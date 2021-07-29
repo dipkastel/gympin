@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/web_api.iml" filepath="$PROJECT_DIR$/workspace/web_api/web_api.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_front/web_front.iml" filepath="$PROJECT_DIR$/workspace/web_front/web_front.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workspace/web_panel/web_panel.iml" filepath="$PROJECT_DIR$/workspace/web_panel/web_panel.iml" />
     </modules>
   </component>
 </project>

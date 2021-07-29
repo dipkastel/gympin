@@ -1,16 +1,27 @@
 import React from 'react';
-import logo from '../../assets/images/logo.svg';
-import './App.css';
+import Navbar from "../../components/navbar/Navbar";
+import FastSearch from "../../components/fastSearch/FastSearch";
+import Advertise from "../../components/advertise/Advertise";
+import Data from "../../components/data/Data";
+import Footer from "../../components/footer/Footer";
+import "./App.css"
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload it.
-        </p>
-      </header>
+        <Navbar/>
+        <FastSearch/>
+
+        <div className="pattern-top"> </div>
+        <div className="container3" >
+            <div className="row">
+                <Advertise/>
+                <div className="clear"></div>
+
+            </div>
+        </div>
+        <Data/>
+        <Footer/>
     </div>
   );
 }
