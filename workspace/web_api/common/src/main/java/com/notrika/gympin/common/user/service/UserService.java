@@ -1,15 +1,10 @@
 package com.notrika.gympin.common.user.service;
 
-import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
-import java.util.List;
 
 public interface UserService extends UserDetailsService {
 
@@ -30,4 +25,6 @@ public interface UserService extends UserDetailsService {
     ResponseEntity<?> getUser(Principal principal);
 
     ResponseEntity<?> activeUserViaSms(String code);
+
+    ResponseEntity<?> loginPanel(Principal principal);
 }

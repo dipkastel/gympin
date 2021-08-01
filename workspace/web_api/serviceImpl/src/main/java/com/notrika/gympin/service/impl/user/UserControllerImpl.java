@@ -2,15 +2,13 @@ package com.notrika.gympin.service.impl.user;
 
 
 import com.notrika.gympin.common.user.api.UserController;
-import com.notrika.gympin.common.user.service.UserService;
-import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
+import com.notrika.gympin.common.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -26,8 +24,14 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
+    @GetMapping("/loginpanel")
+    public ResponseEntity<?> loginPanel(Principal principal) {
+        return userService.loginPanel(principal);
+    }
+
+    @Override
     @GetMapping("/login")
-    public ResponseEntity<?> getUser(@RequestBody Principal principal) {
+    public ResponseEntity<?> getUser(Principal principal) {
         return userService.getUser(principal);
     }
 

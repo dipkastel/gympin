@@ -1,6 +1,5 @@
-package com.notrika.gympin.dao.user;
+package com.notrika.gympin.dao.activationCode;
 
-import com.notrika.gympin.common.user.enums.UserRoles;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,29 +11,25 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="user")
-public class User {
+@Table(name="activation_code")
+public class ActivationCode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(updatable = false)
-    @Enumerated(EnumType.STRING)
-    private UserRoles userRoles = UserRoles.USER;
-
-    @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date CreatedDate = new Date();
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date UpdatedDate = new Date();
-
-    @Column(unique = true)
-    private String username;
+    @Column(name = "userId")
+    private Long userId;
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "code")
+    private String code;
 
 
 }

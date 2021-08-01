@@ -17,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;*/
 
 
 import com.notrika.gympin.common.user.service.UserService;
-import com.notrika.gympin.domain.user.jwt.JWTAuthorizationFilter;
 import com.notrika.gympin.domain.user.jwt.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -77,13 +75,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                         "/**/*.js",
                         "/resources/**",
                         "/error",
-                        "/api/user/**" ,
                         "/downloadFile/*",
                         "/auth/**",
-                        "/api/v1/user/**",
                         "/v2/swagger-ui/**",
-                        "/swagger-ui/**",
-                        "/api/**"
+                        "/swagger-ui/**"
 
                 )
                 .permitAll()
@@ -97,9 +92,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .logoutRequestMatcher(new AntPathRequestMatcher("/api/user/logout", "POST"))
 
                 //login form and path
-                .and().formLogin().loginPage("/api/v1/user/login").and()
+                .and().formLogin().loginPage("http://localhost:3000/")
                 //enable basic authentication
-                .httpBasic().and();
+                .and().httpBasic();
 
         //jwt filter
     }

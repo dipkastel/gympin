@@ -57,19 +57,6 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
-    /*@Bean
-    public Docket swaggerConfiguration(){
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .securityContexts(Arrays.asList(securityContext()))
-                .securitySchemes(Arrays.asList(apiKey()))
-                .select()
-                .paths(PathSelectors.any())//.ant("/api/**"))
-                .apis(RequestHandlerSelectors.basePackage("com.notrika.gympin"))
-                .build();
-
-
-    }*/
     private ApiInfo apiInfo() {
         return new ApiInfo(
                 "My REST API",

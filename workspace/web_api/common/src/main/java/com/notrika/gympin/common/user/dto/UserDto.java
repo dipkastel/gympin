@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.user.dto;
 
-import com.notrika.gympin.common.user.enums.Role;
+import com.notrika.gympin.common.user.enums.UserRoles;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDto {
     private Long id;
-    private Role role = Role.USER;
+    private UserRoles role = UserRoles.USER;
     private String username;
     private String phoneNumber;
+    private String token;
 
 }

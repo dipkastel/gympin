@@ -2,9 +2,8 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
-import com.notrika.gympin.common.user.enums.Role;
+import com.notrika.gympin.common.user.enums.UserRoles;
 import com.notrika.gympin.dao.user.User;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +17,7 @@ public class UserConvertor {
         UserDto dto = new UserDto();
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
-        dto.setRole(Role.valueOf(user.getRole().name()));
+        dto.setRole(UserRoles.valueOf(user.getUserRoles().name()));
         dto.setPhoneNumber(user.getPhoneNumber());
         return dto;
     }
@@ -34,7 +33,7 @@ public class UserConvertor {
         user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
         user.setPhoneNumber(userDto.getPhoneNumber());
-        user.setRole(com.notrika.gympin.dao.user.enums.Role.valueOf(userDto.getRole().name()));
+        user.setUserRoles(UserRoles.valueOf(userDto.getRole().name()));
         return user;
     }
 
