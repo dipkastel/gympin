@@ -256,3 +256,27 @@ ul.hvr-bounce-to-bottom li:hover:before, ul.hvr-bounce-to-bottom li:focus:before
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
 }
+.slide-fwd-center{
+  -webkit-animation: slide-fwd-center 0.45s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+  animation: slide-fwd-center 0.45s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+}
+@-webkit-keyframes slide-fwd-center {
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  0% {
+    -webkit-transform: translateY(160px);
+    transform: translateY(160px);
+  }
+}
+@keyframes slide-fwd-center {
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  0% {
+    -webkit-transform: translateY(160px);
+    transform: translateY(160px);
+  }
+}

@@ -1,20 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import Dashboard from "./masterPages/dashboard/Dashboard";
 import Login from "./masterPages/login/Login";
-import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
-
+import {UserModel} from "./models/UserModel";
 
 
 function App() {
-
-    return (
-        <Router>
-            {false ? <Redirect to="/login" /> :<Dashboard/>}
-            <Route exact path="/login">
-                <Login/>
-            </Route>
-        </Router>
-    );
+    const [user,setUserToken] = useState(new UserModel())
+    var onLogin=(data:any)=>{
+        var newuser = new UserModel();
+        console.log(data.username.value);
+        newuser.token = data.username.value;
+        setUserToken(newuser)
+    }
+    return (user.token==="")?<Login onLogin={onLogin}/>:<Dashboard/>;
 }
 export default App;

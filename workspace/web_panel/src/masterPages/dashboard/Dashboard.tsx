@@ -20,9 +20,6 @@ export default function Dashboard(){
                     <Route path="/users">
                         <UserList/>
                     </Route>
-                    <Route path="/login">
-                        <UserList/>
-                    </Route>
                     <Route path="/user/:userId">
                         <User/>
                     </Route>

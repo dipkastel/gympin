@@ -1,13 +1,10 @@
-class UserModel{
+export class UserModel{
 
     username = "";
     password = "";
     token = "";
 
     constructor() {
-        this.password = JSON.parse(localStorage.getItem('password')||"");
-        this.username = JSON.parse(localStorage.getItem('username')||"");
-        this.token = JSON.parse(localStorage.getItem('token')||"");
     }
     isLoggedIn= ()=>{
         return this.token !== "";
@@ -20,4 +17,3 @@ class UserModel{
 
     }
 }
-module.exports = UserModel;
