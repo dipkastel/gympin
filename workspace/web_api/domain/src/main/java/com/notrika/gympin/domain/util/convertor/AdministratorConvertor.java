@@ -6,8 +6,8 @@ import com.notrika.gympin.dao.administrator.Administrator;
 //@Component
 public class AdministratorConvertor {
 
-    public static AdministratorLoginDto administratorToAdministratorLoginDto(Administrator administrator){
-        if(administrator==null)
+    public static AdministratorLoginDto administratorToAdministratorLoginDto(Administrator administrator) {
+        if (administrator == null)
             return null;
         AdministratorLoginDto dto = new AdministratorLoginDto();
         dto.setId(administrator.getId());

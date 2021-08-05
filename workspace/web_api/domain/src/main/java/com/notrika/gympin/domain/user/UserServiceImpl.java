@@ -1,11 +1,13 @@
 package com.notrika.gympin.domain.user;
 
+import com.notrika.gympin.common.Error;
 import com.notrika.gympin.common.contact.sms.service.SmsService;
+import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
+import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.service.UserService;
-import com.notrika.gympin.dao.ResponseModel;
 import com.notrika.gympin.dao.activationCode.ActivationCode;
 import com.notrika.gympin.dao.administrator.Administrator;
 import com.notrika.gympin.dao.repository.ActivationCodeRepository;
@@ -18,7 +20,6 @@ import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,13 +27,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.notrika.gympin.dao.Error;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -54,9 +55,11 @@ public class UserServiceImpl implements UserService {
     private SmsService smsService;
 
 
-    private UserRegisterDto saveOrUpdateUser(UserRegisterDto userRegisterDto) {
-        userRegisterDto.setPhoneNumber(passwordEncoder.encode(userRegisterDto.getPhoneNumber()));
-        return UserConvertor.userToRegisterDto(userRepository.save(UserConvertor.userRegisterDtoToUser(userRegisterDto)));
+    private UserRegisterDto saveOrUpdateUser(UserRegisterParam userRegisterParam) {
+        User user = new User();
+        user.setUsername(userRegisterParam.getUsername());
+        user.setPhoneNumber(passwordEncoder.encode(userRegisterParam.getPhoneNumber()));
+        return UserConvertor.userToRegisterDto(userRepository.save(user));
     }
 
 
@@ -71,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
 
     private List<UserDto> findAllUsers() {
-        List<UserDto> userDtos=new ArrayList<>();
+        List<UserDto> userDtos = new ArrayList<>();
         userDtos.add(UserConvertor.userToUserDto(userRepository.findAll().get(0)));
         return userDtos;
     }
@@ -86,22 +89,22 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User TBLUser = userRepository.findByUsername(username).orElse(null);
         Administrator admin = administratorRepository.findByAdministratorname(username).orElse(null);
-        if(TBLUser == null && admin == null){
+        if (TBLUser == null && admin == null) {
             throw new UsernameNotFoundException(username);
-        }else if(TBLUser != null){
+        } else if (TBLUser != null) {
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
             grantedAuthorities.add(new SimpleGrantedAuthority(TBLUser.getUserRoles().name()));
             //
             ActivationCode activationCode = activationCodeRepository.findByUserId(TBLUser.getId()).orElse(null);
-            if(activationCode == null){
-                throw new UsernameNotFoundException(username+", sms code not found");
+            if (activationCode == null) {
+                throw new UsernameNotFoundException(username + ", sms code not found");
             }
             return new org.springframework.security.core.userdetails.User(
                     TBLUser.getUsername(),
                     activationCode.getCode(),
                     grantedAuthorities
             );
-        }else {
+        } else {
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
             grantedAuthorities.add(new SimpleGrantedAuthority(admin.getAdministratorRoles().name()));
 
@@ -114,31 +117,29 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public ResponseEntity<?> register(UserRegisterDto dto) {
+    public UserRegisterDto register(UserRegisterParam dto) throws ExceptionBase {
         try {
             User insertedUser = UserConvertor.userRegisterDtoToUser(saveOrUpdateUser(dto));
-            return new ResponseEntity<>(new ResponseModel(UserConvertor.userToUserDto(insertedUser)), HttpStatus.CREATED);
+            return UserConvertor.userToRegisterDto(insertedUser);
         } catch (DataIntegrityViolationException e) {
-            return new ResponseEntity<>(new ResponseModel(new Error(Error.ErrorType.REGISTER_USER_EXIST,e)),
-                    HttpStatus.BAD_REQUEST);
+            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.REGISTER_USER_EXIST);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseModel(new Error(Error.ErrorType.Exception,e)), HttpStatus.BAD_REQUEST);
+            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.Exception);
         }
     }
 
 
-    public ResponseEntity<?> getUser(Principal principal){
-
-        if(principal == null){
-            return new ResponseEntity<>(new ResponseModel(principal), HttpStatus.NOT_FOUND);
+    public UserDto getUser(Principal principal) throws ExceptionBase {
+        if (principal == null) {
+            throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
+
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) principal;
         User user = UserConvertor.userDtoToUser(findByUsername(authenticationToken.getName()));
         UserDto userDto = UserConvertor.userToUserDto(user);
         userDto.setToken(tokenProvider.generateToken(authenticationToken));
-
-        return new ResponseEntity<>(new ResponseModel(userDto), HttpStatus.CREATED);
+        return userDto;
 
     }
 
@@ -149,27 +150,31 @@ public class UserServiceImpl implements UserService {
 //    }
 
 
-
-    public ResponseEntity<?> activeUserViaSms(String code) {
-        return new ResponseEntity<>("nist", HttpStatus.NOT_FOUND);
+    public String activeUserViaSms(String code) {
+        return "nist";
     }
 
     @Override
-    public ResponseEntity<?> loginPanel(Principal principal) {
-
-        if(principal == null){
-            return ResponseEntity.ok(principal);
+    public AdministratorLoginDto loginPanel(Principal principal) throws ExceptionBase {
+        if (principal == null) {
+            throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
+
+        /*if(principal == null){
+            return ResponseEntity.ok(principal);
+        }*/
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) principal;
         Administrator admin = administratorRepository.findByAdministratorname(authenticationToken.getName()).orElse(null);
-        if(admin==null){
-            return new ResponseEntity<>(new ResponseModel(new Error(Error.ErrorType.Client_Auth_Not_Setup)), HttpStatus.UNAUTHORIZED);
-        }
-        AdministratorLoginDto result =  AdministratorConvertor.administratorToAdministratorLoginDto(admin);
-        result.setToken(tokenProvider.generateToken(authenticationToken));
+        if (admin == null) {
+            throw new ExceptionBase(HttpStatus.UNAUTHORIZED, Error.ErrorType.Client_Auth_Not_Setup);
 
-        return new ResponseEntity<>(new ResponseModel(result), HttpStatus.CREATED);
+            // return new ResponseEntity<>(new ResponseModel(new Error(Error.ErrorType.Client_Auth_Not_Setup)), HttpStatus.UNAUTHORIZED);
+        }
+        AdministratorLoginDto result = AdministratorConvertor.administratorToAdministratorLoginDto(admin);
+        result.setToken(tokenProvider.generateToken(authenticationToken));
+        return result;
+        //return new ResponseEntity<>(new ResponseModel(result), HttpStatus.CREATED);
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="activation_code")
+@Table(name = "activation_code")
 public class ActivationCode {
 
     @Id

@@ -15,17 +15,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 
     @Bean(name = "localeResolver")
-    public LocaleResolver getLocaleResolver()  {
-        CookieLocaleResolver resolver= new CookieLocaleResolver();
+    public LocaleResolver getLocaleResolver() {
+        CookieLocaleResolver resolver = new CookieLocaleResolver();
         resolver.setCookieDomain("myAppLocaleCookie");
         // 60 minutes
-        resolver.setCookieMaxAge(60*60);
+        resolver.setCookieMaxAge(60 * 60);
         return resolver;
     }
 
     @Bean(name = "messageSource")
-    public MessageSource getMessageResource()  {
-        ReloadableResourceBundleMessageSource messageResource= new ReloadableResourceBundleMessageSource();
+    public MessageSource getMessageResource() {
+        ReloadableResourceBundleMessageSource messageResource = new ReloadableResourceBundleMessageSource();
 
         // Read i18n/messages_xxx.properties file.
         // For example: i18n/messages_en.properties
@@ -33,6 +33,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         messageResource.setDefaultEncoding("UTF-8");
         return messageResource;
     }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         LocaleChangeInterceptor localeInterceptor = new LocaleChangeInterceptor();

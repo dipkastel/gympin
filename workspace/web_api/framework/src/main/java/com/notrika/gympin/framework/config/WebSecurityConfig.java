@@ -36,8 +36,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebSecurity
 @Slf4j
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter
-{
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
@@ -45,14 +44,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     private UserService userDetailsService;
 
     @Bean
-    public PasswordEncoder passwordEncoder()
-    {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception
-    {
+    protected void configure(HttpSecurity http) throws Exception {
         //Cross-origin-resource-sharing: localhost:8080, localhost:4200(allow for it.)
         http//We will handle it later.
                 //Cross side request forgery
@@ -138,20 +135,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 //    }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception
-    {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.inMemoryAuthentication()
+                .passwordEncoder(passwordEncoder())
+                .withUser("user")
+                .password(passwordEncoder().encode("password"))
+                .roles("USER");
     }
 
     //Cross origin resource sharing.
     @Bean
-    public WebMvcConfigurer corsConfigurer()
-    {
-        return new WebMvcConfigurer()
-        {
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry)
-            {
+            public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
             }
         };
