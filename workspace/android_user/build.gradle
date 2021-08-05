@@ -1,0 +1,52 @@
+buildscript {
+    ext.kotlin_version = "1.5.0"
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://maven.google.com' }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.2.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30-M1"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
+//        classpath "org.jetbrains.kotlin:kotlin-android-extensions:1.5.0"
+        classpath 'com.google.gms:google-services:4.3.8'
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
+//        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.1"
+
+    }
+}
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+subprojects {
+    tasks.withType(Javadoc).all { enabled = false }
+}
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+ext {
+    minSdkVersion = 19
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.3'
+    versionCode = 47
+    versionName = "9.9"
+
+
+    recyclerView = "1.1.0-alpha04"
+    lifecycle_version = "2.2.0-alpha01"
+    play_services_gcm = "16.1.0"
+    play_services_location = "17.0.0"
+    play_services_maps = "16.1.0"
+    play_services_places = "16.1.0"
+    android_maps_utils = "0.3.4"
+    constraintlayout = "2.0.0-beta1"
+
+
+    appcompat = "1.1.0-alpha05"
+}
