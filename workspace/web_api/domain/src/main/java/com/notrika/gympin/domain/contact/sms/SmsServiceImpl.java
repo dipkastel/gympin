@@ -15,8 +15,8 @@ public class SmsServiceImpl implements SmsService {
 
     @Override
     public boolean sendSms(SmsDto smsDto) {
-        String url = Consts.FARAZ_SMS_FIXPART+"&pid="+ Consts.FARAZ_SMS_PATTER_SENDCODE+"&fnum="+ Consts
-         .FARAZ_SMS_SENDER_NUMBER+"&tnum"+smsDto.getUserNumber()+"&p1=code"+"&v1="+smsDto.getText();
+        String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTER_SENDCODE + "&fnum=" + Consts
+                .FARAZ_SMS_SENDER_NUMBER + "&tnum" + smsDto.getUserNumber() + "&p1=code" + "&v1=" + smsDto.getText();
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))

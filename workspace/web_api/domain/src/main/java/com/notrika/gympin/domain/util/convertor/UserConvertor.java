@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 //@Component
 public class UserConvertor {
 
-    public static UserDto userToUserDto(User user){
-        if(user==null)
+    public static UserDto userToUserDto(User user) {
+        if (user == null)
             return null;
         UserDto dto = new UserDto();
         dto.setId(user.getId());
@@ -22,12 +22,12 @@ public class UserConvertor {
         return dto;
     }
 
-    public static  List<UserDto> usersToUserDtos(List<User> users){
-        return users.stream().map(x-> userToUserDto(x)).collect(Collectors.toList());
+    public static List<UserDto> usersToUserDtos(List<User> users) {
+        return users.stream().map(UserConvertor::userToUserDto).collect(Collectors.toList());
     }
 
-    public static User userDtoToUser(UserDto userDto){
-        if(userDto==null)
+    public static User userDtoToUser(UserDto userDto) {
+        if (userDto == null)
             return null;
         User user = new User();
         user.setId(userDto.getId());
@@ -37,12 +37,12 @@ public class UserConvertor {
         return user;
     }
 
-    public static List<User> userDtosToUsers(List<UserDto> userDtos){
-        return userDtos.stream().map(x-> userDtoToUser(x)).collect(Collectors.toList());
+    public static List<User> userDtosToUsers(List<UserDto> userDtos) {
+        return userDtos.stream().map(UserConvertor::userDtoToUser).collect(Collectors.toList());
     }
 
-    public static UserRegisterDto userToRegisterDto(User user){
-        if(user==null)
+    public static UserRegisterDto userToRegisterDto(User user) {
+        if (user == null)
             return null;
         UserRegisterDto dto = new UserRegisterDto();
         dto.setUsername(user.getUsername());
@@ -50,12 +50,12 @@ public class UserConvertor {
         return dto;
     }
 
-    public static List<UserRegisterDto> usersToUserRegisterDtos(List<User> users){
-        return users.stream().map(x-> userToRegisterDto(x)).collect(Collectors.toList());
+    public static List<UserRegisterDto> usersToUserRegisterDtos(List<User> users) {
+        return users.stream().map(UserConvertor::userToRegisterDto).collect(Collectors.toList());
     }
 
-    public static User userRegisterDtoToUser(UserRegisterDto userDto){
-        if(userDto==null)
+    public static User userRegisterDtoToUser(UserRegisterDto userDto) {
+        if (userDto == null)
             return null;
         User user = new User();
         user.setUsername(userDto.getUsername());
@@ -63,9 +63,9 @@ public class UserConvertor {
         return user;
     }
 
-    public static List<User> userRegisterDtosToUsers(List<UserRegisterDto> userRegisterDtos){
+    public static List<User> userRegisterDtosToUsers(List<UserRegisterDto> userRegisterDtos) {
 
-        return userRegisterDtos.stream().map(x-> userRegisterDtoToUser(x)).collect(Collectors.toList());
+        return userRegisterDtos.stream().map(UserConvertor::userRegisterDtoToUser).collect(Collectors.toList());
     }
 
 }

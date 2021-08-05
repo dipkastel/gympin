@@ -1,42 +1,46 @@
-package com.notrika.gympin.dao;
+package com.notrika.gympin.common;
 
-//import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.Nullable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
 public class ResponseModel<T> {
 
     public static final int SUCCESS = 0;
     public static final int ERROR = -1;
 
     @JsonProperty("Success")
-    public boolean Success;
+    private boolean Success;
     @JsonProperty("MessageType")
-    public int MessageType ;
+    private int MessageType;
     @JsonProperty("Message")
-    public String Message = "" ;
+    private String Message = "";
     @JsonProperty("ResultDate")
-    public Date ResultDate =new Date() ;
+    private Date ResultDate = new Date();
     @JsonProperty("LinkParams")
-    public String LinkParams ;
+    private String LinkParams;
     @JsonProperty("Error")
-    public Error Error ;
+    private Error Error;
     @JsonProperty("Data")
     private T data;
 
-    public ResponseModel(@Nullable T _data) {
+    public ResponseModel(/*@Nullable*/ T _data) {
         this.data = _data;
         this.Success = true;
         this.MessageType = SUCCESS;
     }
-    public ResponseModel(@Nullable T _data,String _LinkParams) {
+
+    public ResponseModel(/*@Nullable*/ T _data, String _LinkParams) {
         this.data = _data;
         this.Success = true;
         this.MessageType = SUCCESS;
         this.LinkParams = _LinkParams;
     }
+
     public ResponseModel(Error _data) {
         this.Success = false;
         this.MessageType = ERROR;

@@ -1,30 +1,21 @@
 package com.notrika.gympin.common.user.service;
 
+import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
+import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
-import org.springframework.http.ResponseEntity;
+import com.notrika.gympin.common.user.param.UserRegisterParam;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.security.Principal;
 
 public interface UserService extends UserDetailsService {
 
-/*    UserRegisterDto saveOrUpdateUser(UserRegisterDto TBLUser);
+    UserRegisterDto register(UserRegisterParam userRegisterParam) throws ExceptionBase;
 
-    void deleteUser(int userId);
+    UserDto getUser(Principal principal) throws ExceptionBase;
 
-    UserDto findByUsername(String username);
+    String activeUserViaSms(String code);
 
-    List<UserDto> findAllUsers();
-
-    Long numberOfUsers();
-
-    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;*/
-
-    ResponseEntity<?> register( UserRegisterDto dto);
-
-    ResponseEntity<?> getUser(Principal principal);
-
-    ResponseEntity<?> activeUserViaSms(String code);
-
-    ResponseEntity<?> loginPanel(Principal principal);
+    AdministratorLoginDto loginPanel(Principal principal) throws ExceptionBase;
 }

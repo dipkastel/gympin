@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="administrator")
+@Table(name = "administrator")
 public class Administrator {
 
     @Id
