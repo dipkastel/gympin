@@ -1,35 +1,17 @@
 package com.notrika.gympin.framework.config;
 
-/*import com.notrika.gympin.domain.user.jwt.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;*/
-/*import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;*/
-
-
 import com.notrika.gympin.common.user.service.UserService;
 import com.notrika.gympin.domain.user.jwt.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -59,7 +41,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //These are public paths
                 .antMatchers(
 
-                        HttpMethod.GET,
                         "/",
                         "/v2/api-docs",           // swagger
                         "/webjars/**",            // swagger-ui webjars
@@ -75,18 +56,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/downloadFile/*",
                         "/auth/**",
                         "/v2/swagger-ui/**",
-                        "/swagger-ui/**"
+                        "/swagger-ui/**",
+                        "/api/v1/user/sendsms"
 
                 )
                 .permitAll()
                 //These can be reachable for just have admin role.
-                .antMatchers("/api/admin/**").hasRole("ADMIN")
                 //All remaining paths should need authentication.
                 .anyRequest().fullyAuthenticated()
 
                 //logout will log the user out by invalidated session.
-                .and().logout().permitAll()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/api/user/logout", "POST"))
+//                .and().logout().permitAll()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/api/user/logout", "POST"))
 
                 //login form and path
                 .and().formLogin().loginPage("http://localhost:3000/")

@@ -1,13 +1,17 @@
 package com.notrika.gympin.domain.user;
 
 import com.notrika.gympin.common.Error;
+import com.notrika.gympin.common.contact.sms.dto.SmsDto;
+import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
 import com.notrika.gympin.common.contact.sms.service.SmsService;
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.exception.PhoneNumberNotRegisterdException;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.service.UserService;
+import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.dao.activationCode.ActivationCode;
 import com.notrika.gympin.dao.administrator.Administrator;
 import com.notrika.gympin.dao.repository.ActivationCodeRepository;
@@ -39,6 +43,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+
     @Autowired
     private AdministratorRepository administratorRepository;
 
@@ -117,6 +123,17 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public boolean  sendActivationSms(String PhoneNumber) throws PhoneNumberNotRegisterdException {
+        User user =userRepository.findByUsername(PhoneNumber).orElse(null);
+        if(user==null) throw new PhoneNumberNotRegisterdException();
+        String code = MyRandom.GenerateRandomVerificationSmsCode();
+        ActivationCode activationCode = new ActivationCode(user.getId(),PhoneNumber,code);
+        activationCodeRepository.save(activationCode);
+        //TODO check for last sms time > 2 min
+        return smsService.sendSms(new SmsDto(PhoneNumber, SmsTypes.CODE_TO_VERIFICATION,code));
+    }
+
     public UserRegisterDto register(UserRegisterParam dto) throws ExceptionBase {
         try {
             User insertedUser = UserConvertor.userRegisterDtoToUser(saveOrUpdateUser(dto));
@@ -175,6 +192,11 @@ public class UserServiceImpl implements UserService {
         result.setToken(tokenProvider.generateToken(authenticationToken));
         return result;
         //return new ResponseEntity<>(new ResponseModel(result), HttpStatus.CREATED);
+    }
+
+    @Override
+    public AdministratorLoginDto activeUserViaSms(Principal principal) throws ExceptionBase {
+        return null;
     }
 
 }

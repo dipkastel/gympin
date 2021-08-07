@@ -18,8 +18,6 @@ import java.util.List;
 
 @Configuration
 @EnableSwagger2
-//@EnableWebMvc
-//@EnableSwagger2WebMvc
 public class SwaggerConfig {
 
     private ApiKey apiKey() {

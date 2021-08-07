@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication(scanBasePackages = {"com.notrika.gympin.*"})
 @EnableJpaRepositories(basePackages = {"com.notrika.gympin.dao.*"})
 @EntityScan("com.notrika.gympin.dao.*")
-//@ComponentScan(basePackageClasses = com.notrika.gympin.service.impl.user.UserControllerImpl.class)
 public class WebApiApplication {
 
 

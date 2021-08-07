@@ -2,6 +2,7 @@ package com.notrika.gympin.service.impl.user;
 
 
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.exception.PhoneNumberNotRegisterdException;
 import com.notrika.gympin.common.user.api.UserController;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
@@ -23,29 +24,29 @@ public class UserControllerImpl implements UserController {
     private UserService userService;
 
     @Override
+    @PostMapping("/sendsms")
+    public ResponseEntity<Boolean> sendSms(@RequestBody String phoneNumber) throws PhoneNumberNotRegisterdException {
+        return new ResponseEntity<>(userService.sendActivationSms(phoneNumber), HttpStatus.OK);
+    }
+
+    @Override
     @PostMapping("/register")
     public ResponseEntity<UserRegisterDto> register(@RequestBody UserRegisterParam userRegisterParam) throws ExceptionBase {
-        return new ResponseEntity<UserRegisterDto>(userService.register(userRegisterParam), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.register(userRegisterParam), HttpStatus.CREATED);
+    }
+
+    @Override
+    @GetMapping("/login")
+    public ResponseEntity<UserDto> loginUser(Principal principal) throws ExceptionBase {
+        return new ResponseEntity<>(userService.getUser(principal), HttpStatus.CREATED);
     }
 
     @Override
     @GetMapping("/loginpanel")
     public ResponseEntity<AdministratorLoginDto> loginPanel(Principal principal) throws ExceptionBase {
         return new ResponseEntity<>(userService.loginPanel(principal), HttpStatus.OK);
-        //return userService.loginPanel(principal);
     }
 
-    @Override
-    @GetMapping("/login")
-    public ResponseEntity<UserDto> getUser(Principal principal) throws ExceptionBase {
-        return new ResponseEntity<UserDto>(userService.getUser(principal), HttpStatus.CREATED);
-    }
-
-    @Override
-    @PostMapping("/activeuserviasms")
-    public ResponseEntity<String> activeUserViaSms(@RequestBody String code) {
-        return new ResponseEntity<String>(userService.activeUserViaSms(code), HttpStatus.NOT_FOUND);
-    }
 
 
 }
