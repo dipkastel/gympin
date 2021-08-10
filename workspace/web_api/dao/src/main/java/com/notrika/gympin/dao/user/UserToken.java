@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 //import lombok.Data;
@@ -33,7 +34,7 @@ public class UserToken {
     private Date CreatedDate = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date ExpireDate = new Date();
+    private Date ExpireDate ;
 
 
 

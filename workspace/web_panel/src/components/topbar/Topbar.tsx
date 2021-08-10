@@ -1,10 +1,11 @@
 import React from 'react'
 import "./topbar.css"
-import {NotificationsNone,Language,Settings} from "@material-ui/icons"
+import {NotificationsNone,Language,Settings,MeetingRoom} from "@material-ui/icons"
+import Pocket from "../../helpers/pocket/Pocket";
 
 
 
-export default function Topbar(){
+export default function Topbar({onLogout}:any){
     return (
         <div className="topbar">
             <div className="topbarWraper">
@@ -24,6 +25,9 @@ export default function Topbar(){
                     </div>
                     <div className="topbarIconContainer">
                         <Settings/>
+                    </div>
+                    <div className="topbarIconContainer" onClick={onLogout}>
+                        <MeetingRoom/>
                     </div>
                     <img src="https://images.pexels.com/photos/7645829/pexels-photo-7645829.jpeg?auto=compress&cs=tinysrgb&h=300&w=400" alt="user" className="topAvatar"/>
                 </div>

@@ -1,6 +1,6 @@
 package com.notrika.gympin.framework.config;
 
-import com.notrika.gympin.common.user.service.UserService;
+import com.notrika.gympin.common.user.service.AccountService;
 import com.notrika.gympin.domain.user.jwt.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    private UserService userDetailsService;
+    private AccountService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //Cross-origin-resource-sharing: localhost:8080, localhost:4200(allow for it.)
         http//We will handle it later.
                 //Cross side request forgery
-                .csrf().disable()
+                .cors().and().csrf().disable()
 //                .cors().and()
                 .authorizeRequests()
                 //These are public paths
@@ -57,7 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/auth/**",
                         "/v2/swagger-ui/**",
                         "/swagger-ui/**",
-                        "/api/v1/user/sendsms"
+                        "/api/v1/user/sendsms",
+                        "/api/v1/user/register"
 
                 )
                 .permitAll()
@@ -124,14 +125,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .password(passwordEncoder().encode("password"))
                 .roles("USER");
     }
-
     //Cross origin resource sharing.
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
+                registry.addMapping("/api/v1/**")
+                        .allowedOrigins("http://localhost:3000")
+                        .allowedMethods("PUT", "DELETE","POST","GET")
+                        .allowCredentials(false).maxAge(3600);
             }
         };
     }

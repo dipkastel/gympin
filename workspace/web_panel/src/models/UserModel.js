@@ -3,9 +3,10 @@ export class UserModel{
     username = "";
     password = "";
     token = "";
-
-    constructor() {
+    constructor(_token ="") {
+        this.token = _token;
     }
+
     isLoggedIn= ()=>{
         return this.token !== "";
     }

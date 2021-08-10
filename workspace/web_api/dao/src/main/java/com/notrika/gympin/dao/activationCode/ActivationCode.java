@@ -13,10 +13,11 @@ import java.util.Date;
 @Table(name = "activation_code")
 public class ActivationCode {
 
-    public ActivationCode(Long userId, String phoneNumber, String code) {
+    public ActivationCode(Long userId, String phoneNumber, String code,String senderId) {
         this.userId = userId;
         this.phoneNumber = phoneNumber;
         this.code = code;
+        this.senderId = senderId;
     }
 
     @Id
@@ -37,13 +38,9 @@ public class ActivationCode {
     @Column(name = "code")
     private String code;
 
-//    private SimpleDateFormat getCurrentDateAndTime() {
-//        java.util.Date dt = new java.util.Date();
-//
-//        java.text.SimpleDateFormat sdf =
-//                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        return sdf;
-//    }
+    @Column(name = "senderId")
+    private String senderId;
+
 
 }
 

@@ -2,13 +2,12 @@ package com.notrika.gympin.service.impl.user;
 
 
 import com.notrika.gympin.common.exception.ExceptionBase;
-import com.notrika.gympin.common.exception.PhoneNumberNotRegisterdException;
 import com.notrika.gympin.common.user.api.UserController;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
-import com.notrika.gympin.common.user.service.UserService;
+import com.notrika.gympin.common.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +20,11 @@ import java.security.Principal;
 public class UserControllerImpl implements UserController {
 
     @Autowired
-    private UserService userService;
+    private AccountService userService;
 
     @Override
     @PostMapping("/sendsms")
-    public ResponseEntity<Boolean> sendSms(@RequestBody String phoneNumber) throws PhoneNumberNotRegisterdException {
+    public ResponseEntity<Boolean> sendSms(@RequestBody String phoneNumber) throws ExceptionBase {
         return new ResponseEntity<>(userService.sendActivationSms(phoneNumber), HttpStatus.OK);
     }
 
@@ -38,7 +37,7 @@ public class UserControllerImpl implements UserController {
     @Override
     @GetMapping("/login")
     public ResponseEntity<UserDto> loginUser(Principal principal) throws ExceptionBase {
-        return new ResponseEntity<>(userService.getUser(principal), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.loginUser(principal), HttpStatus.CREATED);
     }
 
     @Override

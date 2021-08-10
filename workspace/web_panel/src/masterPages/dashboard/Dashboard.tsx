@@ -7,10 +7,10 @@ import {BrowserRouter as Router, Switch, Route,Redirect} from "react-router-dom"
 import User from "../../pages/user/User";
 import "./Dashboard.css"
 
-export default function Dashboard(){
+export default function Dashboard({onLogout}:any){
     return (
         <Router>
-            <Topbar/>
+            <Topbar onLogout={onLogout}/>
             <div className="main-container">
                 <Sidebar/>
                 <Switch>
