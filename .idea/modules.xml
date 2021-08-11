@@ -8,6 +8,9 @@
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/framework/framework.iml" filepath="$PROJECT_DIR$/workspace/web_api/framework/framework.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/serviceImpl/serviceImpl.iml" filepath="$PROJECT_DIR$/workspace/web_api/serviceImpl/serviceImpl.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/web_api.iml" filepath="$PROJECT_DIR$/workspace/web_api/web_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workspace/web_dashboard/web_dashboard.iml" filepath="$PROJECT_DIR$/workspace/web_dashboard/web_dashboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workspace/web_dashboard2/web_dashboard2.iml" filepath="$PROJECT_DIR$/workspace/web_dashboard2/web_dashboard2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workspace/web_dashboard3/web_dashboard3.iml" filepath="$PROJECT_DIR$/workspace/web_dashboard3/web_dashboard3.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_front/web_front.iml" filepath="$PROJECT_DIR$/workspace/web_front/web_front.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_panel/web_panel.iml" filepath="$PROJECT_DIR$/workspace/web_panel/web_panel.iml" />
     </modules>
