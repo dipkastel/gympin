@@ -1,17 +1,19 @@
 package com.notrika.gympin.dao.activationCode;
 
+import com.notrika.gympin.dao.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "activation_code")
-public class ActivationCode {
+public class ActivationCode extends BaseEntity {
 
     public ActivationCode(Long userId, String phoneNumber, String code,String senderId) {
         this.userId = userId;
@@ -20,13 +22,6 @@ public class ActivationCode {
         this.senderId = senderId;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date CreatedDate = new Date();
 
 
     @Column(name = "userId")

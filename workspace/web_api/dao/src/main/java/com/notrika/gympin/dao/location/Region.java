@@ -1,6 +1,7 @@
 package com.notrika.gympin.dao.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.dao.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,10 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "region")
-public class Region {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Region extends BaseEntity {
 
     @Column(name = "name")
     private String name;

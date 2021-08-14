@@ -1,11 +1,11 @@
 package com.notrika.gympin.dao.user;
 
 import com.notrika.gympin.common.user.enums.TokenStatus;
+import com.notrika.gympin.dao.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 //import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_token")
-public class UserToken {
+public class UserToken extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,14 +29,14 @@ public class UserToken {
     @Column(updatable = false)
     private String token ;
 
-    @Column(updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date CreatedDate = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date ExpireDate ;
 
 
+    @Override
+    public void setUpdatedDate(Date UpdatedDate) {
+    }
 
 }
 

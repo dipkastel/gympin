@@ -1,5 +1,6 @@
 package com.notrika.gympin.dao.location;
 
+import com.notrika.gympin.dao.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "state")
-public class State {
+public class State extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -56,7 +56,6 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private SmsService smsService;
 
-
     @Override
     public boolean  sendActivationSms(String PhoneNumber) throws ExceptionBase {
         User user =userRepository.findByPhoneNumber(PhoneNumber).orElse(null);
@@ -126,10 +125,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    private void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
-    }
-
 
     private UserDto findByUsername(String username) {
         return UserConvertor.userToUserDto(userRepository.findByUsername(username).orElse(null));
@@ -150,6 +145,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+       userRepository.deleteById(3l);
+
+
+
+
         User TBLUser = userRepository.findByPhoneNumber(username).orElse(null);
         Administrator admin = administratorRepository.findByAdministratorname(username).orElse(null);
         if (TBLUser == null && admin == null) {
