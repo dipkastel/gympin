@@ -1,8 +1,9 @@
-package com.notrika.gympin.service.impl;
+package com.notrika.gympin.dao;
 
-import com.notrika.gympin.dao.BaseEntity;
 import com.notrika.gympin.dao.repository.BaseRepository;
+import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -13,8 +14,9 @@ public class BaseRepositoryImpl <T, ID extends Serializable>
 
     private final EntityManager entityManager;
 
-    public BaseRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
-        super(domainClass, entityManager);
+    public BaseRepositoryImpl(JpaEntityInformation<T, ?>
+                                          entityInformation, EntityManager entityManager) {
+        super(entityInformation, entityManager);
         this.entityManager = entityManager;
     }
 

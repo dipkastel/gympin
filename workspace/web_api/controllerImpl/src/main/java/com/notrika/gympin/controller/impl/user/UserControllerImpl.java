@@ -1,4 +1,4 @@
-package com.notrika.gympin.service.impl.user;
+package com.notrika.gympin.controller.impl.user;
 
 
 import com.notrika.gympin.common.exception.ExceptionBase;

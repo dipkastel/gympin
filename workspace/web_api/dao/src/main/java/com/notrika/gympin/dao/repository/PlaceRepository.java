@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PlaceRepository extends JpaRepository<Place, Long> {
+public interface PlaceRepository extends BaseRepository<Place, Long> {
     @Query("select c from Place c where c.region.id = :#{#region.id}")
     List<Place> getPlacesByRegion(@Param("region") Region region);
 }

@@ -22,15 +22,14 @@ public class ApiAspect {
 
     private final static Logger LOGGER = Logger.getLogger("ApiAspect");
 
-    @Around("execution(* com.notrika.gympin.service.impl..*.*(..))")
+    @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
     public Object process(ProceedingJoinPoint pjp) throws Throwable {
         // start stopwatch
         StringBuffer paramBuffer =
                 new StringBuffer().append("\n==============================================================\n")
                         .append("Method ").append(pjp.getSignature().toLongString()).append(" started with following input param: ");
-        for (Object o :
-                pjp.getArgs()) {
-            paramBuffer.append(o.toString()).append("\n");
+        for (int i = 0; i < pjp.getArgs().length; i++) {
+            paramBuffer.append(pjp.getArgs()[i]).append("\n");
         }
         LOGGER.log(Level.INFO, paramBuffer.toString());
         StringBuffer resultBuffer = new StringBuffer().append(" and return following result: \n");
@@ -53,7 +52,11 @@ public class ApiAspect {
             responseModel.setMessage(error.getErrorMessage());
             responseModel.setError(error);
             return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.BAD_REQUEST);
-        } finally {
+        }
+        catch (Throwable throwable){
+            throw throwable;
+        }
+            finally {
             LOGGER.log(Level.INFO, resultBuffer.append("\n==============================================================\n").toString());
         }
         // stop stopwatch

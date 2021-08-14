@@ -1,4 +1,4 @@
-package com.notrika.gympin.service.impl.location;
+package com.notrika.gympin.controller.impl.location;
 
 import com.notrika.gympin.common.location.api.LocationController;
 import com.notrika.gympin.common.location.dto.CityDto;

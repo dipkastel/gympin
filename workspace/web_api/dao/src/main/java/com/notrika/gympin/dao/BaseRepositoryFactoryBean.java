@@ -1,4 +1,4 @@
-package com.notrika.gympin.service.impl;
+package com.notrika.gympin.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
@@ -37,7 +37,7 @@ public class BaseRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I exten
 
 
         protected Object getTargetRepository(RepositoryMetadata metadata) {
-            return new BaseRepositoryImpl<T, I>((Class<T>) metadata.getDomainType(), em);
+            return null;// new BaseRepositoryImpl<T, I>((Class<T>) metadata.getDomainType(), em);
         }
 
         @Override

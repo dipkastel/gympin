@@ -35,6 +35,7 @@ public class JwtTokenProvider {
 
     @Value("${app.jwt.user-expiration-in-ms}")
     private Long userjwtExpirationInMs;
+
     @Value("${app.jwt.admin-expiration-in-ms}")
     private Long adminjwtExpirationInMs;
 

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CityRepository extends JpaRepository<City, Long> {
+public interface CityRepository extends BaseRepository<City, Long> {
 
     @Query("select c from City c where c.state.id = :#{#state.id}")
     List<City> getCitiesByState(@Param("state") State state);

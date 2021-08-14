@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ActivationCodeRepository extends JpaRepository<ActivationCode, Long> {
+public interface ActivationCodeRepository extends BaseRepository<ActivationCode, Long> {
 
     Optional<List<ActivationCode>> findByUserId(Long userId);
 
