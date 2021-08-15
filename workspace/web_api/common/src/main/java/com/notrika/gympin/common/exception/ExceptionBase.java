@@ -1,13 +1,17 @@
 package com.notrika.gympin.common.exception;
 
 import com.notrika.gympin.common.Error;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
-public class ExceptionBase extends Exception {
+@RequiredArgsConstructor
+public class ExceptionBase extends RuntimeException {
     private HttpStatus httpStatus;
     private Error.ErrorType errorType;
 

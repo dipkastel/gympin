@@ -5,8 +5,6 @@ import lombok.Data;
 
 import java.util.Arrays;
 
-//import lombok.Data;
-
 @Data
 public class Error {
 
@@ -30,7 +28,7 @@ public class Error {
 
 
     public enum ErrorType {
-        REGISTER_USER_EXIST(1005), Exception(999), Client_Auth_Not_Setup(12046), USER_NOT_FOUND(1001);
+        REGISTER_USER_EXIST(1005), EXCEPTION(999), CLIENT_AUTH_NOT_SETUP(12046), USER_NOT_FOUND(1001);
         private final int value;
 
         ErrorType(int value) {

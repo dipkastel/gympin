@@ -1,14 +1,14 @@
 package com.notrika.gympin.common.location.dto;
 
 import com.notrika.gympin.common.BaseDto;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
+@SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class StateDto extends BaseDto<StateDto> {
     private Long id;

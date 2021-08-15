@@ -12,13 +12,13 @@ import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.service.AccountService;
 import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.dao.administrator.Administrator;
-import com.notrika.gympin.dao.repository.AdministratorRepository;
-import com.notrika.gympin.dao.repository.UserRepository;
 import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.dao.user.UserToken;
 import com.notrika.gympin.domain.user.jwt.JwtTokenProvider;
 import com.notrika.gympin.domain.util.convertor.AdministratorConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
+import com.notrika.gympin.persistence.repository.AdministratorRepository;
+import com.notrika.gympin.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -57,16 +57,17 @@ public class AccountServiceImpl implements AccountService {
     private SmsService smsService;
 
     @Override
-    public boolean  sendActivationSms(String PhoneNumber) throws ExceptionBase {
-        User user =userRepository.findByPhoneNumber(PhoneNumber).orElse(null);
-        if(user==null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);;
+    public boolean sendActivationSms(String PhoneNumber) throws ExceptionBase {
+        User user = userRepository.findByPhoneNumber(PhoneNumber).orElse(null);
+        if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
+
         String code = MyRandom.GenerateRandomVerificationSmsCode();
 
         //TODO check for last sms time > 2 min
         try {
-            return smsService.sendVerificationSms(user.getId(),new SmsDto(PhoneNumber, SmsTypes.CODE_TO_VERIFICATION,code));
+            return smsService.sendVerificationSms(user.getId(), new SmsDto(PhoneNumber, SmsTypes.CODE_TO_VERIFICATION, code));
         } catch (Exception e) {
-            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.Exception);
+            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
         }
     }
 
@@ -78,7 +79,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (DataIntegrityViolationException e) {
             throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.REGISTER_USER_EXIST);
         } catch (Exception e) {
-            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.Exception);
+            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
         }
     }
 
@@ -92,7 +93,7 @@ public class AccountServiceImpl implements AccountService {
                 (UsernamePasswordAuthenticationToken) principal;
         User user = UserConvertor.userDtoToUser(findByUsername(authenticationToken.getName()));
         UserDto userDto = UserConvertor.userToUserDto(user);
-        UserToken userToken = tokenProvider.generateToken(user,authenticationToken);
+        UserToken userToken = tokenProvider.generateToken(user, authenticationToken);
         userDto.setToken(userToken.getToken());
         return userDto;
 
@@ -107,11 +108,11 @@ public class AccountServiceImpl implements AccountService {
                 (UsernamePasswordAuthenticationToken) principal;
         Administrator admin = administratorRepository.findByAdministratorname(authenticationToken.getName()).orElse(null);
         if (admin == null) {
-            throw new ExceptionBase(HttpStatus.UNAUTHORIZED, Error.ErrorType.Client_Auth_Not_Setup);
+            throw new ExceptionBase(HttpStatus.UNAUTHORIZED, Error.ErrorType.CLIENT_AUTH_NOT_SETUP);
             // return new ResponseEntity<>(new ResponseModel(new Error(Error.ErrorType.Client_Auth_Not_Setup)), HttpStatus.UNAUTHORIZED);
         }
         AdministratorLoginDto result = AdministratorConvertor.administratorToAdministratorLoginDto(admin);
-        UserToken userToken = tokenProvider.generateToken(admin,authenticationToken);
+        UserToken userToken = tokenProvider.generateToken(admin, authenticationToken);
         result.setToken(userToken.getToken());
         return result;
         //return new ResponseEntity<>(new ResponseModel(result), HttpStatus.CREATED);
@@ -123,7 +124,6 @@ public class AccountServiceImpl implements AccountService {
         user.setPhoneNumber(userRegisterParam.getPhoneNumber());
         return UserConvertor.userToRegisterDto(userRepository.save(user));
     }
-
 
 
     private UserDto findByUsername(String username) {
@@ -146,9 +146,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-       userRepository.deleteById(3l);
-
-
+        userRepository.deleteById(3l);
 
 
         User TBLUser = userRepository.findByPhoneNumber(username).orElse(null);
@@ -178,10 +176,6 @@ public class AccountServiceImpl implements AccountService {
             );
         }
     }
-
-
-
-
 
 
     //@PostMapping("/sendsms")
