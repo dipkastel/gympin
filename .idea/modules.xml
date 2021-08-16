@@ -3,10 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/common/common.iml" filepath="$PROJECT_DIR$/workspace/web_api/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workspace/web_api/controllerImpl/controllerImpl.iml" filepath="$PROJECT_DIR$/workspace/web_api/controllerImpl/controllerImpl.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/dao/dao.iml" filepath="$PROJECT_DIR$/workspace/web_api/dao/dao.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/domain/domain.iml" filepath="$PROJECT_DIR$/workspace/web_api/domain/domain.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/framework/framework.iml" filepath="$PROJECT_DIR$/workspace/web_api/framework/framework.iml" />
-      <module fileurl="file://$PROJECT_DIR$/workspace/web_api/serviceImpl/serviceImpl.iml" filepath="$PROJECT_DIR$/workspace/web_api/serviceImpl/serviceImpl.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/web_api.iml" filepath="$PROJECT_DIR$/workspace/web_api/web_api.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_front/web_front.iml" filepath="$PROJECT_DIR$/workspace/web_front/web_front.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_panel/web_panel.iml" filepath="$PROJECT_DIR$/workspace/web_panel/web_panel.iml" />

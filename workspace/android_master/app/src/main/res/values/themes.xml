@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Gympin" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_kalahari</item>
+        <item name="colorPrimaryDark">@color/purple_dallas</item>
+        <item name="colorAccent">@color/grey_dark</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Widget.BottomNavigationView"
+        parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/iran_sans</item>
+        <item name="android:textSize">@dimen/_6sdp</item>
+    </style>
+    <style name="mainTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/grey_Ash</item>
+        <item name="colorAccent">@color/black_Bistre</item>
+        <item name="colorPrimaryDark">@color/white_Gainsboro</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:colorPrimary" >@color/grey_Davy</item>
+        <item name="android:statusBarColor">@color/white_Gainsboro</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+</resources>

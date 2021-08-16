@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    app:startDestination="@id/fragmentReserves">
+
+    <fragment
+        android:id="@+id/fragmentReserves"
+        android:name="com.notrika.gympin_master.ui.main.reserves.FragmentReserves"
+        android:label="FragmentReserves" />
+</navigation>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "837206705204",
+    "project_id": "gympin-da489",
+    "storage_bucket": "gympin-da489.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837206705204:android:10e9f0b7b478a9fe973661",
+        "android_client_info": {
+          "package_name": "com.notrika.gympin_master"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837206705204-v63g0u8d14504h2k4c1ko7584n6m83nt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.notrika.gympin_master",
+            "certificate_hash": "a51c8dc83dd4a567100c9b142776490eb2248694"
+          }
+        },
+        {
+          "client_id": "837206705204-0kjbn1rguig2seqqp4d6fnljdlloj0ov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3rIDKzC7QaMUvccRSdVY9wGoJOTy-x7s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "837206705204-0kjbn1rguig2seqqp4d6fnljdlloj0ov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
