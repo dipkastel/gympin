@@ -13,11 +13,11 @@ import com.notrika.gympin.dao.location.City;
 import com.notrika.gympin.dao.location.Place;
 import com.notrika.gympin.dao.location.Region;
 import com.notrika.gympin.dao.location.State;
-import com.notrika.gympin.dao.repository.CityRepository;
-import com.notrika.gympin.dao.repository.PlaceRepository;
-import com.notrika.gympin.dao.repository.RegionRepository;
-import com.notrika.gympin.dao.repository.StateRepository;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
+import com.notrika.gympin.persistence.repository.CityRepository;
+import com.notrika.gympin.persistence.repository.PlaceRepository;
+import com.notrika.gympin.persistence.repository.RegionRepository;
+import com.notrika.gympin.persistence.repository.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

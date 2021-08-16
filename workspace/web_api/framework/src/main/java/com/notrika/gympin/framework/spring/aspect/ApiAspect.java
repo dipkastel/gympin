@@ -52,11 +52,9 @@ public class ApiAspect {
             responseModel.setMessage(error.getErrorMessage());
             responseModel.setError(error);
             return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.BAD_REQUEST);
-        }
-        catch (Throwable throwable){
+        } catch (Throwable throwable) {
             throw throwable;
-        }
-            finally {
+        } finally {
             LOGGER.log(Level.INFO, resultBuffer.append("\n==============================================================\n").toString());
         }
         // stop stopwatch

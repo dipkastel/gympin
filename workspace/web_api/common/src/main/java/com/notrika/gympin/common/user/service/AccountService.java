@@ -11,7 +11,7 @@ import java.security.Principal;
 
 public interface AccountService extends UserDetailsService {
 
-    boolean sendActivationSms(String phoneNumber) throws  ExceptionBase;
+    boolean sendActivationSms(String phoneNumber) throws ExceptionBase;
 
     UserRegisterDto register(UserRegisterParam userRegisterParam) throws ExceptionBase;
 

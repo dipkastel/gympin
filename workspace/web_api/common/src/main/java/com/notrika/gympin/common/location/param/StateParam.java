@@ -5,10 +5,12 @@ import com.notrika.gympin.common.BaseParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
 @Data
+@SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class StateParam extends BaseParam<StateParam> implements Serializable {

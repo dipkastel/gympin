@@ -58,7 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/swagger-ui/**",
                         "/swagger-ui/**",
                         "/api/v1/user/sendsms",
-                        "/api/v1/user/register"
+                        "/api/v1/user/register",
+                        "/api/v1/user/loginpanel",
+                        "/api/**"
 
                 )
                 .permitAll()
@@ -125,6 +127,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .password(passwordEncoder().encode("password"))
                 .roles("USER");
     }
+
     //Cross origin resource sharing.
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -133,7 +136,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/v1/**")
                         .allowedOrigins("http://localhost:3000")
-                        .allowedMethods("PUT", "DELETE","POST","GET")
+                        .allowedMethods("PUT", "DELETE", "POST", "GET")
                         .allowCredentials(false).maxAge(3600);
             }
         };
