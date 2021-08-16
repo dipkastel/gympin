@@ -1,14 +1,8 @@
 package com.notrika.gympin.controller.impl.location;
 
 import com.notrika.gympin.common.location.api.LocationController;
-import com.notrika.gympin.common.location.dto.CityDto;
-import com.notrika.gympin.common.location.dto.PlaceDto;
-import com.notrika.gympin.common.location.dto.RegionDto;
-import com.notrika.gympin.common.location.dto.StateDto;
-import com.notrika.gympin.common.location.param.CityParam;
-import com.notrika.gympin.common.location.param.PlaceParam;
-import com.notrika.gympin.common.location.param.RegionParam;
-import com.notrika.gympin.common.location.param.StateParam;
+import com.notrika.gympin.common.location.dto.*;
+import com.notrika.gympin.common.location.param.*;
 import com.notrika.gympin.common.location.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,5 +82,11 @@ public class LocationControllerImpl implements LocationController {
     @GetMapping("/getPlacesByRegion")
     public ResponseEntity<List<PlaceDto>> getPlacesByRegion(RegionParam regionParam) {
         return new ResponseEntity<List<PlaceDto>>(locationService.getPlacesByRegion(regionParam), HttpStatus.OK);
+    }
+
+    @Override
+    @PostMapping("/addOptionOfPlace")
+    public ResponseEntity<OptionOfPlaceDto> addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam) {
+        return new ResponseEntity<OptionOfPlaceDto>(locationService.addOptionOfPlace(optionOfPlaceParam),HttpStatus.CREATED);
     }
 }

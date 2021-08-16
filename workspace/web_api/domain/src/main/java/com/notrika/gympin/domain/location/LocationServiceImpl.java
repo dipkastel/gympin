@@ -1,27 +1,18 @@
 package com.notrika.gympin.domain.location;
 
-import com.notrika.gympin.common.location.dto.CityDto;
-import com.notrika.gympin.common.location.dto.PlaceDto;
-import com.notrika.gympin.common.location.dto.RegionDto;
-import com.notrika.gympin.common.location.dto.StateDto;
-import com.notrika.gympin.common.location.param.CityParam;
-import com.notrika.gympin.common.location.param.PlaceParam;
-import com.notrika.gympin.common.location.param.RegionParam;
-import com.notrika.gympin.common.location.param.StateParam;
+import com.notrika.gympin.common.location.dto.*;
+import com.notrika.gympin.common.location.param.*;
 import com.notrika.gympin.common.location.service.LocationService;
-import com.notrika.gympin.dao.location.City;
-import com.notrika.gympin.dao.location.Place;
-import com.notrika.gympin.dao.location.Region;
-import com.notrika.gympin.dao.location.State;
+import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
+import com.notrika.gympin.dao.location.*;
+import com.notrika.gympin.dao.option.place.PlaceOption;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
-import com.notrika.gympin.persistence.repository.CityRepository;
-import com.notrika.gympin.persistence.repository.PlaceRepository;
-import com.notrika.gympin.persistence.repository.RegionRepository;
-import com.notrika.gympin.persistence.repository.StateRepository;
+import com.notrika.gympin.persistence.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -37,6 +28,12 @@ public class LocationServiceImpl implements LocationService {
 
     @Autowired
     private PlaceRepository placeRepository;
+
+    @Autowired
+    private OptionOfPlaceRepository optionOfPlaceRepository;
+
+    @Autowired
+    private PlaceOptionRepository placeOptionRepository;
 
     @Override
     public StateDto addState(StateParam stateParam) {
@@ -120,5 +117,15 @@ public class LocationServiceImpl implements LocationService {
         region.setId(regionParam.getId());
         return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeRepository.getPlacesByRegion(region), LocationConvertor.CollectionType.LIST,
                 LocationConvertor.CollectionType.LIST);
+    }
+
+    @Override
+    public OptionOfPlaceDto addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam) {
+        if(optionOfPlaceParam.getPlaceOptionParam().getId()==null){
+            PlaceOption save = placeOptionRepository.save(PlaceOption.builder().name(optionOfPlaceParam.getPlaceOptionParam().getName()).build());
+            optionOfPlaceParam.getPlaceOptionParam().setId(save.getId());
+        }
+        OptionOfPlace save = optionOfPlaceRepository.save(OptionOfPlace.builder().place(Place.builder().id(optionOfPlaceParam.getPlaceParam().getId()).build()).placeOption(PlaceOption.builder().id(optionOfPlaceParam.getPlaceOptionParam().getId()).build()).build());
+        return OptionOfPlaceDto.builder().id(save.getId()).createdDate(save.getCreatedDate()).updatedDate(save.getUpdatedDate()).isDeleted(save.isDeleted()).place(PlaceDto.builder().id(save.getPlace().getId()).build()).placeOption(PlaceOptionDto.builder().id(save.getPlaceOption().getId()).build()).build();
     }
 }

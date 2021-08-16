@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class UserDto extends BaseDto<UserDto> {
-    private Long id;
     private UserRoles role = UserRoles.USER;
     private String username;
     private String phoneNumber;

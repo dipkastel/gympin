@@ -1,13 +1,7 @@
 package com.notrika.gympin.common.location.api;
 
-import com.notrika.gympin.common.location.dto.CityDto;
-import com.notrika.gympin.common.location.dto.PlaceDto;
-import com.notrika.gympin.common.location.dto.RegionDto;
-import com.notrika.gympin.common.location.dto.StateDto;
-import com.notrika.gympin.common.location.param.CityParam;
-import com.notrika.gympin.common.location.param.PlaceParam;
-import com.notrika.gympin.common.location.param.RegionParam;
-import com.notrika.gympin.common.location.param.StateParam;
+import com.notrika.gympin.common.location.dto.*;
+import com.notrika.gympin.common.location.param.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -34,4 +28,6 @@ public interface LocationController {
     ResponseEntity<List<PlaceDto>> getAllPlace();
 
     ResponseEntity<List<PlaceDto>> getPlacesByRegion(RegionParam regionParam);
+
+    ResponseEntity<OptionOfPlaceDto> addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam);
 }

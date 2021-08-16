@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class AdministratorLoginDto extends BaseDto<AdministratorLoginDto> {
-    private Long id;
 
     private AdminRoles administratorRoles = AdminRoles.ADMIN;
 

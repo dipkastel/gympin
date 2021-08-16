@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.location.param;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +12,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class CityParam extends BaseParam<CityParam> {
-    private Long id;
+
+    @JsonProperty("Name")
     private String name;
+
+    @JsonProperty("State")
     private StateParam state;
 }

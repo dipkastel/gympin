@@ -25,10 +25,10 @@ public class BaseEntity {
 
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date CreatedDate = new Date();
+    private Date createdDate = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date UpdatedDate = new Date();
+    private Date updatedDate = new Date();
 
     private boolean isDeleted = false;
 

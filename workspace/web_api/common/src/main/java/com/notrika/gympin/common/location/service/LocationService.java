@@ -1,13 +1,7 @@
 package com.notrika.gympin.common.location.service;
 
-import com.notrika.gympin.common.location.dto.CityDto;
-import com.notrika.gympin.common.location.dto.PlaceDto;
-import com.notrika.gympin.common.location.dto.RegionDto;
-import com.notrika.gympin.common.location.dto.StateDto;
-import com.notrika.gympin.common.location.param.CityParam;
-import com.notrika.gympin.common.location.param.PlaceParam;
-import com.notrika.gympin.common.location.param.RegionParam;
-import com.notrika.gympin.common.location.param.StateParam;
+import com.notrika.gympin.common.location.dto.*;
+import com.notrika.gympin.common.location.param.*;
 
 import java.util.List;
 
@@ -34,4 +28,6 @@ public interface LocationService {
     List<PlaceDto> getAllPlace();
 
     List<PlaceDto> getPlacesByRegion(RegionParam regionParam);
+
+    OptionOfPlaceDto addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam);
 }

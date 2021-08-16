@@ -13,9 +13,8 @@ import java.io.Serializable;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class StateParam extends BaseParam<StateParam> implements Serializable {
-    @JsonProperty("id")
-    private Long id;
+public class StateParam extends BaseParam<StateParam> {
+
     @JsonProperty("name")
     private String name;
 }

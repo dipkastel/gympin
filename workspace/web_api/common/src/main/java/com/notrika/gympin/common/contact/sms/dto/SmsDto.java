@@ -15,6 +15,7 @@ public class SmsDto extends BaseDto<SmsDto> {
     private String userNumber;
     private SmsTypes smsType;
     private String text;
+
     public SmsDto(String userNumber, SmsTypes smsType, String text) {
         this.userNumber = userNumber;
         this.smsType = smsType;

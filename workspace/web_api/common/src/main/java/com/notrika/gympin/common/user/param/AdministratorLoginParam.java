@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class AdministratorLoginParam extends BaseParam<AdministratorLoginParam> {
-    private Long id;
 
     private AdminRoles administratorRoles = AdminRoles.ADMIN;
 

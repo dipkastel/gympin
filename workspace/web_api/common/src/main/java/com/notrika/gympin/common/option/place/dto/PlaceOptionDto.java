@@ -1,4 +1,4 @@
-package com.notrika.gympin.common.location.dto;
+package com.notrika.gympin.common.option.place.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseDto;
@@ -11,13 +11,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class RegionDto extends BaseDto<RegionDto> {
+public class PlaceOptionDto extends BaseDto<PlaceOptionDto> {
 
     @JsonProperty("Name")
     private String name;
-
-    @JsonProperty("City")
-    private CityDto city;
-    //private Collection<PlaceDto> places;
-
 }

@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class UserParam extends BaseParam<UserParam> {
-    private Long id;
     private UserRoles role = UserRoles.USER;
     private String username;
     private String phoneNumber;

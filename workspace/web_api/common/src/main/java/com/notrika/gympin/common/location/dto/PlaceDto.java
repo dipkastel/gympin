@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.location.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,10 +12,17 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class PlaceDto extends BaseDto<PlaceDto> {
-    private Long id;
+
+    @JsonProperty("Name")
     private String name;
+
+    @JsonProperty("Latitude")
     private double latitude;
+
+    @JsonProperty("Longitude")
     private double longitude;
+
+    @JsonProperty("Region")
     private RegionDto region;
 
 }

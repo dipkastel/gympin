@@ -2,6 +2,7 @@ package com.notrika.gympin.dao.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.dao.BaseEntity;
+import com.notrika.gympin.dao.option.place.PlaceOption;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -34,6 +36,9 @@ public class Place extends BaseEntity {
     @JoinColumn(name = "region_id")
     @JsonIgnore
     private Region region;
+
+    @OneToMany(mappedBy = "place")
+    private List<OptionOfPlace> optionsOfPlaces;
 
     @Override
     public boolean equals(Object o) {
