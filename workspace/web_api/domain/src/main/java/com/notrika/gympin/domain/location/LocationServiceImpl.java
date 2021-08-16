@@ -4,6 +4,7 @@ import com.notrika.gympin.common.location.dto.*;
 import com.notrika.gympin.common.location.param.*;
 import com.notrika.gympin.common.location.service.LocationService;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
+import com.notrika.gympin.common.option.place.service.PlaceOptionService;
 import com.notrika.gympin.dao.location.*;
 import com.notrika.gympin.dao.option.place.PlaceOption;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
@@ -33,7 +34,7 @@ public class LocationServiceImpl implements LocationService {
     private OptionOfPlaceRepository optionOfPlaceRepository;
 
     @Autowired
-    private PlaceOptionRepository placeOptionRepository;
+    private PlaceOptionService placeOptionService;
 
     @Override
     public StateDto addState(StateParam stateParam) {
@@ -122,10 +123,10 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public OptionOfPlaceDto addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam) {
         if(optionOfPlaceParam.getPlaceOptionParam().getId()==null){
-            PlaceOption save = placeOptionRepository.save(PlaceOption.builder().name(optionOfPlaceParam.getPlaceOptionParam().getName()).build());
-            optionOfPlaceParam.getPlaceOptionParam().setId(save.getId());
+            PlaceOptionDto placeOptionDto = placeOptionService.addPlaceOption(optionOfPlaceParam.getPlaceOptionParam());
+            optionOfPlaceParam.getPlaceOptionParam().setId(placeOptionDto.getId());
         }
-        OptionOfPlace save = optionOfPlaceRepository.save(OptionOfPlace.builder().place(Place.builder().id(optionOfPlaceParam.getPlaceParam().getId()).build()).placeOption(PlaceOption.builder().id(optionOfPlaceParam.getPlaceOptionParam().getId()).build()).build());
-        return OptionOfPlaceDto.builder().id(save.getId()).createdDate(save.getCreatedDate()).updatedDate(save.getUpdatedDate()).isDeleted(save.isDeleted()).place(PlaceDto.builder().id(save.getPlace().getId()).build()).placeOption(PlaceOptionDto.builder().id(save.getPlaceOption().getId()).build()).build();
+        OptionOfPlace optionOfPlace = optionOfPlaceRepository.save(OptionOfPlace.builder().place(Place.builder().id(optionOfPlaceParam.getPlaceParam().getId()).build()).placeOption(PlaceOption.builder().id(optionOfPlaceParam.getPlaceOptionParam().getId()).build()).build());
+        return OptionOfPlaceDto.builder().id(optionOfPlace.getId()).createdDate(optionOfPlace.getCreatedDate()).updatedDate(optionOfPlace.getUpdatedDate()).isDeleted(optionOfPlace.isDeleted()).place(PlaceDto.builder().id(optionOfPlace.getPlace().getId()).build()).placeOption(PlaceOptionDto.builder().id(optionOfPlace.getPlaceOption().getId()).build()).build();
     }
 }
