@@ -21,8 +21,11 @@ class OprationResult<T> {
     @SerializedName("ResultDate")
     @Expose
     var resultDate: String? = null
-    @SerializedName("Info")
+    @SerializedName("LinkParams")
     @Expose
-    var info: Any? = null
+    var linkParams: String? = null
+    @SerializedName("Error")
+    @Expose
+    var error: Any? = null
 
 }

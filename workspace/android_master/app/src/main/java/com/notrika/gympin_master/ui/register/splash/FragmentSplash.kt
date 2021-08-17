@@ -41,9 +41,9 @@ class FragmentSplash : RegisterInnerPageFragment() {
 
             when (baseSetting.status) {
                 Resource.Status.SUCCESS -> {
+                    openApp()
                 }
                 Resource.Status.ERROR -> {
-                    openApp()
 //                    var action = CiBar_Action("تلاش مجدد", object : OnCibarButtonListener {
 //                        override fun OnClick(view: View) {
 //                            getBaseSettings()

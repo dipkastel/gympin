@@ -1,9 +1,13 @@
 package com.notrika.gympin_master.ui.main
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.TypedValue
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.notrika.gympin_master.BaseActivity
+import com.notrika.gympin_master.MainDirections
 import com.notrika.gympin_master.R
 import com.notrika.gympin_master.data.db.db_network_setting.Network_setting
 import com.notrika.gympin_master.data.db.db_pocket.Pocket
@@ -30,10 +34,9 @@ class ActivityMain : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-        bottom_nav.itemIconTintList = null
-//        if (savedInstanceState == null) {
-//            config()
-//        }
+        if (savedInstanceState == null) {
+            config()
+        }
 //
 //        requestVote()
 //        Helper().setShakeListener(this, object : OnDoneListener {
@@ -166,65 +169,65 @@ class ActivityMain : BaseActivity() {
 //        })
 //    }
 
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-//        super.onRestoreInstanceState(savedInstanceState)
-//        config()
-//    }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        config()
+    }
+
+    private fun config() {
+        navController = findNavController(R.id.nav_host_fragment_main)
+        navController.setGraph(R.navigation.main)
+        bottom_nav.setupWithNavController(navController)
+        supportActionBar?.hide()
+        bottom_nav.itemIconTintList = null
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
+    }
 //
-//    private fun config() {
-//        navController = findNavController(R.id.nav_host_fragment_main)
-//        navController.setGraph(R.navigation.main)
-//        bottom_nav.setupWithNavController(navController)
-//        supportActionBar?.hide()
-//        bottom_nav.itemIconTintList = null
-//    }
-//
-//    override fun onSupportNavigateUp(): Boolean {
-//        return navController.navigateUp()
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//
-//        //back from payment
-//        if (pocket.NotSuccededReserveCode != null && navController.currentDestination?.label != "Reserve") {
-//
-//            val date = intent.data
-//            date?.getQueryParameter("order")?.let {
-//                if (it == "0") {
+    override fun onResume() {
+        super.onResume()
+
+        //back from payment
+        if (pocket.NotSuccededReserveCode != null && navController.currentDestination?.label != "Reserve") {
+
+            val date = intent.data
+            date?.getQueryParameter("order")?.let {
+                if (it == "0") {
 //                    ciBar.createAlert(this, getString(R.string.peyment_faild), CiBar.FAST_KSNACK_DURATION).show()
-//                    intent.data = null
-//                    pocket.NotSuccededReserveCode = null
-//                } else {
-//                    val action = MainDirections.toReserve(pocket.NotSuccededReserveCode)
-//                    navController.navigate(action)
-//                }
-//            }
-//        }
-//    }
-//
-//    private var exitTimer: Long = 0
-//    override fun onBackPressed() {
-//        if (navController.currentDestination?.id != R.id.main_films) {
-//            super.onBackPressed()
-//            return
-//        }
-//        if (exitTimer != 0.toLong()) {
-//            finishAffinity()
-//        } else {
+                    intent.data = null
+                    pocket.NotSuccededReserveCode = null
+                } else {
+                    val action = MainDirections.toReserve()
+                    navController.navigate(action)
+                }
+            }
+        }
+    }
+
+    private var exitTimer: Long = 0
+    override fun onBackPressed() {
+        if (navController.currentDestination?.id != R.id.main_reserves) {
+            super.onBackPressed()
+            return
+        }
+        if (exitTimer != 0.toLong()) {
+            finishAffinity()
+        } else {
 //            ciBar.createAlert(this, resources.getString(R.string.pleaseclickAgainForExit), CiBar.FAST_KSNACK_DURATION).show()
-//            val timer = object : CountDownTimer(3000, 100) {
-//                override fun onTick(millisUntilFinished: Long) {
-//                    exitTimer = millisUntilFinished
-//                }
-//
-//                override fun onFinish() {
-//                    exitTimer = 0
-//                }
-//            }
-//            timer.start()
-//        }
-//    }
+            val timer = object : CountDownTimer(3000, 100) {
+                override fun onTick(millisUntilFinished: Long) {
+                    exitTimer = millisUntilFinished
+                }
+
+                override fun onFinish() {
+                    exitTimer = 0
+                }
+            }
+            timer.start()
+        }
+    }
 //
 //    fun selectCinemaTab() {
 //        bottom_nav.selectedItemId = R.id.main_cinemas

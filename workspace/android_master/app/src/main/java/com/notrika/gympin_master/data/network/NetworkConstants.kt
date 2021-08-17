@@ -1,19 +1,16 @@
 package com.notrika.gympin_master.data.network
 
 object NetworkConstants {
-    const val BASE_API_URL = "https://api.gympin.ir"
-    const val BASE_webView_URL = "https://gympin.ir"
-    const val BASE_MEDIA_URL = "https://gympin.ir"
+    const val BASE_API_URL = "http://192.168.0.191:8080"
+    const val BASE_webView_URL = "http://192.168.0.191:8080"
+    const val BASE_MEDIA_URL = "http://192.168.0.191:8080"
     const val GOOGLE_MAP_API_BASE = "https://maps.googleapis.com/maps/api/"
     const val STATIC_CLIENT_ID = "f1f2eb16-1319-4e9c-b7e6-410d589ebf6b"
-    const val START_KEY = "mobileandroid"
+    const val START_KEY = "api/v1"
 
 
-    //base
-    const val base_CustomerPlayerId = "$START_KEY/v1/base/CustomerPlayerId"
-    const val base_OnsAddDevice = "$START_KEY/v1/base/OnsAddDevice"
-    const val base_ReleaseList = "$START_KEY/v1/base/ReleaseList"
-    const val base_SettingNew = "$START_KEY/v1/Base/SettingNew"
+    //masterapplication
+    const val masterapplication_splash = "$START_KEY/masterapplication/splash"
     //account
     const val account_activate = "$START_KEY/v1/account/activate"
     const val account_CheckToken = "$START_KEY/v1/account/checkToken"

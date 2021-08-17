@@ -2,7 +2,7 @@ package com.notrika.gympin_master.data.network.request
 
 import com.notrika.gympin_master.data.db.db_network_setting.Network_setting
 import com.notrika.gympin_master.data.db.db_pocket.Pocket
-import com.notrika.gympin_master.data.model.Res_BaseSetting
+import com.notrika.gympin_master.data.model.Res_Splash
 import com.notrika.gympin_master.data.model.Resource
 import com.notrika.gympin_master.data.network.HttpCode
 import com.notrika.gympin_master.data.network.ResultManager
@@ -18,7 +18,7 @@ constructor(val baseApi: BaseApi, val pocket: Pocket, val networkSetting: Networ
 
     private val TAG: String = this.javaClass.name
 
-    fun RequestBaseSettingNow(): Flowable<Resource<Res_BaseSetting>> {
+    fun RequestBaseSettingNow(): Flowable<Resource<Res_Splash>> {
         return baseApi.baseSettingNow()
                 .onErrorReturn {
                     Response.error(HttpCode.Disconnected, RealResponseBody("null", 0, null))

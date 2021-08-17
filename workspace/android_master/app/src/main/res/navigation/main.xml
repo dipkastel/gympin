@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/fragmentReserves">
+    app:startDestination="@id/main_reserves">
 
     <fragment
-        android:id="@+id/fragmentReserves"
+        android:id="@+id/main_reserves"
         android:name="com.notrika.gympin_master.ui.main.reserves.FragmentReserves"
-        android:label="FragmentReserves" />
+        android:label="reserves"
+        tools:layout="@layout/fragment_main_reserves" />
+    <fragment
+        android:id="@+id/main_myplace"
+        android:name="com.notrika.gympin_master.ui.main.myPlace.FragmentMyPlace"
+        android:label="myplace"
+        tools:layout="@layout/fragment_main_myplace" />
+    <fragment
+        android:id="@+id/main_works"
+        android:name="com.notrika.gympin_master.ui.main.works.FragmentWorks"
+        android:label="works"
+        tools:layout="@layout/fragment_main_works" />
+
+    <action
+        android:id="@+id/to_Reserve"
+        app:destination="@id/main_reserves"
+        android:label="Reserve"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_Works"
+        app:destination="@id/main_works"
+        android:label="Works"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_Myplace"
+        app:destination="@id/main_myplace"
+        android:label="Myplace"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
 </navigation>

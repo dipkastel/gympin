@@ -3,14 +3,15 @@ package com.notrika.gympin_master.data.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Res_CacheItem {
+class Res_Splash {
 
-    @SerializedName("TableName")
+    @SerializedName("initialText")
     @Expose
-    var tableName: String? = null
+    var initialText: String = ""
+    @SerializedName("Id")
+    @Expose
+    var id: Long = 0
 
-    @SerializedName("TableVersion")
-    @Expose
-    var tableVersion: Long? = null
+
 
 }

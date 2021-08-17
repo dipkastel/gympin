@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
         <item
-            android:id="@+id/main_discount"
+            android:id="@+id/main_reserves"
             android:icon="@drawable/menu_item_main_reserves"
             android:title="@string/reserves"/>
         <item
-            android:id="@+id/main_cinemas"
+            android:id="@+id/main_works"
             android:icon="@drawable/menu_item_main_home"
             android:title="@string/works"/>
         <item
-            android:id="@+id/main_films"
+            android:id="@+id/main_myplace"
             android:icon="@drawable/menu_item_main_home"
             android:title="@string/my_place"/>
 
