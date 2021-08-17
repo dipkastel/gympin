@@ -60,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/user/sendsms",
                         "/api/v1/user/register",
                         "/api/v1/user/loginpanel",
+                        "/api/v1/masterapplication/splash",
                         "/api/**"
 
                 )
@@ -135,7 +136,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/v1/**")
-                        .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("*")
                         .allowedMethods("PUT", "DELETE", "POST", "GET")
                         .allowCredentials(false).maxAge(3600);
             }

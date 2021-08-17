@@ -3,9 +3,9 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/workspace/web_api/common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/workspace/web_api/controllerImpl/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/workspace/web_api/dao/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/workspace/web_api/domain/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/workspace/web_api/framework/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/workspace/web_api/persistence/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/workspace/web_api/src/main/resources" charset="UTF-8" />
   </component>
 </project>

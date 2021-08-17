@@ -7,6 +7,7 @@ import com.notrika.gympin.common.android.master.service.MasterApplicationService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,7 @@ public class MasterApplicationControllerImpl implements MasterApplicationControl
     private MasterApplicationService masterApplicationService;
 
     @Override
+    @PostMapping("/splash")
     public ResponseEntity<SplashDto> splash(SplashParam splashParam) {
         return new ResponseEntity<SplashDto>(masterApplicationService.splash(splashParam), HttpStatus.OK);
     }
