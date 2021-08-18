@@ -5,8 +5,11 @@ import com.notrika.gympin.common.location.param.*;
 import com.notrika.gympin.common.location.service.LocationService;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.option.place.service.PlaceOptionService;
+import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.dao.location.*;
 import com.notrika.gympin.dao.option.place.PlaceOption;
+import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
 import com.notrika.gympin.persistence.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,5 +131,14 @@ public class LocationServiceImpl implements LocationService {
         }
         OptionOfPlace optionOfPlace = optionOfPlaceRepository.save(OptionOfPlace.builder().place(Place.builder().id(optionOfPlaceParam.getPlaceParam().getId()).build()).placeOption(PlaceOption.builder().id(optionOfPlaceParam.getPlaceOptionParam().getId()).build()).build());
         return OptionOfPlaceDto.builder().id(optionOfPlace.getId()).createdDate(optionOfPlace.getCreatedDate()).updatedDate(optionOfPlace.getUpdatedDate()).isDeleted(optionOfPlace.isDeleted()).place(PlaceDto.builder().id(optionOfPlace.getPlace().getId()).build()).placeOption(PlaceOptionDto.builder().id(optionOfPlace.getPlaceOption().getId()).build()).build();
+    }
+
+    @Autowired
+    private PlaceOwnerRepository placeOwnerRepository;
+
+    @Override
+    public List<PlaceDto> getPlaceByUser(UserParam userParam) {
+        List<Place> placeByUser = placeRepository.getPlaceByUser(User.builder().id(userParam.getId()).userRoles(userParam.getRole()).build());
+        return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeByUser, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
     }
 }

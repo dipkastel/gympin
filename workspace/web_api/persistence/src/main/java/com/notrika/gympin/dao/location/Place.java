@@ -38,7 +38,12 @@ public class Place extends BaseEntity {
     private Region region;
 
     @OneToMany(mappedBy = "place")
+    @ToString.Exclude
     private List<OptionOfPlace> optionsOfPlaces;
+
+    @OneToMany(mappedBy = "place")
+    @ToString.Exclude
+    private List<PlaceOwner> placeOwners;
 
     @Override
     public boolean equals(Object o) {
