@@ -4,6 +4,7 @@ import com.notrika.gympin.common.location.api.LocationController;
 import com.notrika.gympin.common.location.dto.*;
 import com.notrika.gympin.common.location.param.*;
 import com.notrika.gympin.common.location.service.LocationService;
+import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,5 +89,11 @@ public class LocationControllerImpl implements LocationController {
     @PostMapping("/addOptionOfPlace")
     public ResponseEntity<OptionOfPlaceDto> addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam) {
         return new ResponseEntity<OptionOfPlaceDto>(locationService.addOptionOfPlace(optionOfPlaceParam),HttpStatus.CREATED);
+    }
+
+    @Override
+    @GetMapping("/getPlaceByUser")
+    public ResponseEntity<List<PlaceDto>> getPlaceByUser(UserParam userParam) {
+        return new ResponseEntity<List<PlaceDto>>(locationService.getPlaceByUser(userParam),HttpStatus.OK);
     }
 }

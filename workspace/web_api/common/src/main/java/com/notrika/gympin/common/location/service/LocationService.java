@@ -2,6 +2,8 @@ package com.notrika.gympin.common.location.service;
 
 import com.notrika.gympin.common.location.dto.*;
 import com.notrika.gympin.common.location.param.*;
+import com.notrika.gympin.common.user.param.UserParam;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -30,4 +32,6 @@ public interface LocationService {
     List<PlaceDto> getPlacesByRegion(RegionParam regionParam);
 
     OptionOfPlaceDto addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam);
+
+    List<PlaceDto> getPlaceByUser(UserParam userParam);
 }

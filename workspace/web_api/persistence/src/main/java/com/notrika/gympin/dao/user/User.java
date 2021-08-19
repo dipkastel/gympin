@@ -2,6 +2,7 @@ package com.notrika.gympin.dao.user;
 
 import com.notrika.gympin.common.user.enums.UserRoles;
 import com.notrika.gympin.dao.BaseEntity;
+import com.notrika.gympin.dao.location.PlaceOwner;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -30,6 +32,10 @@ public class User extends BaseEntity {
     private String username;
 
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private List<PlaceOwner> placeOwners;
 
 
     @Override

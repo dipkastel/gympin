@@ -1,5 +1,6 @@
 package com.notrika.gympin.dao;
 
+import com.notrika.gympin.dao.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -31,6 +32,12 @@ public class BaseEntity {
     private Date updatedDate = new Date();
 
     private boolean isDeleted = false;
+
+    @ManyToOne
+    private User creatorUser;
+
+    @ManyToOne
+    private User updaterUser;
 
     @Override
     public boolean equals(Object o) {
