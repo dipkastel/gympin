@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.Binds
 import dagger.multibindings.IntoMap
 import com.notrika.gympin_master.di.ViewModelKey
+import com.notrika.gympin_master.ui.register.login.ViewModelLogin
 
 @Module
 abstract class RegisterViewModelModule {
@@ -19,26 +20,10 @@ abstract class RegisterViewModelModule {
     @IntoMap
     @ViewModelKey(ViewModelSplash::class)
     abstract fun bindSplashViewModel(viewModel: ViewModelSplash): ViewModel
-//
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(ViewModelIntroduction::class)
-//    abstract fun bindIntroductionViewModel(viewModel: ViewModelIntroduction): ViewModel
-//
-//
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(ViewModelGetPhone::class)
-//    abstract fun bindGetPhoneViewModel(viewModel: ViewModelGetPhone): ViewModel
-//
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(ViewModelGetInfo::class)
-//    abstract fun bindGetInfoViewModel(viewModel: ViewModelGetInfo): ViewModel
-//
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(ViewModelLogin::class)
-//    abstract fun bindLoginViewModel(viewModelLogin: ViewModelLogin): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelLogin::class)
+    abstract fun bindLoginViewModel(viewModel: ViewModelLogin): ViewModel
 
 }

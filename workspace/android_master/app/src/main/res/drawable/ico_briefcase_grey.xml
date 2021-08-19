@@ -4,13 +4,9 @@
     android:height="384dp"
     android:viewportWidth="384"
     android:viewportHeight="384">
-    <group>
-        <path android:fillColor="#BB224E"
-            android:pathData="m272,32h-160v64h-112v256h384v-256h-112zM144,64h96v32h-96zM352,320h-320v-96h112v48h96v-48h112zM176,192h32v48h-32zM352,128v64h-112v-32h-96v32h-112v-64zM352,128" />
-    </group>
     <group
-        android:translateX="10.16"
-        android:translateY="5.39">
+        android:translateX="0"
+        android:translateY="0">
         <path android:fillColor="#9CA0A6"
             android:pathData="m272,32h-160v64h-112v256h384v-256h-112zM144,64h96v32h-96zM352,320h-320v-96h112v48h96v-48h112zM176,192h32v48h-32zM352,128v64h-112v-32h-96v32h-112v-64zM352,128" />
     </group>

@@ -1,5 +1,6 @@
 package com.notrika.gympin_master.di.register
 
+import com.notrika.gympin_master.ui.register.login.FragmentLogin
 import com.notrika.gympin_master.ui.register.splash.FragmentSplash
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -10,6 +11,9 @@ abstract class RegisterFragmentBuilderModule {
 
     @ContributesAndroidInjector
     internal abstract fun splashFragment(): FragmentSplash
+
+    @ContributesAndroidInjector
+    internal abstract fun loginFragment(): FragmentLogin
 //
 //    @ContributesAndroidInjector
 //    internal abstract fun getPhoneFragment(): FragmentGetPhone

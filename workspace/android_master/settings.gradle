@@ -1,2 +1,3 @@
 rootProject.name = "gympin_master"
 include ':app'
+include ':Cbar'

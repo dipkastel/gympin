@@ -7,7 +7,7 @@
             android:title="@string/reserves"/>
         <item
             android:id="@+id/main_works"
-            android:icon="@drawable/menu_item_main_home"
+            android:icon="@drawable/menu_item_main_works"
             android:title="@string/works"/>
         <item
             android:id="@+id/main_myplace"

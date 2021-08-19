@@ -1,9 +1,10 @@
-package com.notrika.gympin_master.ui
+package com.notrika.gympin_master.ui.main
 
 import android.os.Bundle
 import android.view.View
 import com.bumptech.glide.RequestManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.notrika.cbar.CiBar
 import com.notrika.gympin_master.R
 import com.notrika.gympin_master.data.db.db_network_setting.Network_setting
 import com.notrika.gympin_master.data.db.db_pocket.Pocket
@@ -26,6 +27,9 @@ open class InnerPageFragment : DaggerFragment() {
 
     @Inject
     lateinit var providerFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var ciBar: CiBar
 
     val TAG: String = this.javaClass.name
 

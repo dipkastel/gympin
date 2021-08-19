@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
+import com.notrika.cbar.CiBar
 import com.notrika.gympin_master.BuildConfig
 import com.notrika.gympin_master.data.db.DBConstants
 import com.notrika.gympin_master.data.db.DBStructure
@@ -75,6 +76,12 @@ class AppModule {
     @Provides
     internal fun provideRequestOptions(): RequestOptions {
         return RequestOptions()
+    }
+
+    @Singleton
+    @Provides
+    internal fun provideCbar(): CiBar {
+        return CiBar()
     }
 
 

@@ -1,5 +1,6 @@
 package com.notrika.gympin_master.ui.register.splash
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
+import com.cinematicket.cbar.models.CiBar_Action
+import com.cinematicket.cbar.models.OnCibarButtonListener
+import com.notrika.cbar.CiBar
 import com.notrika.gympin_master.R
 import com.notrika.gympin_master.data.model.Resource
 import com.notrika.gympin_master.ui.main.ActivityMain
@@ -41,22 +46,31 @@ class FragmentSplash : RegisterInnerPageFragment() {
 
             when (baseSetting.status) {
                 Resource.Status.SUCCESS -> {
-                    openApp()
+                    loginCheck()
                 }
                 Resource.Status.ERROR -> {
-//                    var action = CiBar_Action("تلاش مجدد", object : OnCibarButtonListener {
-//                        override fun OnClick(view: View) {
-//                            getBaseSettings()
-//                        }
-//                    })
-//                    ciBar.createAlert(activity as Activity, baseSetting.message, CiBar.INFINITY_KSNACK_DURATION, action).show()
+                    var action = CiBar_Action("تلاش مجدد", object : OnCibarButtonListener {
+                        override fun OnClick(view: View) {
+                            getBaseSettings()
+                        }
+                    })
+                    ciBar.createAlert(activity as Activity, baseSetting.message, CiBar.INFINITY_CBAR_DURATION, action).show()
                 }
 
             }
         })
     }
 
-//    private fun requsetSuccess(data: F_BaseModel) {
+    private fun loginCheck() {
+        if (!pocket.isUserRegister) {
+            Navigation.findNavController(this.requireView())
+                .navigate(FragmentSplashDirections.registerSplashToLogin())
+        }else{
+            openApp()
+        }
+    }
+
+    //    private fun requsetSuccess(data: F_BaseModel) {
 //
 //
 //        if (!data.appIsActive) {

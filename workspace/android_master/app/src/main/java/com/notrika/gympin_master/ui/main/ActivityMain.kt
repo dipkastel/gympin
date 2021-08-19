@@ -6,6 +6,7 @@ import android.util.TypedValue
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.notrika.cbar.CiBar
 import com.notrika.gympin_master.BaseActivity
 import com.notrika.gympin_master.MainDirections
 import com.notrika.gympin_master.R
@@ -26,6 +27,9 @@ class ActivityMain : BaseActivity() {
 
     @Inject
     lateinit var networkSetting: Network_setting
+
+    @Inject
+    lateinit var ciBar: CiBar
 
 
 
@@ -215,7 +219,7 @@ class ActivityMain : BaseActivity() {
         if (exitTimer != 0.toLong()) {
             finishAffinity()
         } else {
-//            ciBar.createAlert(this, resources.getString(R.string.pleaseclickAgainForExit), CiBar.FAST_KSNACK_DURATION).show()
+            ciBar.createAlert(this, resources.getString(R.string.pleaseclickAgainForExit), CiBar.FAST_CBAR_DURATION).show()
             val timer = object : CountDownTimer(3000, 100) {
                 override fun onTick(millisUntilFinished: Long) {
                     exitTimer = millisUntilFinished

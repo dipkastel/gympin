@@ -1,5 +1,6 @@
 package com.notrika.gympin_master.data.db.db_pocket
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.notrika.gympin_master.data.db.DBStructure
 import java.util.*
@@ -341,16 +342,15 @@ class Pocket @Inject constructor(var db: DBStructure) {
         get() = if (pockets[currentFontKey] != null) pockets[currentFontKey] else "fonts/IRANSans.ttf"
         set(input) = insert(TBL_POCKET(currentFontKey, input))
 
-//    fun initializa() {
-//            pocketDao.all.observeForever {
-//                for (pocket in pocketDao) {
-//                    pockets[pocket.pockeT_Key] = pocket.pockeT_Value
-//                    Log.d(TAG, "initializa: " + pocket.pockeT_Key + "  -  " + pocket.pockeT_Value)
-//                }
-//                fillLivedatas()
-//                Log.d(TAG, "initializa: " + "ok")
-//            }
-//    }
+    fun initializa() {
+            pocketDao.all.observeForever {
+                for (pocket in it) {
+                    pockets[pocket.pockeT_Key] = pocket.pockeT_Value
+                    Log.d(TAG, "initializa: " + pocket.pockeT_Key + "  -  " + pocket.pockeT_Value)
+                }
+                fillLivedatas()
+            }
+    }
 
     private fun fillLivedatas() {
         if (!pockets[UserCreditKey].isNullOrEmpty()) {
@@ -362,9 +362,9 @@ class Pocket @Inject constructor(var db: DBStructure) {
         }
 
     }
-//
-//    init {
-//        initializa()
-//    }
+
+    init {
+        initializa()
+    }
 
 }

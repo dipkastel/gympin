@@ -3,4 +3,12 @@
     <string name="my_place">مجموعه من</string>
     <string name="works">کار ها</string>
     <string name="reserves">رزرو ها</string>
+    <string name="pleaseclickAgainForExit">برای خروج یک بار دیگر کلید بک را بزنید</string>
+    <string name="phone_number">شماره موبایل</string>
+    <string name="login">ورود</string>
+    <string name="activation_code">کد فعالسازی</string>
+    <string name="submit">تایید</string>
+    <string name="RemainTime">نرسیدن کد  %s </string>
+    <string name="resend">ارسال مجدد</string>
+    <string name="phone_number_is_not_valid">لطفا شماره همراه را به صورت صحیح وارد نمایید</string>
 </resources>

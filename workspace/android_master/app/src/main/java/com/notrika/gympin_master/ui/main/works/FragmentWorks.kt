@@ -1,15 +1,12 @@
 package com.notrika.gympin_master.ui.main.works
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.notrika.gympin_master.R
-import com.notrika.gympin_master.data.db.DBStructure
-import com.notrika.gympin_master.ui.InnerPageFragment
-import com.notrika.gympin_master.ui.MainPageFragment
+import com.notrika.gympin_master.ui.main.MainPageFragment
 import com.notrika.gympin_master.util.lottie.LoadingProgress
 import kotlinx.android.synthetic.main.fragment_main_reserves.*
 import javax.inject.Inject

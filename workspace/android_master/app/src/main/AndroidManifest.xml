@@ -22,12 +22,12 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Gympin"
         tools:ignore="GoogleAppIndexingWarning"
         >
         <activity
             android:name=".ui.register.ActivityRegister"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.Register"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,7 @@
         <activity
             android:name=".ui.main.ActivityMain"
             android:screenOrientation="portrait"
-            android:theme="@style/mainTheme"
+            android:theme="@style/Theme.Main"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
