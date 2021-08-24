@@ -57,7 +57,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(multipartFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            Multimedia fileByUserByName = multimediaRepository.findByUserAndFileName(User.builder().id(multimediaStoreParam.getUser().getId()).build(), fileName);
+            Multimedia fileByUserByName = multimediaRepository.findByUserAndFileName(User.builder().id(multimediaStoreParam.getUserParam().getId()).build(), fileName);
             if (fileByUserByName != null) {
                 fileByUserByName.setDocumentFormat(multipartFile.getContentType());
                 fileByUserByName.setMediaType(multimediaStoreParam.getMediaType());
