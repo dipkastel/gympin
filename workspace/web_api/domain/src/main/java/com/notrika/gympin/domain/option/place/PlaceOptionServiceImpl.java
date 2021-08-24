@@ -22,7 +22,7 @@ public class PlaceOptionServiceImpl implements PlaceOptionService {
     @Override
     public PlaceOptionDto addPlaceOption(PlaceOptionParam placeOptionParam) {
         PlaceOption initPlaceOption = PlaceOption.builder().name(placeOptionParam.getName()).build();
-        GeneralConvertor.fillBaseFieldsToCreate(placeOptionParam,initPlaceOption);
+        GeneralConvertor.fillBaseFieldsToCreate(placeOptionParam, initPlaceOption);
         PlaceOption placeOption = placeOptionRepository.save(initPlaceOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }
@@ -30,7 +30,7 @@ public class PlaceOptionServiceImpl implements PlaceOptionService {
     @Override
     public PlaceOptionDto updatePLaceOption(PlaceOptionParam placeOptionParam) {
         PlaceOption initPlaceOption = PlaceOption.builder().name(placeOptionParam.getName()).build();
-        GeneralConvertor.fillBaseFieldsToUpdate(placeOptionParam,initPlaceOption);
+        GeneralConvertor.fillBaseFieldsToUpdate(placeOptionParam, initPlaceOption);
         PlaceOption placeOption = placeOptionRepository.save(initPlaceOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }

@@ -2,7 +2,6 @@ package com.notrika.gympin.dao.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.dao.BaseEntity;
-import com.notrika.gympin.dao.option.place.PlaceOption;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
