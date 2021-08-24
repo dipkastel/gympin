@@ -25,7 +25,7 @@ public class MultimediaStoreParam extends BaseParam<MultimediaStoreParam> {
     private String partName;
 
     @JsonProperty("User")
-    private UserParam user;
+    private UserParam userParam;
 
     @JsonProperty("MediaType")
     private MediaType mediaType;
