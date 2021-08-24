@@ -1,7 +1,7 @@
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { put, takeLatest } from "redux-saga/effects";
-import { getUserByToken } from "../../crud/auth.crud";
+import { getUserByToken } from "../../api/auth.api";
 import * as routerHelpers from "../../router/RouterHelpers";
 import {toAbsoluteUrl} from "../../../_metronic";
 

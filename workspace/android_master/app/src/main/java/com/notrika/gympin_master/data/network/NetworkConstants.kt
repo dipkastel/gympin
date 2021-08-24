@@ -13,6 +13,7 @@ object NetworkConstants {
     const val masterapplication_splash = "$START_KEY/masterapplication/splash"
     //account
     const val user_sendsms = "$START_KEY/user/sendsms"
+    const val user_login = "$START_KEY/user/login"
 
 
 }

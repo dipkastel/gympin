@@ -22,6 +22,13 @@ class ResultManager {
                             Resource.error(it.message(), it.body()?.data)
                         }
                     }
+                    HttpCode.HTTP_CREATED -> {
+                        return if (it.isSuccessful) {
+                            Resource.success(it.body()?.data)
+                        } else {
+                            Resource.error(it.message(), it.body()?.data)
+                        }
+                    }
                     HttpCode.Disconnected -> {
                         return Resource.error(HttpErrors.NO_INTERNET_ACCESS, it.body()?.data)
                     }

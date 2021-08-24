@@ -20,7 +20,16 @@
         android:name="com.notrika.gympin_master.ui.main.works.FragmentWorks"
         android:label="works"
         tools:layout="@layout/fragment_main_works" />
-
+    <fragment
+        android:id="@+id/main_Settings"
+        android:name="com.notrika.gympin_master.ui.main.settings.FragmentSettings"
+        android:label="settings"
+        tools:layout="@layout/fragment_main_settings"/>
+    <fragment
+        android:id="@+id/main_Profile"
+        android:name="com.notrika.gympin_master.ui.main.profile.FragmentProfile"
+        android:label="profile"
+        tools:layout="@layout/fragment_main_profile"/>
     <action
         android:id="@+id/to_Reserve"
         app:destination="@id/main_reserves"
@@ -41,6 +50,22 @@
         android:id="@+id/to_Myplace"
         app:destination="@id/main_myplace"
         android:label="Myplace"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_settings"
+        app:destination="@id/main_Settings"
+        android:label="Settings"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_profile"
+        app:destination="@id/main_Profile"
+        android:label="Profile"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"

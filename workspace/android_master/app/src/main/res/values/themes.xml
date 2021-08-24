@@ -40,6 +40,11 @@
             <item name="android:textSize">@dimen/_6sdp</item>
         </style>
 
+        <style name="main_appbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+            <item name="android:background">@color/white_london</item>
+            <item name="titleTextColor">@color/grey_dim</item>
+            <item name="android:outlineSpotShadowColor" tools:targetApi="p">@color/white_london</item>
+        </style>
 
 
 

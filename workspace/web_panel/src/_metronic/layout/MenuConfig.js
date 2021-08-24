@@ -17,10 +17,16 @@ export default {
       },
       { section: "general" },
       {
-        title: "place manager",
+        title: "manage places",
         root: true,
-        icon: "flaticon-placeholder-2",
+        icon: "flaticon-map-location",
         page: "places"
+      },
+      {
+        title: "manage locations",
+        root: true,
+        icon: "flaticon2-world",
+        page: "locations"
       }
     ]
   }

@@ -5,7 +5,6 @@ import { TextField } from "@material-ui/core";
 import { Link, Redirect } from "react-router-dom";
 import { FormattedMessage, injectIntl } from "react-intl";
 import * as auth from "../../store/ducks/auth.duck";
-import { requestPassword } from "../../crud/auth.crud";
 
 class ForgotPassword extends Component {
   state = { isRequested: false };
@@ -48,19 +47,19 @@ class ForgotPassword extends Component {
                 return errors;
               }}
               onSubmit={(values, { setStatus, setSubmitting }) => {
-                requestPassword(values.email)
-                  .then(() => {
-                    this.setState({ isRequested: true });
-                  })
-                  .catch(() => {
-                    setSubmitting(false);
-                    setStatus(
-                      intl.formatMessage(
-                        { id: "AUTH.VALIDATION.NOT_FOUND" },
-                        { name: values.email }
-                      )
-                    );
-                  });
+                // requestPassword(values.email)
+                //   .then(() => {
+                //     this.setState({ isRequested: true });
+                //   })
+                //   .catch(() => {
+                //     setSubmitting(false);
+                //     setStatus(
+                //       intl.formatMessage(
+                //         { id: "AUTH.VALIDATION.NOT_FOUND" },
+                //         { name: values.email }
+                //       )
+                //     );
+                //   });
               }}
             >
               {({

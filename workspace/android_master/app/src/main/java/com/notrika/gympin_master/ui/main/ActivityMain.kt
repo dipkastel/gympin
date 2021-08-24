@@ -41,6 +41,12 @@ class ActivityMain : BaseActivity() {
         if (savedInstanceState == null) {
             config()
         }
+        btn_setting.setOnClickListener {
+            navController.navigate(MainDirections.toSettings())
+        }
+        btn_user_profile.setOnClickListener {
+            navController.navigate(MainDirections.toProfile())
+        }
 //
 //        requestVote()
 //        Helper().setShakeListener(this, object : OnDoneListener {
@@ -193,21 +199,21 @@ class ActivityMain : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        //back from payment
-        if (pocket.NotSuccededReserveCode != null && navController.currentDestination?.label != "Reserve") {
-
-            val date = intent.data
-            date?.getQueryParameter("order")?.let {
-                if (it == "0") {
-//                    ciBar.createAlert(this, getString(R.string.peyment_faild), CiBar.FAST_KSNACK_DURATION).show()
-                    intent.data = null
-                    pocket.NotSuccededReserveCode = null
-                } else {
-                    val action = MainDirections.toReserve()
-                    navController.navigate(action)
-                }
-            }
-        }
+//        //back from payment
+//        if (pocket.NotSuccededReserveCode != null && navController.currentDestination?.label != "Reserve") {
+//
+//            val date = intent.data
+//            date?.getQueryParameter("order")?.let {
+//                if (it == "0") {
+////                    ciBar.createAlert(this, getString(R.string.peyment_faild), CiBar.FAST_KSNACK_DURATION).show()
+//                    intent.data = null
+//                    pocket.NotSuccededReserveCode = null
+//                } else {
+//                    val action = MainDirections.toReserve()
+//                    navController.navigate(action)
+//                }
+//            }
+//        }
     }
 
     private var exitTimer: Long = 0

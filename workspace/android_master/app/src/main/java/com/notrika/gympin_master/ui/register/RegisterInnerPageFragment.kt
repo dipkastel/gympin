@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 open class RegisterInnerPageFragment : DaggerFragment() {
 
+    val TAG: String = this.javaClass.name
     @Inject
     lateinit var pocket: Pocket
     @Inject

@@ -5,7 +5,6 @@ import com.notrika.gympin.common.location.param.*;
 import com.notrika.gympin.common.location.service.LocationService;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.option.place.service.PlaceOptionService;
-import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.dao.location.*;
 import com.notrika.gympin.dao.option.place.PlaceOption;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -54,8 +52,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public CityDto addCity(CityParam cityParam) {
-        State state = new State();
-        state.setId(cityParam.getState().getId());
+        State state = stateRepository.getById(cityParam.getState().getId());
         City city = new City();
         city.setName(cityParam.getName());
         city.setState(state);
@@ -69,16 +66,14 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public List<CityDto> getCitiesByState(StateParam stateParam) {
-        State state = new State();
-        state.setId(stateParam.getId());
+        State state = stateRepository.getById(stateParam.getId());
         List<City> byState = cityRepository.getCitiesByState(state);
         return (List<CityDto>) LocationConvertor.citiesToCityDtos(byState, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
     }
 
     @Override
     public RegionDto addRegion(RegionParam regionParam) {
-        City city = new City();
-        city.setId(regionParam.getCity().getId());
+        City city = cityRepository.getById(regionParam.getCity().getId());
         Region region = new Region();
         region.setName(regionParam.getName());
         region.setCity(city);
@@ -92,8 +87,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public List<RegionDto> getRegionsByCity(CityParam cityParam) {
-        City city = new City();
-        city.setId(cityParam.getId());
+        City city = cityRepository.getById(cityParam.getId());
         return (List<RegionDto>) LocationConvertor.regionsToRegionDtos(regionRepository.getRegionsByCity(city),
                 LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
     }

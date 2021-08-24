@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { FormattedMessage, injectIntl } from "react-intl";
 import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
 import * as auth from "../../store/ducks/auth.duck";
-import { register } from "../../crud/auth.crud";
 
 function Registration(props) {
   const { intl } = props;
@@ -77,24 +76,25 @@ function Registration(props) {
             return errors;
           }}
           onSubmit={(values, { setStatus, setSubmitting }) => {
-            register(
-              values.email,
-              values.fullname,
-              values.username,
-              values.password
-            )
-              .then(({ data: { accessToken } }) => {
-                props.register(accessToken);
-              })
-              .catch(() => {
-                setSubmitting(false);
-                setStatus(
-                  intl.formatMessage({
-                    id: "AUTH.VALIDATION.INVALID_LOGIN"
-                  })
-                );
-              });
-          }}
+            // register(
+            //   values.email,
+            //   values.fullname,
+            //   values.username,
+            //   values.password
+            // )
+            //   .then(({ data: { accessToken } }) => {
+            //     props.register(accessToken);
+            //   })
+            //   .catch(() => {
+            //     setSubmitting(false);
+            //     setStatus(
+            //       intl.formatMessage({
+            //         id: "AUTH.VALIDATION.INVALID_LOGIN"
+            //       })
+            //     );
+            //   });
+          }
+          }
         >
           {({
             values,

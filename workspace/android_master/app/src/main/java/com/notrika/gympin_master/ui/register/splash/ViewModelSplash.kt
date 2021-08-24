@@ -2,7 +2,6 @@ package com.notrika.gympin_master.ui.register.splash
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.notrika.gympin_master.data.model.F_BaseModel
 import com.notrika.gympin_master.data.model.Res_Splash
 import com.notrika.gympin_master.data.model.Resource
 import com.notrika.gympin_master.data.repository.SPLASH_REPO

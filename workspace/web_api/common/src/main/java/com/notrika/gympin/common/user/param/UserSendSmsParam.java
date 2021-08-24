@@ -11,6 +11,5 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class UserSendSmsParam extends BaseParam<UserSendSmsParam> {
-    private String username;
     private String phoneNumber;
 }

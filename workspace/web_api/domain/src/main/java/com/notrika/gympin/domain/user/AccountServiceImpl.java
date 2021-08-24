@@ -9,6 +9,7 @@ import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
+import com.notrika.gympin.common.user.param.UserSendSmsParam;
 import com.notrika.gympin.common.user.service.AccountService;
 import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.dao.administrator.Administrator;
@@ -57,15 +58,15 @@ public class AccountServiceImpl implements AccountService {
     private SmsService smsService;
 
     @Override
-    public boolean sendActivationSms(String PhoneNumber) throws ExceptionBase {
-        User user = userRepository.findByPhoneNumber(PhoneNumber).orElse(null);
+    public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
+        User user = userRepository.findByPhoneNumber(dto.getPhoneNumber()).orElse(null);
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
 
         String code = MyRandom.GenerateRandomVerificationSmsCode();
 
         //TODO check for last sms time > 2 min
         try {
-            return smsService.sendVerificationSms(user.getId(), new SmsDto(PhoneNumber, SmsTypes.CODE_TO_VERIFICATION, code));
+            return smsService.sendVerificationSms(user.getId(), new SmsDto(dto.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION, code));
         } catch (Exception e) {
             throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
         }

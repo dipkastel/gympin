@@ -1,5 +1,6 @@
 package com.notrika.gympin_master.ui.register.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,19 +9,19 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavOptions
 import com.notrika.gympin_master.R
+import com.notrika.gympin_master.data.model.Req_Login
+import com.notrika.gympin_master.data.model.Req_SendSms
 import com.notrika.gympin_master.data.model.Resource
+import com.notrika.gympin_master.ui.main.ActivityMain
 import com.notrika.gympin_master.ui.register.RegisterInnerPageFragment
 import kotlinx.android.synthetic.main.fragment_register_login.*
 
 
 class FragmentLogin : RegisterInnerPageFragment() {
-    private val TAG: String = this.javaClass.name
     lateinit var viewModel: ViewModelLogin
 
 
-    private lateinit var navOptions: NavOptions
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,35 +33,52 @@ class FragmentLogin : RegisterInnerPageFragment() {
         androidInjector().inject(this)
         viewModel = ViewModelProviders.of(this, providerFactory).get(ViewModelLogin::class.java)
         btn_submith_phone_number.setOnClickListener {
-            SendActiveCode()
+            RequestForSendSms()
         }
         btn_submith_activation_code.setOnClickListener {
-            SubmitActiveCode()
+            RequsetForLogin()
         }
         btn_resend_code.setOnClickListener {
-            SendActiveCode()
+            RequestForSendSms()
         }
     }
 
-    private fun SubmitActiveCode() {
-
-    }
-
-    private fun SendActiveCode() {
+    private fun RequestForSendSms() {
         if(et_phone_number.text.toString().length < 11||!et_phone_number.text.toString().startsWith("09")){
             et_phone_number.error = getString(R.string.phone_number_is_not_valid)
             return
         }else{
             et_phone_number.error = null
         }
-
-        viewModel.requestSendSms(et_phone_number.text.toString()).observe(viewLifecycleOwner, Observer { baseSetting ->
+        viewModel.requestSendSms(Req_SendSms(et_phone_number.text.toString())).observe(viewLifecycleOwner, Observer { baseSetting ->
 
             when (baseSetting.status) {
                 Resource.Status.SUCCESS -> {
                     ActivationMode()
                 }
                 Resource.Status.ERROR -> {
+                    et_phone_number.error = getString(R.string.can_not_send_sms_Now)
+                }
+
+            }
+        })
+    }
+
+    private fun RequsetForLogin() {
+        if(et_activation_code.text.toString().length < 4||et_activation_code.text.toString().length >4){
+            et_activation_code.error = getString(R.string.activation_code_is_not_valid)
+            return
+        }else{
+            et_activation_code.error = null
+        }
+        viewModel.requestLogin(Req_Login(et_phone_number.text.toString(),et_activation_code.text.toString())).observe(viewLifecycleOwner, Observer { baseSetting ->
+
+            when (baseSetting.status) {
+                Resource.Status.SUCCESS -> {
+                    openApp()
+                }
+                Resource.Status.ERROR -> {
+                    et_activation_code.error = getString(R.string.can_not_send_sms_Now)
                 }
 
             }
@@ -103,17 +121,13 @@ class FragmentLogin : RegisterInnerPageFragment() {
         })
     }
 
-    private fun getBaseSettings() {
-
-    }
-
     private fun openApp() {
 //        viewModel.requestUpdateUserProfile().observe(viewLifecycleOwner, Observer {
 //
 //            when (it.status) {
 //                Resource.Status.SUCCESS -> {
-//                    activity?.finish()
-//                    val myIntent = Intent(activity, ActivityMain::class.java)
+                    activity?.finish()
+                    val myIntent = Intent(activity, ActivityMain::class.java)
 //                    try {
 //
 //                        if (activity?.intent?.hasExtra(NotificationConstants.ONESIGNAL_NOTIFICAATION_LINK_PARAMS_KEY) == true
@@ -129,7 +143,7 @@ class FragmentLogin : RegisterInnerPageFragment() {
 //                    } catch (e: java.lang.Exception) {
 //
 //                    }
-//                    activity?.startActivity(myIntent)
+                    activity?.startActivity(myIntent)
 //                }
 //                Resource.Status.ERROR -> {
 //

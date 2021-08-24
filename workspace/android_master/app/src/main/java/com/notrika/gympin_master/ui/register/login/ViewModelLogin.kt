@@ -1,14 +1,14 @@
 package com.notrika.gympin_master.ui.register.login
 
 import android.os.CountDownTimer
-import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.notrika.gympin_master.data.model.Res_Splash
+import com.notrika.gympin_master.data.model.Req_Login
+import com.notrika.gympin_master.data.model.Req_SendSms
+import com.notrika.gympin_master.data.model.Res_Login
 import com.notrika.gympin_master.data.model.Resource
 import com.notrika.gympin_master.data.repository.ACCOUNT_REPO
-import com.notrika.gympin_master.data.repository.SPLASH_REPO
 import javax.inject.Inject
 
 class ViewModelLogin @Inject
@@ -35,7 +35,10 @@ constructor(private val accountRepo: ACCOUNT_REPO) : ViewModel() {
 
     }
 
-    fun requestSendSms(phoneNumber: String): LiveData<Resource<Boolean>> {
+    fun requestSendSms(phoneNumber: Req_SendSms): LiveData<Resource<Boolean>> {
         return accountRepo.observeSendSms(phoneNumber)
+    }
+    fun requestLogin(req_login: Req_Login): LiveData<Resource<Res_Login>> {
+        return accountRepo.observeLogin(req_login)
     }
 }

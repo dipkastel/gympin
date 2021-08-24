@@ -7,6 +7,7 @@ import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
+import com.notrika.gympin.common.user.param.UserSendSmsParam;
 import com.notrika.gympin.common.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @PostMapping("/sendsms")
-    public ResponseEntity<Boolean> sendSms(@RequestBody String phoneNumber) throws ExceptionBase {
+    public ResponseEntity<Boolean> sendSms(@RequestBody UserSendSmsParam phoneNumber) throws ExceptionBase {
         return new ResponseEntity<>(userService.sendActivationSms(phoneNumber), HttpStatus.OK);
     }
 

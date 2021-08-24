@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <option name="BUILD_PROCESS_HEAP_SIZE" value="3000" />
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -22,7 +23,6 @@
       <module name="domain" target="11" />
       <module name="framework" target="1.8" />
       <module name="persistence" target="1.8" />
-      <module name="serviceImpl" target="1.8" />
       <module name="web_api" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -34,7 +34,6 @@
       <module name="domain" options="-parameters" />
       <module name="framework" options="-parameters" />
       <module name="persistence" options="-parameters" />
-      <module name="serviceImpl" options="-parameters" />
       <module name="web_api" options="" />
     </option>
   </component>
