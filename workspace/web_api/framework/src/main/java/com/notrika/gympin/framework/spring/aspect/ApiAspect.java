@@ -33,14 +33,16 @@ public class ApiAspect {
                 .getAuthentication()
                 .getPrincipal();
         BaseParam arg = ((BaseParam) pjp.getArgs()[0]);
-        arg.getUser().setId(userDto.getId());
-        arg.getUser().setCreatedDate(userDto.getCreatedDate());
-        arg.getUser().setUpdatedDate(userDto.getUpdatedDate());
-        arg.getUser().setDeleted(userDto.isDeleted());
-        arg.getUser().setRole(userDto.getRole());
-        arg.getUser().setUsername(userDto.getUsername());
-        arg.getUser().setPhoneNumber(userDto.getPhoneNumber());
-        arg.getUser().setToken(userDto.getToken());
+        if(arg!=null) {
+            arg.getUser().setId(userDto.getId());
+            arg.getUser().setCreatedDate(userDto.getCreatedDate());
+            arg.getUser().setUpdatedDate(userDto.getUpdatedDate());
+            arg.getUser().setDeleted(userDto.isDeleted());
+            arg.getUser().setRole(userDto.getRole());
+            arg.getUser().setUsername(userDto.getUsername());
+            arg.getUser().setPhoneNumber(userDto.getPhoneNumber());
+            arg.getUser().setToken(userDto.getToken());
+        }
         StringBuffer paramBuffer =
                 new StringBuffer().append("\n==============================================================\n")
                         .append("Method ").append(pjp.getSignature().toLongString()).append(" started with following input param: ");
