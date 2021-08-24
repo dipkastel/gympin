@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.DELETE;
 import java.util.List;
 
 @RestController
@@ -31,7 +30,7 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PutMapping("/updateState")
     public ResponseEntity<StateDto> updateState(StateParam stateParam) {
-        return new ResponseEntity<StateDto>(locationService.updateState(stateParam),HttpStatus.OK);
+        return new ResponseEntity<StateDto>(locationService.updateState(stateParam), HttpStatus.OK);
     }
 
     @Override
@@ -167,12 +166,12 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PostMapping("/addOptionOfPlace")
     public ResponseEntity<OptionOfPlaceDto> addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam) {
-        return new ResponseEntity<OptionOfPlaceDto>(locationService.addOptionOfPlace(optionOfPlaceParam),HttpStatus.CREATED);
+        return new ResponseEntity<OptionOfPlaceDto>(locationService.addOptionOfPlace(optionOfPlaceParam), HttpStatus.CREATED);
     }
 
     @Override
     @GetMapping("/getPlaceByUser")
     public ResponseEntity<List<PlaceDto>> getPlaceByUser(UserParam userParam) {
-        return new ResponseEntity<List<PlaceDto>>(locationService.getPlaceByUser(userParam),HttpStatus.OK);
+        return new ResponseEntity<List<PlaceDto>>(locationService.getPlaceByUser(userParam), HttpStatus.OK);
     }
 }
