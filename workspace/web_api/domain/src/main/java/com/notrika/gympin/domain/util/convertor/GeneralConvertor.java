@@ -9,14 +9,18 @@ import java.util.Date;
 public class GeneralConvertor {
 
     public static <T extends BaseEntity> T fillBaseFieldsToCreate(BaseParam param, T entity) {
-        entity.setCreatorUser(User.builder().id(param.getUser().getId()).build());
+        if (param.getUser() != null && param.getUser().getId() != null)
+            entity.setCreatorUser(User.builder().id(param.getUser().getId()).build());
+
         entity.setCreatedDate(new Date());
         return entity;
     }
 
     public static <T extends BaseEntity> T fillBaseFieldsToUpdate(BaseParam param, T entity) {
         entity.setId(param.getId());
-        entity.setUpdaterUser(User.builder().id(param.getUser().getId()).build());
+        if (param.getUser() != null && param.getUser().getId() != null)
+            entity.setUpdaterUser(User.builder().id(param.getUser().getId()).build());
+
         entity.setUpdatedDate(new Date());
         return entity;
     }

@@ -4,7 +4,9 @@ import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.Error;
 import com.notrika.gympin.common.ResponseModel;
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.dao.user.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -27,22 +29,34 @@ public class ApiAspect {
     @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
     public Object process(ProceedingJoinPoint pjp) throws Throwable {
         // start stopwatch
-
-        UserDto userDto = (UserDto) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-        BaseParam arg = ((BaseParam) pjp.getArgs()[0]);
-        if(arg!=null) {
-            arg.getUser().setId(userDto.getId());
-            arg.getUser().setCreatedDate(userDto.getCreatedDate());
-            arg.getUser().setUpdatedDate(userDto.getUpdatedDate());
-            arg.getUser().setDeleted(userDto.isDeleted());
-            arg.getUser().setRole(userDto.getRole());
-            arg.getUser().setUsername(userDto.getUsername());
-            arg.getUser().setPhoneNumber(userDto.getPhoneNumber());
-            arg.getUser().setToken(userDto.getToken());
+        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDto){
+            UserDto userDto = (UserDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            BaseParam arg = ((BaseParam) pjp.getArgs()[0]);
+            if(arg!=null) {
+                arg.getUser().setId(userDto.getId());
+                arg.getUser().setCreatedDate(userDto.getCreatedDate());
+                arg.getUser().setUpdatedDate(userDto.getUpdatedDate());
+                arg.getUser().setDeleted(userDto.isDeleted());
+                arg.getUser().setRole(userDto.getRole());
+                arg.getUser().setUsername(userDto.getUsername());
+                arg.getUser().setPhoneNumber(userDto.getPhoneNumber());
+                arg.getUser().setToken(userDto.getToken());
+            }
+        }else if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof AdministratorLoginDto){
+            AdministratorLoginDto userDto = (AdministratorLoginDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            BaseParam arg = ((BaseParam) pjp.getArgs()[0]);
+            if(arg!=null) {
+                arg.getUser().setId(userDto.getId());
+                arg.getUser().setCreatedDate(userDto.getCreatedDate());
+                arg.getUser().setUpdatedDate(userDto.getUpdatedDate());
+                arg.getUser().setDeleted(userDto.isDeleted());
+//                arg.getUser().setRole(userDto.getRole());
+//                arg.getUser().setUsername(userDto.getUsername());
+                arg.getUser().setPhoneNumber(userDto.getPhoneNumber());
+                arg.getUser().setToken(userDto.getToken());
+            }
         }
+
         StringBuffer paramBuffer =
                 new StringBuffer().append("\n==============================================================\n")
                         .append("Method ").append(pjp.getSignature().toLongString()).append(" started with following input param: ");
