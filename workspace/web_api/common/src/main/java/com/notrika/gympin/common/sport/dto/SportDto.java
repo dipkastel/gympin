@@ -1,7 +1,7 @@
-package com.notrika.gympin.common.sport.param;
+package com.notrika.gympin.common.sport.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common.BaseDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SportParam extends BaseParam<SportParam> {
+public class SportDto extends BaseDto<SportDto> {
 
     @JsonProperty("Name")
     private String name;

@@ -22,12 +22,15 @@ public class BaseParam<T> implements Serializable {
     @JsonProperty("Id")
     private Long id;
 
-    @JsonProperty("CreatedDate")
+    //@JsonProperty("CreatedDate")
+    @JsonIgnore
     private Date createdDate;
 
-    @JsonProperty("UpdatedDate")
+    //@JsonProperty("UpdatedDate")
+    @JsonIgnore
     private Date updatedDate;
 
-    @JsonProperty("IsDeleted")
+    //@JsonProperty("IsDeleted")
+    @JsonIgnore
     private boolean isDeleted;
 }
