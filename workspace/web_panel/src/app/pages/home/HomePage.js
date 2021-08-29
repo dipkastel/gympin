@@ -5,25 +5,21 @@ import Dashboard from "./Dashboard";
 import { LayoutSplashScreen } from "../../../_metronic";
 import PlaceManagement from "./place/management/PlaceManagement";
 import LocationManagement from "./location/LocationManagement";
+import openStreetMap from "../../../_metronic/layout/map/openStreet/openStreetMap";
 export default function HomePage() {
-  // useEffect(() => {
-  //   console.log('Home page');
-  // }, []) // [] - is required if you need only one call
-  // https://reactjs.org/docs/hooks-reference.html#useeffect
-
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Switch>
-        {
-          /* Redirect from root URL to /dashboard. */
-          <Redirect exact from="/" to="/dashboard" />
-        }
-        <Route path="/builder" component={Builder} />
-        <Route path="/places" component={PlaceManagement} />
-        <Route path="/locations" component={LocationManagement} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Redirect to="/error/error-v1" />
-      </Switch>
-    </Suspense>
+          <Suspense fallback={<LayoutSplashScreen />}>
+              <Switch>
+                  {
+                      <Redirect exact from="/" to="/dashboard" />
+                  }
+                  <Route path="/builder" component={Builder} />
+                  <Route path="/places" component={PlaceManagement} />
+                  <Route path="/locations" component={LocationManagement} />
+                  <Route path="/dashboard" component={Dashboard} />
+                  <Route path="/o" component={openStreetMap} />
+                  <Redirect to="/error/error-v1" />
+              </Switch>
+          </Suspense>
   );
 }

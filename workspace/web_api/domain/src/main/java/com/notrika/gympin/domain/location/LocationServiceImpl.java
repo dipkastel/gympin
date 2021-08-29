@@ -74,7 +74,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public CityDto addCity(CityParam cityParam) {
-        City initCity = City.builder().name(cityParam.getName()).state(State.builder().id(cityParam.getState().getId()).build()).build();
+        var state = stateRepository.findById(cityParam.getState().getId()).get();
+        City initCity = City.builder().name(cityParam.getName()).state(state).build();
         GeneralConvertor.fillBaseFieldsToCreate(cityParam, initCity);
         City city = cityRepository.save(initCity);
         return LocationConvertor.cityToCityDto(city, LocationConvertor.CollectionType.LIST);
@@ -114,7 +115,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public RegionDto addRegion(RegionParam regionParam) {
-        Region initRegion = Region.builder().name(regionParam.getName()).city(City.builder().id(regionParam.getCity().getId()).build()).build();
+        var city = cityRepository.findById(regionParam.getCity().getId()).get();
+        Region initRegion = Region.builder().name(regionParam.getName()).city(city).build();
         GeneralConvertor.fillBaseFieldsToCreate(regionParam, initRegion);
         Region region = regionRepository.save(initRegion);
         return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
@@ -154,7 +156,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public PlaceDto addPlace(PlaceParam placeParam) {
-        Place initPlace = Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).region(Region.builder().id(placeParam.getRegion().getId()).build()).build();
+        var region = regionRepository.findById(placeParam.getRegion().getId()).get();
+        Place initPlace = Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(region).build();
         GeneralConvertor.fillBaseFieldsToCreate(placeParam, initPlace);
         Place place = placeRepository.save(initPlace);
         return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);
@@ -162,7 +165,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public PlaceDto updatePlace(PlaceParam placeParam) {
-        Place initPlace = Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).region(Region.builder().id(placeParam.getRegion().getId()).build()).build();
+        Place initPlace = Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(Region.builder().id(placeParam.getRegion().getId()).build()).build();
         GeneralConvertor.fillBaseFieldsToUpdate(placeParam, initPlace);
         Place place = placeRepository.save(initPlace);
         return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);

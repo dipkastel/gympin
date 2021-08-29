@@ -152,6 +152,7 @@ public class LocationConvertor {
         place.setName(placeDto.getName());
         place.setLatitude(placeDto.getLatitude());
         place.setLongitude(placeDto.getLongitude());
+        place.setAddress(placeDto.getAddress());
         place.setRegion(regionDtoToRegion(placeDto.getRegion()));
         return place;
     }
@@ -172,6 +173,7 @@ public class LocationConvertor {
         placeDto.setName(place.getName());
         placeDto.setLatitude(place.getLatitude());
         placeDto.setLongitude(place.getLongitude());
+        placeDto.setAddress(place.getAddress());
         placeDto.setRegion(regionToRegionDto(place.getRegion(), collectionType));
         return placeDto;
     }

@@ -12,6 +12,7 @@ import { I18nProvider, LayoutSplashScreen, ThemeProvider } from "./_metronic";
 
 export default function App({ store, persistor, basename }) {
   return (
+
     /* Provide Redux store */
     <Provider store={store}>
       {/* Asynchronously persist redux stores and show `SplashScreen` while it's loading. */}

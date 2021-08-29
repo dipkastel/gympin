@@ -154,6 +154,7 @@ class StatesManagement extends Component {
 
     addState(e) {
         e.preventDefault()
+        console.log(e.target.state_name.value)
          location_addState({
              "name": e.target.state_name.value
          }).then(data=>{

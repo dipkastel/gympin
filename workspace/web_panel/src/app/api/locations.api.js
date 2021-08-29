@@ -7,6 +7,10 @@ export function location_getAllState() {
     return axios.get(LocationApi.getAllState);
 }
 
+export function location_getAllPlaces() {
+    return axios.get(LocationApi.getAllPlace);
+}
+
 export function location_getAllCities() {
     return axios.get(LocationApi.getAllCity);
 }
@@ -26,4 +30,7 @@ export function location_addCity(city) {
 
 export function location_addRegion(region) {
     return axios.post(LocationApi.addRegion,region);
+}
+export function location_addPlace(place) {
+    return axios.post(LocationApi.addPlace,place);
 }

@@ -31,6 +31,9 @@ public class Place extends BaseEntity {
     @Column(name = "longitude")
     private double longitude;
 
+    @Column(name = "address")
+    private String address;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "region_id")
     @JsonIgnore
