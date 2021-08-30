@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface RegionRepository extends BaseRepository<Region, Long> {
-    @Query("select c from Region c where c.city.id = :#{#city.id}")
+    @Query("select c from Region c where c.isDeleted = false and c.city.id = :#{#city.id}")
     List<Region> getRegionsByCity(@Param("city") City city);
 }

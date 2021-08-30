@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BaseRepositoryImpl<T, ID extends Serializable>
         extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
@@ -28,5 +30,10 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
         ((BaseEntity)item).setDeleted(true);
         save((T) item);
 
+    }
+
+    @Override
+    public List<T> findAll() {
+        return super.findAll().stream().filter(t -> !((BaseEntity)t).isDeleted()).collect(Collectors.toList());
     }
 }

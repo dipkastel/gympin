@@ -1,11 +1,12 @@
 import React, {Component} from "react";
 import Notice from "../../../../partials/content/Notice";
 import AddIcon from "@material-ui/icons/Add";
-import {Form, Table} from "react-bootstrap";
+import {Form, Modal, Table} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import {Button, Paper} from "@material-ui/core";
 import Select from 'react-select';
 import {withStyles} from "@material-ui/styles";
+import ClientsManagement from "../management/clients/clientsManagement";
 import {
     location_addPlace,
     location_getAllPlaces,
@@ -81,31 +82,181 @@ class PlaceManagement extends Component {
             selectedLat:0.0,
             selectedLng:0.0,
             allPlacesArray:[],
-            selectedPlace:null
+            selectedPlace:null,
+            selectedPlaceToOpenClients:null
         };
     }
+    render() {
+        const {classes} = this.props;
 
+
+        return (
+            <>
+
+                <Notice icon="flaticon-warning kt-font-primary">
+                    <p>
+                        موجودیت اماکن به معنای محلی است که در آن ورزش انجام میشود
+                    </p>
+                    <p>
+                        این اماکن میتواند سر پوشیده یا باز باشد و نوع فعالیت های آنها در قسمت ورزش ها تایین میشود
+                    </p>
+                </Notice>
+
+
+                <Portlet>
+                    <PortletHeader
+                        title="مکان ها"
+                        toolbar={
+                            <PortletHeaderToolbar>
+                                <button
+                                    type="button"
+                                    className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
+                                    onClick={(e) => this.toggleAddMode(e)}
+                                >
+                                    <AddIcon/>
+                                </button>
+                            </PortletHeaderToolbar>
+                        }
+                    />
+
+                    <PortletBody>
+
+                        <Paper className={classes.root} hidden={!this.state.addMode}>
+                            <Form className={classes.container} noValidate autoComplete="off"
+                                  onSubmit={(e) => this.addPlace(e)}>
+                                <Form.Group controlId="formPlaceName">
+                                    <Form.Label>نام مکان (مجموعه ورزشی)</Form.Label>
+                                    <Form.Control name="formName" type="text" placeholder="نام مکان (مجموعه ورزشی)"/>
+                                    <Form.Text className="text-muted">
+                                        از نوشتن هاشه ها (مجموعه ورزشی ، باشگاه ، استادیوم) خودداری کنید
+                                    </Form.Text>
+                                </Form.Group>
+
+                                <Form.Group controlId="formState">
+                                    <Form.Label>استان</Form.Label>
+                                    <Select
+                                        className={classes.dropdown}
+                                        inputId="react-select-single"
+                                        name="formState"
+                                        TextFieldProps={{
+                                            label: 'states',
+                                            InputLabelProps: {
+                                                htmlFor: 'react-select-single',
+                                                shrink: true,
+                                            },
+                                            placeholder: 'Search a state',
+                                        }}
+                                        options={this.state.states}
+                                        value={this.state.selectedState}
+                                        onChange={(e) => this.stateSelectedChange(e)}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="formCity">
+                                    <Form.Label>شهر</Form.Label>
+                                    <Select
+                                        className={classes.dropdown}
+                                        inputId="react-select-single"
+                                        name="formCity"
+                                        TextFieldProps={{
+                                            label: 'states',
+                                            InputLabelProps: {
+                                                htmlFor: 'react-select-single',
+                                                shrink: true,
+                                            },
+                                            placeholder: 'Search a state',
+                                        }}
+                                        options={this.state.cities}
+                                        value={this.state.selectedCity}
+                                        onChange={(e) => this.citySelectedChange(e)}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="formRegion">
+                                    <Form.Label>ناحیه (منطقه)</Form.Label>
+                                    <Select
+                                        className={classes.dropdown}
+                                        inputId="react-select-single"
+                                        name="formRegion"
+                                        TextFieldProps={{
+                                            label: 'states',
+                                            InputLabelProps: {
+                                                htmlFor: 'react-select-single',
+                                                shrink: true,
+                                            },
+                                            placeholder: 'Search a state',
+                                        }}
+                                        value={this.state.selectedRegion}
+                                        options={this.state.regions}
+                                        onChange={(e) => this.regionSelectedChange(e)}
+                                    />
+                                </Form.Group>
+                                <input
+                                    className={classes.hidden_input}
+                                    value={this.state.selectedLat}
+                                    name="formLat"
+                                />
+                                <input
+                                    className={classes.hidden_input}
+                                    value={this.state.selectedLng}
+                                    name="formLng"
+                                />
+                                <Form.Group controlId="formAddress">
+                                    <Form.Label>آدرس کامل</Form.Label>
+                                    <textarea
+                                        className="form-control"
+                                        id="exampleTextarea"
+                                        rows="3"
+                                        name="formAddress"
+                                    />
+                                </Form.Group>
+
+                                <Form.Group controlId="map">
+                                    <div id="kt_leaflet" className={classes.map}/>
+                                </Form.Group>
+                                <Button type={"submit"} variant="contained" color="primary" className={classes.button}>
+                                    ثبت
+                                </Button>
+                            </Form>
+                        </Paper>
+                        <div className="kt-separator kt-separator--dashed"/>
+                        <Table striped bordered hover>
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>place Name</th>
+                                <th>place Address</th>
+                                <th>actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.state.allPlacesArray.map(this.renderPlacesRow)}
+                            </tbody>
+                        </Table>
+                    </PortletBody>
+                </Portlet>
+
+                {this.state.selectedPlaceToOpenClients &&
+                <ClientsManagement state={this.state.selectedPlaceToOpenClients}/>
+                }
+                {this.renderModalDelete(classes,this.state.selectedStateToDelete)}
+            </>
+        )
+    }
     componentDidMount() {
         this.getStates();
         this.getPlaces();
-        this.KTLeaflet();
+        this.prepareMap();
 
         this.setState(() => ({
             addMode: false
         }));
     }
-
-
     toggleAddMode(e) {
         e.preventDefault()
         this.setState(() => ({
             addMode: !this.state.addMode
         }));
     }
-
-    addCity(e) {
-        e.preventDefault()
-
+    addPlace(e) {
         e.preventDefault()
         location_addPlace({
             "Address": e.target.formAddress.value,
@@ -121,8 +272,7 @@ class PlaceManagement extends Component {
             console.log(e);
         })
     }
-
-    KTLeaflet() {
+    prepareMap() {
 
         // define leaflet
         var leaflet = L.map('kt_leaflet', {
@@ -171,155 +321,6 @@ class PlaceManagement extends Component {
             }));
         },this);
     };
-
-    render() {
-        const {classes} = this.props;
-
-
-        return (
-            <>
-
-                <Notice icon="flaticon-warning kt-font-primary">
-                    <p>
-                        موجودیت اماکن به معنای محلی است که در آن ورزش انجام میشود
-                    </p>
-                    <p>
-                        این اماکن میتواند سر پوشیده یا باز باشد و نوع فعالیت های آنها در قسمت ورزش ها تایین میشود
-                    </p>
-                </Notice>
-
-
-                <Portlet>
-                    <PortletHeader
-                        title="مکان ها"
-                        toolbar={
-                            <PortletHeaderToolbar>
-                                <button
-                                    type="button"
-                                    className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                    onClick={(e) => this.toggleAddMode(e)}
-                                >
-                                    <AddIcon/>
-                                </button>
-                            </PortletHeaderToolbar>
-                        }
-                    />
-
-                    <PortletBody>
-
-                        <Paper className={classes.root} hidden={!this.state.addMode}>
-                            <Form className={classes.container} noValidate autoComplete="off"
-                                  onSubmit={(e) => this.addCity(e)}>
-                                <Form.Group controlId="formPlaceName">
-                                    <Form.Label>نام مکان (مجموعه ورزشی)</Form.Label>
-                                    <Form.Control name="formName" type="text" placeholder="نام مکان (مجموعه ورزشی)"/>
-                                    <Form.Text className="text-muted">
-                                        از نوشتن هاشه ها (مجموعه ورزشی ، باشگاه ، استادیوم) خودداری کنید
-                                    </Form.Text>
-                                </Form.Group>
-
-                                <Form.Group controlId="formState">
-                                    <Form.Label>استان</Form.Label>
-                                    <Select
-                                        className={classes.dropdown}
-                                        inputId="react-select-single"
-                                        name="formState"
-                                        TextFieldProps={{
-                                            label: 'states',
-                                            InputLabelProps: {
-                                                htmlFor: 'react-select-single',
-                                                shrink: true,
-                                            },
-                                            placeholder: 'Search a state',
-                                        }}
-                                        options={this.state.states}
-                                        onChange={(e) => this.stateSelectedChange(e)}
-                                    />
-                                </Form.Group>
-                                <Form.Group controlId="formCity">
-                                    <Form.Label>شهر</Form.Label>
-                                    <Select
-                                        className={classes.dropdown}
-                                        inputId="react-select-single"
-                                        name="formCity"
-                                        TextFieldProps={{
-                                            label: 'states',
-                                            InputLabelProps: {
-                                                htmlFor: 'react-select-single',
-                                                shrink: true,
-                                            },
-                                            placeholder: 'Search a state',
-                                        }}
-                                        options={this.state.cities}
-                                        onChange={(e) => this.citySelectedChange(e)}
-                                    />
-                                </Form.Group>
-                                <Form.Group controlId="formRegion">
-                                    <Form.Label>ناحیه (منطقه)</Form.Label>
-                                    <Select
-                                        className={classes.dropdown}
-                                        inputId="react-select-single"
-                                        name="formRegion"
-                                        TextFieldProps={{
-                                            label: 'states',
-                                            InputLabelProps: {
-                                                htmlFor: 'react-select-single',
-                                                shrink: true,
-                                            },
-                                            placeholder: 'Search a state',
-                                        }}
-                                        options={this.state.regions}
-                                    />
-                                </Form.Group>
-                                <input
-                                    className={classes.hidden_input}
-                                    value={this.state.selectedLat}
-                                    name="formLat"
-                                />
-                                <input
-                                    className={classes.hidden_input}
-                                    value={this.state.selectedLng}
-                                    name="formLng"
-                                />
-                                <Form.Group controlId="formAddress">
-                                    <Form.Label>آدرس کامل</Form.Label>
-                                    <textarea
-                                        className="form-control"
-                                        id="exampleTextarea"
-                                        rows="3"
-                                        name="formAddress"
-                                    />
-                                </Form.Group>
-
-                                <Form.Group controlId="map">
-                                    <div id="kt_leaflet" className={classes.map}/>
-                                </Form.Group>
-                                <Button type={"submit"} variant="contained" color="primary" className={classes.button}>
-                                    ثبت
-                                </Button>
-                            </Form>
-                        </Paper>
-                        <div className="kt-separator kt-separator--dashed"/>
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>place Name</th>
-                                <th>place Address</th>
-                                <th>actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {this.state.allPlacesArray.map(this.renderPlaces)}
-                            </tbody>
-                        </Table>
-                    </PortletBody>
-                </Portlet>
-
-            </>
-        )
-    }
-
     getStates() {
 
         location_getAllState().then(data => {
@@ -332,19 +333,17 @@ class PlaceManagement extends Component {
             }));
         })
     }
-
     selectPlace(e,place) {
         e.preventDefault()
+        console.log(place)
         this.setState(() => ({
-            selectedPlace: place
+            selectedPlaceToOpenClients: place
         }));
     }
-
     deletePlace(e,place) {
         e.preventDefault()
 
     }
-
     getPlaces() {
 
         location_getAllPlaces().then(data => {
@@ -353,8 +352,13 @@ class PlaceManagement extends Component {
             }));
         })
     }
-
     stateSelectedChange(e) {
+
+        this.setState(() => ({
+            selectedState:e.name,
+            selectedCity: null,
+            selectedRegion: null,
+        }));
         location_getCities_byState({Id: e.value}).then(data => {
             var cityOptions = data.data.Data.map(suggestion => ({
                 value: suggestion.Id,
@@ -365,9 +369,12 @@ class PlaceManagement extends Component {
             }));
         })
     }
-
-
     citySelectedChange(e) {
+
+        this.setState(() => ({
+            selectedCity: e.name,
+            selectedRegion: null,
+        }));
         location_getRegions_byCity({Id: e.value}).then(data => {
             var RegionOptions = data.data.Data.map(suggestion => ({
                 value: suggestion.Id,
@@ -378,8 +385,13 @@ class PlaceManagement extends Component {
             }));
         })
     }
+    regionSelectedChange(e) {
 
-    renderPlaces=(place,index)=>{
+        this.setState(() => ({
+            selectedRegion: e.name,
+        }));
+    }
+    renderPlacesRow=(place, index)=>{
         const { classes } = this.props;
         return (
             <tr key={index}>
@@ -402,6 +414,26 @@ class PlaceManagement extends Component {
             </tr>
         )
     }
+    renderModalDelete = (classes,stateToDelete)=>{
+        return(<>
+                <Modal show={stateToDelete} onHide={this.closeModalDelete}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>delete</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>حذف {stateToDelete&&stateToDelete.Name}</Modal.Body>
+                    <Modal.Footer>
+                        <Button className={classes.button_edit} onClick={this.closeModalDelete}>
+                            خیر
+                        </Button>
+                        <Button className={classes.button_danger} onClick={(e) => this.deleteState(e, stateToDelete)}>
+                            حذف
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        );
+    }
+
 }
 
 export default withStyles(style)(PlaceManagement);

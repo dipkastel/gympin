@@ -39,6 +39,8 @@ public class LocationServiceImpl implements LocationService {
     @Autowired
     private PlaceOptionService placeOptionService;
 
+    //state
+
     @Override
     public StateDto addState(StateParam stateParam) {
         State initState = State.builder().name(stateParam.getName()).build();
@@ -46,7 +48,6 @@ public class LocationServiceImpl implements LocationService {
         State state = stateRepository.save(initState);
         return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
     }
-
     @Override
     public StateDto updateState(StateParam stateParam) {
         State initState = State.builder().name(stateParam.getName()).build();
@@ -54,7 +55,6 @@ public class LocationServiceImpl implements LocationService {
         State state = stateRepository.save(initState);
         return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
     }
-
     @Override
     public List<StateDto> getAllState() {
         List<State> stateList = stateRepository.findAll();
@@ -73,6 +73,8 @@ public class LocationServiceImpl implements LocationService {
         stateRepository.deleteById2(item);
     }
 
+    //city
+
     @Override
     public CityDto addCity(CityParam cityParam) {
         var state = stateRepository.findById(cityParam.getState().getId()).get();
@@ -84,7 +86,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public CityDto updateCity(CityParam cityParam) {
-        City initCity = City.builder().name(cityParam.getName()).state(State.builder().id(cityParam.getState().getId()).build()).build();
+        var state = cityRepository.findById(cityParam.getId()).get().getState();
+        City initCity = City.builder().name(cityParam.getName()).state(state).build();
         GeneralConvertor.fillBaseFieldsToUpdate(cityParam, initCity);
         City city = cityRepository.save(initCity);
         return LocationConvertor.cityToCityDto(city, LocationConvertor.CollectionType.LIST);
@@ -98,7 +101,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void deleteCity(CityParam cityParam) {
-        cityRepository.deleteById(cityParam.getId());
+        var item = cityRepository.findById(cityParam.getId()).get();
+        cityRepository.deleteById2(item);
     }
 
     @Override
@@ -114,6 +118,8 @@ public class LocationServiceImpl implements LocationService {
         return (List<CityDto>) LocationConvertor.citiesToCityDtos(cityList, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
     }
 
+    //region
+
     @Override
     public RegionDto addRegion(RegionParam regionParam) {
         var city = cityRepository.findById(regionParam.getCity().getId()).get();
@@ -125,7 +131,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public RegionDto updateRegion(RegionParam regionParam) {
-        Region initRegion = Region.builder().name(regionParam.getName()).city(City.builder().id(regionParam.getCity().getId()).build()).build();
+        var city = regionRepository.findById(regionParam.getId()).get().getCity();
+        Region initRegion = Region.builder().name(regionParam.getName()).city(city).build();
         GeneralConvertor.fillBaseFieldsToUpdate(regionParam, initRegion);
         Region region = regionRepository.save(initRegion);
         return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
@@ -152,8 +159,12 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void deleteRegion(RegionParam regionParam) {
-        regionRepository.deleteById(regionParam.getId());
+
+        var item = regionRepository.findById(regionParam.getId()).get();
+        regionRepository.deleteById2(item);
     }
+
+    //place
 
     @Override
     public PlaceDto addPlace(PlaceParam placeParam) {
@@ -193,7 +204,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void deletePlace(PlaceParam placeParam) {
-        placeRepository.deleteById(placeParam.getId());
+        var item = placeRepository.findById(placeParam.getId()).get();
+        placeRepository.deleteById2(item);
     }
 
     @Override

@@ -21,6 +21,8 @@ public class LocationControllerImpl implements LocationController {
     @Autowired
     private LocationService locationService;
 
+    //state
+
     @Override
     @PostMapping("/addState")
     public ResponseEntity<StateDto> addState(@RequestBody StateParam stateParam) {
@@ -29,7 +31,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @PutMapping("/updateState")
-    public ResponseEntity<StateDto> updateState(StateParam stateParam) {
+    public ResponseEntity<StateDto> updateState(@RequestBody StateParam stateParam) {
         return new ResponseEntity<StateDto>(locationService.updateState(stateParam), HttpStatus.OK);
     }
 
@@ -52,6 +54,8 @@ public class LocationControllerImpl implements LocationController {
         return new ResponseEntity<BaseDto>(BaseDto.builder().id(stateParam.getId()).build(), HttpStatus.OK);
     }
 
+    //city
+
     @Override
     @PostMapping("/addCity")
     public ResponseEntity<CityDto> addCity(@RequestBody CityParam cityParam) {
@@ -60,7 +64,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @PutMapping("/updateCity")
-    public ResponseEntity<CityDto> updateCity(CityParam cityParam) {
+    public ResponseEntity<CityDto> updateCity(@RequestBody CityParam cityParam) {
         return new ResponseEntity<CityDto>(locationService.updateCity(cityParam), HttpStatus.OK);
     }
 
@@ -89,6 +93,8 @@ public class LocationControllerImpl implements LocationController {
         return new ResponseEntity<List<CityDto>>(locationService.getCitiesByState(stateParam), HttpStatus.OK);
     }
 
+    //region
+
     @Override
     @PostMapping("/addRegion")
     public ResponseEntity<RegionDto> addRegion(@RequestBody RegionParam regionParam) {
@@ -97,7 +103,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @PutMapping("/updateRegion")
-    public ResponseEntity<RegionDto> updateRegion(RegionParam regionParam) {
+    public ResponseEntity<RegionDto> updateRegion(@RequestBody RegionParam regionParam) {
         return new ResponseEntity<RegionDto>(locationService.updateRegion(regionParam), HttpStatus.OK);
     }
 
@@ -126,6 +132,8 @@ public class LocationControllerImpl implements LocationController {
         return new ResponseEntity<BaseDto>(BaseDto.builder().id(regionParam.getId()).build(), HttpStatus.OK);
     }
 
+    //place
+
     @Override
     @PostMapping("/addPlace")
     public ResponseEntity<PlaceDto> addPlace(@RequestBody PlaceParam placeParam) {
@@ -134,7 +142,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @PutMapping("/updatePlace")
-    public ResponseEntity<PlaceDto> updatePlace(PlaceParam placeParam) {
+    public ResponseEntity<PlaceDto> updatePlace(@RequestBody PlaceParam placeParam) {
         return new ResponseEntity<PlaceDto>(locationService.updatePlace(placeParam), HttpStatus.OK);
     }
 

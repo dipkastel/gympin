@@ -6,14 +6,25 @@ export let AuthApi = {
 }
 
 export let LocationApi = {
+    //state
+    addState : "v1/location/addState",
     getAllState : "v1/location/getAllState",
-    getAllPlace : "v1/location/getAllPlace",
+    updateState : "v1/location/updateState",
+    deleteState : "v1/location/deleteState",
+    //city
+    addCity : "v1/location/addCity",
     getAllCity : "v1/location/getAllCity",
     getCitiesByState : "v1/location/getCitiesByState",
+    deleteCity : "v1/location/deleteCity",
+    updateCity : "v1/location/updateCity",
+    //region
     getRegionsByCity : "v1/location/getRegionsByCity",
-    addState : "v1/location/addState",
-    deleteState : "v1/location/deleteState",
-    addCity : "v1/location/addCity",
     addRegion : "v1/location/addRegion",
+    deleteRegion : "v1/location/deleteRegion",
+    updateRegion : "v1/location/updateRegion",
+    //place
+    getAllPlace : "v1/location/getAllPlace",
     addPlace : "v1/location/addPlace",
+    deletePlace : "v1/location/deletePlace",
+    updatePlace : "v1/location/updatePlace",
 }

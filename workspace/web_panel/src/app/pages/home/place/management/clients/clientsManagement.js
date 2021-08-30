@@ -3,11 +3,7 @@ import React, {Component} from "react";
 import {Button, Paper, TextField} from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import AddIcon from "@material-ui/icons/Add";
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
-import {
-    location_addRegion, location_deleteCity, location_deleteRegion,
-    location_getRegions_byCity, location_updateCity, location_updateRegion
-} from "../../../../api/locations.api";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../../partials/content/Portlet";
 import {Modal, Table} from "react-bootstrap";
 
 const style = theme => ({
@@ -50,7 +46,7 @@ const style = theme => ({
         display: "inline-grid"
     }
 })
-class regionManagement extends Component {
+class ClientsManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -67,7 +63,7 @@ class regionManagement extends Component {
 
             <Portlet>
                 <PortletHeader
-                    title={"منطقه های "+this.props.city.Name}
+                    title={"پرسنل "+this.props.state.Name}
                     toolbar={
                         <PortletHeaderToolbar>
                             <button
@@ -109,13 +105,13 @@ class regionManagement extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.allRegionsArray.map(this.renderRegions)}
+                        {/*{this.state.allRegionsArray.map(this.renderRegions)}*/}
                         </tbody>
                     </Table>
                 </PortletBody>
             </Portlet>
 
-            {this.renderModalDelete(classes,this.state.selectedRegionToDelete)}
+            {/*{this.renderModalDelete(classes,this.state.selectedRegionToDelete)}*/}
         </>
 
     };
@@ -124,13 +120,13 @@ class regionManagement extends Component {
         this.getRegions();
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.city.Id !== this.props.city.Id){
-            this.getRegions();
-            this.setState(() => ({
-                addMode: false
-            }));
-
-        }
+        // if(prevProps.city.Id !== this.props.city.Id){
+        //     this.getRegions();
+        //     this.setState(() => ({
+        //         addMode: false
+        //     }));
+        //
+        // }
     }
 
     toggleAddMode(e) {
@@ -148,65 +144,65 @@ class regionManagement extends Component {
         }));
     }
     getRegions(){
-        location_getRegions_byCity({"Id":this.props.city.Id}).then(data=>{
-            this.setState(() => ({
-                allRegionsArray: data.data.Data
-            }));
-        }).catch(e=>{
-            console.log("fail "+e)
-        })
+        // location_getRegions_byCity({"Id":this.props.city.Id}).then(data=>{
+        //     this.setState(() => ({
+        //         allRegionsArray: data.data.Data
+        //     }));
+        // }).catch(e=>{
+        //     console.log("fail "+e)
+        // })
     };
 
     deleteRegion(e,region){
         e.preventDefault()
-        location_deleteRegion({
-            Id:region.Id
-        })
-            .then(data => {
-                this.getRegions()
-                this.closeModalDelete()
-            }).catch(e => {
-            console.log(e)
-        })
+        // location_deleteRegion({
+        //     Id:region.Id
+        // })
+        //     .then(data => {
+        //         this.getRegions()
+        //         this.closeModalDelete()
+        //     }).catch(e => {
+        //     console.log(e)
+        // })
     }
     addRegion(e) {
         e.preventDefault()
-        if(this.state.selectedRegionToEdit){
-            location_updateRegion({
-                "Name": e.target.region_name.value,
-                "Id":this.state.selectedRegionToEdit.Id
-            }).then(data => {
-                this.getRegions();
-                document.querySelector('#standard-region').value = null
-                this.setState(() => ({
-                    addMode: false,
-                    selectedRegionToEdit: null
-                }));
-            }).catch(e => {
-                console.log(e);
-            })
-        }else {
-            location_addRegion({
-                "Name": e.target.region_name.value,
-                "City": this.props.city
-            }).then(data => {
-                this.getRegions();
-                document.querySelector('#standard-region').value = null
-            }).catch(e => {
-                console.log(e);
-            })
-        }
+        // if(this.state.selectedRegionToEdit){
+        //     location_updateRegion({
+        //         "Name": e.target.region_name.value,
+        //         "Id":this.state.selectedRegionToEdit.Id
+        //     }).then(data => {
+        //         this.getRegions();
+        //         document.querySelector('#standard-region').value = null
+        //         this.setState(() => ({
+        //             addMode: false,
+        //             selectedRegionToEdit: null
+        //         }));
+        //     }).catch(e => {
+        //         console.log(e);
+        //     })
+        // }else {
+        //     location_addRegion({
+        //         "Name": e.target.region_name.value,
+        //         "City": this.props.city
+        //     }).then(data => {
+        //         this.getRegions();
+        //         document.querySelector('#standard-region').value = null
+        //     }).catch(e => {
+        //         console.log(e);
+        //     })
+        // }
     }
 
     closeModalDelete = ()=> {
-        this.setState(() => ({
-            selectedRegionToDelete: null
-        }));
+        // this.setState(() => ({
+        //     selectedRegionToDelete: null
+        // }));
     };
     openModalDelete =(e,region)=>{
-        this.setState(() => ({
-            selectedRegionToDelete: region
-        }));
+        // this.setState(() => ({
+        //     selectedRegionToDelete: region
+        // }));
     };
 
     prepareEditRegion=(e,region)=>{
@@ -220,42 +216,42 @@ class regionManagement extends Component {
     }
 
     renderModalDelete = (classes,regionToDelete)=>{
-        return(<>
-                <Modal show={regionToDelete} onHide={this.closeModalDelete}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>delete</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>حذف {regionToDelete&&regionToDelete.Name}</Modal.Body>
-                    <Modal.Footer>
-                        <Button className={classes.button_edit} onClick={this.closeModalDelete}>
-                            خیر
-                        </Button>
-                        <Button className={classes.button_danger} onClick={(e) => this.deleteRegion(e, regionToDelete)}>
-                            حذف
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </>
-        );
+        // return(<>
+        //         <Modal show={regionToDelete} onHide={this.closeModalDelete}>
+        //             <Modal.Header closeButton>
+        //                 <Modal.Title>delete</Modal.Title>
+        //             </Modal.Header>
+        //             <Modal.Body>حذف {regionToDelete&&regionToDelete.Name}</Modal.Body>
+        //             <Modal.Footer>
+        //                 <Button className={classes.button_edit} onClick={this.closeModalDelete}>
+        //                     خیر
+        //                 </Button>
+        //                 <Button className={classes.button_danger} onClick={(e) => this.deleteRegion(e, regionToDelete)}>
+        //                     حذف
+        //                 </Button>
+        //             </Modal.Footer>
+        //         </Modal>
+        //     </>
+        // );
     }
     renderRegions=(region,index)=>{
-        const { classes } = this.props;
-        return (
-            <tr key={index}>
-                <td>{region.Id}</td>
-                <td>{region.Name}</td>
-                <td>
-                    <Button variant="contained" color="primary" className={classes.button_edit} onClick={e=>this.prepareEditRegion(e,region)}>
-                        ویرایش
-                    </Button>
-                    <Button variant="contained" color="primary" className={classes.button_danger} onClick={(e)=>this.openModalDelete(e,region)}>
-                        حذف
-                    </Button>
-
-                </td>
-            </tr>
-        )
+        // const { classes } = this.props;
+        // return (
+        //     <tr key={index}>
+        //         <td>{region.Id}</td>
+        //         <td>{region.Name}</td>
+        //         <td>
+        //             <Button variant="contained" color="primary" className={classes.button_edit} onClick={e=>this.prepareEditRegion(e,region)}>
+        //                 ویرایش
+        //             </Button>
+        //             <Button variant="contained" color="primary" className={classes.button_danger} onClick={(e)=>this.openModalDelete(e,region)}>
+        //                 حذف
+        //             </Button>
+        //
+        //         </td>
+        //     </tr>
+        // )
     }
 }
 
-export default withStyles(style)(regionManagement);
+export default withStyles(style)(ClientsManagement);

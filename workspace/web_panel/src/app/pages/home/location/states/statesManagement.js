@@ -4,7 +4,12 @@ import {Button, Paper, TextField} from '@material-ui/core';
 import {withStyles} from '@material-ui/styles';
 import AddIcon from "@material-ui/icons/Add";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
-import {location_addState, location_deleteState, location_getAllState} from "../../../../api/locations.api";
+import {
+    location_addState,
+    location_getAllState,
+    location_updateState,
+    location_deleteState
+} from "../../../../api/locations.api";
 import CitiesManagement from "../cities/citiesManagement";
 import {Modal, Table} from "react-bootstrap";
 
@@ -54,7 +59,8 @@ class StatesManagement extends Component {
         super(props);
         this.state = {
             addMode: false,
-            selectedState: null,
+            selectedStateToOpenCities: null,
+            selectedStateToEdit: null,
             selectedStateToDelete: null,
             allStatesArray: []
         };
@@ -110,45 +116,36 @@ class StatesManagement extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.allStatesArray.map(this.renderStates)}
+                        {this.state.allStatesArray.map(this.renderStateRow)}
                         </tbody>
                     </Table>
                 </PortletBody>
             </Portlet>
-            {this.state.selectedState &&
-            <CitiesManagement state={this.state.selectedState}/>
+            {this.state.selectedStateToOpenCities &&
+            <CitiesManagement state={this.state.selectedStateToOpenCities}/>
             }
+            {this.renderModalDelete(classes,this.state.selectedStateToDelete)}
 
-            <Modal show={this.state.selectedStateToDelete} onHide={this.handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>delete</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>delete {this.state.selectedStateToDelete&&this.state.selectedStateToDelete.Id}</Modal.Body>
-                <Modal.Footer>
-                    <Button className={classes.button_edit} onClick={this.handleClose}>
-                        خیر
-                    </Button>
-                    <Button className={classes.button_danger} onClick={(e) => this.deleteState(e, this.state.selectedStateToDelete)}>
-                        حذف
-                    </Button>
-                </Modal.Footer>
-            </Modal>
         </>
 
     };
-
     componentDidMount() {
         this.getAllStates();
     }
-
-
     toggleAddMode(e) {
         e.preventDefault()
         this.setState(() => ({
-            addMode: !this.state.addMode
+            addMode: !this.state.addMode,
+            selectedStateToEdit: null
+        }));
+        document.querySelector('#standard-name').value = ""
+    }
+    openAddMode(e) {
+        e.preventDefault()
+        this.setState(() => ({
+            addMode: true
         }));
     }
-
     getAllStates() {
         location_getAllState().then(data => {
 
@@ -158,68 +155,108 @@ class StatesManagement extends Component {
         }).catch(e => {
             console.log(e);
         })
-    };
-
-    selectState(e, state) {
+    }
+    openCities(e, state) {
         e.preventDefault()
         this.setState(() => ({
-            selectedState: state
+            selectedStateToOpenCities: state
         }));
     }
-
     deleteState(e, state) {
         e.preventDefault()
         console.log(state.Id)
         location_deleteState(state)
             .then(data => {
                 this.getAllStates()
-                this.handleClose()
+                this.closeModalDelete()
             }).catch(e => {
             console.log(e)
         })
     }
-
     addState(e) {
         e.preventDefault()
-        console.log(e.target.state_name.value)
-        location_addState({
-            "Name": e.target.state_name.value
-        }).then(data => {
-            this.getAllStates();
-            console.log(data);
-        }).catch(e => {
-            console.log(e);
-        })
+        if(this.state.selectedStateToEdit){
+            location_updateState({
+                "Name": e.target.state_name.value,
+                "Id":this.state.selectedStateToEdit.Id
+            }).then(data => {
+                this.getAllStates();
+                document.querySelector('#standard-name').value = ""
+                this.setState(() => ({
+                    addMode: false,
+                    selectedStateToEdit: null
+                }));
+            }).catch(e => {
+                console.log(e);
+            })
+        }else{
+            location_addState({
+                "Name": e.target.state_name.value
+            }).then(data => {
+                this.getAllStates();
+                document.querySelector('#standard-name').value = ""
+                console.log(data);
+            }).catch(e => {
+                console.log(e);
+            })
+        }
     }
-
-    handleClose() {
+    closeModalDelete = ()=> {
         this.setState(() => ({
             selectedStateToDelete: null
         }));
     };
-    handleShow(e,state){
+    openModalDelete =(e,state)=>{
         this.setState(() => ({
             selectedStateToDelete: state
         }));
     };
-    renderStates = (state, index) => {
+    prepareEditState=(e,State)=>{
+
+        e.preventDefault()
+        this.openAddMode(e)
+        this.setState(() => ({
+            selectedStateToEdit: State
+        }));
+        document.querySelector('#standard-name').value = State.Name
+    }
+    renderModalDelete = (classes,stateToDelete)=>{
+        return(<>
+                <Modal show={stateToDelete} onHide={this.closeModalDelete}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>delete</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>حذف {stateToDelete&&stateToDelete.Name}</Modal.Body>
+                    <Modal.Footer>
+                        <Button className={classes.button_edit} onClick={this.closeModalDelete}>
+                            خیر
+                        </Button>
+                        <Button className={classes.button_danger} onClick={(e) => this.deleteState(e, stateToDelete)}>
+                            حذف
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+        </>
+        );
+    }
+    renderStateRow = (state, index) => {
         const {classes} = this.props;
-        const _state = state;
         return (
             <>
                 <tr key={index}>
-                    <td>{_state.Id}</td>
-                    <td>{_state.Name}</td>
+                    <td>{state.Id}</td>
+                    <td>{state.Name}</td>
                     <td>
                         <Button variant="contained" color="primary" className={classes.button}
-                                onClick={(e) => this.selectState(e, _state)}>
+                                onClick={(e) => this.openCities(e, state)}>
                             مشاهده شهر ها
                         </Button>
-                        <Button variant="contained" color="primary" className={classes.button_edit}>
+                        <Button variant="contained" color="primary" className={classes.button_edit}
+                                onClick={(e)=>this.prepareEditState(e,state)}>
                             ویرایش
                         </Button>
                         <Button variant="contained" color="primary" className={classes.button_danger}
-                                onClick={(e) => this.handleShow(e, _state)}>
+                                onClick={(e) => this.openModalDelete(e, state)}>
                             حذف
                         </Button>
                     </td>

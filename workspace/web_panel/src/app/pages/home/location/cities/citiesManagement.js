@@ -5,10 +5,10 @@ import { withStyles } from '@material-ui/styles';
 import AddIcon from "@material-ui/icons/Add";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import {
-    location_addCity,
-    location_getCities_byState
+    location_addCity, location_deleteCity, location_deleteState,
+    location_getCities_byState, location_updateCity, location_updateState
 } from "../../../../api/locations.api";
-import {Table} from "react-bootstrap";
+import {Modal, Table} from "react-bootstrap";
 import RegionsManagement from "../regions/regionsManagement";
 
 const style = theme => ({
@@ -35,7 +35,8 @@ const style = theme => ({
         backgroundColor:"#aa2222",
         "&:hover":{
             backgroundColor:"#770d0d",
-        }
+        },
+        color: "#fff"
     },
     button_edit: {
         marginLeft: theme.spacing(1),
@@ -43,7 +44,8 @@ const style = theme => ({
         backgroundColor:"#227aaa",
         "&:hover":{
             backgroundColor:"#124a88",
-        }
+        },
+        color: "#fff"
     },
     container: {
         display: "inline-grid"
@@ -54,7 +56,9 @@ class citiesManagement extends Component {
         super(props);
         this.state = {
             addMode: false,
-            selectedCity: null,
+            selectedCityToOpenRegions: null,
+            selectedCityToEdit: null,
+            selectedCityToDelete: null,
             allCitiesArray: []
         };
     }
@@ -86,7 +90,7 @@ class citiesManagement extends Component {
                         <form className={classes.container} noValidate autoComplete="off" onSubmit={(e)=>this.addCity(e)}>
                             <p>افزودن شهر :</p>
                             <TextField
-                                id="standard-name"
+                                id="standard-city"
                                 label="نام شهر"
                                 className={classes.textField}
                                 name="city_name"
@@ -108,53 +112,48 @@ class citiesManagement extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {this.state.allCitiesArray.map(this.renderCities)}
+                        {this.state.allCitiesArray.map(this.renderCitiesRow)}
                         </tbody>
                     </Table>
                 </PortletBody>
             </Portlet>
-            {this.state.selectedCity&&
-            <RegionsManagement city={this.state.selectedCity} />}
+            {this.state.selectedCityToOpenRegions&&
+            <RegionsManagement city={this.state.selectedCityToOpenRegions} />}
+
+            {this.renderModalDelete(classes,this.state.selectedCityToDelete)}
 
         </>
 
     };
-
     componentDidMount() {
-        this.getCitiesByState(this.props.state);
+        this.getCities();
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(prevProps.state.Id !== this.props.state.Id){
-            this.getCitiesByState(this.props.state);
+            this.getCities();
             this.setState(() => ({
                 addMode: false,
-                selectedCity: null,
+                selectedCityToOpenRegions: null,
             }));
 
         }
     }
-
-    toggleAddMode(e){
+    toggleAddMode(e) {
         e.preventDefault()
         this.setState(() => ({
-            addMode: !this.state.addMode
+            addMode: !this.state.addMode,
+            selectedCityToEdit: null
+        }));
+        document.querySelector('#standard-city').value = ""
+    }
+    openAddMode(e) {
+        e.preventDefault()
+        this.setState(() => ({
+            addMode: true
         }));
     }
-
-    addCity(e) {
-        e.preventDefault()
-        location_addCity({
-            "Name": e.target.city_name.value,
-            "State": this.props.state
-        }).then(data=>{
-            this.getCitiesByState(this.props.state);
-        }).catch(e=>{
-            console.log(e);
-        })
-    }
-    getCitiesByState(state){
-        console.log(state)
-        location_getCities_byState(state).then(data=>{
+    getCities(){
+        location_getCities_byState(this.props.state).then(data=>{
             this.setState(() => ({
                 allCitiesArray: data.data.Data
             }));
@@ -162,18 +161,93 @@ class citiesManagement extends Component {
             console.log("fail "+e)
         })
     };
-    selectCity(e,city){
+    openRegions(e,city){
         e.preventDefault()
         this.setState(() => ({
-            selectedCity: city
+            selectedCityToOpenRegions: city
         }));
     }
     deleteCity(e,city){
         e.preventDefault()
-
+        console.log("delete : "+city.Id)
+        location_deleteCity({
+            Id:city.Id
+        })
+            .then(data => {
+                this.getCities()
+                this.closeModalDelete()
+            }).catch(e => {
+            console.log(e)
+        })
     }
+    addCity(e) {
+        e.preventDefault()
 
-    renderCities=(city,index)=>{
+        if(this.state.selectedCityToEdit){
+            location_updateCity({
+                "Name": e.target.city_name.value,
+                "Id":this.state.selectedCityToEdit.Id
+            }).then(data => {
+                this.getCities();
+                document.querySelector('#standard-city').value = null
+                this.setState(() => ({
+                    addMode: false,
+                    selectedCityToEdit: null
+                }));
+            }).catch(e => {
+                console.log(e);
+            })
+        }else{
+        location_addCity({
+            "Name": e.target.city_name.value,
+            "State": this.props.state
+        }).then(data=>{
+            this.getCities();
+            document.querySelector('#standard-city').value = null
+        }).catch(e=>{
+            console.log(e);
+        })
+        }
+    }
+    closeModalDelete = ()=> {
+        this.setState(() => ({
+            selectedCityToDelete: null
+        }));
+    };
+    openModalDelete =(e,state)=>{
+        this.setState(() => ({
+            selectedCityToDelete: state
+        }));
+    };
+    prepareEditCity=(e,State)=>{
+
+        e.preventDefault()
+        this.openAddMode(e)
+        this.setState(() => ({
+            selectedCityToEdit: State
+        }));
+        document.querySelector('#standard-city').value = State.Name
+    }
+    renderModalDelete = (classes,CityToDelete)=>{
+        return(<>
+                <Modal show={CityToDelete} onHide={this.closeModalDelete}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>delete</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>حذف {CityToDelete&&CityToDelete.Name}</Modal.Body>
+                    <Modal.Footer>
+                        <Button className={classes.button_edit} onClick={this.closeModalDelete}>
+                            خیر
+                        </Button>
+                        <Button className={classes.button_danger} onClick={(e) => this.deleteCity(e, CityToDelete)}>
+                            حذف
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        );
+    }
+    renderCitiesRow=(city,index)=>{
         const { classes } = this.props;
         return (
             <tr key={index}>
@@ -181,13 +255,16 @@ class citiesManagement extends Component {
                 <td>{city.Name}</td>
                 <td>
 
-                    <Button variant="contained" color="primary" className={classes.button} onClick={(e)=>this.selectCity(e,city)}>
+                    <Button variant="contained" color="primary" className={classes.button}
+                            onClick={(e)=>this.openRegions(e,city)}>
                         مشاهده محله ها
                     </Button>
-                    <Button variant="contained" color="primary" className={classes.button_edit}>
+                    <Button variant="contained" color="primary" className={classes.button_edit}
+                            onClick={(e)=>this.prepareEditCity(e,city)}>
                         ویرایش
                     </Button>
-                    <Button variant="contained" color="primary" className={classes.button_danger} onClick={(e)=>this.deleteCity(e,city)}>
+                    <Button variant="contained" color="primary" className={classes.button_danger}
+                            onClick={(e)=>this.openModalDelete(e, city)}>
                         حذف
                     </Button>
 
