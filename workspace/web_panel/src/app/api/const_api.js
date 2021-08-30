@@ -12,6 +12,7 @@ export let LocationApi = {
     getCitiesByState : "v1/location/getCitiesByState",
     getRegionsByCity : "v1/location/getRegionsByCity",
     addState : "v1/location/addState",
+    deleteState : "v1/location/deleteState",
     addCity : "v1/location/addCity",
     addRegion : "v1/location/addRegion",
     addPlace : "v1/location/addPlace",

@@ -22,12 +22,11 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 
     @Transactional
     @Override
-    public void deleteById(ID id) {
-
-        BaseEntity deleted = entityManager.find(BaseEntity.class, id);
-        deleted.setDeleted(true);
-        save((T) deleted);
-        return;
+    public void deleteById2(T item) {
+//        BaseEntity deleted = entityManager.find(BaseEntity.class, item);
+//        deleted.setDeleted(true);
+        ((BaseEntity)item).setDeleted(true);
+        save((T) item);
 
     }
 }

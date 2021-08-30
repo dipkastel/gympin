@@ -24,6 +24,10 @@ export function location_addState(state) {
     return axios.post(LocationApi.addState,state);
 }
 
+export function location_deleteState(state) {
+    return axios.delete(LocationApi.deleteState,{params:state});
+}
+
 export function location_addCity(city) {
     return axios.post(LocationApi.addCity,city);
 }

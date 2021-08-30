@@ -69,7 +69,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void deleteState(StateParam stateParam) {
-        stateRepository.deleteById(stateParam.getId());
+        var item = stateRepository.findById(stateParam.getId()).get();
+        stateRepository.deleteById2(item);
     }
 
     @Override

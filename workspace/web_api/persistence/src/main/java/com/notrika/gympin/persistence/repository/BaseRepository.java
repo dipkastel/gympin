@@ -9,5 +9,5 @@ import java.io.Serializable;
 @NoRepositoryBean
 public interface BaseRepository<T, ID extends Serializable> extends JpaRepository<T, ID> {
 
-    void deleteById(ID id);
+    void deleteById2(T item);
 }
