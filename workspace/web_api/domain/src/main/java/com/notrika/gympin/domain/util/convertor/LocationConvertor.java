@@ -1,13 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.location.dto.CityDto;
-import com.notrika.gympin.common.location.dto.PlaceDto;
-import com.notrika.gympin.common.location.dto.RegionDto;
-import com.notrika.gympin.common.location.dto.StateDto;
-import com.notrika.gympin.dao.location.City;
-import com.notrika.gympin.dao.location.Place;
-import com.notrika.gympin.dao.location.Region;
-import com.notrika.gympin.dao.location.State;
+import com.notrika.gympin.common.location.dto.*;
+import com.notrika.gympin.dao.location.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -184,6 +178,10 @@ public class LocationConvertor {
             return null;
 
         return states.stream().map((x) -> placeToPlaceDto(x, innerCollectionType)).collect(Collectors.toCollection(supplierFactory(returnCollectionType)));
+    }
+
+    public static PlaceOwnerDto placeOwnerToPlaceOwnerDto(PlaceOwner placeOwner){
+        return PlaceOwnerDto.builder().id(placeOwner.getId()).createdDate(placeOwner.getCreatedDate()).updatedDate(placeOwner.getUpdatedDate()).isDeleted(placeOwner.isDeleted()).placeDto(placeToPlaceDto(placeOwner.getPlace(), CollectionType.LIST)).userDto(UserConvertor.userToUserDto(placeOwner.getUser())).userRole(placeOwner.getUserRoles()).build();
     }
 
     public enum CollectionType {

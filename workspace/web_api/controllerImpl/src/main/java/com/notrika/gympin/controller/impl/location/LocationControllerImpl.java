@@ -6,6 +6,7 @@ import com.notrika.gympin.common.location.dto.*;
 import com.notrika.gympin.common.location.param.*;
 import com.notrika.gympin.common.location.service.LocationService;
 import com.notrika.gympin.common.primitive.param.LongParam;
+import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,12 +25,14 @@ public class LocationControllerImpl implements LocationController {
     //state
 
     @Override
+    //@RolesAllowed({"ADMIN"})
     @PostMapping("/addState")
     public ResponseEntity<StateDto> addState(@RequestBody StateParam stateParam) {
         return new ResponseEntity<StateDto>(locationService.addState(stateParam), HttpStatus.CREATED);
     }
 
     @Override
+    //@RolesAllowed({"ADMIN"})
     @PutMapping("/updateState")
     public ResponseEntity<StateDto> updateState(@RequestBody StateParam stateParam) {
         return new ResponseEntity<StateDto>(locationService.updateState(stateParam), HttpStatus.OK);
@@ -48,6 +51,7 @@ public class LocationControllerImpl implements LocationController {
     }
 
     @Override
+    //@RolesAllowed({"ADMIN"})
     @DeleteMapping("/deleteState")
     public ResponseEntity<BaseDto> deleteState(StateParam stateParam) {
         locationService.deleteState(stateParam);
@@ -181,5 +185,17 @@ public class LocationControllerImpl implements LocationController {
     @GetMapping("/getPlaceByUser")
     public ResponseEntity<List<PlaceDto>> getPlaceByUser(UserParam userParam) {
         return new ResponseEntity<List<PlaceDto>>(locationService.getPlaceByUser(userParam), HttpStatus.OK);
+    }
+
+    @Override
+    @PostMapping("/addPlaceOwner")
+    public ResponseEntity<PlaceOwnerDto> addPlaceOwner(PlaceOwnerParam placeOwnerParam) {
+        return new ResponseEntity<PlaceOwnerDto>(locationService.addPlaceOwner(placeOwnerParam),HttpStatus.CREATED);
+    }
+
+    @Override
+    @GetMapping("/getOwnersPlace")
+    public ResponseEntity<List<UserDto>> getOwnersPlace(PlaceParam placeParam) {
+        return new ResponseEntity<List<UserDto>>(locationService.getOwnersPlace(placeParam),HttpStatus.OK);
     }
 }

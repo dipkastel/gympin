@@ -6,12 +6,13 @@ import com.notrika.gympin.common.location.service.LocationService;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.option.place.service.PlaceOptionService;
 import com.notrika.gympin.common.primitive.param.LongParam;
+import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.dao.location.*;
 import com.notrika.gympin.dao.option.place.PlaceOption;
 import com.notrika.gympin.dao.user.User;
-import com.notrika.gympin.domain.util.convertor.GeneralConvertor;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
+import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,22 +40,28 @@ public class LocationServiceImpl implements LocationService {
     @Autowired
     private PlaceOptionService placeOptionService;
 
+    @Autowired
+    private PlaceOwnerRepository placeOwnerRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
     //state
 
     @Override
     public StateDto addState(StateParam stateParam) {
         State initState = State.builder().name(stateParam.getName()).build();
-        GeneralConvertor.fillBaseFieldsToCreate(stateParam, initState);
-        State state = stateRepository.save(initState);
+        State state = stateRepository.add(initState);
         return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
     }
+
     @Override
     public StateDto updateState(StateParam stateParam) {
-        State initState = State.builder().name(stateParam.getName()).build();
-        GeneralConvertor.fillBaseFieldsToUpdate(stateParam, initState);
-        State state = stateRepository.save(initState);
+        State initState = State.builder().id(stateParam.getId()).name(stateParam.getName()).build();
+        State state = stateRepository.update(initState);
         return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
     }
+
     @Override
     public List<StateDto> getAllState() {
         List<State> stateList = stateRepository.findAll();
@@ -69,7 +76,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void deleteState(StateParam stateParam) {
-        var item = stateRepository.findById(stateParam.getId()).get();
+        var item = stateRepository.getById(stateParam.getId());
         stateRepository.deleteById2(item);
     }
 
@@ -77,19 +84,17 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public CityDto addCity(CityParam cityParam) {
-        var state = stateRepository.findById(cityParam.getState().getId()).get();
+        var state = stateRepository.getById(cityParam.getState().getId());
         City initCity = City.builder().name(cityParam.getName()).state(state).build();
-        GeneralConvertor.fillBaseFieldsToCreate(cityParam, initCity);
-        City city = cityRepository.save(initCity);
+        City city = cityRepository.add(initCity);
         return LocationConvertor.cityToCityDto(city, LocationConvertor.CollectionType.LIST);
     }
 
     @Override
     public CityDto updateCity(CityParam cityParam) {
-        var state = cityRepository.findById(cityParam.getId()).get().getState();
-        City initCity = City.builder().name(cityParam.getName()).state(state).build();
-        GeneralConvertor.fillBaseFieldsToUpdate(cityParam, initCity);
-        City city = cityRepository.save(initCity);
+        var state = cityRepository.getById(cityParam.getId()).getState();
+        City initCity = City.builder().id(cityParam.getId()).name(cityParam.getName()).state(state).build();
+        City city = cityRepository.update(initCity);
         return LocationConvertor.cityToCityDto(city, LocationConvertor.CollectionType.LIST);
     }
 
@@ -101,7 +106,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void deleteCity(CityParam cityParam) {
-        var item = cityRepository.findById(cityParam.getId()).get();
+        var item = cityRepository.getById(cityParam.getId());
         cityRepository.deleteById2(item);
     }
 
@@ -122,19 +127,17 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public RegionDto addRegion(RegionParam regionParam) {
-        var city = cityRepository.findById(regionParam.getCity().getId()).get();
+        var city = cityRepository.getById(regionParam.getCity().getId());
         Region initRegion = Region.builder().name(regionParam.getName()).city(city).build();
-        GeneralConvertor.fillBaseFieldsToCreate(regionParam, initRegion);
-        Region region = regionRepository.save(initRegion);
+        Region region = regionRepository.add(initRegion);
         return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
     }
 
     @Override
     public RegionDto updateRegion(RegionParam regionParam) {
-        var city = regionRepository.findById(regionParam.getId()).get().getCity();
-        Region initRegion = Region.builder().name(regionParam.getName()).city(city).build();
-        GeneralConvertor.fillBaseFieldsToUpdate(regionParam, initRegion);
-        Region region = regionRepository.save(initRegion);
+        var city = regionRepository.getById(regionParam.getId()).getCity();
+        Region initRegion = Region.builder().id(regionParam.getId()).name(regionParam.getName()).city(city).build();
+        Region region = regionRepository.update(initRegion);
         return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
     }
 
@@ -160,7 +163,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public void deleteRegion(RegionParam regionParam) {
 
-        var item = regionRepository.findById(regionParam.getId()).get();
+        var item = regionRepository.getById(regionParam.getId());
         regionRepository.deleteById2(item);
     }
 
@@ -168,18 +171,16 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public PlaceDto addPlace(PlaceParam placeParam) {
-        var region = regionRepository.findById(placeParam.getRegion().getId()).get();
+        var region = regionRepository.getById(placeParam.getRegion().getId());
         Place initPlace = Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(region).build();
-        GeneralConvertor.fillBaseFieldsToCreate(placeParam, initPlace);
-        Place place = placeRepository.save(initPlace);
+        Place place = placeRepository.add(initPlace);
         return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);
     }
 
     @Override
     public PlaceDto updatePlace(PlaceParam placeParam) {
-        Place initPlace = Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(Region.builder().id(placeParam.getRegion().getId()).build()).build();
-        GeneralConvertor.fillBaseFieldsToUpdate(placeParam, initPlace);
-        Place place = placeRepository.save(initPlace);
+        Place initPlace = Place.builder().id(placeParam.getId()).name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(Region.builder().id(placeParam.getRegion().getId()).build()).build();
+        Place place = placeRepository.update(initPlace);
         return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);
     }
 
@@ -204,7 +205,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void deletePlace(PlaceParam placeParam) {
-        var item = placeRepository.findById(placeParam.getId()).get();
+        var item = placeRepository.getById(placeParam.getId());
         placeRepository.deleteById2(item);
     }
 
@@ -214,7 +215,7 @@ public class LocationServiceImpl implements LocationService {
             PlaceOptionDto placeOptionDto = placeOptionService.addPlaceOption(optionOfPlaceParam.getPlaceOptionParam());
             optionOfPlaceParam.getPlaceOptionParam().setId(placeOptionDto.getId());
         }
-        OptionOfPlace optionOfPlace = optionOfPlaceRepository.save(OptionOfPlace.builder().place(Place.builder().id(optionOfPlaceParam.getPlaceParam().getId()).build()).placeOption(PlaceOption.builder().id(optionOfPlaceParam.getPlaceOptionParam().getId()).build()).build());
+        OptionOfPlace optionOfPlace = optionOfPlaceRepository.add(OptionOfPlace.builder().place(Place.builder().id(optionOfPlaceParam.getPlaceParam().getId()).build()).placeOption(PlaceOption.builder().id(optionOfPlaceParam.getPlaceOptionParam().getId()).build()).build());
         return OptionOfPlaceDto.builder().id(optionOfPlace.getId()).createdDate(optionOfPlace.getCreatedDate()).updatedDate(optionOfPlace.getUpdatedDate()).isDeleted(optionOfPlace.isDeleted()).place(PlaceDto.builder().id(optionOfPlace.getPlace().getId()).build()).placeOption(PlaceOptionDto.builder().id(optionOfPlace.getPlaceOption().getId()).build()).build();
     }
 
@@ -223,5 +224,20 @@ public class LocationServiceImpl implements LocationService {
         User user = User.builder().id(userParam.getId()).userRoles(userParam.getRole()).build();
         List<Place> placeByUser = placeRepository.getPlaceByUser(user);
         return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeByUser, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
+    }
+
+    @Override
+    public PlaceOwnerDto addPlaceOwner(PlaceOwnerParam placeOwnerParam) {
+        Place place = placeRepository.getById(placeOwnerParam.getPlaceParam().getId());
+        User user = userRepository.getById(placeOwnerParam.getUserParam().getId());
+        PlaceOwner initPlaceOwner = PlaceOwner.builder().place(place).user(user).userRoles(placeOwnerParam.getUserRole()).build();
+        PlaceOwner placeOwner = placeOwnerRepository.add(initPlaceOwner);
+        return LocationConvertor.placeOwnerToPlaceOwnerDto(placeOwner);
+    }
+
+    @Override
+    public List<UserDto> getOwnersPlace(PlaceParam placeParam) {
+        List<User> ownersPlace = userRepository.getOwnersPlace(Place.builder().id(placeParam.getId()).build());
+        return UserConvertor.usersToUserDtos(ownersPlace);
     }
 }
