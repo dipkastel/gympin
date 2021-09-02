@@ -33,10 +33,10 @@ public class BaseEntity {
 
     private boolean isDeleted = false;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private User creatorUser;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private User updaterUser;
 
     @Override
