@@ -17,6 +17,7 @@ public class UserConvertor {
         UserDto dto = new UserDto();
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
+        if (user.getUserRoles()!=null)
         dto.setRole(UserRoles.valueOf(user.getUserRoles().name()));
         dto.setPhoneNumber(user.getPhoneNumber());
         return dto;
