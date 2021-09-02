@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends BaseRepository<User, Long> {
 
-    //@Query("select u from User u,PlaceOwner po where u.id=po.user.id and po.place.id=:#{#place.id}")
+    @Query("select u from User u,PlaceOwner po where u.id=po.user.id and po.place.id=:#{#place.id}")
     List<User> getOwnersPlace(Place place);
 
     //findBy + fieldName
