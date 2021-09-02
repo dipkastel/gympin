@@ -5,7 +5,6 @@ import com.notrika.gympin.common.option.place.param.PlaceOptionParam;
 import com.notrika.gympin.common.option.place.service.PlaceOptionService;
 import com.notrika.gympin.common.primitive.param.LongParam;
 import com.notrika.gympin.dao.option.place.PlaceOption;
-import com.notrika.gympin.domain.util.convertor.GeneralConvertor;
 import com.notrika.gympin.domain.util.convertor.OptionConvertor;
 import com.notrika.gympin.persistence.repository.PlaceOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +21,14 @@ public class PlaceOptionServiceImpl implements PlaceOptionService {
     @Override
     public PlaceOptionDto addPlaceOption(PlaceOptionParam placeOptionParam) {
         PlaceOption initPlaceOption = PlaceOption.builder().name(placeOptionParam.getName()).build();
-        GeneralConvertor.fillBaseFieldsToCreate(placeOptionParam, initPlaceOption);
-        PlaceOption placeOption = placeOptionRepository.save(initPlaceOption);
+        PlaceOption placeOption = placeOptionRepository.add(initPlaceOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }
 
     @Override
     public PlaceOptionDto updatePLaceOption(PlaceOptionParam placeOptionParam) {
         PlaceOption initPlaceOption = PlaceOption.builder().name(placeOptionParam.getName()).build();
-        GeneralConvertor.fillBaseFieldsToUpdate(placeOptionParam, initPlaceOption);
-        PlaceOption placeOption = placeOptionRepository.save(initPlaceOption);
+        PlaceOption placeOption = placeOptionRepository.update(initPlaceOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }
 
@@ -49,6 +46,7 @@ public class PlaceOptionServiceImpl implements PlaceOptionService {
 
     @Override
     public void deletePlaceOption(PlaceOptionParam placeOptionParam) {
-        placeOptionRepository.deleteById(placeOptionParam.getId());
+        PlaceOption placeOption = placeOptionRepository.getById(placeOptionParam.getId());
+        placeOptionRepository.deleteById2(placeOption);
     }
 }

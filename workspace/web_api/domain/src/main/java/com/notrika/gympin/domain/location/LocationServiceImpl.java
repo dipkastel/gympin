@@ -12,6 +12,7 @@ import com.notrika.gympin.dao.location.*;
 import com.notrika.gympin.dao.option.place.PlaceOption;
 import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
+import com.notrika.gympin.domain.util.convertor.OptionConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public CityDto addCity(CityParam cityParam) {
-        var state = stateRepository.getById(cityParam.getState().getId());
+        State state = stateRepository.getById(cityParam.getState().getId());
         City initCity = City.builder().name(cityParam.getName()).state(state).build();
         City city = cityRepository.add(initCity);
         return LocationConvertor.cityToCityDto(city, LocationConvertor.CollectionType.LIST);
@@ -92,8 +93,11 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public CityDto updateCity(CityParam cityParam) {
-        var state = cityRepository.getById(cityParam.getId()).getState();
-        City initCity = City.builder().id(cityParam.getId()).name(cityParam.getName()).state(state).build();
+        City initCity = City.builder().id(cityParam.getId()).name(cityParam.getName()).build();
+        if(cityParam.getState().getId()!=null && cityParam.getState().getId()>0) {
+            State state = stateRepository.getById(cityParam.getState().getId());
+            initCity.setState(state);
+        }
         City city = cityRepository.update(initCity);
         return LocationConvertor.cityToCityDto(city, LocationConvertor.CollectionType.LIST);
     }
@@ -127,7 +131,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public RegionDto addRegion(RegionParam regionParam) {
-        var city = cityRepository.getById(regionParam.getCity().getId());
+        City city = cityRepository.getById(regionParam.getCity().getId());
         Region initRegion = Region.builder().name(regionParam.getName()).city(city).build();
         Region region = regionRepository.add(initRegion);
         return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
@@ -135,8 +139,11 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public RegionDto updateRegion(RegionParam regionParam) {
-        var city = regionRepository.getById(regionParam.getId()).getCity();
-        Region initRegion = Region.builder().id(regionParam.getId()).name(regionParam.getName()).city(city).build();
+        Region initRegion = Region.builder().id(regionParam.getId()).name(regionParam.getName()).build();
+        if(regionParam.getCity().getId()!=null && regionParam.getCity().getId()>0) {
+            City city = cityRepository.getById(regionParam.getId());
+            initRegion.setCity(city);
+        }
         Region region = regionRepository.update(initRegion);
         return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
     }
@@ -162,7 +169,6 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void deleteRegion(RegionParam regionParam) {
-
         var item = regionRepository.getById(regionParam.getId());
         regionRepository.deleteById2(item);
     }
@@ -171,7 +177,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public PlaceDto addPlace(PlaceParam placeParam) {
-        var region = regionRepository.getById(placeParam.getRegion().getId());
+        Region region = regionRepository.getById(placeParam.getRegion().getId());
         Place initPlace = Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(region).build();
         Place place = placeRepository.add(initPlace);
         return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);
@@ -179,7 +185,11 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public PlaceDto updatePlace(PlaceParam placeParam) {
-        Place initPlace = Place.builder().id(placeParam.getId()).name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(Region.builder().id(placeParam.getRegion().getId()).build()).build();
+        Place initPlace = Place.builder().id(placeParam.getId()).name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).build();
+        if(placeParam.getRegion().getId()!=null && placeParam.getRegion().getId()>0) {
+            Region region = regionRepository.getById(placeParam.getRegion().getId());
+            initPlace.setRegion(region);
+        }
         Place place = placeRepository.update(initPlace);
         return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);
     }
@@ -211,11 +221,15 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public OptionOfPlaceDto addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam) {
+        PlaceOptionDto placeOptionDto;
         if (optionOfPlaceParam.getPlaceOptionParam().getId() == null) {
-            PlaceOptionDto placeOptionDto = placeOptionService.addPlaceOption(optionOfPlaceParam.getPlaceOptionParam());
+            placeOptionDto = placeOptionService.addPlaceOption(optionOfPlaceParam.getPlaceOptionParam());
             optionOfPlaceParam.getPlaceOptionParam().setId(placeOptionDto.getId());
+        }else{
+            placeOptionDto=placeOptionService.getPlaceOptionById(new LongParam(optionOfPlaceParam.getPlaceOptionParam().getId()));
         }
-        OptionOfPlace optionOfPlace = optionOfPlaceRepository.add(OptionOfPlace.builder().place(Place.builder().id(optionOfPlaceParam.getPlaceParam().getId()).build()).placeOption(PlaceOption.builder().id(optionOfPlaceParam.getPlaceOptionParam().getId()).build()).build());
+        Place place=placeRepository.getById(optionOfPlaceParam.getPlaceParam().getId());
+        OptionOfPlace optionOfPlace = optionOfPlaceRepository.add(OptionOfPlace.builder().place(place).placeOption(OptionConvertor.placeOptionDtoToPlaceOption(placeOptionDto)).build());
         return OptionOfPlaceDto.builder().id(optionOfPlace.getId()).createdDate(optionOfPlace.getCreatedDate()).updatedDate(optionOfPlace.getUpdatedDate()).isDeleted(optionOfPlace.isDeleted()).place(PlaceDto.builder().id(optionOfPlace.getPlace().getId()).build()).placeOption(PlaceOptionDto.builder().id(optionOfPlace.getPlaceOption().getId()).build()).build();
     }
 

@@ -53,7 +53,7 @@ public class LocationControllerImpl implements LocationController {
     @Override
     //@RolesAllowed({"ADMIN"})
     @DeleteMapping("/deleteState")
-    public ResponseEntity<BaseDto> deleteState(StateParam stateParam) {
+    public ResponseEntity<BaseDto> deleteState(@RequestBody StateParam stateParam) {
         locationService.deleteState(stateParam);
         return new ResponseEntity<BaseDto>(BaseDto.builder().id(stateParam.getId()).build(), HttpStatus.OK);
     }
@@ -80,7 +80,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @DeleteMapping("/deleteCity")
-    public ResponseEntity<BaseDto> deleteCity(CityParam cityParam) {
+    public ResponseEntity<BaseDto> deleteCity(@RequestBody CityParam cityParam) {
         locationService.deleteCity(cityParam);
         return new ResponseEntity<BaseDto>(BaseDto.builder().id(cityParam.getId()).build(), HttpStatus.OK);
     }
@@ -131,7 +131,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @DeleteMapping("/deleteRegion")
-    public ResponseEntity<BaseDto> deleteRegion(RegionParam regionParam) {
+    public ResponseEntity<BaseDto> deleteRegion(@RequestBody RegionParam regionParam) {
         locationService.deleteRegion(regionParam);
         return new ResponseEntity<BaseDto>(BaseDto.builder().id(regionParam.getId()).build(), HttpStatus.OK);
     }
@@ -170,14 +170,14 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @DeleteMapping("/deletePlace")
-    public ResponseEntity<BaseDto> deletePlace(PlaceParam placeParam) {
+    public ResponseEntity<BaseDto> deletePlace(@RequestBody PlaceParam placeParam) {
         locationService.deletePlace(placeParam);
         return new ResponseEntity<>(BaseDto.builder().id(placeParam.getId()).build(), HttpStatus.OK);
     }
 
     @Override
     @PostMapping("/addOptionOfPlace")
-    public ResponseEntity<OptionOfPlaceDto> addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam) {
+    public ResponseEntity<OptionOfPlaceDto> addOptionOfPlace(@RequestBody OptionOfPlaceParam optionOfPlaceParam) {
         return new ResponseEntity<OptionOfPlaceDto>(locationService.addOptionOfPlace(optionOfPlaceParam), HttpStatus.CREATED);
     }
 
@@ -189,7 +189,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @PostMapping("/addPlaceOwner")
-    public ResponseEntity<PlaceOwnerDto> addPlaceOwner(PlaceOwnerParam placeOwnerParam) {
+    public ResponseEntity<PlaceOwnerDto> addPlaceOwner(@RequestBody PlaceOwnerParam placeOwnerParam) {
         return new ResponseEntity<PlaceOwnerDto>(locationService.addPlaceOwner(placeOwnerParam),HttpStatus.CREATED);
     }
 

@@ -5,7 +5,6 @@ import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
 import com.notrika.gympin.common.sport.service.SportService;
 import com.notrika.gympin.dao.sport.Sport;
-import com.notrika.gympin.domain.util.convertor.GeneralConvertor;
 import com.notrika.gympin.domain.util.convertor.SportConvertor;
 import com.notrika.gympin.persistence.repository.SportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +21,14 @@ public class SportServiceImpl implements SportService {
     @Override
     public SportDto addSport(SportParam sportParam) {
         Sport initSport=Sport.builder().name(sportParam.getName()).build();
-        GeneralConvertor.fillBaseFieldsToCreate(sportParam,initSport);
-        Sport sport = sportRepository.save(initSport);
+        Sport sport = sportRepository.add(initSport);
         return SportConvertor.sportToSportDto(sport);
     }
 
     @Override
     public SportDto updateSport(SportParam sportParam) {
         Sport initSport=Sport.builder().name(sportParam.getName()).build();
-        GeneralConvertor.fillBaseFieldsToUpdate(sportParam,initSport);
-        Sport sport = sportRepository.save(initSport);
+        Sport sport = sportRepository.update(initSport);
         return SportConvertor.sportToSportDto(sport);
     }
 
@@ -49,6 +46,7 @@ public class SportServiceImpl implements SportService {
 
     @Override
     public void deleteSport(SportParam sportParam) {
-        sportRepository.deleteById(sportParam.getId());
+        Sport sport = sportRepository.getById(sportParam.getId());
+        sportRepository.deleteById2(sport);
     }
 }

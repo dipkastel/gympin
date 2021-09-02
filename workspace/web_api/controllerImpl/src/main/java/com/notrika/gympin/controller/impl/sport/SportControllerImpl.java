@@ -22,13 +22,13 @@ public class SportControllerImpl implements SportController {
 
     @Override
     @PostMapping("/addSport")
-    public ResponseEntity<SportDto> addSport(SportParam sportParam) {
+    public ResponseEntity<SportDto> addSport(@RequestBody SportParam sportParam) {
         return new ResponseEntity<SportDto>(sportService.addSport(sportParam), HttpStatus.CREATED);
     }
 
     @Override
     @PutMapping("/updateSport")
-    public ResponseEntity<SportDto> updateSport(SportParam sportParam) {
+    public ResponseEntity<SportDto> updateSport(@RequestBody SportParam sportParam) {
         return new ResponseEntity<SportDto>(sportService.updateSport(sportParam),HttpStatus.OK);
     }
 
@@ -46,7 +46,7 @@ public class SportControllerImpl implements SportController {
 
     @Override
     @DeleteMapping("/deleteSport")
-    public ResponseEntity<BaseDto> deleteSport(SportParam sportParam) {
+    public ResponseEntity<BaseDto> deleteSport(@RequestBody SportParam sportParam) {
         sportService.deleteSport(sportParam);
         return new ResponseEntity<BaseDto>(BaseDto.builder().id(sportParam.getId()).build(),HttpStatus.OK);
     }

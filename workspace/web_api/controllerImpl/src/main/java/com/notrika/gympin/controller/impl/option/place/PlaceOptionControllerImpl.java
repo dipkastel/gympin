@@ -22,13 +22,13 @@ public class PlaceOptionControllerImpl implements PlaceOptionController {
 
     @Override
     @PostMapping("/addPlaceOption")
-    public ResponseEntity<PlaceOptionDto> addPlaceOption(PlaceOptionParam placeOptionParam) {
+    public ResponseEntity<PlaceOptionDto> addPlaceOption(@RequestBody PlaceOptionParam placeOptionParam) {
         return new ResponseEntity<PlaceOptionDto>(placeOptionService.addPlaceOption(placeOptionParam), HttpStatus.CREATED);
     }
 
     @Override
     @PutMapping("/updatePLaceOption")
-    public ResponseEntity<PlaceOptionDto> updatePLaceOption(PlaceOptionParam placeOptionParam) {
+    public ResponseEntity<PlaceOptionDto> updatePLaceOption(@RequestBody PlaceOptionParam placeOptionParam) {
         return new ResponseEntity<PlaceOptionDto>(placeOptionService.updatePLaceOption(placeOptionParam), HttpStatus.OK);
     }
 
@@ -46,7 +46,7 @@ public class PlaceOptionControllerImpl implements PlaceOptionController {
 
     @Override
     @DeleteMapping("/deletePlaceOption")
-    public ResponseEntity<BaseDto> deletePlaceOption(PlaceOptionParam placeOptionParam) {
+    public ResponseEntity<BaseDto> deletePlaceOption(@RequestBody PlaceOptionParam placeOptionParam) {
         placeOptionService.deletePlaceOption(placeOptionParam);
         return new ResponseEntity<BaseDto>(BaseDto.builder().id(placeOptionParam.getId()).build(), HttpStatus.OK);
     }
