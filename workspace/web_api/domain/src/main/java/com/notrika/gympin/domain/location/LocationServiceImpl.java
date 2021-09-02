@@ -94,7 +94,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public CityDto updateCity(CityParam cityParam) {
         City initCity = City.builder().id(cityParam.getId()).name(cityParam.getName()).build();
-        if(cityParam.getState().getId()!=null && cityParam.getState().getId()>0) {
+        if(cityParam.getState()!=null&&cityParam.getState().getId()!=null && cityParam.getState().getId()>0) {
             State state = stateRepository.getById(cityParam.getState().getId());
             initCity.setState(state);
         }
@@ -140,7 +140,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public RegionDto updateRegion(RegionParam regionParam) {
         Region initRegion = Region.builder().id(regionParam.getId()).name(regionParam.getName()).build();
-        if(regionParam.getCity().getId()!=null && regionParam.getCity().getId()>0) {
+        if(regionParam.getCity()!=null&&regionParam.getCity().getId()!=null && regionParam.getCity().getId()>0) {
             City city = cityRepository.getById(regionParam.getId());
             initRegion.setCity(city);
         }
@@ -186,7 +186,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public PlaceDto updatePlace(PlaceParam placeParam) {
         Place initPlace = Place.builder().id(placeParam.getId()).name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).build();
-        if(placeParam.getRegion().getId()!=null && placeParam.getRegion().getId()>0) {
+        if(placeParam.getRegion()!=null&&placeParam.getRegion().getId()!=null && placeParam.getRegion().getId()>0) {
             Region region = regionRepository.getById(placeParam.getRegion().getId());
             initPlace.setRegion(region);
         }
