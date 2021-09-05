@@ -71,7 +71,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public StateDto getStateById(LongParam longParam) {
-        State state = stateRepository.getById(longParam.getValue());
+        State state = stateRepository.getById(longParam.getId());
         return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
     }
 

@@ -87,13 +87,17 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.7.2</version>
+        </dependency>
     </dependencies>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
+        <junit-jupiter.version>5.7.2</junit-jupiter.version>
     </properties>
 
     <build>

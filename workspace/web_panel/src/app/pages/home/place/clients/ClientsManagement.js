@@ -1,9 +1,8 @@
 import React, {Component} from "react";
-
 import {Button, Paper, TextField} from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import AddIcon from "@material-ui/icons/Add";
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import {Modal, Table} from "react-bootstrap";
 
 const style = theme => ({
@@ -95,7 +94,7 @@ class ClientsManagement extends Component {
                             </Button>
                         </form>
                     </Paper>
-                    <div className="kt-separator kt-separator--dashed"></div>
+                    <div className="kt-separator kt-separator--dashed"/>
                     <Table striped bordered hover className={classes.table}>
                         <thead>
                         <tr>

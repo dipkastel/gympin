@@ -27,4 +27,16 @@ export let LocationApi = {
     addPlace : "v1/location/addPlace",
     deletePlace : "v1/location/deletePlace",
     updatePlace : "v1/location/updatePlace",
+
 }
+
+export let SportApi = {
+    //sport
+    addSport : "v1/sport/addSport",
+    deleteSport : "v1/sport/deleteSport",
+    getAllSport : "v1/sport/getAllSport",
+    getSportById : "v1/sport/getSportById",
+    updateSport : "v1/sport/updateSport",
+
+}
+

@@ -1,19 +1,18 @@
 import React, {Component} from "react";
-import Notice from "../../../../partials/content/Notice";
+import Notice from "../../../partials/content/Notice";
 import AddIcon from "@material-ui/icons/Add";
 import {Form, Modal, Table} from "react-bootstrap";
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import {Button, Paper} from "@material-ui/core";
 import Select from 'react-select';
 import {withStyles} from "@material-ui/styles";
-import ClientsManagement from "../management/clients/clientsManagement";
 import {
     location_addPlace,
     location_getAllPlaces,
     location_getAllState,
     location_getCities_byState,
     location_getRegions_byCity
-} from "../../../../api/locations.api";
+} from "../../../api/locations.api";
 import * as L from "leaflet";
 import 'leaflet/dist/leaflet.css';
 
@@ -72,18 +71,7 @@ class PlaceManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            addMode: true,
-            states: [],
-            cities: [],
-            regions: [],
-            selectedState: null,
-            selectedCity: null,
-            selectedRegion: null,
-            selectedLat:0.0,
-            selectedLng:0.0,
-            allPlacesArray:[],
-            selectedPlace:null,
-            selectedPlaceToOpenClients:null
+            addMode: true
         };
     }
     render() {
@@ -95,17 +83,14 @@ class PlaceManagement extends Component {
 
                 <Notice icon="flaticon-warning kt-font-primary">
                     <p>
-                        موجودیت اماکن به معنای محلی است که در آن ورزش انجام میشود
-                    </p>
-                    <p>
-                        این اماکن میتواند سر پوشیده یا باز باشد و نوع فعالیت های آنها در قسمت ورزش ها تایین میشود
+                        مدیریت کاربران
                     </p>
                 </Notice>
 
 
                 <Portlet>
                     <PortletHeader
-                        title="مکان ها"
+                        title="کاربران"
                         toolbar={
                             <PortletHeaderToolbar>
                                 <button
@@ -228,15 +213,12 @@ class PlaceManagement extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {this.state.allPlacesArray.map(this.renderPlacesRow)}
+                            {/*{this.state.allPlacesArray.map(this.renderPlacesRow)}*/}
                             </tbody>
                         </Table>
                     </PortletBody>
                 </Portlet>
 
-                {this.state.selectedPlaceToOpenClients &&
-                <ClientsManagement state={this.state.selectedPlaceToOpenClients}/>
-                }
                 {this.renderModalDelete(classes,this.state.selectedStateToDelete)}
             </>
         )
@@ -400,6 +382,9 @@ class PlaceManagement extends Component {
                 <td>{place.Address}</td>
                 <td>
 
+                    <Button variant="contained" color="primary" className={classes.button} >
+                        ورزش ها
+                    </Button>
                     <Button variant="contained" color="primary" className={classes.button} onClick={(e)=>this.selectPlace(e,place)}>
                         مشاهده پرسنل
                     </Button>

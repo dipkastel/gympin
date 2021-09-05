@@ -27,6 +27,18 @@ export default {
         root: true,
         icon: "flaticon2-world",
         page: "locations"
+      },
+      {
+        title: "manage users",
+        root: true,
+        icon: "flaticon-users",
+        page: "users"
+      },
+      {
+        title: "manage sports",
+        root: true,
+        icon: "flaticon-stopwatch",
+        page: "sports"
       }
     ]
   }
