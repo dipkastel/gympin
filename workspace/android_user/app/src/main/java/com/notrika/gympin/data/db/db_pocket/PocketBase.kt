@@ -1,6 +1,6 @@
-package com.notrika.gympin_master.data.db.db_pocket
+package com.notrika.gympin.data.db.db_pocket
 
-import com.notrika.gympin_master.data.db.DBStructure
+import com.notrika.gympin.data.db.DBStructure
 import java.util.HashMap
 import java.util.concurrent.Executors
 
@@ -72,7 +72,7 @@ open class PocketBase(protected var db: DBStructure) {
     }
 
     init {
-        pocketDao.all.observeForever {
+        pocketDao.all.observeForever {it->
             for (pocket in it) {
                 pockets[pocket.pockeT_Key] = pocket.pockeT_Value
             }

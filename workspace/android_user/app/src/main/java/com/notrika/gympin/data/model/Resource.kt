@@ -1,4 +1,4 @@
-package com.notrika.gympin_master.data.model
+package com.notrika.gympin.data.model
 
 class Resource<T>(val status: Status, val data: T?, val message: String) {
 

@@ -1,6 +1,6 @@
-package com.notrika.gympin_master.data.db.db_pocket
+package com.notrika.gympin.data.db.db_pocket
 
-import com.notrika.gympin_master.data.db.DBStructure
+import com.notrika.gympin.data.db.DBStructure
 import javax.inject.Inject
 
 class Pocket @Inject constructor(protected var database: DBStructure) : PocketBase(database) {

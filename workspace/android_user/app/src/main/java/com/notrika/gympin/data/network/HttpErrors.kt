@@ -1,4 +1,4 @@
-package com.notrika.gympin_master.data.network
+package com.notrika.gympin.data.network
 
 class HttpErrors {
     companion object{

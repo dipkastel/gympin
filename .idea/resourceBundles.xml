@@ -4,7 +4,6 @@
     <file url="file://$PROJECT_DIR$/workspace/web_api/src/main/resources/i18n/messages.properties" />
     <file url="file://$PROJECT_DIR$/workspace/web_api/src/main/resources/i18n/messages_fa.properties" />
     <custom-resource-bundle>
-      <file value="file://$PROJECT_DIR$/workspace/web_api/src/main/resources/i18n/messages.properties" />
       <file value="file://$PROJECT_DIR$/workspace/web_api/src/main/resources/i18n/messages_en.properties" />
       <file value="file://$PROJECT_DIR$/workspace/web_api/src/main/resources/i18n/messages_fa.properties" />
       <base-name>messages</base-name>

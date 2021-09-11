@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
-import com.notrika.gympin.BuildConfig
+import com.notrika.cbar.CiBar
 import com.notrika.gympin.data.db.DBConstants
 import com.notrika.gympin.data.db.DBStructure
 import com.notrika.gympin.data.db.db_network_setting.Network_setting
@@ -77,6 +77,11 @@ class AppModule {
         return RequestOptions()
     }
 
+    @Singleton
+    @Provides
+    internal fun provideCbar(): CiBar {
+        return CiBar()
+    }
 
     @Singleton
     @Provides
@@ -89,13 +94,13 @@ class AppModule {
         return Interceptor { chain: Interceptor.Chain ->
             val original = chain.request()
             val request = original.newBuilder()
-                    .header("AUTH_TOKEN", network_setting.authToken)
-                    .header("user_token", network_setting.userToken)
-                    .header("Content-Type", "ct-api/ejson")
-                    .header("Accept", "ct-api/ejson")
-                    .header("ApiVersion", "2")
-                    .header("appVersion", BuildConfig.VERSION_NAME + "")
-                    .header("DeviceType", "Android")
+//                    .header("AUTH_TOKEN", network_setting.authToken)
+//                    .header("user_token", network_setting.userToken)
+//                    .header("Content-Type", "ct-api/ejson")
+//                    .header("Accept", "ct-api/ejson")
+//                    .header("ApiVersion", "2")
+//                    .header("appVersion", BuildConfig.VERSION_NAME + "")
+//                    .header("DeviceType", "Android")
                     .method(original.method(), original.body())
                     .build()
             chain.proceed(request)

@@ -1,4 +1,4 @@
-package com.notrika.gympin_master.data.network
+package com.notrika.gympin.data.network
 
 object NetworkConstants {
     const val BASE_API_URL = "http://192.168.0.191:8080"
@@ -10,9 +10,10 @@ object NetworkConstants {
 
 
     //masterapplication
-    const val masterapplication_splash = "$START_KEY/masterapplication/splash"
-    //account
+    const val gympinapplication_splash = "$START_KEY/gympinapplication/splash"
+    //user-controller-impl
     const val user_sendsms = "$START_KEY/user/sendsms"
+    const val user_register = "$START_KEY/user/register"
     const val user_login = "$START_KEY/user/login"
 
 

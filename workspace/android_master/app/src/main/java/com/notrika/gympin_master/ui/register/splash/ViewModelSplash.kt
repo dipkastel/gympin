@@ -11,7 +11,7 @@ class ViewModelSplash @Inject
 constructor(private val splashRepo: SPLASH_REPO) : ViewModel() {
     private val TAG: String = this.javaClass.name
 
-    fun requestBaseSetting(): LiveData<Resource<Res_Splash>> {
+    fun requestSplash(): LiveData<Resource<Res_Splash>> {
 
         liveDataBaseSetting = splashRepo.observeBaseSetting()
         return liveDataBaseSetting

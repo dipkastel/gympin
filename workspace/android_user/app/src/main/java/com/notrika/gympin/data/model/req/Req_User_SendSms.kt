@@ -1,16 +1,17 @@
-package com.notrika.gympin.data.model.res
+package com.notrika.gympin.data.model.req
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Res_User_SendSms {
+class Req_User_SendSms{
 
-    @SerializedName("initialText")
+    constructor(_phoneNumber:String){
+        this.phoneNumber = _phoneNumber;
+    }
+
+    @SerializedName("phoneNumber")
     @Expose
-    var initialText: String = ""
-    @SerializedName("Id")
-    @Expose
-    var id: Long = 0
+    var phoneNumber: String = ""
 
 
 

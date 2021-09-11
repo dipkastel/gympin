@@ -1,18 +1,9 @@
 package com.notrika.gympin.ui.main
 
-import android.graphics.Rect
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Handler
-import android.util.Log
 import android.util.TypedValue
-import android.view.View
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import com.notrika.gympin.BaseActivity
-import com.notrika.gympin.R
 import com.notrika.gympin.data.db.db_network_setting.Network_setting
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import javax.inject.Inject

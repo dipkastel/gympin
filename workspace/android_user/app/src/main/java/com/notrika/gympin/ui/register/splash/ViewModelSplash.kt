@@ -1,6 +1,9 @@
 package com.notrika.gympin.ui.register.splash
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.notrika.gympin.data.model.res.Res_Application_Splash
+import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.repository.SPLASH_REPO
 import javax.inject.Inject
 
@@ -10,12 +13,12 @@ constructor(private val splashRepo: SPLASH_REPO) : ViewModel() {
 
 
 
-//    fun requestBaseSetting(): LiveData<Resource<F_BaseModel>> {
-//
-//        liveDataBaseSetting = splashRepo.observeBaseSetting()
-//        return liveDataBaseSetting
-//
-//    }
+    fun requestSplash(): LiveData<Resource<Res_Application_Splash>> {
+
+        liveDataApplicationSplash = splashRepo.observeBaseSetting()
+        return liveDataApplicationSplash
+
+    }
 //
 //     fun requestGetCinemas(lifecycleOwner: LifecycleOwner): LiveData<Resource<List<F_Cinema>>> {
 //
@@ -77,6 +80,6 @@ constructor(private val splashRepo: SPLASH_REPO) : ViewModel() {
 
     companion object {
         private val TAG = "SplashViewModel"
-//        lateinit var liveDataBaseSetting : LiveData<Resource<F_BaseModel>>
+        lateinit var liveDataApplicationSplash : LiveData<Resource<Res_Application_Splash>>
     }
 }

@@ -72,7 +72,7 @@ open class PocketBase(protected var db: DBStructure) {
     }
 
     init {
-        pocketDao.all.observeForever {
+        pocketDao.all.observeForever {it->
             for (pocket in it) {
                 pockets[pocket.pockeT_Key] = pocket.pockeT_Value
             }

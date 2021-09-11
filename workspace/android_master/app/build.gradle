@@ -157,8 +157,8 @@ dependencies {
 
     // Retrofit
     def retrofitVersion = "2.7.2"
-    implementation "com.squareup.retrofit2:retrofit:2.7.2"
-    implementation "com.squareup.retrofit2:converter-gson:2.7.2"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
 //    //image Gallery
 //    def scrollgalleryviewVersion = "1.2.8"

@@ -105,7 +105,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public CityDto getCityById(LongParam longParam) {
-        City city = cityRepository.getById(longParam.getValue());
+        City city = cityRepository.getById(longParam.getId());
         return LocationConvertor.cityToCityDto(city, LocationConvertor.CollectionType.LIST);
     }
 
@@ -158,7 +158,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public RegionDto getRegionById(LongParam longParam) {
-        Region region = regionRepository.getById(longParam.getValue());
+        Region region = regionRepository.getById(longParam.getId());
         return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
     }
 
@@ -208,7 +208,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public PlaceDto getPlaceById(LongParam longParam) {
-        Place place = placeRepository.getById(longParam.getValue());
+        Place place = placeRepository.getById(longParam.getId());
         return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);
     }
 
