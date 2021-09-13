@@ -49,7 +49,7 @@ public class JwtTokenProvider {
 
         String tokenString = Jwts.builder().setSubject(auth.getName())
                 .claim("roles", authorities)
-                .claim("GympinRole", user.getUserRoles())
+                .claim("GympinRole", user.getUserRole())
                 .setExpiration(new Date(System.currentTimeMillis() + userjwtExpirationInMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
         UserToken userToken = new UserToken();
@@ -67,7 +67,7 @@ public class JwtTokenProvider {
 
         String tokenString = Jwts.builder().setSubject(auth.getName())
                 .claim("roles", authorities)
-                .claim("GympinRole", admin.getAdministratorRoles())
+                .claim("GympinRole", admin.getBaseUser().getUserRole())
                 .setExpiration(new Date(System.currentTimeMillis() + adminjwtExpirationInMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
         UserToken userToken = new UserToken();

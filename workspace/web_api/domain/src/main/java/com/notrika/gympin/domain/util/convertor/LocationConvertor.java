@@ -180,8 +180,8 @@ public class LocationConvertor {
         return states.stream().map((x) -> placeToPlaceDto(x, innerCollectionType)).collect(Collectors.toCollection(supplierFactory(returnCollectionType)));
     }
 
-    public static PlaceOwnerDto placeOwnerToPlaceOwnerDto(PlaceOwner placeOwner){
-        return PlaceOwnerDto.builder().id(placeOwner.getId()).createdDate(placeOwner.getCreatedDate()).updatedDate(placeOwner.getUpdatedDate()).isDeleted(placeOwner.isDeleted()).placeDto(placeToPlaceDto(placeOwner.getPlace(), CollectionType.LIST)).userDto(UserConvertor.userToUserDto(placeOwner.getUser())).userRole(placeOwner.getUserRoles()).build();
+    public static PlaceOwnerDto placeOwnerToPlaceOwnerDto(PlaceOwner placeOwner) {
+        return PlaceOwnerDto.builder().id(placeOwner.getId()).createdDate(placeOwner.getCreatedDate()).updatedDate(placeOwner.getUpdatedDate()).isDeleted(placeOwner.isDeleted()).placeDto(placeToPlaceDto(placeOwner.getPlace(), CollectionType.LIST)).userDto(UserConvertor.userToUserDto(placeOwner.getUser())).userRole(placeOwner.getUserRole()).build();
     }
 
     public enum CollectionType {

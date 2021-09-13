@@ -43,13 +43,11 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private UserRepository userRepository;
 
-
     @Autowired
     private AdministratorRepository administratorRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
 
     @Autowired
     private JwtTokenProvider tokenProvider;
@@ -59,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
-        User user = userRepository.findByPhoneNumber(dto.getPhoneNumber()).orElse(null);
+        User user = userRepository.findByPhoneNumber(dto.getPhoneNumber());
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
 
         String code = MyRandom.GenerateRandomVerificationSmsCode();
@@ -75,7 +73,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public UserRegisterDto register(UserRegisterParam dto) throws ExceptionBase {
         try {
-            User insertedUser = UserConvertor.userRegisterDtoToUser(saveOrUpdateUser(dto));
+            User insertedUser = addUser(dto);
             return UserConvertor.userToRegisterDto(insertedUser);
         } catch (DataIntegrityViolationException e) {
             throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.REGISTER_USER_EXIST);
@@ -89,12 +87,10 @@ public class AccountServiceImpl implements AccountService {
         if (principal == null) {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
-
-        UsernamePasswordAuthenticationToken authenticationToken =
-                (UsernamePasswordAuthenticationToken) principal;
-        User user = UserConvertor.userDtoToUser(findByUsername(authenticationToken.getName()));
-        UserDto userDto = UserConvertor.userToUserDto(user);
+        UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
+        User user = findByUsername(authenticationToken.getName());
         UserToken userToken = tokenProvider.generateToken(user, authenticationToken);
+        UserDto userDto=UserConvertor.userToUserDto(user);
         userDto.setToken(userToken.getToken());
         return userDto;
 
@@ -107,7 +103,7 @@ public class AccountServiceImpl implements AccountService {
         }
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) principal;
-        Administrator admin = administratorRepository.findByAdministratorname(authenticationToken.getName()).orElse(null);
+        Administrator admin = administratorRepository.findByAdministratorName(authenticationToken.getName());
         if (admin == null) {
             throw new ExceptionBase(HttpStatus.UNAUTHORIZED, Error.ErrorType.CLIENT_AUTH_NOT_SETUP);
             // return new ResponseEntity<>(new ResponseModel(new Error(Error.ErrorType.Client_Auth_Not_Setup)), HttpStatus.UNAUTHORIZED);
@@ -119,22 +115,23 @@ public class AccountServiceImpl implements AccountService {
         //return new ResponseEntity<>(new ResponseModel(result), HttpStatus.CREATED);
     }
 
-    private UserRegisterDto saveOrUpdateUser(UserRegisterParam userRegisterParam) {
+    private User addUser(UserRegisterParam userRegisterParam) {
         User user = new User();
         user.setUsername(userRegisterParam.getUsername());
         user.setPhoneNumber(userRegisterParam.getPhoneNumber());
-        return UserConvertor.userToRegisterDto(userRepository.save(user));
+        user.setUserRole(userRegisterParam.getUserRole());
+        return userRepository.add(user);
     }
 
 
-    private UserDto findByUsername(String username) {
-        return UserConvertor.userToUserDto(userRepository.findByUsername(username).orElse(null));
+    private User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
 
-    private List<UserDto> findAllUsers() {
-        List<UserDto> userDtos = new ArrayList<>();
-        userDtos.add(UserConvertor.userToUserDto(userRepository.findAll().get(0)));
+    private List<User> findAllUsers() {
+        List<User> userDtos = new ArrayList<>();
+        userDtos.add(userRepository.findAll().get(0));
         return userDtos;
     }
 
@@ -146,13 +143,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User TBLUser = userRepository.findByPhoneNumber(username).orElse(null);
-        Administrator admin = administratorRepository.findByAdministratorname(username).orElse(null);
+        User TBLUser = userRepository.findByPhoneNumber(username);
+        Administrator admin = administratorRepository.findByAdministratorName(username);
         if (TBLUser == null && admin == null) {
             throw new UsernameNotFoundException(username);
         } else if (TBLUser != null) {
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-            grantedAuthorities.add(new SimpleGrantedAuthority(TBLUser.getUserRoles().name()));
+            grantedAuthorities.add(new SimpleGrantedAuthority(TBLUser.getUserRole().name()));
             var activationCode = smsService.getLastCode(TBLUser.getId());
             if (activationCode == null) {
                 throw new UsernameNotFoundException(username + ", sms code not found");
@@ -164,10 +161,10 @@ public class AccountServiceImpl implements AccountService {
             );
         } else {
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-            grantedAuthorities.add(new SimpleGrantedAuthority(admin.getAdministratorRoles().name()));
+            grantedAuthorities.add(new SimpleGrantedAuthority(admin.getBaseUser().getUserRole().name()));
 
             return new org.springframework.security.core.userdetails.User(
-                    admin.getAdministratorname(),
+                    admin.getAdministratorName(),
                     admin.getPassword(),
                     grantedAuthorities
             );

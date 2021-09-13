@@ -241,7 +241,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public List<PlaceDto> getPlaceByUser(UserParam userParam) {
-        User user = User.builder().id(userParam.getId()).userRoles(userParam.getRole()).build();
+        User user = User.builder().id(userParam.getId()).userRole(userParam.getRole()).build();
         List<Place> placeByUser = placeRepository.getPlaceByUser(user);
         return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeByUser, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
     }
@@ -250,7 +250,7 @@ public class LocationServiceImpl implements LocationService {
     public PlaceOwnerDto addPlaceOwner(PlaceOwnerParam placeOwnerParam) {
         Place place = placeRepository.getById(placeOwnerParam.getPlaceParam().getId());
         User user = userRepository.getById(placeOwnerParam.getUserParam().getId());
-        PlaceOwner initPlaceOwner = PlaceOwner.builder().place(place).user(user).userRoles(placeOwnerParam.getUserRole()).build();
+        PlaceOwner initPlaceOwner = PlaceOwner.builder().place(place).user(user).userRole(placeOwnerParam.getUserRole()).build();
         PlaceOwner placeOwner = placeOwnerRepository.add(initPlaceOwner);
         return LocationConvertor.placeOwnerToPlaceOwnerDto(placeOwner);
     }

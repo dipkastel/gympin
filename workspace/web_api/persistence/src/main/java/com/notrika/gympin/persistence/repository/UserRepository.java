@@ -15,11 +15,9 @@ public interface UserRepository extends BaseRepository<User, Long> {
     List<User> getOwnersPlace(Place place);
 
     //findBy + fieldName
-    Optional<User> findByUsername(String username);
+    User findByUsername(String username);
 
-    Optional<User> findByPhoneNumber(String phoneNumber);
-
-
+    User findByPhoneNumber(String phoneNumber);
 
 
 }

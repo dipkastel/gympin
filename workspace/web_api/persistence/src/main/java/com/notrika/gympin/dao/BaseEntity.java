@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 

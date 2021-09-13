@@ -29,25 +29,25 @@ public class SportControllerImpl implements SportController {
     @Override
     @PutMapping("/updateSport")
     public ResponseEntity<SportDto> updateSport(@RequestBody SportParam sportParam) {
-        return new ResponseEntity<SportDto>(sportService.updateSport(sportParam),HttpStatus.OK);
+        return new ResponseEntity<SportDto>(sportService.updateSport(sportParam), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getSportById")
     public ResponseEntity<SportDto> getSportById(LongParam id) {
-        return new ResponseEntity<SportDto>(sportService.getSportById(id),HttpStatus.OK);
+        return new ResponseEntity<SportDto>(sportService.getSportById(id), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getAllSport")
     public ResponseEntity<List<SportDto>> getAllSport() {
-        return new ResponseEntity<List<SportDto>>(sportService.getAllSport(),HttpStatus.OK);
+        return new ResponseEntity<List<SportDto>>(sportService.getAllSport(), HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/deleteSport")
     public ResponseEntity<BaseDto> deleteSport( SportParam sportParam) {
         sportService.deleteSport(sportParam);
-        return new ResponseEntity<BaseDto>(BaseDto.builder().id(sportParam.getId()).build(),HttpStatus.OK);
+        return new ResponseEntity<BaseDto>(BaseDto.builder().id(sportParam.getId()).build(), HttpStatus.OK);
     }
 }

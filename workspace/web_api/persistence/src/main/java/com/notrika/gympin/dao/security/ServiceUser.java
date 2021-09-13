@@ -1,6 +1,6 @@
 package com.notrika.gympin.dao.security;
 
-import com.notrika.gympin.common.user.enums.UserRoles;
+import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.dao.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +22,6 @@ import javax.persistence.Table;
 public class ServiceUser extends BaseEntity {
 
     @Column(name = "user_role")
-    private UserRoles userRoles;
+    private UserRole userRole;
 
 }
