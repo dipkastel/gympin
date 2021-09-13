@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface PlaceRepository extends BaseRepository<Place, Long> {
 
-    //@Query("select p from Place p where p.region.id = :#{#region.id}")
+    @Query("select p from Place p where p.region.id = :#{#region.id}")
     List<Place> getPlacesByRegion(@Param("region") Region region);
 
-    //@Query("select p from Place p,PlaceOwner po where p.id=po.place.id and po.user.id = :#{#user.id} and po.userRole= :#{#user.userRole}")
+    @Query("select p from Place p,PlaceOwner po where p.id=po.place.id and po.user.id = :#{#user.id} and po.userRole= :#{#user.userRole}")
     List<Place> getPlaceByUser(User user);
 }
