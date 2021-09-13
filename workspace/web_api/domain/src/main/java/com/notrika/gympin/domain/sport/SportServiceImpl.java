@@ -20,14 +20,14 @@ public class SportServiceImpl implements SportService {
 
     @Override
     public SportDto addSport(SportParam sportParam) {
-        Sport initSport=Sport.builder().name(sportParam.getName()).build();
+        Sport initSport = Sport.builder().name(sportParam.getName()).build();
         Sport sport = sportRepository.add(initSport);
         return SportConvertor.sportToSportDto(sport);
     }
 
     @Override
     public SportDto updateSport(SportParam sportParam) {
-        Sport initSport=Sport.builder().name(sportParam.getName()).build();
+        Sport initSport = Sport.builder().name(sportParam.getName()).build();
         Sport sport = sportRepository.update(initSport);
         return SportConvertor.sportToSportDto(sport);
     }

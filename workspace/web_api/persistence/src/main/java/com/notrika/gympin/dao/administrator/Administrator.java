@@ -1,7 +1,7 @@
 package com.notrika.gympin.dao.administrator;
 
-import com.notrika.gympin.common.user.enums.AdminRoles;
 import com.notrika.gympin.dao.BaseEntity;
+import com.notrika.gympin.dao.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,15 +21,11 @@ import java.util.Objects;
 @Table(name = "administrator")
 public class Administrator extends BaseEntity {
 
-    @Column(updatable = false)
-    @Enumerated(EnumType.STRING)
-    private AdminRoles administratorRoles = AdminRoles.ADMIN;
+    @OneToOne
+    private User baseUser;
 
     @Column(unique = true)
-    private String administratorname;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    private String administratorName;
 
     @Column(name = "password")
     private String password;

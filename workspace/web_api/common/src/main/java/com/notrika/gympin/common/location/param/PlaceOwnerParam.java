@@ -2,7 +2,7 @@ package com.notrika.gympin.common.location.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseParam;
-import com.notrika.gympin.common.user.enums.UserRoles;
+import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.param.UserParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +22,7 @@ public class PlaceOwnerParam extends BaseParam<PlaceOwnerParam> {
     private UserParam userParam;
 
     @JsonProperty("UserRole")
-    private UserRoles userRole;
+    private UserRole userRole;
 
 
 }

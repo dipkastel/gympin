@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.user.param;
 
 import com.notrika.gympin.common.BaseParam;
-import com.notrika.gympin.common.user.enums.AdminRoles;
+import com.notrika.gympin.common.user.enums.UserRole;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class AdministratorLoginParam extends BaseParam<AdministratorLoginParam> {
 
-    private AdminRoles administratorRoles = AdminRoles.ADMIN;
+    private UserRole administratorRoles;
 
     private String administratorname;
 

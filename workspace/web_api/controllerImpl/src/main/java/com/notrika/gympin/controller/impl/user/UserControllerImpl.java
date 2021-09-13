@@ -1,51 +1,53 @@
 package com.notrika.gympin.controller.impl.user;
 
-
-import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.primitive.param.LongParam;
 import com.notrika.gympin.common.user.api.UserController;
-import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.dto.UserRegisterDto;
-import com.notrika.gympin.common.user.param.UserRegisterParam;
-import com.notrika.gympin.common.user.param.UserSendSmsParam;
-import com.notrika.gympin.common.user.service.AccountService;
+import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
+import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserControllerImpl implements UserController {
 
     @Autowired
-    private AccountService userService;
+    private UserService userService;
 
     @Override
-    @PostMapping("/sendsms")
-    public ResponseEntity<Boolean> sendSms(@RequestBody UserSendSmsParam phoneNumber) throws ExceptionBase {
-        return new ResponseEntity<>(userService.sendActivationSms(phoneNumber), HttpStatus.OK);
+    @PostMapping("/add")
+    public ResponseEntity<UserDto> add(@RequestBody UserParam userParam) {
+        return new ResponseEntity<>(userService.add(userParam), HttpStatus.OK);
     }
 
     @Override
-    @PostMapping("/register")
-    public ResponseEntity<UserRegisterDto> register(@RequestBody UserRegisterParam userRegisterParam) throws ExceptionBase {
-        return new ResponseEntity<>(userService.register(userRegisterParam), HttpStatus.CREATED);
+    @PutMapping("/update")
+    public ResponseEntity<UserDto> update(@RequestBody UserParam userParam) {
+        return new ResponseEntity<>(userService.update(userParam), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/login")
-    public ResponseEntity<UserDto> loginUser(Principal principal) throws ExceptionBase {
-        return new ResponseEntity<>(userService.loginUser(principal), HttpStatus.CREATED);
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody UserParam userParam) {
+        userService.delete(userParam);
     }
 
     @Override
-    @GetMapping("/loginpanel")
-    public ResponseEntity<AdministratorLoginDto> loginPanel(Principal principal) throws ExceptionBase {
-        return new ResponseEntity<>(userService.loginPanel(principal), HttpStatus.OK);
+    @GetMapping("/getall")
+    public ResponseEntity<List<UserDto>> getAll() {
+        return new ResponseEntity<List<UserDto>>(userService.getAll(), HttpStatus.OK);
     }
 
-
+    @Override
+    @GetMapping("/getbyid")
+    public ResponseEntity<UserDto> getById(@RequestBody LongParam longParam) {
+        return new ResponseEntity<UserDto>(userService.getById(longParam), HttpStatus.OK);
+    }
 }

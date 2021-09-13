@@ -1,6 +1,6 @@
 package com.notrika.gympin.dao.location;
 
-import com.notrika.gympin.common.user.enums.UserRoles;
+import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.dao.BaseEntity;
 import com.notrika.gympin.dao.user.User;
 import lombok.Getter;
@@ -30,5 +30,5 @@ public class PlaceOwner extends BaseEntity {
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private UserRoles userRoles;
+    private UserRole userRole;
 }

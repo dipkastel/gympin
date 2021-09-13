@@ -3,7 +3,7 @@ package com.notrika.gympin.common.location.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseDto;
 import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.enums.UserRoles;
+import com.notrika.gympin.common.user.enums.UserRole;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,5 +22,5 @@ public class PlaceOwnerDto extends BaseDto<PlaceOwnerDto> {
     private UserDto userDto;
 
     @JsonProperty("UserRole")
-    private UserRoles userRole;
+    private UserRole userRole;
 }

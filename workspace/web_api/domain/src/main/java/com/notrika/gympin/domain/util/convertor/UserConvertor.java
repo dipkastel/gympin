@@ -1,8 +1,10 @@
 package com.notrika.gympin.domain.util.convertor;
 
+import com.notrika.gympin.common.user.dto.AdministratorDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
-import com.notrika.gympin.common.user.enums.UserRoles;
+import com.notrika.gympin.common.user.enums.UserRole;
+import com.notrika.gympin.dao.administrator.Administrator;
 import com.notrika.gympin.dao.user.User;
 
 import java.util.List;
@@ -17,8 +19,8 @@ public class UserConvertor {
         UserDto dto = new UserDto();
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
-        if (user.getUserRoles()!=null)
-        dto.setRole(UserRoles.valueOf(user.getUserRoles().name()));
+        if (user.getUserRole() != null)
+            dto.setRole(UserRole.valueOf(user.getUserRole().name()));
         dto.setPhoneNumber(user.getPhoneNumber());
         return dto;
     }
@@ -34,7 +36,7 @@ public class UserConvertor {
         user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
         user.setPhoneNumber(userDto.getPhoneNumber());
-        user.setUserRoles(UserRoles.valueOf(userDto.getRole().name()));
+        user.setUserRole(UserRole.valueOf(userDto.getRole().name()));
         return user;
     }
 
@@ -58,6 +60,7 @@ public class UserConvertor {
     public static User userRegisterDtoToUser(UserRegisterDto userDto) {
         if (userDto == null)
             return null;
+
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setPhoneNumber(userDto.getPhoneNumber());
@@ -65,8 +68,17 @@ public class UserConvertor {
     }
 
     public static List<User> userRegisterDtosToUsers(List<UserRegisterDto> userRegisterDtos) {
-
         return userRegisterDtos.stream().map(UserConvertor::userRegisterDtoToUser).collect(Collectors.toList());
     }
+
+    public static AdministratorDto administratorToAdministratorDto(Administrator administrator){
+        AdministratorDto administratorDto=AdministratorDto.builder().role(administrator.getBaseUser().getUserRole()).username(administrator.getBaseUser().getUsername()).phoneNumber(administrator.getBaseUser().getPhoneNumber()).administratorName(administrator.getAdministratorName()).password(administrator.getPassword()).email(administrator.getEmail()).build();
+        return administratorDto;
+    }
+
+    public static List<AdministratorDto> administratorsToAdministratorDtos(List<Administrator> administratorList){
+        return administratorList.stream().map(UserConvertor::administratorToAdministratorDto).collect(Collectors.toList());
+    }
+
 
 }

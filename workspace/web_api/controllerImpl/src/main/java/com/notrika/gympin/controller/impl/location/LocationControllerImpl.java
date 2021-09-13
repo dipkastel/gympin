@@ -190,12 +190,12 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PostMapping("/addPlaceOwner")
     public ResponseEntity<PlaceOwnerDto> addPlaceOwner(@RequestBody PlaceOwnerParam placeOwnerParam) {
-        return new ResponseEntity<PlaceOwnerDto>(locationService.addPlaceOwner(placeOwnerParam),HttpStatus.CREATED);
+        return new ResponseEntity<PlaceOwnerDto>(locationService.addPlaceOwner(placeOwnerParam), HttpStatus.CREATED);
     }
 
     @Override
     @GetMapping("/getOwnersPlace")
     public ResponseEntity<List<UserDto>> getOwnersPlace(PlaceParam placeParam) {
-        return new ResponseEntity<List<UserDto>>(locationService.getOwnersPlace(placeParam),HttpStatus.OK);
+        return new ResponseEntity<List<UserDto>>(locationService.getOwnersPlace(placeParam), HttpStatus.OK);
     }
 }

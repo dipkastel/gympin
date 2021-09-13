@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 
 public class SportConvertor {
 
-    public static SportDto sportToSportDto(Sport sport){
+    public static SportDto sportToSportDto(Sport sport) {
         return SportDto.builder().id(sport.getId()).createdDate(sport.getCreatedDate()).updatedDate(sport.getUpdatedDate()).isDeleted(sport.isDeleted()).name(sport.getName()).build();
     }
 
-    public static List<SportDto> sportsToSportDtos(List<Sport> sportList){
+    public static List<SportDto> sportsToSportDtos(List<Sport> sportList) {
         return sportList.stream().map(SportConvertor::sportToSportDto).collect(Collectors.toList());
     }
 }

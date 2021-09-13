@@ -11,9 +11,9 @@ public class AdministratorConvertor {
             return null;
         AdministratorLoginDto dto = new AdministratorLoginDto();
         dto.setId(administrator.getId());
-        dto.setAdministratorRoles(administrator.getAdministratorRoles());
-        dto.setAdministratorname(administrator.getAdministratorname());
-        dto.setPhoneNumber(administrator.getPhoneNumber());
+        dto.setAdministratorRoles(administrator.getBaseUser().getUserRole());
+        dto.setAdministratorname(administrator.getAdministratorName());
+        dto.setPhoneNumber(administrator.getBaseUser().getPhoneNumber());
         dto.setEmail(administrator.getEmail());
         return dto;
     }
