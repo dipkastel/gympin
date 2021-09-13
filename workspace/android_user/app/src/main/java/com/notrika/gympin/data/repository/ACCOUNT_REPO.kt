@@ -6,6 +6,8 @@ import androidx.lifecycle.MediatorLiveData
 import com.notrika.gympin.data.model.res.Res_User_SendSms
 import com.notrika.gympin.data.model.res.Res_Application_Splash
 import com.notrika.gympin.data.model.Resource
+import com.notrika.gympin.data.model.req.Req_User_Login
+import com.notrika.gympin.data.model.req.Req_User_Register
 import com.notrika.gympin.data.model.req.Req_User_SendSms
 import com.notrika.gympin.data.model.res.Res_User_Login
 import com.notrika.gympin.data.model.res.Res_User_Register
@@ -19,8 +21,8 @@ class ACCOUNT_REPO @Inject constructor(
         private val UserRequests:UserRequests
 ) {
 
-        fun observeSendSms(reqSendsms: Req_User_SendSms): LiveData<Resource<Res_User_SendSms>> {
-                val Livedata = MediatorLiveData<Resource<Res_User_SendSms>>()
+        fun observeSendSms(reqSendsms: Req_User_SendSms): LiveData<Resource<Boolean>> {
+                val Livedata = MediatorLiveData<Resource<Boolean>>()
                 val source = LiveDataReactiveStreams.fromPublisher(UserRequests.RequestSendSms(reqSendsms))
                 Livedata.value = Resource.loading(null)
 
@@ -39,9 +41,9 @@ class ACCOUNT_REPO @Inject constructor(
                 return Livedata
         }
 
-        fun observeRegister(): LiveData<Resource<Res_User_Register>> {
+        fun observeRegister(reqSendsms:Req_User_Register): LiveData<Resource<Res_User_Register>> {
                 val Livedata = MediatorLiveData<Resource<Res_User_Register>>()
-                val source= LiveDataReactiveStreams.fromPublisher(UserRequests.RequestRegister())
+                val source= LiveDataReactiveStreams.fromPublisher(UserRequests.RequestRegister(reqSendsms))
                 Livedata.value = Resource.loading(null)
 
 
@@ -59,9 +61,9 @@ class ACCOUNT_REPO @Inject constructor(
                 return Livedata
         }
 
-        fun observeLogin(): LiveData<Resource<Res_User_Login>> {
+        fun observeLogin(reqUserLogin: Req_User_Login): LiveData<Resource<Res_User_Login>> {
                 val Livedata = MediatorLiveData<Resource<Res_User_Login>>()
-                val source = LiveDataReactiveStreams.fromPublisher(UserRequests.RequestLogin())
+                val source = LiveDataReactiveStreams.fromPublisher(UserRequests.RequestLogin(reqUserLogin))
                 Livedata.value = Resource.loading(null)
 
 

@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/main_gympin">
 
+    <fragment
+        android:id="@+id/main_gympin"
+        android:name="com.notrika.gympin.ui.main.gympin.FragmentGympin"
+        android:label="gympin"
+        tools:layout="@layout/fragment_main_gympin" />
+    <fragment
+        android:id="@+id/main_sports"
+        android:name="com.notrika.gympin.ui.main.sports.FragmentSports"
+        android:label="sports"
+        tools:layout="@layout/fragment_main_sports" />
+    <fragment
+        android:id="@+id/main_places"
+        android:name="com.notrika.gympin.ui.main.places.FragmentPlaces"
+        android:label="places"
+        tools:layout="@layout/fragment_main_places" />
+    <fragment
+        android:id="@+id/main_reserves"
+        android:name="com.notrika.gympin.ui.main.reserves.FragmentReserves"
+        android:label="reserves"
+        tools:layout="@layout/fragment_main_reserves" />
+    <fragment
+        android:id="@+id/main_settings"
+        android:name="com.notrika.gympin.ui.main.settings.FragmentSettings"
+        android:label="reserves"
+        tools:layout="@layout/fragment_main_reserves" />
+    <fragment
+        android:id="@+id/main_profile"
+        android:name="com.notrika.gympin.ui.main.profile.FragmentProfile"
+        android:label="reserves"
+        tools:layout="@layout/fragment_main_reserves" />
+    <action
+        android:id="@+id/to_gympin"
+        app:destination="@id/main_gympin"
+        android:label="Gympin"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_Sports"
+        app:destination="@id/main_sports"
+        android:label="Sports"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_Places"
+        app:destination="@id/main_places"
+        android:label="Places"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_Reserves"
+        app:destination="@id/main_reserves"
+        android:label="Reserves"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_Profile"
+        app:destination="@id/main_profile"
+        android:label="Profile"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_Settings"
+        app:destination="@id/main_settings"
+        android:label="Profile"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
 </navigation>

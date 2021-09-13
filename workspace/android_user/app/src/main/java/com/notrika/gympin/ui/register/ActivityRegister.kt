@@ -27,6 +27,7 @@ class ActivityRegister : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
     }
 
 //    override fun onBackPressed() {

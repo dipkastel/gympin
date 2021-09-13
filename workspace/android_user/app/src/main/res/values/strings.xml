@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">جیم پین(مدیران)</string>
+    <string name="app_name">جیم پین</string>
     <string name="my_place">مجموعه من</string>
     <string name="works">کار ها</string>
     <string name="reserves">رزرو ها</string>
@@ -14,4 +14,9 @@
     <string name="can_not_send_sms_Now">در حال حاضر امکان ارسال پیامک وجود ندارد</string>
     <string name="activation_code_is_not_valid">کد فعالسازی معتبر نیست</string>
     <string name="text_placeholder">-----</string>
+    <string name="name_family">نام و نام خانوادگی</string>
+    <string name="signup">ثبت نام</string>
+    <string name="sports">ورزش ها</string>
+    <string name="places">مجموعه ها</string>
+    <string name="my_reserves">رزروهای من</string>
 </resources>
