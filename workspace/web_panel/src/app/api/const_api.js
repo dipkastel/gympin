@@ -40,3 +40,15 @@ export let SportApi = {
 
 }
 
+
+
+export let UserApi = {
+    //sport
+    add : "v1/user/add",
+    delete : "v1/user/delete",
+    getAll : "v1/user/getall",
+    getById : "v1/user/getById",
+    update : "v1/user/update",
+
+}
+

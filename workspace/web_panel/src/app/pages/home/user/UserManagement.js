@@ -7,14 +7,14 @@ import {Button, Paper} from "@material-ui/core";
 import Select from 'react-select';
 import {withStyles} from "@material-ui/styles";
 import {
-    location_addPlace,
-    location_getAllPlaces,
-    location_getAllState,
-    location_getCities_byState,
-    location_getRegions_byCity
-} from "../../../api/locations.api";
-import * as L from "leaflet";
+    user_add,
+    user_getAll,
+    user_getById,
+    user_delete,
+    user_update
+} from "../../../api/user.api";
 import 'leaflet/dist/leaflet.css';
+import {location_addRegion, location_updateRegion} from "../../../api/locations.api";
 
 
 const style = theme => ({
@@ -41,7 +41,8 @@ const style = theme => ({
         backgroundColor: "#aa2222",
         "&:hover": {
             backgroundColor: "#770d0d",
-        }
+        },
+        color: "#fff"
     },
     button_edit: {
         marginLeft: theme.spacing(1),
@@ -49,7 +50,8 @@ const style = theme => ({
         backgroundColor: "#227aaa",
         "&:hover": {
             backgroundColor: "#124a88",
-        }
+        },
+        color: "#fff"
     },
     container: {
         display: "inline-grid"
@@ -66,12 +68,15 @@ const style = theme => ({
     }
 })
 
-class PlaceManagement extends Component {
+class UserManagement extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            addMode: true
+            addMode: true,
+            allUsersArray:[],
+            selectedUserToDelete:null,
+            selectedAccess:null
         };
     }
     render() {
@@ -108,70 +113,34 @@ class PlaceManagement extends Component {
 
                         <Paper className={classes.root} hidden={!this.state.addMode}>
                             <Form className={classes.container} noValidate autoComplete="off"
-                                  onSubmit={(e) => this.addPlace(e)}>
-                                <Form.Group controlId="formPlaceName">
-                                    <Form.Label>نام مکان (مجموعه ورزشی)</Form.Label>
-                                    <Form.Control name="formName" type="text" placeholder="نام مکان (مجموعه ورزشی)"/>
-                                    <Form.Text className="text-muted">
-                                        از نوشتن هاشه ها (مجموعه ورزشی ، باشگاه ، استادیوم) خودداری کنید
-                                    </Form.Text>
+                                  onSubmit={(e) => this.addUser(e)}>
+                                <Form.Group controlId="form_UserName">
+                                    <Form.Label>نام کاربر (نام و نام خانوادگی)</Form.Label>
+                                    <Form.Control name="formUserName" type="text" placeholder="نام کاربر (نام و نام خانوادگی)"/>
                                 </Form.Group>
 
-                                <Form.Group controlId="formState">
-                                    <Form.Label>استان</Form.Label>
-                                    <Select
-                                        className={classes.dropdown}
-                                        inputId="react-select-single"
-                                        name="formState"
-                                        TextFieldProps={{
-                                            label: 'states',
-                                            InputLabelProps: {
-                                                htmlFor: 'react-select-single',
-                                                shrink: true,
-                                            },
-                                            placeholder: 'Search a state',
-                                        }}
-                                        options={this.state.states}
-                                        value={this.state.selectedState}
-                                        onChange={(e) => this.stateSelectedChange(e)}
-                                    />
+                                <Form.Group controlId="form_PhoneNumber">
+                                    <Form.Label>شماره موبایل</Form.Label>
+                                    <Form.Control name="formPhoneNumber" type="text" placeholder="شماره موبایل"/>
                                 </Form.Group>
-                                <Form.Group controlId="formCity">
-                                    <Form.Label>شهر</Form.Label>
-                                    <Select
-                                        className={classes.dropdown}
-                                        inputId="react-select-single"
-                                        name="formCity"
-                                        TextFieldProps={{
-                                            label: 'states',
-                                            InputLabelProps: {
-                                                htmlFor: 'react-select-single',
-                                                shrink: true,
-                                            },
-                                            placeholder: 'Search a state',
-                                        }}
-                                        options={this.state.cities}
-                                        value={this.state.selectedCity}
-                                        onChange={(e) => this.citySelectedChange(e)}
-                                    />
-                                </Form.Group>
+
                                 <Form.Group controlId="formRegion">
-                                    <Form.Label>ناحیه (منطقه)</Form.Label>
+                                    <Form.Label>دسترسی</Form.Label>
                                     <Select
                                         className={classes.dropdown}
                                         inputId="react-select-single"
-                                        name="formRegion"
+                                        name="formUserAccess"
                                         TextFieldProps={{
-                                            label: 'states',
+                                            label: 'UserAccess',
                                             InputLabelProps: {
                                                 htmlFor: 'react-select-single',
                                                 shrink: true,
                                             },
                                             placeholder: 'Search a state',
                                         }}
-                                        value={this.state.selectedRegion}
-                                        options={this.state.regions}
-                                        onChange={(e) => this.regionSelectedChange(e)}
+                                        value={this.state.selectedAccess}
+                                        options={this.getAccess()}
+                                        onChange={(e) => this.accessSelectedChange(e)}
                                     />
                                 </Form.Group>
                                 <input
@@ -184,19 +153,6 @@ class PlaceManagement extends Component {
                                     value={this.state.selectedLng}
                                     name="formLng"
                                 />
-                                <Form.Group controlId="formAddress">
-                                    <Form.Label>آدرس کامل</Form.Label>
-                                    <textarea
-                                        className="form-control"
-                                        id="exampleTextarea"
-                                        rows="3"
-                                        name="formAddress"
-                                    />
-                                </Form.Group>
-
-                                <Form.Group controlId="map">
-                                    <div id="kt_leaflet" className={classes.map}/>
-                                </Form.Group>
                                 <Button type={"submit"} variant="contained" color="primary" className={classes.button}>
                                     ثبت
                                 </Button>
@@ -207,191 +163,128 @@ class PlaceManagement extends Component {
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>place Name</th>
-                                <th>place Address</th>
+                                <th>username</th>
+                                <th>phoneNumber</th>
+                                <th>role</th>
                                 <th>actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {/*{this.state.allPlacesArray.map(this.renderPlacesRow)}*/}
+                            {this.state.allUsersArray.map(this.renderUsersRow)}
                             </tbody>
                         </Table>
                     </PortletBody>
                 </Portlet>
 
-                {this.renderModalDelete(classes,this.state.selectedStateToDelete)}
+                {this.renderModalDelete(classes,this.state.selectedUserToDelete)}
             </>
         )
     }
     componentDidMount() {
-        this.getStates();
-        this.getPlaces();
-        this.prepareMap();
-
+        this.getUsers();
         this.setState(() => ({
             addMode: false
         }));
     }
+
     toggleAddMode(e) {
         e.preventDefault()
         this.setState(() => ({
-            addMode: !this.state.addMode
+            addMode: !this.state.addMode,
+            selectedUserToEdit: null
+        }));
+        this.clearForm()
+    }
+    openAddMode(e) {
+        e.preventDefault()
+        this.setState(() => ({
+            addMode: true
         }));
     }
-    addPlace(e) {
+    closeAddMode(e) {
         e.preventDefault()
-        location_addPlace({
-            "Address": e.target.formAddress.value,
-            "Latitude": e.target.formLat.value,
-            "Longitude": e.target.formLng.value,
-            "Name": e.target.formName.value,
-            "Region": {
-                "Id": e.target.formRegion.value
-            }
+        this.setState(() => ({
+            addMode: false
+        }));
+    }
+    addUser(e) {
+        e.preventDefault()
+        if(this.state.selectedUserToEdit){
+            user_update({
+                "Id":this.state.selectedUserToEdit.Id,
+                "username": e.target.form_UserName.value,
+                "phoneNumber":e.target.form_PhoneNumber.value,
+                "role":this.state.selectedAccess.label
+            }).then(data => {
+                this.getUsers();
+
+                this.setState(() => ({
+                    selectedUserToEdit: null
+                }));
+                this.closeAddMode(e)
+                this.clearForm()
+            }).catch(e => {
+                console.log(e);
+            })
+        }else {
+            user_add({
+                "username": e.target.form_UserName.value,
+                "phoneNumber":e.target.form_PhoneNumber.value,
+                "role":this.state.selectedAccess.label
+            }).then(data => {
+
+                this.getUsers()
+                this.clearForm()
+                this.closeAddMode(e)
+            }).catch(e => {
+                console.log(e);
+            })
+        }
+    }
+    deleteUser(e,user) {
+        console.log(user)
+        e.preventDefault()
+        user_delete({
+            "Id": user.Id
+
         }).then(data=>{
-            this.getPlaces();
+            this.getUsers()
+            this.closeModalDelete()
+            this.clearForm()
         }).catch(e=>{
             console.log(e);
         })
     }
-    prepareMap() {
 
-        // define leaflet
-        var leaflet = L.map('kt_leaflet', {
-            center: [35.70190, 51.41712],
-            zoom: 11
-        });
-        leaflet.panTo(leaflet.getCenter());
-
-        // set leaflet tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(leaflet);
-
-        function getIconHtml() {
-            return (`<span class="svg-icon svg-icon-danger svg-icon-3x">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 21 21" version="1.1">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <rect x="0" y="0" width="25" height="25"/>
-                    <path d="M5,10.5 C5,6 8,3 12.5,3 C17,3 20,6.75 20,10.5 C20,12.8325623 17.8236613,16.03566 13.470984,20.1092932 C12.9154018,20.6292577 12.0585054,20.6508331 11.4774555,20.1594925 C7.15915182,16.5078313 5,13.2880005 5,10.5 Z M12.5,12 C13.8807119,12 15,10.8807119 15,9.5 C15,8.11928813 13.8807119,7 12.5,7 C11.1192881,7 10,8.11928813 10,9.5 C10,10.8807119 11.1192881,12 12.5,12 Z" fill="#000000" fill-rule="nonzero"/>
-                    </g>
-                    </svg>
-                    </span>`)
-        }
-
-        // set custom SVG icon marker
-        var leafletIcon = L.divIcon({
-            html: getIconHtml(),
-            bgPos: [60, 60],
-            iconAnchor: [0, 35],
-            popupAnchor: [-19, -35],
-            className: 'leaflet-marker'
-        });
-
-
-        // Define Marker Layer
-        var markerLayer = L.layerGroup().addTo(leaflet);
-
-        // Map onClick Action
-        leaflet.on('click', function (e) {
-            markerLayer.clearLayers();
-            L.marker(e.latlng, {icon: leafletIcon}).addTo(markerLayer);
-
-            this.setState(() => ({
-                selectedLat: e.latlng.lat,
-                selectedLng: e.latlng.lng
-            }));
-        },this);
+    openModalDelete =(e,user)=>{
+        this.setState(() => ({
+            selectedUserToDelete: user
+        }));
     };
-    getStates() {
+    getUsers() {
 
-        location_getAllState().then(data => {
-            var statesOptions = data.data.Data.map(suggestion => ({
-                value: suggestion.Id,
-                label: suggestion.Name
-            }))
+        user_getAll().then(data=>{
             this.setState(() => ({
-                states: statesOptions
+                allUsersArray: data.data.Data
             }));
+
+        }).catch(e=>{
+            console.log(e);
         })
     }
-    selectPlace(e,place) {
-        e.preventDefault()
-        console.log(place)
-        this.setState(() => ({
-            selectedPlaceToOpenClients: place
-        }));
-    }
-    deletePlace(e,place) {
-        e.preventDefault()
-
-    }
-    getPlaces() {
-
-        location_getAllPlaces().then(data => {
-            this.setState(() => ({
-                allPlacesArray: data.data.Data
-            }));
-        })
-    }
-    stateSelectedChange(e) {
-
-        this.setState(() => ({
-            selectedState:e.name,
-            selectedCity: null,
-            selectedRegion: null,
-        }));
-        location_getCities_byState({Id: e.value}).then(data => {
-            var cityOptions = data.data.Data.map(suggestion => ({
-                value: suggestion.Id,
-                label: suggestion.Name
-            }))
-            this.setState(() => ({
-                cities: cityOptions
-            }));
-        })
-    }
-    citySelectedChange(e) {
-
-        this.setState(() => ({
-            selectedCity: e.name,
-            selectedRegion: null,
-        }));
-        location_getRegions_byCity({Id: e.value}).then(data => {
-            var RegionOptions = data.data.Data.map(suggestion => ({
-                value: suggestion.Id,
-                label: suggestion.Name
-            }))
-            this.setState(() => ({
-                regions: RegionOptions
-            }));
-        })
-    }
-    regionSelectedChange(e) {
-
-        this.setState(() => ({
-            selectedRegion: e.name,
-        }));
-    }
-    renderPlacesRow=(place, index)=>{
+    renderUsersRow=(User, index)=>{
         const { classes } = this.props;
         return (
             <tr key={index}>
-                <td>{place.Id}</td>
-                <td>{place.Name}</td>
-                <td>{place.Address}</td>
+                <td>{User.Id}</td>
+                <td>{User.username}</td>
+                <td>{User.phoneNumber}</td>
+                <td>{User.role}</td>
                 <td>
-
-                    <Button variant="contained" color="primary" className={classes.button} >
-                        ورزش ها
-                    </Button>
-                    <Button variant="contained" color="primary" className={classes.button} onClick={(e)=>this.selectPlace(e,place)}>
-                        مشاهده پرسنل
-                    </Button>
-                    <Button variant="contained" color="primary" className={classes.button_edit}>
+                    <Button variant="contained" color="primary" className={classes.button_edit} onClick={(e)=>this.prepareEditUser(e,User)}>
                         ویرایش
                     </Button>
-                    <Button variant="contained" color="primary" className={classes.button_danger} onClick={(e)=>this.deletePlace(e,place)}>
+                    <Button variant="contained" color="primary" className={classes.button_danger} onClick={(e)=>this.openModalDelete(e,User)}>
                         حذف
                     </Button>
 
@@ -399,18 +292,39 @@ class PlaceManagement extends Component {
             </tr>
         )
     }
-    renderModalDelete = (classes,stateToDelete)=>{
+
+    prepareEditUser=(e,user)=>{
+
+        e.preventDefault()
+        this.openAddMode(e)
+        console.log(this.getAccess().filter(p=>p.label === user.role))
+        this.setState(() => ({
+            selectedUserToEdit: user,
+            selectedAccess:this.getAccess().filter(p=>p.label === user.role)
+        }));
+         document.querySelector('#form_UserName').value = user.username
+        document.querySelector('#form_PhoneNumber').value = user.phoneNumber
+    }
+
+
+    closeModalDelete = ()=> {
+        this.setState(() => ({
+            selectedUserToDelete: null
+        }));
+    };
+    renderModalDelete = (classes,UserToDelete)=>{
+        console.log(this.state.selectedAccess)
         return(<>
-                <Modal show={stateToDelete} onHide={this.closeModalDelete}>
+                <Modal show={UserToDelete} onHide={this.closeModalDelete}>
                     <Modal.Header closeButton>
                         <Modal.Title>delete</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>حذف {stateToDelete&&stateToDelete.Name}</Modal.Body>
+                    <Modal.Body>حذف {UserToDelete&&UserToDelete.username}</Modal.Body>
                     <Modal.Footer>
                         <Button className={classes.button_edit} onClick={this.closeModalDelete}>
                             خیر
                         </Button>
-                        <Button className={classes.button_danger} onClick={(e) => this.deleteState(e, stateToDelete)}>
+                        <Button className={classes.button_danger} onClick={(e) => this.deleteUser(e, UserToDelete)}>
                             حذف
                         </Button>
                     </Modal.Footer>
@@ -419,6 +333,52 @@ class PlaceManagement extends Component {
         );
     }
 
+    getAccess() {
+        return [{
+            label: "USER",
+            value: 1
+        },{
+            label: "CONTENT",
+            value: 2
+        },{
+            label: "MARKET",
+            value: 3
+        },{
+            label: "ADMIN",
+            value: 4
+        },{
+            label: "SUPERADMIN",
+            value: 5
+        },{
+            label: "MANAGER",
+            value: 6
+        },{
+            label: "ATHLETE",
+            value: 7
+        },{
+            label: "COACH",
+            value: 8
+        }]
+
+    }
+
+    accessSelectedChange(e) {
+
+        this.setState(() => ({
+                selectedAccess:e,
+            }
+        ));
+    }
+
+    clearForm(){
+
+        this.setState(() => ({
+                selectedAccess:null,
+            }
+        ));
+        document.querySelector('#form_UserName').value = ""
+        document.querySelector('#form_PhoneNumber').value = ""
+    }
 }
 
-export default withStyles(style)(PlaceManagement);
+export default withStyles(style)(UserManagement);

@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/styles';
 import AddIcon from "@material-ui/icons/Add";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import {Modal, Table} from "react-bootstrap";
+import {location_getAllState} from "../../../../api/locations.api";
 
 const style = theme => ({
     root: {
@@ -50,9 +51,8 @@ class ClientsManagement extends Component {
         super(props);
         this.state = {
             addMode: false,
-            selectedRegionToEdit: null,
-            selectedRegionToDelete: null,
-            allRegionsArray: []
+            selectedClientToDelete: null,
+            allUsersArray: []
         };
     }
 
@@ -81,7 +81,7 @@ class ClientsManagement extends Component {
                     <Paper className={classes.root} hidden={!this.state.addMode}>
 
                         <form className={classes.container} noValidate autoComplete="off" onSubmit={(e)=>this.addRegion(e)}>
-                            <p>افزودن منطقه :</p>
+                            <p>افزودن کاربر :</p>
                             <TextField
                                 id="standard-region"
                                 label="نام منطقه"
@@ -99,33 +99,24 @@ class ClientsManagement extends Component {
                         <thead>
                         <tr>
                             <th>id</th>
-                            <th>نام شهر</th>
+                            <th>نام و نام خانوادگی</th>
+                            <th>شماره تلفن</th>
                             <th>actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {/*{this.state.allRegionsArray.map(this.renderRegions)}*/}
                         </tbody>
                     </Table>
                 </PortletBody>
             </Portlet>
 
-            {/*{this.renderModalDelete(classes,this.state.selectedRegionToDelete)}*/}
+            {this.renderModalDelete(classes,this.state.selectedClientToDelete)}
         </>
 
     };
 
     componentDidMount() {
         this.getRegions();
-    }
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        // if(prevProps.city.Id !== this.props.city.Id){
-        //     this.getRegions();
-        //     this.setState(() => ({
-        //         addMode: false
-        //     }));
-        //
-        // }
     }
 
     toggleAddMode(e) {
@@ -141,6 +132,20 @@ class ClientsManagement extends Component {
         this.setState(() => ({
             addMode: true
         }));
+    }
+
+    getStates() {
+
+        location_getAllState().then(data => {
+            var statesOptions = data.data.Data.map(suggestion => ({
+                value: suggestion.Id,
+                label: suggestion.Name
+            }))
+            this.setState(() => ({
+                selectState:{options : statesOptions,
+                    selectedValue:null}
+            }))
+        })
     }
     getRegions(){
         // location_getRegions_byCity({"Id":this.props.city.Id}).then(data=>{
@@ -166,90 +171,63 @@ class ClientsManagement extends Component {
     }
     addRegion(e) {
         e.preventDefault()
-        // if(this.state.selectedRegionToEdit){
-        //     location_updateRegion({
-        //         "Name": e.target.region_name.value,
-        //         "Id":this.state.selectedRegionToEdit.Id
-        //     }).then(data => {
-        //         this.getRegions();
-        //         document.querySelector('#standard-region').value = null
-        //         this.setState(() => ({
-        //             addMode: false,
-        //             selectedRegionToEdit: null
-        //         }));
-        //     }).catch(e => {
-        //         console.log(e);
-        //     })
-        // }else {
-        //     location_addRegion({
-        //         "Name": e.target.region_name.value,
-        //         "City": this.props.city
-        //     }).then(data => {
-        //         this.getRegions();
-        //         document.querySelector('#standard-region').value = null
-        //     }).catch(e => {
-        //         console.log(e);
-        //     })
-        // }
+            // location_addRegion({
+            //     "Name": e.target.region_name.value,
+            //     "City": this.props.city
+            // }).then(data => {
+            //     this.getRegions();
+            //     document.querySelector('#standard-region').value = null
+            // }).catch(e => {
+            //     console.log(e);
+            // })
+
     }
 
     closeModalDelete = ()=> {
-        // this.setState(() => ({
-        //     selectedRegionToDelete: null
-        // }));
+        this.setState(() => ({
+            selectedClientToDelete: null
+        }));
     };
     openModalDelete =(e,region)=>{
-        // this.setState(() => ({
-        //     selectedRegionToDelete: region
-        // }));
+        this.setState(() => ({
+            selectedClientToDelete: region
+        }));
     };
 
-    prepareEditRegion=(e,region)=>{
-
-        e.preventDefault()
-        this.openAddMode(e)
-        this.setState(() => ({
-            selectedRegionToEdit: region
-        }));
-        document.querySelector('#standard-region').value = region.Name
+    renderModalDelete = (classes,clientToDelete)=>{
+        return(<>
+                <Modal show={clientToDelete} onHide={this.closeModalDelete}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>delete</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>حذف {clientToDelete&&clientToDelete.Name}</Modal.Body>
+                    <Modal.Footer>
+                        <Button className={classes.button_edit} onClick={this.closeModalDelete}>
+                            خیر
+                        </Button>
+                        <Button className={classes.button_danger} onClick={(e) => this.deleteRegion(e, clientToDelete)}>
+                            حذف
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        );
     }
+    renderRegions=(client,index)=>{
+        const { classes } = this.props;
+        return (
+            <tr key={index}>
+                <td>{client.Id}</td>
+                <td>{client.username}</td>
+                <td>{client.phoneNumber}</td>
+                <td>
+                    <Button variant="contained" color="primary" className={classes.button_danger} onClick={(e)=>this.openModalDelete(e,client)}>
+                        حذف
+                    </Button>
 
-    renderModalDelete = (classes,regionToDelete)=>{
-        // return(<>
-        //         <Modal show={regionToDelete} onHide={this.closeModalDelete}>
-        //             <Modal.Header closeButton>
-        //                 <Modal.Title>delete</Modal.Title>
-        //             </Modal.Header>
-        //             <Modal.Body>حذف {regionToDelete&&regionToDelete.Name}</Modal.Body>
-        //             <Modal.Footer>
-        //                 <Button className={classes.button_edit} onClick={this.closeModalDelete}>
-        //                     خیر
-        //                 </Button>
-        //                 <Button className={classes.button_danger} onClick={(e) => this.deleteRegion(e, regionToDelete)}>
-        //                     حذف
-        //                 </Button>
-        //             </Modal.Footer>
-        //         </Modal>
-        //     </>
-        // );
-    }
-    renderRegions=(region,index)=>{
-        // const { classes } = this.props;
-        // return (
-        //     <tr key={index}>
-        //         <td>{region.Id}</td>
-        //         <td>{region.Name}</td>
-        //         <td>
-        //             <Button variant="contained" color="primary" className={classes.button_edit} onClick={e=>this.prepareEditRegion(e,region)}>
-        //                 ویرایش
-        //             </Button>
-        //             <Button variant="contained" color="primary" className={classes.button_danger} onClick={(e)=>this.openModalDelete(e,region)}>
-        //                 حذف
-        //             </Button>
-        //
-        //         </td>
-        //     </tr>
-        // )
+                </td>
+            </tr>
+        )
     }
 }
 

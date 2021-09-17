@@ -1,5 +1,5 @@
 import axios from "axios";
-import {LocationApi, SportApi} from "./const_api";
+import { SportApi} from "./const_api";
 
 
 //sport
