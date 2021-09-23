@@ -1,6 +1,8 @@
 package com.notrika.gympin_master
 
+import android.content.Intent
 import android.os.Bundle
+import com.notrika.gympin_master.ui.main.ActivityMain
 import dagger.android.support.DaggerAppCompatActivity
 
 abstract class BaseActivity : DaggerAppCompatActivity() {
@@ -12,4 +14,10 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
+    fun restart() {
+
+        this.finish()
+        val myIntent = Intent(this, ActivityMain::class.java)
+        this.startActivity(myIntent)
+    }
 }

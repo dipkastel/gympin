@@ -10,10 +10,11 @@ import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.notrika.gympin_master.R
-import com.notrika.gympin_master.data.model.Req_Login
-import com.notrika.gympin_master.data.model.Req_SendSms
+import com.notrika.gympin_master.data.model.Req.Req_Login
+import com.notrika.gympin_master.data.model.Req.Req_SendSms
 import com.notrika.gympin_master.data.model.Resource
 import com.notrika.gympin_master.ui.main.ActivityMain
+import com.notrika.gympin_master.ui.register.ActivityRegister
 import com.notrika.gympin_master.ui.register.RegisterInnerPageFragment
 import kotlinx.android.synthetic.main.fragment_register_login.*
 
@@ -75,7 +76,9 @@ class FragmentLogin : RegisterInnerPageFragment() {
 
             when (baseSetting.status) {
                 Resource.Status.SUCCESS -> {
-                    openApp()
+                    activity?.finish()
+                    val myIntent = Intent(activity, ActivityRegister::class.java)
+                    activity?.startActivity(myIntent)
                 }
                 Resource.Status.ERROR -> {
                     et_activation_code.error = getString(R.string.can_not_send_sms_Now)
@@ -121,40 +124,4 @@ class FragmentLogin : RegisterInnerPageFragment() {
         })
     }
 
-    private fun openApp() {
-//        viewModel.requestUpdateUserProfile().observe(viewLifecycleOwner, Observer {
-//
-//            when (it.status) {
-//                Resource.Status.SUCCESS -> {
-                    activity?.finish()
-                    val myIntent = Intent(activity, ActivityMain::class.java)
-//                    try {
-//
-//                        if (activity?.intent?.hasExtra(NotificationConstants.ONESIGNAL_NOTIFICAATION_LINK_PARAMS_KEY) == true
-//                                && activity?.intent?.hasExtra(NotificationConstants.ONESIGNAL_NOTIFICAATION_LINK_TYPE_KEY) == true) {
-//                            val linkType: Int? = activity?.intent?.extras?.getInt(NotificationConstants.ONESIGNAL_NOTIFICAATION_LINK_TYPE_KEY)
-//                            val linkParams: String? = activity?.intent?.extras?.getString(NotificationConstants.ONESIGNAL_NOTIFICAATION_LINK_PARAMS_KEY)
-//                            if (linkType != null && linkParams != null) {
-//                                myIntent.putExtra(NotificationConstants.ONESIGNAL_NOTIFICAATION_LINK_TYPE_KEY, linkType)
-//                                myIntent.putExtra(NotificationConstants.ONESIGNAL_NOTIFICAATION_LINK_PARAMS_KEY, linkParams)
-//                            }
-//                            myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET or Intent.FLAG_ACTIVITY_MULTIPLE_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-//                        }
-//                    } catch (e: java.lang.Exception) {
-//
-//                    }
-                    activity?.startActivity(myIntent)
-//                }
-//                Resource.Status.ERROR -> {
-//
-//                    val action = CiBar_Action("تلاش مجدد", object : OnCibarButtonListener {
-//                        override fun OnClick(view: View) {
-//                            openApp()
-//                        }
-//                    })
-//                    ciBar.createAlert(activity as Activity, it.message, CiBar.INFINITY_KSNACK_DURATION, action).show()
-//                }
-//            }
-//        })
-    }
 }

@@ -24,6 +24,18 @@
 
     <!-- main part main theme. -->
     <style name="Theme.Main" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="android:colorBackground">@color/purple_kalahari</item>
+        <item name="colorError">@color/red_georgia</item>
+
+
+        <!-- New MaterialComponents attributes. -->
+        <item name="colorPrimaryVariant">@color/blue_dodger</item>
+        <item name="colorSecondaryVariant">@color/blue_dodger</item>
+        <item name="strokeColor">@color/black_Bistre</item>
+        <item name="android:textColor">@color/black_Bistre</item>
+        <item name="strokeWidth">@dimen/_1sdp</item>
+
         <item name="colorPrimary">@color/grey_Ash</item>
         <item name="colorAccent">@color/black_Bistre</item>
         <item name="colorPrimaryDark">@color/white_Gainsboro</item>

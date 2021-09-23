@@ -2,57 +2,20 @@ import React, {Component} from "react";
 import {Button, Paper, TextField} from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import AddIcon from "@material-ui/icons/Add";
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
-import {Modal, Table} from "react-bootstrap";
-import {location_getAllState} from "../../../../api/locations.api";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../../partials/content/Portlet";
+import {Form, Modal, Table} from "react-bootstrap";
+import {location_getOwnersPlace,location_addPlaceOwner} from "../../../../../api/locations.api";
+import Select from "react-select";
+import {style} from "../../../../../partials/content/generalStyle"
 
-const style = theme => ({
-    root: {
-        padding: theme.spacing(3, 2),
-        width: "fit-content",
-        "align-self": "center",
-    },
-    table: {
-        marginTop:theme.spacing(2),
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: 200,
-    },
-    button: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-    },
-    button_danger: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        backgroundColor:"#aa2222",
-        "&:hover":{
-            backgroundColor:"#770d0d",
-        },
-        color: "#fff"
-    },
-    button_edit: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        backgroundColor:"#227aaa",
-        "&:hover":{
-            backgroundColor:"#124a88",
-        },
-        color: "#fff"
-    },
-    container: {
-        display: "inline-grid"
-    }
-})
-class ClientsManagement extends Component {
+class PlaceClients extends Component {
     constructor(props) {
         super(props);
         this.state = {
             addMode: false,
             selectedClientToDelete: null,
-            allUsersArray: []
+            allUsersArray: [],
+            selectedRole:null
         };
     }
 
@@ -62,7 +25,7 @@ class ClientsManagement extends Component {
 
             <Portlet>
                 <PortletHeader
-                    title={"پرسنل "+this.props.state.Name}
+                    title={"پرسنل "+this.props.place.Name}
                     toolbar={
                         <PortletHeaderToolbar>
                             <button
@@ -83,12 +46,24 @@ class ClientsManagement extends Component {
                         <form className={classes.container} noValidate autoComplete="off" onSubmit={(e)=>this.addRegion(e)}>
                             <p>افزودن کاربر :</p>
                             <TextField
-                                id="standard-region"
-                                label="نام منطقه"
+                                id="standard-user-id"
+                                label="شناسه کاربر"
                                 className={classes.textField}
-                                name="region_name"
+                                name="user_id"
                                 margin="normal"
                             />
+
+                            <Form.Group controlId="formRole">
+                                <Form.Label>سطح دسترسی</Form.Label>
+                                <Select
+                                    className={classes.dropdown}
+                                    inputId="react-select-single"
+                                    name="formRole"
+                                    options={this.getAccess()}
+                                    value={this.state.selectedRole}
+                                    onChange={(e) => this.roleSelectedChange(e)}
+                                />
+                            </Form.Group>
                             <Button type={"submit"} variant="contained" color="primary" className={classes.button}>
                                 ثبت
                             </Button>
@@ -101,10 +76,12 @@ class ClientsManagement extends Component {
                             <th>id</th>
                             <th>نام و نام خانوادگی</th>
                             <th>شماره تلفن</th>
+                            <th>دسترسی</th>
                             <th>actions</th>
                         </tr>
                         </thead>
                         <tbody>
+                        {this.state.allUsersArray.map(this.renderUsersRow)}
                         </tbody>
                     </Table>
                 </PortletBody>
@@ -117,6 +94,12 @@ class ClientsManagement extends Component {
 
     componentDidMount() {
         this.getRegions();
+        this.getOwnersPlace();
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.place.Id !== this.props.place.Id){
+            this.getOwnersPlace();
+        }
     }
 
     toggleAddMode(e) {
@@ -125,7 +108,7 @@ class ClientsManagement extends Component {
             addMode: !this.state.addMode,
             selectedRegionToEdit: null
         }));
-        document.querySelector('#standard-region').value = ""
+        document.querySelector('#standard-user-id').value = ""
     }
     openAddMode(e) {
         e.preventDefault()
@@ -134,17 +117,15 @@ class ClientsManagement extends Component {
         }));
     }
 
-    getStates() {
+    getOwnersPlace() {
 
-        location_getAllState().then(data => {
-            var statesOptions = data.data.Data.map(suggestion => ({
-                value: suggestion.Id,
-                label: suggestion.Name
-            }))
+        location_getOwnersPlace({"Id":this.props.place.Id}).then(data => {
+            console.log(data.data.Data);
             this.setState(() => ({
-                selectState:{options : statesOptions,
-                    selectedValue:null}
+                allUsersArray:data.data.Data
             }))
+        }).catch(e=>{
+            console.log(e);
         })
     }
     getRegions(){
@@ -213,13 +194,15 @@ class ClientsManagement extends Component {
             </>
         );
     }
-    renderRegions=(client,index)=>{
+    renderUsersRow=(client,index)=>{
+        console.log(client);
         const { classes } = this.props;
         return (
             <tr key={index}>
                 <td>{client.Id}</td>
                 <td>{client.username}</td>
                 <td>{client.phoneNumber}</td>
+                <td>{client.role}</td>
                 <td>
                     <Button variant="contained" color="primary" className={classes.button_danger} onClick={(e)=>this.openModalDelete(e,client)}>
                         حذف
@@ -229,6 +212,43 @@ class ClientsManagement extends Component {
             </tr>
         )
     }
+
+    getAccess() {
+        return [{
+            label: "USER",
+            value: 1
+        },{
+            label: "CONTENT",
+            value: 2
+        },{
+            label: "MARKET",
+            value: 3
+        },{
+            label: "ADMIN",
+            value: 4
+        },{
+            label: "SUPERADMIN",
+            value: 5
+        },{
+            label: "MANAGER",
+            value: 6
+        },{
+            label: "ATHLETE",
+            value: 7
+        },{
+            label: "COACH",
+            value: 8
+        }]
+
+    }
+
+    roleSelectedChange(e) {
+
+            this.setState(() => ({
+                    selectedRole:e,
+                }
+            ));
+    }
 }
 
-export default withStyles(style)(ClientsManagement);
+export default withStyles(style)(PlaceClients);

@@ -1,5 +1,6 @@
 package com.notrika.gympin_master.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.TypedValue
@@ -117,6 +118,11 @@ class ActivityMain : BaseActivity() {
 
 
 
+    public fun setHeaderTitle(title:String){
+        try {
+            topAppBar.title = title
+        }catch (e:Exception){}
+    }
 
 
 //    private fun requestVote() {
@@ -238,6 +244,7 @@ class ActivityMain : BaseActivity() {
             timer.start()
         }
     }
+
 //
 //    fun selectCinemaTab() {
 //        bottom_nav.selectedItemId = R.id.main_cinemas

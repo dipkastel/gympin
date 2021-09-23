@@ -6,7 +6,7 @@ import com.notrika.gympin_master.data.db.db_network_setting.Network_setting
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.LiveData
-import com.notrika.gympin_master.data.model.Res_Splash
+import com.notrika.gympin_master.data.model.Res.Res_Splash
 import com.notrika.gympin_master.data.model.Resource
 import com.notrika.gympin_master.data.network.request.BaseRequests
 import com.notrika.gympin_master.util.setting.ErrorCheckEmpty

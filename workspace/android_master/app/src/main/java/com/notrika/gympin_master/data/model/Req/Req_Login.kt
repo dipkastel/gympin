@@ -1,7 +1,6 @@
-package com.notrika.gympin_master.data.model
+package com.notrika.gympin_master.data.model.Req
 
 import android.util.Base64
-import com.bumptech.glide.RequestManager
 
 class Req_Login(var phoneNumber: String, var password: String) {
     fun getAuth(): String {

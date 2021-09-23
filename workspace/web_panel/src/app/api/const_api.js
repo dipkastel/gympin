@@ -1,4 +1,4 @@
-
+import {location_getOwnersPlace, location_getPlaceById} from "./locations.api";
 
 
 export let AuthApi = {
@@ -24,9 +24,13 @@ export let LocationApi = {
     updateRegion : "v1/location/updateRegion",
     //place
     getAllPlace : "v1/location/getAllPlace",
+    getPlaceById : "v1/location/getPlaceById",
     addPlace : "v1/location/addPlace",
     deletePlace : "v1/location/deletePlace",
     updatePlace : "v1/location/updatePlace",
+    //place client
+    addPlaceOwner : "v1/location/addPlaceOwner",
+    getOwnersPlace : "v1/location/getOwnersPlace",
 
 }
 

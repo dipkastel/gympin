@@ -1,4 +1,4 @@
-package com.notrika.gympin_master.di
+package com.notrika.gympin_master.di.general
 
 
 import com.notrika.gympin_master.data.db.db_network_setting.Network_setting

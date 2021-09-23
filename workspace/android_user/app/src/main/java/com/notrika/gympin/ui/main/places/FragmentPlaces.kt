@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.notrika.gympin.ui.main.MainPageFragment
 import com.notrika.gympin.R
+import com.notrika.gympin.ui.main.ActivityMain
 
 
 class FragmentPlaces : MainPageFragment() {

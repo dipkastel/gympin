@@ -20,5 +20,6 @@
         android:name="com.notrika.gympin_master.ui.register.login.FragmentLogin"
         android:label="FragmentLogin"
         tools:layout="@layout/fragment_register_login"
-        />
+        >
+    </fragment>
 </navigation>

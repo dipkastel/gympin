@@ -6,7 +6,7 @@ import { LayoutSplashScreen } from "../../../_metronic";
 import PlaceManagement from "./place/PlaceManagement";
 import LocationManagement from "./location/LocationManagement";
 import SportManagement from "./sport/SportManagement";
-import PlaceSportManagement from "./place/sport/PlaceSportManagement";
+import PlacedetailsManagement from "./place/details/PlaceDetalsManagement";
 import UserManagement from "./user/UserManagement";
 export default function HomePage() {
   return (
@@ -19,7 +19,7 @@ export default function HomePage() {
                   <Route path="/places" component={PlaceManagement} />
                   <Route path="/locations" component={LocationManagement} />
                   <Route path="/dashboard" component={Dashboard} />
-                  <Route path="/sport/:id" component={PlaceSportManagement} />
+                  <Route path="/place/details" component={PlacedetailsManagement} />
                   <Route path="/sports" component={SportManagement} />
                   <Route path="/users" component={UserManagement} />
                   <Redirect to="/error/error-v1" />

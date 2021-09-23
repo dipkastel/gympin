@@ -14,4 +14,5 @@
     <string name="can_not_send_sms_Now">در حال حاضر امکان ارسال پیامک وجود ندارد</string>
     <string name="activation_code_is_not_valid">کد فعالسازی معتبر نیست</string>
     <string name="text_placeholder">-----</string>
+    <string name="selectPlace">انتخاب مرکز</string>
 </resources>

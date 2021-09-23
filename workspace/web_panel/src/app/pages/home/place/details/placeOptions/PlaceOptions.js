@@ -1,17 +1,13 @@
 import React, {Component} from "react";
-import Notice from "../../../partials/content/Notice";
-import AddIcon from "@material-ui/icons/Add";
-import {Form, Modal, Table} from "react-bootstrap";
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import {Button, Paper} from "@material-ui/core";
 import {withStyles} from "@material-ui/styles";
-import {sport_addSport,sport_deleteSport,sport_getAllSport,sport_updateSport
-} from "../../../api/sport.api";
-import 'leaflet/dist/leaflet.css';
-import {style} from "../../../partials/content/generalStyle";
+import {style} from "../../../../../partials/content/generalStyle";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../../partials/content/Portlet";
+import AddIcon from "@material-ui/icons/Add";
+import {Button, Paper} from "@material-ui/core";
+import {Form, Modal, Table} from "react-bootstrap";
+import {sport_addSport, sport_deleteSport, sport_getAllSport, sport_updateSport} from "../../../../../api/sport.api";
 
-
-class SportManagement extends Component {
+class PlaceOptions extends Component {
 
     constructor(props) {
         super(props);
@@ -21,27 +17,15 @@ class SportManagement extends Component {
             selectedSportToEdit:null,
             selectedSportToDelete:null
         };
+
     }
     render() {
         const {classes} = this.props;
-
-
         return (
             <>
-
-                <Notice icon="flaticon-warning kt-font-primary">
-                    <p>
-                        موجودیت ورزش به معنای فعالیت بدنی است که موجب سلامت و تن درستی است
-                    </p>
-                    <p>
-                        این ورزش ها میتواند نیازمند وسیله یا بی نیاز از وسایل ورزشی باشد
-                    </p>
-                </Notice>
-
-
                 <Portlet>
                     <PortletHeader
-                        title="ورزش ها"
+                        title="امکانات"
                         toolbar={
                             <PortletHeaderToolbar>
                                 <button
@@ -90,11 +74,9 @@ class SportManagement extends Component {
 
                 {this.renderModalDelete(classes,this.state.selectedSportToDelete)}
             </>
-        )
+           );
     }
-    componentDidMount() {
-        this.getSports();
-    }
+
     toggleAddMode(e) {
         e.preventDefault()
         this.setState(() => ({
@@ -188,6 +170,9 @@ class SportManagement extends Component {
             </>
         );
     }
+    componentDidMount() {
+        this.getSports();
+    }
     prepareEditSport=(e,sport)=>{
         e.preventDefault()
         this.openAddMode(e)
@@ -213,7 +198,6 @@ class SportManagement extends Component {
         }));
 
     }
-
 }
 
-export default withStyles(style)(SportManagement);
+export default withStyles(style)(PlaceOptions);

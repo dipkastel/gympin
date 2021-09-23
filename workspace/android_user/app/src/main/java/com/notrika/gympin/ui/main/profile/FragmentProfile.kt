@@ -10,7 +10,7 @@ import com.notrika.gympin.ui.main.InnerPageFragment
 import com.notrika.gympin.ui.main.MainPageFragment
 
 
-class FragmentProfile : InnerPageFragment() {
+class FragmentProfile : MainPageFragment() {
 
     private lateinit var viewModel: ViewModelProfile
 

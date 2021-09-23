@@ -10,7 +10,7 @@ import com.notrika.gympin.R
 import com.notrika.gympin.ui.main.InnerPageFragment
 
 
-class FragmentSettings : InnerPageFragment() {
+class FragmentSettings : MainPageFragment() {
 
     private lateinit var viewModel: ViewModelSettings
 

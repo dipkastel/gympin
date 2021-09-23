@@ -6,7 +6,6 @@ import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../.
 import {Button, Paper} from "@material-ui/core";
 import Select from 'react-select';
 import {withStyles} from "@material-ui/styles";
-import ClientsManagement from "./clients/ClientsManagement";
 import {
     location_addPlace,
     location_deletePlace,
@@ -19,58 +18,8 @@ import {
 import * as L from "leaflet";
 import 'leaflet/dist/leaflet.css';
 import {Link} from "react-router-dom";
+import {style} from "../../../partials/content/generalStyle"
 
-
-const style = theme => ({
-    root: {
-        padding: theme.spacing(3, 2),
-        width: "fit-content",
-        "align-self": "center",
-    },
-    table: {
-        marginTop:theme.spacing(2),
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: 200,
-    },
-    button: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-    },
-    button_danger: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        backgroundColor:"#aa2222",
-        "&:hover":{
-            backgroundColor:"#770d0d",
-        },
-        color: "#fff"
-    },
-    button_edit: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        backgroundColor:"#227aaa",
-        "&:hover":{
-            backgroundColor:"#124a88",
-        },
-        color: "#fff"
-    },
-    container: {
-        display: "inline-grid"
-    },
-    dropdown: {
-        width: "180px"
-    },
-    map: {
-        width: "600px",
-        height: "300px"
-    },
-    hidden_input: {
-        display: "none"
-    }
-})
 var markerLayer = null;
 let leaflet = null;
 class PlaceManagement extends Component {
@@ -95,7 +44,6 @@ class PlaceManagement extends Component {
             selectedLng:0.0,
             allPlacesArray:[],
             selectedPlace:null,
-            selectedPlaceToOpenClients:null,
             selectedPlaceToDelete:null,
             selectedPlaceToEdit:null,
             selectedPlaceToEditTemp:null
@@ -215,9 +163,6 @@ class PlaceManagement extends Component {
                     </PortletBody>
                 </Portlet>
 
-                {this.state.selectedPlaceToOpenClients &&
-                <ClientsManagement state={this.state.selectedPlaceToOpenClients}/>
-                }
                 {this.renderModalDelete(classes,this.state.selectedPlaceToDelete)}
             </>
         )
@@ -345,13 +290,6 @@ class PlaceManagement extends Component {
             }))
         })
     }
-    selectPlace(e,place) {
-        e.preventDefault()
-        console.log(place)
-        this.setState(() => ({
-            selectedPlaceToOpenClients: place
-        }));
-    }
     deletePlace(e,place) {
         e.preventDefault()
         location_deletePlace({
@@ -445,14 +383,11 @@ class PlaceManagement extends Component {
                 <td>{place.Name}</td>
                 <td>{place.Address}</td>
                 <td>
-                    <Link   to={'sport/'+place.Id} >
+                    <Link   to={'place/details?placeId='+place.Id} >
                         <Button variant="contained" color="primary" className={classes.button} >
-                            ورزش ها
+                            جزئیات
                         </Button>
                     </Link>
-                    <Button variant="contained" color="primary" className={classes.button} onClick={(e)=>this.selectPlace(e,place)}>
-                        مشاهده پرسنل
-                    </Button>
                     <Button variant="contained" color="primary" className={classes.button_edit} onClick={e=>this.prepareEditPlace(e,place)}>
                         ویرایش
                     </Button>

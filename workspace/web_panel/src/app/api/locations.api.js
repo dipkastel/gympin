@@ -48,6 +48,9 @@ export function location_updateRegion(region) {
 export function location_getAllPlaces() {
     return axios.get(LocationApi.getAllPlace);
 }
+export function location_getPlaceById(place) {
+    return axios.get(LocationApi.getPlaceById,{params:place});
+}
 export function location_addPlace(place) {
     return axios.post(LocationApi.addPlace,place);
 }
@@ -57,7 +60,13 @@ export function location_deletePlace(place) {
 export function location_updatePlace(place) {
     return axios.put(LocationApi.updatePlace,place);
 }
-
+// place clients
+export function location_addPlaceOwner(placeOwner) {
+    return axios.post(LocationApi.addPlaceOwner,placeOwner);
+}
+export function location_getOwnersPlace(placeId) {
+    return axios.get(LocationApi.getOwnersPlace,{params:placeId});
+}
 
 
 

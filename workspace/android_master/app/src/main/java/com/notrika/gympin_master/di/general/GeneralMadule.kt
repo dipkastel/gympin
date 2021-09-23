@@ -2,6 +2,7 @@ package com.notrika.gympin_master.di.general
 
 import com.notrika.gympin_master.data.network.api.AccountApi
 import com.notrika.gympin_master.data.network.api.BaseApi
+import com.notrika.gympin_master.data.network.api.LocationApi
 import com.notrika.gympin_master.di.DiConstants
 import dagger.Module
 import dagger.Provides
@@ -21,6 +22,10 @@ class GeneralMadule @Inject constructor() {
     @Provides
     internal fun provideAccountApi(@Named(DiConstants.retrofit_gympin_main) retrofit: Retrofit): AccountApi {
         return retrofit.create(AccountApi::class.java)
+    }
+    @Provides
+    internal fun provideLocationApi(@Named(DiConstants.retrofit_gympin_main) retrofit: Retrofit): LocationApi {
+        return retrofit.create(LocationApi::class.java)
     }
 }
 

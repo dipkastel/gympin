@@ -44,7 +44,7 @@ class FragmentSplash : RegisterInnerPageFragment() {
     }
 
     private fun getBaseSettings() {
-        viewModel.requestBaseSetting().observe(viewLifecycleOwner, Observer { baseSetting ->
+        viewModel.requestSplash().observe(viewLifecycleOwner, Observer { baseSetting ->
 
             when (baseSetting.status) {
                 Resource.Status.SUCCESS -> {
@@ -73,24 +73,37 @@ class FragmentSplash : RegisterInnerPageFragment() {
     }
 
     private fun openApp() {
-//        viewModel.requestGetUserPlaces().observe(viewLifecycleOwner, Observer {
-//
-//            when (it.status) {
-//                Resource.Status.SUCCESS -> {
+        viewModel.requestUserPlaces().observe(viewLifecycleOwner, Observer {
+
+            when (it.status) {
+                Resource.Status.SUCCESS -> {
+                    if(it.data!!.isEmpty()){
+                        val action = CiBar_Action("اکانت شما در هیچ مرکزی ثبت نشده", object : OnCibarButtonListener {
+                            override fun OnClick(view: View) {
+                                openApp()
+                            }
+                        })
+                        ciBar.createAlert(activity as Activity, it.message, CiBar.INFINITY_CBAR_DURATION, action).show()
+                        return@Observer
+                    }
+                    pocket.userPlaces = it.data
+                    if(pocket.userCurrentPlace==null){
+                        pocket.userCurrentPlace = it.data[0]
+                    }
                     activity?.finish()
                     val myIntent = Intent(activity, ActivityMain::class.java)
                     activity?.startActivity(myIntent)
-//                }
-//                Resource.Status.ERROR -> {
-//
-//                    val action = CiBar_Action("تلاش مجدد", object : OnCibarButtonListener {
-//                        override fun OnClick(view: View) {
-//                            openApp()
-//                        }
-//                    })
-//                    ciBar.createAlert(activity as Activity, it.message, CiBar.INFINITY_KSNACK_DURATION, action).show()
-//                }
-//            }
-//        })
+                }
+                Resource.Status.ERROR -> {
+
+                    val action = CiBar_Action("تلاش مجدد", object : OnCibarButtonListener {
+                        override fun OnClick(view: View) {
+                            openApp()
+                        }
+                    })
+                    ciBar.createAlert(activity as Activity, it.message, CiBar.INFINITY_CBAR_DURATION, action).show()
+                }
+            }
+        })
     }
 }

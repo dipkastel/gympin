@@ -54,6 +54,10 @@ class ActivityMain : BaseActivity() {
         config()
     }
 
+    public fun setTitle(title:String){
+        topAppBar.title = title
+    }
+
     private fun config() {
         navController = findNavController(R.id.nav_host_fragment_main)
         navController.setGraph(R.navigation.main)

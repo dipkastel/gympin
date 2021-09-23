@@ -2,6 +2,7 @@ package com.notrika.gympin_master.di
 
 
 import com.notrika.gympin_master.di.general.GeneralMadule
+import com.notrika.gympin_master.di.general.RequestesModule
 import com.notrika.gympin_master.di.main.*
 import com.notrika.gympin_master.di.register.RegisterFragmentBuilderModule
 import com.notrika.gympin_master.di.register.RegisterModule

@@ -2,9 +2,9 @@ package com.notrika.gympin_master.data.network.request
 
 import com.notrika.gympin_master.data.db.db_network_setting.Network_setting
 import com.notrika.gympin_master.data.db.db_pocket.Pocket
-import com.notrika.gympin_master.data.model.Req_Login
-import com.notrika.gympin_master.data.model.Req_SendSms
-import com.notrika.gympin_master.data.model.Res_Login
+import com.notrika.gympin_master.data.model.Req.Req_Login
+import com.notrika.gympin_master.data.model.Req.Req_SendSms
+import com.notrika.gympin_master.data.model.Res.Res_Login
 import com.notrika.gympin_master.data.model.Resource
 import com.notrika.gympin_master.data.network.HttpCode
 import com.notrika.gympin_master.data.network.ResultManager

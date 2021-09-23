@@ -4,9 +4,9 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.notrika.gympin_master.data.model.Req_Login
-import com.notrika.gympin_master.data.model.Req_SendSms
-import com.notrika.gympin_master.data.model.Res_Login
+import com.notrika.gympin_master.data.model.Req.Req_Login
+import com.notrika.gympin_master.data.model.Req.Req_SendSms
+import com.notrika.gympin_master.data.model.Res.Res_Login
 import com.notrika.gympin_master.data.model.Resource
 import com.notrika.gympin_master.data.repository.ACCOUNT_REPO
 import javax.inject.Inject

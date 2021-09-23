@@ -9,47 +9,8 @@ import {
     location_getRegions_byCity, location_updateCity, location_updateRegion
 } from "../../../../api/locations.api";
 import {Modal, Table} from "react-bootstrap";
+import {style} from "../../../../partials/content/generalStyle";
 
-const style = theme => ({
-    root: {
-        padding: theme.spacing(3, 2),
-        width: "fit-content",
-        "align-self": "center",
-    },
-    table: {
-        marginTop:theme.spacing(2),
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: 200,
-    },
-    button: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-    },
-    button_danger: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        backgroundColor:"#aa2222",
-        "&:hover":{
-            backgroundColor:"#770d0d",
-        },
-        color: "#fff"
-    },
-    button_edit: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        backgroundColor:"#227aaa",
-        "&:hover":{
-            backgroundColor:"#124a88",
-        },
-        color: "#fff"
-    },
-    container: {
-        display: "inline-grid"
-    }
-})
 class regionManagement extends Component {
     constructor(props) {
         super(props);

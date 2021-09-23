@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.notrika.gympin_master.R
+import com.notrika.gympin_master.ui.main.ActivityMain
 import com.notrika.gympin_master.ui.main.MainPageFragment
 import com.notrika.gympin_master.util.lottie.LoadingProgress
 import kotlinx.android.synthetic.main.fragment_main_reserves.*
@@ -22,6 +23,7 @@ class FragmentMyPlace : MainPageFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        pocket.userCurrentPlace?.name?.let { (activity as ActivityMain).setHeaderTitle(it) }
         return inflater.inflate(R.layout.fragment_main_myplace, container, false)
     }
 
