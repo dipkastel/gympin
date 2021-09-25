@@ -4,8 +4,7 @@ import com.notrika.gympin.common.BaseDto;
 import com.notrika.gympin.common.location.api.LocationController;
 import com.notrika.gympin.common.location.dto.*;
 import com.notrika.gympin.common.location.param.*;
-import com.notrika.gympin.common.location.service.LocationService;
-import com.notrika.gympin.common.primitive.param.LongParam;
+import com.notrika.gympin.common.location.service.*;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,39 +21,51 @@ public class LocationControllerImpl implements LocationController {
     @Autowired
     private LocationService locationService;
 
+    @Autowired
+    private StateService stateService;
+
+    @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private RegionService regionService;
+
+    @Autowired
+    private PlaceService placeService;
+
     //state
 
     @Override
     //@RolesAllowed({"ADMIN"})
     @PostMapping("/addState")
     public ResponseEntity<StateDto> addState(@RequestBody StateParam stateParam) {
-        return new ResponseEntity<StateDto>(locationService.addState(stateParam), HttpStatus.CREATED);
+        return new ResponseEntity<StateDto>(stateService.add(stateParam), HttpStatus.CREATED);
     }
 
     @Override
     //@RolesAllowed({"ADMIN"})
     @PutMapping("/updateState")
     public ResponseEntity<StateDto> updateState(@RequestBody StateParam stateParam) {
-        return new ResponseEntity<StateDto>(locationService.updateState(stateParam), HttpStatus.OK);
+        return new ResponseEntity<StateDto>(stateService.update(stateParam), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getAllState")
     public ResponseEntity<List<StateDto>> getAllState() {
-        return new ResponseEntity<List<StateDto>>(locationService.getAllState(), HttpStatus.OK);
+        return new ResponseEntity<List<StateDto>>(stateService.getAll(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getStateById")
-    public ResponseEntity<StateDto> getStateById(LongParam longParam) {
-        return new ResponseEntity<StateDto>(locationService.getStateById(longParam), HttpStatus.OK);
+    public ResponseEntity<StateDto> getStateById(long id) {
+        return new ResponseEntity<StateDto>(stateService.getById(id), HttpStatus.OK);
     }
 
     @Override
     //@RolesAllowed({"ADMIN"})
     @DeleteMapping("/deleteState")
     public ResponseEntity<BaseDto> deleteState(StateParam stateParam) {
-        locationService.deleteState(stateParam);
+        stateService.delete(stateParam);
         return new ResponseEntity<BaseDto>(BaseDto.builder().id(stateParam.getId()).build(), HttpStatus.OK);
     }
 
@@ -63,38 +74,38 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PostMapping("/addCity")
     public ResponseEntity<CityDto> addCity(@RequestBody CityParam cityParam) {
-        return new ResponseEntity<CityDto>(locationService.addCity(cityParam), HttpStatus.CREATED);
+        return new ResponseEntity<CityDto>(cityService.add(cityParam), HttpStatus.CREATED);
     }
 
     @Override
     @PutMapping("/updateCity")
     public ResponseEntity<CityDto> updateCity(@RequestBody CityParam cityParam) {
-        return new ResponseEntity<CityDto>(locationService.updateCity(cityParam), HttpStatus.OK);
+        return new ResponseEntity<CityDto>(cityService.update(cityParam), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getCityById")
-    public ResponseEntity<CityDto> getCityById(LongParam longParam) {
-        return new ResponseEntity<CityDto>(locationService.getCityById(longParam), HttpStatus.OK);
+    public ResponseEntity<CityDto> getCityById(long id) {
+        return new ResponseEntity<CityDto>(cityService.getById(id), HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/deleteCity")
     public ResponseEntity<BaseDto> deleteCity(CityParam cityParam) {
-        locationService.deleteCity(cityParam);
+        cityService.delete(cityParam);
         return new ResponseEntity<BaseDto>(BaseDto.builder().id(cityParam.getId()).build(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getAllCity")
     public ResponseEntity<List<CityDto>> getAllCity() {
-        return new ResponseEntity<List<CityDto>>(locationService.getAllCity(), HttpStatus.OK);
+        return new ResponseEntity<List<CityDto>>(cityService.getAll(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getCitiesByState")
     public ResponseEntity<List<CityDto>> getCitiesByState(StateParam stateParam) {
-        return new ResponseEntity<List<CityDto>>(locationService.getCitiesByState(stateParam), HttpStatus.OK);
+        return new ResponseEntity<List<CityDto>>(cityService.getCitiesByState(stateParam), HttpStatus.OK);
     }
 
     //region
@@ -102,37 +113,37 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PostMapping("/addRegion")
     public ResponseEntity<RegionDto> addRegion(@RequestBody RegionParam regionParam) {
-        return new ResponseEntity<RegionDto>(locationService.addRegion(regionParam), HttpStatus.CREATED);
+        return new ResponseEntity<RegionDto>(regionService.add(regionParam), HttpStatus.CREATED);
     }
 
     @Override
     @PutMapping("/updateRegion")
     public ResponseEntity<RegionDto> updateRegion(@RequestBody RegionParam regionParam) {
-        return new ResponseEntity<RegionDto>(locationService.updateRegion(regionParam), HttpStatus.OK);
+        return new ResponseEntity<RegionDto>(regionService.update(regionParam), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getAllRegion")
     public ResponseEntity<List<RegionDto>> getAllRegion() {
-        return new ResponseEntity<List<RegionDto>>(locationService.getAllRegion(), HttpStatus.OK);
+        return new ResponseEntity<List<RegionDto>>(regionService.getAll(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getRegionById")
-    public ResponseEntity<RegionDto> getRegionById(LongParam longParam) {
-        return new ResponseEntity<RegionDto>(locationService.getRegionById(longParam), HttpStatus.OK);
+    public ResponseEntity<RegionDto> getRegionById(long id) {
+        return new ResponseEntity<RegionDto>(regionService.getById(id), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getRegionsByCity")
     public ResponseEntity<List<RegionDto>> getRegionsByCity(CityParam cityParam) {
-        return new ResponseEntity<List<RegionDto>>(locationService.getRegionsByCity(cityParam), HttpStatus.OK);
+        return new ResponseEntity<List<RegionDto>>(regionService.getRegionsByCity(cityParam), HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/deleteRegion")
     public ResponseEntity<BaseDto> deleteRegion( RegionParam regionParam) {
-        locationService.deleteRegion(regionParam);
+        regionService.delete(regionParam);
         return new ResponseEntity<BaseDto>(BaseDto.builder().id(regionParam.getId()).build(), HttpStatus.OK);
     }
 
@@ -141,37 +152,37 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PostMapping("/addPlace")
     public ResponseEntity<PlaceDto> addPlace(@RequestBody PlaceParam placeParam) {
-        return new ResponseEntity<PlaceDto>(locationService.addPlace(placeParam), HttpStatus.CREATED);
+        return new ResponseEntity<PlaceDto>(placeService.add(placeParam), HttpStatus.CREATED);
     }
 
     @Override
     @PutMapping("/updatePlace")
     public ResponseEntity<PlaceDto> updatePlace(@RequestBody PlaceParam placeParam) {
-        return new ResponseEntity<PlaceDto>(locationService.updatePlace(placeParam), HttpStatus.OK);
+        return new ResponseEntity<PlaceDto>(placeService.update(placeParam), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getAllPlace")
     public ResponseEntity<List<PlaceDto>> getAllPlace() {
-        return new ResponseEntity<List<PlaceDto>>(locationService.getAllPlace(), HttpStatus.OK);
+        return new ResponseEntity<List<PlaceDto>>(placeService.getAll(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getPlaceById")
-    public ResponseEntity<PlaceDto> getPlaceById(LongParam longParam) {
-        return new ResponseEntity<>(locationService.getPlaceById(longParam), HttpStatus.OK);
+    public ResponseEntity<PlaceDto> getPlaceById(long id) {
+        return new ResponseEntity<>(placeService.getById(id), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getPlacesByRegion")
     public ResponseEntity<List<PlaceDto>> getPlacesByRegion(RegionParam regionParam) {
-        return new ResponseEntity<List<PlaceDto>>(locationService.getPlacesByRegion(regionParam), HttpStatus.OK);
+        return new ResponseEntity<List<PlaceDto>>(placeService.getPlacesByRegion(regionParam), HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/deletePlace")
     public ResponseEntity<BaseDto> deletePlace( PlaceParam placeParam) {
-        locationService.deletePlace(placeParam);
+        placeService.delete(placeParam);
         return new ResponseEntity<>(BaseDto.builder().id(placeParam.getId()).build(), HttpStatus.OK);
     }
 

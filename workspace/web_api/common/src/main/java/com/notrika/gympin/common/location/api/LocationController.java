@@ -3,7 +3,6 @@ package com.notrika.gympin.common.location.api;
 import com.notrika.gympin.common.BaseDto;
 import com.notrika.gympin.common.location.dto.*;
 import com.notrika.gympin.common.location.param.*;
-import com.notrika.gympin.common.primitive.param.LongParam;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ public interface LocationController {
 
     ResponseEntity<List<StateDto>> getAllState();
 
-    ResponseEntity<StateDto> getStateById(LongParam longParam);
+    ResponseEntity<StateDto> getStateById(long longParam);
 
     ResponseEntity<BaseDto> deleteState(StateParam stateParam);
 
@@ -26,7 +25,7 @@ public interface LocationController {
 
     ResponseEntity<CityDto> updateCity(CityParam cityParam);
 
-    ResponseEntity<CityDto> getCityById(LongParam longParam);
+    ResponseEntity<CityDto> getCityById(long longParam);
 
     ResponseEntity<BaseDto> deleteCity(CityParam cityParam);
 
@@ -40,7 +39,7 @@ public interface LocationController {
 
     ResponseEntity<List<RegionDto>> getAllRegion();
 
-    ResponseEntity<RegionDto> getRegionById(LongParam longParam);
+    ResponseEntity<RegionDto> getRegionById(long longParam);
 
     ResponseEntity<List<RegionDto>> getRegionsByCity(CityParam cityParam);
 
@@ -52,7 +51,7 @@ public interface LocationController {
 
     ResponseEntity<List<PlaceDto>> getAllPlace();
 
-    ResponseEntity<PlaceDto> getPlaceById(LongParam longParam);
+    ResponseEntity<PlaceDto> getPlaceById(long longParam);
 
     ResponseEntity<List<PlaceDto>> getPlacesByRegion(RegionParam regionParam);
 

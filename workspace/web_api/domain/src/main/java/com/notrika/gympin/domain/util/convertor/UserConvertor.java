@@ -20,7 +20,7 @@ public class UserConvertor {
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
         if (user.getUserRole() != null)
-            dto.setRole(UserRole.valueOf(user.getUserRole().name()));
+            dto.setUserRole(UserRole.valueOf(user.getUserRole().name()));
         dto.setPhoneNumber(user.getPhoneNumber());
         return dto;
     }
@@ -36,7 +36,7 @@ public class UserConvertor {
         user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
         user.setPhoneNumber(userDto.getPhoneNumber());
-        user.setUserRole(UserRole.valueOf(userDto.getRole().name()));
+        user.setUserRole(UserRole.valueOf(userDto.getUserRole().name()));
         return user;
     }
 
@@ -72,7 +72,7 @@ public class UserConvertor {
     }
 
     public static AdministratorDto administratorToAdministratorDto(Administrator administrator){
-        AdministratorDto administratorDto=AdministratorDto.builder().role(administrator.getBaseUser().getUserRole()).username(administrator.getBaseUser().getUsername()).phoneNumber(administrator.getBaseUser().getPhoneNumber()).administratorName(administrator.getAdministratorName()).password(administrator.getPassword()).email(administrator.getEmail()).build();
+        AdministratorDto administratorDto=AdministratorDto.builder().userRole(administrator.getBaseUser().getUserRole()).username(administrator.getBaseUser().getUsername()).phoneNumber(administrator.getBaseUser().getPhoneNumber()).administratorName(administrator.getAdministratorName()).password(administrator.getPassword()).email(administrator.getEmail()).build();
         return administratorDto;
     }
 

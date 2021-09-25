@@ -8,6 +8,7 @@ import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
+import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.param.UserSendSmsParam;
 import com.notrika.gympin.common.user.service.AccountService;
@@ -19,13 +20,10 @@ import com.notrika.gympin.domain.user.jwt.JwtTokenProvider;
 import com.notrika.gympin.domain.util.convertor.AdministratorConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.repository.AdministratorRepository;
-import com.notrika.gympin.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,18 +31,16 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserServiceImpl userService;
 
     @Autowired
-    private AdministratorRepository administratorRepository;
+    private AdministratorServiceImpl administratorService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -57,7 +53,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
-        User user = userRepository.findByPhoneNumber(dto.getPhoneNumber());
+        User user = userService.findUserByPhoneNumber(dto.getPhoneNumber());
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
 
         String code = MyRandom.GenerateRandomVerificationSmsCode();
@@ -82,6 +78,14 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    private User addUser(UserRegisterParam userRegisterParam) {
+        User user = new User();
+        user.setUsername(userRegisterParam.getUsername());
+        user.setPhoneNumber(userRegisterParam.getPhoneNumber());
+        user.setUserRole(userRegisterParam.getUserRole());
+        return userService.addUser(user);
+    }
+
     @Override
     public UserDto loginUser(Principal principal) throws ExceptionBase {
         if (principal == null) {
@@ -90,7 +94,7 @@ public class AccountServiceImpl implements AccountService {
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
         User user = findByUsername(authenticationToken.getName());
         UserToken userToken = tokenProvider.generateToken(user, authenticationToken);
-        UserDto userDto=UserConvertor.userToUserDto(user);
+        UserDto userDto = UserConvertor.userToUserDto(user);
         userDto.setToken(userToken.getToken());
         return userDto;
 
@@ -103,7 +107,7 @@ public class AccountServiceImpl implements AccountService {
         }
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) principal;
-        Administrator admin = administratorRepository.findByAdministratorName(authenticationToken.getName());
+        Administrator admin = administratorService.findByAdministratorName(authenticationToken.getName());
         if (admin == null) {
             throw new ExceptionBase(HttpStatus.UNAUTHORIZED, Error.ErrorType.CLIENT_AUTH_NOT_SETUP);
             // return new ResponseEntity<>(new ResponseModel(new Error(Error.ErrorType.Client_Auth_Not_Setup)), HttpStatus.UNAUTHORIZED);
@@ -115,60 +119,53 @@ public class AccountServiceImpl implements AccountService {
         //return new ResponseEntity<>(new ResponseModel(result), HttpStatus.CREATED);
     }
 
-    private User addUser(UserRegisterParam userRegisterParam) {
-        User user = new User();
-        user.setUsername(userRegisterParam.getUsername());
-        user.setPhoneNumber(userRegisterParam.getPhoneNumber());
-        user.setUserRole(userRegisterParam.getUserRole());
-        return userRepository.add(user);
-    }
-
-
     private User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userService.findByUsername(username);
     }
-
-
-    private List<User> findAllUsers() {
-        List<User> userDtos = new ArrayList<>();
-        userDtos.add(userRepository.findAll().get(0));
-        return userDtos;
-    }
-
-
-    private Long numberOfUsers() {
-        return userRepository.count();
-    }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User TBLUser = userRepository.findByPhoneNumber(username);
-        Administrator admin = administratorRepository.findByAdministratorName(username);
-        if (TBLUser == null && admin == null) {
+        User user = userService.findUserByPhoneNumber(username);
+        if (user == null) {
             throw new UsernameNotFoundException(username);
-        } else if (TBLUser != null) {
-            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-            grantedAuthorities.add(new SimpleGrantedAuthority(TBLUser.getUserRole().name()));
-            var activationCode = smsService.getLastCode(TBLUser.getId());
-            if (activationCode == null) {
+        }
+        if (user.getUserGroup().equals(UserGroup.CLIENT)) {
+            //String activationCode = smsService.getLastCode(user.getId());
+            if (user.getPassword() == null) {
                 throw new UsernameNotFoundException(username + ", sms code not found");
             }
-            return new org.springframework.security.core.userdetails.User(
-                    TBLUser.getUsername(),
-                    activationCode,
-                    grantedAuthorities
-            );
+            return user;
         } else {
-            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-            grantedAuthorities.add(new SimpleGrantedAuthority(admin.getBaseUser().getUserRole().name()));
-
-            return new org.springframework.security.core.userdetails.User(
-                    admin.getAdministratorName(),
-                    admin.getPassword(),
-                    grantedAuthorities
-            );
+            return administratorService.findByAdministratorName(username);
         }
+
+
+//        User user = userRepository.findByPhoneNumber(username);
+//        Administrator admin = administratorRepository.findByAdministratorName(username);
+//        if (user == null && admin == null) {
+//            throw new UsernameNotFoundException(username);
+//        } else if (user != null) {
+//            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+//            grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRole().name()));
+//            var activationCode = smsService.getLastCode(user.getId());
+//            if (activationCode == null) {
+//                throw new UsernameNotFoundException(username + ", sms code not found");
+//            }
+//            return new org.springframework.security.core.userdetails.User(
+//                    user.getUsername(),
+//                    activationCode,
+//                    grantedAuthorities
+//            );
+//        } else {
+//            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+//            grantedAuthorities.add(new SimpleGrantedAuthority(admin.getBaseUser().getUserRole().name()));
+//
+//            return new org.springframework.security.core.userdetails.User(
+//                    admin.getAdministratorName(),
+//                    admin.getPassword(),
+//                    grantedAuthorities
+//            );
+//        }
     }
 
 

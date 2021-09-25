@@ -18,5 +18,5 @@ public class UserParam extends BaseParam<UserParam> {
     private UserRole role = UserRole.USER;
     private String username;
     private String phoneNumber;
-    private String token;
+    //private String token;
 }

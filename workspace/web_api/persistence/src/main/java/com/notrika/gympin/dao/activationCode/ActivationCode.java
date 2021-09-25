@@ -1,6 +1,7 @@
 package com.notrika.gympin.dao.activationCode;
 
 import com.notrika.gympin.dao.BaseEntity;
+import com.notrika.gympin.dao.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -8,9 +9,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 
@@ -23,17 +22,21 @@ import java.util.Objects;
 @Table(name = "activation_code")
 public class ActivationCode extends BaseEntity {
 
-    @Column(name = "userId")
-    private Long userId;
+    //@Column(name = "user_id")
+    @ManyToOne
+    private User user;
+
     @Column(name = "phone_number")
     private String phoneNumber;
+
     @Column(name = "code")
     private String code;
-    @Column(name = "senderId")
+
+    @Column(name = "sender_id")
     private String senderId;
 
-    public ActivationCode(Long userId, String phoneNumber, String code, String senderId) {
-        this.userId = userId;
+    public ActivationCode(User user, String phoneNumber, String code, String senderId) {
+        this.user = user;
         this.phoneNumber = phoneNumber;
         this.code = code;
         this.senderId = senderId;

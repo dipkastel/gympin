@@ -1,0 +1,73 @@
+package com.notrika.gympin.domain.location;
+
+import com.notrika.gympin.common.location.dto.StateDto;
+import com.notrika.gympin.common.location.param.StateParam;
+import com.notrika.gympin.common.location.service.StateService;
+import com.notrika.gympin.dao.location.State;
+import com.notrika.gympin.domain.util.convertor.LocationConvertor;
+import com.notrika.gympin.persistence.repository.StateRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class StateServiceImpl implements StateService {
+
+    @Autowired
+    private StateRepository stateRepository;
+
+    @Override
+    public StateDto add(StateParam stateParam) {
+        State initState = State.builder().name(stateParam.getName()).build();
+        State state = addState(initState);
+        return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
+    }
+
+    public State addState(State state){
+        return stateRepository.add(state);
+    }
+
+    @Override
+    public StateDto update(StateParam stateParam) {
+        State initState = getStateById(stateParam.getId());
+        initState.setName(stateParam.getName());
+        State state = updateState(initState);
+        return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
+    }
+
+    public State updateState(State state){
+        return stateRepository.update(state);
+    }
+
+    @Override
+    public void delete(StateParam stateParam) {
+        State item = getStateById(stateParam.getId());
+        deleteState(item);
+    }
+
+    public void deleteState(State state){
+        stateRepository.deleteById2(state);
+    }
+
+    @Override
+    public List<StateDto> getAll() {
+        List<State> stateList = getAllState();
+        return (List<StateDto>) LocationConvertor.statesToStateDtos(stateList, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
+
+    }
+
+    public List<State> getAllState(){
+        return stateRepository.findAll();
+    }
+
+    @Override
+    public StateDto getById(long id) {
+        State state = getStateById(id);
+        return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
+    }
+
+    public State getStateById(long id){
+        return stateRepository.getById(id);
+    }
+}

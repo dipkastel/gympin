@@ -1,6 +1,5 @@
 package com.notrika.gympin.domain.sport;
 
-import com.notrika.gympin.common.primitive.param.LongParam;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
 import com.notrika.gympin.common.sport.service.SportService;
@@ -21,8 +20,12 @@ public class SportServiceImpl implements SportService {
     @Override
     public SportDto addSport(SportParam sportParam) {
         Sport initSport = Sport.builder().name(sportParam.getName()).build();
-        Sport sport = sportRepository.add(initSport);
+        Sport sport = addSport(initSport);
         return SportConvertor.sportToSportDto(sport);
+    }
+
+    public Sport addSport(Sport sport) {
+        return sportRepository.add(sport);
     }
 
     @Override
@@ -32,21 +35,37 @@ public class SportServiceImpl implements SportService {
         return SportConvertor.sportToSportDto(sport);
     }
 
-    @Override
-    public SportDto getSportById(LongParam id) {
-        Sport sport = sportRepository.getById(id.getValue());
-        return SportConvertor.sportToSportDto(sport);
+    public Sport updateSport(Sport sport) {
+        return sportRepository.update(sport);
     }
 
     @Override
-    public List<SportDto> getAllSport() {
+    public SportDto getSportDtoById(long id) {
+        Sport sport = sportRepository.getById(id);
+        return SportConvertor.sportToSportDto(sport);
+    }
+
+    public Sport getSportById(long id) {
+        return sportRepository.getById(id);
+    }
+
+    @Override
+    public List<SportDto> getAllSportDto() {
         List<Sport> sportList = sportRepository.findAll();
         return SportConvertor.sportsToSportDtos(sportList);
     }
 
+    public List<Sport> getAllSport() {
+        return sportRepository.findAll();
+    }
+
     @Override
     public void deleteSport(SportParam sportParam) {
-        Sport sport = sportRepository.getById(sportParam.getId());
+        Sport sport = getSportById(sportParam.getId());
+        sportRepository.deleteById2(sport);
+    }
+
+    public void deleteSport(Sport sport) {
         sportRepository.deleteById2(sport);
     }
 }

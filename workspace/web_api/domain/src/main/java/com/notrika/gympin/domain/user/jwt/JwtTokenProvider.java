@@ -53,7 +53,7 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(System.currentTimeMillis() + userjwtExpirationInMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
         UserToken userToken = new UserToken();
-        userToken.setUserId(user.getId());
+        userToken.setUser(user);
         userToken.setToken(tokenString);
         userToken.setExpireDate(new Date(System.currentTimeMillis() + userjwtExpirationInMs));
         userTokenRepository.save(userToken);
@@ -71,7 +71,7 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(System.currentTimeMillis() + adminjwtExpirationInMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
         UserToken userToken = new UserToken();
-        userToken.setUserId(admin.getId());
+        userToken.setUser(admin.getBaseUser());
         userToken.setToken(tokenString);
         userToken.setExpireDate(new Date(System.currentTimeMillis() + adminjwtExpirationInMs));
         userTokenRepository.save(userToken);

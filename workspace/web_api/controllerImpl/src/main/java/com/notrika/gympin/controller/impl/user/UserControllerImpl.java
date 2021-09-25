@@ -1,6 +1,5 @@
 package com.notrika.gympin.controller.impl.user;
 
-import com.notrika.gympin.common.primitive.param.LongParam;
 import com.notrika.gympin.common.user.api.UserController;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
@@ -47,7 +46,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @GetMapping("/getbyid")
-    public ResponseEntity<UserDto> getById(@RequestBody LongParam longParam) {
-        return new ResponseEntity<UserDto>(userService.getById(longParam), HttpStatus.OK);
+    public ResponseEntity<UserDto> getById(@RequestBody long id) {
+        return new ResponseEntity<UserDto>(userService.getById(id), HttpStatus.OK);
     }
 }

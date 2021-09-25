@@ -1,6 +1,5 @@
 package com.notrika.gympin.controller.impl.user;
 
-import com.notrika.gympin.common.primitive.param.LongParam;
 import com.notrika.gympin.common.user.api.AdministratorController;
 import com.notrika.gympin.common.user.dto.AdministratorDto;
 import com.notrika.gympin.common.user.param.AdministratorParam;
@@ -47,7 +46,7 @@ public class AdministratorControllerImpl implements AdministratorController {
 
     @Override
     @GetMapping("/getbyid")
-    public ResponseEntity<AdministratorDto> getById(@RequestBody LongParam longParam) {
-        return new ResponseEntity<AdministratorDto>(administratorService.getById(longParam), HttpStatus.OK);
+    public ResponseEntity<AdministratorDto> getById(@RequestBody long id) {
+        return new ResponseEntity<AdministratorDto>(administratorService.getById(id), HttpStatus.OK);
     }
 }

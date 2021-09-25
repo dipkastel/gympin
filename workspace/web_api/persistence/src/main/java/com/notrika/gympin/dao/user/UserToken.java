@@ -26,15 +26,14 @@ public class UserToken extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TokenStatus tokenStatus = TokenStatus.ACTIVE;
 
-    @Column(updatable = false)
-    private Long userId;
+    @ManyToOne
+    private User user;
 
     @Column(updatable = false)
     private String token;
 
-
     @Temporal(TemporalType.TIMESTAMP)
-    private Date ExpireDate;
+    private Date expireDate;
 
 
     @Override

@@ -8,6 +8,7 @@ import com.notrika.gympin.common.context.GympinContextEntry;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.dao.user.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,17 +32,17 @@ public class ApiAspect {
     public Object process(ProceedingJoinPoint pjp) throws Throwable {
         // start stopwatch
         GympinContextEntry contextEntry = new GympinContextEntry();
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDto) {
-            UserDto userDto = (UserDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
+            User userDto = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             BaseParam arg = new BaseParam();
             arg.getUser().setId(userDto.getId());
             arg.getUser().setCreatedDate(userDto.getCreatedDate());
             arg.getUser().setUpdatedDate(userDto.getUpdatedDate());
             arg.getUser().setDeleted(userDto.isDeleted());
-            arg.getUser().setRole(userDto.getRole());
+            arg.getUser().setUserRole(userDto.getUserRole());
             arg.getUser().setUsername(userDto.getUsername());
             arg.getUser().setPhoneNumber(userDto.getPhoneNumber());
-            arg.getUser().setToken(userDto.getToken());
+            //arg.getUser().setToken(userDto.getToken());
             contextEntry.setBaseParam(arg);
         } else if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof AdministratorLoginDto) {
             AdministratorLoginDto userDto = (AdministratorLoginDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -1,7 +1,6 @@
 package com.notrika.gympin.controller.impl.sport;
 
 import com.notrika.gympin.common.BaseDto;
-import com.notrika.gympin.common.primitive.param.LongParam;
 import com.notrika.gympin.common.sport.api.SportController;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
@@ -34,14 +33,14 @@ public class SportControllerImpl implements SportController {
 
     @Override
     @GetMapping("/getSportById")
-    public ResponseEntity<SportDto> getSportById(LongParam id) {
-        return new ResponseEntity<SportDto>(sportService.getSportById(id), HttpStatus.OK);
+    public ResponseEntity<SportDto> getSportById(long id) {
+        return new ResponseEntity<SportDto>(sportService.getSportDtoById(id), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getAllSport")
     public ResponseEntity<List<SportDto>> getAllSport() {
-        return new ResponseEntity<List<SportDto>>(sportService.getAllSport(), HttpStatus.OK);
+        return new ResponseEntity<List<SportDto>>(sportService.getAllSportDto(), HttpStatus.OK);
     }
 
     @Override

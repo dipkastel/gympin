@@ -1,6 +1,5 @@
 package com.notrika.gympin.common;
 
-import com.notrika.gympin.common.primitive.param.LongParam;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Collection;
@@ -16,5 +15,5 @@ public interface BaseController <I extends BaseParam<?>,O extends BaseDto<?>> {
 
     ResponseEntity<List<O>> getAll();
 
-    ResponseEntity<O> getById(LongParam longParam);
+    ResponseEntity<O> getById(long id);
 }

@@ -1,7 +1,6 @@
 package com.notrika.gympin.common.sport.api;
 
 import com.notrika.gympin.common.BaseDto;
-import com.notrika.gympin.common.primitive.param.LongParam;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ public interface SportController {
 
     ResponseEntity<SportDto> updateSport(SportParam sportParam);
 
-    ResponseEntity<SportDto> getSportById(LongParam id);
+    ResponseEntity<SportDto> getSportById(long id);
 
     ResponseEntity<List<SportDto>> getAllSport();
 

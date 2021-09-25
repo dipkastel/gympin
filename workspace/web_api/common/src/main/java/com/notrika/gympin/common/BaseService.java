@@ -1,7 +1,5 @@
 package com.notrika.gympin.common;
 
-import com.notrika.gympin.common.primitive.param.LongParam;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -15,6 +13,6 @@ public interface BaseService<I extends BaseParam<?>,O extends BaseDto<?>> {
 
     List<O> getAll();
 
-    O getById(LongParam longParam);
+    O getById(long id);
 
 }

@@ -1,6 +1,5 @@
 package com.notrika.gympin.common.sport.service;
 
-import com.notrika.gympin.common.primitive.param.LongParam;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
 
@@ -12,9 +11,9 @@ public interface SportService {
 
     SportDto updateSport(SportParam sportParam);
 
-    SportDto getSportById(LongParam id);
+    SportDto getSportDtoById(long id);
 
-    List<SportDto> getAllSport();
+    List<SportDto> getAllSportDto();
 
     void deleteSport(SportParam sportParam);
 

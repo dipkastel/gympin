@@ -5,7 +5,6 @@ import com.notrika.gympin.common.option.place.api.PlaceOptionController;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.option.place.param.PlaceOptionParam;
 import com.notrika.gympin.common.option.place.service.PlaceOptionService;
-import com.notrika.gympin.common.primitive.param.LongParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +34,13 @@ public class PlaceOptionControllerImpl implements PlaceOptionController {
     @Override
     @GetMapping("/getAllPlaceOption")
     public ResponseEntity<List<PlaceOptionDto>> getAllPlaceOption() {
-        return new ResponseEntity<List<PlaceOptionDto>>(placeOptionService.getAllPlaceOption(), HttpStatus.OK);
+        return new ResponseEntity<List<PlaceOptionDto>>(placeOptionService.getAllPlaceOptionDto(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getPlaceOptionById")
-    public ResponseEntity<PlaceOptionDto> getPlaceOptionById(LongParam longParam) {
-        return new ResponseEntity<PlaceOptionDto>(placeOptionService.getPlaceOptionById(longParam), HttpStatus.OK);
+    public ResponseEntity<PlaceOptionDto> getPlaceOptionById(long id) {
+        return new ResponseEntity<PlaceOptionDto>(placeOptionService.getPlaceOptionDtoById(id), HttpStatus.OK);
     }
 
     @Override

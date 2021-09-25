@@ -60,8 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/user/sendsms",
                         "/api/v1/user/register",
                         "/api/v1/user/loginpanel",
-                        "/api/v1/masterapplication/splash",
-                        "/api/**"
+                        "/api/v1/masterapplication/splash"
+                       // , "/api/**"
 
                 )
                 .permitAll()
