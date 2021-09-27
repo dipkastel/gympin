@@ -29,16 +29,14 @@ public class SmsServiceImpl implements SmsService {
 
     @Override
     public boolean sendVerificationSms(Long userId, SmsDto smsDto) throws Exception {
-        String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTER_SENDCODE + "&fnum=" + Consts
-                .FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1=code" + "&v1=" + smsDto.getText();
+        String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTER_SENDCODE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1=code" + "&v1=" + smsDto.getText();
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();
         InputStream in = con.getInputStream();
         String encoding = con.getContentEncoding();
         encoding = encoding == null ? "UTF-8" : encoding;
         Integer body = Integer.parseInt(IOUtils.toString(in, encoding));
-        ActivationCode activationCode = new ActivationCode(userService.getUserById(userId), smsDto.getUserNumber(),
-                passwordEncoder.encode(smsDto.getText()), body.toString());
+        ActivationCode activationCode = new ActivationCode(userService.getUserById(userId), smsDto.getUserNumber(), passwordEncoder.encode(smsDto.getText()), body.toString());
         activationCodeRepository.save(activationCode);
         return body > 0;
     }
@@ -46,7 +44,9 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public String getLastCode(Long userId) {
         var activationCode = activationCodeRepository.findByUserId(userId).orElse(null);
-        if (activationCode == null) return null;
+        if (activationCode == null)
+            return null;
+
         return activationCode.get(activationCode.toArray().length - 1).getCode();
     }
 }

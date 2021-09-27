@@ -1,6 +1,7 @@
 package com.notrika.gympin.dao.sport;
 
 import com.notrika.gympin.dao.BaseEntity;
+import com.notrika.gympin.dao.sportplace.SportPlace;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,10 +22,15 @@ import java.util.List;
 @Entity
 @Table(name = "sport")
 public class Sport extends BaseEntity {
+
     @Column(name = "name", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "sport")
     @ToString.Exclude
     private List<OptionOfSport> optionsOfSports;
+
+    @OneToMany(mappedBy = "sport")
+    @ToString.Exclude
+    private List<SportPlace> sportPlaces;
 }

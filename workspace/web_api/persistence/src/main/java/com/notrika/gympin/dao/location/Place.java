@@ -2,6 +2,7 @@ package com.notrika.gympin.dao.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.dao.BaseEntity;
+import com.notrika.gympin.dao.sportplace.SportPlace;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -46,6 +47,10 @@ public class Place extends BaseEntity {
     @OneToMany(mappedBy = "place")
     @ToString.Exclude
     private List<PlaceOwner> placeOwners;
+
+    @OneToMany(mappedBy = "place")
+    @ToString.Exclude
+    private List<SportPlace> sportPlaces;
 
     @Override
     public boolean equals(Object o) {
