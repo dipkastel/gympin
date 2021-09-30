@@ -1,5 +1,7 @@
 package com.notrika.gympin.controller.impl.sportplace;
 
+import com.notrika.gympin.common.location.param.PlaceParam;
+import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sportplace.api.SportPlaceController;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
 import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
@@ -46,5 +48,11 @@ public class SportPlaceControllerImpl implements SportPlaceController {
     @GetMapping("getSportPlaceById")
     public ResponseEntity<SportPlaceDto> getById(long id) {
         return new ResponseEntity<SportPlaceDto>(sportPlaceService.getById(id),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("getSportsByPlace")
+    public ResponseEntity<List<SportDto>> getSportsByPlace(PlaceParam placeParam) {
+        return new ResponseEntity<List<SportDto>>(sportPlaceService.getSportsByPlace(placeParam),HttpStatus.OK);
     }
 }

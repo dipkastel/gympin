@@ -1,5 +1,7 @@
 package com.notrika.gympin.domain.sportplace;
 
+import com.notrika.gympin.common.location.param.PlaceParam;
+import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
 import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
 import com.notrika.gympin.common.sportplace.service.SportPlaceService;
@@ -8,6 +10,7 @@ import com.notrika.gympin.dao.sport.Sport;
 import com.notrika.gympin.dao.sportplace.SportPlace;
 import com.notrika.gympin.domain.location.PlaceServiceImpl;
 import com.notrika.gympin.domain.sport.SportServiceImpl;
+import com.notrika.gympin.domain.util.convertor.SportConvertor;
 import com.notrika.gympin.domain.util.convertor.SportPlaceConvertor;
 import com.notrika.gympin.persistence.repository.SportPlaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,4 +86,17 @@ public class SportPlaceServiceImpl implements SportPlaceService {
     public SportPlace getSportPlaceById(long id){
         return sportPlaceRepository.getById(id);
     }
+
+    @Override
+    public List<SportDto> getSportsByPlace(PlaceParam placeParam) {
+        Place place=Place.builder().id(placeParam.getId()).build();
+        List<Sport> sportList = getSportsByPlace(place);
+        List<SportDto> sportDtos = SportConvertor.sportsToSportDtos(sportList);
+        return sportDtos;
+    }
+
+    public List<Sport> getSportsByPlace(Place place){
+        return sportPlaceRepository.getSportPlaceByPlace(place);
+    }
+
 }
