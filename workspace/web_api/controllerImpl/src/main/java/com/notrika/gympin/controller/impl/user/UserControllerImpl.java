@@ -49,4 +49,10 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<UserDto> getById(@RequestBody long id) {
         return new ResponseEntity<UserDto>(userService.getById(id), HttpStatus.OK);
     }
+
+    @Override
+    @PutMapping("/suspendUser")
+    public ResponseEntity<UserDto> suspendUser(UserParam userParam) {
+        return new ResponseEntity<UserDto>(userService.suspendUser(userParam),HttpStatus.OK);
+    }
 }

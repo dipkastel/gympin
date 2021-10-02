@@ -6,4 +6,6 @@ import com.notrika.gympin.common.user.param.UserParam;
 
 public interface UserService extends BaseService<UserParam,UserDto> {
 
+    UserDto suspendUser(UserParam userParam);
+
 }

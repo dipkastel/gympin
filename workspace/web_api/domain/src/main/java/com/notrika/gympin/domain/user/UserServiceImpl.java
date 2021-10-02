@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.user;
 
 import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.service.UserService;
 import com.notrika.gympin.dao.location.Place;
@@ -87,5 +88,19 @@ public class UserServiceImpl implements UserService {
 
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public UserDto suspendUser(UserParam userParam) {
+        User user = getUserById(userParam.getId());
+        User suspendUser = suspendUser(user);
+        return UserConvertor.userToUserDto(suspendUser);
+    }
+
+    public User suspendUser(User user){
+        User initUser = getUserById(user.getId());
+        initUser.setUserStatus(UserStatus.SUSPENDED);
+        User suspendedUser = updateUser(initUser);
+        return suspendedUser;
     }
 }

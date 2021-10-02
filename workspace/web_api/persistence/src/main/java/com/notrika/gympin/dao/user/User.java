@@ -33,6 +33,9 @@ import java.util.*;
 @Table(name = "user")
 public class User extends BaseEntity implements UserDetails {
 
+    @Column
+    private String name;
+
     @Column(updatable = false)
     @Enumerated(EnumType.STRING)
     private UserGroup userGroup;
