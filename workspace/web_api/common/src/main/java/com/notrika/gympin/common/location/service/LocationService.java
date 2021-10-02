@@ -16,4 +16,6 @@ public interface LocationService {
     PlaceOwnerDto addPlaceOwner(PlaceOwnerParam placeOwnerParam);
 
     List<UserDto> getOwnersPlace(PlaceParam placeParam);
+
+    void deletePlaceOwner(PlaceOwnerParam placeOwnerParam);
 }

@@ -209,4 +209,11 @@ public class LocationControllerImpl implements LocationController {
     public ResponseEntity<List<UserDto>> getOwnersPlace(PlaceParam placeParam) {
         return new ResponseEntity<List<UserDto>>(locationService.getOwnersPlace(placeParam), HttpStatus.OK);
     }
+
+    @Override
+    @DeleteMapping("/deletePlaceOwner")
+    public ResponseEntity<BaseDto> deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
+        locationService.deletePlaceOwner(placeOwnerParam);
+        return new ResponseEntity<BaseDto>(new BaseDto(),HttpStatus.OK);
+    }
 }

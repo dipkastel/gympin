@@ -64,4 +64,7 @@ public interface LocationController {
     ResponseEntity<PlaceOwnerDto> addPlaceOwner(PlaceOwnerParam placeOwnerParam);
 
     ResponseEntity<List<UserDto>> getOwnersPlace(PlaceParam placeParam);
+
+    ResponseEntity<BaseDto> deletePlaceOwner(PlaceOwnerParam placeOwnerParam);
+
 }

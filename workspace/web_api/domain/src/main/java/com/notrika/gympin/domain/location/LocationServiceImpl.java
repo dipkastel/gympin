@@ -53,6 +53,10 @@ public class LocationServiceImpl implements LocationService {
         return OptionOfPlaceDto.builder().id(optionOfPlace.getId()).createdDate(optionOfPlace.getCreatedDate()).updatedDate(optionOfPlace.getUpdatedDate()).isDeleted(optionOfPlace.isDeleted()).place(PlaceDto.builder().id(optionOfPlace.getPlace().getId()).build()).placeOption(PlaceOptionDto.builder().id(optionOfPlace.getPlaceOption().getId()).build()).build();
     }
 
+//    public OptionOfPlace addOptionOfPlace(OptionOfPlace optionOfPlace){
+//        return placeOptionService.addPlaceOption(optionOfPlace);
+//    }
+
     @Override
     public List<PlaceDto> getPlaceByUser(UserParam userParam) {
         User user = User.builder().id(userParam.getId()).userRole(userParam.getRole()).build();
@@ -73,10 +77,23 @@ public class LocationServiceImpl implements LocationService {
         return LocationConvertor.placeOwnerToPlaceOwnerDto(placeOwner);
     }
 
+    public PlaceOwner getPlaceOwnerById(long id){
+        return placeOwnerRepository.getById(id);
+    }
+
     @Override
     public List<UserDto> getOwnersPlace(PlaceParam placeParam) {
         List<User> ownersPlace = userService.getOwnersPlace(Place.builder().id(placeParam.getId()).build());
         return UserConvertor.usersToUserDtos(ownersPlace);
     }
 
+    @Override
+    public void deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
+        PlaceOwner placeOwner = getPlaceOwnerById(placeOwnerParam.getId());
+        deletePlaceOwner(placeOwner);
+    }
+
+    public void deletePlaceOwner(PlaceOwner placeOwner){
+        placeOwnerRepository.deleteById2(placeOwner);
+    }
 }
