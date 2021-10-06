@@ -17,18 +17,20 @@ import java.io.IOException;
 @RequestMapping("/api/v1/multimedia")
 public class MultimediaControllerImpl implements MultimediaController {
 
-    @Autowired
-    private MultimediaService multimediaService;
+//    @Autowired
+//    private MultimediaService multimediaService;
 
     @Override
     @PostMapping("/addMultimediaFile")
     public ResponseEntity<Boolean> storeMultimedia(MultimediaStoreParam multimediaStoreParam) throws IOException {
-        return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam), HttpStatus.CREATED);
+        //return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam), HttpStatus.CREATED);
+        return null;
     }
 
     @Override
     @PostMapping("/resource")
     public ResponseEntity<Resource> retrieveMultimedia(String fileName) throws Exception {
-        return new ResponseEntity<Resource>(multimediaService.loadFileAsResource(fileName), HttpStatus.OK);
+        //return new ResponseEntity<Resource>(multimediaService.loadFileAsResource(fileName), HttpStatus.OK);
+        return null;
     }
 }
