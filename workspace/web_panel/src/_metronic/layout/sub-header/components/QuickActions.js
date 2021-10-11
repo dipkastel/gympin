@@ -1,6 +1,7 @@
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid */
 import React from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+// eslint-disable-next-line no-restricted-imports
 import Dropdown from "react-bootstrap/Dropdown";
 import { ReactComponent as FilePlusIcon } from "../../assets/layout-svg-icons/File-plus.svg";
 

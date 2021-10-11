@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/styles';
 import AddIcon from "@material-ui/icons/Add";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../../partials/content/Portlet";
 import {Form, Modal, Table} from "react-bootstrap";
-import {location_getOwnersPlace,location_addPlaceOwner} from "../../../../../api/locations.api";
+import {location_getOwnersPlace} from "../../../../../api/locations.api";
 import Select from "react-select";
 import {style} from "../../../../../partials/content/generalStyle"
 

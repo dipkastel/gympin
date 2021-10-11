@@ -20,7 +20,6 @@ class Header extends React.Component {
       options["offset.desktop"] = 130;
     }
 
-    // eslint-disable-next-line no-undef
     new KTHeader(this.headerCommonRef.current, options);
   }
 
@@ -38,14 +37,9 @@ class Header extends React.Component {
         {...headerAttributes}
       >
         <AnimateLoading />
-        {/* <!-- begin: Header Menu --> */}
         {menuHeaderDisplay && <HMenu />}
-        {/* <!-- end: Header Menu --> */}
-        {/* <!-- begin:: Header Topbar --> */}
-        {/* <!-- empty div to fix topbar to stay on the right when menu-horizontal is hidden --> */}
         {!menuHeaderDisplay && <div />}
         <Topbar />
-        {/* <!-- end:: Header Topbar --> */}
       </div>
     );
   }

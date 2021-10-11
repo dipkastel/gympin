@@ -9,7 +9,6 @@ import {withStyles} from "@material-ui/styles";
 import {
     user_add,
     user_getAll,
-    user_getById,
     user_delete,
     user_update
 } from "../../../api/user.api";

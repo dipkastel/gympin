@@ -1,6 +1,3 @@
-import {location_getOwnersPlace, location_getPlaceById} from "./locations.api";
-
-
 export let AuthApi = {
       LOGIN_URL : "v1/user/loginpanel"
 }

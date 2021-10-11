@@ -5,8 +5,8 @@ import { withStyles } from '@material-ui/styles';
 import AddIcon from "@material-ui/icons/Add";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import {
-    location_addRegion, location_deleteCity, location_deleteRegion,
-    location_getRegions_byCity, location_updateCity, location_updateRegion
+    location_addRegion, location_deleteRegion,
+    location_getRegions_byCity, location_updateRegion
 } from "../../../../api/locations.api";
 import {Modal, Table} from "react-bootstrap";
 import {style} from "../../../../partials/content/generalStyle";
