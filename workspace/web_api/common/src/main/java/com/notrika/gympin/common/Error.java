@@ -2,10 +2,12 @@ package com.notrika.gympin.common;
 
 import com.notrika.gympin.common.util.ErrorMessageHelper;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Arrays;
 
 @Data
+@SuperBuilder
 public class Error {
 
     String errorMessage;

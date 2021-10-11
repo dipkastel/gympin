@@ -9,8 +9,9 @@ public class ErrorMessageHelper {
         try {
             Locale locale = new Locale(language.toString());
             ResourceBundle exampleBundle = ResourceBundle.getBundle("i18n.messages", locale);
-             text = exampleBundle.getString(message);
-        }catch (Exception e){}
+            text = exampleBundle.getString(message);
+        } catch (Exception e) {
+        }
         return text;
     }
 

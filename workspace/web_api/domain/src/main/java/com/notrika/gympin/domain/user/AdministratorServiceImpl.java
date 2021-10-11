@@ -60,8 +60,8 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public void delete(AdministratorParam administratorParam) {
-
+    public AdministratorDto delete(AdministratorParam administratorParam) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -15,6 +15,6 @@ public interface PlaceOptionService {
 
     PlaceOptionDto getPlaceOptionDtoById(long id);
 
-    void deletePlaceOption(PlaceOptionParam placeOptionParam);
+    PlaceOptionDto deletePlaceOption(PlaceOptionParam placeOptionParam);
 
 }

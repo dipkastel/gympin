@@ -71,12 +71,12 @@ public class UserConvertor {
         return userRegisterDtos.stream().map(UserConvertor::userRegisterDtoToUser).collect(Collectors.toList());
     }
 
-    public static AdministratorDto administratorToAdministratorDto(Administrator administrator){
-        AdministratorDto administratorDto=AdministratorDto.builder().userRole(administrator.getBaseUser().getUserRole()).username(administrator.getBaseUser().getUsername()).phoneNumber(administrator.getBaseUser().getPhoneNumber()).administratorName(administrator.getAdministratorName()).password(administrator.getPassword()).email(administrator.getEmail()).build();
+    public static AdministratorDto administratorToAdministratorDto(Administrator administrator) {
+        AdministratorDto administratorDto = AdministratorDto.builder().userRole(administrator.getBaseUser().getUserRole()).username(administrator.getBaseUser().getUsername()).phoneNumber(administrator.getBaseUser().getPhoneNumber()).administratorName(administrator.getAdministratorName()).password(administrator.getPassword()).email(administrator.getEmail()).build();
         return administratorDto;
     }
 
-    public static List<AdministratorDto> administratorsToAdministratorDtos(List<Administrator> administratorList){
+    public static List<AdministratorDto> administratorsToAdministratorDtos(List<Administrator> administratorList) {
         return administratorList.stream().map(UserConvertor::administratorToAdministratorDto).collect(Collectors.toList());
     }
 

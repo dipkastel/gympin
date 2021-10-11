@@ -1,14 +1,17 @@
 package com.notrika.gympin.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class ResponseModel<T> {
+@JsonSerialize
+public class ResponseModel<T> implements Serializable {
 
     public static final int SUCCESS = 0;
     public static final int ERROR = -1;

@@ -55,13 +55,15 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public void delete(PlaceParam placeParam) {
+    public PlaceDto delete(PlaceParam placeParam) {
         var item = getPlaceById(placeParam.getId());
-        deletePlace(item);
+        Place deletedPlace = deletePlace(item);
+        return LocationConvertor.placeToPlaceDto(deletedPlace, LocationConvertor.CollectionType.LIST);
     }
 
-    public void deletePlace(Place place) {
-        placeRepository.deleteById2(place);
+    public Place deletePlace(Place place) {
+        Place deletedPlace = placeRepository.deleteById2(place);
+        return deletedPlace;
     }
 
     @Override
@@ -96,7 +98,7 @@ public class PlaceServiceImpl implements PlaceService {
         return placeRepository.getPlacesByRegion(region);
     }
 
-    public List<Place> getPlaceByUser(User user){
+    public List<Place> getPlaceByUser(User user) {
         return placeRepository.getPlaceByUser(user);
     }
 }

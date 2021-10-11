@@ -4,6 +4,7 @@ import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.option.place.param.PlaceOptionParam;
 import com.notrika.gympin.common.option.place.service.PlaceOptionService;
 import com.notrika.gympin.dao.option.place.PlaceOption;
+import com.notrika.gympin.domain.util.convertor.LocationConvertor;
 import com.notrika.gympin.domain.util.convertor.OptionConvertor;
 import com.notrika.gympin.persistence.repository.PlaceOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,12 +62,14 @@ public class PlaceOptionServiceImpl implements PlaceOptionService {
     }
 
     @Override
-    public void deletePlaceOption(PlaceOptionParam placeOptionParam) {
+    public PlaceOptionDto deletePlaceOption(PlaceOptionParam placeOptionParam) {
         PlaceOption placeOption = getPlaceOptionById(placeOptionParam.getId());
-        deletePlaceOption(placeOption);
+        PlaceOption deletedPlaceOption = deletePlaceOption(placeOption);
+        return OptionConvertor.placeOptionToPlaceOptionDto(deletedPlaceOption);
     }
 
-    public void deletePlaceOption(PlaceOption placeOption) {
-       placeOptionRepository.deleteById2(placeOption);
+    public PlaceOption deletePlaceOption(PlaceOption placeOption) {
+        PlaceOption deletedPlaceOption = placeOptionRepository.deleteById2(placeOption);
+        return deletedPlaceOption;
     }
 }

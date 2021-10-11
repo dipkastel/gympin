@@ -15,7 +15,8 @@ import lombok.experimental.SuperBuilder;
 public class UserRegisterParam extends BaseParam<UserRegisterParam> {
 
     @Builder.Default
-    private UserRole userRole=UserRole.USER;
+    private UserRole userRole = UserRole.USER;
     private String username;
     private String phoneNumber;
+
 }

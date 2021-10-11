@@ -15,6 +15,6 @@ public interface SportService {
 
     List<SportDto> getAllSportDto();
 
-    void deleteSport(SportParam sportParam);
+    SportDto deleteSport(SportParam sportParam);
 
 }

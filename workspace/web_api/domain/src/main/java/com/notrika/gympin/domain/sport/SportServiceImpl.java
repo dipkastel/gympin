@@ -60,12 +60,14 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public void deleteSport(SportParam sportParam) {
+    public SportDto deleteSport(SportParam sportParam) {
         Sport sport = getSportById(sportParam.getId());
-        sportRepository.deleteById2(sport);
+        Sport deleteSport = sportRepository.deleteById2(sport);
+        return SportConvertor.sportToSportDto(deleteSport);
     }
 
-    public void deleteSport(Sport sport) {
-        sportRepository.deleteById2(sport);
+    public Sport deleteSport(Sport sport) {
+        Sport deletedSport = sportRepository.deleteById2(sport);
+        return deletedSport;
     }
 }

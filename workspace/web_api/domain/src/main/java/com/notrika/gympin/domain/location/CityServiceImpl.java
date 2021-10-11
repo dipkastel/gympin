@@ -51,13 +51,14 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public void delete(CityParam cityParam) {
+    public CityDto delete(CityParam cityParam) {
         var item = getCityById(cityParam.getId());
-        deleteCity(item);
+        City deletedCity = deleteCity(item);
+        return LocationConvertor.cityToCityDto(deletedCity, LocationConvertor.CollectionType.LIST);
     }
 
-    public void deleteCity(City city) {
-        cityRepository.deleteById2(city);
+    public City deleteCity(City city) {
+        return cityRepository.deleteById2(city);
     }
 
     @Override

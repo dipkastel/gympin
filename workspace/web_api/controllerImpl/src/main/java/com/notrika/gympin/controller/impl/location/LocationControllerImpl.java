@@ -64,9 +64,9 @@ public class LocationControllerImpl implements LocationController {
     @Override
     //@RolesAllowed({"ADMIN"})
     @DeleteMapping("/deleteState")
-    public ResponseEntity<BaseDto> deleteState(StateParam stateParam) {
-        stateService.delete(stateParam);
-        return new ResponseEntity<BaseDto>(BaseDto.builder().id(stateParam.getId()).build(), HttpStatus.OK);
+    public ResponseEntity<StateDto> deleteState(StateParam stateParam) {
+        StateDto deletedState = stateService.delete(stateParam);
+        return new ResponseEntity<StateDto>(deletedState, HttpStatus.OK);
     }
 
     //city
@@ -91,9 +91,9 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @DeleteMapping("/deleteCity")
-    public ResponseEntity<BaseDto> deleteCity(CityParam cityParam) {
-        cityService.delete(cityParam);
-        return new ResponseEntity<BaseDto>(BaseDto.builder().id(cityParam.getId()).build(), HttpStatus.OK);
+    public ResponseEntity<CityDto> deleteCity(CityParam cityParam) {
+        CityDto deletedCity = cityService.delete(cityParam);
+        return new ResponseEntity<CityDto>(deletedCity, HttpStatus.OK);
     }
 
     @Override
@@ -142,9 +142,9 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @DeleteMapping("/deleteRegion")
-    public ResponseEntity<BaseDto> deleteRegion( RegionParam regionParam) {
-        regionService.delete(regionParam);
-        return new ResponseEntity<BaseDto>(BaseDto.builder().id(regionParam.getId()).build(), HttpStatus.OK);
+    public ResponseEntity<RegionDto> deleteRegion(RegionParam regionParam) {
+        RegionDto deletedRegion = regionService.delete(regionParam);
+        return new ResponseEntity<RegionDto>(deletedRegion, HttpStatus.OK);
     }
 
     //place
@@ -181,9 +181,9 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @DeleteMapping("/deletePlace")
-    public ResponseEntity<BaseDto> deletePlace( PlaceParam placeParam) {
-        placeService.delete(placeParam);
-        return new ResponseEntity<>(BaseDto.builder().id(placeParam.getId()).build(), HttpStatus.OK);
+    public ResponseEntity<PlaceDto> deletePlace(PlaceParam placeParam) {
+        PlaceDto deletedPlace = placeService.delete(placeParam);
+        return new ResponseEntity<PlaceDto>(deletedPlace, HttpStatus.OK);
     }
 
     @Override
@@ -212,8 +212,8 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @DeleteMapping("/deletePlaceOwner")
-    public ResponseEntity<BaseDto> deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
-        locationService.deletePlaceOwner(placeOwnerParam);
-        return new ResponseEntity<BaseDto>(new BaseDto(),HttpStatus.OK);
+    public ResponseEntity<PlaceOwnerDto> deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
+        PlaceOwnerDto deletedPlaceOwner = locationService.deletePlaceOwner(placeOwnerParam);
+        return new ResponseEntity<PlaceOwnerDto>(deletedPlaceOwner,HttpStatus.OK);
     }
 }

@@ -51,9 +51,15 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public void delete(RegionParam regionParam) {
-        var item = regionRepository.getById(regionParam.getId());
-        regionRepository.deleteById2(item);
+    public RegionDto delete(RegionParam regionParam) {
+        Region region = getRegionById(regionParam.getId());
+        return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
+    }
+
+
+    public Region delete(Region region) {
+        Region deleteRegion = regionRepository.deleteById2(region);
+        return deleteRegion;
     }
 
     @Override

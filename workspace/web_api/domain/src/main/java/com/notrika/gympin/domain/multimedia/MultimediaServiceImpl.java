@@ -11,6 +11,8 @@ import com.notrika.gympin.persistence.repository.MultimediaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
@@ -18,27 +20,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
-//@Service
+@Service
 public class MultimediaServiceImpl implements MultimediaService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MultimediaServiceImpl.class);
 
-    private final Path fileStorageLocation;
+    private  Path fileStorageLocation;
 
-    //@Value("${multimedia.dir}")
-    private String dir = "multimedia/image";
+    @Value("${multimedia.dir}")
+    private String dir ;//= "../multimedia/image";
 
     @Autowired
     private MultimediaRepository multimediaRepository;
 
     public MultimediaServiceImpl() {
+
+    }
+
+    @PostConstruct
+    private void init(){
         this.fileStorageLocation = Paths.get(dir).toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
@@ -61,20 +71,21 @@ public class MultimediaServiceImpl implements MultimediaService {
             if (fileByUserByName != null) {
                 fileByUserByName.setDocumentFormat(multipartFile.getContentType());
                 fileByUserByName.setMediaType(multimediaStoreParam.getMediaType());
-                multimediaRepository.save(fileByUserByName);
+                multimediaRepository.update(fileByUserByName);
             } else {
-                multimediaRepository.save(Multimedia.builder().fileName(fileName).mediaType(multimediaStoreParam.getMediaType()).documentFormat(multipartFile.getContentType()).uploadDir(targetLocation.toString()).build());
+                multimediaRepository.add(Multimedia.builder().fileName(fileName).mediaType(multimediaStoreParam.getMediaType()).documentFormat(multipartFile.getContentType()).uploadDir(targetLocation.toString()).build());
             }
         }
         return true;
     }
 
     @Override
-    public Resource loadFileAsResource(String fileName) throws Exception {
+    public InputStream loadFileAsResource(String fileName) throws Exception {
         Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
         Resource resource = new UrlResource(filePath.toUri());
         if (resource.exists()) {
-            return resource;
+            InputStream inputStream=new FileInputStream(resource.getFile());
+            return inputStream;
         } else {
             throw new FileNotFoundException("File not found " + fileName);
         }

@@ -45,8 +45,8 @@ public class SportControllerImpl implements SportController {
 
     @Override
     @DeleteMapping("/deleteSport")
-    public ResponseEntity<BaseDto> deleteSport( SportParam sportParam) {
-        sportService.deleteSport(sportParam);
-        return new ResponseEntity<BaseDto>(BaseDto.builder().id(sportParam.getId()).build(), HttpStatus.OK);
+    public ResponseEntity<SportDto> deleteSport(SportParam sportParam) {
+        SportDto deletedSport = sportService.deleteSport(sportParam);
+        return new ResponseEntity<SportDto>(deletedSport, HttpStatus.OK);
     }
 }

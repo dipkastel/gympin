@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.user;
 
 import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.service.UserService;
@@ -25,18 +26,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto add(UserParam userParam) {
-        User initUser=User.builder().userRole(userParam.getRole()).username(userParam.getUsername()).phoneNumber(userParam.getPhoneNumber()).build();
+        User initUser =
+                User.builder().userGroup(UserGroup.CLIENT).userRole(userParam.getRole()).username(userParam.getUsername()).phoneNumber(userParam.getPhoneNumber()).userStatus(UserStatus.ENABLED).build();
         User user = userRepository.add(initUser);
         return UserConvertor.userToUserDto(user);
     }
 
     public User addUser(User user) {
-       return userRepository.add(user);
+        return userRepository.add(user);
     }
 
     @Override
     public UserDto update(UserParam userParam) {
-        User initUser=getUserById(userParam.getId());
+        User initUser = getUserById(userParam.getId());
         initUser.setUserRole(userParam.getRole());
         initUser.setUsername(userParam.getUsername());
         initUser.setPhoneNumber(userParam.getPhoneNumber());
@@ -49,19 +51,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(UserParam userParam) {
+    public UserDto delete(UserParam userParam) {
         User user = getUserById(userParam.getId());
-        deleteUser(user);
+        User deletedUser = deleteUser(user);
+        return UserConvertor.userToUserDto(deletedUser);
     }
 
-    public void deleteUser(User user) {
-        userRepository.deleteById2(user);
+    public User deleteUser(User user) {
+        User deletedUser = userRepository.deleteById2(user);
+        return deletedUser;
     }
 
     @Override
     public List<UserDto> getAll() {
         List<User> userList = userRepository.findAll();
-       return UserConvertor.usersToUserDtos(userList);
+        return UserConvertor.usersToUserDtos(userList);
     }
 
     public List<User> getAllUser() {
@@ -78,15 +82,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.getById(id);
     }
 
-    public List<User> getOwnersPlace(Place place){
+    public List<User> getOwnersPlace(Place place) {
         return userRepository.getOwnersPlace(place);
     }
 
-    public User findUserByPhoneNumber(String phoneNumber){
+    public User findUserByPhoneNumber(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber);
     }
 
-    public User findByUsername(String username){
+    public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -97,7 +101,7 @@ public class UserServiceImpl implements UserService {
         return UserConvertor.userToUserDto(suspendUser);
     }
 
-    public User suspendUser(User user){
+    public User suspendUser(User user) {
         User initUser = getUserById(user.getId());
         initUser.setUserStatus(UserStatus.SUSPENDED);
         User suspendedUser = updateUser(initUser);

@@ -22,31 +22,31 @@ public class PlaceOptionControllerImpl implements PlaceOptionController {
     @Override
     @PostMapping("/addPlaceOption")
     public ResponseEntity<PlaceOptionDto> addPlaceOption(@RequestBody PlaceOptionParam placeOptionParam) {
-        return new ResponseEntity<PlaceOptionDto>(placeOptionService.addPlaceOption(placeOptionParam), HttpStatus.CREATED);
+        return new ResponseEntity<PlaceOptionDto>(placeOptionService.addPlaceOption(placeOptionParam), HttpStatus.OK);
     }
 
     @Override
     @PutMapping("/updatePLaceOption")
     public ResponseEntity<PlaceOptionDto> updatePLaceOption(@RequestBody PlaceOptionParam placeOptionParam) {
-        return new ResponseEntity<PlaceOptionDto>(placeOptionService.updatePLaceOption(placeOptionParam), HttpStatus.OK);
+        return new ResponseEntity<PlaceOptionDto>(placeOptionService.updatePLaceOption(placeOptionParam),HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getAllPlaceOption")
     public ResponseEntity<List<PlaceOptionDto>> getAllPlaceOption() {
-        return new ResponseEntity<List<PlaceOptionDto>>(placeOptionService.getAllPlaceOptionDto(), HttpStatus.OK);
+        return new ResponseEntity<List<PlaceOptionDto>>(placeOptionService.getAllPlaceOptionDto(),HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getPlaceOptionById")
     public ResponseEntity<PlaceOptionDto> getPlaceOptionById(long id) {
-        return new ResponseEntity<PlaceOptionDto>(placeOptionService.getPlaceOptionDtoById(id), HttpStatus.OK);
+        return new ResponseEntity<PlaceOptionDto>(placeOptionService.getPlaceOptionDtoById(id),HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/deletePlaceOption")
-    public ResponseEntity<BaseDto> deletePlaceOption(@RequestBody PlaceOptionParam placeOptionParam) {
-        placeOptionService.deletePlaceOption(placeOptionParam);
-        return new ResponseEntity<BaseDto>(BaseDto.builder().id(placeOptionParam.getId()).build(), HttpStatus.OK);
+    public ResponseEntity<PlaceOptionDto> deletePlaceOption(@RequestBody PlaceOptionParam placeOptionParam) {
+        PlaceOptionDto deletedPlaceOption = placeOptionService.deletePlaceOption(placeOptionParam);
+        return new ResponseEntity<PlaceOptionDto>(deletedPlaceOption,HttpStatus.OK);
     }
 }

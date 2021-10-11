@@ -1,19 +1,27 @@
 package com.notrika.gympin.domain.location;
 
-import com.notrika.gympin.common.location.dto.*;
-import com.notrika.gympin.common.location.param.*;
+import com.notrika.gympin.common.location.dto.OptionOfPlaceDto;
+import com.notrika.gympin.common.location.dto.PlaceDto;
+import com.notrika.gympin.common.location.dto.PlaceOwnerDto;
+import com.notrika.gympin.common.location.param.OptionOfPlaceParam;
+import com.notrika.gympin.common.location.param.PlaceOwnerParam;
+import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.location.service.LocationService;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
-import com.notrika.gympin.dao.location.*;
+import com.notrika.gympin.dao.location.OptionOfPlace;
+import com.notrika.gympin.dao.location.Place;
+import com.notrika.gympin.dao.location.PlaceOwner;
 import com.notrika.gympin.dao.option.place.PlaceOption;
 import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.domain.option.place.PlaceOptionServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
+import com.notrika.gympin.domain.util.convertor.SportPlaceConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
-import com.notrika.gympin.persistence.repository.*;
+import com.notrika.gympin.persistence.repository.OptionOfPlaceRepository;
+import com.notrika.gympin.persistence.repository.PlaceOwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +49,7 @@ public class LocationServiceImpl implements LocationService {
     public OptionOfPlaceDto addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam) {
         PlaceOption placeOption;
         if (optionOfPlaceParam.getPlaceOptionParam().getId() == null) {
-            PlaceOption initPlaceOption=PlaceOption.builder().name(optionOfPlaceParam.getPlaceOptionParam().getName()).build();
+            PlaceOption initPlaceOption = PlaceOption.builder().name(optionOfPlaceParam.getPlaceOptionParam().getName()).build();
             placeOption = placeOptionService.addPlaceOption(initPlaceOption);
             optionOfPlaceParam.getPlaceOptionParam().setId(placeOption.getId());
         } else {
@@ -77,7 +85,7 @@ public class LocationServiceImpl implements LocationService {
         return LocationConvertor.placeOwnerToPlaceOwnerDto(placeOwner);
     }
 
-    public PlaceOwner getPlaceOwnerById(long id){
+    public PlaceOwner getPlaceOwnerById(long id) {
         return placeOwnerRepository.getById(id);
     }
 
@@ -88,12 +96,14 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public void deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
+    public PlaceOwnerDto deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
         PlaceOwner placeOwner = getPlaceOwnerById(placeOwnerParam.getId());
-        deletePlaceOwner(placeOwner);
+        PlaceOwner deletedPlaceOwner = deletePlaceOwner(placeOwner);
+        return LocationConvertor.placeOwnerToPlaceOwnerDto(deletedPlaceOwner);
     }
 
-    public void deletePlaceOwner(PlaceOwner placeOwner){
-        placeOwnerRepository.deleteById2(placeOwner);
+    public PlaceOwner deletePlaceOwner(PlaceOwner placeOwner) {
+        PlaceOwner deletedUser = placeOwnerRepository.deleteById2(placeOwner);
+        return deletedUser;
     }
 }

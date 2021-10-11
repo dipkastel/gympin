@@ -1,6 +1,5 @@
 package com.notrika.gympin.dao.user;
 
-import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
@@ -13,9 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.JoinFormula;
 import org.hibernate.annotations.Where;
-import org.hibernate.annotations.WhereJoinTable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,7 +44,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(unique = true)
     private String username;
 
-    @Column(unique=true)
+    @Column(unique = true)
     private String phoneNumber;
 
     @Column(updatable = false)
@@ -58,11 +55,11 @@ public class User extends BaseEntity implements UserDetails {
     @ToString.Exclude
     private Set<PlaceOwner> placeOwners;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @ToString.Exclude
     private Set<ActivationCode> activationCodes;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     //@OrderBy("expireDate desc")
     //@Where(clause = "userTokens.tokenStatus='ACTIVE'")
     @Where(clause = "token_status='ACTIVE'")
@@ -80,7 +77,7 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public String getPassword() {
         ActivationCode activationCode = activationCodes.stream().findAny().orElse(null);
-        if(activationCode!=null)
+        if (activationCode != null)
             return activationCode.getCode();
 
         return null;
@@ -99,7 +96,7 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         UserToken userToken = userTokens.stream().findFirst().orElse(null);
-        if(userToken==null)
+        if (userToken == null)
             return true;
 
         return !userToken.getExpireDate().before(new Date());

@@ -1,22 +1,29 @@
 package com.notrika.gympin.framework.spring.aspect;
 
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common.*;
 import com.notrika.gympin.common.Error;
-import com.notrika.gympin.common.ResponseModel;
+import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextEntry;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
-import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.dao.user.User;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.hibernate.cfg.NotYetImplementedException;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -68,14 +75,28 @@ public class ApiAspect {
         StringBuffer resultBuffer = new StringBuffer().append(" and return following result: \n");
         try {
             Object retVal = pjp.proceed();
-            ResponseEntity responseModel = (ResponseEntity) retVal;
-            Object responseModelBody = responseModel.getBody();
-            ResponseModel responseModel1 = new ResponseModel();
-            responseModel1.setData(responseModelBody);
-            responseModel1.setSuccess(true);
-            responseModel1.setMessageType(SUCCESS);
-            resultBuffer.append(responseModel1);
-            return new ResponseEntity<ResponseModel>(responseModel1, responseModel.getStatusCode());
+            MethodSignature signature = (MethodSignature) pjp.getSignature();
+            Method method = signature.getMethod();
+            IgnoreWrapAspect ignoreWrapAspect = method.getAnnotation(IgnoreWrapAspect.class);
+            if(ignoreWrapAspect==null){
+                ResponseEntity responseModel = (ResponseEntity) retVal;
+                Object responseModelBody = responseModel.getBody();
+                ResponseModel responseModel1 = new ResponseModel();
+                responseModel1.setData(responseModelBody);
+                responseModel1.setSuccess(true);
+                responseModel1.setMessageType(SUCCESS);
+                resultBuffer.append(responseModel1);
+                return new ResponseEntity<ResponseModel>(responseModel1, responseModel.getStatusCode());
+            }
+                //            else {
+//                ResponseEntity responseModel = (ResponseEntity) retVal;
+//                MultimediaResponseModel responseModelBody = ((MultimediaResponseModel)responseModel.getBody());
+//                responseModelBody.setSuccess(true);
+//                responseModelBody.setMessageType(SUCCESS);
+////                resultBuffer.append(responseModelBody);
+//                return new ResponseEntity<MultimediaResponseModel>(responseModelBody, responseModel.getStatusCode());
+//            }
+            return retVal;
         } catch (ExceptionBase e) {
             resultBuffer.append(e);
             Error error = new Error(e.getErrorType(), e);
@@ -84,14 +105,32 @@ public class ApiAspect {
             responseModel.setMessageType(ERROR);
             responseModel.setMessage(error.getErrorMessage());
             responseModel.setError(error);
-            return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.BAD_REQUEST);
-        } catch (Throwable throwable) {
-            throw throwable;
+            return new ResponseEntity<ResponseModel>(responseModel, e.getHttpStatus());
+        } catch (Throwable e) {
+            resultBuffer.append(e);
+            ResponseModel responseModel = new ResponseModel();
+            responseModel.setSuccess(false);
+            responseModel.setMessageType(ERROR);
+            responseModel.setMessage(e.getMessage());
+            responseModel.setError(Error.builder().errorMessage(e.getMessage()).stackTrace(e.getStackTrace().toString()).build());
+            return new ResponseEntity<ResponseModel>(responseModel, HttpStatus.EXPECTATION_FAILED);
         } finally {
             LOGGER.log(Level.INFO, resultBuffer.append("\n==============================================================\n").toString());
             GympinContext.clear();
         }
         // stop stopwatch
     }
+
+
+/*    @AfterReturning(value = "execution(* com.notrika.gympin.controller.impl..*.*(..))",returning = "retVal")
+    public Object after(JoinPoint joinPoint,Object retVal){
+//        ResponseModel responseModel1 = new ResponseModel<>();
+//        responseModel1.setData(retVal);
+//        responseModel1.setSuccess(true);
+//        responseModel1.setMessageType(SUCCESS);
+//        ResponseEntity<ResponseModel> responseEntity=new ResponseEntity<ResponseModel>(responseModel1,HttpStatus.OK);
+        retVal="responseEntity";
+        return retVal;
+    }*/
 
 }

@@ -24,7 +24,7 @@ public class StateServiceImpl implements StateService {
         return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
     }
 
-    public State addState(State state){
+    public State addState(State state) {
         return stateRepository.add(state);
     }
 
@@ -36,18 +36,20 @@ public class StateServiceImpl implements StateService {
         return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
     }
 
-    public State updateState(State state){
+    public State updateState(State state) {
         return stateRepository.update(state);
     }
 
     @Override
-    public void delete(StateParam stateParam) {
+    public StateDto delete(StateParam stateParam) {
         State item = getStateById(stateParam.getId());
-        deleteState(item);
+        State deletedState = deleteState(item);
+        return LocationConvertor.stateToStateDto(deletedState, LocationConvertor.CollectionType.LIST);
     }
 
-    public void deleteState(State state){
-        stateRepository.deleteById2(state);
+    public State deleteState(State state) {
+        State deletedState = stateRepository.deleteById2(state);
+        return deletedState;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class StateServiceImpl implements StateService {
 
     }
 
-    public List<State> getAllState(){
+    public List<State> getAllState() {
         return stateRepository.findAll();
     }
 
@@ -67,7 +69,7 @@ public class StateServiceImpl implements StateService {
         return LocationConvertor.stateToStateDto(state, LocationConvertor.CollectionType.LIST);
     }
 
-    public State getStateById(long id){
+    public State getStateById(long id) {
         return stateRepository.getById(id);
     }
 }

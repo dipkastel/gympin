@@ -1,6 +1,5 @@
 package com.notrika.gympin.common.option.place.api;
 
-import com.notrika.gympin.common.BaseDto;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.option.place.param.PlaceOptionParam;
 import org.springframework.http.ResponseEntity;
@@ -17,5 +16,5 @@ public interface PlaceOptionController {
 
     ResponseEntity<PlaceOptionDto> getPlaceOptionById(long id);
 
-    ResponseEntity<BaseDto> deletePlaceOption(PlaceOptionParam placeOptionParam);
+    ResponseEntity<PlaceOptionDto> deletePlaceOption(PlaceOptionParam placeOptionParam);
 }

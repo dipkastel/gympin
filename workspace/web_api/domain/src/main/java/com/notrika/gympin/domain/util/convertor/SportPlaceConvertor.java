@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public class SportPlaceConvertor {
 
-    public static SportPlaceDto sportPlaceToSportPlaceDto(SportPlace sportPlace){
+    public static SportPlaceDto sportPlaceToSportPlaceDto(SportPlace sportPlace) {
         PlaceDto placeDto = LocationConvertor.placeToPlaceDto(sportPlace.getPlace(), LocationConvertor.CollectionType.LIST);
         SportDto sportDto = SportConvertor.sportToSportDto(sportPlace.getSport());
-        SportPlaceDto sportPlaceDto=new SportPlaceDto();
+        SportPlaceDto sportPlaceDto = new SportPlaceDto();
         sportPlaceDto.setId(sportPlace.getId());
         sportPlaceDto.setCreatedDate(sportPlace.getCreatedDate());
         sportPlaceDto.setUpdatedDate(sportPlace.getUpdatedDate());
@@ -23,7 +23,7 @@ public class SportPlaceConvertor {
         return sportPlaceDto;
     }
 
-    public static List<SportPlaceDto> sportPlacesToSportPlaceDtos(List<SportPlace> sportPlaceList){
+    public static List<SportPlaceDto> sportPlacesToSportPlaceDtos(List<SportPlace> sportPlaceList) {
         return sportPlaceList.stream().map(SportPlaceConvertor::sportPlaceToSportPlaceDto).collect(Collectors.toList());
     }
 }

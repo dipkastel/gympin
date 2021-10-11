@@ -28,12 +28,12 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable>
 
     @Transactional
     @Override
-    public void deleteById2(T item) {
+    public T deleteById2(T item) {
 //        BaseEntity deleted = entityManager.find(BaseEntity.class, item);
 //        deleted.setDeleted(true);
         ((BaseEntity) item).setDeleted(true);
-        save((T) item);
-
+        T update = update((T) item);
+        return update;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable>
     @Transactional
     public <S extends T> S add(S entity) {
         GympinContextEntry context = GympinContext.getContext();
-        if (context!=null && context.getBaseParam()!=null && context.getBaseParam().getUser().getId() != null && context.getBaseParam().getUser().getId() > 0)
+        if (context != null && context.getBaseParam() != null && context.getBaseParam().getUser().getId() != null && context.getBaseParam().getUser().getId() > 0)
             entity.setUpdaterUser(User.builder().id(context.getBaseParam().getUser().getId()).build());
         entity.setCreatedDate(new Date());
         return this.save(entity);
@@ -55,7 +55,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable>
     @Transactional
     public <S extends T> S update(S entity) {
         GympinContextEntry context = GympinContext.getContext();
-        if (context!=null && context.getBaseParam()!=null && context.getBaseParam().getUser().getId() != null && context.getBaseParam().getUser().getId() > 0)
+        if (context != null && context.getBaseParam() != null && context.getBaseParam().getUser().getId() != null && context.getBaseParam().getUser().getId() > 0)
             entity.setUpdaterUser(User.builder().id(context.getBaseParam().getUser().getId()).build());
         entity.setUpdatedDate(new Date());
         return this.save(entity);
