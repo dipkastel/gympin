@@ -5,7 +5,6 @@ export const initLayoutConfig = {
   // == Base Layout
   self: {
     layout: "fluid",
-    // body: { "background-image": toAbsoluteUrl("/media/misc/bg-1.jpg") },
     logo: {
       dark: toAbsoluteUrl("/media/logos/logo-light.png"),
       light: toAbsoluteUrl("/media/logos/logo-dark.png"),

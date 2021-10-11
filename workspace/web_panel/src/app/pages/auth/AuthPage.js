@@ -10,7 +10,6 @@ import "../../../_metronic/_assets/sass/pages/login/login-1.scss";
 export default function AuthPage() {
   return (
     <>
-      {/* https://github.com/nfl/react-helmet */}
       <Helmet>
         {/* <link
             type="text/css"

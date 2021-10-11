@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { IntlProvider } from "react-intl";
-import "@formatjs/intl-relativetimeformat/polyfill";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/en";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/de";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/es";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/fr";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/ja";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/zh";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/fa";
+import "@formatjs/intl-listformat/polyfill";
+import "@formatjs/intl-listformat/locale-data/en";
+import "@formatjs/intl-listformat/locale-data/de";
+import "@formatjs/intl-listformat/locale-data/es";
+import "@formatjs/intl-listformat/locale-data/fr";
+import "@formatjs/intl-listformat/locale-data/ja";
+import "@formatjs/intl-listformat/locale-data/zh";
+import "@formatjs/intl-listformat/locale-data/fa";
 
 import deMessages from "./messages/de";
 import enMessages from "./messages/en.json";

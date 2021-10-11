@@ -5,8 +5,8 @@ import { withStyles } from '@material-ui/styles';
 import AddIcon from "@material-ui/icons/Add";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import {
-    location_addCity, location_deleteCity, location_deleteState,
-    location_getCities_byState, location_updateCity, location_updateState
+    location_addCity, location_deleteCity,
+    location_getCities_byState, location_updateCity
 } from "../../../../api/locations.api";
 import {Modal, Table} from "react-bootstrap";
 import RegionsManagement from "../regions/regionsManagement";
@@ -63,7 +63,7 @@ class citiesManagement extends Component {
                         </form>
                     </Paper>
 
-                    <div className="kt-separator kt-separator--dashed"></div>
+                    <div className="kt-separator kt-separator--dashed"/>
                     <Table striped bordered hover className={classes.table}>
                         <thead>
                         <tr>

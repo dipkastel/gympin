@@ -7,7 +7,7 @@ import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
-import { mockAxios, setupAxios } from "./_metronic";
+import { setupAxios } from "./_metronic";
 import store, { persistor } from "./app/store/store";
 import App from "./App";
 // import "./index.scss"; // Standard version
@@ -24,12 +24,6 @@ import "./_metronic/_assets/plugins/flaticon2/flaticon.css";
  */
 const { PUBLIC_URL } = process.env;
 
-/**
- * Creates `axios-mock-adapter` instance for provided `axios` instance, add
- * basic Metronic mocks and returns it.
- *
- * @see https://github.com/ctimmerm/axios-mock-adapter
- */
 /* const mock = */ //mockAxios(axios);
 
 /**
