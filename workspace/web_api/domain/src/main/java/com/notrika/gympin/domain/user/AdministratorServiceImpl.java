@@ -80,6 +80,10 @@ public class AdministratorServiceImpl implements AdministratorService {
         return administratorRepository.getById(id);
     }
 
+    public Administrator getAdministratorByBaseUser(User user){
+        return administratorRepository.findAdministratorByBaseUser(user);
+    }
+
     public Administrator findByAdministratorName(String username){
         return administratorRepository.findByAdministratorName(username);
     }

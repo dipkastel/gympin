@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.repository;
 
 import com.notrika.gympin.dao.administrator.Administrator;
+import com.notrika.gympin.dao.user.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +12,6 @@ public interface AdministratorRepository extends BaseRepository<Administrator, L
 
     //findBy + fieldName
     Administrator findByAdministratorName(String username);
+
+    Administrator findAdministratorByBaseUser(User baseUser);
 }
