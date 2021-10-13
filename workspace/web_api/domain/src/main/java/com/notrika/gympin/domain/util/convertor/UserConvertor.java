@@ -70,9 +70,7 @@ public class UserConvertor {
     }
 
     public static AdministratorDto administratorToAdministratorDto(Administrator administrator) {
-        AdministratorDto admin = new AdministratorDto();//AdministratorDto.builder().userRole(administrator.getBaseUser().getUserRole()).username(administrator.getBaseUser()
-        // .getUsername()).phoneNumber(administrator.getBaseUser().getPhoneNumber()).administratorName(administrator.getAdministratorName()).password(administrator.getPassword()
-        // ).email(administrator.getEmail()).build();
+        AdministratorDto admin = new AdministratorDto();
         admin.setId(administrator.getBaseUser().getId());
         admin.setName(administrator.getBaseUser().getName());
         admin.setUserGroup(administrator.getBaseUser().getUserGroup());
@@ -80,11 +78,11 @@ public class UserConvertor {
         admin.setUsername(administrator.getBaseUser().getUsername());
         admin.setPhoneNumber(administrator.getBaseUser().getPhoneNumber());
         admin.setUserStatus(administrator.getBaseUser().getUserStatus());
-        if (administrator.getBaseUser().getUserTokens() != null) admin.setToken(administrator.getBaseUser().getUserTokens().toString());
+        if (administrator.getBaseUser().getUserTokens()!=null && administrator.getBaseUser().getUserTokens().stream().findFirst().orElse(null) != null)
+            admin.setToken(administrator.getBaseUser().getUserTokens().stream().findFirst().get().getToken());
         admin.setAdministratorName(administrator.getAdministratorName());
         admin.setPassword(administrator.getPassword());
         admin.setEmail(administrator.getEmail());
-        admin.setAdminId(administrator.getId());
         return admin;
     }
 

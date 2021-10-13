@@ -11,7 +11,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class AdministratorDto extends UserDto{
 
-    private long adminId;
     private String administratorName;
     private String password;
     private String email;
