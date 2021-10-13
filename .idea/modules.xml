@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/domain/domain.iml" filepath="$PROJECT_DIR$/workspace/web_api/domain/domain.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/framework/framework.iml" filepath="$PROJECT_DIR$/workspace/web_api/framework/framework.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/persistence/persistence.iml" filepath="$PROJECT_DIR$/workspace/web_api/persistence/persistence.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workspace/web_api/product/product.iml" filepath="$PROJECT_DIR$/workspace/web_api/product/product.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_api/web_api.iml" filepath="$PROJECT_DIR$/workspace/web_api/web_api.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_front/web_front.iml" filepath="$PROJECT_DIR$/workspace/web_front/web_front.iml" />
       <module fileurl="file://$PROJECT_DIR$/workspace/web_panel/web_panel.iml" filepath="$PROJECT_DIR$/workspace/web_panel/web_panel.iml" />
