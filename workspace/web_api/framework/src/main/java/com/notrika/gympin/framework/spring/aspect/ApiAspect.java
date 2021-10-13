@@ -1,29 +1,24 @@
 package com.notrika.gympin.framework.spring.aspect;
 
-import com.notrika.gympin.common.*;
+import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.Error;
+import com.notrika.gympin.common.ResponseModel;
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextEntry;
 import com.notrika.gympin.common.exception.ExceptionBase;
-import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
+import com.notrika.gympin.dao.administrator.Administrator;
 import com.notrika.gympin.dao.user.User;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.hibernate.cfg.NotYetImplementedException;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,25 +44,24 @@ public class ApiAspect {
             arg.getUser().setUserRole(userDto.getUserRole());
             arg.getUser().setUsername(userDto.getUsername());
             arg.getUser().setPhoneNumber(userDto.getPhoneNumber());
-            //arg.getUser().setToken(userDto.getToken());
+            arg.getUser().setToken(userDto.getUserTokens().stream().findFirst().orElse(null).toString());
             contextEntry.setBaseParam(arg);
-        } else if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof AdministratorLoginDto) {
-            AdministratorLoginDto userDto = (AdministratorLoginDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } else if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Administrator) {
+            Administrator userDto = (Administrator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             BaseParam arg = new BaseParam();
             arg.getUser().setId(userDto.getId());
             arg.getUser().setCreatedDate(userDto.getCreatedDate());
             arg.getUser().setUpdatedDate(userDto.getUpdatedDate());
             arg.getUser().setDeleted(userDto.isDeleted());
-//                arg.getUser().setRole(userDto.getRole());
-//                arg.getUser().setUsername(userDto.getUsername());
-            arg.getUser().setPhoneNumber(userDto.getPhoneNumber());
-            arg.getUser().setToken(userDto.getToken());
+            arg.getUser().setUserRole((userDto.getBaseUser().getUserRole()));
+            arg.getUser().setUsername(userDto.getUsername());
+            arg.getUser().setPhoneNumber(userDto.getBaseUser().getPhoneNumber());
+            arg.getUser().setToken(userDto.getBaseUser().getUserTokens().stream().findFirst().orElse(null).toString());
             contextEntry.setBaseParam(arg);
         }
         GympinContext.setContext(contextEntry);
         StringBuffer paramBuffer =
-                new StringBuffer().append("\n==============================================================\n")
-                        .append("Method ").append(pjp.getSignature().toLongString()).append(" started with following input param: ");
+                new StringBuffer().append("\n==============================================================\n").append("Method ").append(pjp.getSignature().toLongString()).append(" started with following input param: ");
         for (int i = 0; i < pjp.getArgs().length; i++) {
             paramBuffer.append(pjp.getArgs()[i]).append("\n");
         }
@@ -78,7 +72,7 @@ public class ApiAspect {
             MethodSignature signature = (MethodSignature) pjp.getSignature();
             Method method = signature.getMethod();
             IgnoreWrapAspect ignoreWrapAspect = method.getAnnotation(IgnoreWrapAspect.class);
-            if(ignoreWrapAspect==null){
+            if (ignoreWrapAspect == null) {
                 ResponseEntity responseModel = (ResponseEntity) retVal;
                 Object responseModelBody = responseModel.getBody();
                 ResponseModel responseModel1 = new ResponseModel();
@@ -88,14 +82,14 @@ public class ApiAspect {
                 resultBuffer.append(responseModel1);
                 return new ResponseEntity<ResponseModel>(responseModel1, responseModel.getStatusCode());
             }
-                //            else {
-//                ResponseEntity responseModel = (ResponseEntity) retVal;
-//                MultimediaResponseModel responseModelBody = ((MultimediaResponseModel)responseModel.getBody());
-//                responseModelBody.setSuccess(true);
-//                responseModelBody.setMessageType(SUCCESS);
-////                resultBuffer.append(responseModelBody);
-//                return new ResponseEntity<MultimediaResponseModel>(responseModelBody, responseModel.getStatusCode());
-//            }
+            //            else {
+            //                ResponseEntity responseModel = (ResponseEntity) retVal;
+            //                MultimediaResponseModel responseModelBody = ((MultimediaResponseModel)responseModel.getBody());
+            //                responseModelBody.setSuccess(true);
+            //                responseModelBody.setMessageType(SUCCESS);
+            ////                resultBuffer.append(responseModelBody);
+            //                return new ResponseEntity<MultimediaResponseModel>(responseModelBody, responseModel.getStatusCode());
+            //            }
             return retVal;
         } catch (ExceptionBase e) {
             resultBuffer.append(e);
