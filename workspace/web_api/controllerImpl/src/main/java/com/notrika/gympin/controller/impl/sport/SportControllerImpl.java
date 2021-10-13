@@ -22,7 +22,7 @@ public class SportControllerImpl implements SportController {
     @Override
     @PostMapping("/addSport")
     public ResponseEntity<SportDto> addSport(@RequestBody SportParam sportParam) {
-        return new ResponseEntity<SportDto>(sportService.addSport(sportParam), HttpStatus.CREATED);
+        return new ResponseEntity<SportDto>(sportService.addSport(sportParam), HttpStatus.OK);
     }
 
     @Override

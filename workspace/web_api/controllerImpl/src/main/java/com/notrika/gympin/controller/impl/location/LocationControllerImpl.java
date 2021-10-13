@@ -39,7 +39,7 @@ public class LocationControllerImpl implements LocationController {
     //@RolesAllowed({"ADMIN"})
     @PostMapping("/addState")
     public ResponseEntity<StateDto> addState(@RequestBody StateParam stateParam) {
-        return new ResponseEntity<StateDto>(stateService.add(stateParam), HttpStatus.CREATED);
+        return new ResponseEntity<StateDto>(stateService.add(stateParam), HttpStatus.OK);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PostMapping("/addCity")
     public ResponseEntity<CityDto> addCity(@RequestBody CityParam cityParam) {
-        return new ResponseEntity<CityDto>(cityService.add(cityParam), HttpStatus.CREATED);
+        return new ResponseEntity<CityDto>(cityService.add(cityParam), HttpStatus.OK);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PostMapping("/addRegion")
     public ResponseEntity<RegionDto> addRegion(@RequestBody RegionParam regionParam) {
-        return new ResponseEntity<RegionDto>(regionService.add(regionParam), HttpStatus.CREATED);
+        return new ResponseEntity<RegionDto>(regionService.add(regionParam), HttpStatus.OK);
     }
 
     @Override
@@ -152,7 +152,7 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PostMapping("/addPlace")
     public ResponseEntity<PlaceDto> addPlace(@RequestBody PlaceParam placeParam) {
-        return new ResponseEntity<PlaceDto>(placeService.add(placeParam), HttpStatus.CREATED);
+        return new ResponseEntity<PlaceDto>(placeService.add(placeParam), HttpStatus.OK);
     }
 
     @Override
@@ -189,7 +189,7 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PostMapping("/addOptionOfPlace")
     public ResponseEntity<OptionOfPlaceDto> addOptionOfPlace(@RequestBody OptionOfPlaceParam optionOfPlaceParam) {
-        return new ResponseEntity<OptionOfPlaceDto>(locationService.addOptionOfPlace(optionOfPlaceParam), HttpStatus.CREATED);
+        return new ResponseEntity<OptionOfPlaceDto>(locationService.addOptionOfPlace(optionOfPlaceParam), HttpStatus.OK);
     }
 
     @Override
@@ -201,7 +201,7 @@ public class LocationControllerImpl implements LocationController {
     @Override
     @PostMapping("/addPlaceOwner")
     public ResponseEntity<PlaceOwnerDto> addPlaceOwner(@RequestBody PlaceOwnerParam placeOwnerParam) {
-        return new ResponseEntity<PlaceOwnerDto>(locationService.addPlaceOwner(placeOwnerParam), HttpStatus.CREATED);
+        return new ResponseEntity<PlaceOwnerDto>(locationService.addPlaceOwner(placeOwnerParam), HttpStatus.OK);
     }
 
     @Override

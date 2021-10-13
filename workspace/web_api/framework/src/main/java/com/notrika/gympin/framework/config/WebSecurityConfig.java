@@ -57,11 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/auth/**",
                         "/v2/swagger-ui/**",
                         "/swagger-ui/**",
-                        "/api/v1/user/sendsms",
-                        "/api/v1/user/register",
-                        "/api/v1/user/loginpanel",
+                        "/api/v1/account/sendsms",
+                        "/api/v1/account/register",
+                        "/api/v1/account/loginpanel",
                         "/api/v1/masterapplication/splash"
-                       // , "/api/**"
+                        // , "/api/**"
 
                 )
                 .permitAll()

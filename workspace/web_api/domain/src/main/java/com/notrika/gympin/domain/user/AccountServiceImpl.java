@@ -136,7 +136,7 @@ public class AccountServiceImpl implements AccountService {
             }
             return user;
         } else {
-            return administratorService.findByAdministratorName(username);
+            return administratorService.getAdministratorById(user.getId());
         }
 
 

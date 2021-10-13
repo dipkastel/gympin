@@ -32,13 +32,13 @@ public class AccountControllerImpl implements AccountController {
     @Override
     @PostMapping("/register")
     public ResponseEntity<UserRegisterDto> register(@RequestBody UserRegisterParam userRegisterParam) throws ExceptionBase {
-        return new ResponseEntity<>(userService.register(userRegisterParam), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.register(userRegisterParam), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/login")
     public ResponseEntity<UserDto> loginUser(Principal principal) throws ExceptionBase {
-        return new ResponseEntity<>(userService.loginUser(principal), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.loginUser(principal), HttpStatus.OK);
     }
 
     @Override
