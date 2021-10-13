@@ -1,6 +1,5 @@
 package com.notrika.gympin.controller.impl.option.place;
 
-import com.notrika.gympin.common.BaseDto;
 import com.notrika.gympin.common.option.place.api.PlaceOptionController;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.option.place.param.PlaceOptionParam;
@@ -28,25 +27,25 @@ public class PlaceOptionControllerImpl implements PlaceOptionController {
     @Override
     @PutMapping("/updatePLaceOption")
     public ResponseEntity<PlaceOptionDto> updatePLaceOption(@RequestBody PlaceOptionParam placeOptionParam) {
-        return new ResponseEntity<PlaceOptionDto>(placeOptionService.updatePLaceOption(placeOptionParam),HttpStatus.OK);
+        return new ResponseEntity<PlaceOptionDto>(placeOptionService.updatePLaceOption(placeOptionParam), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getAllPlaceOption")
     public ResponseEntity<List<PlaceOptionDto>> getAllPlaceOption() {
-        return new ResponseEntity<List<PlaceOptionDto>>(placeOptionService.getAllPlaceOptionDto(),HttpStatus.OK);
+        return new ResponseEntity<List<PlaceOptionDto>>(placeOptionService.getAllPlaceOptionDto(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getPlaceOptionById")
     public ResponseEntity<PlaceOptionDto> getPlaceOptionById(long id) {
-        return new ResponseEntity<PlaceOptionDto>(placeOptionService.getPlaceOptionDtoById(id),HttpStatus.OK);
+        return new ResponseEntity<PlaceOptionDto>(placeOptionService.getPlaceOptionDtoById(id), HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/deletePlaceOption")
     public ResponseEntity<PlaceOptionDto> deletePlaceOption(@RequestBody PlaceOptionParam placeOptionParam) {
         PlaceOptionDto deletedPlaceOption = placeOptionService.deletePlaceOption(placeOptionParam);
-        return new ResponseEntity<PlaceOptionDto>(deletedPlaceOption,HttpStatus.OK);
+        return new ResponseEntity<PlaceOptionDto>(deletedPlaceOption, HttpStatus.OK);
     }
 }

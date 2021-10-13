@@ -37,31 +37,18 @@ public class SwaggerConfig {
 
     // @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
 
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build();
+        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build();
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfo(
-                "My REST API",
-                "Some custom description of API.",
-                "1.0",
-                "Terms of service",
-                new Contact("Sallo Szrajbman", "www.baeldung.com", "salloszraj@gmail.com"),
-                "License of API",
-                "API license URL",
-                Collections.emptyList());
+        return new ApiInfo("My REST API", "Some custom description of API.", "1.0", "Terms of service", new Contact("Sallo Szrajbman", "www.baeldung.com",
+                "salloszraj@gmail.com"), "License of API", "API license URL", Collections.emptyList());
     }
 }

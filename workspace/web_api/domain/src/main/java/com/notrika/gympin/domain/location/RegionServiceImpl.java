@@ -70,7 +70,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     public List<Region> getAllRegion() {
-        return regionRepository.findAll();
+        return regionRepository.findAllUndeleted();
     }
 
     @Override

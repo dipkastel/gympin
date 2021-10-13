@@ -36,42 +36,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http//We will handle it later.
                 //Cross side request forgery
                 .cors().and().csrf().disable()
-//                .cors().and()
+                //                .cors().and()
                 .authorizeRequests()
                 //These are public paths
                 .antMatchers(
 
-                        "/",
-                        "/v2/api-docs",           // swagger
+                        "/", "/v2/api-docs",           // swagger
                         "/webjars/**",            // swagger-ui webjars
                         "/swagger-resources/**",  // swagger-ui resources
                         "/configuration/**",      // swagger configuration
-                        "/*.html",
-                        "/favicon.ico",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js",
-                        "/resources/**",
-                        "/error",
-                        "/downloadFile/*",
-                        "/auth/**",
-                        "/v2/swagger-ui/**",
-                        "/swagger-ui/**",
-                        "/api/v1/account/sendsms",
-                        "/api/v1/account/register",
-                        "/api/v1/account/loginpanel",
-                        "/api/v1/masterapplication/splash"
+                        "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js", "/resources/**", "/error", "/downloadFile/*", "/auth/**", "/v2/swagger-ui/**",
+                        "/swagger-ui/**", "/api/v1/account/sendsms", "/api/v1/account/register", "/api/v1/account/loginpanel", "/api/v1/masterapplication/splash"
                         // , "/api/**"
 
-                )
-                .permitAll()
+                ).permitAll()
                 //These can be reachable for just have admin role.
                 //All remaining paths should need authentication.
                 .anyRequest().fullyAuthenticated()
 
                 //logout will log the user out by invalidated session.
-//                .and().logout().permitAll()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/api/user/logout", "POST"))
+                //                .and().logout().permitAll()
+                //                .logoutRequestMatcher(new AntPathRequestMatcher("/api/user/logout", "POST"))
 
                 //login form and path
                 .and().formLogin().loginPage("http://localhost:3000/")
@@ -81,52 +66,48 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //jwt filter
     }
 
-//    @Override
-//    protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity
-//                // we don't need CSRF because our token is invulnerable
-//                .csrf().disable()
-//
-//
-//                // don't create session
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//
-//                .authorizeRequests()
-//                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-//
-//                // allow anonymous resource requests
-//                .antMatchers(
-//                        HttpMethod.GET,
-//                        "/",
-//                        "/v2/api-docs",           // swagger
-//                        "/webjars/**",            // swagger-ui webjars
-//                        "/swagger-resources/**",  // swagger-ui resources
-//                        "/configuration/**",      // swagger configuration
-//                        "/*.html",
-//                        "/favicon.ico",
-//                        "/**/*.html",
-//                        "/**/*.css",
-//                        "/**/*.js"
-//                ).permitAll()
-//                .antMatchers("/auth/**").permitAll()
-//                .anyRequest().authenticated();
-//
-//        // Custom JWT based security filter
-//        httpSecurity
-//                .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtTokenProvider));
-//
-//        // disable page caching
-//        httpSecurity.headers().cacheControl();
-//    }
+    //    @Override
+    //    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    //        httpSecurity
+    //                // we don't need CSRF because our token is invulnerable
+    //                .csrf().disable()
+    //
+    //
+    //                // don't create session
+    //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+    //
+    //                .authorizeRequests()
+    //                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+    //
+    //                // allow anonymous resource requests
+    //                .antMatchers(
+    //                        HttpMethod.GET,
+    //                        "/",
+    //                        "/v2/api-docs",           // swagger
+    //                        "/webjars/**",            // swagger-ui webjars
+    //                        "/swagger-resources/**",  // swagger-ui resources
+    //                        "/configuration/**",      // swagger configuration
+    //                        "/*.html",
+    //                        "/favicon.ico",
+    //                        "/**/*.html",
+    //                        "/**/*.css",
+    //                        "/**/*.js"
+    //                ).permitAll()
+    //                .antMatchers("/auth/**").permitAll()
+    //                .anyRequest().authenticated();
+    //
+    //        // Custom JWT based security filter
+    //        httpSecurity
+    //                .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtTokenProvider));
+    //
+    //        // disable page caching
+    //        httpSecurity.headers().cacheControl();
+    //    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder())
-                .withUser("user")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER");
+        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("user").password(passwordEncoder().encode("password")).roles("USER");
     }
 
     //Cross origin resource sharing.
@@ -135,10 +116,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/v1/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("PUT", "DELETE", "POST", "GET")
-                        .allowCredentials(false).maxAge(3600);
+                registry.addMapping("/api/v1/**").allowedOrigins("*").allowedMethods("PUT", "DELETE", "POST", "GET").allowCredentials(false).maxAge(3600);
             }
         };
     }

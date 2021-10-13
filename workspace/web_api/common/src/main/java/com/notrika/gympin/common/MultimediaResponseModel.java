@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.core.io.InputStreamResource;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
-import org.apache.commons.lang.SerializationUtils;
 
 @Getter
 @Setter
@@ -33,45 +31,44 @@ public class MultimediaResponseModel extends InputStreamResource {
     private InputStreamResource data;
 
     private InputStream inputStream;
+    private boolean readed = false;
+    private InputStream stream;
 
     public MultimediaResponseModel(InputStream inputStream) {
         super(inputStream);
-        this.inputStream=inputStream;
-        this.data = this;
-        this.Success = true;
-        this.MessageType = SUCCESS;
-    }
-    public MultimediaResponseModel(InputStream inputStream, String description) {
-        super(inputStream, description);
-        this.inputStream=inputStream;
+        this.inputStream = inputStream;
         this.data = this;
         this.Success = true;
         this.MessageType = SUCCESS;
     }
 
+    public MultimediaResponseModel(InputStream inputStream, String description) {
+        super(inputStream, description);
+        this.inputStream = inputStream;
+        this.data = this;
+        this.Success = true;
+        this.MessageType = SUCCESS;
+    }
     public MultimediaResponseModel(/*@Nullable*/ InputStream inputStream, String description, String _LinkParams) {
         super(inputStream, description);
-        this.inputStream=inputStream;
+        this.inputStream = inputStream;
         this.data = this;
         this.Success = true;
         this.MessageType = SUCCESS;
         this.LinkParams = _LinkParams;
     }
-
-    private boolean readed=false;
-    private InputStream stream;
-//    @Override
-//    public InputStream getInputStream() throws IOException, IllegalStateException {
-//        SerializationUtils.clone(this.inputStream);
-//        this.stream=Object this.inputStream.clone();
-//        return this.stream;
-//    }
+    //    @Override
+    //    public InputStream getInputStream() throws IOException, IllegalStateException {
+    //        SerializationUtils.clone(this.inputStream);
+    //        this.stream=Object this.inputStream.clone();
+    //        return this.stream;
+    //    }
 
     //    public MultimediaResponseModel(Error _data) {
-//        super(null);
-//        this.Success = false;
-//        this.MessageType = ERROR;
-//        this.Message = _data.getErrorMessage();
-//        this.Error = _data;
-//    }
+    //        super(null);
+    //        this.Success = false;
+    //        this.MessageType = ERROR;
+    //        this.Message = _data.getErrorMessage();
+    //        this.Error = _data;
+    //    }
 }

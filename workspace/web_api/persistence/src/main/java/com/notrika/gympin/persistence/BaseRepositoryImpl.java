@@ -5,8 +5,6 @@ import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.dao.BaseEntity;
 import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.persistence.repository.BaseRepository;
-import com.notrika.gympin.persistence.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +19,8 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
 
     private final EntityManager entityManager;
 
-//    @Autowired
-//    private UserRepository userRepository;
+    //    @Autowired
+    //    private UserRepository userRepository;
 
     public BaseRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
@@ -40,7 +38,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     }
 
     @Override
-    public List<T> findAll() {
+    public List<T> findAllUndeleted() {
         return super.findAll().stream().filter(t -> !((BaseEntity) t).isDeleted()).collect(Collectors.toList());
     }
 

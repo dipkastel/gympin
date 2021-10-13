@@ -49,10 +49,10 @@ public class ApiAspect {
             return retVal;
         } catch (ExceptionBase e) {
             Error error = new Error(e.getErrorType(), e);
-            LOGGER.log(Level.FINEST,error.getErrorMessage(),e);
+            LOGGER.log(Level.FINEST, error.getErrorMessage(), e);
             return getFailedResponse(error, e.getHttpStatus());
         } catch (Throwable e) {
-            LOGGER.log(Level.FINEST,e.getMessage(),e);
+            LOGGER.log(Level.FINEST, e.getMessage(), e);
             return getFailedResponse(Error.builder().errorMessage(e.getMessage()).stackTrace(Arrays.toString(e.getStackTrace())).build(), HttpStatus.EXPECTATION_FAILED);
         } finally {
             LOGGER.log(Level.INFO, resultBuffer.append("\n==============================================================\n").toString());

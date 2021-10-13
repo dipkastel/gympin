@@ -1,6 +1,5 @@
 package com.notrika.gympin.controller.impl.location;
 
-import com.notrika.gympin.common.BaseDto;
 import com.notrika.gympin.common.location.api.LocationController;
 import com.notrika.gympin.common.location.dto.*;
 import com.notrika.gympin.common.location.param.*;
@@ -214,6 +213,6 @@ public class LocationControllerImpl implements LocationController {
     @DeleteMapping("/deletePlaceOwner")
     public ResponseEntity<PlaceOwnerDto> deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
         PlaceOwnerDto deletedPlaceOwner = locationService.deletePlaceOwner(placeOwnerParam);
-        return new ResponseEntity<PlaceOwnerDto>(deletedPlaceOwner,HttpStatus.OK);
+        return new ResponseEntity<PlaceOwnerDto>(deletedPlaceOwner, HttpStatus.OK);
     }
 }

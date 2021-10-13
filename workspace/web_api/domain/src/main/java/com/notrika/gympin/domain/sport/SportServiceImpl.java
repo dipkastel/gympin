@@ -51,12 +51,12 @@ public class SportServiceImpl implements SportService {
 
     @Override
     public List<SportDto> getAllSportDto() {
-        List<Sport> sportList = sportRepository.findAll();
+        List<Sport> sportList = sportRepository.findAllUndeleted();
         return SportConvertor.sportsToSportDtos(sportList);
     }
 
     public List<Sport> getAllSport() {
-        return sportRepository.findAll();
+        return sportRepository.findAllUndeleted();
     }
 
     @Override

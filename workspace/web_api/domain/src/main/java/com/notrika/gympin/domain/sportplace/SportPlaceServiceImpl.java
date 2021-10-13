@@ -80,7 +80,7 @@ public class SportPlaceServiceImpl implements SportPlaceService {
     }
 
     public List<SportPlace> getAllSportPlace() {
-        return sportPlaceRepository.findAll();
+        return sportPlaceRepository.findAllUndeleted();
     }
 
     @Override

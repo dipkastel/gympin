@@ -15,16 +15,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private JwtTokenProvider jwtTokenProvider;
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager,
-                                  JwtTokenProvider tokenProvider) {
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider) {
         super(authenticationManager);
         jwtTokenProvider = tokenProvider;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         Authentication authentication = jwtTokenProvider.getAuthentication(request);
 
         if (authentication != null && jwtTokenProvider.validateToken(request)) {

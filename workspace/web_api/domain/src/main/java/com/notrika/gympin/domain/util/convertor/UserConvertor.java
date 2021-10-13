@@ -80,7 +80,7 @@ public class UserConvertor {
         admin.setUsername(administrator.getBaseUser().getUsername());
         admin.setPhoneNumber(administrator.getBaseUser().getPhoneNumber());
         admin.setUserStatus(administrator.getBaseUser().getUserStatus());
-        if (administrator.getBaseUser().getUserTokens()!=null && administrator.getBaseUser().getUserTokens().stream().findFirst().orElse(null) != null)
+        if (administrator.getBaseUser().getUserTokens() != null && administrator.getBaseUser().getUserTokens().stream().findFirst().orElse(null) != null)
             admin.setToken(administrator.getBaseUser().getUserTokens().stream().findFirst().get().getToken());
         admin.setAdministratorName(administrator.getAdministratorName());
         admin.setPassword(administrator.getPassword());

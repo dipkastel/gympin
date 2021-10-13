@@ -77,8 +77,7 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public String getPassword() {
         ActivationCode activationCode = activationCodes.stream().findAny().orElse(null);
-        if (activationCode != null)
-            return activationCode.getCode();
+        if (activationCode != null) return activationCode.getCode();
 
         return null;
     }
@@ -96,8 +95,7 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         UserToken userToken = userTokens.stream().findFirst().orElse(null);
-        if (userToken == null)
-            return true;
+        if (userToken == null) return true;
 
         return !userToken.getExpireDate().before(new Date());
     }
