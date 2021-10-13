@@ -30,6 +30,7 @@ import java.util.Objects;
 public class Administrator extends BaseEntity implements UserDetails {
 
     @OneToOne
+    @MapsId
     private User baseUser;
 
     @Column(unique = true)

@@ -16,9 +16,6 @@ import java.util.Date;
 public class BaseParam<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnore
-    private transient UserDto user = new UserDto();
-
     @JsonProperty("Id")
     private Long id;
 

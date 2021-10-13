@@ -1,17 +1,17 @@
 package com.notrika.gympin.common.context;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common.user.dto.AdministratorDto;
+import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.enums.UserGroup;
+import lombok.Data;
+
+@Data
 public class GympinContext {
-    private static final ThreadLocal<GympinContextEntry> CONTEXT = new ThreadLocal<>();
 
-    public static GympinContextEntry getContext() {
-        return CONTEXT.get();
-    }
+    private UserGroup userGroup;
+    private UserDto user;
+    private AdministratorDto administrator;
 
-    public static void setContext(GympinContextEntry contextEntry) {
-        CONTEXT.set(contextEntry);
-    }
-
-    public static void clear() {
-        CONTEXT.remove();
-    }
 }

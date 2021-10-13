@@ -18,10 +18,12 @@ public class UserConvertor {
             return null;
         UserDto dto = new UserDto();
         dto.setId(user.getId());
+        dto.setUserRole(user.getUserRole());
+        dto.setUserStatus(user.getUserStatus());
         dto.setUsername(user.getUsername());
-        if (user.getUserRole() != null)
-            dto.setUserRole(UserRole.valueOf(user.getUserRole().name()));
         dto.setPhoneNumber(user.getPhoneNumber());
+        dto.setToken(user.getUserTokens().toString());
+        dto.setName(user.getName());
         return dto;
     }
 
@@ -72,13 +74,24 @@ public class UserConvertor {
     }
 
     public static AdministratorDto administratorToAdministratorDto(Administrator administrator) {
-        AdministratorDto administratorDto = AdministratorDto.builder().userRole(administrator.getBaseUser().getUserRole()).username(administrator.getBaseUser().getUsername()).phoneNumber(administrator.getBaseUser().getPhoneNumber()).administratorName(administrator.getAdministratorName()).password(administrator.getPassword()).email(administrator.getEmail()).build();
-        return administratorDto;
+        AdministratorDto admin = new AdministratorDto();//AdministratorDto.builder().userRole(administrator.getBaseUser().getUserRole()).username(administrator.getBaseUser().getUsername()).phoneNumber(administrator.getBaseUser().getPhoneNumber()).administratorName(administrator.getAdministratorName()).password(administrator.getPassword()).email(administrator.getEmail()).build();
+        admin.setId(administrator.getBaseUser().getId());
+        admin.setName(administrator.getBaseUser().getName());
+        admin.setUserGroup(administrator.getBaseUser().getUserGroup());
+        admin.setUserRole(administrator.getBaseUser().getUserRole());
+        admin.setUsername(administrator.getBaseUser().getUsername());
+        admin.setPhoneNumber(administrator.getBaseUser().getPhoneNumber());
+        admin.setUserStatus(administrator.getBaseUser().getUserStatus());
+        admin.setToken(administrator.getBaseUser().getUserTokens().toString());
+        admin.setAdministratorName(administrator.getAdministratorName());
+        admin.setPassword(administrator.getPassword());
+        admin.setEmail(administrator.getEmail());
+        admin.setAdminId(administrator.getId());
+        return admin;
     }
 
     public static List<AdministratorDto> administratorsToAdministratorDtos(List<Administrator> administratorList) {
         return administratorList.stream().map(UserConvertor::administratorToAdministratorDto).collect(Collectors.toList());
     }
-
 
 }
