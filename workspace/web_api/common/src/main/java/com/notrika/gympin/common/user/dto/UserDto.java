@@ -25,7 +25,4 @@ public class UserDto extends BaseDto<UserDto> /*implements UserDetails*/ {
     private String token;
     private String name;
 
-    @JsonIgnore
-    private transient UserGroup userGroup;
-
 }

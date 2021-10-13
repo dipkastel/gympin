@@ -35,7 +35,7 @@ public class ApiAspect {
     @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
     public Object process(ProceedingJoinPoint pjp) throws Throwable {
         // start stopwatch
-        setGympinServiceCall();
+        setGympinServiceCallContext();
         logInput(pjp);
         StringBuffer resultBuffer = new StringBuffer().append("\n and return following result: \n");
         try {
@@ -81,7 +81,7 @@ public class ApiAspect {
         LOGGER.log(Level.INFO, paramBuffer.toString());
     }
 
-    private void setGympinServiceCall() {
+    private void setGympinServiceCallContext() {
         GympinContext contextEntry = new GympinContext();
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

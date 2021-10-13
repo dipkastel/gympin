@@ -17,6 +17,9 @@ public class UserConvertor {
         if (user == null) return null;
         UserDto dto = new UserDto();
         dto.setId(user.getId());
+        dto.setCreatedDate(user.getCreatedDate());
+        dto.setUpdatedDate(user.getUpdatedDate());
+        dto.setDeleted(user.isDeleted());
         dto.setUserRole(user.getUserRole());
         dto.setUserStatus(user.getUserStatus());
         dto.setUsername(user.getUsername());
@@ -73,7 +76,6 @@ public class UserConvertor {
         AdministratorDto admin = new AdministratorDto();
         admin.setId(administrator.getBaseUser().getId());
         admin.setName(administrator.getBaseUser().getName());
-        admin.setUserGroup(administrator.getBaseUser().getUserGroup());
         admin.setUserRole(administrator.getBaseUser().getUserRole());
         admin.setUsername(administrator.getBaseUser().getUsername());
         admin.setPhoneNumber(administrator.getBaseUser().getPhoneNumber());
