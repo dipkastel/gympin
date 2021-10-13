@@ -21,8 +21,8 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
 
     private final EntityManager entityManager;
 
-    @Autowired
-    private UserRepository userRepository;
+//    @Autowired
+//    private UserRepository userRepository;
 
     public BaseRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
@@ -49,7 +49,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     public <S extends T> S add(S entity) {
         GympinContext context = GympinContextHolder.getContext();
         if (context != null && context.getUserGroup() != null) {
-            User user = userRepository.getById(context.getUser().getId());
+            User user = User.builder().id(context.getUser().getId()).build();
             entity.setCreatorUser(user);
         }
         entity.setCreatedDate(new Date());
@@ -61,7 +61,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     public <S extends T> S update(S entity) {
         GympinContext context = GympinContextHolder.getContext();
         if (context != null && context.getUserGroup() != null) {
-            User user = userRepository.getById(context.getUser().getId());
+            User user = User.builder().id(context.getUser().getId()).build();
             entity.setUpdaterUser(user);
         }
         entity.setUpdatedDate(new Date());
