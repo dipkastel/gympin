@@ -95,7 +95,7 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         UserToken userToken = userTokens.stream().findFirst().orElse(null);
-        if (userToken == null) return false;
+        if (userToken == null) return true;
 
         return !userToken.getExpireDate().before(new Date());
     }
