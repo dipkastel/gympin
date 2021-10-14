@@ -64,12 +64,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAll() {
-        List<User> userList = userRepository.findAll();
+        List<User> userList = userRepository.findAllUndeleted();
         return UserConvertor.usersToUserDtos(userList);
     }
 
     public List<User> getAllUser() {
-        return userRepository.findAll();
+        return userRepository.findAllUndeleted();
     }
 
     @Override

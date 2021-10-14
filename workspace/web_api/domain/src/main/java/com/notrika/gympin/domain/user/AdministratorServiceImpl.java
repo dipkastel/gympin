@@ -9,12 +9,10 @@ import com.notrika.gympin.dao.administrator.Administrator;
 import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.repository.AdministratorRepository;
-import com.notrika.gympin.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -31,14 +29,16 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public AdministratorDto add(AdministratorParam administratorParam) {
-        User initUser=User.builder().userRole(administratorParam.getRole()).username(administratorParam.getUsername()).phoneNumber(administratorParam.getPhoneNumber()).userGroup(UserGroup.ADMINISTRATION).userStatus(UserStatus.ENABLED).build();
+        User initUser =
+                User.builder().userRole(administratorParam.getRole()).username(administratorParam.getUsername()).phoneNumber(administratorParam.getPhoneNumber()).userGroup(UserGroup.ADMINISTRATION).userStatus(UserStatus.ENABLED).build();
         User user = userService.addUser(initUser);
-        Administrator initAdministrator=Administrator.builder().baseUser(user).administratorName(administratorParam.getAdministratorName()).password(passwordEncoder.encode(administratorParam.getPassword())).email(administratorParam.getEmail()).build();
+        Administrator initAdministrator =
+                Administrator.builder().baseUser(user).administratorName(administratorParam.getAdministratorName()).password(passwordEncoder.encode(administratorParam.getPassword())).email(administratorParam.getEmail()).build();
         Administrator administrator = addAdministrator(initAdministrator);
         return UserConvertor.administratorToAdministratorDto(administrator);
     }
 
-    public Administrator addAdministrator(Administrator administrator){
+    public Administrator addAdministrator(Administrator administrator) {
         return administratorRepository.add(administrator);
     }
 
@@ -55,7 +55,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         return UserConvertor.administratorToAdministratorDto(administrator);
     }
 
-    public Administrator updateAdministrator(Administrator administrator){
+    public Administrator updateAdministrator(Administrator administrator) {
         return administratorRepository.update(administrator);
     }
 
@@ -66,7 +66,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public List<AdministratorDto> getAll() {
-        List<Administrator> administratorList = administratorRepository.findAll();
+        List<Administrator> administratorList = administratorRepository.findAllUndeleted();
         return UserConvertor.administratorsToAdministratorDtos(administratorList);
     }
 
@@ -76,15 +76,15 @@ public class AdministratorServiceImpl implements AdministratorService {
         return UserConvertor.administratorToAdministratorDto(administrator);
     }
 
-    public Administrator getAdministratorById(long id){
+    public Administrator getAdministratorById(long id) {
         return administratorRepository.getById(id);
     }
 
-    public Administrator getAdministratorByBaseUser(User user){
+    public Administrator getAdministratorByBaseUser(User user) {
         return administratorRepository.findAdministratorByBaseUser(user);
     }
 
-    public Administrator findByAdministratorName(String username){
+    public Administrator findByAdministratorName(String username) {
         return administratorRepository.findByAdministratorName(username);
     }
 }

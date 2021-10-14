@@ -1,6 +1,5 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
-import com.notrika.gympin.common.MultimediaResponseModel;
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.multimedia.api.MultimediaController;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
@@ -10,7 +9,10 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
@@ -25,14 +27,14 @@ public class MultimediaControllerImpl implements MultimediaController {
     private MultimediaService multimediaService;
 
     @Override
-    @RequestMapping(path = "/addMultimediaFile", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @RequestMapping(path = "/addMultimediaFile", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Boolean> storeMultimedia(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws IOException {
         return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam), HttpStatus.OK);
     }
 
     @Override
-//    @GetMapping("/resource")
-    @RequestMapping(path = "/resource",method = GET)
+    //    @GetMapping("/resource")
+    @RequestMapping(path = "/resource", method = GET)
     @ResponseBody
     @IgnoreWrapAspect
     public InputStreamResource retrieveMultimedia(String fileName) throws Exception {

@@ -21,5 +21,6 @@ public class UserDto extends BaseDto<UserDto> /*implements UserDetails*/ {
     private String username;
     private String phoneNumber;
     private String token;
+    private String name;
 
 }

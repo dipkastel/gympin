@@ -13,8 +13,7 @@ public interface BaseRepository<T extends BaseEntity, ID extends Serializable> e
 
     T deleteById2(T item);
 
-    @Override
-    List<T> findAll();
+    List<T> findAllUndeleted();
 
     <S extends T> S add(S var1);
 

@@ -43,15 +43,10 @@ public class JwtTokenProvider {
     private UserTokenRepository userTokenRepository;
 
     public UserToken generateToken(User user, Authentication auth) {
-        String authorities = auth.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining());
+        String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining());
 
-        String tokenString = Jwts.builder().setSubject(auth.getName())
-                .claim("roles", authorities)
-                .claim("GympinRole", user.getUserRole())
-                .setExpiration(new Date(System.currentTimeMillis() + userjwtExpirationInMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+        String tokenString =
+                Jwts.builder().setSubject(auth.getName()).claim("roles", authorities).claim("GympinRole", user.getUserRole()).setExpiration(new Date(System.currentTimeMillis() + userjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
         UserToken userToken = new UserToken();
         userToken.setUser(user);
         userToken.setToken(tokenString);
@@ -61,15 +56,10 @@ public class JwtTokenProvider {
     }
 
     public UserToken generateToken(Administrator admin, Authentication auth) {
-        String authorities = auth.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining());
+        String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining());
 
-        String tokenString = Jwts.builder().setSubject(auth.getName())
-                .claim("roles", authorities)
-                .claim("GympinRole", admin.getBaseUser().getUserRole())
-                .setExpiration(new Date(System.currentTimeMillis() + adminjwtExpirationInMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+        String tokenString =
+                Jwts.builder().setSubject(auth.getName()).claim("roles", authorities).claim("GympinRole", admin.getBaseUser().getUserRole()).setExpiration(new Date(System.currentTimeMillis() + adminjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
         UserToken userToken = new UserToken();
         userToken.setUser(admin.getBaseUser());
         userToken.setToken(tokenString);
@@ -85,10 +75,8 @@ public class JwtTokenProvider {
         }
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         String username = claims.getSubject();
-        final List<GrantedAuthority> authorities = Arrays.stream(claims.get("roles").toString().split(","))
-                .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role)
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        final List<GrantedAuthority> authorities =
+                Arrays.stream(claims.get("roles").toString().split(",")).map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         return username != null ? new UsernamePasswordAuthenticationToken(username, null, authorities) : null;
     }
 

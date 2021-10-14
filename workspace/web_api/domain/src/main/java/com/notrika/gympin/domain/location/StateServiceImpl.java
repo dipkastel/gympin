@@ -60,7 +60,7 @@ public class StateServiceImpl implements StateService {
     }
 
     public List<State> getAllState() {
-        return stateRepository.findAll();
+        return stateRepository.findAllUndeleted();
     }
 
     @Override

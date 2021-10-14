@@ -14,14 +14,18 @@ import java.util.stream.Collectors;
 public class UserConvertor {
 
     public static UserDto userToUserDto(User user) {
-        if (user == null)
-            return null;
+        if (user == null) return null;
         UserDto dto = new UserDto();
         dto.setId(user.getId());
+        dto.setCreatedDate(user.getCreatedDate());
+        dto.setUpdatedDate(user.getUpdatedDate());
+        dto.setDeleted(user.isDeleted());
+        dto.setUserRole(user.getUserRole());
+        dto.setUserStatus(user.getUserStatus());
         dto.setUsername(user.getUsername());
-        if (user.getUserRole() != null)
-            dto.setUserRole(UserRole.valueOf(user.getUserRole().name()));
         dto.setPhoneNumber(user.getPhoneNumber());
+        dto.setToken(user.getUserTokens().toString());
+        dto.setName(user.getName());
         return dto;
     }
 
@@ -30,8 +34,7 @@ public class UserConvertor {
     }
 
     public static User userDtoToUser(UserDto userDto) {
-        if (userDto == null)
-            return null;
+        if (userDto == null) return null;
         User user = new User();
         user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
@@ -45,8 +48,7 @@ public class UserConvertor {
     }
 
     public static UserRegisterDto userToRegisterDto(User user) {
-        if (user == null)
-            return null;
+        if (user == null) return null;
         UserRegisterDto dto = new UserRegisterDto();
         dto.setUsername(user.getUsername());
         dto.setPhoneNumber(user.getPhoneNumber());
@@ -58,8 +60,7 @@ public class UserConvertor {
     }
 
     public static User userRegisterDtoToUser(UserRegisterDto userDto) {
-        if (userDto == null)
-            return null;
+        if (userDto == null) return null;
 
         User user = new User();
         user.setUsername(userDto.getUsername());
@@ -72,13 +73,23 @@ public class UserConvertor {
     }
 
     public static AdministratorDto administratorToAdministratorDto(Administrator administrator) {
-        AdministratorDto administratorDto = AdministratorDto.builder().userRole(administrator.getBaseUser().getUserRole()).username(administrator.getBaseUser().getUsername()).phoneNumber(administrator.getBaseUser().getPhoneNumber()).administratorName(administrator.getAdministratorName()).password(administrator.getPassword()).email(administrator.getEmail()).build();
-        return administratorDto;
+        AdministratorDto admin = new AdministratorDto();
+        admin.setId(administrator.getBaseUser().getId());
+        admin.setName(administrator.getBaseUser().getName());
+        admin.setUserRole(administrator.getBaseUser().getUserRole());
+        admin.setUsername(administrator.getBaseUser().getUsername());
+        admin.setPhoneNumber(administrator.getBaseUser().getPhoneNumber());
+        admin.setUserStatus(administrator.getBaseUser().getUserStatus());
+        if (administrator.getBaseUser().getUserTokens() != null && administrator.getBaseUser().getUserTokens().stream().findFirst().orElse(null) != null)
+            admin.setToken(administrator.getBaseUser().getUserTokens().stream().findFirst().get().getToken());
+        admin.setAdministratorName(administrator.getAdministratorName());
+        admin.setPassword(administrator.getPassword());
+        admin.setEmail(administrator.getEmail());
+        return admin;
     }
 
     public static List<AdministratorDto> administratorsToAdministratorDtos(List<Administrator> administratorList) {
         return administratorList.stream().map(UserConvertor::administratorToAdministratorDto).collect(Collectors.toList());
     }
-
 
 }

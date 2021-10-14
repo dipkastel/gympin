@@ -2,7 +2,6 @@ package com.notrika.gympin.dao.administrator;
 
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.dao.BaseEntity;
-import com.notrika.gympin.dao.activationCode.ActivationCode;
 import com.notrika.gympin.dao.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +29,7 @@ import java.util.Objects;
 public class Administrator extends BaseEntity implements UserDetails {
 
     @OneToOne
+    @MapsId
     private User baseUser;
 
     @Column(unique = true)

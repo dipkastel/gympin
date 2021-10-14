@@ -1,6 +1,5 @@
 package com.notrika.gympin.controller.impl.sport;
 
-import com.notrika.gympin.common.BaseDto;
 import com.notrika.gympin.common.sport.api.SportController;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;

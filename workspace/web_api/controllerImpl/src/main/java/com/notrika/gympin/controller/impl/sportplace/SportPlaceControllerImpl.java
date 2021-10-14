@@ -29,7 +29,7 @@ public class SportPlaceControllerImpl implements SportPlaceController {
     @Override
     @PutMapping("updateSportPlace")
     public ResponseEntity<SportPlaceDto> update(@RequestBody SportPlaceParam sportPlaceParam) {
-        return new ResponseEntity<SportPlaceDto>(sportPlaceService.update(sportPlaceParam),HttpStatus.OK);
+        return new ResponseEntity<SportPlaceDto>(sportPlaceService.update(sportPlaceParam), HttpStatus.OK);
     }
 
     @Override
@@ -41,18 +41,18 @@ public class SportPlaceControllerImpl implements SportPlaceController {
     @Override
     @GetMapping("getAllSportPlace")
     public ResponseEntity<List<SportPlaceDto>> getAll() {
-        return new ResponseEntity<List<SportPlaceDto>>(sportPlaceService.getAll(),HttpStatus.OK);
+        return new ResponseEntity<List<SportPlaceDto>>(sportPlaceService.getAll(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("getSportPlaceById")
     public ResponseEntity<SportPlaceDto> getById(long id) {
-        return new ResponseEntity<SportPlaceDto>(sportPlaceService.getById(id),HttpStatus.OK);
+        return new ResponseEntity<SportPlaceDto>(sportPlaceService.getById(id), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("getSportsByPlace")
     public ResponseEntity<List<SportDto>> getSportsByPlace(PlaceParam placeParam) {
-        return new ResponseEntity<List<SportDto>>(sportPlaceService.getSportsByPlace(placeParam),HttpStatus.OK);
+        return new ResponseEntity<List<SportDto>>(sportPlaceService.getSportsByPlace(placeParam), HttpStatus.OK);
     }
 }

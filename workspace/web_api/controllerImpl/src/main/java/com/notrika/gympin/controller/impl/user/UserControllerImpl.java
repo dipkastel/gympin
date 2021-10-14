@@ -7,10 +7,8 @@ import com.notrika.gympin.common.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -53,6 +51,6 @@ public class UserControllerImpl implements UserController {
     @Override
     @PutMapping("/suspendUser")
     public ResponseEntity<UserDto> suspendUser(UserParam userParam) {
-        return new ResponseEntity<UserDto>(userService.suspendUser(userParam),HttpStatus.OK);
+        return new ResponseEntity<UserDto>(userService.suspendUser(userParam), HttpStatus.OK);
     }
 }

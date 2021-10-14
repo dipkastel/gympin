@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
@@ -35,10 +34,10 @@ import java.util.Objects;
 public class MultimediaServiceImpl implements MultimediaService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MultimediaServiceImpl.class);
 
-    private  Path fileStorageLocation;
+    private Path fileStorageLocation;
 
     @Value("${multimedia.dir}")
-    private String dir ;//= "../multimedia/image";
+    private String dir;//= "../multimedia/image";
 
     @Autowired
     private MultimediaRepository multimediaRepository;
@@ -48,7 +47,7 @@ public class MultimediaServiceImpl implements MultimediaService {
     }
 
     @PostConstruct
-    private void init(){
+    private void init() {
         this.fileStorageLocation = Paths.get(dir).toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
@@ -62,8 +61,7 @@ public class MultimediaServiceImpl implements MultimediaService {
         for (int i = 0; i < multimediaStoreParam.getMultipartFile().size(); i++) {
             MultipartFile multipartFile = multimediaStoreParam.getMultipartFile().get(i);
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            if (fileName.contains(".."))
-                throw new InvalidFileNameException("Error in file name.", HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
+            if (fileName.contains("..")) throw new InvalidFileNameException("Error in file name.", HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
 
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(multipartFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
@@ -84,7 +82,7 @@ public class MultimediaServiceImpl implements MultimediaService {
         Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
         Resource resource = new UrlResource(filePath.toUri());
         if (resource.exists()) {
-            InputStream inputStream=new FileInputStream(resource.getFile());
+            InputStream inputStream = new FileInputStream(resource.getFile());
             return inputStream;
         } else {
             throw new FileNotFoundException("File not found " + fileName);

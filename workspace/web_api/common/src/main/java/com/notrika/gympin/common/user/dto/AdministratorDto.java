@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class AdministratorDto extends UserDto{
+public class AdministratorDto extends UserDto {
 
     private String administratorName;
     private String password;

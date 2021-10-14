@@ -19,7 +19,6 @@ import com.notrika.gympin.dao.user.UserToken;
 import com.notrika.gympin.domain.user.jwt.JwtTokenProvider;
 import com.notrika.gympin.domain.util.convertor.AdministratorConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
-import com.notrika.gympin.persistence.repository.AdministratorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -30,8 +29,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -105,8 +102,7 @@ public class AccountServiceImpl implements AccountService {
         if (principal == null) {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
-        UsernamePasswordAuthenticationToken authenticationToken =
-                (UsernamePasswordAuthenticationToken) principal;
+        UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
         Administrator admin = administratorService.findByAdministratorName(authenticationToken.getName());
         if (admin == null) {
             throw new ExceptionBase(HttpStatus.UNAUTHORIZED, Error.ErrorType.CLIENT_AUTH_NOT_SETUP);
@@ -140,40 +136,40 @@ public class AccountServiceImpl implements AccountService {
         }
 
 
-//        User user = userRepository.findByPhoneNumber(username);
-//        Administrator admin = administratorRepository.findByAdministratorName(username);
-//        if (user == null && admin == null) {
-//            throw new UsernameNotFoundException(username);
-//        } else if (user != null) {
-//            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-//            grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRole().name()));
-//            var activationCode = smsService.getLastCode(user.getId());
-//            if (activationCode == null) {
-//                throw new UsernameNotFoundException(username + ", sms code not found");
-//            }
-//            return new org.springframework.security.core.userdetails.User(
-//                    user.getUsername(),
-//                    activationCode,
-//                    grantedAuthorities
-//            );
-//        } else {
-//            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-//            grantedAuthorities.add(new SimpleGrantedAuthority(admin.getBaseUser().getUserRole().name()));
-//
-//            return new org.springframework.security.core.userdetails.User(
-//                    admin.getAdministratorName(),
-//                    admin.getPassword(),
-//                    grantedAuthorities
-//            );
-//        }
+        //        User user = userRepository.findByPhoneNumber(username);
+        //        Administrator admin = administratorRepository.findByAdministratorName(username);
+        //        if (user == null && admin == null) {
+        //            throw new UsernameNotFoundException(username);
+        //        } else if (user != null) {
+        //            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        //            grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRole().name()));
+        //            var activationCode = smsService.getLastCode(user.getId());
+        //            if (activationCode == null) {
+        //                throw new UsernameNotFoundException(username + ", sms code not found");
+        //            }
+        //            return new org.springframework.security.core.userdetails.User(
+        //                    user.getUsername(),
+        //                    activationCode,
+        //                    grantedAuthorities
+        //            );
+        //        } else {
+        //            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        //            grantedAuthorities.add(new SimpleGrantedAuthority(admin.getBaseUser().getUserRole().name()));
+        //
+        //            return new org.springframework.security.core.userdetails.User(
+        //                    admin.getAdministratorName(),
+        //                    admin.getPassword(),
+        //                    grantedAuthorities
+        //            );
+        //        }
     }
 
 
     //@PostMapping("/sendsms")
-//    public ResponseEntity sendsms(User_send_sms_dto dto) {
-//        smsManager.sendSms(dto.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION,"1488");
-//        return new ResponseEntity<>(new ResponseModel(HttpStatus.OK), HttpStatus.OK);
-//    }
+    //    public ResponseEntity sendsms(User_send_sms_dto dto) {
+    //        smsManager.sendSms(dto.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION,"1488");
+    //        return new ResponseEntity<>(new ResponseModel(HttpStatus.OK), HttpStatus.OK);
+    //    }
 
 
     public String activeUserViaSms(String code) {

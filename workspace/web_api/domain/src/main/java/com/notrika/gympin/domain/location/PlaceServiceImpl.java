@@ -26,7 +26,8 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public PlaceDto add(PlaceParam placeParam) {
         Region region = regionService.getRegionById(placeParam.getRegion().getId());
-        Place initPlace = Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(region).build();
+        Place initPlace =
+                Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(region).build();
         Place place = addPlace(initPlace);
         return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);
     }
@@ -74,7 +75,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     public List<Place> getAllPlace() {
-        return placeRepository.findAll();
+        return placeRepository.findAllUndeleted();
     }
 
     @Override
