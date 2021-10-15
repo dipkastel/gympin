@@ -4,6 +4,7 @@ import com.notrika.gympin.common.Error;
 import com.notrika.gympin.common.contact.sms.dto.SmsDto;
 import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
 import com.notrika.gympin.common.contact.sms.service.SmsService;
+import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
@@ -162,6 +163,11 @@ public class AccountServiceImpl implements AccountService {
         //                    grantedAuthorities
         //            );
         //        }
+    }
+
+
+    private void setToken(User user,Principal principal){
+
     }
 
 

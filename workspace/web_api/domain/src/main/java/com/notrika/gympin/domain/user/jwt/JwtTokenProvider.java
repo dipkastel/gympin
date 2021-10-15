@@ -64,7 +64,7 @@ public class JwtTokenProvider {
         userToken.setUser(admin.getBaseUser());
         userToken.setToken(tokenString);
         userToken.setExpireDate(new Date(System.currentTimeMillis() + adminjwtExpirationInMs));
-        userTokenRepository.save(userToken);
+        userTokenRepository.add(userToken);
         return userToken;
     }
 

@@ -13,6 +13,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +27,7 @@ import java.util.logging.Logger;
 import static com.notrika.gympin.common.ResponseModel.ERROR;
 import static com.notrika.gympin.common.ResponseModel.SUCCESS;
 
+//@Order(Integer.MAX_VALUE)
 @Aspect
 @Component
 public class ApiAspect {
@@ -35,7 +37,7 @@ public class ApiAspect {
     @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
     public Object process(ProceedingJoinPoint pjp) throws Throwable {
         // start stopwatch
-        setGympinServiceCallContext();
+        setGympinServiceCallContext(pjp);
         logInput(pjp);
         StringBuffer resultBuffer = new StringBuffer().append("\n and return following result: \n");
         try {
@@ -81,16 +83,22 @@ public class ApiAspect {
         LOGGER.log(Level.INFO, paramBuffer.toString());
     }
 
-    private void setGympinServiceCallContext() {
+    private void setGympinServiceCallContext(ProceedingJoinPoint pjp) {
         GympinContext contextEntry = new GympinContext();
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            contextEntry.getEntry().put("user",user);
             contextEntry.setUser(UserConvertor.userToUserDto(user));
             contextEntry.setUserGroup(user.getUserGroup());
         } else if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Administrator) {
             Administrator administrator = (Administrator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            contextEntry.getEntry().put("user",administrator.getBaseUser());
             contextEntry.setUser(UserConvertor.administratorToAdministratorDto(administrator));
             contextEntry.setUserGroup(administrator.getBaseUser().getUserGroup());
+        }
+        String methodName = pjp.getSignature().getName();
+        if(methodName.equals("loginPanel") || methodName.equals("loginUser")){
+            contextEntry.setIgnoreExpire(true);
         }
         GympinContextHolder.setContext(contextEntry);
     }
