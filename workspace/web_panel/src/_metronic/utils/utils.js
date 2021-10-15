@@ -19,6 +19,7 @@ export function setupAxios(axios, store) {
       } = store.getState();
 
       if (authToken) {
+        console.log("requset whith authToken : "+authToken)
         config.headers.Authorization = `Bearer ${authToken}`;
       }
        config.baseURL = AuthApi.BASEURL;

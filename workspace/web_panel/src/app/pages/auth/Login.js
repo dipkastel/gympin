@@ -8,6 +8,7 @@ import clsx from "clsx";
 import * as auth from "../../store/ducks/auth.duck";
 import { login } from "../../api/auth.api";
 import LanguageSelector from "../../partials/layout/LanguageSelector";
+import {PERSIST} from "redux-persist/es/constants";
 
 function Login(props) {
   const { intl } = props;
