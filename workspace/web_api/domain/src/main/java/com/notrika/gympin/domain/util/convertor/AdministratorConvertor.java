@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
-import com.notrika.gympin.dao.administrator.Administrator;
+import com.notrika.gympin.persistence.entity.administrator.Administrator;
 
 //@Component
 public class AdministratorConvertor {

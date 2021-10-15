@@ -3,9 +3,9 @@ package com.notrika.gympin.domain.sport;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
 import com.notrika.gympin.common.sport.service.SportService;
-import com.notrika.gympin.dao.sport.Sport;
 import com.notrika.gympin.domain.util.convertor.SportConvertor;
-import com.notrika.gympin.persistence.repository.SportRepository;
+import com.notrika.gympin.persistence.dao.repository.SportRepository;
+import com.notrika.gympin.persistence.entity.sport.Sport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

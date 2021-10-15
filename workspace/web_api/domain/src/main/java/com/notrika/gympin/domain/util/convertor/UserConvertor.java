@@ -4,8 +4,8 @@ import com.notrika.gympin.common.user.dto.AdministratorDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.enums.UserRole;
-import com.notrika.gympin.dao.administrator.Administrator;
-import com.notrika.gympin.dao.user.User;
+import com.notrika.gympin.persistence.entity.administrator.Administrator;
+import com.notrika.gympin.persistence.entity.user.User;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,9 +1,9 @@
 package com.notrika.gympin.domain.user.jwt;
 
-import com.notrika.gympin.dao.administrator.Administrator;
-import com.notrika.gympin.dao.user.User;
-import com.notrika.gympin.dao.user.UserToken;
-import com.notrika.gympin.persistence.repository.UserTokenRepository;
+import com.notrika.gympin.persistence.dao.repository.UserTokenRepository;
+import com.notrika.gympin.persistence.entity.administrator.Administrator;
+import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
