@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.sport.dto.SportDto;
-import com.notrika.gympin.persistence.entity.sport.Sport;
+import com.notrika.gympin.dao.sport.Sport;
 
 import java.util.List;
 import java.util.stream.Collectors;

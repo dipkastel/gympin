@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.location.dto.*;
-import com.notrika.gympin.persistence.entity.location.*;
+import com.notrika.gympin.dao.location.*;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
-import com.notrika.gympin.persistence.entity.option.place.PlaceOption;
+import com.notrika.gympin.dao.option.place.PlaceOption;
 
 import java.util.List;
 import java.util.stream.Collectors;
