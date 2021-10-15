@@ -97,11 +97,11 @@ public class User extends BaseEntity implements UserDetails {
     public boolean isCredentialsNonExpired() {
 //        if(GympinContextHolder.getContext().isIgnoreExpire())
 //            return true;
-return true;
-//        UserToken userToken = userTokens.stream().findFirst().orElse(null);
-//        if (userToken == null) return false;
-//
-//        return !userToken.getExpireDate().before(new Date());
+//return true;
+        UserToken userToken = userTokens.stream().findFirst().orElse(null);
+        if (userToken == null) return false;
+
+        return !userToken.getExpireDate().before(new Date());
     }
 
     @Override
