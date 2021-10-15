@@ -104,8 +104,8 @@ public class AccountServiceImpl implements AccountService {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-        User userByPhoneNumber = userService.findUserByPhoneNumber(authenticationToken.getName());
-        Administrator admin = administratorService.getAdministratorByBaseUser(userByPhoneNumber);
+//        User userByPhoneNumber = userService.findUserByPhoneNumber(authenticationToken.getName());
+        Administrator admin = (Administrator) authenticationToken.getPrincipal();// administratorService.getAdministratorByBaseUser(userByPhoneNumber);
         if (admin == null) {
             throw new ExceptionBase(HttpStatus.UNAUTHORIZED, Error.ErrorType.CLIENT_AUTH_NOT_SETUP);
             // return new ResponseEntity<>(new ResponseModel(new Error(Error.ErrorType.Client_Auth_Not_Setup)), HttpStatus.UNAUTHORIZED);
