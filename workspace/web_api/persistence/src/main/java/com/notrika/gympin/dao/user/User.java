@@ -1,5 +1,6 @@
 package com.notrika.gympin.dao.user;
 
+import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
@@ -94,8 +95,11 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
+//        if(GympinContextHolder.getContext().isIgnoreExpire())
+//            return true;
+//return true;
         UserToken userToken = userTokens.stream().findFirst().orElse(null);
-        if (userToken == null) return true;
+        if (userToken == null) return false;
 
         return !userToken.getExpireDate().before(new Date());
     }

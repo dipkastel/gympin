@@ -47,7 +47,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     public <S extends T> S add(S entity) {
         GympinContext context = GympinContextHolder.getContext();
         if (context != null && context.getUserGroup() != null) {
-            User user = User.builder().id(context.getUser().getId()).build();
+            User user = (User) context.getEntry().get("user");
             entity.setCreatorUser(user);
         }
         entity.setCreatedDate(new Date());
@@ -59,7 +59,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     public <S extends T> S update(S entity) {
         GympinContext context = GympinContextHolder.getContext();
         if (context != null && context.getUserGroup() != null) {
-            User user = User.builder().id(context.getUser().getId()).build();
+            User user = (User) context.getEntry().get("user");
             entity.setUpdaterUser(user);
         }
         entity.setUpdatedDate(new Date());

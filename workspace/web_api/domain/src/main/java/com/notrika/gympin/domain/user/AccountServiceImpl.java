@@ -4,6 +4,7 @@ import com.notrika.gympin.common.Error;
 import com.notrika.gympin.common.contact.sms.dto.SmsDto;
 import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
 import com.notrika.gympin.common.contact.sms.service.SmsService;
+import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
@@ -103,7 +104,8 @@ public class AccountServiceImpl implements AccountService {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-        Administrator admin = administratorService.findByAdministratorName(authenticationToken.getName());
+//        User userByPhoneNumber = userService.findUserByPhoneNumber(authenticationToken.getName());
+        Administrator admin = (Administrator) authenticationToken.getPrincipal();// administratorService.getAdministratorByBaseUser(userByPhoneNumber);
         if (admin == null) {
             throw new ExceptionBase(HttpStatus.UNAUTHORIZED, Error.ErrorType.CLIENT_AUTH_NOT_SETUP);
             // return new ResponseEntity<>(new ResponseModel(new Error(Error.ErrorType.Client_Auth_Not_Setup)), HttpStatus.UNAUTHORIZED);
@@ -162,6 +164,11 @@ public class AccountServiceImpl implements AccountService {
         //                    grantedAuthorities
         //            );
         //        }
+    }
+
+
+    private void setToken(User user,Principal principal){
+
     }
 
 
