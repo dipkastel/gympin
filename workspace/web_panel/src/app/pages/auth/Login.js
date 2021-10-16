@@ -67,7 +67,7 @@ function Login(props) {
               enableLoading();
               setTimeout(() => {
                 login({
-                  "phoneNumber":values.username,
+                  "username":values.username,
                   "password":values.password
                 })
                   .then(data => {
