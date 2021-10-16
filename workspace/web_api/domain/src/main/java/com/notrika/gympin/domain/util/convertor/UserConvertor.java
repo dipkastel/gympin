@@ -24,7 +24,6 @@ public class UserConvertor {
         dto.setUserStatus(user.getUserStatus());
         dto.setUsername(user.getUsername());
         dto.setPhoneNumber(user.getPhoneNumber());
-        dto.setToken(user.getUserTokens().toString());
         dto.setName(user.getName());
         return dto;
     }

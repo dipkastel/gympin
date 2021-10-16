@@ -1,6 +1,6 @@
 export let AuthApi = {
-       BASEURL : "http://api.gympin.ir/",
-      // BASEURL : "http://localhost:8080/api/",
+      // BASEURL : "http://api.gympin.ir/",
+       BASEURL : "http://localhost:8080/api/",
       LOGIN_URL : "v1/account/loginpanel"
 }
 
@@ -52,6 +52,18 @@ export let UserApi = {
     getAll : "v1/user/getall",
     getById : "v1/user/getById",
     update : "v1/user/update",
+
+}
+
+
+
+export let AdministratorApi = {
+    //sport
+    add : "v1/administrator/add",
+    update : "v1/administrator/update",
+    delete : "v1/administrator/delete",
+    getAll : "v1/administrator/getall",
+    getById : "v1/administrator/getbyid",
 
 }
 

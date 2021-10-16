@@ -44,7 +44,7 @@ public class AdministratorControllerImpl implements AdministratorController {
 
     @Override
     @GetMapping("/getbyid")
-    public ResponseEntity<AdministratorDto> getById(@RequestBody long id) {
+    public ResponseEntity<AdministratorDto> getById(long id) {
         return new ResponseEntity<AdministratorDto>(administratorService.getById(id), HttpStatus.OK);
     }
 }

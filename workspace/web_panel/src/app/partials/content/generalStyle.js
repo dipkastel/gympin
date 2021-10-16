@@ -35,6 +35,24 @@ export const style = theme => ({
         },
         color: "#fff"
     },
+    button_second: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        backgroundColor: "#2252aa",
+        "&:hover": {
+            backgroundColor: "#123788",
+        },
+        color: "#fff"
+    },
+    button_success: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        backgroundColor: "#22aa66",
+        "&:hover": {
+            backgroundColor: "#128865",
+        },
+        color: "#fff"
+    },
     container: {
         display: "inline-grid"
     },

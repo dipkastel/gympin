@@ -14,6 +14,7 @@ import {
 } from "../../../api/user.api";
 import 'leaflet/dist/leaflet.css';
 import {style} from "../../../partials/content/generalStyle";
+import {administrator_add, administrator_getById, administrator_update} from "../../../api/administrator.api";
 
 
 class UserManagement extends Component {
@@ -22,6 +23,7 @@ class UserManagement extends Component {
         super(props);
         this.state = {
             addMode: true,
+            adminMode: true,
             allUsersArray:[],
             selectedUserToDelete:null,
             selectedAccess:null
@@ -72,7 +74,7 @@ class UserManagement extends Component {
                                     <Form.Control name="formPhoneNumber" type="text" placeholder="شماره موبایل"/>
                                 </Form.Group>
 
-                                <Form.Group controlId="formRegion">
+                                <Form.Group controlId="form_access">
                                     <Form.Label>دسترسی</Form.Label>
                                     <Select
                                         className={classes.dropdown}
@@ -91,16 +93,20 @@ class UserManagement extends Component {
                                         onChange={(e) => this.accessSelectedChange(e)}
                                     />
                                 </Form.Group>
-                                <input
-                                    className={classes.hidden_input}
-                                    value={this.state.selectedLat}
-                                    name="formLat"
-                                />
-                                <input
-                                    className={classes.hidden_input}
-                                    value={this.state.selectedLng}
-                                    name="formLng"
-                                />
+
+                                <Form.Group controlId="form_administrator_name" hidden={!this.state.adminMode}>
+                                    <Form.Label>administrator name</Form.Label>
+                                    <Form.Control name="form_administrator_name" type="text" placeholder="administrator name"/>
+                                </Form.Group>
+
+                                <Form.Group controlId="form_administrator_email" hidden={!this.state.adminMode}>
+                                    <Form.Label>email</Form.Label>
+                                    <Form.Control name="form_administrator_email" type="text" placeholder="email"/>
+                                </Form.Group>
+                                <Form.Group controlId="form_administrator_password" hidden={!this.state.adminMode}>
+                                    <Form.Label>password</Form.Label>
+                                    <Form.Control name="form_administrator_password" type="password" placeholder="password"/>
+                                </Form.Group>
                                 <Button type={"submit"} variant="contained" color="primary" className={classes.button}>
                                     ثبت
                                 </Button>
@@ -114,6 +120,7 @@ class UserManagement extends Component {
                                 <th>username</th>
                                 <th>phoneNumber</th>
                                 <th>role</th>
+                                <th>status</th>
                                 <th>actions</th>
                             </tr>
                             </thead>
@@ -131,7 +138,8 @@ class UserManagement extends Component {
     componentDidMount() {
         this.getUsers();
         this.setState(() => ({
-            addMode: false
+            addMode: false,
+            adminMode:false
         }));
     }
 
@@ -139,7 +147,8 @@ class UserManagement extends Component {
         e.preventDefault()
         this.setState(() => ({
             addMode: !this.state.addMode,
-            selectedUserToEdit: null
+            selectedUserToEdit: null,
+            adminMode:false
         }));
         this.clearForm()
     }
@@ -149,44 +158,98 @@ class UserManagement extends Component {
             addMode: true
         }));
     }
+    openAdminMode(e) {
+        e.preventDefault()
+        this.setState(() => ({
+            adminMode: true
+        }));
+    }
     closeAddMode(e) {
         e.preventDefault()
         this.setState(() => ({
             addMode: false
         }));
     }
+    closeAdminMode(e) {
+        e.preventDefault()
+        this.setState(() => ({
+            adminMode: false
+        }));
+    }
     addUser(e) {
         e.preventDefault()
         if(this.state.selectedUserToEdit){
-            user_update({
-                "Id":this.state.selectedUserToEdit.Id,
-                "username": e.target.form_UserName.value,
-                "phoneNumber":e.target.form_PhoneNumber.value,
-                "role":this.state.selectedAccess.label
-            }).then(data => {
-                this.getUsers();
+            if(this.state.selectedAccess.label==="ADMIN")
+            {
+                administrator_update({
 
-                this.setState(() => ({
-                    selectedUserToEdit: null
-                }));
-                this.closeAddMode(e)
-                this.clearForm()
-            }).catch(e => {
-                console.log(e);
-            })
+                    "Id":this.state.selectedAdministratorToEdit.Id,
+                    "username": e.target.form_UserName.value,
+                    "phoneNumber":e.target.form_PhoneNumber.value,
+                    "role":this.state.selectedAccess.label,
+                    "administratorName": e.target.form_administrator_name.value,
+                    "password":e.target.form_administrator_password.value,
+                    "email":e.target.form_administrator_email.value
+                }).then(data => {
+                    this.getUsers();
+                    this.setState(() => ({
+                        selectedUserToEdit: null
+                    }));
+                    this.closeAddMode(e)
+                    this.clearForm()
+
+                }).catch(e => {
+                    console.log(e);
+                })
+            }
+            else
+            {
+                user_update({
+                    "Id":this.state.selectedUserToEdit.Id,
+                    "username": e.target.form_UserName.value,
+                    "phoneNumber":e.target.form_PhoneNumber.value,
+                    "role":this.state.selectedAccess.label
+                }).then(data => {
+                    this.getUsers();
+                    this.setState(() => ({
+                        selectedUserToEdit: null
+                    }));
+                    this.closeAddMode(e)
+                    this.clearForm()
+
+                }).catch(e => {
+                    console.log(e);
+                })
+            }
         }else {
-            user_add({
-                "username": e.target.form_UserName.value,
-                "phoneNumber":e.target.form_PhoneNumber.value,
-                "role":this.state.selectedAccess.label
-            }).then(data => {
-
-                this.getUsers()
-                this.clearForm()
-                this.closeAddMode(e)
-            }).catch(e => {
-                console.log(e);
-            })
+            if(this.state.selectedAccess.label==="ADMIN"){
+                administrator_add({
+                    "username": e.target.form_UserName.value,
+                    "phoneNumber":e.target.form_PhoneNumber.value,
+                    "role":this.state.selectedAccess.label,
+                    "administratorName": e.target.form_administrator_name.value,
+                    "password":e.target.form_administrator_password.value,
+                    "email":e.target.form_administrator_email.value
+                }).then(data => {
+                    this.getUsers()
+                    this.clearForm()
+                    this.closeAddMode(e)
+                }).catch(e => {
+                    console.log(e);
+                })
+            }else{
+                user_add({
+                    "username": e.target.form_UserName.value,
+                    "phoneNumber":e.target.form_PhoneNumber.value,
+                    "role":this.state.selectedAccess.label
+                }).then(data => {
+                    this.getUsers()
+                    this.clearForm()
+                    this.closeAddMode(e)
+                }).catch(e => {
+                    console.log(e);
+                })
+            }
         }
     }
     deleteUser(e,user) {
@@ -212,6 +275,7 @@ class UserManagement extends Component {
     getUsers() {
 
         user_getAll().then(data=>{
+            console.log(data.data.Data);
             this.setState(() => ({
                 allUsersArray: data.data.Data
             }));
@@ -227,7 +291,8 @@ class UserManagement extends Component {
                 <td>{User.Id}</td>
                 <td>{User.username}</td>
                 <td>{User.phoneNumber}</td>
-                <td>{User.role}</td>
+                <td>{User.userRole}</td>
+                <td>{User.userStatus}</td>
                 <td>
                     <Button variant="contained" color="primary" className={classes.button_edit} onClick={(e)=>this.prepareEditUser(e,User)}>
                         ویرایش
@@ -245,13 +310,29 @@ class UserManagement extends Component {
 
         e.preventDefault()
         this.openAddMode(e)
-        console.log(this.getAccess().filter(p=>p.label === user.role))
+        console.log(this.getAccess().filter(p=>p.label === user.userRole))
         this.setState(() => ({
             selectedUserToEdit: user,
-            selectedAccess:this.getAccess().filter(p=>p.label === user.role)
+            selectedAccess:this.getAccess().filter(p=>p.label === user.userRole),
+            adminMode:(user.userRole==="ADMIN")
         }));
+
+        console.log(this.state.selectedAccess)
          document.querySelector('#form_UserName').value = user.username
         document.querySelector('#form_PhoneNumber').value = user.phoneNumber
+
+        if(user.userRole==="ADMIN"){
+            administrator_getById(user.Id).then(data=>{
+
+                this.setState(() => ({
+                    selectedAdministratorToEdit: data.data.Data
+                }));
+                document.querySelector('#form_administrator_name').value = data.data.Data.administratorName
+                document.querySelector('#form_administrator_email').value = data.data.Data.email
+            }).catch(e=>{
+                console.log(e);
+            })
+        }
     }
 
 
@@ -311,9 +392,9 @@ class UserManagement extends Component {
     }
 
     accessSelectedChange(e) {
-
         this.setState(() => ({
                 selectedAccess:e,
+                adminMode:(e.label==="ADMIN")
             }
         ));
     }
@@ -326,6 +407,9 @@ class UserManagement extends Component {
         ));
         document.querySelector('#form_UserName').value = ""
         document.querySelector('#form_PhoneNumber').value = ""
+        document.querySelector('#form_administrator_name').value = ""
+        document.querySelector('#form_administrator_email').value = ""
+        document.querySelector('#form_administrator_password').value = ""
     }
 }
 
