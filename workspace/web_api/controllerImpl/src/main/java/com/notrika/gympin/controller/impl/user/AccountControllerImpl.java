@@ -13,10 +13,8 @@ import com.notrika.gympin.common.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -41,16 +39,13 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     @PostMapping("/login")
-    public ResponseEntity<UserDto> loginUser(Principal principal) throws ExceptionBase {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-        return new ResponseEntity<>(userService.loginUser(principal), HttpStatus.OK);
+    public ResponseEntity<UserDto> loginUser(LoginParam loginParam) throws ExceptionBase {
+        return new ResponseEntity<>(userService.loginUser(loginParam), HttpStatus.OK);
     }
 
     @Override
     @PostMapping("/loginpanel")
-    public ResponseEntity<AdministratorLoginDto> loginPanel(@RequestBody LoginParam loginParam) throws ExceptionBase {
+    public ResponseEntity<AdministratorLoginDto> loginPanel(LoginParam loginParam) throws ExceptionBase {
         return new ResponseEntity<>(userService.loginPanel(loginParam), HttpStatus.OK);
     }
 

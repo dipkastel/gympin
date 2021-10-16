@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.user;
 
+import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
@@ -106,5 +107,13 @@ public class UserServiceImpl implements UserService {
         initUser.setUserStatus(UserStatus.SUSPENDED);
         User suspendedUser = updateUser(initUser);
         return suspendedUser;
+    }
+
+    @Override
+    public GympinContext createUserContext(String phoneNumber) {
+        User user = findUserByPhoneNumber(phoneNumber);
+        GympinContext userContext=new GympinContext();
+        userContext.getEntry().put(GympinContext.USER_KEY,user);
+        return userContext;
     }
 }

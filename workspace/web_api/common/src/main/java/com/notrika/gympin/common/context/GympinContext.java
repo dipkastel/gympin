@@ -12,12 +12,13 @@ import java.util.HashMap;
 @Data
 public class GympinContext {
 
+    public static final String USER_KEY="USER";
+
     private UserGroup userGroup;
     private UserDto user;
     private AdministratorDto administrator;
     private Method calledApi;
     private boolean ignoreExpire=false;
     private HashMap<String,Object> entry=new HashMap<>();
-
 
 }

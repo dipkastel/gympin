@@ -87,4 +87,16 @@ public class AdministratorServiceImpl implements AdministratorService {
     public Administrator findByAdministratorName(String username) {
         return administratorRepository.findByAdministratorName(username);
     }
+
+    public Administrator findByPhoneNumber(String phoneNumber){
+        return administratorRepository.findByBaseUser_PhoneNumber(phoneNumber);
+    }
+
+    public Administrator findByUsername(String username){
+        return administratorRepository.findByBaseUser_Username(username);
+    }
+
+    public Administrator findByEmail(String email){
+        return administratorRepository.findByEmail(email);
+    }
 }

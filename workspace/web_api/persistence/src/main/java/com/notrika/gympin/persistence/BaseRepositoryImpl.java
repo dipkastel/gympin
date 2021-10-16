@@ -46,9 +46,11 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     @Transactional
     public <S extends T> S add(S entity) {
         GympinContext context = GympinContextHolder.getContext();
-        if (context != null && context.getUserGroup() != null) {
-            User user = (User) context.getEntry().get("user");
-            entity.setCreatorUser(user);
+        if (context != null) {
+            User user = (User) context.getEntry().get(GympinContext.USER_KEY);
+            if (user!=null) {
+                entity.setCreatorUser(user);
+            }
         }
         entity.setCreatedDate(new Date());
         return this.save(entity);
@@ -58,9 +60,11 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     @Transactional
     public <S extends T> S update(S entity) {
         GympinContext context = GympinContextHolder.getContext();
-        if (context != null && context.getUserGroup() != null) {
-            User user = (User) context.getEntry().get("user");
-            entity.setUpdaterUser(user);
+        if (context != null) {
+            User user = (User) context.getEntry().get(GympinContext.USER_KEY);
+            if (user != null) {
+                entity.setUpdaterUser(user);
+            }
         }
         entity.setUpdatedDate(new Date());
         return this.save(entity);

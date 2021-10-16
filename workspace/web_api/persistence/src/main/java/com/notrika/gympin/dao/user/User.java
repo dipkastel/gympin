@@ -1,6 +1,5 @@
 package com.notrika.gympin.dao.user;
 
-import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
@@ -20,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Getter
@@ -29,7 +30,7 @@ import java.util.*;
 @SuperBuilder
 @Entity
 @Table(name = "user")
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity {
 
     @Column
     private String name;
@@ -56,6 +57,7 @@ public class User extends BaseEntity implements UserDetails {
     @ToString.Exclude
     private Set<PlaceOwner> placeOwners;
 
+//    @Where(clause = "isDeleted=false")
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @ToString.Exclude
     private Set<ActivationCode> activationCodes;
@@ -66,48 +68,6 @@ public class User extends BaseEntity implements UserDetails {
     @Where(clause = "token_status='ACTIVE'")
     @ToString.Exclude
     private Set<UserToken> userTokens;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(userRole.name()));
-        return authorities;
-    }
-
-
-    @Override
-    public String getPassword() {
-        ActivationCode activationCode = activationCodes.stream().findAny().orElse(null);
-        if (activationCode != null) return activationCode.getCode();
-
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return !isDeleted();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !userStatus.equals(UserStatus.LOCKED);
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-//        if(GympinContextHolder.getContext().isIgnoreExpire())
-//            return true;
-return true;
-//        UserToken userToken = userTokens.stream().findFirst().orElse(null);
-//        if (userToken == null) return false;
-//
-//        return !userToken.getExpireDate().before(new Date());
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return userStatus.equals(UserStatus.ENABLED);
-    }
 
     @Override
     public boolean equals(Object o) {

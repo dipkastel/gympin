@@ -1,4 +1,4 @@
-package com.notrika.gympin.framework.config;
+package com.notrika.gympin.framework.config.jwt;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

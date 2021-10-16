@@ -1,6 +1,7 @@
 package com.notrika.gympin.framework.config;
 
 import com.notrika.gympin.common.user.service.AccountService;
+import com.notrika.gympin.framework.config.jwt.AuthEntryPointJwt;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -54,54 +55,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/v1/account/**").permitAll()
+                .authorizeRequests().antMatchers("/api/v1/account/**","/swagger-ui/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
-
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
     }
-
-    //    @Override
-    //    protected void configure(HttpSecurity httpSecurity) throws Exception {
-    //        httpSecurity
-    //                // we don't need CSRF because our token is invulnerable
-    //                .csrf().disable()
-    //
-    //
-    //                // don't create session
-    //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-    //
-    //                .authorizeRequests()
-    //                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-    //
-    //                // allow anonymous resource requests
-    //                .antMatchers(
-    //                        HttpMethod.GET,
-    //                        "/",
-    //                        "/v2/api-docs",           // swagger
-    //                        "/webjars/**",            // swagger-ui webjars
-    //                        "/swagger-resources/**",  // swagger-ui resources
-    //                        "/configuration/**",      // swagger configuration
-    //                        "/*.html",
-    //                        "/favicon.ico",
-    //                        "/**/*.html",
-    //                        "/**/*.css",
-    //                        "/**/*.js"
-    //                ).permitAll()
-    //                .antMatchers("/auth/**").permitAll()
-    //                .anyRequest().authenticated();
-    //
-    //        // Custom JWT based security filter
-    //        httpSecurity
-    //                .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtTokenProvider));
-    //
-    //        // disable page caching
-    //        httpSecurity.headers().cacheControl();
-    //    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
