@@ -8,7 +8,13 @@ import org.springframework.stereotype.Repository;
 public interface AdministratorRepository extends BaseRepository<Administrator, Long> {
 
     //findBy + fieldName
-    Administrator findByAdministratorName(String username);
+    Administrator findByAdministratorName(String name);
 
     Administrator findAdministratorByBaseUser(User baseUser);
+
+    Administrator findByBaseUser_PhoneNumber(String phoneNumber);
+
+    Administrator findByBaseUser_Username(String username);
+
+    Administrator findByEmail(String email);
 }

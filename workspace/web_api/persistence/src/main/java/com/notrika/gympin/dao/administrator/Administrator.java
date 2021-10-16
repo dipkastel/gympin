@@ -26,7 +26,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "administrator")
-public class Administrator extends BaseEntity implements UserDetails {
+public class Administrator extends BaseEntity {
 
     @OneToOne
     @MapsId
@@ -40,44 +40,6 @@ public class Administrator extends BaseEntity implements UserDetails {
 
     @Column(name = "email")
     private String email;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(baseUser.getUserRole().name()));
-        return authorities;
-    }
-
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return baseUser.getUsername();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return !isDeleted();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !baseUser.getUserStatus().equals(UserStatus.LOCKED);
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return baseUser.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return baseUser.getUserStatus().equals(UserStatus.ENABLED);
-    }
 
     @Override
     public boolean equals(Object o) {

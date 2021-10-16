@@ -9,15 +9,13 @@ import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.param.UserSendSmsParam;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.security.Principal;
-
 public interface AccountService extends UserDetailsService {
 
     boolean sendActivationSms(UserSendSmsParam phoneNumber) throws ExceptionBase;
 
     UserRegisterDto register(UserRegisterParam userRegisterParam) throws ExceptionBase;
 
-    UserDto loginUser(Principal principal) throws ExceptionBase;
+    UserDto loginUser(LoginParam loginParam) throws ExceptionBase;
 
     AdministratorLoginDto loginPanel(LoginParam loginParam) throws ExceptionBase;
 }

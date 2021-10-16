@@ -7,15 +7,13 @@ import com.notrika.gympin.common.user.param.UserSendSmsParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.security.Principal;
-
 public interface AccountController {
 
     ResponseEntity<?> sendSms(@RequestBody UserSendSmsParam phoneNumber) throws ExceptionBase;
 
     ResponseEntity<?> register(@RequestBody UserRegisterParam userRegisterParam) throws ExceptionBase;
 
-    ResponseEntity<?> loginUser(Principal principal) throws ExceptionBase;
+    ResponseEntity<?> loginUser(LoginParam loginParam) throws ExceptionBase;
 
     ResponseEntity<?> loginPanel(LoginParam loginParam) throws ExceptionBase;
 

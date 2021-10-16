@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 public class LoginParam extends BaseParam<AdministratorLoginParam> {
 
     private UsernameType usernameType=UsernameType.PHONENUMBER;
-    private String phoneNumber;
+    private String username;
     private String password;
 
 }
