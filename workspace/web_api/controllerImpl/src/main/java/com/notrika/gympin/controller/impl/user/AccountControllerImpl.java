@@ -36,13 +36,13 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     @PostMapping("/login")
-    public ResponseEntity<UserDto> loginUser(LoginParam loginParam) throws ExceptionBase {
+    public ResponseEntity<UserDto> loginUser(@RequestBody LoginParam loginParam) throws ExceptionBase {
         return new ResponseEntity<>(userService.loginUser(loginParam), HttpStatus.OK);
     }
 
     @Override
     @PostMapping("/loginpanel")
-    public ResponseEntity<AdministratorLoginDto> loginPanel(LoginParam loginParam) throws ExceptionBase {
+    public ResponseEntity<AdministratorLoginDto> loginPanel(@RequestBody LoginParam loginParam) throws ExceptionBase {
         return new ResponseEntity<>(userService.loginPanel(loginParam), HttpStatus.OK);
     }
 
