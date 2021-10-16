@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="product:war">
+    <output-path>$PROJECT_DIR$/workspace/web_api/product/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>false</exploded>
+        <module>product</module>
+        <packaging>war</packaging>
+        <unpackNestedArchives>false</unpackNestedArchives>
+      </options>
+    </properties>
+    <root id="archive" name="gympin.war">
+      <element id="artifact" artifact-name="product:war exploded" />
+    </root>
+  </artifact>
+</component>

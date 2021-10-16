@@ -1,3 +1,5 @@
+import {AuthApi} from "../../app/api/const_api";
+
 export function removeCSSClass(ele, cls) {
   const reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
   ele.className = ele.className.replace(reg, " ");
@@ -17,9 +19,10 @@ export function setupAxios(axios, store) {
       } = store.getState();
 
       if (authToken) {
-        config.headers.Authorization = `Bearer ${authToken}`;
+        console.log(authToken)
+        config.headers.Authorization = "Bearer "+ authToken;
       }
-       config.baseURL = "http://localhost:8080/api";
+       config.baseURL = AuthApi.BASEURL;
       return config;
     },
     err => Promise.reject(err)

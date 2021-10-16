@@ -10,7 +10,7 @@ const theme = createMuiTheme(
     },
 
     palette: {
-      contrastThreshold: 2,
+      contrastThreshold: 3,
       primary: {
         main: "#5d78ff"
       },

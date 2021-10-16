@@ -76,6 +76,7 @@ export default class MenuItem extends React.Component {
     const isActive = this.isMenuItemIsActive(item);
 
     return (
+        // eslint-disable-next-line jsx-a11y/role-supports-aria-props
       <li
         ref={this.asideLeftLIRef}
         aria-haspopup="true"

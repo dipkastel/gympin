@@ -2,10 +2,7 @@ import axios from "axios";
 import {AuthApi} from "./const_api";
 
 
-export function login(username, password) {
+export function login(loginData) {
 
-  return axios.get(AuthApi.LOGIN_URL, { auth:{
-      username:username,
-      password:password
-    } });
+  return axios.post(AuthApi.LOGIN_URL, loginData);
 }

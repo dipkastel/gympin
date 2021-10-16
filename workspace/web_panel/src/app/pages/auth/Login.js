@@ -66,7 +66,10 @@ function Login(props) {
             onSubmit={(values, { setStatus, setSubmitting }) => {
               enableLoading();
               setTimeout(() => {
-                login(values.username, values.password)
+                login({
+                  "username":values.username,
+                  "password":values.password
+                })
                   .then(data => {
                     disableLoading();
                     props.login(data.data.Data.token);
