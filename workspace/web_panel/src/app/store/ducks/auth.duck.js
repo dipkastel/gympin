@@ -62,16 +62,11 @@ export const actions = {
 
 export function* saga() {
     yield takeLatest(actionTypes.Login, function* loginSaga() {
-        console.log("in2");
-        console.log(actions.requestUser());
         yield put(actions.requestUser());
-        console.log("in2");
     });
 
     yield takeLatest(actionTypes.Register, function* registerSaga() {
-        console.log("in1");
         yield put(actions.requestUser());
-        console.log("in1");
     });
 
     yield takeLatest(actionTypes.UserRequested, function* userRequested() {
@@ -106,7 +101,7 @@ export function* saga() {
             "config": {
                 "url": "api/auth/login",
                 "method": "get",
-                "headers": {"Accept": "application/json, text/plain, */*", "Authorization": "Bearer "+this.Authorization.authToken+""},
+                "headers": {"Accept": "application/json, text/plain, */*", "Authorization": "Bearer "},
                 "auth": {"username": "admin", "password": "demo"},
                 "transformRequest": [null],
                 "transformResponse": [null],

@@ -151,6 +151,7 @@ export default class HMenuItem extends React.Component {
   render() {
     const { item, parentItem, currentUrl, rootArrowEnabled } = this.props;
     return (
+        // eslint-disable-next-line jsx-a11y/role-supports-aria-props
       <li
         className={this.getItemCssClasses(item)}
         aria-haspopup="true"
