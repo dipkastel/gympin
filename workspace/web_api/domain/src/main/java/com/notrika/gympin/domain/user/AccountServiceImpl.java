@@ -4,26 +4,29 @@ import com.notrika.gympin.common.Error;
 import com.notrika.gympin.common.contact.sms.dto.SmsDto;
 import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
 import com.notrika.gympin.common.contact.sms.service.SmsService;
-import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.enums.UserGroup;
+import com.notrika.gympin.common.user.param.LoginParam;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.param.UserSendSmsParam;
 import com.notrika.gympin.common.user.service.AccountService;
+import com.notrika.gympin.common.user.service.JwtTokenProvider;
 import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.dao.administrator.Administrator;
 import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.dao.user.UserToken;
-import com.notrika.gympin.domain.user.jwt.JwtTokenProvider;
 import com.notrika.gympin.domain.util.convertor.AdministratorConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,6 +51,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private SmsService smsService;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     @Override
     public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
@@ -91,28 +97,32 @@ public class AccountServiceImpl implements AccountService {
         }
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
         User user = findByUsername(authenticationToken.getName());
-        UserToken userToken = tokenProvider.generateToken(user, authenticationToken);
+//        UserToken userToken = tokenProvider.generateToken(user, authenticationToken);
         UserDto userDto = UserConvertor.userToUserDto(user);
-        userDto.setToken(userToken.getToken());
+//        userDto.setToken(userToken.getToken());
         return userDto;
 
     }
 
     @Override
-    public AdministratorLoginDto loginPanel(Principal principal) throws ExceptionBase {
-        if (principal == null) {
+    public AdministratorLoginDto loginPanel(LoginParam loginParam) throws ExceptionBase {
+        if (loginParam == null || loginParam.getPhoneNumber()==null || loginParam.getPassword()==null) {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
-        UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginParam.getPhoneNumber(), loginParam.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = tokenProvider.generateJwtToken(authentication);
 //        User userByPhoneNumber = userService.findUserByPhoneNumber(authenticationToken.getName());
-        Administrator admin = (Administrator) authenticationToken.getPrincipal();// administratorService.getAdministratorByBaseUser(userByPhoneNumber);
+        Administrator admin = (Administrator) authentication.getPrincipal();// administratorService.getAdministratorByBaseUser(userByPhoneNumber);
         if (admin == null) {
             throw new ExceptionBase(HttpStatus.UNAUTHORIZED, Error.ErrorType.CLIENT_AUTH_NOT_SETUP);
             // return new ResponseEntity<>(new ResponseModel(new Error(Error.ErrorType.Client_Auth_Not_Setup)), HttpStatus.UNAUTHORIZED);
         }
         AdministratorLoginDto result = AdministratorConvertor.administratorToAdministratorLoginDto(admin);
-        UserToken userToken = tokenProvider.generateToken(admin, authenticationToken);
-        result.setToken(userToken.getToken());
+//        UserToken userToken = tokenProvider.generateToken(admin, authentication);
+        result.setToken(jwt);
         return result;
         //return new ResponseEntity<>(new ResponseModel(result), HttpStatus.CREATED);
     }

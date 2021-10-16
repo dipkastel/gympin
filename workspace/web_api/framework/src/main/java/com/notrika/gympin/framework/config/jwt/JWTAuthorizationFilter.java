@@ -1,4 +1,4 @@
-package com.notrika.gympin.domain.user.jwt;
+package com.notrika.gympin.framework.config.jwt;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -13,9 +13,9 @@ import java.io.IOException;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private JwtTokenProvider jwtTokenProvider;
+    private JwtTokenProviderImpl jwtTokenProvider;
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider) {
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JwtTokenProviderImpl tokenProvider) {
         super(authenticationManager);
         jwtTokenProvider = tokenProvider;
     }
