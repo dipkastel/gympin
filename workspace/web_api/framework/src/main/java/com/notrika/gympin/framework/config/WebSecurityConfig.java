@@ -1,26 +1,34 @@
 package com.notrika.gympin.framework.config;
 
 import com.notrika.gympin.common.user.service.AccountService;
-import com.notrika.gympin.domain.user.jwt.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        // securedEnabled = true,
+        // jsr250Enabled = true,
+        prePostEnabled = true)
 @Slf4j
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private AuthEntryPointJwt unauthorizedHandler;
 
     @Autowired
     private AccountService userDetailsService;
@@ -30,40 +38,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //Cross-origin-resource-sharing: localhost:8080, localhost:4200(allow for it.)
-        http//We will handle it later.
-                //Cross side request forgery
-                .cors().and().csrf().disable()
-                //                .cors().and()
-                .authorizeRequests()
-                //These are public paths
-                .antMatchers(
+        http.cors().and().csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests().antMatchers("/api/v1/account/**").permitAll()
+                .antMatchers("/api/test/**").permitAll()
+                .anyRequest().authenticated();
 
-                        "/", "/v2/api-docs",           // swagger
-                        "/webjars/**",            // swagger-ui webjars
-                        "/swagger-resources/**",  // swagger-ui resources
-                        "/configuration/**",      // swagger configuration
-                        "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js", "/resources/**", "/error", "/downloadFile/*", "/auth/**", "/v2/swagger-ui/**",
-                        "/swagger-ui/**", "/api/v1/account/sendsms", "/api/v1/account/register", "/api/v1/account/loginpanel", "/api/v1/masterapplication/splash"
-                        // , "/api/**"
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-                ).permitAll()
-                //These can be reachable for just have admin role.
-                //All remaining paths should need authentication.
-                .anyRequest().fullyAuthenticated()
 
-                //logout will log the user out by invalidated session.
-                //                .and().logout().permitAll()
-                //                .logoutRequestMatcher(new AntPathRequestMatcher("/api/user/logout", "POST"))
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-                //login form and path
-                .and().formLogin().loginPage("http://localhost:3000/")
-                //enable basic authentication
-                .and().httpBasic();
-
-        //jwt filter
     }
 
     //    @Override

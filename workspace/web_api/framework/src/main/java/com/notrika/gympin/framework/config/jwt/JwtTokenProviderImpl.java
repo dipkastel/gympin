@@ -1,5 +1,6 @@
-package com.notrika.gympin.domain.user.jwt;
+package com.notrika.gympin.framework.config.jwt;
 
+import com.notrika.gympin.common.user.service.JwtTokenProvider;
 import com.notrika.gympin.dao.administrator.Administrator;
 import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.dao.user.UserToken;
@@ -13,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtTokenProvider {
+public class JwtTokenProviderImpl implements JwtTokenProvider {
 
     @Value("${app.jwt.secret}")
     private String jwtSecret;
@@ -68,6 +70,18 @@ public class JwtTokenProvider {
         return userToken;
     }
 
+    public String generateJwtToken(Authentication authentication) {
+
+        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+
+        return Jwts.builder()
+                .setSubject((userPrincipal.getUsername()))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + adminjwtExpirationInMs))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+    }
+
     public Authentication getAuthentication(HttpServletRequest request) {
         String token = resolveToken(request);
         if (token == null) {
@@ -105,5 +119,9 @@ public class JwtTokenProvider {
     public User getCurrentUser(String token) {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         return null;// userService.findByUsername(claims.getSubject());
+    }
+
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 }
