@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class LoginParam extends BaseParam<AdministratorLoginParam> {
+public class LoginParam extends BaseParam<LoginParam> {
 
     private UsernameType usernameType=UsernameType.PHONENUMBER;
     private String username;
