@@ -13,8 +13,10 @@ import com.notrika.gympin.common.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
@@ -48,7 +50,7 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     @PostMapping("/loginpanel")
-    public ResponseEntity<AdministratorLoginDto> loginPanel(LoginParam loginParam) throws ExceptionBase {
+    public ResponseEntity<AdministratorLoginDto> loginPanel(@RequestBody LoginParam loginParam) throws ExceptionBase {
         return new ResponseEntity<>(userService.loginPanel(loginParam), HttpStatus.OK);
     }
 
