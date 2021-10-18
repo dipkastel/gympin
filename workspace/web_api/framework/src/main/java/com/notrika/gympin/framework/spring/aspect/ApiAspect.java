@@ -12,8 +12,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +21,8 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.notrika.gympin.common.ResponseModel.ERROR;
 import static com.notrika.gympin.common.ResponseModel.SUCCESS;
@@ -33,13 +33,14 @@ import static com.notrika.gympin.common.ResponseModel.SUCCESS;
 @Slf4j
 public class ApiAspect {
 
-//    private final static Logger log = LoggerFactory.getLogger(ApiAspect.class);
+    private final static Logger LOGGER = Logger.getLogger("ApiAspect") ;
 
     @Autowired
     private UserService userService;
 
     @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
     public Object process(ProceedingJoinPoint pjp) throws Throwable {
+        log.error("WE ARE Trying");
         // start stopwatch
         setGympinServiceCallContext();
         logInput(pjp);
@@ -55,13 +56,13 @@ public class ApiAspect {
             return retVal;
         } catch (ExceptionBase e) {
             Error error = new Error(e.getErrorType(), e);
-            log.error(error.getErrorMessage(), e);
+            LOGGER.log(Level.FINEST,error.getErrorMessage(), e);
             return getFailedResponse(error, e.getHttpStatus());
         } catch (Throwable e) {
-            log.error(e.getMessage(), e);
+            LOGGER.log(Level.FINEST,e.getMessage(), e);
             return getFailedResponse(Error.builder().errorMessage(e.getMessage()).stackTrace(Arrays.toString(e.getStackTrace())).build(), HttpStatus.EXPECTATION_FAILED);
         } finally {
-            log.info(resultBuffer.append("\n==============================================================\n").toString());
+            LOGGER.info(resultBuffer.append("\n==============================================================\n").toString());
             GympinContextHolder.clear();
         }
         // stop stopwatch
@@ -84,7 +85,7 @@ public class ApiAspect {
         for (int i = 0; i < pjp.getArgs().length; i++) {
             paramBuffer.append(pjp.getArgs()[i]).append("\n");
         }
-        log.info(paramBuffer.toString());
+        LOGGER.info(paramBuffer.toString());
     }
 
     private void setGympinServiceCallContext() {
