@@ -93,7 +93,8 @@ public class ApiAspect {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal instanceof UserDetails){
             GympinContextHolder.setContext(userService.createUserContext(((UserDetails)principal).getUsername()));
-        }
+        }else
+            GympinContextHolder.setContext(new GympinContext());
     }
 
     private ResponseEntity<ResponseModel> getFailedResponse(Error error, HttpStatus httpStatus) {
