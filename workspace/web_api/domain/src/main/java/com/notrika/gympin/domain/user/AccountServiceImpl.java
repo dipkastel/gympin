@@ -88,6 +88,8 @@ public class AccountServiceImpl implements AccountService {
         user.setUsername(userRegisterParam.getUsername());
         user.setPhoneNumber(userRegisterParam.getPhoneNumber());
         user.setUserRole(userRegisterParam.getUserRole());
+        user.setUserGroup(UserGroup.CLIENT);
+        user.setUserStatus(UserStatus.ENABLED);
         return userService.addUser(user);
     }
 
