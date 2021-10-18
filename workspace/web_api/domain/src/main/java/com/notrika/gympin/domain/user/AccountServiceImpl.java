@@ -4,6 +4,8 @@ import com.notrika.gympin.common.Error;
 import com.notrika.gympin.common.contact.sms.dto.SmsDto;
 import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
 import com.notrika.gympin.common.contact.sms.service.SmsService;
+import com.notrika.gympin.common.context.GympinContext;
+import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
@@ -23,6 +25,7 @@ import com.notrika.gympin.dao.administrator.Administrator;
 import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.domain.util.convertor.AdministratorConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
+import com.notrika.gympin.persistence.repository.ActivationCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -55,6 +58,9 @@ public class AccountServiceImpl implements AccountService {
     private JwtTokenProvider tokenProvider;
     @Autowired
     private SmsService smsService;
+
+    @Autowired
+    private ActivationCodeRepository activationCodeRepository;
 
     @Override
     public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
@@ -103,6 +109,7 @@ public class AccountServiceImpl implements AccountService {
         User user = userService.findUserByPhoneNumber(phoneNumber);
         UserDto result = UserConvertor.userToUserDto(user);
         result.setToken(jwt);
+        activationCodeRepository.deleteById2((ActivationCode) GympinContextHolder.getContext().getEntry().get("AC"));
         return result;
     }
 
@@ -161,6 +168,7 @@ public class AccountServiceImpl implements AccountService {
         if (user.getUserGroup().equals(UserGroup.CLIENT)) {
             List<ActivationCode> collect = user.getActivationCodes().stream().filter(c -> !c.isDeleted()).collect(Collectors.toList());
             if (collect.size() != 1) throw new ExceptionBase();
+            GympinContextHolder.getContext().getEntry().put("AC",collect.get(0));
             password = collect.get(0).getCode();
         } else if (user.getUserGroup().equals(UserGroup.ADMINISTRATION)) {
             password=administratorService.findByPhoneNumber(phoneNumber).getPassword();
