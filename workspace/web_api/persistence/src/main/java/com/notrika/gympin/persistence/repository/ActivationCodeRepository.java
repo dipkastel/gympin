@@ -12,7 +12,7 @@ public interface ActivationCodeRepository extends BaseRepository<ActivationCode,
 
     Optional<List<ActivationCode>> findByUserId(Long userId);
 
-    @Query("update ActivationCode a set a.isDeleted=1 where a.user.id=:#{#state.id} ")
+    @Query("update ActivationCode a set a.isDeleted=1 where a.user.id=:#{#userId}")
     void expirationCode(Long userId);
 
 }
