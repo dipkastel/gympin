@@ -116,4 +116,8 @@ public class UserServiceImpl implements UserService {
         userContext.getEntry().put(GympinContext.USER_KEY,user);
         return userContext;
     }
+
+    public void activationCodeExpiration(Long userId){
+        activationCodeExpiration(userId);
+    }
 }
