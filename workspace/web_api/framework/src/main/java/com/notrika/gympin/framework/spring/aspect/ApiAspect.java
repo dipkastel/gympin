@@ -7,17 +7,12 @@ import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.service.UserService;
-import com.notrika.gympin.dao.administrator.Administrator;
-import com.notrika.gympin.dao.user.User;
-import com.notrika.gympin.domain.util.convertor.UserConvertor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +21,8 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.notrika.gympin.common.ResponseModel.ERROR;
 import static com.notrika.gympin.common.ResponseModel.SUCCESS;
@@ -33,15 +30,17 @@ import static com.notrika.gympin.common.ResponseModel.SUCCESS;
 //@Order(Integer.MAX_VALUE)
 @Aspect
 @Component
+@Slf4j
 public class ApiAspect {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ApiAspect.class);
+    private final static Logger LOGGER = Logger.getLogger("ApiAspect") ;
 
     @Autowired
     private UserService userService;
 
     @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
     public Object process(ProceedingJoinPoint pjp) throws Throwable {
+        log.error("WE ARE Trying");
         // start stopwatch
         setGympinServiceCallContext();
         logInput(pjp);
@@ -57,10 +56,10 @@ public class ApiAspect {
             return retVal;
         } catch (ExceptionBase e) {
             Error error = new Error(e.getErrorType(), e);
-            LOGGER.error(error.getErrorMessage(), e);
+            LOGGER.log(Level.FINEST,error.getErrorMessage(), e);
             return getFailedResponse(error, e.getHttpStatus());
         } catch (Throwable e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.log(Level.FINEST,e.getMessage(), e);
             return getFailedResponse(Error.builder().errorMessage(e.getMessage()).stackTrace(Arrays.toString(e.getStackTrace())).build(), HttpStatus.EXPECTATION_FAILED);
         } finally {
             LOGGER.info(resultBuffer.append("\n==============================================================\n").toString());
@@ -93,7 +92,8 @@ public class ApiAspect {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal instanceof UserDetails){
             GympinContextHolder.setContext(userService.createUserContext(((UserDetails)principal).getUsername()));
-        }
+        }else
+            GympinContextHolder.setContext(new GympinContext());
     }
 
     private ResponseEntity<ResponseModel> getFailedResponse(Error error, HttpStatus httpStatus) {

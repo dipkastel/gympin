@@ -25,7 +25,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
         // securedEnabled = true,
         // jsr250Enabled = true,
         prePostEnabled = true)
-@Slf4j
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
