@@ -1,22 +1,14 @@
 package com.notrika.gympin.ui.register.login
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
-import com.cinematicket.cbar.models.CiBar_Action
-import com.cinematicket.cbar.models.OnCibarButtonListener
-import com.notrika.cbar.CiBar
 import com.notrika.gympin.R
 import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.req.Req_User_Login
@@ -51,7 +43,7 @@ class FragmentLogin : RegisterInnerPageFragment() {
         btn_submith_activation_code.setOnClickListener{
             ActiveUser(et_activation_code.text.toString(),et_phone_number.text.toString())
         }
-        switchTo("Login")
+        changeMod("Login")
 
 
     }
@@ -98,18 +90,18 @@ class FragmentLogin : RegisterInnerPageFragment() {
 
             when (baseSetting.status) {
                 Resource.Status.SUCCESS -> {
-                    switchTo("Activation")
+                    changeMod("Activation")
                 }
                 Resource.Status.ERROR -> {
 //                    if(user not found exception)
-                    switchTo("Register")
+                    changeMod("Register")
                 }
 
             }
         })
     }
 
-    private fun switchTo(mode:String) {
+    private fun changeMod(mode:String) {
         when(mode){
             "Activation"->{
                 //start timer

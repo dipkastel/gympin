@@ -1,7 +1,7 @@
 package com.notrika.gympin.di.register
 
 
-import com.notrika.gympin.data.network.api.UserApi
+import com.notrika.gympin.data.network.api.AccountApi
 import com.notrika.gympin.di.DiConstants
 import dagger.Module
 import dagger.Provides
@@ -15,8 +15,8 @@ class RegisterModule @Inject constructor() {
 
 
     @Provides
-    internal fun provideUserApi(@Named(DiConstants.retrofit_gympin_main) retrofit: Retrofit): UserApi {
-        return retrofit.create(UserApi::class.java)
+    internal fun provideUserApi(@Named(DiConstants.retrofit_gympin_main) retrofit: Retrofit): AccountApi {
+        return retrofit.create(AccountApi::class.java)
     }
 
 //    @RegisterScope

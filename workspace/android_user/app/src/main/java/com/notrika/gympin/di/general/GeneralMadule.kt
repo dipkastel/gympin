@@ -1,7 +1,6 @@
 package com.notrika.gympin.di.general
 
 import com.notrika.gympin.data.network.api.GympinApplicationApi
-import com.notrika.gympin.data.network.api.UserApi
 import com.notrika.gympin.di.DiConstants
 import dagger.Module
 import dagger.Provides
