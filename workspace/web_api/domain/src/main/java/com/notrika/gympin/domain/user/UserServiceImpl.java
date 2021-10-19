@@ -10,6 +10,7 @@ import com.notrika.gympin.dao.location.Place;
 import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.domain.location.LocationServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
+import com.notrika.gympin.persistence.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private LocationServiceImpl service;
+
+    @Autowired
+    private ActivationCodeRepository activationCodeRepository;
 
     @Override
     public UserDto add(UserParam userParam) {
@@ -118,6 +122,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public void activationCodeExpiration(Long userId){
-        activationCodeExpiration(userId);
+        activationCodeRepository.expirationCode(userId);
     }
 }
