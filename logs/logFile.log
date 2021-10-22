@@ -1,3 +1,7 @@
 [ERROR] 19-10-2021 05:58:58.379 PM [http-nio-8080-exec-2]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying
 [ERROR] 19-10-2021 06:00:11.226 PM [http-nio-8080-exec-3]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying
 [ERROR] 20-10-2021 04:20:50.008 PM [http-nio-8080-exec-6]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying
+[ERROR] 22-10-2021 04:53:26.838 AM [http-nio-8080-exec-9]  c.n.gympin.framework.config.jwt.AuthEntryPointJwt - Unauthorized error: Full authentication is required to access this resource
+[ERROR] 22-10-2021 05:11:16.135 AM [http-nio-8080-exec-2]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying
+[ERROR] 22-10-2021 05:16:23.443 AM [http-nio-8080-exec-5]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying
+[ERROR] 22-10-2021 05:19:03.329 AM [http-nio-8080-exec-8]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying
