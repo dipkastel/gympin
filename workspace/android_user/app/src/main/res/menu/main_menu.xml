@@ -9,10 +9,10 @@
             android:id="@+id/main_sports"
             android:icon="@drawable/menu_item_main_sports"
             android:title="@string/sports"/>
-        <item
-            android:id="@+id/main_places"
-            android:icon="@drawable/menu_item_main_places"
-            android:title="@string/places"/>
+<!--        <item-->
+<!--            android:id="@+id/main_places"-->
+<!--            android:icon="@drawable/menu_item_main_places"-->
+<!--            android:title="@string/places"/>-->
         <item
             android:id="@+id/main_reserves"
             android:icon="@drawable/menu_item_main_reserves"

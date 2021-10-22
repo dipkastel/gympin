@@ -65,7 +65,7 @@ class FragmentLogin : RegisterInnerPageFragment() {
                         pocket.userId = it.id!!
                         pocket.phoneNumber = it.phoneNumber!!
                         pocket.userName = it.username!!
-                        pocket.userRole = it.role!!
+                        pocket.userRole = it.userRole!!
                         openApp()
                         return@Observer
                     }

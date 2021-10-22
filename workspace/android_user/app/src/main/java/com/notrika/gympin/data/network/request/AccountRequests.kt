@@ -1,6 +1,5 @@
 package com.notrika.gympin.data.network.request
 
-import com.notrika.gympin.data.db.db_network_setting.Network_setting
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.req.Req_User_Login
@@ -18,8 +17,8 @@ import okhttp3.internal.http.RealResponseBody
 import retrofit2.Response
 import javax.inject.Inject
 
-class UserRequests @Inject
-constructor(val accountApi: AccountApi, val pocket: Pocket, val networkSetting: Network_setting) {
+class AccountRequests @Inject
+constructor(val accountApi: AccountApi, val pocket: Pocket) {
 
     private val TAG: String = this.javaClass.name
 

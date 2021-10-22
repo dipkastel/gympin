@@ -5,21 +5,21 @@ import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MediatorLiveData
 import com.notrika.gympin.data.db.DBStructure
 import com.notrika.gympin.data.db.db_pocket.Pocket
-import com.notrika.gympin.data.model.res.Res_Application_Splash
 import com.notrika.gympin.data.model.Resource
-import com.notrika.gympin.data.network.request.BaseRequests
+import com.notrika.gympin.data.model.res.Res_sport
+import com.notrika.gympin.data.network.request.SportRequests
 import com.notrika.gympin_master.util.setting.ErrorCheckEmpty
 import javax.inject.Inject
 
-class SPLASH_REPO @Inject constructor(
-        private val baseRequests: BaseRequests,
+class SPORT_REPO @Inject constructor(
+        private val sportRequests: SportRequests,
         private val pocket: Pocket,
         private val db: DBStructure
 ) {
 
-        fun observeBaseSetting(): LiveData<Resource<Res_Application_Splash>> {
-                val LivedataBaseSetting = MediatorLiveData<Resource<Res_Application_Splash>>()
-                val sourceApplicationSplash: LiveData<Resource<Res_Application_Splash>> = LiveDataReactiveStreams.fromPublisher(baseRequests.RequestSplash())
+        fun observeAllSports(): LiveData<Resource<List<Res_sport>>> {
+                val LivedataBaseSetting = MediatorLiveData<Resource<List<Res_sport>>>()
+                val sourceApplicationSplash: LiveData<Resource<List<Res_sport>>> = LiveDataReactiveStreams.fromPublisher(sportRequests.RequestGetAllSport())
                 LivedataBaseSetting.value = Resource.loading(null)
 
 

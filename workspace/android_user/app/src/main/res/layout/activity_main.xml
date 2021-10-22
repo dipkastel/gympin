@@ -14,7 +14,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,7 +34,6 @@
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ico_options_setting"
-
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
@@ -42,7 +41,7 @@
                     android:id="@+id/topAppBar"
                     style="@style/main_appbar"
                     android:layout_width="0dp"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="@dimen/actionBarSize"
                     app:layout_constraintEnd_toStartOf="@id/btn_user_profile"
                     app:layout_constraintStart_toEndOf="@id/btn_setting"
                     app:layout_constraintTop_toTopOf="parent"

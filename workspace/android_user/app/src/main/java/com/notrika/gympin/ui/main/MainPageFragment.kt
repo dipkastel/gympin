@@ -6,7 +6,6 @@ import com.bumptech.glide.RequestManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.notrika.cbar.CiBar
 import com.notrika.gympin.R
-import com.notrika.gympin.data.db.db_network_setting.Network_setting
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
@@ -25,9 +24,6 @@ abstract class MainPageFragment : DaggerFragment() {
 
     @Inject
     lateinit var requestManager: RequestManager
-
-    @Inject
-    lateinit var networksetting: Network_setting
 
     @Inject
     lateinit var providerFactory: ViewModelProviderFactory

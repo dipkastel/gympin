@@ -1,9 +1,14 @@
 package com.notrika.gympin.di.main
 
+import com.notrika.gympin.data.network.api.AccountApi
+import com.notrika.gympin.data.network.api.SportApi
+import com.notrika.gympin.di.DiConstants
 import com.notrika.gympin.util.general.DisplayUtil
 import dagger.Module
 import dagger.Provides
+import retrofit2.Retrofit
 import javax.inject.Inject
+import javax.inject.Named
 
 @Module
 class MainMadule @Inject constructor() {
@@ -15,5 +20,9 @@ class MainMadule @Inject constructor() {
     }
 
 
+    @Provides
+    internal fun provideSportApi(@Named(DiConstants.retrofit_gympin_main) retrofit: Retrofit): SportApi {
+        return retrofit.create(SportApi::class.java)
+    }
 
 }

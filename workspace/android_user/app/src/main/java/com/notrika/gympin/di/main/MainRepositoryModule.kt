@@ -8,7 +8,7 @@ class MainRepositoryModule @Inject constructor() {
 
 //    @MainScope
 //    @Provides
-//    internal fun provideNewsRepository(Requests: NewsRequests, pocket: Pocket, networkSetting: Network_setting): MainRepository {
+//    internal fun provideNewsRepository(Requests: NewsRequests, pocket: Pocket): MainRepository {
 //        return NewsRepository(Requests,pocket,networkSetting)
 //    }
 

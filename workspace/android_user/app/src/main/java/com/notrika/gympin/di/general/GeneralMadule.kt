@@ -17,5 +17,6 @@ class GeneralMadule @Inject constructor() {
         return retrofit.create(GympinApplicationApi::class.java)
     }
 
+
 }
 

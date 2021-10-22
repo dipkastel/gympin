@@ -17,6 +17,8 @@ object NetworkConstants {
     const val account_sendsms = "$START_KEY/account/sendsms"
     const val account_register = "$START_KEY/account/register"
     const val account_login = "$START_KEY/account/login"
+    //sport
+    const val sport_getAllSport = "$START_KEY/sport/getAllSport"
 
 
 }

@@ -9,7 +9,6 @@ import com.notrika.cbar.CiBar
 import com.notrika.gympin.BaseActivity
 import com.notrika.gympin.MainDirections
 import com.notrika.gympin.R
-import com.notrika.gympin.data.db.db_network_setting.Network_setting
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -23,9 +22,6 @@ class ActivityMain : BaseActivity() {
 
     @Inject
     lateinit var pocket: Pocket
-
-    @Inject
-    lateinit var networkSetting: Network_setting
 
     @Inject
     lateinit var ciBar: CiBar

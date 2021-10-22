@@ -25,5 +25,9 @@ class Pocket @Inject constructor(protected var database: DBStructure) : PocketBa
         get() = getString("UserName")
         set(value) = insert("UserName", value)
 
+    var baseUrl: String
+        get() = getString("baseUrl")
+        set(value) = insert("baseUrl", value)
+
 
 }
