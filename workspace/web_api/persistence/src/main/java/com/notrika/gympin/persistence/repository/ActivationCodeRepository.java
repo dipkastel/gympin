@@ -17,9 +17,9 @@ public interface ActivationCodeRepository extends BaseRepository<ActivationCode,
 
     @Transactional
     @Modifying
-    //@Query("update ActivationCode a set a.isDeleted=1 where a.user.id=:#{#userId}")
+    @Query("update ActivationCode a set a.isDeleted=1 where a.user.id=:#{#userId}")
     void expirationCode(Long userId);
 
-    //void deleteAllByUser(User user);
+    void deleteAllByUser(User user);
 
 }
