@@ -37,7 +37,7 @@ public class SmsServiceImpl implements SmsService {
         String encoding = con.getContentEncoding();
         encoding = encoding == null ? "UTF-8" : encoding;
         Integer body = Integer.parseInt(IOUtils.toString(in, encoding));
-        userService.activationCodeExpiration(userId);
+        activationCodeRepository.deleteAllByUser(userService.getUserById(userId));
         ActivationCode activationCode = new ActivationCode(userService.getUserById(userId), smsDto.getUserNumber(), passwordEncoder.encode(smsDto.getText()), body.toString());
         activationCodeRepository.add(activationCode);
         return body > 0;

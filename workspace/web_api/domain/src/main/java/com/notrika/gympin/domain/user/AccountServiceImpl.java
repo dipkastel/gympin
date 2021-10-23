@@ -109,7 +109,7 @@ public class AccountServiceImpl implements AccountService {
         User user = userService.findUserByPhoneNumber(phoneNumber);
         UserDto result = UserConvertor.userToUserDto(user);
         result.setToken(jwt);
-        activationCodeRepository.deleteById2((ActivationCode) GympinContextHolder.getContext().getEntry().get("AC"));
+        //activationCodeRepository.deleteById2((ActivationCode) GympinContextHolder.getContext().getEntry().get("AC"));
         return result;
     }
 
@@ -167,8 +167,7 @@ public class AccountServiceImpl implements AccountService {
         String password = null;
         if (user.getUserGroup().equals(UserGroup.CLIENT)) {
             List<ActivationCode> collect = user.getActivationCodes().stream().filter(c -> !c.isDeleted()).collect(Collectors.toList());
-            if (collect.size() != 1) ;
-            if(collect.size()>0)
+            if (collect.size() != 1) throw new ExceptionBase();
             GympinContextHolder.getContext().getEntry().put("AC",collect.get(0));
             password = collect.get(0).getCode();
         } else if (user.getUserGroup().equals(UserGroup.ADMINISTRATION)) {
