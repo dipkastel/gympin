@@ -167,7 +167,7 @@ public class AccountServiceImpl implements AccountService {
         String password = null;
         if (user.getUserGroup().equals(UserGroup.CLIENT)) {
             List<ActivationCode> collect = user.getActivationCodes().stream().filter(c -> !c.isDeleted()).collect(Collectors.toList());
-            if (collect.size() != 1) throw new ExceptionBase();
+            if (collect.size() != 1) ;
             GympinContextHolder.getContext().getEntry().put("AC",collect.get(0));
             password = collect.get(0).getCode();
         } else if (user.getUserGroup().equals(UserGroup.ADMINISTRATION)) {
