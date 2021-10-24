@@ -10,12 +10,9 @@ import java.util.stream.Collectors;
 public class SportConvertor {
 
     public static SportDto sportToSportDto(Sport sport) {
-        return SportDto.builder().id(sport.getId())
-                .isDeleted(sport.isDeleted())
-                .name(sport.getName())
-                .launchStatus(sport.getLaunchStatus())
-                .logoIds(sport.getSportMultimedias().stream().map(SportMultimedia::getId).collect(Collectors.toList()))
-                .build();
+        SportDto sportDto = SportDto.builder().id(sport.getId()).isDeleted(sport.isDeleted()).name(sport.getName()).launchStatus(sport.getLaunchStatus()).build();
+        sportDto.setLogoIds(sport.getSportMultimedias().stream().map(SportMultimedia::getId).collect(Collectors.toList()));
+        return sportDto;
     }
 
     public static List<SportDto> sportsToSportDtos(List<Sport> sportList) {
