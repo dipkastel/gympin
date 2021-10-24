@@ -69,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
         User user = userService.findUserByPhoneNumber(dto.getPhoneNumber());
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
         String code = MyRandom.GenerateRandomVerificationSmsCode();
-        if (user.getActivationCode().getExpiredDate() == null || user.getActivationCode().getExpiredDate().after(new Date())) throw new ActivationCodeExpiredException();
+//        if (user.getActivationCode().getExpiredDate() == null || user.getActivationCode().getExpiredDate().after(new Date())) throw new ActivationCodeExpiredException();
         try {
             return smsService.sendVerificationSms(user.getId(), new SmsDto(dto.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION, code));
         } catch (Exception e) {
