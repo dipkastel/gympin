@@ -37,7 +37,7 @@ public class Sport extends BaseEntity {
     @ToString.Exclude
     private List<SportPlace> sportPlaces;
 
-    @OneToMany(mappedBy = "sport")
+    @OneToMany(mappedBy = "sport",cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<SportMultimedia> sportMultimedias;
 
