@@ -16,6 +16,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -58,9 +59,9 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    @Where(clause = "deleted=0 and expired=0")
-    @OneToOne
-    private Password password;
+//    @Where(clause = "deleted=0 and expired=0")
+    @OneToMany(mappedBy = "user")
+    private List<Password> password;
 
     @Column(updatable = false,nullable = false)
     @Enumerated(EnumType.STRING)

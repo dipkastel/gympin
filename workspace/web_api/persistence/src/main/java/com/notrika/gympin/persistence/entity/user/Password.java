@@ -8,10 +8,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -23,7 +20,7 @@ import java.util.Objects;
 @Table(name = "password")
 public class Password extends BaseEntity {
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     @Column(name = "password")

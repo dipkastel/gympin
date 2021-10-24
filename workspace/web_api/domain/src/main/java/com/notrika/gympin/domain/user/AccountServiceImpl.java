@@ -40,6 +40,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -174,7 +175,7 @@ public class AccountServiceImpl implements AccountService {
         String password = null;
         if (user.getActivationCode() != null) password = user.getActivationCode().getCode();
         if (password == null) {
-            password = user.getPassword().getPassword();
+            password = Objects.requireNonNull(user.getPassword().stream().filter(c -> !c.isExpired() && !c.isDeleted()).findAny().orElse(null)).getPassword();
         }
         if (password == null) throw new ExceptionBase();
         setUserContext(user);
