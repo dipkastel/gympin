@@ -5,3 +5,5 @@
 [ERROR] 22-10-2021 05:11:16.135 AM [http-nio-8080-exec-2]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying
 [ERROR] 22-10-2021 05:16:23.443 AM [http-nio-8080-exec-5]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying
 [ERROR] 22-10-2021 05:19:03.329 AM [http-nio-8080-exec-8]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying
+[ERROR] 22-10-2021 05:26:52.572 AM [http-nio-8080-exec-1]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying
+[ERROR] 22-10-2021 05:28:07.263 AM [http-nio-8080-exec-5]  c.notrika.gympin.framework.spring.aspect.ApiAspect - WE ARE Trying

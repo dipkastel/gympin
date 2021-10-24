@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.notrika.gympin.ui.main.MainPageFragment
 import com.notrika.gympin.R
@@ -50,6 +51,10 @@ class FragmentSports : MainPageFragment() {
 
 
     private fun setupRecyclerView(recyclerView: RecyclerView,sports: List<Res_sport> ) {
+        for(i in 0 .. 3){
+            (sports as ArrayList).addAll(sports)
+        }
+        recyclerView.layoutManager = GridLayoutManager(recyclerView.context, 3)
         recyclerView.adapter =  AdapterGridViewSport(activity, sports, requestManager, pocket)
 
         recyclerView.adapter?.let { adapter ->
@@ -60,7 +65,7 @@ class FragmentSports : MainPageFragment() {
 
             }
         }
-
+        recyclerView.adapter?.notifyDataSetChanged();
     }
 
 

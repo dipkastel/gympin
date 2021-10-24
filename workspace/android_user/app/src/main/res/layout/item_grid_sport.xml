@@ -24,7 +24,7 @@
     <ImageView
         android:id="@+id/_image_view"
         android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_112sdp"
+        android:layout_height="@dimen/_80sdp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_8sdp"
         android:src="@drawable/ic_launcher"
