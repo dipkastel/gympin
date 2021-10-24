@@ -109,7 +109,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     @Override
     public InputStream retrieveMultimediaById(Long id) throws Exception {
-        Multimedia byId = multimediaRepository.getById(id);
+        Multimedia byId = sportMultimediaRepository.getById(id).getMultimedia();
         return loadFileAsResource(byId.getFileName());
 
     }
