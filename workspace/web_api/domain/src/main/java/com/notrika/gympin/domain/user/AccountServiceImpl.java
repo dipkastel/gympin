@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
         User user = userService.findUserByPhoneNumber(dto.getPhoneNumber());
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
         String code = MyRandom.GenerateRandomVerificationSmsCode();
-        if(user.getActivationCode().getExpiredDate()==null || user.getActivationCode().getExpiredDate().after(new Date())) throw new ActivationCodeExpiredException();
+        if (user.getActivationCode().getExpiredDate() == null || user.getActivationCode().getExpiredDate().after(new Date())) throw new ActivationCodeExpiredException();
         try {
             return smsService.sendVerificationSms(user.getId(), new SmsDto(dto.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION, code));
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class AccountServiceImpl implements AccountService {
         activationCodeRepository.update(activationCode);
         UserDto result = UserConvertor.userToUserDtoLessDetails(user);
         result.setToken(jwt);
-        log.info("user logined {}...\n",result);
+        log.info("user logined {}...\n", result);
         return result;
     }
 
@@ -128,7 +128,7 @@ public class AccountServiceImpl implements AccountService {
         User admin = userService.findUserByPhoneNumber(phoneNumber);
         UserDto result = UserConvertor.administratorToAdministratorDto(admin);
         result.setToken(jwt);
-        log.info("admin logined {}...\n",result);
+        log.info("admin logined {}...\n", result);
         return result;
     }
 
@@ -171,22 +171,22 @@ public class AccountServiceImpl implements AccountService {
         boolean accountNonLocked = !(user.getUserStatus() == UserStatus.LOCKED);
         boolean credentialsNonExpired = true;
         boolean enabled = user.getUserStatus() == UserStatus.ENABLED;
-        String password = user.getActivationCode().getCode();
-        if(password==null){
-            password=user.getPassword().getPassword();
+        String password = null;
+        if (user.getActivationCode() != null) password = user.getActivationCode().getCode();
+        if (password == null) {
+            password = user.getPassword().getPassword();
         }
-        if(password==null)
-            throw new ExceptionBase();
+        if (password == null) throw new ExceptionBase();
         setUserContext(user);
         UserDetailsImpl userDetails = new UserDetailsImpl(userRoles, password, phoneNumber, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
-        log.info("User loaded: {}",userDetails);
+        log.info("User loaded: {}", userDetails);
         return userDetails;
     }
 
     private void setUserContext(User user) {
         GympinContext context = GympinContextHolder.getContext();
-        if(context==null){
-            context=new GympinContext();
+        if (context == null) {
+            context = new GympinContext();
         }
         context.getEntry().put(GympinContext.USER_KEY, user);
     }
