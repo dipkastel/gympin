@@ -32,14 +32,14 @@ public class SportServiceImpl implements SportService {
         Sport sport = addSport(initSport);
         SportDto sportDto = SportConvertor.sportToSportDto(sport);
         try {
-            if (sportParam.getPictureId() != null && sportParam.getPictureId().size() > 0) {
+            if (sportParam.getPictureIds() != null && sportParam.getPictureIds().size() > 0) {
                 List<Long> logoIds=new ArrayList<>();
-                for (Long id : sportParam.getPictureId()) {
+                for (Long id : sportParam.getPictureIds()) {
                     Multimedia multimedia = multimediaService.getMultimediaById(id);
                     SportMultimedia sportMultimedia = multimediaService.addMultimediaForSport(sport, multimedia);
                     logoIds.add(sportMultimedia.getMultimedia().getId());
                 }
-                sportDto.setLogoId(logoIds);
+                sportDto.setLogoIds(logoIds);
             }
         }catch (Exception e){
             log.error("Error in saving sport multimedia",e);

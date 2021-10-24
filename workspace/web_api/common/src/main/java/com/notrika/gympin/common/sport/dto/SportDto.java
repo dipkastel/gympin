@@ -22,7 +22,7 @@ public class SportDto extends BaseDto<SportDto> {
     @JsonProperty("LaunchStatus")
     private LaunchStatus launchStatus;
 
-    @JsonProperty("LogoId")
-    private List<Long> logoId;
+    @JsonProperty("LogoIds")
+    private List<Long> logoIds;
 
 }

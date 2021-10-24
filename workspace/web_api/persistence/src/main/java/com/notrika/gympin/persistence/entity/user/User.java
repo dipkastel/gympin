@@ -71,7 +71,7 @@ public class User extends BaseEntity {
     @ToString.Exclude
     private Set<PlaceOwner> placeOwners;
 
-    @Where(clause = "expiredDate<=CURRENT_DATE")
+//    @Where(clause = "expiredDate<=CURRENT_DATE")
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
     @ToString.Exclude
     private ActivationCode activationCode;

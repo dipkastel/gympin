@@ -22,7 +22,7 @@ public class SportParam extends BaseParam<SportParam> {
     @JsonProperty("LaunchStatus")
     private LaunchStatus launchStatus;
 
-    @JsonProperty("PictureId")
-    private List<Long> pictureId;
+    @JsonProperty("PictureIds")
+    private List<Long> pictureIds;
 
 }

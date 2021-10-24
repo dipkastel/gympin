@@ -14,7 +14,7 @@ public class SportConvertor {
                 .isDeleted(sport.isDeleted())
                 .name(sport.getName())
                 .launchStatus(sport.getLaunchStatus())
-                .logoId(sport.getSportMultimedias().stream().map(SportMultimedia::getId).collect(Collectors.toList()))
+                .logoIds(sport.getSportMultimedias().stream().map(SportMultimedia::getId).collect(Collectors.toList()))
                 .build();
     }
 
