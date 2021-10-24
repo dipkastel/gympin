@@ -1,7 +1,8 @@
-package com.notrika.gympin.persistence.repository;
+package com.notrika.gympin.persistence.dao.repository;
 
-import com.notrika.gympin.dao.activationCode.ActivationCode;
-import com.notrika.gympin.dao.user.User;
+import com.notrika.gympin.persistence.dao.repository.BaseRepository;
+import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
+import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,7 @@ public interface ActivationCodeRepository extends BaseRepository<ActivationCode,
 
     @Transactional
     @Modifying
-    @Query("update ActivationCode a set a.isDeleted=1 where a.user.id=:#{#userId}")
+    //@Query("update ActivationCode a set a.deleted=1 where a.user.id=:#{#userId}")
     void expirationCode(Long userId);
 
     @Transactional

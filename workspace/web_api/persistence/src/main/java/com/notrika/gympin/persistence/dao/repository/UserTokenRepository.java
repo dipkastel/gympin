@@ -1,6 +1,6 @@
-package com.notrika.gympin.persistence.repository;
+package com.notrika.gympin.persistence.dao.repository;
 
-import com.notrika.gympin.dao.user.UserToken;
+import com.notrika.gympin.persistence.entity.user.UserToken;
 import org.springframework.stereotype.Repository;
 
 @Repository

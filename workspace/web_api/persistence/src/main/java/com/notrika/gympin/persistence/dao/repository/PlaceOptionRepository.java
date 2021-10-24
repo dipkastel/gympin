@@ -1,6 +1,6 @@
-package com.notrika.gympin.persistence.repository;
+package com.notrika.gympin.persistence.dao.repository;
 
-import com.notrika.gympin.dao.option.place.PlaceOption;
+import com.notrika.gympin.persistence.entity.option.place.PlaceOption;
 import org.springframework.stereotype.Repository;
 
 @Repository
