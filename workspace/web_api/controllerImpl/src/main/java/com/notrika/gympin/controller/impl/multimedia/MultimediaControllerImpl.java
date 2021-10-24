@@ -44,4 +44,14 @@ public class MultimediaControllerImpl implements MultimediaController {
     public ResponseEntity<Long> getMultimediaByFileName(String fileName) {
         return new ResponseEntity<>(multimediaService.getMultimediaIdByFileName(fileName),HttpStatus.OK);
     }
+
+    @Override
+    //    @GetMapping("/resource")
+    @RequestMapping(path = "/retrieveMultimediaById", method = GET)
+    @ResponseBody
+    @IgnoreWrapAspect
+    public InputStreamResource retrieveMultimediaById(Long id) throws Exception {
+        return new InputStreamResource(multimediaService.retrieveMultimediaById(id));
+    }
+
 }

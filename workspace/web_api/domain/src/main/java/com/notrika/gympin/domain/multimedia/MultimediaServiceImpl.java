@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
@@ -104,6 +105,13 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     public Long getMultimediaIdByFileName(String fileName){
         return multimediaRepository.findByFileName(fileName).getId();
+    }
+
+    @Override
+    public InputStream retrieveMultimediaById(Long id) throws Exception {
+        Multimedia byId = multimediaRepository.getById(id);
+        return loadFileAsResource(byId.getFileName());
+
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

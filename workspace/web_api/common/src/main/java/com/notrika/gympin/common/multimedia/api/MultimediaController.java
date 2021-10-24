@@ -13,4 +13,6 @@ public interface MultimediaController {
     InputStreamResource retrieveMultimedia(String fileName) throws Exception;
 
     ResponseEntity<Long> getMultimediaByFileName(String fileName);
+
+    InputStreamResource retrieveMultimediaById(Long Id) throws Exception;
 }
