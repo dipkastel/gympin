@@ -11,7 +11,7 @@ public class SportConvertor {
 
     public static SportDto sportToSportDto(Sport sport) {
         SportDto sportDto = SportDto.builder().id(sport.getId()).isDeleted(sport.isDeleted()).name(sport.getName()).launchStatus(sport.getLaunchStatus()).build();
-        sportDto.setLogoIds(sport.getSportMultimedias().stream().map(SportMultimedia::getId).collect(Collectors.toList()));
+        if (sport.getSportMultimedias() != null) sportDto.setLogoIds(sport.getSportMultimedias().stream().map(SportMultimedia::getId).collect(Collectors.toList()));
         return sportDto;
     }
 
