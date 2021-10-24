@@ -60,7 +60,7 @@ public class User extends BaseEntity {
     private UserRole userRole;
 
 //    @Where(clause = "deleted=0 and expired=0")
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private List<Password> password;
 
     @Column(updatable = false,nullable = false)
