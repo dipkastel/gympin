@@ -1,10 +1,10 @@
 package com.notrika.gympin.common.user.service;
 
 import com.notrika.gympin.common.BaseService;
-import com.notrika.gympin.common.user.dto.AdministratorDto;
-import com.notrika.gympin.common.user.param.AdministratorParam;
+import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.param.UserParam;
 
-public interface AdministratorService extends BaseService<AdministratorParam, AdministratorDto> {
+public interface AdministratorService extends BaseService<UserParam, UserDto> {
 
 
 }

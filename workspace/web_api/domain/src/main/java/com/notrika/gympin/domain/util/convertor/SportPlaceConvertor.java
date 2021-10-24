@@ -3,7 +3,7 @@ package com.notrika.gympin.domain.util.convertor;
 import com.notrika.gympin.common.location.dto.PlaceDto;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
-import com.notrika.gympin.dao.sportplace.SportPlace;
+import com.notrika.gympin.persistence.entity.sportplace.SportPlace;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -11,4 +11,8 @@ public interface MultimediaController {
     ResponseEntity<Boolean> storeMultimedia(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
     InputStreamResource retrieveMultimedia(String fileName) throws Exception;
+
+    ResponseEntity<Long> getMultimediaByFileName(String fileName);
+
+    InputStreamResource retrieveMultimediaById(Long Id) throws Exception;
 }

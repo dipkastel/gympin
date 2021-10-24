@@ -1,7 +1,8 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.sport.dto.SportDto;
-import com.notrika.gympin.dao.sport.Sport;
+import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
+import com.notrika.gympin.persistence.entity.sport.Sport;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,7 +10,9 @@ import java.util.stream.Collectors;
 public class SportConvertor {
 
     public static SportDto sportToSportDto(Sport sport) {
-        return SportDto.builder().id(sport.getId()).createdDate(sport.getCreatedDate()).updatedDate(sport.getUpdatedDate()).isDeleted(sport.isDeleted()).name(sport.getName()).build();
+        SportDto sportDto = SportDto.builder().id(sport.getId()).isDeleted(sport.isDeleted()).name(sport.getName()).launchStatus(sport.getLaunchStatus()).build();
+        if (sport.getSportMultimedias() != null) sportDto.setLogoIds(sport.getSportMultimedias().stream().map(SportMultimedia::getId).collect(Collectors.toList()));
+        return sportDto;
     }
 
     public static List<SportDto> sportsToSportDtos(List<Sport> sportList) {

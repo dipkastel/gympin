@@ -7,7 +7,7 @@ import com.notrika.gympin.common.contact.sms.service.SmsService;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ExceptionBase;
-import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
+import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpiredException;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
@@ -20,12 +20,11 @@ import com.notrika.gympin.common.user.param.UserSendSmsParam;
 import com.notrika.gympin.common.user.service.AccountService;
 import com.notrika.gympin.common.user.service.JwtTokenProvider;
 import com.notrika.gympin.common.util.MyRandom;
-import com.notrika.gympin.dao.activationCode.ActivationCode;
-import com.notrika.gympin.dao.administrator.Administrator;
-import com.notrika.gympin.dao.user.User;
-import com.notrika.gympin.domain.util.convertor.AdministratorConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
-import com.notrika.gympin.persistence.repository.ActivationCodeRepository;
+import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
+import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
+import com.notrika.gympin.persistence.entity.user.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -38,11 +37,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Date;
+import java.util.Objects;
 
+@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -63,22 +63,23 @@ public class AccountServiceImpl implements AccountService {
     private ActivationCodeRepository activationCodeRepository;
 
     @Override
+    @Transactional
     public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
+        log.info("Going to send activation sms...\n");
         User user = userService.findUserByPhoneNumber(dto.getPhoneNumber());
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
-
         String code = MyRandom.GenerateRandomVerificationSmsCode();
-
-        //TODO check for last sms time > 2 min
+//        if (user.getActivationCode().getExpiredDate() == null || user.getActivationCode().getExpiredDate().after(new Date())) throw new ActivationCodeExpiredException();
         try {
             return smsService.sendVerificationSms(user.getId(), new SmsDto(dto.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION, code));
         } catch (Exception e) {
-            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
+            throw new ExceptionBase(HttpStatus.INTERNAL_SERVER_ERROR, Error.ErrorType.OUT_SERVICE_EXCEPTION);
         }
     }
 
     @Override
     public UserRegisterDto register(UserRegisterParam dto) throws ExceptionBase {
+        log.info("Going to register user...\n");
         try {
             User insertedUser = addUser(dto);
             return UserConvertor.userToRegisterDto(insertedUser);
@@ -101,45 +102,51 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public UserDto loginUser(LoginParam loginParam) throws ExceptionBase {
+        log.info("Going to loginUser...\n");
         if (loginParam == null || loginParam.getUsername() == null || loginParam.getPassword() == null) {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
         String phoneNumber = getPhoneNumber(loginParam);
         String jwt = getJwt(loginParam, loginParam.getUsername());
         User user = userService.findUserByPhoneNumber(phoneNumber);
-        UserDto result = UserConvertor.userToUserDto(user);
+        ActivationCode activationCode = user.getActivationCode();
+        activationCode.setDeleted(true);
+        activationCodeRepository.update(activationCode);
+        UserDto result = UserConvertor.userToUserDtoLessDetails(user);
         result.setToken(jwt);
-        activationCodeRepository.deleteById2((ActivationCode) GympinContextHolder.getContext().getEntry().get("AC"));
+        log.info("user logined {}...\n", result);
         return result;
     }
 
-    private String getPhoneNumber(LoginParam loginParam) {
-        String phoneNumber=null;
-        switch (loginParam.getUsernameType()) {
-            case PHONENUMBER:
-                phoneNumber= loginParam.getUsername();
-                break;
-            case USERNAME:
-                phoneNumber= userService.findByUsername(loginParam.getUsername()).getPhoneNumber();
-                break;
-            case EMAIL:
-                phoneNumber= administratorService.findByEmail(loginParam.getUsername()).getBaseUser().getPhoneNumber();
-                break;
-        }
-        return phoneNumber;
-    }
-
     @Override
-    public AdministratorLoginDto loginPanel(LoginParam loginParam) throws ExceptionBase {
+    public UserDto loginPanel(LoginParam loginParam) throws ExceptionBase {
+        log.info("Going to loginPanel...\n");
         if (loginParam == null || loginParam.getUsername() == null || loginParam.getPassword() == null) {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
         String phoneNumber = getPhoneNumber(loginParam);
         String jwt = getJwt(loginParam, phoneNumber);
-        Administrator admin = administratorService.findByPhoneNumber(phoneNumber);
-        AdministratorLoginDto result = AdministratorConvertor.administratorToAdministratorLoginDto(admin);
+        User admin = userService.findUserByPhoneNumber(phoneNumber);
+        UserDto result = UserConvertor.administratorToAdministratorDto(admin);
         result.setToken(jwt);
+        log.info("admin logined {}...\n", result);
         return result;
+    }
+
+    private String getPhoneNumber(LoginParam loginParam) {
+        String phoneNumber = null;
+        switch (loginParam.getUsernameType()) {
+            case PHONENUMBER:
+                phoneNumber = loginParam.getUsername();
+                break;
+            case USERNAME:
+                phoneNumber = userService.findByUsername(loginParam.getUsername()).getPhoneNumber();
+                break;
+            case EMAIL:
+                phoneNumber = userService.findByEmail(loginParam.getUsername()).getPhoneNumber();
+                break;
+        }
+        return phoneNumber;
     }
 
     private String getJwt(LoginParam loginParam, String phoneNumber) {
@@ -154,6 +161,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
+        log.info("Going to loadUserByUsername ...\n");
         User user = userService.findUserByPhoneNumber(phoneNumber);
         if (user == null) {
             throw new UsernameNotFoundException(phoneNumber);
@@ -165,33 +173,23 @@ public class AccountServiceImpl implements AccountService {
         boolean credentialsNonExpired = true;
         boolean enabled = user.getUserStatus() == UserStatus.ENABLED;
         String password = null;
-        if (user.getUserGroup().equals(UserGroup.CLIENT)) {
-            List<ActivationCode> collect = user.getActivationCodes().stream().filter(c -> !c.isDeleted()).collect(Collectors.toList());
-            if (collect.size() != 1) throw new ExceptionBase();
-            GympinContextHolder.getContext().getEntry().put("AC",collect.get(0));
-            password = collect.get(0).getCode();
-        } else if (user.getUserGroup().equals(UserGroup.ADMINISTRATION)) {
-            password=administratorService.findByPhoneNumber(phoneNumber).getPassword();
+        if (user.getActivationCode() != null) password = user.getActivationCode().getCode();
+        if (password == null) {
+            password = Objects.requireNonNull(user.getPassword().stream().filter(c -> !c.isExpired() && !c.isDeleted()).findAny().orElse(null)).getPassword();
         }
-        return new UserDetailsImpl(userRoles,password,phoneNumber,accountNonExpired,accountNonLocked,credentialsNonExpired,enabled);
+        if (password == null) throw new ExceptionBase();
+        setUserContext(user);
+        UserDetailsImpl userDetails = new UserDetailsImpl(userRoles, password, phoneNumber, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
+        log.info("User loaded: {}", userDetails);
+        return userDetails;
     }
 
-
-    private void setToken(User user, Principal principal) {
-
+    private void setUserContext(User user) {
+        GympinContext context = GympinContextHolder.getContext();
+        if (context == null) {
+            context = new GympinContext();
+        }
+        context.getEntry().put(GympinContext.USER_KEY, user);
     }
-
-
-    //@PostMapping("/sendsms")
-    //    public ResponseEntity sendsms(User_send_sms_dto dto) {
-    //        smsManager.sendSms(dto.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION,"1488");
-    //        return new ResponseEntity<>(new ResponseModel(HttpStatus.OK), HttpStatus.OK);
-    //    }
-
-
-    public String activeUserViaSms(String code) {
-        return "nist";
-    }
-
 
 }

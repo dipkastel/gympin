@@ -9,6 +9,4 @@ public interface UserService extends BaseService<UserParam, UserDto> {
 
     UserDto suspendUser(UserParam userParam);
 
-    GympinContext createUserContext(String username);
-
 }

@@ -5,17 +5,23 @@ import com.notrika.gympin.common.exception.multimedia.CreateDirectoryException;
 import com.notrika.gympin.common.exception.multimedia.InvalidFileNameException;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
-import com.notrika.gympin.dao.multimedia.Multimedia;
-import com.notrika.gympin.dao.user.User;
-import com.notrika.gympin.persistence.repository.MultimediaRepository;
+import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
+import com.notrika.gympin.persistence.dao.repository.SportMultimediaRepository;
+import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
+import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
+import com.notrika.gympin.persistence.entity.sport.Sport;
+import com.notrika.gympin.persistence.entity.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +34,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -41,6 +48,9 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     @Autowired
     private MultimediaRepository multimediaRepository;
+
+    @Autowired
+    private SportMultimediaRepository sportMultimediaRepository;
 
     public MultimediaServiceImpl() {
 
@@ -87,5 +97,30 @@ public class MultimediaServiceImpl implements MultimediaService {
         } else {
             throw new FileNotFoundException("File not found " + fileName);
         }
+    }
+
+    public Multimedia getMultimediaById(Long id){
+      return  multimediaRepository.getById(id);
+    }
+
+    public Long getMultimediaIdByFileName(String fileName){
+        return multimediaRepository.findByFileName(fileName).getId();
+    }
+
+    @Override
+    public InputStream retrieveMultimediaById(Long id) throws Exception {
+        Multimedia byId = sportMultimediaRepository.getById(id).getMultimedia();
+        return loadFileAsResource(byId.getFileName());
+
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public SportMultimedia addMultimediaForSport(Sport sport,Multimedia multimedia){
+        SportMultimedia sportMultimedia = SportMultimedia.builder().sport(sport).multimedia(multimedia).build();
+        return sportMultimediaRepository.add(sportMultimedia);
+    }
+
+    public List<SportMultimedia> getSportMultimedias(Sport sport){
+        return sportMultimediaRepository.findBySport(sport);
     }
 }

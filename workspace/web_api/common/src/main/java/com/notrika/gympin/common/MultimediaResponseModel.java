@@ -49,6 +49,7 @@ public class MultimediaResponseModel extends InputStreamResource {
         this.Success = true;
         this.MessageType = SUCCESS;
     }
+
     public MultimediaResponseModel(/*@Nullable*/ InputStream inputStream, String description, String _LinkParams) {
         super(inputStream, description);
         this.inputStream = inputStream;

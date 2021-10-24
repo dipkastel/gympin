@@ -1,10 +1,9 @@
 package com.notrika.gympin.framework.config.jwt;
 
 import com.notrika.gympin.common.user.service.JwtTokenProvider;
-import com.notrika.gympin.dao.administrator.Administrator;
-import com.notrika.gympin.dao.user.User;
-import com.notrika.gympin.dao.user.UserToken;
-import com.notrika.gympin.persistence.repository.UserTokenRepository;
+import com.notrika.gympin.persistence.dao.repository.UserTokenRepository;
+import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -44,26 +43,27 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     @Autowired
     private UserTokenRepository userTokenRepository;
 
-    public UserToken generateToken(User user, Authentication auth) {
+    /*public UserToken generateToken(User user, Authentication auth) {
         String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining());
 
         String tokenString =
-                Jwts.builder().setSubject(auth.getName()).claim("roles", authorities).claim("GympinRole", user.getUserRole()).setExpiration(new Date(System.currentTimeMillis() + userjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+                Jwts.builder().setSubject(auth.getName()).claim("roles", authorities).claim("GympinRole", user.getUserRole()).setExpiration(new Date(System.currentTimeMillis() +
+                 userjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
         UserToken userToken = new UserToken();
         userToken.setUser(user);
         userToken.setToken(tokenString);
         userToken.setExpireDate(new Date(System.currentTimeMillis() + userjwtExpirationInMs));
         userTokenRepository.save(userToken);
         return userToken;
-    }
+    }*/
 
-    public UserToken generateToken(Administrator admin, Authentication auth) {
+    public UserToken generateToken(User admin, Authentication auth) {
         String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining());
 
         String tokenString =
-                Jwts.builder().setSubject(auth.getName()).claim("roles", authorities).claim("GympinRole", admin.getBaseUser().getUserRole()).setExpiration(new Date(System.currentTimeMillis() + adminjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+                Jwts.builder().setSubject(auth.getName()).claim("roles", authorities).claim("GympinRole", admin/*.getBaseUser()*/.getUserRole()).setExpiration(new Date(System.currentTimeMillis() + adminjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
         UserToken userToken = new UserToken();
-        userToken.setUser(admin.getBaseUser());
+        //        userToken.setUser(admin.getBaseUser());
         userToken.setToken(tokenString);
         userToken.setExpireDate(new Date(System.currentTimeMillis() + adminjwtExpirationInMs));
         userTokenRepository.add(userToken);
@@ -74,12 +74,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
 
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
 
-        return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + adminjwtExpirationInMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .compact();
+        return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date()).setExpiration(new Date((new Date()).getTime() + adminjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
     }
 
     public Authentication getAuthentication(HttpServletRequest request) {

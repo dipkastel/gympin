@@ -3,9 +3,9 @@ package com.notrika.gympin.domain.location;
 import com.notrika.gympin.common.location.dto.StateDto;
 import com.notrika.gympin.common.location.param.StateParam;
 import com.notrika.gympin.common.location.service.StateService;
-import com.notrika.gympin.dao.location.State;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
-import com.notrika.gympin.persistence.repository.StateRepository;
+import com.notrika.gympin.persistence.dao.repository.StateRepository;
+import com.notrika.gympin.persistence.entity.location.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

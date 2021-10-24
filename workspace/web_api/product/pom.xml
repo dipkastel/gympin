@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>gympin</artifactId>
@@ -13,8 +13,8 @@
 
     <packaging>war</packaging>
 
-<!--    <name>firstSpringBootApplication</name>-->
-<!--    <description>Demo project for Spring Boot</description>-->
+    <!--    <name>firstSpringBootApplication</name>-->
+    <!--    <description>Demo project for Spring Boot</description>-->
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
@@ -53,26 +53,24 @@
     </dependencies>
 
 
-
-
     <build>
         <finalName>gympin</finalName>
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-war-plugin</artifactId>-->
-<!--                <version>3.3.2</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>default-war</id>-->
-<!--                        <phase>prepare-package</phase>-->
-<!--                        <configuration>-->
-<!--                            <failOnMissingWebXml>false</failOnMissingWebXml>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
+        <!--        <plugins>-->
+        <!--            <plugin>-->
+        <!--                <groupId>org.apache.maven.plugins</groupId>-->
+        <!--                <artifactId>maven-war-plugin</artifactId>-->
+        <!--                <version>3.3.2</version>-->
+        <!--                <executions>-->
+        <!--                    <execution>-->
+        <!--                        <id>default-war</id>-->
+        <!--                        <phase>prepare-package</phase>-->
+        <!--                        <configuration>-->
+        <!--                            <failOnMissingWebXml>false</failOnMissingWebXml>-->
+        <!--                        </configuration>-->
+        <!--                    </execution>-->
+        <!--                </executions>-->
+        <!--            </plugin>-->
+        <!--        </plugins>-->
     </build>
 
 </project>

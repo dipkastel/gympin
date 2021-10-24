@@ -6,12 +6,12 @@ import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.service.UserService;
-import com.notrika.gympin.dao.location.Place;
-import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.domain.location.LocationServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
-import com.notrika.gympin.persistence.repository.ActivationCodeRepository;
-import com.notrika.gympin.persistence.repository.UserRepository;
+import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
+import com.notrika.gympin.persistence.dao.repository.UserRepository;
+import com.notrika.gympin.persistence.entity.location.Place;
+import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto add(UserParam userParam) {
         User initUser =
-                User.builder().userGroup(UserGroup.CLIENT).userRole(userParam.getRole()).username(userParam.getUsername()).phoneNumber(userParam.getPhoneNumber()).userStatus(UserStatus.ENABLED).build();
+                User.builder().userGroup(UserGroup.CLIENT)/*.userRole(userParam.getRole())*/.username(userParam.getUsername()).phoneNumber(userParam.getPhoneNumber()).userStatus(UserStatus.ENABLED).build();
         User user = userRepository.add(initUser);
         return UserConvertor.userToUserDto(user);
     }
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto update(UserParam userParam) {
         User initUser = getUserById(userParam.getId());
-        initUser.setUserRole(userParam.getRole());
+//        initUser.setUserRole(userParam.getRole());
         initUser.setUsername(userParam.getUsername());
         initUser.setPhoneNumber(userParam.getPhoneNumber());
         User user = updateUser(initUser);
@@ -99,6 +99,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     @Override
     public UserDto suspendUser(UserParam userParam) {
         User user = getUserById(userParam.getId());
@@ -111,14 +115,6 @@ public class UserServiceImpl implements UserService {
         initUser.setUserStatus(UserStatus.SUSPENDED);
         User suspendedUser = updateUser(initUser);
         return suspendedUser;
-    }
-
-    @Override
-    public GympinContext createUserContext(String phoneNumber) {
-        User user = findUserByPhoneNumber(phoneNumber);
-        GympinContext userContext=new GympinContext();
-        userContext.getEntry().put(GympinContext.USER_KEY,user);
-        return userContext;
     }
 
     public void activationCodeExpiration(Long userId){

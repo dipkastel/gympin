@@ -1,11 +1,9 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.user.dto.AdministratorDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.enums.UserRole;
-import com.notrika.gympin.dao.administrator.Administrator;
-import com.notrika.gympin.dao.user.User;
+import com.notrika.gympin.persistence.entity.user.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +19,18 @@ public class UserConvertor {
         dto.setUpdatedDate(user.getUpdatedDate());
         dto.setDeleted(user.isDeleted());
         dto.setUserRole(user.getUserRole());
+        dto.setUserStatus(user.getUserStatus());
+        dto.setUsername(user.getUsername());
+        dto.setPhoneNumber(user.getPhoneNumber());
+        dto.setName(user.getName());
+        return dto;
+    }
+
+    public static UserDto userToUserDtoLessDetails(User user) {
+        if (user == null) return null;
+        UserDto dto = new UserDto();
+        dto.setId(user.getId());
+        dto.setDeleted(user.isDeleted());
         dto.setUserStatus(user.getUserStatus());
         dto.setUsername(user.getUsername());
         dto.setPhoneNumber(user.getPhoneNumber());
@@ -71,23 +81,11 @@ public class UserConvertor {
         return userRegisterDtos.stream().map(UserConvertor::userRegisterDtoToUser).collect(Collectors.toList());
     }
 
-    public static AdministratorDto administratorToAdministratorDto(Administrator administrator) {
-        AdministratorDto admin = new AdministratorDto();
-        admin.setId(administrator.getBaseUser().getId());
-        admin.setName(administrator.getBaseUser().getName());
-        admin.setUserRole(administrator.getBaseUser().getUserRole());
-        admin.setUsername(administrator.getBaseUser().getUsername());
-        admin.setPhoneNumber(administrator.getBaseUser().getPhoneNumber());
-        admin.setUserStatus(administrator.getBaseUser().getUserStatus());
-        if (administrator.getBaseUser().getUserTokens() != null && administrator.getBaseUser().getUserTokens().stream().findFirst().orElse(null) != null)
-            admin.setToken(administrator.getBaseUser().getUserTokens().stream().findFirst().get().getToken());
-        admin.setAdministratorName(administrator.getAdministratorName());
-        admin.setPassword(administrator.getPassword());
-        admin.setEmail(administrator.getEmail());
-        return admin;
+    public static UserDto administratorToAdministratorDto(User administrator) {
+        return userToUserDtoLessDetails(administrator);
     }
 
-    public static List<AdministratorDto> administratorsToAdministratorDtos(List<Administrator> administratorList) {
+    public static List<UserDto> administratorsToAdministratorDtos(List<User> administratorList) {
         return administratorList.stream().map(UserConvertor::administratorToAdministratorDto).collect(Collectors.toList());
     }
 

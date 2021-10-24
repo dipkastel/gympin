@@ -1,8 +1,8 @@
 package com.notrika.gympin.controller.impl.user;
 
 import com.notrika.gympin.common.user.api.AdministratorController;
-import com.notrika.gympin.common.user.dto.AdministratorDto;
-import com.notrika.gympin.common.user.param.AdministratorParam;
+import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,31 +20,31 @@ public class AdministratorControllerImpl implements AdministratorController {
 
     @Override
     @PostMapping("/add")
-    public ResponseEntity<AdministratorDto> add(@RequestBody AdministratorParam administratorParam) {
+    public ResponseEntity<UserDto> add(@RequestBody UserParam administratorParam) {
         return new ResponseEntity<>(administratorService.add(administratorParam), HttpStatus.OK);
     }
 
     @Override
     @PutMapping("/update")
-    public ResponseEntity<AdministratorDto> update(@RequestBody AdministratorParam administratorParam) {
+    public ResponseEntity<UserDto> update(@RequestBody UserParam administratorParam) {
         return new ResponseEntity<>(administratorService.update(administratorParam), HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/delete")
-    public void delete(@RequestBody AdministratorParam administratorParam) {
+    public void delete(@RequestBody UserParam administratorParam) {
         administratorService.delete(administratorParam);
     }
 
     @Override
     @GetMapping("/getall")
-    public ResponseEntity<List<AdministratorDto>> getAll() {
-        return new ResponseEntity<List<AdministratorDto>>(administratorService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<UserDto>> getAll() {
+        return new ResponseEntity<List<UserDto>>(administratorService.getAll(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getbyid")
-    public ResponseEntity<AdministratorDto> getById(long id) {
-        return new ResponseEntity<AdministratorDto>(administratorService.getById(id), HttpStatus.OK);
+    public ResponseEntity<UserDto> getById(long id) {
+        return new ResponseEntity<UserDto>(administratorService.getById(id), HttpStatus.OK);
     }
 }
