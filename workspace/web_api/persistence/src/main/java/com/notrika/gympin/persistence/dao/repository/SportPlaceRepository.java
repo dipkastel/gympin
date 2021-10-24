@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface SportPlaceRepository extends BaseRepository<SportPlace, Long> {
 
-    //@Query("select s from Sport s,SportPlace sp where s.id=sp.sport.id and sp.place.id=:#{#place.id}")
+    @Query("select s from Sport s,SportPlace sp where s.id=sp.sport.id and sp.place.id=:#{#place.id}")
     List<Sport> getSportPlaceByPlace(Place place);
 }
