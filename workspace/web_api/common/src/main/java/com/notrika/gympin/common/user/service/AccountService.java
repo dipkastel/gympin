@@ -1,7 +1,6 @@
 package com.notrika.gympin.common.user.service;
 
 import com.notrika.gympin.common.exception.ExceptionBase;
-import com.notrika.gympin.common.user.dto.AdministratorLoginDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.param.LoginParam;
@@ -17,5 +16,5 @@ public interface AccountService extends UserDetailsService {
 
     UserDto loginUser(LoginParam loginParam) throws ExceptionBase;
 
-    AdministratorLoginDto loginPanel(LoginParam loginParam) throws ExceptionBase;
+    UserDto loginPanel(LoginParam loginParam) throws ExceptionBase;
 }

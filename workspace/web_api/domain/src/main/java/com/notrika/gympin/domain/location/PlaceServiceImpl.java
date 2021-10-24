@@ -4,11 +4,11 @@ import com.notrika.gympin.common.location.dto.PlaceDto;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.location.param.RegionParam;
 import com.notrika.gympin.common.location.service.PlaceService;
-import com.notrika.gympin.dao.location.Place;
-import com.notrika.gympin.dao.location.Region;
-import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
-import com.notrika.gympin.persistence.repository.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
+import com.notrika.gympin.persistence.entity.location.Place;
+import com.notrika.gympin.persistence.entity.location.Region;
+import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

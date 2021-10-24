@@ -59,7 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/location/getAllPlace",
                         "/api/v1/gympinapplication/splash",
                         "/api/v1/masterapplication/splash",
-                        "/api/v1/location/getPlaceById"
+                        "/api/v1/location/getPlaceById",
+                        "/v2/api-docs"
                 ).permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .anyRequest().authenticated();

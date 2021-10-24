@@ -6,5 +6,4 @@ public interface SmsService {
 
     boolean sendVerificationSms(Long userId, SmsDto smsDto) throws Exception;
 
-    String getLastCode(Long id);
 }

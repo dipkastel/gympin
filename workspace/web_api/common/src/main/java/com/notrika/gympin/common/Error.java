@@ -30,7 +30,8 @@ public class Error {
 
 
     public enum ErrorType {
-        REGISTER_USER_EXIST(1005), EXCEPTION(999), CLIENT_AUTH_NOT_SETUP(12046), USER_NOT_FOUND(1001);
+        REGISTER_USER_EXIST(1005), EXCEPTION(999), CLIENT_AUTH_NOT_SETUP(12046), USER_NOT_FOUND(1001),ACTIVATION_CODE_EXPIRED(2001),
+        OUT_SERVICE_EXCEPTION(3001);
         private final int value;
 
         ErrorType(int value) {

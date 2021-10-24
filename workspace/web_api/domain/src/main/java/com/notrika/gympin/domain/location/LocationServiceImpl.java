@@ -10,17 +10,17 @@ import com.notrika.gympin.common.location.service.LocationService;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
-import com.notrika.gympin.dao.location.OptionOfPlace;
-import com.notrika.gympin.dao.location.Place;
-import com.notrika.gympin.dao.location.PlaceOwner;
-import com.notrika.gympin.dao.option.place.PlaceOption;
-import com.notrika.gympin.dao.user.User;
 import com.notrika.gympin.domain.option.place.PlaceOptionServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
-import com.notrika.gympin.persistence.repository.OptionOfPlaceRepository;
-import com.notrika.gympin.persistence.repository.PlaceOwnerRepository;
+import com.notrika.gympin.persistence.dao.repository.OptionOfPlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.PlaceOwnerRepository;
+import com.notrika.gympin.persistence.entity.location.OptionOfPlace;
+import com.notrika.gympin.persistence.entity.location.Place;
+import com.notrika.gympin.persistence.entity.location.PlaceOwner;
+import com.notrika.gympin.persistence.entity.option.place.PlaceOption;
+import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +66,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public List<PlaceDto> getPlaceByUser(UserParam userParam) {
-        User user = User.builder().id(userParam.getId()).userRole(userParam.getRole()).build();
+        User user = User.builder().id(userParam.getId())/*.userRole(userParam.getRole())*/.build();
         List<Place> placeByUser = getPlaceByUser(user);
         return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeByUser, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
     }

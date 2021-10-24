@@ -6,13 +6,17 @@ import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.user.dto.UserDetailsImpl;
+import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,14 +37,8 @@ import static com.notrika.gympin.common.ResponseModel.SUCCESS;
 @Slf4j
 public class ApiAspect {
 
-    private final static Logger LOGGER = Logger.getLogger("ApiAspect") ;
-
-    @Autowired
-    private UserService userService;
-
     @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
-    public Object process(ProceedingJoinPoint pjp) throws Throwable {
-        log.error("WE ARE Trying");
+    public Object process(ProceedingJoinPoint pjp) {
         // start stopwatch
         setGympinServiceCallContext();
         logInput(pjp);
@@ -56,19 +54,20 @@ public class ApiAspect {
             return retVal;
         } catch (ExceptionBase e) {
             Error error = new Error(e.getErrorType(), e);
-            LOGGER.log(Level.FINEST,error.getErrorMessage(), e);
+            log.error(error.getErrorMessage(), e);
             return getFailedResponse(error, e.getHttpStatus());
         } catch (Throwable e) {
-            LOGGER.log(Level.FINEST,e.getMessage(), e);
+            log.error("Unkown error: \n",e);
             return getFailedResponse(Error.builder().errorMessage(e.getMessage()).stackTrace(Arrays.toString(e.getStackTrace())).build(), HttpStatus.EXPECTATION_FAILED);
         } finally {
-            LOGGER.info(resultBuffer.append("\n==============================================================\n").toString());
+            log.info(resultBuffer.append("\n==============================================================\n").toString());
             GympinContextHolder.clear();
         }
         // stop stopwatch
     }
 
     private ResponseEntity<ResponseModel> getResponseModelResponseEntity(StringBuffer resultBuffer, ResponseEntity retVal) {
+        log.info("Going to set ResponseEntity... \n");
         ResponseEntity responseModel = retVal;
         Object responseModelBody = responseModel.getBody();
         ResponseModel finalResponse = new ResponseModel();
@@ -85,18 +84,23 @@ public class ApiAspect {
         for (int i = 0; i < pjp.getArgs().length; i++) {
             paramBuffer.append(pjp.getArgs()[i]).append("\n");
         }
-        LOGGER.info(paramBuffer.toString());
+        log.info(paramBuffer.toString());
     }
 
     private void setGympinServiceCallContext() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof UserDetails){
-            GympinContextHolder.setContext(userService.createUserContext(((UserDetails)principal).getUsername()));
-        }else
+        log.info("Going to set context...\n");
+        if(GympinContextHolder.getContext()==null){
             GympinContextHolder.setContext(new GympinContext());
+        }
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetailsImpl){
+            GympinContextHolder.getContext().setUserDetails((UserDetailsImpl) principal);
+        }
+        log.info("Following context setted: {} \n",GympinContextHolder.getContext());
     }
 
     private ResponseEntity<ResponseModel> getFailedResponse(Error error, HttpStatus httpStatus) {
+        log.info("Going to set failure response:...\n");
         ResponseModel responseModel = new ResponseModel();
         responseModel.setSuccess(false);
         responseModel.setMessageType(ERROR);

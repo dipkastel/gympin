@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class LoginParam extends BaseParam<LoginParam> {
 
-    private UsernameType usernameType=UsernameType.PHONENUMBER;
+    private UsernameType usernameType = UsernameType.PHONENUMBER;
     private String username;
     private String password;
 
