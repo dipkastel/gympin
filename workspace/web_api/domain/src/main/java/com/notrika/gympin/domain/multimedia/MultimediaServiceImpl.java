@@ -102,6 +102,10 @@ public class MultimediaServiceImpl implements MultimediaService {
       return  multimediaRepository.getById(id);
     }
 
+    public Long getMultimediaIdByFileName(String fileName){
+        return multimediaRepository.findByFileName(fileName).getId();
+    }
+
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public SportMultimedia addMultimediaForSport(Sport sport,Multimedia multimedia){
         SportMultimedia sportMultimedia = SportMultimedia.builder().sport(sport).multimedia(multimedia).build();

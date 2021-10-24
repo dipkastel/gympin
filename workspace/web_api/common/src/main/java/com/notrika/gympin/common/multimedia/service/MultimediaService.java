@@ -10,4 +10,6 @@ public interface MultimediaService {
     boolean storeFile(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
     InputStream loadFileAsResource(String fileName) throws Exception;
+
+    Long getMultimediaIdByFileName(String fileName);
 }

@@ -9,10 +9,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -39,5 +36,12 @@ public class MultimediaControllerImpl implements MultimediaController {
     @IgnoreWrapAspect
     public InputStreamResource retrieveMultimedia(String fileName) throws Exception {
         return new InputStreamResource(multimediaService.loadFileAsResource(fileName));
+    }
+
+
+    @Override
+    @GetMapping("/getMultimediaByFileName")
+    public ResponseEntity<Long> getMultimediaByFileName(String fileName) {
+        return new ResponseEntity<>(multimediaService.getMultimediaIdByFileName(fileName),HttpStatus.OK);
     }
 }
