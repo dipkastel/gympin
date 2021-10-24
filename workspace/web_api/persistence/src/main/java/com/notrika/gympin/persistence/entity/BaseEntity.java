@@ -33,7 +33,7 @@ public class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
-    @Column(name = "deleted")
+    @Column(name = "is_deleted")
     private boolean deleted = false;
 
     //    @Column(name = "creator_user")
