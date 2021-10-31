@@ -1,22 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Register part main theme. -->
-    <style name="Theme.Register" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.Register" parent="Theme.AppCompat.Light.NoActionBar">
 
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
         <!-- Original AppCompat attributes. -->
-        <item name="colorSecondary">@color/green_california</item>
-        <item name="android:colorBackground">@color/cyan_kazan</item>
-        <item name="colorError">@color/pink_dark</item>
-        <item name="colorPrimary">@color/white_london</item>
-        <item name="colorPrimaryDark">@color/cyan_veryDark</item>
-        <item name="colorAccent">@color/grey_Ash</item>
+        <item name="colorSecondary">@color/red_amaranth</item>
+        <item name="android:colorBackground">@color/black_copenhagen</item>
+        <item name="colorError">@color/red_amaranth</item>
+        <item name="colorPrimary">@color/black_copenhagen</item>
+        <item name="colorPrimaryDark">@color/black_Bistre</item>
+        <item name="colorAccent">@color/black_copenhagen</item>
 
         <!-- New MaterialComponents attributes. -->
         <item name="colorPrimaryVariant">@color/blue_dodger</item>
         <item name="colorSecondaryVariant">@color/blue_dodger</item>
         <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
         <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button.TextButton</item>
-        <item name="strokeColor">@color/white_london</item>
-        <item name="android:textColor">@color/white_london</item>
+        <item name="strokeColor">@color/black_copenhagen</item>
+        <item name="android:textColor">@color/black_copenhagen</item>
         <item name="strokeWidth">@dimen/_1sdp</item>
 
     </style>

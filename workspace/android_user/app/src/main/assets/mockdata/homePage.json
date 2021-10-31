@@ -1,0 +1,41 @@
+{
+  "Success": true,
+  "MessageType": 0,
+  "Message": "",
+  "ResultDate": "2021-10-30T20:41:06.962+00:00",
+  "LinkParams": null,
+  "Error": null,
+  "Data": [
+    {
+      "type": "slider",
+      "priority": 1,
+      "items":[
+        {
+          "type": "inapp",
+          "imageUrl": "http://..",
+          "title": "title1",
+          "description": "",
+          "destination": "sports",
+          "priority": 2
+        },
+        {
+          "type": "browser",
+          "imageUrl": "http://..",
+          "title": "title2",
+          "description": "",
+          "destination": "http://...",
+          "priority": 1
+        },
+        {
+          "type": "inapp",
+          "imageUrl": "http://..",
+          "title": "title3",
+          "description": "",
+          "destination": "profile",
+          "priority": 3
+        }
+      ]
+
+    }
+  ]
+}

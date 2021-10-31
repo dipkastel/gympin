@@ -36,12 +36,12 @@ class ActivityMain : BaseActivity() {
         if (savedInstanceState == null) {
             config()
         }
-        btn_setting.setOnClickListener {
-            navController.navigate(MainDirections.toSettings())
-        }
-        btn_user_profile.setOnClickListener {
-            navController.navigate(MainDirections.toProfile())
-        }
+//        btn_setting.setOnClickListener {
+//            navController.navigate(MainDirections.toSettings())
+//        }
+//        btn_user_profile.setOnClickListener {
+//            navController.navigate(MainDirections.toProfile())
+//        }
 //
     }
 
@@ -51,7 +51,7 @@ class ActivityMain : BaseActivity() {
     }
 
     public fun setTitle(title:String){
-        topAppBar.title = title
+//        topAppBar.title = title
     }
 
     private fun config() {

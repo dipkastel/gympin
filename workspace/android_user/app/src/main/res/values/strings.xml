@@ -19,4 +19,11 @@
     <string name="sports">ورزش ها</string>
     <string name="places">مجموعه ها</string>
     <string name="my_reserves">رزروهای من</string>
+    <string name="enter_your_phone_number">لطفا شماره همراه خود را وارد نمایید</string>
+    <string name="sample_phone_number">0912XXXXXXX</string>
+    <string name="slogan">سامانه یکپارچه ورزشی</string>
+    <string name="sample_notify_text">دوستات رو دعوت کن و از جیم پین جایزه بگیر.</string>
+    <string name="my_events">رویدادها</string>
+    <string name="contents">آموزش</string>
+    <string name="profile">پروفایل</string>
 </resources>

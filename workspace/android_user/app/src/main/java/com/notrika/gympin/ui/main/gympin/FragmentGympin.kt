@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.notrika.gympin.ui.main.MainPageFragment
 import com.notrika.gympin.R
+import com.notrika.gympin.util.mocks.mockdatas
 
 
 class FragmentGympin : MainPageFragment() {
@@ -23,6 +24,11 @@ class FragmentGympin : MainPageFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, providerFactory).get(ViewModelGympin::class.java)
+        fillList()
+    }
+
+    private fun fillList() {
+        val data = mockdatas().getHomePageMockData(requireContext());
     }
 
 }

@@ -51,9 +51,7 @@ class FragmentSports : MainPageFragment() {
 
 
     private fun setupRecyclerView(recyclerView: RecyclerView,sports: List<Res_sport> ) {
-        for(i in 0 .. 3){
-            (sports as ArrayList).addAll(sports)
-        }
+
         recyclerView.layoutManager = GridLayoutManager(recyclerView.context, 3)
         recyclerView.adapter =  AdapterGridViewSport(activity, sports, requestManager, pocket)
 

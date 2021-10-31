@@ -39,7 +39,7 @@ class FragmentSplash : RegisterInnerPageFragment() {
                 .setPopUpTo(R.id.register, true)
                 .build()
 
-        Handler().postDelayed({ getSplashData() }, 1000)
+        Handler().postDelayed({ getSplashData() }, 4000)
     }
 
     private fun getSplashData() {
