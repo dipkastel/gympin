@@ -8,14 +8,14 @@ class Res_Home_Page {
 
     @SerializedName("type")
     @Expose
-    private val type: String? = null
+     val type: String? = null
 
     @SerializedName("priority")
     @Expose
-    private val priority: Int? = null
+     val priority: Int? = null
 
     @SerializedName("items")
     @Expose
-    private val items: List<Res_Home_Page_Items>? = null
+     val items: List<Res_Home_Page_Items>? = null
 
 }

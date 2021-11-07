@@ -1,28 +1,44 @@
 package com.notrika.gympin.di.main
 
+import com.bumptech.glide.RequestManager
+import com.notrika.gympin.ui.main.gympin.*
 import dagger.Module
+import dagger.Provides
 import javax.inject.Inject
 
 @Module
 class MainAdapterProviderModule @Inject constructor() {
 
-//
-//    @MainScope
-//    @Provides
-//    internal fun provideAdapterMainCinemas(
-//            requestManager: RequestManager,
-//            pocket: Pocket
-//    ): AdapterMainCinemasRecycler {
-//        return AdapterMainCinemasRecycler(requestManager, networkSetting, pocket)
-//    }
-//
-//    @MainScope
-//    @Provides
-//    internal fun provideAdapterPeymentMethods(
-//            requestManager: RequestManager,
-//    ): AdapterPeymentMethods {
-//        return AdapterPeymentMethods(requestManager, networkSetting)
-//    }
+
+    @MainScope
+    @Provides
+    internal fun provideAdapterGympinMain(requestManager: RequestManager,adapterSlider: AdapterSlider,adapterContentList: AdapterContentList,adapterDiscountList: AdapterDiscountList,adapterUserList: AdapterUserList): AdapterGympinMain {
+        return AdapterGympinMain(requestManager,adapterSlider,adapterContentList,adapterDiscountList,adapterUserList)
+    }
+
+    @MainScope
+    @Provides
+    internal fun provideAdapterAdapterSlider(): AdapterSlider {
+        return AdapterSlider()
+    }
+    @MainScope
+    @Provides
+    internal fun provideAdapterContentList(): AdapterContentList {
+        return AdapterContentList()
+    }
+
+    @MainScope
+    @Provides
+    internal fun provideAdapterDiscountList(): AdapterDiscountList {
+        return AdapterDiscountList()
+    }
+
+    @MainScope
+    @Provides
+    internal fun provideAdapterUserList(): AdapterUserList {
+        return AdapterUserList()
+    }
+
 //
 //    @MainScope
 //    @Provides

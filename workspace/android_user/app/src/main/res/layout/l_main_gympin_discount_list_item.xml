@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layoutDirection="rtl"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/img_discount"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_110sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:scaleType="centerCrop"
+        android:layout_margin="@dimen/_5sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_discount_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="40% تخفیف"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:fontFamily="@font/iran_sans"
+        android:textColor="@color/white_london"
+        android:shadowColor="@color/black_copenhagen"
+        android:textSize="@dimen/_10sdp"
+        android:background="@drawable/_rectangle_radius_fill_crimson"
+        app:layout_constraintTop_toTopOf="@+id/img_discount"
+        app:layout_constraintEnd_toEndOf="@+id/img_discount" />
+    <TextView
+        android:id="@+id/txt_discount_place_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="باشگاه گیو"
+        android:padding="@dimen/_5sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:fontFamily="@font/iran_sans_bold"
+        android:textColor="@color/white_london"
+        android:shadowColor="@color/black_copenhagen"
+        android:shadowRadius="10"
+        app:layout_constraintBottom_toBottomOf="@+id/img_discount"
+        app:layout_constraintEnd_toEndOf="@+id/img_discount" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

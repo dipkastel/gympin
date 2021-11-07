@@ -17,5 +17,7 @@ class mockdatas {
             object : TypeToken<OprationResult<List<Res_Home_Page>>>() {}.type
         return Gson().fromJson(data, collectionType)
     }
+
+
     fun AssetManager.readAssetsFile(fileName : String): String = open(fileName).bufferedReader().use{it.readText()}
 }

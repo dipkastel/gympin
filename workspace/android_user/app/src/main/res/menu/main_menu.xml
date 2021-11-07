@@ -6,7 +6,7 @@
             android:icon="@drawable/menu_item_main_home"
             android:title="@string/app_name"/>
         <item
-            android:id="@+id/main_events"
+            android:id="@+id/main_my_events"
             android:icon="@drawable/menu_item_main_reserves"
             android:title="@string/my_events"/>
         <item
@@ -14,7 +14,7 @@
             android:icon="@drawable/menu_item_main_sports"
             android:title="@string/sports"/>
         <item
-            android:id="@+id/main_content"
+            android:id="@+id/main_contents"
             android:icon="@drawable/menu_item_main_content"
             android:title="@string/contents"/>
         <item

@@ -6,19 +6,19 @@ import com.google.gson.annotations.SerializedName
 class Res_Home_Page_Items {
     @SerializedName("type")
     @Expose
-    private val type: String? = null
+     val type: String? = null
 
     @SerializedName("imageUrl")
     @Expose
-    private val imageUrl: String? = null
+     val imageUrl: String? = null
 
     @SerializedName("title")
     @Expose
-    private val title: String? = null
+     val title: String? = null
 
     @SerializedName("description")
     @Expose
-    private val description: String? = null
+     val description: String? = null
 
     @SerializedName("destination")
     @Expose

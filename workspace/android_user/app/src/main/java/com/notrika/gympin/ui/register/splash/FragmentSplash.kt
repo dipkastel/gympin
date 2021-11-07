@@ -43,6 +43,8 @@ class FragmentSplash : RegisterInnerPageFragment() {
     }
 
     private fun getSplashData() {
+        LoginCheck()
+        return
         viewModel.requestSplash().observe(viewLifecycleOwner, Observer { SplashData->
             when(SplashData.status){
                 Resource.Status.SUCCESS->{
