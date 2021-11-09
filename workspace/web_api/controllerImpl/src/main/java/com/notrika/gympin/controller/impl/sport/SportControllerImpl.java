@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.sport;
 
+import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.sport.api.SportController;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
@@ -20,32 +21,32 @@ public class SportControllerImpl implements SportController {
 
     @Override
     @PostMapping("/addSport")
-    public ResponseEntity<SportDto> addSport(@RequestBody SportParam sportParam) {
-        return new ResponseEntity<SportDto>(sportService.addSport(sportParam), HttpStatus.OK);
+    public ResponseEntity<SportDto> add(@RequestBody SportParam sportParam) {
+        return new ResponseEntity<SportDto>(sportService.add(sportParam), HttpStatus.OK);
     }
 
     @Override
     @PutMapping("/updateSport")
-    public ResponseEntity<SportDto> updateSport(@RequestBody SportParam sportParam) {
-        return new ResponseEntity<SportDto>(sportService.updateSport(sportParam), HttpStatus.OK);
+    public ResponseEntity<SportDto> update(@RequestBody SportParam sportParam) {
+        return new ResponseEntity<SportDto>(sportService.update(sportParam), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getSportById")
-    public ResponseEntity<SportDto> getSportById(long id) {
-        return new ResponseEntity<SportDto>(sportService.getSportDtoById(id), HttpStatus.OK);
+    public ResponseEntity<SportDto> getById(long id) {
+        return new ResponseEntity<SportDto>(sportService.getById(id), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getAllSport")
-    public ResponseEntity<List<SportDto>> getAllSport() {
-        return new ResponseEntity<List<SportDto>>(sportService.getAllSportDto(), HttpStatus.OK);
+    public ResponseEntity<List<SportDto>> getAll(BaseParam pagingParam) {
+        return new ResponseEntity<List<SportDto>>(sportService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/deleteSport")
-    public ResponseEntity<SportDto> deleteSport(SportParam sportParam) {
-        SportDto deletedSport = sportService.deleteSport(sportParam);
+    public ResponseEntity<SportDto> delete(SportParam sportParam) {
+        SportDto deletedSport = sportService.delete(sportParam);
         return new ResponseEntity<SportDto>(deletedSport, HttpStatus.OK);
     }
 }

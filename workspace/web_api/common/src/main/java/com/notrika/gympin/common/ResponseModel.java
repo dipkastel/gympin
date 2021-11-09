@@ -2,6 +2,7 @@ package com.notrika.gympin.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.notrika.gympin.common.exception.Error;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +28,7 @@ public class ResponseModel<T> implements Serializable {
     @JsonProperty("LinkParams")
     private String LinkParams;
     @JsonProperty("Error")
-    private Error Error;
+    private com.notrika.gympin.common.exception.Error Error;
     @JsonProperty("Data")
     private T data;
 

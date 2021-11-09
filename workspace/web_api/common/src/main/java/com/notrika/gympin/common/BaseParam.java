@@ -28,7 +28,14 @@ public class BaseParam<T> implements Serializable {
     @JsonIgnore
     private Date updatedDate;
 
-    //@JsonProperty("IsDeleted")
-    @JsonIgnore
+    @JsonProperty("IsDeleted")
+//    @JsonIgnore
     private boolean isDeleted;
+
+    @JsonProperty("Page")
+    private int page=0;
+
+    @JsonProperty("Size")
+    private int size=20;
+
 }

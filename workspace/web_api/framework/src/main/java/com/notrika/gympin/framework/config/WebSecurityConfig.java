@@ -2,7 +2,6 @@ package com.notrika.gympin.framework.config;
 
 import com.notrika.gympin.common.user.service.AccountService;
 import com.notrika.gympin.framework.config.jwt.AuthEntryPointJwt;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,19 +50,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+        http
+                .cors()
+                .and()
+                .csrf()
+                .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/v1/account/**",
-                        "/swagger-ui/**",
-                        "/api/v1/location/getAllPlace",
-                        "/api/v1/gympinapplication/splash",
-                        "/api/v1/masterapplication/splash",
-                        "/api/v1/location/getPlaceById",
-                        "/v2/api-docs"
-                ).permitAll()
-                .antMatchers("/api/test/**").permitAll()
-                .anyRequest().authenticated();
+                .authorizeRequests()
+                .antMatchers(
+                        "/api/v1/account/**"
+                        ,"/swagger-ui/**"
+                        ,"/api/v1/location/getAllPlace"
+                        ,"/api/v1/gympinapplication/splash"
+                        ,"/api/v1/masterapplication/splash"
+                        ,"/api/v1/location/getPlaceById"
+                        ,"/v2/api-docs/**"
+                        ,"/api/v2/api-docs/**"
+                        ,"/swagger-resources/**"
+                        ,"/v2/swagger-ui/**"
+                        //,"/api/v1/multimedia/**"
+//                        ,"/api/v1/administrator/add"
+                )
+                .permitAll()
+                .antMatchers("/api/test/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

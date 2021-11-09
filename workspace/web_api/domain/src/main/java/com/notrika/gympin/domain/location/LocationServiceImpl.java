@@ -68,7 +68,7 @@ public class LocationServiceImpl implements LocationService {
     public List<PlaceDto> getPlaceByUser(UserParam userParam) {
         User user = User.builder().id(userParam.getId())/*.userRole(userParam.getRole())*/.build();
         List<Place> placeByUser = getPlaceByUser(user);
-        return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeByUser, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
+        return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeByUser);
     }
 
     public List<Place> getPlaceByUser(User user) {
@@ -102,7 +102,6 @@ public class LocationServiceImpl implements LocationService {
     }
 
     public PlaceOwner deletePlaceOwner(PlaceOwner placeOwner) {
-        PlaceOwner deletedUser = placeOwnerRepository.deleteById2(placeOwner);
-        return deletedUser;
+        return placeOwnerRepository.deleteById2(placeOwner);
     }
 }

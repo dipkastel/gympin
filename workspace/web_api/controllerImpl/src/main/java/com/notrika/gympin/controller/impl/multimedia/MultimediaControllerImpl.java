@@ -1,7 +1,10 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.multimedia.api.MultimediaController;
+import com.notrika.gympin.common.multimedia.dto.InputStreamResourceDto;
+import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -24,34 +30,45 @@ public class MultimediaControllerImpl implements MultimediaController {
     private MultimediaService multimediaService;
 
     @Override
-    @RequestMapping(path = "/addMultimediaFile", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Boolean> storeMultimedia(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws IOException {
+    @RequestMapping(path = "/add", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Boolean> add(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws IOException {
         return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam), HttpStatus.OK);
     }
 
     @Override
     //    @GetMapping("/resource")
-    @RequestMapping(path = "/resource", method = GET)
+    @RequestMapping(path = "/getByName", method = GET)
     @ResponseBody
     @IgnoreWrapAspect
-    public InputStreamResource retrieveMultimedia(String fileName) throws Exception {
-        return new InputStreamResource(multimediaService.loadFileAsResource(fileName));
+    public InputStreamResource getByName(MultimediaRetrieveParam multimediaParam) throws Exception {
+        return new InputStreamResource(multimediaService.loadFileAsResource(multimediaParam));
     }
 
-
     @Override
-    @GetMapping("/getMultimediaByFileName")
-    public ResponseEntity<Long> getMultimediaByFileName(String fileName) {
+    @GetMapping("/getMultimediaIdByFileName")
+    public ResponseEntity<Long> getMultimediaIdByFileName(String fileName) {
         return new ResponseEntity<>(multimediaService.getMultimediaIdByFileName(fileName),HttpStatus.OK);
     }
 
     @Override
     //    @GetMapping("/resource")
-    @RequestMapping(path = "/retrieveMultimediaById", method = GET)
+    @RequestMapping(path = "/getById", method = GET)
     @ResponseBody
     @IgnoreWrapAspect
-    public InputStreamResource retrieveMultimediaById(Long id) throws Exception {
-        return new InputStreamResource(multimediaService.retrieveMultimediaById(id));
+    public InputStreamResource getById(MultimediaRetrieveParam id) throws Exception {
+        return new InputStreamResource(multimediaService.getById(id));
     }
 
+    @Override
+    @RequestMapping(path = "/getAllByType", method = GET)
+    @ResponseBody
+    @IgnoreWrapAspect
+    public List<byte[]> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException {
+        List<InputStream> allByType = multimediaService.getAllByType(multimediaRetrieveParam);
+        List<byte[]> inputStreamResources=new ArrayList<>();
+        for (int i = 0; i < allByType.size(); i++) {
+            inputStreamResources.add(allByType.get(i).readAllBytes());
+        }
+        return inputStreamResources;
+    }
 }

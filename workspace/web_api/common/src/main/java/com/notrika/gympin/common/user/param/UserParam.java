@@ -27,7 +27,7 @@ public class UserParam extends BaseParam<UserParam> {
     private String email;
 
     public UserParam(){
-        role.add(UserRole.USER);
+        //role.add(UserRole.USER);
     }
 
 

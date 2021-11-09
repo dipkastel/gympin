@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.sportplace;
 
+import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sportplace.api.SportPlaceController;
@@ -34,14 +35,14 @@ public class SportPlaceControllerImpl implements SportPlaceController {
 
     @Override
     @DeleteMapping("deleteSportPlace")
-    public void delete(@RequestBody SportPlaceParam sportPlaceParam) {
-        sportPlaceService.delete(sportPlaceParam);
+    public ResponseEntity<SportPlaceDto> delete(@RequestBody SportPlaceParam sportPlaceParam) {
+        return new ResponseEntity<SportPlaceDto>(sportPlaceService.delete(sportPlaceParam),HttpStatus.OK);
     }
 
     @Override
     @GetMapping("getAllSportPlace")
-    public ResponseEntity<List<SportPlaceDto>> getAll() {
-        return new ResponseEntity<List<SportPlaceDto>>(sportPlaceService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<SportPlaceDto>> getAll(BaseParam pagingParam) {
+        return new ResponseEntity<List<SportPlaceDto>>(sportPlaceService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override

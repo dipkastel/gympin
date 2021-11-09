@@ -4,17 +4,19 @@ import com.notrika.gympin.common.location.dto.RegionDto;
 import com.notrika.gympin.common.location.param.CityParam;
 import com.notrika.gympin.common.location.param.RegionParam;
 import com.notrika.gympin.common.location.service.RegionService;
+import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
 import com.notrika.gympin.persistence.dao.repository.RegionRepository;
 import com.notrika.gympin.persistence.entity.location.City;
 import com.notrika.gympin.persistence.entity.location.Region;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RegionServiceImpl implements RegionService {
+public class RegionServiceImpl extends AbstractBaseService<RegionParam, RegionDto,Region> implements RegionService {
 
     @Autowired
     private RegionRepository regionRepository;
@@ -27,7 +29,7 @@ public class RegionServiceImpl implements RegionService {
         City city = cityService.getCityById(regionParam.getCity().getId());
         Region initRegion = Region.builder().name(regionParam.getName()).city(city).build();
         Region region = addRegion(initRegion);
-        return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.regionToRegionDto(region);
     }
 
     public Region addRegion(Region region) {
@@ -43,7 +45,7 @@ public class RegionServiceImpl implements RegionService {
             initRegion.setCity(city);
         }
         Region region = updateRegion(initRegion);
-        return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.regionToRegionDto(region);
     }
 
     public Region updateRegion(Region region) {
@@ -53,30 +55,28 @@ public class RegionServiceImpl implements RegionService {
     @Override
     public RegionDto delete(RegionParam regionParam) {
         Region region = getRegionById(regionParam.getId());
-        return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.regionToRegionDto(region);
     }
 
 
     public Region delete(Region region) {
-        Region deleteRegion = regionRepository.deleteById2(region);
-        return deleteRegion;
+        return regionRepository.deleteById2(region);
     }
 
     @Override
-    public List<RegionDto> getAll() {
-        List<Region> regionList = getAllRegion();
-        return (List<RegionDto>) LocationConvertor.regionsToRegionDtos(regionList, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
-
+    public List<Region> getAll(Pageable pageable) {
+        return regionRepository.findAllUndeleted(pageable);
     }
 
-    public List<Region> getAllRegion() {
-        return regionRepository.findAllUndeleted();
+    @Override
+    public List<RegionDto> convertToDto(List<Region> entities) {
+      return   LocationConvertor.regionsToRegionDtos(entities);
     }
 
     @Override
     public RegionDto getById(long id) {
         Region region = getRegionById(id);
-        return LocationConvertor.regionToRegionDto(region, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.regionToRegionDto(region);
     }
 
     public Region getRegionById(long id) {
@@ -87,7 +87,7 @@ public class RegionServiceImpl implements RegionService {
     public List<RegionDto> getRegionsByCity(CityParam cityParam) {
         City city = City.builder().id(cityParam.getId()).build();
         List<Region> regionList = getRegionsByCity(city);
-        return (List<RegionDto>) LocationConvertor.regionsToRegionDtos(regionList, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.regionsToRegionDtos(regionList);
     }
 
     public List<Region> getRegionsByCity(City city) {

@@ -6,5 +6,8 @@ import com.notrika.gympin.common.user.param.UserParam;
 
 public interface AdministratorService extends BaseService<UserParam, UserDto> {
 
+    //todo change password
+
+    //todo add avatar
 
 }

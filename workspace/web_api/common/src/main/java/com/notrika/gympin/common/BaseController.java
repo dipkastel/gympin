@@ -10,9 +10,9 @@ public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>> {
 
     ResponseEntity<O> update(I i);
 
-    void delete(I i);
+    ResponseEntity<O> delete(I i);
 
-    ResponseEntity<List<O>> getAll();
+    ResponseEntity<List<O>> getAll(BaseParam pagingParam);
 
     ResponseEntity<O> getById(long id);
 }

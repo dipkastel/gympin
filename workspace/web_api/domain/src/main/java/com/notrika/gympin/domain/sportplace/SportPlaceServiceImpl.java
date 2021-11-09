@@ -1,12 +1,11 @@
 package com.notrika.gympin.domain.sportplace;
 
-import com.notrika.gympin.common.Error;
-import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
 import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
 import com.notrika.gympin.common.sportplace.service.SportPlaceService;
+import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.location.PlaceServiceImpl;
 import com.notrika.gympin.domain.sport.SportServiceImpl;
 import com.notrika.gympin.domain.util.convertor.SportConvertor;
@@ -16,13 +15,13 @@ import com.notrika.gympin.persistence.entity.location.Place;
 import com.notrika.gympin.persistence.entity.sport.Sport;
 import com.notrika.gympin.persistence.entity.sportplace.SportPlace;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SportPlaceServiceImpl implements SportPlaceService {
+public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, SportPlaceDto,SportPlace> implements SportPlaceService {
 
     @Autowired
     private PlaceServiceImpl placeService;
@@ -69,18 +68,17 @@ public class SportPlaceServiceImpl implements SportPlaceService {
     }
 
     public SportPlace deleteSportPlace(SportPlace sportPlace) {
-        SportPlace deletedSportPlace = sportPlaceRepository.deleteById2(sportPlace);
-        return deletedSportPlace;
+        return sportPlaceRepository.deleteById2(sportPlace);
     }
 
     @Override
-    public List<SportPlaceDto> getAll() {
-        throw new ExceptionBase(HttpStatus.INTERNAL_SERVER_ERROR, Error.ErrorType.USER_NOT_FOUND);
-        //return SportPlaceConvertor.sportPlacesToSportPlaceDtos(getAllSportPlace());
+    public List<SportPlace> getAll(Pageable pageable) {
+        return sportPlaceRepository.findAllUndeleted(pageable);
     }
 
-    public List<SportPlace> getAllSportPlace() {
-        return sportPlaceRepository.findAllUndeleted();
+    @Override
+    public List<SportPlaceDto> convertToDto(List<SportPlace> entities) {
+        return SportPlaceConvertor.sportPlacesToSportPlaceDtos(entities);
     }
 
     @Override
@@ -97,8 +95,7 @@ public class SportPlaceServiceImpl implements SportPlaceService {
     public List<SportDto> getSportsByPlace(PlaceParam placeParam) {
         Place place = Place.builder().id(placeParam.getId()).build();
         List<Sport> sportList = getSportsByPlace(place);
-        List<SportDto> sportDtos = SportConvertor.sportsToSportDtos(sportList);
-        return sportDtos;
+        return SportConvertor.sportsToSportDtos(sportList);
     }
 
     public List<Sport> getSportsByPlace(Place place) {

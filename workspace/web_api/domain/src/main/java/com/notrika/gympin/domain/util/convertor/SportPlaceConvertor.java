@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class SportPlaceConvertor {
 
     public static SportPlaceDto sportPlaceToSportPlaceDto(SportPlace sportPlace) {
-        PlaceDto placeDto = LocationConvertor.placeToPlaceDto(sportPlace.getPlace(), LocationConvertor.CollectionType.LIST);
+        PlaceDto placeDto = LocationConvertor.placeToPlaceDto(sportPlace.getPlace());
         SportDto sportDto = SportConvertor.sportToSportDto(sportPlace.getSport());
         SportPlaceDto sportPlaceDto = new SportPlaceDto();
         sportPlaceDto.setId(sportPlace.getId());

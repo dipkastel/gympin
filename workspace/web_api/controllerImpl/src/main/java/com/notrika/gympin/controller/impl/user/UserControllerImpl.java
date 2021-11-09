@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.user;
 
+import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.user.api.UserController;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
@@ -32,14 +33,14 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @DeleteMapping("/delete")
-    public void delete(@RequestBody UserParam userParam) {
-        userService.delete(userParam);
+    public ResponseEntity<UserDto> delete(@RequestBody UserParam userParam) {
+        return new ResponseEntity<UserDto>(userService.delete(userParam),HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getall")
-    public ResponseEntity<List<UserDto>> getAll() {
-        return new ResponseEntity<List<UserDto>>(userService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<UserDto>> getAll(BaseParam pagingParam) {
+        return new ResponseEntity<List<UserDto>>(userService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
