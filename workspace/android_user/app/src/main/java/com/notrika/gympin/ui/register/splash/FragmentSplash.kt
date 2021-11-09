@@ -39,10 +39,12 @@ class FragmentSplash : RegisterInnerPageFragment() {
                 .setPopUpTo(R.id.register, true)
                 .build()
 
-        Handler().postDelayed({ getSplashData() }, 1000)
+        Handler().postDelayed({ getSplashData() }, 4000)
     }
 
     private fun getSplashData() {
+        LoginCheck()
+        return
         viewModel.requestSplash().observe(viewLifecycleOwner, Observer { SplashData->
             when(SplashData.status){
                 Resource.Status.SUCCESS->{

@@ -9,7 +9,6 @@ import com.notrika.cbar.CiBar
 import com.notrika.gympin.BaseActivity
 import com.notrika.gympin.MainDirections
 import com.notrika.gympin.R
-import com.notrika.gympin.data.db.db_network_setting.Network_setting
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -25,9 +24,6 @@ class ActivityMain : BaseActivity() {
     lateinit var pocket: Pocket
 
     @Inject
-    lateinit var networkSetting: Network_setting
-
-    @Inject
     lateinit var ciBar: CiBar
 
 
@@ -40,12 +36,12 @@ class ActivityMain : BaseActivity() {
         if (savedInstanceState == null) {
             config()
         }
-        btn_setting.setOnClickListener {
-            navController.navigate(MainDirections.toSettings())
-        }
-        btn_user_profile.setOnClickListener {
-            navController.navigate(MainDirections.toProfile())
-        }
+//        btn_setting.setOnClickListener {
+//            navController.navigate(MainDirections.toSettings())
+//        }
+//        btn_user_profile.setOnClickListener {
+//            navController.navigate(MainDirections.toProfile())
+//        }
 //
     }
 
@@ -55,7 +51,7 @@ class ActivityMain : BaseActivity() {
     }
 
     public fun setTitle(title:String){
-        topAppBar.title = title
+//        topAppBar.title = title
     }
 
     private fun config() {

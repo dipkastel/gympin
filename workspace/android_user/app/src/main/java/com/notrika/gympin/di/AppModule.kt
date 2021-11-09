@@ -8,8 +8,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.notrika.cbar.CiBar
 import com.notrika.gympin.data.db.DBConstants
 import com.notrika.gympin.data.db.DBStructure
-import com.notrika.gympin.data.db.db_network_setting.Network_setting
 import com.notrika.gympin.data.db.db_pocket.Pocket
+import com.notrika.gympin.data.network.NetworkConstants
 import com.notrika.gympin.di.DiConstants.retrofit_gympin_main
 import dagger.Module
 import dagger.Provides
@@ -41,14 +41,15 @@ class AppModule {
     @Singleton
     @Provides
     @Named(retrofit_gympin_main)
-    internal fun provideRetrofitInstance(network_setting: Network_setting): Retrofit {
+    internal fun provideRetrofitInstance(pocket: Pocket): Retrofit {
         val builder = OkHttpClient.Builder()
-        builder.addInterceptor(getReqInterceptor(network_setting))
+        builder.addInterceptor(getReqInterceptor(pocket))
         builder.readTimeout(40, TimeUnit.SECONDS)
         builder.connectTimeout(40, TimeUnit.SECONDS)
         val httpClient = builder.build()
+        var baseUrl = pocket.baseUrl.let { if(it.startsWith("http")) return@let it else return@let NetworkConstants.BASE_API_URL }
         return Retrofit.Builder()
-                .baseUrl(network_setting.baseUrl!!)
+                .baseUrl(baseUrl)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient)
@@ -62,14 +63,6 @@ class AppModule {
     internal fun pocket(dbStructure: DBStructure): Pocket {
         return Pocket(dbStructure)
     }
-
-
-    @Singleton
-    @Provides
-    internal fun networkSetting(dbStructure: DBStructure): Network_setting {
-        return Network_setting(dbStructure)
-    }
-
 
     @Singleton
     @Provides
@@ -89,13 +82,12 @@ class AppModule {
         return Glide.with(application).setDefaultRequestOptions(requestOptions)
     }
 
-    private fun getReqInterceptor(network_setting: Network_setting): Interceptor {
+    private fun getReqInterceptor(pocket: Pocket): Interceptor {
 
         return Interceptor { chain: Interceptor.Chain ->
             val original = chain.request()
             val request = original.newBuilder()
-//                    .header("AUTH_TOKEN", network_setting.authToken)
-//                    .header("user_token", network_setting.userToken)
+                    .header("Authorization", pocket.userToken)
 //                    .header("Content-Type", "ct-api/ejson")
 //                    .header("Accept", "ct-api/ejson")
 //                    .header("ApiVersion", "2")

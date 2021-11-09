@@ -181,9 +181,11 @@ class UserManagement extends Component {
         if(this.state.selectedUserToEdit){
             if(this.state.selectedAccess.label==="ADMIN")
             {
+                var id = (this.state.selectedAdministratorToEdit)?this.state.selectedAdministratorToEdit.Id:this.state.selectedUserToEdit.Id
+
                 administrator_update({
 
-                    "Id":this.state.selectedAdministratorToEdit.Id,
+                    "Id":id,
                     "username": e.target.form_UserName.value,
                     "phoneNumber":e.target.form_PhoneNumber.value,
                     "role":this.state.selectedAccess.label,
@@ -193,7 +195,8 @@ class UserManagement extends Component {
                 }).then(data => {
                     this.getUsers();
                     this.setState(() => ({
-                        selectedUserToEdit: null
+                        selectedUserToEdit: null,
+                        selectedAdministratorToEdit: null
                     }));
                     this.closeAddMode(e)
                     this.clearForm()

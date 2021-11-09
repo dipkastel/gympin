@@ -3,7 +3,6 @@ package com.notrika.gympin.ui.register
 import android.os.Bundle
 import android.os.CountDownTimer
 import com.notrika.gympin.R
-import com.notrika.gympin.data.db.db_network_setting.Network_setting
 import com.notrika.gympin.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -20,9 +19,6 @@ class ActivityRegister : DaggerAppCompatActivity() {
 //
 //    @Inject
 //    lateinit var requestManager: RequestManager
-//
-//    @Inject
-//    lateinit var network_setting: Network_setting
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

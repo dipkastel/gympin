@@ -1,7 +1,6 @@
 package com.notrika.gympin.di
 
 
-import com.notrika.gympin.data.db.db_network_setting.Network_setting
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.data.network.api.GympinApplicationApi
 import com.notrika.gympin.data.network.request.BaseRequests
@@ -13,7 +12,7 @@ import javax.inject.Inject
 class RequestesModule @Inject constructor() {
 
     @Provides
-    internal fun provideSplashRequests(gympinApplicationApi: GympinApplicationApi, pocket : Pocket, networkSetting : Network_setting): BaseRequests {
-        return BaseRequests(gympinApplicationApi,pocket,networkSetting)
+    internal fun provideSplashRequests(gympinApplicationApi: GympinApplicationApi, pocket : Pocket): BaseRequests {
+        return BaseRequests(gympinApplicationApi,pocket)
     }
 }

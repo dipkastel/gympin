@@ -3,7 +3,6 @@ package com.notrika.gympin.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MediatorLiveData
-import com.notrika.gympin.data.db.db_network_setting.Network_setting
 import com.notrika.gympin.data.db.DBStructure
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.data.model.res.Res_Application_Splash
@@ -14,7 +13,6 @@ import javax.inject.Inject
 
 class SPLASH_REPO @Inject constructor(
         private val baseRequests: BaseRequests,
-        private val networkSetting: Network_setting,
         private val pocket: Pocket,
         private val db: DBStructure
 ) {

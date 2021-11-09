@@ -95,7 +95,6 @@
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:2.5.2" />
           <element id="library" level="project" name="Maven: org.springframework:spring-orm:5.3.8" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aspects:5.3.8" />
-          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.20" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.5.1" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-crypto:5.5.1" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.3.8" />

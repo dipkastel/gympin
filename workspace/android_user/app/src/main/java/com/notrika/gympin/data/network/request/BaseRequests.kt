@@ -1,6 +1,5 @@
 package com.notrika.gympin.data.network.request
 
-import com.notrika.gympin.data.db.db_network_setting.Network_setting
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.data.model.res.Res_Application_Splash
 import com.notrika.gympin.data.model.Resource
@@ -14,7 +13,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class BaseRequests @Inject
-constructor(val gympinApplicationApi: GympinApplicationApi, val pocket: Pocket, val networkSetting: Network_setting) {
+constructor(val gympinApplicationApi: GympinApplicationApi, val pocket: Pocket) {
 
     private val TAG: String = this.javaClass.name
 

@@ -5,18 +5,18 @@ import com.google.gson.annotations.SerializedName
 
 class Req_User_Login{
 
-    constructor(_phoneNumber:String,_code:String){
-        this.phoneNumber = _phoneNumber;
-        this.code = _code
+    constructor(_username:String,_password:String){
+        this.username = _username;
+        this.password = _password
     }
 
-    @SerializedName("phoneNumber")
+    @SerializedName("username")
     @Expose
-    var phoneNumber: String = ""
+    var username: String = ""
 
-    @SerializedName("code")
+    @SerializedName("password")
     @Expose
-    var code: String = ""
+    var password: String = ""
 
 
 

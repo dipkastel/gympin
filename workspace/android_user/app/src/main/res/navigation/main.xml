@@ -18,67 +18,119 @@
     <fragment
         android:id="@+id/main_places"
         android:name="com.notrika.gympin.ui.main.places.FragmentPlaces"
-        android:label="places"
+        android:label="main_places"
         tools:layout="@layout/fragment_main_places" />
-    <fragment
-        android:id="@+id/main_reserves"
-        android:name="com.notrika.gympin.ui.main.reserves.FragmentReserves"
-        android:label="reserves"
-        tools:layout="@layout/fragment_main_reserves" />
     <fragment
         android:id="@+id/main_settings"
         android:name="com.notrika.gympin.ui.main.settings.FragmentSettings"
-        android:label="reserves"
+        android:label="main_settings"
         tools:layout="@layout/fragment_main_reserves" />
     <fragment
         android:id="@+id/main_profile"
         android:name="com.notrika.gympin.ui.main.profile.FragmentProfile"
         android:label="reserves"
         tools:layout="@layout/fragment_main_reserves" />
+    <fragment
+        android:id="@+id/main_my_events"
+        android:name="com.notrika.gympin.ui.main.myEvents.FragmentMyEvents"
+        android:label="main_my_events"
+        tools:layout="@layout/fragment_main_my_events"/>
+    <fragment
+        android:id="@+id/main_contents"
+        android:name="com.notrika.gympin.ui.main.contents.FragmentContents"
+        android:label="main_contents"
+        tools:layout="@layout/fragment_main_contents"/>
+    <fragment
+        android:id="@+id/main_messages"
+        android:name="com.notrika.gympin.ui.main.messages.FragmentMessages"
+        android:label="main_messages"
+        tools:layout="@layout/fragment_main_messages"/>
+    <fragment
+        android:id="@+id/main_notifs"
+        android:name="com.notrika.gympin.ui.main.notifs.FragmentNotifs"
+        android:label="main_notifs"
+        tools:layout="@layout/fragment_main_notifs"/>
+    <fragment
+        android:id="@+id/main_credit"
+        android:name="com.notrika.gympin.ui.main.credit.FragmentCredit"
+        android:label="main_credet"
+        tools:layout="@layout/fragment_main_credit"/>
     <action
         android:id="@+id/to_gympin"
         app:destination="@id/main_gympin"
-        android:label="Gympin"
+        android:label="gympin"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"
         app:popExitAnim="@anim/top_page_out" />
     <action
-        android:id="@+id/to_Sports"
+        android:id="@+id/to_sports"
         app:destination="@id/main_sports"
-        android:label="Sports"
+        android:label="sports"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"
         app:popExitAnim="@anim/top_page_out" />
     <action
-        android:id="@+id/to_Places"
+        android:id="@+id/to_places"
         app:destination="@id/main_places"
-        android:label="Places"
+        android:label="places"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"
         app:popExitAnim="@anim/top_page_out" />
     <action
-        android:id="@+id/to_Reserves"
-        app:destination="@id/main_reserves"
-        android:label="Reserves"
+        android:id="@+id/to_my_events"
+        app:destination="@id/main_my_events"
+        android:label="reserves"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"
         app:popExitAnim="@anim/top_page_out" />
     <action
-        android:id="@+id/to_Profile"
+        android:id="@+id/to_profile"
         app:destination="@id/main_profile"
-        android:label="Profile"
+        android:label="profile"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"
         app:popExitAnim="@anim/top_page_out" />
     <action
-        android:id="@+id/to_Settings"
+        android:id="@+id/to_settings"
         app:destination="@id/main_settings"
-        android:label="Profile"
+        android:label="profile"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_contents"
+        app:destination="@id/main_contents"
+        android:label="contents"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_messages"
+        app:destination="@id/main_messages"
+        android:label="messages"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_notifs"
+        app:destination="@id/main_notifs"
+        android:label="notifs"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_credit"
+        app:destination="@id/main_credit"
+        android:label="credit"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"

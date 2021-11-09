@@ -1,36 +1,49 @@
 package com.notrika.gympin.di.main
 
+import com.bumptech.glide.RequestManager
+import com.notrika.gympin.ui.main.gympin.*
 import dagger.Module
+import dagger.Provides
 import javax.inject.Inject
 
 @Module
 class MainAdapterProviderModule @Inject constructor() {
 
-//
-//    @MainScope
-//    @Provides
-//    internal fun provideAdapterMainCinemas(
-//            requestManager: RequestManager,
-//            networkSetting: Network_setting,
-//            pocket: Pocket
-//    ): AdapterMainCinemasRecycler {
-//        return AdapterMainCinemasRecycler(requestManager, networkSetting, pocket)
-//    }
-//
-//    @MainScope
-//    @Provides
-//    internal fun provideAdapterPeymentMethods(
-//            requestManager: RequestManager,
-//            networkSetting: Network_setting
-//    ): AdapterPeymentMethods {
-//        return AdapterPeymentMethods(requestManager, networkSetting)
-//    }
+
+    @MainScope
+    @Provides
+    internal fun provideAdapterGympinMain(requestManager: RequestManager,adapterSlider: AdapterSlider,adapterContentList: AdapterContentList,adapterDiscountList: AdapterDiscountList,adapterUserList: AdapterUserList): AdapterGympinMain {
+        return AdapterGympinMain(requestManager,adapterSlider,adapterContentList,adapterDiscountList,adapterUserList)
+    }
+
+    @MainScope
+    @Provides
+    internal fun provideAdapterAdapterSlider(): AdapterSlider {
+        return AdapterSlider()
+    }
+    @MainScope
+    @Provides
+    internal fun provideAdapterContentList(): AdapterContentList {
+        return AdapterContentList()
+    }
+
+    @MainScope
+    @Provides
+    internal fun provideAdapterDiscountList(): AdapterDiscountList {
+        return AdapterDiscountList()
+    }
+
+    @MainScope
+    @Provides
+    internal fun provideAdapterUserList(): AdapterUserList {
+        return AdapterUserList()
+    }
+
 //
 //    @MainScope
 //    @Provides
 //    internal fun provideAdapterMarket(
 //            requestManager: RequestManager,
-//            networkSetting: Network_setting
 //    ): AdapterMarket {
 //        return AdapterMarket(requestManager,networkSetting)
 //    }
@@ -39,7 +52,6 @@ class MainAdapterProviderModule @Inject constructor() {
 //    @Provides
 //    internal fun provideAdapterBoxOffice(
 //            requestManager: RequestManager,
-//            networkSetting: Network_setting
 //    ): AdapterBoxOffice {
 //        return AdapterBoxOffice(requestManager,networkSetting)
 //    }
@@ -49,7 +61,6 @@ class MainAdapterProviderModule @Inject constructor() {
 //    @Provides
 //    internal fun provideAdapterFastFilms(
 //            requestManager: RequestManager,
-//            networkSetting: Network_setting
 //    ): AdapterFastFilms {
 //        return AdapterFastFilms(requestManager, networkSetting)
 //    }
@@ -58,7 +69,6 @@ class MainAdapterProviderModule @Inject constructor() {
 //    @Provides
 //    internal fun provideAdapterFastSans(
 //            requestManager: RequestManager,
-//            networkSetting: Network_setting
 //    ): AdapterFastSans {
 //        return AdapterFastSans()
 //    }
@@ -66,8 +76,7 @@ class MainAdapterProviderModule @Inject constructor() {
 //    @MainScope
 //    @Provides
 //    internal fun provideAdapterFastCount(
-//            requestManager: RequestManager,
-//            networkSetting: Network_setting
+//            requestManager: RequestManager
 //    ): AdapterFastCount {
 //        return AdapterFastCount()
 //    }
@@ -75,8 +84,7 @@ class MainAdapterProviderModule @Inject constructor() {
 //    @MainScope
 //    @Provides
 //    internal fun provideAdapterFastCinemas(
-//            requestManager: RequestManager,
-//            networkSetting: Network_setting
+//            requestManager: RequestManager
 //    ): AdapterFastCinemas {
 //        return AdapterFastCinemas(requestManager, networkSetting)
 //    }
@@ -99,8 +107,7 @@ class MainAdapterProviderModule @Inject constructor() {
 //    @MainScope
 //    @Provides
 //    internal fun provideAdapterTickets(
-//            requestManager: RequestManager,
-//            networkSetting: Network_setting
+//            requestManager: RequestManager
 //    ): AdapterTickets {
 //        return AdapterTickets(requestManager,networkSetting)
 //    }
@@ -109,8 +116,7 @@ class MainAdapterProviderModule @Inject constructor() {
 //    @MainScope
 //    @Provides
 //    internal fun provideAdapterSearch(
-//            requestManager: RequestManager,
-//            networkSetting: Network_setting
+//            requestManager: RequestManager
 //    ): AdapterSearch {
 //        return AdapterSearch(requestManager, networkSetting)
 //    }
@@ -126,7 +132,7 @@ class MainAdapterProviderModule @Inject constructor() {
 //
 //    @MainScope
 //    @Provides
-//    internal fun provideAdapterMainNews(requestManager: RequestManager, networkSetting: Network_setting): AdapterMainNewsRecycler {
+//    internal fun provideAdapterMainNews(requestManager: RequestManager): AdapterMainNewsRecycler {
 //        return AdapterMainNewsRecycler(requestManager, networkSetting)
 //    }
 //
@@ -138,7 +144,7 @@ class MainAdapterProviderModule @Inject constructor() {
 //
 //    @MainScope
 //    @Provides
-//    internal fun provideAdapterSelectCinemaTimeCinemas( requestManager: RequestManager,networkSetting: Network_setting, pocket: Pocket): AdapterSelectCinemaTimeCinemas {
+//    internal fun provideAdapterSelectCinemaTimeCinemas( requestManager: RequestManager, pocket: Pocket): AdapterSelectCinemaTimeCinemas {
 //        return AdapterSelectCinemaTimeCinemas(requestManager,networkSetting, pocket)
 //    }
 
