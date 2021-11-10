@@ -1,18 +1,23 @@
 package com.notrika.gympin.common.multimedia.api;
 
+import com.notrika.gympin.common.multimedia.dto.InputStreamResourceDto;
+import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface MultimediaController {
 
-    ResponseEntity<Boolean> storeMultimedia(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    ResponseEntity<Boolean> add(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
-    InputStreamResource retrieveMultimedia(String fileName) throws Exception;
+    InputStreamResource getByName(MultimediaRetrieveParam multimediaParam) throws Exception;
 
-    ResponseEntity<Long> getMultimediaByFileName(String fileName);
+    ResponseEntity<Long> getMultimediaIdByFileName(String fileName);
 
-    InputStreamResource retrieveMultimediaById(Long Id) throws Exception;
+    InputStreamResource getById(MultimediaRetrieveParam multimediaParam) throws Exception;
+
+    List<byte[]> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException;
 }

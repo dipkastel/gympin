@@ -22,30 +22,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountControllerImpl implements AccountController {
 
     @Autowired
-    private AccountService userService;
+    private AccountService accountService;
 
     @Override
     @PostMapping("/sendsms")
     public ResponseEntity<Boolean> sendSms(@RequestBody UserSendSmsParam phoneNumber) throws ExceptionBase {
-        return new ResponseEntity<>(userService.sendActivationSms(phoneNumber), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.sendActivationSms(phoneNumber), HttpStatus.OK);
     }
 
     @Override
     @PostMapping("/register")
     public ResponseEntity<UserRegisterDto> register(@RequestBody UserRegisterParam userRegisterParam) throws ExceptionBase {
-        return new ResponseEntity<>(userService.register(userRegisterParam), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.register(userRegisterParam), HttpStatus.OK);
     }
 
     @Override
     @PostMapping("/login")
     public ResponseEntity<UserDto> loginUser(@RequestBody LoginParam loginParam) throws ExceptionBase {
-        return new ResponseEntity<>(userService.loginUser(loginParam), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.loginUser(loginParam), HttpStatus.OK);
     }
 
     @Override
     @PostMapping("/loginpanel")
     public ResponseEntity<UserDto> loginPanel(@RequestBody LoginParam loginParam) throws ExceptionBase {
-        return new ResponseEntity<>(userService.loginPanel(loginParam), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.loginPanel(loginParam), HttpStatus.OK);
     }
 
 }

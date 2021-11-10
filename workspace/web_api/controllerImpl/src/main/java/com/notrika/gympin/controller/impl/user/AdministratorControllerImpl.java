@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.user;
 
+import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.user.api.AdministratorController;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
@@ -32,14 +33,14 @@ public class AdministratorControllerImpl implements AdministratorController {
 
     @Override
     @DeleteMapping("/delete")
-    public void delete(@RequestBody UserParam administratorParam) {
-        administratorService.delete(administratorParam);
+    public ResponseEntity<UserDto> delete(@RequestBody UserParam administratorParam) {
+       return new ResponseEntity<UserDto>(administratorService.delete(administratorParam),HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/getall")
-    public ResponseEntity<List<UserDto>> getAll() {
-        return new ResponseEntity<List<UserDto>>(administratorService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<UserDto>> getAll(BaseParam pagingParam) {
+        return new ResponseEntity<List<UserDto>>(administratorService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override

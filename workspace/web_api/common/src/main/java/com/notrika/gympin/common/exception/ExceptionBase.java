@@ -1,6 +1,5 @@
 package com.notrika.gympin.common.exception;
 
-import com.notrika.gympin.common.Error;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

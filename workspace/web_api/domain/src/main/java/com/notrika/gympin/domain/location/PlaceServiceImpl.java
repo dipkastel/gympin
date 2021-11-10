@@ -4,18 +4,20 @@ import com.notrika.gympin.common.location.dto.PlaceDto;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.location.param.RegionParam;
 import com.notrika.gympin.common.location.service.PlaceService;
+import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
 import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
 import com.notrika.gympin.persistence.entity.location.Place;
 import com.notrika.gympin.persistence.entity.location.Region;
 import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PlaceServiceImpl implements PlaceService {
+public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto,Place> implements PlaceService {
 
     @Autowired
     private PlaceRepository placeRepository;
@@ -29,7 +31,7 @@ public class PlaceServiceImpl implements PlaceService {
         Place initPlace =
                 Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(region).build();
         Place place = addPlace(initPlace);
-        return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.placeToPlaceDto(place);
     }
 
     public Place addPlace(Place place) {
@@ -48,7 +50,7 @@ public class PlaceServiceImpl implements PlaceService {
             initPlace.setRegion(region);
         }
         Place place = updatePlace(initPlace);
-        return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.placeToPlaceDto(place);
     }
 
     public Place updatePlace(Place place) {
@@ -59,29 +61,27 @@ public class PlaceServiceImpl implements PlaceService {
     public PlaceDto delete(PlaceParam placeParam) {
         var item = getPlaceById(placeParam.getId());
         Place deletedPlace = deletePlace(item);
-        return LocationConvertor.placeToPlaceDto(deletedPlace, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.placeToPlaceDto(deletedPlace);
     }
 
     public Place deletePlace(Place place) {
-        Place deletedPlace = placeRepository.deleteById2(place);
-        return deletedPlace;
+        return placeRepository.deleteById2(place);
     }
 
     @Override
-    public List<PlaceDto> getAll() {
-        List<Place> placeList = getAllPlace();
-        return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeList, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
-
+    public List<Place> getAll(Pageable pageable) {
+        return placeRepository.findAllUndeleted(pageable);
     }
 
-    public List<Place> getAllPlace() {
-        return placeRepository.findAllUndeleted();
+    @Override
+    public List<PlaceDto> convertToDto(List<Place> entities) {
+        return LocationConvertor.placesToPlaceDtos(entities);
     }
 
     @Override
     public PlaceDto getById(long id) {
         Place place = getPlaceById(id);
-        return LocationConvertor.placeToPlaceDto(place, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.placeToPlaceDto(place);
     }
 
     public Place getPlaceById(long id) {
@@ -92,7 +92,7 @@ public class PlaceServiceImpl implements PlaceService {
     public List<PlaceDto> getPlacesByRegion(RegionParam regionParam) {
         Region region = Region.builder().id(regionParam.getId()).build();
         List<Place> placeList = getPlacesByRegion(region);
-        return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeList, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.placesToPlaceDtos(placeList);
     }
 
     public List<Place> getPlacesByRegion(Region region) {

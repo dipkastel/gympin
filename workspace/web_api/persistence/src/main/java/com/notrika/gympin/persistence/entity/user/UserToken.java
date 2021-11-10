@@ -26,7 +26,7 @@ public class UserToken extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TokenStatus tokenStatus = TokenStatus.ACTIVE;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
     @Column(updatable = false)

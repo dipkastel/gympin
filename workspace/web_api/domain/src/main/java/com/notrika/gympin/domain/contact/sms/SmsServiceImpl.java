@@ -45,16 +45,19 @@ public class SmsServiceImpl implements SmsService {
         String encoding = con.getContentEncoding();
         encoding = encoding == null ? "UTF-8" : encoding;
         int body = Integer.parseInt(IOUtils.toString(in, encoding));
-        User userById = userService.getUserById(userId);
-        ActivationCode code = userById.getActivationCode();
-        code.setCode(passwordEncoder.encode(smsDto.getText()));
-        code.setSenderId(Integer.toString(body));
-        activationCodeRepository.deleteAllByUser(userService.getUserById(userId));
+        User user = userService.getUserById(userId);
         Calendar expireDate=Calendar.getInstance();
         expireDate.add(Calendar.MINUTE,2);
-        ActivationCode activationCode = new ActivationCode(userService.getUserById(userId), smsDto.getUserNumber(), passwordEncoder.encode(smsDto.getText()), Integer.toString(body),expireDate.getTime());
-        activationCodeRepository.add(activationCode);
-        log.info("Verification sms sent to user: {} with following code {}...\n",userById,smsDto.getText());
+        ActivationCode code = user.getActivationCode();
+        if(code==null){
+            code=new ActivationCode();
+            code.setUser(user);
+        }
+        code.setCode(passwordEncoder.encode(smsDto.getText()));
+        code.setSenderId(Integer.toString(body));
+        code.setExpiredDate(expireDate.getTime());
+        activationCodeRepository.update(code);
+        log.info("Verification sms sent to user: {} with following code {}...\n",user,smsDto.getText());
         return body > 0;
     }
 

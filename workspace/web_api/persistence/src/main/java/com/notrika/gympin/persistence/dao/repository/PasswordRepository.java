@@ -10,4 +10,8 @@ import java.util.List;
 public interface PasswordRepository extends BaseRepository<Password,Long> {
 
     List<Password> findByUser(User user);
+
+    Password findByUserAndExpiredIsAndDeletedIs(User user,boolean expired,boolean deleted);
+
+
 }

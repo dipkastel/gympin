@@ -1,39 +1,57 @@
 package com.notrika.gympin.domain.user;
 
-import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.service.UserService;
+import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.location.LocationServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
+import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
 import com.notrika.gympin.persistence.entity.location.Place;
+import com.notrika.gympin.persistence.entity.user.Password;
 import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User> implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private LocationServiceImpl service;
 
     @Autowired
-    private ActivationCodeRepository activationCodeRepository;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PasswordRepository passwordRepository;
 
     @Override
     public UserDto add(UserParam userParam) {
         User initUser =
-                User.builder().userGroup(UserGroup.CLIENT)/*.userRole(userParam.getRole())*/.username(userParam.getUsername()).phoneNumber(userParam.getPhoneNumber()).userStatus(UserStatus.ENABLED).build();
+                User.builder()
+                        .name(userParam.getName())
+                        .lastname(userParam.getLastname())
+                        .username(userParam.getUsername())
+                        .phoneNumber(userParam.getPhoneNumber())
+                        .birthday(userParam.getBirthday())
+                        .nationalCode(userParam.getNationalCode())
+                        .email(userParam.getEmail())
+                        .userGroup(UserGroup.CLIENT)
+                        .userRole(userParam.getRole().get(0))
+                        .userStatus(UserStatus.ENABLED)
+                        .build();
         User user = userRepository.add(initUser);
+        Password password=Password.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
+        passwordRepository.add(password);
         return UserConvertor.userToUserDto(user);
     }
 
@@ -44,9 +62,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto update(UserParam userParam) {
         User initUser = getUserById(userParam.getId());
-//        initUser.setUserRole(userParam.getRole());
+        initUser.setName(userParam.getName());
+        initUser.setLastname(userParam.getLastname());
         initUser.setUsername(userParam.getUsername());
         initUser.setPhoneNumber(userParam.getPhoneNumber());
+        initUser.setBirthday(userParam.getBirthday());
+        initUser.setNationalCode(userParam.getNationalCode());
+        initUser.setEmail(userParam.getEmail());
         User user = updateUser(initUser);
         return UserConvertor.userToUserDto(user);
     }
@@ -63,18 +85,17 @@ public class UserServiceImpl implements UserService {
     }
 
     public User deleteUser(User user) {
-        User deletedUser = userRepository.deleteById2(user);
-        return deletedUser;
+        return userRepository.deleteById2(user);
     }
 
     @Override
-    public List<UserDto> getAll() {
-        List<User> userList = userRepository.findAllUndeleted();
-        return UserConvertor.usersToUserDtos(userList);
+    public List<User> getAll(Pageable pageable) {
+        return userRepository.findAllUndeleted(pageable);
     }
 
-    public List<User> getAllUser() {
-        return userRepository.findAllUndeleted();
+    @Override
+    public List<UserDto> convertToDto(List<User> entities) {
+        return UserConvertor.usersToUserDtos(entities);
     }
 
     @Override
@@ -113,11 +134,6 @@ public class UserServiceImpl implements UserService {
     public User suspendUser(User user) {
         User initUser = getUserById(user.getId());
         initUser.setUserStatus(UserStatus.SUSPENDED);
-        User suspendedUser = updateUser(initUser);
-        return suspendedUser;
-    }
-
-    public void activationCodeExpiration(Long userId){
-        activationCodeRepository.expirationCode(userId);
+        return updateUser(initUser);
     }
 }

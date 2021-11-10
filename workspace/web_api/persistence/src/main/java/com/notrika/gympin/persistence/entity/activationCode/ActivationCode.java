@@ -24,7 +24,7 @@ import java.util.Objects;
 public class ActivationCode extends BaseEntity {
 
     //@Column(name = "user_id")
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
     @Column(name = "phone_number")

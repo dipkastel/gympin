@@ -4,17 +4,19 @@ import com.notrika.gympin.common.location.dto.CityDto;
 import com.notrika.gympin.common.location.param.CityParam;
 import com.notrika.gympin.common.location.param.StateParam;
 import com.notrika.gympin.common.location.service.CityService;
+import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
 import com.notrika.gympin.persistence.dao.repository.CityRepository;
 import com.notrika.gympin.persistence.entity.location.City;
 import com.notrika.gympin.persistence.entity.location.State;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CityServiceImpl implements CityService {
+public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto,City> implements CityService{
 
     @Autowired
     private CityRepository cityRepository;
@@ -27,7 +29,7 @@ public class CityServiceImpl implements CityService {
         State state = stateService.getStateById(cityParam.getState().getId());
         City initCity = City.builder().name(cityParam.getName()).state(state).build();
         City city = addCity(initCity);
-        return LocationConvertor.cityToCityDto(city, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.cityToCityDto(city);
     }
 
     public City addCity(City city) {
@@ -43,7 +45,7 @@ public class CityServiceImpl implements CityService {
             initCity.setState(state);
         }
         City city = updateCity(initCity);
-        return LocationConvertor.cityToCityDto(city, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.cityToCityDto(city);
     }
 
     public City updateCity(City city) {
@@ -54,7 +56,7 @@ public class CityServiceImpl implements CityService {
     public CityDto delete(CityParam cityParam) {
         var item = getCityById(cityParam.getId());
         City deletedCity = deleteCity(item);
-        return LocationConvertor.cityToCityDto(deletedCity, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.cityToCityDto(deletedCity);
     }
 
     public City deleteCity(City city) {
@@ -62,20 +64,19 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<CityDto> getAll() {
-        List<City> cityList = getAllCity();
-        return (List<CityDto>) LocationConvertor.citiesToCityDtos(cityList, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
-
+    public List<City> getAll(Pageable pageable) {
+        return cityRepository.findAllUndeleted(pageable);
     }
 
-    public List<City> getAllCity() {
-        return cityRepository.findAllUndeleted();
+    @Override
+    public List<CityDto> convertToDto(List<City> entities) {
+        return LocationConvertor.citiesToCityDtos(entities);
     }
 
     @Override
     public CityDto getById(long id) {
         City city = getCityById(id);
-        return LocationConvertor.cityToCityDto(city, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.cityToCityDto(city);
     }
 
     public City getCityById(long id) {
@@ -86,7 +87,7 @@ public class CityServiceImpl implements CityService {
     public List<CityDto> getCitiesByState(StateParam stateParam) {
         State state = State.builder().id(stateParam.getId()).build();
         List<City> cityList = getCitiesByState(state);
-        return (List<CityDto>) LocationConvertor.citiesToCityDtos(cityList, LocationConvertor.CollectionType.LIST, LocationConvertor.CollectionType.LIST);
+        return LocationConvertor.citiesToCityDtos(cityList);
     }
 
     public List<City> getCitiesByState(State state) {

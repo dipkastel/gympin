@@ -20,10 +20,10 @@ import java.util.Objects;
 @Table(name = "password")
 public class Password extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private User user;
 
-    @Column(name = "password")
+    @Column(name = "password",nullable = false)
     private String password;
 
     @Column(name = "expired")

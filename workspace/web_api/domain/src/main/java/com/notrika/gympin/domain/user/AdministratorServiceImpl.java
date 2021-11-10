@@ -1,22 +1,26 @@
 package com.notrika.gympin.domain.user;
 
+import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.service.AdministratorService;
+import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.entity.user.Password;
 import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class AdministratorServiceImpl implements AdministratorService {
+public class AdministratorServiceImpl extends AbstractBaseService<UserParam, UserDto,User> implements AdministratorService {
 
     @Autowired
     private UserServiceImpl userService;
@@ -34,10 +38,9 @@ public class AdministratorServiceImpl implements AdministratorService {
                 .phoneNumber(administratorParam.getPhoneNumber())
                 .userGroup(UserGroup.ADMINISTRATION)
                 .userStatus(UserStatus.ENABLED)
-//                .password(password)
                 .build();
         User administrator = addAdministrator(initAdministrator);
-        Password password=Password.builder().password(passwordEncoder.encode(administratorParam.getPassword())).expired(false).build();
+        Password password=Password.builder().user(administrator).password(passwordEncoder.encode(administratorParam.getPassword())).expired(false).build();
         passwordRepository.add(password);
         return UserConvertor.administratorToAdministratorDto(userService.addUser(administrator));
     }
@@ -46,16 +49,19 @@ public class AdministratorServiceImpl implements AdministratorService {
         return userService.addUser(administrator);
     }
 
+    @Transactional
     @Override
     public UserDto update(UserParam administratorParam) {
-        Password password=Password.builder().password(passwordEncoder.encode(administratorParam.getPassword())).expired(false).build();
-        User initAdministrator = userService.getUserById(administratorParam.getId());
-//        initAdministrator.setUserRole(administratorParam.getRole());
-        initAdministrator.setUsername(administratorParam.getUsername());
-        initAdministrator.setPhoneNumber(administratorParam.getPhoneNumber());
-//        initAdministrator.setPassword(password);
-        initAdministrator.setEmail(administratorParam.getEmail());
-        User administrator = userService.updateUser(initAdministrator);
+        User admin = userService.getUserById(administratorParam.getId());
+        admin.setUserRole(administratorParam.getRole().get(0));
+        admin.setUsername(administratorParam.getUsername());
+        admin.setPhoneNumber(administratorParam.getPhoneNumber());
+        admin.setName(administratorParam.getName());
+        admin.setLastname(administratorParam.getLastname());
+        admin.setBirthday(administratorParam.getBirthday());
+        admin.setNationalCode(administratorParam.getNationalCode());
+        admin.setEmail(administratorParam.getEmail());
+        User administrator = userService.updateUser(admin);
         return UserConvertor.administratorToAdministratorDto(administrator);
     }
 
@@ -65,8 +71,13 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public List<UserDto> getAll() {
-        return userService.getAll();
+    public List<User> getAll(Pageable pageable) {
+        return userService.getAll(pageable);
+    }
+
+    @Override
+    public List<UserDto> convertToDto(List<User> entities) {
+        return UserConvertor.administratorsToAdministratorDtos(entities);
     }
 
     @Override

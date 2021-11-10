@@ -20,11 +20,11 @@ import javax.persistence.*;
 @Table(name = "place_owner")
 public class PlaceOwner extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "place_id")
     private Place place;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

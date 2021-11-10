@@ -1,32 +1,24 @@
 package com.notrika.gympin.framework.spring.aspect;
 
-import com.notrika.gympin.common.Error;
+import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.ResponseModel;
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
-import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static com.notrika.gympin.common.ResponseModel.ERROR;
 import static com.notrika.gympin.common.ResponseModel.SUCCESS;

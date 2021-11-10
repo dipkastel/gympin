@@ -26,7 +26,7 @@ public class MultimediaResponseModel extends InputStreamResource {
     @JsonProperty("LinkParams")
     private String LinkParams;
     @JsonProperty("Error")
-    private Error Error;
+    private com.notrika.gympin.common.exception.Error Error;
     @JsonProperty("Data")
     private InputStreamResource data;
 

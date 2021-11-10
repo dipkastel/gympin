@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.location;
 
+import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.location.api.LocationController;
 import com.notrika.gympin.common.location.dto.*;
 import com.notrika.gympin.common.location.param.*;
@@ -50,8 +51,8 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @GetMapping("/getAllState")
-    public ResponseEntity<List<StateDto>> getAllState() {
-        return new ResponseEntity<List<StateDto>>(stateService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<StateDto>> getAllState(BaseParam pagingParam) {
+        return new ResponseEntity<List<StateDto>>(stateService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
@@ -97,8 +98,8 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @GetMapping("/getAllCity")
-    public ResponseEntity<List<CityDto>> getAllCity() {
-        return new ResponseEntity<List<CityDto>>(cityService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<CityDto>> getAllCity(BaseParam pagingParam) {
+        return new ResponseEntity<List<CityDto>>(cityService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
@@ -123,8 +124,8 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @GetMapping("/getAllRegion")
-    public ResponseEntity<List<RegionDto>> getAllRegion() {
-        return new ResponseEntity<List<RegionDto>>(regionService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<RegionDto>> getAllRegion(BaseParam pagingParam) {
+        return new ResponseEntity<List<RegionDto>>(regionService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
@@ -162,8 +163,8 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @GetMapping("/getAllPlace")
-    public ResponseEntity<List<PlaceDto>> getAllPlace() {
-        return new ResponseEntity<List<PlaceDto>>(placeService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<PlaceDto>> getAllPlace(BaseParam pagingParam) {
+        return new ResponseEntity<List<PlaceDto>>(placeService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.notrika.gympin.domain.sport;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
 import com.notrika.gympin.common.sport.service.SportService;
+import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.multimedia.MultimediaServiceImpl;
 import com.notrika.gympin.domain.util.convertor.SportConvertor;
 import com.notrika.gympin.persistence.dao.repository.SportRepository;
@@ -11,6 +12,7 @@ import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
 import com.notrika.gympin.persistence.entity.sport.Sport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class SportServiceImpl implements SportService {
+public class SportServiceImpl extends AbstractBaseService<SportParam,SportDto,Sport> implements SportService {
 
     @Autowired
     private SportRepository sportRepository;
@@ -27,7 +29,7 @@ public class SportServiceImpl implements SportService {
     private MultimediaServiceImpl multimediaService;
 
     @Override
-    public SportDto addSport(SportParam sportParam) {
+    public SportDto add(SportParam sportParam) {
         Sport initSport = Sport.builder().name(sportParam.getName()).launchStatus(sportParam.getLaunchStatus()).build();
         Sport sport = addSport(initSport);
         SportDto sportDto = SportConvertor.sportToSportDto(sport);
@@ -52,12 +54,8 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public SportDto updateSport(SportParam sportParam) {
+    public SportDto update(SportParam sportParam) {
         Sport sport1 = getSportById(sportParam.getId());
-//        if(sportParam.getPictureId()!=null && sportParam.getPictureId().size()>0){
-//            List<SportMultimedia> sportMultimedias = multimediaService.getSportMultimedias(sport1);
-//        }
-
         sport1.setName(sportParam.getName());
         sport1.setLaunchStatus(sportParam.getLaunchStatus());
         Sport sport = updateSport(sport1);
@@ -69,7 +67,7 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public SportDto getSportDtoById(long id) {
+    public SportDto getById(long id) {
         Sport sport = sportRepository.getById(id);
         return SportConvertor.sportToSportDto(sport);
     }
@@ -79,25 +77,24 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public List<SportDto> getAllSportDto() {
-        List<Sport> sportList = sportRepository.findAllUndeleted();
-        return SportConvertor.sportsToSportDtos(sportList);
-    }
-
-    public List<Sport> getAllSport() {
-        return sportRepository.findAllUndeleted();
+    public List<Sport> getAll(Pageable pageable) {
+        return sportRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public SportDto deleteSport(SportParam sportParam) {
+    public List<SportDto> convertToDto(List<Sport> entities) {
+        return SportConvertor.sportsToSportDtos(entities);
+    }
+
+    @Override
+    public SportDto delete(SportParam sportParam) {
         Sport sport = getSportById(sportParam.getId());
-        Sport deleteSport = sportRepository.deleteById2(sport);
+        Sport deleteSport = deleteSport(sport);
         return SportConvertor.sportToSportDto(deleteSport);
     }
 
     public Sport deleteSport(Sport sport) {
-        Sport deletedSport = sportRepository.deleteById2(sport);
-        return deletedSport;
+        return sportRepository.deleteById2(sport);
     }
 
 }
