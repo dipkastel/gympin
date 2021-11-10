@@ -62,7 +62,7 @@ class MediaManagement extends Component {
         )
     }
     componentDidMount() {
-        this.getMedias();
+        // this.getMedias();
     }
 
     toggleAddMode(e) {
@@ -199,7 +199,7 @@ class MediaManagement extends Component {
     };
     getMedias() {
 
-        media_getAll().then(data=>{
+        user_getAll().then(data=>{
             console.log(data.data.Data);
             this.setState(() => ({
                 allUsersArray: data.data.Data
