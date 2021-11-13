@@ -1,8 +1,8 @@
 import axios from "axios";
 import {UserApi} from "./const_api";
 //user
-export function user_add(user) {
-    return axios.post(UserApi.add,user);
+export function miltimedia_add(user) {
+    return axios.post(multimediaApi.add,user);
 }
 export function user_delete(user) {
     return axios.delete(UserApi.delete,{data:user});

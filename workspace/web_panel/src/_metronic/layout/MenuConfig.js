@@ -40,6 +40,12 @@ export default {
         root: true,
         icon: "flaticon-stopwatch",
         page: "sports"
+      },
+      {
+        title: "manage media",
+        root: true,
+        icon: "flaticon-attachment",
+        page: "media"
       }
     ]
   }
