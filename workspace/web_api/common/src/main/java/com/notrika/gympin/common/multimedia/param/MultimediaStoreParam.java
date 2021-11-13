@@ -19,8 +19,9 @@ import java.util.List;
 public class MultimediaStoreParam extends BaseParam<MultimediaStoreParam> {
 
     @JsonProperty("file")
-    private List<MultipartFile> multipartFile;
+    private MultipartFile multipartFile;
 
+    //category
     @JsonProperty("PartName")
     private String partName;
 

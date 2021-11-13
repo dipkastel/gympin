@@ -105,8 +105,8 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     private boolean saveFile(MultimediaStoreParam multimediaStoreParam, Path path) throws IOException {
         User user = userService.getUserById(multimediaStoreParam.getUserParam().getId());
-        for (int i = 0; i < multimediaStoreParam.getMultipartFile().size(); i++) {
-            MultipartFile multipartFile = multimediaStoreParam.getMultipartFile().get(i);
+        for (int i = 0; i < 1/*multimediaStoreParam.getMultipartFile().size()*/; i++) {
+            MultipartFile multipartFile = multimediaStoreParam.getMultipartFile();//multimediaStoreParam.getMultipartFile().get(i);
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             if (fileName.contains("..")) {
                 throw new InvalidFileNameException("Error in file name.", HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
