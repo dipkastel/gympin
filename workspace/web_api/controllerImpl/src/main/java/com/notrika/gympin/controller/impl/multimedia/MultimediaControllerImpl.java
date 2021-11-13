@@ -31,8 +31,8 @@ public class MultimediaControllerImpl implements MultimediaController {
 
     @Override
     @RequestMapping(path = "/add", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Boolean> add(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws IOException {
-        return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam), HttpStatus.OK);
+    public ResponseEntity<Boolean> add(@ModelAttribute List<MultimediaStoreParam> multimediaStoreParam) throws IOException {
+        return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam.get(0)), HttpStatus.OK);
     }
 
     @Override
