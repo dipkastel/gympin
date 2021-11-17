@@ -1,25 +1,26 @@
 import React, {useState} from 'react';
 import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@material-ui/core";
+import {media_addImage} from "../../../api/media.api";
 
 const ImageAddItem = (param) => {
-    const [store,SetStore] = useState(false)
+    const [sent,SetSent] = useState(false)
+
     async function formSubmit(event) {
         event.preventDefault()
-        // param.addToImages({
-        //     file: param.image,
-        //     PartName: event.target.title.value,
-        //     // desc: event.target.desc.value,
-        //     User:{Id:18},
-        //     MediaType:"IMAGE"
-        // })
-
-         param.addToImages(param.image)
-        SetStore(true)
+        var imageToSend = {
+            multipartFile: param.image
+        }
+        console.log(imageToSend)
+        media_addImage(imageToSend).then(data=>{
+            SetSent(true)
+        }).catch(e=>{
+            console.log(e)
+        })
     }
     return (
         <>
 
-            <Card className={"card " + (store&&"MuiCard-success")}>
+            <Card className={"card " + (sent&&"MuiCard-success")}>
                 <form onSubmit={formSubmit}>
                     <CardActionArea>
                         <CardMedia
@@ -38,7 +39,7 @@ const ImageAddItem = (param) => {
                             </Typography>
                         </CardContent>
                     </CardActionArea>
-                    {!store&&
+                    {!sent&&
                     <CardActions>
 
                         <Button type="submit" size="small" color="primary" >

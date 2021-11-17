@@ -4547,3 +4547,10 @@ MultimediaRetrieveParam(fileName=null, height=null, width=null, mediaType=IMAGE)
 
 ==============================================================
 
+[INFO ] 17-11-2021 10:51:28.267 PM [main]  c.n.gympin.framework.spring.WebApiApplication - LOG IS WORKING
+[INFO ] 17-11-2021 10:51:28.560 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - LOG IS WORKING
+[INFO ] 17-11-2021 10:51:29.330 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - Starting WebApiApplication using Java 11.0.11 on amir with PID 11436 (E:\work\gympin\workspace\web_api\framework\target\classes started by amir in E:\work\gympin)
+[INFO ] 17-11-2021 10:51:29.331 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - No active profile set, falling back to default profiles: default
+[INFO ] 17-11-2021 10:51:40.441 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - Started WebApiApplication in 11.864 seconds (JVM running for 13.649)
+[INFO ] 17-11-2021 10:52:35.239 PM [main]  c.n.gympin.framework.spring.WebApiApplication - LOG IS WORKING
+[INFO ] 17-11-2021 10:52:35.880 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - LOG IS WORKING

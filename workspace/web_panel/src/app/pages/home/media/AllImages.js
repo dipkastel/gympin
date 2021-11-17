@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import AddIcon from "@material-ui/icons/Add";
-import {media_getAll} from "../../../api/media.api";
+import { media_getAllName} from "../../../api/media.api";
 
 class AllImages extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allImages: []
+            images: []
         };
     }
 
@@ -17,11 +17,12 @@ class AllImages extends Component {
 
     getAllImages() {
 
-        media_getAll({"mediaType":"IMAGE"}).then(data => {
+        media_getAllName().then(data => {
             console.log(data.data.Data);
             this.setState(() => ({
-                allUsersArray: data.data.Data
+                images: data.data.Data
             }));
+            console.log(this.state.images);
 
         }).catch(e => {
             console.log(e);
@@ -30,15 +31,18 @@ class AllImages extends Component {
 
     RenderImages(image) {
         return (
-            <>
-                <image src={image.src} />
-            </>
+            <React.Fragment key={image}>
+                {image}
+                <img src={"https://api.gympin.ir/v1/multimedia/getByName/"+image}  />
+            </React.Fragment>
         )
     }
 
+
+
     render() {
         const addMode = this.props.addMode
-        const allImages = this.state.allImages
+        const images = this.state.images
         return (
             <>
                 <Portlet>
@@ -58,7 +62,7 @@ class AllImages extends Component {
                     />
 
                     <PortletBody>
-                        {allImages.map(e=>this.RenderImages(e))}
+                        {images.map(e=>this.RenderImages(e))}
                     </PortletBody>
                 </Portlet>
             </>

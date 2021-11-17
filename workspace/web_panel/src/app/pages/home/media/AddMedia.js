@@ -7,7 +7,6 @@ import {
 } from "@material-ui/core";
 import "./AddMedia.css"
 import ImageAddItem from "./ImageAddItem";
-import {media_addMedia} from "../../../api/media.api";
 
 function AddMedia() {
     const [tab, setTab] = useState(0);
@@ -35,16 +34,6 @@ function AddMedia() {
         setImagesToUpload([])
         setImages(Object.values(event.target.files))
     }
-
-    function sendImagesToServer() {
-        console.log(imagesToUpload)
-     media_addMedia(imagesToUpload).then(data=>{
-         console.log(data)
-     }).catch(e=>{
-         console.log(e)
-     })
-    }
-
     return (
         <>
             <Portlet>
@@ -77,10 +66,6 @@ function AddMedia() {
                                 <br/>
                                 <input type="file" id="file_input" onChange={(event) => inputChange(event)}
                                        accept="image/*" multiple/>
-                                <Button variant="contained" color="primary"
-                                        className={"btn btn-primary"} onClick={sendImagesToServer}>
-                                    ثبت
-                                </Button>
                             </div>
                         </div>
                     </PortletBody>
