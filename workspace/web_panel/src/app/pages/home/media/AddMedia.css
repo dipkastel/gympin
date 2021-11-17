@@ -1,0 +1,18 @@
+.card{
+    max-width: 320px;
+    margin: 3px;
+}
+.media{
+    height: 140px;
+}
+.MuiCard-success{
+    background-color: #bcf8d4 !important;
+}
+.text-area{
+    width: 290px;
+    height: 100px;
+}
+
+.text-field{
+    width: 290px;
+}

@@ -1,20 +1,13 @@
 import axios from "axios";
-import {UserApi} from "./const_api";
-//user
-export function miltimedia_add(user) {
-    return axios.post(multimediaApi.add,user);
+import {MultimediaApi, UserApi} from "./const_api";
+//media
+export function media_getAll(data) {
+    return axios.get(MultimediaApi.getAllByType,{params:data});
 }
-export function user_delete(user) {
-    return axios.delete(UserApi.delete,{data:user});
+export function media_addMedia(data) {
+    return axios.post(MultimediaApi.add,{data:data},{
+        headers:{
+            'content-type': 'multipart/form-data'
+        }
+    });
 }
-export function user_getAll() {
-    return axios.get(UserApi.getAll);
-}
-export function user_getById(user) {
-    return axios.get(UserApi.getById,{params:user});
-}
-export function user_update(user) {
-    return axios.put(UserApi.update,user);
-}
-
-

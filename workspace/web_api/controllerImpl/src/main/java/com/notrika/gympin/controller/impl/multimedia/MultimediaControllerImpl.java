@@ -1,9 +1,7 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.multimedia.api.MultimediaController;
-import com.notrika.gympin.common.multimedia.dto.InputStreamResourceDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
@@ -30,9 +28,9 @@ public class MultimediaControllerImpl implements MultimediaController {
     private MultimediaService multimediaService;
 
     @Override
-    @RequestMapping(path = "/add", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Boolean> add(@ModelAttribute List<MultimediaStoreParam> multimediaStoreParam) throws IOException {
-        return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam.get(0)), HttpStatus.OK);
+    @RequestMapping(path = "/addImage", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Boolean> add(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws IOException {
+        return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam), HttpStatus.OK);
     }
 
     @Override
