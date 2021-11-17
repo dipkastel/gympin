@@ -11,7 +11,13 @@ import java.util.List;
 
 public interface MultimediaController {
 
-    ResponseEntity<Boolean> add(List<MultimediaStoreParam> multimediaStoreParam) throws IOException;
+    ResponseEntity<Boolean> add(MultimediaStoreParam multimediaStoreParam) throws IOException;
+
+    ResponseEntity<Boolean> addImage(MultimediaStoreParam multimediaStoreParam) throws IOException;
+
+    ResponseEntity<Boolean> addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException;
+
+    ResponseEntity<Boolean> addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
     InputStreamResource getByName(MultimediaRetrieveParam multimediaParam) throws Exception;
 
@@ -20,4 +26,8 @@ public interface MultimediaController {
     InputStreamResource getById(MultimediaRetrieveParam multimediaParam) throws Exception;
 
     List<byte[]> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException;
+
+    ResponseEntity<List<Long>> getAllId();
+
+    ResponseEntity<List<String>> getAllName();
 }

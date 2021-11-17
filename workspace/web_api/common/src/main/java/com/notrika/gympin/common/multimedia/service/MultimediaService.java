@@ -11,6 +11,12 @@ public interface MultimediaService {
 
     boolean storeFile(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
+    boolean addImage(MultimediaStoreParam multimediaStoreParam) throws IOException;
+
+    boolean addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException;
+
+    boolean addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException;
+
     InputStream loadFileAsResource(MultimediaRetrieveParam multimediaParam) throws Exception;
 
     Long getMultimediaIdByFileName(String fileName);
@@ -18,5 +24,9 @@ public interface MultimediaService {
     InputStream getById(MultimediaRetrieveParam multimediaParam) throws Exception;
 
     List<InputStream> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException;
+
+    List<Long> getAllId();
+
+    List<String> getAllName();
 
 }

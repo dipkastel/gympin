@@ -30,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -38,8 +37,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
 import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MultimediaServiceImpl implements MultimediaService {
@@ -81,7 +81,7 @@ public class MultimediaServiceImpl implements MultimediaService {
             File[] listDirectory = new File(this.imageStorageLocation.toUri()).listFiles(File::isDirectory);
             for (File dir : listDirectory) {
                 String[] splitPath = dir.getPath().split("\\\\");
-                this.imageSizedLocation.put(splitPath[splitPath.length-1],dir.toPath());
+                this.imageSizedLocation.put(splitPath[splitPath.length - 1], dir.toPath());
             }
         } catch (Exception e) {
             throw new CreateDirectoryException(e, HttpStatus.INTERNAL_SERVER_ERROR, Error.ErrorType.EXCEPTION);
@@ -90,43 +90,52 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     @Override
     public boolean storeFile(MultimediaStoreParam multimediaStoreParam) throws IOException {
-        Path targetPath=null;
+        Path targetPath = null;
         switch (multimediaStoreParam.getMediaType()) {
             case IMAGE:
-                return saveFile(multimediaStoreParam,this.imageStorageLocation);
+                return saveFile(multimediaStoreParam, this.imageStorageLocation);
             case VIDEO:
-                return saveFile(multimediaStoreParam,this.videoStorageLocation);
+                return saveFile(multimediaStoreParam, this.videoStorageLocation);
             case AUDIO:
-                return saveFile(multimediaStoreParam,this.audioStorageLocation);
+                return saveFile(multimediaStoreParam, this.audioStorageLocation);
         }
 
         return true;
     }
 
+    @Override
+    public boolean addImage(MultimediaStoreParam multimediaStoreParam) throws IOException {
+        multimediaStoreParam.setMediaType(MediaType.IMAGE);
+        return storeFile(multimediaStoreParam);
+    }
+
+    @Override
+    public boolean addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException {
+        multimediaStoreParam.setMediaType(MediaType.VIDEO);
+        return storeFile(multimediaStoreParam);
+    }
+
+    @Override
+    public boolean addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException {
+        multimediaStoreParam.setMediaType(MediaType.AUDIO);
+        return storeFile(multimediaStoreParam);
+    }
+
     private boolean saveFile(MultimediaStoreParam multimediaStoreParam, Path path) throws IOException {
-        User user = userService.getUserById(multimediaStoreParam.getUserParam().getId());
-        for (int i = 0; i < 1/*multimediaStoreParam.getMultipartFile().size()*/; i++) {
-            MultipartFile multipartFile = multimediaStoreParam.getMultipartFile();//multimediaStoreParam.getMultipartFile().get(i);
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            if (fileName.contains("..")) {
-                throw new InvalidFileNameException("Error in file name.", HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
-            }
-            Path targetLocation = saveFile(path, multipartFile.getInputStream(), fileName);
-            Multimedia fileByUserByName = multimediaRepository.findByUserAndFileName(user, fileName);
-            if (fileByUserByName != null) {
-                fileByUserByName.setDocumentFormat(multipartFile.getContentType());
-                fileByUserByName.setMediaType(multimediaStoreParam.getMediaType());
-                multimediaRepository.update(fileByUserByName);
-            } else {
-                multimediaRepository.add(Multimedia.builder()
-                        .fileName(fileName)
-                        .mediaType(multimediaStoreParam
-                                .getMediaType())
-                        .documentFormat(multipartFile
-                                .getContentType())
-                        .uploadDir(targetLocation.toString())
-                        .build());
-            }
+//        User user = userService.getUserById(multimediaStoreParam.getUserParam().getId());
+        MultipartFile multipartFile = multimediaStoreParam.getMultipartFile();//multimediaStoreParam.getMultipartFile().get(i);
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        if (fileName.contains("..")) {
+            throw new InvalidFileNameException("Error in file name.", HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
+        }
+        Path targetLocation = saveFile(path, multipartFile.getInputStream(), fileName);
+        Multimedia fileByUserByName = multimediaRepository.findByFileName(fileName);
+        if (fileByUserByName != null) {
+            fileByUserByName.setDocumentFormat(multipartFile.getContentType());
+            fileByUserByName.setMediaType(multimediaStoreParam.getMediaType());
+            multimediaRepository.update(fileByUserByName);
+        } else {
+            multimediaRepository.add(Multimedia.builder().fileName(fileName).mediaType(multimediaStoreParam.getMediaType()).documentFormat(multipartFile.getContentType()).uploadDir(targetLocation.toString()).build());
         }
         return true;
     }
@@ -140,25 +149,24 @@ public class MultimediaServiceImpl implements MultimediaService {
     @Override
     public InputStream loadFileAsResource(MultimediaRetrieveParam multimediaParam) throws Exception {
         Multimedia multiMediaFile = multimediaRepository.findByFileName(multimediaParam.getFileName());
-        if(multiMediaFile==null)
-            throw new FileNotFoundException("File not found " + multimediaParam.getFileName());
+        if (multiMediaFile == null) throw new FileNotFoundException("File not found " + multimediaParam.getFileName());
 
-        if(multiMediaFile.getMediaType().equals(MediaType.IMAGE)){
+        if (multiMediaFile.getMediaType().equals(MediaType.IMAGE)) {
             return loadImageFile(multimediaParam);
         }
         Resource resource = null;
-        if(multiMediaFile.getMediaType().equals(MediaType.AUDIO)){
+        if (multiMediaFile.getMediaType().equals(MediaType.AUDIO)) {
             Path filePath = this.audioStorageLocation.resolve(multimediaParam.getFileName()).normalize();
             resource = new UrlResource(filePath.toUri());
         }
-        if(multiMediaFile.getMediaType().equals(MediaType.VIDEO)){
+        if (multiMediaFile.getMediaType().equals(MediaType.VIDEO)) {
             Path filePath = this.videoStorageLocation.resolve(multimediaParam.getFileName()).normalize();
             resource = new UrlResource(filePath.toUri());
         }
 
         //        this.fileStorageLocation.
 
-        if (resource!=null&&resource.exists()) {
+        if (resource != null && resource.exists()) {
             return new FileInputStream(resource.getFile());
         } else {
             throw new FileNotFoundException("File not found " + multimediaParam.getFileName());
@@ -168,37 +176,37 @@ public class MultimediaServiceImpl implements MultimediaService {
     private InputStream loadImageFile(MultimediaRetrieveParam multimediaParam) throws IOException {
         Path filePath = this.imageStorageLocation.resolve(multimediaParam.getFileName()).normalize();
         Resource resource = new UrlResource(filePath.toUri());
-        if(!resource.exists()){
+        if (!resource.exists()) {
             throw new FileNotFoundException("File not found " + multimediaParam.getFileName());
         }
-        if( multimediaParam.getWidth()==null|| multimediaParam.getHeight()==null|| multimediaParam.getWidth()==0 || multimediaParam.getHeight()==0  ){
+        if (multimediaParam.getWidth() == null || multimediaParam.getHeight() == null || multimediaParam.getWidth() == 0 || multimediaParam.getHeight() == 0) {
             return new FileInputStream(resource.getFile());
         }
-        String subPathSized=multimediaParam.getWidth().toString()+"-"+multimediaParam.getHeight().toString();
+        String subPathSized = multimediaParam.getWidth().toString() + "-" + multimediaParam.getHeight().toString();
         Path subPath = this.imageSizedLocation.get(subPathSized);
-        if(subPath==null){
-            Path path = Paths.get(this.imageStorageLocation+"\\"+subPathSized).toAbsolutePath().normalize();
+        if (subPath == null) {
+            Path path = Paths.get(this.imageStorageLocation + "\\" + subPathSized).toAbsolutePath().normalize();
             Files.createDirectories(path);
-            this.imageSizedLocation.put(subPathSized,path);
-            BufferedImage inputBI=ImageIO.read(resource.getFile());
-            BufferedImage outputBI=new BufferedImage(multimediaParam.getWidth(),multimediaParam.getHeight(),inputBI.getType());
-            Graphics2D g2d=outputBI.createGraphics();
-            g2d.drawImage(inputBI,0,0,multimediaParam.getWidth(),multimediaParam.getHeight(),null);
+            this.imageSizedLocation.put(subPathSized, path);
+            BufferedImage inputBI = ImageIO.read(resource.getFile());
+            BufferedImage outputBI = new BufferedImage(multimediaParam.getWidth(), multimediaParam.getHeight(), inputBI.getType());
+            Graphics2D g2d = outputBI.createGraphics();
+            g2d.drawImage(inputBI, 0, 0, multimediaParam.getWidth(), multimediaParam.getHeight(), null);
             g2d.dispose();
-            String formatName=resource.getFile().getName().substring(resource.getFile().getName().lastIndexOf(".")+1);
-            ImageIO.write(outputBI,formatName,new File(path.toString()+"\\"+resource.getFile().getName()));
+            String formatName = resource.getFile().getName().substring(resource.getFile().getName().lastIndexOf(".") + 1);
+            ImageIO.write(outputBI, formatName, new File(path.toString() + "\\" + resource.getFile().getName()));
         }
         Path path = this.imageSizedLocation.get(subPathSized);
         Path normalize = path.resolve(multimediaParam.getFileName()).normalize();
         UrlResource sizedResource = new UrlResource(normalize.toUri());
-        if(!sizedResource.exists()){
-            BufferedImage inputBI=ImageIO.read(resource.getFile());
-            BufferedImage outputBI=new BufferedImage(multimediaParam.getWidth(),multimediaParam.getHeight(),inputBI.getType());
-            Graphics2D g2d=outputBI.createGraphics();
-            g2d.drawImage(inputBI,0,0,multimediaParam.getWidth(),multimediaParam.getHeight(),null);
+        if (!sizedResource.exists()) {
+            BufferedImage inputBI = ImageIO.read(resource.getFile());
+            BufferedImage outputBI = new BufferedImage(multimediaParam.getWidth(), multimediaParam.getHeight(), inputBI.getType());
+            Graphics2D g2d = outputBI.createGraphics();
+            g2d.drawImage(inputBI, 0, 0, multimediaParam.getWidth(), multimediaParam.getHeight(), null);
             g2d.dispose();
-            String formatName=resource.getFile().getName().substring(resource.getFile().getName().lastIndexOf(".")+1);
-            ImageIO.write(outputBI,formatName,new File(path.toString()+"\\"+resource.getFile().getName()));
+            String formatName = resource.getFile().getName().substring(resource.getFile().getName().lastIndexOf(".") + 1);
+            ImageIO.write(outputBI, formatName, new File(path.toString() + "\\" + resource.getFile().getName()));
         }
         resource = new UrlResource(normalize.toUri());
         return new FileInputStream(resource.getFile());
@@ -232,24 +240,33 @@ public class MultimediaServiceImpl implements MultimediaService {
     @Override
     public List<InputStream> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException {
         PageRequest pageRequest = PageRequest.of(multimediaRetrieveParam.getPage(), multimediaRetrieveParam.getSize());
-        List<Multimedia> all = this.multimediaRepository.findAllByMediaType(multimediaRetrieveParam.getMediaType(),pageRequest);
-        List<InputStream> inputStreams=new ArrayList<>();
+        List<Multimedia> all = this.multimediaRepository.findAllByMediaType(multimediaRetrieveParam.getMediaType(), pageRequest);
+        List<InputStream> inputStreams = new ArrayList<>();
         for (Multimedia multimedia : all) {
-            if(multimedia.getMediaType().equals(MediaType.IMAGE)){
+            if (multimedia.getMediaType().equals(MediaType.IMAGE)) {
                 inputStreams.add(loadImageFile(MultimediaRetrieveParam.builder().fileName(multimedia.getFileName()).height(multimediaRetrieveParam.getHeight()).width(multimediaRetrieveParam.getWidth()).build()));
             }
-            if(multimedia.getMediaType().equals(MediaType.AUDIO)){
+            if (multimedia.getMediaType().equals(MediaType.AUDIO)) {
                 Path filePath = this.audioStorageLocation.resolve(multimedia.getFileName()).normalize();
                 Resource resource = new UrlResource(filePath.toUri());
                 inputStreams.add(new FileInputStream(resource.getFile()));
             }
-            if(multimedia.getMediaType().equals(MediaType.VIDEO)){
+            if (multimedia.getMediaType().equals(MediaType.VIDEO)) {
                 Path filePath = this.videoStorageLocation.resolve(multimedia.getFileName()).normalize();
                 Resource resource = new UrlResource(filePath.toUri());
                 inputStreams.add(new FileInputStream(resource.getFile()));
             }
         }
-
         return inputStreams;
+    }
+
+    @Override
+    public List<Long> getAllId() {
+        return multimediaRepository.findAll().stream().map(m->m.getId()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllName() {
+        return multimediaRepository.findAll().stream().map(m->m.getFileName()).collect(Collectors.toList());
     }
 }
