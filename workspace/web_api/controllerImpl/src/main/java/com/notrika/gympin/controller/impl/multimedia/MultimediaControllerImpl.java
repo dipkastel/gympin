@@ -1,7 +1,9 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.multimedia.api.MultimediaController;
+import com.notrika.gympin.common.multimedia.dto.InputStreamResourceDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
@@ -28,9 +30,27 @@ public class MultimediaControllerImpl implements MultimediaController {
     private MultimediaService multimediaService;
 
     @Override
-    @RequestMapping(path = "/addImage", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @RequestMapping(path = "/add", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Boolean> add(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws IOException {
         return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam), HttpStatus.OK);
+    }
+
+    @Override
+    @RequestMapping(path = "/addImage", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Boolean> addImage(MultimediaStoreParam multimediaStoreParam) throws IOException {
+        return new ResponseEntity<Boolean>(multimediaService.addImage(multimediaStoreParam), HttpStatus.OK);
+    }
+
+    @Override
+    @RequestMapping(path = "/addVideo", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Boolean> addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException {
+        return new ResponseEntity<Boolean>(multimediaService.addVideo(multimediaStoreParam), HttpStatus.OK);
+    }
+
+    @Override
+    @RequestMapping(path = "/addAudio", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Boolean> addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException {
+        return new ResponseEntity<Boolean>(multimediaService.addAudio(multimediaStoreParam), HttpStatus.OK);
     }
 
     @Override
@@ -68,5 +88,17 @@ public class MultimediaControllerImpl implements MultimediaController {
             inputStreamResources.add(allByType.get(i).readAllBytes());
         }
         return inputStreamResources;
+    }
+
+    @Override
+    @GetMapping("/getAllId")
+    public ResponseEntity<List<Long>> getAllId() {
+        return new ResponseEntity<List<Long>>(multimediaService.getAllId(),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/getAllName")
+    public ResponseEntity<List<String>> getAllName() {
+        return new ResponseEntity<List<String>>(multimediaService.getAllName(),HttpStatus.OK);
     }
 }
