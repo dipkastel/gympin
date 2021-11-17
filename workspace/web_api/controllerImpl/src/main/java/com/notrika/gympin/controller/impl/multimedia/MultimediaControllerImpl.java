@@ -73,7 +73,7 @@ public class MultimediaControllerImpl implements MultimediaController {
     @RequestMapping(path = "/getById", method = GET)
     @ResponseBody
     @IgnoreWrapAspect
-    public InputStreamResource getById(MultimediaRetrieveParam id) throws Exception {
+    public InputStreamResource getById(Long id) throws Exception {
         return new InputStreamResource(multimediaService.getById(id));
     }
 

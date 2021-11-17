@@ -13,7 +13,6 @@ import com.notrika.gympin.persistence.dao.repository.SportMultimediaRepository;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
 import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
 import com.notrika.gympin.persistence.entity.sport.Sport;
-import com.notrika.gympin.persistence.entity.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +121,7 @@ public class MultimediaServiceImpl implements MultimediaService {
     }
 
     private boolean saveFile(MultimediaStoreParam multimediaStoreParam, Path path) throws IOException {
-//        User user = userService.getUserById(multimediaStoreParam.getUserParam().getId());
+        //        User user = userService.getUserById(multimediaStoreParam.getUserParam().getId());
         MultipartFile multipartFile = multimediaStoreParam.getMultipartFile();//multimediaStoreParam.getMultipartFile().get(i);
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         if (fileName.contains("..")) {
@@ -148,9 +147,12 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     @Override
     public InputStream loadFileAsResource(MultimediaRetrieveParam multimediaParam) throws Exception {
-        Multimedia multiMediaFile = multimediaRepository.findByFileName(multimediaParam.getFileName());
+        Multimedia multiMediaFile = null;
+        if (multimediaParam.getId() != null && multimediaParam.getId() > 0) multiMediaFile = multimediaRepository.getById(multimediaParam.getId());
+        else if (multimediaParam.getFileName() != null) multiMediaFile = multimediaRepository.findByFileName(multimediaParam.getFileName());
         if (multiMediaFile == null) throw new FileNotFoundException("File not found " + multimediaParam.getFileName());
-
+        multimediaParam.setFileName(multiMediaFile.getFileName());
+        multimediaParam.setId(multiMediaFile.getId());
         if (multiMediaFile.getMediaType().equals(MediaType.IMAGE)) {
             return loadImageFile(multimediaParam);
         }
@@ -221,9 +223,9 @@ public class MultimediaServiceImpl implements MultimediaService {
     }
 
     @Override
-    public InputStream getById(MultimediaRetrieveParam multimediaParam) throws Exception {
-        Multimedia byId = sportMultimediaRepository.getById(multimediaParam.getId()).getMultimedia();
-        return loadFileAsResource(multimediaParam);
+    public InputStream getById(Long id) throws Exception {
+        MultimediaRetrieveParam multimediaRetrieveParam = MultimediaRetrieveParam.builder().id(id).build();
+        return loadFileAsResource(multimediaRetrieveParam);
 
     }
 
@@ -262,11 +264,11 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     @Override
     public List<Long> getAllId() {
-        return multimediaRepository.findAll().stream().map(m->m.getId()).collect(Collectors.toList());
+        return multimediaRepository.findAll().stream().map(m -> m.getId()).collect(Collectors.toList());
     }
 
     @Override
     public List<String> getAllName() {
-        return multimediaRepository.findAll().stream().map(m->m.getFileName()).collect(Collectors.toList());
+        return multimediaRepository.findAll().stream().map(m -> m.getFileName()).collect(Collectors.toList());
     }
 }

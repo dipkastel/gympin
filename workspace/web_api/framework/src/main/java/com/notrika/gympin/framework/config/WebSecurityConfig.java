@@ -70,7 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v2/api-docs/**"
                         ,"/swagger-resources/**"
                         ,"/v2/swagger-ui/**"
-                        //,"/api/v1/multimedia/**"
+                        ,"/api/v1/multimedia/getById"
+                        ,"/api/v1/multimedia/getByName"
 //                        ,"/api/v1/administrator/add"
                 )
                 .permitAll()
@@ -85,7 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("user").password(passwordEncoder().encode("password")).roles("USER");
+        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("09365375024").password(passwordEncoder().encode("123456")).roles("ADMIN");
     }
 
     //Cross origin resource sharing.

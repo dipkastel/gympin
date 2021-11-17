@@ -21,7 +21,7 @@ public interface MultimediaService {
 
     Long getMultimediaIdByFileName(String fileName);
 
-    InputStream getById(MultimediaRetrieveParam multimediaParam) throws Exception;
+    InputStream getById(Long id) throws Exception;
 
     List<InputStream> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException;
 
