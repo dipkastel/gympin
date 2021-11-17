@@ -23,7 +23,7 @@ public interface MultimediaController {
 
     ResponseEntity<Long> getMultimediaIdByFileName(String fileName);
 
-    InputStreamResource getById(MultimediaRetrieveParam multimediaParam) throws Exception;
+    InputStreamResource getById(Long id) throws Exception;
 
     List<byte[]> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException;
 
