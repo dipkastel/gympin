@@ -188,7 +188,7 @@ public class MultimediaServiceImpl implements MultimediaService {
         String subPathSized = multimediaParam.getWidth().toString() + "-" + multimediaParam.getHeight().toString();
         Path subPath = this.imageSizedLocation.get(subPathSized);
         if (subPath == null) {
-            Path path = Paths.get(this.imageStorageLocation + "\\" + subPathSized).toAbsolutePath().normalize();
+            Path path = Paths.get(this.imageStorageLocation + "/" + subPathSized).toAbsolutePath().normalize();
             Files.createDirectories(path);
             this.imageSizedLocation.put(subPathSized, path);
             BufferedImage inputBI = ImageIO.read(resource.getFile());
@@ -197,7 +197,7 @@ public class MultimediaServiceImpl implements MultimediaService {
             g2d.drawImage(inputBI, 0, 0, multimediaParam.getWidth(), multimediaParam.getHeight(), null);
             g2d.dispose();
             String formatName = resource.getFile().getName().substring(resource.getFile().getName().lastIndexOf(".") + 1);
-            ImageIO.write(outputBI, formatName, new File(path.toString() + "\\" + resource.getFile().getName()));
+            ImageIO.write(outputBI, formatName, new File(path.toString() + "/" + resource.getFile().getName()));
         }
         Path path = this.imageSizedLocation.get(subPathSized);
         Path normalize = path.resolve(multimediaParam.getFileName()).normalize();
@@ -209,7 +209,7 @@ public class MultimediaServiceImpl implements MultimediaService {
             g2d.drawImage(inputBI, 0, 0, multimediaParam.getWidth(), multimediaParam.getHeight(), null);
             g2d.dispose();
             String formatName = resource.getFile().getName().substring(resource.getFile().getName().lastIndexOf(".") + 1);
-            ImageIO.write(outputBI, formatName, new File(path.toString() + "\\" + resource.getFile().getName()));
+            ImageIO.write(outputBI, formatName, new File(path.toString() + "/" + resource.getFile().getName()));
         }
         resource = new UrlResource(normalize.toUri());
         return new FileInputStream(resource.getFile());
