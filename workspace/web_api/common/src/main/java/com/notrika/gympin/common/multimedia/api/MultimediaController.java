@@ -20,11 +20,11 @@ public interface MultimediaController {
 
     ResponseEntity<Boolean> addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
-    void getByName(HttpServletResponse response, String name) throws Exception;
+    void getByName(HttpServletResponse response,MultimediaRetrieveParam param) throws Exception;
 
     ResponseEntity<Long> getMultimediaIdByFileName(String fileName);
 
-    void getById(HttpServletResponse response, Long id) throws Exception;
+    void getById(HttpServletResponse response,MultimediaRetrieveParam param) throws Exception;
 
     List<byte[]> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException;
 

@@ -60,8 +60,8 @@ public class MultimediaControllerImpl implements MultimediaController {
     @RequestMapping(path = "/getByName", method = GET)
     @ResponseBody
     @IgnoreWrapAspect
-    public void getByName(HttpServletResponse response, String name) throws Exception {
-        InputStream byName = multimediaService.getByName(name);
+    public void getByName(HttpServletResponse response, MultimediaRetrieveParam param) throws Exception {
+        InputStream byName = multimediaService.getByName(param);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(byName,response.getOutputStream());
 
@@ -77,8 +77,8 @@ public class MultimediaControllerImpl implements MultimediaController {
     //    @GetMapping("/resource")
     @RequestMapping(path = "/getById", method = GET)
     @IgnoreWrapAspect
-    public  @ResponseBody void getById(HttpServletResponse response, Long id) throws Exception {
-        InputStream byId = multimediaService.getById(id);
+    public  @ResponseBody void getById(HttpServletResponse response,MultimediaRetrieveParam param) throws Exception {
+        InputStream byId = multimediaService.getById(param);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(byId,response.getOutputStream());
     }

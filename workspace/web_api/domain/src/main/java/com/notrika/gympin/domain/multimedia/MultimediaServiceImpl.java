@@ -224,16 +224,16 @@ public class MultimediaServiceImpl implements MultimediaService {
     }
 
     @Override
-    public InputStream getById(Long id) throws Exception {
-        MultimediaRetrieveParam multimediaRetrieveParam = MultimediaRetrieveParam.builder().id(id).build();
-        return loadFileAsResource(multimediaRetrieveParam);
+    public InputStream getById(MultimediaRetrieveParam param) throws Exception {
+//        MultimediaRetrieveParam multimediaRetrieveParam = MultimediaRetrieveParam.builder().id(id).build();
+        return loadFileAsResource(param);
 
     }
 
     @Override
-    public InputStream getByName(String name) throws Exception {
-        MultimediaRetrieveParam multimediaRetrieveParam = MultimediaRetrieveParam.builder().fileName(name).build();
-        return loadFileAsResource(multimediaRetrieveParam);
+    public InputStream getByName(MultimediaRetrieveParam param) throws Exception {
+        //MultimediaRetrieveParam multimediaRetrieveParam = MultimediaRetrieveParam.builder().fileName(name).build();
+        return loadFileAsResource(param);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
