@@ -57,6 +57,25 @@ export let UserApi = {
 
 
 
+export let MultimediaApi = {
+    //multimedia
+    add : "v1/multimedia/add",
+    addImage : "v1/multimedia/addImage",
+    addAudio : "v1/multimedia/addAudio",
+    addVideo : "v1/multimedia/addVideo",
+    getAllByType : "v1/multimedia/getAllByType",
+    getAllId : "v1/multimedia/getAllId",
+    getAllName : "v1/multimedia/getAllName",
+    getById : "v1/multimedia/getById",
+    getByName : "v1/multimedia/getByName",
+    getByFileName : "v1/multimedia/getByFileName",
+    getMultimediaIdByFileName : "v1/multimedia/getMultimediaIdByFileName",
+    delete : "v1/multimedia/delete",
+
+}
+
+
+
 export let AdministratorApi = {
     //sport
     add : "v1/administrator/add",
