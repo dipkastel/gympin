@@ -6,6 +6,7 @@ import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,11 +20,11 @@ public interface MultimediaController {
 
     ResponseEntity<Boolean> addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
-    InputStreamResource getByName(MultimediaRetrieveParam multimediaParam) throws Exception;
+    void getByName(HttpServletResponse response, String name) throws Exception;
 
     ResponseEntity<Long> getMultimediaIdByFileName(String fileName);
 
-    InputStreamResource getById(Long id) throws Exception;
+    void getById(HttpServletResponse response, Long id) throws Exception;
 
     List<byte[]> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException;
 

@@ -7,6 +7,7 @@ import com.notrika.gympin.common.multimedia.dto.InputStreamResourceDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -58,8 +60,11 @@ public class MultimediaControllerImpl implements MultimediaController {
     @RequestMapping(path = "/getByName", method = GET)
     @ResponseBody
     @IgnoreWrapAspect
-    public InputStreamResource getByName(MultimediaRetrieveParam multimediaParam) throws Exception {
-        return new InputStreamResource(multimediaService.loadFileAsResource(multimediaParam));
+    public void getByName(HttpServletResponse response, String name) throws Exception {
+        InputStream byName = multimediaService.getByName(name);
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        IOUtils.copy(byName,response.getOutputStream());
+
     }
 
     @Override
@@ -71,10 +76,11 @@ public class MultimediaControllerImpl implements MultimediaController {
     @Override
     //    @GetMapping("/resource")
     @RequestMapping(path = "/getById", method = GET)
-    @ResponseBody
     @IgnoreWrapAspect
-    public InputStreamResource getById(Long id) throws Exception {
-        return new InputStreamResource(multimediaService.getById(id));
+    public  @ResponseBody void getById(HttpServletResponse response, Long id) throws Exception {
+        InputStream byId = multimediaService.getById(id);
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        IOUtils.copy(byId,response.getOutputStream());
     }
 
     @Override

@@ -23,6 +23,8 @@ public interface MultimediaService {
 
     InputStream getById(Long id) throws Exception;
 
+    InputStream getByName(String name) throws Exception;
+
     List<InputStream> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException;
 
     List<Long> getAllId();

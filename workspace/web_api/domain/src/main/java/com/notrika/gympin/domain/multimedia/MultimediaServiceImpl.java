@@ -13,6 +13,7 @@ import com.notrika.gympin.persistence.dao.repository.SportMultimediaRepository;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
 import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
 import com.notrika.gympin.persistence.entity.sport.Sport;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -227,6 +228,12 @@ public class MultimediaServiceImpl implements MultimediaService {
         MultimediaRetrieveParam multimediaRetrieveParam = MultimediaRetrieveParam.builder().id(id).build();
         return loadFileAsResource(multimediaRetrieveParam);
 
+    }
+
+    @Override
+    public InputStream getByName(String name) throws Exception {
+        MultimediaRetrieveParam multimediaRetrieveParam = MultimediaRetrieveParam.builder().fileName(name).build();
+        return loadFileAsResource(multimediaRetrieveParam);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
