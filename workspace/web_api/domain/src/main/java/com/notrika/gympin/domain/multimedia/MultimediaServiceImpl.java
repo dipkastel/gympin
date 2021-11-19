@@ -11,6 +11,7 @@ import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.SportMultimediaRepository;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategory;
 import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
 import com.notrika.gympin.persistence.entity.sport.Sport;
 import org.apache.commons.io.IOUtils;
@@ -62,6 +63,9 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private MultimediaCategoryServiceImpl categoryService;
 
     public MultimediaServiceImpl() {
         imageSizedLocation = new HashMap<>();
@@ -129,13 +133,24 @@ public class MultimediaServiceImpl implements MultimediaService {
             throw new InvalidFileNameException("Error in file name.", HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
         }
         Path targetLocation = saveFile(path, multipartFile.getInputStream(), fileName);
+        MultimediaCategory multimediaCategoryById = categoryService.getMultimediaCategoryById(multimediaStoreParam.getCategoryParam().getId());
         Multimedia fileByUserByName = multimediaRepository.findByFileName(fileName);
         if (fileByUserByName != null) {
             fileByUserByName.setDocumentFormat(multipartFile.getContentType());
             fileByUserByName.setMediaType(multimediaStoreParam.getMediaType());
+            fileByUserByName.setTitle(multimediaStoreParam.getTitle());
+            fileByUserByName.setDescription(multimediaStoreParam.getDescription());
+            fileByUserByName.getCategories().add(multimediaCategoryById);
             multimediaRepository.update(fileByUserByName);
         } else {
-            multimediaRepository.add(Multimedia.builder().fileName(fileName).mediaType(multimediaStoreParam.getMediaType()).documentFormat(multipartFile.getContentType()).uploadDir(targetLocation.toString()).build());
+            multimediaRepository.add(Multimedia.builder().fileName(fileName)
+                    .mediaType(multimediaStoreParam.getMediaType())
+                    .documentFormat(multipartFile.getContentType())
+                    .uploadDir(targetLocation.toString())
+                            .title(multimediaStoreParam.getTitle())
+                            .description(multimediaStoreParam.getDescription())
+                            .categories(Collections.singletonList(multimediaCategoryById))
+                    .build());
         }
         return true;
     }
