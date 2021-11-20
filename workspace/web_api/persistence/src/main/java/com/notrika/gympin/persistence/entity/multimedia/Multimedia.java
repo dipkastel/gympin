@@ -38,9 +38,22 @@ public class Multimedia extends BaseEntity {
     @Column(name = "upload_dir")
     private String uploadDir;
 
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(mappedBy = "multimedia")
     @ToString.Exclude
     private List<SportMultimedia> multimedias;
+
+    @ManyToMany
+    @JoinTable(
+            name = "multimedia_multimedia_category",
+            joinColumns = @JoinColumn(name = "multimedia_id"),
+            inverseJoinColumns = @JoinColumn(name = "multimedia_category_id"))
+    private List<MultimediaCategory> categories;
 
     @Override
     public boolean equals(Object o) {

@@ -20,15 +20,16 @@ public class MultimediaStoreParam extends BaseParam<MultimediaStoreParam> {
     private MultipartFile multipartFile;
 
     //category
-    @JsonProperty("PartName")
-    private String partName;
-
-    @JsonProperty("User")
-    private UserParam userParam;
+    @JsonProperty("Category")
+    private MultimediaCategoryParam categoryParam;
 
     @JsonProperty("MediaType")
     private MediaType mediaType;
 
-    
+    @JsonProperty("Title")
+    private String title;
+
+    @JsonProperty("Description")
+    private String description;
 
 }
