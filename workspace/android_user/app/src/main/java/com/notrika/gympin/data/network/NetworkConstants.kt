@@ -1,8 +1,8 @@
 package com.notrika.gympin.data.network
 
 object NetworkConstants {
-    const val BASE_URL = "http://api.gympin.ir/"
-   // const val BASE_URL = "http://192.168.0.191:8080/api/"
+   // const val BASE_URL = "http://api.gympin.ir/"
+    const val BASE_URL = "http://192.168.0.191:8080/api/"
     const val BASE_API_URL = BASE_URL
     const val BASE_webView_URL = BASE_URL
     const val BASE_MEDIA_URL = BASE_URL

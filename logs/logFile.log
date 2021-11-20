@@ -10282,3 +10282,283 @@ io.jsonwebtoken.ExpiredJwtException: JWT expired at 2021-10-16T21:43:56Z. Curren
 [INFO ] 20-11-2021 12:33:58.359 PM [http-nio-8080-exec-4]  com.notrika.gympin.domain.user.AccountServiceImpl - Going to loadUserByUsername ...
 
 [INFO ] 20-11-2021 12:33:58.381 PM [http-nio-8080-exec-4]  com.notrika.gympin.domain.user.AccountServiceImpl - User loaded: com.notrika.gympin.common.user.dto.UserDetailsImpl@20c8e25b
+[INFO ] 20-11-2021 02:20:51.279 PM [main]  c.n.gympin.framework.spring.WebApiApplication - LOG IS WORKING
+[INFO ] 20-11-2021 02:20:51.689 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - LOG IS WORKING
+[INFO ] 20-11-2021 02:20:52.478 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - Starting WebApiApplication using Java 11.0.11 on amir with PID 27248 (E:\work\gympin\workspace\web_api\framework\target\classes started by amir in E:\work\gympin)
+[INFO ] 20-11-2021 02:20:52.479 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - No active profile set, falling back to default profiles: default
+[INFO ] 20-11-2021 02:21:05.198 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - Started WebApiApplication in 13.49 seconds (JVM running for 15.896)
+[INFO ] 20-11-2021 02:21:38.430 PM [http-nio-8080-exec-2]  com.notrika.gympin.domain.user.AccountServiceImpl - Going to loadUserByUsername ...
+
+[INFO ] 20-11-2021 02:21:38.609 PM [http-nio-8080-exec-2]  com.notrika.gympin.domain.user.AccountServiceImpl - User loaded: com.notrika.gympin.common.user.dto.UserDetailsImpl@22d78b
+[INFO ] 20-11-2021 02:21:38.659 PM [http-nio-8080-exec-2]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Going to set context...
+
+[INFO ] 20-11-2021 02:21:38.660 PM [http-nio-8080-exec-2]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Following context setted: GympinContext(userGroup=null, user=null, userDetails=com.notrika.gympin.common.user.dto.UserDetailsImpl@22d78b, calledApi=null, ignoreExpire=false, entry={}) 
+
+[INFO ] 20-11-2021 02:21:38.686 PM [http-nio-8080-exec-2]  c.notrika.gympin.framework.spring.aspect.ApiAspect - 
+==============================================================
+Method public org.springframework.http.ResponseEntity com.notrika.gympin.controller.impl.location.LocationControllerImpl.getAllState(com.notrika.gympin.common.BaseParam)
+started with following input param: 
+BaseParam(id=null, createdDate=null, updatedDate=null, isDeleted=false, page=0, size=20)
+
+[INFO ] 20-11-2021 02:21:38.727 PM [http-nio-8080-exec-2]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Going to set ResponseEntity... 
+
+[INFO ] 20-11-2021 02:21:38.744 PM [http-nio-8080-exec-2]  c.notrika.gympin.framework.spring.aspect.ApiAspect - 
+ and return following result: 
+ResponseModel(Success=true, MessageType=0, Message=, ResultDate=Sat Nov 20 14:21:38 IRST 2021, LinkParams=null, Error=null, data=[StateDto(name=اصفهان), StateDto(name=تهران), StateDto(name=خراسان), StateDto(name=فارس), StateDto(name=آذربایجان غربی), StateDto(name=آذربایجان شرقی)])
+==============================================================
+
+[INFO ] 20-11-2021 02:21:39.977 PM [http-nio-8080-exec-4]  com.notrika.gympin.domain.user.AccountServiceImpl - Going to loadUserByUsername ...
+
+[INFO ] 20-11-2021 02:21:40.013 PM [http-nio-8080-exec-4]  com.notrika.gympin.domain.user.AccountServiceImpl - User loaded: com.notrika.gympin.common.user.dto.UserDetailsImpl@2bd83bd
+[INFO ] 20-11-2021 02:21:40.015 PM [http-nio-8080-exec-4]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Going to set context...
+
+[INFO ] 20-11-2021 02:21:40.015 PM [http-nio-8080-exec-4]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Following context setted: GympinContext(userGroup=null, user=null, userDetails=com.notrika.gympin.common.user.dto.UserDetailsImpl@2bd83bd, calledApi=null, ignoreExpire=false, entry={}) 
+
+[INFO ] 20-11-2021 02:21:40.015 PM [http-nio-8080-exec-4]  c.notrika.gympin.framework.spring.aspect.ApiAspect - 
+==============================================================
+Method public org.springframework.http.ResponseEntity com.notrika.gympin.controller.impl.user.UserControllerImpl.getAll(com.notrika.gympin.common.BaseParam)
+started with following input param: 
+BaseParam(id=null, createdDate=null, updatedDate=null, isDeleted=false, page=0, size=20)
+
+[INFO ] 20-11-2021 02:21:40.060 PM [http-nio-8080-exec-4]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Going to set ResponseEntity... 
+
+[INFO ] 20-11-2021 02:21:40.074 PM [http-nio-8080-exec-4]  c.notrika.gympin.framework.spring.aspect.ApiAspect - 
+ and return following result: 
+ResponseModel(Success=true, MessageType=0, Message=, ResultDate=Sat Nov 20 14:21:40 IRST 2021, LinkParams=null, Error=null, data=[UserDto(userRole=ADMIN, userStatus=ENABLED, username=امیر اشرفی, phoneNumber=09126540027, token=null, name=amir), UserDto(userRole=ADMIN, userStatus=ENABLED, username=سیاوش نمیرانیان, phoneNumber=09365375024, token=null, name=sia), UserDto(userRole=USER, userStatus=null, username=amirashrafi, phoneNumber=09126540028, token=null, name=null)])
+==============================================================
+
+[INFO ] 20-11-2021 02:22:03.095 PM [http-nio-8080-exec-6]  com.notrika.gympin.domain.user.AccountServiceImpl - Going to loadUserByUsername ...
+
+[INFO ] 20-11-2021 02:22:03.120 PM [http-nio-8080-exec-6]  com.notrika.gympin.domain.user.AccountServiceImpl - User loaded: com.notrika.gympin.common.user.dto.UserDetailsImpl@d60b55a
+[INFO ] 20-11-2021 02:22:03.122 PM [http-nio-8080-exec-6]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Going to set context...
+
+[INFO ] 20-11-2021 02:22:03.123 PM [http-nio-8080-exec-6]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Following context setted: GympinContext(userGroup=null, user=null, userDetails=com.notrika.gympin.common.user.dto.UserDetailsImpl@d60b55a, calledApi=null, ignoreExpire=false, entry={}) 
+
+[INFO ] 20-11-2021 02:22:03.123 PM [http-nio-8080-exec-6]  c.notrika.gympin.framework.spring.aspect.ApiAspect - 
+==============================================================
+Method public org.springframework.http.ResponseEntity com.notrika.gympin.controller.impl.multimedia.MultimediaCategoryControllerImpl.add(com.notrika.gympin.common.multimedia.param.MultimediaCategoryParam)
+started with following input param: 
+MultimediaCategoryParam(name=null)
+
+[ERROR] 20-11-2021 02:23:19.895 PM [http-nio-8080-exec-6]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Unkown error: 
+
+org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value : com.notrika.gympin.persistence.entity.multimedia.MultimediaCategory.name; nested exception is org.hibernate.PropertyValueException: not-null property references a null or transient value : com.notrika.gympin.persistence.entity.multimedia.MultimediaCategory.name
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:294)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:233)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:551)
+	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61)
+	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:242)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:152)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:174)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:215)
+	at com.sun.proxy.$Proxy144.add(Unknown Source)
+	at com.notrika.gympin.domain.multimedia.MultimediaCategoryServiceImpl.add(MultimediaCategoryServiceImpl.java:29)
+	at com.notrika.gympin.domain.multimedia.MultimediaCategoryServiceImpl.add(MultimediaCategoryServiceImpl.java:25)
+	at com.notrika.gympin.domain.multimedia.MultimediaCategoryServiceImpl.add(MultimediaCategoryServiceImpl.java:16)
+	at com.notrika.gympin.controller.impl.multimedia.MultimediaCategoryControllerImpl.add(MultimediaCategoryControllerImpl.java:25)
+	at com.notrika.gympin.controller.impl.multimedia.MultimediaCategoryControllerImpl$$FastClassBySpringCGLIB$$ef71c373.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:779)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:750)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.notrika.gympin.framework.spring.aspect.ApiAspect.process(ApiAspect.java:39)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:624)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:72)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:750)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:750)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:692)
+	at com.notrika.gympin.controller.impl.multimedia.MultimediaCategoryControllerImpl$$EnhancerBySpringCGLIB$$1c6cda76.add(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:894)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1063)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:113)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:327)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:121)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:115)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:105)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at com.notrika.gympin.framework.config.AuthTokenFilter.doFilterInternal(AuthTokenFilter.java:46)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: org.hibernate.PropertyValueException: not-null property references a null or transient value : com.notrika.gympin.persistence.entity.multimedia.MultimediaCategory.name
+	at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:111)
+	at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:55)
+	at org.hibernate.action.internal.AbstractEntityInsertAction.nullifyTransientReferencesIfNotAlready(AbstractEntityInsertAction.java:116)
+	at org.hibernate.action.internal.EntityIdentityInsertAction.execute(EntityIdentityInsertAction.java:72)
+	at org.hibernate.engine.spi.ActionQueue.execute(ActionQueue.java:645)
+	at org.hibernate.engine.spi.ActionQueue.addResolvedEntityInsertAction(ActionQueue.java:282)
+	at org.hibernate.engine.spi.ActionQueue.addInsertAction(ActionQueue.java:263)
+	at org.hibernate.engine.spi.ActionQueue.addAction(ActionQueue.java:317)
+	at org.hibernate.event.internal.AbstractSaveEventListener.addInsertAction(AbstractSaveEventListener.java:330)
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:287)
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:193)
+	at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:123)
+	at org.hibernate.event.internal.DefaultPersistEventListener.entityIsTransient(DefaultPersistEventListener.java:185)
+	at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:128)
+	at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:55)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:99)
+	at org.hibernate.internal.SessionImpl.firePersist(SessionImpl.java:720)
+	at org.hibernate.internal.SessionImpl.persist(SessionImpl.java:706)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.orm.jpa.ExtendedEntityManagerCreator$ExtendedEntityManagerInvocationHandler.invoke(ExtendedEntityManagerCreator.java:362)
+	at com.sun.proxy.$Proxy119.persist(Unknown Source)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:311)
+	at com.sun.proxy.$Proxy119.persist(Unknown Source)
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.save(SimpleJpaRepository.java:597)
+	at com.notrika.gympin.persistence.dao.BaseRepositoryImpl.add(BaseRepositoryImpl.java:57)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:289)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:137)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:121)
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:529)
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:285)
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:599)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:163)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:138)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:80)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137)
+	... 126 common frames omitted
+[INFO ] 20-11-2021 02:23:19.900 PM [http-nio-8080-exec-6]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Going to set failure response:...
+
+[INFO ] 20-11-2021 02:23:19.901 PM [http-nio-8080-exec-6]  c.notrika.gympin.framework.spring.aspect.ApiAspect - 
+ and return following result: 
+
+==============================================================
+
+[INFO ] 20-11-2021 02:23:28.246 PM [main]  c.n.gympin.framework.spring.WebApiApplication - LOG IS WORKING
+[INFO ] 20-11-2021 02:23:28.736 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - LOG IS WORKING
+[INFO ] 20-11-2021 02:23:29.657 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - Starting WebApiApplication using Java 11.0.11 on amir with PID 15020 (E:\work\gympin\workspace\web_api\framework\target\classes started by amir in E:\work\gympin)
+[INFO ] 20-11-2021 02:23:29.658 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - No active profile set, falling back to default profiles: default
+[INFO ] 20-11-2021 02:23:43.332 PM [restartedMain]  c.n.gympin.framework.spring.WebApiApplication - Started WebApiApplication in 14.575 seconds (JVM running for 17.212)
+[INFO ] 20-11-2021 02:23:47.354 PM [http-nio-8080-exec-1]  com.notrika.gympin.domain.user.AccountServiceImpl - Going to loadUserByUsername ...
+
+[INFO ] 20-11-2021 02:23:47.517 PM [http-nio-8080-exec-1]  com.notrika.gympin.domain.user.AccountServiceImpl - User loaded: com.notrika.gympin.common.user.dto.UserDetailsImpl@33430c1c
+[INFO ] 20-11-2021 02:23:47.605 PM [http-nio-8080-exec-1]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Going to set context...
+
+[INFO ] 20-11-2021 02:23:47.606 PM [http-nio-8080-exec-1]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Following context setted: GympinContext(userGroup=null, user=null, userDetails=com.notrika.gympin.common.user.dto.UserDetailsImpl@33430c1c, calledApi=null, ignoreExpire=false, entry={}) 
+
+[INFO ] 20-11-2021 02:23:47.622 PM [http-nio-8080-exec-1]  c.notrika.gympin.framework.spring.aspect.ApiAspect - 
+==============================================================
+Method public org.springframework.http.ResponseEntity com.notrika.gympin.controller.impl.multimedia.MultimediaCategoryControllerImpl.add(com.notrika.gympin.common.multimedia.param.MultimediaCategoryParam)
+started with following input param: 
+MultimediaCategoryParam(name=msain)
+
+[INFO ] 20-11-2021 02:23:56.510 PM [http-nio-8080-exec-1]  c.notrika.gympin.framework.spring.aspect.ApiAspect - Going to set ResponseEntity... 
+
+[INFO ] 20-11-2021 02:23:56.528 PM [http-nio-8080-exec-1]  c.notrika.gympin.framework.spring.aspect.ApiAspect - 
+ and return following result: 
+ResponseModel(Success=true, MessageType=0, Message=, ResultDate=Sat Nov 20 14:23:56 IRST 2021, LinkParams=null, Error=null, data=MultimediaCategoryDto(name=msain))
+==============================================================
+
