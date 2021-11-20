@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import AddIcon from "@material-ui/icons/Add";
-import { media_getAllName} from "../../../api/media.api";
+import {media_getAllName} from "../../../api/media.api";
+import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@material-ui/core";
 
 class AllImages extends Component {
     constructor(props) {
@@ -30,14 +31,26 @@ class AllImages extends Component {
     }
 
     RenderImages(image) {
+        var imageUrl = "http://api.gympin.ir/v1/multimedia/getByName?fileName=" + image.toString() + "&width=200&height=200";
+        console.log("imageUrl");
+        console.log(imageUrl);
         return (
-            <React.Fragment key={image}>
-                {image}
-                <img src={"https://api.gympin.ir/v1/multimedia/getByName/"+image}  />
-            </React.Fragment>
+            <Card className={"card "} key={imageUrl}>
+                <CardActionArea>
+                    <CardMedia
+                        className="media"
+                        image={imageUrl}
+                        title="Contemplative Reptile"
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            <label htmlFor={"title"}>{image}</label>
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
         )
     }
-
 
 
     render() {
@@ -62,7 +75,13 @@ class AllImages extends Component {
                     />
 
                     <PortletBody>
-                        {images.map(e=>this.RenderImages(e))}
+                        <div className="kt-section kt-margin-t-30">
+                            <div className="kt-section__body">
+                                <div className="row">
+                                    {images.map(e => this.RenderImages(e))}
+                                </div>
+                            </div>
+                        </div>
                     </PortletBody>
                 </Portlet>
             </>

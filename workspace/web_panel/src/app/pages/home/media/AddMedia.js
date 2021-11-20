@@ -15,20 +15,9 @@ function AddMedia() {
 
     function RenderImageForUpload(e,index) {
         return (
-                <ImageAddItem image={e} key={e.name} addToImages={addToImages}/>
+                <ImageAddItem image={e} key={e.name} />
         )
     }
-    function addToImages(image){
-        setImagesToUpload(prev=>{
-            var item = []
-            prev.forEach(o=>{
-                if(o) item.push(o)
-            })
-            item.push(image)
-            return item
-        })
-    }
-
     function inputChange(event) {
         event.preventDefault()
         setImagesToUpload([])

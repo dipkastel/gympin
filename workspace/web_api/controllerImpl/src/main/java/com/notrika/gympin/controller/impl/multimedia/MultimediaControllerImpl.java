@@ -1,15 +1,12 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.multimedia.api.MultimediaController;
-import com.notrika.gympin.common.multimedia.dto.InputStreamResourceDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +61,6 @@ public class MultimediaControllerImpl implements MultimediaController {
         InputStream byName = multimediaService.getByName(param);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(byName,response.getOutputStream());
-
     }
 
     @Override

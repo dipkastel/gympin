@@ -16,7 +16,7 @@ export function media_addAudio(data) {
     });
 }
 export function media_addImage(data) {
-    return axios.post(MultimediaApi.addImage,{data:data},{
+    return axios.post(MultimediaApi.addImage,data,{
         headers:{
             'content-type': 'multipart/form-data'
         }

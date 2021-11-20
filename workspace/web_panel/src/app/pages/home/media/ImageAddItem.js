@@ -7,11 +7,9 @@ const ImageAddItem = (param) => {
 
     async function formSubmit(event) {
         event.preventDefault()
-        var imageToSend = {
-            multipartFile: param.image
-        }
-        console.log(imageToSend)
-        media_addImage(imageToSend).then(data=>{
+        const formData = new FormData();
+        formData.append('multipartFile',param.image)
+        media_addImage(formData).then(data=>{
             SetSent(true)
         }).catch(e=>{
             console.log(e)
@@ -19,7 +17,6 @@ const ImageAddItem = (param) => {
     }
     return (
         <>
-
             <Card className={"card " + (sent&&"MuiCard-success")}>
                 <form onSubmit={formSubmit}>
                     <CardActionArea>

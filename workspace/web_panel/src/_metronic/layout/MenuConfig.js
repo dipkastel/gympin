@@ -8,6 +8,7 @@ export default {
   aside: {
     self: {},
     items: [
+      { section: "my account" },
       {
         title: "Dashboard",
         root: true,
@@ -41,12 +42,20 @@ export default {
         icon: "flaticon-stopwatch",
         page: "sports"
       },
+      { section: "resource" },
       {
         title: "manage media",
         root: true,
-        icon: "flaticon-attachment",
+        icon: "flaticon-folder-1",
         page: "media"
-      }
+      },
+      { section: "settings" },
+      {
+        title: "settings",
+        root: true,
+        icon: "flaticon-settings-1",
+        page: "settings"
+      },
     ]
   }
 };

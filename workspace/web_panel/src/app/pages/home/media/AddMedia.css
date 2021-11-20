@@ -4,6 +4,7 @@
 }
 .media{
     height: 140px;
+    width: 320px;
 }
 .MuiCard-success{
     background-color: #bcf8d4 !important;
