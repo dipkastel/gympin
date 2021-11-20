@@ -32,17 +32,17 @@ public class MultimediaCategoryControllerImpl implements MultimediaCategoryContr
     }
 
     @Override
-    public ResponseEntity<MultimediaCategoryDto> delete(@RequestBody MultimediaCategoryParam param) {
+    public ResponseEntity<MultimediaCategoryDto> delete(MultimediaCategoryParam param) {
         return new ResponseEntity<>(multimediaCategoryService.delete(param),HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<MultimediaCategoryDto>> getAll(@RequestBody BaseParam pagingParam) {
+    public ResponseEntity<List<MultimediaCategoryDto>> getAll(BaseParam pagingParam) {
         return new ResponseEntity<>(multimediaCategoryService.getAll(pagingParam),HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<MultimediaCategoryDto> getById(@RequestBody long id) {
+    public ResponseEntity<MultimediaCategoryDto> getById(long id) {
         return new ResponseEntity<>(multimediaCategoryService.getById(id),HttpStatus.OK);
     }
 }
