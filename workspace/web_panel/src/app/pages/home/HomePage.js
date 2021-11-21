@@ -8,6 +8,7 @@ import SportManagement from "./sport/SportManagement";
 import PlacedetailsManagement from "./place/details/PlaceDetalsManagement";
 import UserManagement from "./user/UserManagement";
 import MediaManagement from "./media/MediaManagement";
+import MediaCategoryManagement from "./media/category/mediaCategoryManagement";
 export default function HomePage() {
   return (
           <Suspense fallback={<LayoutSplashScreen />}>
@@ -22,6 +23,7 @@ export default function HomePage() {
                   <Route path="/sports" component={SportManagement} />
                   <Route path="/users" component={UserManagement} />
                   <Route path="/media" component={MediaManagement} />
+                  <Route path="/media-category" component={MediaCategoryManagement} />
                   <Redirect to="/error/error" />
               </Switch>
           </Suspense>

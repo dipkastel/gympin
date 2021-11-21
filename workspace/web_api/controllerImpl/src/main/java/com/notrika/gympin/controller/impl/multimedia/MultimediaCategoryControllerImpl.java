@@ -32,7 +32,7 @@ public class MultimediaCategoryControllerImpl implements MultimediaCategoryContr
     }
 
     @Override
-    public ResponseEntity<MultimediaCategoryDto> delete(MultimediaCategoryParam param) {
+    public ResponseEntity<MultimediaCategoryDto> delete(@RequestBody MultimediaCategoryParam param) {
         return new ResponseEntity<>(multimediaCategoryService.delete(param),HttpStatus.OK);
     }
 

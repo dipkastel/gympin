@@ -13,24 +13,27 @@ class MediaManagement extends Component {
         super(props);
         this.state = {
             imagesToUpload: [],
-            addMode: false
+            addMode: false,
+            selectedCatToDelete:[]
         };
     }
 
     render() {
         return (
             <>
-
                 <Notice icon="flaticon-warning kt-font-primary">
                     <p>
                         مدیریت رسانه ها
+                    </p>
+                    <p>
+                        <a className="btn btn-primary" href="/media-category">مدیریت دسته بندی</a>
                     </p>
                 </Notice>
 
                 {this.state.addMode &&
                 <AddMedia/>
                 }
-                <AllImages addMode={(e)=>this.toggleAddMode(e)} />
+                <AllImages addMode={(e) => this.toggleAddMode(e)}/>
             </>
         )
     }
@@ -42,19 +45,16 @@ class MediaManagement extends Component {
         }));
     }
 
-    openModalDelete = (e, user) => {
+    openModalDelete = (e, data) => {
         this.setState(() => ({
-            selectedUserToDelete: user
+            selectedCatToDelete: data
         }));
     };
-
-
-    closeModalDelete = () => {
+    closeModalDelete = ()=> {
         this.setState(() => ({
-            selectedUserToDelete: null
+            selectedCatToDelete: null
         }));
     };
-
     renderModalDelete = (classes, UserToDelete) => {
         console.log(this.state.selectedAccess)
         return (<>
