@@ -158,16 +158,16 @@ class UserManagement extends Component {
             addMode: true
         }));
     }
-    openAdminMode(e) {
-        e.preventDefault()
-        this.setState(() => ({
-            adminMode: true
-        }));
-    }
     closeAddMode(e) {
         e.preventDefault()
         this.setState(() => ({
             addMode: false
+        }));
+    }
+    openAdminMode(e) {
+        e.preventDefault()
+        this.setState(() => ({
+            adminMode: true
         }));
     }
     closeAdminMode(e) {

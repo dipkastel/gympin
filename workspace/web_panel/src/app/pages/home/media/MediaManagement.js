@@ -5,6 +5,9 @@ import {Button} from "@material-ui/core";
 import 'leaflet/dist/leaflet.css';
 import AddMedia from "./AddMedia";
 import AllImages from "./AllImages";
+import {multimediacategory_getAll} from "../../../api/mediaCategories.api";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
+import AddIcon from "@material-ui/icons/Add";
 
 
 class MediaManagement extends Component {
@@ -14,10 +17,10 @@ class MediaManagement extends Component {
         this.state = {
             imagesToUpload: [],
             addMode: false,
-            selectedCatToDelete:[]
+            selectedCatToDelete:[],
+            categories:[]
         };
     }
-
     render() {
         return (
             <>
@@ -31,9 +34,35 @@ class MediaManagement extends Component {
                 </Notice>
 
                 {this.state.addMode &&
-                <AddMedia/>
+                <AddMedia />
                 }
-                <AllImages addMode={(e) => this.toggleAddMode(e)}/>
+
+                <Portlet>
+                    <PortletHeader
+                        title="رسانه ها"
+                        toolbar={
+                            <PortletHeaderToolbar>
+                                <button
+                                    type="button"
+                                    className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
+                                    onClick={(e) => this.toggleAddMode(e)}
+                                >
+                                    <AddIcon/>
+                                </button>
+                            </PortletHeaderToolbar>
+                        }
+                    />
+
+                    <PortletBody>
+                        <div className="kt-section kt-margin-t-30">
+                            <div className="kt-section__body">
+                                <div className="row">
+                                    <AllImages />
+                                </div>
+                            </div>
+                        </div>
+                    </PortletBody>
+                </Portlet>
             </>
         )
     }

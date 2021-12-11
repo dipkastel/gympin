@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import AddIcon from "@material-ui/icons/Add";
-import {media_getAllName} from "../../../api/media.api";
+import {media_getAll} from "../../../api/media.api";
 import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@material-ui/core";
+import ImagePickerConsts from "../../../partials/picker/image/imagePickerConsts";
 
 class AllImages extends Component {
     constructor(props) {
@@ -18,10 +17,13 @@ class AllImages extends Component {
 
     getAllImages() {
 
-        media_getAllName().then(data => {
+        media_getAll().then(data => {
             console.log(data.data.Data);
             this.setState(() => ({
-                images: data.data.Data
+                images: data.data.Data.map(o=>{
+                    o.selected = false;
+                    return o;
+                })
             }));
             console.log(this.state.images);
 
@@ -31,9 +33,8 @@ class AllImages extends Component {
     }
 
     RenderImages(image) {
-        var imageUrl = "http://api.gympin.ir/v1/multimedia/getByName?fileName=" + image.toString() + "&width=200&height=200";
+        var imageUrl = "http://api.gympin.ir/v1/multimedia/getByName?fileName=" + image.Name.toString() + "&height=200";
         console.log("imageUrl");
-        console.log(imageUrl);
         return (
             <Card className={"card "} key={imageUrl}>
                 <CardActionArea>
@@ -42,48 +43,54 @@ class AllImages extends Component {
                         image={imageUrl}
                         title="Contemplative Reptile"
                     />
+                    {this.props.selectMode===ImagePickerConsts.SELECTMODE_SINGLE &&
+                        <input type="checkbox" className="m_checkbox" onChange={e=>this.selectImage(e,image)}
+                               checked={image.selected}/>
+                    }
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
-                            <label htmlFor={"title"}>{image}</label>
+                            <label htmlFor={"title"}>{image.Name}</label>
                         </Typography>
                     </CardContent>
                 </CardActionArea>
             </Card>
         )
     }
-
+    selectImage(e,image){
+        if(e.target.checked){
+            image.selected=true;
+            var images = [];
+            var tempImages = this.state.images;
+            images.push(image);
+            if(this.props.selectMode===ImagePickerConsts.SELECTMODE_SINGLE&&this.state.images.filter(o=>o.selected).length>0){
+                tempImages.filter(o=>o!==image&&o.selected).map(o=>{o.selected=false});
+                tempImages.filter(o=>o!==image).map(o=>images.push(o));
+            }else{
+                tempImages.filter(o=>o!==image).map(o=>images.push(o));
+            }
+            this.setState(() => ({
+                images: images
+            }));
+        }else{
+            var images = [];
+            this.state.images.filter(o=>o!==image&&o.selected).map(o=>images.push(o));
+            image.selected = false;
+            images.push(image);
+            this.state.images.filter(o=>o!==image&&!o.selected).map(o=>images.push(o));
+            this.setState(() => ({
+                images: images
+            }));
+        }
+        this.props.onImageSelect(this.state.images.filter(o=>o.selected));
+    }
 
     render() {
-        const addMode = this.props.addMode
         const images = this.state.images
         return (
             <>
-                <Portlet>
-                    <PortletHeader
-                        title="رسانه ها"
-                        toolbar={
-                            <PortletHeaderToolbar>
-                                <button
-                                    type="button"
-                                    className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                    onClick={(e) => addMode(e)}
-                                >
-                                    <AddIcon/>
-                                </button>
-                            </PortletHeaderToolbar>
-                        }
-                    />
-
-                    <PortletBody>
-                        <div className="kt-section kt-margin-t-30">
-                            <div className="kt-section__body">
-                                <div className="row">
-                                    {images.map(e => this.RenderImages(e))}
-                                </div>
-                            </div>
-                        </div>
-                    </PortletBody>
-                </Portlet>
+                <div className="row">
+                    {images.map(e => this.RenderImages(e))}
+                </div>
             </>
         );
     }

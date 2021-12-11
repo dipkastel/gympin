@@ -1,6 +1,7 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
+import com.notrika.gympin.common.location.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.api.MultimediaController;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
@@ -102,5 +103,11 @@ public class MultimediaControllerImpl implements MultimediaController {
     @GetMapping("/getAllName")
     public ResponseEntity<List<String>> getAllName() {
         return new ResponseEntity<List<String>>(multimediaService.getAllName(),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/getAll")
+    public ResponseEntity<List<MultimediaDto>> getAll() {
+        return new ResponseEntity<List<MultimediaDto>>(multimediaService.getAll(),HttpStatus.OK);
     }
 }

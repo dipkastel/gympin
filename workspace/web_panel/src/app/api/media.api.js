@@ -39,6 +39,10 @@ export function media_getAllName(data) {
     return axios.get(MultimediaApi.getAllName,{params:data});
 }
 
+export function media_getAll(data) {
+    return axios.get(MultimediaApi.getAll,{params:data});
+}
+
 export function media_getMultimediaIdByFileName(data) {
     return axios.get(MultimediaApi.getMultimediaIdByFileName,{params:data});
 }

@@ -1,6 +1,6 @@
 export let AuthApi = {
-       BASEURL : "http://api.gympin.ir/",
-      // BASEURL : "http://localhost:8080/api/",
+      // BASEURL : "http://api.gympin.ir/",
+       BASEURL : "http://localhost:8080/api/",
       LOGIN_URL : "v1/account/loginpanel"
 }
 export let LocationApi = {
@@ -65,6 +65,7 @@ export let MultimediaApi = {
     getAllByType : "v1/multimedia/getAllByType",
     getAllId : "v1/multimedia/getAllId",
     getAllName : "v1/multimedia/getAllName",
+    getAll : "v1/multimedia/getAll",
     getById : "v1/multimedia/getById",
     getByName : "v1/multimedia/getByName",
     getByFileName : "v1/multimedia/getByFileName",

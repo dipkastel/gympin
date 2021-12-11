@@ -4,11 +4,13 @@ import {media_addImage} from "../../../api/media.api";
 
 const ImageAddItem = (param) => {
     const [sent,SetSent] = useState(false)
-
     async function formSubmit(event) {
         event.preventDefault()
         const formData = new FormData();
         formData.append('multipartFile',param.image)
+        formData.append('title',event.target.title.value)
+        formData.append('description',event.target.desc.value)
+        formData.append('categoryParam.id',event.target.category.value)
         media_addImage(formData).then(data=>{
             SetSent(true)
         }).catch(e=>{
@@ -27,6 +29,12 @@ const ImageAddItem = (param) => {
                         />
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
+                                <label htmlFor={"category"}>category</label>
+                                <select id={"category"} name={"category"}  className="text-field">
+                                    {param.categories.map(m=><option value={m.Id}>{m.Name}</option>)}
+                                </select>
+                            </Typography>
+                            <Typography gutterBottom variant="h5" component="h2">
                                 <label htmlFor={"title"}>title</label>
                                 <input name="title" id={"title"} type={"text"} className="text-field"/>
                             </Typography>
@@ -40,7 +48,7 @@ const ImageAddItem = (param) => {
                     <CardActions>
 
                         <Button type="submit" size="small" color="primary" >
-                            آماده ارسال
+                            ارسال
                         </Button>
                     </CardActions>
                     }

@@ -3,18 +3,19 @@ package com.notrika.gympin.domain.multimedia;
 import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.multimedia.CreateDirectoryException;
 import com.notrika.gympin.common.exception.multimedia.InvalidFileNameException;
+import com.notrika.gympin.common.location.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
 import com.notrika.gympin.domain.user.UserServiceImpl;
+import com.notrika.gympin.domain.util.convertor.MultimediaConvertor;
 import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.SportMultimediaRepository;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategory;
 import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
 import com.notrika.gympin.persistence.entity.sport.Sport;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -292,5 +293,9 @@ public class MultimediaServiceImpl implements MultimediaService {
     @Override
     public List<String> getAllName() {
         return multimediaRepository.findAll().stream().map(m -> m.getFileName()).collect(Collectors.toList());
+    }
+    @Override
+    public List<MultimediaDto> getAll() {
+        return multimediaRepository.findAll().stream().map(m -> MultimediaConvertor.multimediaToMultimediaDto(m)).collect(Collectors.toList());
     }
 }

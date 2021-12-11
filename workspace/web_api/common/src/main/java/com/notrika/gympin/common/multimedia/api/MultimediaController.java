@@ -1,9 +1,8 @@
 package com.notrika.gympin.common.multimedia.api;
 
-import com.notrika.gympin.common.multimedia.dto.InputStreamResourceDto;
+import com.notrika.gympin.common.location.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletResponse;
@@ -31,4 +30,6 @@ public interface MultimediaController {
     ResponseEntity<List<Long>> getAllId();
 
     ResponseEntity<List<String>> getAllName();
+
+    ResponseEntity<List<MultimediaDto>> getAll();
 }

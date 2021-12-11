@@ -6,23 +6,11 @@ import {
     Tabs
 } from "@material-ui/core";
 import "./AddMedia.css"
-import ImageAddItem from "./ImageAddItem";
+import AddImage from "./AddImage";
 
-function AddMedia() {
+function AddMedia(props) {
     const [tab, setTab] = useState(0);
-    const [images, setImages] = useState([]);
-    const [imagesToUpload, setImagesToUpload] = useState([[]]);
 
-    function RenderImageForUpload(e,index) {
-        return (
-                <ImageAddItem image={e} key={e.name} />
-        )
-    }
-    function inputChange(event) {
-        event.preventDefault()
-        setImagesToUpload([])
-        setImages(Object.values(event.target.files))
-    }
     return (
         <>
             <Portlet>
@@ -49,12 +37,7 @@ function AddMedia() {
                     <PortletBody>
                         <div className="kt-section kt-margin-t-30">
                             <div className="kt-section__body">
-                                <div className="row">
-                                    {images.map((e,index) => RenderImageForUpload(e,index))}
-                                </div>
-                                <br/>
-                                <input type="file" id="file_input" onChange={(event) => inputChange(event)}
-                                       accept="image/*" multiple/>
+                                <AddImage/>
                             </div>
                         </div>
                     </PortletBody>

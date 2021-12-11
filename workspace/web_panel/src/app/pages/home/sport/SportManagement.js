@@ -9,6 +9,7 @@ import {sport_addSport,sport_deleteSport,sport_getAllSport,sport_updateSport
 } from "../../../api/sport.api";
 import 'leaflet/dist/leaflet.css';
 import {style} from "../../../partials/content/generalStyle";
+import ImagePicker from "../../../partials/picker/image/imagePicker";
 
 
 class SportManagement extends Component {
@@ -19,7 +20,8 @@ class SportManagement extends Component {
             addMode: false,
             allSportsArray:[],
             selectedSportToEdit:null,
-            selectedSportToDelete:null
+            selectedSportToDelete:null,
+            selectedFile:[]
         };
     }
     render() {
@@ -66,6 +68,12 @@ class SportManagement extends Component {
                                     <Form.Text className="text-muted">
                                         از نوشتن هاشیه ها (ورزش،...) خودداری کنید
                                     </Form.Text>
+                                </Form.Group>
+                                <Form.Group controlId="formSportImage">
+                                    <ImagePicker onChange={this.onImageSelect}/>
+                                    {this.state.selectedFile&&
+                                        this.state.selectedFile.name
+                                    }
                                 </Form.Group>
                                 <Button type={"submit"} variant="contained" color="primary" className={classes.button}>
                                     ثبت
@@ -151,6 +159,11 @@ class SportManagement extends Component {
             }).catch(e => {
             console.log(e)
         })
+    }
+    onImageSelect = (images) => {
+        this.setState(() => ({
+            selectedFile: images[0]
+        }));
     }
     renderSportRow=(sport, index)=>{
         const { classes } = this.props;

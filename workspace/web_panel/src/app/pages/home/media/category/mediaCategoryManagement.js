@@ -65,6 +65,18 @@ class MediaCategoryManagement extends Component {
         }))
     }
 
+    openAddMode(e) {
+        e.preventDefault()
+        this.setState(() => ({
+            addMode: true
+        }));
+    }
+    closeAddMode(e) {
+        e.preventDefault()
+        this.setState(() => ({
+            addMode: false
+        }));
+    }
     addMediaCat(e){
         e.preventDefault()
         var that = this;
@@ -87,11 +99,13 @@ class MediaCategoryManagement extends Component {
 
 
     prepareEditUser=(e,data)=>{
+        this.openAddMode(e)
         e.preventDefault()
         this.setState(() => ({
             selectedcatToEdit: data
-        }));
-        document.querySelector('#form_catName').value = data.Name
+        }),()=>{
+            document.querySelector('#form_catName').value = data.Name
+        });
     }
 
 
@@ -141,7 +155,7 @@ class MediaCategoryManagement extends Component {
                     </p>
                 </Notice>
 
-                {(this.state.addMode||this.state.selectedcatToEdit) &&
+                {(this.state.addMode) &&
                     <Portlet>
                         <PortletHeader title="افزودن دسته بندی رسانه ها"/>
                         <PortletBody>
