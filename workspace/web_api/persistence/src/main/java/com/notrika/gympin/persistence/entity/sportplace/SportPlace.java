@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.sportplace;
 
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.location.Place;
 import com.notrika.gympin.persistence.entity.sport.Sport;
 import lombok.Getter;
@@ -23,7 +24,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "sport_place")
-public class SportPlace extends BaseEntity {
+public class SportPlace extends BaseEntityWithCreateUpdate {
 
     @ManyToOne
     @JoinColumn(name = "place_id")

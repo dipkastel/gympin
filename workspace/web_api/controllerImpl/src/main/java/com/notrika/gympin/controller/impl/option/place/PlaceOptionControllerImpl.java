@@ -1,6 +1,6 @@
 package com.notrika.gympin.controller.impl.option.place;
 
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.option.place.api.PlaceOptionController;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.option.place.param.PlaceOptionParam;
@@ -20,31 +20,31 @@ public class PlaceOptionControllerImpl implements PlaceOptionController {
     private PlaceOptionService placeOptionService;
 
     @Override
-    @PostMapping("/addPlaceOption")
+//    @PostMapping("/addPlaceOption")
     public ResponseEntity<PlaceOptionDto> add(@RequestBody PlaceOptionParam placeOptionParam) {
         return new ResponseEntity<PlaceOptionDto>(placeOptionService.add(placeOptionParam), HttpStatus.OK);
     }
 
     @Override
-    @PutMapping("/updatePlaceOption")
+//    @PutMapping("/updatePlaceOption")
     public ResponseEntity<PlaceOptionDto> update(@RequestBody PlaceOptionParam placeOptionParam) {
         return new ResponseEntity<PlaceOptionDto>(placeOptionService.update(placeOptionParam), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getAllPlaceOption")
-    public ResponseEntity<List<PlaceOptionDto>> getAll(BaseParam pagingParam) {
+//    @GetMapping("/getAllPlaceOption")
+    public ResponseEntity<List<PlaceOptionDto>> getAll(BasePagedParam pagingParam) {
         return new ResponseEntity<List<PlaceOptionDto>>(placeOptionService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getPlaceOptionById")
+//    @GetMapping("/getPlaceOptionById")
     public ResponseEntity<PlaceOptionDto> getById(long id) {
         return new ResponseEntity<PlaceOptionDto>(placeOptionService.getById(id), HttpStatus.OK);
     }
 
     @Override
-    @DeleteMapping("/deletePlaceOption")
+//    @DeleteMapping("/deletePlaceOption")
     public ResponseEntity<PlaceOptionDto> delete(@RequestBody PlaceOptionParam placeOptionParam) {
         PlaceOptionDto deletedPlaceOption = placeOptionService.delete(placeOptionParam);
         return new ResponseEntity<PlaceOptionDto>(deletedPlaceOption, HttpStatus.OK);

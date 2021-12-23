@@ -1,6 +1,7 @@
 package com.notrika.gympin.controller.impl.sport;
 
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common.BasePagedParam;
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.sport.api.SportController;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
@@ -20,33 +21,39 @@ public class SportControllerImpl implements SportController {
     private SportService sportService;
 
     @Override
-    @PostMapping("/addSport")
+//    @PostMapping("/addSport")
     public ResponseEntity<SportDto> add(@RequestBody SportParam sportParam) {
         return new ResponseEntity<SportDto>(sportService.add(sportParam), HttpStatus.OK);
     }
 
     @Override
-    @PutMapping("/updateSport")
+//    @PutMapping("/updateSport")
     public ResponseEntity<SportDto> update(@RequestBody SportParam sportParam) {
         return new ResponseEntity<SportDto>(sportService.update(sportParam), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getSportById")
+//    @GetMapping("/getSportById")
     public ResponseEntity<SportDto> getById(long id) {
         return new ResponseEntity<SportDto>(sportService.getById(id), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getAllSport")
-    public ResponseEntity<List<SportDto>> getAll(BaseParam pagingParam) {
+//    @GetMapping("/getAllSport")
+    public ResponseEntity<List<SportDto>> getAll(BasePagedParam pagingParam) {
         return new ResponseEntity<List<SportDto>>(sportService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
-    @DeleteMapping("/deleteSport")
+//    @PutMapping("/deleteSport")
     public ResponseEntity<SportDto> delete(SportParam sportParam) {
         SportDto deletedSport = sportService.delete(sportParam);
         return new ResponseEntity<SportDto>(deletedSport, HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/getSportMultimedia")
+    public ResponseEntity<List<MultimediaDto>> getSportMultimedia(SportParam sportParam) {
+        return new ResponseEntity<List<MultimediaDto>>(sportService.getSportMultimedia(sportParam),HttpStatus.OK);
     }
 }

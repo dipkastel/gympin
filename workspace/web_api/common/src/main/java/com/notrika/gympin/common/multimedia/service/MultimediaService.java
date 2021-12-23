@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.multimedia.service;
 
-import com.notrika.gympin.common.location.dto.MultimediaDto;
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 
@@ -33,5 +33,9 @@ public interface MultimediaService {
     List<String> getAllName();
 
     List<MultimediaDto> getAll();
+
+    boolean update(MultimediaStoreParam multimediaStoreParam);
+
+    boolean delete(Long id);
 
 }

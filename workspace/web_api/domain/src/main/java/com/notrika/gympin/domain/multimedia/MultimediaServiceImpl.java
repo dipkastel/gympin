@@ -3,8 +3,10 @@ package com.notrika.gympin.domain.multimedia;
 import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.multimedia.CreateDirectoryException;
 import com.notrika.gympin.common.exception.multimedia.InvalidFileNameException;
-import com.notrika.gympin.common.location.dto.MultimediaDto;
+import com.notrika.gympin.common.exception.multimedia.MultimediaNotFoundException;
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
+import com.notrika.gympin.common.multimedia.param.MultimediaCategoryParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
@@ -134,24 +136,23 @@ public class MultimediaServiceImpl implements MultimediaService {
             throw new InvalidFileNameException("Error in file name.", HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
         }
         Path targetLocation = saveFile(path, multipartFile.getInputStream(), fileName);
-        MultimediaCategory multimediaCategoryById = categoryService.getMultimediaCategoryById(multimediaStoreParam.getCategoryParam().getId());
+        List<MultimediaCategory> categories=new ArrayList<>();
+        if(multimediaStoreParam.getCategoryParam()!=null && multimediaStoreParam.getCategoryParam().size()>0){
+            for (MultimediaCategoryParam categoryParam : multimediaStoreParam.getCategoryParam()) {
+                categories.add(categoryService.getMultimediaCategoryById(categoryParam.getId()));
+            }
+        }
+//        MultimediaCategory multimediaCategoryById = categoryService.getMultimediaCategoryById(multimediaStoreParam.getCategoryParam().getId());
         Multimedia fileByUserByName = multimediaRepository.findByFileName(fileName);
         if (fileByUserByName != null) {
             fileByUserByName.setDocumentFormat(multipartFile.getContentType());
             fileByUserByName.setMediaType(multimediaStoreParam.getMediaType());
             fileByUserByName.setTitle(multimediaStoreParam.getTitle());
             fileByUserByName.setDescription(multimediaStoreParam.getDescription());
-            fileByUserByName.getCategories().add(multimediaCategoryById);
+            fileByUserByName.setCategories(categories);
             multimediaRepository.update(fileByUserByName);
         } else {
-            multimediaRepository.add(Multimedia.builder().fileName(fileName)
-                    .mediaType(multimediaStoreParam.getMediaType())
-                    .documentFormat(multipartFile.getContentType())
-                    .uploadDir(targetLocation.toString())
-                            .title(multimediaStoreParam.getTitle())
-                            .description(multimediaStoreParam.getDescription())
-                            .categories(Collections.singletonList(multimediaCategoryById))
-                    .build());
+            multimediaRepository.add(Multimedia.builder().fileName(fileName).mediaType(multimediaStoreParam.getMediaType()).documentFormat(multipartFile.getContentType()).uploadDir(targetLocation.toString()).title(multimediaStoreParam.getTitle()).description(multimediaStoreParam.getDescription()).categories(categories).build());
         }
         return true;
     }
@@ -241,7 +242,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     @Override
     public InputStream getById(MultimediaRetrieveParam param) throws Exception {
-//        MultimediaRetrieveParam multimediaRetrieveParam = MultimediaRetrieveParam.builder().id(id).build();
+        //        MultimediaRetrieveParam multimediaRetrieveParam = MultimediaRetrieveParam.builder().id(id).build();
         return loadFileAsResource(param);
 
     }
@@ -294,8 +295,33 @@ public class MultimediaServiceImpl implements MultimediaService {
     public List<String> getAllName() {
         return multimediaRepository.findAll().stream().map(m -> m.getFileName()).collect(Collectors.toList());
     }
+
     @Override
     public List<MultimediaDto> getAll() {
         return multimediaRepository.findAll().stream().map(m -> MultimediaConvertor.multimediaToMultimediaDto(m)).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean update(MultimediaStoreParam multimediaStoreParam) {
+        if (multimediaStoreParam.getId() == null || multimediaStoreParam.getId() < 1) throw new MultimediaNotFoundException();
+        Multimedia multimedia = multimediaRepository.getById(multimediaStoreParam.getId());
+        if (multimedia == null) throw new MultimediaNotFoundException();
+        if (multimediaStoreParam.getCategoryParam() != null && multimediaStoreParam.getCategoryParam().size() > 0) {
+            List<MultimediaCategory> multimediaCategories=new ArrayList<>();
+            for (MultimediaCategoryParam categoryParam : multimediaStoreParam.getCategoryParam()) {
+                multimediaCategories.add(categoryService.getMultimediaCategoryById(categoryParam.getId()));
+            }
+        }
+        multimedia.setTitle(multimediaStoreParam.getTitle());
+        multimedia.setDescription(multimediaStoreParam.getDescription());
+        multimediaRepository.update(multimedia);
+        return true;
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        Multimedia multimedia = multimediaRepository.getById(id);
+        multimediaRepository.deleteById2(multimedia);
+        return true;
     }
 }

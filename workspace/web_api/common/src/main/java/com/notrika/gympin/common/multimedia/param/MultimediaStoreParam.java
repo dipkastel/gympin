@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -21,7 +23,7 @@ public class MultimediaStoreParam extends BaseParam<MultimediaStoreParam> {
 
     //category
     @JsonProperty("Category")
-    private MultimediaCategoryParam categoryParam;
+    private List<MultimediaCategoryParam> categoryParam;
 
     @JsonProperty("MediaType")
     private MediaType mediaType;

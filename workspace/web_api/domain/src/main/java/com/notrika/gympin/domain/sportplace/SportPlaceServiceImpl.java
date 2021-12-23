@@ -77,7 +77,7 @@ public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, 
     }
 
     @Override
-    public List<SportPlaceDto> convertToDto(List<SportPlace> entities) {
+    public List<SportPlaceDto> convertToDtos(List<SportPlace> entities) {
         return SportPlaceConvertor.sportPlacesToSportPlaceDtos(entities);
     }
 

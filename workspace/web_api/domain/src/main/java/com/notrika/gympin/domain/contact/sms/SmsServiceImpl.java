@@ -56,6 +56,7 @@ public class SmsServiceImpl implements SmsService {
         code.setCode(passwordEncoder.encode(smsDto.getText()));
         code.setSenderId(Integer.toString(body));
         code.setExpiredDate(expireDate.getTime());
+        code.setDeleted(false);
         activationCodeRepository.update(code);
         log.info("Verification sms sent to user: {} with following code {}...\n",user,smsDto.getText());
         return body > 0;

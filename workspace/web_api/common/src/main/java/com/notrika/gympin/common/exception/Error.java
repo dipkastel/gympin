@@ -36,6 +36,7 @@ public class Error {
         USER_NOT_FOUND(1001),
         ACTIVATION_CODE_EXPIRED(2001),
         ACTIVATION_CODE_MANY_REQUEST(2002),
+        ACTIVATION_CODE_NOT_FOUND(2003),
         OUT_SERVICE_EXCEPTION(3001);
         private final int value;
 

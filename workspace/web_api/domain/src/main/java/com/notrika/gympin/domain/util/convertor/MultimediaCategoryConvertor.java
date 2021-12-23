@@ -12,8 +12,8 @@ public class MultimediaCategoryConvertor {
     public static MultimediaCategoryDto multimediaCategoryToMultimediaCategoryDto(MultimediaCategory multimediaCategory){
         MultimediaCategoryDto dto=MultimediaCategoryDto.builder().id(multimediaCategory.getId())
                 .name(multimediaCategory.getName())
-                .createdDate(multimediaCategory.getCreatedDate())
-                .updatedDate(multimediaCategory.getUpdatedDate())
+//                .createdDate(multimediaCategory.getCreatedDate())
+//                .updatedDate(multimediaCategory.getUpdatedDate())
                 .isDeleted(multimediaCategory.isDeleted()).build();
         return dto;
     }
@@ -25,8 +25,8 @@ public class MultimediaCategoryConvertor {
     public static MultimediaCategory multimediaCategoryDtoToMultimediaCategory(MultimediaCategoryDto dto){
         MultimediaCategory multimediaCategory=MultimediaCategory.builder().id(dto.getId())
                 .name(dto.getName())
-                .createdDate(dto.getCreatedDate())
-                .updatedDate(dto.getUpdatedDate())
+//                .createdDate(dto.getCreatedDate())
+//                .updatedDate(dto.getUpdatedDate())
                 .deleted(dto.isDeleted())
                 .build();
         return multimediaCategory;
@@ -39,8 +39,8 @@ public class MultimediaCategoryConvertor {
     public static MultimediaCategory multimediaCategoryParamToMultimediaCategory(MultimediaCategoryParam param){
         MultimediaCategory multimediaCategory=MultimediaCategory.builder().id(param.getId())
                 .name(param.getName())
-                .createdDate(param.getCreatedDate())
-                .updatedDate(param.getUpdatedDate())
+//                .createdDate(param.getCreatedDate())
+//                .updatedDate(param.getUpdatedDate())
                 .deleted(param.isDeleted())
                 .build();
         return multimediaCategory;

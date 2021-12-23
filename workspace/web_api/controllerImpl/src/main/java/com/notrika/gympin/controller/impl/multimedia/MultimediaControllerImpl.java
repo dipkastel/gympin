@@ -1,7 +1,7 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
-import com.notrika.gympin.common.location.dto.MultimediaDto;
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.api.MultimediaController;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -31,24 +32,28 @@ public class MultimediaControllerImpl implements MultimediaController {
 
     @Override
     @RequestMapping(path = "/add", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
     public ResponseEntity<Boolean> add(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws IOException {
         return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(path = "/addImage", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
     public ResponseEntity<Boolean> addImage(MultimediaStoreParam multimediaStoreParam) throws IOException {
         return new ResponseEntity<Boolean>(multimediaService.addImage(multimediaStoreParam), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(path = "/addVideo", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
     public ResponseEntity<Boolean> addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException {
         return new ResponseEntity<Boolean>(multimediaService.addVideo(multimediaStoreParam), HttpStatus.OK);
     }
 
     @Override
     @RequestMapping(path = "/addAudio", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
     public ResponseEntity<Boolean> addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException {
         return new ResponseEntity<Boolean>(multimediaService.addAudio(multimediaStoreParam), HttpStatus.OK);
     }
@@ -109,5 +114,19 @@ public class MultimediaControllerImpl implements MultimediaController {
     @GetMapping("/getAll")
     public ResponseEntity<List<MultimediaDto>> getAll() {
         return new ResponseEntity<List<MultimediaDto>>(multimediaService.getAll(),HttpStatus.OK);
+    }
+
+    @Override
+    @PutMapping("/update")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
+    public ResponseEntity<Boolean> update(MultimediaStoreParam multimediaStoreParam) {
+        return new ResponseEntity<Boolean>(multimediaService.update(multimediaStoreParam),HttpStatus.OK);
+    }
+
+    @Override
+    @PutMapping("/delete")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
+    public ResponseEntity<Boolean> delete(Long id) {
+        return new ResponseEntity<Boolean>(multimediaService.delete(id),HttpStatus.OK);
     }
 }

@@ -69,7 +69,7 @@ public class RegionServiceImpl extends AbstractBaseService<RegionParam, RegionDt
     }
 
     @Override
-    public List<RegionDto> convertToDto(List<Region> entities) {
+    public List<RegionDto> convertToDtos(List<Region> entities) {
       return   LocationConvertor.regionsToRegionDtos(entities);
     }
 

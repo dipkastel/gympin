@@ -10,7 +10,7 @@ public interface BaseService<I extends BaseParam<?>, O extends BaseDto<?>> {
 
     O delete(I i);
 
-    List<O> getAll(BaseParam pagingParam);
+    List<O> getAll(BasePagedParam pagingParam);
 
     O getById(long id);
 

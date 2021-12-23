@@ -16,7 +16,7 @@ import java.util.List;
 public class UserParam extends BaseParam<UserParam> {
 
     @Builder.Default
-    private List<UserRole> role = new ArrayList<>();
+    private List<UserRoleParam> role = new ArrayList<>();
     private String username;
     private String phoneNumber;
     private String name;

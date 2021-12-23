@@ -1,5 +1,6 @@
-package com.notrika.gympin.persistence.entity.security;
+package com.notrika.gympin.persistence.entity.security.service;
 
+import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,10 @@ import javax.persistence.Table;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "service")
-public class Service extends BaseEntity {
+@Table(name = "service_user")
+public class ServiceUser extends BaseEntity {
 
-    @Column(name = "code")
-    private String code;
+    @Column(name = "user_role")
+    private UserRole userRole;
 
 }

@@ -1,7 +1,6 @@
 package com.notrika.gympin.common;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,11 +15,11 @@ public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>> {
     @PutMapping("/update")
     ResponseEntity<O> update(I i);
 
-    @DeleteMapping("/delete")
+    @PutMapping("/delete")
     ResponseEntity<O> delete(I i);
 
     @GetMapping("/getall")
-    ResponseEntity<List<O>> getAll(BaseParam pagingParam);
+    ResponseEntity<List<O>> getAll(BasePagedParam pagingParam);
 
     @GetMapping("/getbyid")
     ResponseEntity<O> getById(long id);

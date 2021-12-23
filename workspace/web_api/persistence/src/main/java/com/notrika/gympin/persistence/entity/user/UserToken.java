@@ -35,11 +35,6 @@ public class UserToken extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date expireDate;
 
-
-    @Override
-    public void setUpdatedDate(Date UpdatedDate) {
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.user.enums;
 
 public enum UserRole {
-    CONTENT(4), MARKET(5), ADMIN(6), SUPERADMIN(7), USER(0), MANAGER(3), ATHLETE(1), COACH(2);
+    SUPER_ADMIN(7), ADMIN(6), MARKET(5), CONTENT(4), MANAGER(3), COACH(2), ATHLETE(1), USER(0);
 
     private int level;
 

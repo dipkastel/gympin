@@ -74,7 +74,7 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto,P
     }
 
     @Override
-    public List<PlaceDto> convertToDto(List<Place> entities) {
+    public List<PlaceDto> convertToDtos(List<Place> entities) {
         return LocationConvertor.placesToPlaceDtos(entities);
     }
 

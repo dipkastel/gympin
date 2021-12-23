@@ -48,7 +48,7 @@ public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam
     }
 
     @Override
-    public List<PlaceOptionDto> convertToDto(List<PlaceOption> entities) {
+    public List<PlaceOptionDto> convertToDtos(List<PlaceOption> entities) {
         return OptionConvertor.placeOptionsToPlaceOptionDtos(entities);
     }
 

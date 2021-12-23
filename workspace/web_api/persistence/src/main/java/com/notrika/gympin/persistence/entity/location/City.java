@@ -2,6 +2,7 @@ package com.notrika.gympin.persistence.entity.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,10 +22,10 @@ import java.util.Objects;
 @Table(name = "city")
 public class City extends BaseEntity {
 
-    @Column(name = "name")
+    @Column(name = "name",nullable = false,unique = true)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     @JoinColumn(name = "state_id")
     @JsonIgnore
     private State state;

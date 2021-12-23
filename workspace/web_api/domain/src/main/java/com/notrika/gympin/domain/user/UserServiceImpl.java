@@ -2,23 +2,26 @@ package com.notrika.gympin.domain.user;
 
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.enums.UserGroup;
+import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.user.param.UserRoleParam;
 import com.notrika.gympin.common.user.service.UserService;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.location.LocationServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
-import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
+import com.notrika.gympin.persistence.dao.repository.RoleRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
 import com.notrika.gympin.persistence.entity.location.Place;
 import com.notrika.gympin.persistence.entity.user.Password;
+import com.notrika.gympin.persistence.entity.user.Role;
 import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,15 +30,24 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User
     @Autowired
     private UserRepository userRepository;
 
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private PasswordRepository passwordRepository;
 
+    @Autowired
+    private UserRoleServiceImpl userRoleService;
+
     @Override
     public UserDto add(UserParam userParam) {
+        List<Role> roles=new ArrayList<>();
+        for (UserRoleParam roleParam : userParam.getRole()) {
+            roles.add(userRoleService.getRoleById(roleParam.getId()));
+        }
+        if(roles.size()==0) {
+            roles.add(userRoleService.getByUserRole(UserRole.USER));
+        }
         User initUser =
                 User.builder()
                         .name(userParam.getName())
@@ -46,7 +58,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User
                         .nationalCode(userParam.getNationalCode())
                         .email(userParam.getEmail())
                         .userGroup(UserGroup.CLIENT)
-                        .userRole(userParam.getRole().get(0))
+                        .userRole(roles)
                         .userStatus(UserStatus.ENABLED)
                         .build();
         User user = userRepository.add(initUser);
@@ -61,6 +73,10 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User
 
     @Override
     public UserDto update(UserParam userParam) {
+        List<Role> roles=new ArrayList<>();
+        for (UserRoleParam roleParam : userParam.getRole()) {
+            roles.add(userRoleService.getRoleById(roleParam.getId()));
+        }
         User initUser = getUserById(userParam.getId());
         initUser.setName(userParam.getName());
         initUser.setLastname(userParam.getLastname());
@@ -69,6 +85,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User
         initUser.setBirthday(userParam.getBirthday());
         initUser.setNationalCode(userParam.getNationalCode());
         initUser.setEmail(userParam.getEmail());
+        initUser.setUserRole(roles);
         User user = updateUser(initUser);
         return UserConvertor.userToUserDto(user);
     }
@@ -94,7 +111,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User
     }
 
     @Override
-    public List<UserDto> convertToDto(List<User> entities) {
+    public List<UserDto> convertToDtos(List<User> entities) {
         return UserConvertor.usersToUserDtos(entities);
     }
 
