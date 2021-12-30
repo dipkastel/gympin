@@ -26,7 +26,7 @@
         android:textColor="@color/white_london"
         android:shadowColor="@color/black_copenhagen"
         android:textSize="@dimen/_10sdp"
-        android:background="@drawable/_rectangle_radius_fill_crimson"
+        android:background="@drawable/_c_register_btn_bg_1_focused"
         app:layout_constraintTop_toTopOf="@+id/img_discount"
         app:layout_constraintEnd_toEndOf="@+id/img_discount" />
     <TextView

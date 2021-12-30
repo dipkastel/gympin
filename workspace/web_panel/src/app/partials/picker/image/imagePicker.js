@@ -3,13 +3,11 @@ import {
     AppBar,
     Button,
     Dialog,
-    ExpansionPanel,
-    ExpansionPanelDetails,
-    ExpansionPanelSummary,
     IconButton,
     Slide,
     Toolbar,
-    Typography
+    Typography,
+    Accordion, AccordionSummary, AccordionDetails
 } from "@material-ui/core";
 import {Close ,ExpandMore } from '@material-ui/icons';
 import "./imagePicker.css"
@@ -24,7 +22,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function ImagePicker(props) {
     const [open, setOpen] = React.useState(false);
     const [expanded, setExpanded] = React.useState(false);
-    const [selectMode, setSelectMode] = React.useState(ImagePickerConsts.SELECTMODE_SINGLE);
+    const [selectMode] = React.useState(ImagePickerConsts.SELECTMODE_SINGLE);
     const [selected, setSelected] = React.useState([]);
 
     function handleClickOpen() {
@@ -63,34 +61,34 @@ function ImagePicker(props) {
 
 
                 <div className="main-inputs">
-                    <ExpansionPanel expanded={expanded === 'addImage'} onChange={handleChange('addImage')}>
-                        <ExpansionPanelSummary
+                    <Accordion expanded={expanded === 'addImage'} onChange={handleChange('addImage')}>
+                        <AccordionSummary
                             expandIcon={<ExpandMore/>}
                             aria-controls="panel1bh-content"
                             id="panel1bh-header"
                         >
                             <Typography className="heading">افزودن تصویر جدید</Typography>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
+                        </AccordionSummary>
+                        <AccordionDetails>
                             <Typography>
                                 <AddImage />
                             </Typography>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                    <ExpansionPanel expanded={expanded === 'selectImage'} onChange={handleChange('selectImage')}>
-                        <ExpansionPanelSummary
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion expanded={expanded === 'selectImage'} onChange={handleChange('selectImage')}>
+                        <AccordionSummary
                             expandIcon={<ExpandMore/>}
                             aria-controls="panel2bh-content"
                             id="panel2bh-header"
                         >
                             <Typography className={"heading"}>انتخاب از تصاویر موجود</Typography>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
+                        </AccordionSummary>
+                        <AccordionDetails>
                             <Typography>
                                 <AllImages selectMode={selectMode} onImageSelect={OnImageSelect}/>
                             </Typography>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
+                        </AccordionDetails>
+                    </Accordion>
                 </div>
 
             </Dialog>

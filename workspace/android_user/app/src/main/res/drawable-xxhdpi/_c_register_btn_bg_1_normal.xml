@@ -1,0 +1,8 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <gradient android:startColor="@color/red_Alizarin_Crimson"
+        android:endColor="@color/red_Alizarin_Crimson"/>
+    <corners android:radius="@dimen/register_default_radius"/>
+
+</shape>
