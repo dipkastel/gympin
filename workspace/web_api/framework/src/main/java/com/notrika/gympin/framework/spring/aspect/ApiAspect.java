@@ -1,22 +1,31 @@
 package com.notrika.gympin.framework.spring.aspect;
 
-import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.ResponseModel;
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
+import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
+import com.notrika.gympin.persistence.dao.repository.ServiceExecutionRepository;
+import com.notrika.gympin.persistence.entity.security.service.ServiceExecution;
+import com.notrika.gympin.persistence.entity.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -29,6 +38,9 @@ import static com.notrika.gympin.common.ResponseModel.SUCCESS;
 @Slf4j
 public class ApiAspect {
 
+    @Autowired
+    private ServiceExecutionRepository serviceExecutionRepository;
+
     @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
     public Object process(ProceedingJoinPoint pjp) {
         // start stopwatch
@@ -37,6 +49,11 @@ public class ApiAspect {
         StringBuffer resultBuffer = new StringBuffer().append("\n and return following result: \n");
         try {
             Object retVal = pjp.proceed();
+            try {
+                saveServiceCall(pjp, retVal);
+            } catch (Exception e) {
+                log.error("Error in Save Service Data: \n", e);
+            }
             MethodSignature signature = (MethodSignature) pjp.getSignature();
             Method method = signature.getMethod();
             IgnoreWrapAspect ignoreWrapAspect = method.getAnnotation(IgnoreWrapAspect.class);
@@ -49,7 +66,7 @@ public class ApiAspect {
             log.error(error.getErrorMessage(), e);
             return getFailedResponse(error, e.getHttpStatus());
         } catch (Throwable e) {
-            log.error("Unkown error: \n",e);
+            log.error("Unkown error: \n", e);
             return getFailedResponse(Error.builder().errorMessage(e.getMessage()).stackTrace(Arrays.toString(e.getStackTrace())).build(), HttpStatus.EXPECTATION_FAILED);
         } finally {
             log.info(resultBuffer.append("\n==============================================================\n").toString());
@@ -81,14 +98,14 @@ public class ApiAspect {
 
     private void setGympinServiceCallContext() {
         log.info("Going to set context...\n");
-        if(GympinContextHolder.getContext()==null){
+        if (GympinContextHolder.getContext() == null) {
             GympinContextHolder.setContext(new GympinContext());
         }
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof UserDetailsImpl){
+        if (principal instanceof UserDetailsImpl) {
             GympinContextHolder.getContext().setUserDetails((UserDetailsImpl) principal);
         }
-        log.info("Following context setted: {} \n",GympinContextHolder.getContext());
+        log.info("Following context setted: {} \n", GympinContextHolder.getContext());
     }
 
     private ResponseEntity<ResponseModel> getFailedResponse(Error error, HttpStatus httpStatus) {
@@ -99,6 +116,39 @@ public class ApiAspect {
         responseModel.setMessage(error.getErrorMessage());
         responseModel.setError(error);
         return new ResponseEntity<ResponseModel>(responseModel, httpStatus);
+    }
+
+
+    private void saveServiceCall(ProceedingJoinPoint joinPoint, Object retVal) throws IOException {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        PostMapping postMapping = method.getAnnotation(PostMapping.class);
+        PutMapping putMapping = method.getAnnotation(PutMapping.class);
+        DeleteMapping deleteMapping = method.getAnnotation(DeleteMapping.class);
+        if (postMapping == null && putMapping == null && deleteMapping == null) return;
+        ObjectMapper objectMapper = new ObjectMapper();
+        String paramJson = objectMapper.writeValueAsString(joinPoint.getArgs()[0]);
+        String dtoJson = null;
+        Class dtoClass;
+        if (retVal.getClass().isAssignableFrom(ResponseEntity.class)) {
+            Object body = ((ResponseEntity) retVal).getBody();
+            dtoClass = body.getClass();
+            dtoJson=objectMapper.writeValueAsString(body);
+        } else {
+            dtoClass = retVal.getClass();
+            objectMapper.writeValueAsString(retVal);
+        }
+        User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+
+        ServiceExecution serviceExecution = new ServiceExecution();
+        serviceExecution.setService(method.toGenericString());
+        serviceExecution.setParamClass(joinPoint.getArgs()[0].getClass());
+        serviceExecution.setParam(paramJson);
+        serviceExecution.setDto(dtoJson);
+        serviceExecution.setDtoClass(dtoClass);
+        serviceExecution.setExecutorUser(user);
+        serviceExecutionRepository.add(serviceExecution);
+
     }
 
 

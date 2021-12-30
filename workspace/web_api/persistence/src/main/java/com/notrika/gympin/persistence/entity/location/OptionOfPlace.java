@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.location;
 
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.option.place.PlaceOption;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import javax.persistence.Table;
 @SuperBuilder
 @Entity
 @Table(name = "place_place_option")
-public class OptionOfPlace extends BaseEntity {
+public class OptionOfPlace extends BaseEntityWithCreateUpdate {
 
     @ManyToOne
     @JoinColumn(name = "place_id")

@@ -41,6 +41,4 @@ public class Sport extends BaseEntity {
     @ToString.Exclude
     private List<SportMultimedia> sportMultimedias;
 
-
-
 }

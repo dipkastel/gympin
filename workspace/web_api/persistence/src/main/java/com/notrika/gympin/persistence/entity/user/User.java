@@ -1,11 +1,11 @@
 package com.notrika.gympin.persistence.entity.user;
 
 import com.notrika.gympin.common.user.enums.UserGroup;
-import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
 import com.notrika.gympin.persistence.entity.location.PlaceOwner;
+import com.notrika.gympin.persistence.entity.security.service.ServiceExecution;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -55,9 +55,11 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserGroup userGroup;
 
-    @Column(updatable = false,name = "user_role")
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    @ToString.Exclude
+//    @OneToMany(mappedBy = "user")
+//    @ToString.Exclude
+    @ManyToMany(mappedBy = "users")
+    private List<Role> userRole;
 
 //    @Where(clause = "deleted=0 and expired=0")
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
@@ -82,6 +84,9 @@ public class User extends BaseEntity {
     @Where(clause = "token_status='ACTIVE'")
     @ToString.Exclude
     private Set<UserToken> userTokens;
+
+    @OneToMany
+    private Set<ServiceExecution> serviceExecutions;
 
     @Override
     public boolean equals(Object o) {

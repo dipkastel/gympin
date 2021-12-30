@@ -1,6 +1,6 @@
 package com.notrika.gympin.controller.impl.sportplace;
 
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sportplace.api.SportPlaceController;
@@ -41,7 +41,7 @@ public class SportPlaceControllerImpl implements SportPlaceController {
 
     @Override
     @GetMapping("getAllSportPlace")
-    public ResponseEntity<List<SportPlaceDto>> getAll(BaseParam pagingParam) {
+    public ResponseEntity<List<SportPlaceDto>> getAll(BasePagedParam pagingParam) {
         return new ResponseEntity<List<SportPlaceDto>>(sportPlaceService.getAll(pagingParam), HttpStatus.OK);
     }
 

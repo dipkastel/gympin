@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -72,6 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/v2/swagger-ui/**"
                         ,"/api/v1/multimedia/getById"
                         ,"/api/v1/multimedia/getByName"
+                        //,"/api/v1/**/**"
+                        //,"/api/v1/location"
 //                        ,"/api/v1/administrator/add"
                 )
                 .permitAll()
@@ -98,5 +101,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 registry.addMapping("/api/v1/**").allowedOrigins("*").allowedMethods("PUT", "DELETE", "POST", "GET").allowCredentials(false).maxAge(3600);
             }
         };
+    }
+
+    @Bean
+    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        return new GrantedAuthorityDefaults(""); // Remove the ROLE_ prefix
     }
 }

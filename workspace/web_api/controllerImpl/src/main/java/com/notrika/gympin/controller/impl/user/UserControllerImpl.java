@@ -1,6 +1,6 @@
 package com.notrika.gympin.controller.impl.user;
 
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.user.api.UserController;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
@@ -20,31 +20,26 @@ public class UserControllerImpl implements UserController {
     private UserService userService;
 
     @Override
-    @PostMapping("/add")
     public ResponseEntity<UserDto> add(@RequestBody UserParam userParam) {
         return new ResponseEntity<>(userService.add(userParam), HttpStatus.OK);
     }
 
     @Override
-    @PutMapping("/update")
     public ResponseEntity<UserDto> update(@RequestBody UserParam userParam) {
         return new ResponseEntity<>(userService.update(userParam), HttpStatus.OK);
     }
 
     @Override
-    @DeleteMapping("/delete")
     public ResponseEntity<UserDto> delete(@RequestBody UserParam userParam) {
         return new ResponseEntity<UserDto>(userService.delete(userParam),HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getall")
-    public ResponseEntity<List<UserDto>> getAll(BaseParam pagingParam) {
+    public ResponseEntity<List<UserDto>> getAll(BasePagedParam pagingParam) {
         return new ResponseEntity<List<UserDto>>(userService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getbyid")
     public ResponseEntity<UserDto> getById(@RequestBody long id) {
         return new ResponseEntity<UserDto>(userService.getById(id), HttpStatus.OK);
     }

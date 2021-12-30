@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.location;
 
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -22,7 +23,7 @@ import java.util.Objects;
 @Table(name = "state")
 public class State extends BaseEntity {
 
-    @Column(name = "name")
+    @Column(name = "name",nullable = false)
     private String name;
 
    /* @OneToMany(mappedBy = "state",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.location;
 
+import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.location.api.LocationController;
 import com.notrika.gympin.common.location.dto.*;
@@ -10,6 +11,7 @@ import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +39,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     //@RolesAllowed({"ADMIN"})
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/addState")
     public ResponseEntity<StateDto> addState(@RequestBody StateParam stateParam) {
         return new ResponseEntity<StateDto>(stateService.add(stateParam), HttpStatus.OK);
@@ -51,7 +54,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @GetMapping("/getAllState")
-    public ResponseEntity<List<StateDto>> getAllState(BaseParam pagingParam) {
+    public ResponseEntity<List<StateDto>> getAllState(BasePagedParam pagingParam) {
         return new ResponseEntity<List<StateDto>>(stateService.getAll(pagingParam), HttpStatus.OK);
     }
 
@@ -98,7 +101,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @GetMapping("/getAllCity")
-    public ResponseEntity<List<CityDto>> getAllCity(BaseParam pagingParam) {
+    public ResponseEntity<List<CityDto>> getAllCity(BasePagedParam pagingParam) {
         return new ResponseEntity<List<CityDto>>(cityService.getAll(pagingParam), HttpStatus.OK);
     }
 
@@ -124,7 +127,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @GetMapping("/getAllRegion")
-    public ResponseEntity<List<RegionDto>> getAllRegion(BaseParam pagingParam) {
+    public ResponseEntity<List<RegionDto>> getAllRegion(BasePagedParam pagingParam) {
         return new ResponseEntity<List<RegionDto>>(regionService.getAll(pagingParam), HttpStatus.OK);
     }
 
@@ -163,7 +166,7 @@ public class LocationControllerImpl implements LocationController {
 
     @Override
     @GetMapping("/getAllPlace")
-    public ResponseEntity<List<PlaceDto>> getAllPlace(BaseParam pagingParam) {
+    public ResponseEntity<List<PlaceDto>> getAllPlace(BasePagedParam pagingParam) {
         return new ResponseEntity<List<PlaceDto>>(placeService.getAll(pagingParam), HttpStatus.OK);
     }
 

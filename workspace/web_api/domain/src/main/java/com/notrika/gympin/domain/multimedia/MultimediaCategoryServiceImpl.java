@@ -56,7 +56,7 @@ public class MultimediaCategoryServiceImpl extends AbstractBaseService<Multimedi
     }
 
     @Override
-    public List<MultimediaCategoryDto> convertToDto(List<MultimediaCategory> entities) {
+    public List<MultimediaCategoryDto> convertToDtos(List<MultimediaCategory> entities) {
         return MultimediaCategoryConvertor.multimediaCategoriesToMultimediaCategoryDto(entities);
     }
 

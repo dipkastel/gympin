@@ -2,6 +2,7 @@ package com.notrika.gympin.persistence.entity.multimedia;
 
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +22,15 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "multimedia")
-public class Multimedia extends BaseEntity {
+public class Multimedia extends BaseEntityWithCreateUpdate {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private User user;
 
-    @Column(name = "file_name")
+    @Column(name = "file_name",nullable = false)
     private String fileName;
 
-    @Column(name = "media_type")
+    @Column(name = "media_type",nullable = false)
     private MediaType mediaType;
 
     @Column(name = "document_format")

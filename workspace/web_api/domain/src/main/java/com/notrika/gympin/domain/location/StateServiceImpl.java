@@ -59,7 +59,7 @@ public class StateServiceImpl extends AbstractBaseService<StateParam, StateDto,S
     }
 
     @Override
-    public List<StateDto> convertToDto(List<State> entities) {
+    public List<StateDto> convertToDtos(List<State> entities) {
         return LocationConvertor.statesToStateDtos(entities);
     }
 

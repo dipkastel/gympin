@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.location.dto.MultimediaDto;
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
 
 public class MultimediaConvertor {

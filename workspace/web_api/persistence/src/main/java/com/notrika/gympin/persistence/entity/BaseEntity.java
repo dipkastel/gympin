@@ -1,6 +1,5 @@
 package com.notrika.gympin.persistence.entity;
 
-import com.notrika.gympin.persistence.entity.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -9,7 +8,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.Objects;
 
 
@@ -25,24 +23,8 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "create_date", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    @Column(name = "updated_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedDate;
-
     @Column(name = "is_deleted")
     private boolean deleted = false;
-
-    //    @Column(name = "creator_user")
-    @ManyToOne(cascade = CascadeType.MERGE)
-    private User creatorUser;
-
-    //    @Column(name = "updater_user")
-    @ManyToOne(cascade = CascadeType.MERGE)
-    private User updaterUser;
 
 
     @Override

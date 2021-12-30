@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.option.sport;
 
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.sport.OptionOfSport;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.List;
 @SuperBuilder
 @Entity
 @Table(name = "sport_option")
-public class SportOption extends BaseEntity {
+public class SportOption extends BaseEntityWithCreateUpdate {
 
     @Column(name = "name")
     private String name;

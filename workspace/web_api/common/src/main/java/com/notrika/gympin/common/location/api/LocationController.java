@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.location.api;
 
+import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.location.dto.*;
 import com.notrika.gympin.common.location.param.*;
@@ -15,7 +16,7 @@ public interface LocationController {
 
     ResponseEntity<StateDto> updateState(StateParam stateParam);
 
-    ResponseEntity<List<StateDto>> getAllState(BaseParam pagingParam);
+    ResponseEntity<List<StateDto>> getAllState(BasePagedParam pagingParam);
 
     ResponseEntity<StateDto> getStateById(long longParam);
 
@@ -29,7 +30,7 @@ public interface LocationController {
 
     ResponseEntity<CityDto> deleteCity(CityParam cityParam);
 
-    ResponseEntity<List<CityDto>> getAllCity(BaseParam pagingParam);
+    ResponseEntity<List<CityDto>> getAllCity(BasePagedParam pagingParam);
 
     ResponseEntity<List<CityDto>> getCitiesByState(StateParam stateParam);
 
@@ -37,7 +38,7 @@ public interface LocationController {
 
     ResponseEntity<RegionDto> updateRegion(RegionParam regionParam);
 
-    ResponseEntity<List<RegionDto>> getAllRegion(BaseParam pagingParam);
+    ResponseEntity<List<RegionDto>> getAllRegion(BasePagedParam pagingParam);
 
     ResponseEntity<RegionDto> getRegionById(long longParam);
 
@@ -49,7 +50,7 @@ public interface LocationController {
 
     ResponseEntity<PlaceDto> updatePlace(PlaceParam placeParam);
 
-    ResponseEntity<List<PlaceDto>> getAllPlace(BaseParam pagingParam);
+    ResponseEntity<List<PlaceDto>> getAllPlace(BasePagedParam pagingParam);
 
     ResponseEntity<PlaceDto> getPlaceById(long longParam);
 

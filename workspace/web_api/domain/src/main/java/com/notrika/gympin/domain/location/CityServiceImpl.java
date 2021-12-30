@@ -69,7 +69,7 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto,City
     }
 
     @Override
-    public List<CityDto> convertToDto(List<City> entities) {
+    public List<CityDto> convertToDtos(List<City> entities) {
         return LocationConvertor.citiesToCityDtos(entities);
     }
 

@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.sport;
 
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
 import com.notrika.gympin.common.sport.service.SportService;
@@ -82,7 +83,7 @@ public class SportServiceImpl extends AbstractBaseService<SportParam,SportDto,Sp
     }
 
     @Override
-    public List<SportDto> convertToDto(List<Sport> entities) {
+    public List<SportDto> convertToDtos(List<Sport> entities) {
         return SportConvertor.sportsToSportDtos(entities);
     }
 
@@ -97,4 +98,13 @@ public class SportServiceImpl extends AbstractBaseService<SportParam,SportDto,Sp
         return sportRepository.deleteById2(sport);
     }
 
+    @Override
+    public List<MultimediaDto> getSportMultimedia(SportParam sportParam) {
+        List<MultimediaDto> multimediaDtoLis=new ArrayList<>();
+        List<SportMultimedia> sportMultimedias = multimediaService.getSportMultimedias(Sport.builder().id(sportParam.getId()).build());
+        for (SportMultimedia sportMultimedia : sportMultimedias) {
+            multimediaDtoLis.add(MultimediaDto.builder().id(sportMultimedia.getMultimedia().getId()).name(sportMultimedia.getMultimedia().getTitle()).build());
+        }
+        return multimediaDtoLis;
+    }
 }

@@ -9,6 +9,7 @@ import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpiredException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeManyRequestException;
+import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoundException;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
@@ -17,6 +18,7 @@ import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.common.user.param.LoginParam;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
+import com.notrika.gympin.common.user.param.UserRoleParam;
 import com.notrika.gympin.common.user.param.UserSendSmsParam;
 import com.notrika.gympin.common.user.service.AccountService;
 import com.notrika.gympin.common.user.service.JwtTokenProvider;
@@ -24,8 +26,10 @@ import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
+import com.notrika.gympin.persistence.dao.repository.RoleRepository;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
 import com.notrika.gympin.persistence.entity.user.Password;
+import com.notrika.gympin.persistence.entity.user.Role;
 import com.notrika.gympin.persistence.entity.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +45,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -66,6 +67,8 @@ public class AccountServiceImpl implements AccountService {
     private ActivationCodeRepository activationCodeRepository;
     @Autowired
     private PasswordRepository passwordRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     @Transactional
@@ -98,10 +101,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private User addUser(UserRegisterParam userRegisterParam) {
+        List<Role> roleList=new ArrayList<>();
+        for (UserRoleParam userRole : userRegisterParam.getUserRole()) {
+            roleList.add(roleRepository.getById(userRole.getId()));
+        }
         User user = new User();
         user.setUsername(userRegisterParam.getUsername());
         user.setPhoneNumber(userRegisterParam.getPhoneNumber());
-        user.setUserRole(userRegisterParam.getUserRole());
+        user.setUserRole(roleList);
         user.setUserGroup(UserGroup.CLIENT);
         user.setUserStatus(UserStatus.ENABLED);
         return userService.addUser(user);
@@ -117,7 +124,10 @@ public class AccountServiceImpl implements AccountService {
         String phoneNumber = getPhoneNumber(loginParam);
         User user = userService.findUserByPhoneNumber(phoneNumber);
         ActivationCode activationCode = user.getActivationCode();
-        if (activationCode!=null && activationCode.isDeleted()) {
+        if (activationCode==null){
+            throw new ActivationCodeNotFoundException();
+        }
+        if (activationCode.isDeleted()) {
             throw new ActivationCodeExpiredException();
         }
         activationCode.setDeleted(true);
@@ -171,6 +181,7 @@ public class AccountServiceImpl implements AccountService {
         return tokenProvider.generateJwtToken(authentication);
     }
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
         log.info("Going to loadUserByUsername ...\n");
@@ -178,8 +189,7 @@ public class AccountServiceImpl implements AccountService {
         if (user == null) {
             throw new UsernameNotFoundException(phoneNumber);
         }
-        ArrayList<UserRole> userRoles = new ArrayList<>();
-        userRoles.add(user.getUserRole());
+        ArrayList<Role> userRoles = new ArrayList<>(user.getUserRole());
         boolean accountNonExpired = !user.isDeleted();
         boolean accountNonLocked = !(user.getUserStatus() == UserStatus.LOCKED);
         boolean credentialsNonExpired = true;
@@ -195,7 +205,11 @@ public class AccountServiceImpl implements AccountService {
             throw new ExceptionBase();
         }
         setUserContext(user);
-        UserDetailsImpl userDetails = new UserDetailsImpl(userRoles, password, phoneNumber, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
+        ArrayList<UserRole> roles=new ArrayList<>();
+        for (Role userRole : userRoles) {
+            roles.add(userRole.getRole());
+        }
+        UserDetailsImpl userDetails = new UserDetailsImpl(roles, password, phoneNumber, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
         log.info("User loaded: {}", userDetails);
         return userDetails;
     }

@@ -1,7 +1,8 @@
-package com.notrika.gympin.common.location.dto;
+package com.notrika.gympin.common.user.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseDto;
+import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common.user.enums.UserRole;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class MultimediaDto extends BaseDto<MultimediaDto> {
+public class UserRoleParam extends BaseParam<UserRoleParam> {
 
-    @JsonProperty("Name")
-    private String name;
-
+    @JsonProperty("Role")
+    private UserRole role;
 }

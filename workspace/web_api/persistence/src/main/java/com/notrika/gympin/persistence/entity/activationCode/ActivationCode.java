@@ -24,19 +24,19 @@ import java.util.Objects;
 public class ActivationCode extends BaseEntity {
 
     //@Column(name = "user_id")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,optional = false)
     private User user;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number",nullable = false)
     private String phoneNumber;
 
-    @Column(name = "code")
+    @Column(name = "code",nullable = false)
     private String code;
 
     @Column(name = "sender_id")
     private String senderId;
 
-    @Column(name = "expired_date")
+    @Column(name = "expired_date",nullable = false)
     private Date expiredDate;
 
     public ActivationCode(User user, String phoneNumber, String code, String senderId, Date expiredDate) {

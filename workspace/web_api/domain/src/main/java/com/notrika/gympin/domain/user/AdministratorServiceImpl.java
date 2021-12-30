@@ -3,13 +3,17 @@ package com.notrika.gympin.domain.user;
 import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.enums.UserGroup;
+import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.user.param.UserRoleParam;
 import com.notrika.gympin.common.user.service.AdministratorService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
+import com.notrika.gympin.persistence.dao.repository.RoleRepository;
 import com.notrika.gympin.persistence.entity.user.Password;
+import com.notrika.gympin.persistence.entity.user.Role;
 import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,13 +36,24 @@ public class AdministratorServiceImpl extends AbstractBaseService<UserParam, Use
     @Autowired
     private PasswordRepository passwordRepository;
 
+    @Autowired
+    private UserRoleServiceImpl userRoleService;
+
     @Override
     public UserDto add(UserParam administratorParam) {
+        List<Role> roles=new ArrayList<>();
+        for (UserRoleParam roleParam : administratorParam.getRole()) {
+            roles.add(userRoleService.getRoleById(roleParam.getId()));
+        }
+        if(roles.size()==0){
+            roles.add(userRoleService.getByUserRole(UserRole.ADMIN));
+        }
         User initAdministrator = User.builder()
                 .username(administratorParam.getUsername())
                 .phoneNumber(administratorParam.getPhoneNumber())
                 .userGroup(UserGroup.ADMINISTRATION)
                 .userStatus(UserStatus.ENABLED)
+                .userRole(roles)
                 .build();
         User administrator = addAdministrator(initAdministrator);
         Password password=Password.builder().user(administrator).password(passwordEncoder.encode(administratorParam.getPassword())).expired(false).build();
@@ -52,8 +68,12 @@ public class AdministratorServiceImpl extends AbstractBaseService<UserParam, Use
     @Transactional
     @Override
     public UserDto update(UserParam administratorParam) {
+        List<Role> roles=new ArrayList<>();
+        for (UserRoleParam roleParam : administratorParam.getRole()) {
+            roles.add(userRoleService.getRoleById(roleParam.getId()));
+        }
         User admin = userService.getUserById(administratorParam.getId());
-        admin.setUserRole(administratorParam.getRole().get(0));
+        admin.setUserRole(roles);
         admin.setUsername(administratorParam.getUsername());
         admin.setPhoneNumber(administratorParam.getPhoneNumber());
         admin.setName(administratorParam.getName());
@@ -76,7 +96,7 @@ public class AdministratorServiceImpl extends AbstractBaseService<UserParam, Use
     }
 
     @Override
-    public List<UserDto> convertToDto(List<User> entities) {
+    public List<UserDto> convertToDtos(List<User> entities) {
         return UserConvertor.administratorsToAdministratorDtos(entities);
     }
 

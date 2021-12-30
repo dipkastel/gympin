@@ -8,15 +8,22 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @SuperBuilder
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class UserRegisterParam extends BaseParam<UserRegisterParam> {
 
-    @Builder.Default
-    private UserRole userRole = UserRole.USER;
+    private List<UserRoleParam> userRole;
     private String username;
     private String phoneNumber;
 
+    public UserRegisterParam() {
+        UserRoleParam userRoleParam=new UserRoleParam();
+        userRoleParam.setRole(UserRole.USER);
+        userRole=new ArrayList<>();
+        userRole.add(UserRoleParam.builder().role(UserRole.USER).build());
+    }
 }

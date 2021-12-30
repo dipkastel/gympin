@@ -32,10 +32,4 @@ public class BaseParam<T> implements Serializable {
 //    @JsonIgnore
     private boolean isDeleted;
 
-    @JsonProperty("Page")
-    private int page=0;
-
-    @JsonProperty("Size")
-    private int size=20;
-
 }
