@@ -1,5 +1,4 @@
 import {AuthApi} from "../../app/api/const_api";
-import {actions, reducer} from "../../app/store/ducks/auth.duck";
 
 export function removeCSSClass(ele, cls) {
   const reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");

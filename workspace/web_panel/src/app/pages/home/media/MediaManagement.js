@@ -5,7 +5,6 @@ import {Button} from "@material-ui/core";
 import 'leaflet/dist/leaflet.css';
 import AddMedia from "./AddMedia";
 import AllImages from "./AllImages";
-import {multimediacategory_getAll} from "../../../api/mediaCategories.api";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import AddIcon from "@material-ui/icons/Add";
 

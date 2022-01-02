@@ -18,14 +18,12 @@ class AllImages extends Component {
     getAllImages() {
 
         media_getAll().then(data => {
-            console.log(data.data.Data);
             this.setState(() => ({
                 images: data.data.Data.map(o=>{
                     o.selected = false;
                     return o;
                 })
             }));
-            console.log(this.state.images);
 
         }).catch(e => {
             console.log(e);
@@ -34,7 +32,6 @@ class AllImages extends Component {
 
     RenderImages(image) {
         var imageUrl = "http://api.gympin.ir/v1/multimedia/getByName?fileName=" + image.Name.toString() + "&height=200";
-        console.log("imageUrl");
         return (
             <Card className={"card "} key={imageUrl}>
                 <CardActionArea>
@@ -57,22 +54,19 @@ class AllImages extends Component {
         )
     }
     selectImage(e,image){
+        var images = [];
         if(e.target.checked){
             image.selected=true;
-            var images = [];
             var tempImages = this.state.images;
             images.push(image);
             if(this.props.selectMode===ImagePickerConsts.SELECTMODE_SINGLE&&this.state.images.filter(o=>o.selected).length>0){
-                tempImages.filter(o=>o!==image&&o.selected).map(o=>{o.selected=false});
-                tempImages.filter(o=>o!==image).map(o=>images.push(o));
-            }else{
-                tempImages.filter(o=>o!==image).map(o=>images.push(o));
+                tempImages.filter(o=>o!==image&&o.selected).map(o=>o.selected=false);
             }
+            tempImages.filter(o=>o!==image).map(o=>images.push(o));
             this.setState(() => ({
                 images: images
             }));
         }else{
-            var images = [];
             this.state.images.filter(o=>o!==image&&o.selected).map(o=>images.push(o));
             image.selected = false;
             images.push(image);

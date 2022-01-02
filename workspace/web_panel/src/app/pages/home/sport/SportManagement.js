@@ -72,7 +72,7 @@ class SportManagement extends Component {
                                 <Form.Group controlId="formSportImage">
                                     <ImagePicker onChange={this.onImageSelect}/>
                                     {this.state.selectedFile&&
-                                        this.state.selectedFile.name
+                                        this.state.selectedFile.Name
                                     }
                                 </Form.Group>
                                 <Button type={"submit"} variant="contained" color="primary" className={classes.button}>
@@ -86,6 +86,7 @@ class SportManagement extends Component {
                             <tr>
                                 <th>id</th>
                                 <th>sport Name</th>
+                                <th>image</th>
                                 <th>actions</th>
                             </tr>
                             </thead>
@@ -121,7 +122,8 @@ class SportManagement extends Component {
         if(this.state.selectedSportToEdit){
             sport_updateSport({
                 "Id":this.state.selectedSportToEdit.Id,
-                "Name": e.target.formName.value
+                "Name": e.target.formName.value,
+                "PictureIds":[this.state.selectedFile.Id]
             }).then(data=>{
                 this.getSports();
                 this.toggleAddMode(e)
@@ -131,7 +133,8 @@ class SportManagement extends Component {
         }
         else {
             sport_addSport({
-                "Name": e.target.formName.value
+                "Name": e.target.formName.value,
+                "PictureIds":[this.state.selectedFile.Id]
             }).then(data=>{
                 this.getSports();
                 this.toggleAddMode(e)
@@ -171,6 +174,7 @@ class SportManagement extends Component {
             <tr key={index}>
                 <td>{sport.Id}</td>
                 <td>{sport.Name}</td>
+                <td>{sport.LogoIds[0]}</td>
                 <td>
                     <Button variant="contained" color="primary" className={classes.button_edit} onClick={e=>this.prepareEditSport(e,sport)}>
                         ویرایش

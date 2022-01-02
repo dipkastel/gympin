@@ -1,5 +1,5 @@
 import axios from "axios";
-import {MultimediaApi, UserApi} from "./const_api";
+import {MultimediaApi} from "./const_api";
 //media
 export function media_add(data) {
     return axios.post(MultimediaApi.add,{data:data},{

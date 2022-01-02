@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/_main_layout"
-    android:background="@color/green_Fern"
+    android:background="@color/white_Munsell"
     tools:context=".ui.main.profile.FragmentProfile">
 
 

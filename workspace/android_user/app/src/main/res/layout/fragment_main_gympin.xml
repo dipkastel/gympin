@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/_main_layout"
     android:layoutDirection="rtl"
+    android:background="@color/white_london"
     tools:context=".ui.main.gympin.FragmentGympin">
 
     <androidx.constraintlayout.widget.ConstraintLayout

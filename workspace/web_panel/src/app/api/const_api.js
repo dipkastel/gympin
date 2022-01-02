@@ -1,6 +1,6 @@
 export let AuthApi = {
-      // BASEURL : "http://api.gympin.ir/",
-       BASEURL : "http://localhost:8080/api/",
+       BASEURL : "http://api.gympin.ir/",
+      // BASEURL : "http://localhost:8080/api/",
       LOGIN_URL : "v1/account/loginpanel"
 }
 export let LocationApi = {

@@ -27,7 +27,6 @@ class AddImage extends Component {
 
     render() {
         var images = this.state.images;
-        console.log(images)
         return (
             <div>
                 <div className="row">
@@ -41,7 +40,6 @@ class AddImage extends Component {
     }
 
     RenderImageForUpload(e, index) {
-        console.log(e)
         return (
             <ImageAddItem image={e} key={e.name} categories={this.state.categories} />
         )

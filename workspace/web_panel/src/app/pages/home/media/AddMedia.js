@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import {
-    Button,
     Tab,
     Tabs
 } from "@material-ui/core";

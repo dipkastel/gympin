@@ -58,6 +58,7 @@ class FragmentLogin : RegisterInnerPageFragment() {
         }
         viewModel.requestLogin(Req_User_Login(phoneNumber,code)).observe(viewLifecycleOwner, Observer { result ->
 
+            btn_submith_activation_code.isEnabled = true
             when (result.status) {
                 Resource.Status.SUCCESS -> {
                     result.data?.let {
@@ -74,6 +75,9 @@ class FragmentLogin : RegisterInnerPageFragment() {
                 Resource.Status.ERROR -> {
                     et_activation_code.error = getString(R.string.activation_code_is_not_valid)
                 }
+                Resource.Status.LOADING -> {
+                    btn_submith_activation_code.isEnabled = false
+                }
 
             }
         })
@@ -88,6 +92,7 @@ class FragmentLogin : RegisterInnerPageFragment() {
         }
         viewModel.requestSendSms(Req_User_SendSms(phoneNumber)).observe(viewLifecycleOwner, Observer { baseSetting ->
 
+            btn_submith_phone_number.isEnabled = true
             when (baseSetting.status) {
                 Resource.Status.SUCCESS -> {
                     changeMod("Activation")
@@ -95,6 +100,9 @@ class FragmentLogin : RegisterInnerPageFragment() {
                 Resource.Status.ERROR -> {
 //                    if(user not found exception)
                     changeMod("Register")
+                }
+                Resource.Status.LOADING -> {
+                    btn_submith_phone_number.isEnabled = false
                 }
 
             }
@@ -159,6 +167,7 @@ class FragmentLogin : RegisterInnerPageFragment() {
     private fun RegisterUserBeforeLogin(phonrNumber: String,UserName:String) {
         viewModel.requestRegister(Req_User_Register(phonrNumber,UserName)).observe(viewLifecycleOwner, Observer { baseSetting ->
 
+            btn_submith_register.isEnabled = true
             when (baseSetting.status) {
                 Resource.Status.SUCCESS -> {
                     et_phone_number.text = et_register_phone_number.text
@@ -167,6 +176,11 @@ class FragmentLogin : RegisterInnerPageFragment() {
                 Resource.Status.ERROR -> {
                     et_phone_number.error = baseSetting.message
                 }
+
+                Resource.Status.LOADING -> {
+                    btn_submith_register.isEnabled = false
+                }
+
 
             }
         })
