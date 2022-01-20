@@ -24,7 +24,7 @@ import java.util.Objects;
 @Table(name = "multimedia")
 public class Multimedia extends BaseEntityWithCreateUpdate {
 
-    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false,fetch = FetchType.LAZY)
     private User user;
 
     @Column(name = "file_name",nullable = false)

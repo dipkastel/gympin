@@ -5,6 +5,7 @@ import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
 import com.notrika.gympin.persistence.entity.location.PlaceOwner;
+import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
 import com.notrika.gympin.persistence.entity.security.service.ServiceExecution;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -86,7 +87,12 @@ public class User extends BaseEntity {
     private Set<UserToken> userTokens;
 
     @OneToMany
+    @ToString.Exclude
     private Set<ServiceExecution> serviceExecutions;
+
+    @OneToMany
+    @ToString.Exclude
+    private Set<Multimedia> multimediaSet;
 
     @Override
     public boolean equals(Object o) {
