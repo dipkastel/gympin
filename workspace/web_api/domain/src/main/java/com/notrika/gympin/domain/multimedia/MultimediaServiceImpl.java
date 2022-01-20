@@ -165,6 +165,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     @Override
     public InputStream loadFileAsResource(MultimediaRetrieveParam multimediaParam) throws Exception {
+        multimediaRepository.findAll();
         Multimedia multiMediaFile = null;
         if (multimediaParam.getId() != null && multimediaParam.getId() > 0) multiMediaFile = multimediaRepository.getById(multimediaParam.getId());
         else if (multimediaParam.getFileName() != null) multiMediaFile = multimediaRepository.findByFileName(multimediaParam.getFileName());
