@@ -54,6 +54,7 @@ public class Multimedia extends BaseEntityWithCreateUpdate {
             name = "multimedia_multimedia_category",
             joinColumns = @JoinColumn(name = "multimedia_id"),
             inverseJoinColumns = @JoinColumn(name = "multimedia_category_id"))
+    @ToString.Exclude
     private List<MultimediaCategory> categories;
 
     @Override
