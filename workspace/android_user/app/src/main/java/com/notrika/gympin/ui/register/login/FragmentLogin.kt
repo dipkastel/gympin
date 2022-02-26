@@ -61,12 +61,12 @@ class FragmentLogin : RegisterInnerPageFragment() {
             btn_submith_activation_code.isEnabled = true
             when (result.status) {
                 Resource.Status.SUCCESS -> {
-                    result.data?.let {
+                    result.data?.let { it ->
                         pocket.userToken = "Bearer "+it.token
-                        pocket.userId = it.id!!
-                        pocket.phoneNumber = it.phoneNumber!!
-                        pocket.userName = it.username!!
-                        pocket.userRole = it.userRole!!
+                        it.id?.let {that-> pocket.userId=that }
+                        it.phoneNumber?.let {that-> pocket.phoneNumber=that }
+                        it.username?.let {that-> pocket.userName=that }
+                        it.userRole?.let {that-> pocket.userRole=that }
                         openApp()
                         return@Observer
                     }

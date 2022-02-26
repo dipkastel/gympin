@@ -14,17 +14,19 @@ import kotlinx.android.synthetic.main.l_main_gympin_user_list_item.view.*
 class AdapterUserList : RecyclerView.Adapter<AdapterUserList.sliderViewHolder>() {
 
     inner class sliderViewHolder(var view: View) : RecyclerView.ViewHolder(view)
+
     lateinit var items: List<Res_Home_Page_Items>
 
     fun addItems(_items: List<Res_Home_Page_Items>) {
         this.items = _items
         notifyDataSetChanged()
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): sliderViewHolder {
 
-        var itemView:View =
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.l_main_gympin_user_list_item, parent,false)
+        var itemView: View =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.l_main_gympin_user_list_item, parent, false)
         return sliderViewHolder(itemView)
     }
 
@@ -32,14 +34,27 @@ class AdapterUserList : RecyclerView.Adapter<AdapterUserList.sliderViewHolder>()
         Glide.with(holder.view).load(items[position].imageUrl)
             .placeholder(R.drawable.placeholder_profile)
             .transform(
-                CenterCrop(), RoundedCorners(holder.view.resources.getDimension(R.dimen.const_corner_radius).toInt())
+                CenterCrop(),
+                RoundedCorners(
+                    holder.view.resources.getDimension(R.dimen.const_corner_radius).toInt()
+                )
             )
             .into(holder.view.img_user_image)
 
         holder.view.txt_user_name.text = items[position].title
+        holder.itemView.setOnClickListener {
+            onUserListItemClickListener.Click(items[position])
+        }
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
+
+    lateinit var onUserListItemClickListener: OnUserListItemClickListener
+
+    interface OnUserListItemClickListener{
+        fun Click(item:Res_Home_Page_Items)
+    }
+
 }

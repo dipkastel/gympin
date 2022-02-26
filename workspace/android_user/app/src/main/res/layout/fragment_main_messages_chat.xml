@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pink_rotterdam">
+
+    <TextView
+        android:id="@+id/lbl_user"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_36sdp"
+        android:fontFamily="@font/iran_sans_normal"
+        android:gravity="center"
+        android:text="@string/text_placeholder"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textColor="@color/black_Bistre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/img_user"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:src="@drawable/sampleuser3"
+        app:layout_constraintBottom_toBottomOf="@+id/lbl_user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lbl_user" />
+
+    <ImageView
+        android:id="@+id/img_online"
+        android:layout_width="@dimen/_5sdp"
+        android:layout_height="@dimen/_5sdp"
+        android:src="@drawable/_circle_bg_red"
+        android:tint="@color/green_Fern"
+        app:layout_constraintBottom_toBottomOf="@+id/lbl_user"
+        app:layout_constraintStart_toEndOf="@+id/lbl_user"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white_london"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_user"
+        tools:listitem="@layout/l_main_messages_chat_item1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

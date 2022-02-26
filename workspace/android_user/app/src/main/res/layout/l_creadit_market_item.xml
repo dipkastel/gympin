@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/img_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_baner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/_rectangle_title_edge"
+                android:fontFamily="@font/iran_sans_normal"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:text="800 سکه"
+                android:textColor="@color/white_london"
+                android:textSize="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="wrap_content"
+                android:background="@color/red_Alizarin_Crimson"
+                android:fontFamily="@font/iran_sans_bold"
+                android:gravity="center"
+                android:paddingTop="@dimen/_20sdp"
+                android:rotation="270"
+                android:text="اسنپ باکس"
+                android:textColor="@color/white_london"
+                android:textSize="@dimen/_8sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/img_banner"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/_c_register_btn_bg_1_normal"
+        android:elevation="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.17"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ico_coin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/iran_sans_normal"
+            android:text="ارزش 6،000 تومان"
+            android:textColor="@color/white_london"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

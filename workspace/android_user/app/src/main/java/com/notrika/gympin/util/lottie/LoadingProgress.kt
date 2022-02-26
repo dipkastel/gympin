@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.notrika.gympin.R
 import java.io.IOException
 import java.nio.charset.Charset
@@ -50,7 +51,7 @@ class LoadingProgress @Inject constructor() {
         animationView.frame = 60
         animationView.alpha = 1f
         animationView.tag = "progress"
-        animationView.loop(isloop)
+        animationView.repeatCount = LottieDrawable.INFINITE
         if (!isloop){
 //            animationView.repeatCount = 1
         }

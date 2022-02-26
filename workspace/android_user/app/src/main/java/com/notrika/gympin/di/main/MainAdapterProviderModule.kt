@@ -2,6 +2,7 @@ package com.notrika.gympin.di.main
 
 import com.bumptech.glide.RequestManager
 import com.notrika.gympin.ui.main.gympin.*
+import com.notrika.gympin.ui.main.myEvents.AdapterMyEvents
 import dagger.Module
 import dagger.Provides
 import javax.inject.Inject
@@ -37,6 +38,12 @@ class MainAdapterProviderModule @Inject constructor() {
     @Provides
     internal fun provideAdapterUserList(): AdapterUserList {
         return AdapterUserList()
+    }
+
+    @MainScope
+    @Provides
+    internal fun provideAdapterMyEvents(requestManager: RequestManager): AdapterMyEvents {
+        return AdapterMyEvents(requestManager)
     }
 
 //

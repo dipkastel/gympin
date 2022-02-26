@@ -14,7 +14,11 @@
         android:id="@+id/main_sports"
         android:name="com.notrika.gympin.ui.main.sports.FragmentSports"
         android:label="sports"
-        tools:layout="@layout/fragment_main_sports" />
+        tools:layout="@layout/fragment_main_sports" >
+        <action
+            android:id="@+id/sports_to_events"
+            app:destination="@id/main_events_list" />
+    </fragment>
     <fragment
         android:id="@+id/main_places"
         android:name="com.notrika.gympin.ui.main.places.FragmentPlaces"
@@ -24,27 +28,68 @@
         android:id="@+id/main_settings"
         android:name="com.notrika.gympin.ui.main.settings.FragmentSettings"
         android:label="main_settings"
-        tools:layout="@layout/fragment_main_reserves" />
-    <fragment
-        android:id="@+id/main_profile"
-        android:name="com.notrika.gympin.ui.main.profile.FragmentProfile"
-        android:label="reserves"
-        tools:layout="@layout/fragment_main_reserves" />
+        tools:layout="@layout/fragment_main_settings" />
     <fragment
         android:id="@+id/main_my_events"
         android:name="com.notrika.gympin.ui.main.myEvents.FragmentMyEvents"
         android:label="main_my_events"
         tools:layout="@layout/fragment_main_my_events"/>
+
+    <fragment
+        android:id="@+id/main_events_list"
+        android:name="com.notrika.gympin.ui.main.sports.eventsList.FragmentEventsList"
+        android:label="main_events_list"
+        tools:layout="@layout/fragment_main_events_list">
+        <action
+            android:id="@+id/events_list_to_event"
+            app:destination="@id/main_event" />
+        <action
+            android:id="@+id/events_list_to_create_event"
+            app:destination="@id/create_event" />
+    </fragment>
+    <fragment
+        android:id="@+id/main_profile"
+        android:name="com.notrika.gympin.ui.main.myProfile.FragmentMyProfile"
+        android:label="main_profile"
+        tools:layout="@layout/fragment_main_my_profile">
+        <action
+            android:id="@+id/profile_to_edit"
+            app:destination="@id/profile_edit" />
+    </fragment>
     <fragment
         android:id="@+id/main_contents"
         android:name="com.notrika.gympin.ui.main.contents.FragmentContents"
         android:label="main_contents"
         tools:layout="@layout/fragment_main_contents"/>
     <fragment
+        android:id="@+id/create_event"
+        android:name="com.notrika.gympin.ui.main.events.createEvent.FragmentCreateEvent"
+        android:label="create_event"
+        tools:layout="@layout/fragment_main_create_event"/>
+
+    <fragment
+        android:id="@+id/profile_edit"
+        android:name="com.notrika.gympin.ui.main.myProfile.editProfile.FragmentEditProfile"
+        android:label="profile_edit"
+        tools:layout="@layout/fragment_main_profile_edit"/>
+    <fragment
+        android:id="@+id/main_user_profile"
+        android:name="com.notrika.gympin.ui.main.userProfile.FragmentUserProfile"
+        android:label="main_user_profile"
+        tools:layout="@layout/fragment_main_user_profile">
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
+    <fragment
         android:id="@+id/main_messages"
         android:name="com.notrika.gympin.ui.main.messages.FragmentMessages"
         android:label="main_messages"
-        tools:layout="@layout/fragment_main_messages"/>
+        tools:layout="@layout/fragment_main_messages">
+        <action
+            android:id="@+id/action_main_messages_to_main_message_chat"
+            app:destination="@id/main_message_chat" />
+    </fragment>
     <fragment
         android:id="@+id/main_notifs"
         android:name="com.notrika.gympin.ui.main.notifs.FragmentNotifs"
@@ -55,6 +100,16 @@
         android:name="com.notrika.gympin.ui.main.credit.FragmentCredit"
         android:label="main_credet"
         tools:layout="@layout/fragment_main_credit"/>
+    <fragment
+        android:id="@+id/main_message_chat"
+        android:name="com.notrika.gympin.ui.main.messages.chat.FragmentChat"
+        android:label="main_message_chat"
+        tools:layout="@layout/fragment_main_messages_chat"/>
+    <fragment
+        android:id="@+id/main_event"
+        android:name="com.notrika.gympin.ui.main.events.event.FragmentEvent"
+        android:label="main_event"
+        tools:layout="@layout/fragment_main_event"/>
     <action
         android:id="@+id/to_gympin"
         app:destination="@id/main_gympin"
@@ -75,6 +130,14 @@
         android:id="@+id/to_places"
         app:destination="@id/main_places"
         android:label="places"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_user_profile"
+        app:destination="@id/img_user_image"
+        android:label="user_profile"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"

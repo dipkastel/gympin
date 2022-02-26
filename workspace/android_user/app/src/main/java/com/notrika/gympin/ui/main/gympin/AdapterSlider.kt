@@ -38,9 +38,18 @@ class AdapterSlider : RecyclerView.Adapter<AdapterSlider.sliderViewHolder>() {
                 CenterCrop(), RoundedCorners(holder.view.resources.getDimension(R.dimen.const_corner_radius).toInt())
             )
             .into(holder.view.img_slider)
+        holder.itemView.setOnClickListener {
+            onSliderItemClickListener.Click(items[position])
+        }
     }
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    lateinit var onSliderItemClickListener: OnSliderItemClickListener
+
+    interface OnSliderItemClickListener{
+        fun Click(item:Res_Home_Page_Items)
     }
 }

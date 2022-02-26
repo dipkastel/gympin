@@ -21,9 +21,6 @@ class ActivityMain : BaseActivity() {
     private val TAG: String = this.javaClass.name
 
     @Inject
-    lateinit var pocket: Pocket
-
-    @Inject
     lateinit var ciBar: CiBar
 
 
@@ -48,10 +45,6 @@ class ActivityMain : BaseActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         config()
-    }
-
-    public fun setTitle(title:String){
-//        topAppBar.title = title
     }
 
     private fun config() {

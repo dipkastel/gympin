@@ -8,27 +8,13 @@
     android:background="@color/white_london"
     tools:context=".ui.main.sports.FragmentSports">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
+    <com.notrika.gympin.util.component.CActionbarGeneral
+        android:id="@+id/actionbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/actionBarSize"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/iran_sans"
-            android:text="@string/sports"
-            android:textSize="@dimen/_15sdp"
-            android:textColor="@color/black_ciatel"
-            android:textFontWeight="600"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/grid_sport"
@@ -41,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/actionbar"
         app:spanCount="3"
         tools:listitem="@layout/item_grid_sport" />
 

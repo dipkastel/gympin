@@ -10,12 +10,11 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.notrika.gympin.R
 import com.notrika.gympin.data.model.res.Res_Home_Page_Items
 import kotlinx.android.synthetic.main.l_main_gympin_discount_list_item.view.*
-import kotlinx.android.synthetic.main.l_main_gympin_user_list_item.view.*
-import kotlinx.android.synthetic.main.l_main_gympin_user_list_item.view.img_user_image
 
 class AdapterDiscountList : RecyclerView.Adapter<AdapterDiscountList.ViewHolder>() {
 
     inner class ViewHolder(var view: View) : RecyclerView.ViewHolder(view)
+
     lateinit var items: List<Res_Home_Page_Items>
 
     fun addItems(_items: List<Res_Home_Page_Items>) {
@@ -36,13 +35,23 @@ class AdapterDiscountList : RecyclerView.Adapter<AdapterDiscountList.ViewHolder>
             .transform(
                 CenterCrop(), RoundedCorners(holder.view.resources.getDimension(R.dimen.const_corner_radius).toInt())
             )
-            .into(holder.view.img_discount)
+            .into(holder.view.img_post_image)
 
         holder.view.txt_discount_title.text = items[position].description
         holder.view.txt_discount_place_name.text = items[position].title
+        holder.itemView.setOnClickListener {
+            onDiscountClick.click(items[position])
+        }
     }
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+
+    lateinit var onDiscountClick: DiscountClickListener
+
+    interface DiscountClickListener{
+        fun click(item:Res_Home_Page_Items)
     }
 }

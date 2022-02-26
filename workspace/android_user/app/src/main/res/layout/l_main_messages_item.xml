@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/_txt_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:fontFamily="@font/iran_sans_normal"
+        android:paddingHorizontal="@dimen/_8sdp"
+        android:textSize="@dimen/_7sdp"
+        android:text="@string/text_placeholder"
+        android:textAlignment="textEnd"
+        android:textColor="@color/gray_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:src="@drawable/sampleuser3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_txt_time" />
+
+    <TextView
+        android:id="@+id/_txt_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/iran_sans_normal"
+        android:paddingHorizontal="@dimen/_3sdp"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:text="@string/text_placeholder"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black_onyx"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/_txt_time" />
+
+    <TextView
+        android:id="@+id/_txt_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:fontFamily="@font/iran_sans_normal"
+        android:paddingHorizontal="@dimen/_3sdp"
+        android:paddingBottom="@dimen/_3sdp"
+        android:text="@string/text_placeholder"
+        android:textAlignment="viewStart"
+        android:textColor="@color/grey_Liver"
+        android:textSize="@dimen/_9sdp"
+        app:layout_constraintEnd_toStartOf="@+id/_txt_count"
+        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/_txt_title" />
+
+    <TextView
+        android:id="@+id/_txt_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/iran_sans_bold"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:text="16"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white_london"
+        android:background="@drawable/_c_register_btn_bg_1_normal"
+        android:textSize="@dimen/_7sdp"
+        app:layout_constraintEnd_toEndOf="@+id/_txt_time"
+        app:layout_constraintStart_toStartOf="@+id/_txt_time"
+        app:layout_constraintTop_toBottomOf="@+id/_txt_title" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/gray_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_txt_desc"
+        android:layout_marginBottom="@dimen/_3sdp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

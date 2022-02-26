@@ -1,0 +1,42 @@
+{
+  "Success": true,
+  "MessageType": 0,
+  "Message": "",
+  "ResultDate": "2021-10-30T20:41:06.962+00:00",
+  "LinkParams": null,
+  "Error": null,
+  "Data": {
+    "type": "direct",
+    "user": {
+      "Id": 10,
+      "imageUrl": "https://www.micromata.de/wp-content/uploads/2021/03/avatar_user_7_1491310778-150x150.jpg",
+      "name": "حبیب نسیم آبادی"
+    },
+    "lastChats": [
+      {
+        "Id": 100,
+        "text": "این یک پیام تست است که خودم نوشتم",
+        "date": "2022-02-04T11:08:56.235-0700",
+        "userId": 0
+      },
+      {
+        "Id": 101,
+        "text": "این پیام را یوزر 2 نوشته است",
+        "date": "2022-02-04T11:08:56.235-0700",
+        "userId": 10
+      },
+      {
+        "Id": 102,
+        "text": "موضوع پیام 3",
+        "date": "2022-02-04T11:08:56.235-0700",
+        "userId": 10
+      },
+      {
+        "Id": 102,
+        "text": "این یک پیام تست است",
+        "date": "2022-02-04T11:08:56.235-0700",
+        "userId": 0
+      }
+    ]
+  }
+}

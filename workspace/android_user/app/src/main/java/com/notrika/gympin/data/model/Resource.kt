@@ -3,7 +3,7 @@ package com.notrika.gympin.data.model
 class Resource<T>(val status: Status, val data: T?, val message: String) {
 
     enum class Status {
-        SUCCESS, ERROR, LOADING,FAILURE,EMPTY
+        SUCCESS, ERROR, LOADING,FAILURE,EMPTY,UNAUTHORIZED
     }
 
 
@@ -19,6 +19,10 @@ class Resource<T>(val status: Status, val data: T?, val message: String) {
 
         fun <T> failure(msg: String, data: T?): Resource<T> {
             return Resource(Status.FAILURE, data, msg)
+        }
+
+        fun <T> unauthorized(msg: String, data: T?): Resource<T> {
+            return Resource(Status.UNAUTHORIZED, data, msg)
         }
 
         fun <T> Empty(msg: String, data: T?): Resource<T> {

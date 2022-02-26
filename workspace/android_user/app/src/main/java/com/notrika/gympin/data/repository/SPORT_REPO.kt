@@ -8,7 +8,6 @@ import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.res.Res_sport
 import com.notrika.gympin.data.network.request.SportRequests
-import com.notrika.gympin_master.util.setting.ErrorCheckEmpty
 import javax.inject.Inject
 
 class SPORT_REPO @Inject constructor(
@@ -18,22 +17,13 @@ class SPORT_REPO @Inject constructor(
 ) {
 
         fun observeAllSports(): LiveData<Resource<List<Res_sport>>> {
-                val LivedataBaseSetting = MediatorLiveData<Resource<List<Res_sport>>>()
-                val sourceApplicationSplash: LiveData<Resource<List<Res_sport>>> = LiveDataReactiveStreams.fromPublisher(sportRequests.RequestGetAllSport())
-                LivedataBaseSetting.value = Resource.loading(null)
-
-
-                LivedataBaseSetting.addSource(sourceApplicationSplash) { listResource ->
-                        LivedataBaseSetting.removeSource(sourceApplicationSplash)
-                        if (listResource.data == null) {
-                                LivedataBaseSetting.value = Resource.error(listResource.message.ErrorCheckEmpty(), null)
-                        } else if (listResource?.status == Resource.Status.SUCCESS) {
-                                LivedataBaseSetting.value = Resource.success(listResource.data)
-                        } else {
-                                LivedataBaseSetting.value = Resource.error(listResource.message.ErrorCheckEmpty(), null)
-                        }
+                val lData = MediatorLiveData<Resource<List<Res_sport>>>()
+                val lStream: LiveData<Resource<List<Res_sport>>> = LiveDataReactiveStreams.fromPublisher(sportRequests.RequestGetAllSport())
+                lData.value = Resource.loading(null)
+                lData.addSource(lStream) { result ->
+                        lData.removeSource(lStream)
+                        lData.value =  result
                 }
-
-                return LivedataBaseSetting
+                return lData
         }
 }

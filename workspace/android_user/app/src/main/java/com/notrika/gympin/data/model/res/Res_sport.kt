@@ -6,13 +6,16 @@ import com.google.gson.annotations.SerializedName
 
 class Res_sport {
 
+    @SerializedName("Id")
+    @Expose
+    var Id: Int? = null
     @SerializedName("Name")
     @Expose
     var name: String? = null
-    @SerializedName("Status")
+    @SerializedName("LaunchStatus")
     @Expose
-    var status: String? = null
-    @SerializedName("MainImage")
+    var LaunchStatus: String? = null
+    @SerializedName("LogoIds")
     @Expose
-    var mainImage: String? = null
+    var LogoIds: List<Int> = ArrayList<Int>()
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardElevation="@dimen/_5sdp"
+    android:layout_marginHorizontal="@dimen/_10sdp"
+    android:layout_marginVertical="@dimen/_5sdp">
+    <org.osmdroid.views.MapView android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp" />
+</androidx.cardview.widget.CardView>

@@ -9,55 +9,13 @@
     android:background="@color/white_london"
     tools:context=".ui.main.gympin.FragmentGympin">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <com.notrika.gympin.util.component.CActionbarGeneral
+        android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_3sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/img_coins"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/ico_coin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/img_chat"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/ico_dirct"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/img_notif"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:padding="@dimen/_5sdp"
-            android:src="@drawable/ico_notif"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_chat"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_16sdp"
-            android:fontFamily="@font/iran_sans"
-            android:text="350"
-            app:layout_constraintBottom_toBottomOf="@+id/img_coins"
-            app:layout_constraintEnd_toStartOf="@+id/img_coins"
-            app:layout_constraintTop_toTopOf="@+id/img_coins"
-            app:layout_constraintVertical_bias="0.79" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -66,7 +24,7 @@
         android:padding="@dimen/_3sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/actionbar">
 
         <ImageView
             android:id="@+id/imageView5"

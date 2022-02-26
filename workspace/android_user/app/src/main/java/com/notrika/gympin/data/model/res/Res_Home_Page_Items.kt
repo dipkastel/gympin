@@ -2,8 +2,9 @@ package com.notrika.gympin.data.model.res
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.notrika.gympin.data.model.entity.Home_Item
 
-class Res_Home_Page_Items {
+class Res_Home_Page_Items : Home_Item {
     @SerializedName("type")
     @Expose
      val type: String? = null
@@ -22,9 +23,13 @@ class Res_Home_Page_Items {
 
     @SerializedName("destination")
     @Expose
-    private val destination: String? = null
+    val destination: String? = null
+
+    @SerializedName("data")
+    @Expose
+    val data: String = ""
 
     @SerializedName("priority")
     @Expose
-    private val priority: Int? = null
+    val priority: Int? = null
 }

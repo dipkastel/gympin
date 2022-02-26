@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.notrika.gympin.ui.main.MainPageFragment
 import com.notrika.gympin.R
+import com.notrika.gympin.data.`interface`.onAuthorizeComplete
 import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.res.Res_sport
+import com.notrika.gympin.ui.main.ActivityMain
+import com.notrika.gympin.ui.main.MainPageFragment
 import kotlinx.android.synthetic.main.fragment_main_sports.*
 
 
@@ -21,9 +23,10 @@ class FragmentSports : MainPageFragment() {
     private lateinit var viewModel: ViewModelSports
 
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_main_sports, container, false)
     }
 
@@ -39,10 +42,18 @@ class FragmentSports : MainPageFragment() {
             when (baseSetting.status) {
                 Resource.Status.SUCCESS -> {
 
-                    setupRecyclerView(grid_sport,baseSetting.data!!)
+                    setupRecyclerView(grid_sport, baseSetting.data!!)
                 }
                 Resource.Status.ERROR -> {
 
+                }
+                Resource.Status.UNAUTHORIZED -> {
+                    (activity as ActivityMain).reautorizationUser(requireActivity(),
+                        object : onAuthorizeComplete {
+                            override fun authorized() {
+                                getsports()
+                            }
+                        })
                 }
 
             }
@@ -50,14 +61,15 @@ class FragmentSports : MainPageFragment() {
     }
 
 
-    private fun setupRecyclerView(recyclerView: RecyclerView,sports: List<Res_sport> ) {
+    private fun setupRecyclerView(recyclerView: RecyclerView, sports: List<Res_sport>) {
 
-        recyclerView.adapter =  AdapterGridViewSport(activity, sports, requestManager, pocket)
+        recyclerView.adapter = AdapterGridViewSport(activity, sports, requestManager, pocket)
 
         recyclerView.adapter?.let { adapter ->
             (adapter as AdapterGridViewSport).onitemClickLictener = object : OnSportClickListener {
                 override fun Click(imageView: ImageView, item: Res_sport) {
-
+                    var action = FragmentSportsDirections.sportsToEvents()
+                    findNavController().navigate(action)
                 }
 
             }

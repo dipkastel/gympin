@@ -39,14 +39,14 @@ class FragmentSplash : RegisterInnerPageFragment() {
                 .setPopUpTo(R.id.register, true)
                 .build()
 
-        Handler().postDelayed({ getSplashData() }, 4000)
+                getSplashData()
     }
 
     private fun getSplashData() {
         viewModel.requestSplash().observe(viewLifecycleOwner, Observer { SplashData->
             when(SplashData.status){
                 Resource.Status.SUCCESS->{
-                    LoginCheck()
+                    Handler().postDelayed({LoginCheck()}, 4000)
                 }
                 Resource.Status.ERROR ->{
                     var action = CiBar_Action("تلاش مجدد", object : OnCibarButtonListener {
@@ -62,7 +62,9 @@ class FragmentSplash : RegisterInnerPageFragment() {
 
     private fun LoginCheck() {
         if (pocket.userId<1) {
-            Navigation.findNavController(this.requireView()).navigate(FragmentSplashDirections.splashToLogin())
+            this.view?.let{
+                Navigation.findNavController(it).navigate(FragmentSplashDirections.splashToLogin())
+            }
         }else{
             openApp()
         }
@@ -70,8 +72,10 @@ class FragmentSplash : RegisterInnerPageFragment() {
 
     private fun openApp() {
         activity?.finish()
-        val myIntent = Intent(activity, ActivityMain::class.java)
-        activity?.startActivity(myIntent)
+        activity?.let {
+            val myIntent = Intent(activity, ActivityMain::class.java)
+            activity?.startActivity(myIntent)
+        }
     }
 
 

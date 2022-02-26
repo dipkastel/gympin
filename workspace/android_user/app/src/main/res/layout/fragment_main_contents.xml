@@ -2,6 +2,29 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Tamarind">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white_london">
+
+    <com.notrika.gympin.util.component.CActionbarGeneral
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_contents"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:itemCount="5"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/l_main_content_list_item_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actionbar"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

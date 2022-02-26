@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
-import com.notrika.gympin.ui.main.MainPageFragment
 import com.notrika.gympin.R
-import com.notrika.gympin.ui.main.ActivityMain
+import com.notrika.gympin.ui.main.MainPageFragment
+import com.notrika.gympin.util.mocks.mockdatas
+import kotlinx.android.synthetic.main.fragment_main_contents.*
 
 
 class FragmentContents : MainPageFragment() {
@@ -25,6 +25,15 @@ class FragmentContents : MainPageFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, providerFactory).get(ViewModelContents::class.java)
+        fillList()
     }
 
+    private fun fillList() {
+        var contents = mockdatas().getContentsMockData(requireContext());
+        var adapter = AdapterContents(requestManager)
+        adapter.addItems(contents.data!!)
+        rv_contents.adapter =adapter
+        rv_contents.adapter?.notifyDataSetChanged();
+
+    }
 }

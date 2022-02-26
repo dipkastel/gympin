@@ -12,10 +12,10 @@ class ResultManager {
             try {
                 when (it.code()) {
                     HttpCode.HTTP_FORBIDDEN -> {
-                        return Resource.failure(HttpErrors.AUTH_ERROR, it.body()?.data)
+                        return Resource.unauthorized(HttpErrors.AUTH_ERROR, it.body()?.data)
                     }
                     HttpCode.HTTP_UNAUTHORIZED -> {
-                        return Resource.failure(HttpErrors.AUTH_ERROR, it.body()?.data)
+                        return Resource.unauthorized(HttpErrors.AUTH_ERROR, it.body()?.data)
                     }
                     HttpCode.HTTP_OK -> {
                         return if (it.isSuccessful) {
@@ -41,7 +41,7 @@ class ResultManager {
                 }
 
             } catch (e: Exception) {
-                return Resource.error(HttpErrors.UNKNOWN_ERROR, null)
+                return Resource.failure(HttpErrors.UNKNOWN_ERROR, null)
             }
         }
 

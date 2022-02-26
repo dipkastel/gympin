@@ -5,7 +5,7 @@
     android:layoutDirection="rtl"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
-        android:id="@+id/img_discount"
+        android:id="@+id/img_post_image"
         android:layout_width="@dimen/_180sdp"
         android:layout_height="@dimen/_110sdp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,13 +22,13 @@
         android:text="40% تخفیف"
         android:paddingHorizontal="@dimen/_5sdp"
         android:layout_margin="@dimen/_5sdp"
-        android:fontFamily="@font/iran_sans"
+        android:fontFamily="@font/iran_sans_normal"
         android:textColor="@color/white_london"
         android:shadowColor="@color/black_copenhagen"
         android:textSize="@dimen/_10sdp"
         android:background="@drawable/_c_register_btn_bg_1_focused"
-        app:layout_constraintTop_toTopOf="@+id/img_discount"
-        app:layout_constraintEnd_toEndOf="@+id/img_discount" />
+        app:layout_constraintTop_toTopOf="@+id/img_post_image"
+        app:layout_constraintEnd_toEndOf="@+id/img_post_image" />
     <TextView
         android:id="@+id/txt_discount_place_name"
         android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
         android:textColor="@color/white_london"
         android:shadowColor="@color/black_copenhagen"
         android:shadowRadius="10"
-        app:layout_constraintBottom_toBottomOf="@+id/img_discount"
-        app:layout_constraintEnd_toEndOf="@+id/img_discount" />
+        app:layout_constraintBottom_toBottomOf="@+id/img_post_image"
+        app:layout_constraintEnd_toEndOf="@+id/img_post_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,9 +6,8 @@ import com.notrika.gympin.data.network.NetworkConstants
 import io.reactivex.Flowable
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.POST
 
 interface SportApi {
-    @GET(NetworkConstants.sport_getAllSport)
+    @GET(NetworkConstants.sport_getall)
     fun sportGetAllSport(): Flowable<Response<OprationResult<List<Res_sport>>>>
 }

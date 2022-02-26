@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_Munsell">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/main_my_profile_content" />
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white_london">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/actionbar">
+
+                    <TextView
+                        android:id="@+id/txt_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ico_edit"
+                        android:drawableTint="@color/red_Lust"
+                        android:fontFamily="@font/iran_sans_normal"
+                        android:text="ویرایش"
+                        android:layout_marginTop="@dimen/_36sdp"
+                        android:textColor="@color/red_Lust"
+                        android:textSize="@dimen/_11sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.08"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/_img_mock"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_230sdp"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:background="@color/red_Lust"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_edit" />
+
+                    <ImageView
+                        android:id="@+id/_img_user"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        android:src="@drawable/sampleuser1"
+                        android:layout_marginTop="@dimen/_40sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.69"
+                        app:layout_constraintStart_toEndOf="@+id/_img_mock"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/_img_user_gender"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:src="@drawable/sampleuser1"
+                        app:layout_constraintBottom_toBottomOf="@+id/_img_user"
+                        app:layout_constraintEnd_toEndOf="@+id/_img_user"
+                        app:layout_constraintStart_toStartOf="@+id/_img_user"
+                        app:layout_constraintTop_toTopOf="@+id/_img_user"
+                        app:layout_constraintHorizontal_bias="0.05"
+                        app:layout_constraintVertical_bias="0.95" />
+
+                    <TextView
+                        android:id="@+id/txt_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/iran_sans_bold"
+                        android:text="نام کاربر"
+                        android:textColor="@color/black_ciatel"
+                        app:layout_constraintEnd_toEndOf="@+id/_img_user"
+                        app:layout_constraintStart_toStartOf="@+id/_img_user"
+                        app:layout_constraintTop_toBottomOf="@+id/_img_user" />
+
+                    <TextView
+                        android:id="@+id/txt_user_phone_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/iran_sans_normal"
+                        android:text="09XXXXXXXXX"
+                        android:textColor="@color/grey_Ash"
+                        app:layout_constraintEnd_toEndOf="@+id/_img_user"
+                        app:layout_constraintStart_toStartOf="@+id/_img_user"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_user_name" />
+
+                    <com.willy.ratingbar.ScaleRatingBar
+                        android:id="@+id/rate_creator"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        app:layout_constraintEnd_toEndOf="@+id/_img_user"
+                        app:layout_constraintStart_toStartOf="@+id/_img_user"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_user_phone_number"
+                        app:srb_clearRatingEnabled="true"
+                        app:srb_drawableEmpty="@drawable/ic_star_black_active_16dp"
+                        app:srb_drawableFilled="@drawable/ic_star_black_16dp"
+                        app:srb_numStars="5"
+                        app:srb_starHeight="@dimen/_12sdp"
+                        app:srb_starPadding="0dp"
+                        app:srb_starWidth="@dimen/_12sdp"
+                        app:srb_stepSize="0.1" />
+
+                    <TextView
+                        android:id="@+id/txt_user_bio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/iran_sans_normal"
+                        android:maxWidth="@dimen/_180sdp"
+                        android:maxLines="3"
+                        android:text="من احمد سغیری هستم تکوانذوکار اسکل محل و یک جنگجو لطفا من را دنبال کنید که ..."
+                        android:textColor="@color/grey_Ash"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/_img_mock"
+                        app:layout_constraintTop_toBottomOf="@+id/rate_creator" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.notrika.gympin.util.component.CActionbarGeneral
+                    android:id="@+id/actionbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white_london"
+                    app:layout_collapseMode="pin"/>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="محتوا های من"
+                    android:textColor="@color/black_ciatel"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/grey_Ash"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/ico_notif"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/white_london"
+        android:padding="@dimen/_3sdp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

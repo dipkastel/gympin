@@ -49,13 +49,12 @@ class AdapterGridViewSport(var context: Activity?, private val mValues: List<Res
         holder._sport_title.text = mValues[position].name
 
 //        if (mValues[position].status=="Active")
-
-        requestManager
-                .load(mValues[position].mainImage)
+        if(mValues[position].LogoIds.any())
+            requestManager
+                .load("http://api.gympin.ir/v1/multimedia/getById?id=${mValues[position].LogoIds?.first()?: ""}&height=200")
                 .placeholder(R.drawable.ic_launcher)
                 .transform(CenterInside(), RoundedCorners(holder._image_view.resources.getDimension(R.dimen.const_corner_radius).toInt()))
                 .into(holder._image_view)
-
 
         val anim = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.enter_zoom)
 //        anim.startOffset = 100.toLong()

@@ -23,6 +23,7 @@ constructor(val sportApi: SportApi, val pocket: Pocket) {
                     Response.error(HttpCode.Disconnected, RealResponseBody("null", 0, null))
                 }
                 .map {
+
                     ResultManager.OnOprationResult(it)
                 }
                 .subscribeOn(Schedulers.io())

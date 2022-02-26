@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white_london">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red_Alizarin_Crimson"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_user_image"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/sampleuser5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_folow_user"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@color/blue_dodger"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_message"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:background="@color/yellow_venice"
+            app:layout_constraintEnd_toEndOf="@+id/img_folow_user"
+            app:layout_constraintStart_toStartOf="@+id/img_folow_user"
+            app:layout_constraintTop_toBottomOf="@+id/img_folow_user" />
+
+        <TextView
+            android:id="@+id/txt_user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:fontFamily="@font/iran_sans_bold"
+            android:text="مصطفی اکبری"
+            android:textColor="@color/white_london"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@+id/img_folow_user"
+            app:layout_constraintStart_toEndOf="@+id/img_user_image"
+            app:layout_constraintTop_toTopOf="@+id/img_user_image" />
+
+        <TextView
+            android:id="@+id/txt_user_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:fontFamily="@font/iran_sans_normal"
+            android:text="من کشتی گیر حرفه ای هستم برای برنامه غذایی حرفه ای به دایرکت اینجانب مراجعه کنید ."
+            android:textColor="@color/white_london"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_user_image"
+            app:layout_constraintEnd_toStartOf="@+id/img_folow_user"
+            app:layout_constraintStart_toStartOf="@+id/txt_user_name"
+            app:layout_constraintTop_toBottomOf="@+id/txt_user_name"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_user_contents"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:background="@color/white_london"
+        android:paddingTop="@dimen/_57sdp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bottom_header_bg"
+        android:paddingHorizontal="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header">
+
+
+        <TextView
+            android:id="@+id/txt_user_folowers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iran_sans_normal"
+            android:text="89 دنبال کننده"
+            android:textColor="@color/white_london"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/view4"
+            app:layout_constraintEnd_toStartOf="@id/view4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view4" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="1dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@color/grey_Ash"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/txt_user_folowing"
+            app:layout_constraintStart_toEndOf="@+id/txt_user_folowers"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_user_folowing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iran_sans_normal"
+            android:text="580 دنبال شونده"
+            android:textColor="@color/white_london"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/view4"
+            app:layout_constraintEnd_toStartOf="@id/view5"
+            app:layout_constraintStart_toEndOf="@+id/view4"
+            app:layout_constraintTop_toTopOf="@+id/view4" />
+
+        <View
+            android:id="@+id/view5"
+            android:layout_width="1dp"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@color/grey_Ash"
+            app:layout_constraintBottom_toBottomOf="@+id/view4"
+            app:layout_constraintEnd_toStartOf="@id/txt_content_count"
+            app:layout_constraintStart_toEndOf="@+id/txt_user_folowing"
+            app:layout_constraintTop_toTopOf="@+id/view4" />
+
+        <TextView
+            android:id="@+id/txt_content_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iran_sans_normal"
+            android:text="137 محتوا"
+            android:textColor="@color/white_london"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/view4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view5"
+            app:layout_constraintTop_toTopOf="@+id/view4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

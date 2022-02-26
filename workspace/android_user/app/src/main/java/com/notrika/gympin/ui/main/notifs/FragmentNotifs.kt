@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
-import com.notrika.gympin.ui.main.MainPageFragment
 import com.notrika.gympin.R
-import com.notrika.gympin.ui.main.ActivityMain
+import com.notrika.gympin.ui.main.InnerPageFragment
+import com.notrika.gympin.util.mocks.mockdatas
+import kotlinx.android.synthetic.main.fragment_main_notifs.*
 
 
-class FragmentNotifs : MainPageFragment() {
+class FragmentNotifs : InnerPageFragment() {
 
     private lateinit var viewModel: ViewModelNotifs
 
@@ -25,6 +25,16 @@ class FragmentNotifs : MainPageFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, providerFactory).get(ViewModelNotifs::class.java)
+        fillList()
+    }
+
+    private fun fillList() {
+            var contents = mockdatas().getNotifsMockData(requireContext());
+        var adapter = AdapterNotifs(requestManager)
+        adapter.addItems(contents.data!!)
+        rv_notif.adapter =adapter
+        rv_notif.adapter?.notifyDataSetChanged();
+
     }
 
 }
