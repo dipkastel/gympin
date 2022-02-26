@@ -104,7 +104,7 @@ class AdapterGympinMain(
                 holder.itemView.setOnClickListener {
                     onItemClickListener.Click(
                         items[position],
-                        MainItemType.valueOf(items[position].type!!)
+                        MainDestinationType.valueOf(items[position].items?.get(0)!!.destination!!)
                     )
                 }
             }
@@ -116,7 +116,7 @@ class AdapterGympinMain(
                         override fun Click(item: Res_Home_Page_Items) {
                             onItemClickListener.Click(
                                 item,
-                                MainItemType.valueOf(items[position].type!!)
+                                MainDestinationType.valueOf(item.destination!!)
                             )
                         }
                     }
@@ -136,7 +136,7 @@ class AdapterGympinMain(
                 holder.itemView.setOnClickListener {
                     onItemClickListener.Click(
                         items[position],
-                        MainItemType.valueOf(items[position].type!!)
+                        MainDestinationType.valueOf(items[position].items?.get(0)!!.destination!!)
                     )
                 }
             }
@@ -148,7 +148,7 @@ class AdapterGympinMain(
                         override fun Click(item: Res_Home_Page_Items) {
                             onItemClickListener.Click(
                                 item,
-                                MainItemType.valueOf(items[position].type!!)
+                                MainDestinationType.valueOf(item.destination!!)
                             )
                         }
 
@@ -158,7 +158,7 @@ class AdapterGympinMain(
                 holder.itemView.setOnClickListener {
                     onItemClickListener.Click(
                         items[position],
-                        MainItemType.valueOf(items[position].type!!)
+                        MainDestinationType.valueOf(items[position].items?.get(0)!!.destination!!)
                     )
                 }
             }
@@ -170,7 +170,7 @@ class AdapterGympinMain(
                         override fun Click(item: Res_Home_Page_Items) {
                             onItemClickListener.Click(
                                 item,
-                                MainItemType.valueOf(items[position].type!!)
+                                MainDestinationType.valueOf(item.destination!!)
                             )
                         }
                     }
@@ -182,7 +182,7 @@ class AdapterGympinMain(
                     override fun click(item: Res_Home_Page_Items) {
                         onItemClickListener.Click(
                             item,
-                            MainItemType.valueOf(items[position].type!!)
+                            MainDestinationType.valueOf(item.destination!!)
                         )
                     }
                 }
@@ -207,7 +207,7 @@ class AdapterGympinMain(
     lateinit var onItemClickListener: OnItemClickListener
 
     interface OnItemClickListener {
-        fun <T : Home_Item> Click(item: T, type: MainItemType)
+        fun <T : Home_Item> Click(item: T, type: MainDestinationType)
     }
 
     enum class MainItemType(val typeNumber: Int) {
@@ -220,5 +220,8 @@ class AdapterGympinMain(
         discount_list(6),
         single_content(7),
         single_discount(8)
+    }
+    enum class MainDestinationType {
+        Sports,InnerBrowser,OuterBrowser,Profile,UserList,Discounts,Places,Contents,SingleContent,SingleDiscount
     }
 }

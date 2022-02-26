@@ -11,7 +11,6 @@
       "priority": 0,
       "items":[
         {
-          "type": "inapp",
           "imageUrl": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/sports-and-tech-banner-design-template-b60eb30e679bdd78cde37d835c83f5c1_screen.jpg",
           "title": "title1",
           "description": "",
@@ -20,16 +19,14 @@
           "priority": 2
         },
         {
-          "type": "browser",
           "imageUrl": "https://i.pinimg.com/originals/4b/78/37/4b783786a354609d0c8b1d2a6e7b4b78.jpg",
           "title": "title2",
           "description": "",
-          "destination": "http://...",
-          "data": "",
+          "destination": "innerBrowser",
+          "data": "http://...",
           "priority": 1
         },
         {
-          "type": "inapp",
           "imageUrl": "https://secureprintportal.s3.us-west-1.amazonaws.com/production/assets/5966561450122033bd4456f8/imageLocker/blog-description/5f11c366a53d4d3a831471de/blog/sports_banners.png",
           "title": "title3",
           "description": "",
@@ -45,7 +42,6 @@
       "priority": 1,
       "items":[
         {
-          "type": "inapp",
           "imageUrl": "",
           "title": "برترین ورزشکاران",
           "description": "",
@@ -61,7 +57,6 @@
       "priority": 2,
       "items":[
         {
-          "type": "inapp",
           "imageUrl": "https://pod.inside-agile.de/common/images/numbers/12830_1.jpg",
           "title": "ربیعه سلمک قرچلو",
           "description": "",
@@ -70,7 +65,6 @@
           "priority": 0
         },
         {
-          "type": "inapp",
           "imageUrl": "https://www.uxmatters.com/authors/Kuldeep-Kulshreshtha.jpg",
           "title": "مسلم گرکانی",
           "description": "",
@@ -79,7 +73,6 @@
           "priority": 1
         },
         {
-          "type": "inapp",
           "imageUrl": "https://www.micromata.de/wp-content/uploads/2021/03/avatar_user_7_1491310778-150x150.jpg",
           "title": "حبیب نسیم آبادی",
           "description": "",
@@ -88,7 +81,6 @@
           "priority": 2
         },
         {
-          "type": "inapp",
           "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/41NnhFZA8aL._SY600_.jpg",
           "title": "احسان ابراهیمی",
           "description": "",
@@ -97,7 +89,6 @@
           "priority": 3
         },
         {
-          "type": "inapp",
           "imageUrl": "https://blog-gestion-de-projet.com/wp-content/uploads/2020/03/Capture-d%E2%80%99e%CC%81cran-2019-12-20-a%CC%80-00.43.05-300x300.png",
           "title": "سحر اسدی",
           "description": "",
@@ -106,7 +97,6 @@
           "priority": 4
         },
         {
-          "type": "inapp",
           "imageUrl": "https://certification.scrumalliance.org/system/members/photos/000/006/637/200x200/hohmann-small.jpg?1543438680",
           "title": "علیرضا خانی",
           "description": "",
@@ -121,12 +111,11 @@
       "priority": 3,
       "items":[
         {
-          "type": "browser",
           "imageUrl": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/a93f1056368213.59ac0e6672bf2.jpg",
           "title": "",
           "description": "",
-          "destination": "http://...",
-          "data": "",
+          "destination": "innerBrowser",
+          "data": "http://...",
           "priority": 0
         }
       ]
@@ -137,7 +126,6 @@
       "priority": 4,
       "items":[
         {
-          "type": "inapp",
           "imageUrl": "",
           "title": "ورزش های تخفیف دار",
           "description": "",
@@ -153,7 +141,6 @@
       "priority": 5,
       "items":[
         {
-          "type": "inapp",
           "imageUrl": "https://static01.nyt.com/images/2020/05/19/well/physed-gym/physed-gym-superJumbo-v2.jpg",
           "title": "باشگاه گیو",
           "description": "تخفیف 40%",
@@ -162,7 +149,6 @@
           "priority": 0
         },
         {
-          "type": "inapp",
           "imageUrl": "https://www.gannett-cdn.com/presto/2020/04/16/USAT/5b7ef814-a04d-44c8-86ef-1d47c798a1f1-Golds_gym_CharlesTown.jpg",
           "title": "باشگاه شهرداری",
           "description": "تخفیف 10%",
@@ -177,12 +163,11 @@
       "priority": 6,
       "items":[
         {
-          "type": "browser",
           "imageUrl": "https://png.pngtree.com/thumb_back/fh260/background/20190223/ourmid/pngtree-color-tennis-sport-advertising-background-backgroundmotionwork-outtennistreeshand-paintedfreshhouses-image_75815.jpg",
           "title": "",
           "description": "",
-          "destination": "http://...",
-          "data": "",
+          "destination": "innerBrowser",
+          "data": "http://...",
           "priority": 0
         }
       ]
@@ -193,11 +178,10 @@
       "priority": 7,
       "items":[
         {
-          "type": "inapp",
           "imageUrl": "",
           "title": "مقالات و آموزش ها",
           "description": "",
-          "destination": "content",
+          "destination": "contents",
           "data": "TopAll",
           "priority": 0
         }
@@ -209,7 +193,6 @@
       "priority": 8,
       "items":[
         {
-          "type": "inapp",
           "imageUrl": "https://www.fashionbeans.com/wp-content/uploads/2016/06/sixpack3.jpg",
           "title": "چگونه سیکس پک بسازیم",
           "description": "4.4",
@@ -218,7 +201,6 @@
           "priority": 0
         },
         {
-          "type": "inapp",
           "imageUrl": "https://evofitness.at/wp-content/uploads/2019/08/EVO-201-1200x675.jpg",
           "title": "مقدمات trx",
           "description": "5",
@@ -227,7 +209,6 @@
           "priority": 1
         },
         {
-          "type": "inapp",
           "imageUrl": "https://www.trifectanutrition.com/hubfs/how-to-gain-weight-fast-secrets-for-skinny-guys.jpg",
           "title": "چاق شوید و چاق بمانید",
           "description": "4.8",
@@ -236,7 +217,6 @@
           "priority": 2
         },
         {
-          "type": "inapp",
           "imageUrl": "https://spy.com/wp-content/uploads/2021/03/online-self-defense-featured.jpg",
           "title": "آموزش چند حرکت سریع در دفاع شخصی",
           "description": "4.9",
@@ -245,7 +225,6 @@
           "priority": 3
         },
         {
-          "type": "inapp",
           "imageUrl": "https://s.abcnews.com/images/Health/gty_cellulite_jtm_130926_16x9_1600.jpg",
           "title": "رفع چروک بعد لاغری با یک روش ساده",
           "description": "8",

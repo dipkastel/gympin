@@ -42,35 +42,43 @@ class FragmentGympin : MainPageFragment() {
         val data = mockdatas().getHomePageMockData(requireContext());
         adapterMainGympin.addItems(data.data!!)
         adapterMainGympin.onItemClickListener = object:AdapterGympinMain.OnItemClickListener{
-            override fun <T: Home_Item> Click(item: T, type: AdapterGympinMain.MainItemType) {
-                when(type){
-                    AdapterGympinMain.MainItemType.title -> {
+            override fun <T: Home_Item> Click(item: T, destination: AdapterGympinMain.MainDestinationType) {
+                when(destination){
+
+                    AdapterGympinMain.MainDestinationType.Places -> {
                         Toast.makeText(context, (item as Res_Home_Page).items?.get(0)?.title,Toast.LENGTH_SHORT).show()
                     }
-                    AdapterGympinMain.MainItemType.slider -> {
-                        Toast.makeText(context,(item as Res_Home_Page_Items).title,Toast.LENGTH_SHORT).show()
-                    }
-                    AdapterGympinMain.MainItemType.banner -> {
+                    AdapterGympinMain.MainDestinationType.Sports -> {
                         Toast.makeText(context, (item as Res_Home_Page).items?.get(0)?.title,Toast.LENGTH_SHORT).show()
                     }
-                    AdapterGympinMain.MainItemType.user_list -> {
+                    AdapterGympinMain.MainDestinationType.OuterBrowser -> {
+                        Toast.makeText(context, (item as Res_Home_Page).items?.get(0)?.title,Toast.LENGTH_SHORT).show()
+                    }
+                    AdapterGympinMain.MainDestinationType.InnerBrowser -> {
+                        Toast.makeText(context, (item as Res_Home_Page).items?.get(0)?.title,Toast.LENGTH_SHORT).show()
+                    }
+                    AdapterGympinMain.MainDestinationType.UserList -> {
                         Toast.makeText(context,(item as Res_Home_Page_Items).title,Toast.LENGTH_SHORT).show()
                         var action = FragmentGympinDirections.toUserProfile()
                         findNavController().navigate(action)
                     }
-                    AdapterGympinMain.MainItemType.single_user ->{
+                    AdapterGympinMain.MainDestinationType.Profile ->{
                         Toast.makeText(context, (item as Res_Home_Page).items?.get(0)?.title,Toast.LENGTH_SHORT).show()
                     }
-                    AdapterGympinMain.MainItemType.content_list -> {
+                    AdapterGympinMain.MainDestinationType.Contents -> {
                         Toast.makeText(context,(item as Res_Home_Page_Items).title,Toast.LENGTH_SHORT).show()
                     }
-                    AdapterGympinMain.MainItemType.discount_list -> {
-                        Toast.makeText(context,(item as Res_Home_Page_Items).title,Toast.LENGTH_SHORT).show()}
-                    AdapterGympinMain.MainItemType.single_content -> {
+                    AdapterGympinMain.MainDestinationType.Discounts -> {
+                        Toast.makeText(context,(item as Res_Home_Page_Items).title,Toast.LENGTH_SHORT).show()
+                    }
+                    AdapterGympinMain.MainDestinationType.SingleContent -> {
                         Toast.makeText(context, (item as Res_Home_Page).items?.get(0)?.title,Toast.LENGTH_SHORT).show()
                     }
-                    AdapterGympinMain.MainItemType.single_discount -> {
+                    AdapterGympinMain.MainDestinationType.SingleDiscount -> {
                         Toast.makeText(context, (item as Res_Home_Page).items?.get(0)?.title,Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+
                     }
                 }
             }
