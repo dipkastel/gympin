@@ -1,5 +1,6 @@
 package com.notrika.gympin.di.main
 
+import com.notrika.gympin.ui.main.browser.FragmentBrowser
 import com.notrika.gympin.ui.main.contents.FragmentContents
 import com.notrika.gympin.ui.main.credit.FragmentCredit
 import com.notrika.gympin.ui.main.events.createEvent.FragmentCreateEvent
@@ -60,4 +61,6 @@ abstract class MainFragmentBuilderModule {
     internal abstract fun event_fragment(): FragmentEvent
     @ContributesAndroidInjector
     internal abstract fun create_event_fragment(): FragmentCreateEvent
+    @ContributesAndroidInjector
+    internal abstract fun browser_fragment(): FragmentBrowser
 }

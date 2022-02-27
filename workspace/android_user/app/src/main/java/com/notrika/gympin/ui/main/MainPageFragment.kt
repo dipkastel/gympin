@@ -1,12 +1,21 @@
 package com.notrika.gympin.ui.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.notrika.cbar.CiBar
 import com.notrika.gympin.R
 import com.notrika.gympin.data.db.db_pocket.Pocket
+import com.notrika.gympin.data.enum.MainDestinationTypes
+import com.notrika.gympin.data.model.res.Res_Home_Page
+import com.notrika.gympin.data.model.res.Res_Home_Page_Items
+import com.notrika.gympin.ui.main.gympin.AdapterGympinMain
+import com.notrika.gympin.ui.main.gympin.FragmentGympinDirections
 import com.notrika.gympin.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -49,50 +58,46 @@ abstract class MainPageFragment : DaggerFragment() {
     override fun onResume() {
         super.onResume()
 
-//        syncUser()
         showBottomNav()
     }
-
-//    private fun syncUser() {
-//
-//        Glide.with(this).load(networksetting.baseWebViewUrl+"/"+ pocket.userImageUrl)
-//                .placeholder(R.drawable.placeholder_userprofile)
-//                .transform(
-//                CenterCrop(), RoundedCorners(img_user!!.layoutParams.width / 2)).into(img_user)
-//        pocket.LiveUserPoints.observe(this, Observer {
-//            txt_user_score.text = it.toString()
-//        })
-//        img_user.setOnClickListener {
-//            fragmentManager?.let {
-//                val action = MainDirections.toUserProfile()
-//                try{findNavController().navigate(action)}catch (e:Exception){logger.errorNavigation(TAG)}
-//
-//            }
-//
-//        }
-//        img_user_score_badge.setOnClickListener {
-//            fragmentManager?.let {
-//                val action = MainDirections.toUserProfile()
-//                try{findNavController().navigate(action)}catch (e:Exception){logger.errorNavigation(TAG)}
-//            }
-//        }
-//        btn_search.setOnClickListener {
-//            val action = MainDirections.toSearch()
-//            try{findNavController().navigate(action)}catch (e:Exception){logger.errorNavigation(TAG)}
-//        }
-//    }
-
-
-//    fun UNAUTHORIZED() {
-//        ciBar.createAlert(activity as Activity, "دسترسی منقضی شده است", CiBar.FAST_KSNACK_DURATION).show()
-//        activity?.finish()
-//        val myIntent = Intent(activity, ActivityRegister::class.java)
-//        activity?.startActivity(myIntent)
-//    }
 
     private fun showBottomNav() {
         bottomNavigationView?.visibility = View.VISIBLE
         bottom_nav_shadow?.visibility = View.VISIBLE
-
     }
+
+    fun route(destination:MainDestinationTypes,data:String){
+
+        when(destination){
+            MainDestinationTypes.Places -> {
+            }
+            MainDestinationTypes.Sports -> {
+                val view = bottomNavigationView!!.findViewById<View>(R.id.main_sports)
+                view.performClick()
+            }
+            MainDestinationTypes.OuterBrowser -> {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
+                startActivity(browserIntent)
+            }
+            MainDestinationTypes.InnerBrowser -> {
+                var action = FragmentGympinDirections.toBrowser(data)
+                findNavController().navigate(action)
+            }
+            MainDestinationTypes.UserList -> {
+            }
+            MainDestinationTypes.Profile ->{
+                var action = FragmentGympinDirections.toUserProfile()
+                findNavController().navigate(action)
+            }
+            MainDestinationTypes.Contents -> {
+            }
+            MainDestinationTypes.Discounts -> {
+            }
+            MainDestinationTypes.SingleContent -> {
+            }
+            MainDestinationTypes.SingleDiscount -> {
+            }
+        }
+    }
+
 }

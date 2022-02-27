@@ -96,6 +96,15 @@
         android:label="main_notifs"
         tools:layout="@layout/fragment_main_notifs"/>
     <fragment
+        android:id="@+id/main_browser"
+        android:name="com.notrika.gympin.ui.main.browser.FragmentBrowser"
+        android:label="main_browser"
+        tools:layout="@layout/fragment_browser">
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
+    <fragment
         android:id="@+id/main_credit"
         android:name="com.notrika.gympin.ui.main.credit.FragmentCredit"
         android:label="main_credet"
@@ -194,6 +203,14 @@
         android:id="@+id/to_credit"
         app:destination="@id/main_credit"
         android:label="credit"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_browser"
+        app:destination="@id/main_browser"
+        android:label="browser"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"

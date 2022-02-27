@@ -31,7 +31,6 @@ public class gympinApplicationControllerImpl implements GympinApplicationControl
     @Override
     @PostMapping("/mainpage")
     public ResponseEntity<List<MainPageItemDto>> mainPage() {
-
         return new ResponseEntity<List<MainPageItemDto>>(gympinApplicationService.mainPage(), HttpStatus.OK);
     }
 }

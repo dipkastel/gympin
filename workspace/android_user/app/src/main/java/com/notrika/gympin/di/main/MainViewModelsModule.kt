@@ -2,6 +2,7 @@ package com.notrika.gympin.di.main
 
 import androidx.lifecycle.ViewModel
 import com.notrika.gympin.di.ViewModelKey
+import com.notrika.gympin.ui.main.browser.ViewModelBrowser
 import com.notrika.gympin.ui.main.contents.ViewModelContents
 import com.notrika.gympin.ui.main.credit.ViewModelCredit
 import com.notrika.gympin.ui.main.events.createEvent.ViewModelCreateEvent
@@ -116,5 +117,10 @@ abstract class MainViewModelsModule {
     @IntoMap
     @ViewModelKey(ViewModelCreateEvent::class)
     abstract fun CreateEventViewModel(viewModel: ViewModelCreateEvent): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelBrowser::class)
+    abstract fun BrowserViewModel(viewModel: ViewModelBrowser): ViewModel
 
 }
