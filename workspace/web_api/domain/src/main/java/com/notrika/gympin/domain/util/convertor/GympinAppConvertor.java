@@ -22,7 +22,7 @@ public final class GympinAppConvertor {
     }
 
     public static MainPageLayoutChildItemEntity mainPageLayoutChildItemParamToEntity(MainPageLayoutChildItemParam param) {
-        return MainPageLayoutChildItemEntity.builder().id(param.getId()).imageUrl(param.getImageUrl()).title(param.getTitle()).description(param.getDescription()).data(param.getData()).priority(param.getPriority()).build();
+        return MainPageLayoutChildItemEntity.builder().id(param.getId()).imageUrl(param.getImageUrl()).title(param.getTitle()).description(param.getDescription()).destination(param.getDestination()).data(param.getData()).priority(param.getPriority()).build();
     }
 
     public static MainPageLayoutItemDto mainPageLayoutItemDtoEntityToDto(MainPageLayoutItemEntity entity) {
