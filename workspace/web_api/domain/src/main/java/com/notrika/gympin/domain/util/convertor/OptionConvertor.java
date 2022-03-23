@@ -6,7 +6,7 @@ import com.notrika.gympin.persistence.entity.option.place.PlaceOption;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OptionConvertor {
+public final class OptionConvertor {
 
     public static PlaceOptionDto placeOptionToPlaceOptionDto(PlaceOption placeOption) {
         return PlaceOptionDto.builder().id(placeOption.getId()).createdDate(placeOption.getCreatedDate()).updatedDate(placeOption.getUpdatedDate()).isDeleted(placeOption.isDeleted()).name(placeOption.getName()).build();

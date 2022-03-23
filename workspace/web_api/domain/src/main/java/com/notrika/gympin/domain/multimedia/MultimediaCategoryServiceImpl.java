@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MultimediaCategoryServiceImpl extends AbstractBaseService<MultimediaCategoryParam,MultimediaCategoryDto,MultimediaCategory> implements MultimediaCategoryService {
+public class MultimediaCategoryServiceImpl extends AbstractBaseService<MultimediaCategoryParam, MultimediaCategoryDto, MultimediaCategory> implements MultimediaCategoryService {
 
     @Autowired
     private MultimediaCategoryRepository multimediaCategoryRepository;
@@ -25,18 +25,20 @@ public class MultimediaCategoryServiceImpl extends AbstractBaseService<Multimedi
         return MultimediaCategoryConvertor.multimediaCategoryToMultimediaCategoryDto(add(multimediaCategory));
     }
 
-    public MultimediaCategory add(MultimediaCategory multimediaCategory){
+    @Override
+    public MultimediaCategory add(MultimediaCategory multimediaCategory) {
         return multimediaCategoryRepository.add(multimediaCategory);
     }
 
     @Override
     public MultimediaCategoryDto update(MultimediaCategoryParam multimediaCategoryParam) {
-        MultimediaCategory category = getMultimediaCategoryById(multimediaCategoryParam.getId());
+        MultimediaCategory category = getEntityById(multimediaCategoryParam.getId());
         category.setName(multimediaCategoryParam.getName());
         return MultimediaCategoryConvertor.multimediaCategoryToMultimediaCategoryDto(update(category));
     }
 
-    public MultimediaCategory update(MultimediaCategory multimediaCategory){
+    @Override
+    public MultimediaCategory update(MultimediaCategory multimediaCategory) {
         return multimediaCategoryRepository.update(multimediaCategory);
     }
 
@@ -46,7 +48,8 @@ public class MultimediaCategoryServiceImpl extends AbstractBaseService<Multimedi
         return MultimediaCategoryConvertor.multimediaCategoryToMultimediaCategoryDto(delete(category));
     }
 
-    public MultimediaCategory delete(MultimediaCategory multimediaCategory){
+    @Override
+    public MultimediaCategory delete(MultimediaCategory multimediaCategory) {
         return multimediaCategoryRepository.deleteById2(multimediaCategory);
     }
 
@@ -60,16 +63,17 @@ public class MultimediaCategoryServiceImpl extends AbstractBaseService<Multimedi
         return MultimediaCategoryConvertor.multimediaCategoriesToMultimediaCategoryDto(entities);
     }
 
-    public List<MultimediaCategory> getAll(){
+    public List<MultimediaCategory> getAll() {
         return multimediaCategoryRepository.findAll();
     }
 
     @Override
     public MultimediaCategoryDto getById(long id) {
-        return MultimediaCategoryConvertor.multimediaCategoryToMultimediaCategoryDto(getMultimediaCategoryById(id));
+        return MultimediaCategoryConvertor.multimediaCategoryToMultimediaCategoryDto(getEntityById(id));
     }
 
-    public MultimediaCategory getMultimediaCategoryById(long id){
+    @Override
+    public MultimediaCategory getEntityById(long id) {
         return multimediaCategoryRepository.getById(id);
     }
 }

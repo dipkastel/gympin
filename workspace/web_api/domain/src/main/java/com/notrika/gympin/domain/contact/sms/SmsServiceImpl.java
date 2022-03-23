@@ -18,7 +18,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
-import java.util.Date;
 
 @Slf4j
 @Service
@@ -37,20 +36,20 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public boolean sendVerificationSms(Long userId, SmsDto smsDto) throws Exception {
         log.info("Going to send verification sms...\n");
-        String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTER_SENDCODE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1" +
-                "=code" + "&v1=" + smsDto.getText();
+        String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTER_SENDCODE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"
+                + "=code" + "&v1=" + smsDto.getText();
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();
         InputStream in = con.getInputStream();
         String encoding = con.getContentEncoding();
         encoding = encoding == null ? "UTF-8" : encoding;
         int body = Integer.parseInt(IOUtils.toString(in, encoding));
-        User user = userService.getUserById(userId);
-        Calendar expireDate=Calendar.getInstance();
-        expireDate.add(Calendar.MINUTE,2);
+        User user = userService.getEntityById(userId);
+        Calendar expireDate = Calendar.getInstance();
+        expireDate.add(Calendar.MINUTE, 2);
         ActivationCode code = user.getActivationCode();
-        if(code==null){
-            code=new ActivationCode();
+        if (code == null) {
+            code = new ActivationCode();
             code.setUser(user);
         }
         code.setCode(passwordEncoder.encode(smsDto.getText()));
@@ -58,7 +57,7 @@ public class SmsServiceImpl implements SmsService {
         code.setExpiredDate(expireDate.getTime());
         code.setDeleted(false);
         activationCodeRepository.update(code);
-        log.info("Verification sms sent to user: {} with following code {}...\n",user,smsDto.getText());
+        log.info("Verification sms sent to user: {} with following code {}...\n", user, smsDto.getText());
         return body > 0;
     }
 

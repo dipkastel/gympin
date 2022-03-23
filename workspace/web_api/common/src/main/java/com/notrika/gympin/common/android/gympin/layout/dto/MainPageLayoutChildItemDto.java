@@ -1,7 +1,8 @@
-package com.notrika.gympin.common.android.gympin.dto;
+package com.notrika.gympin.common.android.gympin.layout.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseDto;
+import com.notrika.gympin.common.android.gympin.layout.enums.MainPageChildItemDestination;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,26 +12,24 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class MainPageChildItemDto extends BaseDto<MainPageChildItemDto> {
+public class MainPageLayoutChildItemDto extends BaseDto<MainPageLayoutChildItemDto> {
 
     @JsonProperty("imageUrl")
-    String imageUrl;
+    private String imageUrl;
 
     @JsonProperty("title")
-    String title;
+    private String title;
 
     @JsonProperty("description")
-    String description;
+    private String description;
 
     @JsonProperty("destination")
-    MainPageChildItemDestinationDto destination;
+    private MainPageChildItemDestination destination;
 
     @JsonProperty("data")
-    String data;
+    private String data;
 
     @JsonProperty("priority")
-    Integer priority;
-
-
+    private Integer priority;
 
 }

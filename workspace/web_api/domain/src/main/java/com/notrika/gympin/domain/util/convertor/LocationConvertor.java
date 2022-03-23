@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class LocationConvertor {
+public final class LocationConvertor {
 
     public static <T> Supplier<Collection<T>> supplierFactory(CollectionType type) {
         switch (type) {
@@ -163,13 +163,9 @@ public class LocationConvertor {
 
     public static PlaceOwnerDto placeOwnerToPlaceOwnerDto(PlaceOwner placeOwner) {
         return PlaceOwnerDto.builder().id(placeOwner.getId())
-//                .createdDate(placeOwner.getCreatedDate())
-//                .updatedDate(placeOwner.getUpdatedDate())
-                .isDeleted(placeOwner.isDeleted())
-                .placeDto(placeToPlaceDto(placeOwner.getPlace()))
-                .userDto(UserConvertor.userToUserDto(placeOwner.getUser()))
-                .userRole(placeOwner.getUserRole())
-                .build();
+                //                .createdDate(placeOwner.getCreatedDate())
+                //                .updatedDate(placeOwner.getUpdatedDate())
+                .isDeleted(placeOwner.isDeleted()).placeDto(placeToPlaceDto(placeOwner.getPlace())).userDto(UserConvertor.userToUserDto(placeOwner.getUser())).userRole(placeOwner.getUserRole()).build();
     }
 
     public enum CollectionType {

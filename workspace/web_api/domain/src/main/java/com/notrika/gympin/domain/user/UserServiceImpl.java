@@ -10,7 +10,6 @@ import com.notrika.gympin.common.user.service.UserService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
-import com.notrika.gympin.persistence.dao.repository.RoleRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
 import com.notrika.gympin.persistence.entity.location.Place;
 import com.notrika.gympin.persistence.entity.user.Password;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User> implements UserService {
+public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, User> implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -41,43 +40,33 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User
 
     @Override
     public UserDto add(UserParam userParam) {
-        List<Role> roles=new ArrayList<>();
+        List<Role> roles = new ArrayList<>();
         for (UserRoleParam roleParam : userParam.getRole()) {
-            roles.add(userRoleService.getRoleById(roleParam.getId()));
+            roles.add(userRoleService.getEntityById(roleParam.getId()));
         }
-        if(roles.size()==0) {
+        if (roles.size() == 0) {
             roles.add(userRoleService.getByUserRole(UserRole.USER));
         }
         User initUser =
-                User.builder()
-                        .name(userParam.getName())
-                        .lastname(userParam.getLastname())
-                        .username(userParam.getUsername())
-                        .phoneNumber(userParam.getPhoneNumber())
-                        .birthday(userParam.getBirthday())
-                        .nationalCode(userParam.getNationalCode())
-                        .email(userParam.getEmail())
-                        .userGroup(UserGroup.CLIENT)
-                        .userRole(roles)
-                        .userStatus(UserStatus.ENABLED)
-                        .build();
+                User.builder().name(userParam.getName()).lastname(userParam.getLastname()).username(userParam.getUsername()).phoneNumber(userParam.getPhoneNumber()).birthday(userParam.getBirthday()).nationalCode(userParam.getNationalCode()).email(userParam.getEmail()).userGroup(UserGroup.CLIENT).userRole(roles).userStatus(UserStatus.ENABLED).build();
         User user = userRepository.add(initUser);
-        Password password=Password.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
+        Password password = Password.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
         passwordRepository.add(password);
         return UserConvertor.userToUserDto(user);
     }
 
-    public User addUser(User user) {
+    @Override
+    public User add(User user) {
         return userRepository.add(user);
     }
 
     @Override
     public UserDto update(UserParam userParam) {
-        List<Role> roles=new ArrayList<>();
+        List<Role> roles = new ArrayList<>();
         for (UserRoleParam roleParam : userParam.getRole()) {
-            roles.add(userRoleService.getRoleById(roleParam.getId()));
+            roles.add(userRoleService.getEntityById(roleParam.getId()));
         }
-        User initUser = getUserById(userParam.getId());
+        User initUser = getEntityById(userParam.getId());
         initUser.setName(userParam.getName());
         initUser.setLastname(userParam.getLastname());
         initUser.setUsername(userParam.getUsername());
@@ -86,22 +75,24 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User
         initUser.setNationalCode(userParam.getNationalCode());
         initUser.setEmail(userParam.getEmail());
         initUser.setUserRole(roles);
-        User user = updateUser(initUser);
+        User user = update(initUser);
         return UserConvertor.userToUserDto(user);
     }
 
-    public User updateUser(User user) {
+    @Override
+    public User update(User user) {
         return userRepository.update(user);
     }
 
     @Override
     public UserDto delete(UserParam userParam) {
-        User user = getUserById(userParam.getId());
-        User deletedUser = deleteUser(user);
+        User user = getEntityById(userParam.getId());
+        User deletedUser = delete(user);
         return UserConvertor.userToUserDto(deletedUser);
     }
 
-    public User deleteUser(User user) {
+    @Override
+    public User delete(User user) {
         return userRepository.deleteById2(user);
     }
 
@@ -117,11 +108,12 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User
 
     @Override
     public UserDto getById(long id) {
-        User user = getUserById(id);
+        User user = getEntityById(id);
         return UserConvertor.userToUserDto(user);
     }
 
-    public User getUserById(long id) {
+    @Override
+    public User getEntityById(long id) {
         return userRepository.getById(id);
     }
 
@@ -143,14 +135,14 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto,User
 
     @Override
     public UserDto suspendUser(UserParam userParam) {
-        User user = getUserById(userParam.getId());
+        User user = getEntityById(userParam.getId());
         User suspendUser = suspendUser(user);
         return UserConvertor.userToUserDto(suspendUser);
     }
 
     public User suspendUser(User user) {
-        User initUser = getUserById(user.getId());
+        User initUser = getEntityById(user.getId());
         initUser.setUserStatus(UserStatus.SUSPENDED);
-        return updateUser(initUser);
+        return update(initUser);
     }
 }

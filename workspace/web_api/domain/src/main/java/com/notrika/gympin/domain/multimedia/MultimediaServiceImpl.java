@@ -136,13 +136,13 @@ public class MultimediaServiceImpl implements MultimediaService {
             throw new InvalidFileNameException("Error in file name.", HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
         }
         Path targetLocation = saveFile(path, multipartFile.getInputStream(), fileName);
-        List<MultimediaCategory> categories=new ArrayList<>();
-        if(multimediaStoreParam.getCategoryParam()!=null && multimediaStoreParam.getCategoryParam().size()>0){
+        List<MultimediaCategory> categories = new ArrayList<>();
+        if (multimediaStoreParam.getCategoryParam() != null && multimediaStoreParam.getCategoryParam().size() > 0) {
             for (MultimediaCategoryParam categoryParam : multimediaStoreParam.getCategoryParam()) {
-                categories.add(categoryService.getMultimediaCategoryById(categoryParam.getId()));
+                categories.add(categoryService.getEntityById(categoryParam.getId()));
             }
         }
-//        MultimediaCategory multimediaCategoryById = categoryService.getMultimediaCategoryById(multimediaStoreParam.getCategoryParam().getId());
+        //        MultimediaCategory multimediaCategoryById = categoryService.getMultimediaCategoryById(multimediaStoreParam.getCategoryParam().getId());
         Multimedia fileByUserByName = multimediaRepository.findByFileName(fileName);
         if (fileByUserByName != null) {
             fileByUserByName.setDocumentFormat(multipartFile.getContentType());
@@ -307,9 +307,9 @@ public class MultimediaServiceImpl implements MultimediaService {
         Multimedia multimedia = multimediaRepository.getById(multimediaStoreParam.getId());
         if (multimedia == null) throw new MultimediaNotFoundException();
         if (multimediaStoreParam.getCategoryParam() != null && multimediaStoreParam.getCategoryParam().size() > 0) {
-            List<MultimediaCategory> multimediaCategories=new ArrayList<>();
+            List<MultimediaCategory> multimediaCategories = new ArrayList<>();
             for (MultimediaCategoryParam categoryParam : multimediaStoreParam.getCategoryParam()) {
-                multimediaCategories.add(categoryService.getMultimediaCategoryById(categoryParam.getId()));
+                multimediaCategories.add(categoryService.getEntityById(categoryParam.getId()));
             }
         }
         multimedia.setTitle(multimediaStoreParam.getTitle());

@@ -28,7 +28,6 @@ import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.RoleRepository;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
-import com.notrika.gympin.persistence.entity.user.Password;
 import com.notrika.gympin.persistence.entity.user.Role;
 import com.notrika.gympin.persistence.entity.user.User;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +44,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -77,7 +78,7 @@ public class AccountServiceImpl implements AccountService {
         User user = userService.findUserByPhoneNumber(dto.getPhoneNumber());
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
         String code = MyRandom.GenerateRandomVerificationSmsCode();
-        if (user.getActivationCode()!=null && user.getActivationCode().getExpiredDate() != null && user.getActivationCode().getExpiredDate().after(new Date())) {
+        if (user.getActivationCode() != null && user.getActivationCode().getExpiredDate() != null && user.getActivationCode().getExpiredDate().after(new Date())) {
             throw new ActivationCodeManyRequestException();
         }
         try {
@@ -101,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private User addUser(UserRegisterParam userRegisterParam) {
-        List<Role> roleList=new ArrayList<>();
+        List<Role> roleList = new ArrayList<>();
         for (UserRoleParam userRole : userRegisterParam.getUserRole()) {
             roleList.add(roleRepository.getById(userRole.getId()));
         }
@@ -111,7 +112,7 @@ public class AccountServiceImpl implements AccountService {
         user.setUserRole(roleList);
         user.setUserGroup(UserGroup.CLIENT);
         user.setUserStatus(UserStatus.ENABLED);
-        return userService.addUser(user);
+        return userService.add(user);
     }
 
     @Transactional
@@ -124,7 +125,7 @@ public class AccountServiceImpl implements AccountService {
         String phoneNumber = getPhoneNumber(loginParam);
         User user = userService.findUserByPhoneNumber(phoneNumber);
         ActivationCode activationCode = user.getActivationCode();
-        if (activationCode==null){
+        if (activationCode == null) {
             throw new ActivationCodeNotFoundException();
         }
         if (activationCode.isDeleted()) {
@@ -148,7 +149,7 @@ public class AccountServiceImpl implements AccountService {
         String phoneNumber = getPhoneNumber(loginParam);
         User admin = userService.findUserByPhoneNumber(phoneNumber);
         ActivationCode activationCode = admin.getActivationCode();
-        if (activationCode!=null) {
+        if (activationCode != null) {
             activationCode.setDeleted(true);
             activationCodeRepository.update(activationCode);
         }
@@ -199,13 +200,13 @@ public class AccountServiceImpl implements AccountService {
             password = user.getActivationCode().getCode();
         }
         if (password == null) {
-            password = passwordRepository.findByUserAndExpiredIsAndDeletedIs(user,false,false).getPassword();
+            password = passwordRepository.findByUserAndExpiredIsAndDeletedIs(user, false, false).getPassword();
         }
         if (password == null) {
             throw new ExceptionBase();
         }
         setUserContext(user);
-        ArrayList<UserRole> roles=new ArrayList<>();
+        ArrayList<UserRole> roles = new ArrayList<>();
         for (Role userRole : userRoles) {
             roles.add(userRole.getRole());
         }
