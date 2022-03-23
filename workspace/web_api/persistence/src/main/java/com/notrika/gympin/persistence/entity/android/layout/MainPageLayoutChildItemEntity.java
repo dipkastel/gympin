@@ -8,10 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
@@ -33,6 +30,7 @@ public class MainPageLayoutChildItemEntity extends BaseEntity {
     private String description;
 
     @Column(name = "destination")
+    @Enumerated(EnumType.STRING)
     private MainPageChildItemDestination destination;
 
     @Column(name = "data")
