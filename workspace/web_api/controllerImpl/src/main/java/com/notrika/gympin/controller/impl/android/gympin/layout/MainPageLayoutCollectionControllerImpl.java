@@ -8,6 +8,7 @@ import com.notrika.gympin.common.android.gympin.layout.service.MainPageLayoutCol
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,26 +23,31 @@ public class MainPageLayoutCollectionControllerImpl implements MainPageLayoutCol
     private MainPageLayoutCollectionService collectionService;
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<MainPageLayoutCollectionDto> add(@RequestBody MainPageLayoutCollectionParam mainPageLayoutCollectionParam) {
         return new ResponseEntity<>(collectionService.add(mainPageLayoutCollectionParam), HttpStatus.OK);
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<MainPageLayoutCollectionDto> update(@RequestBody MainPageLayoutCollectionParam mainPageLayoutCollectionParam) {
         return new ResponseEntity<>(collectionService.update(mainPageLayoutCollectionParam), HttpStatus.OK);
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<MainPageLayoutCollectionDto> delete(@RequestBody MainPageLayoutCollectionParam mainPageLayoutCollectionParam) {
         return new ResponseEntity<>(collectionService.delete(mainPageLayoutCollectionParam), HttpStatus.OK);
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<List<MainPageLayoutCollectionDto>> getAll(BasePagedParam pagingParam) {
         return new ResponseEntity<>(collectionService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<MainPageLayoutCollectionDto> getById(@RequestBody long id) {
         return new ResponseEntity<>(collectionService.getById(id), HttpStatus.OK);
     }

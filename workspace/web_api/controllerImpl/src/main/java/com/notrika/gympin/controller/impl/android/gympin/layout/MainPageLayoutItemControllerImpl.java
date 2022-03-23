@@ -8,6 +8,7 @@ import com.notrika.gympin.common.android.gympin.layout.service.MainPageLayoutIte
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,32 +24,38 @@ public class MainPageLayoutItemControllerImpl implements MainPageLayoutItemContr
     private MainPageLayoutItemService mainPageLayoutItemService;
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<MainPageLayoutItemDto> add(@RequestBody MainPageLayoutItemParam mainPageLayoutItemParam) {
         return new ResponseEntity<MainPageLayoutItemDto>(mainPageLayoutItemService.add(mainPageLayoutItemParam), HttpStatus.OK);
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<MainPageLayoutItemDto> update(@RequestBody MainPageLayoutItemParam mainPageLayoutItemParam) {
         return new ResponseEntity<MainPageLayoutItemDto>(mainPageLayoutItemService.update(mainPageLayoutItemParam), HttpStatus.OK);
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<MainPageLayoutItemDto> delete(@RequestBody MainPageLayoutItemParam mainPageLayoutItemParam) {
         return new ResponseEntity<MainPageLayoutItemDto>(mainPageLayoutItemService.delete(mainPageLayoutItemParam), HttpStatus.OK);
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<List<MainPageLayoutItemDto>> getAll(BasePagedParam pagingParam) {
         return new ResponseEntity<List<MainPageLayoutItemDto>>(mainPageLayoutItemService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<MainPageLayoutItemDto> getById(@RequestBody long id) {
         return new ResponseEntity<MainPageLayoutItemDto>(mainPageLayoutItemService.getById(id), HttpStatus.OK);
     }
 
     @Override
     @PostMapping("/mainpage")
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<List<MainPageLayoutItemDto>> mainPage() {
         return new ResponseEntity<List<MainPageLayoutItemDto>>(mainPageLayoutItemService.mainPage(), HttpStatus.OK);
     }
