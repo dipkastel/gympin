@@ -53,10 +53,10 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
             if (context != null) {
                 User user = (User) context.getEntry().get(GympinContext.USER_KEY);
                 if (user != null) {
-                    ((BaseEntityWithCreateUpdate) entity).setCreatorUser(user);
+                    ((BaseEntityWithCreate) entity).setCreatorUser(user);
                 }
             }
-            ((BaseEntityWithCreateUpdate) entity).setCreatedDate(new Date());
+            ((BaseEntityWithCreate) entity).setCreatedDate(new Date());
         }
         return this.save(entity);
     }
