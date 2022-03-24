@@ -75,7 +75,7 @@ public class MainPageLayoutCollectionServiceImpl extends AbstractBaseService<Mai
     }
 
     @Override
-    public List<MainPageLayoutItemDto> mainPage(long id) {
+    public List<MainPageLayoutItemDto> mainPage(Long id) {
         return getById(id).getLayoutItems();
     }
 }

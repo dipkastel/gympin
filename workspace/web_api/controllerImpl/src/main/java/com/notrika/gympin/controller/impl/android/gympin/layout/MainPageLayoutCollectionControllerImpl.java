@@ -54,7 +54,7 @@ public class MainPageLayoutCollectionControllerImpl implements MainPageLayoutCol
     @Override
     @GetMapping("/mainpage")
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<List<MainPageLayoutItemDto>> mainPage(long id) {
+    public ResponseEntity<List<MainPageLayoutItemDto>> mainPage(Long id) {
         return new ResponseEntity<List<MainPageLayoutItemDto>>(collectionService.mainPage(id), HttpStatus.OK);
     }
 }

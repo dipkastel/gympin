@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface MainPageLayoutCollectionService extends BaseService<MainPageLayoutCollectionParam, MainPageLayoutCollectionDto> {
 
-    List<MainPageLayoutItemDto> mainPage(long id);
+    List<MainPageLayoutItemDto> mainPage(Long id);
 
 }

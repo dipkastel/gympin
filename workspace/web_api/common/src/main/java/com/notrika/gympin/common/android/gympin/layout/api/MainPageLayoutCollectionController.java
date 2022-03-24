@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface MainPageLayoutCollectionController extends BaseController<MainPageLayoutCollectionParam, MainPageLayoutCollectionDto> {
 
-    ResponseEntity<List<MainPageLayoutItemDto>> mainPage(long id);
+    ResponseEntity<List<MainPageLayoutItemDto>> mainPage(Long id);
 
 }
