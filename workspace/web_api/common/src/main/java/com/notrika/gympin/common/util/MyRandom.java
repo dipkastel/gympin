@@ -6,7 +6,7 @@ public class MyRandom {
     public static String GenerateRandomVerificationSmsCode() {
         Random rand = new Random();
         System.out.println("Rand numb...");
-        int resRandom = rand.nextInt((9999 - 100) + 1) + 10;
+        int resRandom = rand.nextInt(9999) * (9999 - 1000) + 1000;
         return resRandom + "";
     }
 }
