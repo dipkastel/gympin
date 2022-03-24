@@ -53,10 +53,4 @@ public class MainPageLayoutItemControllerImpl implements MainPageLayoutItemContr
         return new ResponseEntity<MainPageLayoutItemDto>(mainPageLayoutItemService.getById(id), HttpStatus.OK);
     }
 
-    @Override
-    @PostMapping("/mainpage")
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<List<MainPageLayoutItemDto>> mainPage() {
-        return new ResponseEntity<List<MainPageLayoutItemDto>>(mainPageLayoutItemService.mainPage(), HttpStatus.OK);
-    }
 }

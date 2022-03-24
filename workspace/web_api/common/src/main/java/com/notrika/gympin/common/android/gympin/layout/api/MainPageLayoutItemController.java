@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface MainPageLayoutItemController extends BaseController<MainPageLayoutItemParam, MainPageLayoutItemDto> {
 
-    ResponseEntity<List<MainPageLayoutItemDto>> mainPage();
+
 }

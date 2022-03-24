@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.android.gympin.layout;
 
 import com.notrika.gympin.common.android.gympin.layout.dto.MainPageLayoutCollectionDto;
+import com.notrika.gympin.common.android.gympin.layout.dto.MainPageLayoutItemDto;
 import com.notrika.gympin.common.android.gympin.layout.param.MainPageLayoutCollectionParam;
 import com.notrika.gympin.common.android.gympin.layout.service.MainPageLayoutCollectionService;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -71,5 +72,10 @@ public class MainPageLayoutCollectionServiceImpl extends AbstractBaseService<Mai
     @Override
     public List<MainPageLayoutCollectionDto> convertToDtos(List<MainPageLayoutCollectionEntity> entities) {
         return entities.stream().map(GympinAppConvertor::mainPageLayoutCollectionEntityToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MainPageLayoutItemDto> mainPage(long id) {
+        return getById(id).getLayoutItems();
     }
 }
