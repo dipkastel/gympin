@@ -21,12 +21,15 @@ import java.util.Date;
 public class ServiceExecution extends BaseEntity {
 
     @Column(name = "service", nullable = false)
+    @Lob
     private String service;
 
     @Column(name = "param_class", nullable = false)
+    @Lob
     private Class paramClass;
 
     @Column(name = "dto_class", nullable = false)
+    @Lob
     private Class dtoClass;
 
     @ManyToOne
@@ -37,9 +40,11 @@ public class ServiceExecution extends BaseEntity {
     private Date executionDate;
 
     @Column(name = "param", nullable = false)
+    @Lob
     private String param;
 
     @Column(name = "dto", nullable = false)
+    @Lob
     private String dto;
 
     @PrePersist
