@@ -1,5 +1,7 @@
 package com.notrika.gympin.domain.multimedia;
 
+import com.notrika.gympin.common.context.GympinContext;
+import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.multimedia.CreateDirectoryException;
 import com.notrika.gympin.common.exception.multimedia.InvalidFileNameException;
@@ -18,6 +20,7 @@ import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategory;
 import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
 import com.notrika.gympin.persistence.entity.sport.Sport;
+import com.notrika.gympin.persistence.entity.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,7 +155,7 @@ public class MultimediaServiceImpl implements MultimediaService {
             fileByUserByName.setCategories(categories);
             multimediaRepository.update(fileByUserByName);
         } else {
-            multimediaRepository.add(Multimedia.builder().fileName(fileName).mediaType(multimediaStoreParam.getMediaType()).documentFormat(multipartFile.getContentType()).uploadDir(targetLocation.toString()).title(multimediaStoreParam.getTitle()).description(multimediaStoreParam.getDescription()).categories(categories).build());
+            multimediaRepository.add(Multimedia.builder().user((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY)).fileName(fileName).mediaType(multimediaStoreParam.getMediaType()).documentFormat(multipartFile.getContentType()).uploadDir(targetLocation.toString()).title(multimediaStoreParam.getTitle()).description(multimediaStoreParam.getDescription()).categories(categories).build());
         }
         return true;
     }

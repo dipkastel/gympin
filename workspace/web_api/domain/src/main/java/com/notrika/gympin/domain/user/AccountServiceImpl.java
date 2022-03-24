@@ -221,6 +221,8 @@ public class AccountServiceImpl implements AccountService {
             context = new GympinContext();
         }
         context.getEntry().put(GympinContext.USER_KEY, user);
+        GympinContextHolder.setContext(context);
+
     }
 
 }
