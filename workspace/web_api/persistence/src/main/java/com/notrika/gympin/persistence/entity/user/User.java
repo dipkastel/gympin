@@ -59,7 +59,10 @@ public class User extends BaseEntity {
     @ToString.Exclude
 //    @OneToMany(mappedBy = "user")
 //    @ToString.Exclude
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany
+    @JoinTable(name = "role_user_role",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<Role> userRole;
 
 //    @Where(clause = "deleted=0 and expired=0")
