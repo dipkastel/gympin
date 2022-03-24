@@ -14,22 +14,22 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class MainPageLayoutChildItemDto extends BaseDto<MainPageLayoutChildItemDto> {
 
-    @JsonProperty("imageUrl")
+    @JsonProperty("ImageUrl")
     private String imageUrl;
 
-    @JsonProperty("title")
+    @JsonProperty("Title")
     private String title;
 
-    @JsonProperty("description")
+    @JsonProperty("Description")
     private String description;
 
-    @JsonProperty("destination")
+    @JsonProperty("Destination")
     private MainPageChildItemDestination destination;
 
-    @JsonProperty("data")
+    @JsonProperty("Data")
     private String data;
 
-    @JsonProperty("priority")
+    @JsonProperty("Priority")
     private Integer priority;
 
 }

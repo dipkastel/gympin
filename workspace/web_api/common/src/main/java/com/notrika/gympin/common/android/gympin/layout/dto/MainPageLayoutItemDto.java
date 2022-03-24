@@ -16,13 +16,13 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class MainPageLayoutItemDto extends BaseDto<MainPageLayoutItemDto> {
 
-    @JsonProperty("type")
+    @JsonProperty("Type")
     private MainPageLayoutItemType type;
 
-    @JsonProperty("priority")
+    @JsonProperty("Priority")
     private Integer priority;
 
-    @JsonProperty("items")
+    @JsonProperty("Items")
     private List<MainPageLayoutChildItemDto> items;
 
 }
