@@ -14,22 +14,22 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class MainPageLayoutChildItemParam extends BaseParam<MainPageLayoutChildItemParam> {
 
-    @JsonProperty("imageUrl")
+    @JsonProperty("ImageUrl")
     private String imageUrl;
 
-    @JsonProperty("title")
+    @JsonProperty("Title")
     private String title;
 
-    @JsonProperty("description")
+    @JsonProperty("Description")
     private String description;
 
-    @JsonProperty("destination")
+    @JsonProperty("Destination")
     private MainPageChildItemDestination destination;
 
-    @JsonProperty("data")
+    @JsonProperty("Data")
     private String data;
 
-    @JsonProperty("priority")
+    @JsonProperty("Priority")
     private Integer priority;
 
 }
