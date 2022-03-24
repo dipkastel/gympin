@@ -43,7 +43,7 @@ public class SmsServiceImpl implements SmsService {
         InputStream in = con.getInputStream();
         String encoding = con.getContentEncoding();
         encoding = encoding == null ? "UTF-8" : encoding;
-        int body = Integer.parseInt(IOUtils.toString(in, encoding));
+        String body = IOUtils.toString(in, encoding);
         User user = userService.getEntityById(userId);
         Calendar expireDate = Calendar.getInstance();
         expireDate.add(Calendar.MINUTE, 2);
@@ -53,12 +53,12 @@ public class SmsServiceImpl implements SmsService {
             code.setUser(user);
         }
         code.setCode(passwordEncoder.encode(smsDto.getText()));
-        code.setSenderId(Integer.toString(body));
+        code.setSenderId(body);
         code.setExpiredDate(expireDate.getTime());
         code.setDeleted(false);
         activationCodeRepository.update(code);
         log.info("Verification sms sent to user: {} with following code {}...\n", user, smsDto.getText());
-        return body > 0;
+        return Integer.parseInt(body) > 0;
     }
 
 }
