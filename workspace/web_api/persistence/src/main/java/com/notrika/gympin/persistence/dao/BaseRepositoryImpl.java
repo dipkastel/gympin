@@ -4,6 +4,7 @@ import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +48,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     @Override
     @Transactional
     public <S extends T> S add(S entity) {
-        if (entity.getClass().isAssignableFrom(BaseEntityWithCreateUpdate.class)) {
+        if (entity.getClass().isAssignableFrom(BaseEntityWithCreate.class)) {
             GympinContext context = GympinContextHolder.getContext();
             if (context != null) {
                 User user = (User) context.getEntry().get(GympinContext.USER_KEY);
