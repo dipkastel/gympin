@@ -104,7 +104,7 @@ public class AccountServiceImpl implements AccountService {
     private User addUser(UserRegisterParam userRegisterParam) {
         List<Role> roleList = new ArrayList<>();
         for (UserRoleParam userRole : userRegisterParam.getUserRole()) {
-            roleList.add(roleRepository.getById(roleRepository.getByRole(userRole.getRole()).getId()));
+            roleList.add(roleRepository.getByRole(userRole.getRole()));
         }
         User user = new User();
         user.setUsername(userRegisterParam.getUsername());
