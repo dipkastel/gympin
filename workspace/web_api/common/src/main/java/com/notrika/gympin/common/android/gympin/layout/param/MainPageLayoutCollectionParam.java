@@ -18,6 +18,6 @@ public class MainPageLayoutCollectionParam extends BaseParam<MainPageLayoutColle
     @JsonProperty("CollectionName")
     private String collectionName;
 
-    @JsonProperty("LayoutItemParams")
+    @JsonProperty("LayoutItem")
     private List<MainPageLayoutItemParam> layoutItems;
 }
