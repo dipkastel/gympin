@@ -62,8 +62,8 @@ public class User extends BaseEntityWithCreate {
 //    @ToString.Exclude
     @ManyToMany
     @JoinTable(name = "role_user_role",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> userRole;
 
 //    @Where(clause = "deleted=0 and expired=0")
