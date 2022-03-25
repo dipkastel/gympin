@@ -4,10 +4,12 @@ import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.location.api.CityController;
 import com.notrika.gympin.common.location.dto.CityDto;
 import com.notrika.gympin.common.location.param.CityParam;
+import com.notrika.gympin.common.location.param.StateParam;
 import com.notrika.gympin.common.location.service.CityService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,5 +51,11 @@ public class CityControllerImpl implements CityController {
     @Override
     public ResponseEntity<CityDto> getById(long id) {
         return new ResponseEntity<CityDto>(cityService.getById(id),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/getCitiesByState")
+    public ResponseEntity<List<CityDto>> getCitiesByState(StateParam stateParam) {
+        return new ResponseEntity<List<CityDto>>(cityService.getCitiesByState(stateParam), HttpStatus.OK);
     }
 }

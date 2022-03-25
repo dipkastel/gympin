@@ -3,13 +3,19 @@ package com.notrika.gympin.controller.impl.location;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.location.api.PlaceController;
 import com.notrika.gympin.common.location.dto.PlaceDto;
+import com.notrika.gympin.common.location.dto.PlaceOwnerDto;
+import com.notrika.gympin.common.location.param.PlaceOwnerParam;
 import com.notrika.gympin.common.location.param.PlaceParam;
+import com.notrika.gympin.common.location.param.RegionParam;
+import com.notrika.gympin.common.location.service.LocationService;
 import com.notrika.gympin.common.location.service.PlaceService;
+import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.param.UserParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +24,9 @@ import java.util.List;
 public class PlaceControllerImpl implements PlaceController {
 
     private final PlaceService placeService;
+
+    @Autowired
+    private LocationService locationService;
 
     public PlaceControllerImpl(PlaceService placeService) {
         this.placeService = placeService;
@@ -50,4 +59,36 @@ public class PlaceControllerImpl implements PlaceController {
     public ResponseEntity<PlaceDto> getById(long id) {
         return new ResponseEntity<PlaceDto>(placeService.getById(id), HttpStatus.OK);
     }
+
+    @Override
+    @GetMapping("/getPlacesByRegion")
+    public ResponseEntity<List<PlaceDto>> getPlacesByRegion(RegionParam regionParam) {
+        return new ResponseEntity<List<PlaceDto>>(placeService.getPlacesByRegion(regionParam), HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/getPlaceByUser")
+    public ResponseEntity<List<PlaceDto>> getPlaceByUser(UserParam userParam) {
+        return new ResponseEntity<List<PlaceDto>>(locationService.getPlaceByUser(userParam), HttpStatus.OK);
+    }
+
+    @Override
+    @PostMapping("/addPlaceOwner")
+    public ResponseEntity<PlaceOwnerDto> addPlaceOwner(@RequestBody PlaceOwnerParam placeOwnerParam) {
+        return new ResponseEntity<PlaceOwnerDto>(locationService.addPlaceOwner(placeOwnerParam), HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/getOwnersPlace")
+    public ResponseEntity<List<UserDto>> getOwnersPlace(PlaceParam placeParam) {
+        return new ResponseEntity<List<UserDto>>(locationService.getOwnersPlace(placeParam), HttpStatus.OK);
+    }
+
+    @Override
+    @DeleteMapping("/deletePlaceOwner")
+    public ResponseEntity<PlaceOwnerDto> deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
+        PlaceOwnerDto deletedPlaceOwner = locationService.deletePlaceOwner(placeOwnerParam);
+        return new ResponseEntity<PlaceOwnerDto>(deletedPlaceOwner, HttpStatus.OK);
+    }
+
 }

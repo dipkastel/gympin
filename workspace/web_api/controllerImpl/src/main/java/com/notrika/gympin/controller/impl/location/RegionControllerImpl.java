@@ -3,11 +3,13 @@ package com.notrika.gympin.controller.impl.location;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.location.api.RegionController;
 import com.notrika.gympin.common.location.dto.RegionDto;
+import com.notrika.gympin.common.location.param.CityParam;
 import com.notrika.gympin.common.location.param.RegionParam;
 import com.notrika.gympin.common.location.service.RegionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,4 +52,11 @@ public class RegionControllerImpl implements RegionController {
     public ResponseEntity<RegionDto> getById(long id) {
         return new ResponseEntity<RegionDto>(regionService.getById(id), HttpStatus.OK);
     }
+
+    @Override
+    @GetMapping("/getRegionsByCity")
+    public ResponseEntity<List<RegionDto>> getRegionsByCity(CityParam cityParam) {
+        return new ResponseEntity<List<RegionDto>>(regionService.getRegionsByCity(cityParam), HttpStatus.OK);
+    }
+
 }
