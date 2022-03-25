@@ -34,19 +34,19 @@ public class PlaceControllerImpl implements PlaceController {
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN','MANAGER')")
-    public ResponseEntity<PlaceDto> add(PlaceParam placeParam) {
+    public ResponseEntity<PlaceDto> add(@RequestBody PlaceParam placeParam) {
         return new ResponseEntity<PlaceDto>(placeService.add(placeParam), HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN','MANAGER')")
-    public ResponseEntity<PlaceDto> update(PlaceParam placeParam) {
+    public ResponseEntity<PlaceDto> update(@RequestBody PlaceParam placeParam) {
         return new ResponseEntity<PlaceDto>(placeService.update(placeParam), HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN','MANAGER')")
-    public ResponseEntity<PlaceDto> delete(PlaceParam placeParam) {
+    public ResponseEntity<PlaceDto> delete(@RequestBody PlaceParam placeParam) {
         return new ResponseEntity<PlaceDto>(placeService.delete(placeParam), HttpStatus.OK);
     }
 
@@ -61,32 +61,32 @@ public class PlaceControllerImpl implements PlaceController {
     }
 
     @Override
-    @GetMapping("/getPlacesByRegion")
+    @GetMapping("/getplacesbyregion")
     public ResponseEntity<List<PlaceDto>> getPlacesByRegion(RegionParam regionParam) {
         return new ResponseEntity<List<PlaceDto>>(placeService.getPlacesByRegion(regionParam), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getPlaceByUser")
+    @GetMapping("/getplacebyuser")
     public ResponseEntity<List<PlaceDto>> getPlaceByUser(UserParam userParam) {
         return new ResponseEntity<List<PlaceDto>>(locationService.getPlaceByUser(userParam), HttpStatus.OK);
     }
 
     @Override
-    @PostMapping("/addPlaceOwner")
+    @PostMapping("/addplaceowner")
     public ResponseEntity<PlaceOwnerDto> addPlaceOwner(@RequestBody PlaceOwnerParam placeOwnerParam) {
         return new ResponseEntity<PlaceOwnerDto>(locationService.addPlaceOwner(placeOwnerParam), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getOwnersPlace")
+    @GetMapping("/getownersplace")
     public ResponseEntity<List<UserDto>> getOwnersPlace(PlaceParam placeParam) {
         return new ResponseEntity<List<UserDto>>(locationService.getOwnersPlace(placeParam), HttpStatus.OK);
     }
 
     @Override
-    @DeleteMapping("/deletePlaceOwner")
-    public ResponseEntity<PlaceOwnerDto> deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
+    @DeleteMapping("/deleteplaceowner")
+    public ResponseEntity<PlaceOwnerDto> deletePlaceOwner(@RequestBody PlaceOwnerParam placeOwnerParam) {
         PlaceOwnerDto deletedPlaceOwner = locationService.deletePlaceOwner(placeOwnerParam);
         return new ResponseEntity<PlaceOwnerDto>(deletedPlaceOwner, HttpStatus.OK);
     }

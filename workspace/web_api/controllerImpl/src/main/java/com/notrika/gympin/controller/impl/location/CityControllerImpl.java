@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,19 +28,19 @@ public class CityControllerImpl implements CityController {
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<CityDto> add(CityParam cityParam) {
+    public ResponseEntity<CityDto> add(@RequestBody CityParam cityParam) {
         return new ResponseEntity<CityDto>(cityService.add(cityParam), HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<CityDto> update(CityParam cityParam) {
+    public ResponseEntity<CityDto> update(@RequestBody CityParam cityParam) {
         return new ResponseEntity<CityDto>(cityService.update(cityParam),HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<CityDto> delete(CityParam cityParam) {
+    public ResponseEntity<CityDto> delete(@RequestBody CityParam cityParam) {
         return new ResponseEntity<CityDto>(cityService.delete(cityParam),HttpStatus.OK);
     }
 
@@ -54,8 +55,8 @@ public class CityControllerImpl implements CityController {
     }
 
     @Override
-    @GetMapping("/getCitiesByState")
-    public ResponseEntity<List<CityDto>> getCitiesByState(StateParam stateParam) {
+    @GetMapping("/getcitiesbystate")
+    public ResponseEntity<List<CityDto>> getCitiesByState(@RequestBody StateParam stateParam) {
         return new ResponseEntity<List<CityDto>>(cityService.getCitiesByState(stateParam), HttpStatus.OK);
     }
 }
