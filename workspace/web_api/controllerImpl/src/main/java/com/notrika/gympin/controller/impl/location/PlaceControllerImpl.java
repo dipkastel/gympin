@@ -46,7 +46,7 @@ public class PlaceControllerImpl implements PlaceController {
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN','MANAGER')")
-    public ResponseEntity<PlaceDto> delete(@RequestBody PlaceParam placeParam) {
+    public ResponseEntity<PlaceDto> delete(PlaceParam placeParam) {
         return new ResponseEntity<PlaceDto>(placeService.delete(placeParam), HttpStatus.OK);
     }
 

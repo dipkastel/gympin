@@ -38,7 +38,7 @@ public class StateControllerImpl implements StateController {
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<StateDto> delete(@RequestBody StateParam stateParam) {
+    public ResponseEntity<StateDto> delete(StateParam stateParam) {
         return new ResponseEntity<StateDto>(stateService.delete(stateParam),HttpStatus.OK);
     }
 
