@@ -1,4 +1,4 @@
-package com.notrika.gympin.common.android.gympin.dto;
+package com.notrika.gympin.common.android.gympin.base.dto;
 
 import com.notrika.gympin.common.BaseDto;
 import com.notrika.gympin.common.util.StringUtil;

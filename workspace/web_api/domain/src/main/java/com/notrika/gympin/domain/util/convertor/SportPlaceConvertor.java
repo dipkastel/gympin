@@ -8,7 +8,7 @@ import com.notrika.gympin.persistence.entity.sportplace.SportPlace;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SportPlaceConvertor {
+public final class SportPlaceConvertor {
 
     public static SportPlaceDto sportPlaceToSportPlaceDto(SportPlace sportPlace) {
         PlaceDto placeDto = LocationConvertor.placeToPlaceDto(sportPlace.getPlace());

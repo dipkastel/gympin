@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto,Place> implements PlaceService {
+public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, Place> implements PlaceService {
 
     @Autowired
     private PlaceRepository placeRepository;
@@ -27,44 +27,47 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto,P
 
     @Override
     public PlaceDto add(PlaceParam placeParam) {
-        Region region = regionService.getRegionById(placeParam.getRegion().getId());
+        Region region = regionService.getEntityById(placeParam.getRegion().getId());
         Place initPlace =
                 Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(region).build();
-        Place place = addPlace(initPlace);
+        Place place = add(initPlace);
         return LocationConvertor.placeToPlaceDto(place);
     }
 
-    public Place addPlace(Place place) {
+    @Override
+    public Place add(Place place) {
         return placeRepository.add(place);
     }
 
     @Override
     public PlaceDto update(PlaceParam placeParam) {
-        Place initPlace = getPlaceById(placeParam.getId());
+        Place initPlace = getEntityById(placeParam.getId());
         initPlace.setName(placeParam.getName());
         initPlace.setLatitude(placeParam.getLatitude());
         initPlace.setLongitude(placeParam.getLongitude());
         initPlace.setAddress(placeParam.getAddress());
         if (placeParam.getRegion() != null && placeParam.getRegion().getId() != null && placeParam.getRegion().getId() > 0) {
-            Region region = regionService.getRegionById(placeParam.getRegion().getId());
+            Region region = regionService.getEntityById(placeParam.getRegion().getId());
             initPlace.setRegion(region);
         }
-        Place place = updatePlace(initPlace);
+        Place place = update(initPlace);
         return LocationConvertor.placeToPlaceDto(place);
     }
 
-    public Place updatePlace(Place place) {
+    @Override
+    public Place update(Place place) {
         return placeRepository.update(place);
     }
 
     @Override
     public PlaceDto delete(PlaceParam placeParam) {
-        var item = getPlaceById(placeParam.getId());
-        Place deletedPlace = deletePlace(item);
+        var item = getEntityById(placeParam.getId());
+        Place deletedPlace = delete(item);
         return LocationConvertor.placeToPlaceDto(deletedPlace);
     }
 
-    public Place deletePlace(Place place) {
+    @Override
+    public Place delete(Place place) {
         return placeRepository.deleteById2(place);
     }
 
@@ -80,11 +83,12 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto,P
 
     @Override
     public PlaceDto getById(long id) {
-        Place place = getPlaceById(id);
+        Place place = getEntityById(id);
         return LocationConvertor.placeToPlaceDto(place);
     }
 
-    public Place getPlaceById(long id) {
+    @Override
+    public Place getEntityById(long id) {
         return placeRepository.getById(id);
     }
 

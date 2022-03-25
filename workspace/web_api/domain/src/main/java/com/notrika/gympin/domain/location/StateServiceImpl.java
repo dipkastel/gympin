@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StateServiceImpl extends AbstractBaseService<StateParam, StateDto,State> implements StateService {
+public class StateServiceImpl extends AbstractBaseService<StateParam, StateDto, State> implements StateService {
 
     @Autowired
     private StateRepository stateRepository;
@@ -22,34 +22,37 @@ public class StateServiceImpl extends AbstractBaseService<StateParam, StateDto,S
     @Override
     public StateDto add(StateParam stateParam) {
         State initState = State.builder().name(stateParam.getName()).build();
-        State state = addState(initState);
+        State state = add(initState);
         return LocationConvertor.stateToStateDto(state);
     }
 
-    public State addState(State state) {
+    @Override
+    public State add(State state) {
         return stateRepository.add(state);
     }
 
     @Override
     public StateDto update(StateParam stateParam) {
-        State initState = getStateById(stateParam.getId());
+        State initState = getEntityById(stateParam.getId());
         initState.setName(stateParam.getName());
-        State state = updateState(initState);
+        State state = update(initState);
         return LocationConvertor.stateToStateDto(state);
     }
 
-    public State updateState(State state) {
+    @Override
+    public State update(State state) {
         return stateRepository.update(state);
     }
 
     @Override
     public StateDto delete(StateParam stateParam) {
-        State item = getStateById(stateParam.getId());
-        State deletedState = deleteState(item);
+        State item = getEntityById(stateParam.getId());
+        State deletedState = delete(item);
         return LocationConvertor.stateToStateDto(deletedState);
     }
 
-    public State deleteState(State state) {
+    @Override
+    public State delete(State state) {
         return stateRepository.deleteById2(state);
     }
 
@@ -65,11 +68,12 @@ public class StateServiceImpl extends AbstractBaseService<StateParam, StateDto,S
 
     @Override
     public StateDto getById(long id) {
-        State state = getStateById(id);
+        State state = getEntityById(id);
         return LocationConvertor.stateToStateDto(state);
     }
 
-    public State getStateById(long id) {
+    @Override
+    public State getEntityById(long id) {
         return stateRepository.getById(id);
     }
 }

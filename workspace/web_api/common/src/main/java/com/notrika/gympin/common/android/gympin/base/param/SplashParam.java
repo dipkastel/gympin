@@ -1,4 +1,4 @@
-package com.notrika.gympin.common.android.gympin.param;
+package com.notrika.gympin.common.android.gympin.base.param;
 
 import com.notrika.gympin.common.BaseParam;
 import lombok.Data;

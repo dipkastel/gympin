@@ -25,10 +25,8 @@ public class Role extends BaseEntity {
     private UserRole role;
 
     @ToString.Exclude
-    @ManyToMany//(cascade = CascadeType.ALL)
+    //@ManyToMany//(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "user_id",nullable = false)
-    @JoinTable(name = "role_user_role",
-    joinColumns = @JoinColumn(name = "role_id"),
-    inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(mappedBy = "userRole")
     private List<User> users;
 }

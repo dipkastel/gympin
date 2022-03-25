@@ -1,5 +1,7 @@
 package com.notrika.gympin.domain.multimedia;
 
+import com.notrika.gympin.common.context.GympinContext;
+import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.multimedia.CreateDirectoryException;
 import com.notrika.gympin.common.exception.multimedia.InvalidFileNameException;
@@ -18,6 +20,7 @@ import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategory;
 import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
 import com.notrika.gympin.persistence.entity.sport.Sport;
+import com.notrika.gympin.persistence.entity.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,13 +139,13 @@ public class MultimediaServiceImpl implements MultimediaService {
             throw new InvalidFileNameException("Error in file name.", HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
         }
         Path targetLocation = saveFile(path, multipartFile.getInputStream(), fileName);
-        List<MultimediaCategory> categories=new ArrayList<>();
-        if(multimediaStoreParam.getCategoryParam()!=null && multimediaStoreParam.getCategoryParam().size()>0){
+        List<MultimediaCategory> categories = new ArrayList<>();
+        if (multimediaStoreParam.getCategoryParam() != null && multimediaStoreParam.getCategoryParam().size() > 0) {
             for (MultimediaCategoryParam categoryParam : multimediaStoreParam.getCategoryParam()) {
-                categories.add(categoryService.getMultimediaCategoryById(categoryParam.getId()));
+                categories.add(categoryService.getEntityById(categoryParam.getId()));
             }
         }
-//        MultimediaCategory multimediaCategoryById = categoryService.getMultimediaCategoryById(multimediaStoreParam.getCategoryParam().getId());
+        //        MultimediaCategory multimediaCategoryById = categoryService.getMultimediaCategoryById(multimediaStoreParam.getCategoryParam().getId());
         Multimedia fileByUserByName = multimediaRepository.findByFileName(fileName);
         if (fileByUserByName != null) {
             fileByUserByName.setDocumentFormat(multipartFile.getContentType());
@@ -152,7 +155,7 @@ public class MultimediaServiceImpl implements MultimediaService {
             fileByUserByName.setCategories(categories);
             multimediaRepository.update(fileByUserByName);
         } else {
-            multimediaRepository.add(Multimedia.builder().fileName(fileName).mediaType(multimediaStoreParam.getMediaType()).documentFormat(multipartFile.getContentType()).uploadDir(targetLocation.toString()).title(multimediaStoreParam.getTitle()).description(multimediaStoreParam.getDescription()).categories(categories).build());
+            multimediaRepository.add(Multimedia.builder().user((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY)).fileName(fileName).mediaType(multimediaStoreParam.getMediaType()).documentFormat(multipartFile.getContentType()).uploadDir(targetLocation.toString()).title(multimediaStoreParam.getTitle()).description(multimediaStoreParam.getDescription()).categories(categories).build());
         }
         return true;
     }
@@ -307,9 +310,9 @@ public class MultimediaServiceImpl implements MultimediaService {
         Multimedia multimedia = multimediaRepository.getById(multimediaStoreParam.getId());
         if (multimedia == null) throw new MultimediaNotFoundException();
         if (multimediaStoreParam.getCategoryParam() != null && multimediaStoreParam.getCategoryParam().size() > 0) {
-            List<MultimediaCategory> multimediaCategories=new ArrayList<>();
+            List<MultimediaCategory> multimediaCategories = new ArrayList<>();
             for (MultimediaCategoryParam categoryParam : multimediaStoreParam.getCategoryParam()) {
-                multimediaCategories.add(categoryService.getMultimediaCategoryById(categoryParam.getId()));
+                multimediaCategories.add(categoryService.getEntityById(categoryParam.getId()));
             }
         }
         multimedia.setTitle(multimediaStoreParam.getTitle());

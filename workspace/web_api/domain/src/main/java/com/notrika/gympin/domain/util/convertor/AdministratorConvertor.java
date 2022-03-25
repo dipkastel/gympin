@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.util.convertor;
 
 //@Component
-public class AdministratorConvertor {
+public final class AdministratorConvertor {
 
 }

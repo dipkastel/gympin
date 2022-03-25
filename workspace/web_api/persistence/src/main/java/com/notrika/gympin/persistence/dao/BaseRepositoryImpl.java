@@ -4,6 +4,7 @@ import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.data.domain.Pageable;
@@ -47,15 +48,15 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     @Override
     @Transactional
     public <S extends T> S add(S entity) {
-        if (entity.getClass().isAssignableFrom(BaseEntityWithCreateUpdate.class)) {
+        if (entity instanceof BaseEntityWithCreate) {
             GympinContext context = GympinContextHolder.getContext();
             if (context != null) {
                 User user = (User) context.getEntry().get(GympinContext.USER_KEY);
                 if (user != null) {
-                    ((BaseEntityWithCreateUpdate) entity).setCreatorUser(user);
+                    ((BaseEntityWithCreate) entity).setCreatorUser(user);
                 }
             }
-            ((BaseEntityWithCreateUpdate) entity).setCreatedDate(new Date());
+            ((BaseEntityWithCreate) entity).setCreatedDate(new Date());
         }
         return this.save(entity);
     }
@@ -63,7 +64,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     @Override
     @Transactional
     public <S extends T> S update(S entity) {
-        if (entity.getClass().isAssignableFrom(BaseEntityWithCreateUpdate.class)) {
+        if (entity instanceof BaseEntityWithCreate) {
             GympinContext context = GympinContextHolder.getContext();
             if (context != null) {
                 User user = (User) context.getEntry().get(GympinContext.USER_KEY);

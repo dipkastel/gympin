@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto,City> implements CityService{
+public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, City> implements CityService {
 
     @Autowired
     private CityRepository cityRepository;
@@ -26,40 +26,42 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto,City
 
     @Override
     public CityDto add(CityParam cityParam) {
-        State state = stateService.getStateById(cityParam.getState().getId());
+        State state = stateService.getEntityById(cityParam.getState().getId());
         City initCity = City.builder().name(cityParam.getName()).state(state).build();
-        City city = addCity(initCity);
+        City city = add(initCity);
         return LocationConvertor.cityToCityDto(city);
     }
 
-    public City addCity(City city) {
+    public City add(City city) {
         return cityRepository.add(city);
     }
 
     @Override
     public CityDto update(CityParam cityParam) {
-        City initCity = getCityById(cityParam.getId());
+        City initCity = getEntityById(cityParam.getId());
         initCity.setName(cityParam.getName());
         if (cityParam.getState() != null && cityParam.getState().getId() != null && cityParam.getState().getId() > 0) {
-            State state = stateService.getStateById(cityParam.getState().getId());
+            State state = stateService.getEntityById(cityParam.getState().getId());
             initCity.setState(state);
         }
-        City city = updateCity(initCity);
+        City city = update(initCity);
         return LocationConvertor.cityToCityDto(city);
     }
 
-    public City updateCity(City city) {
+    @Override
+    public City update(City city) {
         return cityRepository.update(city);
     }
 
     @Override
     public CityDto delete(CityParam cityParam) {
-        var item = getCityById(cityParam.getId());
-        City deletedCity = deleteCity(item);
+        var item = getEntityById(cityParam.getId());
+        City deletedCity = delete(item);
         return LocationConvertor.cityToCityDto(deletedCity);
     }
 
-    public City deleteCity(City city) {
+    @Override
+    public City delete(City city) {
         return cityRepository.deleteById2(city);
     }
 
@@ -75,11 +77,12 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto,City
 
     @Override
     public CityDto getById(long id) {
-        City city = getCityById(id);
+        City city = getEntityById(id);
         return LocationConvertor.cityToCityDto(city);
     }
 
-    public City getCityById(long id) {
+    @Override
+    public City getEntityById(long id) {
         return cityRepository.getById(id);
     }
 

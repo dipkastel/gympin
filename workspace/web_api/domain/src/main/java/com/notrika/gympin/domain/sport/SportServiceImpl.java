@@ -21,7 +21,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class SportServiceImpl extends AbstractBaseService<SportParam,SportDto,Sport> implements SportService {
+public class SportServiceImpl extends AbstractBaseService<SportParam, SportDto, Sport> implements SportService {
 
     @Autowired
     private SportRepository sportRepository;
@@ -32,11 +32,11 @@ public class SportServiceImpl extends AbstractBaseService<SportParam,SportDto,Sp
     @Override
     public SportDto add(SportParam sportParam) {
         Sport initSport = Sport.builder().name(sportParam.getName()).launchStatus(sportParam.getLaunchStatus()).build();
-        Sport sport = addSport(initSport);
+        Sport sport = add(initSport);
         SportDto sportDto = SportConvertor.sportToSportDto(sport);
         try {
             if (sportParam.getPictureIds() != null && sportParam.getPictureIds().size() > 0) {
-                List<Long> logoIds=new ArrayList<>();
+                List<Long> logoIds = new ArrayList<>();
                 for (Long id : sportParam.getPictureIds()) {
                     Multimedia multimedia = multimediaService.getMultimediaById(id);
                     SportMultimedia sportMultimedia = multimediaService.addMultimediaForSport(sport, multimedia);
@@ -44,26 +44,28 @@ public class SportServiceImpl extends AbstractBaseService<SportParam,SportDto,Sp
                 }
                 sportDto.setLogoIds(logoIds);
             }
-        }catch (Exception e){
-            log.error("Error in saving sport multimedia",e);
+        } catch (Exception e) {
+            log.error("Error in saving sport multimedia", e);
         }
         return sportDto;
     }
 
-    public Sport addSport(Sport sport) {
+    @Override
+    public Sport add(Sport sport) {
         return sportRepository.add(sport);
     }
 
     @Override
     public SportDto update(SportParam sportParam) {
-        Sport sport1 = getSportById(sportParam.getId());
+        Sport sport1 = getEntityById(sportParam.getId());
         sport1.setName(sportParam.getName());
         sport1.setLaunchStatus(sportParam.getLaunchStatus());
-        Sport sport = updateSport(sport1);
+        Sport sport = update(sport1);
         return SportConvertor.sportToSportDto(sport);
     }
 
-    public Sport updateSport(Sport sport) {
+    @Override
+    public Sport update(Sport sport) {
         return sportRepository.update(sport);
     }
 
@@ -73,7 +75,8 @@ public class SportServiceImpl extends AbstractBaseService<SportParam,SportDto,Sp
         return SportConvertor.sportToSportDto(sport);
     }
 
-    public Sport getSportById(long id) {
+    @Override
+    public Sport getEntityById(long id) {
         return sportRepository.getById(id);
     }
 
@@ -89,18 +92,19 @@ public class SportServiceImpl extends AbstractBaseService<SportParam,SportDto,Sp
 
     @Override
     public SportDto delete(SportParam sportParam) {
-        Sport sport = getSportById(sportParam.getId());
-        Sport deleteSport = deleteSport(sport);
+        Sport sport = getEntityById(sportParam.getId());
+        Sport deleteSport = delete(sport);
         return SportConvertor.sportToSportDto(deleteSport);
     }
 
-    public Sport deleteSport(Sport sport) {
+    @Override
+    public Sport delete(Sport sport) {
         return sportRepository.deleteById2(sport);
     }
 
     @Override
     public List<MultimediaDto> getSportMultimedia(SportParam sportParam) {
-        List<MultimediaDto> multimediaDtoLis=new ArrayList<>();
+        List<MultimediaDto> multimediaDtoLis = new ArrayList<>();
         List<SportMultimedia> sportMultimedias = multimediaService.getSportMultimedias(Sport.builder().id(sportParam.getId()).build());
         for (SportMultimedia sportMultimedia : sportMultimedias) {
             multimediaDtoLis.add(MultimediaDto.builder().id(sportMultimedia.getMultimedia().getId()).name(sportMultimedia.getMultimedia().getTitle()).build());

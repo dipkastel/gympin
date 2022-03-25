@@ -40,7 +40,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<UserDto> getById(@RequestBody long id) {
+    public ResponseEntity<UserDto> getById(long id) {
         return new ResponseEntity<UserDto>(userService.getById(id), HttpStatus.OK);
     }
 

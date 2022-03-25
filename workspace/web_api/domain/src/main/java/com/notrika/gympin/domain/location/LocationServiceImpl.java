@@ -49,12 +49,12 @@ public class LocationServiceImpl implements LocationService {
         PlaceOption placeOption;
         if (optionOfPlaceParam.getPlaceOptionParam().getId() == null) {
             PlaceOption initPlaceOption = PlaceOption.builder().name(optionOfPlaceParam.getPlaceOptionParam().getName()).build();
-            placeOption = placeOptionService.addPlaceOption(initPlaceOption);
+            placeOption = placeOptionService.add(initPlaceOption);
             optionOfPlaceParam.getPlaceOptionParam().setId(placeOption.getId());
         } else {
-            placeOption = placeOptionService.getPlaceOptionById(optionOfPlaceParam.getPlaceOptionParam().getId());
+            placeOption = placeOptionService.getEntityById(optionOfPlaceParam.getPlaceOptionParam().getId());
         }
-        Place place = placeService.getPlaceById(optionOfPlaceParam.getPlaceParam().getId());
+        Place place = placeService.getEntityById(optionOfPlaceParam.getPlaceParam().getId());
         OptionOfPlace initOptionOfPlace = OptionOfPlace.builder().place(place).placeOption(placeOption).build();
         OptionOfPlace optionOfPlace = optionOfPlaceRepository.add(initOptionOfPlace);
         return OptionOfPlaceDto.builder().id(optionOfPlace.getId()).createdDate(optionOfPlace.getCreatedDate()).updatedDate(optionOfPlace.getUpdatedDate()).isDeleted(optionOfPlace.isDeleted()).place(PlaceDto.builder().id(optionOfPlace.getPlace().getId()).build()).placeOption(PlaceOptionDto.builder().id(optionOfPlace.getPlaceOption().getId()).build()).build();
@@ -77,8 +77,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public PlaceOwnerDto addPlaceOwner(PlaceOwnerParam placeOwnerParam) {
-        Place place = placeService.getPlaceById(placeOwnerParam.getPlaceParam().getId());
-        User user = userService.getUserById(placeOwnerParam.getUserParam().getId());
+        Place place = placeService.getEntityById(placeOwnerParam.getPlaceParam().getId());
+        User user = userService.getEntityById(placeOwnerParam.getUserParam().getId());
         PlaceOwner initPlaceOwner = PlaceOwner.builder().place(place).user(user).userRole(placeOwnerParam.getUserRole()).build();
         PlaceOwner placeOwner = placeOwnerRepository.add(initPlaceOwner);
         return LocationConvertor.placeOwnerToPlaceOwnerDto(placeOwner);

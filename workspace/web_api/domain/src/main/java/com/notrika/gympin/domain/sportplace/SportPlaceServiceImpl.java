@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, SportPlaceDto,SportPlace> implements SportPlaceService {
+public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, SportPlaceDto, SportPlace> implements SportPlaceService {
 
     @Autowired
     private PlaceServiceImpl placeService;
@@ -34,40 +34,43 @@ public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, 
 
     @Override
     public SportPlaceDto add(SportPlaceParam sportPlaceParam) {
-        Place place = placeService.getPlaceById(sportPlaceParam.getPlace().getId());
-        Sport sport = sportService.getSportById(sportPlaceParam.getSport().getId());
+        Place place = placeService.getEntityById(sportPlaceParam.getPlace().getId());
+        Sport sport = sportService.getEntityById(sportPlaceParam.getSport().getId());
         SportPlace initSportPlace = SportPlace.builder().place(place).sport(sport).build();
-        SportPlace sportPlace = addSportPlace(initSportPlace);
+        SportPlace sportPlace = add(initSportPlace);
         return SportPlaceConvertor.sportPlaceToSportPlaceDto(sportPlace);
     }
 
-    public SportPlace addSportPlace(SportPlace sportPlace) {
+    @Override
+    public SportPlace add(SportPlace sportPlace) {
         return sportPlaceRepository.add(sportPlace);
     }
 
     @Override
     public SportPlaceDto update(SportPlaceParam sportPlaceParam) {
-        Place place = placeService.getPlaceById(sportPlaceParam.getPlace().getId());
-        Sport sport = sportService.getSportById(sportPlaceParam.getSport().getId());
-        SportPlace initSportPlace = getSportPlaceById(sportPlaceParam.getId());
+        Place place = placeService.getEntityById(sportPlaceParam.getPlace().getId());
+        Sport sport = sportService.getEntityById(sportPlaceParam.getSport().getId());
+        SportPlace initSportPlace = getEntityById(sportPlaceParam.getId());
         initSportPlace.setPlace(place);
         initSportPlace.setSport(sport);
-        SportPlace sportPlace = updateSportPlace(initSportPlace);
+        SportPlace sportPlace = update(initSportPlace);
         return SportPlaceConvertor.sportPlaceToSportPlaceDto(sportPlace);
     }
 
-    public SportPlace updateSportPlace(SportPlace sportPlace) {
+    @Override
+    public SportPlace update(SportPlace sportPlace) {
         return sportPlaceRepository.getById(sportPlace.getId());
     }
 
     @Override
     public SportPlaceDto delete(SportPlaceParam sportPlaceParam) {
-        SportPlace sportPlace = getSportPlaceById(sportPlaceParam.getId());
-        SportPlace deletedSportPlace = deleteSportPlace(sportPlace);
+        SportPlace sportPlace = getEntityById(sportPlaceParam.getId());
+        SportPlace deletedSportPlace = delete(sportPlace);
         return SportPlaceConvertor.sportPlaceToSportPlaceDto(deletedSportPlace);
     }
 
-    public SportPlace deleteSportPlace(SportPlace sportPlace) {
+    @Override
+    public SportPlace delete(SportPlace sportPlace) {
         return sportPlaceRepository.deleteById2(sportPlace);
     }
 
@@ -83,11 +86,12 @@ public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, 
 
     @Override
     public SportPlaceDto getById(long id) {
-        SportPlace sportPlace = getSportPlaceById(id);
+        SportPlace sportPlace = getEntityById(id);
         return SportPlaceConvertor.sportPlaceToSportPlaceDto(sportPlace);
     }
 
-    public SportPlace getSportPlaceById(long id) {
+    @Override
+    public SportPlace getEntityById(long id) {
         return sportPlaceRepository.getById(id);
     }
 

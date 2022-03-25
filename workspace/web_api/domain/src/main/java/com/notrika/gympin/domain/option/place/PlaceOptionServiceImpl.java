@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam,PlaceOptionDto,PlaceOption> implements PlaceOptionService {
+public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam, PlaceOptionDto, PlaceOption> implements PlaceOptionService {
 
     @Autowired
     private PlaceOptionRepository placeOptionRepository;
@@ -22,23 +22,25 @@ public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam
     @Override
     public PlaceOptionDto add(PlaceOptionParam placeOptionParam) {
         PlaceOption initPlaceOption = PlaceOption.builder().name(placeOptionParam.getName()).build();
-        PlaceOption placeOption = addPlaceOption(initPlaceOption);
+        PlaceOption placeOption = add(initPlaceOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }
 
-    public PlaceOption addPlaceOption(PlaceOption placeOption) {
+    @Override
+    public PlaceOption add(PlaceOption placeOption) {
         return placeOptionRepository.add(placeOption);
     }
 
     @Override
     public PlaceOptionDto update(PlaceOptionParam placeOptionParam) {
-        PlaceOption initPlaceOption = getPlaceOptionById(placeOptionParam.getId());
+        PlaceOption initPlaceOption = getEntityById(placeOptionParam.getId());
         initPlaceOption.setName(placeOptionParam.getName());
-        PlaceOption placeOption = updatePLaceOption(initPlaceOption);
+        PlaceOption placeOption = update(initPlaceOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }
 
-    public PlaceOption updatePLaceOption(PlaceOption placeOption) {
+    @Override
+    public PlaceOption update(PlaceOption placeOption) {
         return placeOptionRepository.update(placeOption);
     }
 
@@ -54,22 +56,24 @@ public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam
 
     @Override
     public PlaceOptionDto getById(long id) {
-        PlaceOption placeOption = getPlaceOptionById(id);
+        PlaceOption placeOption = getEntityById(id);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }
 
-    public PlaceOption getPlaceOptionById(long id) {
+    @Override
+    public PlaceOption getEntityById(long id) {
         return placeOptionRepository.getById(id);
     }
 
     @Override
     public PlaceOptionDto delete(PlaceOptionParam placeOptionParam) {
-        PlaceOption placeOption = getPlaceOptionById(placeOptionParam.getId());
-        PlaceOption deletedPlaceOption = deletePlaceOption(placeOption);
+        PlaceOption placeOption = getEntityById(placeOptionParam.getId());
+        PlaceOption deletedPlaceOption = delete(placeOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(deletedPlaceOption);
     }
 
-    public PlaceOption deletePlaceOption(PlaceOption placeOption) {
+    @Override
+    public PlaceOption delete(PlaceOption placeOption) {
         return placeOptionRepository.deleteById2(placeOption);
     }
 }

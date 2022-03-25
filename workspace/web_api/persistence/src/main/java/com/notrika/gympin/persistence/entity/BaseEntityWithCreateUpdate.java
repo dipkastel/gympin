@@ -16,19 +16,11 @@ import java.util.Date;
 @RequiredArgsConstructor
 @SuperBuilder
 @MappedSuperclass
-public class BaseEntityWithCreateUpdate extends BaseEntity {
-
-        @Column(name = "create_date", updatable = false)
-        @Temporal(TemporalType.TIMESTAMP)
-        private Date createdDate;
+public class BaseEntityWithCreateUpdate extends BaseEntityWithCreate {
 
         @Column(name = "updated_date")
         @Temporal(TemporalType.TIMESTAMP)
         private Date updatedDate;
-
-//        @Column(name = "creator_user")
-        @ManyToOne(cascade = CascadeType.MERGE)
-        private User creatorUser;
 
 //        @Column(name = "updater_user")
         @ManyToOne(cascade = CascadeType.MERGE)

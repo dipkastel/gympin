@@ -3,6 +3,7 @@ package com.notrika.gympin.persistence.entity.user;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
 import com.notrika.gympin.persistence.entity.location.PlaceOwner;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
@@ -29,7 +30,7 @@ import java.util.Set;
 @SuperBuilder
 @Entity
 @Table(name = "user")
-public class User extends BaseEntity {
+public class User extends BaseEntityWithCreate {
 
     @Column(name = "name")
     private String name;
@@ -59,7 +60,10 @@ public class User extends BaseEntity {
     @ToString.Exclude
 //    @OneToMany(mappedBy = "user")
 //    @ToString.Exclude
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany
+    @JoinTable(name = "role_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> userRole;
 
 //    @Where(clause = "deleted=0 and expired=0")
