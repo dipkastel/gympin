@@ -37,7 +37,7 @@ public class RegionControllerImpl implements RegionController {
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ResponseEntity<RegionDto> delete(RegionParam regionParam) {
         return new ResponseEntity<RegionDto>(regionService.delete(regionParam), HttpStatus.OK);
     }
