@@ -38,7 +38,7 @@
                 android:id="@+id/txt_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/_rectangle_title_edge"
+                android:background="@drawable/_rectangle_title_edge_b"
                 android:fontFamily="@font/iran_sans_normal"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingTop="@dimen/_2sdp"

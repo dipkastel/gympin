@@ -5,10 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.cinematicket.cbar.models.CiBar_Action
+import com.cinematicket.cbar.models.OnCibarButtonListener
+import com.notrika.cbar.CiBar
 import com.notrika.gympin.R
 import com.notrika.gympin.data.`interface`.onAuthorizeComplete
 import com.notrika.gympin.data.model.Resource
@@ -37,15 +41,33 @@ class FragmentSports : MainPageFragment() {
     }
 
     private fun getsports() {
-        viewModel.requestGetAllSport().observe(viewLifecycleOwner, Observer { baseSetting ->
+        viewModel.requestGetAllSport().observe(viewLifecycleOwner, Observer {
 
-            when (baseSetting.status) {
+            when (it.status) {
                 Resource.Status.SUCCESS -> {
 
-                    setupRecyclerView(grid_sport, baseSetting.data!!)
+                    setupRecyclerView(grid_sport, it.data!!)
                 }
                 Resource.Status.ERROR -> {
-
+                    var action = CiBar_Action("تلاش مجدد", object : OnCibarButtonListener {
+                        override fun OnClick(view: View) {
+                            getsports()
+                        }
+                    })
+                    ciBar.createAlert(context as AppCompatActivity, it.message, CiBar.INFINITY_CBAR_DURATION, action).show()
+                }
+                Resource.Status.FAILURE->{
+                    var action = CiBar_Action("تلاش مجدد", object : OnCibarButtonListener {
+                        override fun OnClick(view: View) {
+                            getsports()
+                        }
+                    })
+                    ciBar.createAlert(
+                        context as AppCompatActivity,
+                        it.message,
+                        CiBar.INFINITY_CBAR_DURATION,
+                        action
+                    ).show()
                 }
                 Resource.Status.UNAUTHORIZED -> {
                     (activity as ActivityMain).reautorizationUser(requireActivity(),

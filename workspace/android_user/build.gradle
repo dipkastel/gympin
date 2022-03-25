@@ -1,13 +1,12 @@
 buildscript {
-    ext.kotlin_version = "1.5.0"
     repositories {
         google()
         mavenCentral()
         maven { url 'https://maven.google.com' }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.2"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
+        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
         classpath 'com.google.gms:google-services:4.3.10'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
@@ -30,8 +29,8 @@ task clean(type: Delete) {
 ext {
 
     minSdkVersion = 19
-    targetSdkVersion = 28
-    compileSdkVersion = 28
+    targetSdkVersion = 31
+    compileSdkVersion = 31
     buildToolsVersion = '28.0.3'
     versionCode = 47
     versionName = "9.9"

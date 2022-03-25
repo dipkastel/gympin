@@ -40,46 +40,46 @@ class AdapterGympinMain(
         var itemView: View = viewType.let {
 
             when (viewType) {
-                MainItemTypes.title.typeNumber -> {
+                MainItemTypes.TITLE.typeNumber -> {
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.l_main_gympin_title, parent, false)
                 }
-                MainItemTypes.slider.typeNumber -> {
+                MainItemTypes.SLIDER.typeNumber -> {
 
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.l_main_gympin_slider, parent, false)
                 }
-                MainItemTypes.banner.typeNumber -> {
+                MainItemTypes.BANNER.typeNumber -> {
 
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.l_main_gympin_banner, parent, false)
                 }
-                MainItemTypes.user_list.typeNumber -> {
+                MainItemTypes.USER_LIST.typeNumber -> {
 
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.l_main_gympin_user_list, parent, false)
                 }
-                MainItemTypes.single_user.typeNumber -> {
+                MainItemTypes.SINGLE_USER.typeNumber -> {
 
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.l_main_gympin_single_user, parent, false)
                 }
-                MainItemTypes.content_list.typeNumber -> {
+                MainItemTypes.CONTENT_LIST.typeNumber -> {
 
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.l_main_gympin_content_list, parent, false)
                 }
-                MainItemTypes.discount_list.typeNumber -> {
+                MainItemTypes.DISCOUNT_LIST.typeNumber -> {
 
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.l_main_gympin_discount_list, parent, false)
                 }
-                MainItemTypes.single_content.typeNumber -> {
+                MainItemTypes.SINGLE_CONTENT.typeNumber -> {
 
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.l_main_gympin_single_content, parent, false)
                 }
-                MainItemTypes.single_discount.typeNumber -> {
+                MainItemTypes.SINGLE_DISCOUNT.typeNumber -> {
 
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.l_main_gympin_single_discount, parent, false)
@@ -97,7 +97,7 @@ class AdapterGympinMain(
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
 
         when (getItemViewType(position)) {
-            MainItemTypes.title.typeNumber -> {
+            MainItemTypes.TITLE.typeNumber -> {
                 items[position].items?.get(0)?.title.let {
                     holder.view.txt_title.text = it
                 }
@@ -107,7 +107,7 @@ class AdapterGympinMain(
                     )
                 }
             }
-            MainItemTypes.slider.typeNumber -> {
+            MainItemTypes.SLIDER.typeNumber -> {
                 adapterSlider.addItems(items[position].items!!)
                 holder.view.Slider.adapter = adapterSlider
                 adapterSlider.onSliderItemClickListener =
@@ -119,7 +119,7 @@ class AdapterGympinMain(
                         }
                     }
             }
-            MainItemTypes.banner.typeNumber -> {
+            MainItemTypes.BANNER.typeNumber -> {
                 items[position].items?.get(0)?.imageUrl.let {
                     requestManager.load(it)
                         .placeholder(R.drawable.placeholder_banners)
@@ -137,7 +137,7 @@ class AdapterGympinMain(
                     )
                 }
             }
-            MainItemTypes.user_list.typeNumber -> {
+            MainItemTypes.USER_LIST.typeNumber -> {
                 adapterUserList.addItems(items[position].items!!)
                 holder.view.rv_user_list.adapter = adapterUserList
                 adapterUserList.onUserListItemClickListener =
@@ -150,14 +150,14 @@ class AdapterGympinMain(
 
                     }
             }
-            MainItemTypes.single_user.typeNumber -> {
+            MainItemTypes.SINGLE_USER.typeNumber -> {
                 holder.itemView.setOnClickListener {
                     onItemClickListener.Click(
                         items[position]
                     )
                 }
             }
-            MainItemTypes.content_list.typeNumber -> {
+            MainItemTypes.CONTENT_LIST.typeNumber -> {
                 adapterContentList.addItems(items[position].items!!)
                 holder.view.rv_discount_list.adapter = adapterContentList
                 adapterContentList.onContentClick =
@@ -169,7 +169,7 @@ class AdapterGympinMain(
                         }
                     }
             }
-            MainItemTypes.discount_list.typeNumber -> {
+            MainItemTypes.DISCOUNT_LIST.typeNumber -> {
                 adapterDiscountList.addItems(items[position].items!!)
                 holder.view.rv_discount_list.adapter = adapterDiscountList
                 adapterDiscountList.onDiscountClick = object:AdapterDiscountList.DiscountClickListener {
@@ -180,9 +180,9 @@ class AdapterGympinMain(
                     }
                 }
             }
-            MainItemTypes.single_content.typeNumber -> {
+            MainItemTypes.SINGLE_CONTENT.typeNumber -> {
             }
-            MainItemTypes.single_discount.typeNumber -> {
+            MainItemTypes.SINGLE_DISCOUNT.typeNumber -> {
             }
             else -> {
             }

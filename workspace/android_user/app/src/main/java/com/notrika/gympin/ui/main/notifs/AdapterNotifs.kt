@@ -33,10 +33,17 @@ class AdapterNotifs(val requestManager: RequestManager) : RecyclerView.Adapter<A
         holder.view._txt_title.text = item.title
         holder.view._txt_desc.text = item.description
         holder.view._txt_time.text = SimpleDateFormat("HH:mm").format(item.date)
+        holder.view.setOnClickListener {
+            this.onItemClickListener.click(item)
+        }
     }
 
 
     override fun getItemCount(): Int {
         return items.size
+    }
+    lateinit var onItemClickListener:OnItemClickListener
+    interface OnItemClickListener{
+        fun click(item:Res_notification)
     }
 }

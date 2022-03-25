@@ -7,19 +7,20 @@ import com.notrika.gympin.ui.main.contents.ViewModelContents
 import com.notrika.gympin.ui.main.credit.ViewModelCredit
 import com.notrika.gympin.ui.main.events.createEvent.ViewModelCreateEvent
 import com.notrika.gympin.ui.main.events.event.ViewModelEvent
-import com.notrika.gympin.ui.main.sports.eventsList.ViewModelEventsList
 import com.notrika.gympin.ui.main.gympin.ViewModelGympin
 import com.notrika.gympin.ui.main.leaderBoard.ViewModelLeaderBoard
 import com.notrika.gympin.ui.main.messages.ViewModelMessages
 import com.notrika.gympin.ui.main.messages.chat.ViewModelChat
 import com.notrika.gympin.ui.main.myEvents.ViewModelMyEvents
-import com.notrika.gympin.ui.main.notifs.ViewModelNotifs
-import com.notrika.gympin.ui.main.places.ViewModelPlaces
 import com.notrika.gympin.ui.main.myProfile.ViewModelMyProfile
 import com.notrika.gympin.ui.main.myProfile.editProfile.ViewModelEditProfile
+import com.notrika.gympin.ui.main.notifs.ViewModelNotifs
+import com.notrika.gympin.ui.main.places.ViewModelPlaces
 import com.notrika.gympin.ui.main.settings.ViewModelSettings
 import com.notrika.gympin.ui.main.singleContent.ViewModelSingleContent
 import com.notrika.gympin.ui.main.sports.ViewModelSports
+import com.notrika.gympin.ui.main.sports.eventsList.ViewModelEventsList
+import com.notrika.gympin.ui.main.survey.ViewModelSurveyList
 import com.notrika.gympin.ui.main.userProfile.ViewModelUserProfile
 import dagger.Binds
 import dagger.Module
@@ -122,5 +123,11 @@ abstract class MainViewModelsModule {
     @IntoMap
     @ViewModelKey(ViewModelBrowser::class)
     abstract fun BrowserViewModel(viewModel: ViewModelBrowser): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelSurveyList::class)
+    abstract fun SurveyListViewModel(viewModel: ViewModelSurveyList): ViewModel
 
 }

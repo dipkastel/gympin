@@ -7,20 +7,17 @@
     android:layout_height="match_parent"
     android:background="@color/white_london"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/fragment_main_my_profile"
-    android:layout_marginBottom="@dimen/_50sdp">
+    tools:showIn="@layout/fragment_main_my_profile">
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/grid_my_content"
+        android:id="@+id/list_profile_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:footerDividersEnabled="false"
-        android:padding="1dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:padding="15dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actionbar"
-        app:spanCount="3"
-        tools:listitem="@layout/item_grid_my_content"/>
+        tools:listitem="@layout/l_main_profile_item"/>
 </androidx.core.widget.NestedScrollView>

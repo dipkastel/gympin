@@ -6,9 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavOptions
+import com.cinematicket.cbar.models.CiBar_Action
+import com.cinematicket.cbar.models.OnCibarButtonListener
+import com.notrika.cbar.CiBar
 import com.notrika.gympin.R
 import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.req.Req_User_Login
@@ -56,11 +60,12 @@ class FragmentLogin : RegisterInnerPageFragment() {
         }else{
             et_activation_code.error = null
         }
+        btn_submith_activation_code.isEnabled = false
         viewModel.requestLogin(Req_User_Login(phoneNumber,code)).observe(viewLifecycleOwner, Observer { result ->
 
-            btn_submith_activation_code.isEnabled = true
             when (result.status) {
                 Resource.Status.SUCCESS -> {
+                    btn_submith_activation_code.isEnabled = true
                     result.data?.let { it ->
                         pocket.userToken = "Bearer "+it.token
                         it.id?.let {that-> pocket.userId=that }
@@ -73,6 +78,7 @@ class FragmentLogin : RegisterInnerPageFragment() {
                     et_activation_code.error = getString(R.string.activation_code_is_not_valid)
                 }
                 Resource.Status.ERROR -> {
+                    btn_submith_activation_code.isEnabled = true
                     et_activation_code.error = getString(R.string.activation_code_is_not_valid)
                 }
                 Resource.Status.LOADING -> {
@@ -98,8 +104,16 @@ class FragmentLogin : RegisterInnerPageFragment() {
                     changeMod("Activation")
                 }
                 Resource.Status.ERROR -> {
-//                    if(user not found exception)
-                    changeMod("Register")
+                    if(baseSetting.message=="user not found")
+                        changeMod("Register")
+                    else{
+                        var action = CiBar_Action("تلاش مجدد", object : OnCibarButtonListener {
+                            override fun OnClick(view: View) {
+                                RequestForSendSms(phoneNumber)
+                            }
+                        })
+                        ciBar.createAlert(context as AppCompatActivity, baseSetting.message, CiBar.INFINITY_CBAR_DURATION, action).show()
+                    }
                 }
                 Resource.Status.LOADING -> {
                     btn_submith_phone_number.isEnabled = false

@@ -1,5 +1,5 @@
 package com.notrika.gympin.data.enum
 
 enum class MainDestinationTypes {
-    Sports,InnerBrowser,OuterBrowser,Profile,UserList,Discounts,Places,Contents,SingleContent,SingleDiscount
+    SPORTS,INNERBROWSER,OUTERBROWSER,PROFILE,USERLIST,DISCOUNTS,PLACES,CONTENTS,SINGLECONTENT,SINGLEDISCOUNT, INVITEFRIENDS, SURVEYLIST, LOGOUT
 }

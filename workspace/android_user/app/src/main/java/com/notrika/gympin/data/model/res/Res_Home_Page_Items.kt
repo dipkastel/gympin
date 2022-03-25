@@ -6,27 +6,27 @@ import com.notrika.gympin.data.model.entity.Home_Item
 
 class Res_Home_Page_Items : Home_Item {
 
-    @SerializedName("imageUrl")
+    @SerializedName("ImageUrl")
     @Expose
      val imageUrl: String? = null
 
-    @SerializedName("title")
+    @SerializedName("Title")
     @Expose
      val title: String? = null
 
-    @SerializedName("description")
+    @SerializedName("Description")
     @Expose
      val description: String? = null
 
-    @SerializedName("destination")
+    @SerializedName("Destination")
     @Expose
     val destination: String? = null
 
-    @SerializedName("data")
+    @SerializedName("Data")
     @Expose
     val data: String = ""
 
-    @SerializedName("priority")
+    @SerializedName("Priority")
     @Expose
     val priority: Int? = null
 }

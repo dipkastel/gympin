@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -12,9 +11,6 @@ import com.notrika.cbar.CiBar
 import com.notrika.gympin.R
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.data.enum.MainDestinationTypes
-import com.notrika.gympin.data.model.res.Res_Home_Page
-import com.notrika.gympin.data.model.res.Res_Home_Page_Items
-import com.notrika.gympin.ui.main.gympin.AdapterGympinMain
 import com.notrika.gympin.ui.main.gympin.FragmentGympinDirections
 import com.notrika.gympin.util.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
@@ -69,33 +65,41 @@ abstract class MainPageFragment : DaggerFragment() {
     fun route(destination:MainDestinationTypes,data:String){
 
         when(destination){
-            MainDestinationTypes.Places -> {
+            MainDestinationTypes.PLACES -> {
             }
-            MainDestinationTypes.Sports -> {
+            MainDestinationTypes.SPORTS -> {
                 val view = bottomNavigationView!!.findViewById<View>(R.id.main_sports)
                 view.performClick()
             }
-            MainDestinationTypes.OuterBrowser -> {
+            MainDestinationTypes.OUTERBROWSER -> {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
                 startActivity(browserIntent)
             }
-            MainDestinationTypes.InnerBrowser -> {
+            MainDestinationTypes.INNERBROWSER -> {
                 var action = FragmentGympinDirections.toBrowser(data)
                 findNavController().navigate(action)
             }
-            MainDestinationTypes.UserList -> {
+            MainDestinationTypes.USERLIST -> {
             }
-            MainDestinationTypes.Profile ->{
-                var action = FragmentGympinDirections.toUserProfile()
+            MainDestinationTypes.PROFILE ->{
+                var action = FragmentGympinDirections.toUserProfile(data)
                 findNavController().navigate(action)
             }
-            MainDestinationTypes.Contents -> {
+            MainDestinationTypes.CONTENTS -> {
             }
-            MainDestinationTypes.Discounts -> {
+            MainDestinationTypes.DISCOUNTS -> {
             }
-            MainDestinationTypes.SingleContent -> {
+            MainDestinationTypes.SINGLECONTENT -> {
             }
-            MainDestinationTypes.SingleDiscount -> {
+            MainDestinationTypes.SINGLEDISCOUNT -> {
+            }
+            MainDestinationTypes.INVITEFRIENDS -> {
+            }
+            MainDestinationTypes.SURVEYLIST -> {
+                var action = FragmentGympinDirections.toSurvey()
+                findNavController().navigate(action)
+            }
+            MainDestinationTypes.LOGOUT -> {
             }
         }
     }

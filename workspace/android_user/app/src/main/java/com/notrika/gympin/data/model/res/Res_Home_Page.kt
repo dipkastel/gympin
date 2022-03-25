@@ -7,15 +7,15 @@ import com.notrika.gympin.data.model.entity.Home_Item
 
 class Res_Home_Page:Home_Item {
 
-    @SerializedName("type")
+    @SerializedName("Type")
     @Expose
      val type: String? = null
 
-    @SerializedName("priority")
+    @SerializedName("Priority")
     @Expose
      val priority: Int? = null
 
-    @SerializedName("items")
+    @SerializedName("Items")
     @Expose
      val items: List<Res_Home_Page_Items>? = null
 

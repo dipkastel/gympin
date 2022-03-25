@@ -68,6 +68,11 @@
         tools:layout="@layout/fragment_main_create_event"/>
 
     <fragment
+        android:id="@+id/Survey_list"
+        android:name="com.notrika.gympin.ui.main.survey.FragmentSurveyList"
+        android:label="survey_list"
+        tools:layout="@layout/fragment_main_survey_list"/>
+    <fragment
         android:id="@+id/profile_edit"
         android:name="com.notrika.gympin.ui.main.myProfile.editProfile.FragmentEditProfile"
         android:label="profile_edit"
@@ -144,8 +149,16 @@
         app:popEnterAnim="@anim/back_pages_in"
         app:popExitAnim="@anim/top_page_out" />
     <action
+        android:id="@+id/to_survey"
+        app:destination="@id/Survey_list"
+        android:label="survey"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
         android:id="@+id/to_user_profile"
-        app:destination="@id/img_user_image"
+        app:destination="@id/main_user_profile"
         android:label="user_profile"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"

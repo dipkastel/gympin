@@ -19,6 +19,8 @@ object NetworkConstants {
     const val account_login = "$START_KEY/account/login"
     //sport
     const val sport_getall = "$START_KEY/sport/getall"
+    //Main
+    const val main_gethomeData = "$START_KEY/mainpagelayoutcollection/mainpage"
 
 
 }

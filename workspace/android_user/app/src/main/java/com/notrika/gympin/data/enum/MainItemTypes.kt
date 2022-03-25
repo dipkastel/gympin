@@ -2,13 +2,13 @@ package com.notrika.gympin.data.enum
 
 
 enum class MainItemTypes(val typeNumber: Int) {
-    title(0),
-    slider(1),
-    banner(2),
-    user_list(3),
-    single_user(4),
-    content_list(5),
-    discount_list(6),
-    single_content(7),
-    single_discount(8)
+    TITLE(0),
+    SLIDER(1),
+    BANNER(2),
+    USER_LIST(3),
+    SINGLE_USER(4),
+    CONTENT_LIST(5),
+    DISCOUNT_LIST(6),
+    SINGLE_CONTENT(7),
+    SINGLE_DISCOUNT(8)
 }
