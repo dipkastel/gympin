@@ -61,7 +61,7 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
 
     @Override
     public PlaceDto delete(PlaceParam placeParam) {
-        var item = getEntityById(placeParam.getId());
+        Place item = getEntityById(placeParam.getId());
         Place deletedPlace = delete(item);
         return LocationConvertor.placeToPlaceDto(deletedPlace);
     }

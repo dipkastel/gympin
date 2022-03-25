@@ -40,7 +40,7 @@ public class CityControllerImpl implements CityController {
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<CityDto> delete(CityParam cityParam) {
+    public ResponseEntity<CityDto> delete(@RequestBody CityParam cityParam) {
         return new ResponseEntity<CityDto>(cityService.delete(cityParam),HttpStatus.OK);
     }
 

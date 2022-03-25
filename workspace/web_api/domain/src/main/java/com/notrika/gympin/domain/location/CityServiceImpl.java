@@ -55,7 +55,7 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
 
     @Override
     public CityDto delete(CityParam cityParam) {
-        var item = getEntityById(cityParam.getId());
+        City item = getEntityById(cityParam.getId());
         City deletedCity = delete(item);
         return LocationConvertor.cityToCityDto(deletedCity);
     }
