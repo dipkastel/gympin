@@ -9,10 +9,7 @@ import com.notrika.gympin.common.location.service.RegionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,6 +37,7 @@ public class RegionControllerImpl implements RegionController {
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
+    @DeleteMapping
     public ResponseEntity<RegionDto> delete(RegionParam regionParam) {
         return new ResponseEntity<RegionDto>(regionService.delete(regionParam), HttpStatus.OK);
     }
