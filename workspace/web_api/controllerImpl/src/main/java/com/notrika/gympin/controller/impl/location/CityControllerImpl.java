@@ -55,8 +55,8 @@ public class CityControllerImpl implements CityController {
     }
 
     @Override
-    @GetMapping("/getcitiesbystate")
-    public ResponseEntity<List<CityDto>> getCitiesByState(@RequestBody StateParam stateParam) {
+    @GetMapping("/getCitiesByState")
+    public ResponseEntity<List<CityDto>> getCitiesByState(StateParam stateParam) {
         return new ResponseEntity<List<CityDto>>(cityService.getCitiesByState(stateParam), HttpStatus.OK);
     }
 }
