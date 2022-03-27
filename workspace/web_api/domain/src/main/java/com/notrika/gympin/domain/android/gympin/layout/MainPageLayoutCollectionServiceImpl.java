@@ -30,6 +30,7 @@ public class MainPageLayoutCollectionServiceImpl extends AbstractBaseService<Mai
     public MainPageLayoutCollectionDto update(MainPageLayoutCollectionParam mainPageLayoutCollectionParam) {
         MainPageLayoutCollectionEntity collection = getEntityById(mainPageLayoutCollectionParam.getId());
         collection.setName(mainPageLayoutCollectionParam.getCollectionName());
+        collection.setDescription(mainPageLayoutCollectionParam.getDescription());
         collection.setItems(mainPageLayoutCollectionParam.getLayoutItems().stream().map(GympinAppConvertor::mainPageLayoutItemParamToEntity).collect(Collectors.toList()));
         return GympinAppConvertor.mainPageLayoutCollectionEntityToDto(update(collection));
     }

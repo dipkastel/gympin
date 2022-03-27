@@ -37,13 +37,13 @@ public final class GympinAppConvertor {
 
     public static MainPageLayoutCollectionEntity mainPageLayoutCollectionParamToEntity(MainPageLayoutCollectionParam param) {
         if (param.getLayoutItems() != null)
-            return MainPageLayoutCollectionEntity.builder().id(param.getId()).name(param.getCollectionName()).items(param.getLayoutItems().stream().map(GympinAppConvertor::mainPageLayoutItemParamToEntity).collect(Collectors.toList())).build();
-        return MainPageLayoutCollectionEntity.builder().id(param.getId()).name(param.getCollectionName()).build();
+            return MainPageLayoutCollectionEntity.builder().id(param.getId()).name(param.getCollectionName()).description(param.getDescription()).items(param.getLayoutItems().stream().map(GympinAppConvertor::mainPageLayoutItemParamToEntity).collect(Collectors.toList())).build();
+        return MainPageLayoutCollectionEntity.builder().id(param.getId()).name(param.getCollectionName()).description(param.getDescription()).build();
     }
 
     public static MainPageLayoutCollectionDto mainPageLayoutCollectionEntityToDto(MainPageLayoutCollectionEntity entity) {
         if (entity.getItems() != null)
-            return MainPageLayoutCollectionDto.builder().id(entity.getId()).collectionName(entity.getName()).layoutItems(entity.getItems().stream().map(GympinAppConvertor::mainPageLayoutItemDtoEntityToDto).collect(Collectors.toList())).build();
-        return MainPageLayoutCollectionDto.builder().id(entity.getId()).collectionName(entity.getName()).build();
+            return MainPageLayoutCollectionDto.builder().id(entity.getId()).collectionName(entity.getName()).description(entity.getDescription()).layoutItems(entity.getItems().stream().map(GympinAppConvertor::mainPageLayoutItemDtoEntityToDto).collect(Collectors.toList())).build();
+        return MainPageLayoutCollectionDto.builder().id(entity.getId()).collectionName(entity.getName()).description(entity.getDescription()).build();
     }
 }
