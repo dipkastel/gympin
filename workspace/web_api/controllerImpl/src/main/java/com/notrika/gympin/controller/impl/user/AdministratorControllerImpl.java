@@ -8,7 +8,9 @@ import com.notrika.gympin.common.user.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class AdministratorControllerImpl implements AdministratorController {
 
     @Override
     public ResponseEntity<UserDto> delete(@RequestBody UserParam administratorParam) {
-       return new ResponseEntity<UserDto>(administratorService.delete(administratorParam),HttpStatus.OK);
+        return new ResponseEntity<UserDto>(administratorService.delete(administratorParam), HttpStatus.OK);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class AdministratorControllerImpl implements AdministratorController {
     }
 
     @Override
-    public ResponseEntity<UserDto> getById(long id) {
+    public ResponseEntity<UserDto> getById(Long id) {
         return new ResponseEntity<UserDto>(administratorService.getById(id), HttpStatus.OK);
     }
 }

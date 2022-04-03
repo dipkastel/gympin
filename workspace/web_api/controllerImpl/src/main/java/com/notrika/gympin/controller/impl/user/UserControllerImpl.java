@@ -8,7 +8,10 @@ import com.notrika.gympin.common.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public ResponseEntity<UserDto> delete(@RequestBody UserParam userParam) {
-        return new ResponseEntity<UserDto>(userService.delete(userParam),HttpStatus.OK);
+        return new ResponseEntity<UserDto>(userService.delete(userParam), HttpStatus.OK);
     }
 
     @Override
@@ -40,7 +43,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<UserDto> getById(long id) {
+    public ResponseEntity<UserDto> getById(Long id) {
         return new ResponseEntity<UserDto>(userService.getById(id), HttpStatus.OK);
     }
 

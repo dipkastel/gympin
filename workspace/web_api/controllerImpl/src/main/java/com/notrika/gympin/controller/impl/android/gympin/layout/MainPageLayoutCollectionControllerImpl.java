@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -47,13 +50,13 @@ public class MainPageLayoutCollectionControllerImpl implements MainPageLayoutCol
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutCollectionDto> getById(@RequestBody long id) {
+    public ResponseEntity<MainPageLayoutCollectionDto> getById(@RequestBody Long id) {
         return new ResponseEntity<>(collectionService.getById(id), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/mainpage")
-//    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
+    @GetMapping("/mainPage")
+    //    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<List<MainPageLayoutItemDto>> mainPage(Long id) {
         return new ResponseEntity<List<MainPageLayoutItemDto>>(collectionService.mainPage(id), HttpStatus.OK);
     }

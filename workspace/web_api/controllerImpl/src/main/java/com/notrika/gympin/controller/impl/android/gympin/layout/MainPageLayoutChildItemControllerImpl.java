@@ -48,7 +48,7 @@ public class MainPageLayoutChildItemControllerImpl implements MainPageLayoutChil
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutChildItemDto> getById(@RequestBody long id) {
+    public ResponseEntity<MainPageLayoutChildItemDto> getById(@RequestBody Long id) {
         return new ResponseEntity<>(childItemService.getById(id), HttpStatus.OK);
     }
 }

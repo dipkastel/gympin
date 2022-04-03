@@ -56,36 +56,36 @@ public class PlaceControllerImpl implements PlaceController {
     }
 
     @Override
-    public ResponseEntity<PlaceDto> getById(long id) {
+    public ResponseEntity<PlaceDto> getById(Long id) {
         return new ResponseEntity<PlaceDto>(placeService.getById(id), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getplacesbyregion")
+    @GetMapping("/getPlacesByRegion")
     public ResponseEntity<List<PlaceDto>> getPlacesByRegion(RegionParam regionParam) {
         return new ResponseEntity<List<PlaceDto>>(placeService.getPlacesByRegion(regionParam), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getplacebyuser")
+    @GetMapping("/getPlaceByUser")
     public ResponseEntity<List<PlaceDto>> getPlaceByUser(UserParam userParam) {
         return new ResponseEntity<List<PlaceDto>>(locationService.getPlaceByUser(userParam), HttpStatus.OK);
     }
 
     @Override
-    @PostMapping("/addplaceowner")
+    @PostMapping("/addPlaceOwner")
     public ResponseEntity<PlaceOwnerDto> addPlaceOwner(@RequestBody PlaceOwnerParam placeOwnerParam) {
         return new ResponseEntity<PlaceOwnerDto>(locationService.addPlaceOwner(placeOwnerParam), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getownersplace")
+    @GetMapping("/getOwnersPlace")
     public ResponseEntity<List<UserDto>> getOwnersPlace(PlaceParam placeParam) {
         return new ResponseEntity<List<UserDto>>(locationService.getOwnersPlace(placeParam), HttpStatus.OK);
     }
 
     @Override
-    @DeleteMapping("/deleteplaceowner")
+    @DeleteMapping("/deletePlaceOwner")
     public ResponseEntity<PlaceOwnerDto> deletePlaceOwner(@RequestBody PlaceOwnerParam placeOwnerParam) {
         PlaceOwnerDto deletedPlaceOwner = locationService.deletePlaceOwner(placeOwnerParam);
         return new ResponseEntity<PlaceOwnerDto>(deletedPlaceOwner, HttpStatus.OK);

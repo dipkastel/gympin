@@ -35,23 +35,23 @@ public class CityControllerImpl implements CityController {
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<CityDto> update(@RequestBody CityParam cityParam) {
-        return new ResponseEntity<CityDto>(cityService.update(cityParam),HttpStatus.OK);
+        return new ResponseEntity<CityDto>(cityService.update(cityParam), HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<CityDto> delete(@RequestBody CityParam cityParam) {
-        return new ResponseEntity<CityDto>(cityService.delete(cityParam),HttpStatus.OK);
+        return new ResponseEntity<CityDto>(cityService.delete(cityParam), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<List<CityDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<List<CityDto>>(cityService.getAll(pagingParam),HttpStatus.OK);
+        return new ResponseEntity<List<CityDto>>(cityService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<CityDto> getById(long id) {
-        return new ResponseEntity<CityDto>(cityService.getById(id),HttpStatus.OK);
+    public ResponseEntity<CityDto> getById(Long id) {
+        return new ResponseEntity<CityDto>(cityService.getById(id), HttpStatus.OK);
     }
 
     @Override

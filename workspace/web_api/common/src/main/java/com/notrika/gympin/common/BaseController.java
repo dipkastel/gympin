@@ -18,9 +18,9 @@ public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>> {
     @PutMapping("/delete")
     ResponseEntity<O> delete(I i);
 
-    @GetMapping("/getall")
+    @GetMapping("/getAll")
     ResponseEntity<List<O>> getAll(BasePagedParam pagingParam);
 
-    @GetMapping("/getbyid")
-    ResponseEntity<O> getById(long id);
+    @GetMapping("/getById")
+    ResponseEntity<O> getById(Long id);
 }

@@ -2,9 +2,9 @@ package com.notrika.gympin.persistence.entity.user;
 
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
-import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
+import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.location.PlaceOwner;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
 import com.notrika.gympin.persistence.entity.security.service.ServiceExecution;
@@ -38,10 +38,10 @@ public class User extends BaseEntityWithCreate {
     @Column(name = "lastname")
     private String lastname;
 
-    @Column(unique = true,name = "username")
+    @Column(unique = true, name = "username")
     private String username;
 
-    @Column(unique = true,name = "phoneNumber",nullable = false)
+    @Column(unique = true, name = "phoneNumber", nullable = false)
     private String phoneNumber;
 
     @Column(name = "birthday")
@@ -53,24 +53,22 @@ public class User extends BaseEntityWithCreate {
     @Column(name = "email")
     private String email;
 
-    @Column(updatable = false,name = "user_group",nullable = false)
+    @Column(updatable = false, name = "user_group", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserGroup userGroup;
 
     @ToString.Exclude
-//    @OneToMany(mappedBy = "user")
-//    @ToString.Exclude
+    //    @OneToMany(mappedBy = "user")
+    //    @ToString.Exclude
     @ManyToMany
-    @JoinTable(name = "role_user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "role_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> userRole;
 
-//    @Where(clause = "deleted=0 and expired=0")
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    //    @Where(clause = "deleted=0 and expired=0")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Password> password;
 
-    @Column(updatable = false,nullable = false)
+    @Column(updatable = false, nullable = false)
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
@@ -78,7 +76,7 @@ public class User extends BaseEntityWithCreate {
     @ToString.Exclude
     private Set<PlaceOwner> placeOwners;
 
-//    @Where(clause = "expiredDate<=CURRENT_DATE")
+    //    @Where(clause = "expiredDate<=CURRENT_DATE")
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
     @ToString.Exclude
     private ActivationCode activationCode;
@@ -97,6 +95,9 @@ public class User extends BaseEntityWithCreate {
     @OneToMany
     @ToString.Exclude
     private Set<Multimedia> multimediaSet;
+
+    @OneToMany(mappedBy = "user")
+    private List<EventParticipantEntity> participants;
 
     @Override
     public boolean equals(Object o) {

@@ -3,16 +3,23 @@ package com.notrika.gympin.domain.event.walking;
 import com.notrika.gympin.common.event.walking.dto.WalkingEventDto;
 import com.notrika.gympin.common.event.walking.param.WalkingEventParam;
 import com.notrika.gympin.common.event.walking.service.WalkingEventService;
+import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.event.general.EventParticipantServiceImpl;
 import com.notrika.gympin.domain.sport.SportServiceImpl;
+import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.EventConvertor;
 import com.notrika.gympin.persistence.dao.repository.WalkingEventRepository;
+import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.event.WalkingEventEntity;
 import com.notrika.gympin.persistence.entity.sport.Sport;
+import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,12 +32,27 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     @Autowired
     private SportServiceImpl sportService;
 
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    private EventParticipantServiceImpl eventParticipantService;
+
     @Override
+    @Transactional
     public WalkingEventDto add(WalkingEventParam walkingEventParam) {
         Sport sport = sportService.getEntityById(walkingEventParam.getSport().getId());
         WalkingEventEntity walkingEvent =
-                WalkingEventEntity.builder().sport(sport).title(walkingEventParam.getTitle()).description(walkingEventParam.getDescription()).startLatitude(walkingEventParam.getStartLatitude()).startLongitude(walkingEventParam.getStartLongitude()).endLatitude(walkingEventParam.getEndLatitude()).endLongitude(walkingEventParam.getEndLongitude()).participantCount(walkingEventParam.getParticipantCount()).build();
+                WalkingEventEntity.builder().sport(sport).title(walkingEventParam.getTitle()).description(walkingEventParam.getDescription()).startLatitude(walkingEventParam.getStartLatitude()).startLongitude(walkingEventParam.getStartLongitude()).endLatitude(walkingEventParam.getEndLatitude()).endLongitude(walkingEventParam.getEndLongitude()).participantCount(walkingEventParam.getParticipantCount()).startDate(walkingEventParam.getStartDate()).build();
         WalkingEventEntity entity = walkingEventRepository.add(walkingEvent);
+        if (entity.getParticipants() == null) entity.setParticipants(new ArrayList<>());
+        for (UserParam userParam : walkingEventParam.getParticipants()) {
+            User user = userService.getEntityById(userParam.getId());
+            EventParticipantEntity eventParticipant = eventParticipantService.add(EventParticipantEntity.builder().event(entity).user(user).build());
+            entity.getParticipants().add(eventParticipant);
+        }
+        //        entity=walkingEventRepository.getById(entity.getId());
+        //        entity.getParticipants();
         return EventConvertor.walkingEventEntityToDto(entity);
     }
 

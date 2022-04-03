@@ -42,7 +42,7 @@ public class WalkingEventControllerImpl implements WalkingEventController {
     }
 
     @Override
-    public ResponseEntity<WalkingEventDto> getById(long id) {
+    public ResponseEntity<WalkingEventDto> getById(Long id) {
         return new ResponseEntity<>(walkingEventService.getById(id), HttpStatus.OK);
     }
 }

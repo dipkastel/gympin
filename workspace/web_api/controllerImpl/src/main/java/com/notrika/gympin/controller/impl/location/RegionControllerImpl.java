@@ -48,12 +48,12 @@ public class RegionControllerImpl implements RegionController {
     }
 
     @Override
-    public ResponseEntity<RegionDto> getById(long id) {
+    public ResponseEntity<RegionDto> getById(Long id) {
         return new ResponseEntity<RegionDto>(regionService.getById(id), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("/getregionsbycity")
+    @GetMapping("/getRegionsByCity")
     public ResponseEntity<List<RegionDto>> getRegionsByCity(CityParam cityParam) {
         return new ResponseEntity<List<RegionDto>>(regionService.getRegionsByCity(cityParam), HttpStatus.OK);
     }

@@ -33,22 +33,22 @@ public class StateControllerImpl implements StateController {
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<StateDto> update(@RequestBody StateParam stateParam) {
-        return new ResponseEntity<StateDto>(stateService.update(stateParam),HttpStatus.OK);
+        return new ResponseEntity<StateDto>(stateService.update(stateParam), HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<StateDto> delete(@RequestBody StateParam stateParam) {
-        return new ResponseEntity<StateDto>(stateService.delete(stateParam),HttpStatus.OK);
+        return new ResponseEntity<StateDto>(stateService.delete(stateParam), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<List<StateDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<List<StateDto>>(stateService.getAll(pagingParam),HttpStatus.OK);
+        return new ResponseEntity<List<StateDto>>(stateService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<StateDto> getById(long id) {
-        return new ResponseEntity<StateDto>(stateService.getById(id),HttpStatus.OK);
+    public ResponseEntity<StateDto> getById(Long id) {
+        return new ResponseEntity<StateDto>(stateService.getById(id), HttpStatus.OK);
     }
 }

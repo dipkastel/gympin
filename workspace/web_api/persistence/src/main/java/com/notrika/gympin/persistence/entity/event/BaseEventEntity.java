@@ -9,6 +9,8 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,5 +35,12 @@ public class BaseEventEntity extends BaseEntityWithCreateUpdate {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "start_date", nullable = false)
+    private Date startDate;
+
+    @OneToMany(mappedBy = "event")
+    @ToString.Exclude
+    private List<EventParticipantEntity> participants;
 
 }
