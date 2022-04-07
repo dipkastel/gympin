@@ -28,5 +28,6 @@ public class MainPageLayoutCollectionEntity extends BaseEntity {
     @ManyToMany
     @JoinTable(name = "main_page_layout_item_collection", joinColumns = @JoinColumn(name = "main_page_layout_collection_id"), inverseJoinColumns = @JoinColumn(name =
             "main_page_layout_item_id"))
+    @ToString.Exclude
     private List<MainPageLayoutItemEntity> items;
 }

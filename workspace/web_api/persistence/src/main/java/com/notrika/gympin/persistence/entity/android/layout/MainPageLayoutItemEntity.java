@@ -30,9 +30,11 @@ public class MainPageLayoutItemEntity extends BaseEntity {
     @ManyToMany
     @JoinTable(name = "main_page_layout_item_child_item", joinColumns = @JoinColumn(name = "main_page_layout_item_id"), inverseJoinColumns = @JoinColumn(name =
             "main_page_layout_child_item_id"))
+    @ToString.Exclude
     private List<MainPageLayoutChildItemEntity> items;
 
     @ManyToMany(mappedBy = "items")
+    @ToString.Exclude
     private List<MainPageLayoutCollectionEntity> collections;
 
 }

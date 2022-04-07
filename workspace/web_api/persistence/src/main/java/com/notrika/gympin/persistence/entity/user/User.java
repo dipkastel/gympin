@@ -97,6 +97,7 @@ public class User extends BaseEntityWithCreate {
     private Set<Multimedia> multimediaSet;
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private List<EventParticipantEntity> participants;
 
     @Override
