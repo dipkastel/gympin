@@ -145,4 +145,13 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setUserStatus(UserStatus.SUSPENDED);
         return update(initUser);
     }
+
+    @Override
+    public UserDto getUserByUsername(UserParam userParam) {
+        return UserConvertor.userToUserDto(getUserByUsername(userParam.getUsername()));
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

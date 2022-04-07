@@ -9,4 +9,6 @@ public interface UserController extends BaseController<UserParam, UserDto> {
 
     ResponseEntity<UserDto> suspendUser(UserParam userParam);
 
+    ResponseEntity<UserDto> getUserByUsername(UserParam userParam);
+
 }

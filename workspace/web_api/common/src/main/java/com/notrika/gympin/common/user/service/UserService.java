@@ -9,4 +9,5 @@ public interface UserService extends BaseService<UserParam, UserDto> {
 
     UserDto suspendUser(UserParam userParam);
 
+    UserDto getUserByUsername(UserParam userParam);
 }
