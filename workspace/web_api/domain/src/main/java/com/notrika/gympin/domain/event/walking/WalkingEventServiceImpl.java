@@ -21,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,9 +88,11 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
         List<WalkingEventEntity> ownedEvents = walkingEventRepository.findAllByCreatorUserAndDeleted(user1, false);
         EventParticipantEntity eventParticipantEntity=new EventParticipantEntity();
         eventParticipantEntity.setUser(user1);
+        Set<EventParticipantEntity> a=new HashSet<>();
+        a.add(eventParticipantEntity);
         List<EventParticipantEntity> eventParticipantEntities=new ArrayList<>();
         eventParticipantEntities.add(eventParticipantEntity);
-        List<WalkingEventEntity> participatedEvents = walkingEventRepository.findAllByParticipantsAndDeleted(eventParticipantEntity, false);
+        List<WalkingEventEntity> participatedEvents = walkingEventRepository.findAllByParticipantsInAndDeleted(a, false);
         UserWalkingEventDto userWalkingEventDto = new UserWalkingEventDto();
         userWalkingEventDto.setOwnedEvents(ownedEvents.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList()));
         userWalkingEventDto.setParticipatedEvents(participatedEvents.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList()));
