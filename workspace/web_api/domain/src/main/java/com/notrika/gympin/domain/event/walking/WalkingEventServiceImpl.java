@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.event.walking;
 
+import com.notrika.gympin.common.event.walking.dto.UserWalkingEventDto;
 import com.notrika.gympin.common.event.walking.dto.WalkingEventDto;
 import com.notrika.gympin.common.event.walking.param.WalkingEventParam;
 import com.notrika.gympin.common.event.walking.service.WalkingEventService;
@@ -77,6 +78,22 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
         WalkingEventEntity walkingEvent = getEntityById(walkingEventParam.getId());
         WalkingEventEntity entity = delete(walkingEvent);
         return EventConvertor.walkingEventEntityToDto(entity);
+    }
+
+    @Override
+    public UserWalkingEventDto getAllEventOfUser(UserParam user) {
+        User user1 = userService.getEntityById(user.getId());
+        List<WalkingEventEntity> ownedEvents = walkingEventRepository.findAllByCreatorUserAndDeleted(user1, false);
+        List<WalkingEventEntity> participatedEvents = walkingEventRepository.findAllByParticipantsAndDeleted(new ArrayList<User>() {{
+            add(user1);
+        }}, false);
+        UserWalkingEventDto userWalkingEventDto = new UserWalkingEventDto();
+        userWalkingEventDto.setOwnedEvents(ownedEvents.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList()));
+        userWalkingEventDto.setParticipatedEvents(participatedEvents.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList()));
+
+        return userWalkingEventDto;
+
+        //        return walkingEventRepository.getAllEventOfUser(user.getId()).stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList());
     }
 
     @Override
