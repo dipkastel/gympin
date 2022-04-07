@@ -30,4 +30,7 @@ public class BaseEventParam<T> extends BaseParam<T> {
 
     @JsonProperty("Participants")
     private List<UserParam> participants;
+
+    //    @JsonProperty("Owner")
+    //    private UserParam owner;
 }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public final class EventConvertor {
 
     public static WalkingEventDto walkingEventEntityToDto(WalkingEventEntity entity) {
-        return WalkingEventDto.builder().id(entity.getId()).sport(SportConvertor.sportToSportDto(entity.getSport())).title(entity.getTitle()).description(entity.getDescription()).startLatitude(entity.getStartLatitude()).startLongitude(entity.getStartLongitude()).endLatitude(entity.getEndLatitude()).endLongitude(entity.getEndLongitude()).participantCount(entity.getParticipantCount()).participants(entity.getParticipants().stream().map(c -> UserConvertor.userToUserDto(c.getUser())).collect(Collectors.toList())).build();
+        return WalkingEventDto.builder().id(entity.getId()).sport(SportConvertor.sportToSportDto(entity.getSport())).title(entity.getTitle()).description(entity.getDescription()).startLatitude(entity.getStartLatitude()).startLongitude(entity.getStartLongitude()).endLatitude(entity.getEndLatitude()).endLongitude(entity.getEndLongitude()).participantCount(entity.getParticipantCount()).participants(entity.getParticipants().stream().map(c -> UserConvertor.userToUserDto(c.getUser())).collect(Collectors.toList())).owner(UserConvertor.userToUserDto(entity.getCreatorUser())).build();
     }
 
     public static EventParticipantDto eventParticipantEntityToDto(EventParticipantEntity entity) {

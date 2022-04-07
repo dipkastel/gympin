@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.event;
 
-import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @SuperBuilder
 @Entity
 @Table(name = "event_participant")
-public class EventParticipantEntity extends BaseEntityWithCreateUpdate {
+public class EventParticipantEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")

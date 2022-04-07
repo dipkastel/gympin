@@ -31,4 +31,7 @@ public class BaseEventDto<T> extends BaseDto<T> {
     @JsonProperty("Participants")
     private List<UserDto> participants;
 
+    @JsonProperty("Owner")
+    private UserDto owner;
+
 }
