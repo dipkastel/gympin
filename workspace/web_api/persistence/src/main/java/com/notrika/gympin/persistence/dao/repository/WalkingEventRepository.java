@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.dao.repository;
 
+import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.event.WalkingEventEntity;
 import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,6 @@ public interface WalkingEventRepository extends BaseRepository<WalkingEventEntit
 
     List<WalkingEventEntity> findAllByCreatorUserAndDeleted(User ownerUser, boolean isDeleted);
 
-    List<WalkingEventEntity> findAllByParticipantsAndDeleted(User participant, boolean isDeleted);
+    List<WalkingEventEntity> findAllByParticipantsAndDeleted(List<EventParticipantEntity> participants, boolean deleted);
 
 }
