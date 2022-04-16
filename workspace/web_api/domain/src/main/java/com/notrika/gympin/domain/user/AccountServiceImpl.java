@@ -53,7 +53,7 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
     @Autowired
     private UserServiceImpl userService;
     @Autowired

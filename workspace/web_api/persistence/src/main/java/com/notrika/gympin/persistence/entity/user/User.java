@@ -8,6 +8,7 @@ import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.location.PlaceOwner;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
 import com.notrika.gympin.persistence.entity.security.service.ServiceExecution;
+import com.notrika.gympin.persistence.entity.user.relation.FollowEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -99,6 +100,14 @@ public class User extends BaseEntityWithCreate {
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     private List<EventParticipantEntity> participants;
+
+    @OneToMany(mappedBy = "requesterUser")
+    @ToString.Exclude
+    private List<FollowEntity> followings;
+
+    @OneToMany(mappedBy = "requestedUser")
+    @ToString.Exclude
+    private List<FollowEntity> followers;
 
     @Override
     public boolean equals(Object o) {

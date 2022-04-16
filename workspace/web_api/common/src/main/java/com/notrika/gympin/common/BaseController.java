@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
+// FIXME: 4/14/2022 edit to standard rest resource convention
 public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>> {
 
     @PostMapping("/add")
@@ -18,9 +19,11 @@ public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>> {
     @PutMapping("/delete")
     ResponseEntity<O> delete(I i);
 
+    // FIXME: 4/14/2022
     @GetMapping("/getAll")
     ResponseEntity<List<O>> getAll(BasePagedParam pagingParam);
 
+    // FIXME: 4/14/2022
     @GetMapping("/getById")
     ResponseEntity<O> getById(Long id);
 }
