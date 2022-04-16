@@ -106,12 +106,12 @@ public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDt
 
     @Override
     public FollowEntity add(FollowEntity entity) {
-        return null;
+        return followRepository.add(entity);
     }
 
     @Override
     public FollowEntity update(FollowEntity entity) {
-        return null;
+        return followRepository.update(entity);
     }
 
     @Override
