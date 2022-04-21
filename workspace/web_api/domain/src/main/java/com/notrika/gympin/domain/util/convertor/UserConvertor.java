@@ -29,6 +29,7 @@ public final class UserConvertor {
         dto.setUsername(user.getUsername());
         dto.setPhoneNumber(user.getPhoneNumber());
         dto.setName(user.getName());
+        dto.setBio(user.getBio());
         return dto;
     }
 
@@ -41,6 +42,7 @@ public final class UserConvertor {
         dto.setUsername(user.getUsername());
         dto.setPhoneNumber(user.getPhoneNumber());
         dto.setName(user.getName());
+        dto.setBio(user.getBio());
         return dto;
     }
 

@@ -45,4 +45,7 @@ public class UserDto extends BaseDto<UserDto> /*implements UserDetails*/ {
     @JsonProperty("FollowingsCount")
     private Long followingsCount;
 
+    @JsonProperty("Bio")
+    private String bio;
+
 }

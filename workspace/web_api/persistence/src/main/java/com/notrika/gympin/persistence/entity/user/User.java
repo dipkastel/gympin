@@ -73,6 +73,9 @@ public class User extends BaseEntityWithCreate {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
+    @Column(name = "bio",length = 250)
+    private String bio;
+
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     private Set<PlaceOwner> placeOwners;
@@ -108,6 +111,7 @@ public class User extends BaseEntityWithCreate {
     @OneToMany(mappedBy = "requestedUser")
     @ToString.Exclude
     private List<FollowEntity> followers;
+
 
     @Override
     public boolean equals(Object o) {

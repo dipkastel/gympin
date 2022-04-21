@@ -52,7 +52,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
             roles.add(userRoleService.getByUserRole(UserRole.USER));
         }
         User initUser =
-                User.builder().name(userParam.getName()).lastname(userParam.getLastname()).username(userParam.getUsername()).phoneNumber(userParam.getPhoneNumber()).birthday(userParam.getBirthday()).nationalCode(userParam.getNationalCode()).email(userParam.getEmail()).userGroup(UserGroup.CLIENT).userRole(roles).userStatus(UserStatus.ENABLED).build();
+                User.builder().name(userParam.getName()).lastname(userParam.getLastname()).username(userParam.getUsername()).phoneNumber(userParam.getPhoneNumber()).birthday(userParam.getBirthday()).nationalCode(userParam.getNationalCode()).email(userParam.getEmail()).userGroup(UserGroup.CLIENT).userRole(roles).userStatus(UserStatus.ENABLED).bio(userParam.getBio()).build();
         User user = userRepository.add(initUser);
         Password password = Password.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
         passwordRepository.add(password);
@@ -79,6 +79,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setNationalCode(userParam.getNationalCode());
         initUser.setEmail(userParam.getEmail());
         initUser.setUserRole(roles);
+        initUser.setBio(userParam.getBio());
         User user = update(initUser);
         return UserConvertor.userToUserDto(user);
     }
