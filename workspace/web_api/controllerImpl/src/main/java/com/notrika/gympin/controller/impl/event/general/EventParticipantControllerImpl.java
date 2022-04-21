@@ -9,6 +9,7 @@ import com.notrika.gympin.common.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,17 +23,17 @@ public class EventParticipantControllerImpl implements EventParticipantControlle
     private EventParticipantService eventParticipantService;
 
     @Override
-    public ResponseEntity<EventParticipantDto> add(EventParticipantParam param) {
+    public ResponseEntity<EventParticipantDto> add(@RequestBody EventParticipantParam param) {
         return new ResponseEntity<>(eventParticipantService.add(param), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<EventParticipantDto> update(EventParticipantParam param) {
+    public ResponseEntity<EventParticipantDto> update(@RequestBody EventParticipantParam param) {
         return new ResponseEntity<>(eventParticipantService.update(param), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<EventParticipantDto> delete(EventParticipantParam param) {
+    public ResponseEntity<EventParticipantDto> delete(@RequestBody EventParticipantParam param) {
         return new ResponseEntity<>(eventParticipantService.delete(param), HttpStatus.OK);
     }
 
