@@ -51,7 +51,7 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     @PostMapping("/refreshToken")
-    public ResponseEntity<?> refreshToken(String refreshToken) {
+    public ResponseEntity<?> refreshToken(@RequestBody String refreshToken) {
         return new ResponseEntity<>(accountService.refreshToken(refreshToken), HttpStatus.OK);
     }
 }
