@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
+
 @Data
 @SuperBuilder
 @AllArgsConstructor
@@ -28,5 +30,8 @@ public class WalkingEventDto extends BaseEventDto<WalkingEventDto> {
 
     @JsonProperty("ParticipantCount")
     private int participantCount;
+
+    @JsonProperty("StartDate")
+    private Date startDate;
 
 }
