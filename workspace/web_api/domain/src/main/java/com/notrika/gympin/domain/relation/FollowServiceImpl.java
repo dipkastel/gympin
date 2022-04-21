@@ -145,4 +145,12 @@ public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDt
         List<User> followers = followRepository.getFollowings(user.getId());
         return UserConvertor.usersToUserDtos(followers);
     }
+
+    public Long getFollowersCount(User user){
+        return followRepository.getFollowersCount(user.getId());
+    }
+
+    public Long getFollowingsCount(User user){
+        return followRepository.getFollowingsCount(user.getId());
+    }
 }

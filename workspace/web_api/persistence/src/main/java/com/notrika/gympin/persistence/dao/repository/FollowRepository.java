@@ -12,10 +12,16 @@ public interface FollowRepository extends BaseRepository<FollowEntity,Long> {
 
     FollowEntity getByRequesterUserAndRequestedUserAndDeleted(User requesterUser,User requestedUser,boolean deleted);
 
-    @Query("select f.requesterUser from FollowEntity f where f.requestedUser.id=:#{#userId}")
+    //@Query("select f.requesterUser from FollowEntity f where f.requestedUser.id=:#{#userId} and f.deleted=false ")
     List<User> getFollowers(Long userId);
 
-    @Query("select f.requestedUser from FollowEntity f where f.requesterUser.id=:#{#userId}")
+    //@Query("select f.requestedUser from FollowEntity f where f.requesterUser.id=:#{#userId} and f.deleted=false ")
     List<User> getFollowings(Long userId);
+
+    //@Query("select count(*) from FollowEntity f where f.requestedUser.id=:#{#userId} and f.deleted=false ")
+    Long getFollowersCount(Long userId);
+
+    //@Query("select count(*) from FollowEntity f where f.requesterUser.id=:#{#userId} and f.deleted=false ")
+    Long getFollowingsCount(Long userId);
 
 }

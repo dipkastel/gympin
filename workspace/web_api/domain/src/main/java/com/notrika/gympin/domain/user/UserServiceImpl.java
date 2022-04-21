@@ -8,6 +8,7 @@ import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.param.UserRoleParam;
 import com.notrika.gympin.common.user.service.UserService;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.relation.FollowServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
@@ -37,6 +38,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 
     @Autowired
     private UserRoleServiceImpl userRoleService;
+
+    @Autowired
+    private FollowServiceImpl followService;
 
     @Override
     public UserDto add(UserParam userParam) {
@@ -109,7 +113,10 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Override
     public UserDto getById(long id) {
         User user = getEntityById(id);
-        return UserConvertor.userToUserDto(user);
+        UserDto userDto = UserConvertor.userToUserDto(user);
+        userDto.setFollowersCount(followService.getFollowersCount(user));
+        userDto.setFollowingsCount(followService.getFollowingsCount(user));
+        return userDto;
     }
 
     @Override
