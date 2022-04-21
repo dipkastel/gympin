@@ -129,7 +129,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
         if (!StringUtils.hasText(token)) {
             return false;
         }
-        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token.substring(7)).getBody();
+        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         return !claims.getExpiration().before(new Date());
     }
 

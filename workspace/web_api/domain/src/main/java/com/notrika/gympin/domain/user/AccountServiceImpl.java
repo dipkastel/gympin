@@ -17,10 +17,7 @@ import com.notrika.gympin.common.user.enums.TokenType;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
-import com.notrika.gympin.common.user.param.LoginParam;
-import com.notrika.gympin.common.user.param.UserRegisterParam;
-import com.notrika.gympin.common.user.param.UserRoleParam;
-import com.notrika.gympin.common.user.param.UserSendSmsParam;
+import com.notrika.gympin.common.user.param.*;
 import com.notrika.gympin.common.user.service.AccountService;
 import com.notrika.gympin.common.user.service.JwtTokenProvider;
 import com.notrika.gympin.common.util.MyRandom;
@@ -222,9 +219,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public String refreshToken(String refreshToken) {
-        if (StringUtils.hasText(refreshToken) && tokenProvider.validateToken(refreshToken)) {
-            return tokenProvider.refreshToken(refreshToken);
+    public String refreshToken(RefreshTokenParam refreshToken) {
+        if (StringUtils.hasText(refreshToken.getRefreshToken()) && tokenProvider.validateToken(refreshToken.getRefreshToken())) {
+            return tokenProvider.refreshToken(refreshToken.getRefreshToken());
         } else {
             throw new ExceptionBase();
         }

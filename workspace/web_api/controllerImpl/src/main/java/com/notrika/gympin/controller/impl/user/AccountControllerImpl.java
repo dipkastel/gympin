@@ -6,6 +6,7 @@ import com.notrika.gympin.common.user.api.AccountController;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.param.LoginParam;
+import com.notrika.gympin.common.user.param.RefreshTokenParam;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.param.UserSendSmsParam;
 import com.notrika.gympin.common.user.service.AccountService;
@@ -51,7 +52,7 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     @PostMapping("/refreshToken")
-    public ResponseEntity<?> refreshToken(@RequestBody String refreshToken) {
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenParam refreshToken) {
         return new ResponseEntity<>(accountService.refreshToken(refreshToken), HttpStatus.OK);
     }
 }
