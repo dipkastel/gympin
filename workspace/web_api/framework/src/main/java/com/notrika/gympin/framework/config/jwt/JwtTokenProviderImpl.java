@@ -1,6 +1,7 @@
 package com.notrika.gympin.framework.config.jwt;
 
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.enums.TokenType;
 import com.notrika.gympin.common.user.service.JwtTokenProvider;
 import com.notrika.gympin.domain.user.UserServiceImpl;
@@ -134,13 +135,16 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     }
 
     @Override
-    public String refreshToken(String refreshToken) {
+    public RefreshTokenDto refreshToken(String refreshToken) {
         String userName = getUserNameFromJwtToken(refreshToken);
         User user = userService.findUserByPhoneNumber(userName);
         if (user.isDeleted()) {
             throw new ExceptionBase();
         }
-        return getjwt(userjwtExpirationInMs, userName);
+        RefreshTokenDto refreshTokenDto = new RefreshTokenDto();
+        refreshTokenDto.setToken(getjwt(userjwtExpirationInMs, userName));
+        refreshTokenDto.setRefreshToken(getjwt(refreshTokenJwtExpirationInMs,userName));
+        return refreshTokenDto;
     }
 
     private String resolveToken(HttpServletRequest req) {

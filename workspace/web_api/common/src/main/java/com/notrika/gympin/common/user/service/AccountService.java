@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.user.service;
 
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.param.LoginParam;
@@ -19,6 +20,6 @@ public interface AccountService extends UserDetailsService {
 
     UserDto loginPanel(LoginParam loginParam) throws ExceptionBase;
 
-    String refreshToken(RefreshTokenParam refreshToken);
+    RefreshTokenDto refreshToken(RefreshTokenParam refreshToken);
 
 }

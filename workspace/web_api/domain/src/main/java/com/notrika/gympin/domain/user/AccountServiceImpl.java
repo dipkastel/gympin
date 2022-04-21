@@ -10,6 +10,7 @@ import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpiredException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeManyRequestException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoundException;
+import com.notrika.gympin.common.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
@@ -219,7 +220,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public String refreshToken(RefreshTokenParam refreshToken) {
+    public RefreshTokenDto refreshToken(RefreshTokenParam refreshToken) {
         if (StringUtils.hasText(refreshToken.getRefreshToken()) && tokenProvider.validateToken(refreshToken.getRefreshToken())) {
             return tokenProvider.refreshToken(refreshToken.getRefreshToken());
         } else {

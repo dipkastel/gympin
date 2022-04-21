@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.user.service;
 
+import com.notrika.gympin.common.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.enums.TokenType;
 import org.springframework.security.core.Authentication;
 
@@ -9,6 +10,6 @@ public interface JwtTokenProvider {
 
     boolean validateToken(String token);
 
-    String refreshToken(String refreshToken);
+    RefreshTokenDto refreshToken(String refreshToken);
 
 }
