@@ -17,4 +17,5 @@ public interface AccountService extends UserDetailsService {
     UserDto loginUser(LoginParam loginParam) throws ExceptionBase;
 
     UserDto loginPanel(LoginParam loginParam) throws ExceptionBase;
+
 }
