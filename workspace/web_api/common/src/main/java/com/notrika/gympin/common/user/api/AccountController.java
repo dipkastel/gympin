@@ -17,4 +17,6 @@ public interface AccountController {
 
     ResponseEntity<?> loginPanel(LoginParam loginParam) throws ExceptionBase;
 
+    ResponseEntity<?> refreshToken(String refreshToken);
+
 }

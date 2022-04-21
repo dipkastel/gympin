@@ -13,6 +13,7 @@ import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoun
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
+import com.notrika.gympin.common.user.enums.TokenType;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
@@ -42,6 +43,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -133,9 +135,11 @@ public class AccountServiceImpl implements AccountService {
         }
         activationCode.setDeleted(true);
         activationCodeRepository.update(activationCode);
-        String jwt = getJwt(loginParam, loginParam.getUsername());
+        String jwt = getJwt(loginParam, loginParam.getUsername(), TokenType.USER);
+        String refreshJwt = getJwt(loginParam, loginParam.getUsername(), TokenType.REFRESH_TOKE);
         UserDto result = UserConvertor.userToUserDtoLessDetails(user);
         result.setToken(jwt);
+        result.setRefreshToken(refreshJwt);
         log.info("user logined {}...\n", result);
         return result;
     }
@@ -153,10 +157,12 @@ public class AccountServiceImpl implements AccountService {
             activationCode.setDeleted(true);
             activationCodeRepository.update(activationCode);
         }
-        String jwt = getJwt(loginParam, phoneNumber);
+        String jwt = getJwt(loginParam, phoneNumber, TokenType.ADMIN);
+        String refreshJwt = getJwt(loginParam, loginParam.getUsername(), TokenType.REFRESH_TOKE);
         UserDto result = UserConvertor.administratorToAdministratorDto(admin);
         result.setToken(jwt);
-        log.info("Admin logined {}...\n", result);
+        result.setRefreshToken(refreshJwt);
+        log.info("Admin loggined {}...\n", result);
         return result;
     }
 
@@ -176,10 +182,10 @@ public class AccountServiceImpl implements AccountService {
         return phoneNumber;
     }
 
-    private String getJwt(LoginParam loginParam, String phoneNumber) {
+    private String getJwt(LoginParam loginParam, String phoneNumber, TokenType tokenType) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(phoneNumber, loginParam.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return tokenProvider.generateJwtToken(authentication);
+        return tokenProvider.generateJwtToken(authentication, tokenType);
     }
 
     @Transactional
@@ -215,6 +221,15 @@ public class AccountServiceImpl implements AccountService {
         return userDetails;
     }
 
+    @Override
+    public String refreshToken(String refreshToken) {
+        if (StringUtils.hasText(refreshToken) && tokenProvider.validateToken(refreshToken)) {
+            return tokenProvider.refreshToken(refreshToken);
+        } else {
+            throw new ExceptionBase();
+        }
+    }
+
     private void setUserContext(User user) {
         GympinContext context = GympinContextHolder.getContext();
         if (context == null) {
@@ -222,7 +237,6 @@ public class AccountServiceImpl implements AccountService {
         }
         context.getEntry().put(GympinContext.USER_KEY, user);
         GympinContextHolder.setContext(context);
-
     }
 
 }

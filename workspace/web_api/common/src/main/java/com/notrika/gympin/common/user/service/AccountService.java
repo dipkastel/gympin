@@ -18,4 +18,6 @@ public interface AccountService extends UserDetailsService {
 
     UserDto loginPanel(LoginParam loginParam) throws ExceptionBase;
 
+    String refreshToken(String refreshToken);
+
 }

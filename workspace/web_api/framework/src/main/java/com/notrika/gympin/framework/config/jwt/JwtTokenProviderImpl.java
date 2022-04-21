@@ -1,6 +1,9 @@
 package com.notrika.gympin.framework.config.jwt;
 
+import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.user.enums.TokenType;
 import com.notrika.gympin.common.user.service.JwtTokenProvider;
+import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.UserTokenRepository;
 import com.notrika.gympin.persistence.entity.user.User;
 import com.notrika.gympin.persistence.entity.user.UserToken;
@@ -40,8 +43,14 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     @Value("${app.jwt.admin-expiration-in-ms}")
     private Long adminjwtExpirationInMs;
 
+    @Value("${app.jwt.refreshtoken-in-ms}")
+    private Long refreshTokenJwtExpirationInMs;
+
     @Autowired
     private UserTokenRepository userTokenRepository;
+
+    @Autowired
+    private UserServiceImpl userService;
 
     /*public UserToken generateToken(User user, Authentication auth) {
         String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining());
@@ -70,11 +79,25 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
         return userToken;
     }
 
-    public String generateJwtToken(Authentication authentication) {
-
+    public String generateJwtToken(Authentication authentication, TokenType tokenType) {
+        Long expireTime = 0L;
+        switch (tokenType) {
+            case USER:
+                expireTime = userjwtExpirationInMs;
+                break;
+            case ADMIN:
+                expireTime = adminjwtExpirationInMs;
+            case REFRESH_TOKE:
+                expireTime = refreshTokenJwtExpirationInMs;
+                break;
+        }
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        return getjwt(expireTime, userPrincipal.getUsername());
+    }
 
-        return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date()).setExpiration(new Date((new Date()).getTime() + adminjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+    private String getjwt(Long expireTime, String username) {
+        return Jwts.builder().setSubject((username)).setIssuedAt(new Date()).setExpiration(new Date((new Date()).getTime() + expireTime)).signWith(SignatureAlgorithm.HS512,
+                jwtSecret).compact();
     }
 
     public Authentication getAuthentication(HttpServletRequest request) {
@@ -99,6 +122,27 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
             return false;
         }
         return true;
+    }
+
+    public boolean validateToken(String token) {
+        if (token == null) {
+            return false;
+        }
+        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        if (claims.getExpiration().before(new Date())) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String refreshToken(String refreshToken) {
+        String userName = getUserNameFromJwtToken(refreshToken);
+        User user = userService.findByUsername(userName);
+        if (user.isDeleted()) {
+            throw new ExceptionBase();
+        }
+        return getjwt(userjwtExpirationInMs, userName);
     }
 
     private String resolveToken(HttpServletRequest req) {
