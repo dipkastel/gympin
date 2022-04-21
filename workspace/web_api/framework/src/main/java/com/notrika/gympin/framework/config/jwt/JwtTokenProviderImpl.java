@@ -18,6 +18,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -125,14 +126,11 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     }
 
     public boolean validateToken(String token) {
-        if (token == null) {
+        if (StringUtils.hasText(token)) {
             return false;
         }
-        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-        if (claims.getExpiration().before(new Date())) {
-            return false;
-        }
-        return true;
+        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token.substring(7)).getBody();
+        return !claims.getExpiration().before(new Date());
     }
 
     @Override
