@@ -13,6 +13,6 @@ import java.util.List;
 public interface EventParticipantController extends BaseController<EventParticipantParam, EventParticipantDto> {
 
     @GetMapping("/getEventParticipant")
-    ResponseEntity<List<UserDto>> getEventParticipant(@RequestParam(name = "id") Long id);
+    ResponseEntity<List<UserDto>> getEventParticipant(/*@RequestParam(name = "event-id")*/ Long id);
 
 }
