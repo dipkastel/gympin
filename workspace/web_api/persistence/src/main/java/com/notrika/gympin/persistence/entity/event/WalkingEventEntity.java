@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Getter
@@ -33,5 +34,9 @@ public class WalkingEventEntity extends BaseEventEntity {
 
     @Column(name = "participant_count",nullable = false)
     private int participantCount;
+
+    @Lob
+    @Column(name = "address")
+    private String address;
 
 }

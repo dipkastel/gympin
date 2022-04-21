@@ -33,4 +33,7 @@ public class WalkingEventParam extends BaseEventParam<WalkingEventParam> {
     @JsonProperty("StartDate")
     private Date startDate;
 
+    @JsonProperty("Address")
+    private String address;
+
 }

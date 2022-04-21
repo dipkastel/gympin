@@ -34,4 +34,7 @@ public class WalkingEventDto extends BaseEventDto<WalkingEventDto> {
     @JsonProperty("StartDate")
     private Date startDate;
 
+    @JsonProperty("Address")
+    private String address;
+
 }

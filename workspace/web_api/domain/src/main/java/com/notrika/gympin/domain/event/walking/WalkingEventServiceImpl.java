@@ -46,7 +46,7 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     public WalkingEventDto add(WalkingEventParam walkingEventParam) {
         Sport sport = sportService.getEntityById(walkingEventParam.getSport().getId());
         WalkingEventEntity walkingEvent =
-                WalkingEventEntity.builder().sport(sport).title(walkingEventParam.getTitle()).description(walkingEventParam.getDescription()).startLatitude(walkingEventParam.getStartLatitude()).startLongitude(walkingEventParam.getStartLongitude()).endLatitude(walkingEventParam.getEndLatitude()).endLongitude(walkingEventParam.getEndLongitude()).participantCount(walkingEventParam.getParticipantCount()).startDate(walkingEventParam.getStartDate()).build();
+                WalkingEventEntity.builder().sport(sport).title(walkingEventParam.getTitle()).description(walkingEventParam.getDescription()).startLatitude(walkingEventParam.getStartLatitude()).startLongitude(walkingEventParam.getStartLongitude()).endLatitude(walkingEventParam.getEndLatitude()).endLongitude(walkingEventParam.getEndLongitude()).participantCount(walkingEventParam.getParticipantCount()).startDate(walkingEventParam.getStartDate()).address(walkingEventParam.getAddress()).build();
         WalkingEventEntity entity = walkingEventRepository.add(walkingEvent);
         if (entity.getParticipants() == null) entity.setParticipants(new ArrayList<>());
         for (UserParam userParam : walkingEventParam.getParticipants()) {
