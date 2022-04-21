@@ -126,7 +126,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     }
 
     public boolean validateToken(String token) {
-        if (StringUtils.hasText(token)) {
+        if (!StringUtils.hasText(token)) {
             return false;
         }
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token.substring(7)).getBody();
