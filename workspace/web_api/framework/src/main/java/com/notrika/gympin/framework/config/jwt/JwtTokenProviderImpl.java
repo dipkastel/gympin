@@ -136,7 +136,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     @Override
     public String refreshToken(String refreshToken) {
         String userName = getUserNameFromJwtToken(refreshToken);
-        User user = userService.findByUsername(userName);
+        User user = userService.findUserByPhoneNumber(userName);
         if (user.isDeleted()) {
             throw new ExceptionBase();
         }
