@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -11,13 +12,13 @@ import java.util.List;
 public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>> {
 
     @PostMapping("/add")
-    ResponseEntity<O> add(I i);
+    ResponseEntity<O> add(@RequestBody I i);
 
     @PutMapping("/update")
-    ResponseEntity<O> update(I i);
+    ResponseEntity<O> update(@RequestBody I i);
 
     @PutMapping("/delete")
-    ResponseEntity<O> delete(I i);
+    ResponseEntity<O> delete(@RequestBody I i);
 
     // FIXME: 4/14/2022
     @GetMapping("/getAll")
