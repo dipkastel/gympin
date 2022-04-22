@@ -40,8 +40,8 @@ public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDt
     @Override
     @Transactional
     public FollowDto add(FollowParam followParam) {
-        User requesterUser = userService.getEntityById(followParam.getRequestedUser().getId());
-        User requestedUser = userService.getEntityById(followParam.getRequesterUser().getId());
+        User requestedUser = userService.getEntityById(followParam.getRequestedUser().getId());
+        User requesterUser  = userService.getEntityById(followParam.getRequesterUser().getId());
         FollowEntity followEntity = FollowEntity.builder().requesterUser(requesterUser).requestedUser(requestedUser).status(FollowingStatus.ACCEPTED).build();
         followEntity = add(followEntity);
         followChangeStatusRepository.add(FollowChangeStatusEntity.builder().follow(followEntity).preStatus(FollowingStatus.NONE).newStatus(FollowingStatus.ACCEPTED).build());
