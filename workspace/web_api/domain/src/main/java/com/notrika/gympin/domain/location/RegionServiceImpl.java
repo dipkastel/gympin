@@ -94,7 +94,7 @@ public class RegionServiceImpl extends AbstractBaseService<RegionParam, RegionDt
     }
 
     public List<Region> getRegionsByCity(City city) {
-        return regionRepository.getRegionsByCity(city);
+        return regionRepository.findAllByCityAndDeletedIsFalse(city);
     }
 
 }

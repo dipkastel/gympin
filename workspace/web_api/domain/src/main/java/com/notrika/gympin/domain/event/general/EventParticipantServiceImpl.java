@@ -96,8 +96,8 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
         return UserConvertor.usersToUserDtos(allParticipants);
     }
 
-    public List<EventParticipantEntity> getEventParticipantEntities(User user,boolean isDeleted){
-        return participantRepository.findAllByUserAndDeleted(user,isDeleted);
+    public List<EventParticipantEntity> getEventParticipantEntities(User user){
+        return participantRepository.findAllByUserAndDeletedIsFalse(user);
     }
 
 }

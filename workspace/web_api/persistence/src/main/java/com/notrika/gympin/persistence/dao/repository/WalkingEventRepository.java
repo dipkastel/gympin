@@ -16,9 +16,9 @@ public interface WalkingEventRepository extends BaseRepository<WalkingEventEntit
             " and p.user.id=u.id and u.id= :#{#userId})")
     List<WalkingEventEntity> getAllEventOfUser(Long userId);*/
 
-    List<WalkingEventEntity> findAllByCreatorUserAndDeleted(User ownerUser, boolean isDeleted);
+    List<WalkingEventEntity> findAllByCreatorUserAndDeletedIsFalse(User ownerUser);
 
-    List<WalkingEventEntity> findAllByParticipantsInAndDeleted(List<EventParticipantEntity> participants, boolean deleted);
+    List<WalkingEventEntity> findAllByParticipantsInAndDeletedIsFalse(List<EventParticipantEntity> participants);
 
 //    List<WalkingEventEntity> findAllByParticipants();
 

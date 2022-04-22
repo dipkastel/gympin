@@ -48,4 +48,7 @@ public class UserDto extends BaseDto<UserDto> /*implements UserDetails*/ {
     @JsonProperty("Bio")
     private String bio;
 
+    @JsonProperty("Rate")
+    private Float rate;
+
 }

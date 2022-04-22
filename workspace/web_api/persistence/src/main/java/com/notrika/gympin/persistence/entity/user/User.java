@@ -7,6 +7,7 @@ import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.location.PlaceOwner;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
+import com.notrika.gympin.persistence.entity.rating.UserRate;
 import com.notrika.gympin.persistence.entity.security.service.ServiceExecution;
 import com.notrika.gympin.persistence.entity.user.relation.FollowEntity;
 import lombok.Getter;
@@ -111,6 +112,14 @@ public class User extends BaseEntityWithCreate {
     @OneToMany(mappedBy = "requestedUser")
     @ToString.Exclude
     private List<FollowEntity> followers;
+
+    @OneToMany(mappedBy = "judgingUser")
+    @ToString.Exclude
+    private List<UserRate> judged;
+
+    @OneToMany(mappedBy = "judgerUser")
+    @ToString.Exclude
+    private List<UserRate> hasJudged;
 
 
     @Override

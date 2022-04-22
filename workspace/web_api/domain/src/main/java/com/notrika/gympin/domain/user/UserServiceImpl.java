@@ -42,6 +42,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Autowired
     private FollowServiceImpl followService;
 
+    @Autowired
+    private UserRateServiceImpl userRateService;
+
     @Override
     public UserDto add(UserParam userParam) {
         List<Role> roles = new ArrayList<>();
@@ -117,6 +120,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         UserDto userDto = UserConvertor.userToUserDto(user);
         userDto.setFollowersCount(followService.getFollowersCount(user));
         userDto.setFollowingsCount(followService.getFollowingsCount(user));
+        userDto.setRate(userRateService.calculateUserRate(UserParam.builder().id(id).build()));
         return userDto;
     }
 

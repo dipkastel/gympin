@@ -94,6 +94,6 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
     }
 
     public List<City> getCitiesByState(State state) {
-        return cityRepository.getCitiesByState(state);
+        return cityRepository.findAllByStateAndDeletedIsFalse(state);
     }
 }

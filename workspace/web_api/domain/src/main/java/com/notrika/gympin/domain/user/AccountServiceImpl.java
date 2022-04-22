@@ -104,7 +104,7 @@ public class AccountServiceImpl implements AccountService {
     private User addUser(UserRegisterParam userRegisterParam) {
         List<Role> roleList = new ArrayList<>();
         for (UserRoleParam userRole : userRegisterParam.getUserRole()) {
-            roleList.add(roleRepository.getByRole(userRole.getRole()));
+            roleList.add(roleRepository.findByRole(userRole.getRole()));
         }
         User user = new User();
         user.setUsername(userRegisterParam.getUsername());
@@ -204,7 +204,7 @@ public class AccountServiceImpl implements AccountService {
             password = user.getActivationCode().getCode();
         }
         if (password == null) {
-            password = passwordRepository.findByUserAndExpiredIsAndDeletedIs(user, false, false).getPassword();
+            password = passwordRepository.findByUserAndExpiredIsFalseAndDeletedIsFalse(user).getPassword();
         }
         if (password == null) {
             throw new ExceptionBase();

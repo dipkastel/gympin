@@ -85,12 +85,12 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     @Override
     public UserWalkingEventDto getAllEventOfUser(UserParam user) {
         User user1 = userService.getEntityById(user.getId());
-        List<WalkingEventEntity> ownedEvents = walkingEventRepository.findAllByCreatorUserAndDeleted(user1, false);
+        List<WalkingEventEntity> ownedEvents = walkingEventRepository.findAllByCreatorUserAndDeletedIsFalse(user1);
         EventParticipantEntity eventParticipantEntity=new EventParticipantEntity();
         eventParticipantEntity.setUser(user1);
         List<EventParticipantEntity> eventParticipantEntities=new ArrayList<>();
-        eventParticipantEntities.addAll(eventParticipantService.getEventParticipantEntities(user1,false));
-        List<WalkingEventEntity> participatedEvents = walkingEventRepository.findAllByParticipantsInAndDeleted(eventParticipantEntities, false);
+        eventParticipantEntities.addAll(eventParticipantService.getEventParticipantEntities(user1));
+        List<WalkingEventEntity> participatedEvents = walkingEventRepository.findAllByParticipantsInAndDeletedIsFalse(eventParticipantEntities);
         UserWalkingEventDto userWalkingEventDto = new UserWalkingEventDto();
         userWalkingEventDto.setOwnedEvents(ownedEvents.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList()));
         userWalkingEventDto.setParticipatedEvents(participatedEvents.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList()));
