@@ -29,6 +29,6 @@ public class UserRate extends BaseEntity {
     private User judgingUser;
 
     @Column(name = "rate")
-    private Integer rate;
+    private Float rate;
 
 }
