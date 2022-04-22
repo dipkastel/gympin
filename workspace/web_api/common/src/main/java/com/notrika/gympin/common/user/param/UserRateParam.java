@@ -20,6 +20,6 @@ public class UserRateParam extends BaseParam<UserRateParam> {
     private UserParam judgingUser;
 
     @JsonProperty("rate")
-    private Integer rate;
+    private Float rate;
 
 }

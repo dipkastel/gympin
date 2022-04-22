@@ -20,6 +20,6 @@ public class UserRateDto extends BaseDto<UserRateDto> {
     private UserDto judgingUser;
 
     @JsonProperty("rate")
-    private Integer rate;
+    private Float rate;
 
 }
