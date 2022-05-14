@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface EventParticipantRepository extends BaseRepository<EventParticipantEntity, Long> {
 
-    //@Query("select c.user from EventParticipantEntity c where c.deleted=false and c.event.id = :#{#event.id}")
+    @Query("select c.user from EventParticipantEntity c where c.deleted=false and c.event.id = :#{#event.id}")
     List<User> getUserByEventAndDeleted(BaseEventEntity event);
 
     List<EventParticipantEntity> findAllByUserAndDeletedIsFalse(User user);
