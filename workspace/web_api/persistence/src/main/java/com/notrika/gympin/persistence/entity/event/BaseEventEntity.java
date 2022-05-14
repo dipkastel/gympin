@@ -39,7 +39,7 @@ public class BaseEventEntity extends BaseEntityWithCreateUpdate {
     @Column(name = "start_date", nullable = false)
     private Date startDate;
 
-    @Column(name = "participant_count",nullable = false)
+    @Column(name = "participant_count",nullable = false, columnDefinition = "default 0")
     private int participantCount;
 
     @OneToMany(mappedBy = "event",cascade = CascadeType.ALL,orphanRemoval = true)
