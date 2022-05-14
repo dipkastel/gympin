@@ -21,7 +21,6 @@ public class GympinApplicationControllerImpl implements GympinApplicationControl
     private GympinApplicationService gympinApplicationService;
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
     @PostMapping("/splash")
     public ResponseEntity<SplashDto> splash(SplashParam splashParam) {
         return ResponseEntity.ok(gympinApplicationService.splash(splashParam));

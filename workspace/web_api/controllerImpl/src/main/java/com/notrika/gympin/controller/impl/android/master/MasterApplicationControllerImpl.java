@@ -20,7 +20,6 @@ public class MasterApplicationControllerImpl implements MasterApplicationControl
     private MasterApplicationService masterApplicationService;
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
     @PostMapping("/splash")
     public ResponseEntity<SplashDto> splash(SplashParam splashParam) {
         return ResponseEntity.ok(masterApplicationService.splash(splashParam));
