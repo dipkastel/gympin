@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface BaseEventRepository extends BaseRepository<BaseEventEntity, Long> {
 
-    //@Query("select count(*) from BaseEventEntity be where be.startDate >= :fromDate and be.startDate <= :toDate and (be.creatorUser= :user or :user in elements(be.participants))")
+    @Query("select count(*) from BaseEventEntity be where be.startDate >= :fromDate and be.startDate <= :toDate and (be.creatorUser= :user or :user in elements(be.participants))")
     Long getAllActiveEventOfUser(@Param("user") User user,@Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
 
 }
