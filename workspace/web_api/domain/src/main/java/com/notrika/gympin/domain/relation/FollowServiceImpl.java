@@ -8,6 +8,7 @@ import com.notrika.gympin.common.relation.service.FollowService;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.user.UserRateServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.FollowConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
@@ -37,15 +38,22 @@ public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDt
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private UserRateServiceImpl userRateService;
+
     @Override
     @Transactional
     public FollowDto add(FollowParam followParam) {
+        //check condition
         User requestedUser = userService.getEntityById(followParam.getRequestedUser().getId());
         User requesterUser  = userService.getEntityById(followParam.getRequesterUser().getId());
         FollowEntity followEntity = FollowEntity.builder().requesterUser(requesterUser).requestedUser(requestedUser).status(FollowingStatus.ACCEPTED).build();
         followEntity = add(followEntity);
         followChangeStatusRepository.add(FollowChangeStatusEntity.builder().follow(followEntity).preStatus(FollowingStatus.NONE).newStatus(FollowingStatus.ACCEPTED).build());
-        return FollowConvertor.followEntityToDto(followEntity);
+        FollowDto followDto = FollowConvertor.followEntityToDto(followEntity);
+        followDto.getRequestedUser().setRate(userRateService.calculateUserRate(UserParam.builder().id(followDto.getRequestedUser().getId()).build()));
+        followDto.getRequesterUser().setRate(userRateService.calculateUserRate(UserParam.builder().id(followDto.getRequesterUser().getId()).build()));
+        return followDto;
     }
 
     @Override
@@ -71,8 +79,8 @@ public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDt
             updatedEntity = update(followEntity);
             followChangeStatusRepository.add(FollowChangeStatusEntity.builder().follow(updatedEntity).preStatus(preStatus).newStatus(updatedEntity.getStatus()).changeDate(new Date()).build());
         }else if(!StringUtils.isEmpty(requesterUsername=requesterUserParam.getUsername().trim()) && !StringUtils.isEmpty(requestedUsername=requestedUserParam.getUsername().trim())) {
-            requesterUser = userService.findUserByPhoneNumber(requesterUsername);
-            requestedUser = userService.findUserByPhoneNumber(requestedUsername);
+            requesterUser = userService.getByPhoneNumber(requesterUsername);
+            requestedUser = userService.getByPhoneNumber(requestedUsername);
             FollowEntity followEntity=followRepository.getByRequesterUserAndRequestedUserAndDeleted(requesterUser,requestedUser,false);
             FollowingStatus preStatus=followEntity.getStatus();
             followEntity.setStatus(followParam.getStatus());

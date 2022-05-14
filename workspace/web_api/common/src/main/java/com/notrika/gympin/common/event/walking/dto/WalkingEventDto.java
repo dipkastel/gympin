@@ -3,16 +3,16 @@ package com.notrika.gympin.common.event.walking.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.event.BaseEventDto;
 import com.notrika.gympin.common.sport.dto.SportDto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
 @Data
+@ToString
 @SuperBuilder
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class WalkingEventDto extends BaseEventDto<WalkingEventDto> {
 

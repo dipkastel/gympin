@@ -10,6 +10,7 @@ import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,32 +26,39 @@ public class WalkingEventControllerImpl implements WalkingEventController {
     private WalkingEventService walkingEventService;
 
     @Override
-    public ResponseEntity<WalkingEventDto> add(@RequestBody WalkingEventParam param) {
-        return new ResponseEntity<>(walkingEventService.add(param), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
+    public ResponseEntity<WalkingEventDto> add(WalkingEventParam param) {
+        return ResponseEntity.ok(walkingEventService.add(param));
     }
 
     @Override
-    public ResponseEntity<WalkingEventDto> update(@RequestBody WalkingEventParam param) {
-        return new ResponseEntity<>(walkingEventService.update(param), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<WalkingEventDto> update(WalkingEventParam param) {
+        return ResponseEntity.ok(walkingEventService.update(param));
     }
 
     @Override
-    public ResponseEntity<WalkingEventDto> delete(@RequestBody WalkingEventParam param) {
-        return new ResponseEntity<>(walkingEventService.delete(param), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
+    public ResponseEntity<WalkingEventDto> delete(WalkingEventParam param) {
+        return ResponseEntity.ok(walkingEventService.delete(param));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
     public ResponseEntity<List<WalkingEventDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<>(walkingEventService.getAll(pagingParam), HttpStatus.OK);
+        return ResponseEntity.ok(walkingEventService.getAll(pagingParam));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
     public ResponseEntity<WalkingEventDto> getById(Long id) {
-        return new ResponseEntity<>(walkingEventService.getById(id), HttpStatus.OK);
+        return ResponseEntity.ok(walkingEventService.getById(id));
     }
 
+    @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
     @GetMapping("/getAllEventOfUser")
     public ResponseEntity<UserWalkingEventDto> getAllEventOfUser(UserParam user) {
-        return new ResponseEntity<>(walkingEventService.getAllEventOfUser(user), HttpStatus.OK);
+        return ResponseEntity.ok(walkingEventService.getAllEventOfUser(user));
     }
 }

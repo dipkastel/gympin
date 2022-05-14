@@ -35,7 +35,7 @@ public class SmsServiceImpl implements SmsService {
     @Transactional
     @Override
     public boolean sendVerificationSms(Long userId, SmsDto smsDto) throws Exception {
-        log.info("Going to send verification sms...\n");
+        log.info("Going to send verification sms with params: {} || {}...\n",userId,smsDto);
         String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTER_SENDCODE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"
                 + "=code" + "&v1=" + smsDto.getText();
         URL url2 = new URL(url);

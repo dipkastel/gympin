@@ -2,6 +2,7 @@ package com.notrika.gympin.common.location.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseDto;
+import com.notrika.gympin.common.BaseDtoWithCreateUpdate;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class OptionOfPlaceDto extends BaseDto<OptionOfPlaceDto> {
+public class OptionOfPlaceDto extends BaseDtoWithCreateUpdate<OptionOfPlaceDto> {
 
     @JsonProperty("Place")
     private PlaceDto place;

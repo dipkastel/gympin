@@ -2,6 +2,7 @@ package com.notrika.gympin.common.sport.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseDto;
+import com.notrika.gympin.common.BaseDtoWithCreateUpdate;
 import com.notrika.gympin.common.sport.enums.LaunchStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +15,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SportDto extends BaseDto<SportDto> {
+public class SportDto extends BaseDtoWithCreateUpdate<SportDto> {
 
     @JsonProperty("Name")
     private String name;

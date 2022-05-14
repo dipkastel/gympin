@@ -9,9 +9,8 @@ import com.notrika.gympin.common.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,32 +22,39 @@ public class EventParticipantControllerImpl implements EventParticipantControlle
     private EventParticipantService eventParticipantService;
 
     @Override
-    public ResponseEntity<EventParticipantDto> add(@RequestBody EventParticipantParam param) {
-        return new ResponseEntity<>(eventParticipantService.add(param), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
+    public ResponseEntity<EventParticipantDto> add(EventParticipantParam param) {
+        return ResponseEntity.ok(eventParticipantService.add(param));
     }
 
     @Override
-    public ResponseEntity<EventParticipantDto> update(@RequestBody EventParticipantParam param) {
-        return new ResponseEntity<>(eventParticipantService.update(param), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<EventParticipantDto> update(EventParticipantParam param) {
+        return ResponseEntity.ok(eventParticipantService.update(param));
     }
 
     @Override
-    public ResponseEntity<EventParticipantDto> delete(@RequestBody EventParticipantParam param) {
-        return new ResponseEntity<>(eventParticipantService.delete(param), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
+    public ResponseEntity<EventParticipantDto> delete(EventParticipantParam param) {
+        return ResponseEntity.ok(eventParticipantService.delete(param));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<List<EventParticipantDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<>(eventParticipantService.getAll(pagingParam), HttpStatus.OK);
+        return ResponseEntity.ok(eventParticipantService.getAll(pagingParam));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<EventParticipantDto> getById(Long id) {
-        return new ResponseEntity<>(eventParticipantService.getById(id), HttpStatus.OK);
+        return ResponseEntity.ok(eventParticipantService.getById(id));
     }
 
     @Override
-    public ResponseEntity<List<UserDto>> getEventParticipant(Long id) {
-        return new ResponseEntity<>(eventParticipantService.getEventParticipant(id), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
+    @GetMapping("/getEventParticipant")
+    public ResponseEntity<List<UserDto>> getEventParticipant(@RequestParam(name = "event-id") Long id) {
+        return ResponseEntity.ok(eventParticipantService.getEventParticipant(id));
     }
 }

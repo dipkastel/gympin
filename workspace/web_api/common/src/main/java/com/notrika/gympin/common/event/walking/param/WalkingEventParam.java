@@ -5,6 +5,7 @@ import com.notrika.gympin.common.event.BaseEventParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
@@ -16,22 +17,24 @@ import java.util.Date;
 public class WalkingEventParam extends BaseEventParam<WalkingEventParam> {
 
     @JsonProperty("StartLatitude")
+    @NonNull
     private double startLatitude;
 
     @JsonProperty("StartLongitude")
+    @NonNull
     private double startLongitude;
 
     @JsonProperty("EndLatitude")
+    @NonNull
     private double endLatitude;
 
     @JsonProperty("EndLongitude")
+    @NonNull
     private double endLongitude;
 
     @JsonProperty("ParticipantCount")
+    @NonNull
     private int participantCount;
-
-    @JsonProperty("StartDate")
-    private Date startDate;
 
     @JsonProperty("Address")
     private String address;

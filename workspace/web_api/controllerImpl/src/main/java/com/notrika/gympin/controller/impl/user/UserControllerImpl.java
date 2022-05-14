@@ -20,39 +20,39 @@ public class UserControllerImpl implements UserController {
     private UserService userService;
 
     @Override
-    public ResponseEntity<UserDto> add(@RequestBody UserParam userParam) {
-        return new ResponseEntity<>(userService.add(userParam), HttpStatus.OK);
+    public ResponseEntity<UserDto> add(UserParam userParam) {
+        return ResponseEntity.ok(userService.add(userParam));
     }
 
     @Override
-    public ResponseEntity<UserDto> update(@RequestBody UserParam userParam) {
-        return new ResponseEntity<>(userService.update(userParam), HttpStatus.OK);
+    public ResponseEntity<UserDto> update(UserParam userParam) {
+        return ResponseEntity.ok(userService.update(userParam));
     }
 
     @Override
-    public ResponseEntity<UserDto> delete(@RequestBody UserParam userParam) {
-        return new ResponseEntity<UserDto>(userService.delete(userParam), HttpStatus.OK);
+    public ResponseEntity<UserDto> delete(UserParam userParam) {
+        return ResponseEntity.ok(userService.delete(userParam));
     }
 
     @Override
     public ResponseEntity<List<UserDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<List<UserDto>>(userService.getAll(pagingParam), HttpStatus.OK);
+        return ResponseEntity.ok(userService.getAll(pagingParam));
     }
 
     @Override
     public ResponseEntity<UserDto> getById(Long id) {
-        return new ResponseEntity<UserDto>(userService.getById(id), HttpStatus.OK);
+        return ResponseEntity.ok(userService.getById(id));
     }
 
     @Override
     @PutMapping("/suspendUser")
     public ResponseEntity<UserDto> suspendUser(UserParam userParam) {
-        return new ResponseEntity<UserDto>(userService.suspendUser(userParam), HttpStatus.OK);
+        return ResponseEntity.ok(userService.suspendUser(userParam));
     }
 
     @Override
     @GetMapping("/getUserByUsername")
     public ResponseEntity<UserDto> getUserByUsername(UserParam userParam) {
-        return new ResponseEntity<UserDto>(userService.getUserByUsername(userParam), HttpStatus.OK);
+        return ResponseEntity.ok(userService.getUserByUsername(userParam));
     }
 }

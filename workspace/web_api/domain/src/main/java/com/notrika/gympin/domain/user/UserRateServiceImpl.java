@@ -31,7 +31,7 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     @Override
     public UserRateDto add(UserRateParam userRateParam) {
         if(userRateParam.getRate()>5 || userRateParam.getRate()<0){
-            throw new ExceptionBase();
+            throw new ExceptionBase();//out of range
         }
         User judger = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         User judging = userService.getEntityById(userRateParam.getJudgingUser().getId());
@@ -41,8 +41,8 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
         userRate.setRate(userRateParam.getRate());
         UserRate entity = add(userRate);
         UserRateDto userRateDto=new UserRateDto();
-        userRateDto.setJudgerUser(UserConvertor.userToUserDto(entity.getJudgerUser()));
-        userRateDto.setJudgingUser(UserConvertor.userToUserDto(entity.getJudgingUser()));
+        userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(entity.getJudgerUser()));
+        userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(entity.getJudgingUser()));
         userRateDto.setRate(entity.getRate());
         userRateDto.setId(userRate.getId());
         return userRateDto;
@@ -51,7 +51,7 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     @Override
     public UserRateDto update(UserRateParam userRateParam) {
         if(userRateParam.getRate()>5 || userRateParam.getRate()<0){
-            throw new ExceptionBase();
+            throw new ExceptionBase();//out of range
         }
         UserRate userRate = getEntityById(userRateParam.getId());
         userRate.setJudgerUser((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
@@ -59,8 +59,8 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
         userRate.setRate(userRateParam.getRate());
         UserRate entity = update(userRate);
         UserRateDto userRateDto=new UserRateDto();
-        userRateDto.setJudgerUser(UserConvertor.userToUserDto(entity.getJudgerUser()));
-        userRateDto.setJudgingUser(UserConvertor.userToUserDto(entity.getJudgingUser()));
+        userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(entity.getJudgerUser()));
+        userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(entity.getJudgingUser()));
         userRateDto.setRate(entity.getRate());
         userRateDto.setId(userRate.getId());
         return userRateDto;
@@ -77,8 +77,8 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     public UserRateDto getById(long id) {
         UserRate userRate = getEntityById(id);
         UserRateDto userRateDto=new UserRateDto();
-        userRateDto.setJudgerUser(UserConvertor.userToUserDto(userRate.getJudgerUser()));
-        userRateDto.setJudgingUser(UserConvertor.userToUserDto(userRate.getJudgingUser()));
+        userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(userRate.getJudgerUser()));
+        userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(userRate.getJudgingUser()));
         userRateDto.setRate(userRate.getRate());
         userRateDto.setId(userRate.getId());
         userRate.setDeleted(userRate.isDeleted());
@@ -117,8 +117,8 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
 
     public static UserRateDto userRateToUserRateDto(UserRate userRate){
         UserRateDto userRateDto=new UserRateDto();
-        userRateDto.setJudgerUser(UserConvertor.userToUserDto(userRate.getJudgerUser()));
-        userRateDto.setJudgingUser(UserConvertor.userToUserDto(userRate.getJudgingUser()));
+        userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(userRate.getJudgerUser()));
+        userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(userRate.getJudgingUser()));
         userRateDto.setRate(userRate.getRate());
         userRateDto.setId(userRate.getId());
         userRate.setDeleted(userRate.isDeleted());

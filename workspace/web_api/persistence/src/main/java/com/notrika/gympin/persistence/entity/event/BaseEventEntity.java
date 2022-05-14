@@ -30,7 +30,7 @@ public class BaseEventEntity extends BaseEntityWithCreateUpdate {
     //    @ToString.Exclude
     //    private List<EventDataEntity> eventData;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false,length = 50)
     private String title;
 
     @Column(name = "description", nullable = false)
@@ -39,7 +39,10 @@ public class BaseEventEntity extends BaseEntityWithCreateUpdate {
     @Column(name = "start_date", nullable = false)
     private Date startDate;
 
-    @OneToMany(mappedBy = "event")
+    @Column(name = "participant_count",nullable = false)
+    private int participantCount;
+
+    @OneToMany(mappedBy = "event",cascade = CascadeType.ALL,orphanRemoval = true)
     @ToString.Exclude
     private List<EventParticipantEntity> participants;
 

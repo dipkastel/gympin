@@ -5,11 +5,13 @@ import com.notrika.gympin.common.BaseDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Data
+@ToString
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)

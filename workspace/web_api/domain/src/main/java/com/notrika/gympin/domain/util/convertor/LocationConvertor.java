@@ -165,7 +165,7 @@ public final class LocationConvertor {
         return PlaceOwnerDto.builder().id(placeOwner.getId())
                 //                .createdDate(placeOwner.getCreatedDate())
                 //                .updatedDate(placeOwner.getUpdatedDate())
-                .isDeleted(placeOwner.isDeleted()).placeDto(placeToPlaceDto(placeOwner.getPlace())).userDto(UserConvertor.userToUserDto(placeOwner.getUser())).userRole(placeOwner.getUserRole()).build();
+                .isDeleted(placeOwner.isDeleted()).placeDto(placeToPlaceDto(placeOwner.getPlace())).userDto(UserConvertor.userToUserDtoComplete(placeOwner.getUser())).userRole(placeOwner.getUserRole()).build();
     }
 
     public enum CollectionType {

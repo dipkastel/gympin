@@ -29,6 +29,7 @@ import com.notrika.gympin.persistence.dao.repository.RoleRepository;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
 import com.notrika.gympin.persistence.entity.user.Role;
 import com.notrika.gympin.persistence.entity.user.User;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -41,9 +42,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,11 +77,12 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
         log.info("Going to send activation sms...\n");
-        User user = userService.findUserByPhoneNumber(dto.getPhoneNumber());
+        User user = userService.getByPhoneNumber(dto.getPhoneNumber());
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
         String code = MyRandom.GenerateRandomVerificationSmsCode();
         if (user.getActivationCode() != null && user.getActivationCode().getExpiredDate() != null && user.getActivationCode().getExpiredDate().after(new Date())) {
-            throw new ActivationCodeManyRequestException();
+//            throw new ActivationCodeManyRequestException();
+            return true;
         }
         try {
             return smsService.sendVerificationSms(user.getId(), new SmsDto(dto.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION, code));
@@ -102,6 +105,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private User addUser(UserRegisterParam userRegisterParam) {
+        log.info("Going to addUser...\n");
         List<Role> roleList = new ArrayList<>();
         for (UserRoleParam userRole : userRegisterParam.getUserRole()) {
             roleList.add(roleRepository.findByRole(userRole.getRole()));
@@ -115,15 +119,14 @@ public class AccountServiceImpl implements AccountService {
         return userService.add(user);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public UserDto loginUser(LoginParam loginParam) throws ExceptionBase {
         log.info("Going to loginUser...\n");
         if (loginParam == null || loginParam.getUsername() == null || loginParam.getPassword() == null) {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
-        String phoneNumber = getPhoneNumber(loginParam);
-        User user = userService.findUserByPhoneNumber(phoneNumber);
+        User user = getUser(loginParam);
         ActivationCode activationCode = user.getActivationCode();
         if (activationCode == null) {
             throw new ActivationCodeNotFoundException();
@@ -148,8 +151,8 @@ public class AccountServiceImpl implements AccountService {
         if (loginParam == null || loginParam.getUsername() == null || loginParam.getPassword() == null) {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
-        String phoneNumber = getPhoneNumber(loginParam);
-        User admin = userService.findUserByPhoneNumber(phoneNumber);
+        String phoneNumber = getUser(loginParam).getPhoneNumber();
+        User admin = userService.getByPhoneNumber(phoneNumber);
         ActivationCode activationCode = admin.getActivationCode();
         if (activationCode != null) {
             activationCode.setDeleted(true);
@@ -164,20 +167,20 @@ public class AccountServiceImpl implements AccountService {
         return result;
     }
 
-    private String getPhoneNumber(LoginParam loginParam) {
-        String phoneNumber = null;
+    private User getUser(LoginParam loginParam) {
+        User user = null;
         switch (loginParam.getUsernameType()) {
             case PHONENUMBER:
-                phoneNumber = loginParam.getUsername();
+                user = userService.getByPhoneNumber(loginParam.getUsername());
                 break;
             case USERNAME:
-                phoneNumber = userService.findByUsername(loginParam.getUsername()).getPhoneNumber();
+                user = userService.getByUsername(loginParam.getUsername());
                 break;
             case EMAIL:
-                phoneNumber = userService.findByEmail(loginParam.getUsername()).getPhoneNumber();
+                user = userService.getByEmail(loginParam.getUsername());
                 break;
         }
-        return phoneNumber;
+        return user;
     }
 
     private String getJwt(LoginParam loginParam, String phoneNumber, TokenType tokenType) {
@@ -190,7 +193,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
         log.info("Going to loadUserByUsername ...\n");
-        User user = userService.findUserByPhoneNumber(phoneNumber);
+        User user = userService.getByPhoneNumber(phoneNumber);
         if (user == null) {
             throw new UsernameNotFoundException(phoneNumber);
         }

@@ -22,39 +22,39 @@ public class FollowControllerImpl implements FollowController {
     private FollowService followService;
 
     @Override
-    public ResponseEntity<FollowDto> add(@RequestBody FollowParam followParam) {
-        return new ResponseEntity<>(followService.add(followParam), HttpStatus.OK);
+    public ResponseEntity<FollowDto> add(FollowParam followParam) {
+        return ResponseEntity.ok(followService.add(followParam));
     }
 
     @Override
     public ResponseEntity<FollowDto> update(FollowParam followParam) {
-        return new ResponseEntity<>(followService.update(followParam), HttpStatus.OK);
+        return ResponseEntity.ok(followService.update(followParam));
     }
 
     @Override
     public ResponseEntity<FollowDto> delete(FollowParam followParam) {
-        return null;
+        return ResponseEntity.ok(followService.delete(followParam));
     }
 
     @Override
     public ResponseEntity<List<FollowDto>> getAll(BasePagedParam pagingParam) {
-        return null;
+        return ResponseEntity.ok(followService.getAll(pagingParam));
     }
 
     @Override
     public ResponseEntity<FollowDto> getById(Long id) {
-        return null;
+        return ResponseEntity.ok(followService.getById(id));
     }
 
     @Override
     @GetMapping("/followers")
     public ResponseEntity<List<UserDto>> getFollowers(UserParam user) {
-        return new ResponseEntity<>(followService.getFollowers(user), HttpStatus.OK);
+        return ResponseEntity.ok(followService.getFollowers(user));
     }
 
     @Override
     @GetMapping("/following")
     public ResponseEntity<List<UserDto>> getFollowing(UserParam user) {
-        return new ResponseEntity<>(followService.getFollowing(user), HttpStatus.OK);
+        return ResponseEntity.ok(followService.getFollowing(user));
     }
 }

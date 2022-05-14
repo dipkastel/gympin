@@ -1,15 +1,22 @@
 package com.notrika.gympin.domain.event.walking;
 
+import com.notrika.gympin.common.context.GympinContext;
+import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.event.walking.dto.UserWalkingEventDto;
 import com.notrika.gympin.common.event.walking.dto.WalkingEventDto;
 import com.notrika.gympin.common.event.walking.param.WalkingEventParam;
 import com.notrika.gympin.common.event.walking.service.WalkingEventService;
+import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.event.general.EventParticipantServiceImpl;
 import com.notrika.gympin.domain.sport.SportServiceImpl;
+import com.notrika.gympin.domain.user.UserRateServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.EventConvertor;
+import com.notrika.gympin.domain.util.validator.GeneralValidator;
+import com.notrika.gympin.persistence.dao.repository.BaseEventRepository;
 import com.notrika.gympin.persistence.dao.repository.WalkingEventRepository;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.event.WalkingEventEntity;
@@ -20,10 +27,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,69 +45,119 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     @Autowired
     private EventParticipantServiceImpl eventParticipantService;
 
+    @Autowired
+    private BaseEventRepository eventRepository;
+
+    @Autowired
+    private UserRateServiceImpl userRateService;
+
     @Override
     @Transactional
     public WalkingEventDto add(WalkingEventParam walkingEventParam) {
+        //TODO: add limitation for add new events
+        User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(walkingEventParam.getStartDate());
+        calendar.add(Calendar.MINUTE,-120);
+        Date fromDate = calendar.getTime();
+        calendar.add(Calendar.MINUTE,240);
+        Date toDate = calendar.getTime();
+        if(eventRepository.getAllActiveEventOfUser(user,fromDate,toDate)>0) {
+            throw new ExceptionBase();//You already are participant to another event
+        }
+        GeneralValidator.idValidator(walkingEventParam.getSport());
         Sport sport = sportService.getEntityById(walkingEventParam.getSport().getId());
-        WalkingEventEntity walkingEvent =
-                WalkingEventEntity.builder().sport(sport).title(walkingEventParam.getTitle()).description(walkingEventParam.getDescription()).startLatitude(walkingEventParam.getStartLatitude()).startLongitude(walkingEventParam.getStartLongitude()).endLatitude(walkingEventParam.getEndLatitude()).endLongitude(walkingEventParam.getEndLongitude()).participantCount(walkingEventParam.getParticipantCount()).startDate(walkingEventParam.getStartDate()).address(walkingEventParam.getAddress()).build();
+        if(sport==null){
+            throw new ExceptionBase();//sport not found
+        }
+        WalkingEventEntity walkingEvent = EventConvertor.walkingEventParamToEntity(walkingEventParam);
+        walkingEvent.setSport(sport);
         WalkingEventEntity entity = walkingEventRepository.add(walkingEvent);
         if (entity.getParticipants() == null) entity.setParticipants(new ArrayList<>());
         for (UserParam userParam : walkingEventParam.getParticipants()) {
-            User user = userService.getEntityById(userParam.getId());
-            EventParticipantEntity eventParticipant = eventParticipantService.add(EventParticipantEntity.builder().event(entity).user(user).build());
+            User participantUser = userService.getUserByAnyKey(userParam);
+            EventParticipantEntity eventParticipant = eventParticipantService.add(EventParticipantEntity.builder().event(entity).user(participantUser).build());
             entity.getParticipants().add(eventParticipant);
         }
-        //        entity=walkingEventRepository.getById(entity.getId());
-        //        entity.getParticipants();
-        return EventConvertor.walkingEventEntityToDto(entity);
+        WalkingEventDto walkingEventDto = EventConvertor.walkingEventEntityToDto(entity);
+        walkingEventDto.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(walkingEventDto.getOwner().getId()).build()));
+        walkingEventDto.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build())));
+        return walkingEventDto;
     }
 
     @Override
+    @Transactional
     public WalkingEventDto update(WalkingEventParam walkingEventParam) {
+        GeneralValidator.idValidator(walkingEventParam);
+        GeneralValidator.idValidator(walkingEventParam.getSport());
+        WalkingEventEntity event = getEntityById(walkingEventParam.getId());
+        if(event==null){
+            throw new ExceptionBase();//event not found
+        }
+        WalkingEventEntity walkingEvent = EventConvertor.walkingEventParamToEntity(walkingEventParam,event);
         Sport sport = sportService.getEntityById(walkingEventParam.getSport().getId());
-        WalkingEventEntity walkingEventEntity = getEntityById(walkingEventParam.getId());
-        walkingEventEntity.setSport(sport);
-        walkingEventEntity.setTitle(walkingEventEntity.getTitle());
-        walkingEventEntity.setDescription(walkingEventEntity.getDescription());
-        walkingEventEntity.setStartLatitude(walkingEventParam.getStartLatitude());
-        walkingEventEntity.setStartLongitude(walkingEventEntity.getStartLongitude());
-        walkingEventEntity.setEndLatitude(walkingEventEntity.getEndLatitude());
-        walkingEventEntity.setEndLongitude(walkingEventEntity.getEndLongitude());
-        walkingEventEntity.setParticipantCount(walkingEventEntity.getParticipantCount());
-        WalkingEventEntity entity = update(walkingEventEntity);
-        return EventConvertor.walkingEventEntityToDto(entity);
+        if(sport==null){
+            throw new ExceptionBase();//sport not found
+        }
+        walkingEvent.setSport(sport);
+        WalkingEventEntity entity = update(walkingEvent);
+        WalkingEventDto walkingEventDto = EventConvertor.walkingEventEntityToDto(entity);
+        walkingEventDto.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(walkingEventDto.getOwner().getId()).build()));
+        walkingEventDto.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build())));
+        return walkingEventDto;
     }
 
     @Override
+    @Transactional
     public WalkingEventDto delete(WalkingEventParam walkingEventParam) {
+        GeneralValidator.idValidator(walkingEventParam);
         WalkingEventEntity walkingEvent = getEntityById(walkingEventParam.getId());
+        if(walkingEvent==null){
+            throw new ExceptionBase();//event not found
+        }
+        User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        if(!walkingEvent.getCreatorUser().equals(user)){
+            throw new ExceptionBase();//you are not owner of event
+        }
+        if(new Date().after(walkingEvent.getStartDate())){
+            throw new ExceptionBase();//the event is started
+        }
+        if(walkingEvent.getParticipants().size()>0){
+            //jarime
+        }
+        for (EventParticipantEntity participant : walkingEvent.getParticipants()) {
+            eventParticipantService.delete(participant);
+        }
         WalkingEventEntity entity = delete(walkingEvent);
         return EventConvertor.walkingEventEntityToDto(entity);
     }
 
     @Override
-    public UserWalkingEventDto getAllEventOfUser(UserParam user) {
-        User user1 = userService.getEntityById(user.getId());
-        List<WalkingEventEntity> ownedEvents = walkingEventRepository.findAllByCreatorUserAndDeletedIsFalse(user1);
-        EventParticipantEntity eventParticipantEntity=new EventParticipantEntity();
-        eventParticipantEntity.setUser(user1);
-        List<EventParticipantEntity> eventParticipantEntities=new ArrayList<>();
-        eventParticipantEntities.addAll(eventParticipantService.getEventParticipantEntities(user1));
+    public UserWalkingEventDto getAllEventOfUser(UserParam userParam) {
+        User user= (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        if(!Collections.disjoint(user.getUserRole(),Arrays.asList(UserRole.SUPER_ADMIN,UserRole.ADMIN)) && GeneralValidator.validateId(userParam)){
+            user = userService.getEntityById(userParam.getId());
+        }
+        List<WalkingEventEntity> ownedEvents = walkingEventRepository.findAllByCreatorUserAndDeletedIsFalse(user);
+        List<EventParticipantEntity> eventParticipantEntities = new ArrayList<>(eventParticipantService.getEventParticipantEntities(user));
         List<WalkingEventEntity> participatedEvents = walkingEventRepository.findAllByParticipantsInAndDeletedIsFalse(eventParticipantEntities);
         UserWalkingEventDto userWalkingEventDto = new UserWalkingEventDto();
         userWalkingEventDto.setOwnedEvents(ownedEvents.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList()));
+        userWalkingEventDto.getOwnedEvents().forEach(c->c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getOwner().getId()).build())));
+        userWalkingEventDto.getOwnedEvents().forEach(c->c.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build()))));
         userWalkingEventDto.setParticipatedEvents(participatedEvents.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList()));
-
+        userWalkingEventDto.getParticipatedEvents().forEach(c->c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getId()).build())));
+        userWalkingEventDto.getParticipatedEvents().forEach(c->c.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build()))));
         return userWalkingEventDto;
-
-        //        return walkingEventRepository.getAllEventOfUser(user.getId()).stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList());
     }
 
     @Override
     public WalkingEventDto getById(long id) {
         WalkingEventEntity entity = getEntityById(id);
-        return EventConvertor.walkingEventEntityToDto(entity);
+        WalkingEventDto walkingEventDto = EventConvertor.walkingEventEntityToDto(entity);
+        walkingEventDto.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(walkingEventDto.getOwner().getId()).build()));
+        walkingEventDto.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build())));
+        return walkingEventDto;
     }
 
     @Override
@@ -133,6 +187,9 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
 
     @Override
     public List<WalkingEventDto> convertToDtos(List<WalkingEventEntity> entities) {
-        return entities.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList());
+        List<WalkingEventDto> walkingEventDtos = entities.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList());
+        walkingEventDtos.forEach(c->c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getOwner().getId()).build())));
+        walkingEventDtos.forEach(c->c.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build()))));
+        return walkingEventDtos;
     }
 }

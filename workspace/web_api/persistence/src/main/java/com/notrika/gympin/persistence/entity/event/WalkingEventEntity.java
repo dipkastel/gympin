@@ -32,9 +32,6 @@ public class WalkingEventEntity extends BaseEventEntity {
     @Column(name = "end_longitude",nullable = false)
     private double endLongitude;
 
-    @Column(name = "participant_count",nullable = false)
-    private int participantCount;
-
     @Lob
     @Column(name = "address")
     private String address;

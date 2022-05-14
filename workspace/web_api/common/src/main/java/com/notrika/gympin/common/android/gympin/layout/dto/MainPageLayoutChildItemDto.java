@@ -6,9 +6,11 @@ import com.notrika.gympin.common.android.gympin.layout.enums.MainPageChildItemDe
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
+@ToString
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)

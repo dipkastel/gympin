@@ -6,9 +6,11 @@ import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
+@ToString
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)

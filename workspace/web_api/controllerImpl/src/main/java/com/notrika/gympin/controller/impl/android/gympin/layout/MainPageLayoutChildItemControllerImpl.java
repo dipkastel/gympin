@@ -23,32 +23,32 @@ public class MainPageLayoutChildItemControllerImpl implements MainPageLayoutChil
     private MainPageLayoutChildItemService childItemService;
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutChildItemDto> add(@RequestBody MainPageLayoutChildItemParam mainPageLayoutChildItemParam) {
-        return new ResponseEntity<>(childItemService.add(mainPageLayoutChildItemParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutChildItemDto> add(MainPageLayoutChildItemParam mainPageLayoutChildItemParam) {
+        return ResponseEntity.ok(childItemService.add(mainPageLayoutChildItemParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutChildItemDto> update(@RequestBody MainPageLayoutChildItemParam mainPageLayoutChildItemParam) {
-        return new ResponseEntity<>(childItemService.update(mainPageLayoutChildItemParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutChildItemDto> update(MainPageLayoutChildItemParam mainPageLayoutChildItemParam) {
+        return ResponseEntity.ok(childItemService.update(mainPageLayoutChildItemParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutChildItemDto> delete(@RequestBody MainPageLayoutChildItemParam mainPageLayoutChildItemParam) {
-        return new ResponseEntity<>(childItemService.delete(mainPageLayoutChildItemParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutChildItemDto> delete(MainPageLayoutChildItemParam mainPageLayoutChildItemParam) {
+        return ResponseEntity.ok(childItemService.delete(mainPageLayoutChildItemParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<List<MainPageLayoutChildItemDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<>(childItemService.getAll(pagingParam), HttpStatus.OK);
+        return ResponseEntity.ok(childItemService.getAll(pagingParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<MainPageLayoutChildItemDto> getById(@RequestBody Long id) {
-        return new ResponseEntity<>(childItemService.getById(id), HttpStatus.OK);
+        return ResponseEntity.ok(childItemService.getById(id));
     }
 }

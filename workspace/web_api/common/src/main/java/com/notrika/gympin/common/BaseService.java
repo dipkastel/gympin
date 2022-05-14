@@ -1,14 +1,16 @@
 package com.notrika.gympin.common;
 
+import lombok.NonNull;
+
 import java.util.List;
 
 public interface BaseService<I extends BaseParam<?>, O extends BaseDto<?>> {
 
-    O add(I i);
+    O add(@NonNull I i);
 
-    O update(I i);
+    O update(@NonNull I i);
 
-    O delete(I i);
+    O delete(@NonNull I i);
 
     List<O> getAll(BasePagedParam pagingParam);
 

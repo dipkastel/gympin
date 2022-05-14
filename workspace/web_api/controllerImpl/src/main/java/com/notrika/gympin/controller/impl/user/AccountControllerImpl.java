@@ -13,6 +13,7 @@ import com.notrika.gympin.common.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,6 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     @PostMapping("/sendsms")
-    //    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Boolean> sendSms(@RequestBody UserSendSmsParam phoneNumber) throws ExceptionBase {
         return new ResponseEntity<>(accountService.sendActivationSms(phoneNumber), HttpStatus.OK);
     }

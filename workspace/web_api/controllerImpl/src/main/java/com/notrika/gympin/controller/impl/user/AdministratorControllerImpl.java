@@ -8,6 +8,7 @@ import com.notrika.gympin.common.user.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,27 +23,32 @@ public class AdministratorControllerImpl implements AdministratorController {
     private AdministratorService administratorService;
 
     @Override
-    public ResponseEntity<UserDto> add(@RequestBody UserParam administratorParam) {
-        return new ResponseEntity<>(administratorService.add(administratorParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<UserDto> add(UserParam administratorParam) {
+        return ResponseEntity.ok(administratorService.add(administratorParam));
     }
 
     @Override
-    public ResponseEntity<UserDto> update(@RequestBody UserParam administratorParam) {
-        return new ResponseEntity<>(administratorService.update(administratorParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<UserDto> update(UserParam administratorParam) {
+        return ResponseEntity.ok(administratorService.update(administratorParam));
     }
 
     @Override
-    public ResponseEntity<UserDto> delete(@RequestBody UserParam administratorParam) {
-        return new ResponseEntity<UserDto>(administratorService.delete(administratorParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<UserDto> delete(UserParam administratorParam) {
+        return ResponseEntity.ok(administratorService.delete(administratorParam));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<List<UserDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<List<UserDto>>(administratorService.getAll(pagingParam), HttpStatus.OK);
+        return ResponseEntity.ok(administratorService.getAll(pagingParam));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<UserDto> getById(Long id) {
-        return new ResponseEntity<UserDto>(administratorService.getById(id), HttpStatus.OK);
+        return ResponseEntity.ok(administratorService.getById(id));
     }
 }

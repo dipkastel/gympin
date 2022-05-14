@@ -121,6 +121,8 @@ public class User extends BaseEntityWithCreate {
     @ToString.Exclude
     private List<UserRate> hasJudged;
 
+    @Transient
+    private Float rate;
 
     @Override
     public boolean equals(Object o) {
