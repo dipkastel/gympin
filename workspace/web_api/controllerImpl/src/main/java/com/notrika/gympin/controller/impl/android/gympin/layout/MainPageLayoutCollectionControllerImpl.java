@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -22,39 +25,39 @@ public class MainPageLayoutCollectionControllerImpl implements MainPageLayoutCol
     private MainPageLayoutCollectionService collectionService;
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutCollectionDto> add(@RequestBody MainPageLayoutCollectionParam mainPageLayoutCollectionParam) {
-        return new ResponseEntity<>(collectionService.add(mainPageLayoutCollectionParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutCollectionDto> add(MainPageLayoutCollectionParam mainPageLayoutCollectionParam) {
+        return ResponseEntity.ok(collectionService.add(mainPageLayoutCollectionParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutCollectionDto> update(@RequestBody MainPageLayoutCollectionParam mainPageLayoutCollectionParam) {
-        return new ResponseEntity<>(collectionService.update(mainPageLayoutCollectionParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutCollectionDto> update(MainPageLayoutCollectionParam mainPageLayoutCollectionParam) {
+        return ResponseEntity.ok(collectionService.update(mainPageLayoutCollectionParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutCollectionDto> delete(@RequestBody MainPageLayoutCollectionParam mainPageLayoutCollectionParam) {
-        return new ResponseEntity<>(collectionService.delete(mainPageLayoutCollectionParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutCollectionDto> delete(MainPageLayoutCollectionParam mainPageLayoutCollectionParam) {
+        return ResponseEntity.ok(collectionService.delete(mainPageLayoutCollectionParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<List<MainPageLayoutCollectionDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<>(collectionService.getAll(pagingParam), HttpStatus.OK);
+        return ResponseEntity.ok(collectionService.getAll(pagingParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutCollectionDto> getById(@RequestBody long id) {
-        return new ResponseEntity<>(collectionService.getById(id), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutCollectionDto> getById(Long id) {
+        return ResponseEntity.ok(collectionService.getById(id));
     }
 
     @Override
-    @GetMapping("/mainpage")
-//    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
+    @GetMapping("/mainPage")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','MARKET','CONTENT','MANAGER','COACH','ATHLETE','USER')")
     public ResponseEntity<List<MainPageLayoutItemDto>> mainPage(Long id) {
-        return new ResponseEntity<List<MainPageLayoutItemDto>>(collectionService.mainPage(id), HttpStatus.OK);
+        return ResponseEntity.ok(collectionService.mainPage(id));
     }
 }

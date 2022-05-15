@@ -9,41 +9,89 @@ import com.notrika.gympin.common.android.gympin.layout.param.MainPageLayoutItemP
 import com.notrika.gympin.persistence.entity.android.layout.MainPageLayoutChildItemEntity;
 import com.notrika.gympin.persistence.entity.android.layout.MainPageLayoutCollectionEntity;
 import com.notrika.gympin.persistence.entity.android.layout.MainPageLayoutItemEntity;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.stream.Collectors;
 
+@Slf4j
 public final class GympinAppConvertor {
 
     public static MainPageLayoutItemEntity mainPageLayoutItemParamToEntity(MainPageLayoutItemParam param) {
-        if (param.getItems() != null)
-            return MainPageLayoutItemEntity.builder().id(param.getId()).type(param.getType()).priority(param.getPriority()).items(param.getItems().stream().map(GympinAppConvertor::mainPageLayoutChildItemParamToEntity).collect(Collectors.toList())).build();
-        return MainPageLayoutItemEntity.builder().id(param.getId()).type(param.getType()).priority(param.getPriority()).build();
-
+        log.info("MainPageLayoutItemEntity mainPageLayoutItemParamToEntity is going to execute with param {}",param);
+        if(param==null) return null;
+        MainPageLayoutItemEntity entity=new MainPageLayoutItemEntity();
+        entity.setId(param.getId());
+        entity.setType(param.getType());
+        entity.setPriority(param.getPriority());
+        if (param.getItems() != null) {
+            entity.setItems(param.getItems().stream().map(GympinAppConvertor::mainPageLayoutChildItemParamToEntity).collect(Collectors.toList()));
+        }
+        return entity;
     }
 
     public static MainPageLayoutChildItemEntity mainPageLayoutChildItemParamToEntity(MainPageLayoutChildItemParam param) {
-        return MainPageLayoutChildItemEntity.builder().id(param.getId()).imageUrl(param.getImageUrl()).title(param.getTitle()).description(param.getDescription()).destination(param.getDestination()).data(param.getData()).priority(param.getPriority()).build();
+        log.info("mainPageLayoutChildItemParamToEntity is going to execute with param {}", param);
+        MainPageLayoutChildItemEntity entity=new MainPageLayoutChildItemEntity();
+        entity.setId(param.getId());
+        entity.setImageUrl(param.getImageUrl());
+        entity.setTitle(param.getTitle());
+        entity.setDescription(param.getDescription());
+        entity.setDestination(param.getDestination());
+        entity.setData(param.getData());
+        entity.setPriority(param.getPriority());
+        return entity;
     }
 
     public static MainPageLayoutItemDto mainPageLayoutItemDtoEntityToDto(MainPageLayoutItemEntity entity) {
-        if (entity.getItems() != null)
-            return MainPageLayoutItemDto.builder().type(entity.getType()).priority(entity.getPriority()).items(entity.getItems().stream().map(GympinAppConvertor::mainPageLayoutChildItemEntityToDto).collect(Collectors.toList())).build();
-        return MainPageLayoutItemDto.builder().type(entity.getType()).priority(entity.getPriority()).build();
+        log.info("MainPageLayoutItemDto mainPageLayoutItemDtoEntityToDto is going to execute with param {}",entity);
+        if(entity==null) return null;
+        MainPageLayoutItemDto dto=new MainPageLayoutItemDto();
+        dto.setId(entity.getId());
+        dto.setType(entity.getType());
+        dto.setPriority(entity.getPriority());
+        if (entity.getItems() != null) {
+            dto.setItems(entity.getItems().stream().map(GympinAppConvertor::mainPageLayoutChildItemEntityToDto).collect(Collectors.toList()));
+        }
+        return dto;
     }
 
     public static MainPageLayoutChildItemDto mainPageLayoutChildItemEntityToDto(MainPageLayoutChildItemEntity entity) {
-        return MainPageLayoutChildItemDto.builder().id(entity.getId()).isDeleted(entity.isDeleted()).imageUrl(entity.getImageUrl()).title(entity.getTitle()).description(entity.getDescription()).destination(entity.getDestination()).data(entity.getData()).priority(entity.getPriority()).build();
+        log.info("mainPageLayoutChildItemEntityToDto add is going to execute with param {}", entity);
+        MainPageLayoutChildItemDto dto=new MainPageLayoutChildItemDto();
+        dto.setId(entity.getId());
+        dto.setDeleted(entity.isDeleted());
+        dto.setImageUrl(entity.getImageUrl());
+        dto.setTitle(entity.getTitle());
+        dto.setDescription(entity.getDescription());
+        dto.setDestination(entity.getDestination());
+        dto.setData(entity.getData());
+        dto.setPriority(entity.getPriority());
+        return dto;
     }
 
     public static MainPageLayoutCollectionEntity mainPageLayoutCollectionParamToEntity(MainPageLayoutCollectionParam param) {
-        if (param.getLayoutItems() != null)
-            return MainPageLayoutCollectionEntity.builder().id(param.getId()).name(param.getCollectionName()).items(param.getLayoutItems().stream().map(GympinAppConvertor::mainPageLayoutItemParamToEntity).collect(Collectors.toList())).build();
-        return MainPageLayoutCollectionEntity.builder().id(param.getId()).name(param.getCollectionName()).build();
+        log.info("MainPageLayoutCollectionEntity mainPageLayoutCollectionParamToEntity is going to execute with param {}", param);
+        if (param == null) return null;
+        MainPageLayoutCollectionEntity entity = new MainPageLayoutCollectionEntity();
+        entity.setId(param.getId());
+        entity.setName(param.getCollectionName());
+        entity.setDescription(param.getDescription());
+        if (param.getLayoutItems() != null) {
+            entity.setItems(param.getLayoutItems().stream().map(GympinAppConvertor::mainPageLayoutItemParamToEntity).collect(Collectors.toList()));
+        }
+        return entity;
     }
 
     public static MainPageLayoutCollectionDto mainPageLayoutCollectionEntityToDto(MainPageLayoutCollectionEntity entity) {
-        if (entity.getItems() != null)
-            return MainPageLayoutCollectionDto.builder().id(entity.getId()).collectionName(entity.getName()).layoutItems(entity.getItems().stream().map(GympinAppConvertor::mainPageLayoutItemDtoEntityToDto).collect(Collectors.toList())).build();
-        return MainPageLayoutCollectionDto.builder().id(entity.getId()).collectionName(entity.getName()).build();
+        log.info("MainPageLayoutCollectionDto mainPageLayoutCollectionEntityToDto is going to execute with param {}", entity);
+        if (entity == null) return null;
+        MainPageLayoutCollectionDto dto = new MainPageLayoutCollectionDto();
+        dto.setId(entity.getId());
+        dto.setCollectionName(entity.getName());
+        dto.setDescription(entity.getDescription());
+        if (entity.getItems() != null) {
+            dto.setLayoutItems(entity.getItems().stream().map(GympinAppConvertor::mainPageLayoutItemDtoEntityToDto).collect(Collectors.toList()));
+        }
+        return dto;
     }
 }

@@ -6,6 +6,7 @@ import com.notrika.gympin.common.user.api.AccountController;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.param.LoginParam;
+import com.notrika.gympin.common.user.param.RefreshTokenParam;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.param.UserSendSmsParam;
 import com.notrika.gympin.common.user.service.AccountService;
@@ -18,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.security.RolesAllowed;
-
 @RestController
 @RequestMapping("/api/v1/account")
 public class AccountControllerImpl implements AccountController {
@@ -29,7 +28,6 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     @PostMapping("/sendsms")
-//    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Boolean> sendSms(@RequestBody UserSendSmsParam phoneNumber) throws ExceptionBase {
         return new ResponseEntity<>(accountService.sendActivationSms(phoneNumber), HttpStatus.OK);
     }
@@ -47,9 +45,14 @@ public class AccountControllerImpl implements AccountController {
     }
 
     @Override
-    @PostMapping("/loginpanel")
+    @PostMapping("/loginpPanel")
     public ResponseEntity<UserDto> loginPanel(@RequestBody LoginParam loginParam) throws ExceptionBase {
         return new ResponseEntity<>(accountService.loginPanel(loginParam), HttpStatus.OK);
     }
 
+    @Override
+    @PostMapping("/refreshToken")
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenParam refreshToken) {
+        return new ResponseEntity<>(accountService.refreshToken(refreshToken), HttpStatus.OK);
+    }
 }

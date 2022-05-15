@@ -11,5 +11,8 @@ import java.util.List;
 @Repository
 public interface RegionRepository extends BaseRepository<Region, Long> {
    // @Query("select c from Region c where c.deleted = false and c.city.id = :#{#city.id}")
-    List<Region> getRegionsByCity(@Param("city") City city);
+//    List<Region> getRegionsByCity(@Param("city") City city);
+
+    List<Region> findAllByCityAndDeletedIsFalse(City city);
+
 }

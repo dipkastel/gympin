@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.user.param;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,5 +12,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class UserSendSmsParam extends BaseParam<UserSendSmsParam> {
+
+    @JsonProperty("PhoneNumber")
     private String phoneNumber;
+
 }

@@ -25,6 +25,7 @@ import java.util.Objects;
 public class Multimedia extends BaseEntityWithCreateUpdate {
 
     @ManyToOne(cascade = CascadeType.MERGE,optional = false,fetch = FetchType.LAZY)
+    @ToString.Exclude
     private User user;
 
     @Column(name = "file_name",nullable = false)

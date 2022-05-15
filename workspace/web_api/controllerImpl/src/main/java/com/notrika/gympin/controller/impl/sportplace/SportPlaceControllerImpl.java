@@ -36,7 +36,7 @@ public class SportPlaceControllerImpl implements SportPlaceController {
     @Override
     @DeleteMapping("deleteSportPlace")
     public ResponseEntity<SportPlaceDto> delete(@RequestBody SportPlaceParam sportPlaceParam) {
-        return new ResponseEntity<SportPlaceDto>(sportPlaceService.delete(sportPlaceParam),HttpStatus.OK);
+        return new ResponseEntity<SportPlaceDto>(sportPlaceService.delete(sportPlaceParam), HttpStatus.OK);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class SportPlaceControllerImpl implements SportPlaceController {
 
     @Override
     @GetMapping("getSportPlaceById")
-    public ResponseEntity<SportPlaceDto> getById(long id) {
+    public ResponseEntity<SportPlaceDto> getById(Long id) {
         return new ResponseEntity<SportPlaceDto>(sportPlaceService.getById(id), HttpStatus.OK);
     }
 

@@ -26,6 +26,7 @@ public class MultimediaCategory extends BaseEntity {
     private String name;
 
     @ManyToMany(mappedBy = "categories")
+    @ToString.Exclude
     private List<Multimedia> multimediaList;
 
 }

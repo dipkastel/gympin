@@ -12,7 +12,9 @@ import java.util.List;
 @Repository
 public interface CityRepository extends BaseRepository<City, Long> {
 
-    @Query("select c from City c where c.deleted = false and c.state.id = :#{#state.id}")
-    List<City> getCitiesByState(@Param("state") State state);
+//    @Query("select c from City c where c.deleted = false and c.state.id = :#{#state.id}")
+//    List<City> getCitiesByState(@Param("state") State state);
+
+    List<City> findAllByStateAndDeletedIsFalse(State state);
 
 }

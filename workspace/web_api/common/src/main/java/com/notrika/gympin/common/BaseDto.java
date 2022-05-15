@@ -3,12 +3,15 @@ package com.notrika.gympin.common;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
 
+// FIXME: 4/14/2022 change all names to convention: lower case and seperated by "-"
 @Data
+@ToString
 @SuperBuilder
 @NoArgsConstructor
 public class BaseDto<T> implements Serializable {
@@ -16,12 +19,6 @@ public class BaseDto<T> implements Serializable {
 
     @JsonProperty("Id")
     private Long id;
-
-    @JsonProperty("CreatedDate")
-    private Date createdDate;
-
-    @JsonProperty("UpdatedDate")
-    private Date updatedDate;
 
     @JsonProperty("IsDeleted")
     private boolean isDeleted;

@@ -10,16 +10,15 @@ import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpiredException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeManyRequestException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoundException;
+import com.notrika.gympin.common.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
+import com.notrika.gympin.common.user.enums.TokenType;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
-import com.notrika.gympin.common.user.param.LoginParam;
-import com.notrika.gympin.common.user.param.UserRegisterParam;
-import com.notrika.gympin.common.user.param.UserRoleParam;
-import com.notrika.gympin.common.user.param.UserSendSmsParam;
+import com.notrika.gympin.common.user.param.*;
 import com.notrika.gympin.common.user.service.AccountService;
 import com.notrika.gympin.common.user.service.JwtTokenProvider;
 import com.notrika.gympin.common.util.MyRandom;
@@ -30,6 +29,7 @@ import com.notrika.gympin.persistence.dao.repository.RoleRepository;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
 import com.notrika.gympin.persistence.entity.user.Role;
 import com.notrika.gympin.persistence.entity.user.User;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -42,8 +42,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
-import javax.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +55,7 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
     @Autowired
     private UserServiceImpl userService;
     @Autowired
@@ -75,11 +77,12 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
         log.info("Going to send activation sms...\n");
-        User user = userService.findUserByPhoneNumber(dto.getPhoneNumber());
+        User user = userService.getByPhoneNumber(dto.getPhoneNumber());
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
         String code = MyRandom.GenerateRandomVerificationSmsCode();
         if (user.getActivationCode() != null && user.getActivationCode().getExpiredDate() != null && user.getActivationCode().getExpiredDate().after(new Date())) {
-            throw new ActivationCodeManyRequestException();
+//            throw new ActivationCodeManyRequestException();
+            return true;
         }
         try {
             return smsService.sendVerificationSms(user.getId(), new SmsDto(dto.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION, code));
@@ -102,9 +105,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private User addUser(UserRegisterParam userRegisterParam) {
+        log.info("Going to addUser...\n");
         List<Role> roleList = new ArrayList<>();
         for (UserRoleParam userRole : userRegisterParam.getUserRole()) {
-            roleList.add(roleRepository.getByRole(userRole.getRole()));
+            roleList.add(roleRepository.findByRole(userRole.getRole()));
         }
         User user = new User();
         user.setUsername(userRegisterParam.getUsername());
@@ -115,15 +119,14 @@ public class AccountServiceImpl implements AccountService {
         return userService.add(user);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public UserDto loginUser(LoginParam loginParam) throws ExceptionBase {
         log.info("Going to loginUser...\n");
         if (loginParam == null || loginParam.getUsername() == null || loginParam.getPassword() == null) {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
-        String phoneNumber = getPhoneNumber(loginParam);
-        User user = userService.findUserByPhoneNumber(phoneNumber);
+        User user = getUser(loginParam);
         ActivationCode activationCode = user.getActivationCode();
         if (activationCode == null) {
             throw new ActivationCodeNotFoundException();
@@ -133,9 +136,11 @@ public class AccountServiceImpl implements AccountService {
         }
         activationCode.setDeleted(true);
         activationCodeRepository.update(activationCode);
-        String jwt = getJwt(loginParam, loginParam.getUsername());
+        String jwt = getJwt(loginParam, loginParam.getUsername(), TokenType.USER);
+        String refreshJwt = getJwt(loginParam, loginParam.getUsername(), TokenType.REFRESH_TOKE);
         UserDto result = UserConvertor.userToUserDtoLessDetails(user);
         result.setToken(jwt);
+        result.setRefreshToken(refreshJwt);
         log.info("user logined {}...\n", result);
         return result;
     }
@@ -146,47 +151,49 @@ public class AccountServiceImpl implements AccountService {
         if (loginParam == null || loginParam.getUsername() == null || loginParam.getPassword() == null) {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
-        String phoneNumber = getPhoneNumber(loginParam);
-        User admin = userService.findUserByPhoneNumber(phoneNumber);
+        String phoneNumber = getUser(loginParam).getPhoneNumber();
+        User admin = userService.getByPhoneNumber(phoneNumber);
         ActivationCode activationCode = admin.getActivationCode();
         if (activationCode != null) {
             activationCode.setDeleted(true);
             activationCodeRepository.update(activationCode);
         }
-        String jwt = getJwt(loginParam, phoneNumber);
+        String jwt = getJwt(loginParam, phoneNumber, TokenType.ADMIN);
+        String refreshJwt = getJwt(loginParam, loginParam.getUsername(), TokenType.REFRESH_TOKE);
         UserDto result = UserConvertor.administratorToAdministratorDto(admin);
         result.setToken(jwt);
-        log.info("Admin logined {}...\n", result);
+        result.setRefreshToken(refreshJwt);
+        log.info("Admin loggined {}...\n", result);
         return result;
     }
 
-    private String getPhoneNumber(LoginParam loginParam) {
-        String phoneNumber = null;
+    private User getUser(LoginParam loginParam) {
+        User user = null;
         switch (loginParam.getUsernameType()) {
             case PHONENUMBER:
-                phoneNumber = loginParam.getUsername();
+                user = userService.getByPhoneNumber(loginParam.getUsername());
                 break;
             case USERNAME:
-                phoneNumber = userService.findByUsername(loginParam.getUsername()).getPhoneNumber();
+                user = userService.getByUsername(loginParam.getUsername());
                 break;
             case EMAIL:
-                phoneNumber = userService.findByEmail(loginParam.getUsername()).getPhoneNumber();
+                user = userService.getByEmail(loginParam.getUsername());
                 break;
         }
-        return phoneNumber;
+        return user;
     }
 
-    private String getJwt(LoginParam loginParam, String phoneNumber) {
+    private String getJwt(LoginParam loginParam, String phoneNumber, TokenType tokenType) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(phoneNumber, loginParam.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return tokenProvider.generateJwtToken(authentication);
+        return tokenProvider.generateJwtToken(authentication, tokenType);
     }
 
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
         log.info("Going to loadUserByUsername ...\n");
-        User user = userService.findUserByPhoneNumber(phoneNumber);
+        User user = userService.getByPhoneNumber(phoneNumber);
         if (user == null) {
             throw new UsernameNotFoundException(phoneNumber);
         }
@@ -200,7 +207,7 @@ public class AccountServiceImpl implements AccountService {
             password = user.getActivationCode().getCode();
         }
         if (password == null) {
-            password = passwordRepository.findByUserAndExpiredIsAndDeletedIs(user, false, false).getPassword();
+            password = passwordRepository.findByUserAndExpiredIsFalseAndDeletedIsFalse(user).getPassword();
         }
         if (password == null) {
             throw new ExceptionBase();
@@ -215,6 +222,15 @@ public class AccountServiceImpl implements AccountService {
         return userDetails;
     }
 
+    @Override
+    public RefreshTokenDto refreshToken(RefreshTokenParam refreshToken) {
+        if (StringUtils.hasText(refreshToken.getRefreshToken()) && tokenProvider.validateToken(refreshToken.getRefreshToken())) {
+            return tokenProvider.refreshToken(refreshToken.getRefreshToken());
+        } else {
+            throw new ExceptionBase();
+        }
+    }
+
     private void setUserContext(User user) {
         GympinContext context = GympinContextHolder.getContext();
         if (context == null) {
@@ -222,7 +238,6 @@ public class AccountServiceImpl implements AccountService {
         }
         context.getEntry().put(GympinContext.USER_KEY, user);
         GympinContextHolder.setContext(context);
-
     }
 
 }

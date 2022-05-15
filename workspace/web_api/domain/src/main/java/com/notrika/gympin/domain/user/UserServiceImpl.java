@@ -8,17 +8,23 @@ import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.param.UserRoleParam;
 import com.notrika.gympin.common.user.service.UserService;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.relation.FollowServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
+import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
 import com.notrika.gympin.persistence.entity.location.Place;
 import com.notrika.gympin.persistence.entity.user.Password;
 import com.notrika.gympin.persistence.entity.user.Role;
 import com.notrika.gympin.persistence.entity.user.User;
+import com.sun.istack.NotNull;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +44,14 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Autowired
     private UserRoleServiceImpl userRoleService;
 
+    @Autowired
+    private FollowServiceImpl followService;
+
+    @Autowired
+    private UserRateServiceImpl userRateService;
+
     @Override
+    @Transactional
     public UserDto add(UserParam userParam) {
         List<Role> roles = new ArrayList<>();
         for (UserRoleParam roleParam : userParam.getRole()) {
@@ -47,12 +60,22 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         if (roles.size() == 0) {
             roles.add(userRoleService.getByUserRole(UserRole.USER));
         }
-        User initUser =
-                User.builder().name(userParam.getName()).lastname(userParam.getLastname()).username(userParam.getUsername()).phoneNumber(userParam.getPhoneNumber()).birthday(userParam.getBirthday()).nationalCode(userParam.getNationalCode()).email(userParam.getEmail()).userGroup(UserGroup.CLIENT).userRole(roles).userStatus(UserStatus.ENABLED).build();
+        User initUser = new User();
+        initUser.setName(userParam.getName());
+        initUser.setLastname(userParam.getLastname());
+        initUser.setUsername(userParam.getUsername());
+        initUser.setPhoneNumber(userParam.getPhoneNumber());
+        initUser.setBirthday(userParam.getBirthday());
+        initUser.setNationalCode(userParam.getNationalCode());
+        initUser.setEmail(userParam.getEmail());
+        initUser.setUserGroup(UserGroup.CLIENT);
+        initUser.setUserRole(roles);
+        initUser.setUserStatus(UserStatus.ENABLED);
+        initUser.setBio(userParam.getBio());
         User user = userRepository.add(initUser);
         Password password = Password.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
         passwordRepository.add(password);
-        return UserConvertor.userToUserDto(user);
+        return UserConvertor.userToUserDtoComplete(user);
     }
 
     @Override
@@ -61,6 +84,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     }
 
     @Override
+    @Transactional
     public UserDto update(UserParam userParam) {
         List<Role> roles = new ArrayList<>();
         for (UserRoleParam roleParam : userParam.getRole()) {
@@ -75,8 +99,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setNationalCode(userParam.getNationalCode());
         initUser.setEmail(userParam.getEmail());
         initUser.setUserRole(roles);
+        initUser.setBio(userParam.getBio());
         User user = update(initUser);
-        return UserConvertor.userToUserDto(user);
+        return UserConvertor.userToUserDtoComplete(user);
     }
 
     @Override
@@ -85,10 +110,11 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     }
 
     @Override
+    @Transactional
     public UserDto delete(UserParam userParam) {
         User user = getEntityById(userParam.getId());
         User deletedUser = delete(user);
-        return UserConvertor.userToUserDto(deletedUser);
+        return UserConvertor.userToUserDtoComplete(deletedUser);
     }
 
     @Override
@@ -109,7 +135,11 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Override
     public UserDto getById(long id) {
         User user = getEntityById(id);
-        return UserConvertor.userToUserDto(user);
+        UserDto userDto = UserConvertor.userToUserDtoComplete(user);
+        userDto.setFollowersCount(followService.getFollowersCount(user));
+        userDto.setFollowingsCount(followService.getFollowingsCount(user));
+        userDto.setRate(userRateService.calculateUserRate(UserParam.builder().id(id).build()));
+        return userDto;
     }
 
     @Override
@@ -121,15 +151,31 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         return userRepository.getOwnersPlace(place);
     }
 
-    public User findUserByPhoneNumber(String phoneNumber) {
+    public User getByPhoneNumberAndUsernameAndEmail(String phoneNumber, String username, String email) {
+        return userRepository.findByPhoneNumberAndUsernameAndEmail(phoneNumber, username, email);
+    }
+
+    public User getByPhoneNumberAndUsername(String phoneNumber, String username) {
+        return userRepository.findByPhoneNumberAndUsername(phoneNumber, username);
+    }
+
+    public User getByPhoneNumberAndEmail(String phoneNumber, String email) {
+        return userRepository.findByPhoneNumberAndEmail(phoneNumber, email);
+    }
+
+    public User getByUsernameAndEmail(String username, String email) {
+        return userRepository.findByUsernameAndEmail(username, email);
+    }
+
+    public User getByPhoneNumber(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber);
     }
 
-    public User findByUsername(String username) {
+    public User getByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public User findByEmail(String email) {
+    public User getByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -137,7 +183,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     public UserDto suspendUser(UserParam userParam) {
         User user = getEntityById(userParam.getId());
         User suspendUser = suspendUser(user);
-        return UserConvertor.userToUserDto(suspendUser);
+        return UserConvertor.userToUserDtoComplete(suspendUser);
     }
 
     public User suspendUser(User user) {
@@ -145,4 +191,43 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setUserStatus(UserStatus.SUSPENDED);
         return update(initUser);
     }
+
+    @Override
+    public UserDto getUserByUsername(UserParam userParam) {
+        return UserConvertor.userToUserDtoComplete(getByUsername(userParam.getUsername()));
+    }
+
+    @Override
+    public UserDto getUserDtoByAnyKey(@NonNull UserParam userParam) {
+        return UserConvertor.userToUserDtoComplete(getUserByAnyKey(userParam));
+    }
+
+    public User getUserByAnyKey(@NonNull UserParam userParam){
+        userParam = GeneralHelper.requireNonNull(userParam,"userParam");
+        String phoneNumber = userParam.getPhoneNumber();
+        String username = userParam.getUsername();
+        String email = userParam.getEmail();
+        return getUserByAnyKey(phoneNumber, username, email);
+    }
+
+    public User getUserByAnyKey(String phoneNumber, String username, String email) {
+        User user = null;
+        if (StringUtils.hasText(phoneNumber) && StringUtils.hasText(username) && StringUtils.hasText(email)) {
+            user = this.getByPhoneNumberAndUsernameAndEmail(phoneNumber, username, email);
+        } else if (StringUtils.hasText(phoneNumber) && StringUtils.hasText(username)) {
+            user = this.getByPhoneNumberAndUsername(phoneNumber, username);
+        } else if (StringUtils.hasText(phoneNumber) && StringUtils.hasText(email)) {
+            user = this.getByPhoneNumberAndEmail(phoneNumber, email);
+        } else if (StringUtils.hasText(username) && StringUtils.hasText(email)) {
+            user = this.getByUsernameAndEmail(username, email);
+        } else if (StringUtils.hasText(phoneNumber)) {
+            user = this.getByPhoneNumber(phoneNumber);
+        } else if (StringUtils.hasText(username)) {
+            user = this.getByUsername(username);
+        } else if (StringUtils.hasText(email)) {
+            user = this.getByEmail(email);
+        }
+        return user;
+    }
+
 }

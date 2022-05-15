@@ -83,7 +83,7 @@ public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, User
     }
 
     public Role getByUserRole(UserRole userRole) {
-        return roleRepository.getByRole(userRole);
+        return roleRepository.findByRole(userRole);
     }
 
 }

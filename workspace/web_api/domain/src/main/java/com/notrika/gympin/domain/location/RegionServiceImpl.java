@@ -57,7 +57,7 @@ public class RegionServiceImpl extends AbstractBaseService<RegionParam, RegionDt
     @Override
     public RegionDto delete(RegionParam regionParam) {
         Region region = getEntityById(regionParam.getId());
-        return LocationConvertor.regionToRegionDto(region);
+        return LocationConvertor.regionToRegionDto(delete(region));
     }
 
     @Override
@@ -94,7 +94,7 @@ public class RegionServiceImpl extends AbstractBaseService<RegionParam, RegionDt
     }
 
     public List<Region> getRegionsByCity(City city) {
-        return regionRepository.getRegionsByCity(city);
+        return regionRepository.findAllByCityAndDeletedIsFalse(city);
     }
 
 }

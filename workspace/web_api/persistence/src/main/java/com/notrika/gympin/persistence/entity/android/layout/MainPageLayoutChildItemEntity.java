@@ -40,5 +40,6 @@ public class MainPageLayoutChildItemEntity extends BaseEntity {
     private Integer priority;
 
     @ManyToMany(mappedBy = "items")
+    @ToString.Exclude
     private List<MainPageLayoutItemEntity> mainPages;
 }

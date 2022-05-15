@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.location;
 
+import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.location.dto.CityDto;
 import com.notrika.gympin.common.location.param.CityParam;
 import com.notrika.gympin.common.location.param.StateParam;
@@ -40,6 +41,8 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
     public CityDto update(CityParam cityParam) {
         City initCity = getEntityById(cityParam.getId());
         initCity.setName(cityParam.getName());
+        if(cityParam.getState()==null || cityParam.getState().getId() == null || cityParam.getState().getId() <= 0)
+            throw new ExceptionBase();
         if (cityParam.getState() != null && cityParam.getState().getId() != null && cityParam.getState().getId() > 0) {
             State state = stateService.getEntityById(cityParam.getState().getId());
             initCity.setState(state);
@@ -55,7 +58,7 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
 
     @Override
     public CityDto delete(CityParam cityParam) {
-        var item = getEntityById(cityParam.getId());
+        City item = getEntityById(cityParam.getId());
         City deletedCity = delete(item);
         return LocationConvertor.cityToCityDto(deletedCity);
     }
@@ -94,6 +97,10 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
     }
 
     public List<City> getCitiesByState(State state) {
-        return cityRepository.getCitiesByState(state);
+        return cityRepository.findAllByStateAndDeletedIsFalse(state);
+    }
+
+    private void validateCityParam(CityParam param){
+
     }
 }

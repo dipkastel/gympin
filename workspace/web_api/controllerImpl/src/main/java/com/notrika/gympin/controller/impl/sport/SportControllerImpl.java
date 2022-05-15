@@ -9,7 +9,10 @@ import com.notrika.gympin.common.sport.service.SportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -21,31 +24,31 @@ public class SportControllerImpl implements SportController {
     private SportService sportService;
 
     @Override
-//    @PostMapping("/addSport")
+    //    @PostMapping("/addSport")
     public ResponseEntity<SportDto> add(@RequestBody SportParam sportParam) {
         return new ResponseEntity<SportDto>(sportService.add(sportParam), HttpStatus.OK);
     }
 
     @Override
-//    @PutMapping("/updateSport")
+    //    @PutMapping("/updateSport")
     public ResponseEntity<SportDto> update(@RequestBody SportParam sportParam) {
         return new ResponseEntity<SportDto>(sportService.update(sportParam), HttpStatus.OK);
     }
 
     @Override
-//    @GetMapping("/getSportById")
-    public ResponseEntity<SportDto> getById(long id) {
+    //    @GetMapping("/getSportById")
+    public ResponseEntity<SportDto> getById(Long id) {
         return new ResponseEntity<SportDto>(sportService.getById(id), HttpStatus.OK);
     }
 
     @Override
-//    @GetMapping("/getAllSport")
+    //    @GetMapping("/getAllSport")
     public ResponseEntity<List<SportDto>> getAll(BasePagedParam pagingParam) {
         return new ResponseEntity<List<SportDto>>(sportService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
-//    @PutMapping("/deleteSport")
+    //    @PutMapping("/deleteSport")
     public ResponseEntity<SportDto> delete(SportParam sportParam) {
         SportDto deletedSport = sportService.delete(sportParam);
         return new ResponseEntity<SportDto>(deletedSport, HttpStatus.OK);
@@ -54,6 +57,6 @@ public class SportControllerImpl implements SportController {
     @Override
     @GetMapping("/getSportMultimedia")
     public ResponseEntity<List<MultimediaDto>> getSportMultimedia(SportParam sportParam) {
-        return new ResponseEntity<List<MultimediaDto>>(sportService.getSportMultimedia(sportParam),HttpStatus.OK);
+        return new ResponseEntity<List<MultimediaDto>>(sportService.getSportMultimedia(sportParam), HttpStatus.OK);
     }
 }

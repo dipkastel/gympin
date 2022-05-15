@@ -2,6 +2,7 @@ package com.notrika.gympin.persistence.entity.sport;
 
 import com.notrika.gympin.common.sport.enums.LaunchStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.event.BaseEventEntity;
 import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
 import com.notrika.gympin.persistence.entity.sportplace.SportPlace;
 import lombok.Getter;
@@ -40,5 +41,9 @@ public class Sport extends BaseEntity {
     @OneToMany(mappedBy = "sport",cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<SportMultimedia> sportMultimedias;
+
+    @OneToMany(mappedBy = "sport",cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<BaseEventEntity> events;
 
 }

@@ -61,7 +61,7 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
 
     @Override
     public PlaceDto delete(PlaceParam placeParam) {
-        var item = getEntityById(placeParam.getId());
+        Place item = getEntityById(placeParam.getId());
         Place deletedPlace = delete(item);
         return LocationConvertor.placeToPlaceDto(deletedPlace);
     }
@@ -100,10 +100,10 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     }
 
     public List<Place> getPlacesByRegion(Region region) {
-        return placeRepository.getPlacesByRegion(region);
+        return placeRepository.findAllByRegionAndDeletedIsFalse(region);
     }
 
     public List<Place> getPlaceByUser(User user) {
-        return placeRepository.getPlaceByUser(user);
+        return placeRepository.findAllByPlaceOwnersAndDeletedIsFalse(user);
     }
 }

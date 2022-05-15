@@ -31,22 +31,22 @@ public class MultimediaCategoryControllerImpl implements MultimediaCategoryContr
     @Override
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
     public ResponseEntity<MultimediaCategoryDto> update(@RequestBody MultimediaCategoryParam param) {
-        return new ResponseEntity<>(multimediaCategoryService.update(param),HttpStatus.OK);
+        return new ResponseEntity<>(multimediaCategoryService.update(param), HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
     public ResponseEntity<MultimediaCategoryDto> delete(@RequestBody MultimediaCategoryParam param) {
-        return new ResponseEntity<>(multimediaCategoryService.delete(param),HttpStatus.OK);
+        return new ResponseEntity<>(multimediaCategoryService.delete(param), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<List<MultimediaCategoryDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<>(multimediaCategoryService.getAll(pagingParam),HttpStatus.OK);
+        return new ResponseEntity<>(multimediaCategoryService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<MultimediaCategoryDto> getById(long id) {
-        return new ResponseEntity<>(multimediaCategoryService.getById(id),HttpStatus.OK);
+    public ResponseEntity<MultimediaCategoryDto> getById(Long id) {
+        return new ResponseEntity<>(multimediaCategoryService.getById(id), HttpStatus.OK);
     }
 }

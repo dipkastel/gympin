@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,33 +23,33 @@ public class MainPageLayoutItemControllerImpl implements MainPageLayoutItemContr
     private MainPageLayoutItemService mainPageLayoutItemService;
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutItemDto> add(@RequestBody MainPageLayoutItemParam mainPageLayoutItemParam) {
-        return new ResponseEntity<MainPageLayoutItemDto>(mainPageLayoutItemService.add(mainPageLayoutItemParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutItemDto> add(MainPageLayoutItemParam mainPageLayoutItemParam) {
+        return ResponseEntity.ok(mainPageLayoutItemService.add(mainPageLayoutItemParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutItemDto> update(@RequestBody MainPageLayoutItemParam mainPageLayoutItemParam) {
-        return new ResponseEntity<MainPageLayoutItemDto>(mainPageLayoutItemService.update(mainPageLayoutItemParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutItemDto> update(MainPageLayoutItemParam mainPageLayoutItemParam) {
+        return ResponseEntity.ok(mainPageLayoutItemService.update(mainPageLayoutItemParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutItemDto> delete(@RequestBody MainPageLayoutItemParam mainPageLayoutItemParam) {
-        return new ResponseEntity<MainPageLayoutItemDto>(mainPageLayoutItemService.delete(mainPageLayoutItemParam), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutItemDto> delete(MainPageLayoutItemParam mainPageLayoutItemParam) {
+        return ResponseEntity.ok(mainPageLayoutItemService.delete(mainPageLayoutItemParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<List<MainPageLayoutItemDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<List<MainPageLayoutItemDto>>(mainPageLayoutItemService.getAll(pagingParam), HttpStatus.OK);
+        return ResponseEntity.ok(mainPageLayoutItemService.getAll(pagingParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    public ResponseEntity<MainPageLayoutItemDto> getById(@RequestBody long id) {
-        return new ResponseEntity<MainPageLayoutItemDto>(mainPageLayoutItemService.getById(id), HttpStatus.OK);
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+    public ResponseEntity<MainPageLayoutItemDto> getById(Long id) {
+        return ResponseEntity.ok(mainPageLayoutItemService.getById(id));
     }
 
 }
