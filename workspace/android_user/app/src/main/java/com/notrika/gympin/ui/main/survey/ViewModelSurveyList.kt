@@ -1,5 +1,6 @@
 package com.notrika.gympin.ui.main.survey
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.notrika.gympin.data.model.Resource
@@ -9,6 +10,7 @@ import javax.inject.Inject
 
 class ViewModelSurveyList @Inject constructor() : ViewModel() {
 
+    lateinit var viewLifecycleOwner: LifecycleOwner
 
 
 }

@@ -1,11 +1,12 @@
 package com.notrika.gympin.di
 
 
-import com.notrika.gympin.di.general.GeneralMadule
+import com.notrika.gympin.di.general.*
+import com.notrika.gympin.di.general.scops.MainScope
 import com.notrika.gympin.di.main.*
 import com.notrika.gympin.di.register.RegisterFragmentBuilderModule
 import com.notrika.gympin.di.register.RegisterModule
-import com.notrika.gympin.di.register.RegisterScope
+import com.notrika.gympin.di.general.scops.RegisterScope
 import com.notrika.gympin.di.register.RegisterViewModelModule
 import com.notrika.gympin.ui.main.ActivityMain
 import com.notrika.gympin.ui.register.ActivityRegister
@@ -17,22 +18,28 @@ abstract class ActivityBuilderModule {
 
     @RegisterScope
     @ContributesAndroidInjector(modules = [
+        GeneralFragmentBuilderModule::class,
+        GeneralViewModelsModule::class,
+        GeneralDialogsMadule::class,
+        GeneralApiMadule::class,
         RegisterFragmentBuilderModule::class,
         RegisterViewModelModule::class,
-        RequestesModule::class,
-        GeneralMadule::class,
+        GeneralRequestesModule::class,
         RegisterModule::class])
     internal abstract fun contributeRegisterActivity(): ActivityRegister
 
     @MainScope
     @ContributesAndroidInjector(modules = [
+        GeneralFragmentBuilderModule::class,
+        GeneralViewModelsModule::class,
+        GeneralDialogsMadule::class,
+        GeneralApiMadule::class,
         MainFragmentBuilderModule::class,
         MainViewModelsModule::class,
         MainRepositoryModule::class,
         MainDialogsMadule::class,
-        RequestesModule::class,
-        GeneralMadule::class,
-        MainMadule::class,
+        GeneralRequestesModule::class,
+        MainApiMadule::class,
         MainAdapterProviderModule::class])
     internal abstract fun contributeMainActivity(): ActivityMain
 

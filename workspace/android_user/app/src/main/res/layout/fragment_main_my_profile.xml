@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layoutDirection="rtl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_Munsell">
@@ -35,49 +36,64 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/actionbar">
-
-                    <TextView
-                        android:id="@+id/txt_edit"
+                    <LinearLayout
+                        android:id="@+id/ll_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ico_edit"
-                        android:drawableTint="@color/red_Lust"
-                        android:fontFamily="@font/iran_sans_normal"
-                        android:text="ویرایش"
-                        android:layout_marginTop="@dimen/_36sdp"
-                        android:textColor="@color/red_Lust"
-                        android:textSize="@dimen/_11sdp"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/_43sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.08"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/iran_sans_normal"
+                            android:text="ویرایش"
+                            android:textColor="@color/red_Lust"
+                            android:textSize="@dimen/_11sdp"/>
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:tint="@color/red_Alizarin_Crimson"
+                            android:src="@drawable/ico_edit" />
+
+                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/_img_mock"
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="@dimen/_230sdp"
                         android:layout_marginStart="@dimen/_6sdp"
-                        android:background="@color/red_Lust"
+                        android:layout_marginBottom="@dimen/_3sdp"
+                        android:src="@drawable/charcter_orang"
+                        android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_edit" />
+                        app:layout_constraintTop_toBottomOf="@+id/ll_edit" />
 
                     <ImageView
                         android:id="@+id/_img_user"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        android:src="@drawable/sampleuser1"
-                        android:layout_marginTop="@dimen/_40sdp"
+                        android:src="@drawable/placeholder_userprofile"
+                        android:layout_marginTop="@dimen/_43sdp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.69"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/_img_mock"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/_img_user_gender"
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
-                        android:src="@drawable/sampleuser1"
+                        android:src="@drawable/ico_man"
                         app:layout_constraintBottom_toBottomOf="@+id/_img_user"
                         app:layout_constraintEnd_toEndOf="@+id/_img_user"
                         app:layout_constraintStart_toStartOf="@+id/_img_user"
@@ -89,9 +105,8 @@
                         android:id="@+id/txt_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:fontFamily="@font/iran_sans_bold"
-                        android:text="نام کاربر"
+                        android:text="@string/text_placeholder"
                         android:textColor="@color/black_ciatel"
                         app:layout_constraintEnd_toEndOf="@+id/_img_user"
                         app:layout_constraintStart_toStartOf="@+id/_img_user"
@@ -101,25 +116,25 @@
                         android:id="@+id/txt_user_phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/iran_sans_normal"
-                        android:text="09XXXXXXXXX"
+                        android:text="@string/text_placeholder"
                         android:textColor="@color/grey_Ash"
                         app:layout_constraintEnd_toEndOf="@+id/_img_user"
                         app:layout_constraintStart_toStartOf="@+id/_img_user"
                         app:layout_constraintTop_toBottomOf="@+id/txt_user_name" />
 
                     <com.willy.ratingbar.ScaleRatingBar
-                        android:id="@+id/rate_creator"
+                        android:id="@+id/rb_user_rate"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_3sdp"
                         app:layout_constraintEnd_toEndOf="@+id/_img_user"
                         app:layout_constraintStart_toStartOf="@+id/_img_user"
                         app:layout_constraintTop_toBottomOf="@+id/txt_user_phone_number"
                         app:srb_clearRatingEnabled="true"
-                        app:srb_drawableEmpty="@drawable/ic_star_black_active_16dp"
-                        app:srb_drawableFilled="@drawable/ic_star_black_16dp"
+                        app:srb_drawableFilled="@drawable/ico_rate_star_active"
+                        app:srb_drawableEmpty="@drawable/ico_rate_star_deactive"
+                        app:srb_clickable="false"
+                        app:srb_scrollable="false"
                         app:srb_numStars="5"
                         app:srb_starHeight="@dimen/_12sdp"
                         app:srb_starPadding="0dp"
@@ -132,18 +147,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_3sdp"
                         android:fontFamily="@font/iran_sans_normal"
-                        android:maxWidth="@dimen/_180sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:maxLines="3"
-                        android:text="من احمد سغیری هستم تکوانذوکار اسکل محل و یک جنگجو لطفا من را دنبال کنید که ..."
                         android:textColor="@color/grey_Ash"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/_img_mock"
-                        app:layout_constraintTop_toBottomOf="@+id/rate_creator" />
+                        app:layout_constraintEnd_toEndOf="@+id/_img_user"
+                        app:layout_constraintStart_toStartOf="@+id/_img_user"
+                        app:layout_constraintTop_toBottomOf="@+id/rb_user_rate" />
 
                     <View
                         android:id="@+id/view_spliter"
                         android:layout_width="@dimen/_1sdp"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_height="@dimen/_30sdp"
                         android:layout_marginTop="@dimen/_6sdp"
                         android:layout_marginBottom="@dimen/_6sdp"
                         android:background="@color/grey_Ash"
@@ -152,14 +166,34 @@
                         app:layout_constraintStart_toStartOf="@+id/txt_user_bio"
                         app:layout_constraintTop_toBottomOf="@+id/txt_user_bio" />
 
+                    <ProgressBar
+                        android:id="@+id/prg_user_followers_count"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toEndOf="@+id/view_spliter"
+                        app:layout_constraintTop_toTopOf="@+id/view_spliter"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_spliter"/>
+                    <ProgressBar
+                        android:id="@+id/prg_user_following_count"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/view_spliter"
+                        app:layout_constraintTop_toTopOf="@+id/view_spliter"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_spliter"/>
                     <TextView
                         android:id="@+id/txt_user_followers_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/iran_sans_normal"
-                        android:text="435 دنبال کننده"
+                        android:text="@string/followers_count"
+                        android:textSize="@dimen/_9sdp"
+                        android:paddingVertical="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_6sdp"
-                        android:textColor="@color/grey_Ash"
+                        android:textColor="@color/grey_tehran"
                         app:layout_constraintBottom_toBottomOf="@+id/view_spliter"
                         app:layout_constraintStart_toEndOf="@+id/view_spliter"
                         app:layout_constraintTop_toTopOf="@+id/view_spliter" />
@@ -169,8 +203,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/iran_sans_normal"
-                        android:text="435 دنبال شونده"
-                        android:textColor="@color/grey_Ash"
+                        android:text="@string/followings_count"
+                        android:textSize="@dimen/_9sdp"
+                        android:paddingVertical="@dimen/_10sdp"
+                        android:textColor="@color/grey_tehran"
                         android:layout_marginEnd="@dimen/_6sdp"
                         app:layout_constraintBottom_toBottomOf="@+id/view_spliter"
                         app:layout_constraintEnd_toStartOf="@+id/view_spliter"

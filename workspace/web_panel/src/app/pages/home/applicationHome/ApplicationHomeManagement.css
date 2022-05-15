@@ -1,0 +1,28 @@
+.button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.button_danger {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #aa2222;
+    color: white;
+}
+.button_edit {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #227aaa;
+    color: white;
+}
+.button_second {
+    margin-left:10px;
+    margin-right:10px;
+    background-color:#2252aa;
+    color: white;
+}
+.button_success {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #22aa66;
+    color: white;
+}

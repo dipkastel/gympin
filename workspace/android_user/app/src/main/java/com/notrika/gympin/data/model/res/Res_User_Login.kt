@@ -6,27 +6,31 @@ import com.google.gson.annotations.SerializedName
 
 class Res_User_Login {
 
-    @SerializedName("userRole")
+    @SerializedName("UserRole")
     @Expose
     var userRole: String? = null
 
-    @SerializedName("userStatus")
+    @SerializedName("UserStatus")
     @Expose
     var userStatus: String? = null
 
-    @SerializedName("username")
+    @SerializedName("Username")
     @Expose
     var username: String? = null
 
-    @SerializedName("phoneNumber")
+    @SerializedName("PhoneNumber")
     @Expose
     var phoneNumber: String? = null
 
-    @SerializedName("token")
+    @SerializedName("Token")
     @Expose
     var token: String? = null
 
-    @SerializedName("name")
+    @SerializedName("RefreshToken")
+    @Expose
+    var refreshToken: String = ""
+
+    @SerializedName("Name")
     @Expose
     var name: String? = null
 

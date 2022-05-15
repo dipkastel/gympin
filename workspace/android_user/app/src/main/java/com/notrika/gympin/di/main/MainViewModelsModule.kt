@@ -1,12 +1,12 @@
 package com.notrika.gympin.di.main
 
 import androidx.lifecycle.ViewModel
-import com.notrika.gympin.di.ViewModelKey
+import com.notrika.gympin.di.general.utils.viewModel.ViewModelKey
 import com.notrika.gympin.ui.main.browser.ViewModelBrowser
 import com.notrika.gympin.ui.main.contents.ViewModelContents
 import com.notrika.gympin.ui.main.credit.ViewModelCredit
-import com.notrika.gympin.ui.main.events.createEvent.ViewModelCreateEvent
-import com.notrika.gympin.ui.main.events.event.ViewModelEvent
+import com.notrika.gympin.ui.main.events.walking.eventCreateWalking.ViewModelEventCreateWalking
+import com.notrika.gympin.ui.main.events.walking.eventWalking.ViewModelEventWalking
 import com.notrika.gympin.ui.main.gympin.ViewModelGympin
 import com.notrika.gympin.ui.main.leaderBoard.ViewModelLeaderBoard
 import com.notrika.gympin.ui.main.messages.ViewModelMessages
@@ -19,7 +19,7 @@ import com.notrika.gympin.ui.main.places.ViewModelPlaces
 import com.notrika.gympin.ui.main.settings.ViewModelSettings
 import com.notrika.gympin.ui.main.singleContent.ViewModelSingleContent
 import com.notrika.gympin.ui.main.sports.ViewModelSports
-import com.notrika.gympin.ui.main.sports.eventsList.ViewModelEventsList
+import com.notrika.gympin.ui.main.events.walking.eventListWalking.ViewModelEventListWalking
 import com.notrika.gympin.ui.main.survey.ViewModelSurveyList
 import com.notrika.gympin.ui.main.userProfile.ViewModelUserProfile
 import dagger.Binds
@@ -66,8 +66,8 @@ abstract class MainViewModelsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ViewModelEventsList::class)
-    abstract fun EventsViewModel(viewModelList: ViewModelEventsList): ViewModel
+    @ViewModelKey(ViewModelEventListWalking::class)
+    abstract fun EventsViewModel(viewModelList: ViewModelEventListWalking): ViewModel
 
     @Binds
     @IntoMap
@@ -111,13 +111,13 @@ abstract class MainViewModelsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ViewModelEvent::class)
-    abstract fun EventViewModel(viewModel: ViewModelEvent): ViewModel
+    @ViewModelKey(ViewModelEventWalking::class)
+    abstract fun EventViewModel(viewModel: ViewModelEventWalking): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(ViewModelCreateEvent::class)
-    abstract fun CreateEventViewModel(viewModel: ViewModelCreateEvent): ViewModel
+    @ViewModelKey(ViewModelEventCreateWalking::class)
+    abstract fun CreateEventViewModel(viewModel: ViewModelEventCreateWalking): ViewModel
 
     @Binds
     @IntoMap

@@ -36,4 +36,28 @@
     <string name="text_lorem_epsom">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker in</string>
     <string name="text_lorem_epsom_fa">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</string>
     <string name="pointsSection">امتیاز ها و بازخورد</string>
+    <string name="Walking">پیاده‌روی</string>
+    <string name="listOfExistWalkings">لیست پیاده روی های موجود</string>
+    <string name="remainingCapacity">ظرفیت باقی‌مانده :</string>
+    <string name="i_am_in">شرکت میکنم</string>
+    <string name="create_walkig_event">ساخت رویداد جدید پیاده‌روی</string>
+    <string name="title">موضوع رویداد :</string>
+    <string name="walking_title_example">پیاده روی ساده در میرداماد</string>
+    <string name="select_time">زمان رویداد را مشخص کنید</string>
+    <string name="select_start_point">مبدا را مشخص کنید</string>
+    <string name="select_peolple_count">تعداد همراهان را انتخاب کنید :</string>
+    <string name="create_event">ساخت رویداد</string>
+    <string name="confirm">تایید</string>
+    <string name="followers_count">_ دنبال کننده</string>
+    <string name="followings_count">_ دنبال شونده</string>
+    <string name="cancel_event">لغو رویداد</string>
+    <string name="cancel_join">منصرف شدم</string>
+    <string name="inviteFriendBySms">سلام %s \n توی اپلیکیشن جیم پین با خیلیا میتونیم بریم بیرون تو هم عضو شو : http://gympin.ir</string>
+    <string name="share_event">ازت دعوت میکنم توی ایونت
+        %1$s
+        من رو همراهی کنی.
+        \n\t %2$s</string>
+    <string name="share_subject">شما به یک ایونت دعوت شدید : </string>
+    <string name="share_using">اشترک گذاری ایونت</string>
+    <string name="cancel">لغو</string>
 </resources>

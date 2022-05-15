@@ -21,7 +21,7 @@
             android:layout_height="@dimen/_70sdp"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/sampleuser5"
+            android:background="@drawable/placeholder_userprofile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +31,18 @@
             android:layout_height="@dimen/_25sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
-            android:background="@color/blue_dodger"
+            android:visibility="invisible"
+            android:src="@drawable/ico_follow"
+            android:tint="@color/white_london"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ProgressBar
+            android:id="@+id/prg_folow_user"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:indeterminateTint="@color/white_london"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,8 +50,10 @@
             android:id="@+id/img_message"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:background="@color/yellow_venice"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:src="@drawable/ico_massage"
+            android:padding="@dimen/_2sdp"
+            android:background="@drawable/_rectangle_radius_fill_white"
             app:layout_constraintEnd_toEndOf="@+id/img_folow_user"
             app:layout_constraintStart_toStartOf="@+id/img_folow_user"
             app:layout_constraintTop_toBottomOf="@+id/img_folow_user" />
@@ -52,7 +65,6 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:fontFamily="@font/iran_sans_bold"
-            android:text="مصطفی اکبری"
             android:textColor="@color/white_london"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@+id/img_folow_user"
@@ -60,13 +72,12 @@
             app:layout_constraintTop_toTopOf="@+id/img_user_image" />
 
         <TextView
-            android:id="@+id/txt_user_description"
+            android:id="@+id/txt_user_bio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:fontFamily="@font/iran_sans_normal"
-            android:text="من کشتی گیر حرفه ای هستم برای برنامه غذایی حرفه ای به دایرکت اینجانب مراجعه کنید ."
             android:textColor="@color/white_london"
             android:textSize="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="@+id/img_user_image"
@@ -89,7 +100,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header" />
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        tools:listitem="@layout/l_main_profile_user_events"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -102,13 +114,24 @@
 
 
         <TextView
-            android:id="@+id/txt_user_folowers"
+            android:id="@+id/txt_user_followers_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/iran_sans_normal"
-            android:text="89 دنبال کننده"
+            android:text="@string/text_placeholder"
             android:textColor="@color/white_london"
+            android:visibility="invisible"
             android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/view4"
+            app:layout_constraintEnd_toStartOf="@id/view4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view4" />
+
+        <ProgressBar
+            android:id="@+id/prg_user_followers_count"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:indeterminateTint="@color/white_london"
             app:layout_constraintBottom_toBottomOf="@+id/view4"
             app:layout_constraintEnd_toStartOf="@id/view4"
             app:layout_constraintStart_toStartOf="parent"
@@ -122,18 +145,28 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@color/grey_Ash"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/txt_user_folowing"
-            app:layout_constraintStart_toEndOf="@+id/txt_user_folowers"
+            app:layout_constraintEnd_toStartOf="@id/txt_user_following_count"
+            app:layout_constraintStart_toEndOf="@+id/txt_user_followers_count"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txt_user_folowing"
+            android:id="@+id/txt_user_following_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/iran_sans_normal"
-            android:text="580 دنبال شونده"
+            android:text="@string/text_placeholder"
             android:textColor="@color/white_london"
+            android:visibility="invisible"
             android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/view4"
+            app:layout_constraintEnd_toStartOf="@id/view5"
+            app:layout_constraintStart_toEndOf="@+id/view4"
+            app:layout_constraintTop_toTopOf="@+id/view4" />
+        <ProgressBar
+            android:id="@+id/prg_user_following_count"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:indeterminateTint="@color/white_london"
             app:layout_constraintBottom_toBottomOf="@+id/view4"
             app:layout_constraintEnd_toStartOf="@id/view5"
             app:layout_constraintStart_toEndOf="@+id/view4"
@@ -144,9 +177,10 @@
             android:layout_width="1dp"
             android:layout_height="@dimen/_35sdp"
             android:background="@color/grey_Ash"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/view4"
             app:layout_constraintEnd_toStartOf="@id/txt_content_count"
-            app:layout_constraintStart_toEndOf="@+id/txt_user_folowing"
+            app:layout_constraintStart_toEndOf="@+id/txt_user_following_count"
             app:layout_constraintTop_toTopOf="@+id/view4" />
 
         <TextView
@@ -155,8 +189,19 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/iran_sans_normal"
             android:text="137 محتوا"
+            android:visibility="invisible"
             android:textColor="@color/white_london"
             android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/view4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view5"
+            app:layout_constraintTop_toTopOf="@+id/view4" />
+        <ProgressBar
+            android:id="@+id/prg_user_content_count"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:indeterminateTint="@color/white_london"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/view4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view5"

@@ -12,7 +12,6 @@ import android.view.ViewTreeObserver
 import android.view.Window
 import android.widget.LinearLayout
 import androidx.annotation.CallSuper
-import com.hampardaz.cinematicket.util.dialogs.CDialog
 import com.notrika.gympin.R
 import kotlinx.android.synthetic.main.c_component_base_dialog.view.*
 
@@ -23,7 +22,7 @@ abstract class CBaseDialogContaner : CDialog {
     lateinit var dialog: Dialog
 
     lateinit var context: Activity
-    fun initialize(activity: Activity) {
+    protected fun initialize(activity: Activity) {
         this.context = activity
 
         dialog = Dialog(context, R.style.baseDialog)
@@ -58,7 +57,7 @@ abstract class CBaseDialogContaner : CDialog {
     override fun setDialogOptions(dialog: Dialog) {
     }
 
-    fun setTitle(title:String){
+    protected fun setDialogTitle(title:String){
         layout.title.text = title
     }
 

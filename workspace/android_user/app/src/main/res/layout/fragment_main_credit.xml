@@ -167,7 +167,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_marginVertical="@dimen/_10sdp"
-                android:background="@drawable/_rectangle_radius_strok_grey"
+                android:background="@drawable/_rectangle_radius_strok_cyan"
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_price">

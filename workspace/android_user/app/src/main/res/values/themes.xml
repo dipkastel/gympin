@@ -31,16 +31,18 @@
         <item name="colorAccent">@color/black_Bistre</item>
         <item name="colorPrimaryDark">@color/white_Gainsboro</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:colorPrimary" >@color/grey_Davy</item>
-        <item name="android:statusBarColor">@color/white_Gainsboro</item>
+        <item name="android:colorPrimary" >@color/colorPrimary</item>
+        <!-- Original AppCompat attributes. -->
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
-
     <!-- styles. -->
     <style name="Widget.BottomNavigationView"
         parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/iran_sans_normal</item>
         <item name="android:textSize">@dimen/_6sdp</item>
+        <item name="android:minHeight">0dp</item>
     </style>
 
     <style name="main_appbar" parent="Widget.MaterialComponents.Toolbar.Primary">

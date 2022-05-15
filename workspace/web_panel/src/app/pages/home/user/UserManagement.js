@@ -24,9 +24,9 @@ class UserManagement extends Component {
         this.state = {
             addMode: true,
             adminMode: true,
-            allUsersArray:[],
             selectedUserToDelete:null,
-            selectedAccess:null
+            selectedAccess:null,
+            allUsersArray:[]
         };
     }
     render() {
@@ -256,7 +256,6 @@ class UserManagement extends Component {
         }
     }
     deleteUser(e,user) {
-        console.log(user)
         e.preventDefault()
         user_delete({
             "Id": user.Id
@@ -294,7 +293,7 @@ class UserManagement extends Component {
                 <td>{User.Id}</td>
                 <td>{User.username}</td>
                 <td>{User.phoneNumber}</td>
-                <td>{User.userRole}</td>
+                <td>{User.userRole.map(o=>o.Role+" ")}</td>
                 <td>{User.userStatus}</td>
                 <td>
                     <Button variant="contained" color="primary" className={classes.button_edit} onClick={(e)=>this.prepareEditUser(e,User)}>
@@ -345,7 +344,6 @@ class UserManagement extends Component {
         }));
     };
     renderModalDelete = (classes,UserToDelete)=>{
-        console.log(this.state.selectedAccess)
         return(<>
                 <Modal show={UserToDelete} onHide={this.closeModalDelete}>
                     <Modal.Header closeButton>

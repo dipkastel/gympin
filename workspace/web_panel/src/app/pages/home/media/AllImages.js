@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {media_getAll} from "../../../api/media.api";
 import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@material-ui/core";
 import ImagePickerConsts from "../../../partials/picker/image/imagePickerConsts";
+import  * as utils from "../../../../_metronic/utils/utils";
 
 class AllImages extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class AllImages extends Component {
     }
 
     RenderImages(image) {
-        var imageUrl = "http://api.gympin.ir/v1/multimedia/getByName?fileName=" + image.Name.toString() + "&height=200";
+        var imageUrl = utils.getImageUrlByName(image.Name.toString(),200);
         return (
             <Card className={"card "} key={imageUrl}>
                 <CardActionArea>

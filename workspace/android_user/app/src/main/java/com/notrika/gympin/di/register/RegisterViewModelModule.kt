@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Binds
 import dagger.multibindings.IntoMap
-import com.notrika.gympin.di.ViewModelKey
+import com.notrika.gympin.di.general.utils.viewModel.ViewModelKey
 import com.notrika.gympin.ui.register.login.ViewModelLogin
 
 @Module

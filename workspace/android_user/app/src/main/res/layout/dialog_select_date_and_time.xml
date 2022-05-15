@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minWidth="@dimen/_280sdp"
+    android:padding="@dimen/_10sdp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_date"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/_40sdp"
+        android:paddingBottom="@dimen/_40sdp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rv_hour"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        tools:listitem="@layout/l_date_time_picker" />
+
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/black_Bistre"
+        app:layout_constraintBottom_toTopOf="@+id/view9"
+        app:layout_constraintEnd_toEndOf="@+id/rv_date"
+        app:layout_constraintStart_toStartOf="@+id/rv_date"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
+
+    <View
+        android:id="@+id/view9"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/black_Bistre"
+        app:layout_constraintBottom_toBottomOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="@+id/rv_date"
+        app:layout_constraintStart_toStartOf="@+id/rv_date"
+        app:layout_constraintTop_toBottomOf="@+id/view8" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_hour"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/_40sdp"
+        android:paddingBottom="@dimen/_40sdp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toStartOf="@+id/rv_date"
+        app:layout_constraintStart_toEndOf="@+id/rv_minutes"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
+        tools:listitem="@layout/l_date_time_picker" />
+
+    <View
+        android:id="@+id/view10"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/black_Bistre"
+        app:layout_constraintBottom_toTopOf="@+id/view11"
+        app:layout_constraintEnd_toEndOf="@+id/rv_hour"
+        app:layout_constraintStart_toStartOf="@+id/rv_hour"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
+
+    <View
+        android:id="@+id/view11"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/black_Bistre"
+        app:layout_constraintBottom_toBottomOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="@+id/rv_hour"
+        app:layout_constraintStart_toStartOf="@+id/rv_hour"
+        app:layout_constraintTop_toBottomOf="@+id/view10" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_minutes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/_40sdp"
+        android:paddingBottom="@dimen/_40sdp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineBottom"
+        app:layout_constraintEnd_toStartOf="@+id/rv_hour"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"
+        tools:listitem="@layout/l_date_time_picker" />
+
+
+
+    <View
+        android:id="@+id/view12"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/black_Bistre"
+        app:layout_constraintBottom_toTopOf="@+id/view13"
+        app:layout_constraintEnd_toEndOf="@+id/rv_minutes"
+        app:layout_constraintStart_toStartOf="@+id/rv_minutes"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
+
+    <View
+        android:id="@+id/view13"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/black_Bistre"
+        app:layout_constraintBottom_toBottomOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="@+id/rv_minutes"
+        app:layout_constraintStart_toStartOf="@+id/rv_minutes"
+        app:layout_constraintTop_toBottomOf="@+id/view12" />
+
+    <View
+        android:id="@+id/view14"
+        android:layout_width="@dimen/_3sdp"
+        android:layout_height="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@color/black_Bistre"
+        app:layout_constraintBottom_toTopOf="@+id/view13"
+        app:layout_constraintEnd_toEndOf="@+id/rv_hour"
+        app:layout_constraintStart_toStartOf="@+id/rv_minutes"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
+
+    <View
+        android:id="@+id/view15"
+        android:layout_width="@dimen/_3sdp"
+        android:layout_height="@dimen/_3sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:background="@color/black_Bistre"
+        app:layout_constraintBottom_toBottomOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="@+id/rv_hour"
+        app:layout_constraintStart_toStartOf="@+id/rv_minutes"
+        app:layout_constraintTop_toBottomOf="@+id/view12" />
+    <TextView
+        android:id="@+id/txt_btn_select_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/_rectangle_radius_strok_cyan"
+        android:fontFamily="@font/iran_sans_normal"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_5sdp"
+        android:text="@string/confirm"
+        android:textColor="@color/black_Bistre"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineBottom" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/color_gradient_fade_to_white_bottom"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_hour"
+        app:layout_constraintEnd_toEndOf="@+id/rv_date"
+        app:layout_constraintStart_toStartOf="@+id/rv_minutes"
+        app:layout_constraintTop_toBottomOf="@id/view9"/>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/color_gradient_fade_to_white_top"
+        app:layout_constraintEnd_toEndOf="@+id/rv_date"
+        app:layout_constraintStart_toStartOf="@+id/rv_minutes"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        app:layout_constraintBottom_toTopOf="@id/view10"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/_10sdp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/_130sdp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

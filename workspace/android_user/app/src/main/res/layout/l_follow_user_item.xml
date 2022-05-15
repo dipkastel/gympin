@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/img_user_container"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/_circle_bg_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_user_picture"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:padding="@dimen/_2sdp"
+        android:src="@drawable/placeholder_userprofile"
+        app:layout_constraintBottom_toBottomOf="@+id/img_user_container"
+        app:layout_constraintEnd_toEndOf="@+id/img_user_container"
+        app:layout_constraintStart_toStartOf="@+id/img_user_container"
+        app:layout_constraintTop_toTopOf="@+id/img_user_container" />
+
+    <TextView
+        android:id="@+id/txt_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/iran_sans_bold"
+        android:text="@string/text_placeholder"
+        android:textColor="@color/black_Bistre"
+        android:textSize="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="@+id/img_user_picture"
+        app:layout_constraintStart_toStartOf="@+id/img_user_picture"
+        app:layout_constraintTop_toBottomOf="@+id/img_user_container" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

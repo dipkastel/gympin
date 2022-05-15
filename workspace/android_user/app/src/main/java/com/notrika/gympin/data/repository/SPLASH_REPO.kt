@@ -8,7 +8,7 @@ import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.data.model.res.Res_Application_Splash
 import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.network.request.BaseRequests
-import com.notrika.gympin_master.util.setting.ErrorCheckEmpty
+import com.notrika.gympin.util.extention.ErrorCheckEmpty
 import javax.inject.Inject
 
 class SPLASH_REPO @Inject constructor(
@@ -18,22 +18,20 @@ class SPLASH_REPO @Inject constructor(
 ) {
 
         fun observeBaseSetting(): LiveData<Resource<Res_Application_Splash>> {
-                val LivedataBaseSetting = MediatorLiveData<Resource<Res_Application_Splash>>()
+                val Livedata = MediatorLiveData<Resource<Res_Application_Splash>>()
                 val sourceApplicationSplash: LiveData<Resource<Res_Application_Splash>> = LiveDataReactiveStreams.fromPublisher(baseRequests.RequestSplash())
-                LivedataBaseSetting.value = Resource.loading(null)
+                Livedata.value = Resource.loading(null)
 
 
-                LivedataBaseSetting.addSource(sourceApplicationSplash) { listResource ->
-                        LivedataBaseSetting.removeSource(sourceApplicationSplash)
-                        if (listResource.data == null) {
-                                LivedataBaseSetting.value = Resource.error(listResource.message.ErrorCheckEmpty(), null)
-                        } else if (listResource?.status == Resource.Status.SUCCESS) {
-                                LivedataBaseSetting.value = Resource.success(listResource.data)
+                Livedata.addSource(sourceApplicationSplash) { listResource ->
+                        Livedata.removeSource(sourceApplicationSplash)
+                        if (listResource?.status == Resource.Status.SUCCESS) {
+                                Livedata.value = Resource.success(listResource.data)
                         } else {
-                                LivedataBaseSetting.value = Resource.error(listResource.message.ErrorCheckEmpty(), null)
+                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), listResource?.errorCode?:0)
                         }
                 }
 
-                return LivedataBaseSetting
+                return Livedata
         }
 }

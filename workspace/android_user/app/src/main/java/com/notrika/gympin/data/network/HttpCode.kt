@@ -338,6 +338,12 @@ class HttpCode {
 
         val Failed_Due_to_Security_Check = 12171
 
+        //applicationErrors
+
+        val USER_NAME_EXIST = 1005
+        val USER_REGISTERD_BEFORE = 1006
+
+
 
     }
 

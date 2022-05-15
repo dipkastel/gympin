@@ -10,6 +10,7 @@ import {sport_addSport,sport_deleteSport,sport_getAllSport,sport_updateSport
 import 'leaflet/dist/leaflet.css';
 import {style} from "../../../partials/content/generalStyle";
 import ImagePicker from "../../../partials/picker/image/imagePicker";
+import  * as utils from "../../../../_metronic/utils/utils";
 
 
 class SportManagement extends Component {
@@ -36,7 +37,7 @@ class SportManagement extends Component {
                         موجودیت ورزش به معنای فعالیت بدنی است که موجب سلامت و تن درستی است
                     </p>
                     <p>
-                        این ورزش ها میتواند نیازمند وسیله یا بی نیاز از وسایل ورزشی باشد
+                        این ورزش ها میتواند نیازمند یا بی نیاز از وسایل ویا مکان ورزشی باشد
                     </p>
                 </Notice>
 
@@ -145,6 +146,7 @@ class SportManagement extends Component {
     }
     getSports() {
         sport_getAllSport().then(data => {
+            console.log(data.data.Data)
             this.setState(() => ({
                 allSportsArray: data.data.Data
             }));
@@ -174,7 +176,7 @@ class SportManagement extends Component {
             <tr key={index}>
                 <td>{sport.Id}</td>
                 <td>{sport.Name}</td>
-                <td>{sport.LogoIds[0]}</td>
+                <td><image src={utils.getImageUrlById(sport.LogoIds[0],40,40)} /></td>
                 <td>
                     <Button variant="contained" color="primary" className={classes.button_edit} onClick={e=>this.prepareEditSport(e,sport)}>
                         ویرایش

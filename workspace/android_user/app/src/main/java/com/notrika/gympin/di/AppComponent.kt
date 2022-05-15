@@ -6,10 +6,9 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
-import com.notrika.gympin.di.ActivityBuilderModule
-import com.notrika.gympin.di.AppModule
-import com.notrika.gympin.di.ViewModelFactoryModule
+import com.notrika.gympin.di.general.utils.viewModel.ViewModelFactoryModule
 import com.notrika.gympin.BaseApplication
+import com.notrika.gympin.di.general.utils.AppModule
 
 @Singleton
 @SuppressWarnings("unchecked")

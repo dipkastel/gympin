@@ -14,11 +14,12 @@ import com.notrika.gympin.data.`interface`.onAuthorizeComplete
 import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.res.Res_sport
 import com.notrika.gympin.ui.main.ActivityMain
+import com.notrika.gympin.ui.main.InnerPageFragment
 import com.notrika.gympin.ui.main.MainPageFragment
 import kotlinx.android.synthetic.main.fragment_main_sports.*
 
 
-class FragmentSurveyList : MainPageFragment() {
+class FragmentSurveyList : InnerPageFragment() {
 
     private lateinit var viewModel: ViewModelSurveyList
 
@@ -33,6 +34,7 @@ class FragmentSurveyList : MainPageFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, providerFactory).get(ViewModelSurveyList::class.java)
+        viewModel.viewLifecycleOwner = viewLifecycleOwner
 
     }
 

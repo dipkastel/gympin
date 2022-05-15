@@ -1,5 +1,6 @@
 package com.notrika.gympin.ui.main.sports
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.notrika.gympin.data.model.Resource
@@ -9,9 +10,9 @@ import javax.inject.Inject
 
 class ViewModelSports @Inject constructor(var sportRepo: SPORT_REPO) : ViewModel() {
 
+    lateinit var viewLifecycleOwner: LifecycleOwner
+
     fun requestGetAllSport(): LiveData<Resource<List<Res_sport>>> {
         return sportRepo.observeAllSports()
     }
-
-
 }

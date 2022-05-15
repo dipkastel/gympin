@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<!--    them colors     -->
+    <color name="colorPrimary">@color/Red_gympin</color>
+    <color name="colorSecondary">@color/cyan_Dark</color>
+<!--    standard colors    -->
     <color name="white_london">#FFF</color>
     <color name="white_SuperGhost">#fbfbfb</color>
     <color name="white_SuperLight">#fcfafb</color>
@@ -32,6 +36,7 @@
     <color name="cyan_veryDark">#0D505C</color>
     <color name="cyan_kazan">#0F7D91</color>
     <color name="blue_dodger">#1c8ff8</color>
+    <color name="cyan_light">#129988</color>
     <color name="cyan_Dark">#178e96</color>
     <color name="green_vancouver">#4caf50</color>
     <color name="green_vancouver50">#884caf50</color>

@@ -10,14 +10,20 @@
         android:name="com.notrika.gympin.ui.main.gympin.FragmentGympin"
         android:label="gympin"
         tools:layout="@layout/fragment_main_gympin" />
+
+    <fragment
+        android:id="@+id/full_screen_map"
+        android:name="com.notrika.gympin.ui.common.fullScreenMap.FragmentFullScreenMap"
+        android:label="FullScreenMap"
+        tools:layout="@layout/fragment_full_screen_map"/>
     <fragment
         android:id="@+id/main_sports"
         android:name="com.notrika.gympin.ui.main.sports.FragmentSports"
         android:label="sports"
         tools:layout="@layout/fragment_main_sports" >
         <action
-            android:id="@+id/sports_to_events"
-            app:destination="@id/main_events_list" />
+            android:id="@+id/sports_to_walking"
+            app:destination="@id/events_list_walking" />
     </fragment>
     <fragment
         android:id="@+id/main_places"
@@ -33,19 +39,26 @@
         android:id="@+id/main_my_events"
         android:name="com.notrika.gympin.ui.main.myEvents.FragmentMyEvents"
         android:label="main_my_events"
-        tools:layout="@layout/fragment_main_my_events"/>
+        tools:layout="@layout/fragment_main_my_events">
+        <action
+            android:id="@+id/my_events_to_walking"
+            app:destination="@id/event_walking" />
+    </fragment>
 
     <fragment
-        android:id="@+id/main_events_list"
-        android:name="com.notrika.gympin.ui.main.sports.eventsList.FragmentEventsList"
-        android:label="main_events_list"
-        tools:layout="@layout/fragment_main_events_list">
+        android:id="@+id/events_list_walking"
+        android:name="com.notrika.gympin.ui.main.events.walking.eventListWalking.FragmentEventListWalking"
+        android:label="events_list_walking"
+        tools:layout="@layout/fragment_events_list_walking">
         <action
-            android:id="@+id/events_list_to_event"
-            app:destination="@id/main_event" />
+            android:id="@+id/walking_list_to_walking"
+            app:destination="@id/event_walking" />
         <action
-            android:id="@+id/events_list_to_create_event"
-            app:destination="@id/create_event" />
+            android:id="@+id/walking_list_to_create_walking"
+            app:destination="@id/event_create_walking" />
+        <argument
+            android:name="sportId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/main_profile"
@@ -62,10 +75,10 @@
         android:label="main_contents"
         tools:layout="@layout/fragment_main_contents"/>
     <fragment
-        android:id="@+id/create_event"
-        android:name="com.notrika.gympin.ui.main.events.createEvent.FragmentCreateEvent"
-        android:label="create_event"
-        tools:layout="@layout/fragment_main_create_event"/>
+        android:id="@+id/event_create_walking"
+        android:name="com.notrika.gympin.ui.main.events.walking.eventCreateWalking.FragmentEventCreateWalking"
+        android:label="event_create_walking"
+        tools:layout="@layout/fragment_event_create_walking"/>
 
     <fragment
         android:id="@+id/Survey_list"
@@ -84,7 +97,11 @@
         tools:layout="@layout/fragment_main_user_profile">
         <argument
             android:name="userId"
-            app:argType="string" />
+            app:argType="long" />
+        <argument
+            android:name="userName"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/main_messages"
@@ -120,10 +137,14 @@
         android:label="main_message_chat"
         tools:layout="@layout/fragment_main_messages_chat"/>
     <fragment
-        android:id="@+id/main_event"
-        android:name="com.notrika.gympin.ui.main.events.event.FragmentEvent"
-        android:label="main_event"
-        tools:layout="@layout/fragment_main_event"/>
+        android:id="@+id/event_walking"
+        android:name="com.notrika.gympin.ui.main.events.walking.eventWalking.FragmentEventWalking"
+        android:label="event_walking"
+        tools:layout="@layout/fragment_event_walking">
+        <argument
+            android:name="walkingItem"
+            app:argType="com.notrika.gympin.data.model.res.Res_evets_walking" />
+    </fragment>
     <action
         android:id="@+id/to_gympin"
         app:destination="@id/main_gympin"
@@ -224,6 +245,14 @@
         android:id="@+id/to_browser"
         app:destination="@id/main_browser"
         android:label="browser"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_full_screen_map"
+        app:destination="@id/full_screen_map"
+        android:label="map"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"

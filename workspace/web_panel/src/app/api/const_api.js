@@ -5,40 +5,53 @@ export let AuthApi = {
 }
 export let LocationApi = {
     //state
-    addState : "v1/location/addState",
-    getAllState : "v1/location/getAllState",
-    updateState : "v1/location/updateState",
-    deleteState : "v1/location/deleteState",
+    addState : "v1/state/add",
+    getAllState : "v1/state/getall",
+    updateState : "v1/state/update",
+    deleteState : "v1/state/delete",
     //city
-    addCity : "v1/location/addCity",
-    getAllCity : "v1/location/getAllCity",
-    getCitiesByState : "v1/location/getCitiesByState",
-    deleteCity : "v1/location/deleteCity",
-    updateCity : "v1/location/updateCity",
+    addCity : "v1/city/add",
+    deleteCity : "v1/city/delete",
+    getAllCity : "v1/city/getall",
+    getCitiesByState : "v1/city/getCitiesByState",
+    updateCity : "v1/city/update",
     //region
-    getRegionsByCity : "v1/location/getRegionsByCity",
-    addRegion : "v1/location/addRegion",
-    deleteRegion : "v1/location/deleteRegion",
-    updateRegion : "v1/location/updateRegion",
+    getRegionsByCity : "v1/region/getRegionsByCity",
+    addRegion : "v1/region/add",
+    deleteRegion : "v1/region/delete",
+    updateRegion : "v1/region/update",
     //place
-    getAllPlace : "v1/location/getAllPlace",
-    getPlaceById : "v1/location/getPlaceById",
-    addPlace : "v1/location/addPlace",
-    deletePlace : "v1/location/deletePlace",
-    updatePlace : "v1/location/updatePlace",
+    getAllPlace : "v1/place/getAll",
+    getPlaceById : "v1/place/getById",
+    addPlace : "v1/place/add",
+    deletePlace : "v1/place/delete",
+    updatePlace : "v1/place/update",
     //place client
-    addPlaceOwner : "v1/location/addPlaceOwner",
-    getOwnersPlace : "v1/location/getOwnersPlace",
+    addPlaceOwner : "v1/place/addPlaceOwner",
+    getOwnersPlace : "v1/place/getOwnersPlace",
 
 }
 
 export let SportApi = {
     //sport
-    addSport : "v1/sport/addSport",
-    deleteSport : "v1/sport/deleteSport",
-    getAllSport : "v1/sport/getAllSport",
-    getSportById : "v1/sport/getSportById",
-    updateSport : "v1/sport/updateSport",
+    addSport : "v1/sport/add",
+    deleteSport : "v1/sport/delete",
+    getAllSport : "v1/sport/getAll",
+    getSportById : "v1/sport/getById",
+    updateSport : "v1/sport/update",
+
+}
+
+
+
+export let collection = {
+    //sport
+    add : "v1/mainpagelayoutcollection/add",
+    delete : "v1/mainpagelayoutcollection/delete",
+    getAll : "v1/mainpagelayoutcollection/getAll",
+    getById : "v1/mainpagelayoutcollection/getById",
+    getMainPage : "v1/mainpagelayoutcollection/mainPage",
+    update : "v1/mainpagelayoutcollection/update",
 
 }
 

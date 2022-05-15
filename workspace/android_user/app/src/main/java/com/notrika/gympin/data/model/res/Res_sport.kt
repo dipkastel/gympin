@@ -4,11 +4,11 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-class Res_sport {
+class Res_sport(id:Int) {
 
     @SerializedName("Id")
     @Expose
-    var Id: Int? = null
+    var Id: Int? = id
     @SerializedName("Name")
     @Expose
     var name: String? = null

@@ -3,8 +3,10 @@ package com.notrika.gympin.data.network.request
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.req.Req_User_Login
+import com.notrika.gympin.data.model.req.Req_User_Refresh_Token
 import com.notrika.gympin.data.model.req.Req_User_Register
 import com.notrika.gympin.data.model.req.Req_User_SendSms
+import com.notrika.gympin.data.model.res.Res_Refresh_Token
 import com.notrika.gympin.data.model.res.Res_User_Login
 import com.notrika.gympin.data.model.res.Res_User_Register
 import com.notrika.gympin.data.network.HttpCode
@@ -45,6 +47,20 @@ constructor(val accountApi: AccountApi, val pocket: Pocket) {
     }
     fun RequestLogin(reqUserLogin: Req_User_Login): Flowable<Resource<Res_User_Login>> {
         return accountApi.userLogin(reqUserLogin)
+                .onErrorReturn {
+                    Response.error(HttpCode.Disconnected, RealResponseBody("null", 0, null))
+                }
+                .map {
+                    ResultManager.OnOprationResult(it)
+                }
+                .subscribeOn(Schedulers.io())
+
+    }
+
+    fun RequestRefreshToken(): Flowable<Resource<Res_Refresh_Token>> {
+        var req = Req_User_Refresh_Token()
+        req.refreshToken = pocket.refreshToken
+        return accountApi.userRefreshToken(req)
                 .onErrorReturn {
                     Response.error(HttpCode.Disconnected, RealResponseBody("null", 0, null))
                 }

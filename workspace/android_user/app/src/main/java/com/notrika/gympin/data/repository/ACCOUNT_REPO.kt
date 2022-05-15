@@ -7,10 +7,11 @@ import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.req.Req_User_Login
 import com.notrika.gympin.data.model.req.Req_User_Register
 import com.notrika.gympin.data.model.req.Req_User_SendSms
+import com.notrika.gympin.data.model.res.Res_Refresh_Token
 import com.notrika.gympin.data.model.res.Res_User_Login
 import com.notrika.gympin.data.model.res.Res_User_Register
 import com.notrika.gympin.data.network.request.AccountRequests
-import com.notrika.gympin_master.util.setting.ErrorCheckEmpty
+import com.notrika.gympin.util.extention.ErrorCheckEmpty
 import javax.inject.Inject
 
 class ACCOUNT_REPO @Inject constructor(
@@ -25,12 +26,10 @@ class ACCOUNT_REPO @Inject constructor(
 
                 Livedata.addSource(source) { listResource ->
                         Livedata.removeSource(source)
-                        if (listResource.data == null) {
-                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), null)
-                        } else if (listResource?.status == Resource.Status.SUCCESS) {
+                        if (listResource?.status == Resource.Status.SUCCESS) {
                                 Livedata.value = Resource.success(listResource.data)
                         } else {
-                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), null)
+                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), listResource?.errorCode?:0)
                         }
                 }
 
@@ -45,12 +44,10 @@ class ACCOUNT_REPO @Inject constructor(
 
                 Livedata.addSource(source) { listResource ->
                         Livedata.removeSource(source)
-                        if (listResource.data == null) {
-                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), null)
-                        } else if (listResource?.status == Resource.Status.SUCCESS) {
+                        if (listResource?.status == Resource.Status.SUCCESS) {
                                 Livedata.value = Resource.success(listResource.data)
                         } else {
-                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), null)
+                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), listResource?.errorCode?:0)
                         }
                 }
 
@@ -65,12 +62,28 @@ class ACCOUNT_REPO @Inject constructor(
 
                 Livedata.addSource(source) { listResource ->
                         Livedata.removeSource(source)
-                        if (listResource.data == null) {
-                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), null)
-                        } else if (listResource?.status == Resource.Status.SUCCESS) {
+                        if (listResource?.status == Resource.Status.SUCCESS) {
                                 Livedata.value = Resource.success(listResource.data)
                         } else {
-                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), null)
+                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), listResource?.errorCode?:0)
+                        }
+                }
+
+                return source
+        }
+
+        fun observeRefresh(): LiveData<Resource<Res_Refresh_Token>> {
+                val Livedata = MediatorLiveData<Resource<Res_Refresh_Token>>()
+                val source = LiveDataReactiveStreams.fromPublisher(UserRequests.RequestRefreshToken())
+                Livedata.value = Resource.loading(null)
+
+
+                Livedata.addSource(source) { listResource ->
+                        Livedata.removeSource(source)
+                        if (listResource?.status == Resource.Status.SUCCESS) {
+                                Livedata.value = Resource.success(listResource.data)
+                        } else {
+                                Livedata.value = Resource.error(listResource.message.ErrorCheckEmpty(), listResource?.errorCode?:0)
                         }
                 }
 

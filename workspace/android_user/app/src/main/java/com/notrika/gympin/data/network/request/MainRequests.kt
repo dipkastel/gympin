@@ -1,5 +1,6 @@
 package com.notrika.gympin.data.network.request
 
+import android.util.Log
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.res.Res_Home_Page
@@ -25,7 +26,6 @@ constructor(val mainApi: MainApi, val pocket: Pocket) {
                     Response.error(HttpCode.Disconnected, RealResponseBody("null", 0, null))
                 }
                 .map {
-
                     ResultManager.OnOprationResult(it)
                 }
                 .subscribeOn(Schedulers.io())

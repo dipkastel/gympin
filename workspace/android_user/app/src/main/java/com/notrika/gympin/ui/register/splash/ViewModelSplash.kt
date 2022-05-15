@@ -1,5 +1,6 @@
 package com.notrika.gympin.ui.register.splash
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.notrika.gympin.data.model.res.Res_Application_Splash

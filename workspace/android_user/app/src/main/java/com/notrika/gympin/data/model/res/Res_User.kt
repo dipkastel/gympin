@@ -9,17 +9,53 @@ class Res_User {
 
     @SerializedName("Id")
     @Expose
-     val Id: Int? = null
+     val id: Long = 0
 
-    @SerializedName("name")
+    @SerializedName("Name")
     @Expose
-     val name: String? = null
+    var name: String? = null
 
-    @SerializedName("profileImage")
+    @SerializedName("ProfileImage")
     @Expose
-     val profileImage: String? = null
+    var profileImage: String? = null
 
-    @SerializedName("rate")
+    @SerializedName("Bio")
     @Expose
-    val rate: Float? = null
+    var bio: String? = null
+
+
+    @SerializedName("FollowersCount")
+    @Expose
+    var followersCount: Long? = null
+
+    @SerializedName("FollowingsCount")
+    @Expose
+    var followingsCount: Long? = null
+
+    @SerializedName("Rate")
+    @Expose
+    var rate: Float? = null
+
+
+    @SerializedName("UserRole")
+    @Expose
+    var userRole: List<Res_User_Role>? = null
+
+    @SerializedName("UserStatus")
+    @Expose
+    var userStatus: String? = null
+
+    @SerializedName("Username")
+    @Expose
+    var username: String? = null
+
+    @SerializedName("UhoneNumber")
+    @Expose
+    var phoneNumber: String? = null
+
+    @SerializedName("Token")
+    @Expose
+    var token: Any? = null
+
+
 }

@@ -21,6 +21,10 @@ class Pocket @Inject constructor(protected var database: DBStructure) : PocketBa
         get() = getString("UserToken")
         set(value) = insert("UserToken", value)
 
+    var refreshToken: String
+        get() = getString("RefreshToken")
+        set(value) = insert("RefreshToken", value)
+
     var userName: String
         get() = getString("UserName")
         set(value) = insert("UserName", value)
@@ -28,6 +32,8 @@ class Pocket @Inject constructor(protected var database: DBStructure) : PocketBa
     var baseUrl: String
         get() = getString("baseUrl")
         set(value) = insert("baseUrl", value)
+
+
 
 
 }

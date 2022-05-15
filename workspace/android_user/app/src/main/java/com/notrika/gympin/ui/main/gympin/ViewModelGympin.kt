@@ -1,5 +1,6 @@
 package com.notrika.gympin.ui.main.gympin
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.notrika.gympin.data.model.Resource
@@ -10,6 +11,8 @@ import javax.inject.Inject
 
 class ViewModelGympin @Inject constructor(var mainRepo: MAIN_REPO) : ViewModel() {
 
+
+    lateinit var viewLifecycleOwner: LifecycleOwner
 
     fun requestGetHomeData(): LiveData<Resource<List<Res_Home_Page>>> {
         return mainRepo.observeMainPageLayoutItem()

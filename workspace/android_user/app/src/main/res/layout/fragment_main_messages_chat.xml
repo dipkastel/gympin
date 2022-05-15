@@ -21,11 +21,11 @@
 
 
     <ImageView
-        android:id="@+id/img_user"
+        android:id="@+id/img_owner_image"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_5sdp"
-        android:src="@drawable/sampleuser3"
+        android:src="@drawable/placeholder_userprofile"
         app:layout_constraintBottom_toBottomOf="@+id/lbl_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/lbl_user" />

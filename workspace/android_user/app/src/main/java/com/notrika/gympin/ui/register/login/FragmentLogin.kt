@@ -18,6 +18,8 @@ import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.req.Req_User_Login
 import com.notrika.gympin.data.model.req.Req_User_Register
 import com.notrika.gympin.data.model.req.Req_User_SendSms
+import com.notrika.gympin.data.network.HttpCode
+import com.notrika.gympin.data.network.HttpErrors
 import com.notrika.gympin.ui.main.ActivityMain
 import com.notrika.gympin.ui.register.RegisterInnerPageFragment
 import kotlinx.android.synthetic.main.fragment_register_login.*
@@ -68,6 +70,7 @@ class FragmentLogin : RegisterInnerPageFragment() {
                     btn_submith_activation_code.isEnabled = true
                     result.data?.let { it ->
                         pocket.userToken = "Bearer "+it.token
+                        pocket.refreshToken = it.refreshToken
                         it.id?.let {that-> pocket.userId=that }
                         it.phoneNumber?.let {that-> pocket.phoneNumber=that }
                         it.username?.let {that-> pocket.userName=that }
@@ -139,7 +142,7 @@ class FragmentLogin : RegisterInnerPageFragment() {
 
 //                val anim2 = AnimationUtils.loadAnimation(context, R.anim.exit_from_bottom)
 //                frame_lagin.startAnimation(anim2)
-                requsetSuccess(120*1000);
+                requsetSuccess(120*1000.toLong());
             }
             "Register"->{
 
@@ -160,7 +163,6 @@ class FragmentLogin : RegisterInnerPageFragment() {
 
     private fun requsetSuccess(timeToCount:Long) {
         btn_resend_code.isEnabled = false
-        Log.d(TAG,"success")
         viewModel.resetCounter(timeToCount)
         setCounterObserver()
 
@@ -188,7 +190,10 @@ class FragmentLogin : RegisterInnerPageFragment() {
                     RequestForSendSms(phonrNumber)
                 }
                 Resource.Status.ERROR -> {
-                    et_phone_number.error = baseSetting.message
+                    if(baseSetting.errorCode==HttpCode.USER_NAME_EXIST)
+                        et_register_name.error = HttpErrors.USER_NAME_EXIST
+                    if(baseSetting.errorCode==HttpCode.USER_REGISTERD_BEFORE)
+                        et_register_phone_number.error = HttpErrors.USER_REGISTERD_BEFORE
                 }
 
                 Resource.Status.LOADING -> {

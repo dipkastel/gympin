@@ -8,17 +8,17 @@ import com.notrika.gympin.R
 import com.notrika.gympin.util.dialog.CBaseDialogContaner
 import kotlinx.android.synthetic.main.dialog_messages.view.*
 
-class DialogMessageDetail constructor(var _activity: Activity,var _title:String,var _message:String): CBaseDialogContaner() {
+class DialogMessageDetail constructor(var activity: Activity,var _title:String,var _message:String): CBaseDialogContaner() {
 
     init {
-        initialize(_activity)
-        setTitle(_title)
+        initialize(activity)
+        setDialogTitle(_title)
     }
 
 
 
     override fun setView(view: View) {
-        val inflater = _activity
+        val inflater = activity
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         var thisView = inflater.inflate(R.layout.dialog_messages, null)
         thisView.txt_message.text = _message

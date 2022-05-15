@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -37,11 +38,12 @@ class FragmentSports : MainPageFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, providerFactory).get(ViewModelSports::class.java)
+        viewModel.viewLifecycleOwner = viewLifecycleOwner
         getsports()
     }
 
     private fun getsports() {
-        viewModel.requestGetAllSport().observe(viewLifecycleOwner, Observer {
+        viewModel.requestGetAllSport().observe(viewModel.viewLifecycleOwner, Observer {
 
             when (it.status) {
                 Resource.Status.SUCCESS -> {
@@ -70,7 +72,7 @@ class FragmentSports : MainPageFragment() {
                     ).show()
                 }
                 Resource.Status.UNAUTHORIZED -> {
-                    (activity as ActivityMain).reautorizationUser(requireActivity(),
+                    (activity as ActivityMain).reautorizationUser(
                         object : onAuthorizeComplete {
                             override fun authorized() {
                                 getsports()
@@ -90,8 +92,15 @@ class FragmentSports : MainPageFragment() {
         recyclerView.adapter?.let { adapter ->
             (adapter as AdapterGridViewSport).onitemClickLictener = object : OnSportClickListener {
                 override fun Click(imageView: ImageView, item: Res_sport) {
-                    var action = FragmentSportsDirections.sportsToEvents()
-                    findNavController().navigate(action)
+                    when(item.Id){
+                        1->{
+                            var action = FragmentSportsDirections.sportsToWalking(item.Id?:1)
+                            findNavController().navigate(action)
+                        }
+                        else->{
+
+                        }
+                    }
                 }
 
             }

@@ -4,26 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/img_ico_peoples"
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_margin="@dimen/_3sdp"
-        android:src="@drawable/ico_notif"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/txt_user_count"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_user_count"
+        android:layout_margin="@dimen/_3sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_3sdp"
+        android:paddingHorizontal="@dimen/_25sdp"
+        android:paddingVertical="@dimen/_5sdp"
+        android:background="@drawable/_rectangle_radius_strok_grey"
         android:fontFamily="@font/iran_sans_normal"
-        android:text="@string/text_placeholder"
+        android:text="2 نفر"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_ico_peoples"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

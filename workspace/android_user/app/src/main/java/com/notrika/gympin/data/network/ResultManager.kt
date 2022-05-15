@@ -23,35 +23,36 @@ class ResultManager {
                         return if (it.isSuccessful) {
                             Resource.success(it.body()?.data)
                         } else {
-                            Resource.error(it.message(), it.body()?.data)
+                            var err = getErrorMessage(it.errorBody()?.string())
+                            Resource.error(it.message(), err?.code!!)
                         }
                     }
                     HttpCode.HTTP_CREATED -> {
                         return if (it.isSuccessful) {
                             Resource.success(it.body()?.data)
                         } else {
-                            Resource.error(it.message(), it.body()?.data)
+                            var err = getErrorMessage(it.errorBody()?.string())
+                            Resource.error(it.message(), err?.code!!)
                         }
                     }
                     HttpCode.Disconnected -> {
-                        return Resource.error(HttpErrors.NO_INTERNET_ACCESS, it.body()?.data)
+                        return Resource.error(HttpErrors.NO_INTERNET_ACCESS, 12163)
                     }
                     HttpCode.HTTP_BAD_REQUEST -> {
                         try{
-                            var kk=it.errorBody()?.string()
-                            var err = getErrorMessage(kk);
+                            var err = getErrorMessage(it.errorBody()?.string())
                             if(err?.code==1001){
-                                return Resource.error("user not found", it.body()?.data)
+                                return Resource.error("user not found", 1001)
                             }else{
-                                return Resource.error(err?.errorMessage?:"نامشخص", it.body()?.data)
+                                return Resource.error(err?.errorMessage?:"نامشخص", err?.code!!)
                             }
                         }catch (e:Exception){
-                            return Resource.error("ورودی نامعتبر", it.body()?.data)
+                            return Resource.error("ورودی نامعتبر", 400)
                         }
                     }
                     else -> {
                         var errors = getErrorMessage(it.errorBody()?.string())
-                        return Resource.error(errors?.errorMessage?:"نامشخص", it.body()?.data)
+                        return Resource.error(errors?.errorMessage?:"نامشخص", errors?.code!!)
                     }
                 }
 
@@ -61,7 +62,7 @@ class ResultManager {
         }
 
         private fun getErrorMessage(string: String?): ErrorType? {
-            val firstresult = Gson().fromJson<OprationErrorResult>(string, OprationErrorResult::class.java)
+            val firstresult = Gson().fromJson(string, OprationErrorResult::class.java)
             return  firstresult.error
         }
 

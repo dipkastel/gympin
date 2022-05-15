@@ -3,8 +3,8 @@ package com.notrika.gympin.di.main
 import com.notrika.gympin.ui.main.browser.FragmentBrowser
 import com.notrika.gympin.ui.main.contents.FragmentContents
 import com.notrika.gympin.ui.main.credit.FragmentCredit
-import com.notrika.gympin.ui.main.events.createEvent.FragmentCreateEvent
-import com.notrika.gympin.ui.main.events.event.FragmentEvent
+import com.notrika.gympin.ui.main.events.walking.eventCreateWalking.FragmentEventCreateWalking
+import com.notrika.gympin.ui.main.events.walking.eventWalking.FragmentEventWalking
 import com.notrika.gympin.ui.main.gympin.FragmentGympin
 import com.notrika.gympin.ui.main.leaderBoard.FragmentLeaderBoard
 import com.notrika.gympin.ui.main.messages.FragmentMessages
@@ -17,7 +17,7 @@ import com.notrika.gympin.ui.main.places.FragmentPlaces
 import com.notrika.gympin.ui.main.settings.FragmentSettings
 import com.notrika.gympin.ui.main.singleContent.FragmentSingleContents
 import com.notrika.gympin.ui.main.sports.FragmentSports
-import com.notrika.gympin.ui.main.sports.eventsList.FragmentEventsList
+import com.notrika.gympin.ui.main.events.walking.eventListWalking.FragmentEventListWalking
 import com.notrika.gympin.ui.main.survey.FragmentSurveyList
 import com.notrika.gympin.ui.main.userProfile.FragmentUserProfile
 import dagger.Module
@@ -48,7 +48,7 @@ abstract class MainFragmentBuilderModule {
     internal abstract fun credit_fragment(): FragmentCredit
 
     @ContributesAndroidInjector
-    internal abstract fun events_fragment(): FragmentEventsList
+    internal abstract fun events_fragment(): FragmentEventListWalking
 
     @ContributesAndroidInjector
     internal abstract fun leader_board_fragment(): FragmentLeaderBoard
@@ -75,10 +75,10 @@ abstract class MainFragmentBuilderModule {
     internal abstract fun edit_profile_fragment(): FragmentEditProfile
 
     @ContributesAndroidInjector
-    internal abstract fun event_fragment(): FragmentEvent
+    internal abstract fun event_fragment(): FragmentEventWalking
 
     @ContributesAndroidInjector
-    internal abstract fun create_event_fragment(): FragmentCreateEvent
+    internal abstract fun create_event_fragment(): FragmentEventCreateWalking
 
     @ContributesAndroidInjector
     internal abstract fun browser_fragment(): FragmentBrowser

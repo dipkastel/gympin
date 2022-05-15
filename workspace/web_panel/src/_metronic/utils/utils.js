@@ -1,5 +1,23 @@
 import {AuthApi} from "../../app/api/const_api";
 
+export function getImageUrlByName(name,Height=0,Width=0) {
+  var url = "http://api.gympin.ir/v1/multimedia/getByName?fileName=" + name;
+  if(Height!==0)
+    url+="&height="+Height
+  if(Width!==0)
+    url+="&width="+Width
+  return url;
+}
+export function getImageUrlById(id,Height=0,Width=0) {
+  var url = "http://api.gympin.ir/v1/multimedia/getById?Id=" + id;
+  if(Height!==0)
+    url+="&height="+Height
+  if(Width!==0)
+    url+="&width="+Width
+  return url;
+}
+
+
 export function removeCSSClass(ele, cls) {
   const reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
   ele.className = ele.className.replace(reg, " ");

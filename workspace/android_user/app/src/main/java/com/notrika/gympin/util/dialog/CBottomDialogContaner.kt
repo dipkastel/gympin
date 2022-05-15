@@ -11,7 +11,6 @@ import android.view.*
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import androidx.annotation.CallSuper
-import com.hampardaz.cinematicket.util.dialogs.CDialog
 import com.notrika.gympin.R
 import kotlinx.android.synthetic.main.c_component_bottom_dialog.view.*
 

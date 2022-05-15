@@ -9,7 +9,7 @@
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
         android:layout_marginTop="@dimen/_20sdp"
-        android:src="@drawable/sampleuser5"
+        android:src="@drawable/placeholder_userprofile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,12 +31,12 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/_35sdp"
         android:layout_marginTop="@dimen/_3sdp"
+        android:paddingHorizontal="@dimen/_20sdp"
         android:background="@drawable/_rectangle_radius_fill_grey"
         android:layout_marginHorizontal="@dimen/_30sdp"
         android:fontFamily="@font/iran_sans_bold"
         android:inputType="number"
         android:textSize="@dimen/_11sdp"
-        android:paddingHorizontal="@dimen/_20sdp"
         android:textColor="@color/grey_Davy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,17 +84,21 @@
 
     <EditText
         android:id="@+id/edt_bio"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_80sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_3sdp"
         android:lines="3"
+        android:minLines="4"
+        android:text="asd asd asd asd asd "
         android:background="@drawable/_rectangle_radius_fill_grey"
         android:layout_marginHorizontal="@dimen/_30sdp"
         android:fontFamily="@font/iran_sans_bold"
-        android:inputType="textPersonName"
+        android:inputType="text|textMultiLine"
         android:textSize="@dimen/_11sdp"
         android:paddingHorizontal="@dimen/_20sdp"
+        android:paddingVertical="@dimen/_5sdp"
         android:textColor="@color/grey_Davy"
+        android:gravity="top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_bio" />
@@ -125,5 +129,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_link" />
+
+    <TextView
+        android:id="@+id/txt_btn_create"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:background="@color/cyan_light"
+        android:gravity="center"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/white_london"
+        android:fontFamily="@font/iran_sans_bold"
+        android:text="@string/confirm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

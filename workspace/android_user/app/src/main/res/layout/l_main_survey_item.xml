@@ -21,10 +21,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/img_user"
+                android:id="@+id/img_owner_image"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
-                android:src="@drawable/sampleuser5"
+                android:src="@drawable/placeholder_userprofile"
                 android:layout_margin="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -39,9 +39,9 @@
                 android:textColor="@color/black_Bistre"
                 android:textSize="@dimen/_11sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/img_user"
-                app:layout_constraintStart_toStartOf="@+id/img_user"
-                app:layout_constraintTop_toBottomOf="@+id/img_user" />
+                app:layout_constraintEnd_toEndOf="@+id/img_owner_image"
+                app:layout_constraintStart_toStartOf="@+id/img_owner_image"
+                app:layout_constraintTop_toBottomOf="@+id/img_owner_image" />
 
 
             <TextView
@@ -56,21 +56,21 @@
                 android:textColor="@color/black_Bistre"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/img_user"
-                app:layout_constraintTop_toTopOf="@+id/img_user" />
+                app:layout_constraintStart_toEndOf="@+id/img_owner_image"
+                app:layout_constraintTop_toTopOf="@+id/img_owner_image" />
 
             <com.willy.ratingbar.ScaleRatingBar
-                android:id="@+id/rate_user"
+                android:id="@+id/rb_owner_rate"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_margin="@dimen/_5sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/img_user"
+                app:layout_constraintStart_toEndOf="@+id/img_owner_image"
                 app:layout_constraintTop_toBottomOf="@+id/txt_event_name"
                 app:srb_clearRatingEnabled="true"
-                app:srb_drawableEmpty="@drawable/ic_star_black_active_16dp"
-                app:srb_drawableFilled="@drawable/ic_star_black_16dp"
+                app:srb_drawableEmpty="@drawable/ico_rate_star_deactive"
+                app:srb_drawableFilled="@drawable/ico_rate_star_active"
                 app:srb_numStars="5"
                 app:srb_starPadding="0dp"
                 app:srb_starHeight="@dimen/_35sdp"

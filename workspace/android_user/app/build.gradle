@@ -5,7 +5,8 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
-//apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
 
 
 android {
@@ -21,11 +22,11 @@ android {
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
-//        defaultConfig {
-//            manifestPlaceholders = [onesignal_app_id : "51150754-1bd6-4632-ba35-55bbbeff985a",
-//                                    // Project number pulled from dashboard, local value is ignored.
-//                                    onesignal_google_project_number: "REMOTE"]
-//        }
+        defaultConfig {
+            manifestPlaceholders = [onesignal_app_id : "abc4d224-e0a7-4520-ae39-bf3c010d641c",
+                                    // Project number pulled from dashboard, local value is ignored.
+                                    onesignal_google_project_number: "REMOTE"]
+        }
     }
 
 
@@ -85,15 +86,19 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     implementation project(path: ':Cbar')
 
+    //datetime
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.4.0'
+
     //navigation
     def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-runtime-ktx:$nav_version"
 
-//    //firebase
-//    implementation platform('com.google.firebase:firebase-bom:28.3.0')
-//    implementation 'com.google.firebase:firebase-analytics-ktx'
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:28.3.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
     //dagger
     implementation 'com.google.dagger:dagger:2.38.1'
@@ -120,8 +125,11 @@ dependencies {
 //    implementation "org.greenrobot:eventbus:$eventbus_version"
 
 //    //onesignal
-//    def onesignal_version = "3.7.1"
-//    implementation "com.onesignal:OneSignal:$onesignal_version"
+    implementation "com.onesignal:OneSignal:[4.0.0, 4.99.99]"
+
+    //persian date
+    implementation 'com.github.samanzamani:PersianDate:1.4.0'
+    implementation 'com.github.aliab:Persian-Date-Picker-Dialog:1.8.0'
 
     //material
     def material_version = "1.5.0"
@@ -131,10 +139,9 @@ dependencies {
 //    def smartlocation = "3.3.3"
 //    implementation "io.nlopez.smartlocation:library:$smartlocation"
 
-//    //imagePicker
-//    def imagePicker = "1.0.1"
-//    implementation 'com.github.dhaval2404:imagepicker:1.6'
-//    implementation "com.github.florent37:inline-activity-result-kotlin:$imagePicker"
+    //imagePicker
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
 
     //sdp library
     implementation "com.intuit.sdp:sdp-android:1.0.6"

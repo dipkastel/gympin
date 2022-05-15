@@ -17,11 +17,23 @@ open class PocketBase(protected var db: DBStructure) {
         }
         return ""
     }
+    protected fun getBoolean(key:String):Boolean {
+         pockets[key]?.let {
+            return it.toBoolean()
+        }
+        return false
+    }
     protected fun getInt(key:String):Int {
          pockets[key]?.let {
             return it.toInt()
         }
         return 0
+    }
+    protected fun getFloat(key:String):Float {
+         pockets[key]?.let {
+            return it.toFloat()
+        }
+        return 0f
     }
     protected fun getLong(key:String):Long {
          pockets[key]?.let {
@@ -29,8 +41,19 @@ open class PocketBase(protected var db: DBStructure) {
         }
         return 0
     }
+    protected fun getDouble(key:String):Double {
+         pockets[key]?.let {
+            return it.toDouble()
+        }
+        return 0.00000
+    }
     protected fun insert(key:String,value:String?) {
         var pocketdata = TBL_POCKET(key, value)
+        threadPool.submit { pocketDao.insert(pocketdata) }
+        RefreshValue(pocketdata)
+    }
+    protected fun insert(key:String,value:Boolean?) {
+        var pocketdata = TBL_POCKET(key, value.toString())
         threadPool.submit { pocketDao.insert(pocketdata) }
         RefreshValue(pocketdata)
     }
@@ -40,6 +63,16 @@ open class PocketBase(protected var db: DBStructure) {
         RefreshValue(pocketdata)
     }
     protected fun insert(key:String,value:Long?) {
+        var pocketdata = TBL_POCKET(key, value.toString())
+        threadPool.submit { pocketDao.insert(pocketdata) }
+        RefreshValue(pocketdata)
+    }
+    protected fun insert(key:String,value:Float?) {
+        var pocketdata = TBL_POCKET(key, value.toString())
+        threadPool.submit { pocketDao.insert(pocketdata) }
+        RefreshValue(pocketdata)
+    }
+    protected fun insert(key:String,value:Double?) {
         var pocketdata = TBL_POCKET(key, value.toString())
         threadPool.submit { pocketDao.insert(pocketdata) }
         RefreshValue(pocketdata)

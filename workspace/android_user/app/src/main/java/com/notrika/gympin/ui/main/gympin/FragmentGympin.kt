@@ -1,10 +1,14 @@
 package com.notrika.gympin.ui.main.gympin
 
+import android.app.Notification
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.cinematicket.cbar.models.CiBar_Action
@@ -43,11 +47,14 @@ class FragmentGympin : MainPageFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, providerFactory).get(ViewModelGympin::class.java)
+        viewModel.viewLifecycleOwner = viewLifecycleOwner
         getHome()
+
     }
 
     private fun getHome() {
-        viewModel.requestGetHomeData().observe(viewLifecycleOwner, Observer {
+        viewModel.requestGetHomeData().observe(viewModel.viewLifecycleOwner, Observer {
+
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     fillList(it.data!!)
@@ -79,7 +86,7 @@ class FragmentGympin : MainPageFragment() {
                     ).show()
                 }
                 Resource.Status.UNAUTHORIZED -> {
-                    (activity as ActivityMain).reautorizationUser(requireActivity(),
+                    (activity as ActivityMain).reautorizationUser(
                         object : onAuthorizeComplete {
                             override fun authorized() {
                                 getHome()

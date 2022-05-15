@@ -11,12 +11,11 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_150sdp"
-        android:background="@color/black_copenhagen"
+        android:background="@drawable/_register_header_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <ImageView
             android:id="@+id/imageView"

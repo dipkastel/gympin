@@ -104,7 +104,6 @@ class Helper {
             // Toast.makeText(context, "gps_enabled", Toast.LENGTH_LONG).show();
         } catch (ex: Exception) {
             ex.printStackTrace()
-            Log.i("", "")
         }
 
         try {
@@ -320,7 +319,6 @@ class Helper {
         view.stateListAnimator = StateListAnimator()
         animation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {
-                Log.i("", "")
             }
 
             override fun onAnimationEnd(animation: Animation) {
@@ -329,7 +327,6 @@ class Helper {
             }
 
             override fun onAnimationRepeat(animation: Animation) {
-                Log.i("", "")
             }
         })
     }
@@ -379,7 +376,7 @@ class Helper {
 
     @Throws(PackageManager.NameNotFoundException::class)
     fun getVersionName(activity: androidx.appcompat.app.AppCompatActivity): String {
-        val packageInfo = activity.packageManager.getPackageInfo("com.hampardaz.cinematicket", 0)
+        val packageInfo = activity.packageManager.getPackageInfo("com.notrika.gympin", 0)
         return packageInfo.versionName
     }
 

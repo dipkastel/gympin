@@ -19,6 +19,12 @@ export default {
       },
       { section: "general" },
       {
+        title: "manage HomePage",
+        root: true,
+        icon: "flaticon-home",
+        page: "homePage"
+      },
+      {
         title: "manage places",
         root: true,
         icon: "flaticon-map-location",
@@ -35,6 +41,12 @@ export default {
         root: true,
         icon: "flaticon-users",
         page: "users"
+      },
+      {
+        title: "manage events",
+        root: true,
+        icon: "flaticon-map-location",
+        page: "events"
       },
       {
         title: "manage sports",

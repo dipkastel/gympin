@@ -23,7 +23,7 @@
         android:layout_width="@dimen/_35sdp"
         android:layout_height="@dimen/_35sdp"
         android:layout_marginStart="@dimen/_3sdp"
-        android:src="@drawable/sampleuser3"
+        android:src="@drawable/placeholder_userprofile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/_txt_time" />
 

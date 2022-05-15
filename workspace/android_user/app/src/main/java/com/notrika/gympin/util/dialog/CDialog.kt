@@ -1,4 +1,4 @@
-package com.hampardaz.cinematicket.util.dialogs
+package com.notrika.gympin.util.dialog
 
 import android.app.Dialog
 import android.view.View

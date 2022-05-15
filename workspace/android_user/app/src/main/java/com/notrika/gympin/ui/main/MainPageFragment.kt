@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.RequestManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.notrika.cbar.CiBar
+import com.notrika.gympin.BaseActivity
 import com.notrika.gympin.R
 import com.notrika.gympin.data.db.db_pocket.Pocket
 import com.notrika.gympin.data.enum.MainDestinationTypes
@@ -82,7 +83,7 @@ abstract class MainPageFragment : DaggerFragment() {
             MainDestinationTypes.USERLIST -> {
             }
             MainDestinationTypes.PROFILE ->{
-                var action = FragmentGympinDirections.toUserProfile(data)
+                var action = FragmentGympinDirections.toUserProfile(0,data)
                 findNavController().navigate(action)
             }
             MainDestinationTypes.CONTENTS -> {
@@ -95,11 +96,16 @@ abstract class MainPageFragment : DaggerFragment() {
             }
             MainDestinationTypes.INVITEFRIENDS -> {
             }
+            MainDestinationTypes.FULLSCREENMAP -> {
+                var action = FragmentGympinDirections.toFullScreenMap()
+                findNavController().navigate(action)
+            }
             MainDestinationTypes.SURVEYLIST -> {
                 var action = FragmentGympinDirections.toSurvey()
                 findNavController().navigate(action)
             }
             MainDestinationTypes.LOGOUT -> {
+                (activity as ActivityMain).logout()
             }
         }
     }
