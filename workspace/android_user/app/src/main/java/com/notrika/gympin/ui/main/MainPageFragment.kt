@@ -96,10 +96,6 @@ abstract class MainPageFragment : DaggerFragment() {
             }
             MainDestinationTypes.INVITEFRIENDS -> {
             }
-            MainDestinationTypes.FULLSCREENMAP -> {
-                var action = FragmentGympinDirections.toFullScreenMap()
-                findNavController().navigate(action)
-            }
             MainDestinationTypes.SURVEYLIST -> {
                 var action = FragmentGympinDirections.toSurvey()
                 findNavController().navigate(action)

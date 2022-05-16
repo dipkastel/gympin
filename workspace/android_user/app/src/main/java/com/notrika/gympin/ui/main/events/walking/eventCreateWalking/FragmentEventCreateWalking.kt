@@ -18,15 +18,13 @@ import com.notrika.gympin.data.model.Resource
 import com.notrika.gympin.data.model.req.Req_event_walking_add
 import com.notrika.gympin.data.model.res.Res_User
 import com.notrika.gympin.data.model.res.Res_sport
-import com.notrika.gympin.ui.common.fullScreenMap.FragmentFullScreenMap
 import com.notrika.gympin.ui.main.ActivityMain
 import com.notrika.gympin.ui.main.InnerPageFragment
-import com.notrika.gympin.util.component.MyMapView
+import com.notrika.gympin.util.component.map.MyMapView
 import com.notrika.gympin.util.extention.toStringDateFormat
 import kotlinx.android.synthetic.main.fragment_event_create_walking.*
 import saman.zamani.persiandate.PersianDate
 import saman.zamani.persiandate.PersianDateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -67,21 +65,12 @@ class FragmentEventCreateWalking : InnerPageFragment() {
                 }
             }
         }
-        my_map.onPointSelectListener = object:MyMapView.OnPointSelectListener{
+        my_map.onPointSelectListener = object: MyMapView.OnPointSelectListener{
             override fun onSelect(lat:Double,lon:Double){
                 viewModel.requestGetAddress(lat,lon).observe(viewModel.viewLifecycleOwner, {
                     my_map.setAddress(it.data)
 
                 })
-            }
-
-            override fun goToFullScreen() {
-                setFragmentResultListener(FragmentFullScreenMap.MAP_RESULT_KEY) { key, bundle ->
-                   var k = key
-                    var d = bundle
-                }
-               var action =  FragmentEventCreateWalkingDirections.toFullScreenMap()
-                findNavController().navigate(action)
             }
 
         }

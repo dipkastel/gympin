@@ -10,12 +10,6 @@
         android:name="com.notrika.gympin.ui.main.gympin.FragmentGympin"
         android:label="gympin"
         tools:layout="@layout/fragment_main_gympin" />
-
-    <fragment
-        android:id="@+id/full_screen_map"
-        android:name="com.notrika.gympin.ui.common.fullScreenMap.FragmentFullScreenMap"
-        android:label="FullScreenMap"
-        tools:layout="@layout/fragment_full_screen_map"/>
     <fragment
         android:id="@+id/main_sports"
         android:name="com.notrika.gympin.ui.main.sports.FragmentSports"
@@ -245,14 +239,6 @@
         android:id="@+id/to_browser"
         app:destination="@id/main_browser"
         android:label="browser"
-        app:enterAnim="@anim/top_pages_in"
-        app:exitAnim="@anim/back_page_out"
-        app:popEnterAnim="@anim/back_pages_in"
-        app:popExitAnim="@anim/top_page_out" />
-    <action
-        android:id="@+id/to_full_screen_map"
-        app:destination="@id/full_screen_map"
-        android:label="map"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"

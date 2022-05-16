@@ -1,4 +1,4 @@
-package com.notrika.gympin.util.component
+package com.notrika.gympin.util.component.map
 
 import android.content.Context
 import android.graphics.Canvas
@@ -22,17 +22,16 @@ import org.osmdroid.views.overlay.OverlayItem
 class MyMapView : CardView {
     interface OnPointSelectListener {
         fun onSelect(lat: Double, lon: Double)
-        fun goToFullScreen()
     }
 
     var onPointSelectListener: OnPointSelectListener? = null
     internal var context: Context
     internal var customView: View
     lateinit var map: MapView
-    var geoPoint: GeoPoint?=null
-    var address: String?=null
+    var geoPoint: GeoPoint? = null
+    var address: String? = null
     var moverlays: ItemizedIconOverlay<OverlayItem>? = null
-    var overlay:Overlay?=null
+    var overlay: Overlay? = null
     private fun init(attrs: AttributeSet? = null) {
 
         Configuration.getInstance()
@@ -41,7 +40,7 @@ class MyMapView : CardView {
         map = customView.map_view
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.controller.setZoom(10)
-        map.controller.setCenter(GeoPoint( 35.6842,51.3523))
+        map.controller.setCenter(GeoPoint(35.6842, 51.3523))
         map.isClickable = true
         map.setUseDataConnection(true)
         map.setBuiltInZoomControls(false)
@@ -49,17 +48,17 @@ class MyMapView : CardView {
         map.isFocusable = true
         map.isFocusableInTouchMode = true
         overlay = object : Overlay(getContext()) {
-            override fun draw(c: Canvas?, osmv: MapView?, shadow: Boolean) {            }
+            override fun draw(c: Canvas?, osmv: MapView?, shadow: Boolean) {}
 
             override fun onSingleTapConfirmed(e: MotionEvent, mapView: MapView): Boolean {
                 geoPoint = mapView.projection.fromPixels(e.x.toInt(), e.y.toInt()) as GeoPoint
-                setSinglePoint(geoPoint!!,mapView)
+                setSinglePoint(geoPoint!!, mapView)
                 return true
             }
         }
         map.overlayManager.add(overlay)
-        img_full_screen.setOnClickListener{
-            onPointSelectListener?.goToFullScreen()
+        img_full_screen.setOnClickListener {
+            FullScreenMapDialog().initialize(context)
         }
 
     }
@@ -68,7 +67,7 @@ class MyMapView : CardView {
         val overlayArray = ArrayList<OverlayItem>()
         val mapItem = OverlayItem("", "", geoPoint)
         var image = resources.getDrawable(R.drawable.ico_location)
-        image.setBounds(0,0,10,10)
+        image.setBounds(0, 0, 10, 10)
         mapItem.setMarker(image)
         overlayArray.add(mapItem)
         if (moverlays == null) {
@@ -92,20 +91,20 @@ class MyMapView : CardView {
             data?.let {
                 data.address?.let {
                     txt_address.visibility = View.VISIBLE
-                    this.address = "${it.city?:""},${it.neighbourhood?:""},${it.road?:""}"
+                    this.address = "${it.city ?: ""},${it.neighbourhood ?: ""},${it.road ?: ""}"
                     txt_address.text = this.address
                 }
             }
 
-        }catch (E:Exception){
+        } catch (E: Exception) {
             txt_address.visibility = View.GONE
         }
     }
 
 
-    fun setSelectedLocation(selectedpoint:GeoPoint) {
+    fun setSelectedLocation(selectedpoint: GeoPoint) {
         geoPoint = selectedpoint
-        setSinglePoint(geoPoint!!,map)
+        setSinglePoint(geoPoint!!, map)
         map.overlayManager.remove(overlay)
         invalidate()
     }

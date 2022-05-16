@@ -45,6 +45,8 @@
     <string name="walking_title_example">پیاده روی ساده در میرداماد</string>
     <string name="select_time">زمان رویداد را مشخص کنید</string>
     <string name="select_start_point">مبدا را مشخص کنید</string>
+    <string name="select_end_point">نقطه انتهای مسیر را مشخص کنید</string>
+    <string name="submit_points">نقاط انتخاب شده را تایید کنید</string>
     <string name="select_peolple_count">تعداد همراهان را انتخاب کنید :</string>
     <string name="create_event">ساخت رویداد</string>
     <string name="confirm">تایید</string>
