@@ -10,13 +10,11 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.Window
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.gson.Gson
 import com.notrika.gympin.R
 import com.notrika.gympin.data.model.res.Res_map_data
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.c_full_screen_map.view.*
 import okhttp3.*
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -26,7 +24,6 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay
 import org.osmdroid.views.overlay.Overlay
 import org.osmdroid.views.overlay.OverlayItem
 import java.io.IOException
-import java.net.URI
 
 
 class FullScreenMapDialog {
@@ -135,6 +132,7 @@ class FullScreenMapDialog {
         val request: Request = Request.Builder()
             .url("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + geoPoint.latitude + "&lon=" + geoPoint.longitude + "&zoom=22&addressdetails=1")
             .build()
+
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
