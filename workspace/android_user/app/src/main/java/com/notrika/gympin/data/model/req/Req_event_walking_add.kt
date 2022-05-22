@@ -30,6 +30,14 @@ class Req_event_walking_add {
     @Expose
     var startLongitude: Double? = null
 
+    @SerializedName("EndLatitude")
+    @Expose
+    var endLatitude: Double? = null
+
+    @SerializedName("EndLongitude")
+    @Expose
+    var endLongitude: Double? = null
+
     @SerializedName("ParticipantCount")
     @Expose
     var participantCount: Int? = null

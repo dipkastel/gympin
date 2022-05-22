@@ -3,13 +3,15 @@
     <style name="Theme.Register" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">true</item>
+        <item name="android:windowFullscreen">false</item>
         <!-- Original AppCompat attributes. -->
         <item name="colorSecondary">@color/red_amaranth</item>
         <item name="android:colorBackground">@color/black_copenhagen</item>
         <item name="colorError">@color/red_amaranth</item>
         <item name="colorPrimary">@color/black_copenhagen</item>
+        <item name="android:statusBarColor">@color/white_london</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="colorPrimaryDark">@color/black_Bistre</item>
         <item name="colorAccent">@color/black_copenhagen</item>
 
@@ -31,11 +33,12 @@
         <item name="colorAccent">@color/black_Bistre</item>
         <item name="colorPrimaryDark">@color/white_Gainsboro</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:colorPrimary" >@color/grey_Davy</item>
-        <item name="android:statusBarColor">@color/white_Gainsboro</item>
+        <item name="android:colorPrimary" >@color/colorPrimary</item>
+        <!-- Original AppCompat attributes. -->
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
-
     <!-- styles. -->
     <style name="Widget.BottomNavigationView"
         parent="Widget.Design.BottomNavigationView">

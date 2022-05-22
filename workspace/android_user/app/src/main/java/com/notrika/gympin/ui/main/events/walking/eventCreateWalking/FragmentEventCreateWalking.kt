@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.cinematicket.cbar.models.CiBar_Action
@@ -20,6 +19,7 @@ import com.notrika.gympin.data.model.res.Res_User
 import com.notrika.gympin.data.model.res.Res_sport
 import com.notrika.gympin.ui.main.ActivityMain
 import com.notrika.gympin.ui.main.InnerPageFragment
+import com.notrika.gympin.util.component.map.MapItemEntity
 import com.notrika.gympin.util.component.map.MyMapView
 import com.notrika.gympin.util.extention.toStringDateFormat
 import kotlinx.android.synthetic.main.fragment_event_create_walking.*
@@ -66,8 +66,8 @@ class FragmentEventCreateWalking : InnerPageFragment() {
             }
         }
         my_map.onPointSelectListener = object: MyMapView.OnPointSelectListener{
-            override fun onSelect(lat:Double,lon:Double){
-                viewModel.requestGetAddress(lat,lon).observe(viewModel.viewLifecycleOwner, {
+            override fun onSelect(mapitem: MapItemEntity) {
+                viewModel.requestGetAddress(mapitem.geoPoint!!).observe(viewModel.viewLifecycleOwner, {
                     my_map.setAddress(it.data)
 
                 })
@@ -111,12 +111,14 @@ class FragmentEventCreateWalking : InnerPageFragment() {
         }else{
             req.address = my_map.address
         }
-        if(my_map.geoPoint == null){
+        if(my_map.geoPoints.size<2){
             ciBar.createAlert(requireActivity() as AppCompatActivity,"مکان درست را انتخاب کنید",CiBar.FAST_CBAR_DURATION).show()
             return
         }else{
-            req.startLatitude = my_map.geoPoint?.latitude
-            req.startLongitude = my_map.geoPoint?.longitude
+            req.startLatitude = my_map.geoPoints[0].geoPoint?.latitude
+            req.startLongitude = my_map.geoPoints[0].geoPoint?.longitude
+            req.endLatitude = my_map.geoPoints[1].geoPoint?.latitude
+            req.endLongitude = my_map.geoPoints[1].geoPoint?.longitude
         }
         if(peopleCountAdapter.selectedItem==9999){
             ciBar.createAlert(requireActivity() as AppCompatActivity,"تعداد همراهان خود را انتخاب کنید",CiBar.FAST_CBAR_DURATION).show()

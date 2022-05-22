@@ -12,6 +12,7 @@ import com.notrika.gympin.data.model.res.Res_map_data
 import com.notrika.gympin.data.repository.FOLLOW_REPO
 import com.notrika.gympin.data.repository.Walking_EVENTS_REPO
 import com.notrika.gympin.data.repository.MAP_REPO
+import org.osmdroid.util.GeoPoint
 import javax.inject.Inject
 
 class ViewModelEventCreateWalking @Inject constructor(var followRepo: FOLLOW_REPO ,var walkingEventsRepo: Walking_EVENTS_REPO, var mapRepo: MAP_REPO,var pocket: Pocket) : ViewModel() {
@@ -22,8 +23,8 @@ class ViewModelEventCreateWalking @Inject constructor(var followRepo: FOLLOW_REP
         return walkingEventsRepo.observeAddWalkingEvents(reqEventWalkingAdd)
     }
 
-    fun requestGetAddress(lat:Double,lon:Double): LiveData<Resource<Res_map_data>> {
-        return mapRepo.observeAddress(lat,lon)
+    fun requestGetAddress(geoPoint: GeoPoint): LiveData<Resource<Res_map_data>> {
+        return mapRepo.observeAddress(geoPoint.latitude,geoPoint.longitude)
     }
 
     fun GetFollowings():LiveData<Resource<List<Res_User>>> {

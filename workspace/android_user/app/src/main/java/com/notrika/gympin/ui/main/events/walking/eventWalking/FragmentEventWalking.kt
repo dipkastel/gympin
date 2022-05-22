@@ -15,6 +15,7 @@ import com.notrika.gympin.data.model.res.Res_evets_walking
 import com.notrika.gympin.ui.common.widgets.dialogConfirm.DialogConfirm
 import com.notrika.gympin.ui.main.ActivityMain
 import com.notrika.gympin.ui.main.InnerPageFragment
+import com.notrika.gympin.util.component.map.MapItemEntity
 import com.notrika.gympin.util.extention.toPersianDate
 import com.notrika.gympin.util.general.GeneralConstants
 import kotlinx.android.synthetic.main.fragment_event_walking.*
@@ -53,7 +54,12 @@ class FragmentEventWalking : InnerPageFragment() {
         var pd=item.startDate.toPersianDate()
         txt_date.text = "${pd.shDay} ${pd.monthName()}"
         txt_time.text = PersianDateFormat("H:i").format(pd)
-        my_map.setSelectedLocation(GeoPoint(item.startLatitude?: GeneralConstants.TEHRAN_LATITUDE,item.startLongitude?: GeneralConstants.TEHRAN_LONGITUDE))
+        var mapitem1 = MapItemEntity(GeoPoint(item.startLatitude?: GeneralConstants.TEHRAN_LATITUDE,item.startLongitude?: GeneralConstants.TEHRAN_LONGITUDE))
+        mapitem1.address = item.address
+        var mapitem2 = MapItemEntity(GeoPoint(item.endLatitude?: GeneralConstants.TEHRAN_LATITUDE,item.endLongitude?: GeneralConstants.TEHRAN_LONGITUDE))
+        mapitem1.address = item.address
+        my_map.setSelectedLocation(mapitem1)
+        my_map.setSelectedLocation(mapitem2)
         fillListParticipants()
         if(item.owner?.id==pocket.userId){
             txt_btn_join.setBackgroundColor(resources.getColor(R.color.Red_gympin))

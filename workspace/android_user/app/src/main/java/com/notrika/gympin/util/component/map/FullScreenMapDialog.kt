@@ -1,18 +1,16 @@
 package com.notrika.gympin.util.component.map
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.Window
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.gson.Gson
+import com.notrika.cbar.CiBar
 import com.notrika.gympin.R
 import com.notrika.gympin.data.model.res.Res_map_data
 import kotlinx.android.synthetic.main.c_full_screen_map.view.*
@@ -28,18 +26,21 @@ import java.io.IOException
 
 class FullScreenMapDialog {
 
+
     lateinit var dialog: Dialog
     lateinit var context: Context
     lateinit var view: View
+    lateinit var adapter:AdapterMapAddress
 
-    var geoPointStart: GeoPoint? = null
-    var geoPointEnd: GeoPoint? = null
+    var geoPoints: ArrayList<MapItemEntity> = ArrayList()
+    var pointCounts = 0;
     var address: String? = null
     var moverlays: ItemizedIconOverlay<OverlayItem>? = null
     var overlay: Overlay? = null
     var overlayArray = ArrayList<OverlayItem>()
 
-    fun initialize(_context: Context) {
+    fun initialize(_context: Context, _pointCounts: Int) {
+        pointCounts = _pointCounts
         this.context = _context;
         dialog = Dialog(context, R.style.baseDialog)
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -49,13 +50,11 @@ class FullScreenMapDialog {
         }
         view = inflater.inflate(R.layout.c_full_screen_map, null)
         dialog.setContentView(view)
-        dialog.window?.setBackgroundDrawable(
-            ColorDrawable(Color.TRANSPARENT)
-        )
         setListeners()
+        adapter = AdapterMapAddress()
+        view.rv_address.adapter =adapter
         loadMap()
         dialog.show()
-
     }
 
     fun loadMap() {
@@ -77,60 +76,48 @@ class FullScreenMapDialog {
             }
         }
         view._full_map.overlayManager.add(overlay)
+
+        adapter.onItemClickListener = object :AdapterMapAddress.OnItemClickListener{
+            override fun click(itemEntity: MapItemEntity) {
+                geoPoints.remove(itemEntity)
+                adapter.removeItem(itemEntity)
+
+                removePointOnMap(itemEntity)
+                settitle()
+            }
+        }
+
     }
 
     private fun pointSelect(e: MotionEvent, mapView: MapView) {
-        if (geoPointStart == null) {
-            geoPointStart = mapView.projection.fromPixels(e.x.toInt(), e.y.toInt()) as GeoPoint
-            setPoint(geoPointStart!!, mapView)
-            setAddress(geoPointStart!!, "از ", view.txt_start_address)
-            view.txt_close_start.setOnClickListener {
-                view.cl_start.visibility = View.INVISIBLE
-                overlayArray.remove(overlayArray.filter { o -> o.point.latitude == geoPointStart!!.latitude }
-                    .first())
-                geoPointStart = null;
-                invalidateMap(mapView)
-                settitle()
-            }
+        if (geoPoints.count()< pointCounts) {
+            var mapItem = MapItemEntity(mapView.projection.fromPixels(e.x.toInt(), e.y.toInt()) as GeoPoint)
+            geoPoints.add(mapItem)
+            setPointOnMap(mapItem)
+            setAddress(mapItem)
 
-            settitle()
-            return
         }
-        if (geoPointEnd == null) {
-            geoPointEnd = mapView.projection.fromPixels(e.x.toInt(), e.y.toInt()) as GeoPoint
-            setPoint(geoPointEnd!!, mapView)
-            setAddress(geoPointEnd!!, "تا ", view.txt_end_address)
-            view.txt_close_end.setOnClickListener {
-                view.cl_end.visibility = View.INVISIBLE
-                overlayArray.remove(overlayArray.filter { o -> o.point.latitude == geoPointEnd!!.latitude }
-                    .first())
-                geoPointEnd = null;
-                invalidateMap(mapView)
-                settitle()
-            }
-            settitle()
-            return
-        }
-
+        settitle()
     }
+
 
     fun settitle() {
 
         view.txt_title.text =
             when {
-                (geoPointStart == null) -> context.getString(R.string.select_start_point)
-                (geoPointEnd == null) -> context.getString(R.string.select_end_point)
+                (geoPoints.count()<1) -> context.getString(R.string.select_start_point)
+                (geoPoints.count()<2) -> context.getString(R.string.select_end_point)
                 else -> context.getString(R.string.submit_points)
             }
     }
 
-    private fun setAddress(geoPoint: GeoPoint, preposition: String, txtDest: TextView) {
+    private fun setAddress(mapitem: MapItemEntity) {
         val client = OkHttpClient()
 
         val handler = Handler()
 
         val request: Request = Request.Builder()
-            .url("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + geoPoint.latitude + "&lon=" + geoPoint.longitude + "&zoom=22&addressdetails=1")
+            .url("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + mapitem.geoPoint?.latitude + "&lon=" + mapitem.geoPoint?.longitude + "&zoom=22&addressdetails=1")
             .build()
 
 
@@ -138,7 +125,7 @@ class FullScreenMapDialog {
             override fun onFailure(call: Call, e: IOException) {
 
                 handler.post {
-                    txtDest.text = "آدرس نا مشخص"
+//                    adapter.items.add("آدرس نا مشخص")
                 }
             }
 
@@ -146,8 +133,11 @@ class FullScreenMapDialog {
                 var responses = Gson().fromJson(response.body()?.string(), Res_map_data::class.java)
 
                 handler.post {
-                    txtDest.text = preposition + responses.displayName
-                    (txtDest.parent as ConstraintLayout).visibility = View.VISIBLE
+
+                    responses.displayName?.let {
+                        mapitem.address =it
+                            adapter.addItem(mapitem)
+                    }
                 }
             }
 
@@ -157,33 +147,57 @@ class FullScreenMapDialog {
 
     private fun setListeners() {
         view.btn_submit.setOnClickListener {
-
+            if (geoPoints.count()==pointCounts){
+                onfinishListener?.submit(geoPoints)
+                dialog.dismiss()
+            }else{
+                CiBar().createAlert(context as Activity,"کممه",CiBar.LONG_CBAR_DURATION).show()
+            }
         }
     }
 
-    fun setPoint(geoPoint: GeoPoint, mapView: MapView) {
-        val mapItem = OverlayItem("", "", geoPoint)
+    fun setPointOnMap(mapitem: MapItemEntity) {
+        val mapItem = OverlayItem("", "", mapitem.geoPoint)
         var image = context.resources.getDrawable(R.drawable.ico_location)
         image.setBounds(0, 0, 10, 10)
         mapItem.setMarker(image)
         overlayArray.add(mapItem)
-        invalidateMap(mapView)
+        invalidateMap()
     }
 
-    private fun invalidateMap(mapView: MapView) {
+    private fun removePointOnMap(mapItemEntity: MapItemEntity) {
+        overlayArray.remove(overlayArray.find { p->p.point.latitude==mapItemEntity.geoPoint?.latitude })
+        invalidateMap()
+    }
+    private fun invalidateMap() {
         if (moverlays == null) {
             moverlays =
                 ItemizedIconOverlay(context, overlayArray, null)
-            mapView.overlays.add(moverlays)
-            mapView.invalidate()
+            view._full_map.overlays.add(moverlays)
+            view._full_map.invalidate()
         } else {
-            mapView.overlays.remove(moverlays)
-            mapView.invalidate()
+            view._full_map.overlays.remove(moverlays)
+            view._full_map.invalidate()
             moverlays =
                 ItemizedIconOverlay(context, overlayArray, null)
-            mapView.overlays.add(moverlays)
+            view._full_map.overlays.add(moverlays)
+            view._full_map.invalidate()
         }
     }
 
+    fun setgeoPoints(geoPoints: java.util.ArrayList<MapItemEntity>) {
+        this.geoPoints = geoPoints;
+        geoPoints.forEach{
+            setPointOnMap(it)
+            setAddress(it)
+        }
+        settitle()
+    }
 
+    var onfinishListener:OnSubmitListener?=null
+
+    interface OnSubmitListener {
+
+        fun submit(points: List<MapItemEntity>)
+    }
 }

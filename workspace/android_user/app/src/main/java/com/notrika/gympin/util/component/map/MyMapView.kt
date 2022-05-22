@@ -20,15 +20,16 @@ import org.osmdroid.views.overlay.OverlayItem
 
 
 class MyMapView : CardView {
+
     interface OnPointSelectListener {
-        fun onSelect(lat: Double, lon: Double)
+        fun onSelect(mapitem: MapItemEntity)
     }
 
     var onPointSelectListener: OnPointSelectListener? = null
     internal var context: Context
     internal var customView: View
     lateinit var map: MapView
-    var geoPoint: GeoPoint? = null
+    var geoPoints: ArrayList<MapItemEntity> = ArrayList()
     var address: String? = null
     var moverlays: ItemizedIconOverlay<OverlayItem>? = null
     var overlay: Overlay? = null
@@ -51,21 +52,34 @@ class MyMapView : CardView {
             override fun draw(c: Canvas?, osmv: MapView?, shadow: Boolean) {}
 
             override fun onSingleTapConfirmed(e: MotionEvent, mapView: MapView): Boolean {
-                geoPoint = mapView.projection.fromPixels(e.x.toInt(), e.y.toInt()) as GeoPoint
-                setSinglePoint(geoPoint!!, mapView)
+                var mapItem = MapItemEntity(mapView.projection.fromPixels(e.x.toInt(), e.y.toInt()) as GeoPoint)
+                geoPoints.add(mapItem)
+                setSinglePoint(mapItem)
                 return true
             }
         }
         map.overlayManager.add(overlay)
         img_full_screen.setOnClickListener {
-            FullScreenMapDialog().initialize(context)
+            var dialog =FullScreenMapDialog();
+            dialog.initialize(context,2)
+            dialog.setgeoPoints(geoPoints)
+            dialog.onfinishListener = object :FullScreenMapDialog.OnSubmitListener{
+                override fun submit(points: List<MapItemEntity>) {
+                    overlayArray.clear()
+                    points.forEach{
+                        setSinglePoint(it)
+                    }
+                    geoPoints.clear()
+                    geoPoints.addAll(points)
+                }
+            }
         }
 
     }
 
-    private fun setSinglePoint(geoPoint: GeoPoint, mapView: MapView) {
-        val overlayArray = ArrayList<OverlayItem>()
-        val mapItem = OverlayItem("", "", geoPoint)
+    val overlayArray = ArrayList<OverlayItem>()
+    private fun setSinglePoint(mapitem: MapItemEntity) {
+        val mapItem = OverlayItem("", "", mapitem.geoPoint)
         var image = resources.getDrawable(R.drawable.ico_location)
         image.setBounds(0, 0, 10, 10)
         mapItem.setMarker(image)
@@ -73,16 +87,16 @@ class MyMapView : CardView {
         if (moverlays == null) {
             moverlays =
                 ItemizedIconOverlay(getContext(), overlayArray, null)
-            mapView.overlays.add(moverlays)
-            mapView.invalidate()
+            map.overlays.add(moverlays)
+            map.invalidate()
         } else {
-            mapView.overlays.remove(moverlays)
-            mapView.invalidate()
+            map.overlays.remove(moverlays)
+            map.invalidate()
             moverlays =
                 ItemizedIconOverlay(getContext(), overlayArray, null)
-            mapView.overlays.add(moverlays)
+            map.overlays.add(moverlays)
         }
-        onPointSelectListener?.onSelect(geoPoint.latitude, geoPoint.longitude)
+        onPointSelectListener?.onSelect(mapitem)
     }
 
     fun setAddress(data: Res_map_data?) {
@@ -102,9 +116,9 @@ class MyMapView : CardView {
     }
 
 
-    fun setSelectedLocation(selectedpoint: GeoPoint) {
-        geoPoint = selectedpoint
-        setSinglePoint(geoPoint!!, map)
+    fun setSelectedLocation(mapItemEntity: MapItemEntity) {
+        geoPoints.add(mapItemEntity)
+        setSinglePoint(mapItemEntity)
         map.overlayManager.remove(overlay)
         invalidate()
     }
