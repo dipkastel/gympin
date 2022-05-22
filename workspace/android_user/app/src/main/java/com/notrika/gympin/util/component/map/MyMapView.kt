@@ -35,6 +35,7 @@ class MyMapView : CardView,IMapActions{
 
     private fun setMode() {
         if(fullScreenMode){
+            img_full_screen.visibility = View.VISIBLE
             img_full_screen.setOnClickListener {
                 var dialog = FullScreenMapDialog(imapUse,context,poinsCount)
                 dialog.onfinishListener= object :OnSubmitListener{
