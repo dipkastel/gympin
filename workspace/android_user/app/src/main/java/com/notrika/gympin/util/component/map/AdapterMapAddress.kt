@@ -9,16 +9,16 @@ import com.notrika.gympin.R
 import kotlinx.android.synthetic.main.l_c_map_address.view.*
 
 class AdapterMapAddress() : RecyclerView.Adapter<AdapterMapAddress.MainViewHolder>() {
-    var itemEntities: ArrayList<MapItemEntity> = ArrayList()
+    var items: ArrayList<MapItemEntity> = ArrayList()
 
     fun addItem(itemEntity :MapItemEntity){
-        itemEntities.add(itemEntity)
+        items.add(itemEntity)
         notifyDataSetChanged()
     }
 
 
     fun removeItem(itemEntity :MapItemEntity){
-        itemEntities.remove(itemEntities.filter { p->p.geoPoint?.latitude == itemEntity.geoPoint?.latitude }.firstOrNull())
+        items.remove(items.filter { p->p.geoPoint?.latitude == itemEntity.geoPoint?.latitude }.firstOrNull())
         notifyDataSetChanged()
     }
 
@@ -32,7 +32,7 @@ class AdapterMapAddress() : RecyclerView.Adapter<AdapterMapAddress.MainViewHolde
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        var item = itemEntities[position]
+        var item = items[position]
         holder.view.txt_address.text = item.address
         holder.view.txt_close.setOnClickListener {
             this.onItemClickListener?.click(item)
@@ -41,7 +41,7 @@ class AdapterMapAddress() : RecyclerView.Adapter<AdapterMapAddress.MainViewHolde
 
 
     override fun getItemCount(): Int {
-        return itemEntities.size
+        return items.size
     }
     var onItemClickListener: OnItemClickListener? = null
 
