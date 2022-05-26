@@ -26,5 +26,5 @@ public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>> {
 
     // FIXME: 4/14/2022
     @GetMapping("/getById")
-    ResponseEntity<O> getById(@RequestBody Long id);
+    ResponseEntity<O> getById(Long id);
 }
