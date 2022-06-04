@@ -44,7 +44,14 @@ public class ApiAspect {
     @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
     public Object process(ProceedingJoinPoint pjp) {
         // start stopwatch
-//        setGympinServiceCallContext();
+        MethodSignature signature = (MethodSignature) pjp.getSignature();
+        Method method = signature.getMethod();
+        if(!method.getName().equals("greeting")){
+            setGympinServiceCallContext();
+        }
+        else {
+            setGympinServiceCallContextForChat(pjp.getArgs()[0]);
+        }
         logInput(pjp);
         StringBuffer resultBuffer = new StringBuffer().append("\n and return following result: \n");
         try {
@@ -54,8 +61,6 @@ public class ApiAspect {
             } catch (Exception e) {
                 log.error("Error in Save Service Data: \n", e);
             }
-            MethodSignature signature = (MethodSignature) pjp.getSignature();
-            Method method = signature.getMethod();
             IgnoreWrapAspect ignoreWrapAspect = method.getAnnotation(IgnoreWrapAspect.class);
             if (ignoreWrapAspect == null) {
                 return getResponseModelResponseEntity(resultBuffer, (ResponseEntity) retVal);
@@ -102,6 +107,17 @@ public class ApiAspect {
             GympinContextHolder.setContext(new GympinContext());
         }
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetailsImpl) {
+            GympinContextHolder.getContext().setUserDetails((UserDetailsImpl) principal);
+        }
+        log.info("Following context setted: {} \n", GympinContextHolder.getContext());
+    }
+
+    private void setGympinServiceCallContextForChat(Object principal) {
+        log.info("Going to set context...\n");
+        if (GympinContextHolder.getContext() == null) {
+            GympinContextHolder.setContext(new GympinContext());
+        }
         if (principal instanceof UserDetailsImpl) {
             GympinContextHolder.getContext().setUserDetails((UserDetailsImpl) principal);
         }
