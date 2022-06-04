@@ -44,7 +44,7 @@ public class ApiAspect {
     @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
     public Object process(ProceedingJoinPoint pjp) {
         // start stopwatch
-//        setGympinServiceCallContext();
+        setGympinServiceCallContext();
         logInput(pjp);
         StringBuffer resultBuffer = new StringBuffer().append("\n and return following result: \n");
         try {
