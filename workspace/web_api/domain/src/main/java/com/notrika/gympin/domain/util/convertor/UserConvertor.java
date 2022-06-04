@@ -34,7 +34,7 @@ public final class UserConvertor {
         dto.setUserStatus(user.getUserStatus());
         dto.setBio(user.getBio());
         List<UserMultimediaEntity> userMultimedias = user.getUserMultimedias();
-        if (userMultimedias != null) {
+        if (userMultimedias != null && userMultimedias.size()>0 ) {
             UserMultimediaEntity userMultimediaEntity = userMultimedias.get(0);
             if(userMultimediaEntity!=null) {
                 dto.setAvatarId(userMultimediaEntity.getMultimedia().getId());
