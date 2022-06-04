@@ -8,16 +8,19 @@ import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.param.UserRoleParam;
 import com.notrika.gympin.common.user.service.UserService;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.multimedia.MultimediaServiceImpl;
 import com.notrika.gympin.domain.relation.FollowServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
+import com.notrika.gympin.persistence.dao.repository.UserMultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
 import com.notrika.gympin.persistence.entity.location.Place;
+import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
+import com.notrika.gympin.persistence.entity.multimedia.UserMultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.Password;
 import com.notrika.gympin.persistence.entity.user.Role;
 import com.notrika.gympin.persistence.entity.user.User;
-import com.sun.istack.NotNull;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +53,12 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Autowired
     private UserRateServiceImpl userRateService;
 
+    @Autowired
+    private UserMultimediaRepository userMultimediaRepository;
+
+    @Autowired
+    private MultimediaServiceImpl multimediaService;
+
     @Override
     @Transactional
     public UserDto add(UserParam userParam) {
@@ -57,7 +66,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         for (UserRoleParam roleParam : userParam.getRole()) {
             roles.add(userRoleService.getEntityById(roleParam.getId()));
         }
-        if (roles.size() == 0) {
+        if (roles.isEmpty()) {
             roles.add(userRoleService.getByUserRole(UserRole.USER));
         }
         User initUser = new User();
@@ -75,6 +84,13 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         User user = userRepository.add(initUser);
         Password password = Password.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
         passwordRepository.add(password);
+        if(userParam.getAvatarId()!=null && userParam.getAvatarId()>0){
+            Multimedia multimedia = multimediaService.getMultimediaById(userParam.getAvatarId());
+            UserMultimediaEntity userAvatar = userMultimediaRepository.add(UserMultimediaEntity.builder().multimedia(multimedia).user(user).build());
+            List<UserMultimediaEntity> multimediaEntities=new ArrayList<>();
+            multimediaEntities.add(userAvatar);
+            user.setUserMultimedias(multimediaEntities);
+        }
         return UserConvertor.userToUserDtoComplete(user);
     }
 
@@ -101,6 +117,13 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setUserRole(roles);
         initUser.setBio(userParam.getBio());
         User user = update(initUser);
+        if(userParam.getAvatarId()!=null && userParam.getAvatarId()>0){
+            Multimedia multimedia = multimediaService.getMultimediaById(userParam.getAvatarId());
+            UserMultimediaEntity userAvatar = userMultimediaRepository.add(UserMultimediaEntity.builder().multimedia(multimedia).user(user).build());
+            List<UserMultimediaEntity> multimediaEntities=new ArrayList<>();
+            multimediaEntities.add(userAvatar);
+            user.setUserMultimedias(multimediaEntities);
+        }
         return UserConvertor.userToUserDtoComplete(user);
     }
 

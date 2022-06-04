@@ -5,7 +5,8 @@ import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.event.general.dto.EventParticipantDto;
 import com.notrika.gympin.common.event.general.param.EventParticipantParam;
 import com.notrika.gympin.common.event.general.service.EventParticipantService;
-import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.exception.event.*;
+import com.notrika.gympin.common.exception.general.InputNotValidException;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.param.UserParam;
@@ -54,10 +55,10 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
         log.info("EventParticipantDto add is going to execute with param {}",eventParticipantParam);
         BaseEventEntity event = eventRepository.getById(eventParticipantParam.getEvent().getId());
         if(new Date().after(event.getStartDate())){
-            throw new ExceptionBase();//The event is started
+            throw new EventStartedException();//The event is started
         }
         if(getEventParticipantCount(event)==event.getParticipantCount()){
-            throw new ExceptionBase();//Participants are full
+            throw new ParticipantsCountLimitException();//Participants are full
         }
         User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         if(!Collections.disjoint(user.getUserRole(),Arrays.asList(UserRole.SUPER_ADMIN,UserRole.ADMIN)) && GeneralValidator.validateUser(eventParticipantParam.getUser())){
@@ -70,13 +71,13 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
         calendar.add(Calendar.MINUTE,240);
         Date toDate = calendar.getTime();
         if(eventRepository.getAllActiveEventOfUser(user,fromDate,toDate)>0) {
-            throw new ExceptionBase();//You already are participant to another event
+            throw new ParticipantOfAnotherEventException();//You already are participant to another event
         }
         if(participantRepository.findByEventAndUserAndDeletedIsFalse(event,user)!=null){
-            throw new ExceptionBase();//User already is a participant to this event
+            throw new AlreadyParticipantOfEventException();//User already is a participant to this event
         }
         if(eventRepository.getById(eventParticipantParam.getEvent().getId()).getCreatorUser().equals(user)){
-            throw new ExceptionBase();//User is owner of event
+            throw new IsOwnerOfEventException();//User is owner of event
         }
         EventParticipantEntity entity = add(EventParticipantEntity.builder().event(event).user(user).build());
         EventParticipantDto eventParticipantDto = EventConvertor.eventParticipantEntityToDto(entity);
@@ -103,12 +104,12 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
         }
         if(!GeneralValidator.validateId(eventParticipantParam)){
             if(!GeneralValidator.validateId(eventParticipantParam.getEvent())){
-                throw new ExceptionBase();//Error in parameters, Either id or sub param is null
+                throw new InputNotValidException();//Error in parameters, Either id or sub param is null
             }else{
                 event = eventRepository.getById(eventParticipantParam.getEvent().getId());
                 entity = participantRepository.findByEventAndUserAndDeletedIsFalse(event,user);
                 if(entity==null){
-                    throw new ExceptionBase();//the event not exist or the user is not participant of it
+                    throw new EventOrUserNotExistException();//the event not exist or the user is not participant of it
                 }
             }
         }else{
@@ -116,7 +117,7 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
             event = entity.getEvent();
         }
         if(new Date().after(event.getStartDate())){
-            throw new ExceptionBase();//Event is started
+            throw new EventStartedException();//Event is started
         }
         //if is cancelling on critical time must pay penalty
         return EventConvertor.eventParticipantEntityToDto(delete(entity));
@@ -183,7 +184,7 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
 
     private void validateParamForAdd(@NonNull EventParticipantParam param){
         if(param.getEvent()==null || !GeneralValidator.validateId(param.getEvent())){
-            throw new ExceptionBase();//event is empty
+            throw new InputNotValidException();//event is empty
         }
     }
 

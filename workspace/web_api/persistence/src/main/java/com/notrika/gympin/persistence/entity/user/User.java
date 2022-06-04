@@ -7,6 +7,8 @@ import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.location.PlaceOwner;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
+import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
+import com.notrika.gympin.persistence.entity.multimedia.UserMultimediaEntity;
 import com.notrika.gympin.persistence.entity.rating.UserRate;
 import com.notrika.gympin.persistence.entity.security.service.ServiceExecution;
 import com.notrika.gympin.persistence.entity.user.relation.FollowEntity;
@@ -120,6 +122,10 @@ public class User extends BaseEntityWithCreate {
     @OneToMany(mappedBy = "judgerUser")
     @ToString.Exclude
     private List<UserRate> hasJudged;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<UserMultimediaEntity> userMultimedias;
 
     @Transient
     private Float rate;

@@ -7,6 +7,8 @@ import com.notrika.gympin.common.event.walking.dto.WalkingEventDto;
 import com.notrika.gympin.common.event.walking.param.WalkingEventParam;
 import com.notrika.gympin.common.event.walking.service.WalkingEventService;
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.exception.event.*;
+import com.notrika.gympin.common.exception.general.InputNotValidException;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -63,12 +65,12 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
         calendar.add(Calendar.MINUTE,240);
         Date toDate = calendar.getTime();
         if(eventRepository.getAllActiveEventOfUser(user,fromDate,toDate)>0) {
-            throw new ExceptionBase();//You already are participant to another event
+            throw new ParticipantOfAnotherEventException();//You already are participant to another event
         }
         GeneralValidator.idValidator(walkingEventParam.getSport());
         Sport sport = sportService.getEntityById(walkingEventParam.getSport().getId());
         if(sport==null){
-            throw new ExceptionBase();//sport not found
+            throw new InputNotValidException();//sport not found
         }
         WalkingEventEntity walkingEvent = EventConvertor.walkingEventParamToEntity(walkingEventParam);
         walkingEvent.setSport(sport);
@@ -92,12 +94,12 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
         GeneralValidator.idValidator(walkingEventParam.getSport());
         WalkingEventEntity event = getEntityById(walkingEventParam.getId());
         if(event==null){
-            throw new ExceptionBase();//event not found
+            throw new EventNotFoundException();//event not found
         }
         WalkingEventEntity walkingEvent = EventConvertor.walkingEventParamToEntity(walkingEventParam,event);
         Sport sport = sportService.getEntityById(walkingEventParam.getSport().getId());
         if(sport==null){
-            throw new ExceptionBase();//sport not found
+            throw new SportOfEventNotFoundException();//sport not found
         }
         walkingEvent.setSport(sport);
         WalkingEventEntity entity = update(walkingEvent);
@@ -113,14 +115,14 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
         GeneralValidator.idValidator(walkingEventParam);
         WalkingEventEntity walkingEvent = getEntityById(walkingEventParam.getId());
         if(walkingEvent==null){
-            throw new ExceptionBase();//event not found
+            throw new EventNotFoundException();//event not found
         }
         User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         if(!walkingEvent.getCreatorUser().equals(user)){
-            throw new ExceptionBase();//you are not owner of event
+            throw new NotOwnerOfEventException();//you are not owner of event
         }
         if(new Date().after(walkingEvent.getStartDate())){
-            throw new ExceptionBase();//the event is started
+            throw new EventStartedException();//the event is started
         }
         if(walkingEvent.getParticipants().size()>0){
             //jarime

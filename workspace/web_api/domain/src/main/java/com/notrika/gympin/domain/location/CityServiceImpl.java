@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.location;
 
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.exception.general.InputNotValidException;
 import com.notrika.gympin.common.location.dto.CityDto;
 import com.notrika.gympin.common.location.param.CityParam;
 import com.notrika.gympin.common.location.param.StateParam;
@@ -42,7 +43,7 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
         City initCity = getEntityById(cityParam.getId());
         initCity.setName(cityParam.getName());
         if(cityParam.getState()==null || cityParam.getState().getId() == null || cityParam.getState().getId() <= 0)
-            throw new ExceptionBase();
+            throw new InputNotValidException();
         if (cityParam.getState() != null && cityParam.getState().getId() != null && cityParam.getState().getId() > 0) {
             State state = stateService.getEntityById(cityParam.getState().getId());
             initCity.setState(state);

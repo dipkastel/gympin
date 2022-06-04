@@ -46,6 +46,9 @@ public class UserParam extends BaseParam<UserParam> {
     @JsonProperty("Bio")
     private String bio;
 
+    @JsonProperty("AvatarId")
+    private Long avatarId;
+
     public UserParam(){
         //role.add(UserRole.USER);
     }

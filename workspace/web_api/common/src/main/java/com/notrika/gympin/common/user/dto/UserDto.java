@@ -71,4 +71,7 @@ public class UserDto extends BaseDtoWithCreate<UserDto> /*implements UserDetails
     @JsonProperty("UserGroup")
     private UserGroup userGroup;
 
+    @JsonProperty("AvatarId")
+    private Long avatarId;
+
 }

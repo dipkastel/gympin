@@ -11,13 +11,13 @@ import java.util.List;
 
 public interface MultimediaController {
 
-    ResponseEntity<Boolean> add(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    ResponseEntity<Long> add(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
-    ResponseEntity<Boolean> addImage(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    ResponseEntity<Long> addImage(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
-    ResponseEntity<Boolean> addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    ResponseEntity<Long> addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
-    ResponseEntity<Boolean> addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    ResponseEntity<Long> addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
     void getByName(HttpServletResponse response,MultimediaRetrieveParam param) throws Exception;
 
@@ -33,7 +33,7 @@ public interface MultimediaController {
 
     ResponseEntity<List<MultimediaDto>> getAll();
 
-    ResponseEntity<Boolean> update(MultimediaStoreParam multimediaStoreParam);
+    ResponseEntity<Long> update(MultimediaStoreParam multimediaStoreParam);
 
     ResponseEntity<Boolean> delete(Long id);
 

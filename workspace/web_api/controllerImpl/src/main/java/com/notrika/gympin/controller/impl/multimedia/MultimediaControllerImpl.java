@@ -33,29 +33,29 @@ public class MultimediaControllerImpl implements MultimediaController {
     @Override
     @RequestMapping(path = "/add", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
-    public ResponseEntity<Boolean> add(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws IOException {
-        return new ResponseEntity<Boolean>(multimediaService.storeFile(multimediaStoreParam), HttpStatus.OK);
+    public ResponseEntity<Long> add(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws IOException {
+        return ResponseEntity.ok(multimediaService.storeFile(multimediaStoreParam));
     }
 
     @Override
     @RequestMapping(path = "/addImage", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
-    public ResponseEntity<Boolean> addImage(MultimediaStoreParam multimediaStoreParam) throws IOException {
-        return new ResponseEntity<Boolean>(multimediaService.addImage(multimediaStoreParam), HttpStatus.OK);
+    public ResponseEntity<Long> addImage(MultimediaStoreParam multimediaStoreParam) throws IOException {
+        return ResponseEntity.ok(multimediaService.addImage(multimediaStoreParam));
     }
 
     @Override
     @RequestMapping(path = "/addVideo", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
-    public ResponseEntity<Boolean> addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException {
-        return new ResponseEntity<Boolean>(multimediaService.addVideo(multimediaStoreParam), HttpStatus.OK);
+    public ResponseEntity<Long> addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException {
+        return ResponseEntity.ok(multimediaService.addVideo(multimediaStoreParam));
     }
 
     @Override
     @RequestMapping(path = "/addAudio", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
-    public ResponseEntity<Boolean> addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException {
-        return new ResponseEntity<Boolean>(multimediaService.addAudio(multimediaStoreParam), HttpStatus.OK);
+    public ResponseEntity<Long> addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException {
+        return ResponseEntity.ok(multimediaService.addAudio(multimediaStoreParam));
     }
 
     @Override
@@ -72,7 +72,7 @@ public class MultimediaControllerImpl implements MultimediaController {
     @Override
     @GetMapping("/getMultimediaIdByFileName")
     public ResponseEntity<Long> getMultimediaIdByFileName(String fileName) {
-        return new ResponseEntity<>(multimediaService.getMultimediaIdByFileName(fileName),HttpStatus.OK);
+        return ResponseEntity.ok(multimediaService.getMultimediaIdByFileName(fileName));
     }
 
     @Override
@@ -101,32 +101,32 @@ public class MultimediaControllerImpl implements MultimediaController {
     @Override
     @GetMapping("/getAllId")
     public ResponseEntity<List<Long>> getAllId() {
-        return new ResponseEntity<List<Long>>(multimediaService.getAllId(),HttpStatus.OK);
+        return ResponseEntity.ok(multimediaService.getAllId());
     }
 
     @Override
     @GetMapping("/getAllName")
     public ResponseEntity<List<String>> getAllName() {
-        return new ResponseEntity<List<String>>(multimediaService.getAllName(),HttpStatus.OK);
+        return ResponseEntity.ok(multimediaService.getAllName());
     }
 
     @Override
     @GetMapping("/getAll")
     public ResponseEntity<List<MultimediaDto>> getAll() {
-        return new ResponseEntity<List<MultimediaDto>>(multimediaService.getAll(),HttpStatus.OK);
+        return ResponseEntity.ok(multimediaService.getAll());
     }
 
     @Override
     @PutMapping("/update")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
-    public ResponseEntity<Boolean> update(MultimediaStoreParam multimediaStoreParam) {
-        return new ResponseEntity<Boolean>(multimediaService.update(multimediaStoreParam),HttpStatus.OK);
+    public ResponseEntity<Long> update(MultimediaStoreParam multimediaStoreParam) {
+        return ResponseEntity.ok(multimediaService.update(multimediaStoreParam));
     }
 
     @Override
     @PutMapping("/delete")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
     public ResponseEntity<Boolean> delete(Long id) {
-        return new ResponseEntity<Boolean>(multimediaService.delete(id),HttpStatus.OK);
+        return ResponseEntity.ok(multimediaService.delete(id));
     }
 }

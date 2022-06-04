@@ -10,13 +10,13 @@ import java.util.List;
 
 public interface MultimediaService {
 
-    boolean storeFile(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    Long storeFile(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
-    boolean addImage(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    Long addImage(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
-    boolean addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    Long addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
-    boolean addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    Long addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException;
 
     InputStream loadFileAsResource(MultimediaRetrieveParam multimediaParam) throws Exception;
 
@@ -34,7 +34,7 @@ public interface MultimediaService {
 
     List<MultimediaDto> getAll();
 
-    boolean update(MultimediaStoreParam multimediaStoreParam);
+    Long update(MultimediaStoreParam multimediaStoreParam);
 
     boolean delete(Long id);
 

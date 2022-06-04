@@ -24,6 +24,12 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons -->
 
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>5.3.20</version>
+        </dependency>
     </dependencies>
 
     <properties>

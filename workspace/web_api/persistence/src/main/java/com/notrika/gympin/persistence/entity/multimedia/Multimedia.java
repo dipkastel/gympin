@@ -48,7 +48,11 @@ public class Multimedia extends BaseEntityWithCreateUpdate {
 
     @OneToMany(mappedBy = "multimedia")
     @ToString.Exclude
-    private List<SportMultimedia> multimedias;
+    private List<SportMultimedia> sportMultimedias;
+
+    @OneToMany(mappedBy = "multimedia")
+    @ToString.Exclude
+    private List<UserMultimediaEntity> userMultimedias;
 
     @ManyToMany
     @JoinTable(

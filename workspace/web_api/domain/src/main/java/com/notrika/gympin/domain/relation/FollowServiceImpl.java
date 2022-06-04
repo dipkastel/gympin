@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.relation;
 
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.exception.general.InputNotValidException;
 import com.notrika.gympin.common.relation.dto.FollowDto;
 import com.notrika.gympin.common.relation.enums.FollowingStatus;
 import com.notrika.gympin.common.relation.param.FollowParam;
@@ -87,7 +88,7 @@ public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDt
             updatedEntity = update(followEntity);
             followChangeStatusRepository.add(FollowChangeStatusEntity.builder().follow(updatedEntity).preStatus(preStatus).newStatus(updatedEntity.getStatus()).changeDate(new Date()).build());
         }else {
-            throw new ExceptionBase();
+            throw new InputNotValidException();
         }
         return null;
     }

@@ -99,7 +99,7 @@ public class MultimediaServiceImpl implements MultimediaService {
     }
 
     @Override
-    public boolean storeFile(MultimediaStoreParam multimediaStoreParam) throws IOException {
+    public Long storeFile(MultimediaStoreParam multimediaStoreParam) throws IOException {
         Path targetPath = null;
         switch (multimediaStoreParam.getMediaType()) {
             case IMAGE:
@@ -110,28 +110,28 @@ public class MultimediaServiceImpl implements MultimediaService {
                 return saveFile(multimediaStoreParam, this.audioStorageLocation);
         }
 
-        return true;
+        return 0L;
     }
 
     @Override
-    public boolean addImage(MultimediaStoreParam multimediaStoreParam) throws IOException {
+    public Long addImage(MultimediaStoreParam multimediaStoreParam) throws IOException {
         multimediaStoreParam.setMediaType(MediaType.IMAGE);
         return storeFile(multimediaStoreParam);
     }
 
     @Override
-    public boolean addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException {
+    public Long addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException {
         multimediaStoreParam.setMediaType(MediaType.VIDEO);
         return storeFile(multimediaStoreParam);
     }
 
     @Override
-    public boolean addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException {
+    public Long addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException {
         multimediaStoreParam.setMediaType(MediaType.AUDIO);
         return storeFile(multimediaStoreParam);
     }
 
-    private boolean saveFile(MultimediaStoreParam multimediaStoreParam, Path path) throws IOException {
+    private Long saveFile(MultimediaStoreParam multimediaStoreParam, Path path) throws IOException {
         //        User user = userService.getUserById(multimediaStoreParam.getUserParam().getId());
         MultipartFile multipartFile = multimediaStoreParam.getMultipartFile();//multimediaStoreParam.getMultipartFile().get(i);
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
@@ -146,18 +146,27 @@ public class MultimediaServiceImpl implements MultimediaService {
             }
         }
         //        MultimediaCategory multimediaCategoryById = categoryService.getMultimediaCategoryById(multimediaStoreParam.getCategoryParam().getId());
-        Multimedia fileByUserByName = multimediaRepository.findByFileName(fileName);
-        if (fileByUserByName != null) {
-            fileByUserByName.setDocumentFormat(multipartFile.getContentType());
-            fileByUserByName.setMediaType(multimediaStoreParam.getMediaType());
-            fileByUserByName.setTitle(multimediaStoreParam.getTitle());
-            fileByUserByName.setDescription(multimediaStoreParam.getDescription());
-            fileByUserByName.setCategories(categories);
-            multimediaRepository.update(fileByUserByName);
+        Multimedia multimediaEntity = multimediaRepository.findByFileName(fileName);
+        if (multimediaEntity != null) {
+            multimediaEntity.setDocumentFormat(multipartFile.getContentType());
+            multimediaEntity.setMediaType(multimediaStoreParam.getMediaType());
+            multimediaEntity.setTitle(multimediaStoreParam.getTitle());
+            multimediaEntity.setDescription(multimediaStoreParam.getDescription());
+            multimediaEntity.setCategories(categories);
+            multimediaEntity = multimediaRepository.update(multimediaEntity);
         } else {
-            multimediaRepository.add(Multimedia.builder().user((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY)).fileName(fileName).mediaType(multimediaStoreParam.getMediaType()).documentFormat(multipartFile.getContentType()).uploadDir(targetLocation.toString()).title(multimediaStoreParam.getTitle()).description(multimediaStoreParam.getDescription()).categories(categories).build());
+            Multimedia multimedia=new Multimedia();
+            multimedia.setUser((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
+            multimedia.setFileName(fileName);
+            multimedia.setMediaType(multimediaStoreParam.getMediaType());
+            multimedia.setDocumentFormat(multipartFile.getContentType());
+            multimedia.setUploadDir(targetLocation.toString());
+            multimedia.setTitle(multimediaStoreParam.getTitle());
+            multimedia.setDescription(multimediaStoreParam.getDescription());
+            multimedia.setCategories(categories);
+            multimediaEntity = multimediaRepository.add(multimedia);
         }
-        return true;
+        return multimediaEntity.getId();
     }
 
     private Path saveFile(Path path, InputStream fileStream, String fileName) throws IOException {
@@ -305,7 +314,7 @@ public class MultimediaServiceImpl implements MultimediaService {
     }
 
     @Override
-    public boolean update(MultimediaStoreParam multimediaStoreParam) {
+    public Long update(MultimediaStoreParam multimediaStoreParam) {
         if (multimediaStoreParam.getId() == null || multimediaStoreParam.getId() < 1) throw new MultimediaNotFoundException();
         Multimedia multimedia = multimediaRepository.getById(multimediaStoreParam.getId());
         if (multimedia == null) throw new MultimediaNotFoundException();
@@ -317,8 +326,8 @@ public class MultimediaServiceImpl implements MultimediaService {
         }
         multimedia.setTitle(multimediaStoreParam.getTitle());
         multimedia.setDescription(multimediaStoreParam.getDescription());
-        multimediaRepository.update(multimedia);
-        return true;
+        Multimedia update = multimediaRepository.update(multimedia);
+        return update.getId();
     }
 
     @Override

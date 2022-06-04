@@ -3,6 +3,7 @@ package com.notrika.gympin.domain.user;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.exception.user.UserRateOutOfBoundException;
 import com.notrika.gympin.common.user.dto.UserRateDto;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.param.UserRateParam;
@@ -31,7 +32,7 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     @Override
     public UserRateDto add(UserRateParam userRateParam) {
         if(userRateParam.getRate()>5 || userRateParam.getRate()<0){
-            throw new ExceptionBase();//out of range
+            throw new UserRateOutOfBoundException();//out of range
         }
         User judger = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         User judging = userService.getEntityById(userRateParam.getJudgingUser().getId());
@@ -51,7 +52,7 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     @Override
     public UserRateDto update(UserRateParam userRateParam) {
         if(userRateParam.getRate()>5 || userRateParam.getRate()<0){
-            throw new ExceptionBase();//out of range
+            throw new UserRateOutOfBoundException();//out of range
         }
         UserRate userRate = getEntityById(userRateParam.getId());
         userRate.setJudgerUser((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
