@@ -74,8 +74,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/multimedia/getById"
                         ,"/api/v1/multimedia/getByName"
 //                        ,"/api/v1/**/**"
-                        ,"**"
-                        ,"/index.html"
+//                        ,"**"
+//                        ,"/index.html"
                         //,"/api/v1/location"
 //                        ,"/api/v1/administrator/add"
                 )
