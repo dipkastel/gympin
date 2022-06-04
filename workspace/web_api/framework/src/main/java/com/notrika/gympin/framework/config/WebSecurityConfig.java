@@ -73,7 +73,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/v2/swagger-ui/**"
                         ,"/api/v1/multimedia/getById"
                         ,"/api/v1/multimedia/getByName"
-                        //,"/api/v1/**/**"
+//                        ,"/api/v1/**/**"
+                        ,"**"
+                        ,"/index.html"
                         //,"/api/v1/location"
 //                        ,"/api/v1/administrator/add"
                 )
