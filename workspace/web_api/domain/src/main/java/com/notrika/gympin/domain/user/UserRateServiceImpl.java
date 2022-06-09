@@ -23,6 +23,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -153,6 +155,14 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
         List<RateableUsersDto> rateableUsers = new ArrayList<>();
         UserWalkingEventDto allEventOfUser = walkingEventService.getAllEventOfUser(null);
         for (WalkingEventDto dto : allEventOfUser.getOwnedEvents()) {
+            Date startDate = dto.getStartDate();
+            Calendar instance = Calendar.getInstance();
+            instance.setTime(startDate);
+            instance.add(Calendar.HOUR,2);
+            Date endDate=instance.getTime();
+            if(endDate.after(new Date()))
+                continue;
+
             RateableUsersDto dto2 = new RateableUsersDto();
             dto2.setEvent(dto);
             List<UserDto> userOfThisEvent=new ArrayList<>();
@@ -167,6 +177,14 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
             rateableUsers.add(dto2);
         }
         for (WalkingEventDto dto : allEventOfUser.getParticipatedEvents()) {
+            Date startDate = dto.getStartDate();
+            Calendar instance = Calendar.getInstance();
+            instance.setTime(startDate);
+            instance.add(Calendar.HOUR,2);
+            Date endDate=instance.getTime();
+            if(endDate.after(new Date()))
+                continue;
+
             RateableUsersDto dto1 = new RateableUsersDto();
             dto1.setEvent(dto);
             List<UserDto> users = new ArrayList<>();
