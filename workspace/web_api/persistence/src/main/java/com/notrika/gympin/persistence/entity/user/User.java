@@ -4,6 +4,7 @@ import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
+import com.notrika.gympin.persistence.entity.communication.notification.NotificationEntity;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.location.PlaceOwner;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
@@ -126,6 +127,10 @@ public class User extends BaseEntityWithCreate {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<UserMultimediaEntity> userMultimedias;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<NotificationEntity> notifs;
 
     @Transient
     private Float rate;
