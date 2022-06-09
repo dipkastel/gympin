@@ -107,15 +107,15 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
             roles.add(userRoleService.getEntityById(roleParam.getId()));
         }
         User initUser = getEntityById(userParam.getId());
-        initUser.setName(userParam.getName());
-        initUser.setLastname(userParam.getLastname());
-        initUser.setUsername(userParam.getUsername());
+        if(StringUtils.hasText(userParam.getName())) initUser.setName(userParam.getName());
+        if(StringUtils.hasText(userParam.getLastname())) initUser.setLastname(userParam.getLastname());
+        if(StringUtils.hasText(userParam.getUsername()))initUser.setUsername(userParam.getUsername());
 //        initUser.setPhoneNumber(userParam.getPhoneNumber());
-        initUser.setBirthday(userParam.getBirthday());
-        initUser.setNationalCode(userParam.getNationalCode());
-        initUser.setEmail(userParam.getEmail());
-        initUser.setUserRole(roles);
-        initUser.setBio(userParam.getBio());
+        if(userParam.getBirthday()!=null) initUser.setBirthday(userParam.getBirthday());
+        if(StringUtils.hasText(userParam.getNationalCode())) initUser.setNationalCode(userParam.getNationalCode());
+        if(StringUtils.hasText(userParam.getEmail())) initUser.setEmail(userParam.getEmail());
+        if(!roles.isEmpty())initUser.setUserRole(roles);
+        if(StringUtils.hasText(userParam.getBio()))initUser.setBio(userParam.getBio());
         User user = update(initUser);
         if(userParam.getAvatarId()!=null && userParam.getAvatarId()>0){
             Multimedia multimedia = multimediaService.getMultimediaById(userParam.getAvatarId());
