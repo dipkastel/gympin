@@ -64,7 +64,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     @Override
     @Transactional
     public <S extends T> S update(S entity) {
-        if (entity instanceof BaseEntityWithCreate) {
+        if (entity instanceof BaseEntityWithCreateUpdate) {
             GympinContext context = GympinContextHolder.getContext();
             if (context != null) {
                 User user = (User) context.getEntry().get(GympinContext.USER_KEY);
