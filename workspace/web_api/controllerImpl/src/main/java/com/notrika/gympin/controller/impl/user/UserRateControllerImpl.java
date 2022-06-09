@@ -48,7 +48,7 @@ public class UserRateControllerImpl implements UserRateController {
 
     @Override
     @GetMapping("/getRateableUsers")
-    public ResponseEntity<List<RateableUsersDto>> getRateableUsers() {
-        return ResponseEntity.ok(userRateService.getRateableUsers());
+    public ResponseEntity<List<RateableUsersDto>> getRateableUsers(BasePagedParam<?> pagedParam) {
+        return ResponseEntity.ok(userRateService.getRateableUsers(pagedParam));
     }
 }

@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.user;
 
+import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.event.walking.dto.UserWalkingEventDto;
@@ -147,7 +148,7 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     }
 
     @Override
-    public List<RateableUsersDto> getRateableUsers() {
+    public List<RateableUsersDto> getRateableUsers(BasePagedParam<?> pagedParam) {
         User user1 = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         List<RateableUsersDto> rateableUsers = new ArrayList<>();
         UserWalkingEventDto allEventOfUser = walkingEventService.getAllEventOfUser(null);
