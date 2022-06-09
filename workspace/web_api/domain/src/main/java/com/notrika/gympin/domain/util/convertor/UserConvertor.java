@@ -17,8 +17,8 @@ public final class UserConvertor {
         if (user == null) return null;
         UserDto dto = new UserDto();
         dto.setId(user.getId());
-        dto.setDeleted(user.isDeleted());
-        dto.setCreatedDate(user.getCreatedDate());
+//        dto.setDeleted(user.isDeleted());
+//        dto.setCreatedDate(user.getCreatedDate());
         //        dto.setCreatorUser(user.getCreatorUser()); //Loop Error
         dto.setName(user.getName());
         dto.setLastName(user.getLastname());
@@ -59,8 +59,8 @@ public final class UserConvertor {
     public static UserDto userToUserDtoLessDetails(User user) {
         if (user == null) return null;
         UserDto dto = new UserDto();
-        dto.setId(user.getId());
-        dto.setDeleted(user.isDeleted());
+//        dto.setId(user.getId());
+//        dto.setDeleted(user.isDeleted());
         dto.setUserStatus(user.getUserStatus());
         dto.setUsername(user.getUsername());
         dto.setPhoneNumber(user.getPhoneNumber());

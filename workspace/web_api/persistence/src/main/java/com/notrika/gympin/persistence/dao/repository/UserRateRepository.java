@@ -5,6 +5,8 @@ import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserRateRepository extends BaseRepository<UserRate, Long> {
 
@@ -13,5 +15,7 @@ public interface UserRateRepository extends BaseRepository<UserRate, Long> {
 
     @Query("select SUM(r.rate) from UserRate r where r.judgingUser.id=:#{#user.id}")
     Float sumOfRateOfUser(User user);
+
+    List<UserRate> findAllByJudgerUserAndJudgingUserAndDeletedIsFalse(User judgerUser,User judgingUser);
 
 }

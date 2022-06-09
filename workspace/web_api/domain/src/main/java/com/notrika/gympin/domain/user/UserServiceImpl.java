@@ -110,7 +110,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setName(userParam.getName());
         initUser.setLastname(userParam.getLastname());
         initUser.setUsername(userParam.getUsername());
-        initUser.setPhoneNumber(userParam.getPhoneNumber());
+//        initUser.setPhoneNumber(userParam.getPhoneNumber());
         initUser.setBirthday(userParam.getBirthday());
         initUser.setNationalCode(userParam.getNationalCode());
         initUser.setEmail(userParam.getEmail());

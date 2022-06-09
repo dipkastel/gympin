@@ -2,6 +2,7 @@ package com.notrika.gympin.controller.impl.user;
 
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.user.api.UserRateController;
+import com.notrika.gympin.common.user.dto.RateableUsersDto;
 import com.notrika.gympin.common.user.dto.UserRateDto;
 import com.notrika.gympin.common.user.param.UserRateParam;
 import com.notrika.gympin.common.user.service.UserRateService;
@@ -42,5 +43,10 @@ public class UserRateControllerImpl implements UserRateController {
     @Override
     public ResponseEntity<UserRateDto> getById(Long id) {
         return ResponseEntity.ok(userRateService.getById(id));
+    }
+
+    @Override
+    public ResponseEntity<List<RateableUsersDto>> getRateableUsers() {
+        return ResponseEntity.ok(userRateService.getRateableUsers());
     }
 }

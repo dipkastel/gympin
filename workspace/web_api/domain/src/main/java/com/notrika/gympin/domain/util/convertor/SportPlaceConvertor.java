@@ -15,9 +15,9 @@ public final class SportPlaceConvertor {
         SportDto sportDto = SportConvertor.sportToSportDto(sportPlace.getSport());
         SportPlaceDto sportPlaceDto = new SportPlaceDto();
         sportPlaceDto.setId(sportPlace.getId());
-        sportPlaceDto.setCreatedDate(sportPlace.getCreatedDate());
-        sportPlaceDto.setUpdatedDate(sportPlace.getUpdatedDate());
-        sportPlaceDto.setDeleted(sportPlace.isDeleted());
+//        sportPlaceDto.setCreatedDate(sportPlace.getCreatedDate());
+//        sportPlaceDto.setUpdatedDate(sportPlace.getUpdatedDate());
+//        sportPlaceDto.setDeleted(sportPlace.isDeleted());
         sportPlaceDto.setPlace(placeDto);
         sportPlaceDto.setSport(sportDto);
         return sportPlaceDto;
