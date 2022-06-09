@@ -8,6 +8,7 @@ import com.notrika.gympin.common.user.param.UserRateParam;
 import com.notrika.gympin.common.user.service.UserRateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,6 +47,7 @@ public class UserRateControllerImpl implements UserRateController {
     }
 
     @Override
+    @GetMapping("/getRateableUsers")
     public ResponseEntity<List<RateableUsersDto>> getRateableUsers() {
         return ResponseEntity.ok(userRateService.getRateableUsers());
     }
