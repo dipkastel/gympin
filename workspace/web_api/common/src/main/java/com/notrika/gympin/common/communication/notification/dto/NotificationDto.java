@@ -20,8 +20,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class NotificationDto extends BaseDto<NotificationDto> {
 
-    @JsonProperty("Name")
-    private List<UserDto> targetUser;
+    @JsonProperty("TargetUsers")
+    private List<UserDto> targetUsers;
 
     @JsonProperty("Notif")
     private String notif;

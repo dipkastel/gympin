@@ -46,7 +46,7 @@ public class NotificationServiceImpl extends AbstractBaseService<NotificationPar
         }
 
         NotificationDto notificationDto = new NotificationDto();
-        notificationDto.setTargetUser(userDtos);
+        notificationDto.setTargetUsers(userDtos);
         notificationDto.setExpiredDate(notificationParam.getExpiredDate());
         notificationDto.setNotif(notificationParam.getNotif());
         return notificationDto;

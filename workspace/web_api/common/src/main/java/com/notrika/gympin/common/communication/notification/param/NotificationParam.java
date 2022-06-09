@@ -17,7 +17,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class NotificationParam extends BaseParam<NotificationParam> {
 
-    @JsonProperty("Name")
+    @JsonProperty("TargetUsers")
     private List<UserParam> targetUsers;
 
     @JsonProperty("Notif")
