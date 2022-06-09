@@ -103,7 +103,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Transactional
     public UserDto update(UserParam userParam) {
         List<Role> roles = new ArrayList<>();
-        for (UserRoleParam roleParam : userParam.getRole()) {
+        for (UserRoleParam roleParam : userParam.getRole()!=null?userParam.getRole():new ArrayList<UserRoleParam>()) {
             roles.add(userRoleService.getEntityById(roleParam.getId()));
         }
         User initUser = getEntityById(userParam.getId());
