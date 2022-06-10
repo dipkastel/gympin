@@ -27,6 +27,7 @@ import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.RoleRepository;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
+import com.notrika.gympin.persistence.entity.user.Password;
 import com.notrika.gympin.persistence.entity.user.Role;
 import com.notrika.gympin.persistence.entity.user.User;
 import lombok.NonNull;
@@ -138,7 +139,7 @@ public class AccountServiceImpl implements AccountService {
         activationCodeRepository.update(activationCode);
         String jwt = getJwt(loginParam, loginParam.getUsername(), TokenType.USER);
         String refreshJwt = getJwt(loginParam, loginParam.getUsername(), TokenType.REFRESH_TOKE);
-        UserDto result = UserConvertor.userToUserDtoLessDetails(user);
+        UserDto result = UserConvertor.userToUserDtoComplete(user);
         result.setToken(jwt);
         result.setRefreshToken(refreshJwt);
         log.info("user logined {}...\n", result);
@@ -207,10 +208,11 @@ public class AccountServiceImpl implements AccountService {
             password = user.getActivationCode().getCode();
         }
         if (password == null) {
-            password = passwordRepository.findByUserAndExpiredIsFalseAndDeletedIsFalse(user).getPassword();
+            Password pass = passwordRepository.findByUserAndExpiredIsFalseAndDeletedIsFalse(user);
+            password = pass!=null?pass.getPassword():null;
         }
         if (password == null) {
-            throw new ExceptionBase();
+//            throw new ExceptionBase();
         }
         setUserContext(user);
         ArrayList<UserRole> roles = new ArrayList<>();
