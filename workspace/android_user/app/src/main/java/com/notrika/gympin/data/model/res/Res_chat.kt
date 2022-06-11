@@ -12,13 +12,13 @@ class Res_chat {
 
     @SerializedName("userId")
     @Expose
-    val userId: Int =0
+    var userId: Int =0
 
     @SerializedName("text")
     @Expose
-    val text: String? = null
+    var text: String? = null
 
     @SerializedName("date")
     @Expose
-    val date: Date? = null
+    var date: Date? = null
 }

@@ -39,4 +39,15 @@ class USER_REPO @Inject constructor(
                 }
                 return lData
         }
+
+        fun observeSetUser(user: Res_User): LiveData<Resource<Res_User>> {
+                val lData = MediatorLiveData<Resource<Res_User>>()
+                val lStream: LiveData<Resource<Res_User>> = LiveDataReactiveStreams.fromPublisher(userRequests.RequestSetUser(user))
+                lData.value = Resource.loading(null)
+                lData.addSource(lStream) { result ->
+                        lData.removeSource(lStream)
+                        lData.value =  result
+                }
+                return lData
+        }
 }

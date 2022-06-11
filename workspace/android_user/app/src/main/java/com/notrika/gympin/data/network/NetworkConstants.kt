@@ -21,10 +21,14 @@ object NetworkConstants {
     //user
     const val user_getById = "$START_KEY/user/getById"
     const val user_getUserByUsername = "$START_KEY/user/getUserByUsername"
+    const val user_update = "$START_KEY/user/update"
     //sport
     const val sport_getall = "$START_KEY/sport/getall"
     //main page layout collection
     const val main_gethomeData = "$START_KEY/mainpagelayoutcollection/mainpage"
+    //multimedia
+    const val multimedia_add = "$START_KEY/multimedia/add"
+
     //events
     //  walking
     const val events_walking_add = "$START_KEY/WalkingEvent/add"
@@ -34,8 +38,8 @@ object NetworkConstants {
     const val events_walking_update = "$START_KEY/WalkingEvent/update"
     const val events_get_All_Event_Of_User = "$START_KEY/WalkingEvent/getAllEventOfUser"
     //participant
-    const val EventParticipant_add = "$START_KEY/EventParticipant/add"
-    const val EventParticipant_delete = "$START_KEY/EventParticipant/delete"
+    const val eventParticipant_add = "$START_KEY/EventParticipant/add"
+    const val eventParticipant_delete = "$START_KEY/EventParticipant/delete"
     //follow
     const val follow_add = "$START_KEY/follow/add"
     const val follow_followers = "$START_KEY/follow/followers"

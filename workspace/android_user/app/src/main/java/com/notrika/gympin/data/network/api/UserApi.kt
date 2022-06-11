@@ -6,7 +6,9 @@ import com.notrika.gympin.data.model.res.Res_sport
 import com.notrika.gympin.data.network.NetworkConstants
 import io.reactivex.Flowable
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface UserApi {
@@ -15,4 +17,7 @@ interface UserApi {
 
     @GET(NetworkConstants.user_getUserByUsername)
     fun userGetByUsername(@Query("username") id:String): Flowable<Response<OprationResult<Res_User>>>
+
+    @POST(NetworkConstants.user_update)
+    fun userUpdateUser(@Body user: Res_User): Flowable<Response<OprationResult<Res_User>>>
 }

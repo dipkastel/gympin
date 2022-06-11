@@ -49,13 +49,36 @@ class Res_User {
     @Expose
     var username: String? = null
 
-    @SerializedName("UhoneNumber")
+    @SerializedName("LastName")
+    @Expose
+    var lastName: String? = null
+
+    @SerializedName("Email")
+    @Expose
+    var email: String? = null
+
+    @SerializedName("NationalCode")
+    @Expose
+    var nationalCode: String? = null
+
+    @SerializedName("Birthday")
+    @Expose
+    var birthday: String? = null
+
+    @SerializedName("PhoneNumber")
     @Expose
     var phoneNumber: String? = null
 
+    @SerializedName("UserGroup")
+    @Expose
+    var userGroup: String? = null
+
     @SerializedName("Token")
     @Expose
-    var token: Any? = null
+    var token: String? = null
 
+    @SerializedName("AvatarId")
+    @Expose
+    var AvatarId: Long? = null
 
 }

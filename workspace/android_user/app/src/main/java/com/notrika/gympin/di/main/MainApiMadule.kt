@@ -51,6 +51,11 @@ class MainApiMadule @Inject constructor() {
         return retrofit.create(ParticipantApi::class.java)
     }
 
+    @Provides
+    internal fun provideMultimediaApi(@Named(DiConstants.retrofit_gympin_main) retrofit: Retrofit): MultimediaApi {
+        return retrofit.create(MultimediaApi::class.java)
+    }
+
 
     @Provides
     internal fun provideRateApi(@Named(DiConstants.retrofit_gympin_main) retrofit: Retrofit): RateApi {
@@ -61,5 +66,4 @@ class MainApiMadule @Inject constructor() {
     internal fun provideMapApi(@Named(DiConstants.retrofit_gympin_map) retrofit: Retrofit): MapApi {
         return retrofit.create(MapApi::class.java)
     }
-
 }

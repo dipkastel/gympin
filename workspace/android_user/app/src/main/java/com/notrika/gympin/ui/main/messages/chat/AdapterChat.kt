@@ -14,12 +14,16 @@ import kotlinx.android.synthetic.main.l_main_messages_chat_item1.view.*
 import java.text.SimpleDateFormat
 
 class AdapterChat(val requestManager: RequestManager) : RecyclerView.Adapter<AdapterChat.MainViewHolder>() {
-    lateinit var items: List<Res_chat>
+    lateinit var items: ArrayList<Res_chat>
 
     inner class MainViewHolder(var view: View) : RecyclerView.ViewHolder(view)
 
-    fun addItems(_items: List<Res_chat>) {
+    fun addItems(_items: ArrayList<Res_chat>) {
         this.items = _items
+        notifyDataSetChanged()
+    }
+    fun addItem(_items: Res_chat) {
+        this.items.add( _items)
         notifyDataSetChanged()
     }
 
@@ -37,7 +41,7 @@ class AdapterChat(val requestManager: RequestManager) : RecyclerView.Adapter<Ada
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         var item = items[position]
         holder.view._txt_text.text = item.text
-        holder.view._txt_time.text = SimpleDateFormat("HH:mm").format(item.date)
+//        holder.view._txt_time.text = SimpleDateFormat("HH:mm").format(item.date)
         if(item.userId!=0){
             holder.itemView.layoutDirection = LayoutDirection.LTR
         }

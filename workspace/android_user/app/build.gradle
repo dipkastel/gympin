@@ -165,6 +165,9 @@ dependencies {
 //    def ratingbar_version = '1.4.0'
 //    implementation "me.zhanghai.android.materialratingbar:library:$ratingbar_version"
 
+    //web socket
+    implementation 'tech.gusavila92:java-android-websocket-client:1.2.2'
+
     // Retrofit
     def retrofitVersion = "2.7.2"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"

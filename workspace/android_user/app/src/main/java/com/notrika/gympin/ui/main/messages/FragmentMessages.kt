@@ -12,6 +12,7 @@ import com.notrika.gympin.ui.main.InnerPageFragment
 import com.notrika.gympin.ui.register.splash.FragmentSplashDirections
 import com.notrika.gympin.util.mocks.mockdatas
 import kotlinx.android.synthetic.main.fragment_main_messages.*
+import tech.gusavila92.websocketclient.WebSocketClient
 
 
 class FragmentMessages : InnerPageFragment() {

@@ -11,6 +11,7 @@ import com.notrika.gympin.data.network.api.UserApi
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.internal.http.RealResponseBody
+import org.reactivestreams.Publisher
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -41,6 +42,18 @@ constructor(val userApi: UserApi, val pocket: Pocket) {
                 .subscribeOn(Schedulers.io())
     }
 
+    fun RequestSetUser(user: Res_User): Publisher<Resource<Res_User>> {
+
+        return userApi.userUpdateUser(user)
+            .onErrorReturn {
+                Response.error(HttpCode.Disconnected, RealResponseBody("null", 0, null))
+            }
+            .map {
+                ResultManager.OnOprationResult(it)
+            }
+            .subscribeOn(Schedulers.io())
+
+    }
 
 
 }
