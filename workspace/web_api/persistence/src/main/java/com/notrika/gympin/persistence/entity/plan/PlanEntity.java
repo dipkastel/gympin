@@ -1,7 +1,6 @@
-package com.notrika.gympin.persistence.entity.location;
+package com.notrika.gympin.persistence.entity.plan;
 
-import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.plan.PlanGateEntity;
+import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -9,8 +8,10 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import javax.persistence.*;
-import java.sql.Time;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,22 +21,16 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "gate")
-public class GateEntity extends BaseEntityWithCreateUpdate {
+@Table(name = "plan")
+public class PlanEntity extends BaseEntity {
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "opening_time")
-    private Time openingTime;
+    //    @Column(name = "plan_type")
+    //    private PlanType planType;
 
-    @Column(name = "closing_time")
-    private Time closingTime;
-
-    @ManyToOne
-    private Place place;
-
-    @OneToMany(mappedBy = "gate")
+    @OneToMany(mappedBy = "plan")
     @ToString.Exclude
     private List<PlanGateEntity> planGates;
 
@@ -43,7 +38,7 @@ public class GateEntity extends BaseEntityWithCreateUpdate {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        GateEntity that = (GateEntity) o;
+        PlanEntity that = (PlanEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

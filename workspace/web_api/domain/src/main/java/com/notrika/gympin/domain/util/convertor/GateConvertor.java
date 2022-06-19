@@ -16,8 +16,9 @@ public final class GateConvertor {
         return gateEntity;
     }
 
-    public static GateDto convertToDto(GateEntity entity){
+    public static GateDto convertToDto(GateEntity entity) {
         GateDto gateDto = new GateDto();
+        gateDto.setId(entity.getId());
         gateDto.setName(entity.getName());
         gateDto.setOpeningTime(entity.getOpeningTime());
         gateDto.setClosingTime(entity.getClosingTime());
