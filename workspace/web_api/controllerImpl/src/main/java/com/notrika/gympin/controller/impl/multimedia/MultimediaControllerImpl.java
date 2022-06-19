@@ -32,7 +32,7 @@ public class MultimediaControllerImpl implements MultimediaController {
 
     @Override
     @RequestMapping(path = "/add", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
+//    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
     public ResponseEntity<Long> add(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws IOException {
         return ResponseEntity.ok(multimediaService.storeFile(multimediaStoreParam));
     }

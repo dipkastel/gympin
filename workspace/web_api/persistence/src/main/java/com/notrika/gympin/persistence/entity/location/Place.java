@@ -53,6 +53,10 @@ public class Place extends BaseEntityWithCreateUpdate {
     @ToString.Exclude
     private List<SportPlace> sportPlaces;
 
+    @OneToMany(mappedBy = "place")
+    @ToString.Exclude
+    private List<GateEntity> gates;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
