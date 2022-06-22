@@ -2,27 +2,34 @@ package com.notrika.gympin.common.plan.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseDto;
-import com.notrika.gympin.common.location.dto.GateDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class PlanGateDto extends BaseDto<PlanGateDto> {
+public class PlanRegisterDto extends BaseDto<PlanRegisterDto> {
 
-    @JsonProperty("plan")
+    @JsonProperty(value = "plan")
     private PlanDto plan;
 
-    @JsonProperty("gate")
-    private GateDto gate;
+    @JsonProperty(value = "register-date")
+    private Date registerDate;
 
-    @JsonProperty("entry-count")
-    private Short entryCount;
+    @JsonProperty(value = "expire-date")
+    private Date expireDate;
+
+    @JsonProperty(value = "length")
+    private Integer length;
+
+    @JsonProperty(value = "expired")
+    private boolean expired;
 
 }

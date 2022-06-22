@@ -1,7 +1,6 @@
 package com.notrika.gympin.common.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseDto;
 import com.notrika.gympin.common.BaseDtoWithCreate;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
@@ -15,9 +14,9 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@ToString
 @SuperBuilder
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class UserDto extends BaseDtoWithCreate<UserDto> /*implements UserDetails*/ {
 

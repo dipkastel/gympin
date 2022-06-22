@@ -1,10 +1,21 @@
 package com.notrika.gympin.domain.util.convertor;
 
+import com.notrika.gympin.common.context.GympinContext;
+import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.plan.dto.PlanDto;
 import com.notrika.gympin.common.plan.dto.PlanGateDto;
+import com.notrika.gympin.common.plan.dto.PlanRegisterDto;
 import com.notrika.gympin.common.plan.param.PlanParam;
+import com.notrika.gympin.common.plan.param.PlanRegisterParam;
+import com.notrika.gympin.domain.plan.PlanServiceImpl;
+import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.entity.plan.PlanEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanGateEntity;
+import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
+import com.notrika.gympin.persistence.entity.user.User;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class PlanConvertor {
 
@@ -29,5 +40,28 @@ public class PlanConvertor {
         dto.setEntryCount(entity.getEntryCount());
         return dto;
     }
+
+    public static PlanRegisterEntity convertToPlanRegisterEntity(PlanRegisterParam param) {
+        PlanRegisterEntity entity = new PlanRegisterEntity();
+        entity.setId(param.getId());
+        entity.setUser((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
+        entity.setPlan(GympinContext.getBean(PlanServiceImpl.class).getEntityById(param.getPlan().getId()));
+        entity.setRegisterDate(new Date());
+        entity.setExpireDate(GeneralHelper.calcDateByDiff(entity.getRegisterDate(), param.getLength(), Calendar.MINUTE));
+        entity.setLength(param.getLength());
+        return entity;
+    }
+
+    public static PlanRegisterDto convertToPlanRegisterDto(PlanRegisterEntity entity) {
+        PlanRegisterDto dto = new PlanRegisterDto();
+        dto.setId(entity.getId());
+        dto.setPlan(convertToPlanDto(entity.getPlan()));
+        dto.setRegisterDate(dto.getRegisterDate());
+        dto.setExpireDate(dto.getExpireDate());
+        dto.setLength(entity.getLength());
+        dto.setExpired(entity.getExpireDate().before(new Date()));
+        return dto;
+    }
+
 
 }

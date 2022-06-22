@@ -3,11 +3,7 @@ package com.notrika.gympin.common.user.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseDto;
 import com.notrika.gympin.common.event.BaseEventDto;
-import com.notrika.gympin.common.event.walking.dto.WalkingEventDto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
@@ -16,6 +12,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class RateableUsersDto extends BaseDto<RateableUsersDto> {
 

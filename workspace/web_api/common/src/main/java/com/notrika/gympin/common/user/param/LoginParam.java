@@ -6,11 +6,13 @@ import com.notrika.gympin.common.user.enums.UsernameType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class LoginParam extends BaseParam<LoginParam> {
 

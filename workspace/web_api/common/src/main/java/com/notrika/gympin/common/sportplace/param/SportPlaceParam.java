@@ -7,11 +7,13 @@ import com.notrika.gympin.common.sport.param.SportParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class SportPlaceParam extends BaseParam<SportPlaceParam> {
 

@@ -2,17 +2,13 @@ package com.notrika.gympin.common.event.walking.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.event.BaseEventParam;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NonNull;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.Date;
 
 @Data
 @SuperBuilder
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class WalkingEventParam extends BaseEventParam<WalkingEventParam> {
 

@@ -6,6 +6,7 @@ import com.notrika.gympin.common.sport.enums.LaunchStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @SuperBuilder
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class SportParam extends BaseParam<SportParam> {
 

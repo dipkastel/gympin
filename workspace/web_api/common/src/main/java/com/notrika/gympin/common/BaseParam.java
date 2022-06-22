@@ -2,10 +2,7 @@ package com.notrika.gympin.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
@@ -13,10 +10,11 @@ import java.util.Date;
 
 // FIXME: 4/14/2022 change all names to convention: lower case and seperated by "-"
 @Data
-@ToString
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class BaseParam<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -32,10 +30,10 @@ public class BaseParam<T> implements Serializable {
     private Date updatedDate;
 
     @JsonProperty("IsDeleted")
-//    @JsonIgnore
+    //    @JsonIgnore
     private boolean isDeleted;
 
     @JsonIgnore
-    private T object= (T) this;
+    private T object = (T) this;
 
 }

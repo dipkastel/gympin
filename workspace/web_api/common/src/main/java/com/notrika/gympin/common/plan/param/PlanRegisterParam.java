@@ -1,4 +1,4 @@
-package com.notrika.gympin.common.multimedia.param;
+package com.notrika.gympin.common.plan.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseParam;
@@ -13,9 +13,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class MultimediaCategoryParam extends BaseParam<MultimediaCategoryParam> {
+public class PlanRegisterParam extends BaseParam<PlanRegisterParam> {
 
-    @JsonProperty("Name")
-    private String name;
+    @JsonProperty(value = "plan", required = true)
+    private PlanParam plan;
+
+    @JsonProperty(value = "length", required = true)
+    private Integer length;
 
 }
