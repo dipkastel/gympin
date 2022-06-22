@@ -2,6 +2,7 @@ package com.notrika.gympin.common.location.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseDtoWithCreateUpdate;
+import com.notrika.gympin.common.sport.dto.SportDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,8 @@ public class GateDto extends BaseDtoWithCreateUpdate<GateDto> {
 
     @JsonProperty(value = "place")
     private PlaceDto place;
+
+    @JsonProperty(value = "sport")
+    private SportDto sport;
 
 }
