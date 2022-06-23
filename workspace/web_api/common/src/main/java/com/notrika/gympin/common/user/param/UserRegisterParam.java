@@ -5,6 +5,7 @@ import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.user.enums.UserRole;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Data
 @SuperBuilder
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class UserRegisterParam extends BaseParam<UserRegisterParam> {
 

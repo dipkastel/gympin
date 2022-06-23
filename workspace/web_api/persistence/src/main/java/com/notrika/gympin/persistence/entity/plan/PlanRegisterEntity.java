@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.plan;
 
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -18,27 +19,31 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "plan")
-public class PlanEntity extends BaseEntity {
+@Table(name = "plan_register")
+public class PlanRegisterEntity extends BaseEntity {
 
-    @Column(name = "name")
-    private String name;
+    @OneToOne
+    private User user;
 
-    //    @Column(name = "plan_type")
-    //    private PlanType planType;
+    @OneToOne
+    private PlanEntity plan;
 
-    @OneToMany(mappedBy = "plan")
-    @ToString.Exclude
-    private List<PlanGateEntity> planGates;
+    @Column(name = "register_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date registerDate;
 
-    @OneToOne(mappedBy = "plan")
-    private PlanRegisterEntity registeredPlan;
+    @Column(name = "expire_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date expireDate;
+
+    @Column(name = "length")
+    private Integer length;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        PlanEntity that = (PlanEntity) o;
+        PlanRegisterEntity that = (PlanRegisterEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

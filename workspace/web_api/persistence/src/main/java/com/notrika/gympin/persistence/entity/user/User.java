@@ -8,8 +8,8 @@ import com.notrika.gympin.persistence.entity.communication.notification.Notifica
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.location.PlaceOwner;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
-import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
 import com.notrika.gympin.persistence.entity.multimedia.UserMultimediaEntity;
+import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
 import com.notrika.gympin.persistence.entity.rating.UserRate;
 import com.notrika.gympin.persistence.entity.security.service.ServiceExecution;
 import com.notrika.gympin.persistence.entity.user.relation.FollowEntity;
@@ -77,7 +77,7 @@ public class User extends BaseEntityWithCreate {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
-    @Column(name = "bio",length = 250)
+    @Column(name = "bio", length = 250)
     private String bio;
 
     @OneToMany(mappedBy = "user")
@@ -124,13 +124,16 @@ public class User extends BaseEntityWithCreate {
     @ToString.Exclude
     private List<UserRate> hasJudged;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<UserMultimediaEntity> userMultimedias;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<NotificationEntity> notifs;
+
+    @OneToOne(mappedBy = "user")
+    private PlanRegisterEntity registeredPlan;
 
     @Transient
     private Float rate;

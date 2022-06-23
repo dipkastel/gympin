@@ -1,7 +1,9 @@
 package com.notrika.gympin.persistence.entity.location;
 
+import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.plan.PlanGateEntity;
+import com.notrika.gympin.persistence.entity.sport.Sport;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -34,6 +36,9 @@ public class GateEntity extends BaseEntityWithCreateUpdate {
 
     @ManyToOne
     private Place place;
+
+    @ManyToOne
+    private Sport sport;
 
     @OneToMany(mappedBy = "gate")
     @ToString.Exclude

@@ -6,6 +6,7 @@ import com.notrika.gympin.common.user.param.UserParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @SuperBuilder
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class NotificationParam extends BaseParam<NotificationParam> {
 

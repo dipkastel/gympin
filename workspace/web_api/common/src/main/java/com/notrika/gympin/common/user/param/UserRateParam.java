@@ -5,11 +5,13 @@ import com.notrika.gympin.common.BaseParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class UserRateParam extends BaseParam<UserRateParam> {
 

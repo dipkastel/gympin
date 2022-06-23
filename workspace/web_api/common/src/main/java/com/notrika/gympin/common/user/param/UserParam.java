@@ -2,7 +2,6 @@ package com.notrika.gympin.common.user.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseParam;
-import com.notrika.gympin.common.user.enums.UserRole;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -13,6 +12,7 @@ import java.util.List;
 @Data
 @SuperBuilder
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class UserParam extends BaseParam<UserParam> {
 
@@ -49,7 +49,7 @@ public class UserParam extends BaseParam<UserParam> {
     @JsonProperty("AvatarId")
     private Long avatarId;
 
-    public UserParam(){
+    public UserParam() {
         //role.add(UserRole.USER);
     }
 

@@ -2,9 +2,11 @@ package com.notrika.gympin.common.location.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common.sport.param.SportParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Time;
@@ -12,6 +14,7 @@ import java.sql.Time;
 @Data
 @SuperBuilder
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class GateParam extends BaseParam<GateParam> {
 
@@ -26,5 +29,8 @@ public class GateParam extends BaseParam<GateParam> {
 
     @JsonProperty(value = "place", required = true)
     private PlaceParam place;
+
+    @JsonProperty(value = "sport", required = true)
+    private SportParam sport;
 
 }
