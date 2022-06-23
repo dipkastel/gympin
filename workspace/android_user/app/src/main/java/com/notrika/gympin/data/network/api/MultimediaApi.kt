@@ -9,9 +9,17 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
+import java.io.File
 
 interface MultimediaApi {
-    @Multipart
+    @FormUrlEncoded
+    @Headers("Accept:*/*")
     @POST(NetworkConstants.multimedia_add)
-    fun multimediaAdd(@Part filePart: MultipartBody.Part): Flowable<Response<OprationResult<Int>>>
+    fun multimediaAdd(
+        @Field("multipartFile") image:File,
+        @Field("MediaType") MediaType:String,
+        @Field("title") title:String,
+        @Field("description") description:String,
+        @Field("categoryParam[0].id") catId:Long,
+    ): Flowable<Response<OprationResult<Int>>>
 }

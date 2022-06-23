@@ -22,10 +22,7 @@ constructor(val multimediaApi: MultimediaApi, val pocket: Pocket) {
     private val TAG: String = this.javaClass.name
 
     fun multimediaAdd(file: File): Flowable<Resource<Int>> {
-        val filePart = MultipartBody.Part.createFormData("multipartFile[0]",file.name,
-            RequestBody.create(MediaType.parse("IMAGE"), file)
-        )
-        return multimediaApi.multimediaAdd(filePart)
+        var a =multimediaApi.multimediaAdd(file,"IMAGE","userImage","sampleDescription",1)
                 .onErrorReturn {
                     Response.error(HttpCode.Disconnected, RealResponseBody("null", 0, null))
                 }
@@ -34,6 +31,8 @@ constructor(val multimediaApi: MultimediaApi, val pocket: Pocket) {
                     ResultManager.OnOprationResult(it)
                 }
                 .subscribeOn(Schedulers.io())
+
+        return a
 
     }
 }

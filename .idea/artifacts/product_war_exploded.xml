@@ -21,6 +21,7 @@
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.12.0" />
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
           <element id="library" level="project" name="Maven: org.springframework:spring-messaging:5.3.8" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.11.0" />
           <element id="archive" name="controllerImpl-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="controllerImpl" />
           </element>
@@ -30,7 +31,6 @@
           </element>
           <element id="library" level="project" name="Maven: io.jsonwebtoken:jjwt:0.9.1" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.3.8" />
-          <element id="library" level="project" name="Maven: commons-io:commons-io:2.11.0" />
           <element id="archive" name="framework-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="framework" />
           </element>
