@@ -3,6 +3,7 @@ package com.notrika.gympin.common.location.param;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.sport.param.SportParam;
+import com.notrika.gympin.common.user.param.UserParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -32,5 +33,8 @@ public class GateParam extends BaseParam<GateParam> {
 
     @JsonProperty(value = "sport", required = true)
     private SportParam sport;
+
+    @JsonProperty(value = "guard", required = true)
+    private UserParam guard;
 
 }
