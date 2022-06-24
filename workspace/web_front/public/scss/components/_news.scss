@@ -955,6 +955,8 @@
 .sidebar-search-form {
     position: relative;
     input {
+        line-height: 2.1em;
+        text-align: right;
         width: 100%;
         font-size: 12px;
         background: $white;
@@ -968,7 +970,7 @@
     button {
         border: none;
         position: absolute;
-        right: 0;
+        left: 0;
         background: $theme-color;
         color: $white;
         font-size: 14px;

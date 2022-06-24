@@ -7,11 +7,11 @@ import AboutTeam from '../components/About/AboutTeam'
 import AboutTestimonial from '../components/About/AboutTestimonial'
 import AboutVideo from '../components/About/AboutVideo'
 import AboutWCU from '../components/About/AboutWCU'
-import Layout1 from '../layouts/Layout1'
+import Layout from '../layouts/Layout'
 
-export default function About() {
+export default function OurBrand() {
     return (
-        <Layout1>
+        <Layout>
             <AboutBreadcrumb/>
             <AboutSection/>
             <AboutVideo/>
@@ -20,6 +20,6 @@ export default function About() {
             <AboutTestimonial/>
             <AboutTeam/>
             <AboutBrand/>
-        </Layout1>
+        </Layout>
     )
 }

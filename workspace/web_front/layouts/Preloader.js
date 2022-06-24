@@ -9,17 +9,20 @@ export default function Preloader() {
                     <div className="animation-preloader">
                         <div className="spinner"></div>
                         <div className="txt-loading">
+                            <span data-text-preloader="G" className="letters-loading">
+                                G
+                            </span>
+                            <span data-text-preloader="Y" className="letters-loading">
+                                Y
+                            </span>
+                            <span data-text-preloader="M" className="letters-loading">
+                                M
+                            </span>
                             <span data-text-preloader="P" className="letters-loading">
                                 P
                             </span>
                             <span data-text-preloader="I" className="letters-loading">
                                 I
-                            </span>
-                            <span data-text-preloader="X" className="letters-loading">
-                                X
-                            </span>
-                            <span data-text-preloader="E" className="letters-loading">
-                                E
                             </span>
                             <span data-text-preloader="N" className="letters-loading">
                                 N

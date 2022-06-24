@@ -2,7 +2,7 @@ import React, { useState, useEffect  } from 'react'
 import Link from 'next/link'
 import MobileMenu from './MobileMenu';
 
-export default function Header1() {
+export default function Header() {
     const [isToggled, setToggled] = useState(false);
     const toggleTrueFalse = () => setToggled(!isToggled);
     const [isSelect, setSelect] = useState("Eng");
@@ -21,28 +21,6 @@ export default function Header1() {
         <>
             {/* <!-- header start --> */}
             <header className="header">
-                {/*<div className="header__top">*/}
-                {/*    <div className="container-fluid">*/}
-                {/*        <div className="row">*/}
-                {/*            <div className="col-lg-6 col-md-12 p-0">*/}
-                {/*                <ul className="header__info">*/}
-                {/*                    <li><Link href="telto:2202588-6500"><a><i className="fa fa-phone-volume"></i> +2 (202) 588-6500</a></Link>*/}
-                {/*                    </li>*/}
-                {/*                    <li><Link href="mailto:info@pixento24.com"><a><i className="fal fa-envelope-open"></i>*/}
-                {/*                        info@pixento24.com</a></Link></li>*/}
-                {/*                </ul>*/}
-                {/*            </div>*/}
-                {/*            <div className="col-lg-6 col-md-12 my-auto p-0">*/}
-                {/*                <div className="social__links">*/}
-                {/*                    <Link href="#"><a><i className="fab fa-facebook-f"></i></a></Link>*/}
-                {/*                    <Link href="#"><a><i className="fab fa-twitter"></i></a></Link>*/}
-                {/*                    <Link href="#"><a><i className="fab fa-pinterest-p"></i></a></Link>*/}
-                {/*                    <Link href="#"><a><i className="fab fa-linkedin-in"></i></a></Link>*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
                 <div className={`header__bottom ${scroll ? "sticky-header animated fadeInDown" : ""}`}>
                     <div className="container-fluid">
                         <div className="row">
@@ -54,13 +32,13 @@ export default function Header1() {
                                     <div className="mainmenu d-none d-lg-block">
                                         <nav id="mobile-menu">
                                             <ul>
-                                                <li ><Link href="/"><a>پیشنهادات ورزشی</a></Link></li>
-                                                <li ><Link href="/"><a>رویداد‌ها</a></Link></li>
-                                                <li><Link href="/about"><a>شرکت ها</a></Link></li>
-                                                <li><Link href="#"><a>به ما بپیوندید</a></Link></li>
-                                                <li><Link href="/service"><a>فروشگاه</a></Link></li>
-                                                <li><Link href="/project"><a>بلاگ</a></Link></li>
-                                                <li><Link href="/news"><a>کارت هدیه</a></Link></li>
+                                                <li ><Link href="/venues"><a>پیشنهادات ورزشی</a></Link></li>
+                                                <li ><Link href="/events"><a>رویداد‌ها</a></Link></li>
+                                                <li><Link href="/corporate"><a>شرکت ها</a></Link></li>
+                                                <li><Link href="/join-us"><a>به ما بپیوندید</a></Link></li>
+                                                <li><Link href="/shop"><a>فروشگاه</a></Link></li>
+                                                <li><Link href="/blog"><a>بلاگ</a></Link></li>
+                                                <li><Link href="/shop?c=cards"><a>کارت هدیه</a></Link></li>
                                             </ul>
                                         </nav>
                                     </div>

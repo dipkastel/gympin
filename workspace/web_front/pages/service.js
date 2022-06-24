@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout1 from '../layouts/Layout1'
+import Layout from '../layouts/Layout'
 import ServiceBreadcrumb from '../components/Service/ServiceBreadcrumb'
 import ServiceFeature from '../components/Service/ServiceFeature'
 import ServiceSection from '../components/Service/ServiceSection'
@@ -10,7 +10,7 @@ import ServiceStrategy from '../components/Service/ServiceStrategy'
 export default function Service() {
     return (
         <>
-            <Layout1>
+            <Layout>
                 <ServiceBreadcrumb />
                 <ServiceFeature/>
                 <ServiceSection/>
@@ -18,7 +18,7 @@ export default function Service() {
                 <ServiceWorkingProgres/>
                 <ServiceStrategy/>
                 <ServicePricing/>
-            </Layout1>
+            </Layout>
         </>
     )
 }

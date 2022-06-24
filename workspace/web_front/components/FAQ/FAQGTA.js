@@ -12,24 +12,25 @@ export default function FAQGTA() {
                         </div>
                         <div className="col-xl-6 pl-70">
                             <div className="section-header mb-50">
-                                <h4 className="sub-heading sub-heading__2 mb-15">Send Message
-                                    <span><img src="/images/shape/heading-shape-4.png" className="ml-10" alt="" /></span>
+                                <h4 className="sub-heading sub-heading__2 mb-15">
+                                    <span><img src="/images/shape/heading-shape-3.png" className="mr-10" alt="" /></span>
+                                        سوال دیگری دارید
                                 </h4>
-                                <h2 className="section-title section-title__2">Get in Touch</h2>
+                                <h2 className="section-title section-title__2">با ما در ارتباط باشید</h2>
                             </div>
-                            <div className="contact-form">
+                            <div className="contact-form rtl">
                                 <form action="#" method="POST" id="contact-form">
                                     <div className="form-group mt-25">
-                                        <input type="text" name="name" id="name" placeholder="Your Name" />
+                                        <input type="text" name="name" id="name" placeholder="نام شما" />
                                     </div>
                                     <div className="form-group mt-25">
-                                        <input type="email" name="email" id="mail" placeholder="Email Address" />
+                                        <input type="email" name="email" id="mail" placeholder="ایمیل" />
                                     </div>
                                     <div className="form-group mt-25">
-                                        <textarea name="message" id="message" placeholder="Your Message"></textarea>
+                                        <textarea name="message" id="message" placeholder="سوال خود را بنویسید"></textarea>
                                     </div>
-                                    <button type="submit" className="site-btn site-btn__s2 mt-15"><span className="icon icon__black"><i
-                                        className="far fa-arrow-right"></i></span> Contact us</button>
+                                    <button type="submit" className="site-btn site-btn__s2 mt-15 ltr"><span className="icon icon__black"><i
+                                        className="far fa-arrow-left"></i></span> ارسال</button>
                                     <p className="ajax-response"></p>
                                 </form>
                             </div>

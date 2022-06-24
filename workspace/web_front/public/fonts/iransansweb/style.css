@@ -1,7 +1,5 @@
 @charset "utf-8";
-body {
-	font-family: 'IRANSans-web';
-}
+
 @font-face {
 	font-family: 'IRANSans-web';
 	src: url('IRANSans-Bold.eot?#') format('eot'),  /* IE6–8 */

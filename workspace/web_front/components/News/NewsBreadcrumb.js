@@ -13,11 +13,6 @@ export default function NewsBreadcrumb() {
                                 <h2 className="breadcrumb-text__title">
                                     New Article
                                 </h2>
-                                <ul className="breadcrumb-text__nav">
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>-</li>
-                                    <li>New Article</li>
-                                </ul>
                             </div>
                         </div>
                     </div>

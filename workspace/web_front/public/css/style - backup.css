@@ -1,3 +1,20 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: SiteName - Multipurpose Technology HTML5 Template
+    Template URI: site.com
+    Description: SiteName - Multipurpose Technology HTML5 Template
+    Author: BasicTheme
+    Author URI: site.com
+    Version: 1.0
+
+-----------------------------------------------------------------------------------
+
+    CSS INDEX
+    ===================
+
+	01. Theme default CSS
+
+-----------------------------------------------------------------------------------*/
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700&display=swap");
 @-webkit-keyframes zoom {
@@ -159,7 +176,6 @@
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -177,7 +193,6 @@
 
 body {
   margin: 0;
-  font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
@@ -185,7 +200,8 @@ body {
   text-align: var(--bs-body-text-align);
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(31, 31, 32, 0); }
+  -webkit-tap-highlight-color: rgba(31, 31, 32, 0);
+}
 
 hr {
   margin: 1rem 0;
@@ -500,6 +516,13 @@ progress {
 
 [hidden] {
   display: none !important; }
+
+.rtl{
+  direction: rtl;
+}
+.ltr{
+  direction: ltr;
+}
 
 .lead {
   font-size: 1.25rem;
@@ -4478,7 +4501,6 @@ textarea.form-control-lg {
   z-index: 1080;
   display: block;
   margin: 0;
-  font-family: var(--bs-font-sans-serif);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -4563,7 +4585,6 @@ textarea.form-control-lg {
   z-index: 1070;
   display: block;
   max-width: 276px;
-  font-family: var(--bs-font-sans-serif);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -7923,7 +7944,6 @@ html {
   scroll-behavior: smooth; }
 
 body {
-  font-family: "IRANSans-web";
   font-size: 16px;
   padding: 0;
   margin: 0;
@@ -8022,12 +8042,6 @@ p, li, span {
 .position-absulate {
   position: absolute; }
 
-.rtl {
-  direction: rtl; }
-
-.ltr {
-  direction: ltr; }
-
 .section-header__white p {
   color: #fff; }
 
@@ -8036,7 +8050,6 @@ p, li, span {
 
 .section-header .sub-heading {
   font-size: 20px;
-  font-family: "IRANSans-web";
   color: #FD4A36;
   display: inline-block;
   font-weight: 500;
@@ -8627,495 +8640,495 @@ p, li, span {
 
 /*-- Padding Top --*/
 .pt-5 {
-  padding-top: 5px !important; }
+  padding-top: 5px; }
 
 .pt-10 {
-  padding-top: 10px !important; }
+  padding-top: 10px; }
 
 .pt-15 {
-  padding-top: 15px !important; }
+  padding-top: 15px; }
 
 .pt-20 {
-  padding-top: 20px !important; }
+  padding-top: 20px; }
 
 .pt-25 {
-  padding-top: 25px !important; }
+  padding-top: 25px; }
 
 .pt-30 {
-  padding-top: 30px !important; }
+  padding-top: 30px; }
 
 .pt-35 {
-  padding-top: 35px !important; }
+  padding-top: 35px; }
 
 .pt-40 {
-  padding-top: 40px !important; }
+  padding-top: 40px; }
 
 .pt-45 {
-  padding-top: 45px !important; }
+  padding-top: 45px; }
 
 .pt-50 {
-  padding-top: 50px !important; }
+  padding-top: 50px; }
 
 .pt-55 {
-  padding-top: 55px !important; }
+  padding-top: 55px; }
 
 .pt-60 {
-  padding-top: 60px !important; }
+  padding-top: 60px; }
 
 .pt-65 {
-  padding-top: 65px !important; }
+  padding-top: 65px; }
 
 .pt-70 {
-  padding-top: 70px !important; }
+  padding-top: 70px; }
 
 .pt-75 {
-  padding-top: 75px !important; }
+  padding-top: 75px; }
 
 .pt-80 {
-  padding-top: 80px !important; }
+  padding-top: 80px; }
 
 .pt-85 {
-  padding-top: 85px !important; }
+  padding-top: 85px; }
 
 .pt-90 {
-  padding-top: 90px !important; }
+  padding-top: 90px; }
 
 .pt-95 {
-  padding-top: 95px !important; }
+  padding-top: 95px; }
 
 .pt-100 {
-  padding-top: 100px !important; }
+  padding-top: 100px; }
 
 .pt-105 {
-  padding-top: 105px !important; }
+  padding-top: 105px; }
 
 .pt-110 {
-  padding-top: 110px !important; }
+  padding-top: 110px; }
 
 .pt-115 {
-  padding-top: 115px !important; }
+  padding-top: 115px; }
 
 .pt-120 {
-  padding-top: 120px !important; }
+  padding-top: 120px; }
 
 .pt-125 {
-  padding-top: 125px !important; }
+  padding-top: 125px; }
 
 .pt-130 {
-  padding-top: 130px !important; }
+  padding-top: 130px; }
 
 .pt-135 {
-  padding-top: 135px !important; }
+  padding-top: 135px; }
 
 .pt-140 {
-  padding-top: 140px !important; }
+  padding-top: 140px; }
 
 .pt-145 {
-  padding-top: 145px !important; }
+  padding-top: 145px; }
 
 .pt-150 {
-  padding-top: 150px !important; }
+  padding-top: 150px; }
 
 .pt-155 {
-  padding-top: 155px !important; }
+  padding-top: 155px; }
 
 .pt-160 {
-  padding-top: 160px !important; }
+  padding-top: 160px; }
 
 .pt-165 {
-  padding-top: 165px !important; }
+  padding-top: 165px; }
 
 .pt-170 {
-  padding-top: 170px !important; }
+  padding-top: 170px; }
 
 .pt-175 {
-  padding-top: 175px !important; }
+  padding-top: 175px; }
 
 .pt-180 {
-  padding-top: 180px !important; }
+  padding-top: 180px; }
 
 .pt-185 {
-  padding-top: 185px !important; }
+  padding-top: 185px; }
 
 .pt-190 {
-  padding-top: 190px !important; }
+  padding-top: 190px; }
 
 .pt-195 {
-  padding-top: 195px !important; }
+  padding-top: 195px; }
 
 .pt-200 {
-  padding-top: 200px !important; }
+  padding-top: 200px; }
 
 /*-- Padding Bottom --*/
 .pb-5 {
-  padding-bottom: 5px !important; }
+  padding-bottom: 5px; }
 
 .pb-10 {
-  padding-bottom: 10px !important; }
+  padding-bottom: 10px; }
 
 .pb-15 {
-  padding-bottom: 15px !important; }
+  padding-bottom: 15px; }
 
 .pb-20 {
-  padding-bottom: 20px !important; }
+  padding-bottom: 20px; }
 
 .pb-25 {
-  padding-bottom: 25px !important; }
+  padding-bottom: 25px; }
 
 .pb-30 {
-  padding-bottom: 30px !important; }
+  padding-bottom: 30px; }
 
 .pb-35 {
-  padding-bottom: 35px !important; }
+  padding-bottom: 35px; }
 
 .pb-40 {
-  padding-bottom: 40px !important; }
+  padding-bottom: 40px; }
 
 .pb-45 {
-  padding-bottom: 45px !important; }
+  padding-bottom: 45px; }
 
 .pb-50 {
-  padding-bottom: 50px !important; }
+  padding-bottom: 50px; }
 
 .pb-55 {
-  padding-bottom: 55px !important; }
+  padding-bottom: 55px; }
 
 .pb-60 {
-  padding-bottom: 60px !important; }
+  padding-bottom: 60px; }
 
 .pb-65 {
-  padding-bottom: 65px !important; }
+  padding-bottom: 65px; }
 
 .pb-70 {
-  padding-bottom: 70px !important; }
+  padding-bottom: 70px; }
 
 .pb-75 {
-  padding-bottom: 75px !important; }
+  padding-bottom: 75px; }
 
 .pb-80 {
-  padding-bottom: 80px !important; }
+  padding-bottom: 80px; }
 
 .pb-85 {
-  padding-bottom: 85px !important; }
+  padding-bottom: 85px; }
 
 .pb-90 {
-  padding-bottom: 90px !important; }
+  padding-bottom: 90px; }
 
 .pb-95 {
-  padding-bottom: 95px !important; }
+  padding-bottom: 95px; }
 
 .pb-100 {
-  padding-bottom: 100px !important; }
+  padding-bottom: 100px; }
 
 .pb-105 {
-  padding-bottom: 105px !important; }
+  padding-bottom: 105px; }
 
 .pb-110 {
-  padding-bottom: 110px !important; }
+  padding-bottom: 110px; }
 
 .pb-115 {
-  padding-bottom: 115px !important; }
+  padding-bottom: 115px; }
 
 .pb-120 {
-  padding-bottom: 120px !important; }
+  padding-bottom: 120px; }
 
 .pb-125 {
-  padding-bottom: 125px !important; }
+  padding-bottom: 125px; }
 
 .pb-130 {
-  padding-bottom: 130px !important; }
+  padding-bottom: 130px; }
 
 .pb-135 {
-  padding-bottom: 135px !important; }
+  padding-bottom: 135px; }
 
 .pb-140 {
-  padding-bottom: 140px !important; }
+  padding-bottom: 140px; }
 
 .pb-145 {
-  padding-bottom: 145px !important; }
+  padding-bottom: 145px; }
 
 .pb-150 {
-  padding-bottom: 150px !important; }
+  padding-bottom: 150px; }
 
 .pb-155 {
-  padding-bottom: 155px !important; }
+  padding-bottom: 155px; }
 
 .pb-160 {
-  padding-bottom: 160px !important; }
+  padding-bottom: 160px; }
 
 .pb-165 {
-  padding-bottom: 165px !important; }
+  padding-bottom: 165px; }
 
 .pb-170 {
-  padding-bottom: 170px !important; }
+  padding-bottom: 170px; }
 
 .pb-175 {
-  padding-bottom: 175px !important; }
+  padding-bottom: 175px; }
 
 .pb-180 {
-  padding-bottom: 180px !important; }
+  padding-bottom: 180px; }
 
 .pb-185 {
-  padding-bottom: 185px !important; }
+  padding-bottom: 185px; }
 
 .pb-190 {
-  padding-bottom: 190px !important; }
+  padding-bottom: 190px; }
 
 .pb-195 {
-  padding-bottom: 195px !important; }
+  padding-bottom: 195px; }
 
 .pb-200 {
-  padding-bottom: 200px !important; }
+  padding-bottom: 200px; }
 
 /*-- Padding Left --*/
 .pl-5 {
-  padding-left: 5px !important; }
+  padding-left: 5px; }
 
 .pl-10 {
-  padding-left: 10px !important; }
+  padding-left: 10px; }
 
 .pl-15 {
-  padding-left: 15px !important; }
+  padding-left: 15px; }
 
 .pl-20 {
-  padding-left: 20px !important; }
+  padding-left: 20px; }
 
 .pl-25 {
-  padding-left: 25px !important; }
+  padding-left: 25px; }
 
 .pl-30 {
-  padding-left: 30px !important; }
+  padding-left: 30px; }
 
 .pl-35 {
-  padding-left: 35px !important; }
+  padding-left: 35px; }
 
 .pl-40 {
-  padding-left: 40px !important; }
+  padding-left: 40px; }
 
 .pl-45 {
-  padding-left: 45px !important; }
+  padding-left: 45px; }
 
 .pl-50 {
-  padding-left: 50px !important; }
+  padding-left: 50px; }
 
 .pl-55 {
-  padding-left: 55px !important; }
+  padding-left: 55px; }
 
 .pl-60 {
-  padding-left: 60px !important; }
+  padding-left: 60px; }
 
 .pl-65 {
-  padding-left: 65px !important; }
+  padding-left: 65px; }
 
 .pl-70 {
-  padding-left: 70px !important; }
+  padding-left: 70px !important;
+}
 
 .pl-75 {
-  padding-left: 75px !important; }
+  padding-left: 75px; }
 
 .pl-80 {
-  padding-left: 80px !important; }
+  padding-left: 80px; }
 
 .pl-85 {
-  padding-left: 85px !important; }
+  padding-left: 85px; }
 
 .pl-90 {
-  padding-left: 90px !important; }
+  padding-left: 90px; }
 
 .pl-95 {
-  padding-left: 95px !important; }
+  padding-left: 95px; }
 
 .pl-100 {
-  padding-left: 100px !important; }
+  padding-left: 100px; }
 
 .pl-105 {
-  padding-left: 105px !important; }
+  padding-left: 105px; }
 
 .pl-110 {
-  padding-left: 110px !important; }
+  padding-left: 110px; }
 
 .pl-115 {
-  padding-left: 115px !important; }
+  padding-left: 115px; }
 
 .pl-120 {
-  padding-left: 120px !important; }
+  padding-left: 120px; }
 
 .pl-125 {
-  padding-left: 125px !important; }
+  padding-left: 125px; }
 
 .pl-130 {
-  padding-left: 130px !important; }
+  padding-left: 130px; }
 
 .pl-135 {
-  padding-left: 135px !important; }
+  padding-left: 135px; }
 
 .pl-140 {
-  padding-left: 140px !important; }
+  padding-left: 140px; }
 
 .pl-145 {
-  padding-left: 145px !important; }
+  padding-left: 145px; }
 
 .pl-150 {
-  padding-left: 150px !important; }
+  padding-left: 150px; }
 
 .pl-155 {
-  padding-left: 155px !important; }
+  padding-left: 155px; }
 
 .pl-160 {
-  padding-left: 160px !important; }
+  padding-left: 160px; }
 
 .pl-165 {
-  padding-left: 165px !important; }
+  padding-left: 165px; }
 
 .pl-170 {
-  padding-left: 170px !important; }
+  padding-left: 170px; }
 
 .pl-175 {
-  padding-left: 175px !important; }
+  padding-left: 175px; }
 
 .pl-180 {
-  padding-left: 180px !important; }
+  padding-left: 180px; }
 
 .pl-185 {
-  padding-left: 185px !important; }
+  padding-left: 185px; }
 
 .pl-190 {
-  padding-left: 190px !important; }
+  padding-left: 190px; }
 
 .pl-195 {
-  padding-left: 195px !important; }
+  padding-left: 195px; }
 
 .pl-200 {
-  padding-left: 200px !important; }
+  padding-left: 200px; }
 
 /*-- Padding Right --*/
 .pr-5 {
-  padding-right: 5px !important; }
+  padding-right: 5px; }
 
 .pr-10 {
-  padding-right: 10px !important; }
+  padding-right: 10px; }
 
 .pr-15 {
-  padding-right: 15px !important; }
+  padding-right: 15px; }
 
 .pr-20 {
-  padding-right: 20px !important; }
+  padding-right: 20px; }
 
 .pr-25 {
-  padding-right: 25px !important; }
+  padding-right: 25px; }
 
 .pr-30 {
-  padding-right: 30px !important; }
+  padding-right: 30px; }
 
 .pr-35 {
-  padding-right: 35px !important; }
+  padding-right: 35px; }
 
 .pr-40 {
-  padding-right: 40px !important; }
+  padding-right: 40px; }
 
 .pr-45 {
-  padding-right: 45px !important; }
+  padding-right: 45px; }
 
 .pr-50 {
-  padding-right: 50px !important; }
+  padding-right: 50px; }
 
 .pr-55 {
-  padding-right: 55px !important; }
+  padding-right: 55px; }
 
 .pr-60 {
-  padding-right: 60px !important; }
+  padding-right: 60px; }
 
 .pr-65 {
-  padding-right: 65px !important; }
+  padding-right: 65px; }
 
 .pr-70 {
-  padding-right: 70px !important; }
+  padding-right: 70px; }
 
 .pr-75 {
-  padding-right: 75px !important; }
+  padding-right: 75px; }
 
 .pr-80 {
-  padding-right: 80px !important; }
+  padding-right: 80px; }
 
 .pr-85 {
-  padding-right: 85px !important; }
+  padding-right: 85px; }
 
 .pr-90 {
-  padding-right: 90px !important; }
+  padding-right: 90px; }
 
 .pr-95 {
-  padding-right: 95px !important; }
+  padding-right: 95px; }
 
 .pr-100 {
-  padding-right: 100px !important; }
+  padding-right: 100px; }
 
 .pr-105 {
-  padding-right: 105px !important; }
+  padding-right: 105px; }
 
 .pr-110 {
-  padding-right: 110px !important; }
+  padding-right: 110px; }
 
 .pr-115 {
-  padding-right: 115px !important; }
+  padding-right: 115px; }
 
 .pr-120 {
-  padding-right: 120px !important; }
+  padding-right: 120px; }
 
 .pr-125 {
-  padding-right: 125px !important; }
+  padding-right: 125px; }
 
 .pr-130 {
-  padding-right: 130px !important; }
+  padding-right: 130px; }
 
 .pr-135 {
-  padding-right: 135px !important; }
+  padding-right: 135px; }
 
 .pr-140 {
-  padding-right: 140px !important; }
+  padding-right: 140px; }
 
 .pr-145 {
-  padding-right: 145px !important; }
+  padding-right: 145px; }
 
 .pr-150 {
-  padding-right: 150px !important; }
+  padding-right: 150px; }
 
 .pr-155 {
-  padding-right: 155px !important; }
+  padding-right: 155px; }
 
 .pr-160 {
-  padding-right: 160px !important; }
+  padding-right: 160px; }
 
 .pr-165 {
-  padding-right: 165px !important; }
+  padding-right: 165px; }
 
 .pr-170 {
-  padding-right: 170px !important; }
+  padding-right: 170px; }
 
 .pr-175 {
-  padding-right: 175px !important; }
+  padding-right: 175px; }
 
 .pr-180 {
-  padding-right: 180px !important; }
+  padding-right: 180px; }
 
 .pr-185 {
-  padding-right: 185px !important; }
+  padding-right: 185px; }
 
 .pr-190 {
-  padding-right: 190px !important; }
+  padding-right: 190px; }
 
 .pr-195 {
-  padding-right: 195px !important; }
+  padding-right: 195px; }
 
 .pr-200 {
-  padding-right: 200px !important; }
+  padding-right: 200px; }
 
 /* typography css start */
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   font-weight: 700;
   color: #0C2957;
   margin: 0;
-  line-height: 1.4;
-  font-family: "IRANSans-web"; }
+  line-height: 1.4; }
 
 h2, .h2 {
   font-size: 32px; }
@@ -9221,7 +9234,6 @@ h6, .h6 {
         padding-left: 0px; } }
     .header__info li a {
       color: #0C2957;
-      font-family: "IRANSans-web";
       display: block;
       padding: 17px 0px;
       transition: 0.3s; }
@@ -9299,11 +9311,12 @@ h6, .h6 {
   animation-duration: 0.3s; }
 
 .social__links {
-  display: -ms-flexbox;
+  display: -moz-box;
   display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  justify-content: flex-end; }
+  -moz-box-pack: end;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  flex-wrap: wrap; }
   @media (max-width: 991px) {
     .social__links {
       justify-content: center;
@@ -9323,26 +9336,28 @@ h6, .h6 {
     line-height: 42px;
     box-shadow: 0px 0px 30px 0px rgba(0, 26, 100, 0.06); }
     .social__links a:not(:last-child) {
-      margin-left: 12px; }
+      margin-right: 12px; }
     .social__links a:hover {
       background: #0C2957;
       color: #fff; }
 
 /* Navigation css */
 .navarea {
-  display: -ms-flexbox;
+  display: -moz-box;
   display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -moz-box-align: center;
+  width: 100%;
   align-items: center;
-  justify-content: space-between; }
+  justify-content: space-between;
+
+}
   @media (max-width: 1199px) {
     .navarea {
-      flex-wrap: nowrap; } }
+      justify-content: space-between; } }
   @media (max-width: 991px) {
     .navarea {
-      display: block;
-      flex-wrap: nowrap; } }
+      justify-content: flex-start;
+      display: block; } }
   .navarea .mean-container a.meanmenu-reveal {
     margin-top: -49px;
     color: #FD4A36;
@@ -9359,7 +9374,9 @@ h6, .h6 {
     .navarea .site-logo {
       flex: 0 0 19%;
       -ms-flex: 0 0 19%;
-      max-width: 19%; } }
+      max-width: 45%;
+      display: flex;
+    } }
 
 .mainmenu {
   padding-left: 83px; }
@@ -9379,16 +9396,16 @@ h6, .h6 {
   .mainmenu ul {
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    flex-direction: row-reverse; }
-    .mainmenu ul li {
+    flex-direction: row-reverse;
+}
+.mainmenu ul li {
       position: relative; }
       .mainmenu ul li a {
         font-weight: 500;
         color: #0C2957;
         display: block;
-        padding: 32px 15px; }
+        padding: 32px 25px; }
         @media only screen and (min-width: 1200px) and (max-width: 1500px) {
           .mainmenu ul li a {
             padding: 32px 20px; } }
@@ -9682,7 +9699,6 @@ input.form-control-sm {
   padding-right: 40px;
   font-size: 13px;
   text-transform: uppercase;
-  font-family: "IRANSans-web";
   border-radius: 40px;
   font-weight: 700;
   padding-left: 0px;
@@ -10203,6 +10219,9 @@ input.form-control-sm {
     box-shadow: none; }
 
 /*about css*/
+.about-lists ul {
+  direction: rtl;
+}
 @media (max-width: 1199px) {
   .about-area .pr-0 {
     padding-right: 15px !important; } }
@@ -10409,7 +10428,6 @@ input.form-control-sm {
         transition: none; } }
   .project-item__subtitle {
     font-size: 16px;
-    font-family: "IRANSans-web";
     color: #FD4A36;
     margin-bottom: 7px; }
     .project-item__subtitle span {
@@ -10573,7 +10591,6 @@ input.form-control-sm {
 .view-all a {
   font-weight: 700;
   color: #FD4A36;
-  font-family: "IRANSans-web";
   font-size: 13px;
   text-transform: uppercase; }
 
@@ -10689,7 +10706,6 @@ input.form-control-sm {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  flex-wrap: nowrap;
   padding-top: 25px; }
   @media (max-width: 991px) {
     .testimonial-item {
@@ -10700,9 +10716,9 @@ input.form-control-sm {
     max-width: 400px;
     height: auto;
     position: relative;
-    -webkit-transform: translate(40px, -130px);
-    -ms-transform: translate(40px, -130px);
-    transform: translate(40px, -130px); }
+    -webkit-transform: translate(35px, -130px);
+    -ms-transform: translate(35px, -130px);
+    transform: translate(35px, -130px); }
     @media (max-width: 1250px) {
       .testimonial-item__thumb {
         -webkit-transform: translate(50px, -130px);
@@ -10760,10 +10776,12 @@ input.form-control-sm {
           top: -10px;
           width: 80px; } }
   .testimonial-item__content {
-    flex: 0 0 770px;
+    -moz-box-flex: 0;
+    flex: 0 0 100%;
     -ms-flex: 0 0 770px;
-    max-width: 770px;
-    padding-right: 100px; }
+    max-width: 100%;
+    direction: rtl;
+    padding-left: 430px; }
     @media (max-width: 1199px) {
       .testimonial-item__content {
         flex: 0 0 580px;
@@ -10779,7 +10797,8 @@ input.form-control-sm {
         margin-top: 40px; } }
     .testimonial-item__content p {
       line-height: 27px;
-      color: #fff; }
+      color: #fff;
+      min-height: 130px; }
     .testimonial-item__content .name {
       color: #fff;
       font-size: 22px; }
@@ -10994,7 +11013,6 @@ input.form-control-sm {
       font-size: 16px;
       font-weight: 400;
       color: #6B727E;
-      font-family: "IRANSans-web";
       margin-top: 5px; }
     .pricing-item__head--2 {
       background: #F7F7F7; }
@@ -11038,7 +11056,6 @@ input.form-control-sm {
     transition: 0.3s;
     font-size: 13px;
     font-weight: 700;
-    font-family: "IRANSans-web";
     text-transform: uppercase; }
     @media (prefers-reduced-motion: reduce) {
       .pricing-item .price-btn {
@@ -11146,7 +11163,6 @@ input.form-control-sm {
     padding: 2px 25px;
     text-transform: uppercase; }
   .post-box__title a {
-    font-family: "IRANSans-web";
     color: #0C2957;
     line-height: 32px;
     display: inline-block; }
@@ -11225,7 +11241,6 @@ input.form-control-sm {
     color: #FD4A36;
     margin-bottom: 15px;
     font-weight: 700;
-    font-family: "IRANSans-web";
     text-transform: uppercase; }
   .blog__box .content .title {
     font-size: 24px;
@@ -11236,7 +11251,8 @@ input.form-control-sm {
       .blog__box .content .title a:hover {
         color: #FD4A36; }
   .blog__box .content p {
-    font-family: "IRANSans-web"; }
+
+  }
   .blog__box .content .meta {
     margin-top: 20px;
     display: -ms-flexbox;
@@ -11257,11 +11273,9 @@ input.form-control-sm {
         padding: 0px;
         padding-left: 15px; }
         .blog__box .content .meta .authore__content h5, .blog__box .content .meta .authore__content .h5 {
-          font-family: "IRANSans-web";
           font-size: 16px;
           font-weight: 700; }
     .blog__box .content .meta .date {
-      font-family: "IRANSans-web";
       font-weight: 700;
       padding-left: 30px; }
       .blog__box .content .meta .date i {
@@ -11292,7 +11306,7 @@ input.form-control-sm {
       margin-bottom: 22px; }
       .blog__box--3 .content .cat span {
         color: #fff;
-        font-family: "IRANSans-web"; }
+      }
     .blog__box--3 .content .title {
       font-size: 32px;
       line-height: 42px; }
@@ -11305,7 +11319,6 @@ input.form-control-sm {
           font-size: 24px;
           line-height: 36px; } }
       .blog__box--3 .content .title a {
-        font-family: "IRANSans-web";
         letter-spacing: -2px; }
         @media (max-width: 767px) {
           .blog__box--3 .content .title a {
@@ -11319,7 +11332,7 @@ input.form-control-sm {
     .blog__box--3 .content .meta span, .blog__box--3 .content .meta a {
       font-size: 14px;
       color: #0C2957;
-      font-family: "IRANSans-web"; }
+    }
       @media (max-width: 767px) {
         .blog__box--3 .content .meta span, .blog__box--3 .content .meta a {
           margin-top: 5px; } }
@@ -11417,7 +11430,7 @@ input.form-control-sm {
   .blog__box--quote .title a {
     color: #fff;
     font-size: 32px;
-    font-family: "IRANSans-web"; }
+  }
     @media (max-width: 767px) {
       .blog__box--quote .title a {
         font-size: 18px; } }
@@ -11429,7 +11442,7 @@ input.form-control-sm {
   .blog__box--quote .meta span, .blog__box--quote .meta a {
     font-size: 14px;
     color: #fff;
-    font-family: "IRANSans-web"; }
+  }
   .blog__box--quote .meta span:not(:last-child) {
     margin-right: 30px; }
   .blog__box--quote blockquote {
@@ -11587,7 +11600,6 @@ input.form-control-sm {
     .blog-author__text span {
       color: #FD4A36;
       font-size: 12px;
-      font-family: "IRANSans-web";
       font-weight: 700; }
 
 .blog-post-tag span {
@@ -11596,7 +11608,6 @@ input.form-control-sm {
   display: block;
   margin-bottom: 17px;
   color: #0C2957;
-  font-family: "IRANSans-web";
   letter-spacing: -1px; }
 
 .blog-post-tag a {
@@ -11612,7 +11623,6 @@ input.form-control-sm {
   margin-bottom: 10px;
   position: relative;
   z-index: 1;
-  font-family: "IRANSans-web";
   background: #F7F7F7; }
   @media (prefers-reduced-motion: reduce) {
     .blog-post-tag a {
@@ -11628,7 +11638,6 @@ input.form-control-sm {
   color: #0C2957;
   display: block;
   margin-bottom: 17px;
-  font-family: "IRANSans-web";
   letter-spacing: -1px; }
 
 .blog-share-icon a {
@@ -11652,7 +11661,6 @@ input.form-control-sm {
   margin-bottom: 0px; }
   .bakix-navigation span a {
     color: #FD4A36;
-    font-family: "IRANSans-web";
     text-transform: capitalize; }
 
 .bakix-navigation h4, .bakix-navigation .h4 {
@@ -11662,7 +11670,7 @@ input.form-control-sm {
 
 .bakix-navigation a {
   color: #0C2957;
-  font-family: "IRANSans-web"; }
+}
   .bakix-navigation a:hover {
     color: #FD4A36; }
 
@@ -11744,7 +11752,7 @@ input.form-control-sm {
   padding: 12px 30px;
   padding-right: 0;
   font-size: 14px;
-  font-family: "IRANSans-web"; }
+}
   .widget .cat a:hover {
     background: #FD4A36;
     color: #fff; }
@@ -12005,7 +12013,7 @@ input.form-control-sm {
   .latest__comments .avatar-name span {
     font-size: 12px;
     font-weight: 700;
-    font-family: "IRANSans-web"; }
+  }
 
 .latest__comments .reply {
   color: #0C2957;
@@ -12027,7 +12035,6 @@ input.form-control-sm {
     color: #FD4A36; }
 
 .latest__comments--2 p {
-  font-family: "IRANSans-web";
   font-size: 14px;
   line-height: 24px; }
 
@@ -12106,7 +12113,6 @@ input.form-control-sm {
   align-items: center; }
   .cta-right p {
     color: #fff;
-    font-family: "IRANSans-web";
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase; }
@@ -12308,7 +12314,7 @@ input.form-control-sm {
       text-decoration: none;
       border: none;
       font-weight: 600;
-      font-family: "IRANSans-web"; }
+    }
       .faqs .card__header .btn-link::after {
         left: 0px;
         content: "\f067";
@@ -12343,7 +12349,7 @@ input.form-control-sm {
     position: relative; }
     .faqs .card__body p {
       line-height: 28px;
-      font-family: "IRANSans-web"; }
+    }
   .faqs .card:not(:first-of-type):not(:last-of-type) {
     border-bottom: 1px solid #E1E1E1; }
   .faqs .card:first-of-type {
@@ -12386,7 +12392,7 @@ input.form-control-sm {
     margin-right: 1px; }
     .faqs__2 .card__body p {
       line-height: 27px;
-      font-family: "IRANSans-web";
+
       opacity: .70;
       color: #fff; }
   .faqs__2 .card:last-of-type {
@@ -12539,7 +12545,6 @@ input.form-control-sm {
 
 .video-text {
   font-size: 22px;
-  font-family: "IRANSans-web";
   color: #fff;
   display: inline-block;
   margin-left: 45px;
@@ -12901,7 +12906,6 @@ input.form-control-sm {
 
 .counter-box .odometer {
   font-size: 60px;
-  font-family: "IRANSans-web";
   margin-top: 13px;
   margin-bottom: 3px; }
   .counter-box .odometer span {
@@ -12910,7 +12914,6 @@ input.form-control-sm {
 .counter-box p {
   font-size: 22px;
   color: #fff;
-  font-family: "IRANSans-web";
   font-weight: 700; }
 
 .counter-box__2 .odometer span {
@@ -13023,6 +13026,7 @@ input.form-control-sm {
     content: "";
     height: 100%;
     background-image: url(../images/shape/breadcrumb-shape.png);
+    z-index: -1;
     width: 35%;
     background-repeat: no-repeat;
     z-index: 1; }
@@ -13063,7 +13067,6 @@ input.form-control-sm {
     margin-top: 2px; }
     .breadcrumb-text__nav li {
       font-size: 22px;
-      font-family: "IRANSans-web";
       color: #fff;
       text-transform: uppercase;
       font-weight: 700; }
@@ -13107,7 +13110,7 @@ input.form-control-sm {
       margin-bottom: 10px;
       font-weight: 500;
       color: #0C2957;
-      font-family: "IRANSans-web"; }
+    }
     .skill-boxs .skill-item .progress {
       height: 12px;
       border-radius: 4px;
@@ -13149,8 +13152,7 @@ input.form-control-sm {
 /*pricacy css*/
 .privacy__highlight {
   font-weight: 600;
-  line-height: 27px;
-  font-family: "IRANSans-web"; }
+  line-height: 27px; }
   .privacy__highlight p {
     color: #0C2957; }
 
@@ -13158,7 +13160,6 @@ input.form-control-sm {
   font-size: 22px; }
 
 .privacy__lists li {
-  font-family: "IRANSans-web";
   line-height: 27px;
   position: relative;
   padding-left: 20px; }
@@ -13229,13 +13230,12 @@ input.form-control-sm {
 .sidebar {
   padding: 35px 35px; }
   .sidebar__title {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
     font-size: 22px;
     margin-bottom: 15px;
-    justify-content: space-between; }
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
     .sidebar__title--white {
       color: #fff;
       margin-bottom: 40px; }
@@ -13248,11 +13248,10 @@ input.form-control-sm {
     .sidebar__list li a {
       background: #fff;
       color: #0C2957;
-      font-family: "IRANSans-web";
       font-weight: 600;
       display: block;
       padding: 17px;
-      padding-left: 65px; }
+      padding-right: 65px; }
     .sidebar__list li:not(:last-child) {
       margin-bottom: 20px; }
     .sidebar__list li .icon {
@@ -13396,14 +13395,12 @@ input.form-control-sm {
   .project-details li {
     font-size: 30px;
     font-weight: 700;
-    font-family: "IRANSans-web";
     color: #fff;
     padding-bottom: 20px; }
     .project-details li:not(:last-child) {
       margin-bottom: 33px;
       border-bottom: 1px solid #2A4877; }
     .project-details li span {
-      font-family: "IRANSans-web";
       display: block;
       font-weight: 400;
       font-size: 16px;
@@ -13532,22 +13529,29 @@ input.form-control-sm {
   margin-top: 44px;
   margin-top: 0;
   transform: translateY(15px); }
-  .metismenu a {
-    display: block;
-    padding: 12px 15px;
-    margin: 0;
-    text-align: right;
-    color: #fff;
-    border-top: 1px solid #383838;
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 14px; }
-  .metismenu li ul {
-    padding-left: 50px; }
-    .metismenu li ul a {
-      opacity: 0.7; }
 
+.metismenu a {
+  display: block;
+  padding: 12px 15px;
+  margin: 0;
+  text-align: right;
+  color: #fff;
+  border-top: 1px solid #383838;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 14px; }
+
+.metismenu li ul {
+  padding-left: 50px; }
+  .metismenu li ul a {
+    opacity: 0.7; }
+
+.metismenu .has-arrow::after {
+  inset-inline-end: 0px;
+  inset-inline-start: 1em !important;
+
+}
 .google-map {
   height: 60vh;
   overflow: hidden;
@@ -13618,7 +13622,7 @@ input.form-control-sm {
   margin-bottom: 45px; }
   .footer-widget .widget-title::after {
     position: absolute;
-    left: 0;
+    right: 0;
     content: "";
     width: 60px;
     height: 2px;

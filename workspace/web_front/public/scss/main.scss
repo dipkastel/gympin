@@ -1,20 +1,3 @@
-/*-----------------------------------------------------------------------------------
-
-    Template Name: SiteName - Multipurpose Technology HTML5 Template
-    Template URI: site.com
-    Description: SiteName - Multipurpose Technology HTML5 Template
-    Author: BasicTheme
-    Author URI: site.com
-    Version: 1.0
-
------------------------------------------------------------------------------------
-
-    CSS INDEX
-    ===================
-
-	01. Theme default CSS
-
------------------------------------------------------------------------------------*/
 // abstracts scss
 @import "./abstracts/mixins";
 @import "./abstracts/variables";
@@ -33,7 +16,7 @@
 // layout scss
 @import "./layout/header";
 @import "./layout/navigation";
- 
+
 
 // components scss
 @import "./components/form";

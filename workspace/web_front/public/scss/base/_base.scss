@@ -56,6 +56,12 @@
 	position: absolute;
 }
 
+.rtl{
+	direction: rtl;
+}
+.ltr{
+	direction: ltr;
+}
 .section-header {
 	&__white {
 		p {
@@ -114,5 +120,4 @@
 	p {
 		line-height: 27px;
 	}
-
 }

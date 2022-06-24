@@ -10,14 +10,9 @@ export default function PrivacyBreadcrumb() {
                     <div className="row">
                         <div className="col-xl-8 d-flex pr-0">
                             <div className="breadcrumb-text">
-                                <h2 className="breadcrumb-text__title">
-                                    Privacy policy
-                                </h2>
-                                <ul className="breadcrumb-text__nav">
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>-</li>
-                                    <li>Privacy policy</li>
-                                </ul>
+                                <h1 className="breadcrumb-text__title">
+                                    حریم شخصی
+                                </h1>
                             </div>
                         </div>
                     </div>

@@ -5,7 +5,7 @@ export default function HomeOneCTA() {
         <>
             {/* <!-- cta section start --> */}
             <section className="cta-area theme-bg pt-105 pb-115">
-                <div className="container">
+                <div className="container  rtl">
                     <div className="row">
                         <div className="col-xl-8">
                             <div className="section-header">
@@ -13,7 +13,7 @@ export default function HomeOneCTA() {
                                     راه کارهای ورزشی هستید؟</h2>
                             </div>
                         </div>
-                        <div className="col-xl-4 text-right">
+                        <div className="col-xl-4 text-right ltr">
                             <div className="cta-right">
                                 <p>با ما تماس بگیرید</p>
                                 <a href="contact.html" className="site-btn site-btn__s3">

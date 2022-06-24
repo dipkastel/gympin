@@ -11,13 +11,8 @@ export default function AboutBreadcrumb() {
                         <div className="col-xl-5 d-flex">
                             <div className="breadcrumb-text">
                                 <h2 className="breadcrumb-text__title">
-                                    About us
+                                    برند جیم پین
                                 </h2>
-                                <ul className="breadcrumb-text__nav">
-                                    <li><Link href="/"><a>Home</a></Link></li>
-                                    <li>-</li>
-                                    <li>about us</li>
-                                </ul>
                             </div>
                         </div>
                     </div>

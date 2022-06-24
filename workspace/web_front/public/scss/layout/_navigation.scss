@@ -2,12 +2,13 @@
 .navarea {
     @include d-flex;
     align-items: center;
+    justify-content: space-between;
     @include respond(lg) {
-        justify-content: space-between;
+        flex-wrap: nowrap;
     }
     @include respond(md) {
-        justify-content: flex-start;
         display: block;
+        flex-wrap: nowrap;
     }
     .mean-container {
         a.meanmenu-reveal {
@@ -49,13 +50,14 @@
     }
     ul {
         @include d-flex;
+        flex-direction: row-reverse;
         li {
             position: relative;
             a {
                 font-weight: 500;
                 color: $primary-color;
                 display: block;
-                padding: 32px 25px;
+                padding: 32px 15px;
                 @include respond(laptop) {
                     padding: 32px 20px;
                 }

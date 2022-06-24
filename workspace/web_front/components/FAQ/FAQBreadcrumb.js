@@ -10,14 +10,9 @@ export default function FAQBreadcrumb() {
                     <div className="row">
                         <div className="col-xl-8 d-flex pr-0">
                             <div className="breadcrumb-text">
-                                <h2 className="breadcrumb-text__title">
-                                    asked question
-                                </h2>
-                                <ul className="breadcrumb-text__nav">
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>-</li>
-                                    <li>asked question</li>
-                                </ul>
+                                <h1 className="breadcrumb-text__title">
+                                    سوالات متداول
+                                </h1>
                             </div>
                         </div>
                     </div>

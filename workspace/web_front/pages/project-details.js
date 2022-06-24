@@ -1,15 +1,15 @@
 import React from 'react'
-import Layout1 from '../layouts/Layout1'
+import Layout from '../layouts/Layout'
 import ProjectDetailsBreadCrumb from '../components/ProjectDetails/ProjectDetailsBreadCrumb'
 import ProjectDetailsArea from '../components/ProjectDetails/ProjectDetailsArea'
 
 export default function ProjectDetails() {
     return (
         <>
-            <Layout1>
+            <Layout>
                 <ProjectDetailsBreadCrumb />
                 <ProjectDetailsArea />
-            </Layout1>
+            </Layout>
         </>
     )
 }

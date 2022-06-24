@@ -1,15 +1,15 @@
 import React from 'react'
 import PricingBreadcrumb from '../components/Pricing/PricingBreadcrumb'
 import PricingSection from '../components/Pricing/PricingSection'
-import Layout1 from '../layouts/Layout1'
+import Layout from '../layouts/Layout'
 
 export default function Pricing() {
     return (
         <>
-            <Layout1>
+            <Layout>
                 <PricingBreadcrumb />
                 <PricingSection />
-            </Layout1>
+            </Layout>
         </>
     )
 }

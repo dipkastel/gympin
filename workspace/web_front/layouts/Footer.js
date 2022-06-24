@@ -16,9 +16,9 @@ export default function Footer() {
                             <br/>
                             <div className="footer-widget footer-widget__2">
                                 <ul>
-                                    <li><a href="service-details.html">قوانین و مقررات<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="service-details.html">حریم شخصی<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="service-details.html">سوالات متداول<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/term-and-conditions">قوانین و مقررات<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/privacy-policy">حریم شخصی<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/faq">سوالات متداول<i className="fa fa-angle-left"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -26,12 +26,11 @@ export default function Footer() {
                             <div className="footer-widget footer-widget__2">
                                 <h4 className="widget-title">خدمات</h4>
                                 <ul>
-                                    <li><a href="service-details.html">پیشنهادات ورزشی<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="service-details.html">رویداد ها<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="service-details.html">شرکت ها<i className="fa fa-angle-left"></i></a>
-                                    </li>
-                                    <li><a href="service-details.html">فروشگاه<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="service-details.html">وبلاگ<i className="fa fa-angle-left"></i></a>
+                                    <li><a href="/venues">پیشنهادات ورزشی<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/events">رویداد ها<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/corporate">شرکت ها<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/shop">فروشگاه<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/blog">وبلاگ<i className="fa fa-angle-left"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -41,11 +40,11 @@ export default function Footer() {
                                 <h4 className="widget-title">پیگیری ها</h4>
 
                                 <ul>
-                                    <li><a href="service-details.html">اخبار<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="service-details.html">اخبار شرکت ها<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="service-details.html">پشتیبانی<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="service-details.html">برند ما<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="service-details.html">تماس با ما<i className="fa fa-angle-left"></i></a>
+                                    <li><a href="/news">اخبار<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/news?c=corporates">اخبار شرکت ها<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/support">پشتیبانی<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/our-brand">برند ما<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/contact">تماس با ما<i className="fa fa-angle-left"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -56,7 +55,7 @@ export default function Footer() {
                                     <h4 className="newslater__title">عضویت در خبرنامه</h4>
                                     <div className="newslater__form">
                                         <form action="index.html">
-                                            <input type="email" name="email" id="email" placeholder="Enter Email" />
+                                            <input type="email" name="email" id="email" placeholder="Email" />
                                             <button type="submit"><i className="far fa-paper-plane"></i></button>
                                         </form>
                                     </div>
@@ -75,9 +74,9 @@ export default function Footer() {
                             </div>
                             <div className="col-lg-6">
                                 <div className="social__links social__links--2">
-                                    <a href="#0"><i className="fab fa-facebook-f"></i></a>
+                                    <a href="#0"><i className="fab fa-telegram-plane"></i></a>
                                     <a href="#0"><i className="fab fa-twitter"></i></a>
-                                    <a href="#0"><i className="fab fa-pinterest-p"></i></a>
+                                    <a href="#0"><i className="fab fa-instagram"></i></a>
                                     <a href="#0"><i className="fab fa-linkedin-in"></i></a>
                                 </div>
                             </div>

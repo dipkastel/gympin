@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function NewsDetailsBreadcrumb() {
+export default function NewsBreadcrumb() {
     return (
         <>
             {/* <!-- breadcrumb section start --> */}
@@ -11,7 +11,7 @@ export default function NewsDetailsBreadcrumb() {
                         <div className="col-xl-8 d-flex pr-0">
                             <div className="breadcrumb-text">
                                 <h1 className="breadcrumb-text__title">
-                                    خبر شماره 1 از همه
+                                    اماکن و فعالیت ها
                                 </h1>
                             </div>
                         </div>

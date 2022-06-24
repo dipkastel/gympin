@@ -4,38 +4,6 @@
     cursor: pointer;
 }
 
-
-// Custom CSS for Donacion-React
-// .metismenu{
-//     width: 100%;
-//     background: #0c1923;
-//     margin-top: 44px;
-//     transform: translateY(12px);
-// }
-// .metismenu li, .metismenu ul li {
-//     list-style: none;
-//     list-style-type: none;
-//     & a {
-//       display: block;
-//       width: 100%;
-//       padding: 10px 0;
-//       color: #fff;
-//       border-top: 1px solid #ebebeb;
-//       font-size: 14px;
-//       font-weight: 700;
-//       &:hover {
-//         color: #f15b43;
-//       }
-//     }
-//   }
-  
-//    .metismenu li:first-child > a {
-//     border-top: 0px;
-//   }
-//   .metismenu li ul {
-//     padding-left: 15px;
-//   }
-
 .mobile-nav{
     z-index: 9999;
     position: absolute;
@@ -50,24 +18,22 @@
     margin-top: 44px;
     margin-top: 0;
     transform: translateY(15px);
-    
-}
-
-.metismenu a{
-    display: block;
-    padding: 12px 15px;
-    margin: 0;
-    text-align: left;
-    color: #fff;
-    border-top: 1px solid #383838;
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 14px;
-}
-.metismenu li ul {
+    a{
+        display: block;
+        padding: 12px 15px;
+        margin: 0;
+        text-align: right;
+        color: #fff;
+        border-top: 1px solid #383838;
+        border-top: 1px solid rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+    li ul {
         padding-left: 50px;
         a{
             opacity: 0.7;
         }
-      }
+    }
+}

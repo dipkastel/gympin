@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout1 from '../layouts/Layout1'
+import Layout from '../layouts/Layout'
 import TeamBreadcrumb from '../components/Team/TeamBreadcrumb'
 import TeamGTA from '../components/Team/TeamGTA'
 import TeamSection from '../components/Team/TeamSection'
@@ -8,12 +8,12 @@ import TeamVideo from '../components/Team/TeamVideo'
 export default function Team() {
     return (
         <>
-            <Layout1>
+            <Layout>
                 <TeamBreadcrumb />
                 <TeamSection />
                 <TeamVideo />
                 <TeamGTA />
-            </Layout1>
+            </Layout>
         </>
     )
 }

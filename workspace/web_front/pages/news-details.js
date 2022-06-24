@@ -1,15 +1,15 @@
 import React from 'react'
 import NewsDetailsArea from '../components/NewsDetails/NewsDetailsArea'
 import NewsDetailsBreadcrumb from '../components/NewsDetails/NewsDetailsBreadcrumb'
-import Layout1 from '../layouts/Layout1'
+import Layout from '../layouts/Layout'
 
 export default function NewsDetails() {
     return (
         <>
-            <Layout1>
+            <Layout>
                 <NewsDetailsBreadcrumb />
                 <NewsDetailsArea />
-            </Layout1>
+            </Layout>
         </>
     )
 }

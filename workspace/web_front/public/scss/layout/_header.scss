@@ -138,7 +138,7 @@
         line-height: 42px;
         box-shadow: 0px 0px 30px 0px rgba(0, 26, 100, 0.06);
         &:not(:last-child) {
-            margin-right: 12px;
+            margin-left: 12px;
         }
         &:hover {
             background: $primary-color;

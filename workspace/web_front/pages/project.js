@@ -3,17 +3,17 @@ import ProjectBrand from '../components/Project/ProjectBrand'
 import ProjectBreadcrumb from '../components/Project/ProjectBreadcrumb'
 import ProjectCTA from '../components/Project/ProjectCTA'
 import ProjectSection from '../components/Project/ProjectSection'
-import Layout1 from '../layouts/Layout1'
+import Layout from '../layouts/Layout'
 
 export default function Project() {
     return (
         <>
-            <Layout1>
+            <Layout>
                 <ProjectBreadcrumb />
                 <ProjectSection />
                 <ProjectBrand />
                 <ProjectCTA />
-            </Layout1>
+            </Layout>
         </>
     )
 }

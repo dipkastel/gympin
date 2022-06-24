@@ -11,25 +11,25 @@ import HomeOnePricing from '../components/HomeOne/HomeOnePricing'
 import HomeOneProject from '../components/HomeOne/HomeOneProject'
 import HomeOneService from '../components/HomeOne/HomeOneService'
 import HomeOneTestimonial from '../components/HomeOne/HomeOneTestimonial'
-import Layout1 from '../layouts/Layout1'
+import Layout from '../layouts/Layout'
 
 export default function Home() {
     return (
         <>
-            <Layout1>
+            <Layout>
                 <HomeOneHero />
                 {/*<HomeOneFeature />*/}
                 <HomeOneAbout />
                 {/*<HomeOneProject />*/}
                 <HomeOneService />
                 <HomeOneTestimonial />
-                {/*<HomeOnePricing />*/}
+                <HomeOnePricing />
                 <HomeOneNews />
                 <HomeOneCTA />
                 <HomeOneGTA />
                 <HomeOneFAQ />
                 {/*<HomeOneBrand />*/}
-            </Layout1>
+            </Layout>
         </>
     )
 }

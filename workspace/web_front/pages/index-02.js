@@ -12,12 +12,12 @@ import HomeTwoVideo from '../components/HomeTwo/HomeTwoVideo'
 import HomeTwoWCU from '../components/HomeTwo/HomeTwoWCU'
 import HomeTwoWorkingProcess from '../components/HomeTwo/HomeTwoWorkingProcess'
 import HomeTwoNews  from '../components/HomeTwo/HomeTwoNews'
-import Layout1 from '../layouts/Layout1'
+import Layout from '../layouts/Layout'
 
 export default function index2() {
     return (
         <>
-            <Layout1>
+            <Layout>
                 <HomeTwoHero/>
                 <HomeTwoAbout/>
                 <HomeTwoFeature/>
@@ -31,7 +31,7 @@ export default function index2() {
                 <HomeTwoBrand/>
                 <HomeTwoTeam/>
                 <HomeTwoNews/>
-            </Layout1>
+            </Layout>
         </>
     )
 }
