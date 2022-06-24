@@ -25,4 +25,5 @@ public class PlanGateParam extends BaseParam<PlanGateParam> {
     @JsonProperty(value = "entry-count", required = true)
     private Short entryCount;
 
+
 }

@@ -4,8 +4,8 @@ import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.location.dto.GateDto;
 import com.notrika.gympin.common.location.param.GateParam;
 import com.notrika.gympin.domain.location.PlaceServiceImpl;
-import com.notrika.gympin.domain.location.StateServiceImpl;
 import com.notrika.gympin.domain.sport.SportServiceImpl;
+import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
 
 public final class GateConvertor {
@@ -16,6 +16,7 @@ public final class GateConvertor {
         gateEntity.setOpeningTime(gateParam.getOpeningTime());
         gateEntity.setPlace(GympinContext.getBean(PlaceServiceImpl.class).getEntityById(gateParam.getPlace().getId()));
         gateEntity.setSport(GympinContext.getBean(SportServiceImpl.class).getEntityById(gateParam.getSport().getId()));
+        gateEntity.setGuard(GympinContext.getBean(UserServiceImpl.class).getEntityById(gateParam.getGuard().getId()));
         return gateEntity;
     }
 
@@ -27,6 +28,7 @@ public final class GateConvertor {
         gateDto.setClosingTime(entity.getClosingTime());
         gateDto.setPlace(LocationConvertor.placeToPlaceDto(entity.getPlace()));
         gateDto.setSport(SportConvertor.sportToSportDto(entity.getSport()));
+        gateDto.setGuard(UserConvertor.userToUserDtoBrief(entity.getGuard()));
         return gateDto;
     }
 
