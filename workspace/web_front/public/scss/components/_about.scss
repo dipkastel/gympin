@@ -70,11 +70,12 @@
         li {
             @include d-flex;
             align-items: center;
+            direction: rtl;
             @include respond(xs) {
                 display: inline-block;
             }
             i {
-                margin-right: 15px;
+                margin-left: 15px;
                 color: $theme-color;
             }
             &:not(:last-child) {
@@ -102,7 +103,7 @@
             }
         }
         .title {
-            padding-left: 20px;
+            padding-right: 20px;
             font-size: 22px;
             line-height: 32px;
         }

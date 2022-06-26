@@ -7,7 +7,7 @@ export default function HomeTwoVideo() {
     return (
         <>
             {/* <!-- video area start --> */}
-            <section className="video-area">
+            <section className="video-area" id="corporate-contact">
                 <div className="container-fluid">
                     <div className="row no-gutters">
                         <div className="col-xl-8">
@@ -27,39 +27,29 @@ export default function HomeTwoVideo() {
                                             </div>
                                         </div>
                                     </a>
-                                    <a onClick={setPopUp} className="video-text pointer"
-                                        data-rel="lightcase:myCollection" data-animation="fadeInLeft" data-delay=".1s">Play
-                                        Video</a>
                                 </div>
                             </div>
                             {isPopUp && <VideoPopUp setShow={() => setPopUp(false)} src={"//www.youtube.com/embed/4xe72U7mXNg"} />}
                         </div>
                         <div className="col-xl-4">
                             <div className="quote-wrapper">
-                                <h2 className="quote-title">Free quote</h2>
-                                <div className="quote-form">
+                                <h2 className="quote-title">مشاوره رایگان</h2>
+                                <div className="quote-form rtl">
                                     <form action="index.html" className="mt-none-15">
                                         <div className="form-group mt-15">
-                                            <input type="text" name="Name" id="name" placeholder="Your Name" />
+                                            <input type="text" name="Name" id="name" placeholder="نام" />
                                         </div>
                                         <div className="form-group mt-15">
-                                            <input type="tel" name="Tel" id="tel" placeholder="Phone Number" />
+                                            <input type="tel" name="Tel" id="tel" placeholder="تلفن" />
                                         </div>
                                         <div className="form-group mt-15">
-                                            <select name="subject" id="service">
-                                                <option data-display="Choose Service"> Choose Service</option>
-                                                <option value="1">IT Services</option>
-                                                <option value="2">Infrastructure Plan</option>
-                                                <option value="3">IT Mangement</option>
-                                            </select>
+                                            <textarea name="Message" id="message" placeholder="پیام"/>
                                         </div>
                                         <div className="form-group mt-15">
-                                            <textarea name="Message" id="message" placeholder="Write Message"></textarea>
-                                        </div>
-                                        <div className="form-group mt-15">
-                                            <button type="submit" className="quote-btn"><span className="icon"><i
-                                                className="far fa-arrow-right"></i></span> free
-                                                estimate</button>
+                                            <button type="submit" className="quote-btn"> ارسال
+                                                <span className="icon"><i
+                                                    className="far fa-arrow-left"/></span>
+                                            </button>
                                         </div>
                                     </form>
                                 </div>

@@ -104,37 +104,25 @@ export default function EventsArea() {
 
                                 {list.map((item, i) => (
                                     <div className="col-xl-3 col-md-4 col-6 mb-20 pr-1 pl-1">
-                                        <article className="blog__box">
-                                            <div className="thumb">
-                                                <a href="#0">
-                                                    <img src={item.image}
-                                                         alt="blog image"/>
-                                                </a>
-                                            </div>
-                                            <div className="content">
-                                                <div className="meta mb-10">
-                                                    <div className="flex-grow-1">
-                                                        {item.plans.map((d, i) => (
-                                                            <div className="border pr-2 pl-2 inline-btn">{d}</div>
-                                                        ))}
-                                                    </div>
-
-                                                    <div className="flex-grow-3">
-                                                        {item.ads &&
-                                                        <a className="btn btn-sm btn-danger inline-btn">تبلیغات</a>
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <h4 className="title">
-                                                    <a href="#0">{item.title}</a>
-                                                </h4>
-                                                <div className="post-text small">
-                                                    {item.description.map((d, i) => (
-                                                        (i<(item.description.length-1))? d+"," :d
-                                                    ))}
+                                        <div className="widget sidebar grey-bg mb-40">
+                                            <h4 className="sidebar__title">
+                                                <span><img src="/images/shape/heading-shape-3.png" className="mr-5" alt="" /></span>
+                                                About Me
+                                            </h4>
+                                            <div className="aboutme text-center">
+                                                <img src="/images/news/news-author-2.jpeg" alt="" />
+                                                <h4>Rosalina D.Willaimson</h4>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                                    incididunt ut labore.</p>
+                                                <div className="aboutme__icon mt-30">
+                                                    <a href="#0"><i className="fab fa-facebook-f"></i></a>
+                                                    <a href="#0"><i className="fab fa-twitter"></i></a>
+                                                    <a href="#0"><i className="fab fa-behance"></i></a>
+                                                    <a href="#0"><i className="fab fa-linkedin-in"></i></a>
+                                                    <a href="#0"><i className="fab fa-youtube"></i></a>
                                                 </div>
                                             </div>
-                                        </article>
+                                        </div>
                                     </div>
                                 ))}
                             </div>

@@ -72,7 +72,7 @@
             line-height: 27px;
         }
         &--2 {
-            text-align: left;
+            text-align: right;
             .inline-btn {
                 margin-top: 25px;
                 display: inline-block;
@@ -99,6 +99,7 @@
         @include transition(.3s);
         &--2 {
             margin-bottom: 15px;
+            text-align: right;
         }
     }
     &:hover {

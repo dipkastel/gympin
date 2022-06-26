@@ -11,13 +11,8 @@ export default function ContactBreadcrumb() {
                         <div className="col-xl-6 d-flex pr-0">
                             <div className="breadcrumb-text">
                                 <h2 className="breadcrumb-text__title">
-                                    contact us
+                                    تماس با ما
                                 </h2>
-                                <ul className="breadcrumb-text__nav">
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>-</li>
-                                    <li>contact us</li>
-                                </ul>
                             </div>
                         </div>
                     </div>

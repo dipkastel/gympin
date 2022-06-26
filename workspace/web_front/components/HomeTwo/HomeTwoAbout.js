@@ -10,13 +10,13 @@ export default function HomeTwoAbout() {
                         <div className="col-xl-5">
                             <div className="about__bg about__bg--2 mt-75">
                                 <div className="big-thumb">
-                                    <img src="/images/about/about-bg-1.jpeg" alt="" />
+                                    <img src="/images/about/about-bg-1.jpg" alt="" />
                                 </div>
                                 <div className="mid-thumb position-absulate">
-                                    <img src="/images/about/about-bg-2.jpeg" alt="" />
+                                    <img src="/images/about/about-bg-2.jpg" alt="" />
                                 </div>
                                 <div className="small-thumb position-absulate">
-                                    <img src="/images/about/about-bg-3.jpeg" alt="" />
+                                    <img src="/images/about/about-bg-3.jpg" alt="" />
                                 </div>
                                 <span className="circle-shape position-absulate"><img src="/images/shape/border-shape-2.png" alt="" /></span>
                                 <span className="patternt-shape position-absulate"><img src="/images/shape/about-shape-1.png" alt="" /></span>
@@ -24,56 +24,40 @@ export default function HomeTwoAbout() {
                         </div>
                         <div className="col-xl-6">
                             <div className="section-header section-header__2 mb-40">
-                                <h4 className="sub-heading sub-heading__2 mb-10">About Us <span><img
-                                    src="/images/shape/heading-shape-4.png" className="ml-10" alt="" /></span></h4>
-                                <h2 className="section-title section-title__2 mb-30">From Structure
-                                    to Conveyance</h2>
-                                <p>Libero aliquam eiget rhoncus elit quis mattis tos neque ullco qua praesent interdum orce
-                                    torristique aenean at dictumst
-                                    velit fames molestie tristique magna sociosqu iner rhoncuis in cubilia here are some best
-                                    and catchy dolor for printing
-                                    company</p>
+                                <h4 className="sub-heading sub-heading__2 mb-10">
+                                    <span><img src="/images/shape/heading-shape-3.png" className="mr-10" alt="" /></span>
+                                    چرا جیم پین
+                                </h4>
+                                <h2 className="section-title section-title__2 mb-30">افزایش انرژی سازمان با آفرهای ورزشی</h2>
+                                <p className="rtl">فرهنگ سازمانی خود را با افزودن رویداد های ورزشی متحول کنید .</p>
+                                <p className="rtl">پرسنل را به ورزش ترغیب کنید و مجموعه ای پر انرژی بسازید .</p>
+                                <p className="rtl">سلامتی را به شرکت خود بازگردانید و به بازدهی بالاتری برسید.</p>
+                                <p className="rtl">با جیم پبن همه ورزش ها در دسترس خواهند بود . </p>
                             </div>
                             <div className="row mt-none-40">
                                 <div className="col-xl-6 mt-40">
-                                    <div className="ab__box">
+                                    <div className="ab__box rtl">
                                         <div className="ab__box--head">
                                             <div className="icon">
                                                 <img src="/images/icons/ab-1.png" alt="" />
                                             </div>
-                                            <h4 className="title">Get the <br/>
-                                                Most Definitely</h4>
+                                            <h4 className="title">یک پلن <br/>
+                                                انتخاب کنید</h4>
                                         </div>
-                                        <p>Pulvinar primis to velit dolo sociise aptent varius acuise maner platea dames pura
-                                            suspen</p>
+                                        <p className="rtl">به کارمندان خود ورزش هدیه کنید تا همه از مزایای آن بهره مند شوند.</p>
                                     </div>
                                 </div>
                                 <div className="col-xl-6 mt-40">
-                                    <div className="ab__box">
+                                    <div className="ab__box rtl">
                                         <div className="ab__box--head">
                                             <div className="icon icon__2">
                                                 <img src="/images/icons/ab-2.png" alt="" />
                                             </div>
-                                            <h4 className="title">Fast and <br/>
-                                                quality service</h4>
+                                            <h4 className="title">ورزش را <br/>
+                                               عادت کنید</h4>
                                         </div>
-                                        <p>Pulvinar primis to velit dolo sociise aptent varius acuise maner platea dames pura
-                                            suspen</p>
+                                        <p>با ساخت تیم های ورزشی و رویداد های هفتگی ورزش کردن را برای مجموعه خود عادت کنید</p>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="ab-author-signature mt-55">
-                                <div className="author__box">
-                                    <div className="author__box--thumb">
-                                        <img src="/images/other/author-2.png" alt="" />
-                                    </div>
-                                    <div className="author__box--text">
-                                        <h4 className="name">Martyn Alex</h4>
-                                        <span className="designation">CEO of pixen</span>
-                                    </div>
-                                </div>
-                                <div className="signature">
-                                    <img src="/images/shape/signature.png" alt="" />
                                 </div>
                             </div>
                         </div>

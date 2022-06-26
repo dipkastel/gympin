@@ -10168,7 +10168,7 @@ input.form-control-sm {
   .feature-item__content p {
     line-height: 27px; }
   .feature-item__content--2 {
-    text-align: left; }
+    text-align: right; }
     .feature-item__content--2 .inline-btn {
       margin-top: 25px;
       display: inline-block;
@@ -10187,7 +10187,8 @@ input.form-control-sm {
       .feature-item__title {
         transition: none; } }
     .feature-item__title--2 {
-      margin-bottom: 15px; }
+      margin-bottom: 15px;
+      text-align: right; }
   .feature-item:hover .feature-item__icon img {
     -webkit-transform: scale(0.8);
     -ms-transform: scale(0.8);
@@ -10268,12 +10269,13 @@ input.form-control-sm {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  align-items: center; }
+  align-items: center;
+  direction: rtl; }
   @media (max-width: 767px) {
     .about-lists ul li {
       display: inline-block; } }
   .about-lists ul li i {
-    margin-right: 15px;
+    margin-left: 15px;
     color: #FD4A36; }
   .about-lists ul li:not(:last-child) {
     margin-bottom: 15px; }
@@ -10301,7 +10303,7 @@ input.form-control-sm {
     .ab__box--head .icon__2 {
       background-color: #FD4A36; }
   .ab__box--head .title {
-    padding-left: 20px;
+    padding-right: 20px;
     font-size: 22px;
     line-height: 32px; }
 
