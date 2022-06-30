@@ -7,6 +7,7 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.PlanConvertor;
 import com.notrika.gympin.persistence.dao.repository.PlanRegisterRepository;
 import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
+import com.notrika.gympin.persistence.entity.user.User;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -75,4 +76,9 @@ public class PlanRegisterServiceImpl extends AbstractBaseService<PlanRegisterPar
     public List<PlanRegisterDto> convertToDtos(List<PlanRegisterEntity> entities) {
         return entities.stream().map(PlanConvertor::convertToPlanRegisterDto).collect(Collectors.toList());
     }
+
+    public PlanRegisterEntity getPlanOfUser(User user){
+        return planRegisterRepository.findPlanRegisterEntityByUserAndDeletedIsFalse(user);
+    }
+
 }

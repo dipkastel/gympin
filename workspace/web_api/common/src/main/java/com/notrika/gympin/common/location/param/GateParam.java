@@ -11,6 +11,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Time;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -35,6 +36,6 @@ public class GateParam extends BaseParam<GateParam> {
     private SportParam sport;
 
     @JsonProperty(value = "guard", required = true)
-    private UserParam guard;
+    private List<UserParam> guard;
 
 }
