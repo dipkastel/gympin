@@ -142,9 +142,11 @@ public class User extends BaseEntityWithCreate {
     private List<GateEntity> gates;
 
     @OneToMany(mappedBy = "athlete")
+    @ToString.Exclude
     private List<EnterGateEntity> enterGateAthlete;
 
     @OneToMany(mappedBy = "guard")
+    @ToString.Exclude
     private List<EnterGateEntity> enterGateGuard;
 
     @Transient

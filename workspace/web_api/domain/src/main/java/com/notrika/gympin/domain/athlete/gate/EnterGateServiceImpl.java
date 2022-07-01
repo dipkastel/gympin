@@ -71,7 +71,7 @@ public class EnterGateServiceImpl implements EnterGateService {
         EnterGateDto dto=new EnterGateDto();
         dto.setId(entity.getId());
         dto.setGate(GateConvertor.convertToDto(entity.getGate()));
-        dto.setReferenceId(UUID.fromString(entity.getReferenceId()));
+        dto.setReferenceId(entity.getReferenceId());
         return dto;
     }
 }

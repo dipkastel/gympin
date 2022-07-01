@@ -19,7 +19,7 @@ import java.util.UUID;
 public class EnterGateDto extends BaseDto<EnterGateDto> {
 
     @JsonProperty(value = "reference-id")
-    private UUID referenceId;
+    private String referenceId;
 
     @JsonProperty(value = "gate")
     private GateDto gate;
