@@ -20,7 +20,7 @@ import java.util.UUID;
 public class EnterGateParam extends BaseParam<EnterGateParam> {
 
     @JsonProperty(value = "reference-id")
-    private UUID referenceId;
+    private String referenceId;
 
     @JsonProperty(value = "enter-status", required = true)
     private EnterGateStatus enterStatus;

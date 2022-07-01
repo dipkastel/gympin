@@ -21,7 +21,7 @@ public class EnterGateServiceImpl implements EnterGateService {
     @Override
     public EnterGateDto confirmEnterGate(EnterGateParam enterGateParam) {
         Timestamp storeTime = new Timestamp(new Date().getTime());
-        EnterGateEntity enterGateEntity = enterGateRepository.findAllByReferenceIdAndDeletedIsFalse(enterGateParam.getReferenceId().toString());
+        EnterGateEntity enterGateEntity = enterGateRepository.findAllByReferenceIdAndDeletedIsFalse(enterGateParam.getReferenceId());
         if(enterGateEntity==null){
             throw new EnterGateRequestNotFoundException();
         }
