@@ -47,9 +47,11 @@ public class GateEntity extends BaseEntityWithCreateUpdate {
 
     @ManyToMany
     @JoinTable(name = "gate_guard",joinColumns=@JoinColumn(name = "gate_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ToString.Exclude
     private List<User> guard;
 
     @OneToMany(mappedBy = "gate")
+    @ToString.Exclude
     private List<EnterGateEntity> enterGate;
 
     @Override
