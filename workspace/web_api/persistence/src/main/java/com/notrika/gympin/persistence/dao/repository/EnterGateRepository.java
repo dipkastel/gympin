@@ -13,6 +13,6 @@ public interface EnterGateRepository extends BaseRepository<EnterGateEntity,Long
 
     Long countAllByAthleteAndGateAndEnterGateStatusAndDeletedIsFalse(User athlete, GateEntity gate, EnterGateStatus status);
 
-    EnterGateEntity findAllByReferenceIdAndDeletedIsFalse(UUID referenceId);
+    EnterGateEntity findAllByReferenceIdAndDeletedIsFalse(String referenceId);
 
 }
