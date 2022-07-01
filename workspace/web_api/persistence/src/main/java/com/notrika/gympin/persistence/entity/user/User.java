@@ -135,6 +135,7 @@ public class User extends BaseEntityWithCreate {
     private List<NotificationEntity> notifs;
 
     @OneToOne(mappedBy = "user")
+    @ToString.Exclude
     private PlanRegisterEntity registeredPlan;
 
     @ManyToMany(mappedBy = "guard")

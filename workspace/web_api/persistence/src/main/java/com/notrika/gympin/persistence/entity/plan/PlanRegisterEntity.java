@@ -15,7 +15,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-//@ToString
+@ToString
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
