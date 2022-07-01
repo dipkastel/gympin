@@ -20,7 +20,7 @@ public class EnterGateControllerImpl implements EnterGateController {
 
     @Override
     @PostMapping("/confirm-enter")
-    public ResponseEntity<EnterGateDto> confirmEnterGate(EnterGateParam enterGateParam) {
+    public ResponseEntity<EnterGateDto> confirmEnterGate(@RequestBody EnterGateParam enterGateParam) {
         return ResponseEntity.ok(enterGateService.confirmEnterGate(enterGateParam));
     }
 }
