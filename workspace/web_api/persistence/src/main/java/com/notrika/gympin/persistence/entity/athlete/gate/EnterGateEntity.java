@@ -29,7 +29,7 @@ import java.util.UUID;
 public class EnterGateEntity extends BaseEntityWithCreateUpdate {
 
     @Column(name = "reference_id",nullable = false)
-    private UUID referenceId;
+    private String referenceId;
 
     @ManyToOne(optional = false)
 //    @JoinTable(name = "athlete_gate_enter",joinColumns=@JoinColumn(name = "enter_gate_id",nullable = false),inverseJoinColumns = @JoinColumn(name = "user_id",nullable = false))

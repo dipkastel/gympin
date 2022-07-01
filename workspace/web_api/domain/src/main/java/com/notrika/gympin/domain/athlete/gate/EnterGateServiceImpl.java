@@ -61,7 +61,7 @@ public class EnterGateServiceImpl implements EnterGateService {
         }
         Timestamp storeTime = new Timestamp(new Date().getTime());
         EnterGateEntity enterGateEntity=new EnterGateEntity();
-        enterGateEntity.setReferenceId(UUID.randomUUID());
+        enterGateEntity.setReferenceId(UUID.randomUUID().toString());
         enterGateEntity.setAthlete(user);
         enterGateEntity.setGate(gate);
         enterGateEntity.setRequestDate(storeTime);
@@ -71,7 +71,7 @@ public class EnterGateServiceImpl implements EnterGateService {
         EnterGateDto dto=new EnterGateDto();
         dto.setId(entity.getId());
         dto.setGate(GateConvertor.convertToDto(entity.getGate()));
-        dto.setReferenceId(entity.getReferenceId());
+        dto.setReferenceId(UUID.fromString(entity.getReferenceId()));
         return dto;
     }
 }
