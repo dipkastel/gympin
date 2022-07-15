@@ -47,7 +47,7 @@ public class PlanConvertor {
         entity.setUser((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
         entity.setPlan(GympinContext.getBean(PlanServiceImpl.class).getEntityById(param.getPlan().getId()));
         entity.setRegisterDate(new Date());
-        entity.setExpireDate(GeneralHelper.calcDateByDiff(entity.getRegisterDate(), param.getLength(), Calendar.MINUTE));
+        entity.setExpireDate(GeneralHelper.calcDateByDiff(entity.getRegisterDate(), param.getLength(), Calendar.MONTH));
         entity.setLength(param.getLength());
         return entity;
     }

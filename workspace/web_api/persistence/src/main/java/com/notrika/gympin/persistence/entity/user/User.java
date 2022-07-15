@@ -4,6 +4,7 @@ import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
+import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
 import com.notrika.gympin.persistence.entity.communication.notification.NotificationEntity;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
@@ -134,11 +135,20 @@ public class User extends BaseEntityWithCreate {
     private List<NotificationEntity> notifs;
 
     @OneToOne(mappedBy = "user")
+    @ToString.Exclude
     private PlanRegisterEntity registeredPlan;
+
+    @ManyToMany(mappedBy = "guard")
+    @ToString.Exclude
+    private List<GateEntity> gates;
+
+    @OneToMany(mappedBy = "athlete")
+    @ToString.Exclude
+    private List<EnterGateEntity> enterGateAthlete;
 
     @OneToMany(mappedBy = "guard")
     @ToString.Exclude
-    private List<GateEntity> gates;
+    private List<EnterGateEntity> enterGateGuard;
 
     @Transient
     private Float rate;

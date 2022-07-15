@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.location;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanGateEntity;
 import com.notrika.gympin.persistence.entity.sport.Sport;
 import com.notrika.gympin.persistence.entity.user.User;
@@ -44,8 +45,14 @@ public class GateEntity extends BaseEntityWithCreateUpdate {
     @ToString.Exclude
     private List<PlanGateEntity> planGates;
 
-    @ManyToOne
-    private User guard;
+    @ManyToMany
+    @JoinTable(name = "gate_guard",joinColumns=@JoinColumn(name = "gate_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ToString.Exclude
+    private List<User> guard;
+
+    @OneToMany(mappedBy = "gate")
+    @ToString.Exclude
+    private List<EnterGateEntity> enterGate;
 
     @Override
     public boolean equals(Object o) {

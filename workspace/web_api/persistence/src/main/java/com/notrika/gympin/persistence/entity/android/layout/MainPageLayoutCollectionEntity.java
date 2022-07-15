@@ -6,9 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -30,4 +32,18 @@ public class MainPageLayoutCollectionEntity extends BaseEntity {
             "main_page_layout_item_id"))
     @ToString.Exclude
     private List<MainPageLayoutItemEntity> items;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        MainPageLayoutCollectionEntity entity = (MainPageLayoutCollectionEntity) o;
+        return getId() != null && Objects.equals(getId(), entity.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
 }

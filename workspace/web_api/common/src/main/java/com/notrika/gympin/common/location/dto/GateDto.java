@@ -11,6 +11,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Time;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -35,6 +36,6 @@ public class GateDto extends BaseDtoWithCreateUpdate<GateDto> {
     private SportDto sport;
 
     @JsonProperty(value = "guard")
-    private UserDto guard;
+    private List<UserDto> guard;
 
 }
