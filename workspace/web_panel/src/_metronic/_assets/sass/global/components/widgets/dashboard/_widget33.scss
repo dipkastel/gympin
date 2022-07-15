@@ -2,8 +2,6 @@
 // Widget33
 //
 
-
-
 // Base
 .kt-widget33 {
   // Head
@@ -75,7 +73,6 @@
             align-items: center;
 
             .kt-widget33__check {
-
               @include kt-rounded {
                 border-radius: $kt-border-radius;
               }

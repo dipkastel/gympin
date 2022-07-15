@@ -1,22 +1,17 @@
-import {AuthApi} from "../../app/api/const_api";
+import { AuthApi } from "../../app/api/const_api";
 
-export function getImageUrlByName(name,Height=0,Width=0) {
+export function getImageUrlByName(name, Height = 0, Width = 0) {
   var url = "http://api.gympin.ir/v1/multimedia/getByName?fileName=" + name;
-  if(Height!==0)
-    url+="&height="+Height
-  if(Width!==0)
-    url+="&width="+Width
+  if (Height !== 0) url += "&height=" + Height;
+  if (Width !== 0) url += "&width=" + Width;
   return url;
 }
-export function getImageUrlById(id,Height=0,Width=0) {
+export function getImageUrlById(id, Height = 0, Width = 0) {
   var url = "http://api.gympin.ir/v1/multimedia/getById?Id=" + id;
-  if(Height!==0)
-    url+="&height="+Height
-  if(Width!==0)
-    url+="&width="+Width
+  if (Height !== 0) url += "&height=" + Height;
+  if (Width !== 0) url += "&width=" + Width;
   return url;
 }
-
 
 export function removeCSSClass(ele, cls) {
   const reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
@@ -26,40 +21,47 @@ export function removeCSSClass(ele, cls) {
 export function addCSSClass(ele, cls) {
   ele.classList.add(cls);
 }
+export function checkMobileValid(mobileNumber) {
+  return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
+}
 
-export const toAbsoluteUrl = pathname => process.env.PUBLIC_URL + pathname;
+export const toAbsoluteUrl = (pathname) => process.env.PUBLIC_URL + pathname;
 
 export function setupAxios(axios, store) {
   axios.interceptors.request.use(
-    config => {
+    (config) => {
       const {
-        auth: { authToken }
+        auth: { authToken },
       } = store.getState();
 
       if (authToken) {
-        console.log("Bearer "+ authToken)
-        config.headers.Authorization = "Bearer "+ authToken;
+        console.log("Bearer " + authToken);
+        config.headers.Authorization = "Bearer " + authToken;
       }
-       config.baseURL = AuthApi.BASEURL;
+      config.baseURL = AuthApi.BASEURL;
       return config;
     },
-    err => {
-      console.log("err",err)
-      Promise.reject(err)
+    (err) => {
+      console.log("err", err);
+      Promise.reject(err);
     }
   );
 
-  axios.interceptors.response.use((response) => {
-    return response
-  }, async function (error) {
-    if (error.response.status === 401) {
-      console.log("expire")
-      window.location = "/logout";
+  axios.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async function (error) {
+      if (!error.response) {
+        console.log("error");
+      } else if (error.response.status === 401) {
+        console.log("expire");
+        window.location = "/logout";
+      }
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
-  });
+  );
 }
-
 
 /*  removeStorage: removes a key from localStorage and its sibling expiracy key
     params:

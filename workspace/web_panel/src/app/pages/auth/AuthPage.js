@@ -36,7 +36,7 @@ export default function AuthPage() {
             <div
               className="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside"
               style={{
-                backgroundImage: `url(${toAbsoluteUrl("/media/bg/bg-4.jpg")})`
+                backgroundImage: `url(${toAbsoluteUrl("/media/bg/bg-4.jpg")})`,
               }}
             >
               <div className="kt-grid__item">
@@ -49,17 +49,16 @@ export default function AuthPage() {
               </div>
               <div className="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
                 <div className="kt-grid__item kt-grid__item--middle">
-                  <h3 className="kt-login__title">Welcome to Gimpin</h3>
+                  <h3 className="kt-login__title">Welcome to Gympin</h3>
                   <h4 className="kt-login__subtitle">
-                    A space to manage sports and create new sports solutions to infinity .
+                    A space to manage sports and create new sports solutions to
+                    infinity .
                   </h4>
                 </div>
               </div>
               <div className="kt-grid__item">
                 <div className="kt-login__info">
-                  <div className="kt-login__copyright">
-                    &copy; 2021 Gimpin
-                  </div>
+                  <div className="kt-login__copyright">&copy; 2021 Gympin</div>
                   <div className="kt-login__menu">
                     <Link to="/terms" className="kt-link">
                       Privacy

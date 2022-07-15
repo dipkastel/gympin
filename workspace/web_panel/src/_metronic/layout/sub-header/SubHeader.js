@@ -14,7 +14,7 @@ class SubHeader extends React.Component {
     const {
       subheaderCssClasses,
       subheaderContainerCssClasses,
-      subheaderMobileToggle
+      subheaderMobileToggle,
     } = this.props;
     return (
       <div
@@ -68,7 +68,7 @@ class SubHeader extends React.Component {
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   config: store.builder.layoutConfig,
   menuConfig: store.builder.menuConfig,
   subheaderMobileToggle: objectPath.get(
@@ -77,12 +77,12 @@ const mapStateToProps = store => ({
   ),
   subheaderCssClasses: builder.selectors.getClasses(store, {
     path: "subheader",
-    toString: true
+    toString: true,
   }),
   subheaderContainerCssClasses: builder.selectors.getClasses(store, {
     path: "subheader_container",
-    toString: true
-  })
+    toString: true,
+  }),
 });
 
 export default withRouter(connect(mapStateToProps)(SubHeader));

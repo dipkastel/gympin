@@ -4,23 +4,21 @@
 // Most of the changes can be achieved via global or layout level sass variable changes.
 //
 
-
 .my-custom-style {
-    padding: 1rem 0.5rem;
-    color: kt-brand-color();
+  padding: 1rem 0.5rem;
+  color: kt-brand-color();
 
-    .my-custom-element {
-        margin-left: 1rem;
-    }
+  .my-custom-element {
+    margin-left: 1rem;
+  }
 }
 
-
 @include kt-tablet-and-mobile {
-    .my-custom-style {
-        padding: 0.5rem 0.25rem;
+  .my-custom-style {
+    padding: 0.5rem 0.25rem;
 
-        .my-custom-element {
-            margin-left: 0.5rem;
-        }
+    .my-custom-element {
+      margin-left: 0.5rem;
     }
+  }
 }

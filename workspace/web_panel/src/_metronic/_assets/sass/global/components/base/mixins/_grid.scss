@@ -2,116 +2,112 @@
 // Grid Mixins
 //
 
-
-
-
 @mixin kt-grid-generate($mode) {
-	$mode-class: '';
-	$mode-dir: '';
+  $mode-class: "";
+  $mode-dir: "";
 
-	// Grid mode
-	@if ($mode == general) {
-		$mode-class: ":not(.kt-grid--desktop):not(.kt-grid--desktop-and-tablet):not(.kt-grid--tablet):not(.kt-grid--tablet-and-mobile):not(.kt-grid--mobile)";
-	} @else {
-		$mode-class: ".kt-grid--" + $mode;
-		$mode-dir: "-" + $mode;
-	}
+  // Grid mode
+  @if ($mode == general) {
+    $mode-class: ":not(.kt-grid--desktop):not(.kt-grid--desktop-and-tablet):not(.kt-grid--tablet):not(.kt-grid--tablet-and-mobile):not(.kt-grid--mobile)";
+  } @else {
+    $mode-class: ".kt-grid--" + $mode;
+    $mode-dir: "-" + $mode;
+  }
 
-	// Horizontal grid
-	.kt-grid.kt-grid--hor#{$mode-dir}#{$mode-class} {
-		display: flex;
-		flex-direction: column;
+  // Horizontal grid
+  .kt-grid.kt-grid--hor#{$mode-dir}#{$mode-class} {
+    display: flex;
+    flex-direction: column;
 
-		&.kt-grid--root {
-			flex: 1;
-			-ms-flex: 1 0 0px; // IE10-11 fix
-		}
-		
-		> .kt-grid__item {
-			flex: none;
+    &.kt-grid--root {
+      flex: 1;
+      -ms-flex: 1 0 0px; // IE10-11 fix
+    }
 
-			&.kt-grid__item--fluid,
-			&.kt-grid__item--fluid#{$mode-dir} {
-				flex: 1 0 auto;
-				//-ms-flex: 1 0 0px;  // IE10-11 fix
-			}	
-		}
+    > .kt-grid__item {
+      flex: none;
 
-		// flex ordering
-		@for $i from 1 through 12 {
-			> .kt-grid__item.kt-grid__item--order-#{$i}#{$mode-dir} {
-				order: $i;
-			}
-		}
-	}
+      &.kt-grid__item--fluid,
+      &.kt-grid__item--fluid#{$mode-dir} {
+        flex: 1 0 auto;
+        //-ms-flex: 1 0 0px;  // IE10-11 fix
+      }
+    }
 
-	// Vertical grid
-	.kt-grid.kt-grid--ver#{$mode-dir}#{$mode-class} {
-		display: flex;
-		flex-direction: row;
+    // flex ordering
+    @for $i from 1 through 12 {
+      > .kt-grid__item.kt-grid__item--order-#{$i}#{$mode-dir} {
+        order: $i;
+      }
+    }
+  }
 
-		&.kt-grid--root {
-			flex: 1;
-			-ms-flex: 1 0 0px;  // IE10-11 fix
-		}
-		 
-		> .kt-grid__item {
-			flex: 0 0 auto;
+  // Vertical grid
+  .kt-grid.kt-grid--ver#{$mode-dir}#{$mode-class} {
+    display: flex;
+    flex-direction: row;
 
-			&.kt-grid__item--fluid,
-			&.kt-grid__item--fluid#{$mode-dir} {
-				flex: 1 auto; 
-				-ms-flex: 1 0 0px;  // IE10-11 fix
-				min-width: 0;
+    &.kt-grid--root {
+      flex: 1;
+      -ms-flex: 1 0 0px; // IE10-11 fix
+    }
 
-				@include kt-hack-ie {
-					min-width: none;  // IE10-11 fix
-				}				
-			}			 
-		}
+    > .kt-grid__item {
+      flex: 0 0 auto;
 
-		// flex ordering
-		@for $i from 1 through 12 {
-			> .kt-grid__item.kt-grid__item--order-#{$i}#{$mode-dir} {
-				order: $i;
-			}
-		}
-	}	 
+      &.kt-grid__item--fluid,
+      &.kt-grid__item--fluid#{$mode-dir} {
+        flex: 1 auto;
+        -ms-flex: 1 0 0px; // IE10-11 fix
+        min-width: 0;
 
-	// Grid item order
-	.kt-grid {
-		// horizontal items aligment
-		&.kt-grid--center {
-			align-content: center;
-		}	
+        @include kt-hack-ie {
+          min-width: none; // IE10-11 fix
+        }
+      }
+    }
 
-		&.kt-grid--stretch {
-			align-items: stretch;
-		}	
+    // flex ordering
+    @for $i from 1 through 12 {
+      > .kt-grid__item.kt-grid__item--order-#{$i}#{$mode-dir} {
+        order: $i;
+      }
+    }
+  }
 
-		// vertical item alignment
-		> .kt-grid__item {
-			max-width:100%;
-			
-			&.kt-grid__item--top {
-				align-self: flex-start;
-			}
+  // Grid item order
+  .kt-grid {
+    // horizontal items aligment
+    &.kt-grid--center {
+      align-content: center;
+    }
 
-			&.kt-grid__item--middle {
-				align-self: center;
-			}
-		 
+    &.kt-grid--stretch {
+      align-items: stretch;
+    }
 
-			&.kt-grid__item--bottom {
-				align-self: flex-end;
-			}
-		}
+    // vertical item alignment
+    > .kt-grid__item {
+      max-width: 100%;
 
-		// flex ordering
-		@for $i from 1 through 12 {
-			> .kt-grid__item.kt-grid__item--order-#{$i} {
-				order: $i;
-			}
-		}
-	}
+      &.kt-grid__item--top {
+        align-self: flex-start;
+      }
+
+      &.kt-grid__item--middle {
+        align-self: center;
+      }
+
+      &.kt-grid__item--bottom {
+        align-self: flex-end;
+      }
+    }
+
+    // flex ordering
+    @for $i from 1 through 12 {
+      > .kt-grid__item.kt-grid__item--order-#{$i} {
+        order: $i;
+      }
+    }
+  }
 }

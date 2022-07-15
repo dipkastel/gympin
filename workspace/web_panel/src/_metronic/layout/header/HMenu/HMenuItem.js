@@ -11,7 +11,7 @@ export default class HMenuItem extends React.Component {
    * Returns Attribute SubMenu Toggle
    * @param item: any
    */
-  getItemAttrSubmenuToggle = item => {
+  getItemAttrSubmenuToggle = (item) => {
     const toggleEvent = objectPath.get(item, "toggle");
     if (toggleEvent === "click") {
       return "click";
@@ -28,7 +28,7 @@ export default class HMenuItem extends React.Component {
    * Check Menu is active
    * @param item: any
    */
-  isMenuItemIsActive = item => {
+  isMenuItemIsActive = (item) => {
     if (item.submenu) {
       return this.isMenuRootItemIsActive(item);
     }
@@ -44,7 +44,7 @@ export default class HMenuItem extends React.Component {
    * Check Menu Root Item is active
    * @param item: any
    */
-  isMenuRootItemIsActive = item => {
+  isMenuRootItemIsActive = (item) => {
     if (item.submenu && !item.submenu.type) {
       for (const _subItem of item.submenu) {
         const isActive = this.isMenuItemIsActive(_subItem);
@@ -57,8 +57,7 @@ export default class HMenuItem extends React.Component {
 
     if (item.submenu && item.submenu.columns) {
       for (const _column of item.submenu.columns) {
-        for (const _subItem of _column.items)
-        {
+        for (const _subItem of _column.items) {
           const isActive = this.isMenuItemIsActive(_subItem);
           if (isActive) {
             return true;
@@ -75,7 +74,7 @@ export default class HMenuItem extends React.Component {
    * Return Css Class Name
    * @param item: any
    */
-  getItemCssClasses = item => {
+  getItemCssClasses = (item) => {
     let classes = "kt-menu__item";
 
     if (objectPath.get(item, "submenu")) {
@@ -119,7 +118,7 @@ export default class HMenuItem extends React.Component {
    * Returns Submenu CSS Class Name
    * @param item: any
    */
-  getItemMenuSubmenuClass = item => {
+  getItemMenuSubmenuClass = (item) => {
     let classes = "";
 
     const alignment = objectPath.get(item, "alignment") || "right";
@@ -151,7 +150,7 @@ export default class HMenuItem extends React.Component {
   render() {
     const { item, parentItem, currentUrl, rootArrowEnabled } = this.props;
     return (
-        // eslint-disable-next-line jsx-a11y/role-supports-aria-props
+      // eslint-disable-next-line jsx-a11y/role-supports-aria-props
       <li
         className={this.getItemCssClasses(item)}
         aria-haspopup="true"
@@ -163,7 +162,7 @@ export default class HMenuItem extends React.Component {
         {item.submenu && (
           <a
             className={`kt-menu__link ${clsx({
-              "kt-menu__toggle": item.root || item.submenu
+              "kt-menu__toggle": item.root || item.submenu,
             })}`}
           >
             <MenuItemInner
@@ -210,7 +209,7 @@ export default class HMenuItem extends React.Component {
           >
             <span
               className={`kt-menu__arrow ${clsx({
-                "kt-menu__arrow--adjust": item.root
+                "kt-menu__arrow--adjust": item.root,
               })}`}
             />
 
@@ -247,7 +246,8 @@ export default class HMenuItem extends React.Component {
             )}
 
             {item.submenu.type === "mega" &&
-              (item.submenu.columns && item.submenu.columns.length) && (
+              item.submenu.columns &&
+              item.submenu.columns.length && (
                 <div className="kt-menu__subnav">
                   <ul className="kt-menu__content">
                     {item.submenu.columns.map((child, index) => {

@@ -11,7 +11,7 @@ export default function LayoutInitializer({
   children,
   menuConfig,
   layoutConfig,
-  htmlClassService
+  htmlClassService,
 }) {
   const dispatch = useDispatch();
   const builderState = useSelector(({ builder }) => builder);

@@ -8,11 +8,9 @@ export * from "./utils/utils";
 export * from "./layout/LayoutContext";
 export * from "./layout/LayoutConfig";
 export { default as I18nProvider } from "./i18n/I18nProvider";
-export { default as ThemeProvider } from "./materialUIThemeProvider/ThemeProvider";
 
 /**
  * Ducks
  */
-
 
 export const metronic = { i18n, builder };

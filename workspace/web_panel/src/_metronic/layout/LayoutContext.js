@@ -3,7 +3,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useReducer
+  useReducer,
 } from "react";
 
 /**
@@ -22,7 +22,7 @@ const LayoutContext = {
   /**
    * Stores `dispatch` function to update layout state, intended to be internal.
    */
-  Dispatch: createContext(null)
+  Dispatch: createContext(null),
 };
 
 /**
@@ -44,7 +44,7 @@ const actionTypes = {
    * Controls splash screen visibility.
    */
   SHOW_SPLASH_SCREEN: "SHOW_SPLASH_SCREEN",
-  HIDE_SPLASH_SCREEN: "HIDE_SPLASH_SCREEN"
+  HIDE_SPLASH_SCREEN: "HIDE_SPLASH_SCREEN",
 };
 
 /**
@@ -82,11 +82,14 @@ function init({ pathname, menuConfig }) {
   const currentPage = pathname.slice(1 /* Remove leading slash. */);
   let breadcrumbs = [];
   const pageConfig =
-      findPageConfig(currentPage, menuConfig.aside.items, breadcrumbs) ||
-      findPageConfig(currentPage, menuConfig.header.items, breadcrumbs);
+    findPageConfig(currentPage, menuConfig.aside.items, breadcrumbs) ||
+    findPageConfig(currentPage, menuConfig.header.items, breadcrumbs);
 
   breadcrumbs.reverse();
-  const state = { subheader: { title: "", breadcrumb: [], description: "" }, splashScreen: { refs: {} } };
+  const state = {
+    subheader: { title: "", breadcrumb: [], description: "" },
+    splashScreen: { refs: {} },
+  };
   if (pageConfig) {
     breadcrumbs.push(pageConfig);
     state.subheader.title = pageConfig.title;
@@ -113,8 +116,8 @@ function reducer(state, { type, payload }) {
       ...state,
       splashScreen: {
         ...state.splashScreen,
-        refs: { ...state.splashScreen.refs, [payload.id]: true }
-      }
+        refs: { ...state.splashScreen.refs, [payload.id]: true },
+      },
     };
   }
 
@@ -123,7 +126,7 @@ function reducer(state, { type, payload }) {
 
     return {
       ...state,
-      splashScreen: { ...state.splashScreen, refs: nextRefs }
+      splashScreen: { ...state.splashScreen, refs: nextRefs },
     };
   }
 
@@ -135,36 +138,36 @@ function reducer(state, { type, payload }) {
  */
 export function LayoutContextProvider({ history, children, menuConfig }) {
   const [state, dispatch] = useReducer(
-      reducer,
-      { menuConfig, pathname: history.location.pathname },
-      // See https://reactjs.org/docs/hooks-reference.html#lazy-initialization
-      init
+    reducer,
+    { menuConfig, pathname: history.location.pathname },
+    // See https://reactjs.org/docs/hooks-reference.html#lazy-initialization
+    init
   );
 
   // Subscribe to history changes and reinitialize on each change.
   useEffect(
-      () =>
-          history.listen(({ pathname }) => {
-            dispatch({
-              type: actionTypes.INIT,
-              payload: { pathname, menuConfig }
-            });
-          }),
+    () =>
+      history.listen(({ pathname }) => {
+        dispatch({
+          type: actionTypes.INIT,
+          payload: { pathname, menuConfig },
+        });
+      }),
 
-      /**
-       * Passing `history` and `menuConfig` to `deps` ensures that `useEffect`
-       * will cleanup current `history` listener and will dispatch `INIT`
-       * with `menuConfig` reference from current render.
-       *
-       * @see https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
-       */
-      [history, menuConfig]
+    /**
+     * Passing `history` and `menuConfig` to `deps` ensures that `useEffect`
+     * will cleanup current `history` listener and will dispatch `INIT`
+     * with `menuConfig` reference from current render.
+     *
+     * @see https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
+     */
+    [history, menuConfig]
   );
 
   const { refs: splashScreenRefs } = state.splashScreen;
   const splashScreenVisible = useMemo(
-      () => Object.keys(splashScreenRefs).length > 0,
-      [splashScreenRefs]
+    () => Object.keys(splashScreenRefs).length > 0,
+    [splashScreenRefs]
   );
 
   useEffect(() => {
@@ -189,11 +192,11 @@ export function LayoutContextProvider({ history, children, menuConfig }) {
 
   // Pass state and dispatch to it's contexts.
   return (
-      <LayoutContext.State.Provider value={state}>
-        <LayoutContext.Dispatch.Provider value={dispatch}>
-          {children}
-        </LayoutContext.Dispatch.Provider>
-      </LayoutContext.State.Provider>
+    <LayoutContext.State.Provider value={state}>
+      <LayoutContext.Dispatch.Provider value={dispatch}>
+        {children}
+      </LayoutContext.Dispatch.Provider>
+    </LayoutContext.State.Provider>
   );
 }
 
@@ -242,7 +245,7 @@ export function LayoutSubheader({ title, breadcrumb, description }) {
   useEffect(() => {
     dispatch({
       type: actionTypes.SET_SUBHEADER,
-      payload: { title, breadcrumb, description }
+      payload: { title, breadcrumb, description },
     });
   }, [dispatch, title, breadcrumb, description]);
 

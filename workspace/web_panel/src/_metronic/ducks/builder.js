@@ -8,8 +8,9 @@ import MenuConfig from "../layout/MenuConfig";
 export const actionTypes = {
   SetMenuConfig: "builder/SET_MENU_CONFIG",
   SetLayoutConfigs: "builder/SET_LAYOUT_CONFIGS",
-  SetLayoutConfigsWithPageRefresh: "builder/SET_LAYOUT_CONFIGS_WITH_PAGE_REFRESH",
-  SetHtmlClassService: "builder/SET_HTML_CLASS_SERVICE"
+  SetLayoutConfigsWithPageRefresh:
+    "builder/SET_LAYOUT_CONFIGS_WITH_PAGE_REFRESH",
+  SetHtmlClassService: "builder/SET_HTML_CLASS_SERVICE",
 };
 
 export const selectors = {
@@ -26,8 +27,9 @@ export const selectors = {
       const { htmlClassServiceObjects } = store.builder;
 
       return htmlClassServiceObjects
-          ? htmlClassServiceObjects.getAttributes(params.path)
-          : [];    }
+        ? htmlClassServiceObjects.getAttributes(params.path)
+        : [];
+    }
 
     return [];
   },
@@ -64,27 +66,27 @@ export const selectors = {
     return logo;
   },
 
-  getStickyLogo: store => {
+  getStickyLogo: (store) => {
     const { layoutConfig } = store.builder;
     let logo = objectPath.get(layoutConfig, "self.logo.sticky");
     if (typeof logo === "undefined") {
       logo = selectors.getLogo(store);
     }
     return logo + "";
-  }
+  },
 };
 
 const initialState = {
   menuConfig: MenuConfig,
   layoutConfig: LayoutConfig,
-  htmlClassServiceObjects: undefined
+  htmlClassServiceObjects: undefined,
 };
 
 export const reducer = persistReducer(
   {
     storage,
     key: "build-demo1",
-    blacklist: ["htmlClassServiceObjects"]
+    blacklist: ["htmlClassServiceObjects"],
   },
   (state = initialState, { type, payload }) => {
     switch (type) {
@@ -95,7 +97,7 @@ export const reducer = persistReducer(
         return { ...state, layoutConfig: payload };
 
       case actionTypes.SetLayoutConfigsWithPageRefresh: {
-        return {...state, layoutConfig: payload};
+        return { ...state, layoutConfig: payload };
       }
       case actionTypes.SetHtmlClassService:
         return { ...state, htmlClassServiceObjects: payload };
@@ -107,20 +109,20 @@ export const reducer = persistReducer(
 );
 
 export const actions = {
-  setMenuConfig: payload => ({ payload, type: actionTypes.SetMenuConfig }),
+  setMenuConfig: (payload) => ({ payload, type: actionTypes.SetMenuConfig }),
 
-  setLayoutConfigs: payload => ({
+  setLayoutConfigs: (payload) => ({
     payload,
-    type: actionTypes.SetLayoutConfigs
+    type: actionTypes.SetLayoutConfigs,
   }),
 
-  setLayoutConfigsWithPageRefresh: payload => ({
+  setLayoutConfigsWithPageRefresh: (payload) => ({
     payload,
-    type: actionTypes.SetLayoutConfigsWithPageRefresh
+    type: actionTypes.SetLayoutConfigsWithPageRefresh,
   }),
 
-  setHtmlClassService: payload => ({
+  setHtmlClassService: (payload) => ({
     payload,
-    type: actionTypes.SetHtmlClassService
-  })
+    type: actionTypes.SetHtmlClassService,
+  }),
 };

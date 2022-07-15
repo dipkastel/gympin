@@ -99,12 +99,14 @@ export const PortletHeader = forwardRef(
           >
             {icon}
 
-            {/* Wrap string and fragments in PortletHeaderTitle */
-            typeof title === "string" || isFragment(title) ? (
-              <PortletHeaderTitle>{title}</PortletHeaderTitle>
-            ) : (
-              title
-            )}
+            {
+              /* Wrap string and fragments in PortletHeaderTitle */
+              typeof title === "string" || isFragment(title) ? (
+                <PortletHeaderTitle>{title}</PortletHeaderTitle>
+              ) : (
+                title
+              )
+            }
           </div>
         )}
 
@@ -123,7 +125,7 @@ export const PortletBody = forwardRef(
         "kt-portlet__body",
         {
           "kt-portlet__body--fit": fit,
-          "kt-portlet__body--fluid": fluid
+          "kt-portlet__body--fluid": fluid,
         },
         className
       )}

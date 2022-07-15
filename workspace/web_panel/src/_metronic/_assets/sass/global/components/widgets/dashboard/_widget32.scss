@@ -2,10 +2,7 @@
 // Widget32
 //
 
-
-
-
-.kt-widget__files {  
+.kt-widget__files {
   .kt-widget__media {
     text-align: center;
 
@@ -14,7 +11,7 @@
     }
 
     g [fill] {
-        fill: rgba(40, 42, 60, 0.2);
+      fill: rgba(40, 42, 60, 0.2);
     }
 
     .kt-widget__icon {
@@ -23,8 +20,8 @@
       text-align: center;
 
       svg {
-          width: 4rem;
-          height: 4rem;
+        width: 4rem;
+        height: 4rem;
       }
     }
   }

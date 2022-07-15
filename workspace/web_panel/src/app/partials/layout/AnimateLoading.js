@@ -7,7 +7,7 @@ class AnimateLoading extends React.Component {
   stopAnimateTimeout;
   state = {
     width: 0,
-    routeChanged: false
+    routeChanged: false,
   };
 
   componentDidUpdate(nextProps) {

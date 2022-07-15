@@ -48,15 +48,15 @@ class AsideLeft extends React.Component {
       submenu: {
         desktop: {
           // by default the menu mode set to accordion in desktop mode
-          default: "dropdown"
+          default: "dropdown",
         },
         tablet: "accordion", // menu set to accordion in tablet mode
-        mobile: "accordion" // menu set to accordion in mobile mode
+        mobile: "accordion", // menu set to accordion in mobile mode
       },
       // accordion setup
       accordion: {
-        expandAll: false // allow having multiple expanded accordions in the menu
-      }
+        expandAll: false, // allow having multiple expanded accordions in the menu
+      },
     };
 
     // init aside menu
@@ -83,7 +83,7 @@ class AsideLeft extends React.Component {
    * Use for fixed left aside menu, to show menu on mouseenter event.
    * @param e Event
    */
-  mouseEnter = e => {
+  mouseEnter = (e) => {
     // check if the left aside menu is fixed
     if (document.body.classList.contains("kt-aside--fixed")) {
       if (this.outsideTm) {
@@ -109,7 +109,7 @@ class AsideLeft extends React.Component {
    * Use for fixed left aside menu, to show menu on mouseenter event.
    * @param e Event
    */
-  mouseLeave = e => {
+  mouseLeave = (e) => {
     if (document.body.classList.contains("kt-aside--fixed")) {
       if (this.insideTm) {
         clearTimeout(this.insideTm);
@@ -143,7 +143,7 @@ class AsideLeft extends React.Component {
       layoutConfig,
       asideMenuAttr,
       asideClassesFromConfig,
-      location: { pathname }
+      location: { pathname },
     } = this.props;
 
     return (
@@ -178,7 +178,7 @@ class AsideLeft extends React.Component {
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   menuConfig: store.builder.menuConfig,
   layoutConfig: store.builder.layoutConfig,
   headerLogo: builder.selectors.getLogo(store),
@@ -188,13 +188,13 @@ const mapStateToProps = store => ({
 
   ulClasses: builder.selectors.getClasses(store, {
     path: "aside_menu_nav",
-    toString: true
+    toString: true,
   }),
 
   asideClassesFromConfig: builder.selectors.getClasses(store, {
     path: "aside_menu",
-    toString: true
-  })
+    toString: true,
+  }),
 });
 
 export default withRouter(connect(mapStateToProps)(AsideLeft));

@@ -50,7 +50,7 @@ class AsideLeft extends React.Component {
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   disableAsideSelfDisplay:
     builder.selectors.getConfig(store, "aside.self.display") === false,
   disableScroll:
@@ -58,7 +58,7 @@ const mapStateToProps = store => ({
     false,
   asideClassesFromConfig: builder.selectors.getClasses(store, {
     path: "aside",
-    toString: true
+    toString: true,
   }),
   menuCanvasOptions: {
     baseClass: "kt-aside",
@@ -66,9 +66,9 @@ const mapStateToProps = store => ({
     closeBy: "kt_aside_close_btn",
     toggleBy: {
       target: "kt_aside_mobile_toggler",
-      state: "kt-header-mobile__toolbar-toggler--active"
-    }
-  }
+      state: "kt-header-mobile__toolbar-toggler--active",
+    },
+  },
 });
 
 export default connect(mapStateToProps)(AsideLeft);

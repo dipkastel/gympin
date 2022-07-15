@@ -2,18 +2,15 @@
 // Layout Config
 //
 
-
-
 // Layout
 $kt-aside-default-width: 265px;
 $kt-aside-minimize-width: 70px;
 $kt-aside-offcanvas-width: 255px;
 
-
 // Layout Skins
 $kt-layout-skins: (
-	dark: #1e1e2d,
-	light: #ffffff
+  dark: #1e1e2d,
+  light: #ffffff,
 );
 
 // content bg color
@@ -24,8 +21,8 @@ $kt-border-radius: 4px;
 
 // Page padding
 $kt-page-padding: (
-	desktop: 25px,
-	mobile: 15px
+  desktop: 25px,
+  mobile: 15px,
 );
 
 // Page container width

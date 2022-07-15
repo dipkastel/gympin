@@ -1,20 +1,20 @@
-.card{
-    max-width: 320px;
-    margin: 3px;
+.card {
+  max-width: 320px;
+  margin: 3px;
 }
-.media{
-    height: 140px;
-    width: 320px;
-    background-size: contain !important;
+.media {
+  height: 140px;
+  width: 320px;
+  background-size: contain !important;
 }
-.MuiCard-success{
-    background-color: #bcf8d4 !important;
+.MuiCard-success {
+  background-color: #bcf8d4 !important;
 }
-.text-area{
-    width: 290px;
-    height: 100px;
+.text-area {
+  width: 290px;
+  height: 100px;
 }
 
-.text-field{
-    width: 290px;
+.text-field {
+  width: 290px;
 }

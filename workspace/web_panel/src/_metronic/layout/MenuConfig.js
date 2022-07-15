@@ -2,72 +2,59 @@
 export default {
   header: {
     self: {},
-    items: [
-    ]
+    items: [],
   },
   aside: {
     self: {},
     items: [
-      { section: "my account" },
+      { section: "دسترسی سریع" },
       {
         title: "Dashboard",
         root: true,
         icon: "flaticon2-architecture-and-city",
         page: "dashboard",
         translate: "MENU.DASHBOARD",
-        bullet: "dot"
+        bullet: "dot",
       },
-      { section: "general" },
-      {
-        title: "manage HomePage",
-        root: true,
-        icon: "flaticon-home",
-        page: "homePage"
-      },
+      { section: "مدیریت" },
       {
         title: "manage places",
         root: true,
         icon: "flaticon-map-location",
-        page: "places"
-      },
-      {
-        title: "manage locations",
-        root: true,
-        icon: "flaticon2-world",
-        page: "locations"
-      },
-      {
-        title: "manage users",
-        root: true,
-        icon: "flaticon-users",
-        page: "users"
+        translate: "MENU.MANAGE_PLACES",
+        page: "places",
       },
       {
         title: "manage events",
         root: true,
         icon: "flaticon-map-location",
-        page: "events"
+        translate: "MENU.MANAGE_EVENTS",
+        page: "events",
       },
+      { section: "نمایش" },
       {
-        title: "manage sports",
+        title: "manage HomePage",
         root: true,
-        icon: "flaticon-stopwatch",
-        page: "sports"
+        icon: "flaticon-home",
+        translate: "MENU.MANAGE_HOMEPAGE",
+        page: "homePage",
       },
-      { section: "resource" },
+      { section: "مدیا" },
       {
         title: "manage media",
         root: true,
         icon: "flaticon-folder-1",
-        page: "media"
+        translate: "MENU.MANAGE_MEDIA",
+        page: "media",
       },
-      { section: "settings" },
+      { section: "تنظیمات" },
       {
         title: "settings",
         root: true,
         icon: "flaticon-settings-1",
-        page: "settings"
+        translate: "MENU.SETTINGS",
+        page: "settings",
       },
-    ]
-  }
+    ],
+  },
 };

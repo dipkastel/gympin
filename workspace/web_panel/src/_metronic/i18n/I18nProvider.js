@@ -25,15 +25,15 @@ const allMessages = {
   fr: frMessages,
   ja: jaMessages,
   zh: zhMessages,
-  fa: faMessages
+  fa: faMessages,
 };
 
 export default function I18nProvider({ children }) {
   const locale = useSelector(({ i18n }) => i18n.lang);
   const messages = allMessages[locale];
   return (
-      <IntlProvider locale={locale} messages={messages}>
-        {children}
-      </IntlProvider>
+    <IntlProvider locale={locale} messages={messages}>
+      {children}
+    </IntlProvider>
   );
 }

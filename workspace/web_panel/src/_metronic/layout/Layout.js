@@ -21,7 +21,7 @@ function Layout({
   subheaderDisplay,
   selfLayout,
   layoutConfig,
-  contentContainerClasses
+  contentContainerClasses,
 }) {
   htmlClassService.setConfig(layoutConfig);
   // scroll to top after location changes
@@ -64,16 +64,12 @@ function Layout({
               className={`kt-content ${contentCssClasses} kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor`}
             >
               {/* <!-- begin:: Content Head --> */}
-              {subheaderDisplay && (
-                <SubHeader />
-              )}
+              {subheaderDisplay && <SubHeader />}
               {/* <!-- end:: Content Head --> */}
 
               {/* <!-- begin:: Content Body --> */}
               {/* TODO: add class to animate  kt-grid--animateContent-finished */}
-              <KtContent>
-                {children}
-              </KtContent>
+              <KtContent>{children}</KtContent>
               {/*<!-- end:: Content Body -->*/}
             </div>
             {/* <!-- end:: Content --> */}
@@ -89,9 +85,7 @@ function Layout({
   ) : (
     // BLANK LAYOUT
     <div className="kt-grid kt-grid--ver kt-grid--root">
-      <KtContent>
-        {children}
-      </KtContent>
+      <KtContent>{children}</KtContent>
     </div>
   );
 }
@@ -105,7 +99,7 @@ const mapStateToProps = ({ builder: { layoutConfig } }) => ({
     layoutConfig,
     "header.self.fixed.desktop"
   ),
-  contentContainerClasses: ""
+  contentContainerClasses: "",
   // contentContainerClasses: builder.selectors.getClasses(store, {
   //   path: "content_container",
   //   toString: true

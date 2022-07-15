@@ -9,7 +9,7 @@ import '../public/css/magnific-popup.css'
 import Head from 'next/head'
 import Preloader from '../layouts/Preloader'
 import { Fragment, useEffect, useState } from "react";
-import '../public/css/bootstrap.min.rtl.css'
+import '../public/css/bootstrap.rtl.css'
 import '../public/fonts/iransansweb/style.css'
 
 function MyApp({ Component, pageProps }) {

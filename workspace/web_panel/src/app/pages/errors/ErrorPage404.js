@@ -9,9 +9,7 @@ export function ErrorPage404() {
         <div
           className="kt-grid__item kt-grid__item--fluid kt-grid kt-error-v3"
           style={{
-            backgroundImage: `url(${toAbsoluteUrl(
-              "/media/error/bg3.jpg"
-            )})`
+            backgroundImage: `url(${toAbsoluteUrl("/media/error/bg3.jpg")})`,
           }}
         >
           <div className="kt-error_container">

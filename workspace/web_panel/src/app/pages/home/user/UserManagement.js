@@ -1,417 +1,204 @@
-import React, {Component} from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Notice from "../../../partials/content/Notice";
-import AddIcon from "@material-ui/icons/Add";
-import {Form, Modal, Table} from "react-bootstrap";
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import {Button, Paper} from "@material-ui/core";
-import Select from 'react-select';
-import {withStyles} from "@material-ui/styles";
-import {
-    user_add,
-    user_getAll,
-    user_delete,
-    user_update
-} from "../../../api/user.api";
-import 'leaflet/dist/leaflet.css';
-import {style} from "../../../partials/content/generalStyle";
-import {administrator_add, administrator_getById, administrator_update} from "../../../api/administrator.api";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import AddIcon from "@mui/icons-material/Add";
+import "leaflet/dist/leaflet.css";
+import { user_getAll } from "../../../api/user.api";
 
+const headCells = [
+  {
+    Id: "Id",
+    disablePadding: false,
+    label: "Id",
+  },
+  {
+    Id: "Username",
+    disablePadding: false,
+    label: "نام کاربری",
+  },
+  {
+    Id: "PhoneNumber",
+    disablePadding: false,
+    label: "تلفن",
+  },
+  {
+    Id: "UserGroup",
+    disablePadding: false,
+    label: "گروه",
+  },
+  {
+    Id: "UserStatus",
+    disablePadding: false,
+    label: "وضعیت",
+  },
+];
 
-class UserManagement extends Component {
+function UserManagementHead(props) {
+  const { order, orderBy } = props;
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            addMode: true,
-            adminMode: true,
-            selectedUserToDelete:null,
-            selectedAccess:null,
-            allUsersArray:[]
-        };
-    }
-    render() {
-        const {classes} = this.props;
-
-
-        return (
-            <>
-
-                <Notice icon="flaticon-warning kt-font-primary">
-                    <p>
-                        مدیریت کاربران
-                    </p>
-                </Notice>
-
-
-                <Portlet>
-                    <PortletHeader
-                        title="کاربران"
-                        toolbar={
-                            <PortletHeaderToolbar>
-                                <button
-                                    type="button"
-                                    className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                    onClick={(e) => this.toggleAddMode(e)}
-                                >
-                                    <AddIcon/>
-                                </button>
-                            </PortletHeaderToolbar>
-                        }
-                    />
-
-                    <PortletBody>
-
-                        <Paper className={classes.root} hidden={!this.state.addMode}>
-                            <Form className={classes.container} noValidate autoComplete="off"
-                                  onSubmit={(e) => this.addUser(e)}>
-                                <Form.Group controlId="form_UserName">
-                                    <Form.Label>نام کاربر (نام و نام خانوادگی)</Form.Label>
-                                    <Form.Control name="formUserName" type="text" placeholder="نام کاربر (نام و نام خانوادگی)"/>
-                                </Form.Group>
-
-                                <Form.Group controlId="form_PhoneNumber">
-                                    <Form.Label>شماره موبایل</Form.Label>
-                                    <Form.Control name="formPhoneNumber" type="text" placeholder="شماره موبایل"/>
-                                </Form.Group>
-
-                                <Form.Group controlId="form_access">
-                                    <Form.Label>دسترسی</Form.Label>
-                                    <Select
-                                        className={classes.dropdown}
-                                        inputId="react-select-single"
-                                        name="formUserAccess"
-                                        TextFieldProps={{
-                                            label: 'UserAccess',
-                                            InputLabelProps: {
-                                                htmlFor: 'react-select-single',
-                                                shrink: true,
-                                            },
-                                            placeholder: 'Search a state',
-                                        }}
-                                        value={this.state.selectedAccess}
-                                        options={this.getAccess()}
-                                        onChange={(e) => this.accessSelectedChange(e)}
-                                    />
-                                </Form.Group>
-
-                                <Form.Group controlId="form_administrator_name" hidden={!this.state.adminMode}>
-                                    <Form.Label>administrator name</Form.Label>
-                                    <Form.Control name="form_administrator_name" type="text" placeholder="administrator name"/>
-                                </Form.Group>
-
-                                <Form.Group controlId="form_administrator_email" hidden={!this.state.adminMode}>
-                                    <Form.Label>email</Form.Label>
-                                    <Form.Control name="form_administrator_email" type="text" placeholder="email"/>
-                                </Form.Group>
-                                <Form.Group controlId="form_administrator_password" hidden={!this.state.adminMode}>
-                                    <Form.Label>password</Form.Label>
-                                    <Form.Control name="form_administrator_password" type="password" placeholder="password"/>
-                                </Form.Group>
-                                <Button type={"submit"} variant="contained" color="primary" className={classes.button}>
-                                    ثبت
-                                </Button>
-                            </Form>
-                        </Paper>
-                        <div className="kt-separator kt-separator--dashed"/>
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>username</th>
-                                <th>phoneNumber</th>
-                                <th>role</th>
-                                <th>status</th>
-                                <th>actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {this.state.allUsersArray.map(this.renderUsersRow)}
-                            </tbody>
-                        </Table>
-                    </PortletBody>
-                </Portlet>
-
-                {this.renderModalDelete(classes,this.state.selectedUserToDelete)}
-            </>
-        )
-    }
-    componentDidMount() {
-        this.getUsers();
-        this.setState(() => ({
-            addMode: false,
-            adminMode:false
-        }));
-    }
-
-    toggleAddMode(e) {
-        e.preventDefault()
-        this.setState(() => ({
-            addMode: !this.state.addMode,
-            selectedUserToEdit: null,
-            adminMode:false
-        }));
-        this.clearForm()
-    }
-    openAddMode(e) {
-        e.preventDefault()
-        this.setState(() => ({
-            addMode: true
-        }));
-    }
-    closeAddMode(e) {
-        e.preventDefault()
-        this.setState(() => ({
-            addMode: false
-        }));
-    }
-    openAdminMode(e) {
-        e.preventDefault()
-        this.setState(() => ({
-            adminMode: true
-        }));
-    }
-    closeAdminMode(e) {
-        e.preventDefault()
-        this.setState(() => ({
-            adminMode: false
-        }));
-    }
-    addUser(e) {
-        e.preventDefault()
-        if(this.state.selectedUserToEdit){
-            if(this.state.selectedAccess.label==="ADMIN")
-            {
-                var id = (this.state.selectedAdministratorToEdit)?this.state.selectedAdministratorToEdit.Id:this.state.selectedUserToEdit.Id
-
-                administrator_update({
-
-                    "Id":id,
-                    "username": e.target.form_UserName.value,
-                    "phoneNumber":e.target.form_PhoneNumber.value,
-                    "role":this.state.selectedAccess.label,
-                    "administratorName": e.target.form_administrator_name.value,
-                    "password":e.target.form_administrator_password.value,
-                    "email":e.target.form_administrator_email.value
-                }).then(data => {
-                    this.getUsers();
-                    this.setState(() => ({
-                        selectedUserToEdit: null,
-                        selectedAdministratorToEdit: null
-                    }));
-                    this.closeAddMode(e)
-                    this.clearForm()
-
-                }).catch(e => {
-                    console.log(e);
-                })
-            }
-            else
-            {
-                user_update({
-                    "Id":this.state.selectedUserToEdit.Id,
-                    "username": e.target.form_UserName.value,
-                    "phoneNumber":e.target.form_PhoneNumber.value,
-                    "role":this.state.selectedAccess.label
-                }).then(data => {
-                    this.getUsers();
-                    this.setState(() => ({
-                        selectedUserToEdit: null
-                    }));
-                    this.closeAddMode(e)
-                    this.clearForm()
-
-                }).catch(e => {
-                    console.log(e);
-                })
-            }
-        }else {
-            if(this.state.selectedAccess.label==="ADMIN"){
-                administrator_add({
-                    "username": e.target.form_UserName.value,
-                    "phoneNumber":e.target.form_PhoneNumber.value,
-                    "role":this.state.selectedAccess.label,
-                    "administratorName": e.target.form_administrator_name.value,
-                    "password":e.target.form_administrator_password.value,
-                    "email":e.target.form_administrator_email.value
-                }).then(data => {
-                    this.getUsers()
-                    this.clearForm()
-                    this.closeAddMode(e)
-                }).catch(e => {
-                    console.log(e);
-                })
-            }else{
-                user_add({
-                    "username": e.target.form_UserName.value,
-                    "phoneNumber":e.target.form_PhoneNumber.value,
-                    "role":this.state.selectedAccess.label
-                }).then(data => {
-                    this.getUsers()
-                    this.clearForm()
-                    this.closeAddMode(e)
-                }).catch(e => {
-                    console.log(e);
-                })
-            }
-        }
-    }
-    deleteUser(e,user) {
-        e.preventDefault()
-        user_delete({
-            "Id": user.Id
-
-        }).then(data=>{
-            this.getUsers()
-            this.closeModalDelete()
-            this.clearForm()
-        }).catch(e=>{
-            console.log(e);
-        })
-    }
-
-    openModalDelete =(e,user)=>{
-        this.setState(() => ({
-            selectedUserToDelete: user
-        }));
-    };
-    getUsers() {
-
-        user_getAll().then(data=>{
-            console.log(data.data.Data);
-            this.setState(() => ({
-                allUsersArray: data.data.Data
-            }));
-
-        }).catch(e=>{
-            console.log(e);
-        })
-    }
-    renderUsersRow=(User, index)=>{
-        const { classes } = this.props;
-        return (
-            <tr key={index}>
-                <td>{User.Id}</td>
-                <td>{User.username}</td>
-                <td>{User.phoneNumber}</td>
-                <td>{User.userRole.map(o=>o.Role+" ")}</td>
-                <td>{User.userStatus}</td>
-                <td>
-                    <Button variant="contained" color="primary" className={classes.button_edit} onClick={(e)=>this.prepareEditUser(e,User)}>
-                        ویرایش
-                    </Button>
-                    <Button variant="contained" color="primary" className={classes.button_danger} onClick={(e)=>this.openModalDelete(e,User)}>
-                        حذف
-                    </Button>
-
-                </td>
-            </tr>
-        )
-    }
-
-    prepareEditUser=(e,user)=>{
-
-        e.preventDefault()
-        this.openAddMode(e)
-        console.log(this.getAccess().filter(p=>p.label === user.userRole))
-        this.setState(() => ({
-            selectedUserToEdit: user,
-            selectedAccess:this.getAccess().filter(p=>p.label === user.userRole),
-            adminMode:(user.userRole==="ADMIN")
-        }));
-
-        console.log(this.state.selectedAccess)
-         document.querySelector('#form_UserName').value = user.username
-        document.querySelector('#form_PhoneNumber').value = user.phoneNumber
-
-        if(user.userRole==="ADMIN"){
-            administrator_getById(user.Id).then(data=>{
-
-                this.setState(() => ({
-                    selectedAdministratorToEdit: data.data.Data
-                }));
-                document.querySelector('#form_administrator_name').value = data.data.Data.administratorName
-                document.querySelector('#form_administrator_email').value = data.data.Data.email
-            }).catch(e=>{
-                console.log(e);
-            })
-        }
-    }
-
-
-    closeModalDelete = ()=> {
-        this.setState(() => ({
-            selectedUserToDelete: null
-        }));
-    };
-    renderModalDelete = (classes,UserToDelete)=>{
-        return(<>
-                <Modal show={UserToDelete} onHide={this.closeModalDelete}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>delete</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>حذف {UserToDelete&&UserToDelete.username}</Modal.Body>
-                    <Modal.Footer>
-                        <Button className={classes.button_edit} onClick={this.closeModalDelete}>
-                            خیر
-                        </Button>
-                        <Button className={classes.button_danger} onClick={(e) => this.deleteUser(e, UserToDelete)}>
-                            حذف
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </>
-        );
-    }
-
-    getAccess() {
-        return [{
-            label: "USER",
-            value: 1
-        },{
-            label: "CONTENT",
-            value: 2
-        },{
-            label: "MARKET",
-            value: 3
-        },{
-            label: "ADMIN",
-            value: 4
-        },{
-            label: "SUPERADMIN",
-            value: 5
-        },{
-            label: "MANAGER",
-            value: 6
-        },{
-            label: "ATHLETE",
-            value: 7
-        },{
-            label: "COACH",
-            value: 8
-        }]
-
-    }
-
-    accessSelectedChange(e) {
-        this.setState(() => ({
-                selectedAccess:e,
-                adminMode:(e.label==="ADMIN")
-            }
-        ));
-    }
-
-    clearForm(){
-
-        this.setState(() => ({
-                selectedAccess:null,
-            }
-        ));
-        document.querySelector('#form_UserName').value = ""
-        document.querySelector('#form_PhoneNumber').value = ""
-        document.querySelector('#form_administrator_name').value = ""
-        document.querySelector('#form_administrator_email').value = ""
-        document.querySelector('#form_administrator_password').value = ""
-    }
+  return (
+    <TableHead>
+      <TableRow>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.Id}
+            align="right"
+            padding="normal"
+            sortDirection={orderBy === headCell.Id ? order : false}
+          >
+            {headCell.label}
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
 }
 
-export default withStyles(style)(UserManagement);
+const UserManagement = () => {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [itemCount, setItemCount] = useState(5);
+  const [userList, setUserList] = useState([]);
+  const [searchString, setSearchString] = useState("");
+  const history = useHistory();
+
+  useEffect(() => {
+    user_getAll(page, rowsPerPage)
+      .then((data) => {
+        console.log(data.data.Data);
+        setUserList(data.data.Data);
+        setItemCount(33);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [page, rowsPerPage, searchString]);
+
+  const handleClick = (event, id) => {
+    history.push({
+      pathname: "/usersDetails",
+      state: id,
+    });
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const onSearchChange = (event) => {
+    setSearchString(event.target.value);
+    setPage(0);
+  };
+
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - itemCount) : 0;
+
+  return (
+    <>
+      <Notice icon="flaticon-warning kt-font-primary">مدیریت کاربران</Notice>
+
+      <Box sx={{ width: "100%" }}>
+        <Paper sx={{ width: "100%", mb: 2 }}>
+          <Toolbar>
+            <Typography
+              sx={{ flex: "1 1 100%" }}
+              variant="h6"
+              id="tableTitle"
+              component="div"
+            >
+              کاربران
+            </Typography>
+            <input
+              type={"Text"}
+              title="search"
+              aria-label={"search"}
+              value={searchString}
+              onChange={onSearchChange}
+            />
+            <Tooltip title="Filter list">
+              <IconButton>
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
+          </Toolbar>
+          <TableContainer>
+            <Table
+              sx={{ minWidth: 750 }}
+              aria-labelledby="tableTitle"
+              size="medium"
+            >
+              <UserManagementHead rowCount={itemCount} />
+              <TableBody>
+                {userList.map((row, index) => {
+                  const labelId = `enhanced-table-checkbox-${index}`;
+                  return (
+                    <TableRow
+                      hover
+                      onClick={(event) => handleClick(event, row.Id)}
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row.Id.toString()}
+                    >
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="normal"
+                        align="right"
+                      >
+                        {row.Id}
+                      </TableCell>
+                      <TableCell align="right">{row.Username}</TableCell>
+                      <TableCell align="right">{row.PhoneNumber}</TableCell>
+                      <TableCell align="right">{row.UserGroup}</TableCell>
+                      <TableCell align="right">{row.UserStatus}</TableCell>
+                    </TableRow>
+                  );
+                })}
+                {emptyRows > 0 && (
+                  <TableRow
+                    style={{
+                      height: 53 * emptyRows,
+                    }}
+                  >
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            sx={{ direction: "ltr" }}
+            count={itemCount}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </Box>
+    </>
+  );
+};
+
+export default UserManagement;

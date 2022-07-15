@@ -2,11 +2,11 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const actionTypes = {
-  SetLanguage: "i18n/SET_LANGUAGE"
+  SetLanguage: "i18n/SET_LANGUAGE",
 };
 
 const initialState = {
-  lang: "fa"
+  lang: "fa",
 };
 
 export const reducer = persistReducer(
@@ -23,5 +23,5 @@ export const reducer = persistReducer(
 );
 
 export const actions = {
-  setLanguage: lang => ({ type: actionTypes.SetLanguage, payload: { lang } })
+  setLanguage: (lang) => ({ type: actionTypes.SetLanguage, payload: { lang } }),
 };

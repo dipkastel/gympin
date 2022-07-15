@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { FormattedMessage, injectIntl } from "react-intl";
-import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
+import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import * as auth from "../../store/ducks/auth.duck";
 
 function Registration(props) {
@@ -25,44 +25,44 @@ function Registration(props) {
             username: "",
             password: "",
             acceptTerms: true,
-            confirmPassword: ""
+            confirmPassword: "",
           }}
-          validate={values => {
+          validate={(values) => {
             const errors = {};
 
             if (!values.email) {
               errors.email = intl.formatMessage({
-                id: "AUTH.VALIDATION.REQUIRED_FIELD"
+                id: "AUTH.VALIDATION.REQUIRED_FIELD",
               });
             } else if (
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
               errors.email = intl.formatMessage({
-                id: "AUTH.VALIDATION.INVALID_FIELD"
+                id: "AUTH.VALIDATION.INVALID_FIELD",
               });
             }
 
             if (!values.fullname) {
               errors.fullname = intl.formatMessage({
-                id: "AUTH.VALIDATION.REQUIRED_FIELD"
+                id: "AUTH.VALIDATION.REQUIRED_FIELD",
               });
             }
 
             if (!values.username) {
               errors.username = intl.formatMessage({
-                id: "AUTH.VALIDATION.REQUIRED_FIELD"
+                id: "AUTH.VALIDATION.REQUIRED_FIELD",
               });
             }
 
             if (!values.password) {
               errors.password = intl.formatMessage({
-                id: "AUTH.VALIDATION.REQUIRED_FIELD"
+                id: "AUTH.VALIDATION.REQUIRED_FIELD",
               });
             }
 
             if (!values.confirmPassword) {
               errors.confirmPassword = intl.formatMessage({
-                id: "AUTH.VALIDATION.REQUIRED_FIELD"
+                id: "AUTH.VALIDATION.REQUIRED_FIELD",
               });
             } else if (values.password !== values.confirmPassword) {
               errors.confirmPassword =
@@ -93,8 +93,7 @@ function Registration(props) {
             //       })
             //     );
             //   });
-          }
-          }
+          }}
         >
           {({
             values,
@@ -104,7 +103,7 @@ function Registration(props) {
             handleChange,
             handleBlur,
             handleSubmit,
-            isSubmitting
+            isSubmitting,
           }) => (
             <form onSubmit={handleSubmit} noValidate autoComplete="off">
               {status && (
@@ -222,7 +221,10 @@ function Registration(props) {
                 </Link>
 
                 <Link to="/auth">
-                  <button type="button" className="btn btn-secondary btn-elevate kt-login__btn-secondary">
+                  <button
+                    type="button"
+                    className="btn btn-secondary btn-elevate kt-login__btn-secondary"
+                  >
                     Back
                   </button>
                 </Link>
@@ -242,9 +244,4 @@ function Registration(props) {
   );
 }
 
-export default injectIntl(
-  connect(
-    null,
-    auth.actions
-  )(Registration)
-);
+export default injectIntl(connect(null, auth.actions)(Registration));

@@ -7,7 +7,7 @@ export default class ScrollTop extends React.Component {
   componentDidMount() {
     const scrollTopOptions = {
       offset: 300,
-      speed: 600
+      speed: 600,
     };
     // eslint-disable-next-line no-undef
     new KTScrolltop(this.scrollTopCommonRef.current, scrollTopOptions);

@@ -5,7 +5,7 @@ const HeaderDropdownToggle = React.forwardRef((props, ref) => {
     <div
       ref={ref}
       className="kt-header__topbar-wrapper"
-      onClick={e => {
+      onClick={(e) => {
         e.preventDefault();
         props.onClick(e);
       }}
@@ -15,5 +15,5 @@ const HeaderDropdownToggle = React.forwardRef((props, ref) => {
   );
 });
 
-HeaderDropdownToggle.displayName = 'HeaderDropdownToggle';
+HeaderDropdownToggle.displayName = "HeaderDropdownToggle";
 export default HeaderDropdownToggle;

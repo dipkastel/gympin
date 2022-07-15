@@ -25,13 +25,13 @@ export default class HtmlClassService {
       subheader_container: [],
       content: [],
       content_container: [],
-      footer_container: []
+      footer_container: [],
     };
 
     this.attributes = {
       aside_menu: {},
       header_mobile: {},
-      header_menu: {}
+      header_menu: {},
     };
 
     // init base layout
@@ -95,7 +95,9 @@ export default class HtmlClassService {
     if (_selfBodyClass) {
       if (_selfBodyClass) {
         const bodyClasses = _selfBodyClass.toString().split(" ");
-        bodyClasses.forEach(cssClass => document.body.classList.add(cssClass));
+        bodyClasses.forEach((cssClass) =>
+          document.body.classList.add(cssClass)
+        );
       }
     }
 
@@ -235,9 +237,8 @@ export default class HtmlClassService {
       "aside.menu.submenu.dropdown.hover-timeout"
     );
     if (asideSubmenuDHoverTimeout) {
-      this.attributes.aside_menu[
-        "data-ktmenu-dropdown-timeout"
-      ] = asideSubmenuDHoverTimeout;
+      this.attributes.aside_menu["data-ktmenu-dropdown-timeout"] =
+        asideSubmenuDHoverTimeout;
     }
   }
 

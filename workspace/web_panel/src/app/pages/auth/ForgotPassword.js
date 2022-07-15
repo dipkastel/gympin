@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
 import { connect } from "react-redux";
-import { TextField } from "@material-ui/core";
+import { TextField } from "@mui/material";
 import { Link, Redirect } from "react-router-dom";
 import { FormattedMessage, injectIntl } from "react-intl";
 import * as auth from "../../store/ducks/auth.duck";
@@ -29,18 +29,18 @@ class ForgotPassword extends Component {
 
             <Formik
               initialValues={{ email: "" }}
-              validate={values => {
+              validate={(values) => {
                 const errors = {};
 
                 if (!values.email) {
                   errors.email = intl.formatMessage({
-                    id: "AUTH.VALIDATION.REQUIRED_FIELD"
+                    id: "AUTH.VALIDATION.REQUIRED_FIELD",
                   });
                 } else if (
                   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
                 ) {
                   errors.email = intl.formatMessage({
-                    id: "AUTH.VALIDATION.INVALID_FIELD"
+                    id: "AUTH.VALIDATION.INVALID_FIELD",
                   });
                 }
 
@@ -70,7 +70,7 @@ class ForgotPassword extends Component {
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                isSubmitting
+                isSubmitting,
               }) => (
                 <form onSubmit={handleSubmit} className="kt-form">
                   {status && (
@@ -120,9 +120,4 @@ class ForgotPassword extends Component {
   }
 }
 
-export default injectIntl(
-  connect(
-    null,
-    auth.actions
-  )(ForgotPassword)
-);
+export default injectIntl(connect(null, auth.actions)(ForgotPassword));

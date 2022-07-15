@@ -17,10 +17,6 @@ const { PUBLIC_URL } = process.env;
 setupAxios(axios, store);
 
 ReactDOM.render(
-  <App
-    store={store}
-    persistor={persistor}
-    basename={PUBLIC_URL}
-  />,
+  <App store={store} persistor={persistor} basename={PUBLIC_URL} />,
   document.getElementById("root")
 );

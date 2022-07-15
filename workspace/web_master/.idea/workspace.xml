@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aaa339a7-f874-44cd-9025-b881c033f287" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../web_front/public/css/bootstrap.rtl.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/web_master.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/noInternet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/sw.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/NBottomNavigation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/NNavigaion.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/NOfflineMode.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helper/GympinTheme.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helper/ducks/auth.duck.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helper/rootDuck.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helper/setupAxios.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helper/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helper/swDev.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helper/utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/auth/Login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/auth/Logout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/auth/Register.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/error/NotFound.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/finance/Finance.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/home/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/management/Management.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/report/Report.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/users/Gate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/users/Users.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/router/ApplicationRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/router/AuthRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/router/ErrorRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/router/MainRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/router/RouterHelpers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/user/UserDetailsManagement.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/user/UserManagement-backup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/user/components/UserAccess.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/user/components/UserBasics.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/user/components/UserTransActions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/user/userCss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/css/bootstrap.min.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/css/bootstrap.rtl.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/css/style - backup.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/avatar.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/avatar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/dialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/dialog.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/offcanvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/offcanvas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/portlet.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/portlet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/scrolltop.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/scrolltop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/toggle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/toggle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/util.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/wizard.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/js/wizard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-multiselectsplitter/bootstrap-multiselectsplitter.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-multiselectsplitter/bootstrap-multiselectsplitter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-multiselectsplitter/bootstrap-multiselectsplitter.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-multiselectsplitter/bootstrap-multiselectsplitter.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/.jshintrc" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/.jshintrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/Gruntfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/Gruntfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/countdown-bar.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/countdown-bar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/countdown-timer.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/countdown-timer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/custom-callback.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/custom-callback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/keep-alive.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/keep-alive.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/locked.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/locked.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/examples/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/bootstrap-session-timeout/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/flaticon/flaticon.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/flaticon/flaticon.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/flaticon/license.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/flaticon/license.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/flaticon2/flaticon.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/flaticon2/flaticon.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/flaticon2/license.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/flaticon2/license.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/jquery-idletimer/idle-timer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/jquery-idletimer/idle-timer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/jquery-idletimer/idle-timer.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/jquery-idletimer/idle-timer.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/jquery-ui/jquery-ui.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/jquery-ui/jquery-ui.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/jquery-ui/jquery-ui.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/jquery-ui/jquery-ui.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/jquery-ui/jquery-ui.min.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/jquery-ui/jquery-ui.min.rtl.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/line-awesome/css/line-awesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/line-awesome/css/line-awesome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/hammer.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/hammer.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/html5shiv.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/html5shiv.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/jquery.mousewheel.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/jquery.mousewheel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/magnific-popup.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/magnific-popup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/mapplic-ie.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/mapplic-ie.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/mapplic.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/mapplic.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/mapplic.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/plugins/mapplic/mapplic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/_config.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/_config.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/custom/_example-1.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/custom/_example-1.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/custom/_example-2.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/custom/_example-2.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/_functions.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/_functions.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/_include.react.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/_include.react.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/_init.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/_init.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/_mixins.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_animations.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_animations.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_avatar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_avatar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_checkbox.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_checkbox.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_container.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_container.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_datatable.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_datatable.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_dialog.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_dialog.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_form.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_grid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_grid.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_helpers.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_helpers.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_input-icon.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_input-icon.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_loader.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_loader.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_normalize.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_normalize.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_option.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_option.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_page-loader.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_page-loader.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_portlet.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_portlet.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_pulse.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_pulse.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_radio.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_radio.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_scrolltop.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_scrolltop.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_spinner.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_spinner.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_switch.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/_switch.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_burger-menu.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_burger-menu.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_grid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_grid.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_menu-horizontal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_menu-horizontal.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_menu-vertical.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_menu-vertical.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_offcanvas.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_offcanvas.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_spinner.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_spinner.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_wave.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/base/mixins/_wave.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_callout.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_callout.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_chat.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_chat.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_grid-nav-v2.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_grid-nav-v2.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_grid-nav.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_grid-nav.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_head.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_head.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_iconbox.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_iconbox.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_infobox.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_infobox.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_list-pics.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_list-pics.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_list-timeline.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_list-timeline.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_media.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_my-cart.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_my-cart.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_nav.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_nav.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_notes.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_notes.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_notification-v2.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_notification-v2.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_notification.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_notification.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_pagination.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_pagination.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_profile.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_profile.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_ribbon.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_ribbon.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_searchbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_searchbar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_timeline-v1.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_timeline-v1.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_timeline-v2.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_timeline-v2.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_timeline-v3.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_timeline-v3.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_user-card-v2.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_user-card-v2.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_user-card-v3.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_user-card-v3.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_user-card.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/_user-card.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/mixins/_media.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/general/mixins/_media.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_demo-panel.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_demo-panel.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_offcanvas-panel.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_offcanvas-panel.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_quick-panel.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_quick-panel.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_quick-search.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_quick-search.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_scroll.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_scroll.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_sticky-toolbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_sticky-toolbar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_subheader.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/_subheader.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/mixins/_app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/layout/mixins/_app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_badge.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_badge.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_demo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_demo.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_divider.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_divider.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_heading.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_heading.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_link.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_link.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_section.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_section.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_separator.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_separator.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_svg-icon.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/_svg-icon.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/mixins/_link.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/typography/mixins/_link.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget1.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget1.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget10.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget10.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget11.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget11.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget12.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget12.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget13.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget13.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget14.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget14.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget15.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget15.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget16.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget16.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget17.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget17.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget19.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget19.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget2.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget2.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget20.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget20.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget21.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget21.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget24.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget24.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget25.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget25.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget26.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget26.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget27.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget27.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget28.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget28.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget29.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget29.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget3.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget3.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget30.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget30.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget31.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget31.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget32.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget32.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget33.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget33.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget4.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget4.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget5.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget5.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget6.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget6.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget7.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget7.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget8.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget8.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget9.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/dashboard/_widget9.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_profile-1.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_profile-1.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_profile-2.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_profile-2.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_profile-3.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_profile-3.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_profile-4.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_profile-4.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_project-1.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_project-1.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_users.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/components/widgets/general/_users.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_accordion.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_accordion.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_alert.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_alert.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_badge.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_badge.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_button-group.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_button-group.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_buttons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_buttons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_code.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_code.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_dropdown.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_dropdown.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_forms.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_forms.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_grid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_grid.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_modal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_modal.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_pagination.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_pagination.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_popover.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_popover.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_progress.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_progress.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_table.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_table.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_tabs-btn.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_tabs-btn.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_tabs-line.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_tabs-line.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_tabs.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_tabs.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_toasts.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_toasts.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_tooltip.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_tooltip.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/bootstrap.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/bootstrap/bootstrap.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/react/material-ui/_general.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/frameworks/react/material-ui/_general.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_ckeditor.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_ckeditor.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_dropzone.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_dropzone.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_fontawesome5.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_fontawesome5.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_kanban.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_kanban.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_perfect-scrollbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_perfect-scrollbar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_quill.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_quill.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_sweetalert2.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_sweetalert2.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_tagify.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_tagify.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_tinymce.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/_tinymce.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/mixins/_perfect-scrollbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/integration/plugins/mixins/_perfect-scrollbar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/_config.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/_config.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/aside/_aside.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/aside/_aside.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/aside/_config.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/aside/_config.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/aside/skins/dark.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/aside/skins/dark.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/aside/skins/light.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/aside/skins/light.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/base/_base.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/base/_base.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/brand/_brand.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/brand/_brand.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/brand/_config.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/brand/_config.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/brand/skins/dark.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/brand/skins/dark.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/brand/skins/light.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/brand/skins/light.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/content/_content.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/content/_content.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/footer/_config.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/footer/_config.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/footer/_footer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/footer/_footer.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/_base-mobile.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/_base-mobile.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/_config.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/_config.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/_header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/_header.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/_menu.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/_menu.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/_topbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/_topbar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/skins/base/dark.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/skins/base/dark.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/skins/base/light.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/skins/base/light.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/skins/menu/dark.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/skins/menu/dark.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/skins/menu/light.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/global/layout/header/skins/menu/light.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/pages/error/error-3.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/pages/error/error-3.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/pages/login/login-1.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/pages/login/login-1.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/style.react.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/_assets/sass/style.react.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/ducks/builder.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/ducks/builder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/ducks/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/ducks/i18n.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/i18n/I18nProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/i18n/I18nProvider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/i18n/messages/fa.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/i18n/messages/fa.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/HTMLClassService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/HTMLClassService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/KtContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/KtContent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/LayoutConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/LayoutConfig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/LayoutContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/LayoutContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/LayoutInitializer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/LayoutInitializer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/MenuConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/MenuConfig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/AsideLeft.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/AsideLeft.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/Menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuItemSeparator.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuItemSeparator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuItemText.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuItemText.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuSection.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuSection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuSubmenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/aside/MenuSubmenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/assets/Base.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/assets/Base.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/brand/Brand.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/brand/Brand.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/footer/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/footer/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/HMenu/HMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/HMenu/HMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/HMenu/HMenuColumn.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/HMenu/HMenuColumn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/HMenu/HMenuItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/HMenu/HMenuItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/HMenu/HMenuItemInner.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/HMenu/HMenuItemInner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/HeaderMobile.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/HeaderMobile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/QuickPanelToggle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/QuickPanelToggle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/Topbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/header/Topbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/sub-header/SubHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/sub-header/SubHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/sub-header/components/QuickActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/layout/sub-header/components/QuickActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/materialUIThemeProvider/ThemeProvider.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/_metronic/utils/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/_metronic/utils/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/administrator.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/api/administrator.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/auth.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/api/auth.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/collection.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/api/collection.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/const_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/api/const_api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/locations.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/api/locations.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/media.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/api/media.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/mediaCategories.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/api/mediaCategories.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/sport.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/api/sport.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/user.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/api/user.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/auth/AuthPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/auth/AuthPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/auth/ForgotPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/auth/ForgotPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/auth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/auth/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/auth/Logout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/auth/Logout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/auth/Registration.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/auth/Registration.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/errors/ErrorPage404.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/errors/ErrorPage404.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/errors/ErrorsPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/errors/ErrorsPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/Dashboard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/ApplicationHomeManagement.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/ApplicationHomeManagement.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/ApplicationHomeManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/ApplicationHomeManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/main/ListApplicationHomeCollections.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/main/ModalAddApplicationHomeCollectionList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/event/EventManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/event/EventManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/location/LocationManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/location/LocationManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/location/cities/citiesManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/location/cities/citiesManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/location/regions/regionsManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/location/regions/regionsManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/location/states/statesManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/location/states/statesManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/AddImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/AddImage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/AddMedia.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/AddMedia.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/AddMedia.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/AddMedia.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/AllImages.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/AllImages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/ImageAddItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/ImageAddItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/MediaManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/MediaManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/category/mediaCategoryManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/media/category/mediaCategoryManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/place/PlaceManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/place/PlaceManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/place/details/Clients/PlaceClients.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/place/details/PlaceDetalsManagement.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/place/details/placeOptions/PlaceOptions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/place/details/placeSport/PlaceSport.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/place/placeOption/placeOptionManagement.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/sport/SportManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/sport/SportManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/user/UserManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/user/UserManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/partials/content/CustomDropdowns/HeaderDropdownToggle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/partials/content/CustomDropdowns/HeaderDropdownToggle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/partials/content/Notice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/partials/content/Notice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/partials/content/Portlet.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/partials/content/Portlet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/partials/content/generalStyle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/partials/content/generalStyle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/partials/layout/AnimateLoading.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/partials/layout/AnimateLoading.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/partials/layout/LanguageSelector.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/partials/layout/LanguageSelector.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/partials/layout/ScrollTop.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/partials/layout/ScrollTop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/partials/picker/image/imagePicker.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/partials/picker/image/imagePicker.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/partials/picker/image/imagePicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/partials/picker/image/imagePicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/partials/picker/image/imagePickerConsts.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/partials/picker/image/imagePickerConsts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/router/RouterHelpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/router/RouterHelpers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/router/Routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/router/Routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/store/ducks/auth.duck.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/store/ducks/auth.duck.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/store/rootDuck.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/store/rootDuck.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/store/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/sass/style.react.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/sass/style.react.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/sass/style.react.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/sass/style.react.rtl.css" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="2BUZpc05M3RdP05IDYxXrmYyaz8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="abbreviatePackageNames" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/network/api" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.3.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\work\gympin\workspace\web_master\src\network\api" />
+      <recent name="E:\work\gympin\workspace\web_master\src\pages\auth" />
+      <recent name="E:\work\gympin\workspace\web_master\src\helper" />
+      <recent name="E:\work\gympin\workspace\web_master\src\router" />
+      <recent name="E:\work\gympin\workspace\web_master\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\work\gympin\workspace\web_master\src\network" />
+      <recent name="E:\work\gympin\workspace\web_master\src\router" />
+      <recent name="E:\work\gympin\workspace\web_master\src\helper" />
+      <recent name="E:\work\gympin\workspace\web_master\src\pages\users" />
+      <recent name="E:\work\gympin\workspace\web_master\src\pages\report" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aaa339a7-f874-44cd-9025-b881c033f287" name="Changes" comment="" />
+      <created>1656962816030</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1656962816030</updated>
+      <workItem from="1656962816478" duration="61401000" />
+      <workItem from="1657639348530" duration="2094000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>

@@ -55,17 +55,17 @@ class Footer extends React.Component {
   }
 }
 
-const mapStateToProps = store => ({
+const mapStateToProps = (store) => ({
   fluid:
     objectPath.get(store.builder.layoutConfig, "footer.self.width") === "fluid",
   footerClasses: builder.selectors.getClasses(store, {
     path: "footer",
-    toString: true
+    toString: true,
   }),
   footerContainerClasses: builder.selectors.getClasses(store, {
     path: "footer_container",
-    toString: true
-  })
+    toString: true,
+  }),
 });
 
 export default connect(mapStateToProps)(Footer);
