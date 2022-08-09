@@ -2,6 +2,8 @@ import React from 'react';
 import {Line, LineChart, ResponsiveContainer, XAxis, YAxis} from 'recharts';
 import {Card, CardContent, CardHeader} from "@mui/material";
 
+
+
 export default function _Income() {
     var data = [];
     for (var i = 1; i < 27; i++) {
