@@ -36,6 +36,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
                 android:layout_width="0dp"
+                android:visibility="gone"
                 android:layout_height="@dimen/_150sdp"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_10sdp"
@@ -93,6 +94,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:background="@drawable/_c_register_btn_bg_1_focused"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -250,6 +252,7 @@
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:fontFamily="@font/iran_sans_bold"
             android:text="بازارچه تبدیل سکه ها :"
             android:layout_marginStart="@dimen/_10sdp"
@@ -262,6 +265,7 @@
             android:id="@+id/rv_market"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/_5sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="80"

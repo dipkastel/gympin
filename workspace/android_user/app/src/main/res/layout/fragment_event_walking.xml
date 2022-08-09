@@ -63,7 +63,7 @@
                         android:textSize="@dimen/_13sdp" />
                 </LinearLayout>
 
-                <com.notrika.gympin.util.component.map.MyMapView
+                <com.notrika.gympin.util.component.map.MyMapCardView
                     android:id="@+id/my_map"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_150sdp" />

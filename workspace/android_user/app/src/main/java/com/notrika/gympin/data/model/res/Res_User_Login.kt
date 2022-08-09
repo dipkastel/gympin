@@ -2,13 +2,28 @@ package com.notrika.gympin.data.model.res
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 
 class Res_User_Login {
 
-    @SerializedName("UserRole")
+
+
+    @SerializedName("Id")
     @Expose
-    var userRole: String? = null
+    var id: Long? = null
+
+    @SerializedName("IsDeleted")
+    @Expose
+    var isDeleted: Boolean? = null
+
+    @SerializedName("CreatedDate")
+    @Expose
+    var createdDate: Date? = null
+
+    @SerializedName("UpdatedDate")
+    @Expose
+    var updatedDate: Date? = null
 
     @SerializedName("UserStatus")
     @Expose
@@ -34,21 +49,50 @@ class Res_User_Login {
     @Expose
     var name: String? = null
 
-    @SerializedName("Id")
+    @SerializedName("LastName")
     @Expose
-    var id: Long? = null
+    var lastName: String? = null
 
-    @SerializedName("CreatedDate")
+    @SerializedName("FollowersCount")
     @Expose
-    var createdDate: Any? = null
+    var followersCount: Long? = null
 
-    @SerializedName("UpdatedDate")
+    @SerializedName("FollowingsCount")
     @Expose
-    var updatedDate: Any? = null
+    var followingsCount: Long? = null
 
-    @SerializedName("IsDeleted")
+    @SerializedName("Bio")
     @Expose
-    var isDeleted: Boolean? = null
+    var bio: String? = null
+
+    @SerializedName("Rate")
+    @Expose
+    var rate: Float? = 0.0f
+
+    @SerializedName("Birthday")
+    @Expose
+    var birthday: Date? = null
+
+    @SerializedName("NationalCode")
+    @Expose
+    var nationalCode: String? = null
+
+    @SerializedName("Email")
+    @Expose
+    var email: String? = null
+
+    @SerializedName("UserGroup")
+    @Expose
+    var userGroup: String? = null
+
+    @SerializedName("AvatarId")
+    @Expose
+    var avatarId: Long? = null
+
+    @SerializedName("UserRole")
+    @Expose
+    var userRole: List<Res_User_Role>? = null
+
 
 
 }

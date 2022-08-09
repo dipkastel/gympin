@@ -12,7 +12,11 @@ class Res_User_Role {
 
     @SerializedName("Id")
     @Expose
-    var id: Int? = null
+    var id: Long? = null
+
+    @SerializedName("IsDeleted")
+    @Expose
+    var isDeleted: Boolean? = false
 
     @SerializedName("Role")
     @Expose

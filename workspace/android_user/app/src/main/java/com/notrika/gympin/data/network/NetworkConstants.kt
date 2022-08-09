@@ -50,6 +50,13 @@ object NetworkConstants {
    //map address
     const val map_get_address = "reverse"
 
+    //plans
+    const val plan_getall = "$START_KEY/plan/getAll"
+
+    //place
+    const val place_getByPlan = "$START_KEY/place/getByPlan"
+    const val place_getall = "$START_KEY/place/getAll"
+
 
 
 }

@@ -1,0 +1,20 @@
+{
+  "Success": true,
+  "MessageType": 0,
+  "Message": "",
+  "ResultDate": "2021-10-30T20:41:06.962+00:00",
+  "LinkParams": null,
+  "Error": null,
+  "Data":  [
+    {
+      "Id": 1,
+      "name": "سیب زمینی",
+      "price": 29000
+    },
+    {
+      "Id": 1,
+      "name": "تخم مرغ",
+      "price": 25000
+    }
+  ]
+}

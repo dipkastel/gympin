@@ -68,4 +68,6 @@
     <string name="email">ایمیل</string>
     <string name="national_code">کد ملی</string>
     <string name="user_name">نام کاربری</string>
+    <string name="reserve">رزرو</string>
+    <string name="plans">بلیط ها</string>
 </resources>

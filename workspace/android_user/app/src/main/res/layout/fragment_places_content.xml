@@ -1,0 +1,28 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/place_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Red_gympin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabSelectedTextColor="@color/white_london"
+                app:tabTextColor="@color/white_timberwolf" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/place_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layoutDirection="rtl"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/place_tabs" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,10 +5,7 @@ import com.notrika.gympin.data.model.req.Req_User_Login
 import com.notrika.gympin.data.model.req.Req_User_Refresh_Token
 import com.notrika.gympin.data.model.req.Req_User_Register
 import com.notrika.gympin.data.model.req.Req_User_SendSms
-import com.notrika.gympin.data.model.res.Res_Refresh_Token
-import com.notrika.gympin.data.model.res.Res_User_Login
-import com.notrika.gympin.data.model.res.Res_User_Register
-import com.notrika.gympin.data.model.res.Res_User_SendSms
+import com.notrika.gympin.data.model.res.*
 import com.notrika.gympin.data.network.NetworkConstants
 import io.reactivex.Flowable
 import retrofit2.Response

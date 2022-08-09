@@ -74,7 +74,7 @@ class FragmentLogin : RegisterInnerPageFragment() {
                         it.id?.let {that-> pocket.userId=that }
                         it.phoneNumber?.let {that-> pocket.phoneNumber=that }
                         it.username?.let {that-> pocket.userName=that }
-                        it.userRole?.let {that-> pocket.userRole=that }
+                        it.userRole?.let {that-> pocket.userRole=that[0].role!! }
                         openApp()
                         return@Observer
                     }

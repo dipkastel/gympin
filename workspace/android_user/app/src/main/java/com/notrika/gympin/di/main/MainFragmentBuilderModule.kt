@@ -13,12 +13,19 @@ import com.notrika.gympin.ui.main.myEvents.FragmentMyEvents
 import com.notrika.gympin.ui.main.myProfile.FragmentMyProfile
 import com.notrika.gympin.ui.main.myProfile.editProfile.FragmentEditProfile
 import com.notrika.gympin.ui.main.notifs.FragmentNotifs
-import com.notrika.gympin.ui.main.places.FragmentPlaces
+import com.notrika.gympin.ui.main.places.list.FragmentPlacesList
 import com.notrika.gympin.ui.main.settings.FragmentSettings
 import com.notrika.gympin.ui.main.singleContent.FragmentSingleContents
 import com.notrika.gympin.ui.main.sports.FragmentSports
 import com.notrika.gympin.ui.main.events.walking.eventListWalking.FragmentEventListWalking
+import com.notrika.gympin.ui.main.place.FragmentPlace
+import com.notrika.gympin.ui.main.place.subFragments.about.FragmentPlaceAbout
+import com.notrika.gympin.ui.main.place.subFragments.facilities.FragmentPlaceFacilities
+import com.notrika.gympin.ui.main.place.subFragments.reserve.FragmentPlaceReserve
+import com.notrika.gympin.ui.main.place.subFragments.stall.FragmentStallReserve
+import com.notrika.gympin.ui.main.places.map.FragmentPlacesMap
 import com.notrika.gympin.ui.main.survey.FragmentSurveyList
+import com.notrika.gympin.ui.main.tickets.FragmentTicketsList
 import com.notrika.gympin.ui.main.userProfile.FragmentUserProfile
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -30,7 +37,12 @@ abstract class MainFragmentBuilderModule {
     internal abstract fun sport_fragment(): FragmentSports
 
     @ContributesAndroidInjector
-    internal abstract fun places_fragment(): FragmentPlaces
+    internal abstract fun places_fragmen( ): FragmentPlace
+    @ContributesAndroidInjector
+    internal abstract fun places_fragmentList(): FragmentPlacesList
+
+    @ContributesAndroidInjector
+    internal abstract fun places_fragmentMap(): FragmentPlacesMap
 
     @ContributesAndroidInjector
     internal abstract fun gympin_fragment(): FragmentGympin
@@ -85,4 +97,19 @@ abstract class MainFragmentBuilderModule {
 
     @ContributesAndroidInjector
     internal abstract fun survey_list_fragment(): FragmentSurveyList
+
+    @ContributesAndroidInjector
+    internal abstract fun place_reserve_fragment(): FragmentPlaceReserve
+
+    @ContributesAndroidInjector
+    internal abstract fun place_about_fragment(): FragmentPlaceAbout
+
+    @ContributesAndroidInjector
+    internal abstract fun place_facilities_fragment(): FragmentPlaceFacilities
+
+    @ContributesAndroidInjector
+    internal abstract fun place_stall_fragment(): FragmentStallReserve
+
+    @ContributesAndroidInjector
+    internal abstract fun tickets_list_fragment(): FragmentTicketsList
 }

@@ -39,7 +39,7 @@ class CActionbarGeneral : ConstraintLayout {
             val action = FragmentGympinDirections.toMessages()
             try{findNavController().navigate(action)}catch (e:Exception){}
         }
-        this.view.img_coins.setOnClickListener {
+        this.view.img_wallet.setOnClickListener {
             val action = FragmentGympinDirections.toCredit()
             try{findNavController().navigate(action)}catch (e:Exception){}
         }

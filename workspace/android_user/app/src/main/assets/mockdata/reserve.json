@@ -1,0 +1,15 @@
+{
+  "Success": true,
+  "MessageType": 0,
+  "Message": "",
+  "ResultDate": "2021-10-30T20:41:06.962+00:00",
+  "LinkParams": null,
+  "Error": null,
+  "Data":  [
+    {
+      "Id": 1,
+      "name": "ورودی بدنسازی",
+      "price": 48000
+    }
+  ]
+}

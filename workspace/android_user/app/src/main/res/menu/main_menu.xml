@@ -6,13 +6,13 @@
             android:icon="@drawable/menu_item_main_home"
             android:title="@string/app_name"/>
         <item
-            android:id="@+id/main_sports"
+            android:id="@+id/main_places_list"
             android:icon="@drawable/menu_item_main_sports"
-            android:title="@string/sports"/>
+            android:title="@string/places"/>
         <item
-            android:id="@+id/main_my_events"
-            android:icon="@drawable/menu_item_main_reserves"
-            android:title="@string/my_events"/>
+            android:id="@+id/main_tickets_list"
+            android:icon="@drawable/menu_item_main_tickets"
+            android:title="@string/plans"/>
         <item
             android:id="@+id/main_profile"
             android:icon="@drawable/menu_item_main_profile"

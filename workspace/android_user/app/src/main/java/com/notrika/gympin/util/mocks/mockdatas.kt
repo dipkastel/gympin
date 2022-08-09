@@ -6,6 +6,9 @@ import androidx.annotation.NonNull
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.notrika.gympin.data.model.OprationResult
+import com.notrika.gympin.data.model.entity.mock_facility
+import com.notrika.gympin.data.model.entity.mock_place
+import com.notrika.gympin.data.model.entity.mock_reserve
 import com.notrika.gympin.data.model.res.*
 import java.lang.reflect.Type
 
@@ -68,6 +71,34 @@ class mockdatas {
         val data = manager.readAssetsFile("mockdata/market.json")
         val collectionType: Type? =
             object : TypeToken<OprationResult<List<Res_market>>>(){}.type
+        return Gson().fromJson(data, collectionType)
+    }
+    fun getPlacesMockData(context: Context): OprationResult<List<mock_place>> {
+        val manager: AssetManager = context.assets
+        val data = manager.readAssetsFile("mockdata/places.json")
+        val collectionType: Type? =
+            object : TypeToken<OprationResult<List<mock_place>>>(){}.type
+        return Gson().fromJson(data, collectionType)
+    }
+    fun getReserveMockData(context: Context): OprationResult<List<mock_reserve>> {
+        val manager: AssetManager = context.assets
+        val data = manager.readAssetsFile("mockdata/reserve.json")
+        val collectionType: Type? =
+            object : TypeToken<OprationResult<List<mock_reserve>>>(){}.type
+        return Gson().fromJson(data, collectionType)
+    }
+    fun getStallMockData(context: Context): OprationResult<List<mock_reserve>> {
+        val manager: AssetManager = context.assets
+        val data = manager.readAssetsFile("mockdata/stall.json")
+        val collectionType: Type? =
+            object : TypeToken<OprationResult<List<mock_reserve>>>(){}.type
+        return Gson().fromJson(data, collectionType)
+    }
+    fun getfacilitiesMockData(context: Context): OprationResult<List<mock_facility>> {
+        val manager: AssetManager = context.assets
+        val data = manager.readAssetsFile("mockdata/facilities.json")
+        val collectionType: Type? =
+            object : TypeToken<OprationResult<List<mock_facility>>>(){}.type
         return Gson().fromJson(data, collectionType)
     }
     fun AssetManager.readAssetsFile(fileName : String): String = open(fileName).bufferedReader().use{it.readText()}

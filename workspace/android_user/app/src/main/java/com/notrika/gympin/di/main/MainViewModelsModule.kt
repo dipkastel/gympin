@@ -15,12 +15,19 @@ import com.notrika.gympin.ui.main.myEvents.ViewModelMyEvents
 import com.notrika.gympin.ui.main.myProfile.ViewModelMyProfile
 import com.notrika.gympin.ui.main.myProfile.editProfile.ViewModelEditProfile
 import com.notrika.gympin.ui.main.notifs.ViewModelNotifs
-import com.notrika.gympin.ui.main.places.ViewModelPlaces
+import com.notrika.gympin.ui.main.places.list.ViewModelPlacesList
 import com.notrika.gympin.ui.main.settings.ViewModelSettings
 import com.notrika.gympin.ui.main.singleContent.ViewModelSingleContent
 import com.notrika.gympin.ui.main.sports.ViewModelSports
 import com.notrika.gympin.ui.main.events.walking.eventListWalking.ViewModelEventListWalking
+import com.notrika.gympin.ui.main.place.ViewModelPlace
+import com.notrika.gympin.ui.main.place.subFragments.about.ViewModelPlaceAbout
+import com.notrika.gympin.ui.main.place.subFragments.facilities.ViewModelPlaceFacilities
+import com.notrika.gympin.ui.main.place.subFragments.reserve.ViewModelPlaceReserve
+import com.notrika.gympin.ui.main.place.subFragments.stall.ViewModelStallReserve
+import com.notrika.gympin.ui.main.places.map.ViewModelPlacesMap
 import com.notrika.gympin.ui.main.survey.ViewModelSurveyList
+import com.notrika.gympin.ui.main.tickets.ViewModelTicketsList
 import com.notrika.gympin.ui.main.userProfile.ViewModelUserProfile
 import dagger.Binds
 import dagger.Module
@@ -36,8 +43,18 @@ abstract class MainViewModelsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ViewModelPlaces::class)
-    abstract fun bindPlacesViewModel(viewModel: ViewModelPlaces): ViewModel
+    @ViewModelKey(ViewModelPlace::class)
+    abstract fun bindPlaceViewModel(viewModelList: ViewModelPlace): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelPlacesList::class)
+    abstract fun bindPlacesViewModelList(viewModelList: ViewModelPlacesList): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelPlacesMap::class)
+    abstract fun bindPlacesViewModelMap(viewModelList: ViewModelPlacesMap): ViewModel
 
     @Binds
     @IntoMap
@@ -129,5 +146,31 @@ abstract class MainViewModelsModule {
     @IntoMap
     @ViewModelKey(ViewModelSurveyList::class)
     abstract fun SurveyListViewModel(viewModel: ViewModelSurveyList): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelPlaceReserve::class)
+    abstract fun PlaceReserveViewModel(viewModel: ViewModelPlaceReserve): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelPlaceAbout::class)
+    abstract fun PlaceAboutViewModel(viewModel: ViewModelPlaceAbout): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelPlaceFacilities::class)
+    abstract fun PlaceFacilitiesViewModel(viewModel: ViewModelPlaceFacilities): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelStallReserve::class)
+    abstract fun PlaceStallViewModel(viewModel: ViewModelStallReserve): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelTicketsList::class)
+    abstract fun ticketListViewModel(viewModel: ViewModelTicketsList): ViewModel
 
 }

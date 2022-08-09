@@ -39,7 +39,15 @@ class FragmentSports : MainPageFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, providerFactory).get(ViewModelSports::class.java)
         viewModel.viewLifecycleOwner = viewLifecycleOwner
+        prepare()
         getsports()
+    }
+
+    private fun prepare() {
+        btn_my_events.setOnClickListener {
+            var action = FragmentSportsDirections.toMyEvents()
+            findNavController().navigate(action)
+        }
     }
 
     private fun getsports() {

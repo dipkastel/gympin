@@ -36,7 +36,6 @@ class Res_User {
     @Expose
     var rate: Float? = null
 
-
     @SerializedName("UserRole")
     @Expose
     var userRole: List<Res_User_Role>? = null

@@ -1,0 +1,50 @@
+{
+  "Success": true,
+  "MessageType": 0,
+  "Message": "",
+  "ResultDate": "2021-10-30T20:41:06.962+00:00",
+  "LinkParams": null,
+  "Error": null,
+  "Data":  [
+    {
+      "Id": 1,
+      "name": "ماساژ",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Noun_Project_list_icon_119366_cc.svg/1200px-Noun_Project_list_icon_119366_cc.svg.png"
+    },
+    {
+      "Id": 2,
+      "name": "رستوران",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Noun_Project_list_icon_119366_cc.svg/1200px-Noun_Project_list_icon_119366_cc.svg.png"
+    },
+    {
+      "Id": 3,
+      "name": "مربی",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Noun_Project_list_icon_119366_cc.svg/1200px-Noun_Project_list_icon_119366_cc.svg.png"
+    },
+    {
+      "Id": 4,
+      "name": "کمد",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Noun_Project_list_icon_119366_cc.svg/1200px-Noun_Project_list_icon_119366_cc.svg.png"
+    },
+    {
+      "Id": 5,
+      "name": "فروشگاه",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Noun_Project_list_icon_119366_cc.svg/1200px-Noun_Project_list_icon_119366_cc.svg.png"
+    },
+    {
+      "Id": 6,
+      "name": "پارکینگ",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Noun_Project_list_icon_119366_cc.svg/1200px-Noun_Project_list_icon_119366_cc.svg.png"
+    },
+    {
+      "Id": 7,
+      "name": "تهویه هوا",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Noun_Project_list_icon_119366_cc.svg/1200px-Noun_Project_list_icon_119366_cc.svg.png"
+    },
+    {
+      "Id": 8,
+      "name": "دوش",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Noun_Project_list_icon_119366_cc.svg/1200px-Noun_Project_list_icon_119366_cc.svg.png"
+    }
+  ]
+}

@@ -19,11 +19,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/img_coins"
+        android:id="@+id/img_wallet"
         android:layout_width="@dimen/_35sdp"
         android:layout_height="@dimen/_30sdp"
         android:padding="@dimen/_3sdp"
-        android:src="@drawable/ico_coin"
+        android:src="@drawable/ico_wallet"
         android:layout_margin="@dimen/_3sdp"
         app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,6 +35,7 @@
         android:layout_height="@dimen/_30sdp"
         android:padding="@dimen/_5sdp"
         android:layout_margin="@dimen/_3sdp"
+        android:visibility="gone"
         android:src="@drawable/ico_dirct"
         app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,9 +56,9 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_16sdp"
         android:fontFamily="@font/iran_sans_normal"
-        android:text="350"
-        app:layout_constraintBottom_toBottomOf="@+id/img_coins"
-        app:layout_constraintEnd_toStartOf="@+id/img_coins"
-        app:layout_constraintTop_toTopOf="@+id/img_coins"/>
+        android:text="350,000"
+        app:layout_constraintBottom_toBottomOf="@+id/img_wallet"
+        app:layout_constraintEnd_toStartOf="@+id/img_wallet"
+        app:layout_constraintTop_toTopOf="@+id/img_wallet"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

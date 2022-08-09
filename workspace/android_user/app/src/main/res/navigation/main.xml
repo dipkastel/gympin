@@ -18,12 +18,48 @@
         <action
             android:id="@+id/sports_to_walking"
             app:destination="@id/events_list_walking" />
+        <action
+            android:id="@+id/action_main_sports_to_main_my_events"
+            app:destination="@id/main_my_events" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/main_tickets_list"
+        android:name="com.notrika.gympin.ui.main.tickets.FragmentTicketsList"
+        android:label="tickets"
+        tools:layout="@layout/fragment_tickets_list"/>
+    <fragment
+        android:id="@+id/main_places_list"
+        android:name="com.notrika.gympin.ui.main.places.list.FragmentPlacesList"
+        android:label="main_places_list"
+        tools:layout="@layout/fragment_main_places_list" >
+        <action
+            android:id="@+id/places_list_to_place_map"
+            app:destination="@id/main_places_map" />
+        <action
+            android:id="@+id/places_list_to_place"
+            app:destination="@id/main_place"
+
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/main_place"
+        android:name="com.notrika.gympin.ui.main.place.FragmentPlace"
+        android:label="main_place"
+        tools:layout="@layout/fragment_main_place">
+        <argument android:name="placeItem"
+            app:argType="com.notrika.gympin.data.model.entity.mock_place" />
     </fragment>
     <fragment
-        android:id="@+id/main_places"
-        android:name="com.notrika.gympin.ui.main.places.FragmentPlaces"
-        android:label="main_places"
-        tools:layout="@layout/fragment_main_places" />
+        android:id="@+id/main_places_map"
+        android:name="com.notrika.gympin.ui.main.places.map.FragmentPlacesMap"
+        android:label="main_places_map"
+        tools:layout="@layout/fragment_main_places_map" >
+        <action
+            android:id="@+id/places_map_to_places_list"
+            app:destination="@id/main_places_list" />
+    </fragment>
     <fragment
         android:id="@+id/main_settings"
         android:name="com.notrika.gympin.ui.main.settings.FragmentSettings"
@@ -157,7 +193,7 @@
         app:popExitAnim="@anim/top_page_out" />
     <action
         android:id="@+id/to_places"
-        app:destination="@id/main_places"
+        app:destination="@id/main_places_list"
         android:label="places"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"

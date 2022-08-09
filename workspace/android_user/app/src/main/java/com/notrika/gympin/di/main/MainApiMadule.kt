@@ -32,6 +32,16 @@ class MainApiMadule @Inject constructor() {
     }
 
     @Provides
+    internal fun providePlanApi(@Named(DiConstants.retrofit_gympin_main) retrofit: Retrofit): PlanApi {
+        return retrofit.create(PlanApi::class.java)
+    }
+
+    @Provides
+    internal fun providePlaceApi(@Named(DiConstants.retrofit_gympin_main) retrofit: Retrofit): PlaceApi {
+        return retrofit.create(PlaceApi::class.java)
+    }
+
+    @Provides
     internal fun provideEventsApi(@Named(DiConstants.retrofit_gympin_main) retrofit: Retrofit): EventsApi {
         return retrofit.create(EventsApi::class.java)
     }
