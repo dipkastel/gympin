@@ -11,7 +11,7 @@ import {
     DialogTitle, FormControl, FormGroup, FormHelperText, Input, InputLabel,
     List,
     ListItem, ListItemIcon,
-    ListItemText, Switch
+    ListItemText, Switch, Typography
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -62,11 +62,36 @@ const _GateSchedule = (props) => {
                         <>
                             فعال
                             <Switch  defaultChecked />
+                            حذف
+                            <DeleteIcon onClick={(e)=>handleClickOpen(props)} color={"primary"}/>
                         </>
                     )}
                 />
 
                 <CardContent sx={{margin: 0}}>
+
+                    <Typography
+                        sx={{display: 'inline', margin: 2}}
+                        component="p"
+                        variant="caption"
+                        color="text.primary"
+                    >
+                        کاربر با خرید این پلن میتواند {props.count} ورود به یکی از گیت های انتخابی زیر داشته باشد:
+                        <br/>
+                        - شنبه ها : بدنسازی عصر ( آقایان )
+                        <br/>
+                        - یک شنبه ها : بدنسازی عصر ( آقایان )
+                        <br/>
+                        - دو شنبه ها : بدنسازی عصر ( آقایان )
+                        <br/>
+                        - سه شنبه ها : بدنسازی عصر ( آقایان )
+                        <br/>
+                        - چهار شنبه ها : بدنسازی عصر ( آقایان )
+                        <br/>
+                        - پنج شنبه ها : بدنسازی عصر ( آقایان )
+                        <br/>
+                        - اعتبار این پلن تا {props.expire}  می باشد.
+                    </Typography>
                     <FormGroup>
                         <FormControl sx={{margin: 1}}>
                             <InputLabel htmlFor="my-input">توضیح</InputLabel>

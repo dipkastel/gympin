@@ -296,7 +296,7 @@ const Plans = () => {
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     sx={{paddingBottom: 0}}
-                    title={"مدیریت زمان ها"}
+                    title={"مدیریت پلن ها"}
                     action={renderAddButton()}/>
                 <CardContent sx={{margin: 0}}>
                     <Typography
@@ -319,14 +319,12 @@ const Plans = () => {
                         - قیمت ها ساعت 24:00 در سیستم بروز میشود
                         <br/>
                         - بلیط های فروخته شده قیمت جدید را شامل نمیشود
-                        <br/>
-                        - درصورت وجود بلیط فروخته شده حذف پلن امکانپذیر نمیباشد
                     </Typography>
                 </CardContent>
             </Card>
-            <_SinglePlan name={"تک جلسه"}/>
-            <_SinglePlan name={"12 جلسه"}/>
-            <_SinglePlan name={"24 جلسه"}/>
+            <_SinglePlan expire={"2 روز"} count={1} name={"تک جلسه"}/>
+            <_SinglePlan expire={"30 روز"} count={12} name={"12 جلسه"}/>
+            <_SinglePlan expire={"30 روز"} count={24} name={"24 جلسه"}/>
             {ModalAddPlan()}
         </>
 

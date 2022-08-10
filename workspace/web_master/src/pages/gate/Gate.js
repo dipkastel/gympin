@@ -196,13 +196,13 @@ const Gate = () => {
                     </Typography>
                 </CardContent>
             </Card>
-            <_GateSchedule data={data} name={"شنبه"}/>
-            <_GateSchedule data={data} name={"یک شنبه"}/>
-            <_GateSchedule data={data} name={"دوشنبه"}/>
-            <_GateSchedule data={data} name={"سه شنبه"}/>
-            <_GateSchedule data={data} name={"چهار شنبه"}/>
-            <_GateSchedule data={data} name={"پنج شنبه"}/>
-            <_GateSchedule data={data} name={"جمعه"}/>
+            <_GateSchedule data={data} name={"شنبه ها"}/>
+            <_GateSchedule data={data} name={"یک شنبه ها"}/>
+            <_GateSchedule data={data} name={"دوشنبه ها"}/>
+            <_GateSchedule data={data} name={"سه شنبه ها"}/>
+            <_GateSchedule data={data} name={"چهار شنبه ها"}/>
+            <_GateSchedule data={data} name={"پنج شنبه ها"}/>
+            <_GateSchedule data={data} name={"جمعه ها"}/>
             {ModalAddPlan()}
         </>
 
