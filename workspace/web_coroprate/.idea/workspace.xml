@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaa339a7-f874-44cd-9025-b881c033f287" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../web_master/src/pages/images/Images.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_master/src/pages/images/_AddImage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_master/src/pages/images/_ImageList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_master/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/public/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/public/logo192.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/public/logo192.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/public/logo512.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/public/logo512.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/public/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/gate/Gate.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/gate/Gate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/plans/Plans.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/plans/Plans.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/plans/_SinglePlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/plans/_SinglePlan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/facilities/Facilities.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/facilities/Facilities.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/management/Management.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/management/Management.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/router/ApplicationRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/router/ApplicationRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -18,6 +18,7 @@ import Profile from "../pages/profile/Profile";
 import Stall from "../pages/stall/Stall";
 import Personel from "../pages/personel/Personel";
 import Plans from "../pages/plans/Plans";
+import Images from "../pages/images/Images";
 
 export default function ApplicationRoutes() {
 
@@ -33,6 +34,7 @@ export default function ApplicationRoutes() {
                 <Route path="/management/stall" element={<ManageStall/>}/>
                 <Route path="/management/profile" element={<Profile/>}/>
                 <Route path="/management/personel" element={<Personel/>}/>
+                <Route path="/management/images" element={<Images/>}/>
 
                 <Route path="/finance" element={<Finance/>}/>
                 <Route path="/finance/demand" element={<DemandPeyment/>}/>

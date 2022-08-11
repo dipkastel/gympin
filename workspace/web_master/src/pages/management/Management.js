@@ -13,6 +13,7 @@ export default function Management(){
             <_PlaceGates/>
             <_PlacePlans/>
             <_PlaceActivity/>
+            <_ListItem title="تصاویر" destination="/management/images"/>
             <_ListItem title="پرسنل مجموعه" destination="/management/personel"/>
             <_ListItem title="درباره مرکز" destination="/management/about"/>
             <_ListItem title="امکانات مرکز" destination="/management/facilities"/>

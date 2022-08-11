@@ -3,15 +3,16 @@ import {
     Button,
     Card,
     CardHeader,
-    Dialog, DialogActions,
+    Dialog,
+    DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle,
+    DialogTitle, Input,
     TextField
 } from "@mui/material";
-import _FacilitiesItem from "./_FacilitiesItem";
 
-const Facilities  = () => {
+const _AddImage = () => {
+
     const [open, setOpen] = React.useState(false);
 
 
@@ -22,26 +23,40 @@ const Facilities  = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    function ModalAddFacility(){
+
+    function ModalAddImage() {
         return (
             <div>
                 <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>افزودن امکانات</DialogTitle>
+                    <DialogTitle>افزودن تصویر</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            برای افزودن امکانات جدید نام را وارد کنید
+                            برای افزودن تصویر جدید نام آن را وارد کنید
                             <br/>
-                            مثال : کمد (لاکر)
+                            مثال : درب ورودی
                         </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
                             id="name"
-                            label="نام امکانات"
+                            label="نام تصویر"
                             type="text"
                             fullWidth
                             variant="standard"
                         />
+                        <Input
+                            accept="image/*"
+                            className={"input"}
+                            style={{ display: 'none' }}
+                            id="raised-button-file"
+                            multiple
+                            type="file"
+                        />
+                        <label htmlFor="raised-button-file">
+                            <Button variant="contained" component="span" className={"button"}>
+                                انتخاب تصویر
+                            </Button>
+                        </label>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>لغو</Button>
@@ -57,16 +72,13 @@ const Facilities  = () => {
         <>
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
-                    title={"مدیریت امکانات"}
-                    action={<Button variant={"contained"} title={"btn_add"} onClick={handleClickOpen}>افزودن امکانات</Button>}/>
+                    title={"مدیریت تصاویر"}
+                    action={<Button variant={"contained"} title={"btn_add"} onClick={handleClickOpen}>افزودن
+                        امکانات</Button>}/>
             </Card>
-            <_FacilitiesItem name={"کمد(لاکر)"}/>
-            <_FacilitiesItem name={"دوش"}/>
-            <_FacilitiesItem name={"سشوار"}/>
-
-            {ModalAddFacility()}
+            {ModalAddImage()}
         </>
-
-    );
+    )
 };
-export default Facilities;
+
+export default _AddImage;
