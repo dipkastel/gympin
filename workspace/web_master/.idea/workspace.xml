@@ -5,14 +5,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaa339a7-f874-44cd-9025-b881c033f287" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/images/Images.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/images/_AddImage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/images/_ImageList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/assets/mockdata/tickets.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/data/model/entity/mock_ticket.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/AdapterTickets.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/DialogQrCode.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/dialog_qr_code.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/l_tickets_list_item.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/consumer-rules.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/proguard-rules.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/androidTest/java/com/notrika/qrcodegenerator/ExampleInstrumentedTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/java/com/notrika/qrcodegenerator/QRGContents.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/java/com/notrika/qrcodegenerator/QRGEncoder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/java/com/notrika/qrcodegenerator/QRGSaver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/test/java/com/notrika/qrcodegenerator/ExampleUnitTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/di/main/MainDialogsMadule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/di/main/MainDialogsMadule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/AdapterReserve.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/AdapterReserve.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/FragmentPlaceReserve.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/FragmentPlaceReserve.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/FragmentTicketsList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/FragmentTicketsList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/util/mocks/mockdatas.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/util/mocks/mockdatas.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/fragment_tickets_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/fragment_tickets_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/res/navigation/main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/navigation/main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/settings.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_coroprate/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneAbout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneAbout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneFeature.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneFeature.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneGTA.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneGTA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneHero.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneHero.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneNews.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneNews.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneTestimonial.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneTestimonial.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/layouts/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/layouts/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/css/bootstrap.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/css/bootstrap.rtl.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/other/author-2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/other/author-2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/facilities/Facilities.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/facilities/Facilities.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/management/Management.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/management/Management.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/ApplicationRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/ApplicationRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/const/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/const/NETWORKCONSTS.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +152,9 @@
       <workItem from="1658496770826" duration="22508000" />
       <workItem from="1658643410231" duration="27366000" />
       <workItem from="1659011366253" duration="16748000" />
-      <workItem from="1659423805081" duration="63550000" />
+      <workItem from="1659423805081" duration="64142000" />
+      <workItem from="1660377110655" duration="4914000" />
+      <workItem from="1660721149819" duration="124000" />
     </task>
     <servers />
   </component>

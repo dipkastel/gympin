@@ -32,13 +32,11 @@ export default function Header() {
                                     <div className="mainmenu d-none d-lg-block">
                                         <nav id="mobile-menu">
                                             <ul>
+                                                <li ><Link href="/"><a>صفحه اصلی</a></Link></li>
                                                 <li ><Link href="/venues"><a>پیشنهادات ورزشی</a></Link></li>
-                                                <li ><Link href="/events"><a>رویداد‌ها</a></Link></li>
                                                 <li><Link href="/corporate"><a>شرکت ها</a></Link></li>
-                                                <li><Link href="/join-us"><a>به ما بپیوندید</a></Link></li>
-                                                <li><Link href="/shop"><a>فروشگاه</a></Link></li>
-                                                <li><Link href="/blog"><a>بلاگ</a></Link></li>
-                                                <li><Link href="/shop?c=cards"><a>کارت هدیه</a></Link></li>
+                                                <li><Link href="/#places"><a>مرکز ورزشی دارید؟</a></Link></li>
+                                                <li><Link href="shop.gympin.ir?c=cards"><a>کارت هدیه</a></Link></li>
                                             </ul>
                                         </nav>
                                     </div>

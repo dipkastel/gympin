@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_5sdp"
+    app:cardCornerRadius="@dimen/_5sdp"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_5sdp">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_margin="@dimen/_2sdp"
+            android:background="@drawable/c_register_btn_bg_1"
+            android:text="X"
+            android:textColor="@color/white_london"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_rereserve"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="♫"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/btn_getQr"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_25sdp"
+            android:background="@drawable/c_register_btn_bg_1"
+            android:fontFamily="@font/iran_sans_normal"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:text="دریافت کد ورود"
+            android:textColor="@color/white_london"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_rereserve"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/plan_expire" />
+
+        <TextView
+            android:id="@+id/plan_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iran_sans_bold"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:text="ورود تک جلسه"
+            android:textColor="@color/black_Bistre"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/plan_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iran_sans_normal"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:text="باشگاه ورزشی امیر"
+            android:textColor="@color/black_Bistre"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/plan_desciption" />
+
+        <TextView
+            android:id="@+id/plan_desciption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iran_sans_normal"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:text="توضیحات تکمیلی مرکز در مورد بلیط"
+            android:textColor="@color/black_Bistre"
+            android:textSize="@dimen/_7sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/plan_name" />
+
+        <TextView
+            android:id="@+id/plan_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iran_sans_normal"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:text="48000 تومان برای 1/1 ورود"
+            android:textColor="@color/black_Bistre"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/plan_place" />
+
+        <TextView
+            android:id="@+id/plan_expire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/iran_sans_normal"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:text="اعتبار بلیط تا:1401/09/12"
+            android:textColor="@color/black_Bistre"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/plan_price" />
+
+        <ImageView
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:src="@drawable/ico_winner_badge"
+            app:layout_constraintBottom_toTopOf="@+id/btn_getQr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/plan_place"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

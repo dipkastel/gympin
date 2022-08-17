@@ -2,11 +2,11 @@ package com.notrika.gympin.util.mocks
 
 import android.content.Context
 import android.content.res.AssetManager
-import androidx.annotation.NonNull
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.notrika.gympin.data.model.OprationResult
 import com.notrika.gympin.data.model.entity.mock_facility
+import com.notrika.gympin.data.model.entity.mock_ticket
 import com.notrika.gympin.data.model.entity.mock_place
 import com.notrika.gympin.data.model.entity.mock_reserve
 import com.notrika.gympin.data.model.res.*
@@ -99,6 +99,13 @@ class mockdatas {
         val data = manager.readAssetsFile("mockdata/facilities.json")
         val collectionType: Type? =
             object : TypeToken<OprationResult<List<mock_facility>>>(){}.type
+        return Gson().fromJson(data, collectionType)
+    }
+    fun getTicketsMockData(context: Context): OprationResult<List<mock_ticket>> {
+        val manager: AssetManager = context.assets
+        val data = manager.readAssetsFile("mockdata/facilities.json")
+        val collectionType: Type? =
+            object : TypeToken<OprationResult<List<mock_ticket>>>(){}.type
         return Gson().fromJson(data, collectionType)
     }
     fun AssetManager.readAssetsFile(fileName : String): String = open(fileName).bufferedReader().use{it.readText()}

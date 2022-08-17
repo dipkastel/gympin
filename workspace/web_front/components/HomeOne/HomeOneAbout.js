@@ -4,7 +4,7 @@ export default function HomeOneAbout() {
     return (
         <>
             {/* <!-- about section start --> */}
-            <section className="about-area pt-130 pb-130">
+            <section id="places" className="about-area pt-130 pb-130">
                 <div className="container">
                     <div className="row justify-content-between">
                         <div className="col-xl-6 pr-0">
@@ -15,19 +15,20 @@ export default function HomeOneAbout() {
                         <div className="col-xl-6 pl-80">
                             <div className="section-header mb-40">
                                 <h4 className="sub-heading mb-10">جیم پین</h4>
-                                <h2 className="section-title mb-35">ورزش بیشتر
-                                    <br/>
-                                    هزینه کمتر</h2>
-                                <p>جیم پین موقعیتی را فراهم کرده تا شما بتوانید با یک بار هزینه از تعداد زیادی مجموعه ورزشی استفاده کرده و سلامت و تن درستی را با هزینه کمتری تجربه کنید. چرا جیم پین؟</p>
+                                <h3 className=" mb-35">ورزشکاران خود را هوشمند مدیریت کنید</h3>
+                                <p>جیم پین موقعیتی را فراهم کرده تا شما بتوانید در یک پلتفرم یکپارچه آنلاین خدمات خود را ارائه کنید و با دریافت گزارشات روند کاری خود را بهبود بخشید.</p>
                             </div>
                             <div className="about-lists">
                                 <ul>
-                                    <li><i className="fa fa-check"></i> با یکبار ثبت نام اجازه ورود به همه مراکز را دارید.
+                                    <li><i className="fa fa-check"></i>امکان مدیریت ترافیک مرکز
                                     </li>
-                                    <li><i className="fa fa-check"></i> هزینه پرداختی شما پایین تر از ثبت نام در باشگاه های مختلف است.</li>
+                                    <li><i className="fa fa-check"></i>امکان مدیریت پرسنل</li>
+                                    <li><i className="fa fa-check"></i>گزارشات حرفه ای</li>
+                                    <li><i className="fa fa-check"></i>مدیریت پلن های و تخفیف ها</li>
+                                    <li><i className="fa fa-check"></i>اطلاع رسانی کمپین ها</li>
                                 </ul>
                                 <a href="about.html" className="site-btn site-btn__s2 mt-55"><span className="icon icon__black"><i
-                                    className="far fa-arrow-left"></i></span> بیشتر بخوانید</a>
+                                    className="far fa-arrow-left"></i></span> یک قدم تا همکاری</a>
                             </div>
                         </div>
                     </div>

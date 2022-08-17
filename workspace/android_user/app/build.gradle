@@ -89,6 +89,7 @@ dependencies {
 
     //datetime
     implementation 'com.jakewharton.threetenabp:threetenabp:1.4.0'
+    implementation project(path: ':qrCodeGenerator')
 
     //navigation
     def nav_version = "2.5.1"
@@ -142,13 +143,13 @@ dependencies {
 
     //imagePicker
     implementation 'com.github.dhaval2404:imagepicker:2.1'
-    implementation "androidx.fragment:fragment-ktx:1.5.1"
+    implementation "androidx.fragment:fragment-ktx:1.5.2"
 
     //sdp library
     implementation "com.intuit.sdp:sdp-android:1.0.6"
 
     //coroutines library
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
 
     // Glide
     def glideVersion = "4.9.0"

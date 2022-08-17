@@ -14,7 +14,7 @@ export default function HomeOneService() {
                             خدمات ما
                             <span><img src="/images/shape/heading-shape-2.png" className="ml-10" alt=""/></span>
                         </h4>
-                        <h2 className="section-title">ورزش بی حد و اندازه</h2>
+                        <h2 className="section-title">سلامتی بی حد و اندازه</h2>
                     </div>
                 </div>
             </div>
@@ -25,8 +25,8 @@ export default function HomeOneService() {
                             <img src="/images/icons/s-1.png" alt=""/>
                         </div>
                         <div className="service-item__content">
-                            <h4 className="service-item__title">ورزش جدید</h4>
-                            <p>از میان 30 ورزش که توسط 150 مرکز ورزشی ارائه شده است انتخاب کنید</p>
+                            <h4 className="service-item__title">گستردگی ورزش ها</h4>
+                            <p>از میان 30 ورزش که توسط بیش از 150 مرکز ورزشی ارائه شده است انتخاب کنید</p>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@ export default function HomeOneService() {
                         </div>
                         <div className="service-item__content">
                             <h4 className="service-item__title">پوشش ورزش های جدید</h4>
-                            <p>شما هرگز از ما خسته نخواهید شد . هر روز ورزش های جدیدی ارائه میکنیم</p>
+                            <p>شما هرگز خسته نخواهید شد .ما هر روز ورزش های جدیدی ارائه میکنیم</p>
                         </div>
                     </div>
                 </div>
@@ -47,8 +47,8 @@ export default function HomeOneService() {
                             <img src="/images/icons/s-3.png" alt=""/>
                         </div>
                         <div className="service-item__content">
-                            <h4 className="service-item__title">فعالیت ها را ترکیب کنید</h4>
-                            <p>به برنامه ورزشی خود ماجراجویی اضافه کنید.</p>
+                            <h4 className="service-item__title">یک بار ثبت نام کنید</h4>
+                            <p>برای استفاره از ورزش های جیم پین شما در هیچکدام از مراکز به صورت جداگانه ثبت نام نمی‌کنید</p>
                         </div>
                     </div>
                 </div>
@@ -58,8 +58,8 @@ export default function HomeOneService() {
                             <img src="/images/icons/s-4.png" alt=""/>
                         </div>
                         <div className="service-item__content">
-                            <h4 className="service-item__title">امتحان مرکز ورزشی جدید</h4>
-                            <p>نیاز به ثبت نام ندارید فقط حرکت کنید</p>
+                            <h4 className="service-item__title">ورزش خود را برنامه ریزی کنید</h4>
+                            <p>شما میتوانید برای استفاده از ورزش ها از قبل برنامه ریزی کنید</p>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@ export default function HomeOneService() {
             <div className="row justify-content-center">
                 <div className="col-xl-8 text-center">
                     <div className="view-all mt-55">
-                        <p>ما به شما کمک میکنیم شرکت سرحالی داشته باشید. <a href="service.html">برای شرکت ها</a></p>
+                        <p>ما به شما کمک میکنیم شرکت با نشاط تری داشته باشید. <a href="/corporate">برای شرکت ها</a></p>
                     </div>
                 </div>
             </div>

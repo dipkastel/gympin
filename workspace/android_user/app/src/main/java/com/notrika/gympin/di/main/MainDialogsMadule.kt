@@ -1,11 +1,22 @@
 package com.notrika.gympin.di.main
 
+import com.notrika.gympin.di.general.scops.MainScope
+import com.notrika.gympin.ui.common.widgets.dialogConfirm.DialogConfirm
+import com.notrika.gympin.ui.main.tickets.DialogQrCode
 import dagger.Module
+import dagger.Provides
 import javax.inject.Inject
 
 
 @Module
 class MainDialogsMadule @Inject constructor(){
+
+
+    @MainScope
+    @Provides
+    internal fun provideDialogQrCode(): DialogQrCode {
+        return DialogQrCode()
+    }
 
 //    @MainScope
 //    @Provides

@@ -15,7 +15,7 @@ export default function HomeOneGTA() {
                         </div>
                         <div className="col-xl-6 pl-70">
                             <div className="section-header mb-50">
-                                <h4 className="sub-heading mb-15">قدم آخر</h4>
+                                <h4 className="sub-heading mb-15">سوال و جواب</h4>
                                 <h2 className="section-title">یک پیام بگذار</h2>
                             </div>
                             <div className="contact-form">

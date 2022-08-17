@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.notrika.gympin.R
 import com.notrika.gympin.data.model.entity.mock_reserve
 import com.notrika.gympin.ui.main.InnerPageFragment
@@ -32,9 +33,10 @@ class FragmentPlaceReserve() : InnerPageFragment() {
         var adapter = AdapterReserve(requestManager)
         rv_reserve.adapter = adapter
         adapter.addItems(contents.data!!)
-        adapter.onItemClickListener = object : AdapterReserve.OnItemClickListener {
-            override fun click(item: mock_reserve) {
-
+        adapter.onReserve = object : AdapterReserve.OnReserve {
+            override fun reserve(item: mock_reserve) {
+               var action = FragmentPlaceReserveDirections.toTickets()
+                findNavController().navigate(action)
             }
         }
     }

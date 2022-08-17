@@ -10,17 +10,19 @@ SwiperCore.use([Navigation, Pagination]);
 export default function HomeOneTestimonial() {
     const team = [
         {
-            text:"من تا الان هفته ای 2 روز ورزش میکردم چون ورزش کردن من نیاز داشت حتما نزدیک خونه باشم تا بتونم برم باشگاه از وفتی با جیم پین آشنا شدم ساک باشگاه پشت ماشینمه و فقط کافیه 2 ساعت وقت خالی پیدا کنم هرجا باشم یه باشگاه نزدیک پیدا میکنم و تموم.ورزش کردن برام مثل آب خوردن شده اصلا فکرشم نمی کردم همچین چیزی امکان پذیر باشه دمتون گرم",
-            userName:"ساسان دهقان",
-            position:"مدیر, شرکت داستا",
+            sub:"سوال",
+            title:"چرا جیم پین؟",
+            text:"جیم پین یک راهکار ورزشی برای همه است ، شما در جیم پین میتوانید مراکز ورزشی مختلف را مقایسه کنید . از کمپین های تبلیغاتی آنها مطلع شوید ، با تخفیف ثبت نام کنید و امکانات بسیار دیگر",
+            userName:"",
+            position:"",
             src: "/images/other/author-1.png"
         },
         {
-            text: "تبریک میگم انتخاب خوبی کردی بهترین میان رده سال 2021 (از هر نظر) و سال 2022 (از نظر قیمت) پیشاپیش مبارکت باشه داداش\n" +
-                "البته باتری بهتر میخوای a73 (که بهترین میان رده سال 2022) هست ولی احتمالا هزینشو نداری که اینو انتخاب میکنی رفیق این گوشی درحال حاضر هیچ مشکلی از هیچ نظر نداره با گارانتی داریا همراه از نمایندگی بگیری دیگه خیالتم راحت\n" +
-                "خیر ضعیف تر نشده خیالت راحت من که به شخصه به مشکلی برنخوردم رفقای دیگه اگه برخوردن بگن",
-            userName:"فرهاد میرباقری",
-            position:"برنامه نویس, شرکت رونیچ",
+            sub:"اطلاعات",
+            title:"ترافیک مجموعه؟",
+            text: "جیم پین این امکان را فراهم کرده تا شما قبل از ورود به مراکز از وضعیت شلوغی آن مرکز مطلع شوید و بتوانید ورزش لذت بخشتری را تجربه کنید . کیف پول جیم پین به شما این امکان را میدهد تا دیگر برای خرید پلن های ورزشی دست به کارت هم نشوید ",
+            userName:"",
+            position:"",
             src: "/images/other/author-2.png"
         }
     ];
@@ -54,8 +56,8 @@ export default function HomeOneTestimonial() {
                                 <div className="row justify-content-end">
                                     <div className="col-xl-7 col-lg-8">
                                         <div className="section-header mb-10">
-                                            <h4 className="sub-heading sub-heading__white mb-10">گفت و گو</h4>
-                                            <h2 className="section-title section-title__white">نظر کاربران جیم پین</h2>
+                                            <h4 className="sub-heading sub-heading__white mb-10">{item.sub}</h4>
+                                            <h2 className="section-title section-title__white">{item.title}</h2>
                                         </div>
                                     </div>
                                 </div>
@@ -77,6 +79,7 @@ export default function HomeOneTestimonial() {
                                                     <p>
                                                         {item.text}
                                                     </p>
+                                                    <h4 className="name mt-40">{item.userName} - <span className="designation">{item.position}</span></h4>
                                                     <h4 className="name mt-40">{item.userName} - <span className="designation">{item.position}</span></h4>
                                                 </div>
                                             </div>

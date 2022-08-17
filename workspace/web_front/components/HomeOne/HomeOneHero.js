@@ -12,12 +12,16 @@ export default function HomeOneHero() {
         {
             title: ["یک ثبت نام", "بی نهایت استفاده"],
             desc: "دیگر نیاز به ثبت نام در مکان های ورزشی مختلف ندارید یکبار ثبت نام کنید",
-            src: "/images/banner/hp-slide-1.jpeg"
+            src: "/images/banner/hp-slide-1.jpeg",
+            destination:"/register",
+            btnTitle:"ثبت نام"
         },
         {
             title: ["تجربه بینظیر", "ورزش های جدید"],
             desc: "ورزش های مختلفی برای استفاده شما گرداوری شده است",
-            src: "/images/banner/hp-slide-2.jpeg"
+            src: "/images/banner/hp-slide-2.jpeg",
+            destination:"/venues",
+            btnTitle:"مراکز و ورزش‌ها"
         }
     ];
 
@@ -46,8 +50,8 @@ export default function HomeOneHero() {
                                                 <h2 className="hero__title" data-animation="fadeIn" data-delay=".2s" data-duration=".5s">{item.title[0]} <br />
                                                     {item.title[1]}</h2>
                                                 <p data-animation="fadeInUp" data-delay=".5s" data-duration=".7s">{item.desc}</p>
-                                                <a data-animation="fadeInUp" data-delay=".7s" data-duration=".9s" href="register.html"
-                                                    className="site-btn"><span className="icon"><i className="far fa-arrow-left"></i></span> ثبت نام</a>
+                                                <a data-animation="fadeInUp" data-delay=".7s" data-duration=".9s" href={item.destination}
+                                                    className="site-btn"><span className="icon"><i className="far fa-arrow-left"></i></span>{item.btnTitle}</a>
                                                 <div className="shape">
                                                     <img src="/images/shape/hero-shape.png" alt="" />
                                                 </div>

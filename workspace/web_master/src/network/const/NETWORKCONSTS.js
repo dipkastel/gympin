@@ -1,5 +1,5 @@
 export let AuthApi = {
-    BASEURL : "http://api.gympin.ir/",
+    BASEURL : "https://api.gympin.ir/",
 };
 export let Api_url = {
     getHome: "rest/getHomePage",

@@ -4,7 +4,7 @@ export default function HomeOneNews() {
 
     const news = [
         {
-            title: "اکنون میتوانید با عضویت متوسط از بولینگ هم استفاده کنید",
+            title: "بولینگ یکی از ورزش های پر طرفدار جیم پین",
             auther:"شهرام سماواتی",
             category:"ورزش ها",
             date:Date(),

@@ -161,6 +161,12 @@
         android:name="com.notrika.gympin.ui.main.credit.FragmentCredit"
         android:label="main_credet"
         tools:layout="@layout/fragment_main_credit"/>
+
+    <fragment
+        android:id="@+id/place_reserve"
+        android:name="com.notrika.gympin.ui.main.place.subFragments.reserve.FragmentPlaceReserve"
+        android:label="place_reserve"
+        tools:layout="@layout/fragment_place_reserve"/>
     <fragment
         android:id="@+id/main_message_chat"
         android:name="com.notrika.gympin.ui.main.messages.chat.FragmentChat"
@@ -275,6 +281,14 @@
         android:id="@+id/to_browser"
         app:destination="@id/main_browser"
         android:label="browser"
+        app:enterAnim="@anim/top_pages_in"
+        app:exitAnim="@anim/back_page_out"
+        app:popEnterAnim="@anim/back_pages_in"
+        app:popExitAnim="@anim/top_page_out" />
+    <action
+        android:id="@+id/to_tickets"
+        app:destination="@id/main_tickets_list"
+        android:label="tickets"
         app:enterAnim="@anim/top_pages_in"
         app:exitAnim="@anim/back_page_out"
         app:popEnterAnim="@anim/back_pages_in"

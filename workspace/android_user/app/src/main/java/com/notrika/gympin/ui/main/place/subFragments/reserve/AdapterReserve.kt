@@ -31,8 +31,8 @@ class AdapterReserve(val requestManager: RequestManager) : RecyclerView.Adapter<
         var item = items[position]
         holder.view.title.text = item.name
         holder.view.price.text = item.price.toString()
-        holder.view.setOnClickListener {
-            this.onItemClickListener.click(item)
+        holder.view.btn_reserve.setOnClickListener {
+            this.onReserve?.reserve(item)
         }
     }
 
@@ -40,8 +40,8 @@ class AdapterReserve(val requestManager: RequestManager) : RecyclerView.Adapter<
     override fun getItemCount(): Int {
         return items.size
     }
-    lateinit var onItemClickListener:OnItemClickListener
-    interface OnItemClickListener{
-        fun click(item:mock_reserve)
+    var onReserve:OnReserve? = null
+    interface OnReserve{
+        fun reserve(item:mock_reserve)
     }
 }
