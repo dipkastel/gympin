@@ -5,47 +5,102 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaa339a7-f874-44cd-9025-b881c033f287" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/assets/mockdata/tickets.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/data/model/entity/mock_ticket.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/AdapterTickets.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/DialogQrCode.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/dialog_qr_code.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/l_tickets_list_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/consumer-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/androidTest/java/com/notrika/qrcodegenerator/ExampleInstrumentedTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/java/com/notrika/qrcodegenerator/QRGContents.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/java/com/notrika/qrcodegenerator/QRGEncoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/java/com/notrika/qrcodegenerator/QRGSaver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/test/java/com/notrika/qrcodegenerator/ExampleUnitTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/di/main/MainDialogsMadule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/di/main/MainDialogsMadule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/AdapterReserve.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/AdapterReserve.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/FragmentPlaceReserve.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/FragmentPlaceReserve.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/FragmentTicketsList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/FragmentTicketsList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/util/mocks/mockdatas.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/util/mocks/mockdatas.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/fragment_tickets_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/fragment_tickets_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/res/navigation/main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/navigation/main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneAbout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneAbout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneFeature.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneFeature.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneGTA.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneGTA.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneHero.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneHero.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneNews.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneNews.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneTestimonial.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneTestimonial.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/.idea/web_app.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRAN Sans.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRAN Sans.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRAN Sans.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRAN Sans.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSANSExpanded.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSANSExpanded.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSANSExpanded.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Black.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Black.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Black.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Bold.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Bold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Bold.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Light-Expanded.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Light-Expanded.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Light-Expanded.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Light.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Light.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-Light.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-UltraLight.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-UltraLight.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/IRANSans-UltraLight.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/fonts/iransansweb/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/images/1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/images/2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/images/3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/images/noInternet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/public/sw.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/components/NBottomNavigation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/components/NNavigaion.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/components/NOfflineMode.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/App.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/GympinTheme.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/ducks/auth.duck.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/reportWebVitals.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/rootDuck.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/setupAxios.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/setupTests.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/style.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/swDev.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/network/api/account.api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/network/api/mainPage.api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/network/const/NETWORKCONSTS.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/auth/Login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/auth/Logout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/auth/Register.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/error/NotFound.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/home/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/home/components/HomeBanner.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/home/components/HomeSlider.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/home/components/HomeTitle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/home/components/HomeUserList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/places/Places.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/places/_Filter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/places/_PlacesList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/profile/Profile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/tickets/Tickets.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/router/ApplicationRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/router/AuthRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/router/ErrorRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/router/MainRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/router/RouterHelpers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/scss/_custom.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/scss/_general.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/scss/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/scss/main.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/about/Thumbs.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/banner/Thumbs.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/bg/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/Errors/Section404.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/Errors/Section404.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/layouts/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/layouts/Footer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_front/layouts/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/layouts/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/css/bootstrap.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/css/bootstrap.rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/images/other/author-2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/other/author-2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/layouts/MobileMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/layouts/MobileMenu.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/const/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/const/NETWORKCONSTS.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +138,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.obroom.plugin.jpasql:running" value="0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/management" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../web_app" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -154,7 +209,7 @@
       <workItem from="1659011366253" duration="16748000" />
       <workItem from="1659423805081" duration="64142000" />
       <workItem from="1660377110655" duration="4914000" />
-      <workItem from="1660721149819" duration="124000" />
+      <workItem from="1660721149819" duration="3995000" />
     </task>
     <servers />
   </component>

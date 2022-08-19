@@ -16,7 +16,7 @@ export default function Section404() {
                                 <h2 className="section-title section-title__2 mt-35">خطا 404</h2>
                                 <h4 className="heading mb-25 mt-65">
                                    شاید جستجو در میان
-                                    <a href="/venues"> مراکز و ورزش ها </a>
+                                    <a href="https://web.gympin.ir"> مراکز و ورزش ها </a>
                                     کمک کننده باشد
                                 </h4>
                             </div>

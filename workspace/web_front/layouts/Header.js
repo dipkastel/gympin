@@ -33,10 +33,10 @@ export default function Header() {
                                         <nav id="mobile-menu">
                                             <ul>
                                                 <li ><Link href="/"><a>صفحه اصلی</a></Link></li>
-                                                <li ><Link href="/venues"><a>پیشنهادات ورزشی</a></Link></li>
+                                                <li ><Link href="https://web.gympin.ir"><a>پیشنهادات ورزشی</a></Link></li>
                                                 <li><Link href="/corporate"><a>شرکت ها</a></Link></li>
                                                 <li><Link href="/#places"><a>مرکز ورزشی دارید؟</a></Link></li>
-                                                <li><Link href="shop.gympin.ir?c=cards"><a>کارت هدیه</a></Link></li>
+                                                {/*<li><Link href="shop.gympin.ir?c=cards"><a>کارت هدیه</a></Link></li>*/}
                                             </ul>
                                         </nav>
                                     </div>

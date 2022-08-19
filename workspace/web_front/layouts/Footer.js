@@ -26,10 +26,8 @@ export default function Footer() {
                             <div className="footer-widget footer-widget__2">
                                 <h4 className="widget-title">خدمات</h4>
                                 <ul>
-                                    <li><a href="/venues">پیشنهادات ورزشی<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="/events">رویداد ها<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="https://web.gympin.ir">پیشنهادات ورزشی<i className="fa fa-angle-left"></i></a></li>
                                     <li><a href="/corporate">شرکت ها<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="/shop">فروشگاه<i className="fa fa-angle-left"></i></a></li>
                                     <li><a href="/blog">وبلاگ<i className="fa fa-angle-left"></i></a>
                                     </li>
                                 </ul>

@@ -13,13 +13,9 @@ export default function MobileMenu() {
         <>
             <nav className="mobile-nav">
                 <ul className="metismenu" id="metismenu">
-                    <li><Link href="/venues"><a>پیشنهادات ورزشی</a></Link></li>
-                    <li><Link href="/events"><a>رویداد‌ها</a></Link></li>
+                    <li><Link href="https://web.gympin.ir"><a>پیشنهادات ورزشی</a></Link></li>
                     <li><Link href="/corporate"><a>شرکت ها</a></Link></li>
-                    <li><Link href="/join-us"><a>به ما بپیوندید</a></Link></li>
-                    <li><Link href="/shop"><a>فروشگاه</a></Link></li>
                     <li><Link href="/blog"><a>بلاگ</a></Link></li>
-                    <li><Link href="/shop?c=cards"><a>کارت هدیه</a></Link></li>
                 </ul>
             </nav>
         </>
