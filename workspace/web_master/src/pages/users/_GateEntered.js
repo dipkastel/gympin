@@ -2,7 +2,7 @@ import React from "react";
 import {Avatar, Divider, Grid, Link, List, ListItem, ListItemAvatar, ListItemText, Typography} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
 
-export default function GateEntered() {
+export default function _GateEntered() {
     return (
         <List sx={{width: '100%', bgcolor: 'background.paper'}}>
             <ListItem alignItems="flex-start">

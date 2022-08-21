@@ -5,10 +5,11 @@ import { useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import _GateAwaitingEntry from "./_GateAwaitingEntry";
-import _GateEntered from "./_GateEntered";
-import _AllUsers from "./_AllUsers";
+import _PlaceReserve from "./_PlaceReserve";
+import _PlaceAbout from "./_PlaceAbout";
+import _PlaceFacilities from "./_PlaceFacilities";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -22,7 +23,7 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box>
+                <Box sx={{ p: 0 }}>
                     {children}
                 </Box>
             )}
@@ -43,9 +44,8 @@ function a11yProps(index) {
     };
 }
 
-export default function Users() {
+const _PlaceTabs = () => {
     const theme = useTheme();
-    theme.direction = 'rtl';
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -55,8 +55,9 @@ export default function Users() {
     const handleChangeIndex = (index) => {
         setValue(index);
     };
+
     return (
-        <Box sx={{ bgcolor: 'background.paper'}}>
+        <Box sx={{ bgcolor: 'background.paper' ,marginTop:-1}}>
             <AppBar position="static">
                 <Tabs
                     value={value}
@@ -66,26 +67,29 @@ export default function Users() {
                     variant="fullWidth"
                     aria-label="full width tabs example"
                 >
-                    <Tab label="در انتظار ورود" {...a11yProps(0)} />
-                    <Tab label="وارد شده" {...a11yProps(1)} />
-                    <Tab label="همه کاربران" {...a11yProps(2)} />
+                    <Tab label="رزرو" {...a11yProps(0)} />
+                    <Tab label="درباره مرکز" {...a11yProps(1)} />
+                    <Tab label="امکانات" {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
             <SwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={value}
+
                 onChangeIndex={handleChangeIndex}
             >
-                <TabPanel  value={value} index={0}  dir={theme.direction}>
-                    <_GateAwaitingEntry/>
+                <TabPanel  value={value} index={0} dir={theme.direction}>
+                    <_PlaceReserve/>
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    <_GateEntered/>
+                    <_PlaceAbout/>
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
-                    <_AllUsers/>
+                    <_PlaceFacilities/>
                 </TabPanel>
             </SwipeableViews>
         </Box>
     );
-}
+};
+
+export default _PlaceTabs;

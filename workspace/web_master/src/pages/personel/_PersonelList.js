@@ -14,7 +14,6 @@ import {toAbsoluteUrl} from "../../helper/utils";
 
 const _PersonelList = () => {
     return (
-
         <Card elevation={3} sx={{margin: 1}} >
             <CardHeader
                 sx={{paddingBottom:0}}

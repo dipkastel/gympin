@@ -20,7 +20,7 @@ export default function NNavigaion(){
                     }
 
                     label={
-                        <IconButton sx={{color:"#000000"}} aria-label="" name="wallet">
+                        <IconButton sx={{color:"#000000"}} aria-label="" href={"/wallet"} name="wallet">
                             <AccountBalanceWalletOutlinedIcon />
                         </IconButton>
                     }

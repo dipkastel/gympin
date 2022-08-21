@@ -119,16 +119,16 @@ const _PlacesList = () => {
                   justifyContent="center"
                   alignItems="center">
                 {data.Data.map(item => (
-                        <Grid md={6}>
+                        <Grid component={"a"} href={"/place?id="+item.id+"&name="+item.name} sx={{textDecoration:"none"}} md={6} sm={6} xs={6}>
                             <Card elevation={3} sx={{margin:0.5,padding:0.5}}>
                                 <Grid container
                                       direction="row"
                                       justifyContent="center"
                                       alignItems="center">
-                                    <Grid md={6}>
-                                        <Image src={item.image} width={"80px"} height={"80px"} rounded={3}/>
+                                    <Grid md={6} sm={6} xs={6} sx={{padding:0.5}}>
+                                        <Image src={item.image} width={"100%"} rounded={3}/>
                                     </Grid>
-                                    <Grid sx={{padding:0}} md={6}>
+                                    <Grid sx={{padding:0}} md={6} sm={6} xs={6}>
                                         <Typography variant={"subtitle1"}>
                                             {item.name}
                                         </Typography>

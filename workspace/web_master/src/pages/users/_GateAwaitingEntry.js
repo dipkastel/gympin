@@ -11,7 +11,7 @@ let users = [
         userName: "ابراهیم گلستان",
     }
 ]
-export default function GateAwaitingEntry() {
+export default function _GateAwaitingEntry() {
     return (
         <List sx={{width: '100%', bgcolor: 'background.paper'}}>
             {users.map((item, Index) => (

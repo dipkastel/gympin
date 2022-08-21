@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import jsQR from 'jsqr';
+import {Card} from "@mui/material";
 const {
     requestAnimationFrame
 } = global;
@@ -77,9 +78,18 @@ class QRScan extends Component {
             }, ""), "در حال اتصال به دوربین");
         }
 
-        return React.createElement("div", null, message, React.createElement("canvas", {
-            id: "qrCanvas"
-        }));
+
+
+        return (
+            <Card elevation={3} sx={{
+                margin: 2,
+                height: "66vw"
+            }}>
+                {React.createElement("div", null, message, React.createElement("canvas", {
+                    id: "qrCanvas"
+                }))}
+            </Card>
+            );
     }
 
 }

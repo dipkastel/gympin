@@ -19,6 +19,9 @@ import Stall from "../pages/stall/Stall";
 import Personel from "../pages/personel/Personel";
 import Plans from "../pages/plans/Plans";
 import Images from "../pages/images/Images";
+import UserPlan from "../pages/userPlan/UserPlan";
+import Tickets from "../pages/ticket/Tickets";
+import SingleTicket from "../pages/singleTicket/SingleTicket";
 
 export default function ApplicationRoutes() {
 
@@ -35,6 +38,8 @@ export default function ApplicationRoutes() {
                 <Route path="/management/profile" element={<Profile/>}/>
                 <Route path="/management/personel" element={<Personel/>}/>
                 <Route path="/management/images" element={<Images/>}/>
+                <Route path="/management/tickets" element={<Tickets/>}/>
+                <Route path="/management/singleTicket" element={<SingleTicket/>}/>
 
                 <Route path="/finance" element={<Finance/>}/>
                 <Route path="/finance/demand" element={<DemandPeyment/>}/>
@@ -42,6 +47,7 @@ export default function ApplicationRoutes() {
                 <Route path="/users" element={<Users/>}/>
                 <Route path="/users/singleuser" element={<SingleUser/>}/>
                 <Route path="/users/qrscan" element={<Nqrscan/>}/>
+                <Route path="/users/UserPlan" element={<UserPlan/>}/>
 
                 <Route path="/stall" element={<Stall/>}/>
                 <Route path="/stall/qrscan" element={<Nqrscan/>}/>

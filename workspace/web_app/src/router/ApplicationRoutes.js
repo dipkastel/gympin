@@ -10,6 +10,7 @@ import Profile from "../pages/profile/Profile";
 import Tickets from "../pages/tickets/Tickets";
 import Wallet from "../pages/wallet/Wallet";
 import Notifs from "../pages/notifs/Notifs";
+import Place from "../pages/place/Place";
 
 export default function ApplicationRoutes() {
 
@@ -25,6 +26,7 @@ export default function ApplicationRoutes() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/places" element={<Places/>}/>
+                <Route path="/place" element={<Place/>}/>
                 <Route path="/profile" element={isAuthorized?<Profile/>: <AuthRoutes/>}/>
                 <Route path="/tickets" element={isAuthorized?<Tickets/>: <AuthRoutes/>}/>
                 <Route path="/wallet" element={isAuthorized?<Wallet/>: <AuthRoutes/>}/>
