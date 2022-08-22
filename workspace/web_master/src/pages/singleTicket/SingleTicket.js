@@ -1,11 +1,15 @@
 import React from 'react';
 import {Grid} from "@mui/material";
-import _AddForm from "./_AddForm";
+import _TicketAddForm from "./_TicketAddForm";
+import _TicketMessages from "./_TicketMessages";
+import _TicketClose from "./_TicketClose";
 
 const SingleTicket = () => {
     return (
         <Grid height={"100%"}>
-            <_AddForm/>
+            <_TicketClose/>
+            <_TicketAddForm/>
+            <_TicketMessages/>
         </Grid>
     );
 };

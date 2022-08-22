@@ -22,6 +22,7 @@ import Images from "../pages/images/Images";
 import UserPlan from "../pages/userPlan/UserPlan";
 import Tickets from "../pages/ticket/Tickets";
 import SingleTicket from "../pages/singleTicket/SingleTicket";
+import Settings from "../pages/settings/Settings";
 
 export default function ApplicationRoutes() {
 
@@ -40,6 +41,7 @@ export default function ApplicationRoutes() {
                 <Route path="/management/images" element={<Images/>}/>
                 <Route path="/management/tickets" element={<Tickets/>}/>
                 <Route path="/management/singleTicket" element={<SingleTicket/>}/>
+                <Route path="/management/settings" element={<Settings/>}/>
 
                 <Route path="/finance" element={<Finance/>}/>
                 <Route path="/finance/demand" element={<DemandPeyment/>}/>

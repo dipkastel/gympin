@@ -5,60 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaa339a7-f874-44cd-9025-b881c033f287" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/place/Place.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceAbout.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceFacilities.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceImages.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceReserve.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceTabs.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_front/public/favicon1.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_front/public/images/banner/hp-slide-11 (2).jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_front/public/images/banner/hp-slide-11.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_front/public/images/banner/hp-slide2.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_front/public/images/brand/Thumbs.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_front/public/images/other/Thumbs.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/qr-scan/_ByCode.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/qr-scan/_ScanUser.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/singleTicket/SingleTicket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/singleTicket/_AddForm.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/singleUser/_userActions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/ticket/Tickets.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/ticket/_AddTicket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/ticket/_TicketList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/userPlan/UserPlan.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/userPlan/_UserPlanActions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/userPlan/_UserPlanDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/userPlan/_UserPlanEnterList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/users/_GateEntered.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/public/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/public/logo192.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/public/logo192.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/public/logo512.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/public/logo512.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/public/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/components/NNavigaion.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/components/NNavigaion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/notifs/Notifs.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/notifs/Notifs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/_PlacesList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/_PlacesList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/router/ApplicationRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/router/ApplicationRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/public/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/public/logo192.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/public/logo192.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/public/logo512.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/public/logo512.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/images/banner/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/banner/Thumbs.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/images/banner/hp-slide-1.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/banner/hp-slide-1.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/images/banner/hp-slide-2.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/banner/hp-slide-2.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/images/bg/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/bg/Thumbs.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/images/bg/about-bg-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/bg/about-bg-1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/images/bg/breadcrumb-bg-1.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/bg/breadcrumb-bg-1.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/Thumbs.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/bazaar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/google-play-badge.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/gym-pwa1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/gym-pwa2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/gym-pwa3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/iApps.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/sibapp-badge-white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/settings/Settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/settings/_SettingsCodeFotQr.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/settings/_SettingsPlaceName.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/singleTicket/_TicketAddForm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/singleTicket/_TicketClose.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/singleTicket/_TicketMessages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/other/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/other/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/other/author-1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/other/author-1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/management/Management.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/management/Management.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/personel/_PersonelList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/personel/_PersonelList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/qr-scan/Nqrscan.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/qr-scan/Nqrscan.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/qr-scan/myScanner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/qr-scan/myScanner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/singleUser/SingleUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/singleUser/SingleUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/singleUser/_userPackages.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/singleUser/_userPackages.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/GateAwaitingEntry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/_GateAwaitingEntry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/GateEntered.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/_AllUsers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/Users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/Users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/singleTicket/SingleTicket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/singleTicket/SingleTicket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/singleTicket/_AddForm.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/ApplicationRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/ApplicationRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -176,7 +142,7 @@
       <workItem from="1659011366253" duration="16748000" />
       <workItem from="1659423805081" duration="64142000" />
       <workItem from="1660377110655" duration="4914000" />
-      <workItem from="1660721149819" duration="22344000" />
+      <workItem from="1660721149819" duration="26327000" />
     </task>
     <servers />
   </component>
