@@ -19,15 +19,15 @@ export default function Home() {
             <Layout>
                 <HomeOneHero />
                 <HomeOneFeature />
-                <HomeOneAbout />
-                {/*<HomeOneProject />*/}
                 <HomeOneService />
+                {/*<HomeOneProject />*/}
                 <HomeOneTestimonial />
                 {/*<HomeOnePricing />*/}
-                <HomeOneNews />
+                {/*<HomeOneNews />*/}
+                <HomeOneAbout />
                 <HomeOneCTA />
-                <HomeOneFAQ />
                 <HomeOneGTA />
+                <HomeOneFAQ />
                 {/*<HomeOneBrand />*/}
             </Layout>
         </>

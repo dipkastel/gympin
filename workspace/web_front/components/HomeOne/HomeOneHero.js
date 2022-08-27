@@ -10,17 +10,17 @@ SwiperCore.use([Navigation, Pagination]);
 export default function HomeOneHero() {
     const team = [
         {
-            title: ["یک ثبت نام", "بی نهایت استفاده"],
-            desc: "دیگر نیاز به ثبت نام در مکان های ورزشی مختلف ندارید یکبار ثبت نام کنید",
+            title: ["ورزش بیشتر", "سلامتی بیشتر"],
+            desc: "شادابی و نشاط بیشتر ارمغان و هدف جیم پین است",
             src: "/images/banner/hp-slide-1.jpeg",
-            destination:"/register",
+            destination:"https://web.gympin.ir/profile",
             btnTitle:"ثبت نام"
         },
         {
             title: ["تجربه بینظیر", "ورزش های جدید"],
             desc: "ورزش های مختلفی برای استفاده شما گرداوری شده است",
             src: "/images/banner/hp-slide-2.jpeg",
-            destination:"/venues",
+            destination:"https://web.gympin.ir/places",
             btnTitle:"مراکز و ورزش‌ها"
         }
     ];
@@ -47,9 +47,9 @@ export default function HomeOneHero() {
                                     <div className="row no-gutters">
                                         <div className="col-xl-6 col-lg-7">
                                             <div className="hero__content">
-                                                <h2 className="hero__title" data-animation="fadeIn" data-delay=".2s" data-duration=".5s">{item.title[0]} <br />
+                                                <h2 className="hero__title text-shadow"  data-animation="fadeIn" data-delay=".2s" data-duration=".5s">{item.title[0]} <br />
                                                     {item.title[1]}</h2>
-                                                <p data-animation="fadeInUp" data-delay=".5s" data-duration=".7s">{item.desc}</p>
+                                                <p className="text-shadow" data-animation="fadeInUp" data-delay=".5s" data-duration=".7s">{item.desc}</p>
                                                 <a data-animation="fadeInUp" data-delay=".7s" data-duration=".9s" href={item.destination}
                                                     className="site-btn"><span className="icon"><i className="far fa-arrow-left"></i></span>{item.btnTitle}</a>
                                                 <div className="shape">

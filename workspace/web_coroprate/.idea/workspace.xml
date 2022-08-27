@@ -5,45 +5,55 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaa339a7-f874-44cd-9025-b881c033f287" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/assets/mockdata/tickets.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/data/model/entity/mock_ticket.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/AdapterTickets.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/DialogQrCode.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/dialog_qr_code.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/l_tickets_list_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/consumer-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/androidTest/java/com/notrika/qrcodegenerator/ExampleInstrumentedTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/java/com/notrika/qrcodegenerator/QRGContents.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/java/com/notrika/qrcodegenerator/QRGEncoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/main/java/com/notrika/qrcodegenerator/QRGSaver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../android_user/qrCodeGenerator/src/test/java/com/notrika/qrcodegenerator/ExampleUnitTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/di/main/MainDialogsMadule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/di/main/MainDialogsMadule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/AdapterReserve.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/AdapterReserve.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/FragmentPlaceReserve.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/place/subFragments/reserve/FragmentPlaceReserve.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/FragmentTicketsList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/ui/main/tickets/FragmentTicketsList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/util/mocks/mockdatas.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/java/com/notrika/gympin/util/mocks/mockdatas.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/fragment_tickets_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/layout/fragment_tickets_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/app/src/main/res/navigation/main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/app/src/main/res/navigation/main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android_user/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android_user/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/about/about-bg-11.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/about/about-bg-21.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/about/about-bg-31.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/banner/hero-banner-21.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/banner/hero-banner-21.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/android-chrome-192x192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/android-chrome-512x512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/apple-touch-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/favicon-16x16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/favicon-32x32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/gym-pwa-and.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/logo/gym-pwa-ioss.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/project/Thumbs.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/shape/Thumbs.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/team/Thumbs.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_front/public/images/venues/Thumbs.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/Contact/ContactGTA.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/Contact/ContactGTA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/FAQ/FAQArea.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/FAQ/FAQArea.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneAbout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneAbout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneCTA.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneCTA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneFAQ.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneFAQ.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneFeature.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneFeature.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneGTA.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneGTA.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneHero.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneHero.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneNews.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneNews.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneService.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneTestimonial.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeOne/HomeOneTestimonial.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/layouts/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/layouts/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/components/HomeTwo/HomeTwoVideo.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/components/HomeTwo/HomeTwoVideo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/layouts/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/layouts/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/pages/contact.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/pages/contact.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/pages/corporate.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/pages/corporate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_front/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/css/bootstrap.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/css/bootstrap.rtl.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/about/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/about/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/about/about-bg-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/about/about-bg-1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/about/about-bg-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/about/about-bg-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/banner/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/banner/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/banner/hero-banner-2.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/banner/hero-banner-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/banner/hero-banner-2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/logo/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/logo/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/logo/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/logo/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/logo/gym-pwa1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/logo/gym-pwa2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/logo/gym-pwa2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/logo/gym-pwa3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/logo/gym-pwa3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/logo/logo-white.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/logo/logo-white.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/logo/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/logo/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/images/other/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/other/Thumbs.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_front/public/images/other/author-2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/images/other/author-2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_front/public/scss/components/_hero.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/scss/components/_hero.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_master/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -154,6 +164,7 @@
       <workItem from="1659423805081" duration="33647000" />
       <workItem from="1659882107208" duration="4552000" />
       <workItem from="1660380239047" duration="631000" />
+      <workItem from="1661446888150" duration="616000" />
     </task>
     <servers />
   </component>

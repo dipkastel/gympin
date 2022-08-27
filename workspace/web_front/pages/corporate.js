@@ -20,8 +20,8 @@ export default function corporate() {
             <Layout>
                 <HomeTwoHero/>
                 <HomeTwoAbout/>
-                <HomeTwoFeature/>
                 <HomeTwoVideo/>
+                <HomeTwoFeature/>
                 {/*<HomeTwoService/>*/}
                 {/*<HomeTwoWCU/>*/}
                 {/*<HomeTwoWorkingProcess/>*/}
@@ -30,7 +30,7 @@ export default function corporate() {
                 {/*<HomeTwoProject/>*/}
                 {/*<HomeTwoBrand/>*/}
                 {/*<HomeTwoTeam/>*/}
-                <HomeTwoNews/>
+                {/*<HomeTwoNews/>*/}
             </Layout>
         </>
     )

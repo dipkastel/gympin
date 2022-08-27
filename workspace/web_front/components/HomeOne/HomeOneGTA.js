@@ -10,7 +10,7 @@ export default function HomeOneGTA() {
                     <div className="row">
                         <div className="col-xl-6">
                             <div>
-                                <GoogleMap/>
+                                {/*<GoogleMap/>*/}
                             </div>
                         </div>
                         <div className="col-xl-6 pl-70">

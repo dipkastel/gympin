@@ -27,7 +27,8 @@ export default function Footer() {
                                 <h4 className="widget-title">خدمات</h4>
                                 <ul>
                                     <li><a href="https://web.gympin.ir">پیشنهادات ورزشی<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="/corporate">شرکت ها<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/corporate">شرکت ها و سازمان ها<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/places">مجموعه ها<i className="fa fa-angle-left"></i></a></li>
                                     <li><a href="/blog">وبلاگ<i className="fa fa-angle-left"></i></a>
                                     </li>
                                 </ul>
@@ -38,10 +39,6 @@ export default function Footer() {
                                 <h4 className="widget-title">پیگیری ها</h4>
 
                                 <ul>
-                                    <li><a href="/news">اخبار<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="/news?c=corporates">اخبار شرکت ها<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="/support">پشتیبانی<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="/our-brand">برند ما<i className="fa fa-angle-left"></i></a></li>
                                     <li><a href="/contact">تماس با ما<i className="fa fa-angle-left"></i></a>
                                     </li>
                                 </ul>

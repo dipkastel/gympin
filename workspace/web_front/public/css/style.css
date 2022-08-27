@@ -10102,6 +10102,11 @@ input.form-control-sm {
       .hero__2 .shape-pattern img {
         height: 360px; } }
 
+
+.text-shadow{
+  text-shadow: 2px 2px 6px black;
+}
+
 /* feature css */
 .feature-area {
   position: relative;

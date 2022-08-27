@@ -8,30 +8,27 @@ export default function ContactGTA() {
                 <div className="container">
                     <div className="row">
                         <div className="col-xl-6">
-                            <div className="gta-bg__2">
-                                <img src="/images/bg/gta-bg-2.png" alt=""/>
-                            </div>
+                            {/*<div className="gta-bg__2">*/}
+                            {/*    <img src="/images/bg/gta-bg-2.png" alt=""/>*/}
+                            {/*</div>*/}
                         </div>
                         <div className="col-xl-6 pl-50">
                             <div className="section-header mb-50">
-                                <h4 className="sub-heading sub-heading__2 mb-15">Send Message
-                                    <span><img src="/images/shape/heading-shape-4.png" className="mr-10" alt=""/></span>
-                                </h4>
-                                <h2 className="section-title section-title__2">Get in Touch</h2>
+                                <h2 className="section-title section-title__2">پیامی بگذارید</h2>
                             </div>
                             <div className="contact-form">
                                 <form action="#" method="POST" id="contact-form">
                                     <div className="form-group mt-25">
-                                        <input type="text" name="name" id="name" placeholder="Your Name"/>
+                                        <input className={"rtl"} type="text" name="name" id="name" placeholder="نام"/>
                                     </div>
                                     <div className="form-group mt-25">
-                                        <input type="email" name="email" id="mail" placeholder="Email Address"/>
+                                        <input  className={"rtl"} type="tel" name="tel" id="tel" placeholder="تلفن"/>
                                     </div>
                                     <div className="form-group mt-25">
-                                        <textarea name="message" id="message" placeholder="Your Message"></textarea>
+                                        <textarea  className={"rtl"} name="message" id="message" placeholder="پیام"></textarea>
                                     </div>
                                     <button type="submit" className="site-btn site-btn__2 mt-15"><span className="icon icon__black"><i
-                                        className="far fa-arrow-right"></i></span> Contact us</button>
+                                        className="far fa-arrow-left"></i></span> ارسال</button>
                                     <p className="ajax-response"></p>
                                 </form>
                             </div>

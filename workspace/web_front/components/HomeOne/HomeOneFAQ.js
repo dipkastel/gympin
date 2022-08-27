@@ -4,22 +4,22 @@ export default function HomeOneFAQ() {
     const [activeDefault, setActiveDefault] = useState(0);
     const FAQ = [
         {
-            q: " How can get my print job once it is finished?",
-            a:"Had own doesn creature days multiply and thing enter created fruit fowlen his whose can sea fly two it’s you. So have form fill. You rule us isn't seas fill firmament given dole marce"
+            q: "مراکز ورزشی چرا و چگونه باید خود را در اپلیکیشن جیم پین ثبت کنند ؟",
+            a:"دلایل و راه های متفاوتی برای ثبت مراکز ورزشی در جیم پین وجود دارد فرم مربوط در همین صفحه را پرکنید و یا یک پیام برای ما بگذارید تا کارشناسان جیم پین با شما تماس بگیرند."
         },
         {
-            q: "Is white considered a printing color code? ?",
-            a:"Had own doesn creature days multiply and thing enter created fruit fowlen his whose can sea fly two it’s you. So have form fill. You rule us isn't seas fill firmament given dole marce"
+            q: "شرکت ها چگونه میتوانند کارمندان خود را در اپلیکشن ثبت نام کنند ؟",
+            a:"در بخش شرکت ها کامل به این موضوع پرداخته شده است فرم را پرکنید و یا با ما تماس بگیرید."
         },
         {
-            q: "How can get my print job once it is finished?",
-            a:"Had own doesn creature days multiply and thing enter created fruit fowlen his whose can sea fly two it’s you. So have form fill. You rule us isn't seas fill firmament given dole marce"
+            q: "آیا جیم پین کلاس های ورزشی آنلاین هم برگزار میکند ؟",
+            a:"رسالت جیم پین ارائه راهکار های ورزشی است . و هم اکنون در زمینه رزرو و خرید بلیت مراکز فعالیت می کند. جیم پین محدودیتی برای نوع فعالیت ورزشی ندارد و اگر فعالیت های آنلاین ورزشی توسط مجموعه ها ارائه شود در بخش ورزش ها فابل مشاهده خواهد بود."
         },
         {
-            q: " What types of Shipping Service do you offer?",
-            a:"Had own doesn creature days multiply and thing enter created fruit fowlen his whose can sea fly two it’s you. So have form fill. You rule us isn't seas fill firmament given dole marce"
+            q: "آیا جیم پین برای استفاده کاربران هزینه دریافت میکند ؟",
+            a:"خیر ، جیم پین هیچ هزینه ای برای خدمات خود از کاربر دریافت نمیکند و پرداختی کاربران تنها مربوط به خدماتی است که دریافت خواهند نمود"
         }
-        
+
     ]
     return (
         <>

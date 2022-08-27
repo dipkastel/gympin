@@ -24,8 +24,9 @@ export default function HomeOneAbout() {
                                     </li>
                                     <li><i className="fa fa-check"></i>امکان مدیریت پرسنل</li>
                                     <li><i className="fa fa-check"></i>گزارشات حرفه ای</li>
-                                    <li><i className="fa fa-check"></i>مدیریت پلن های و تخفیف ها</li>
+                                    <li><i className="fa fa-check"></i>مدیریت پلن ها و تخفیف ها</li>
                                     <li><i className="fa fa-check"></i>اطلاع رسانی کمپین ها</li>
+                                    <li><i className="fa fa-check"></i>و ...</li>
                                 </ul>
                                 <a href="about.html" className="site-btn site-btn__s2 mt-55"><span className="icon icon__black"><i
                                     className="far fa-arrow-left"></i></span> یک قدم تا همکاری</a>

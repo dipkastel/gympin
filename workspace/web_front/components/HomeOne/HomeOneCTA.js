@@ -16,7 +16,7 @@ export default function HomeOneCTA() {
                         <div className="col-xl-4 text-right ltr">
                             <div className="cta-right">
                                 <p>با ما تماس بگیرید</p>
-                                <a href="contact.html" className="site-btn site-btn__s3">
+                                <a href="/corporate" className="site-btn site-btn__s3">
                                     <span className="icon"><i className="far fa-arrow-left"></i></span>
                                     تماس با ما
                                 </a>

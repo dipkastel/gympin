@@ -41,28 +41,6 @@ export default function HomeOneService() {
                         </div>
                     </div>
                 </div>
-                <div className="col-xl-6 col-lg-6 mt-50">
-                    <div className="service-item d-flex">
-                        <div className="service-item__icon service-item__icon--3">
-                            <img src="/images/icons/s-3.png" alt=""/>
-                        </div>
-                        <div className="service-item__content">
-                            <h4 className="service-item__title">یک بار ثبت نام کنید</h4>
-                            <p>برای استفاره از ورزش های جیم پین شما در هیچکدام از مراکز به صورت جداگانه ثبت نام نمی‌کنید</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-xl-6 col-lg-6 mt-50">
-                    <div className="service-item d-flex">
-                        <div className="service-item__icon service-item__icon--4">
-                            <img src="/images/icons/s-4.png" alt=""/>
-                        </div>
-                        <div className="service-item__content">
-                            <h4 className="service-item__title">ورزش خود را برنامه ریزی کنید</h4>
-                            <p>شما میتوانید برای استفاده از ورزش ها از قبل برنامه ریزی کنید</p>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div className="row justify-content-center">
                 <div className="col-xl-8 text-center">
