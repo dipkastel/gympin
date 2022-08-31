@@ -26,16 +26,13 @@ const _Wallet = () => {
         return (
             <div>
                 <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>درخواست تسویه حساب</DialogTitle>
+                    <DialogTitle>افزایش اعتبار</DialogTitle>
                     <DialogContent >
-                        <DialogContentText>
-                            درخواست شما طی 24 ساعت کاری به بانک ارسال خواهد شد
-                        </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
                             id="name"
-                            label="مبلغ درخواستی"
+                            label="مبلغ افزایش"
                             type="number"
                             fullWidth
                             variant="standard"
@@ -55,7 +52,7 @@ const _Wallet = () => {
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent
                     >
-                    اعتبار شما :
+                    مانده شارژ شما :
                     <Stack
                         justifyContent="space-between"
                         alignItems="flex-start"
@@ -65,13 +62,13 @@ const _Wallet = () => {
                         <Typography variant="h6" >
                             14,500,000 تومان
                         </Typography>
-                        <Button variant={"contained"} onClick={handleClickOpen}>درخواست تسویه</Button>
+                        <Button variant={"contained"} onClick={handleClickOpen}>افزایش اعتبار</Button>
                     </Stack>
                     <Typography  variant="caption"
                                  component={"a"}
-                                 href={"/finance/demand"}
+                                 href={"/finance/IncreaseList"}
                                  sx={{textDecoration:"none",color:"#000000"}}>
-                        مشاهده لیست درخواست ها
+                        مشاهده تاریخچه افزایش اعتبار
                     </Typography>
                 </CardContent>
             </Card>

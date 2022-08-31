@@ -1,22 +1,15 @@
 import React from "react";
-import _PlaceTrafic from "./_PlaceTraffic";
-import _PlacePersonel from "./_PlacePersonel";
-import _PlaceGates from "./_PlaceGates";
-import _PlaceAbout from "./_PlaceAbout";
-import _PlaceStall from "./_PlaceStall";
-import _Profile from "./_Profile";
-import _PlaceFacilities from "./_PlaceFacilities";
+import _ListItem from "../../components/_ListItem";
+import _OurTraffic from "../report/_OurTraffic";
+import _SportRadar from "../report/_SportRadar";
 
 
-export default function Management(){
+export default function Management() {
     return (
         <>
-            <_PlaceTrafic/>
-            <_PlaceGates/>
-            <_PlacePersonel/>
-            <_PlaceAbout/>
-            <_PlaceFacilities/>
-            <_Profile/>
+            <_ListItem title="مشخصات سازمان" destination="/management/details"/>
+            <_OurTraffic/>
+            <_SportRadar/>
         </>
     );
 }

@@ -3,19 +3,12 @@ import * as auth from "../../helper/ducks/auth.duck";
 import {connect} from "react-redux";
 import {Navigate} from 'react-router-dom';
 
-class Logout extends Component {
-    componentDidMount() {
-        this.props.logout();
-    }
+function Logout(props) {
+    console.log("log out page")
 
-    render() {
-        // const { hasAuthToken } = this.props;
-
-        return <Navigate to="/auth" />;
-    }
+    props.logout();
+    return ""
+    // return <Navigate to="/auth" />;
 }
 
-export default connect(
-    ({ auth }) => ({ hasAuthToken: Boolean(auth.authToken) }),
-    auth.actions
-)(Logout);
+export default connect(null, auth.actions)(Logout)

@@ -1,10 +1,13 @@
 import React from 'react';
+import _UserCredit from "./_UserCredit";
+import _IncreaseCredit from "./_IncreaseCredit";
 
 const Wallet = () => {
     return (
-        <div>
-            walet
-        </div>
+        <>
+            <_UserCredit/>
+            <_IncreaseCredit/>
+        </>
     );
 };
 

@@ -16,14 +16,26 @@ const data = [
         fullMark: 80,
     },
     {
+        subject: 'اسب سواری',
+        count: 15,
+        B: 130,
+        fullMark: 80,
+    },
+    {
+        subject: 'بولبنگ',
+        count: 15,
+        B: 130,
+        fullMark: 80,
+    },
+    {
         subject: 'ایروبیک',
-        count: 33,
+        count: 60,
         B: 130,
         fullMark: 80,
     },
     {
         subject: 'استخر',
-        count: 41,
+        count: 68,
         B: 100,
         fullMark: 80,
     },
@@ -35,7 +47,7 @@ const data = [
     },
     {
         subject: 'تکواندو',
-        count: 10,
+        count: 0,
         B: 85,
         fullMark: 80,
     },

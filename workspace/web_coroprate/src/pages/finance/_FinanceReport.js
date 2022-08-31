@@ -1,77 +1,87 @@
 import React, {PureComponent} from 'react';
-import {Cell, ResponsiveContainer, Treemap} from 'recharts';
+import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import {Card, CardContent, CardHeader} from "@mui/material";
 
 const data = [
-    { name: 'بدنسازی', size: 6084000},
-    { name: 'تکواندو', size: 1384000},
-    { name: 'پیلاتس', size: 1084000 },
-    { name: 'استخر', size: 3884000},
-    { name: 'ایروبیک', size: 1584000 },
-    { name: 'trx', size: 2584000 },
+    {
+        month: 'اردیبهشت',
+        users: 80.400000,
+        corporate: 48.000000,
+        uses: 30.000000,
+    },
+    {
+        month: 'خرداد',
+        users: 90.400000,
+        corporate: 48.000000,
+        uses: 39.000000,
+    },
+    {
+        month: 'تیر',
+        users: 162.400000,
+        corporate: 58.000000,
+        uses: 45.000000,
+    },
+    {
+        month: 'مرداد',
+        users: 192.400000,
+        corporate: 58.000000,
+        uses: 51.000000,
+    },
+    {
+        month: 'شهریور',
+        users: 212.400000,
+        corporate: 68.000000,
+        uses: 60.000000,
+    },
+    {
+        name: 'مهر',
+        users: 232.400000,
+        corporate: 95.000000,
+        uses: 89.000000,
+    },
+    {
+        month: 'آبان',
+        users: 240.400000,
+        corporate: 95.000000,
+        uses: 93.000000,
+    },
 ];
 
-class CustomizedContent extends PureComponent {
-    render() {
-        const { root, depth, x, y, width, height, index, payload, colors, size, name } = this.props;
+export default class Example extends PureComponent {
+    static demoUrl = 'https://codesandbox.io/s/stacked-area-chart-ix341';
 
-        return (
-            <g>
-                <rect
-                    x={x}
-                    y={y}
-                    width={width}
-                    height={height}
-                    style={{
-                        fill: depth < 2 ? colors[Math.floor((index / root.children.length) * 6)] : 'none',
-                        stroke: '#fff',
-                        strokeWidth: 2 / (depth + 1e-10),
-                        strokeOpacity: 1 / (depth + 1e-10),
-                    }}
-                />
-                {depth === 1 ? (
-                    <text x={x + width / 2} y={y + height / 2} textAnchor="middle" fill="#fff" fontSize={12}>
-                        {name}
-                    </text>
-                ) : null}
-                {depth === 1 ? (
-                    <text x={x + width / 2} y={y + height / 2 + 14} textAnchor="middle" fill="#fff" fontSize={12}>
-                        {size}
-                    </text>
-                ) : null}
-            </g>
-        );
-    }
-}
-
-const COLORS = ['#8f4260', '#9597E4', '#2142b0', '#A5D297', '#E2CF45', '#F8C12D'];
-
-class _FinanaceReport extends PureComponent {
     render() {
         return (
 
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
-                    title={"درآمد"}
+                    title={"نمودار"}
                 />
                 <CardContent>
+
                     <ResponsiveContainer width="100%" aspect={3}>
-                        <Treemap
-                            width={400}
-                            height={200}
+                        <AreaChart
+                            width={500}
+                            height={400}
                             data={data}
-                            dataKey="size"
-                            ratio={4 / 3}
-                            stroke="#fff"
-                            fill="#8884d8"
-                            content={<CustomizedContent colors={COLORS} />}
-                        />
+                            margin={{
+                                top: 10,
+                                right: 30,
+                                left: 0,
+                                bottom: 0,
+                            }}
+                        >
+                            <CartesianGrid strokeDasharray="3 3"/>
+                            <XAxis dataKey="month"/>
+                            <YAxis dataKey="users"/>
+                            <Tooltip/>
+                            <Area type="monotone" name="شارژ مجموعه" dataKey="corporate" stackId="2" stroke="#8884d8" fill="#8884d8"/>
+                            <Area type="monotone" name={"شارژ کاربران"} dataKey="users" stackId="3" stroke="#82ca9d" fill="#82ca9d"/>
+                            <Area type="monotone" name={"استفاده شده"} dataKey="uses" stackId="4" stroke="#ffc658" fill="#ffc658"/>
+                        </AreaChart>
                     </ResponsiveContainer>
                 </CardContent>
             </Card>
         );
     }
 }
-
-
-export default _FinanaceReport;

@@ -38,14 +38,7 @@ export default function NBottomNavigation(){
             firstDirection:"/management",
             icon:<ManageAccountsIcon/>,
             otherRouts:["management"]
-        },
-        {
-            value:"report",
-            lable:"گزارشات",
-            firstDirection:"/report",
-            icon:<AssessmentIcon/>,
-            otherRouts:["report"]
-        },
+        }
     ]
     const pathname = window.location.pathname
     const [value, setValue] = React.useState(getTabName(pathname));

@@ -8,14 +8,11 @@ import Users from "../pages/users/Users";
 import NNavigaion from "../components/NNavigaion";
 import NBottomNavigation from "../components/NBottomNavigation";
 import Nqrscan from "../pages/qr-scan/Nqrscan";
-import Gate from "../pages/gate/Gate";
-import About from "../pages/about/About";
-import DemandPeyment from "../pages/demandPeyment/DemandPeyment";
-import SingleUser from "../pages/singleUser/SingleUser";
-import Facilities from "../pages/facilities/Facilities";
-import ManageStall from "../pages/ManageStall/ManageStall";
-import Profile from "../pages/profile/Profile";
+import IncreaseList from "../pages/IncreaseListPeyment/IncreaseList";
 import Stall from "../pages/stall/Stall";
+import CorporateDetail from "../pages/corporateDetail/CorporateDetail";
+import IncreaseGroupCredit from "../pages/increaseGroupCredit/IncreaseGroupCredit";
+import SingleUser from "../pages/singleUser/SingleUser";
 
 export default function ApplicationRoutes() {
 
@@ -24,18 +21,14 @@ export default function ApplicationRoutes() {
             <NNavigaion/>
             <Routes>
                 <Route path="/management" element={<Management/>}/>
-                <Route path="/management/gate" element={<Gate/>}/>
-                <Route path="/management/about" element={<About/>}/>
-                <Route path="/management/facilities" element={<Facilities/>}/>
-                <Route path="/management/stall" element={<ManageStall/>}/>
-                <Route path="/management/profile" element={<Profile/>}/>
+                <Route path="/management/details" element={<CorporateDetail/>}/>
 
                 <Route path="/finance" element={<Finance/>}/>
-                <Route path="/finance/demand" element={<DemandPeyment/>}/>
+                <Route path="/finance/increaselist" element={<IncreaseList/>}/>
 
                 <Route path="/users" element={<Users/>}/>
-                <Route path="/users/singleuser" element={<SingleUser/>}/>
-                <Route path="/users/qrscan" element={<Nqrscan/>}/>
+                <Route path="/users/increasegroupcredit" element={<IncreaseGroupCredit/>}/>
+                <Route path="/users/Detail" element={<SingleUser/>}/>
 
                 <Route path="/stall" element={<Stall/>}/>
                 <Route path="/stall/qrscan" element={<Nqrscan/>}/>

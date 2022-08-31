@@ -6,7 +6,7 @@ export default function _OurTraffic() {
     var data = [];
     for (var i = 1; i < 27; i++) {
         var current = {
-            entery: Math.floor(Math.random() * 10+3),
+            entery: Math.floor(Math.random() * (20+i)+i)*10000,
             date: new Date().setDate(new Date().getDate() - (30-i))
         }
         data.push(current);
@@ -14,12 +14,12 @@ export default function _OurTraffic() {
     return (
         <Card elevation={3} sx={{margin: 1}}>
             <CardHeader
-            title="ترافیک ورودی"
+            title="مجموع ورزش پرسنل"
             sx={{
             }}
             />
             <CardContent>
-                <ResponsiveContainer width="113%" aspect={3}>
+                <ResponsiveContainer width="100%" aspect={3}>
                     <LineChart
                         data={data}
                     >

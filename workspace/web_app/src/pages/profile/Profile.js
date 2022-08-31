@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import {Avatar, Button, Card, CardContent, CardHeader, Grid, Typography} from "@mui/material";
+import {Avatar, Button, Card, CardContent, CardHeader, Divider, Grid, Rating, Typography} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
+import {Image} from "react-bootstrap";
+import _ListItem from "../../components/_ListItem";
 let user = {
     userId: 1,
     gateName: "ورودی بدنسازی",
@@ -12,99 +14,59 @@ let user = {
     phoneNumber: "09126548595",
     birthLocation: "تهران",
     fathersName: "حمید",
+    bio:"من ابراهیم گلستان یک نویسنده خوب هستم لطفا مرا دنبال کنید تا با ادبیات ورزش کنیم"
 
 }
 
 const Profile = (props) => {
-    const [nationalCode, SetNationalCode] = useState(false)
-    const [birthDay, SetBirthDay] = useState(false)
-    const [fatherName, SetFatherName] = useState(false)
-    const [birthLocation, SetBirthLocation] = useState(false)
-    const [phoneNumber, SetPhoneNumber] = useState(false)
 
     return (
-        <Card elevation={3} sx={{margin: 1}}>
-            <CardHeader
-                title={user.userName}
-            />
-            <CardContent>
-                <Avatar
-                    sx={{width: 120, height: 120}}
-                    alt="Remy Sharp"
-                    src={toAbsoluteUrl(user.image)}/>
-                <Grid container direction="row" justifyContent="space-between" sx={{marginY: 2}}>
-                    کدملی :
-                    <Typography
-                        sx={{display: "inline"}}
-                        className={!nationalCode && "blur"}
-                        component="P"
-                        variant="h6"
-                        color="text.primary"
-                    >
-                        {user.nationalCode}
-                    </Typography>
-                    <Button size={"small"} variant={"contained"} onClick={() => SetNationalCode(true)}> دریافت
-                        اطلاعات</Button>
-                </Grid>
-                <Grid container direction="row" justifyContent="space-between" sx={{marginY: 2}}>
-                    تاریخ تولد :
-                    <Typography
-                        sx={{display: "inline"}}
-                        className={!birthDay && "blur"}
-                        component="P"
-                        variant="h6"
-                        color="text.primary"
-                    >
-                        {user.birthday}
-                    </Typography>
-                    <Button size={"small"} variant={"contained"} onClick={() => SetBirthDay(true)}> دریافت
-                        اطلاعات</Button>
-                </Grid>
-                <Grid container direction="row" justifyContent="space-between" sx={{marginY: 2}}>
-                    نام پدر :
-                    <Typography
-                        sx={{display: "inline"}}
-                        className={!fatherName && "blur"}
-                        component="P"
-                        variant="h6"
-                        color="text.primary"
-                    >
-                        {user.fathersName}
-                    </Typography>
-                    <Button size={"small"} variant={"contained"} onClick={() => SetFatherName(true)}> دریافت
-                        اطلاعات</Button>
-                </Grid>
-                <Grid container direction="row" justifyContent="space-between" sx={{marginY: 2}}>
-                    محل تولد :
-                    <Typography
-                        sx={{display: "inline"}}
-                        className={!birthLocation && "blur"}
-                        component="P"
-                        variant="h6"
-                        color="text.primary"
-                    >
-                        {user.birthLocation}
-                    </Typography>
-                    <Button size={"small"} variant={"contained"} onClick={() => SetBirthLocation(true)}> دریافت
-                        اطلاعات</Button>
-                </Grid>
-                <Grid container direction="row" justifyContent="space-between" sx={{marginY: 2}}>
-                    شماره همراه :
-                    <Typography
-                        sx={{display: "inline"}}
-                        className={!phoneNumber && "blur"}
-                        component="P"
-                        variant="h6"
-                        color="text.primary"
-                    >
-                        {user.phoneNumber}
-                    </Typography>
-                    <Button size={"small"} variant={"contained"} onClick={() => SetPhoneNumber(true)}> دریافت
-                        اطلاعات</Button>
-                </Grid>
+        <>
 
-            </CardContent>
-        </Card>
+            <Card elevation={3} sx={{margin: 1}}>
+                <CardContent>
+                    <Grid container >
+                        <Grid item xs={3} >
+                            <Button href={"/profile/edit"} variant={"outlined"}>ویرایش</Button>
+                            <Image fluid width={"100%"}  src={"/assets/images/charcter_orang.png"}/>
+                        </Grid>
+                        <Grid container direction={"column"} alignItems={"center"} justifyContent={"start"} item xs={9}>
+                            <Avatar
+                                sx={{width: 120, height: 120,marginTop:3}}
+                                alt="Remy Sharp"
+                                src={toAbsoluteUrl(user.image)}/>
+                            <Typography variant={"h4"} color={"black"}>{user.userName}</Typography>
+                            <Typography variant={"h6"} color={"darkgray"}>{user.phoneNumber}</Typography>
+                            <Rating name="read-only" value={5} readOnly />
+                            <Typography variant={"body1"} color={"darkgray"} sx={{marginY:1}}>{user.bio}</Typography>
+                            {/*<Grid  container direction={"row"} columns={13}   >*/}
+                            {/*    <Grid container  xs={5} alignItems={"center"} justifyContent={"center"} >*/}
+                            {/*        <Typography variant={"body2"} color={"darkgray"} sx={{marginY:1}}>دنبال کننده 123</Typography>*/}
+
+                            {/*    </Grid>*/}
+                            {/*    <Grid container  xs={1} alignItems={"center"} justifyContent={"center"} >*/}
+                            {/*        <Divider xs={1} orientation="vertical" variant="middle" sx={{height:"25px !important"}} />*/}
+                            {/*    </Grid>*/}
+                            {/*    <Grid container  xs={5} alignItems={"center"} justifyContent={"center"} >*/}
+                            {/*        <Typography variant={"body2"} color={"darkgray"} sx={{marginY:1}}>دنبال شونده*/}
+                            {/*            1123</Typography>*/}
+                            {/*    </Grid>*/}
+
+                            {/*</Grid>*/}
+
+                        </Grid>
+                    </Grid>
+
+                </CardContent>
+            </Card>
+            <_ListItem title="شرایط و قوانین" destination="https://gympin.ir/term-and-conditions/"/>
+            <_ListItem title="دعوت از دوستان" destination="/profile/invitefriends"/>
+            <_ListItem title="سوالات متداول" destination="https://gympin.ir/faq/"/>
+            <_ListItem title="امتیاز و بازخورد" destination="/profile/survey"/>
+            <_ListItem title="تماس با ما" destination="https://gympin.ir/contact/"/>
+            <_ListItem title="خروج" destination="/auth/logout"/>
+
+        </>
     );
 };
 

@@ -1,18 +1,18 @@
 import React from 'react';
 import {Card, CardHeader} from "@mui/material";
 
-const _Profile = () => {
+const _ListItem = (props) => {
     return (
         <Card elevation={3} sx={{margin: 1}} >
             <CardHeader
                 component={"a"}
                 sx={{textDecoration:"none",color:"#000000"}}
-                href={"/management/profile"}
-                title={"پروفایل من"}
+                href={props.destination}
+                title={props.title}
                 action={""}/>
         </Card>
     );
 };
 
 
-export default _Profile;
+export default _ListItem;

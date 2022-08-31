@@ -53,7 +53,7 @@ export let jsonData = [
                 "Id": 4,
                 "IsDeleted": false,
                 "ImageUrl": "",
-                "Title": "برترین ورزشکاران مرکز",
+                "Title": "برترین ورزشکاران",
                 "Description": "",
                 "Destination": "USERLIST",
                 "Data": "TopAll",

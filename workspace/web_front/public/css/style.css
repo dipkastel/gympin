@@ -9359,7 +9359,10 @@ h6, .h6 {
     .navarea .site-logo {
       flex: 0 0 19%;
       -ms-flex: 0 0 19%;
-      max-width: 19%; } }
+      max-width: 19%;
+      display: table-cell;
+
+    } }
 
 .mainmenu {
   padding-left: 83px; }

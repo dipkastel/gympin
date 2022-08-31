@@ -25,7 +25,7 @@ export default function NBottomNavigation(){
             lable:"مجموعه ها",
             firstDirection:"/places",
             icon:<GrainIcon/>,
-            otherRouts:["places"]
+            otherRouts:["places","place"]
         },
         {
             value:"tickets",
@@ -39,7 +39,7 @@ export default function NBottomNavigation(){
             lable:"پروفایل",
             firstDirection:"/profile",
             icon:<ManageAccountsIcon/>,
-            otherRouts:["profile"]
+            otherRouts:["profile","wallet","notifs",]
         }
     ]
     const pathname = window.location.pathname

@@ -12,11 +12,11 @@ import {
 } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-const DemandPeyment  = () => {
+const IncreaseList  = () => {
     return (
         <Card elevation={3} sx={{margin: 1}} >
             <CardContent>
-                درخواست های تصویه
+                تاریخچه افزایش اعتبار
                 <List disablePadding>
                     <ListItem disablePadding >
                         <ListItemButton >
@@ -70,4 +70,4 @@ const DemandPeyment  = () => {
     );
 };
 
-export default DemandPeyment;
+export default IncreaseList;
