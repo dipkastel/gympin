@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.user;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.user.dto.UserRoleDto;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.param.UserRoleParam;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, UserRoleDto, Role> implements UserRoleService {
+public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, UserRoleDto, BaseFilter<?>, Role> implements UserRoleService {
 
     private final RoleRepository roleRepository;
 

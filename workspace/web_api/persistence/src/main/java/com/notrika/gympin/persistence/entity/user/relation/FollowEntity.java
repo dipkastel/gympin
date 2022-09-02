@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.user.relation;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.relation.enums.FollowingStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.user.User;
@@ -21,7 +22,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "follow")
-public class FollowEntity extends BaseEntity {
+public class FollowEntity extends BaseEntity<FollowEntity> {
 
     @ManyToOne
     @ToString.Exclude

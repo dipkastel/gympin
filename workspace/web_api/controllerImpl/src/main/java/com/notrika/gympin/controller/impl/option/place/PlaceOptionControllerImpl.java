@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.option.place;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.option.place.api.PlaceOptionController;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
@@ -50,5 +51,25 @@ public class PlaceOptionControllerImpl implements PlaceOptionController {
     public ResponseEntity<PlaceOptionDto> delete(@RequestBody PlaceOptionParam placeOptionParam) {
         PlaceOptionDto deletedPlaceOption = placeOptionService.delete(placeOptionParam);
         return new ResponseEntity<PlaceOptionDto>(deletedPlaceOption, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<PlaceOptionDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<PlaceOptionDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.location;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.user.User;
@@ -20,7 +21,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "place_owner")
-public class PlaceOwner extends BaseEntity {
+public class PlaceOwner extends BaseEntity<PlaceOwner> {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "place_id")

@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.multimedia;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.sport.Sport;
 import lombok.Getter;
@@ -22,7 +23,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "sport_multimedia")
-public class SportMultimedia extends BaseEntity {
+public class SportMultimedia extends BaseEntity<SportMultimedia> {
 
     @ManyToOne
     @JoinColumn(name = "sport_id")

@@ -1,12 +1,12 @@
 package com.notrika.gympin.controller.impl.location;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.location.api.CityController;
 import com.notrika.gympin.common.location.dto.CityDto;
 import com.notrika.gympin.common.location.param.CityParam;
 import com.notrika.gympin.common.location.param.StateParam;
 import com.notrika.gympin.common.location.service.CityService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,34 +29,54 @@ public class CityControllerImpl implements CityController {
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<CityDto> add(@RequestBody CityParam cityParam) {
-        return new ResponseEntity<CityDto>(cityService.add(cityParam), HttpStatus.OK);
+        return ResponseEntity.ok(cityService.add(cityParam));
     }
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<CityDto> update(@RequestBody CityParam cityParam) {
-        return new ResponseEntity<CityDto>(cityService.update(cityParam), HttpStatus.OK);
+        return ResponseEntity.ok(cityService.update(cityParam));
     }
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     public ResponseEntity<CityDto> delete(@RequestBody CityParam cityParam) {
-        return new ResponseEntity<CityDto>(cityService.delete(cityParam), HttpStatus.OK);
+        return ResponseEntity.ok(cityService.delete(cityParam));
     }
 
     @Override
     public ResponseEntity<List<CityDto>> getAll(BasePagedParam pagingParam) {
-        return new ResponseEntity<List<CityDto>>(cityService.getAll(pagingParam), HttpStatus.OK);
+        return ResponseEntity.ok(cityService.getAll(pagingParam));
     }
 
     @Override
     public ResponseEntity<CityDto> getById(Long id) {
-        return new ResponseEntity<CityDto>(cityService.getById(id), HttpStatus.OK);
+        return ResponseEntity.ok(cityService.getById(id));
     }
 
     @Override
     @GetMapping("/getCitiesByState")
     public ResponseEntity<List<CityDto>> getCitiesByState(StateParam stateParam) {
-        return new ResponseEntity<List<CityDto>>(cityService.getCitiesByState(stateParam), HttpStatus.OK);
+        return ResponseEntity.ok(cityService.getCitiesByState(stateParam));
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<CityDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<CityDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.location;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.location.api.StateController;
 import com.notrika.gympin.common.location.dto.StateDto;
@@ -50,5 +51,25 @@ public class StateControllerImpl implements StateController {
     @Override
     public ResponseEntity<StateDto> getById(Long id) {
         return new ResponseEntity<StateDto>(stateService.getById(id), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<StateDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<StateDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }

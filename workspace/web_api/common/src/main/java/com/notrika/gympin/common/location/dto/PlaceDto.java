@@ -30,4 +30,10 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
     @JsonProperty("Region")
     private RegionDto region;
 
+    @JsonProperty("aboutPlace")
+    private String aboutPlace;
+
+    @JsonProperty("placeRules")
+    private String placeRules;
+
 }

@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.location;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.location.dto.PlaceDto;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.location.param.RegionParam;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, Place> implements PlaceService {
+public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, BaseFilter<?>, Place> implements PlaceService {
 
     @Autowired
     private PlaceRepository placeRepository;
@@ -28,8 +29,14 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     @Override
     public PlaceDto add(PlaceParam placeParam) {
         Region region = regionService.getEntityById(placeParam.getRegion().getId());
-        Place initPlace =
-                Place.builder().name(placeParam.getName()).latitude(placeParam.getLatitude()).longitude(placeParam.getLongitude()).address(placeParam.getAddress()).region(region).build();
+        Place initPlace = new Place();
+        initPlace.setName(placeParam.getName());
+        initPlace.setLatitude(placeParam.getLatitude());
+        initPlace.setLatitude(placeParam.getLongitude());
+        initPlace.setAddress(placeParam.getAddress());
+        initPlace.setRegion(region);
+        initPlace.setAboutPlace(placeParam.getAboutPlace());
+        initPlace.setPlaceRules(placeParam.getPlaceRules());
         Place place = add(initPlace);
         return LocationConvertor.placeToPlaceDto(place);
     }

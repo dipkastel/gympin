@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.location;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.location.dto.StateDto;
 import com.notrika.gympin.common.location.param.StateParam;
 import com.notrika.gympin.common.location.service.StateService;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StateServiceImpl extends AbstractBaseService<StateParam, StateDto, State> implements StateService {
+public class StateServiceImpl extends AbstractBaseService<StateParam, StateDto, BaseFilter<?>, State> implements StateService {
 
     @Autowired
     private StateRepository stateRepository;

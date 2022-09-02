@@ -152,6 +152,8 @@ public final class LocationConvertor {
         placeDto.setLongitude(place.getLongitude());
         placeDto.setAddress(place.getAddress());
         placeDto.setRegion(regionToRegionDto(place.getRegion()));
+        placeDto.setAboutPlace(place.getAboutPlace());
+        placeDto.setPlaceRules(place.getPlaceRules());
         return placeDto;
     }
 

@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.event;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.sport.Sport;
 import lombok.Getter;
@@ -22,7 +23,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "base_event")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class BaseEventEntity extends BaseEntityWithCreateUpdate {
+public class BaseEventEntity extends BaseEntityWithCreateUpdate<BaseEventEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "sport_id")

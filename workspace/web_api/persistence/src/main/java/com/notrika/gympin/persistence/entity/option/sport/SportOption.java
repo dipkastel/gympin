@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.option.sport;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.sport.OptionOfSport;
@@ -24,7 +25,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "sport_option")
-public class SportOption extends BaseEntityWithCreateUpdate {
+public class SportOption extends BaseEntityWithCreateUpdate<SportOption> {
 
     @Column(name = "name")
     private String name;

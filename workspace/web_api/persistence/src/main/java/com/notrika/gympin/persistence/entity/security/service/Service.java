@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.security.service;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "service")
-public class Service extends BaseEntity {
+public class Service extends BaseEntity<Service> {
 
     @Column(name = "code")
     private String code;

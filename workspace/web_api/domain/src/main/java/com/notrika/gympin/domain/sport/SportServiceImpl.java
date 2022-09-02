@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.sport;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class SportServiceImpl extends AbstractBaseService<SportParam, SportDto, Sport> implements SportService {
+public class SportServiceImpl extends AbstractBaseService<SportParam, SportDto, BaseFilter<?>, Sport> implements SportService {
 
     @Autowired
     private SportRepository sportRepository;

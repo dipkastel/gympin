@@ -35,7 +35,7 @@ public class PlanConvertor {
     public static PlanGateDto convertToPlanGateDto(PlanGateEntity entity) {
         PlanGateDto dto = new PlanGateDto();
         dto.setId(entity.getId());
-        dto.setPlan(convertToPlanDto(entity.getPlan()));
+//        dto.setPlan(convertToPlanDto(entity.getPlan()));
         dto.setGate(GateConvertor.convertToDto(entity.getGate()));
         dto.setEntryCount(entity.getEntryCount());
         return dto;

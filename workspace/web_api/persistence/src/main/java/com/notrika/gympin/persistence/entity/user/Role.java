@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.user;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
@@ -20,7 +21,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "role")
-public class Role extends BaseEntity {
+public class Role extends BaseEntity<Role> {
 
     @Column(updatable = false,name = "role")
     @Enumerated(EnumType.STRING)

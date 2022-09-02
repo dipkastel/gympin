@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.event.general;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.event.general.api.EventParticipantController;
 import com.notrika.gympin.common.event.general.dto.EventParticipantDto;
@@ -7,7 +8,6 @@ import com.notrika.gympin.common.event.general.param.EventParticipantParam;
 import com.notrika.gympin.common.event.general.service.EventParticipantService;
 import com.notrika.gympin.common.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -56,5 +56,25 @@ public class EventParticipantControllerImpl implements EventParticipantControlle
     @GetMapping("/getEventParticipant")
     public ResponseEntity<List<UserDto>> getEventParticipant(@RequestParam(name = "event-id") Long id) {
         return ResponseEntity.ok(eventParticipantService.getEventParticipant(id));
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<EventParticipantDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<EventParticipantDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }

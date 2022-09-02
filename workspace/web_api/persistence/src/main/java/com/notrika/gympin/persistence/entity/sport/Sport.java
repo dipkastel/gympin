@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.sport;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.sport.enums.LaunchStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.event.BaseEventEntity;
@@ -24,7 +25,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "sport")
-public class Sport extends BaseEntity {
+public class Sport extends BaseEntity<Sport> {
 
     @Column(name = "name", nullable = false)
     private String name;

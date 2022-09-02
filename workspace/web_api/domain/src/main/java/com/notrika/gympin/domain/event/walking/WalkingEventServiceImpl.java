@@ -1,7 +1,10 @@
 package com.notrika.gympin.domain.event.walking;
 
+import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
+import com.notrika.gympin.common.event.BaseEventFilter;
 import com.notrika.gympin.common.event.walking.dto.UserWalkingEventDto;
 import com.notrika.gympin.common.event.walking.dto.WalkingEventDto;
 import com.notrika.gympin.common.event.walking.param.WalkingEventParam;
@@ -17,15 +20,18 @@ import com.notrika.gympin.domain.sport.SportServiceImpl;
 import com.notrika.gympin.domain.user.UserRateServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.EventConvertor;
+import com.notrika.gympin.domain.util.convertor.searchfilter.EventFilterConvertor;
 import com.notrika.gympin.domain.util.validator.GeneralValidator;
 import com.notrika.gympin.persistence.dao.repository.BaseEventRepository;
 import com.notrika.gympin.persistence.dao.repository.WalkingEventRepository;
+import com.notrika.gympin.persistence.entity.event.BaseEventEntity;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.event.WalkingEventEntity;
 import com.notrika.gympin.persistence.entity.sport.Sport;
 import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +39,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventParam, WalkingEventDto, WalkingEventEntity> implements WalkingEventService {
+public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventParam, WalkingEventDto, BaseEventFilter, WalkingEventEntity> implements WalkingEventService {
 
     @Autowired
     private WalkingEventRepository walkingEventRepository;
@@ -193,5 +199,22 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
         walkingEventDtos.forEach(c->c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getOwner().getId()).build())));
         walkingEventDtos.forEach(c->c.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build()))));
         return walkingEventDtos;
+    }
+
+    @Override
+    public Long countSearch(BaseEventFilter filter) {
+        Specification<BaseEventEntity> clause = null;
+        List<SearchCriteria> searchCriteriaList = EventFilterConvertor.convertToBaseEventFilter(filter);
+        if(!searchCriteriaList.isEmpty()) {
+            BaseEventEntity specification= new BaseEventEntity();
+            specification.setCriteria(searchCriteriaList.get(0));
+            clause=Specification.where(specification);
+        }
+        for (int i=1;i<searchCriteriaList.size();i++) {
+            BaseEventEntity specification= new BaseEventEntity();
+            specification.setCriteria(searchCriteriaList.get(i));
+            clause.and(specification);
+        }
+        return eventRepository.count(clause);
     }
 }

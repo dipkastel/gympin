@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.android.layout;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.android.gympin.layout.enums.MainPageChildItemDestination;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
@@ -20,7 +21,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "main_page_layout_child_item")
-public class MainPageLayoutChildItemEntity extends BaseEntity {
+public class MainPageLayoutChildItemEntity extends BaseEntity<MainPageLayoutChildItemEntity> {
 
     @Column(name = "image_url")
     private String imageUrl;

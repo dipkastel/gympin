@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.location;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.location.dto.RegionDto;
 import com.notrika.gympin.common.location.param.CityParam;
 import com.notrika.gympin.common.location.param.RegionParam;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RegionServiceImpl extends AbstractBaseService<RegionParam, RegionDto, Region> implements RegionService {
+public class RegionServiceImpl extends AbstractBaseService<RegionParam, RegionDto, BaseFilter<?>, Region> implements RegionService {
 
     @Autowired
     private RegionRepository regionRepository;

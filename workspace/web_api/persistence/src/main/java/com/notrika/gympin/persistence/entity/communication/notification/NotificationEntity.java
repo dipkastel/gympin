@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.communication.notification;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.User;
 import lombok.Getter;
@@ -20,7 +21,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "notification")
-public class NotificationEntity extends BaseEntityWithCreateUpdate {
+public class NotificationEntity extends BaseEntityWithCreateUpdate<NotificationEntity> {
 
     @ManyToOne
     private User user;

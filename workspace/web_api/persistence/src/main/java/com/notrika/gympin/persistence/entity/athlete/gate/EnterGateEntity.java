@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.athlete.gate;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.athlete.gate.enums.EnterGateStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
@@ -26,7 +27,7 @@ import java.util.UUID;
 @SuperBuilder
 @Entity
 @Table(name = "enter_gate")
-public class EnterGateEntity extends BaseEntityWithCreateUpdate {
+public class EnterGateEntity extends BaseEntityWithCreateUpdate<EnterGateEntity> {
 
     @Column(name = "reference_id",nullable = false)
     private String referenceId;

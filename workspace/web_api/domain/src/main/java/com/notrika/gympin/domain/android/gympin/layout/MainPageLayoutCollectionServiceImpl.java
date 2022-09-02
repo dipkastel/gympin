@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.android.gympin.layout;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.android.gympin.layout.dto.MainPageLayoutCollectionDto;
 import com.notrika.gympin.common.android.gympin.layout.dto.MainPageLayoutItemDto;
 import com.notrika.gympin.common.android.gympin.layout.param.MainPageLayoutCollectionParam;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class MainPageLayoutCollectionServiceImpl extends AbstractBaseService<MainPageLayoutCollectionParam, MainPageLayoutCollectionDto, MainPageLayoutCollectionEntity> implements MainPageLayoutCollectionService {
+public class MainPageLayoutCollectionServiceImpl extends AbstractBaseService<MainPageLayoutCollectionParam, MainPageLayoutCollectionDto, BaseFilter<?>, MainPageLayoutCollectionEntity> implements MainPageLayoutCollectionService {
 
     @Autowired
     private MainPageLayoutCollectionRepository collectionRepository;

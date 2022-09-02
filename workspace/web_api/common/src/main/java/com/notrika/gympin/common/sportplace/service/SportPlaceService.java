@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.sportplace.service;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BaseService;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.sport.dto.SportDto;
@@ -8,7 +9,7 @@ import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
 
 import java.util.List;
 
-public interface SportPlaceService extends BaseService<SportPlaceParam, SportPlaceDto> {
+public interface SportPlaceService extends BaseService<SportPlaceParam, SportPlaceDto, BaseFilter<?>> {
 
     List<SportDto> getSportsByPlace(PlaceParam placeParam);
 

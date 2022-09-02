@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.sportplace.SportPlace;
@@ -22,7 +23,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "place")
-public class Place extends BaseEntityWithCreateUpdate {
+public class Place extends BaseEntityWithCreateUpdate<Place> {
 
     @Column(name = "name",nullable = false)
     private String name;
@@ -56,6 +57,12 @@ public class Place extends BaseEntityWithCreateUpdate {
     @OneToMany(mappedBy = "place")
     @ToString.Exclude
     private List<GateEntity> gates;
+
+    @Column(name = "about_place")
+    private String aboutPlace;
+
+    @Column(name = "place_rules")
+    private String placeRules;
 
     @Override
     public boolean equals(Object o) {

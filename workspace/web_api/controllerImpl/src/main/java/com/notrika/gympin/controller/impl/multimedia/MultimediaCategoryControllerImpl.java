@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.multimedia.api.MultimediaCategoryController;
 import com.notrika.gympin.common.multimedia.dto.MultimediaCategoryDto;
@@ -48,5 +49,25 @@ public class MultimediaCategoryControllerImpl implements MultimediaCategoryContr
     @Override
     public ResponseEntity<MultimediaCategoryDto> getById(Long id) {
         return new ResponseEntity<>(multimediaCategoryService.getById(id), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<MultimediaCategoryDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<MultimediaCategoryDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }

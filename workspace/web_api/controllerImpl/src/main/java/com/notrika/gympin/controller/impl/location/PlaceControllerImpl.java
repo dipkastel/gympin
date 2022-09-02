@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.location;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.location.api.PlaceController;
 import com.notrika.gympin.common.location.dto.PlaceDto;
@@ -89,6 +90,26 @@ public class PlaceControllerImpl implements PlaceController {
     public ResponseEntity<PlaceOwnerDto> deletePlaceOwner(@RequestBody PlaceOwnerParam placeOwnerParam) {
         PlaceOwnerDto deletedPlaceOwner = locationService.deletePlaceOwner(placeOwnerParam);
         return new ResponseEntity<PlaceOwnerDto>(deletedPlaceOwner, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<PlaceDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<PlaceDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 
 }

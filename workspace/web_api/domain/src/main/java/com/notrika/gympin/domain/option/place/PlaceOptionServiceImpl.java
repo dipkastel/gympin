@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.option.place;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
 import com.notrika.gympin.common.option.place.param.PlaceOptionParam;
 import com.notrika.gympin.common.option.place.service.PlaceOptionService;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam, PlaceOptionDto, PlaceOption> implements PlaceOptionService {
+public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam, PlaceOptionDto, BaseFilter<?>, PlaceOption> implements PlaceOptionService {
 
     @Autowired
     private PlaceOptionRepository placeOptionRepository;

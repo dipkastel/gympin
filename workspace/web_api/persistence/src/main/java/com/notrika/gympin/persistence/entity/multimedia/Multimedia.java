@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.multimedia;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
@@ -22,7 +23,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "multimedia")
-public class Multimedia extends BaseEntityWithCreateUpdate {
+public class Multimedia extends BaseEntityWithCreateUpdate<Multimedia> {
 
     @ManyToOne(cascade = CascadeType.MERGE,optional = false,fetch = FetchType.LAZY)
     @ToString.Exclude

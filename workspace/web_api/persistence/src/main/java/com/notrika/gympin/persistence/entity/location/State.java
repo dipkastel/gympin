@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.location;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
@@ -21,7 +22,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "state")
-public class State extends BaseEntity {
+public class State extends BaseEntity<State> {
 
     @Column(name = "name",nullable = false)
     private String name;

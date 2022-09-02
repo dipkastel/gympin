@@ -1,8 +1,11 @@
 package com.notrika.gympin.persistence.entity.user;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.accounting.AuditableEntitiesEntity;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
 import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
 import com.notrika.gympin.persistence.entity.communication.notification.NotificationEntity;
@@ -37,7 +40,8 @@ import java.util.Set;
 @SuperBuilder
 @Entity
 @Table(name = "user")
-public class User extends BaseEntityWithCreate {
+@PrimaryKeyJoinColumn(name = "id")
+public class User extends AuditableEntitiesEntity<User> {
 
     @Column(name = "name")
     private String name;

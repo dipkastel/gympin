@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.relation;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.general.InputNotValidException;
 import com.notrika.gympin.common.relation.dto.FollowDto;
@@ -28,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDto, FollowEntity> implements FollowService {
+public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDto, BaseFilter<?>, FollowEntity> implements FollowService {
 
     @Autowired
     private FollowRepository followRepository;
@@ -162,4 +163,6 @@ public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDt
     public Long getFollowingsCount(User user){
         return followRepository.getFollowingsCount(user.getId());
     }
+
+
 }

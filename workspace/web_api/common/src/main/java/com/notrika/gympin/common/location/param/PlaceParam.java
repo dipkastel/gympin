@@ -29,4 +29,10 @@ public class PlaceParam extends BaseParam<PlaceParam> {
 
     @JsonProperty("Region")
     private RegionParam region;
+
+    @JsonProperty("about-place")
+    private String aboutPlace;
+
+    @JsonProperty("place-rules")
+    private String placeRules;
 }

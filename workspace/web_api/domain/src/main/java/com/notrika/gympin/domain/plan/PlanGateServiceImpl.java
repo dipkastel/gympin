@@ -1,14 +1,16 @@
 package com.notrika.gympin.domain.plan;
 
+import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common.location.param.GateParam;
 import com.notrika.gympin.common.plan.dto.PlanGateDto;
 import com.notrika.gympin.common.plan.param.PlanGateParam;
 import com.notrika.gympin.common.plan.service.PlanGateService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.location.GateServiceImpl;
+import com.notrika.gympin.domain.util.convertor.GateConvertor;
 import com.notrika.gympin.domain.util.convertor.PlanConvertor;
 import com.notrika.gympin.persistence.dao.repository.PlanGateRepository;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
-import com.notrika.gympin.persistence.entity.plan.PlanEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanGateEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PlanGateServiceImpl extends AbstractBaseService<PlanGateParam, PlanGateDto, PlanGateEntity> implements PlanGateService {
+public class PlanGateServiceImpl extends AbstractBaseService<PlanGateParam, PlanGateDto, BaseFilter<?>, PlanGateEntity> implements PlanGateService {
 
     @Autowired
     private PlanServiceImpl planService;
@@ -32,10 +34,14 @@ public class PlanGateServiceImpl extends AbstractBaseService<PlanGateParam, Plan
 
     @Override
     public PlanGateDto add(@NonNull PlanGateParam planGateParam) {
-        PlanEntity planEntity = planService.getEntityById(planGateParam.getPlan().getId());
+//        PlanEntity planEntity = planService.getEntityById(planGateParam.getPlan().getId());
         GateEntity gateEntity = gateService.getEntityById(planGateParam.getGate().getId());
         PlanGateEntity planGateEntity = new PlanGateEntity();
-        planGateEntity.setPlan(planEntity);
+//        planGateEntity.setPlan(planEntity);
+        planGateEntity.setTitle(planGateParam.getTitle());
+        planGateEntity.setDescription(planGateParam.getDescription());
+        planGateEntity.setPrice(planGateParam.getPrice());
+        planGateEntity.setDiscountPrice(planGateParam.getDiscountPrice());
         planGateEntity.setGate(gateEntity);
         planGateEntity.setEntryCount(planGateParam.getEntryCount());
         planGateEntity = this.add(planGateEntity);
@@ -89,4 +95,15 @@ public class PlanGateServiceImpl extends AbstractBaseService<PlanGateParam, Plan
     public List<PlanGateDto> convertToDtos(List<PlanGateEntity> entities) {
         return entities.stream().map(PlanConvertor::convertToPlanGateDto).collect(Collectors.toList());
     }
+
+    @Override
+    public List<PlanGateDto> getPlanesByGate(GateParam gate) {
+        List<PlanGateEntity> planGateEntityList = planGateRepository.findAllByGateAndDeletedIsFalse(GateEntity.builder().id(gate.getId()).build());
+        return planGateEntityList.stream().map(GateConvertor::convertToPlanGateDto).collect(Collectors.toList());
+    }
+
+    public List<PlanGateEntity> getPlanesByGate(GateEntity gate) {
+        return planGateRepository.findAllByGateAndDeletedIsFalse(gate);
+    }
+
 }
