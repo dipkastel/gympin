@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DocumentRepository extends BaseRepository<DocumentEntity,Long> {
 
-    //@Query("select max(d.documentNumber) from DocumentEntity d")
+    @Query("select max(d.documentNumber) from DocumentEntity d")
     Long findMaxDocNum();
 
 }

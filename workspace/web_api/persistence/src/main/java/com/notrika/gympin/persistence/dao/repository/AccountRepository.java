@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends BaseRepository<AccountEntity,Long> {
 
-    //@Query("select max(a.serial) from AccountEntity a where a.auditableEntity=:#{#auditableEntity}")
+    @Query("select max(a.serial) from AccountEntity a where a.auditableEntity=:#{#auditableEntity}")
     Long findMaxOfSerial(AuditableEntitiesEntity auditableEntity);
 
     AccountEntity findByAuditableEntityAndDeletedIsFalse(AuditableEntitiesEntity entitiesEntity);
