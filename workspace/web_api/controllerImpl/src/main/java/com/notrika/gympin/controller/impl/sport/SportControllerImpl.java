@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.sport;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.sport.api.SportController;
@@ -58,5 +59,25 @@ public class SportControllerImpl implements SportController {
     @GetMapping("/getSportMultimedia")
     public ResponseEntity<List<MultimediaDto>> getSportMultimedia(SportParam sportParam) {
         return new ResponseEntity<List<MultimediaDto>>(sportService.getSportMultimedia(sportParam), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<SportDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<SportDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }

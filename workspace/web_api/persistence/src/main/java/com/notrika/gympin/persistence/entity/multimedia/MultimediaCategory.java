@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.multimedia;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "multimedia_category")
-public class MultimediaCategory extends BaseEntity {
+public class MultimediaCategory extends BaseEntity<MultimediaCategory> {
 
     @Column(name = "name",nullable = false,unique = true)
     private String name;

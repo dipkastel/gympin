@@ -1,5 +1,7 @@
 package com.notrika.gympin.domain.user;
 
+import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common.accounting.account.enums.AccountTopic;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserRole;
@@ -8,6 +10,7 @@ import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.param.UserRoleParam;
 import com.notrika.gympin.common.user.service.UserService;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.accounting.AccountingServiceImpl;
 import com.notrika.gympin.domain.multimedia.MultimediaServiceImpl;
 import com.notrika.gympin.domain.relation.FollowServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
@@ -15,6 +18,7 @@ import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.UserMultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
+import com.notrika.gympin.persistence.entity.accounting.AccountEntity;
 import com.notrika.gympin.persistence.entity.location.Place;
 import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
 import com.notrika.gympin.persistence.entity.multimedia.UserMultimediaEntity;
@@ -33,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, User> implements UserService {
+public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, BaseFilter<?>, User> implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -58,6 +62,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 
     @Autowired
     private MultimediaServiceImpl multimediaService;
+
+    @Autowired
+    private AccountingServiceImpl accountingService;
 
     @Override
     @Transactional
@@ -96,7 +103,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 
     @Override
     public User add(User user) {
-        return userRepository.add(user);
+       user = userRepository.add(user);
+       accountingService.add(user, AccountTopic.PISH_DARYAFT);
+       return user;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.communication.notification;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.communication.notification.dto.NotificationDto;
 import com.notrika.gympin.common.communication.notification.param.NotificationParam;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class NotificationServiceImpl extends AbstractBaseService<NotificationParam, NotificationDto, NotificationEntity> implements NotificationService {
+public class NotificationServiceImpl extends AbstractBaseService<NotificationParam, NotificationDto, BaseFilter<?>, NotificationEntity> implements NotificationService {
 
     @Autowired
     private NotificationRepository notificationRepository;

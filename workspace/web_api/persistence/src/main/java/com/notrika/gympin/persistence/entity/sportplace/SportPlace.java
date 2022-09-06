@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.sportplace;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.location.Place;
@@ -24,7 +25,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "sport_place")
-public class SportPlace extends BaseEntityWithCreateUpdate {
+public class SportPlace extends BaseEntityWithCreateUpdate<SportPlace> {
 
     @ManyToOne
     @JoinColumn(name = "place_id")

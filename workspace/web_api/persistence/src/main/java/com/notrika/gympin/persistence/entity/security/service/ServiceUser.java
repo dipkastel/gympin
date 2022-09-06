@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.security.service;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
@@ -21,7 +22,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "service_user")
-public class ServiceUser extends BaseEntity {
+public class ServiceUser extends BaseEntity<ServiceUser> {
 
     @Column(name = "user_role")
     private UserRole userRole;

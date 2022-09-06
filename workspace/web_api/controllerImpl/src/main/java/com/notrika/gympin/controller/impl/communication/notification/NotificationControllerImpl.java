@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.communication.notification;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.communication.notification.api.NotificationController;
 import com.notrika.gympin.common.communication.notification.dto.NotificationDto;
@@ -49,5 +50,25 @@ public class NotificationControllerImpl implements NotificationController {
     @GetMapping("/getUserNotifications")
     public ResponseEntity<List<NotificationDto>> getUserNotifications(BasePagedParam<?> pagedParam) {
         return ResponseEntity.ok(notificationService.getUserNotifications(pagedParam));
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<NotificationDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<NotificationDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }

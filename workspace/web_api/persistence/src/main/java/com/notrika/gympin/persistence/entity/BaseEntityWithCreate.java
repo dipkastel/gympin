@@ -18,7 +18,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @MappedSuperclass
-public class BaseEntityWithCreate extends BaseEntity  {
+public class BaseEntityWithCreate<T> extends BaseEntity<T>  {
 
     @Column(name = "create_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.multimedia;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.multimedia.dto.MultimediaCategoryDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaCategoryParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaCategoryService;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MultimediaCategoryServiceImpl extends AbstractBaseService<MultimediaCategoryParam, MultimediaCategoryDto, MultimediaCategory> implements MultimediaCategoryService {
+public class MultimediaCategoryServiceImpl extends AbstractBaseService<MultimediaCategoryParam, MultimediaCategoryDto, BaseFilter<?>, MultimediaCategory> implements MultimediaCategoryService {
 
     @Autowired
     private MultimediaCategoryRepository multimediaCategoryRepository;

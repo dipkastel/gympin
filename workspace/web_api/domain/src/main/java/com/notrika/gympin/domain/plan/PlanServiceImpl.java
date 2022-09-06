@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.plan;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.plan.dto.PlanDto;
 import com.notrika.gympin.common.plan.param.PlanParam;
 import com.notrika.gympin.common.plan.service.PlanService;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, PlanEntity> implements PlanService {
+public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, BaseFilter<?>, PlanEntity> implements PlanService {
 
     @Autowired
     private PlanRepository planRepository;

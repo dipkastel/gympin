@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.plan;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.plan.api.PlanRegisterController;
 import com.notrika.gympin.common.plan.dto.PlanRegisterDto;
@@ -42,5 +43,25 @@ public class PlanRegisterControllerImpl implements PlanRegisterController {
     @Override
     public ResponseEntity<PlanRegisterDto> getById(Long id) {
         return ResponseEntity.ok(planRegisterService.getById(id));
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<PlanRegisterDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<PlanRegisterDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }

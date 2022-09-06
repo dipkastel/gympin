@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.user;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.user.api.UserRateController;
 import com.notrika.gympin.common.user.dto.RateableUsersDto;
@@ -50,5 +51,25 @@ public class UserRateControllerImpl implements UserRateController {
     @GetMapping("/getRateableUsers")
     public ResponseEntity<List<RateableUsersDto>> getRateableUsers(BasePagedParam<?> pagedParam) {
         return ResponseEntity.ok(userRateService.getRateableUsers(pagedParam));
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<UserRateDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<UserRateDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }

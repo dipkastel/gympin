@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.user;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserRole;
@@ -14,6 +15,8 @@ import com.notrika.gympin.persistence.entity.user.Password;
 import com.notrika.gympin.persistence.entity.user.Role;
 import com.notrika.gympin.persistence.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AdministratorServiceImpl extends AbstractBaseService<UserParam, UserDto, User> implements AdministratorService {
+public class AdministratorServiceImpl extends AbstractBaseService<UserParam, UserDto, BaseFilter<?>, User> implements AdministratorService {
 
     @Autowired
     private UserServiceImpl userService;
@@ -32,12 +35,13 @@ public class AdministratorServiceImpl extends AbstractBaseService<UserParam, Use
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordRepository passwordRepository;
+    private PasswordRepository passwordRepository; //todo: create service
 
     @Autowired
     private UserRoleServiceImpl userRoleService;
 
     @Override
+    @CacheEvict("admin")
     public UserDto add(UserParam administratorParam) {
         List<Role> roles = new ArrayList<>();
         for (UserRoleParam roleParam : administratorParam.getRole()) {
@@ -55,12 +59,14 @@ public class AdministratorServiceImpl extends AbstractBaseService<UserParam, Use
     }
 
     @Override
+    @CacheEvict("admin")
     public User add(User administrator) {
         return userService.add(administrator);
     }
 
-    @Transactional
     @Override
+    @Transactional
+    @CacheEvict("admin")
     public UserDto update(UserParam administratorParam) {
         List<Role> roles = new ArrayList<>();
         for (UserRoleParam roleParam : administratorParam.getRole()) {
@@ -80,16 +86,19 @@ public class AdministratorServiceImpl extends AbstractBaseService<UserParam, Use
     }
 
     @Override
+    @CacheEvict("admin")
     public User update(User entity) {
         return null;
     }
 
     @Override
+    @CacheEvict("admin")
     public UserDto delete(UserParam userParam) {
         return userService.delete(userParam);
     }
 
     @Override
+    @CacheEvict("admin")
     public User delete(User entity) {
         return null;
     }

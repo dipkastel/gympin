@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
@@ -20,7 +21,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "region")
-public class Region extends BaseEntity {
+public class Region extends BaseEntity<Region> {
 
     @Column(name = "name",nullable = false)
     private String name;

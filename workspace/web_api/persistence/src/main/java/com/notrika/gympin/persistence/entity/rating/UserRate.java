@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.rating;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.user.User;
 import lombok.Getter;
@@ -22,7 +23,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "user_rate")
-public class UserRate extends BaseEntity {
+public class UserRate extends BaseEntity<UserRate> {
 
     @ManyToOne
     private User judgerUser;

@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.sportplace;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.sport.dto.SportDto;
@@ -55,5 +56,25 @@ public class SportPlaceControllerImpl implements SportPlaceController {
     @GetMapping("getSportsByPlace")
     public ResponseEntity<List<SportDto>> getSportsByPlace(PlaceParam placeParam) {
         return new ResponseEntity<List<SportDto>>(sportPlaceService.getSportsByPlace(placeParam), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<SportPlaceDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<SportPlaceDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }

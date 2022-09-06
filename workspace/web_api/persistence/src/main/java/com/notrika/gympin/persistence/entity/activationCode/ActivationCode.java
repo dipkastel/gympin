@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.activationCode;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.user.User;
 import lombok.Getter;
@@ -21,7 +22,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "activation_code")
-public class ActivationCode extends BaseEntity {
+public class ActivationCode extends BaseEntity<ActivationCode> {
 
     //@Column(name = "user_id")
     @OneToOne(cascade = CascadeType.ALL)

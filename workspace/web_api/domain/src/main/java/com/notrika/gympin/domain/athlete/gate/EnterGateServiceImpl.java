@@ -50,7 +50,7 @@ public class EnterGateServiceImpl implements EnterGateService {
             throw new PlanExpiredException();
         }
         GateEntity gate = gateService.getEntityById(param.getGate().getId());
-        Optional<PlanGateEntity> gateEntity = planOfUser.getPlan().getPlanGates().stream().filter(g -> g.getGate().equals(gate)).findAny();
+        Optional<PlanGateEntity> gateEntity = null;//planOfUser.getPlan().getPlanGates().stream().filter(g -> g.getGate().equals(gate)).findAny();
         if(gateEntity.isEmpty()){
             throw new GateNotInPlanException();
         }

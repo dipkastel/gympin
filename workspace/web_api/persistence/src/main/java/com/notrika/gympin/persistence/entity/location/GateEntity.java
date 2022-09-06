@@ -1,6 +1,8 @@
 package com.notrika.gympin.persistence.entity.location;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.accounting.AuditableEntitiesEntity;
 import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanGateEntity;
 import com.notrika.gympin.persistence.entity.sport.Sport;
@@ -24,7 +26,8 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "gate")
-public class GateEntity extends BaseEntityWithCreateUpdate {
+@PrimaryKeyJoinColumn(name = "id")
+public class GateEntity extends AuditableEntitiesEntity<GateEntity> {
 
     @Column(name = "name")
     private String name;
@@ -35,7 +38,7 @@ public class GateEntity extends BaseEntityWithCreateUpdate {
     @Column(name = "closing_time")
     private Time closingTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Place place;
 
     @ManyToOne
@@ -53,6 +56,16 @@ public class GateEntity extends BaseEntityWithCreateUpdate {
     @OneToMany(mappedBy = "gate")
     @ToString.Exclude
     private List<EnterGateEntity> enterGate;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<GateTimingEntity> gateTimings;
+
+    @Column(name = "about_gate")
+    private String aboutGate;
+
+    @Column(name = "gate_rules")
+    private String gateRules;
 
     @Override
     public boolean equals(Object o) {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 // FIXME: 4/14/2022 edit to standard rest resource convention
-public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>> {
+public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>, F extends BaseFilter<?>> {
 
     @PostMapping("/add")
     ResponseEntity<O> add(@RequestBody I i);
@@ -27,4 +27,17 @@ public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>> {
     // FIXME: 4/14/2022
     @GetMapping("/getById")
     ResponseEntity<O> getById(Long id);
+
+    @GetMapping("/count-search")
+    ResponseEntity<Long> countSearch();
+
+    @GetMapping("/search")
+    ResponseEntity<List<O>> search(F filter);
+
+    @GetMapping("/count-filter")
+    ResponseEntity<Long> countFilter(F filter);
+
+    @GetMapping("/filter")
+    ResponseEntity<List<O>> filter(F filter);
+
 }

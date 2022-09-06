@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.event.general;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.event.general.dto.EventParticipantDto;
@@ -25,6 +26,8 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +37,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class EventParticipantServiceImpl extends AbstractBaseService<EventParticipantParam, EventParticipantDto, EventParticipantEntity> implements EventParticipantService {
+public class EventParticipantServiceImpl extends AbstractBaseService<EventParticipantParam, EventParticipantDto, BaseFilter<?>, EventParticipantEntity> implements EventParticipantService {
 
     @Autowired
     private UserServiceImpl userService;
@@ -50,6 +53,7 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
 
     @Override
     @Transactional
+    @CacheEvict("event_participants")
     public EventParticipantDto add(EventParticipantParam eventParticipantParam) {
         validateParamForAdd(eventParticipantParam);
         log.info("EventParticipantDto add is going to execute with param {}",eventParticipantParam);
@@ -89,12 +93,14 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
 
     @Override
     @Transactional
+    @CacheEvict("event_participants")
     public EventParticipantDto update(EventParticipantParam eventParticipantParam) {
         throw new NotYetImplementedException();
     }
 
     @Override
     @Transactional
+    @CacheEvict("event_participants")
     public EventParticipantDto delete(EventParticipantParam eventParticipantParam) {
         BaseEventEntity event;
         EventParticipantEntity entity;
@@ -137,11 +143,13 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
     }
 
     @Override
+
     public EventParticipantEntity update(@NonNull EventParticipantEntity entity) {
         throw new NotYetImplementedException();
     }
 
     @Override
+    @Cacheable("event_participants")
     public EventParticipantEntity delete(@NonNull EventParticipantEntity entity) {
         return participantRepository.deleteById2(entity);
     }
@@ -152,6 +160,7 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
     }
 
     @Override
+    @Cacheable("event_participants")
     public List<EventParticipantEntity> getAll(Pageable pageable) {
         return participantRepository.findAllUndeleted(pageable);
     }
@@ -187,6 +196,5 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
             throw new InputNotValidException();//event is empty
         }
     }
-
 
 }

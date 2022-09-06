@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.android.layout;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "main_page_layout_collection")
-public class MainPageLayoutCollectionEntity extends BaseEntity {
+public class MainPageLayoutCollectionEntity extends BaseEntity<MainPageLayoutCollectionEntity> {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;

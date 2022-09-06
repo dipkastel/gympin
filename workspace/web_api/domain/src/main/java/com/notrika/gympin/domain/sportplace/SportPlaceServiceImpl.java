@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.sportplace;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, SportPlaceDto, SportPlace> implements SportPlaceService {
+public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, SportPlaceDto, BaseFilter<?>, SportPlace> implements SportPlaceService {
 
     @Autowired
     private PlaceServiceImpl placeService;

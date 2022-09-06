@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.location;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.general.InputNotValidException;
 import com.notrika.gympin.common.location.dto.CityDto;
@@ -12,13 +13,15 @@ import com.notrika.gympin.persistence.dao.repository.CityRepository;
 import com.notrika.gympin.persistence.entity.location.City;
 import com.notrika.gympin.persistence.entity.location.State;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, City> implements CityService {
+public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, BaseFilter<?>, City> implements CityService {
 
     @Autowired
     private CityRepository cityRepository;
@@ -27,6 +30,7 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
     private StateServiceImpl stateService;
 
     @Override
+    @CacheEvict("city")
     public CityDto add(CityParam cityParam) {
         State state = stateService.getEntityById(cityParam.getState().getId());
         City initCity = City.builder().name(cityParam.getName()).state(state).build();
@@ -34,11 +38,14 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
         return LocationConvertor.cityToCityDto(city);
     }
 
+    @Override
+    @CacheEvict("city")
     public City add(City city) {
         return cityRepository.add(city);
     }
 
     @Override
+    @CacheEvict("city")
     public CityDto update(CityParam cityParam) {
         City initCity = getEntityById(cityParam.getId());
         initCity.setName(cityParam.getName());
@@ -53,11 +60,13 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
     }
 
     @Override
+    @CacheEvict("city")
     public City update(City city) {
         return cityRepository.update(city);
     }
 
     @Override
+    @CacheEvict("city")
     public CityDto delete(CityParam cityParam) {
         City item = getEntityById(cityParam.getId());
         City deletedCity = delete(item);
@@ -65,6 +74,7 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
     }
 
     @Override
+    @CacheEvict("city")
     public City delete(City city) {
         return cityRepository.deleteById2(city);
     }
@@ -104,4 +114,6 @@ public class CityServiceImpl extends AbstractBaseService<CityParam, CityDto, Cit
     private void validateCityParam(CityParam param){
 
     }
+
+
 }

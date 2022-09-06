@@ -2,8 +2,10 @@ package com.notrika.gympin.common.location.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseDtoWithCreateUpdate;
+import com.notrika.gympin.common.location.param.GateTimingParam;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.param.UserParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,12 +25,6 @@ public class GateDto extends BaseDtoWithCreateUpdate<GateDto> {
     @JsonProperty(value = "name")
     private String name;
 
-    @JsonProperty("opening-time")
-    private Time openingTime;
-
-    @JsonProperty("closing-time")
-    private Time closingTime;
-
     @JsonProperty(value = "place")
     private PlaceDto place;
 
@@ -37,5 +33,17 @@ public class GateDto extends BaseDtoWithCreateUpdate<GateDto> {
 
     @JsonProperty(value = "guard")
     private List<UserDto> guard;
+
+    @JsonProperty(value = "owner")
+    private UserParam owner;
+
+    @JsonProperty(value = "gate-timing")
+    private List<GateTimingParam> gateTimings;
+
+    @JsonProperty("about-gate")
+    private String aboutGate;
+
+    @JsonProperty("gate-rules")
+    private String gateRules;
 
 }

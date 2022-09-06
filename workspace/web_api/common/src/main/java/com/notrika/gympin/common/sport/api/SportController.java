@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.sport.api;
 
 import com.notrika.gympin.common.BaseController;
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.sport.dto.SportDto;
@@ -9,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface SportController extends BaseController<SportParam,SportDto> {
+public interface SportController extends BaseController<SportParam,SportDto, BaseFilter<?>> {
 
     ResponseEntity<List<MultimediaDto>> getSportMultimedia(SportParam sportParam);
 

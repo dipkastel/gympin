@@ -23,12 +23,6 @@ public class GateParam extends BaseParam<GateParam> {
     @JsonProperty(value = "name", required = true)
     private String name;
 
-    @JsonProperty("opening-time")
-    private Time openingTime;
-
-    @JsonProperty("closing-time")
-    private Time closingTime;
-
     @JsonProperty(value = "place", required = true)
     private PlaceParam place;
 
@@ -37,5 +31,17 @@ public class GateParam extends BaseParam<GateParam> {
 
     @JsonProperty(value = "guard", required = true)
     private List<UserParam> guard;
+
+    @JsonProperty(value = "owner")
+    private UserParam owner;
+
+    @JsonProperty(value = "gate-timing")
+    private List<GateTimingParam> gateTimings;
+
+    @JsonProperty("about-gate")
+    private String aboutGate;
+
+    @JsonProperty("gate-rules")
+    private String gateRules;
 
 }

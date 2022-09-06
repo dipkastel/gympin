@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.user;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
@@ -29,7 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, UserRateDto, UserRate> implements UserRateService {
+public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, UserRateDto, BaseFilter<?>, UserRate> implements UserRateService {
 
     @Autowired
     private UserRateRepository userRateRepository;

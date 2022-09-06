@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.user;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "password")
-public class Password extends BaseEntity {
+public class Password extends BaseEntity<Password> {
 
     @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private User user;

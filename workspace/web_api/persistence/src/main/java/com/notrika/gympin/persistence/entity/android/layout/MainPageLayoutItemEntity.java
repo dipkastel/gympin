@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.android.layout;
 
+import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.android.gympin.layout.enums.MainPageLayoutItemType;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
@@ -20,7 +21,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "main_page_layout_item")
-public class MainPageLayoutItemEntity extends BaseEntity {
+public class MainPageLayoutItemEntity extends BaseEntity<MainPageLayoutItemEntity> {
 
     @Column(updatable = false, name = "type")
     @Enumerated(EnumType.STRING)

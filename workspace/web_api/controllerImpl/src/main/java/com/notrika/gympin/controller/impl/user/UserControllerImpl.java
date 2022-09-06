@@ -1,12 +1,12 @@
 package com.notrika.gympin.controller.impl.user;
 
+import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.BasePagedParam;
 import com.notrika.gympin.common.user.api.UserController;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,5 +54,25 @@ public class UserControllerImpl implements UserController {
     @GetMapping("/getUserByUsername")
     public ResponseEntity<UserDto> getUserByUsername(UserParam userParam) {
         return ResponseEntity.ok(userService.getUserByUsername(userParam));
+    }
+
+    @Override
+    public ResponseEntity<Long> countSearch() {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<UserDto>> search(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<UserDto>> filter(BaseFilter<?> filter) {
+        return null;
     }
 }
