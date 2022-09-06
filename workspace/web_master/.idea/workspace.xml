@@ -5,64 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaa339a7-f874-44cd-9025-b881c033f287" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/images/charcter_orang.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/actionQR/ActionQR.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/actionQR/_EnterList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/actionQR/_ReserveDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/editProfile/EditProfile.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/inviteFriends/InviteFriends.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/inviteFriends/_Invite.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/survey/Survey.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/wallet/_IncreaseCredit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/wallet/_UserCredit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_coroprate/src/components/_ListItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/corporateDetail/CorporateDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/finance/_UsersWallet.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/increaseGroupCredit/IncreaseGroupCredit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/singleUser/_userCharges.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/users/_AddPersonel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/users/_PersonelList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/components/NBottomNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/components/NBottomNavigation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/components/NNavigaion.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/components/NNavigaion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/auth/Logout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/auth/Logout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceAbout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceAbout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceFacilities.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceFacilities.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/profile/Profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/tickets/Tickets.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/tickets/Tickets.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/wallet/Wallet.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/wallet/Wallet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/router/ApplicationRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/router/ApplicationRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/router/AuthRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/router/AuthRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/public/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/components/NBottomNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/components/NBottomNavigation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/demandPeyment/DemandPeyment.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/IncreaseListPeyment/IncreaseList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/finance/Finance.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/finance/Finance.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/finance/_FinanceReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/finance/_FinanceReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/finance/_Wallet.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/finance/_Wallet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/home/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/home/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/management/Management.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/management/Management.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/management/_PlaceAbout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/management/_PlaceFacilities.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/management/_PlaceGates.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/management/_PlacePersonel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/management/_PlaceStall.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/management/_PlaceTraffic.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/management/_Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/components/_ListItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/report/Report.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/report/Report.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/report/_OurTraffic.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/report/_OurTraffic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/report/_SportRadar.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/report/_SportRadar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/singleUser/SingleUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/singleUser/SingleUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/singleUser/_userDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/singleUser/_userDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/singleUser/_userPackages.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/users/GateAwaitingEntry.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/users/GateEntered.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/pages/users/Users.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/pages/users/Users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_coroprate/src/router/ApplicationRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_coroprate/src/router/ApplicationRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_front/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_front/public/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/api/account.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/api/account.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/api/mainPage.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/api/mainPage.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/const/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/const/NETWORKCONSTS.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/home/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home/Home.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +127,7 @@
       <workItem from="1659423805081" duration="64142000" />
       <workItem from="1660377110655" duration="4914000" />
       <workItem from="1660721149819" duration="29964000" />
-      <workItem from="1661694610477" duration="5011000" />
+      <workItem from="1661694610477" duration="9213000" />
     </task>
     <servers />
   </component>

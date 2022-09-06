@@ -3,6 +3,8 @@ import HomeSlider from "./components/HomeSlider";
 import HomeTitle from "./components/HomeTitle";
 import HomeUserList from "./components/HomeUserList";
 import HomeBanner from "./components/HomeBanner";
+import {sendSms} from "../../network/api/account.api";
+import {getMainPage} from "../../network/api/mainPage.api";
 
 export let jsonData = [
     {
@@ -153,8 +155,12 @@ export let jsonData = [
 export default function Home() {
     const [data, setData] = useState([]);
     useEffect(() => {
-        setData(jsonData);
-
+        getMainPage()
+            .then((data) => {
+                setData(jsonData);
+            }).catch((err)=>{
+                alert("خطا در برقراری ارتباط با سرور و یا شما اجازه دسترسی به این بخش را ندارید"+err.message)
+        })
     }, [])
     return (
         <>
