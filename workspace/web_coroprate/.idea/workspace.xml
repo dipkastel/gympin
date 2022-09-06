@@ -23,14 +23,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
-  </component>
   <component name="ProjectId" id="2BUZpc05M3RdP05IDYxXrmYyaz8" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -49,34 +41,50 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.obroom.plugin.jpasql:running" value="0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/finance" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/management" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.3.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\work\gympin\workspace\web_master\src\pages\finance" />
-      <recent name="E:\work\gympin\workspace\web_master\src\pages\users" />
-      <recent name="E:\work\gympin\workspace\web_master\src\pages\management" />
-      <recent name="E:\work\gympin\workspace\web_master\src\pages\plans" />
+      <recent name="E:\work\gympin\workspace\web_coroprate\src\pages\management" />
+      <recent name="E:\work\gympin\workspace\web_coroprate\src\pages\users" />
       <recent name="E:\work\gympin\workspace\web_master\src\pages\stall" />
+      <recent name="E:\work\gympin\workspace\web_master\src\pages\facilities" />
+      <recent name="E:\work\gympin\workspace\web_master\src\pages\management" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\work\gympin\workspace\web_coroprate\src\components" />
+      <recent name="E:\work\gympin\workspace\web_coroprate\src\pages\finance" />
       <recent name="E:\work\gympin\workspace\web_master\src\network" />
       <recent name="E:\work\gympin\workspace\web_master\src\router" />
       <recent name="E:\work\gympin\workspace\web_master\src\helper" />
-      <recent name="E:\work\gympin\workspace\web_master\src\pages\users" />
-      <recent name="E:\work\gympin\workspace\web_master\src\pages\report" />
     </key>
   </component>
   <component name="RunManager" selected="npm.start">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="web_corporate" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="web_corporate" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="format" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -118,10 +126,12 @@
       <workItem from="1658496770826" duration="22508000" />
       <workItem from="1658643410231" duration="27366000" />
       <workItem from="1659011366253" duration="16748000" />
-      <workItem from="1659423805081" duration="64142000" />
-      <workItem from="1660377110655" duration="4914000" />
-      <workItem from="1660721149819" duration="29964000" />
-      <workItem from="1661694610477" duration="9637000" />
+      <workItem from="1659423805081" duration="33647000" />
+      <workItem from="1659882107208" duration="4552000" />
+      <workItem from="1660380239047" duration="631000" />
+      <workItem from="1661446888150" duration="8055000" />
+      <workItem from="1661690208508" duration="6112000" />
+      <workItem from="1662455838587" duration="404000" />
     </task>
     <servers />
   </component>
