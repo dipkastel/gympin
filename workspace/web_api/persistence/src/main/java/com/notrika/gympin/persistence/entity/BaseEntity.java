@@ -30,7 +30,7 @@ public class BaseEntity<T> implements Specification<T> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "is_deleted", nullable = false)
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "boolean default false")
     private boolean deleted = false;
 
     @Transient
