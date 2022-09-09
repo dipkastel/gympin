@@ -110,7 +110,7 @@ public class GateServiceImpl extends AbstractBaseService<GateParam, GateDto, Gat
 
     private Specification<GateEntity> createSearchSpecification(GateFilter filter) {
         Specification<GateEntity> clause = null;
-        List<SearchCriteria> searchCriteriaList = GateFilterConvertor.convertToGateFilter(filter);
+        List<SearchCriteria> searchCriteriaList = GateFilterConvertor.convertToGateSearch(filter);
         if (!searchCriteriaList.isEmpty()) {
             GateEntity specification = new GateEntity();
             specification.setCriteria(searchCriteriaList.get(0));
@@ -126,15 +126,16 @@ public class GateServiceImpl extends AbstractBaseService<GateParam, GateDto, Gat
 
     @Override
     public Long countFilter(GateFilter filter) {
-        Specification<GateEntity> clause = createSearchSpecification(filter);
+        Specification<GateEntity> clause = createFilterSpecification(filter);
         return gateRepository.count(clause);
     }
 
     @Override
     public List<GateDto> filter(GateFilter filter) {
-        Specification<GateEntity> clause = createSearchSpecification(filter);
+        Specification<GateEntity> clause = createFilterSpecification(filter);
         return gateRepository.findAll(clause).stream().map(GateConvertor::convertToDto).collect(Collectors.toList());
     }
+
 
     private Specification<GateEntity> createFilterSpecification(GateFilter filter) {
         Specification<GateEntity> clause = null;
