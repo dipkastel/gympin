@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.location.param;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.BaseParam;
 import com.notrika.gympin.common.location.enums.DayOfWeek;
@@ -28,9 +29,11 @@ public class GateTimingParam extends BaseParam<GateTimingParam> {
     private DayOfWeek dayOfWeek;
 
     @JsonProperty(value = "opening-time", required = true)
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "HH:mm:ss[.SSS][.SS][.S]")
     private LocalTime openingTime;
 
     @JsonProperty(value = "closing-time", required = true)
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "HH:mm:ss[.SSS][.SS][.S]")
     private LocalTime closingTime;
 
     @JsonProperty(value = "price")
