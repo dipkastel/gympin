@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.sql.Time;
+import java.time.LocalTime;
 
 @Data
 @SuperBuilder
@@ -27,10 +28,10 @@ public class GateTimingParam extends BaseParam<GateTimingParam> {
     private DayOfWeek dayOfWeek;
 
     @JsonProperty(value = "opening-time", required = true)
-    private Time openingTime;
+    private LocalTime openingTime;
 
     @JsonProperty(value = "closing-time", required = true)
-    private Time closingTime;
+    private LocalTime closingTime;
 
     @JsonProperty(value = "price")
     private BigDecimal price;
