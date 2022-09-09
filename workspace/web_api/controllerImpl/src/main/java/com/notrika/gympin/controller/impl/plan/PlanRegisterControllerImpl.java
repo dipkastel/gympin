@@ -46,7 +46,7 @@ public class PlanRegisterControllerImpl implements PlanRegisterController {
     }
 
     @Override
-    public ResponseEntity<Long> countSearch() {
+    public ResponseEntity<Long> countSearch(BaseFilter<?> filter) {
         return null;
     }
 

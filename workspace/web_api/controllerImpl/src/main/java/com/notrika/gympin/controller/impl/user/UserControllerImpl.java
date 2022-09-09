@@ -57,7 +57,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<Long> countSearch() {
+    public ResponseEntity<Long> countSearch(BaseFilter<?> filter) {
         return null;
     }
 
