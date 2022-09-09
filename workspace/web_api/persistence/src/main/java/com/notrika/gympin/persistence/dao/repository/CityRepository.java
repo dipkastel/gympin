@@ -1,20 +1,18 @@
 package com.notrika.gympin.persistence.dao.repository;
 
 
-import com.notrika.gympin.persistence.entity.location.City;
-import com.notrika.gympin.persistence.entity.location.State;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import com.notrika.gympin.persistence.entity.location.CityEntity;
+import com.notrika.gympin.persistence.entity.location.StateEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface CityRepository extends BaseRepository<City, Long> {
+public interface CityRepository extends BaseRepository<CityEntity, Long> {
 
-//    @Query("select c from City c where c.deleted = false and c.state.id = :#{#state.id}")
-//    List<City> getCitiesByState(@Param("state") State state);
+    //    @Query("select c from City c where c.deleted = false and c.state.id = :#{#state.id}")
+    //    List<City> getCitiesByState(@Param("state") State state);
 
-    List<City> findAllByStateAndDeletedIsFalse(State state);
+    List<CityEntity> findAllByStateAndDeletedIsFalse(StateEntity state);
 
 }

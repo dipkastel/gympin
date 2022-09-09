@@ -18,13 +18,12 @@ import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.UserMultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
-import com.notrika.gympin.persistence.entity.accounting.AccountEntity;
-import com.notrika.gympin.persistence.entity.location.Place;
-import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
+import com.notrika.gympin.persistence.entity.location.PlaceEntity;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.multimedia.UserMultimediaEntity;
-import com.notrika.gympin.persistence.entity.user.Password;
-import com.notrika.gympin.persistence.entity.user.Role;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.PasswordEntity;
+import com.notrika.gympin.persistence.entity.user.RoleEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, BaseFilter<?>, User> implements UserService {
+public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, BaseFilter<?>, UserEntity> implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -69,14 +68,14 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
     @Override
     @Transactional
     public UserDto add(UserParam userParam) {
-        List<Role> roles = new ArrayList<>();
+        List<RoleEntity> roles = new ArrayList<>();
         for (UserRoleParam roleParam : userParam.getRole()) {
             roles.add(userRoleService.getEntityById(roleParam.getId()));
         }
         if (roles.isEmpty()) {
             roles.add(userRoleService.getByUserRole(UserRole.USER));
         }
-        User initUser = new User();
+        UserEntity initUser = new UserEntity();
         initUser.setName(userParam.getName());
         initUser.setLastname(userParam.getLastname());
         initUser.setUsername(userParam.getUsername());
@@ -88,13 +87,13 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
         initUser.setUserRole(roles);
         initUser.setUserStatus(UserStatus.ENABLED);
         initUser.setBio(userParam.getBio());
-        User user = userRepository.add(initUser);
-        Password password = Password.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
+        UserEntity user = userRepository.add(initUser);
+        PasswordEntity password = PasswordEntity.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
         passwordRepository.add(password);
-        if(userParam.getAvatarId()!=null && userParam.getAvatarId()>0){
-            Multimedia multimedia = multimediaService.getMultimediaById(userParam.getAvatarId());
+        if (userParam.getAvatarId() != null && userParam.getAvatarId() > 0) {
+            MultimediaEntity multimedia = multimediaService.getMultimediaById(userParam.getAvatarId());
             UserMultimediaEntity userAvatar = userMultimediaRepository.add(UserMultimediaEntity.builder().multimedia(multimedia).user(user).build());
-            List<UserMultimediaEntity> multimediaEntities=new ArrayList<>();
+            List<UserMultimediaEntity> multimediaEntities = new ArrayList<>();
             multimediaEntities.add(userAvatar);
             user.setUserMultimedias(multimediaEntities);
         }
@@ -102,34 +101,34 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
     }
 
     @Override
-    public User add(User user) {
-       user = userRepository.add(user);
-       accountingService.add(user, AccountTopic.PISH_DARYAFT);
-       return user;
+    public UserEntity add(UserEntity user) {
+        user = userRepository.add(user);
+        accountingService.add(user, AccountTopic.PISH_DARYAFT);
+        return user;
     }
 
     @Override
     @Transactional
     public UserDto update(UserParam userParam) {
-        List<Role> roles = new ArrayList<>();
-        for (UserRoleParam roleParam : userParam.getRole()!=null?userParam.getRole():new ArrayList<UserRoleParam>()) {
+        List<RoleEntity> roles = new ArrayList<>();
+        for (UserRoleParam roleParam : userParam.getRole() != null ? userParam.getRole() : new ArrayList<UserRoleParam>()) {
             roles.add(userRoleService.getEntityById(roleParam.getId()));
         }
-        User initUser = getEntityById(userParam.getId());
-        if(StringUtils.hasText(userParam.getName())) initUser.setName(userParam.getName());
-        if(StringUtils.hasText(userParam.getLastname())) initUser.setLastname(userParam.getLastname());
-        if(StringUtils.hasText(userParam.getUsername()))initUser.setUsername(userParam.getUsername());
-//        initUser.setPhoneNumber(userParam.getPhoneNumber());
-        if(userParam.getBirthday()!=null) initUser.setBirthday(userParam.getBirthday());
-        if(StringUtils.hasText(userParam.getNationalCode())) initUser.setNationalCode(userParam.getNationalCode());
-        if(StringUtils.hasText(userParam.getEmail())) initUser.setEmail(userParam.getEmail());
-        if(!roles.isEmpty())initUser.setUserRole(roles);
-        if(StringUtils.hasText(userParam.getBio()))initUser.setBio(userParam.getBio());
-        User user = update(initUser);
-        if(userParam.getAvatarId()!=null && userParam.getAvatarId()>0){
-            Multimedia multimedia = multimediaService.getMultimediaById(userParam.getAvatarId());
+        UserEntity initUser = getEntityById(userParam.getId());
+        if (StringUtils.hasText(userParam.getName())) initUser.setName(userParam.getName());
+        if (StringUtils.hasText(userParam.getLastname())) initUser.setLastname(userParam.getLastname());
+        if (StringUtils.hasText(userParam.getUsername())) initUser.setUsername(userParam.getUsername());
+        //        initUser.setPhoneNumber(userParam.getPhoneNumber());
+        if (userParam.getBirthday() != null) initUser.setBirthday(userParam.getBirthday());
+        if (StringUtils.hasText(userParam.getNationalCode())) initUser.setNationalCode(userParam.getNationalCode());
+        if (StringUtils.hasText(userParam.getEmail())) initUser.setEmail(userParam.getEmail());
+        if (!roles.isEmpty()) initUser.setUserRole(roles);
+        if (StringUtils.hasText(userParam.getBio())) initUser.setBio(userParam.getBio());
+        UserEntity user = update(initUser);
+        if (userParam.getAvatarId() != null && userParam.getAvatarId() > 0) {
+            MultimediaEntity multimedia = multimediaService.getMultimediaById(userParam.getAvatarId());
             UserMultimediaEntity userAvatar = userMultimediaRepository.add(UserMultimediaEntity.builder().multimedia(multimedia).user(user).build());
-            List<UserMultimediaEntity> multimediaEntities=new ArrayList<>();
+            List<UserMultimediaEntity> multimediaEntities = new ArrayList<>();
             multimediaEntities.add(userAvatar);
             user.setUserMultimedias(multimediaEntities);
         }
@@ -137,36 +136,36 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
     }
 
     @Override
-    public User update(User user) {
+    public UserEntity update(UserEntity user) {
         return userRepository.update(user);
     }
 
     @Override
     @Transactional
     public UserDto delete(UserParam userParam) {
-        User user = getEntityById(userParam.getId());
-        User deletedUser = delete(user);
+        UserEntity user = getEntityById(userParam.getId());
+        UserEntity deletedUser = delete(user);
         return UserConvertor.userToUserDtoComplete(deletedUser);
     }
 
     @Override
-    public User delete(User user) {
+    public UserEntity delete(UserEntity user) {
         return userRepository.deleteById2(user);
     }
 
     @Override
-    public List<User> getAll(Pageable pageable) {
+    public List<UserEntity> getAll(Pageable pageable) {
         return userRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public List<UserDto> convertToDtos(List<User> entities) {
+    public List<UserDto> convertToDtos(List<UserEntity> entities) {
         return UserConvertor.usersToUserDtos(entities);
     }
 
     @Override
     public UserDto getById(long id) {
-        User user = getEntityById(id);
+        UserEntity user = getEntityById(id);
         UserDto userDto = UserConvertor.userToUserDtoComplete(user);
         userDto.setFollowersCount(followService.getFollowersCount(user));
         userDto.setFollowingsCount(followService.getFollowingsCount(user));
@@ -175,51 +174,51 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
     }
 
     @Override
-    public User getEntityById(long id) {
+    public UserEntity getEntityById(long id) {
         return userRepository.getById(id);
     }
 
-    public List<User> getOwnersPlace(Place place) {
+    public List<UserEntity> getOwnersPlace(PlaceEntity place) {
         return userRepository.getOwnersPlace(place);
     }
 
-    public User getByPhoneNumberAndUsernameAndEmail(String phoneNumber, String username, String email) {
+    public UserEntity getByPhoneNumberAndUsernameAndEmail(String phoneNumber, String username, String email) {
         return userRepository.findByPhoneNumberAndUsernameAndEmail(phoneNumber, username, email);
     }
 
-    public User getByPhoneNumberAndUsername(String phoneNumber, String username) {
+    public UserEntity getByPhoneNumberAndUsername(String phoneNumber, String username) {
         return userRepository.findByPhoneNumberAndUsername(phoneNumber, username);
     }
 
-    public User getByPhoneNumberAndEmail(String phoneNumber, String email) {
+    public UserEntity getByPhoneNumberAndEmail(String phoneNumber, String email) {
         return userRepository.findByPhoneNumberAndEmail(phoneNumber, email);
     }
 
-    public User getByUsernameAndEmail(String username, String email) {
+    public UserEntity getByUsernameAndEmail(String username, String email) {
         return userRepository.findByUsernameAndEmail(username, email);
     }
 
-    public User getByPhoneNumber(String phoneNumber) {
+    public UserEntity getByPhoneNumber(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber);
     }
 
-    public User getByUsername(String username) {
+    public UserEntity getByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public User getByEmail(String email) {
+    public UserEntity getByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
     public UserDto suspendUser(UserParam userParam) {
-        User user = getEntityById(userParam.getId());
-        User suspendUser = suspendUser(user);
+        UserEntity user = getEntityById(userParam.getId());
+        UserEntity suspendUser = suspendUser(user);
         return UserConvertor.userToUserDtoComplete(suspendUser);
     }
 
-    public User suspendUser(User user) {
-        User initUser = getEntityById(user.getId());
+    public UserEntity suspendUser(UserEntity user) {
+        UserEntity initUser = getEntityById(user.getId());
         initUser.setUserStatus(UserStatus.SUSPENDED);
         return update(initUser);
     }
@@ -234,16 +233,16 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
         return UserConvertor.userToUserDtoComplete(getUserByAnyKey(userParam));
     }
 
-    public User getUserByAnyKey(@NonNull UserParam userParam){
-        userParam = GeneralHelper.requireNonNull(userParam,"userParam");
+    public UserEntity getUserByAnyKey(@NonNull UserParam userParam) {
+        userParam = GeneralHelper.requireNonNull(userParam, "userParam");
         String phoneNumber = userParam.getPhoneNumber();
         String username = userParam.getUsername();
         String email = userParam.getEmail();
         return getUserByAnyKey(phoneNumber, username, email);
     }
 
-    public User getUserByAnyKey(String phoneNumber, String username, String email) {
-        User user = null;
+    public UserEntity getUserByAnyKey(String phoneNumber, String username, String email) {
+        UserEntity user = null;
         if (StringUtils.hasText(phoneNumber) && StringUtils.hasText(username) && StringUtils.hasText(email)) {
             user = this.getByPhoneNumberAndUsernameAndEmail(phoneNumber, username, email);
         } else if (StringUtils.hasText(phoneNumber) && StringUtils.hasText(username)) {

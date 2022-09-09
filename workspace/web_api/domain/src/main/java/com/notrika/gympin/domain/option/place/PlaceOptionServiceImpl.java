@@ -7,7 +7,7 @@ import com.notrika.gympin.common.option.place.service.PlaceOptionService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.OptionConvertor;
 import com.notrika.gympin.persistence.dao.repository.PlaceOptionRepository;
-import com.notrika.gympin.persistence.entity.option.place.PlaceOption;
+import com.notrika.gympin.persistence.entity.option.place.PlaceOptionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,66 +15,66 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam, PlaceOptionDto, BaseFilter<?>, PlaceOption> implements PlaceOptionService {
+public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam, PlaceOptionDto, BaseFilter<?>, PlaceOptionEntity> implements PlaceOptionService {
 
     @Autowired
     private PlaceOptionRepository placeOptionRepository;
 
     @Override
     public PlaceOptionDto add(PlaceOptionParam placeOptionParam) {
-        PlaceOption initPlaceOption = PlaceOption.builder().name(placeOptionParam.getName()).build();
-        PlaceOption placeOption = add(initPlaceOption);
+        PlaceOptionEntity initPlaceOption = PlaceOptionEntity.builder().name(placeOptionParam.getName()).build();
+        PlaceOptionEntity placeOption = add(initPlaceOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }
 
     @Override
-    public PlaceOption add(PlaceOption placeOption) {
+    public PlaceOptionEntity add(PlaceOptionEntity placeOption) {
         return placeOptionRepository.add(placeOption);
     }
 
     @Override
     public PlaceOptionDto update(PlaceOptionParam placeOptionParam) {
-        PlaceOption initPlaceOption = getEntityById(placeOptionParam.getId());
+        PlaceOptionEntity initPlaceOption = getEntityById(placeOptionParam.getId());
         initPlaceOption.setName(placeOptionParam.getName());
-        PlaceOption placeOption = update(initPlaceOption);
+        PlaceOptionEntity placeOption = update(initPlaceOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }
 
     @Override
-    public PlaceOption update(PlaceOption placeOption) {
+    public PlaceOptionEntity update(PlaceOptionEntity placeOption) {
         return placeOptionRepository.update(placeOption);
     }
 
     @Override
-    public List<PlaceOption> getAll(Pageable pageable) {
+    public List<PlaceOptionEntity> getAll(Pageable pageable) {
         return placeOptionRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public List<PlaceOptionDto> convertToDtos(List<PlaceOption> entities) {
+    public List<PlaceOptionDto> convertToDtos(List<PlaceOptionEntity> entities) {
         return OptionConvertor.placeOptionsToPlaceOptionDtos(entities);
     }
 
     @Override
     public PlaceOptionDto getById(long id) {
-        PlaceOption placeOption = getEntityById(id);
+        PlaceOptionEntity placeOption = getEntityById(id);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }
 
     @Override
-    public PlaceOption getEntityById(long id) {
+    public PlaceOptionEntity getEntityById(long id) {
         return placeOptionRepository.getById(id);
     }
 
     @Override
     public PlaceOptionDto delete(PlaceOptionParam placeOptionParam) {
-        PlaceOption placeOption = getEntityById(placeOptionParam.getId());
-        PlaceOption deletedPlaceOption = delete(placeOption);
+        PlaceOptionEntity placeOption = getEntityById(placeOptionParam.getId());
+        PlaceOptionEntity deletedPlaceOption = delete(placeOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(deletedPlaceOption);
     }
 
     @Override
-    public PlaceOption delete(PlaceOption placeOption) {
+    public PlaceOptionEntity delete(PlaceOptionEntity placeOption) {
         return placeOptionRepository.deleteById2(placeOption);
     }
 }

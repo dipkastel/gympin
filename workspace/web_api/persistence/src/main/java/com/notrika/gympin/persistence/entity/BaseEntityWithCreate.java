@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity;
 
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @MappedSuperclass
-public class BaseEntityWithCreate<T> extends BaseEntity<T>  {
+public class BaseEntityWithCreate<T> extends BaseEntity<T> {
 
     @Column(name = "create_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -26,7 +26,7 @@ public class BaseEntityWithCreate<T> extends BaseEntity<T>  {
 
     //        @Column(name = "creator_user")
     @ManyToOne(cascade = CascadeType.MERGE)
-    private User creatorUser;
+    private UserEntity creatorUser;
 
     @Override
     public boolean equals(Object o) {

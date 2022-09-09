@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.user;
 
-import com.notrika.gympin.common.SearchCriteria;
+import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -18,29 +19,30 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "password")
-public class Password extends BaseEntity<Password> {
+@Table(name = "role")
+public class RoleEntity extends BaseEntity<RoleEntity> {
 
-    @ManyToOne(cascade = CascadeType.ALL,optional = false)
-    private User user;
+    @Column(updatable = false, name = "role")
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
-    @Column(name = "password",nullable = false)
-    private String password;
-
-    @Column(name = "expired")
-    private boolean expired;
+    @ToString.Exclude
+    //@ManyToMany//(cascade = CascadeType.ALL)
+    //    @JoinColumn(name = "user_id",nullable = false)
+    @ManyToMany(mappedBy = "userRole")
+    private List<UserEntity> users;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Password password = (Password) o;
-        return getId() != null && Objects.equals(getId(), password.getId());
+        RoleEntity role = (RoleEntity) o;
+        return getId() != null && Objects.equals(getId(), role.getId());
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return getClass().hashCode();
     }
 
 }

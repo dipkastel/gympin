@@ -2,14 +2,14 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.multimedia.dto.MultimediaCategoryDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaCategoryParam;
-import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategory;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategoryEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public final class MultimediaCategoryConvertor {
 
-    public static MultimediaCategoryDto multimediaCategoryToMultimediaCategoryDto(MultimediaCategory multimediaCategory) {
+    public static MultimediaCategoryDto multimediaCategoryToMultimediaCategoryDto(MultimediaCategoryEntity multimediaCategory) {
         MultimediaCategoryDto dto = MultimediaCategoryDto.builder().id(multimediaCategory.getId()).name(multimediaCategory.getName())
                 //                .createdDate(multimediaCategory.getCreatedDate())
                 //                .updatedDate(multimediaCategory.getUpdatedDate())
@@ -17,31 +17,31 @@ public final class MultimediaCategoryConvertor {
         return dto;
     }
 
-    public static List<MultimediaCategoryDto> multimediaCategoriesToMultimediaCategoryDto(List<MultimediaCategory> multimediaCategories) {
+    public static List<MultimediaCategoryDto> multimediaCategoriesToMultimediaCategoryDto(List<MultimediaCategoryEntity> multimediaCategories) {
         return multimediaCategories.stream().map(MultimediaCategoryConvertor::multimediaCategoryToMultimediaCategoryDto).collect(Collectors.toList());
     }
 
-    public static MultimediaCategory multimediaCategoryDtoToMultimediaCategory(MultimediaCategoryDto dto) {
-        MultimediaCategory multimediaCategory = MultimediaCategory.builder().id(dto.getId()).name(dto.getName())
+    public static MultimediaCategoryEntity multimediaCategoryDtoToMultimediaCategory(MultimediaCategoryDto dto) {
+        MultimediaCategoryEntity multimediaCategory = MultimediaCategoryEntity.builder().id(dto.getId()).name(dto.getName())
                 //                .createdDate(dto.getCreatedDate())
                 //                .updatedDate(dto.getUpdatedDate())
                 .deleted(dto.isDeleted()).build();
         return multimediaCategory;
     }
 
-    public static List<MultimediaCategory> multimediaCategoryDtoToMultimediaCategories(List<MultimediaCategoryDto> dtoList) {
+    public static List<MultimediaCategoryEntity> multimediaCategoryDtoToMultimediaCategories(List<MultimediaCategoryDto> dtoList) {
         return dtoList.stream().map(MultimediaCategoryConvertor::multimediaCategoryDtoToMultimediaCategory).collect(Collectors.toList());
     }
 
-    public static MultimediaCategory multimediaCategoryParamToMultimediaCategory(MultimediaCategoryParam param) {
-        MultimediaCategory multimediaCategory = MultimediaCategory.builder().id(param.getId()).name(param.getName())
+    public static MultimediaCategoryEntity multimediaCategoryParamToMultimediaCategory(MultimediaCategoryParam param) {
+        MultimediaCategoryEntity multimediaCategory = MultimediaCategoryEntity.builder().id(param.getId()).name(param.getName())
                 //                .createdDate(param.getCreatedDate())
                 //                .updatedDate(param.getUpdatedDate())
                 .deleted(param.isDeleted()).build();
         return multimediaCategory;
     }
 
-    public static List<MultimediaCategory> multimediaCategoryParamsToMultimediaCategories(List<MultimediaCategoryParam> paramList) {
+    public static List<MultimediaCategoryEntity> multimediaCategoryParamsToMultimediaCategories(List<MultimediaCategoryParam> paramList) {
         return paramList.stream().map(MultimediaCategoryConvertor::multimediaCategoryParamToMultimediaCategory).collect(Collectors.toList());
     }
 

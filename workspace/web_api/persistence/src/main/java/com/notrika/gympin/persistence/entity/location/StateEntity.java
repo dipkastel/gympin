@@ -1,6 +1,5 @@
-package com.notrika.gympin.persistence.entity.multimedia;
+package com.notrika.gympin.persistence.entity.location;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +10,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -22,26 +19,27 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "multimedia_category")
-public class MultimediaCategory extends BaseEntity<MultimediaCategory> {
+@Table(name = "state")
+public class StateEntity extends BaseEntity<StateEntity> {
 
-    @Column(name = "name",nullable = false,unique = true)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
-    @ToString.Exclude
-    private List<Multimedia> multimediaList;
+   /* @OneToMany(mappedBy = "state",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JsonIgnoreProperties()
+    private Set<City> cities;*/
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        MultimediaCategory that = (MultimediaCategory) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        StateEntity state = (StateEntity) o;
+
+        return Objects.equals(this.getId(), state.getId());
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return 732746439;
     }
 }

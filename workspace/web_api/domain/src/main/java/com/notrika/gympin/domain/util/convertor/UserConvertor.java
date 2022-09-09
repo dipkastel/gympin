@@ -4,7 +4,7 @@ import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.dto.UserRoleDto;
 import com.notrika.gympin.persistence.entity.multimedia.UserMultimediaEntity;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 //@Component
 public final class UserConvertor {
 
-    public static UserDto userToUserDtoComplete(User user) {
+    public static UserDto userToUserDtoComplete(UserEntity user) {
         if (user == null) return null;
         UserDto dto = new UserDto();
         dto.setId(user.getId());
-//        dto.setDeleted(user.isDeleted());
-//        dto.setCreatedDate(user.getCreatedDate());
+        //        dto.setDeleted(user.isDeleted());
+        //        dto.setCreatedDate(user.getCreatedDate());
         //        dto.setCreatorUser(user.getCreatorUser()); //Loop Error
         dto.setName(user.getName());
         dto.setLastName(user.getLastname());
@@ -34,16 +34,16 @@ public final class UserConvertor {
         dto.setUserStatus(user.getUserStatus());
         dto.setBio(user.getBio());
         List<UserMultimediaEntity> userMultimedias = user.getUserMultimedias();
-        if (userMultimedias != null && userMultimedias.size()>0 ) {
+        if (userMultimedias != null && userMultimedias.size() > 0) {
             UserMultimediaEntity userMultimediaEntity = userMultimedias.get(0);
-            if(userMultimediaEntity!=null) {
+            if (userMultimediaEntity != null) {
                 dto.setAvatarId(userMultimediaEntity.getMultimedia().getId());
             }
         }
         return dto;
     }
 
-    public static UserDto userToUserDtoBrief(User user) {
+    public static UserDto userToUserDtoBrief(UserEntity user) {
         if (user == null) return null;
         UserDto dto = new UserDto();
         dto.setId(user.getId());
@@ -56,11 +56,11 @@ public final class UserConvertor {
     }
 
     @Deprecated(forRemoval = true, since = "Use userToUserDtoBrief")
-    public static UserDto userToUserDtoLessDetails(User user) {
+    public static UserDto userToUserDtoLessDetails(UserEntity user) {
         if (user == null) return null;
         UserDto dto = new UserDto();
-//        dto.setId(user.getId());
-//        dto.setDeleted(user.isDeleted());
+        //        dto.setId(user.getId());
+        //        dto.setDeleted(user.isDeleted());
         dto.setUserStatus(user.getUserStatus());
         dto.setUsername(user.getUsername());
         dto.setPhoneNumber(user.getPhoneNumber());
@@ -69,11 +69,11 @@ public final class UserConvertor {
         return dto;
     }
 
-    public static List<UserDto> usersToUserDtos(List<User> users) {
+    public static List<UserDto> usersToUserDtos(List<UserEntity> users) {
         return users.stream().map(UserConvertor::userToUserDtoComplete).collect(Collectors.toList());
     }
 
-    public static UserRegisterDto userToRegisterDto(User user) {
+    public static UserRegisterDto userToRegisterDto(UserEntity user) {
         if (user == null) return null;
         UserRegisterDto dto = new UserRegisterDto();
         dto.setUsername(user.getUsername());
@@ -81,11 +81,11 @@ public final class UserConvertor {
         return dto;
     }
 
-    public static UserDto administratorToAdministratorDto(User administrator) {
+    public static UserDto administratorToAdministratorDto(UserEntity administrator) {
         return userToUserDtoLessDetails(administrator);
     }
 
-    public static List<UserDto> administratorsToAdministratorDtos(List<User> administratorList) {
+    public static List<UserDto> administratorsToAdministratorDtos(List<UserEntity> administratorList) {
         return administratorList.stream().map(UserConvertor::administratorToAdministratorDto).collect(Collectors.toList());
     }
 

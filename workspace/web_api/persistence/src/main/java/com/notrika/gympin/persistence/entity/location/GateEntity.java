@@ -1,12 +1,10 @@
 package com.notrika.gympin.persistence.entity.location;
 
-import com.notrika.gympin.common.SearchCriteria;
-import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.accounting.AuditableEntitiesEntity;
 import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanGateEntity;
-import com.notrika.gympin.persistence.entity.sport.Sport;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.sport.SportEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -39,19 +37,19 @@ public class GateEntity extends AuditableEntitiesEntity<GateEntity> {
     private Time closingTime;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    private Place place;
+    private PlaceEntity place;
 
     @ManyToOne
-    private Sport sport;
+    private SportEntity sport;
 
     @OneToMany(mappedBy = "gate")
     @ToString.Exclude
     private List<PlanGateEntity> planGates;
 
     @ManyToMany
-    @JoinTable(name = "gate_guard",joinColumns=@JoinColumn(name = "gate_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "gate_guard", joinColumns = @JoinColumn(name = "gate_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     @ToString.Exclude
-    private List<User> guard;
+    private List<UserEntity> guard;
 
     @OneToMany(mappedBy = "gate")
     @ToString.Exclude

@@ -1,6 +1,5 @@
 package com.notrika.gympin.persistence.entity.android.layout;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.android.gympin.layout.enums.MainPageChildItemDestination;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;

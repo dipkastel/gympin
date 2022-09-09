@@ -16,8 +16,8 @@ import com.notrika.gympin.domain.util.convertor.GateConvertor;
 import com.notrika.gympin.domain.util.convertor.searchfilter.GateFilterConvertor;
 import com.notrika.gympin.persistence.dao.repository.GateRepository;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
-import com.notrika.gympin.persistence.entity.location.Place;
-import com.notrika.gympin.persistence.entity.sport.Sport;
+import com.notrika.gympin.persistence.entity.location.PlaceEntity;
+import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +39,7 @@ public class GateServiceImpl extends AbstractBaseService<GateParam, GateDto, Gat
     @Override
     public GateDto add(@NonNull GateParam gateParam) {
         GateEntity gateEntity = GateConvertor.convertToEntity(gateParam);
-        gateEntity= this.gateRepository.add(gateEntity);
+        gateEntity = this.gateRepository.add(gateEntity);
         return GateConvertor.convertToDto(gateEntity);
     }
 
@@ -98,26 +98,26 @@ public class GateServiceImpl extends AbstractBaseService<GateParam, GateDto, Gat
 
     @Override
     public List<GateDto> search(GateFilter filter) {
-        Specification<GateEntity> clause= createSearchSpecification(filter);
+        Specification<GateEntity> clause = createSearchSpecification(filter);
         return gateRepository.findAll(clause).stream().map(GateConvertor::convertToDto).collect(Collectors.toList());
     }
 
     @Override
     public Long countSearch(GateFilter filter) {
-        Specification<GateEntity> clause= createSearchSpecification(filter);
+        Specification<GateEntity> clause = createSearchSpecification(filter);
         return gateRepository.count(clause);
     }
 
-    private Specification<GateEntity> createSearchSpecification(GateFilter filter){
+    private Specification<GateEntity> createSearchSpecification(GateFilter filter) {
         Specification<GateEntity> clause = null;
         List<SearchCriteria> searchCriteriaList = GateFilterConvertor.convertToGateFilter(filter);
-        if(!searchCriteriaList.isEmpty()) {
-            GateEntity specification= new GateEntity();
+        if (!searchCriteriaList.isEmpty()) {
+            GateEntity specification = new GateEntity();
             specification.setCriteria(searchCriteriaList.get(0));
-            clause=Specification.where(specification);
+            clause = Specification.where(specification);
         }
-        for (int i=1;i<searchCriteriaList.size();i++) {
-            GateEntity specification= new GateEntity();
+        for (int i = 1; i < searchCriteriaList.size(); i++) {
+            GateEntity specification = new GateEntity();
             specification.setCriteria(searchCriteriaList.get(i));
             clause.and(specification);
         }
@@ -126,26 +126,26 @@ public class GateServiceImpl extends AbstractBaseService<GateParam, GateDto, Gat
 
     @Override
     public Long countFilter(GateFilter filter) {
-        Specification<GateEntity> clause= createSearchSpecification(filter);
+        Specification<GateEntity> clause = createSearchSpecification(filter);
         return gateRepository.count(clause);
     }
 
     @Override
     public List<GateDto> filter(GateFilter filter) {
-        Specification<GateEntity> clause= createSearchSpecification(filter);
+        Specification<GateEntity> clause = createSearchSpecification(filter);
         return gateRepository.findAll(clause).stream().map(GateConvertor::convertToDto).collect(Collectors.toList());
     }
 
-    private Specification<GateEntity> createFilterSpecification(GateFilter filter){
+    private Specification<GateEntity> createFilterSpecification(GateFilter filter) {
         Specification<GateEntity> clause = null;
         List<SearchCriteria> searchCriteriaList = GateFilterConvertor.convertToGateFilter(filter);
-        if(!searchCriteriaList.isEmpty()) {
-            GateEntity specification= new GateEntity();
+        if (!searchCriteriaList.isEmpty()) {
+            GateEntity specification = new GateEntity();
             specification.setCriteria(searchCriteriaList.get(0));
-            clause=Specification.where(specification);
+            clause = Specification.where(specification);
         }
-        for (int i=1;i<searchCriteriaList.size();i++) {
-            GateEntity specification= new GateEntity();
+        for (int i = 1; i < searchCriteriaList.size(); i++) {
+            GateEntity specification = new GateEntity();
             specification.setCriteria(searchCriteriaList.get(i));
             clause.or(specification);
         }
@@ -154,12 +154,12 @@ public class GateServiceImpl extends AbstractBaseService<GateParam, GateDto, Gat
 
     @Override
     public List<GateDto> getGatesByPlace(PlaceParam place) {
-        return gateRepository.findAllByPlaceAndDeletedIsFalse(Place.builder().id(place.getId()).build()).stream().map(GateConvertor::convertToDto).collect(Collectors.toList());
+        return gateRepository.findAllByPlaceAndDeletedIsFalse(PlaceEntity.builder().id(place.getId()).build()).stream().map(GateConvertor::convertToDto).collect(Collectors.toList());
     }
 
     @Override
     public List<GateDto> getGatesBySport(SportParam sport) {
-        return gateRepository.findAllBySportAndDeletedIsFalse(Sport.builder().id(sport.getId()).build()).stream().map(GateConvertor::convertToDto).collect(Collectors.toList());
+        return gateRepository.findAllBySportAndDeletedIsFalse(SportEntity.builder().id(sport.getId()).build()).stream().map(GateConvertor::convertToDto).collect(Collectors.toList());
     }
 
     @Override

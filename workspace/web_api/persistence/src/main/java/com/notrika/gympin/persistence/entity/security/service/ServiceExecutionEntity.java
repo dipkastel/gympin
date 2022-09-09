@@ -1,8 +1,7 @@
 package com.notrika.gympin.persistence.entity.security.service;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,7 +20,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "service_execution")
-public class ServiceExecution extends BaseEntity<ServiceExecution> {
+public class ServiceExecutionEntity extends BaseEntity<ServiceExecutionEntity> {
 
     @Column(name = "service", nullable = false)
     @Lob
@@ -36,7 +35,7 @@ public class ServiceExecution extends BaseEntity<ServiceExecution> {
     private Class dtoClass;
 
     @ManyToOne
-    private User executorUser;
+    private UserEntity executorUser;
 
     @Column(name = "execution_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -51,15 +50,15 @@ public class ServiceExecution extends BaseEntity<ServiceExecution> {
     private String dto;
 
     @PrePersist
-    public void onCreate(){
-        executionDate=new Date();
+    public void onCreate() {
+        executionDate = new Date();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ServiceExecution that = (ServiceExecution) o;
+        ServiceExecutionEntity that = (ServiceExecutionEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

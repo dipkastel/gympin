@@ -1,6 +1,5 @@
 package com.notrika.gympin.domain.event.walking;
 
-import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
@@ -9,7 +8,6 @@ import com.notrika.gympin.common.event.walking.dto.UserWalkingEventDto;
 import com.notrika.gympin.common.event.walking.dto.WalkingEventDto;
 import com.notrika.gympin.common.event.walking.param.WalkingEventParam;
 import com.notrika.gympin.common.event.walking.service.WalkingEventService;
-import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.event.*;
 import com.notrika.gympin.common.exception.general.InputNotValidException;
 import com.notrika.gympin.common.user.enums.UserRole;
@@ -27,8 +25,8 @@ import com.notrika.gympin.persistence.dao.repository.WalkingEventRepository;
 import com.notrika.gympin.persistence.entity.event.BaseEventEntity;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.event.WalkingEventEntity;
-import com.notrika.gympin.persistence.entity.sport.Sport;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.sport.SportEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -63,19 +61,19 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     @Transactional
     public WalkingEventDto add(WalkingEventParam walkingEventParam) {
         //TODO: add limitation for add new events
-        User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(walkingEventParam.getStartDate());
-        calendar.add(Calendar.MINUTE,-120);
+        calendar.add(Calendar.MINUTE, -120);
         Date fromDate = calendar.getTime();
-        calendar.add(Calendar.MINUTE,240);
+        calendar.add(Calendar.MINUTE, 240);
         Date toDate = calendar.getTime();
-        if(eventRepository.getAllActiveEventOfUser(user,fromDate,toDate)>0) {
+        if (eventRepository.getAllActiveEventOfUser(user, fromDate, toDate) > 0) {
             throw new ParticipantOfAnotherEventException();//You already are participant to another event
         }
         GeneralValidator.idValidator(walkingEventParam.getSport());
-        Sport sport = sportService.getEntityById(walkingEventParam.getSport().getId());
-        if(sport==null){
+        SportEntity sport = sportService.getEntityById(walkingEventParam.getSport().getId());
+        if (sport == null) {
             throw new InputNotValidException();//sport not found
         }
         WalkingEventEntity walkingEvent = EventConvertor.walkingEventParamToEntity(walkingEventParam);
@@ -83,13 +81,13 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
         WalkingEventEntity entity = walkingEventRepository.add(walkingEvent);
         if (entity.getParticipants() == null) entity.setParticipants(new ArrayList<>());
         for (UserParam userParam : walkingEventParam.getParticipants()) {
-            User participantUser = userService.getUserByAnyKey(userParam);
+            UserEntity participantUser = userService.getUserByAnyKey(userParam);
             EventParticipantEntity eventParticipant = eventParticipantService.add(EventParticipantEntity.builder().event(entity).user(participantUser).build());
             entity.getParticipants().add(eventParticipant);
         }
         WalkingEventDto walkingEventDto = EventConvertor.walkingEventEntityToDto(entity);
         walkingEventDto.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(walkingEventDto.getOwner().getId()).build()));
-        walkingEventDto.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build())));
+        walkingEventDto.getParticipants().forEach(u -> u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build())));
         return walkingEventDto;
     }
 
@@ -99,19 +97,19 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
         GeneralValidator.idValidator(walkingEventParam);
         GeneralValidator.idValidator(walkingEventParam.getSport());
         WalkingEventEntity event = getEntityById(walkingEventParam.getId());
-        if(event==null){
+        if (event == null) {
             throw new EventNotFoundException();//event not found
         }
-        WalkingEventEntity walkingEvent = EventConvertor.walkingEventParamToEntity(walkingEventParam,event);
-        Sport sport = sportService.getEntityById(walkingEventParam.getSport().getId());
-        if(sport==null){
+        WalkingEventEntity walkingEvent = EventConvertor.walkingEventParamToEntity(walkingEventParam, event);
+        SportEntity sport = sportService.getEntityById(walkingEventParam.getSport().getId());
+        if (sport == null) {
             throw new SportOfEventNotFoundException();//sport not found
         }
         walkingEvent.setSport(sport);
         WalkingEventEntity entity = update(walkingEvent);
         WalkingEventDto walkingEventDto = EventConvertor.walkingEventEntityToDto(entity);
         walkingEventDto.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(walkingEventDto.getOwner().getId()).build()));
-        walkingEventDto.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build())));
+        walkingEventDto.getParticipants().forEach(u -> u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build())));
         return walkingEventDto;
     }
 
@@ -120,17 +118,17 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     public WalkingEventDto delete(WalkingEventParam walkingEventParam) {
         GeneralValidator.idValidator(walkingEventParam);
         WalkingEventEntity walkingEvent = getEntityById(walkingEventParam.getId());
-        if(walkingEvent==null){
+        if (walkingEvent == null) {
             throw new EventNotFoundException();//event not found
         }
-        User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-        if(!walkingEvent.getCreatorUser().equals(user)){
+        UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        if (!walkingEvent.getCreatorUser().equals(user)) {
             throw new NotOwnerOfEventException();//you are not owner of event
         }
-        if(new Date().after(walkingEvent.getStartDate())){
+        if (new Date().after(walkingEvent.getStartDate())) {
             throw new EventStartedException();//the event is started
         }
-        if(walkingEvent.getParticipants().size()>0){
+        if (walkingEvent.getParticipants().size() > 0) {
             //jarime
         }
         for (EventParticipantEntity participant : walkingEvent.getParticipants()) {
@@ -142,8 +140,8 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
 
     @Override
     public UserWalkingEventDto getAllEventOfUser(UserParam userParam) {
-        User user= (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-        if(!Collections.disjoint(user.getUserRole(),Arrays.asList(UserRole.SUPER_ADMIN,UserRole.ADMIN)) && GeneralValidator.validateId(userParam)){
+        UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        if (!Collections.disjoint(user.getUserRole(), Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN)) && GeneralValidator.validateId(userParam)) {
             user = userService.getEntityById(userParam.getId());
         }
         List<WalkingEventEntity> ownedEvents = walkingEventRepository.findAllByCreatorUserAndDeletedIsFalse(user);
@@ -151,11 +149,11 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
         List<WalkingEventEntity> participatedEvents = walkingEventRepository.findAllByParticipantsInAndDeletedIsFalse(eventParticipantEntities);
         UserWalkingEventDto userWalkingEventDto = new UserWalkingEventDto();
         userWalkingEventDto.setOwnedEvents(ownedEvents.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList()));
-        userWalkingEventDto.getOwnedEvents().forEach(c->c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getOwner().getId()).build())));
-        userWalkingEventDto.getOwnedEvents().forEach(c->c.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build()))));
+        userWalkingEventDto.getOwnedEvents().forEach(c -> c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getOwner().getId()).build())));
+        userWalkingEventDto.getOwnedEvents().forEach(c -> c.getParticipants().forEach(u -> u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build()))));
         userWalkingEventDto.setParticipatedEvents(participatedEvents.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList()));
-        userWalkingEventDto.getParticipatedEvents().forEach(c->c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getId()).build())));
-        userWalkingEventDto.getParticipatedEvents().forEach(c->c.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build()))));
+        userWalkingEventDto.getParticipatedEvents().forEach(c -> c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getId()).build())));
+        userWalkingEventDto.getParticipatedEvents().forEach(c -> c.getParticipants().forEach(u -> u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build()))));
         return userWalkingEventDto;
     }
 
@@ -164,7 +162,7 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
         WalkingEventEntity entity = getEntityById(id);
         WalkingEventDto walkingEventDto = EventConvertor.walkingEventEntityToDto(entity);
         walkingEventDto.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(walkingEventDto.getOwner().getId()).build()));
-        walkingEventDto.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build())));
+        walkingEventDto.getParticipants().forEach(u -> u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build())));
         return walkingEventDto;
     }
 
@@ -196,8 +194,8 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     @Override
     public List<WalkingEventDto> convertToDtos(List<WalkingEventEntity> entities) {
         List<WalkingEventDto> walkingEventDtos = entities.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList());
-        walkingEventDtos.forEach(c->c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getOwner().getId()).build())));
-        walkingEventDtos.forEach(c->c.getParticipants().forEach(u->u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build()))));
+        walkingEventDtos.forEach(c -> c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getOwner().getId()).build())));
+        walkingEventDtos.forEach(c -> c.getParticipants().forEach(u -> u.setRate(userRateService.calculateUserRate(UserParam.builder().id(u.getId()).build()))));
         return walkingEventDtos;
     }
 
@@ -205,13 +203,13 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     public Long countSearch(BaseEventFilter filter) {
         Specification<BaseEventEntity> clause = null;
         List<SearchCriteria> searchCriteriaList = EventFilterConvertor.convertToBaseEventFilter(filter);
-        if(!searchCriteriaList.isEmpty()) {
-            BaseEventEntity specification= new BaseEventEntity();
+        if (!searchCriteriaList.isEmpty()) {
+            BaseEventEntity specification = new BaseEventEntity();
             specification.setCriteria(searchCriteriaList.get(0));
-            clause=Specification.where(specification);
+            clause = Specification.where(specification);
         }
-        for (int i=1;i<searchCriteriaList.size();i++) {
-            BaseEventEntity specification= new BaseEventEntity();
+        for (int i = 1; i < searchCriteriaList.size(); i++) {
+            BaseEventEntity specification = new BaseEventEntity();
             specification.setCriteria(searchCriteriaList.get(i));
             clause.and(specification);
         }

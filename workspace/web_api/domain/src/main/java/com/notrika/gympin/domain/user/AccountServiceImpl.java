@@ -8,7 +8,6 @@ import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpiredException;
-import com.notrika.gympin.common.exception.activation.code.ActivationCodeManyRequestException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoundException;
 import com.notrika.gympin.common.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
@@ -26,11 +25,10 @@ import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.RoleRepository;
-import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
-import com.notrika.gympin.persistence.entity.user.Password;
-import com.notrika.gympin.persistence.entity.user.Role;
-import com.notrika.gympin.persistence.entity.user.User;
-import lombok.NonNull;
+import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
+import com.notrika.gympin.persistence.entity.user.PasswordEntity;
+import com.notrika.gympin.persistence.entity.user.RoleEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -45,7 +43,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,11 +75,11 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
         log.info("Going to send activation sms...\n");
-        User user = userService.getByPhoneNumber(dto.getPhoneNumber());
+        UserEntity user = userService.getByPhoneNumber(dto.getPhoneNumber());
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
         String code = MyRandom.GenerateRandomVerificationSmsCode();
         if (user.getActivationCode() != null && user.getActivationCode().getExpiredDate() != null && user.getActivationCode().getExpiredDate().after(new Date())) {
-//            throw new ActivationCodeManyRequestException();
+            //            throw new ActivationCodeManyRequestException();
             return true;
         }
         try {
@@ -96,7 +93,7 @@ public class AccountServiceImpl implements AccountService {
     public UserRegisterDto register(UserRegisterParam userRegisterParam) throws ExceptionBase {
         log.info("Going to register user...\n");
         try {
-            User insertedUser = addUser(userRegisterParam);
+            UserEntity insertedUser = addUser(userRegisterParam);
             return UserConvertor.userToRegisterDto(insertedUser);
         } catch (DataIntegrityViolationException e) {
             throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.REGISTER_USER_EXIST);
@@ -105,13 +102,13 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    private User addUser(UserRegisterParam userRegisterParam) {
+    private UserEntity addUser(UserRegisterParam userRegisterParam) {
         log.info("Going to addUser...\n");
-        List<Role> roleList = new ArrayList<>();
+        List<RoleEntity> roleList = new ArrayList<>();
         for (UserRoleParam userRole : userRegisterParam.getUserRole()) {
             roleList.add(roleRepository.findByRole(userRole.getRole()));
         }
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setUsername(userRegisterParam.getUsername());
         user.setPhoneNumber(userRegisterParam.getPhoneNumber());
         user.setUserRole(roleList);
@@ -127,8 +124,8 @@ public class AccountServiceImpl implements AccountService {
         if (loginParam == null || loginParam.getUsername() == null || loginParam.getPassword() == null) {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
-        User user = getUser(loginParam);
-        ActivationCode activationCode = user.getActivationCode();
+        UserEntity user = getUser(loginParam);
+        ActivationCodeEntity activationCode = user.getActivationCode();
         if (activationCode == null) {
             throw new ActivationCodeNotFoundException();
         }
@@ -153,8 +150,8 @@ public class AccountServiceImpl implements AccountService {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
         String phoneNumber = getUser(loginParam).getPhoneNumber();
-        User admin = userService.getByPhoneNumber(phoneNumber);
-        ActivationCode activationCode = admin.getActivationCode();
+        UserEntity admin = userService.getByPhoneNumber(phoneNumber);
+        ActivationCodeEntity activationCode = admin.getActivationCode();
         if (activationCode != null) {
             activationCode.setDeleted(true);
             activationCodeRepository.update(activationCode);
@@ -168,8 +165,8 @@ public class AccountServiceImpl implements AccountService {
         return result;
     }
 
-    private User getUser(LoginParam loginParam) {
-        User user = null;
+    private UserEntity getUser(LoginParam loginParam) {
+        UserEntity user = null;
         switch (loginParam.getUsernameType()) {
             case PHONENUMBER:
                 user = userService.getByPhoneNumber(loginParam.getUsername());
@@ -194,11 +191,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
         log.info("Going to loadUserByUsername ...\n");
-        User user = userService.getByPhoneNumber(phoneNumber);
+        UserEntity user = userService.getByPhoneNumber(phoneNumber);
         if (user == null) {
             throw new UsernameNotFoundException(phoneNumber);
         }
-        ArrayList<Role> userRoles = new ArrayList<>(user.getUserRole());
+        ArrayList<RoleEntity> userRoles = new ArrayList<>(user.getUserRole());
         boolean accountNonExpired = !user.isDeleted();
         boolean accountNonLocked = !(user.getUserStatus() == UserStatus.LOCKED);
         boolean credentialsNonExpired = true;
@@ -208,15 +205,15 @@ public class AccountServiceImpl implements AccountService {
             password = user.getActivationCode().getCode();
         }
         if (password == null) {
-            Password pass = passwordRepository.findByUserAndExpiredIsFalseAndDeletedIsFalse(user);
-            password = pass!=null?pass.getPassword():null;
+            PasswordEntity pass = passwordRepository.findByUserAndExpiredIsFalseAndDeletedIsFalse(user);
+            password = pass != null ? pass.getPassword() : null;
         }
         if (password == null) {
-//            throw new ExceptionBase();
+            //            throw new ExceptionBase();
         }
         setUserContext(user);
         ArrayList<UserRole> roles = new ArrayList<>();
-        for (Role userRole : userRoles) {
+        for (RoleEntity userRole : userRoles) {
             roles.add(userRole.getRole());
         }
         UserDetailsImpl userDetails = new UserDetailsImpl(roles, password, phoneNumber, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
@@ -233,7 +230,7 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    private void setUserContext(User user) {
+    private void setUserContext(UserEntity user) {
         GympinContext context = GympinContextHolder.getContext();
         if (context == null) {
             context = new GympinContext();

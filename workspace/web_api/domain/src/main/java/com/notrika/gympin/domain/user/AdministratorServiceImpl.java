@@ -11,12 +11,11 @@ import com.notrika.gympin.common.user.service.AdministratorService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
-import com.notrika.gympin.persistence.entity.user.Password;
-import com.notrika.gympin.persistence.entity.user.Role;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.PasswordEntity;
+import com.notrika.gympin.persistence.entity.user.RoleEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AdministratorServiceImpl extends AbstractBaseService<UserParam, UserDto, BaseFilter<?>, User> implements AdministratorService {
+public class AdministratorServiceImpl extends AbstractBaseService<UserParam, UserDto, BaseFilter<?>, UserEntity> implements AdministratorService {
 
     @Autowired
     private UserServiceImpl userService;
@@ -43,24 +42,24 @@ public class AdministratorServiceImpl extends AbstractBaseService<UserParam, Use
     @Override
     @CacheEvict("admin")
     public UserDto add(UserParam administratorParam) {
-        List<Role> roles = new ArrayList<>();
+        List<RoleEntity> roles = new ArrayList<>();
         for (UserRoleParam roleParam : administratorParam.getRole()) {
             roles.add(userRoleService.getEntityById(roleParam.getId()));
         }
         if (roles.size() == 0) {
             roles.add(userRoleService.getByUserRole(UserRole.ADMIN));
         }
-        User initAdministrator =
-                User.builder().username(administratorParam.getUsername()).phoneNumber(administratorParam.getPhoneNumber()).userGroup(UserGroup.ADMINISTRATION).userStatus(UserStatus.ENABLED).userRole(roles).build();
-        User administrator = add(initAdministrator);
-        Password password = Password.builder().user(administrator).password(passwordEncoder.encode(administratorParam.getPassword())).expired(false).build();
+        UserEntity initAdministrator =
+                UserEntity.builder().username(administratorParam.getUsername()).phoneNumber(administratorParam.getPhoneNumber()).userGroup(UserGroup.ADMINISTRATION).userStatus(UserStatus.ENABLED).userRole(roles).build();
+        UserEntity administrator = add(initAdministrator);
+        PasswordEntity password = PasswordEntity.builder().user(administrator).password(passwordEncoder.encode(administratorParam.getPassword())).expired(false).build();
         passwordRepository.add(password);
         return UserConvertor.administratorToAdministratorDto(userService.add(administrator));
     }
 
     @Override
     @CacheEvict("admin")
-    public User add(User administrator) {
+    public UserEntity add(UserEntity administrator) {
         return userService.add(administrator);
     }
 
@@ -68,11 +67,11 @@ public class AdministratorServiceImpl extends AbstractBaseService<UserParam, Use
     @Transactional
     @CacheEvict("admin")
     public UserDto update(UserParam administratorParam) {
-        List<Role> roles = new ArrayList<>();
+        List<RoleEntity> roles = new ArrayList<>();
         for (UserRoleParam roleParam : administratorParam.getRole()) {
             roles.add(userRoleService.getEntityById(roleParam.getId()));
         }
-        User admin = userService.getEntityById(administratorParam.getId());
+        UserEntity admin = userService.getEntityById(administratorParam.getId());
         admin.setUserRole(roles);
         admin.setUsername(administratorParam.getUsername());
         admin.setPhoneNumber(administratorParam.getPhoneNumber());
@@ -81,13 +80,13 @@ public class AdministratorServiceImpl extends AbstractBaseService<UserParam, Use
         admin.setBirthday(administratorParam.getBirthday());
         admin.setNationalCode(administratorParam.getNationalCode());
         admin.setEmail(administratorParam.getEmail());
-        User administrator = userService.update(admin);
+        UserEntity administrator = userService.update(admin);
         return UserConvertor.administratorToAdministratorDto(administrator);
     }
 
     @Override
     @CacheEvict("admin")
-    public User update(User entity) {
+    public UserEntity update(UserEntity entity) {
         return null;
     }
 
@@ -99,28 +98,28 @@ public class AdministratorServiceImpl extends AbstractBaseService<UserParam, Use
 
     @Override
     @CacheEvict("admin")
-    public User delete(User entity) {
+    public UserEntity delete(UserEntity entity) {
         return null;
     }
 
     @Override
-    public List<User> getAll(Pageable pageable) {
+    public List<UserEntity> getAll(Pageable pageable) {
         return userService.getAll(pageable);
     }
 
     @Override
-    public List<UserDto> convertToDtos(List<User> entities) {
+    public List<UserDto> convertToDtos(List<UserEntity> entities) {
         return UserConvertor.administratorsToAdministratorDtos(entities);
     }
 
     @Override
     public UserDto getById(long id) {
-        User administrator = userService.getEntityById(id);
+        UserEntity administrator = userService.getEntityById(id);
         return UserConvertor.administratorToAdministratorDto(administrator);
     }
 
     @Override
-    public User getEntityById(long id) {
+    public UserEntity getEntityById(long id) {
         return null;
     }
 

@@ -10,10 +10,9 @@ import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.persistence.dao.repository.DocumentRepository;
 import com.notrika.gympin.persistence.entity.accounting.AccountEntity;
-import com.notrika.gympin.persistence.entity.accounting.AuditableEntitiesEntity;
 import com.notrika.gympin.persistence.entity.accounting.DocumentEntity;
 import com.notrika.gympin.persistence.entity.accounting.DocumentItemsEntity;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -60,7 +59,7 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
         return null;
     }
 
-    private DocumentEntity add(AccountEntity from,AccountEntity to, BigDecimal amount){
+    private DocumentEntity add(AccountEntity from, AccountEntity to, BigDecimal amount) {
         return null;
     }
 
@@ -91,25 +90,25 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
 
     @Override
     public TransactionDto deposit(BigDecimal amount) {
-        User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-        AccountEntity to= accountingService.getByAuditable(user);
-        AccountEntity cash= accountingService.getCashAccount();
-        DocumentEntity documentEntity=new DocumentEntity();
-        documentEntity.setDocumentNumber(documentRepository.findMaxDocNum()+1);
+        UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        AccountEntity to = accountingService.getByAuditable(user);
+        AccountEntity cash = accountingService.getCashAccount();
+        DocumentEntity documentEntity = new DocumentEntity();
+        documentEntity.setDocumentNumber(documentRepository.findMaxDocNum() + 1);
         documentEntity.setDocumentDate(new Date());
         documentEntity.setTotalAmount(amount);
         documentEntity.setDescription("واریز به حساب توسط کاربر " + user.getName() + " به شماره تلفن " + user.getPhoneNumber());
 
-        List<DocumentItemsEntity> documentItemsEntities=new ArrayList<>();
+        List<DocumentItemsEntity> documentItemsEntities = new ArrayList<>();
         documentEntity.setDocumentsItems(documentItemsEntities);
 
-        DocumentItemsEntity userAccountItem=new DocumentItemsEntity();
+        DocumentItemsEntity userAccountItem = new DocumentItemsEntity();
         userAccountItem.setAccount(to);
         userAccountItem.setAmount(amount);
         userAccountItem.setTransactionType(DebtorCreditor.CREDITOR);
         documentItemsEntities.add(userAccountItem);
 
-        DocumentItemsEntity cashAccountItem=new DocumentItemsEntity();
+        DocumentItemsEntity cashAccountItem = new DocumentItemsEntity();
         cashAccountItem.setAccount(cash);
         cashAccountItem.setAmount(amount);
         cashAccountItem.setTransactionType(DebtorCreditor.DEBTOR);
@@ -120,7 +119,7 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
         return null;
     }
 
-    public TransactionDto withdrawal(AccountEntity account,BigDecimal amount){
+    public TransactionDto withdrawal(AccountEntity account, BigDecimal amount) {
         return null;
     }
 

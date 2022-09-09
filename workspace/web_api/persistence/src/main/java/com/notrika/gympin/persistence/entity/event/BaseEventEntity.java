@@ -1,8 +1,7 @@
 package com.notrika.gympin.persistence.entity.event;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.sport.Sport;
+import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -27,13 +26,13 @@ public class BaseEventEntity extends BaseEntityWithCreateUpdate<BaseEventEntity>
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "sport_id")
-    private Sport sport;
+    private SportEntity sport;
 
     //    @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
     //    @ToString.Exclude
     //    private List<EventDataEntity> eventData;
 
-    @Column(name = "title", nullable = false,length = 50)
+    @Column(name = "title", nullable = false, length = 50)
     private String title;
 
     @Column(name = "description", nullable = false)
@@ -42,10 +41,10 @@ public class BaseEventEntity extends BaseEntityWithCreateUpdate<BaseEventEntity>
     @Column(name = "start_date", nullable = false)
     private Date startDate;
 
-    @Column(name = "participant_count",nullable = false, columnDefinition = "default 0")
+    @Column(name = "participant_count", nullable = false, columnDefinition = "default 0")
     private int participantCount;
 
-    @OneToMany(mappedBy = "event",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<EventParticipantEntity> participants;
 

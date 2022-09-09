@@ -46,7 +46,7 @@ public class BaseEntity<T> implements Specification<T> {
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder builder) {
-                SearchOperations operation = criteria.getOperation();
+        SearchOperations operation = criteria.getOperation();
         String key = criteria.getKey();
         String value = criteria.getValue().toString();
         if (operation.equals(SearchOperations.GREATER_THAN_OR_EQUAL_TO)) {

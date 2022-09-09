@@ -1,8 +1,7 @@
 package com.notrika.gympin.persistence.entity.plan;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -24,7 +23,7 @@ import java.util.Objects;
 public class PlanRegisterEntity extends BaseEntity<PlanRegisterEntity> {
 
     @OneToOne
-    private User user;
+    private UserEntity user;
 
     @OneToOne
     private PlanEntity plan;

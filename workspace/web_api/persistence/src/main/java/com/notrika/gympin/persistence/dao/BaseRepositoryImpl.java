@@ -6,11 +6,9 @@ import com.notrika.gympin.persistence.dao.repository.BaseRepository;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.provider.PersistenceProvider;
-import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +56,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
         if (entity instanceof BaseEntityWithCreate) {
             GympinContext context = GympinContextHolder.getContext();
             if (context != null) {
-                User user = (User) context.getEntry().get(GympinContext.USER_KEY);
+                UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
                 if (user != null) {
                     ((BaseEntityWithCreate) entity).setCreatorUser(user);
                 }
@@ -74,7 +72,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
         if (entity instanceof BaseEntityWithCreateUpdate) {
             GympinContext context = GympinContextHolder.getContext();
             if (context != null) {
-                User user = (User) context.getEntry().get(GympinContext.USER_KEY);
+                UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
                 if (user != null) {
                     ((BaseEntityWithCreateUpdate) entity).setUpdaterUser(user);
                 }
@@ -84,12 +82,12 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
         return this.save(entity);
     }
 
-//    @Override
-//    public Long countAllByDeletedIsFalse() {
-//        String countQuery = String.format("select count(%s) from %s x where x.is_deleted=0", this.provider.getCountQueryPlaceholder(), "%s");
-//        String queryString = QueryUtils.getQueryString(countQuery, this.entityInformation.getEntityName());
-////        this.findAll(Specification.where());
-////        this.count()
-//        return this.entityManager.createQuery(queryString, Long.class).getSingleResult();
-//    }
+    //    @Override
+    //    public Long countAllByDeletedIsFalse() {
+    //        String countQuery = String.format("select count(%s) from %s x where x.is_deleted=0", this.provider.getCountQueryPlaceholder(), "%s");
+    //        String queryString = QueryUtils.getQueryString(countQuery, this.entityInformation.getEntityName());
+    ////        this.findAll(Specification.where());
+    ////        this.count()
+    //        return this.entityManager.createQuery(queryString, Long.class).getSingleResult();
+    //    }
 }

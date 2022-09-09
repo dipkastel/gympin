@@ -6,8 +6,8 @@ import com.notrika.gympin.common.user.enums.TokenType;
 import com.notrika.gympin.common.user.service.JwtTokenProvider;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.UserTokenRepository;
-import com.notrika.gympin.persistence.entity.user.User;
-import com.notrika.gympin.persistence.entity.user.UserToken;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
+import com.notrika.gympin.persistence.entity.user.UserTokenEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -68,12 +68,12 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
         return userToken;
     }*/
 
-    public UserToken generateToken(User admin, Authentication auth) {
+    public UserTokenEntity generateToken(UserEntity admin, Authentication auth) {
         String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining());
 
         String tokenString =
                 Jwts.builder().setSubject(auth.getName()).claim("roles", authorities).claim("GympinRole", admin/*.getBaseUser()*/.getUserRole()).setExpiration(new Date(System.currentTimeMillis() + adminjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
-        UserToken userToken = new UserToken();
+        UserTokenEntity userToken = new UserTokenEntity();
         //        userToken.setUser(admin.getBaseUser());
         userToken.setToken(tokenString);
         userToken.setExpireDate(new Date(System.currentTimeMillis() + adminjwtExpirationInMs));
@@ -137,13 +137,13 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     @Override
     public RefreshTokenDto refreshToken(String refreshToken) {
         String userName = getUserNameFromJwtToken(refreshToken);
-        User user = userService.getByPhoneNumber(userName);
+        UserEntity user = userService.getByPhoneNumber(userName);
         if (user.isDeleted()) {
             throw new ExceptionBase();
         }
         RefreshTokenDto refreshTokenDto = new RefreshTokenDto();
         refreshTokenDto.setToken(getjwt(userjwtExpirationInMs, userName));
-        refreshTokenDto.setRefreshToken(getjwt(refreshTokenJwtExpirationInMs,userName));
+        refreshTokenDto.setRefreshToken(getjwt(refreshTokenJwtExpirationInMs, userName));
         return refreshTokenDto;
     }
 
@@ -157,7 +157,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     }
 
 
-    public User getCurrentUser(String token) {
+    public UserEntity getCurrentUser(String token) {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         return null;// userService.findByUsername(claims.getSubject());
     }

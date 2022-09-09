@@ -11,7 +11,7 @@ import com.notrika.gympin.persistence.dao.repository.AccountRepository;
 import com.notrika.gympin.persistence.entity.accounting.AccountEntity;
 import com.notrika.gympin.persistence.entity.accounting.AuditableEntitiesEntity;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -49,23 +49,23 @@ public class AccountingServiceImpl extends AbstractBaseService<AccountParam, Acc
 
     @Override
     public AccountEntity add(AccountEntity entity) {
-//        fillAccountNumber(entity);
+        //        fillAccountNumber(entity);
         return accountRepository.add(entity);
     }
 
-    public <T> AccountEntity add(AuditableEntitiesEntity<T> auditableEntity, AccountTopic topic){
+    public <T> AccountEntity add(AuditableEntitiesEntity<T> auditableEntity, AccountTopic topic) {
         AccountEntity accountEntity = new AccountEntity();
         accountEntity.setAuditableEntity(auditableEntity);
         accountEntity.setAccountCode(topic.getCode());
-        accountEntity.setSerial(accountRepository.findMaxOfSerial(auditableEntity) + 1 );
+        accountEntity.setSerial(accountRepository.findMaxOfSerial(auditableEntity) + 1);
         accountEntity.setOpenDate(new Date());
         accountEntity.setAccountNature(extractAccountNature(topic));
         accountEntity.setBalance(BigDecimal.ZERO);
         accountEntity.setBalanceType(accountEntity.getAccountNature());
-        if(auditableEntity instanceof User){
-            accountEntity.setDescription("حساب پیش دریافت کاربر " + ((User)auditableEntity).getName() +" با شماره تلفن "+ ((User)auditableEntity).getPhoneNumber());
-        }else if(auditableEntity instanceof GateEntity){
-            accountEntity.setDescription("حساب پیش پرداخت گیت " + ((GateEntity)auditableEntity).getName());
+        if (auditableEntity instanceof UserEntity) {
+            accountEntity.setDescription("حساب پیش دریافت کاربر " + ((UserEntity) auditableEntity).getName() + " با شماره تلفن " + ((UserEntity) auditableEntity).getPhoneNumber());
+        } else if (auditableEntity instanceof GateEntity) {
+            accountEntity.setDescription("حساب پیش پرداخت گیت " + ((GateEntity) auditableEntity).getName());
         }
         return add(accountEntity);
     }
@@ -95,12 +95,12 @@ public class AccountingServiceImpl extends AbstractBaseService<AccountParam, Acc
         return null;
     }
 
-    private void fillAccountNumber(AuditableEntitiesEntity account){
+    private void fillAccountNumber(AuditableEntitiesEntity account) {
 
     }
 
-    private DebtorCreditor extractAccountNature(AccountTopic topic){
-        switch (topic){
+    private DebtorCreditor extractAccountNature(AccountTopic topic) {
+        switch (topic) {
             case CASH:
                 return DebtorCreditor.DEBTOR;
             case OPERATING_INCOME:
@@ -112,11 +112,11 @@ public class AccountingServiceImpl extends AbstractBaseService<AccountParam, Acc
         }
     }
 
-    public AccountEntity getCashAccount(){
+    public AccountEntity getCashAccount() {
         return null;
     }
 
-    public AccountEntity getByAuditable(AuditableEntitiesEntity auditableEntity){
+    public AccountEntity getByAuditable(AuditableEntitiesEntity auditableEntity) {
         return accountRepository.findByAuditableEntityAndDeletedIsFalse(auditableEntity);
     }
 

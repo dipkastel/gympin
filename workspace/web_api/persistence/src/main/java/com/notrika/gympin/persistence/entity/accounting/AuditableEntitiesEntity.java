@@ -21,6 +21,7 @@ import java.util.List;
 public class AuditableEntitiesEntity<T> extends BaseEntityWithCreateUpdate<T> {
 
     @OneToMany
+    @ToString.Exclude
     private List<AccountEntity> accounts;
 
 }

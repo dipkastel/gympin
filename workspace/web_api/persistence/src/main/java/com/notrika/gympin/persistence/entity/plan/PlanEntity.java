@@ -1,6 +1,5 @@
 package com.notrika.gympin.persistence.entity.plan;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +8,10 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Getter
@@ -28,9 +29,9 @@ public class PlanEntity extends BaseEntity<PlanEntity> {
     //    @Column(name = "plan_type")
     //    private PlanType planType;
 
-//    @OneToMany(mappedBy = "plan")
-//    @ToString.Exclude
-//    private List<PlanGateEntity> planGates;
+    //    @OneToMany(mappedBy = "plan")
+    //    @ToString.Exclude
+    //    private List<PlanGateEntity> planGates;
 
     @OneToOne(mappedBy = "plan")
     private PlanRegisterEntity registeredPlan;

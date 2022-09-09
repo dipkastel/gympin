@@ -9,9 +9,9 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.multimedia.MultimediaServiceImpl;
 import com.notrika.gympin.domain.util.convertor.SportConvertor;
 import com.notrika.gympin.persistence.dao.repository.SportRepository;
-import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
-import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
-import com.notrika.gympin.persistence.entity.sport.Sport;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
+import com.notrika.gympin.persistence.entity.multimedia.SportMultimediaEntity;
+import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class SportServiceImpl extends AbstractBaseService<SportParam, SportDto, BaseFilter<?>, Sport> implements SportService {
+public class SportServiceImpl extends AbstractBaseService<SportParam, SportDto, BaseFilter<?>, SportEntity> implements SportService {
 
     @Autowired
     private SportRepository sportRepository;
@@ -32,15 +32,15 @@ public class SportServiceImpl extends AbstractBaseService<SportParam, SportDto, 
 
     @Override
     public SportDto add(SportParam sportParam) {
-        Sport initSport = Sport.builder().name(sportParam.getName()).launchStatus(sportParam.getLaunchStatus()).build();
-        Sport sport = add(initSport);
+        SportEntity initSport = SportEntity.builder().name(sportParam.getName()).launchStatus(sportParam.getLaunchStatus()).build();
+        SportEntity sport = add(initSport);
         SportDto sportDto = SportConvertor.sportToSportDto(sport);
         try {
             if (sportParam.getPictureIds() != null && sportParam.getPictureIds().size() > 0) {
                 List<Long> logoIds = new ArrayList<>();
                 for (Long id : sportParam.getPictureIds()) {
-                    Multimedia multimedia = multimediaService.getMultimediaById(id);
-                    SportMultimedia sportMultimedia = multimediaService.addMultimediaForSport(sport, multimedia);
+                    MultimediaEntity multimedia = multimediaService.getMultimediaById(id);
+                    SportMultimediaEntity sportMultimedia = multimediaService.addMultimediaForSport(sport, multimedia);
                     logoIds.add(sportMultimedia.getMultimedia().getId());
                 }
                 sportDto.setLogoIds(logoIds);
@@ -52,62 +52,62 @@ public class SportServiceImpl extends AbstractBaseService<SportParam, SportDto, 
     }
 
     @Override
-    public Sport add(Sport sport) {
+    public SportEntity add(SportEntity sport) {
         return sportRepository.add(sport);
     }
 
     @Override
     public SportDto update(SportParam sportParam) {
-        Sport sport1 = getEntityById(sportParam.getId());
+        SportEntity sport1 = getEntityById(sportParam.getId());
         sport1.setName(sportParam.getName());
         sport1.setLaunchStatus(sportParam.getLaunchStatus());
-        Sport sport = update(sport1);
+        SportEntity sport = update(sport1);
         return SportConvertor.sportToSportDto(sport);
     }
 
     @Override
-    public Sport update(Sport sport) {
+    public SportEntity update(SportEntity sport) {
         return sportRepository.update(sport);
     }
 
     @Override
     public SportDto getById(long id) {
-        Sport sport = sportRepository.getById(id);
+        SportEntity sport = sportRepository.getById(id);
         return SportConvertor.sportToSportDto(sport);
     }
 
     @Override
-    public Sport getEntityById(long id) {
+    public SportEntity getEntityById(long id) {
         return sportRepository.getById(id);
     }
 
     @Override
-    public List<Sport> getAll(Pageable pageable) {
+    public List<SportEntity> getAll(Pageable pageable) {
         return sportRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public List<SportDto> convertToDtos(List<Sport> entities) {
+    public List<SportDto> convertToDtos(List<SportEntity> entities) {
         return SportConvertor.sportsToSportDtos(entities);
     }
 
     @Override
     public SportDto delete(SportParam sportParam) {
-        Sport sport = getEntityById(sportParam.getId());
-        Sport deleteSport = delete(sport);
+        SportEntity sport = getEntityById(sportParam.getId());
+        SportEntity deleteSport = delete(sport);
         return SportConvertor.sportToSportDto(deleteSport);
     }
 
     @Override
-    public Sport delete(Sport sport) {
+    public SportEntity delete(SportEntity sport) {
         return sportRepository.deleteById2(sport);
     }
 
     @Override
     public List<MultimediaDto> getSportMultimedia(SportParam sportParam) {
         List<MultimediaDto> multimediaDtoLis = new ArrayList<>();
-        List<SportMultimedia> sportMultimedias = multimediaService.getSportMultimedias(Sport.builder().id(sportParam.getId()).build());
-        for (SportMultimedia sportMultimedia : sportMultimedias) {
+        List<SportMultimediaEntity> sportMultimedias = multimediaService.getSportMultimedias(SportEntity.builder().id(sportParam.getId()).build());
+        for (SportMultimediaEntity sportMultimedia : sportMultimedias) {
             multimediaDtoLis.add(MultimediaDto.builder().id(sportMultimedia.getMultimedia().getId()).name(sportMultimedia.getMultimedia().getTitle()).build());
         }
         return multimediaDtoLis;

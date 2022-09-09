@@ -16,11 +16,11 @@ import com.notrika.gympin.domain.util.convertor.LocationConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.OptionOfPlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.PlaceOwnerRepository;
-import com.notrika.gympin.persistence.entity.location.OptionOfPlace;
-import com.notrika.gympin.persistence.entity.location.Place;
-import com.notrika.gympin.persistence.entity.location.PlaceOwner;
-import com.notrika.gympin.persistence.entity.option.place.PlaceOption;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.location.OptionOfPlaceEntity;
+import com.notrika.gympin.persistence.entity.location.PlaceEntity;
+import com.notrika.gympin.persistence.entity.location.PlaceOwnerEntity;
+import com.notrika.gympin.persistence.entity.option.place.PlaceOptionEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,17 +46,17 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public OptionOfPlaceDto addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam) {
-        PlaceOption placeOption;
+        PlaceOptionEntity placeOption;
         if (optionOfPlaceParam.getPlaceOptionParam().getId() == null) {
-            PlaceOption initPlaceOption = PlaceOption.builder().name(optionOfPlaceParam.getPlaceOptionParam().getName()).build();
+            PlaceOptionEntity initPlaceOption = PlaceOptionEntity.builder().name(optionOfPlaceParam.getPlaceOptionParam().getName()).build();
             placeOption = placeOptionService.add(initPlaceOption);
             optionOfPlaceParam.getPlaceOptionParam().setId(placeOption.getId());
         } else {
             placeOption = placeOptionService.getEntityById(optionOfPlaceParam.getPlaceOptionParam().getId());
         }
-        Place place = placeService.getEntityById(optionOfPlaceParam.getPlaceParam().getId());
-        OptionOfPlace initOptionOfPlace = OptionOfPlace.builder().place(place).placeOption(placeOption).build();
-        OptionOfPlace optionOfPlace = optionOfPlaceRepository.add(initOptionOfPlace);
+        PlaceEntity place = placeService.getEntityById(optionOfPlaceParam.getPlaceParam().getId());
+        OptionOfPlaceEntity initOptionOfPlace = OptionOfPlaceEntity.builder().place(place).placeOption(placeOption).build();
+        OptionOfPlaceEntity optionOfPlace = optionOfPlaceRepository.add(initOptionOfPlace);
         return OptionOfPlaceDto.builder().id(optionOfPlace.getId()).createdDate(optionOfPlace.getCreatedDate()).updatedDate(optionOfPlace.getUpdatedDate()).isDeleted(optionOfPlace.isDeleted()).place(PlaceDto.builder().id(optionOfPlace.getPlace().getId()).build()).placeOption(PlaceOptionDto.builder().id(optionOfPlace.getPlaceOption().getId()).build()).build();
     }
 
@@ -66,42 +66,42 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public List<PlaceDto> getPlaceByUser(UserParam userParam) {
-        User user = User.builder().id(userParam.getId())/*.userRole(userParam.getRole())*/.build();
-        List<Place> placeByUser = getPlaceByUser(user);
+        UserEntity user = UserEntity.builder().id(userParam.getId())/*.userRole(userParam.getRole())*/.build();
+        List<PlaceEntity> placeByUser = getPlaceByUser(user);
         return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeByUser);
     }
 
-    public List<Place> getPlaceByUser(User user) {
+    public List<PlaceEntity> getPlaceByUser(UserEntity user) {
         return placeService.getPlaceByUser(user);
     }
 
     @Override
     public PlaceOwnerDto addPlaceOwner(PlaceOwnerParam placeOwnerParam) {
-        Place place = placeService.getEntityById(placeOwnerParam.getPlaceParam().getId());
-        User user = userService.getEntityById(placeOwnerParam.getUserParam().getId());
-        PlaceOwner initPlaceOwner = PlaceOwner.builder().place(place).user(user).userRole(placeOwnerParam.getUserRole()).build();
-        PlaceOwner placeOwner = placeOwnerRepository.add(initPlaceOwner);
+        PlaceEntity place = placeService.getEntityById(placeOwnerParam.getPlaceParam().getId());
+        UserEntity user = userService.getEntityById(placeOwnerParam.getUserParam().getId());
+        PlaceOwnerEntity initPlaceOwner = PlaceOwnerEntity.builder().place(place).user(user).userRole(placeOwnerParam.getUserRole()).build();
+        PlaceOwnerEntity placeOwner = placeOwnerRepository.add(initPlaceOwner);
         return LocationConvertor.placeOwnerToPlaceOwnerDto(placeOwner);
     }
 
-    public PlaceOwner getPlaceOwnerById(long id) {
+    public PlaceOwnerEntity getPlaceOwnerById(long id) {
         return placeOwnerRepository.getById(id);
     }
 
     @Override
     public List<UserDto> getOwnersPlace(PlaceParam placeParam) {
-        List<User> ownersPlace = userService.getOwnersPlace(Place.builder().id(placeParam.getId()).build());
+        List<UserEntity> ownersPlace = userService.getOwnersPlace(PlaceEntity.builder().id(placeParam.getId()).build());
         return UserConvertor.usersToUserDtos(ownersPlace);
     }
 
     @Override
     public PlaceOwnerDto deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
-        PlaceOwner placeOwner = getPlaceOwnerById(placeOwnerParam.getId());
-        PlaceOwner deletedPlaceOwner = deletePlaceOwner(placeOwner);
+        PlaceOwnerEntity placeOwner = getPlaceOwnerById(placeOwnerParam.getId());
+        PlaceOwnerEntity deletedPlaceOwner = deletePlaceOwner(placeOwner);
         return LocationConvertor.placeOwnerToPlaceOwnerDto(deletedPlaceOwner);
     }
 
-    public PlaceOwner deletePlaceOwner(PlaceOwner placeOwner) {
+    public PlaceOwnerEntity deletePlaceOwner(PlaceOwnerEntity placeOwner) {
         return placeOwnerRepository.deleteById2(placeOwner);
     }
 }

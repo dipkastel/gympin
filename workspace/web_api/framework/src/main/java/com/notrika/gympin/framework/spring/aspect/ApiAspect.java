@@ -8,8 +8,8 @@ import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
 import com.notrika.gympin.persistence.dao.repository.ServiceExecutionRepository;
-import com.notrika.gympin.persistence.entity.security.service.ServiceExecution;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.security.service.ServiceExecutionEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -46,10 +46,9 @@ public class ApiAspect {
         // start stopwatch
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
-        if(!method.getName().equals("greeting")){
+        if (!method.getName().equals("greeting")) {
             setGympinServiceCallContext();
-        }
-        else {
+        } else {
             setGympinServiceCallContextForChat(pjp.getArgs()[0]);
         }
         logInput(pjp);
@@ -149,14 +148,14 @@ public class ApiAspect {
         if (retVal.getClass().isAssignableFrom(ResponseEntity.class)) {
             Object body = ((ResponseEntity) retVal).getBody();
             dtoClass = body.getClass();
-            dtoJson=objectMapper.writeValueAsString(body);
+            dtoJson = objectMapper.writeValueAsString(body);
         } else {
             dtoClass = retVal.getClass();
             objectMapper.writeValueAsString(retVal);
         }
-        User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
 
-        ServiceExecution serviceExecution = new ServiceExecution();
+        ServiceExecutionEntity serviceExecution = new ServiceExecutionEntity();
         serviceExecution.setService(method.toGenericString());
         serviceExecution.setParamClass(joinPoint.getArgs()[0].getClass());
         serviceExecution.setParam(paramJson);

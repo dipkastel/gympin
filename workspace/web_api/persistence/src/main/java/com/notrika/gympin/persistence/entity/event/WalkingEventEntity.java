@@ -22,16 +22,16 @@ import java.util.Objects;
 @Table(name = "walking_event")
 public class WalkingEventEntity extends BaseEventEntity {
 
-    @Column(name = "start_latitude",nullable = false)
+    @Column(name = "start_latitude", nullable = false)
     private double startLatitude;
 
-    @Column(name = "start_longitude",nullable = false)
+    @Column(name = "start_longitude", nullable = false)
     private double startLongitude;
 
-    @Column(name = "end_latitude",nullable = false)
+    @Column(name = "end_latitude", nullable = false)
     private double endLatitude;
 
-    @Column(name = "end_longitude",nullable = false)
+    @Column(name = "end_longitude", nullable = false)
     private double endLongitude;
 
     @Lob

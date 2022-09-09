@@ -1,9 +1,7 @@
 package com.notrika.gympin.persistence.entity.option.sport;
 
-import com.notrika.gympin.common.SearchCriteria;
-import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.sport.OptionOfSport;
+import com.notrika.gympin.persistence.entity.sport.OptionOfSportEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -25,20 +23,20 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "sport_option")
-public class SportOption extends BaseEntityWithCreateUpdate<SportOption> {
+public class SportOptionEntity extends BaseEntityWithCreateUpdate<SportOptionEntity> {
 
     @Column(name = "name")
     private String name;
 
     @OneToMany(mappedBy = "sportOption")
     @ToString.Exclude
-    private List<OptionOfSport> optionsOfSports;
+    private List<OptionOfSportEntity> optionsOfSports;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SportOption that = (SportOption) o;
+        SportOptionEntity that = (SportOptionEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

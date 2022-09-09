@@ -12,7 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -26,15 +25,15 @@ public class GlobalLegerItemEntity extends BaseEntityWithCreateUpdate<GlobalLege
     @ManyToOne
     private DocumentEntity document;
 
-//    @Column(name = "transaction_date")
-//    private Date transactionDate;
+    //    @Column(name = "transaction_date")
+    //    private Date transactionDate;
 
-//    @Column(name = "description")
-//    private String description;
+    //    @Column(name = "description")
+    //    private String description;
 
     @Column(name = "transaction_type")
     private DebtorCreditor transactionType;
 
-//    private
+    //    private
 
 }

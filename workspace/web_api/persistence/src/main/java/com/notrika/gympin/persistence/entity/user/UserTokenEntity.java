@@ -1,6 +1,5 @@
 package com.notrika.gympin.persistence.entity.user;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.user.enums.TokenStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
@@ -22,13 +21,13 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "user_token")
-public class UserToken extends BaseEntity<UserToken> {
+public class UserTokenEntity extends BaseEntity<UserTokenEntity> {
 
     @Enumerated(EnumType.STRING)
     private TokenStatus tokenStatus = TokenStatus.ACTIVE;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    private User user;
+    private UserEntity user;
 
     @Column(updatable = false)
     private String token;
@@ -40,7 +39,7 @@ public class UserToken extends BaseEntity<UserToken> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        UserToken userToken = (UserToken) o;
+        UserTokenEntity userToken = (UserTokenEntity) o;
 
         return Objects.equals(this.getId(), userToken.getId());
     }

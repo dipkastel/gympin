@@ -1,10 +1,8 @@
 package com.notrika.gympin.persistence.entity.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.notrika.gympin.common.SearchCriteria;
-import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.sportplace.SportPlace;
+import com.notrika.gympin.persistence.entity.sportplace.SportPlaceEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,36 +21,36 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "place")
-public class Place extends BaseEntityWithCreateUpdate<Place> {
+public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "latitude",nullable = false)
+    @Column(name = "latitude", nullable = false)
     private double latitude;
 
-    @Column(name = "longitude",nullable = false)
+    @Column(name = "longitude", nullable = false)
     private double longitude;
 
-    @Column(name = "address",nullable = false)
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "region_id")
     @JsonIgnore
-    private Region region;
+    private RegionEntity region;
 
     @OneToMany(mappedBy = "place")
     @ToString.Exclude
-    private List<OptionOfPlace> optionsOfPlaces;
+    private List<OptionOfPlaceEntity> optionsOfPlaces;
 
     @OneToMany(mappedBy = "place")
     @ToString.Exclude
-    private List<PlaceOwner> placeOwners;
+    private List<PlaceOwnerEntity> placeOwners;
 
     @OneToMany(mappedBy = "place")
     @ToString.Exclude
-    private List<SportPlace> sportPlaces;
+    private List<SportPlaceEntity> sportPlaces;
 
     @OneToMany(mappedBy = "place")
     @ToString.Exclude
@@ -68,7 +66,7 @@ public class Place extends BaseEntityWithCreateUpdate<Place> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Place place = (Place) o;
+        PlaceEntity place = (PlaceEntity) o;
 
         return Objects.equals(getId(), place.getId());
     }

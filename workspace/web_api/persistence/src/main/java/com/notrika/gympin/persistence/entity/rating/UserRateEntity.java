@@ -1,10 +1,7 @@
-package com.notrika.gympin.persistence.entity.sportplace;
+package com.notrika.gympin.persistence.entity.rating;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.location.Place;
-import com.notrika.gympin.persistence.entity.sport.Sport;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,8 +9,8 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -24,27 +21,28 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "sport_place")
-public class SportPlace extends BaseEntityWithCreateUpdate<SportPlace> {
+@Table(name = "user_rate")
+public class UserRateEntity extends BaseEntity<UserRateEntity> {
 
     @ManyToOne
-    @JoinColumn(name = "place_id")
-    private Place place;
+    private UserEntity judgerUser;
 
     @ManyToOne
-    @JoinColumn(name = "sport_id")
-    private Sport sport;
+    private UserEntity judgingUser;
+
+    @Column(name = "rate")
+    private Float rate;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SportPlace that = (SportPlace) o;
-        return Objects.equals(getId(), that.getId());
+        UserRateEntity userRate = (UserRateEntity) o;
+        return getId() != null && Objects.equals(getId(), userRate.getId());
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return getClass().hashCode();
     }
 }

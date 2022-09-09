@@ -7,7 +7,7 @@ import com.notrika.gympin.common.multimedia.service.MultimediaCategoryService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.MultimediaCategoryConvertor;
 import com.notrika.gympin.persistence.dao.repository.MultimediaCategoryRepository;
-import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategory;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,56 +15,56 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MultimediaCategoryServiceImpl extends AbstractBaseService<MultimediaCategoryParam, MultimediaCategoryDto, BaseFilter<?>, MultimediaCategory> implements MultimediaCategoryService {
+public class MultimediaCategoryServiceImpl extends AbstractBaseService<MultimediaCategoryParam, MultimediaCategoryDto, BaseFilter<?>, MultimediaCategoryEntity> implements MultimediaCategoryService {
 
     @Autowired
     private MultimediaCategoryRepository multimediaCategoryRepository;
 
     @Override
     public MultimediaCategoryDto add(MultimediaCategoryParam multimediaCategoryParam) {
-        MultimediaCategory multimediaCategory = MultimediaCategoryConvertor.multimediaCategoryParamToMultimediaCategory(multimediaCategoryParam);
+        MultimediaCategoryEntity multimediaCategory = MultimediaCategoryConvertor.multimediaCategoryParamToMultimediaCategory(multimediaCategoryParam);
         return MultimediaCategoryConvertor.multimediaCategoryToMultimediaCategoryDto(add(multimediaCategory));
     }
 
     @Override
-    public MultimediaCategory add(MultimediaCategory multimediaCategory) {
+    public MultimediaCategoryEntity add(MultimediaCategoryEntity multimediaCategory) {
         return multimediaCategoryRepository.add(multimediaCategory);
     }
 
     @Override
     public MultimediaCategoryDto update(MultimediaCategoryParam multimediaCategoryParam) {
-        MultimediaCategory category = getEntityById(multimediaCategoryParam.getId());
+        MultimediaCategoryEntity category = getEntityById(multimediaCategoryParam.getId());
         category.setName(multimediaCategoryParam.getName());
         return MultimediaCategoryConvertor.multimediaCategoryToMultimediaCategoryDto(update(category));
     }
 
     @Override
-    public MultimediaCategory update(MultimediaCategory multimediaCategory) {
+    public MultimediaCategoryEntity update(MultimediaCategoryEntity multimediaCategory) {
         return multimediaCategoryRepository.update(multimediaCategory);
     }
 
     @Override
     public MultimediaCategoryDto delete(MultimediaCategoryParam multimediaCategoryParam) {
-        MultimediaCategory category = multimediaCategoryRepository.getById(multimediaCategoryParam.getId());
+        MultimediaCategoryEntity category = multimediaCategoryRepository.getById(multimediaCategoryParam.getId());
         return MultimediaCategoryConvertor.multimediaCategoryToMultimediaCategoryDto(delete(category));
     }
 
     @Override
-    public MultimediaCategory delete(MultimediaCategory multimediaCategory) {
+    public MultimediaCategoryEntity delete(MultimediaCategoryEntity multimediaCategory) {
         return multimediaCategoryRepository.deleteById2(multimediaCategory);
     }
 
     @Override
-    public List<MultimediaCategory> getAll(Pageable pageable) {
+    public List<MultimediaCategoryEntity> getAll(Pageable pageable) {
         return multimediaCategoryRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public List<MultimediaCategoryDto> convertToDtos(List<MultimediaCategory> entities) {
+    public List<MultimediaCategoryDto> convertToDtos(List<MultimediaCategoryEntity> entities) {
         return MultimediaCategoryConvertor.multimediaCategoriesToMultimediaCategoryDto(entities);
     }
 
-    public List<MultimediaCategory> getAll() {
+    public List<MultimediaCategoryEntity> getAll() {
         return multimediaCategoryRepository.findAll();
     }
 
@@ -74,7 +74,7 @@ public class MultimediaCategoryServiceImpl extends AbstractBaseService<Multimedi
     }
 
     @Override
-    public MultimediaCategory getEntityById(long id) {
+    public MultimediaCategoryEntity getEntityById(long id) {
         return multimediaCategoryRepository.getById(id);
     }
 }

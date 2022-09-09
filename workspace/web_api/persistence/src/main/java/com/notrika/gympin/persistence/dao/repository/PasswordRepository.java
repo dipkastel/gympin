@@ -1,17 +1,17 @@
 package com.notrika.gympin.persistence.dao.repository;
 
-import com.notrika.gympin.persistence.entity.user.Password;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.PasswordEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface PasswordRepository extends BaseRepository<Password,Long> {
+public interface PasswordRepository extends BaseRepository<PasswordEntity, Long> {
 
-    List<Password> findByUser(User user);
+    List<PasswordEntity> findByUser(UserEntity user);
 
-    Password findByUserAndExpiredIsFalseAndDeletedIsFalse(User user);
+    PasswordEntity findByUserAndExpiredIsFalseAndDeletedIsFalse(UserEntity user);
 
 
 }

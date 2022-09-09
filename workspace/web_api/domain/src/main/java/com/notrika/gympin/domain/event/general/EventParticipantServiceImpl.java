@@ -21,7 +21,7 @@ import com.notrika.gympin.persistence.dao.repository.BaseEventRepository;
 import com.notrika.gympin.persistence.dao.repository.EventParticipantRepository;
 import com.notrika.gympin.persistence.entity.event.BaseEventEntity;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.cfg.NotYetImplementedException;
@@ -56,38 +56,38 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
     @CacheEvict("event_participants")
     public EventParticipantDto add(EventParticipantParam eventParticipantParam) {
         validateParamForAdd(eventParticipantParam);
-        log.info("EventParticipantDto add is going to execute with param {}",eventParticipantParam);
+        log.info("EventParticipantDto add is going to execute with param {}", eventParticipantParam);
         BaseEventEntity event = eventRepository.getById(eventParticipantParam.getEvent().getId());
-        if(new Date().after(event.getStartDate())){
+        if (new Date().after(event.getStartDate())) {
             throw new EventStartedException();//The event is started
         }
-        if(getEventParticipantCount(event)==event.getParticipantCount()){
+        if (getEventParticipantCount(event) == event.getParticipantCount()) {
             throw new ParticipantsCountLimitException();//Participants are full
         }
-        User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-        if(!Collections.disjoint(user.getUserRole(),Arrays.asList(UserRole.SUPER_ADMIN,UserRole.ADMIN)) && GeneralValidator.validateUser(eventParticipantParam.getUser())){
-            user=userService.getUserByAnyKey(eventParticipantParam.getUser());
+        UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        if (!Collections.disjoint(user.getUserRole(), Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN)) && GeneralValidator.validateUser(eventParticipantParam.getUser())) {
+            user = userService.getUserByAnyKey(eventParticipantParam.getUser());
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(event.getStartDate());
-        calendar.add(Calendar.MINUTE,-120);
+        calendar.add(Calendar.MINUTE, -120);
         Date fromDate = calendar.getTime();
-        calendar.add(Calendar.MINUTE,240);
+        calendar.add(Calendar.MINUTE, 240);
         Date toDate = calendar.getTime();
-        if(eventRepository.getAllActiveEventOfUser(user,fromDate,toDate)>0) {
+        if (eventRepository.getAllActiveEventOfUser(user, fromDate, toDate) > 0) {
             throw new ParticipantOfAnotherEventException();//You already are participant to another event
         }
-        if(participantRepository.findByEventAndUserAndDeletedIsFalse(event,user)!=null){
+        if (participantRepository.findByEventAndUserAndDeletedIsFalse(event, user) != null) {
             throw new AlreadyParticipantOfEventException();//User already is a participant to this event
         }
-        if(eventRepository.getById(eventParticipantParam.getEvent().getId()).getCreatorUser().equals(user)){
+        if (eventRepository.getById(eventParticipantParam.getEvent().getId()).getCreatorUser().equals(user)) {
             throw new IsOwnerOfEventException();//User is owner of event
         }
         EventParticipantEntity entity = add(EventParticipantEntity.builder().event(event).user(user).build());
         EventParticipantDto eventParticipantDto = EventConvertor.eventParticipantEntityToDto(entity);
         eventParticipantDto.getUser().setRate(userRateService.calculateUserRate(UserParam.builder().id(eventParticipantDto.getId()).build()));
         eventParticipantDto.getEvent().getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(eventParticipantDto.getEvent().getOwner().getId()).build()));
-        eventParticipantDto.getEvent().getParticipants().forEach(c->((UserDto)c).setRate(userRateService.calculateUserRate(UserParam.builder().id(((UserDto) c).getId()).build())));//.getEvent().getParticipants().forEach(c->c.setRate(userRateService.calculateUserRate()))
+        eventParticipantDto.getEvent().getParticipants().forEach(c -> ((UserDto) c).setRate(userRateService.calculateUserRate(UserParam.builder().id(((UserDto) c).getId()).build())));//.getEvent().getParticipants().forEach(c->c.setRate(userRateService.calculateUserRate()))
         return eventParticipantDto;
     }
 
@@ -104,25 +104,25 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
     public EventParticipantDto delete(EventParticipantParam eventParticipantParam) {
         BaseEventEntity event;
         EventParticipantEntity entity;
-        User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-        if(!Collections.disjoint(user.getUserRole(),Arrays.asList(UserRole.SUPER_ADMIN,UserRole.ADMIN)) && GeneralValidator.validateUser(eventParticipantParam.getUser())){
-            user=userService.getUserByAnyKey(eventParticipantParam.getUser());
+        UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        if (!Collections.disjoint(user.getUserRole(), Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN)) && GeneralValidator.validateUser(eventParticipantParam.getUser())) {
+            user = userService.getUserByAnyKey(eventParticipantParam.getUser());
         }
-        if(!GeneralValidator.validateId(eventParticipantParam)){
-            if(!GeneralValidator.validateId(eventParticipantParam.getEvent())){
+        if (!GeneralValidator.validateId(eventParticipantParam)) {
+            if (!GeneralValidator.validateId(eventParticipantParam.getEvent())) {
                 throw new InputNotValidException();//Error in parameters, Either id or sub param is null
-            }else{
+            } else {
                 event = eventRepository.getById(eventParticipantParam.getEvent().getId());
-                entity = participantRepository.findByEventAndUserAndDeletedIsFalse(event,user);
-                if(entity==null){
+                entity = participantRepository.findByEventAndUserAndDeletedIsFalse(event, user);
+                if (entity == null) {
                     throw new EventOrUserNotExistException();//the event not exist or the user is not participant of it
                 }
             }
-        }else{
-            entity =  participantRepository.getById(eventParticipantParam.getId());
+        } else {
+            entity = participantRepository.getById(eventParticipantParam.getId());
             event = entity.getEvent();
         }
-        if(new Date().after(event.getStartDate())){
+        if (new Date().after(event.getStartDate())) {
             throw new EventStartedException();//Event is started
         }
         //if is cancelling on critical time must pay penalty
@@ -138,7 +138,7 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
     @Override
     //    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public EventParticipantEntity add(@NonNull EventParticipantEntity entity) {
-        log.info("EventParticipantEntity add is going to execute with param {}",entity);
+        log.info("EventParticipantEntity add is going to execute with param {}", entity);
         return participantRepository.add(entity);
     }
 
@@ -168,31 +168,31 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
     @Override
     public List<EventParticipantDto> convertToDtos(@NonNull List<EventParticipantEntity> entities) {
         List<EventParticipantDto> eventParticipantDtos = entities.stream().map(EventConvertor::eventParticipantEntityToDto).collect(Collectors.toList());
-        eventParticipantDtos.forEach(p->p.getUser().setRate(userRateService.calculateUserRate(UserParam.builder().id(p.getUser().getId()).build())));
-        eventParticipantDtos.forEach(p->p.getEvent().getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(p.getEvent().getOwner().getId()).build())));
-        eventParticipantDtos.forEach(p->p.getEvent().getParticipants().forEach(c->((UserDto)c).setRate(userRateService.calculateUserRate(UserParam.builder().id(((UserDto)c).getId()).build()))));
+        eventParticipantDtos.forEach(p -> p.getUser().setRate(userRateService.calculateUserRate(UserParam.builder().id(p.getUser().getId()).build())));
+        eventParticipantDtos.forEach(p -> p.getEvent().getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(p.getEvent().getOwner().getId()).build())));
+        eventParticipantDtos.forEach(p -> p.getEvent().getParticipants().forEach(c -> ((UserDto) c).setRate(userRateService.calculateUserRate(UserParam.builder().id(((UserDto) c).getId()).build()))));
         return eventParticipantDtos;
     }
 
     @Override
     public List<UserDto> getEventParticipant(Long id) {
         BaseEventEntity entity = eventRepository.getById(id);
-        List<User> allParticipants = participantRepository.getUserByEventAndDeleted(entity);
+        List<UserEntity> allParticipants = participantRepository.getUserByEventAndDeleted(entity);
         List<UserDto> userDtos = UserConvertor.usersToUserDtos(allParticipants);
-        userDtos.forEach(c->c.setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getId()).build())));
+        userDtos.forEach(c -> c.setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getId()).build())));
         return userDtos;
     }
 
-    public List<EventParticipantEntity> getEventParticipantEntities(@NonNull User user){
+    public List<EventParticipantEntity> getEventParticipantEntities(@NonNull UserEntity user) {
         return participantRepository.findAllByUserAndDeletedIsFalse(user);
     }
 
-    public Long getEventParticipantCount(@NonNull BaseEventEntity event){
+    public Long getEventParticipantCount(@NonNull BaseEventEntity event) {
         return participantRepository.countAllByEventAndDeletedIsFalse(event);
     }
 
-    private void validateParamForAdd(@NonNull EventParticipantParam param){
-        if(param.getEvent()==null || !GeneralValidator.validateId(param.getEvent())){
+    private void validateParamForAdd(@NonNull EventParticipantParam param) {
+        if (param.getEvent() == null || !GeneralValidator.validateId(param.getEvent())) {
             throw new InputNotValidException();//event is empty
         }
     }

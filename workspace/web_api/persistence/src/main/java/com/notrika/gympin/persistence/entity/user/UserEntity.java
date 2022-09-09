@@ -1,22 +1,19 @@
 package com.notrika.gympin.persistence.entity.user;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
-import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
-import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.accounting.AuditableEntitiesEntity;
-import com.notrika.gympin.persistence.entity.activationCode.ActivationCode;
+import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
 import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
 import com.notrika.gympin.persistence.entity.communication.notification.NotificationEntity;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
-import com.notrika.gympin.persistence.entity.location.PlaceOwner;
-import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
+import com.notrika.gympin.persistence.entity.location.PlaceOwnerEntity;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.multimedia.UserMultimediaEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
-import com.notrika.gympin.persistence.entity.rating.UserRate;
-import com.notrika.gympin.persistence.entity.security.service.ServiceExecution;
+import com.notrika.gympin.persistence.entity.rating.UserRateEntity;
+import com.notrika.gympin.persistence.entity.security.service.ServiceExecutionEntity;
 import com.notrika.gympin.persistence.entity.user.relation.FollowEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +38,7 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 @PrimaryKeyJoinColumn(name = "id")
-public class User extends AuditableEntitiesEntity<User> {
+public class UserEntity extends AuditableEntitiesEntity<UserEntity> {
 
     @Column(name = "name")
     private String name;
@@ -73,11 +70,11 @@ public class User extends AuditableEntitiesEntity<User> {
     //    @ToString.Exclude
     @ManyToMany
     @JoinTable(name = "role_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> userRole;
+    private List<RoleEntity> userRole;
 
     //    @Where(clause = "deleted=0 and expired=0")
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Password> password;
+    private List<PasswordEntity> password;
 
     @Column(updatable = false, nullable = false)
     @Enumerated(EnumType.STRING)
@@ -88,27 +85,27 @@ public class User extends AuditableEntitiesEntity<User> {
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
-    private Set<PlaceOwner> placeOwners;
+    private Set<PlaceOwnerEntity> placeOwners;
 
     //    @Where(clause = "expiredDate<=CURRENT_DATE")
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
     @ToString.Exclude
-    private ActivationCode activationCode;
+    private ActivationCodeEntity activationCode;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     //@OrderBy("expireDate desc")
     //@Where(clause = "userTokens.tokenStatus='ACTIVE'")
     @Where(clause = "token_status='ACTIVE'")
     @ToString.Exclude
-    private Set<UserToken> userTokens;
+    private Set<UserTokenEntity> userTokens;
 
     @OneToMany
     @ToString.Exclude
-    private Set<ServiceExecution> serviceExecutions;
+    private Set<ServiceExecutionEntity> serviceExecutions;
 
     @OneToMany
     @ToString.Exclude
-    private Set<Multimedia> multimediaSet;
+    private Set<MultimediaEntity> multimediaSet;
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
@@ -124,11 +121,11 @@ public class User extends AuditableEntitiesEntity<User> {
 
     @OneToMany(mappedBy = "judgingUser")
     @ToString.Exclude
-    private List<UserRate> judged;
+    private List<UserRateEntity> judged;
 
     @OneToMany(mappedBy = "judgerUser")
     @ToString.Exclude
-    private List<UserRate> hasJudged;
+    private List<UserRateEntity> hasJudged;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
@@ -161,7 +158,7 @@ public class User extends AuditableEntitiesEntity<User> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
+        UserEntity user = (UserEntity) o;
 
         return Objects.equals(getId(), user.getId());
     }
