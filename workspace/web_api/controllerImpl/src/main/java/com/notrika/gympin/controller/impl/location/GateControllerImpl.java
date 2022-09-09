@@ -56,7 +56,7 @@ public class GateControllerImpl implements GateController {
 
     @Override
     public ResponseEntity<List<GateDto>> search(GateFilter filter) {
-        return null;
+        return ResponseEntity.ok(gateService.search(filter));
     }
 
     @Override
