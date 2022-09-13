@@ -59,7 +59,7 @@ public final class UserConvertor {
     public static UserDto userToUserDtoLessDetails(UserEntity user) {
         if (user == null) return null;
         UserDto dto = new UserDto();
-        //        dto.setId(user.getId());
+        dto.setId(user.getId());
         //        dto.setDeleted(user.isDeleted());
         dto.setUserStatus(user.getUserStatus());
         dto.setUsername(user.getUsername());
