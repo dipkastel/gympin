@@ -1,9 +1,7 @@
 package com.notrika.gympin.persistence.entity.multimedia;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.sport.Sport;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -28,11 +26,11 @@ public class UserMultimediaEntity extends BaseEntityWithCreateUpdate<UserMultime
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "multimedia_id")
-    private Multimedia multimedia;
+    private MultimediaEntity multimedia;
 
     @Override
     public boolean equals(Object o) {

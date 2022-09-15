@@ -23,23 +23,23 @@ public final class LocationConvertor {
         }
     }
 
-    public static State stateDtoToState(StateDto stateDto) {
+    public static StateEntity stateDtoToState(StateDto stateDto) {
         if (stateDto == null) return null;
 
-        State state = new State();
+        StateEntity state = new StateEntity();
         state.setId(stateDto.getId());
         state.setName(stateDto.getName());
         //state.setCities((Set<City>) cityDtosToCities(stateDto.getCities(), supplierFactory(CollectionType.SET)));
         return state;
     }
 
-    public static List<State> stateDtosToStates(Collection<StateDto> stateDtos/*, CollectionType returnCollectionType*/) {
+    public static List<StateEntity> stateDtosToStates(Collection<StateDto> stateDtos/*, CollectionType returnCollectionType*/) {
         if (stateDtos == null) return null;
 
         return stateDtos.stream().map(LocationConvertor::stateDtoToState).collect(Collectors.toList());
     }
 
-    public static StateDto stateToStateDto(State state/*, CollectionType collectionType*/) {
+    public static StateDto stateToStateDto(StateEntity state/*, CollectionType collectionType*/) {
         if (state == null) return null;
 
         StateDto stateDto = new StateDto();
@@ -49,16 +49,16 @@ public final class LocationConvertor {
         return stateDto;
     }
 
-    public static List<StateDto> statesToStateDtos(Collection<State> states/*, CollectionType returnCollectionType, CollectionType innerCollectionType*/) {
+    public static List<StateDto> statesToStateDtos(Collection<StateEntity> states/*, CollectionType returnCollectionType, CollectionType innerCollectionType*/) {
         if (states == null) return null;
 
         return states.stream().map((x) -> stateToStateDto(x)).collect(Collectors.toList());
     }
 
-    public static City cityDtoToCity(CityDto cityDto) {
+    public static CityEntity cityDtoToCity(CityDto cityDto) {
         if (cityDto == null) return null;
 
-        City city = new City();
+        CityEntity city = new CityEntity();
         city.setId(cityDto.getId());
         city.setName(city.getName());
         city.setState(stateDtoToState(cityDto.getState()));
@@ -66,13 +66,13 @@ public final class LocationConvertor {
         return city;
     }
 
-    public static List<City> cityDtosToCities(Collection<CityDto> cityDtos/*, Supplier<Collection<City>> supplier*/) {
+    public static List<CityEntity> cityDtosToCities(Collection<CityDto> cityDtos/*, Supplier<Collection<City>> supplier*/) {
         if (cityDtos == null) return null;
 
         return cityDtos.stream().map(LocationConvertor::cityDtoToCity).collect(Collectors.toList());
     }
 
-    public static CityDto cityToCityDto(City city/*, CollectionType collectionType*/) {
+    public static CityDto cityToCityDto(CityEntity city/*, CollectionType collectionType*/) {
         if (city == null) return null;
 
         CityDto cityDto = new CityDto();
@@ -83,16 +83,16 @@ public final class LocationConvertor {
         return cityDto;
     }
 
-    public static List<CityDto> citiesToCityDtos(Collection<City> cityDtos/*, CollectionType returnCollectionType, CollectionType innerCollectionType*/) {
+    public static List<CityDto> citiesToCityDtos(Collection<CityEntity> cityDtos/*, CollectionType returnCollectionType, CollectionType innerCollectionType*/) {
         if (cityDtos == null) return null;
 
         return cityDtos.stream().map(x -> cityToCityDto(x)).collect(Collectors.toList());
     }
 
-    public static Region regionDtoToRegion(RegionDto regionDto) {
+    public static RegionEntity regionDtoToRegion(RegionDto regionDto) {
         if (regionDto == null) return null;
 
-        Region region = new Region();
+        RegionEntity region = new RegionEntity();
         region.setId(regionDto.getId());
         region.setName(regionDto.getName());
         region.setCity(cityDtoToCity(regionDto.getCity()));
@@ -100,13 +100,13 @@ public final class LocationConvertor {
         return region;
     }
 
-    public static List<Region> regionDtosToRegions(Collection<RegionDto> regionDtos/*, CollectionType returnCollectionType*/) {
+    public static List<RegionEntity> regionDtosToRegions(Collection<RegionDto> regionDtos/*, CollectionType returnCollectionType*/) {
         if (regionDtos == null) return null;
 
         return regionDtos.stream().map(LocationConvertor::regionDtoToRegion).collect(Collectors.toList());
     }
 
-    public static RegionDto regionToRegionDto(Region region/*, CollectionType collectionType*/) {
+    public static RegionDto regionToRegionDto(RegionEntity region/*, CollectionType collectionType*/) {
         if (region == null) return null;
 
         RegionDto regionDto = new RegionDto();
@@ -117,16 +117,16 @@ public final class LocationConvertor {
         return regionDto;
     }
 
-    public static List<RegionDto> regionsToRegionDtos(Collection<Region> states/*, CollectionType returnCollectionType, CollectionType innerCollectionType*/) {
+    public static List<RegionDto> regionsToRegionDtos(Collection<RegionEntity> states/*, CollectionType returnCollectionType, CollectionType innerCollectionType*/) {
         if (states == null) return null;
 
         return states.stream().map(x -> regionToRegionDto(x)).collect(Collectors.toList());
     }
 
-    public static Place placeDtoToPlace(PlaceDto placeDto) {
+    public static PlaceEntity placeDtoToPlace(PlaceDto placeDto) {
         if (placeDto == null) return null;
 
-        Place place = new Place();
+        PlaceEntity place = new PlaceEntity();
         place.setId(placeDto.getId());
         place.setName(placeDto.getName());
         place.setLatitude(placeDto.getLatitude());
@@ -136,13 +136,13 @@ public final class LocationConvertor {
         return place;
     }
 
-    public static List<Place> placeDtosToPlaces(Collection<PlaceDto> stateDtos/*, CollectionType returnCollectionType*/) {
+    public static List<PlaceEntity> placeDtosToPlaces(Collection<PlaceDto> stateDtos/*, CollectionType returnCollectionType*/) {
         if (stateDtos == null) return null;
 
         return stateDtos.stream().map(LocationConvertor::placeDtoToPlace).collect(Collectors.toList());
     }
 
-    public static PlaceDto placeToPlaceDto(Place place/*, CollectionType collectionType*/) {
+    public static PlaceDto placeToPlaceDto(PlaceEntity place/*, CollectionType collectionType*/) {
         if (place == null) return null;
 
         PlaceDto placeDto = new PlaceDto();
@@ -157,13 +157,13 @@ public final class LocationConvertor {
         return placeDto;
     }
 
-    public static List<PlaceDto> placesToPlaceDtos(Collection<Place> states/*, CollectionType returnCollectionType, CollectionType innerCollectionType*/) {
+    public static List<PlaceDto> placesToPlaceDtos(Collection<PlaceEntity> states/*, CollectionType returnCollectionType, CollectionType innerCollectionType*/) {
         if (states == null) return null;
 
         return states.stream().map((x) -> placeToPlaceDto(x)).collect(Collectors.toList());
     }
 
-    public static PlaceOwnerDto placeOwnerToPlaceOwnerDto(PlaceOwner placeOwner) {
+    public static PlaceOwnerDto placeOwnerToPlaceOwnerDto(PlaceOwnerEntity placeOwner) {
         return PlaceOwnerDto.builder().id(placeOwner.getId())
                 //                .createdDate(placeOwner.getCreatedDate())
                 //                .updatedDate(placeOwner.getUpdatedDate())

@@ -1,10 +1,8 @@
 package com.notrika.gympin.persistence.entity.multimedia;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
-import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,16 +21,16 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "multimedia")
-public class Multimedia extends BaseEntityWithCreateUpdate<Multimedia> {
+public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntity> {
 
-    @ManyToOne(cascade = CascadeType.MERGE,optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, optional = false, fetch = FetchType.LAZY)
     @ToString.Exclude
-    private User user;
+    private UserEntity user;
 
-    @Column(name = "file_name",nullable = false)
+    @Column(name = "file_name", nullable = false)
     private String fileName;
 
-    @Column(name = "media_type",nullable = false)
+    @Column(name = "media_type", nullable = false)
     private MediaType mediaType;
 
     @Column(name = "document_format")
@@ -49,25 +47,22 @@ public class Multimedia extends BaseEntityWithCreateUpdate<Multimedia> {
 
     @OneToMany(mappedBy = "multimedia")
     @ToString.Exclude
-    private List<SportMultimedia> sportMultimedias;
+    private List<SportMultimediaEntity> sportMultimedias;
 
     @OneToMany(mappedBy = "multimedia")
     @ToString.Exclude
     private List<UserMultimediaEntity> userMultimedias;
 
     @ManyToMany
-    @JoinTable(
-            name = "multimedia_multimedia_category",
-            joinColumns = @JoinColumn(name = "multimedia_id"),
-            inverseJoinColumns = @JoinColumn(name = "multimedia_category_id"))
+    @JoinTable(name = "multimedia_multimedia_category", joinColumns = @JoinColumn(name = "multimedia_id"), inverseJoinColumns = @JoinColumn(name = "multimedia_category_id"))
     @ToString.Exclude
-    private List<MultimediaCategory> categories;
+    private List<MultimediaCategoryEntity> categories;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Multimedia that = (Multimedia) o;
+        MultimediaEntity that = (MultimediaEntity) o;
 
         return Objects.equals(getId(), that.getId());
     }

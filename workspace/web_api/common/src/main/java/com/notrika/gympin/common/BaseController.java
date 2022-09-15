@@ -29,7 +29,7 @@ public interface BaseController<I extends BaseParam<?>, O extends BaseDto<?>, F 
     ResponseEntity<O> getById(Long id);
 
     @GetMapping("/count-search")
-    ResponseEntity<Long> countSearch();
+    ResponseEntity<Long> countSearch(F filter);
 
     @GetMapping("/search")
     ResponseEntity<List<O>> search(F filter);

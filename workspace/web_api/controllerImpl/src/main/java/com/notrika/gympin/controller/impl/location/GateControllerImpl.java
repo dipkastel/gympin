@@ -50,23 +50,23 @@ public class GateControllerImpl implements GateController {
     }
 
     @Override
-    public ResponseEntity<Long> countSearch() {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<List<GateDto>> search(GateFilter filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Long> countFilter(GateFilter filter) {
+    public ResponseEntity<Long> countSearch(GateFilter filter) {
         return ResponseEntity.ok(gateService.countSearch(filter));
     }
 
     @Override
+    public ResponseEntity<List<GateDto>> search(GateFilter filter) {
+        return ResponseEntity.ok(gateService.search(filter));
+    }
+
+    @Override
+    public ResponseEntity<Long> countFilter(GateFilter filter) {
+        return ResponseEntity.ok(gateService.countFilter(filter));
+    }
+
+    @Override
     public ResponseEntity<List<GateDto>> filter(GateFilter filter) {
-        return null;
+        return ResponseEntity.ok(gateService.filter(filter));
     }
 
     @Override

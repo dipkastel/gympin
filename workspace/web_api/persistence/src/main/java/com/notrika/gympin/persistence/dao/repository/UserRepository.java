@@ -1,30 +1,30 @@
 package com.notrika.gympin.persistence.dao.repository;
 
-import com.notrika.gympin.persistence.entity.location.Place;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.location.PlaceEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface UserRepository extends BaseRepository<User, Long> {
+public interface UserRepository extends BaseRepository<UserEntity, Long> {
 
-    @Query("select u from User u,PlaceOwner po where u.id=po.user.id and po.place.id=:#{#place.id}")
-    List<User> getOwnersPlace(Place place);
+    @Query("select u from UserEntity u,PlaceOwnerEntity po where u.id=po.user.id and po.place.id=:#{#place.id}")
+    List<UserEntity> getOwnersPlace(PlaceEntity place);
 
-    User findByPhoneNumberAndUsernameAndEmail(String phoneNumber, String username, String email);
+    UserEntity findByPhoneNumberAndUsernameAndEmail(String phoneNumber, String username, String email);
 
-    User findByPhoneNumberAndUsername(String phoneNumber, String username);
+    UserEntity findByPhoneNumberAndUsername(String phoneNumber, String username);
 
-    User findByPhoneNumberAndEmail(String phoneNumber, String email);
+    UserEntity findByPhoneNumberAndEmail(String phoneNumber, String email);
 
-    User findByUsernameAndEmail(String username, String email);
+    UserEntity findByUsernameAndEmail(String username, String email);
 
-    User findByPhoneNumber(String phoneNumber);
+    UserEntity findByPhoneNumber(String phoneNumber);
 
-    User findByUsername(String username);
+    UserEntity findByUsername(String username);
 
-    User findByEmail(String email);
+    UserEntity findByEmail(String email);
 
 }

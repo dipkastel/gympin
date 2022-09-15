@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.security.service;
 
-import com.notrika.gympin.common.SearchCriteria;
+import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,18 +20,18 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "service")
-public class Service extends BaseEntity<Service> {
+@Table(name = "service_user")
+public class ServiceUserEntity extends BaseEntity<ServiceUserEntity> {
 
-    @Column(name = "code")
-    private String code;
+    @Column(name = "user_role")
+    private UserRole userRole;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Service service = (Service) o;
-        return getId() != null && Objects.equals(getId(), service.getId());
+        ServiceUserEntity that = (ServiceUserEntity) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
     }
 
     @Override

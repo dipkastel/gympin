@@ -8,8 +8,8 @@ import com.notrika.gympin.common.location.service.RegionService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
 import com.notrika.gympin.persistence.dao.repository.RegionRepository;
-import com.notrika.gympin.persistence.entity.location.City;
-import com.notrika.gympin.persistence.entity.location.Region;
+import com.notrika.gympin.persistence.entity.location.CityEntity;
+import com.notrika.gympin.persistence.entity.location.RegionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RegionServiceImpl extends AbstractBaseService<RegionParam, RegionDto, BaseFilter<?>, Region> implements RegionService {
+public class RegionServiceImpl extends AbstractBaseService<RegionParam, RegionDto, BaseFilter<?>, RegionEntity> implements RegionService {
 
     @Autowired
     private RegionRepository regionRepository;
@@ -27,74 +27,74 @@ public class RegionServiceImpl extends AbstractBaseService<RegionParam, RegionDt
 
     @Override
     public RegionDto add(RegionParam regionParam) {
-        City city = cityService.getEntityById(regionParam.getCity().getId());
-        Region initRegion = Region.builder().name(regionParam.getName()).city(city).build();
-        Region region = add(initRegion);
+        CityEntity city = cityService.getEntityById(regionParam.getCity().getId());
+        RegionEntity initRegion = RegionEntity.builder().name(regionParam.getName()).city(city).build();
+        RegionEntity region = add(initRegion);
         return LocationConvertor.regionToRegionDto(region);
     }
 
     @Override
-    public Region add(Region region) {
+    public RegionEntity add(RegionEntity region) {
         return regionRepository.add(region);
     }
 
     @Override
     public RegionDto update(RegionParam regionParam) {
-        Region initRegion = getEntityById(regionParam.getId()); //Region.builder().id(regionParam.getId()).name(regionParam.getName()).build();
+        RegionEntity initRegion = getEntityById(regionParam.getId()); //Region.builder().id(regionParam.getId()).name(regionParam.getName()).build();
         initRegion.setName(regionParam.getName());
         if (regionParam.getCity() != null && regionParam.getCity().getId() != null && regionParam.getCity().getId() > 0) {
-            City city = cityService.getEntityById(regionParam.getId());
+            CityEntity city = cityService.getEntityById(regionParam.getId());
             initRegion.setCity(city);
         }
-        Region region = update(initRegion);
+        RegionEntity region = update(initRegion);
         return LocationConvertor.regionToRegionDto(region);
     }
 
     @Override
-    public Region update(Region region) {
+    public RegionEntity update(RegionEntity region) {
         return regionRepository.update(region);
     }
 
     @Override
     public RegionDto delete(RegionParam regionParam) {
-        Region region = getEntityById(regionParam.getId());
+        RegionEntity region = getEntityById(regionParam.getId());
         return LocationConvertor.regionToRegionDto(delete(region));
     }
 
     @Override
-    public Region delete(Region region) {
+    public RegionEntity delete(RegionEntity region) {
         return regionRepository.deleteById2(region);
     }
 
     @Override
-    public List<Region> getAll(Pageable pageable) {
+    public List<RegionEntity> getAll(Pageable pageable) {
         return regionRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public List<RegionDto> convertToDtos(List<Region> entities) {
+    public List<RegionDto> convertToDtos(List<RegionEntity> entities) {
         return LocationConvertor.regionsToRegionDtos(entities);
     }
 
     @Override
     public RegionDto getById(long id) {
-        Region region = getEntityById(id);
+        RegionEntity region = getEntityById(id);
         return LocationConvertor.regionToRegionDto(region);
     }
 
     @Override
-    public Region getEntityById(long id) {
+    public RegionEntity getEntityById(long id) {
         return regionRepository.getById(id);
     }
 
     @Override
     public List<RegionDto> getRegionsByCity(CityParam cityParam) {
-        City city = City.builder().id(cityParam.getId()).build();
-        List<Region> regionList = getRegionsByCity(city);
+        CityEntity city = CityEntity.builder().id(cityParam.getId()).build();
+        List<RegionEntity> regionList = getRegionsByCity(city);
         return LocationConvertor.regionsToRegionDtos(regionList);
     }
 
-    public List<Region> getRegionsByCity(City city) {
+    public List<RegionEntity> getRegionsByCity(CityEntity city) {
         return regionRepository.findAllByCityAndDeletedIsFalse(city);
     }
 

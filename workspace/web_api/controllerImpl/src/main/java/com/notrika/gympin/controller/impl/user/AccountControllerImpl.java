@@ -45,7 +45,7 @@ public class AccountControllerImpl implements AccountController {
     }
 
     @Override
-    @PostMapping("/loginpPanel")
+    @PostMapping("/loginPanel")
     public ResponseEntity<UserDto> loginPanel(@RequestBody LoginParam loginParam) throws ExceptionBase {
         return new ResponseEntity<>(accountService.loginPanel(loginParam), HttpStatus.OK);
     }

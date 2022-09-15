@@ -8,9 +8,9 @@ import com.notrika.gympin.common.location.service.PlaceService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
 import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
-import com.notrika.gympin.persistence.entity.location.Place;
-import com.notrika.gympin.persistence.entity.location.Region;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.location.PlaceEntity;
+import com.notrika.gympin.persistence.entity.location.RegionEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, BaseFilter<?>, Place> implements PlaceService {
+public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, BaseFilter<?>, PlaceEntity> implements PlaceService {
 
     @Autowired
     private PlaceRepository placeRepository;
@@ -28,8 +28,8 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
 
     @Override
     public PlaceDto add(PlaceParam placeParam) {
-        Region region = regionService.getEntityById(placeParam.getRegion().getId());
-        Place initPlace = new Place();
+        RegionEntity region = regionService.getEntityById(placeParam.getRegion().getId());
+        PlaceEntity initPlace = new PlaceEntity();
         initPlace.setName(placeParam.getName());
         initPlace.setLatitude(placeParam.getLatitude());
         initPlace.setLatitude(placeParam.getLongitude());
@@ -37,80 +37,80 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         initPlace.setRegion(region);
         initPlace.setAboutPlace(placeParam.getAboutPlace());
         initPlace.setPlaceRules(placeParam.getPlaceRules());
-        Place place = add(initPlace);
+        PlaceEntity place = add(initPlace);
         return LocationConvertor.placeToPlaceDto(place);
     }
 
     @Override
-    public Place add(Place place) {
+    public PlaceEntity add(PlaceEntity place) {
         return placeRepository.add(place);
     }
 
     @Override
     public PlaceDto update(PlaceParam placeParam) {
-        Place initPlace = getEntityById(placeParam.getId());
+        PlaceEntity initPlace = getEntityById(placeParam.getId());
         initPlace.setName(placeParam.getName());
         initPlace.setLatitude(placeParam.getLatitude());
         initPlace.setLongitude(placeParam.getLongitude());
         initPlace.setAddress(placeParam.getAddress());
         if (placeParam.getRegion() != null && placeParam.getRegion().getId() != null && placeParam.getRegion().getId() > 0) {
-            Region region = regionService.getEntityById(placeParam.getRegion().getId());
+            RegionEntity region = regionService.getEntityById(placeParam.getRegion().getId());
             initPlace.setRegion(region);
         }
-        Place place = update(initPlace);
+        PlaceEntity place = update(initPlace);
         return LocationConvertor.placeToPlaceDto(place);
     }
 
     @Override
-    public Place update(Place place) {
+    public PlaceEntity update(PlaceEntity place) {
         return placeRepository.update(place);
     }
 
     @Override
     public PlaceDto delete(PlaceParam placeParam) {
-        Place item = getEntityById(placeParam.getId());
-        Place deletedPlace = delete(item);
+        PlaceEntity item = getEntityById(placeParam.getId());
+        PlaceEntity deletedPlace = delete(item);
         return LocationConvertor.placeToPlaceDto(deletedPlace);
     }
 
     @Override
-    public Place delete(Place place) {
+    public PlaceEntity delete(PlaceEntity place) {
         return placeRepository.deleteById2(place);
     }
 
     @Override
-    public List<Place> getAll(Pageable pageable) {
+    public List<PlaceEntity> getAll(Pageable pageable) {
         return placeRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public List<PlaceDto> convertToDtos(List<Place> entities) {
+    public List<PlaceDto> convertToDtos(List<PlaceEntity> entities) {
         return LocationConvertor.placesToPlaceDtos(entities);
     }
 
     @Override
     public PlaceDto getById(long id) {
-        Place place = getEntityById(id);
+        PlaceEntity place = getEntityById(id);
         return LocationConvertor.placeToPlaceDto(place);
     }
 
     @Override
-    public Place getEntityById(long id) {
+    public PlaceEntity getEntityById(long id) {
         return placeRepository.getById(id);
     }
 
     @Override
     public List<PlaceDto> getPlacesByRegion(RegionParam regionParam) {
-        Region region = Region.builder().id(regionParam.getId()).build();
-        List<Place> placeList = getPlacesByRegion(region);
+        RegionEntity region = RegionEntity.builder().id(regionParam.getId()).build();
+        List<PlaceEntity> placeList = getPlacesByRegion(region);
         return LocationConvertor.placesToPlaceDtos(placeList);
     }
 
-    public List<Place> getPlacesByRegion(Region region) {
+    public List<PlaceEntity> getPlacesByRegion(RegionEntity region) {
         return placeRepository.findAllByRegionAndDeletedIsFalse(region);
     }
 
-    public List<Place> getPlaceByUser(User user) {
+    public List<PlaceEntity> getPlaceByUser(UserEntity user) {
         return placeRepository.findAllByPlaceOwnersAndDeletedIsFalse(user);
     }
 }

@@ -12,7 +12,7 @@ import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.entity.plan.PlanEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanGateEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -35,7 +35,7 @@ public class PlanConvertor {
     public static PlanGateDto convertToPlanGateDto(PlanGateEntity entity) {
         PlanGateDto dto = new PlanGateDto();
         dto.setId(entity.getId());
-//        dto.setPlan(convertToPlanDto(entity.getPlan()));
+        //        dto.setPlan(convertToPlanDto(entity.getPlan()));
         dto.setGate(GateConvertor.convertToDto(entity.getGate()));
         dto.setEntryCount(entity.getEntryCount());
         return dto;
@@ -44,7 +44,7 @@ public class PlanConvertor {
     public static PlanRegisterEntity convertToPlanRegisterEntity(PlanRegisterParam param) {
         PlanRegisterEntity entity = new PlanRegisterEntity();
         entity.setId(param.getId());
-        entity.setUser((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
+        entity.setUser((UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
         entity.setPlan(GympinContext.getBean(PlanServiceImpl.class).getEntityById(param.getPlan().getId()));
         entity.setRegisterDate(new Date());
         entity.setExpireDate(GeneralHelper.calcDateByDiff(entity.getRegisterDate(), param.getLength(), Calendar.MONTH));

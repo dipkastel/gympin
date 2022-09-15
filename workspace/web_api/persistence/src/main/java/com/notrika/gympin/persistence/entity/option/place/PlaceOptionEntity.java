@@ -1,7 +1,7 @@
-package com.notrika.gympin.persistence.entity.communication.notification;
+package com.notrika.gympin.persistence.entity.option.place;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
+import com.notrika.gympin.persistence.entity.location.OptionOfPlaceEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -9,8 +9,11 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -19,24 +22,21 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "notification")
-public class NotificationEntity extends BaseEntityWithCreateUpdate<NotificationEntity> {
+@Table(name = "place_option")
+public class PlaceOptionEntity extends BaseEntityWithCreateUpdate<PlaceOptionEntity> {
 
-    @ManyToOne
-    private UserEntity user;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "notif")
-    private String notif;
-
-    @Column(name = "expired_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date expiredDate;
+    @OneToMany(mappedBy = "placeOption")
+    @ToString.Exclude
+    private List<OptionOfPlaceEntity> optionsOfPlaces;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        NotificationEntity that = (NotificationEntity) o;
+        PlaceOptionEntity that = (PlaceOptionEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

@@ -1,9 +1,7 @@
 package com.notrika.gympin.persistence.entity.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,32 +18,33 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "region")
-public class Region extends BaseEntity<Region> {
+@Table(name = "city")
+public class CityEntity extends BaseEntity<CityEntity> {
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL,optional = false)
-    @JoinColumn(name = "city_id")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "state_id")
     @JsonIgnore
-    private City city;
+    private StateEntity state;
 
-/*    @OneToMany(mappedBy = "region",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+/*    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Place> places;*/
+    private Set<Region> regions;*/
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Region region = (Region) o;
+        CityEntity city = (CityEntity) o;
 
-        return Objects.equals(getId(), region.getId());
+        return Objects.equals(getId(), city.getId());
     }
 
     @Override
     public int hashCode() {
-        return 271369428;
+        return 39525063;
     }
 }

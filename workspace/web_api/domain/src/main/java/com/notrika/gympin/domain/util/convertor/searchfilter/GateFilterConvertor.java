@@ -20,9 +20,17 @@ public final class GateFilterConvertor {
 
 
     public static List<SearchCriteria> convertToGateFilter(GateFilter filter){
+        List<SearchCriteria> filterCriteriaList=convertToBaseFilter(filter);
+        if(stringHasValue(filter.getName())){
+            filterCriteriaList.add(createSearchCriteria(NAME,filter.getName(),LIKE));
+        }
+        return filterCriteriaList;
+    }
+
+    public static List<SearchCriteria> convertToGateSearch(GateFilter filter){
         List<SearchCriteria> searchCriteriaList=convertToBaseFilter(filter);
         if(stringHasValue(filter.getName())){
-            searchCriteriaList.add(createSearchCriteria(NAME,filter.getName(),LIKE));
+            searchCriteriaList.add(createSearchCriteria(NAME,filter.getName(),EQUAL_TO));
         }
         return searchCriteriaList;
     }

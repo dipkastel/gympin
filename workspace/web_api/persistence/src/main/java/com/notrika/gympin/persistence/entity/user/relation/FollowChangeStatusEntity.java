@@ -1,6 +1,5 @@
 package com.notrika.gympin.persistence.entity.user.relation;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.relation.enums.FollowingStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;

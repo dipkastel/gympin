@@ -1,8 +1,8 @@
-package com.notrika.gympin.persistence.entity.security.service;
+package com.notrika.gympin.persistence.entity.location;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,9 +10,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -21,17 +19,26 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "service_user")
-public class ServiceUser extends BaseEntity<ServiceUser> {
+@Table(name = "place_owner")
+public class PlaceOwnerEntity extends BaseEntity<PlaceOwnerEntity> {
 
-    @Column(name = "user_role")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "place_id")
+    private PlaceEntity place;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ServiceUser that = (ServiceUser) o;
+        PlaceOwnerEntity that = (PlaceOwnerEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

@@ -1,9 +1,7 @@
-package com.notrika.gympin.persistence.entity.location;
+package com.notrika.gympin.persistence.entity.multimedia;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.option.place.PlaceOption;
+import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,22 +21,22 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "place_place_option")
-public class OptionOfPlace extends BaseEntityWithCreateUpdate<OptionOfPlace> {
+@Table(name = "sport_multimedia")
+public class SportMultimediaEntity extends BaseEntity<SportMultimediaEntity> {
 
     @ManyToOne
-    @JoinColumn(name = "place_id")
-    private Place place;
+    @JoinColumn(name = "sport_id")
+    private SportEntity sport;
 
     @ManyToOne
-    @JoinColumn(name = "place_option_id")
-    private PlaceOption placeOption;
+    @JoinColumn(name = "multimedia_id")
+    private MultimediaEntity multimedia;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        OptionOfPlace that = (OptionOfPlace) o;
+        SportMultimediaEntity that = (SportMultimediaEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

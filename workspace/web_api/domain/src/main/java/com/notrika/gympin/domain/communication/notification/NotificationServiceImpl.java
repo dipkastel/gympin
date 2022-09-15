@@ -14,7 +14,7 @@ import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.NotificationRepository;
 import com.notrika.gympin.persistence.entity.communication.notification.NotificationEntity;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class NotificationServiceImpl extends AbstractBaseService<NotificationPar
     public NotificationDto add(@NonNull NotificationParam notificationParam) {
         List<UserDto> userDtos = new ArrayList<>();
         for (UserParam userParam : notificationParam.getTargetUsers()) {
-            User user = userService.getEntityById(userParam.getId());
+            UserEntity user = userService.getEntityById(userParam.getId());
             NotificationEntity notificationEntity = new NotificationEntity();
             notificationEntity.setUser(user);
             notificationEntity.setNotif(notificationParam.getNotif());
@@ -65,10 +65,10 @@ public class NotificationServiceImpl extends AbstractBaseService<NotificationPar
 
     @Override
     public NotificationDto getById(long id) {
-//        NotificationEntity notification = notificationRepository.getById(id);
-//        NotificationDto dto=new NotificationDto();
-//        dto.setId(notification.getId());
-//        dto.set
+        //        NotificationEntity notification = notificationRepository.getById(id);
+        //        NotificationDto dto=new NotificationDto();
+        //        dto.setId(notification.getId());
+        //        dto.set
         throw new NotYetImplementedException();
     }
 
@@ -104,11 +104,11 @@ public class NotificationServiceImpl extends AbstractBaseService<NotificationPar
 
     @Override
     public List<NotificationDto> getUserNotifications(BasePagedParam<?> pagedParam) {
-        List<NotificationDto> notifications =new ArrayList<>();
-        User user = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        List<NotificationDto> notifications = new ArrayList<>();
+        UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         List<NotificationEntity> allByUserAndDeletedIsFalse = notificationRepository.findAllByUserAndDeletedIsFalse(user);
         for (NotificationEntity entity : allByUserAndDeletedIsFalse) {
-            NotificationDto notificationDto=new NotificationDto();
+            NotificationDto notificationDto = new NotificationDto();
             notificationDto.setId(entity.getId());
             notificationDto.setNotif(entity.getNotif());
             notificationDto.setExpiredDate(entity.getExpiredDate());

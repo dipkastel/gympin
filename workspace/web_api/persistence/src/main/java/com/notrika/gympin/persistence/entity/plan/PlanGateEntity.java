@@ -1,6 +1,5 @@
 package com.notrika.gympin.persistence.entity.plan;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
 import com.notrika.gympin.persistence.entity.location.GateTimingEntity;
@@ -25,8 +24,8 @@ import java.util.Objects;
 @Table(name = "plan_gate")
 public class PlanGateEntity extends BaseEntity<PlanGateEntity> {
 
-//    @ManyToOne(optional = false)
-//    private PlanEntity plan;
+    //    @ManyToOne(optional = false)
+    //    private PlanEntity plan;
 
     @ManyToOne(optional = false)
     private GateEntity gate;
@@ -47,6 +46,7 @@ public class PlanGateEntity extends BaseEntity<PlanGateEntity> {
     private BigDecimal discountPrice;
 
     @OneToMany
+    @ToString.Exclude
     private List<GateTimingEntity> gateTimings;
 
     @Override

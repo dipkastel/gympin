@@ -16,11 +16,11 @@ import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.MultimediaConvertor;
 import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.SportMultimediaRepository;
-import com.notrika.gympin.persistence.entity.multimedia.Multimedia;
-import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategory;
-import com.notrika.gympin.persistence.entity.multimedia.SportMultimedia;
-import com.notrika.gympin.persistence.entity.sport.Sport;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategoryEntity;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
+import com.notrika.gympin.persistence.entity.multimedia.SportMultimediaEntity;
+import com.notrika.gympin.persistence.entity.sport.SportEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,14 +139,14 @@ public class MultimediaServiceImpl implements MultimediaService {
             throw new InvalidFileNameException("Error in file name.", HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
         }
         Path targetLocation = saveFile(path, multipartFile.getInputStream(), fileName);
-        List<MultimediaCategory> categories = new ArrayList<>();
+        List<MultimediaCategoryEntity> categories = new ArrayList<>();
         if (multimediaStoreParam.getCategoryParam() != null && multimediaStoreParam.getCategoryParam().size() > 0) {
             for (MultimediaCategoryParam categoryParam : multimediaStoreParam.getCategoryParam()) {
                 categories.add(categoryService.getEntityById(categoryParam.getId()));
             }
         }
         //        MultimediaCategory multimediaCategoryById = categoryService.getMultimediaCategoryById(multimediaStoreParam.getCategoryParam().getId());
-        Multimedia multimediaEntity = multimediaRepository.findByFileName(fileName);
+        MultimediaEntity multimediaEntity = multimediaRepository.findByFileName(fileName);
         if (multimediaEntity != null) {
             multimediaEntity.setDocumentFormat(multipartFile.getContentType());
             multimediaEntity.setMediaType(multimediaStoreParam.getMediaType());
@@ -155,8 +155,8 @@ public class MultimediaServiceImpl implements MultimediaService {
             multimediaEntity.setCategories(categories);
             multimediaEntity = multimediaRepository.update(multimediaEntity);
         } else {
-            Multimedia multimedia=new Multimedia();
-            multimedia.setUser((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
+            MultimediaEntity multimedia = new MultimediaEntity();
+            multimedia.setUser((UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
             multimedia.setFileName(fileName);
             multimedia.setMediaType(multimediaStoreParam.getMediaType());
             multimedia.setDocumentFormat(multipartFile.getContentType());
@@ -177,7 +177,7 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     @Override
     public InputStream loadFileAsResource(MultimediaRetrieveParam multimediaParam) throws Exception {
-        Multimedia multiMediaFile = null;
+        MultimediaEntity multiMediaFile = null;
         if (multimediaParam.getId() != null && multimediaParam.getId() > 0) multiMediaFile = multimediaRepository.getById(multimediaParam.getId());
         else if (multimediaParam.getFileName() != null) multiMediaFile = multimediaRepository.findByFileName(multimediaParam.getFileName());
         if (multiMediaFile == null) throw new FileNotFoundException("File not found " + multimediaParam.getFileName());
@@ -244,7 +244,7 @@ public class MultimediaServiceImpl implements MultimediaService {
         return new FileInputStream(resource.getFile());
     }
 
-    public Multimedia getMultimediaById(Long id) {
+    public MultimediaEntity getMultimediaById(Long id) {
         return multimediaRepository.getById(id);
     }
 
@@ -266,21 +266,21 @@ public class MultimediaServiceImpl implements MultimediaService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public SportMultimedia addMultimediaForSport(Sport sport, Multimedia multimedia) {
-        SportMultimedia sportMultimedia = SportMultimedia.builder().sport(sport).multimedia(multimedia).build();
+    public SportMultimediaEntity addMultimediaForSport(SportEntity sport, MultimediaEntity multimedia) {
+        SportMultimediaEntity sportMultimedia = SportMultimediaEntity.builder().sport(sport).multimedia(multimedia).build();
         return sportMultimediaRepository.add(sportMultimedia);
     }
 
-    public List<SportMultimedia> getSportMultimedias(Sport sport) {
+    public List<SportMultimediaEntity> getSportMultimedias(SportEntity sport) {
         return sportMultimediaRepository.findBySport(sport);
     }
 
     @Override
     public List<InputStream> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException {
         PageRequest pageRequest = PageRequest.of(multimediaRetrieveParam.getPage(), multimediaRetrieveParam.getSize());
-        List<Multimedia> all = this.multimediaRepository.findAllByMediaType(multimediaRetrieveParam.getMediaType(), pageRequest);
+        List<MultimediaEntity> all = this.multimediaRepository.findAllByMediaType(multimediaRetrieveParam.getMediaType(), pageRequest);
         List<InputStream> inputStreams = new ArrayList<>();
-        for (Multimedia multimedia : all) {
+        for (MultimediaEntity multimedia : all) {
             if (multimedia.getMediaType().equals(MediaType.IMAGE)) {
                 inputStreams.add(loadImageFile(MultimediaRetrieveParam.builder().fileName(multimedia.getFileName()).height(multimediaRetrieveParam.getHeight()).width(multimediaRetrieveParam.getWidth()).build()));
             }
@@ -316,23 +316,23 @@ public class MultimediaServiceImpl implements MultimediaService {
     @Override
     public Long update(MultimediaStoreParam multimediaStoreParam) {
         if (multimediaStoreParam.getId() == null || multimediaStoreParam.getId() < 1) throw new MultimediaNotFoundException();
-        Multimedia multimedia = multimediaRepository.getById(multimediaStoreParam.getId());
+        MultimediaEntity multimedia = multimediaRepository.getById(multimediaStoreParam.getId());
         if (multimedia == null) throw new MultimediaNotFoundException();
         if (multimediaStoreParam.getCategoryParam() != null && multimediaStoreParam.getCategoryParam().size() > 0) {
-            List<MultimediaCategory> multimediaCategories = new ArrayList<>();
+            List<MultimediaCategoryEntity> multimediaCategories = new ArrayList<>();
             for (MultimediaCategoryParam categoryParam : multimediaStoreParam.getCategoryParam()) {
                 multimediaCategories.add(categoryService.getEntityById(categoryParam.getId()));
             }
         }
         multimedia.setTitle(multimediaStoreParam.getTitle());
         multimedia.setDescription(multimediaStoreParam.getDescription());
-        Multimedia update = multimediaRepository.update(multimedia);
+        MultimediaEntity update = multimediaRepository.update(multimedia);
         return update.getId();
     }
 
     @Override
     public boolean delete(Long id) {
-        Multimedia multimedia = multimediaRepository.getById(id);
+        MultimediaEntity multimedia = multimediaRepository.getById(id);
         multimediaRepository.deleteById2(multimedia);
         return true;
     }

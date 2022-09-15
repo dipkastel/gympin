@@ -17,8 +17,8 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.event.walking.WalkingEventServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.UserRateRepository;
-import com.notrika.gympin.persistence.entity.rating.UserRate;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.rating.UserRateEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, UserRateDto, BaseFilter<?>, UserRate> implements UserRateService {
+public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, UserRateDto, BaseFilter<?>, UserRateEntity> implements UserRateService {
 
     @Autowired
     private UserRateRepository userRateRepository;
@@ -42,7 +42,7 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     private WalkingEventServiceImpl walkingEventService;
 
 
-    public static UserRateDto userRateToUserRateDto(UserRate userRate) {
+    public static UserRateDto userRateToUserRateDto(UserRateEntity userRate) {
         UserRateDto userRateDto = new UserRateDto();
         userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(userRate.getJudgerUser()));
         userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(userRate.getJudgingUser()));
@@ -57,13 +57,13 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
         if (userRateParam.getRate() > 5 || userRateParam.getRate() < 0) {
             throw new UserRateOutOfBoundException();//out of range
         }
-        User judger = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-        User judging = userService.getEntityById(userRateParam.getJudgingUser().getId());
-        UserRate userRate = new UserRate();
+        UserEntity judger = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        UserEntity judging = userService.getEntityById(userRateParam.getJudgingUser().getId());
+        UserRateEntity userRate = new UserRateEntity();
         userRate.setJudgerUser(judger);
         userRate.setJudgingUser(judging);
         userRate.setRate(userRateParam.getRate());
-        UserRate entity = add(userRate);
+        UserRateEntity entity = add(userRate);
         UserRateDto userRateDto = new UserRateDto();
         userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(entity.getJudgerUser()));
         userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(entity.getJudgingUser()));
@@ -77,11 +77,11 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
         if (userRateParam.getRate() > 5 || userRateParam.getRate() < 0) {
             throw new UserRateOutOfBoundException();//out of range
         }
-        UserRate userRate = getEntityById(userRateParam.getId());
-        userRate.setJudgerUser((User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
+        UserRateEntity userRate = getEntityById(userRateParam.getId());
+        userRate.setJudgerUser((UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
         userRate.setJudgingUser(userService.getEntityById(userRateParam.getJudgingUser().getId()));
         userRate.setRate(userRateParam.getRate());
-        UserRate entity = update(userRate);
+        UserRateEntity entity = update(userRate);
         UserRateDto userRateDto = new UserRateDto();
         userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(entity.getJudgerUser()));
         userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(entity.getJudgingUser()));
@@ -92,14 +92,14 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
 
     @Override
     public UserRateDto delete(UserRateParam userRateParam) {
-        UserRate entity = getEntityById(userRateParam.getId());
-        UserRate deletedEntity = delete(entity);
+        UserRateEntity entity = getEntityById(userRateParam.getId());
+        UserRateEntity deletedEntity = delete(entity);
         return null;
     }
 
     @Override
     public UserRateDto getById(long id) {
-        UserRate userRate = getEntityById(id);
+        UserRateEntity userRate = getEntityById(id);
         UserRateDto userRateDto = new UserRateDto();
         userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(userRate.getJudgerUser()));
         userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(userRate.getJudgingUser()));
@@ -110,38 +110,38 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     }
 
     @Override
-    public UserRate add(UserRate entity) {
+    public UserRateEntity add(UserRateEntity entity) {
         return userRateRepository.add(entity);
     }
 
     @Override
-    public UserRate update(UserRate entity) {
+    public UserRateEntity update(UserRateEntity entity) {
         return userRateRepository.update(entity);
     }
 
     @Override
-    public UserRate delete(UserRate entity) {
+    public UserRateEntity delete(UserRateEntity entity) {
         return userRateRepository.deleteById2(entity);
     }
 
     @Override
-    public UserRate getEntityById(long id) {
+    public UserRateEntity getEntityById(long id) {
         return userRateRepository.getById(id);
     }
 
     @Override
-    public List<UserRate> getAll(Pageable pageable) {
+    public List<UserRateEntity> getAll(Pageable pageable) {
         return userRateRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public List<UserRateDto> convertToDtos(List<UserRate> entities) {
+    public List<UserRateDto> convertToDtos(List<UserRateEntity> entities) {
         return entities.stream().map(UserRateServiceImpl::userRateToUserRateDto).collect(Collectors.toList());
     }
 
     @Override
     public float calculateUserRate(UserParam userParam) {
-        User user = userService.getEntityById(userParam.getId());
+        UserEntity user = userService.getEntityById(userParam.getId());
         Float rateCount = userRateRepository.countAllByJudgingUserAndDeletedIsFalse(user);
         if (rateCount == 0) {
             return 5F;
@@ -152,25 +152,23 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
 
     @Override
     public List<RateableUsersDto> getRateableUsers(BasePagedParam<?> pagedParam) {
-        User user1 = (User) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+        UserEntity user1 = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         List<RateableUsersDto> rateableUsers = new ArrayList<>();
         UserWalkingEventDto allEventOfUser = walkingEventService.getAllEventOfUser(null);
         for (WalkingEventDto dto : allEventOfUser.getOwnedEvents()) {
             Date startDate = dto.getStartDate();
             Calendar instance = Calendar.getInstance();
             instance.setTime(startDate);
-            instance.add(Calendar.HOUR,2);
-            Date endDate=instance.getTime();
-            if(endDate.after(new Date()))
-                continue;
+            instance.add(Calendar.HOUR, 2);
+            Date endDate = instance.getTime();
+            if (endDate.after(new Date())) continue;
 
             RateableUsersDto dto2 = new RateableUsersDto();
             dto2.setEvent(dto);
-            List<UserDto> userOfThisEvent=new ArrayList<>();
-            for (UserDto dto1:
-                 dto.getParticipants()) {
-                List<UserRate> rates = userRateRepository.findAllByJudgerUserAndJudgingUserAndDeletedIsFalse(user1,userService.getEntityById(dto1.getId()));
-                if(rates==null || rates.isEmpty()) {
+            List<UserDto> userOfThisEvent = new ArrayList<>();
+            for (UserDto dto1 : dto.getParticipants()) {
+                List<UserRateEntity> rates = userRateRepository.findAllByJudgerUserAndJudgingUserAndDeletedIsFalse(user1, userService.getEntityById(dto1.getId()));
+                if (rates == null || rates.isEmpty()) {
                     userOfThisEvent.add(dto1);
                 }
             }
@@ -181,22 +179,21 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
             Date startDate = dto.getStartDate();
             Calendar instance = Calendar.getInstance();
             instance.setTime(startDate);
-            instance.add(Calendar.HOUR,2);
-            Date endDate=instance.getTime();
-            if(endDate.after(new Date()))
-                continue;
+            instance.add(Calendar.HOUR, 2);
+            Date endDate = instance.getTime();
+            if (endDate.after(new Date())) continue;
 
             RateableUsersDto dto1 = new RateableUsersDto();
             dto1.setEvent(dto);
             List<UserDto> users = new ArrayList<>();
-            List<UserRate> rates = userRateRepository.findAllByJudgerUserAndJudgingUserAndDeletedIsFalse(user1,userService.getEntityById(dto.getOwner().getId()));
-            if(rates==null || rates.isEmpty()){
+            List<UserRateEntity> rates = userRateRepository.findAllByJudgerUserAndJudgingUserAndDeletedIsFalse(user1, userService.getEntityById(dto.getOwner().getId()));
+            if (rates == null || rates.isEmpty()) {
                 users.add(dto.getOwner());
             }
             for (UserDto user : dto.getParticipants()) {
                 if (!user.equals(GympinContextHolder.getContext().getUser())) {
-                    List<UserRate> rates1 = userRateRepository.findAllByJudgerUserAndJudgingUserAndDeletedIsFalse(user1,userService.getEntityById(user.getId()));
-                    if(rates1==null || rates1.isEmpty()){
+                    List<UserRateEntity> rates1 = userRateRepository.findAllByJudgerUserAndJudgingUserAndDeletedIsFalse(user1, userService.getEntityById(user.getId()));
+                    if (rates1 == null || rates1.isEmpty()) {
                         users.add(user);
                     }
                 }
@@ -204,7 +201,7 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
             dto1.setUsers(users);
             rateableUsers.add(dto1);
         }
-        
+
         return rateableUsers;
     }
 }

@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity;
 
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,25 +20,25 @@ import java.util.Objects;
 @MappedSuperclass
 public class BaseEntityWithCreateUpdate<T> extends BaseEntityWithCreate<T> {
 
-        @Column(name = "updated_date")
-        @Temporal(TemporalType.TIMESTAMP)
-        private Date updatedDate;
+    @Column(name = "updated_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
 
-//        @Column(name = "updater_user")
-        @ManyToOne(cascade = CascadeType.MERGE)
-        private User updaterUser;
+    //        @Column(name = "updater_user")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private UserEntity updaterUser;
 
-        @Override
-        public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-                BaseEntityWithCreateUpdate that = (BaseEntityWithCreateUpdate) o;
-                return getId() != null && Objects.equals(getId(), that.getId());
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        BaseEntityWithCreateUpdate that = (BaseEntityWithCreateUpdate) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
 
-        @Override
-        public int hashCode() {
-                return getClass().hashCode();
-        }
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }

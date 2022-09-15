@@ -1,9 +1,8 @@
 package com.notrika.gympin.persistence.entity.user.relation;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.relation.enums.FollowingStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.user.User;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -26,11 +25,11 @@ public class FollowEntity extends BaseEntity<FollowEntity> {
 
     @ManyToOne
     @ToString.Exclude
-    private User requesterUser;
+    private UserEntity requesterUser;
 
     @ManyToOne()
     @ToString.Exclude
-    private User requestedUser;
+    private UserEntity requestedUser;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

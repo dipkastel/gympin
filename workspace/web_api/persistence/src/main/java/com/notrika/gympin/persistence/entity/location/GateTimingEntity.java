@@ -10,9 +10,12 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.sql.Time;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -28,9 +31,9 @@ public class GateTimingEntity extends BaseEntityWithCreateUpdate<GateTimingEntit
 
     private DayOfWeek dayOfWeek;
 
-    private Time openingTime;
+    private LocalTime openingTime;
 
-    private Time closingTime;
+    private LocalTime closingTime;
 
     private BigDecimal price;
 

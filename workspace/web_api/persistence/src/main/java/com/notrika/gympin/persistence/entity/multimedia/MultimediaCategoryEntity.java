@@ -1,8 +1,6 @@
-package com.notrika.gympin.persistence.entity.sport;
+package com.notrika.gympin.persistence.entity.multimedia;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.option.sport.SportOption;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,10 +8,11 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -22,22 +21,21 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "sport_sport_option")
-public class OptionOfSport extends BaseEntity<OptionOfSport> {
+@Table(name = "multimedia_category")
+public class MultimediaCategoryEntity extends BaseEntity<MultimediaCategoryEntity> {
 
-    @ManyToOne
-    @JoinColumn(name = "sport_id")
-    private Sport sport;
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "sport_option_id")
-    private SportOption sportOption;
+    @ManyToMany(mappedBy = "categories")
+    @ToString.Exclude
+    private List<MultimediaEntity> multimediaList;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        OptionOfSport that = (OptionOfSport) o;
+        MultimediaCategoryEntity that = (MultimediaCategoryEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

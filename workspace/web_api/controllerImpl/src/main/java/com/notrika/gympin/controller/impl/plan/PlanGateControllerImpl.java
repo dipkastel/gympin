@@ -46,7 +46,7 @@ public class PlanGateControllerImpl implements PlanGateController {
     }
 
     @Override
-    public ResponseEntity<Long> countSearch() {
+    public ResponseEntity<Long> countSearch(BaseFilter<?> filter) {
         return null;
     }
 

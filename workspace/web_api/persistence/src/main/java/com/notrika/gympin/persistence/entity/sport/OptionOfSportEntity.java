@@ -1,9 +1,7 @@
-package com.notrika.gympin.persistence.entity.option.place;
+package com.notrika.gympin.persistence.entity.sport;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.location.OptionOfPlace;
+import com.notrika.gympin.persistence.entity.option.sport.SportOptionEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,11 +9,10 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -24,21 +21,22 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "place_option")
-public class PlaceOption extends BaseEntityWithCreateUpdate<PlaceOption> {
+@Table(name = "sport_sport_option")
+public class OptionOfSportEntity extends BaseEntity<OptionOfSportEntity> {
 
-    @Column(name = "name")
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "sport_id")
+    private SportEntity sport;
 
-    @OneToMany(mappedBy = "placeOption")
-    @ToString.Exclude
-    private List<OptionOfPlace> optionsOfPlaces;
+    @ManyToOne
+    @JoinColumn(name = "sport_option_id")
+    private SportOptionEntity sportOption;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        PlaceOption that = (PlaceOption) o;
+        OptionOfSportEntity that = (OptionOfSportEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

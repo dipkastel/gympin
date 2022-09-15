@@ -31,6 +31,7 @@ public final class GateConvertor {
 //                GympinContext.getBean(UserServiceImpl.class).getEntityById(gateParam.getGuard().getId()));
         gateEntity.setAboutGate(gateParam.getAboutGate());
         gateEntity.setGateRules(gateParam.getGateRules());
+        gateEntity.setDeleted(false);
 
         List<GateTimingEntity> gateTimingEntities=new ArrayList<>();
         gateEntity.setGateTimings(gateTimingEntities);
@@ -62,6 +63,7 @@ public final class GateConvertor {
         gateTimingEntity.setClosingTime(gateTimingParam.getClosingTime());
         gateTimingEntity.setSex(gateTimingParam.getSex());
         gateTimingEntity.setPrice(gateTimingParam.getPrice());
+        gateTimingEntity.setDeleted(false);
         return gateTimingEntity;
 
     }
