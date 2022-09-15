@@ -24,6 +24,9 @@ public class MainPageLayoutItemParam extends BaseParam<MainPageLayoutItemParam> 
     @JsonProperty("Priority")
     private Integer priority;
 
+    @JsonProperty("Name")
+    private String name;
+
     @JsonProperty("Items")
     private List<MainPageLayoutChildItemParam> items;
 

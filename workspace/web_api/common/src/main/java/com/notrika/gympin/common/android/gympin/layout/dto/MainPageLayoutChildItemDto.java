@@ -34,4 +34,7 @@ public class MainPageLayoutChildItemDto extends BaseDto<MainPageLayoutChildItemD
     @JsonProperty("Priority")
     private Integer priority;
 
+    @JsonProperty("Type")
+    private String type;
+
 }

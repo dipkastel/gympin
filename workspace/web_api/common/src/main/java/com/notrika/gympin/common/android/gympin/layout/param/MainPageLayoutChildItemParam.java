@@ -34,4 +34,7 @@ public class MainPageLayoutChildItemParam extends BaseParam<MainPageLayoutChildI
     @JsonProperty("Priority")
     private Integer priority;
 
+    @JsonProperty("Type")
+    private String type;
+
 }

@@ -24,6 +24,9 @@ public class MainPageLayoutItemDto extends BaseDto<MainPageLayoutItemDto> {
     @JsonProperty("Priority")
     private Integer priority;
 
+    @JsonProperty("Name")
+    private String name;
+
     @JsonProperty("Items")
     private List<MainPageLayoutChildItemDto> items;
 

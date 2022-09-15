@@ -41,6 +41,9 @@ public class MainPageLayoutChildItemEntity extends BaseEntity<MainPageLayoutChil
     @Column(name = "priority")
     private Integer priority;
 
+    @Column(name = "type")
+    private String type;
+
     @ManyToMany(mappedBy = "items")
     @ToString.Exclude
     private List<MainPageLayoutItemEntity> mainPages;
