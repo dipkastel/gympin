@@ -1,10 +1,10 @@
 import axios from "axios";
-import {Account} from "../const/NETWORKCONSTS";
+import { Api_url} from "../const/NETWORKCONSTS";
 
 export function login(loginData) {
-    return axios.post(Account.LOGIN_URL, loginData);
+    return axios.post(Api_url.Account.LOGIN_URL, loginData);
 }
 
 export function sendSms(userdata) {
-    return axios.post(Account.SEND_SMS_URL, userdata);
+    return axios.post(Api_url.Account.SEND_SMS_URL, userdata);
 }

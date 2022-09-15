@@ -49,7 +49,6 @@ const _AddImage = () => {
                             className={"input"}
                             style={{ display: 'none' }}
                             id="raised-button-file"
-                            multiple
                             type="file"
                         />
                         <label htmlFor="raised-button-file">
@@ -74,7 +73,7 @@ const _AddImage = () => {
                 <CardHeader
                     title={"مدیریت تصاویر"}
                     action={<Button variant={"contained"} title={"btn_add"} onClick={handleClickOpen}>افزودن
-                        امکانات</Button>}/>
+                        تصویر</Button>}/>
             </Card>
             {ModalAddImage()}
         </>

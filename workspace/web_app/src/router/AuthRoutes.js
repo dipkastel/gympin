@@ -9,7 +9,7 @@ export default function AuthRoutes() {
 
     const { isAuthorized } = useSelector(
         ({ auth }) => ({
-            isAuthorized: auth.user != null,
+            isAuthorized: auth.authToken != null,
         }),
         shallowEqual
     );
@@ -18,7 +18,7 @@ export default function AuthRoutes() {
             <Route path="/" element={isAuthorized?<Navigate to={"/"} />:<Navigate exact={true} to="/auth/login"/>}/>
             <Route path="/login" element={isAuthorized?<Navigate to={"/"} />:<Login/>}/>
             <Route path="/register" element={isAuthorized?<Navigate to={"/"} />:<Register/>}/>
-            <Route path="/logout" element={<LogoutPage/>}/>
+            <Route path="/logout" element={isAuthorized?<LogoutPage/>:<Navigate to={"/"} />}/>
         </Routes>
     )
 }

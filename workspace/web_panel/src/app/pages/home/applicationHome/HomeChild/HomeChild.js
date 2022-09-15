@@ -2,18 +2,23 @@ import React, {useEffect, useState} from 'react';
 import AddIcon from "@mui/icons-material/Add";
 import {Button} from "react-bootstrap";
 import {toAbsoluteUrl} from "../../../../../_metronic";
-import * as collection from "../../../../api/collection.api";
+import * as HomeCollection from "../../../../api/HomeCollection.api";
 import {Portlet, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
-import ModalDelete from "./ModalDelete";
+import ModalDeleteChild from "./ModalDeleteChild";
+import {Link} from "@mui/material";
+import ModalAddChild from "./ModalAddChild";
 
-const AndroidClientHomeCollection = () => {
+const HomeChild = ({CollectionItem,SetSelectedItem}) => {
     const [list, SetList] = useState([]);
-    const [deleteItem, SetDeleteItem] = useState(null)
+    const [deleteItem, SetDeleteItem] = useState(null);
+    const [openModalAdd, SetOpenModalAdd] = useState(false);
+    const [dataChanges, SetDataChanges] = useState([]);
     useEffect(function () {
-        collection._getAll().then((data) => {
+        HomeCollection._getById({id:CollectionItem.Id}).then((data) => {
+            console.log(data.data.Data)
             SetList(data.data.Data)
         });
-    }, [])
+    }, [dataChanges,CollectionItem])
 
     function renderCollectionsRow(data, index) {
         return (
@@ -22,37 +27,30 @@ const AndroidClientHomeCollection = () => {
                     <img alt="" src={toAbsoluteUrl("/media/users/100_11.jpg")}/>
                 </div>
                 <div className="kt-widget4__info ">
-                    <a
+                    <Link onClick={()=>SetSelectedItem(data)}
                         className="kt-widget4__title"
-                        href="https://keenthemes.com.my/metronic"
                     >
-                        {data.CollectionName}
-                    </a>
+                        {data.Priority+" - "+data.Type}
+                    </Link>
                 </div>
-
                 <span className="pr-1">
-          <Button variant="danger" onClick={(e) => SetDeleteItem(data.Id)}>
-            {" "}
-              حذف{" "}
-          </Button>
+          <Button variant="danger" onClick={(e) => SetDeleteItem(data)}>حذف</Button>
         </span>
             </div>
         );
     };
 
-    const onDelete = ()=> {
-        // SetDeleteItem(null)
-    }
     return (
         <>
             <Portlet>
                 <PortletHeader
-                    title="صفحه اصلی اپلیکیشن موبایل"
+                    title={CollectionItem.CollectionName}
                     toolbar={
                         <PortletHeaderToolbar>
                             <button
                                 type="button"
                                 className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
+                                onClick={()=>SetOpenModalAdd(true)}
                             >
                                 <AddIcon/>
                             </button>
@@ -62,17 +60,17 @@ const AndroidClientHomeCollection = () => {
                 <div className="kt-portlet kt-portlet--height-fluid">
                     <div className="kt-portlet__body">
                         <div className="kt-widget4">
-                            {list.map(renderCollectionsRow)}
+                            {list.LayoutItemParams&&list.LayoutItemParams.sort ((a,b)=>(a.Priority>b.Priority)?1:-1).map(renderCollectionsRow)}
                         </div>
                     </div>
                 </div>
             </Portlet>
-            {/*<ModalAdd/>*/}
-            <ModalDelete deleteItem={deleteItem} />
+            {deleteItem && <ModalDeleteChild deleteItem={deleteItem} SetDeleteItem={SetDeleteItem}/>}
+            {openModalAdd&&<ModalAddChild openModalAdd={openModalAdd} SetOpenModalAdd={SetOpenModalAdd} SetDataChanges={SetDataChanges} />}
         </>
     );
 };
 
-export default AndroidClientHomeCollection;
+export default HomeChild;
 
 

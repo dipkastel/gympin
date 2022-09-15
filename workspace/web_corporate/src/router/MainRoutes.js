@@ -18,7 +18,7 @@ export const MainRoutes = () => {
     return (
 
             <Routes>
-                <Route path="/auth/*" element={isAuthorized?<Navigate to={"/"} />: <AuthRoutes/>} />
+                <Route path="/auth/*" element={<AuthRoutes/>} />
                 <Route path="/error/*" element={<ErrorsRoutes/>} />
                 <Route path="/*" element={isAuthorized?<ApplicationRoutes userLastLocation={"/"} />:<Navigate to="/auth/login" />} />
             </Routes>

@@ -1,8 +1,18 @@
 import React from 'react';
 import {Avatar, Button, Card, Grid, TextField} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
+import {connect} from "react-redux";
+import {authActions} from "../../helper/redux/actions/authActions";
 
-const EditProfile = () => {
+const EditProfile = (props) => {
+    function SubmitEdit(e) {
+
+    }
+
+    function ChangeAvatar() {
+
+    }
+
     return (
 
         <Card elevation={3} sx={{margin:1}}>
@@ -15,7 +25,9 @@ const EditProfile = () => {
                 <Avatar
                     sx={{width: 120, height: 120,marginTop:3}}
                     alt="Remy Sharp"
-                    src={toAbsoluteUrl("sd")}/>
+                    src={toAbsoluteUrl("sd")}
+                    onClick={ChangeAvatar}
+                    />
 
                 <div className="form-group p-4">
                     <TextField
@@ -26,6 +38,8 @@ const EditProfile = () => {
                         margin="normal"
                         name="username"
                         type="username"
+                        aria-readonly
+                        value={"09126540027"}
                         label={"شماره همراه"}
                     />
                     <TextField
@@ -99,7 +113,7 @@ const EditProfile = () => {
                         type="username"
                         label={"درباره من"}
                     />
-                    <Button className="mt-4" variant={"outlined"} fullWidth  >ثبت</Button>
+                    <Button className="mt-4" variant={"outlined"} fullWidth onClick={SubmitEdit} >ثبت</Button>
                 </div>
 
             </Grid>
@@ -107,4 +121,4 @@ const EditProfile = () => {
     );
 };
 
-export default EditProfile;
+export default connect(null, authActions)(EditProfile);

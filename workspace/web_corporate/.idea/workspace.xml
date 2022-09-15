@@ -5,43 +5,62 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaa339a7-f874-44cd-9025-b881c033f287" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/corporateDetail/CorporateDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/finance/_UsersWallet.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/increaseGroupCredit/IncreaseGroupCredit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/users/_AddPersonel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/users/_PersonelList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/components/NBottomNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/components/NBottomNavigation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/components/NNavigaion.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/components/NNavigaion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceAbout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceAbout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceFacilities.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/place/_PlaceFacilities.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/lastLocationHandler.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/redux/actions/authActionTypes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/redux/actions/authActions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/redux/reducers/authReducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/redux/reducers/rootReducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/helper/redux/saga/saga.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/home/Home.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/home/components/HomeDiscountList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/api/HomeChild.api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/api/HomeCollection.api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/api/HomeItem.api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/HomeChild/HomeChild.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/HomeChild/ModalAddChild.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/HomeChild/ModalDeleteChild.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/HomeCollections/HomeCollections.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/HomeCollections/ModalAddCollection.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/HomeCollections/ModalDeleteCollection.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/HomeItem/ModalDeleteItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/widgetDestination.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/widgetList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/helper/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/helper/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/helper/ducks/auth.duck.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/helper/rootDuck.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/helper/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/helper/redux/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/account.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/api/account.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/mainPage.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/api/mainPage.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/network/const/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/const/NETWORKCONSTS.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/auth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/auth/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/auth/Logout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/auth/Logout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/editProfile/EditProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/editProfile/EditProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/home/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/home/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/profile/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/router/ApplicationRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/router/ApplicationRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/router/AuthRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/router/AuthRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/router/MainRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/router/MainRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/router/RouterHelpers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_coroprate/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_coroprate/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_coroprate/.idea/web_corporate.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_coroprate/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NBottomNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NBottomNavigation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/demandPeyment/DemandPeyment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/IncreaseListPeyment/IncreaseList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/finance/Finance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/finance/Finance.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/finance/_FinanceReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/finance/_FinanceReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/finance/_Wallet.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/finance/_Wallet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/home/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helper/ducks/auth.duck.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/ducks/auth.duck.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/auth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/management/Management.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/management/Management.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/management/_PlaceAbout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/management/_PlaceFacilities.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/management/_PlaceGates.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/management/_PlacePersonel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/management/_PlaceStall.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/management/_PlaceTraffic.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/management/_Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/_ListItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/report/Report.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/report/Report.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/report/_OurTraffic.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/report/_OurTraffic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/report/_SportRadar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/report/_SportRadar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/singleUser/SingleUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/singleUser/SingleUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/singleUser/_userDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/singleUser/_userDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/singleUser/_userPackages.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/singleUser/_userCharges.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/GateAwaitingEntry.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/GateEntered.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/users/Users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/users/Users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/ApplicationRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/ApplicationRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/MainRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/MainRoutes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_master/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/images/_AddImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/images/_AddImage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/management/Management.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/management/Management.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/collection.api.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/api/const_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/api/const_api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/AndroidClientMainPage/AndroidClientHomeCollections.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/HomeItem/HomeItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/AndroidClientMainPage/ModalAdd.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/AndroidClientMainPage/ModalDelete.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/ApplicationHomeManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/pages/home/applicationHome/ApplicationHomeManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/app/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/app/store/store.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +98,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.obroom.plugin.jpasql:running" value="0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/management" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../web_app" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -153,6 +172,8 @@
       <workItem from="1660380239047" duration="631000" />
       <workItem from="1661446888150" duration="8055000" />
       <workItem from="1661690208508" duration="6112000" />
+      <workItem from="1662822064818" duration="4684000" />
+      <workItem from="1663248192092" duration="643000" />
     </task>
     <servers />
   </component>

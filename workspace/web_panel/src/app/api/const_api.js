@@ -41,8 +41,8 @@ export let SportApi = {
   updateSport: "v1/sport/update",
 };
 
-export let collection = {
-  //sport
+export let homeCollection = {
+  //mainpagelayout
   add: "v1/mainpagelayoutcollection/add",
   delete: "v1/mainpagelayoutcollection/delete",
   getAll: "v1/mainpagelayoutcollection/getAll",
@@ -50,6 +50,27 @@ export let collection = {
   getMainPage: "v1/mainpagelayoutcollection/mainPage",
   update: "v1/mainpagelayoutcollection/update",
 };
+
+export let homeChild = {
+  //mainpagelayout
+  add: "v1/mainpagelayoutchilditem/add",
+  delete: "v1/mainpagelayoutchilditem/delete",
+  getAll: "v1/mainpagelayoutchilditem/getAll",
+  getById: "v1/mainpagelayoutchilditem/getById",
+  getMainPage: "v1/mainpagelayoutchilditem/mainPage",
+  update: "v1/mainpagelayoutchilditem/update",
+};
+
+export let homeItem = {
+  //mainpagelayout
+  add: "v1/mainpagelayoutitem/add",
+  delete: "v1/mainpagelayoutitem/delete",
+  getAll: "v1/mainpagelayoutitem/getAll",
+  getById: "v1/mainpagelayoutitem/getById",
+  getMainPage: "v1/mainpagelayoutitem/mainPage",
+  update: "v1/mainpagelayoutitem/update",
+};
+
 
 export let UserApi = {
   //sport

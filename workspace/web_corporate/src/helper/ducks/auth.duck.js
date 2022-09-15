@@ -22,14 +22,12 @@ export const reducer = persistReducer(
         switch (action.type) {
             case actionTypes.Login: {
                 const { authToken } = action.payload;
-
                 return { authToken, user: undefined };
             }
 
             case actionTypes.Register: {
                 console.log("actionTypes.Register");
                 const { authToken } = action.payload;
-
                 return { authToken, user: undefined };
             }
 
@@ -75,6 +73,8 @@ export function* saga() {
 
     yield takeLatest(actionTypes.UserRequested, function* userRequested() {
         console.log("userRequested");
+        console.log(actionTypes)
+        console.log(actions)
         const a = {
             status: 200,
             data: {

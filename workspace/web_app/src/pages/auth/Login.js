@@ -1,21 +1,11 @@
 import React, {useState} from "react";
-import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardHeader,
-    Grid, Hidden,
-    IconButton,
-    InputAdornment,
-    Link, TextField, Typography
-} from "@mui/material";
-import * as auth from "../../helper/ducks/auth.duck";
+import {Button, Card, CardContent, CardHeader, Grid, Hidden, TextField, Typography} from "@mui/material";
 import {Formik} from "formik";
 import {checkMobileValid} from "../../helper/utils";
 import {Spinner} from "react-bootstrap";
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
+import {authActions} from "../../helper/redux/actions/authActions";
 
 function Login(props) {
 
@@ -107,14 +97,15 @@ function Login(props) {
                                     })
                                         .then((data) => {
                                             disableLoading();
-                                             props.login(data.data.Data.Token);
+                                            console.log(data.data.Data)
+                                            props.login(data.data.Data);
                                         })
                                         .catch((ex) => {
                                             console.log(ex);
                                             disableLoading();
                                             setSubmitting(false);
                                             setStatus(
-                                                "اطلاعات وارد شده معتبر نبست"
+                                                "اطلاعات وارد شده معتبر نیست"
                                             );
                                         });
                                 }, 1000);
@@ -161,28 +152,18 @@ function Login(props) {
                                         />
                                     </div>
 
-                                    <InputAdornment position="start">
-                                        <IconButton
-                                            edge="start"
-                                            aria-label="Toggle password visibility"
-                                            disabled={(resend > 0)}
-                                            onClick={(e) => sendMessage(e, values)}
-                                        >
-                                            {(checkMobileValid(values.username)) && (
-                                                (resend > 0) ? (
-                                                    <div>
-                                                        <Spinner animation="border" size="sm"/>
-                                                        <Typography variant="body1" display="block"
-                                                                    gutterBottom>
-                                                            {resend}
-                                                        </Typography>
-                                                    </div>
-                                                ) : <Button variant={"contained"} >ارسال کد</Button>
-                                            )
-                                            }
-
-                                        </IconButton>
-                                    </InputAdornment>
+                                    {(checkMobileValid(values.username)) && (
+                                        (resend > 0) ? (
+                                            <div>
+                                                <Spinner animation="border" size="sm"/>
+                                                <Typography variant="body1" display="block"
+                                                            gutterBottom>
+                                                    {resend}
+                                                </Typography>
+                                            </div>
+                                        ) : <Button onClick={(e) => sendMessage(e, values)} disabled={(resend > 0)} variant={"contained"} >ارسال کد</Button>
+                                    )
+                                    }
 
                                     <Hidden lgDown={(resend < -1)} lgUp={(resend < -1)}>
                                         <div className="form-group"
@@ -216,4 +197,4 @@ function Login(props) {
         </Grid>
     );
 }
-export default connect(null, auth.actions)(Login)
+export default connect(null, authActions)(Login)

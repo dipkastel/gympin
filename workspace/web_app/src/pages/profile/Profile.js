@@ -1,28 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Avatar, Button, Card, CardContent, CardHeader, Divider, Grid, Rating, Typography} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
 import {Image} from "react-bootstrap";
 import _ListItem from "../../components/_ListItem";
-let user = {
-    userId: 1,
-    gateName: "ورودی بدنسازی",
-    sportName: "بدنسازی",
-    image: "/assets/images/2.jpg",
-    userName: "ابراهیم گلستان",
-    nationalCode: "0020596891",
-    birthday: "1360/05/07",
-    phoneNumber: "09126548595",
-    birthLocation: "تهران",
-    fathersName: "حمید",
-    bio:"من ابراهیم گلستان یک نویسنده خوب هستم لطفا مرا دنبال کنید تا با ادبیات ورزش کنیم"
-
-}
+import {connect,useSelector} from "react-redux";
+import {authActions} from "../../helper/redux/actions/authActions";
 
 const Profile = (props) => {
-
+    const user = useSelector(state=>state.auth.user)
+    console.log(user)
     return (
         <>
-
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent>
                     <Grid container >
@@ -35,10 +23,10 @@ const Profile = (props) => {
                                 sx={{width: 120, height: 120,marginTop:3}}
                                 alt="Remy Sharp"
                                 src={toAbsoluteUrl(user.image)}/>
-                            <Typography variant={"h4"} color={"black"}>{user.userName}</Typography>
-                            <Typography variant={"h6"} color={"darkgray"}>{user.phoneNumber}</Typography>
-                            <Rating name="read-only" value={5} readOnly />
-                            <Typography variant={"body1"} color={"darkgray"} sx={{marginY:1}}>{user.bio}</Typography>
+                            <Typography variant={"h4"} color={"black"}>{user.Username}</Typography>
+                            <Typography variant={"h6"} color={"darkgray"}>{user.PhoneNumber}</Typography>
+                            <Rating name="read-only" value={user.rate} readOnly />
+                            <Typography variant={"body1"} color={"darkgray"} sx={{marginY:1}}>{user.Bio}</Typography>
                             {/*<Grid  container direction={"row"} columns={13}   >*/}
                             {/*    <Grid container  xs={5} alignItems={"center"} justifyContent={"center"} >*/}
                             {/*        <Typography variant={"body2"} color={"darkgray"} sx={{marginY:1}}>دنبال کننده 123</Typography>*/}
@@ -71,4 +59,4 @@ const Profile = (props) => {
 };
 
 
-export default Profile;
+export default connect(null, authActions)(Profile);

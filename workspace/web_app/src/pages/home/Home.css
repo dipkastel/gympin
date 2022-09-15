@@ -1,0 +1,27 @@
+.discount{
+    z-index: 1;
+    position: absolute;
+    width: 40px;
+    border-top-right-radius: 4px;
+}
+.discount .discountbg{
+    border-style: solid;
+    border-width: 0 60px 60px 0;
+    border-color: transparent #ff0000 transparent transparent;
+}
+
+.discount .percent{
+    color: #FFFFFF;
+    position: absolute;
+    font-size: 0.8em;
+}
+
+.title{
+    color: #FFFFFF;
+    position: absolute;
+    font-size: 0.8em;
+    bottom: 0;
+    margin-bottom: 18px;
+    margin-right: 3px;
+    text-shadow: 0px 0px 4px #000;
+}

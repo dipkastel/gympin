@@ -1,0 +1,3 @@
+export const widgetList=[
+    "TITLE" , "SLIDER" , "BANNER" , "USER_LIST" , "SINGLE_USER" , "CONTENT_LIST" , "DISCOUNT_LIST" , "SINGLE_CONTENT" , "SINGLE_DISCOUNT"
+]

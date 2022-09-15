@@ -20,7 +20,7 @@ export default function ApplicationRoutes() {
 
     const { isAuthorized } = useSelector(
         ({ auth }) => ({
-            isAuthorized: auth.user != null,
+            isAuthorized: auth.authToken != null,
         }),
         shallowEqual
     );

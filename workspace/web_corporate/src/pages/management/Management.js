@@ -10,6 +10,7 @@ export default function Management() {
             <_ListItem title="مشخصات سازمان" destination="/management/details"/>
             <_OurTraffic/>
             <_SportRadar/>
+            <_ListItem title="خروج" destination="/auth/logout"/>
         </>
     );
 }

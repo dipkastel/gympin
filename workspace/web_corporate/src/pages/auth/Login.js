@@ -5,10 +5,13 @@ import {
     CardActions,
     CardContent,
     CardHeader,
-    Grid, Hidden,
+    Grid,
+    Hidden,
     IconButton,
     InputAdornment,
-    Link, TextField, Typography
+    Link,
+    TextField,
+    Typography
 } from "@mui/material";
 import * as auth from "../../helper/ducks/auth.duck";
 import {Formik} from "formik";
@@ -39,7 +42,7 @@ function Login(props) {
         if (checkMobileValid(value.username)) {
             var count = 120;
             setResend(count);
-            sendSms({"phoneNumber":value.username})
+            sendSms({"phoneNumber": value.username})
                 .then((data) => {
                     let interval = setInterval(() => {
                         if (count > 0) {
@@ -47,7 +50,7 @@ function Login(props) {
                             setResend(count);
                         } else clearInterval(interval);
                     }, 1000);
-                }).catch((err)=>{
+                }).catch((err) => {
                 setResend(-3);
                 alert("خطا در برقراری ارتباط با سرور و یا شما اجازه دسترسی به این بخش را ندارید")
             })
@@ -64,14 +67,15 @@ function Login(props) {
             justifyContent="center"
             style={{minHeight: '100vh'}}
         >
-            <Grid item >
+            <Grid item>
                 <Card elevation={5} sx={{
-                    borderRadius:3,
+                    borderRadius: 3,
 
                 }}>
                     <CardHeader
                         sx={{
-                            backgroundColor:"primary.main"
+                            backgroundColor: "primary.main",
+                            color: "#fff"
                         }}
                         title="ورود"
                     />
@@ -106,19 +110,19 @@ function Login(props) {
                                     })
                                         .then((data) => {
                                             disableLoading();
-                                             props.login(data.data.Data.Token);
+                                            console.log(data.data.Data.Token)
+                                            props.login(data.data.Data.Token);
                                         })
                                         .catch((ex) => {
-                                            console.log(ex);
                                             disableLoading();
+                                            console.log("login called")
                                             setSubmitting(false);
                                             setStatus(
                                                 "اطلاعات وارد شده معتبر نبست"
                                             );
                                         });
                                 }, 1000);
-                            }}
-                        >
+                            }}>
                             {({
                                   values,
                                   status,
@@ -161,12 +165,6 @@ function Login(props) {
                                     </div>
 
                                     <InputAdornment position="start">
-                                        <IconButton
-                                            edge="start"
-                                            aria-label="Toggle password visibility"
-                                            disabled={(resend > 0)}
-                                            onClick={(e) => sendMessage(e, values)}
-                                        >
                                             {(checkMobileValid(values.username)) && (
                                                 (resend > 0) ? (
                                                     <div>
@@ -176,11 +174,12 @@ function Login(props) {
                                                             {resend}
                                                         </Typography>
                                                     </div>
-                                                ) : <Button variant={"contained"} >ارسال کد</Button>
+                                                ) : <Button variant={"contained"}
+                                                            disabled={(resend > 0)}
+                                                            onClick={(e) => sendMessage(e, values)}>ارسال کد</Button>
                                             )
                                             }
 
-                                        </IconButton>
                                     </InputAdornment>
 
                                     <Hidden lgDown={(resend < -1)} lgUp={(resend < -1)}>
@@ -212,7 +211,7 @@ function Login(props) {
                     <CardActions>
                         <Grid rowSpacing={1}>
                             <Link
-                                variant="caption"  href="/auth/register">مرکز خود را ثبت نام کنید</Link>
+                                variant="caption" href="/auth/register">مرکز خود را ثبت نام کنید</Link>
                         </Grid>
                     </CardActions>
                 </Card>
@@ -221,4 +220,5 @@ function Login(props) {
         </Grid>
     );
 }
+
 export default connect(null, auth.actions)(Login)

@@ -1,15 +1,21 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import Notice from "../../../partials/content/Notice";
-import AddIcon from "@mui/icons-material/Add";
-import {
-  Portlet,
-  PortletHeader,
-  PortletHeaderToolbar,
-} from "../../../partials/content/Portlet";
 import "../applicationHome/ApplicationHomeManagement.css";
-import AndroidClientHomeCollections from "./AndroidClientMainPage/AndroidClientHomeCollections";
+import HomeCollections from "./HomeCollections/HomeCollections";
+import HomeChild from "./HomeChild/HomeChild";
+import {widgetList} from "./widgetList";
+import {widgetDestination} from "./widgetDestination";
+import HomeItem from "./HomeItem/HomeItem";
 
 class ApplicationHomeManagement extends Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            selectedHomeCollection:null,
+            selectedHomeChild:null,
+            selectedHomeItem:null,
+        };
+    }
   render() {
     return (
       <>
@@ -19,13 +25,34 @@ class ApplicationHomeManagement extends Component {
             میتوان از ویجت های قراردادی برای ساخت صفحه اصلی اپلیکیشن موبایل
             استفاده کرد که در این قسمت آنها را مدیریت میکنیم
           </p>
+          <p>
+              ویجت های قابل استفاده :
+              <br/>
+              {widgetList.map(item=>(item+" , "))}
+              <br/>
+              <br/>
+              که میتوانند مقاصد زیر را داشته باشند:
+              <br/>
+              {widgetDestination.map(item=>(item+" , "))}
+           </p>
         </Notice>
 
         <div className="row">
-          <div className="col-xl-6">
-              <AndroidClientHomeCollections />
+          <div className="col-xl-4">
+              <HomeCollections SetSelectedItem={(item)=>this.setState({selectedHomeCollection:item,selectedHomeItem:null})} />
           </div>
+            {this.state.selectedHomeCollection &&
+              <div className="col-xl-4">
+                  <HomeChild CollectionItem={this.state.selectedHomeCollection} SetSelectedItem={(item)=>this.setState({selectedHomeItem:item})}/>
+              </div>
+          }
+            {this.state.selectedHomeItem &&
+            <div className="col-xl-4">
+                <HomeItem selectedHomeItem={this.state.selectedHomeItem} selectedHomeChild={(item)=>this.setState({selectedHomeChild:item})}/>
+            </div>
+            }
         </div>
+
       </>
     );
   }

@@ -1,6 +1,6 @@
 import axios from "axios";
-import {Account} from "../const/NETWORKCONSTS";
+import {Api_url} from "../const/NETWORKCONSTS";
 
 export function getMainPage() {
-    return axios.get(Account.LOGIN_URL);
+    return axios.get(Api_url.mainPage.GET_MAIN_PAGE,{params:{id:2}});
 }
