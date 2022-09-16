@@ -105,11 +105,15 @@ public class ApiAspect {
         if (GympinContextHolder.getContext() == null) {
             GympinContextHolder.setContext(new GympinContext());
         }
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetailsImpl) {
-            GympinContextHolder.getContext().setUserDetails((UserDetailsImpl) principal);
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof UserDetailsImpl) {
+                GympinContextHolder.getContext().setUserDetails((UserDetailsImpl) principal);
+            }
+            log.info("Following context setted: {} \n", GympinContextHolder.getContext());
+        }catch (Exception ex){
+            log.error("ERROR IN SET CONTEXT",ex);
         }
-        log.info("Following context setted: {} \n", GympinContextHolder.getContext());
     }
 
     private void setGympinServiceCallContextForChat(Object principal) {
