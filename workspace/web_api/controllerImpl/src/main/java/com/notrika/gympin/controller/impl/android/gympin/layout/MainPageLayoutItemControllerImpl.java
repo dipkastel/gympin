@@ -40,13 +40,13 @@ public class MainPageLayoutItemControllerImpl implements MainPageLayoutItemContr
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+//    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<List<MainPageLayoutItemDto>> getAll(BasePagedParam pagingParam) {
         return ResponseEntity.ok(mainPageLayoutItemService.getAll(pagingParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+//    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<MainPageLayoutItemDto> getById(Long id) {
         return ResponseEntity.ok(mainPageLayoutItemService.getById(id));
     }

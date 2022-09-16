@@ -41,13 +41,13 @@ public class MainPageLayoutChildItemControllerImpl implements MainPageLayoutChil
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+//    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<List<MainPageLayoutChildItemDto>> getAll(BasePagedParam pagingParam) {
         return ResponseEntity.ok(childItemService.getAll(pagingParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+//    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<MainPageLayoutChildItemDto> getById(@RequestBody Long id) {
         return ResponseEntity.ok(childItemService.getById(id));
     }

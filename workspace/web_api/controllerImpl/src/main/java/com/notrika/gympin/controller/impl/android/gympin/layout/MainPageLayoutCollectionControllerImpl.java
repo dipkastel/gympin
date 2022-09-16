@@ -42,13 +42,13 @@ public class MainPageLayoutCollectionControllerImpl implements MainPageLayoutCol
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+//    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<List<MainPageLayoutCollectionDto>> getAll(BasePagedParam pagingParam) {
         return ResponseEntity.ok(collectionService.getAll(pagingParam));
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
+//    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     public ResponseEntity<MainPageLayoutCollectionDto> getById(Long id) {
         return ResponseEntity.ok(collectionService.getById(id));
     }
