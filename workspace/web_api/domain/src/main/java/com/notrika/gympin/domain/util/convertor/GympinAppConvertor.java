@@ -23,6 +23,7 @@ public final class GympinAppConvertor {
         entity.setId(param.getId());
         entity.setType(param.getType());
         entity.setPriority(param.getPriority());
+        entity.setName(param.getName());
         if (param.getItems() != null) {
             entity.setItems(param.getItems().stream().map(GympinAppConvertor::mainPageLayoutChildItemParamToEntity).collect(Collectors.toList()));
         }
@@ -39,6 +40,7 @@ public final class GympinAppConvertor {
         entity.setDestination(param.getDestination());
         entity.setData(param.getData());
         entity.setPriority(param.getPriority());
+        entity.setType(param.getType());
         return entity;
     }
 
@@ -49,6 +51,7 @@ public final class GympinAppConvertor {
         dto.setId(entity.getId());
         dto.setType(entity.getType());
         dto.setPriority(entity.getPriority());
+        dto.setName(entity.getName());
         if (entity.getItems() != null) {
             dto.setItems(entity.getItems().stream().map(GympinAppConvertor::mainPageLayoutChildItemEntityToDto).collect(Collectors.toList()));
         }
@@ -66,6 +69,7 @@ public final class GympinAppConvertor {
         dto.setDestination(entity.getDestination());
         dto.setData(entity.getData());
         dto.setPriority(entity.getPriority());
+        dto.setType(entity.getType());
         return dto;
     }
 
