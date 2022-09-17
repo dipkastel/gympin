@@ -10,6 +10,7 @@ import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.location.param.RegionParam;
 import com.notrika.gympin.common.location.service.LocationService;
 import com.notrika.gympin.common.location.service.PlaceService;
+import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +91,12 @@ public class PlaceControllerImpl implements PlaceController {
     public ResponseEntity<PlaceOwnerDto> deletePlaceOwner(@RequestBody PlaceOwnerParam placeOwnerParam) {
         PlaceOwnerDto deletedPlaceOwner = locationService.deletePlaceOwner(placeOwnerParam);
         return new ResponseEntity<PlaceOwnerDto>(deletedPlaceOwner, HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/get-sports-of-place")
+    public ResponseEntity<List<SportDto>> getSportsOfPlace(PlaceDto place) {
+        return ResponseEntity.ok(placeService.getSportsOfPlace(place));
     }
 
     @Override

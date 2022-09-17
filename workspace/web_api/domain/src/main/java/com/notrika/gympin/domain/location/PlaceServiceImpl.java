@@ -5,8 +5,10 @@ import com.notrika.gympin.common.location.dto.PlaceDto;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.location.param.RegionParam;
 import com.notrika.gympin.common.location.service.PlaceService;
+import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
+import com.notrika.gympin.domain.util.convertor.SportConvertor;
 import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
 import com.notrika.gympin.persistence.entity.location.PlaceEntity;
 import com.notrika.gympin.persistence.entity.location.RegionEntity;
@@ -112,5 +114,10 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
 
     public List<PlaceEntity> getPlaceByUser(UserEntity user) {
         return placeRepository.findAllByPlaceOwnersAndDeletedIsFalse(user);
+    }
+
+    @Override
+    public List<SportDto> getSportsOfPlace(PlaceDto place) {
+        return SportConvertor.sportsToSportDtos(placeRepository.getSportsOfPlace(PlaceEntity.builder().id(place.getId()).build()));
     }
 }
