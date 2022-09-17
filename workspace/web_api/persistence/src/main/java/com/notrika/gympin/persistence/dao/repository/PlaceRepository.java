@@ -23,7 +23,7 @@ public interface PlaceRepository extends BaseRepository<PlaceEntity, Long> {
 
     List<PlaceEntity> findAllByPlaceOwnersAndDeletedIsFalse(UserEntity user);
 
-    @Query("select s from PlaceEntity p,GateEntity g,SportEntity s where p.id=:#{#place.id} and p.id=g.place.id and s.id=g.sport.id")
+    @Query("select distinct s from PlaceEntity p,GateEntity g,SportEntity s where p.id=:#{#place.id} and p.id=g.place.id and s.id=g.sport.id")
     List<SportEntity> getSportsOfPlace(PlaceEntity place);
 
 }
