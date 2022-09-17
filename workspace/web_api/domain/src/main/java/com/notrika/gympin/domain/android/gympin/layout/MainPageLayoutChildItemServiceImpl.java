@@ -58,7 +58,9 @@ public class MainPageLayoutChildItemServiceImpl extends AbstractBaseService<Main
     @Override
     public MainPageLayoutChildItemDto delete(MainPageLayoutChildItemParam mainPageLayoutChildItemParam) {
         log.info("MainPageLayoutChildItemDto delete is going to execute with param {}",mainPageLayoutChildItemParam);
-        throw new NotYetImplementedException();
+        MainPageLayoutChildItemEntity entity = getEntityById(mainPageLayoutChildItemParam.getId());
+        MainPageLayoutChildItemEntity deletedEntity = delete(entity);
+        return GympinAppConvertor.mainPageLayoutChildItemEntityToDto(deletedEntity);
     }
 
     @Override
