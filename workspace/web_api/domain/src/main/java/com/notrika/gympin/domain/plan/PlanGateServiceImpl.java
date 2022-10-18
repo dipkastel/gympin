@@ -11,6 +11,7 @@ import com.notrika.gympin.domain.util.convertor.GateConvertor;
 import com.notrika.gympin.domain.util.convertor.PlanConvertor;
 import com.notrika.gympin.persistence.dao.repository.PlanGateRepository;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
+import com.notrika.gympin.persistence.entity.location.PlaceEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanGateEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,8 +103,12 @@ public class PlanGateServiceImpl extends AbstractBaseService<PlanGateParam, Plan
         return planGateEntityList.stream().map(GateConvertor::convertToPlanGateDto).collect(Collectors.toList());
     }
 
-    public List<PlanGateEntity> getPlanesByGate(GateEntity gate) {
+    public List<PlanGateEntity> getPlansOfGate(GateEntity gate) {
         return planGateRepository.findAllByGateAndDeletedIsFalse(gate);
+    }
+
+    public List<PlanGateEntity> getPlansOfPlace(PlaceEntity place){
+        return planGateRepository.findAllByGate_PlaceAndDeletedIsFalse(place);
     }
 
 }

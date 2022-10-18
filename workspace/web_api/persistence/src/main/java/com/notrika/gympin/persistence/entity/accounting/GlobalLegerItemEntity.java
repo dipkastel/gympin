@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -33,6 +34,7 @@ public class GlobalLegerItemEntity extends BaseEntityWithCreateUpdate<GlobalLege
 
     @Column(name = "transaction_type")
     private DebtorCreditor transactionType;
+
 
     //    private
 

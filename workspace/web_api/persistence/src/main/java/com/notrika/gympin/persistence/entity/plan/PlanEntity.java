@@ -33,8 +33,8 @@ public class PlanEntity extends BaseEntity<PlanEntity> {
     //    @ToString.Exclude
     //    private List<PlanGateEntity> planGates;
 
-    @OneToOne(mappedBy = "plan")
-    private PlanRegisterEntity registeredPlan;
+//    @OneToOne(mappedBy = "plan")
+//    private PlanRegisterEntity registeredPlan;
 
     @Override
     public boolean equals(Object o) {

@@ -29,6 +29,7 @@ public final class GateConvertor {
         gateEntity.setSport(GympinContext.getBean(SportServiceImpl.class).getEntityById(gateParam.getSport().getId()));
         gateEntity.setGuard(gateParam.getGuard().stream().map(g->GympinContext.getBean(UserServiceImpl.class).getEntityById(g.getId())).collect(Collectors.toList()));
 //                GympinContext.getBean(UserServiceImpl.class).getEntityById(gateParam.getGuard().getId()));
+        gateEntity.setOwner(gateParam.getOwner().stream().map(g->GympinContext.getBean(UserServiceImpl.class).getEntityById(g.getId())).collect(Collectors.toList()));
         gateEntity.setAboutGate(gateParam.getAboutGate());
         gateEntity.setGateRules(gateParam.getGateRules());
         gateEntity.setDeleted(false);
@@ -51,6 +52,7 @@ public final class GateConvertor {
         gateDto.setPlace(LocationConvertor.placeToPlaceDto(entity.getPlace()));
         gateDto.setSport(SportConvertor.sportToSportDto(entity.getSport()));
         gateDto.setGuard(entity.getGuard().stream().map(UserConvertor::userToUserDtoBrief).collect(Collectors.toList()));
+        gateDto.setOwner(entity.getOwner().stream().map(UserConvertor::userToUserDtoBrief).collect(Collectors.toList()));
 //        UserConvertor.userToUserDtoBrief(entity.getGuard()));
         return gateDto;
     }

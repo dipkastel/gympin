@@ -3,9 +3,12 @@ package com.notrika.gympin.domain.accounting;
 import com.notrika.gympin.common.BaseFilter;
 import com.notrika.gympin.common.accounting.account.DebtorCreditor;
 import com.notrika.gympin.common.accounting.account.dto.AccountDto;
+import com.notrika.gympin.common.accounting.account.dto.SemiOverallTransactionDto;
 import com.notrika.gympin.common.accounting.account.enums.AccountTopic;
 import com.notrika.gympin.common.accounting.account.param.AccountParam;
 import com.notrika.gympin.common.accounting.account.service.AccountingService;
+import com.notrika.gympin.common.context.GympinContext;
+import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.persistence.dao.repository.AccountRepository;
 import com.notrika.gympin.persistence.entity.accounting.AccountEntity;
@@ -82,7 +85,7 @@ public class AccountingServiceImpl extends AbstractBaseService<AccountParam, Acc
 
     @Override
     public AccountEntity getEntityById(long id) {
-        return null;
+        return accountRepository.getById(id);
     }
 
     @Override
@@ -94,6 +97,7 @@ public class AccountingServiceImpl extends AbstractBaseService<AccountParam, Acc
     public List<AccountDto> convertToDtos(List<AccountEntity> entities) {
         return null;
     }
+
 
     private void fillAccountNumber(AuditableEntitiesEntity account) {
 

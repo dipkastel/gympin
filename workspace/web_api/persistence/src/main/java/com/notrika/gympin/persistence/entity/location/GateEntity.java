@@ -2,7 +2,9 @@ package com.notrika.gympin.persistence.entity.location;
 
 import com.notrika.gympin.persistence.entity.accounting.AuditableEntitiesEntity;
 import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
+import com.notrika.gympin.persistence.entity.comment.CommentGateEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanGateEntity;
+import com.notrika.gympin.persistence.entity.rating.RateGateEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
@@ -64,6 +66,17 @@ public class GateEntity extends AuditableEntitiesEntity<GateEntity> {
 
     @Column(name = "gate_rules")
     private String gateRules;
+
+    @ManyToMany
+    @JoinTable(name = "gate_owner", joinColumns = @JoinColumn(name = "gate_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ToString.Exclude
+    private List<UserEntity> owner;
+
+    @OneToMany
+    private List<CommentGateEntity> gateComments;
+
+    @OneToMany
+    private List<RateGateEntity> gateRates;
 
     @Override
     public boolean equals(Object o) {

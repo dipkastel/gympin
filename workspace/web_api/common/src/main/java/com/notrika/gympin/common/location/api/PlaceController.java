@@ -7,6 +7,7 @@ import com.notrika.gympin.common.location.dto.PlaceOwnerDto;
 import com.notrika.gympin.common.location.param.PlaceOwnerParam;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.location.param.RegionParam;
+import com.notrika.gympin.common.plan.dto.PlanGateDto;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
@@ -27,5 +28,8 @@ public interface PlaceController extends BaseController<PlaceParam, PlaceDto, Ba
     ResponseEntity<PlaceOwnerDto> deletePlaceOwner(PlaceOwnerParam placeOwnerParam);
 
     ResponseEntity<List<SportDto>> getSportsOfPlace(PlaceDto place);
+
+    ResponseEntity<List<PlanGateDto>> getPlansOfPlace(PlaceParam place);
+
 
 }

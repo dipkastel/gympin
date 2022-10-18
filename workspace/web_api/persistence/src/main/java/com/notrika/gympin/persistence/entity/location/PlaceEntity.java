@@ -2,6 +2,8 @@ package com.notrika.gympin.persistence.entity.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.comment.CommentPlaceEntity;
+import com.notrika.gympin.persistence.entity.rating.RatePlaceEntity;
 import com.notrika.gympin.persistence.entity.sportplace.SportPlaceEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +63,12 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
 
     @Column(name = "place_rules")
     private String placeRules;
+
+    @OneToMany
+    private List<CommentPlaceEntity> placeComments;
+
+    @OneToMany
+    private List<RatePlaceEntity> placeRates;
 
     @Override
     public boolean equals(Object o) {

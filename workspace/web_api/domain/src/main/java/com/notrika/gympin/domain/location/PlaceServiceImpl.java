@@ -5,9 +5,13 @@ import com.notrika.gympin.common.location.dto.PlaceDto;
 import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.location.param.RegionParam;
 import com.notrika.gympin.common.location.service.PlaceService;
+import com.notrika.gympin.common.plan.dto.PlanGateDto;
+import com.notrika.gympin.common.plan.service.PlanGateService;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.plan.PlanGateServiceImpl;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
+import com.notrika.gympin.domain.util.convertor.PlanConvertor;
 import com.notrika.gympin.domain.util.convertor.SportConvertor;
 import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
 import com.notrika.gympin.persistence.entity.location.PlaceEntity;
@@ -27,6 +31,9 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
 
     @Autowired
     private RegionServiceImpl regionService;
+
+    @Autowired
+    private PlanGateServiceImpl planGateService;
 
     @Override
     public PlaceDto add(PlaceParam placeParam) {
@@ -119,5 +126,10 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     @Override
     public List<SportDto> getSportsOfPlace(PlaceDto place) {
         return SportConvertor.sportsToSportDtos(placeRepository.getSportsOfPlace(PlaceEntity.builder().id(place.getId()).build()));
+    }
+
+    @Override
+    public List<PlanGateDto> getPlansOfPlace(PlaceParam place) {
+        return PlanConvertor.convertToPlanGateDto(planGateService.getPlansOfPlace(getEntityById(place.getId())));
     }
 }

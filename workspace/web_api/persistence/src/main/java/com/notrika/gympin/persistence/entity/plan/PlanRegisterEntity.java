@@ -12,6 +12,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -26,7 +27,7 @@ public class PlanRegisterEntity extends BaseEntity<PlanRegisterEntity> {
     private UserEntity user;
 
     @OneToOne
-    private PlanEntity plan;
+    private PlanGateEntity planGate;
 
     @Column(name = "register_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -35,9 +36,6 @@ public class PlanRegisterEntity extends BaseEntity<PlanRegisterEntity> {
     @Column(name = "expire_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expireDate;
-
-    @Column(name = "length")
-    private Integer length;
 
     @Override
     public boolean equals(Object o) {

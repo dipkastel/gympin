@@ -5,6 +5,8 @@ import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.accounting.AuditableEntitiesEntity;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
 import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
+import com.notrika.gympin.persistence.entity.comment.CommentGateEntity;
+import com.notrika.gympin.persistence.entity.comment.CommentPlaceEntity;
 import com.notrika.gympin.persistence.entity.communication.notification.NotificationEntity;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
@@ -12,6 +14,8 @@ import com.notrika.gympin.persistence.entity.location.PlaceOwnerEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.multimedia.UserMultimediaEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
+import com.notrika.gympin.persistence.entity.rating.RateGateEntity;
+import com.notrika.gympin.persistence.entity.rating.RatePlaceEntity;
 import com.notrika.gympin.persistence.entity.rating.UserRateEntity;
 import com.notrika.gympin.persistence.entity.security.service.ServiceExecutionEntity;
 import com.notrika.gympin.persistence.entity.user.relation.FollowEntity;
@@ -150,6 +154,18 @@ public class UserEntity extends AuditableEntitiesEntity<UserEntity> {
     @OneToMany(mappedBy = "guard")
     @ToString.Exclude
     private List<EnterGateEntity> enterGateGuard;
+
+    @OneToMany
+    private List<CommentGateEntity> gateComments;
+
+    @OneToMany
+    private List<CommentPlaceEntity> placeComments;
+
+    @OneToMany
+    private List<RateGateEntity> gateRates;
+
+    @OneToMany
+    private List<RatePlaceEntity> placeRates;
 
     @Transient
     private Float rate;

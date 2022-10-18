@@ -10,6 +10,7 @@ import com.notrika.gympin.common.location.param.PlaceParam;
 import com.notrika.gympin.common.location.param.RegionParam;
 import com.notrika.gympin.common.location.service.LocationService;
 import com.notrika.gympin.common.location.service.PlaceService;
+import com.notrika.gympin.common.plan.dto.PlanGateDto;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.param.UserParam;
@@ -97,6 +98,12 @@ public class PlaceControllerImpl implements PlaceController {
     @GetMapping("/get-sports-of-place")
     public ResponseEntity<List<SportDto>> getSportsOfPlace(PlaceDto place) {
         return ResponseEntity.ok(placeService.getSportsOfPlace(place));
+    }
+
+    @Override
+    @GetMapping("/get-plans-of-place")
+    public ResponseEntity<List<PlanGateDto>> getPlansOfPlace(PlaceParam place) {
+        return ResponseEntity.ok(placeService.getPlansOfPlace(place));
     }
 
     @Override

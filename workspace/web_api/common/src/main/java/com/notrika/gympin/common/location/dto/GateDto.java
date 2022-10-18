@@ -35,7 +35,7 @@ public class GateDto extends BaseDtoWithCreateUpdate<GateDto> {
     private List<UserDto> guard;
 
     @JsonProperty(value = "owner")
-    private UserParam owner;
+    private List<UserDto> owner;
 
     @JsonProperty(value = "gate-timing")
     private List<GateTimingParam> gateTimings;

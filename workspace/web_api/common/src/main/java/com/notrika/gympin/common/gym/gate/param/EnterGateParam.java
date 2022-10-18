@@ -25,4 +25,7 @@ public class EnterGateParam extends BaseParam<EnterGateParam> {
     @JsonProperty(value = "enter-status", required = true)
     private EnterGateStatus enterStatus;
 
+    @JsonProperty(value = "notes")
+    private String notes;
+
 }

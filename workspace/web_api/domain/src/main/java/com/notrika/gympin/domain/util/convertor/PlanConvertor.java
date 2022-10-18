@@ -16,6 +16,8 @@ import com.notrika.gympin.persistence.entity.user.UserEntity;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlanConvertor {
 
@@ -45,23 +47,26 @@ public class PlanConvertor {
         PlanRegisterEntity entity = new PlanRegisterEntity();
         entity.setId(param.getId());
         entity.setUser((UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY));
-        entity.setPlan(GympinContext.getBean(PlanServiceImpl.class).getEntityById(param.getPlan().getId()));
+//        entity.setPlan(GympinContext.getBean(PlanServiceImpl.class).getEntityById(param.getPlan().getId()));
         entity.setRegisterDate(new Date());
         entity.setExpireDate(GeneralHelper.calcDateByDiff(entity.getRegisterDate(), param.getLength(), Calendar.MONTH));
-        entity.setLength(param.getLength());
+//        entity.setLength(param.getLength());
         return entity;
     }
 
     public static PlanRegisterDto convertToPlanRegisterDto(PlanRegisterEntity entity) {
         PlanRegisterDto dto = new PlanRegisterDto();
         dto.setId(entity.getId());
-        dto.setPlan(convertToPlanDto(entity.getPlan()));
+//        dto.setPlan(convertToPlanDto(entity.getPlan()));
         dto.setRegisterDate(dto.getRegisterDate());
         dto.setExpireDate(dto.getExpireDate());
-        dto.setLength(entity.getLength());
+//        dto.setLength(entity.getLength());
         dto.setExpired(entity.getExpireDate().before(new Date()));
         return dto;
     }
 
+    public static List<PlanGateDto> convertToPlanGateDto(List<PlanGateEntity> entities){
+        return entities.stream().map(PlanConvertor::convertToPlanGateDto).collect(Collectors.toList());
+    }
 
 }

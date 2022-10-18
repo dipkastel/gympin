@@ -10,4 +10,6 @@ public interface DocumentRepository extends BaseRepository<DocumentEntity,Long> 
     @Query("select max(d.documentNumber) from DocumentEntity d")
     Long findMaxDocNum();
 
+
+
 }

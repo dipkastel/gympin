@@ -33,7 +33,7 @@ public class GateParam extends BaseParam<GateParam> {
     private List<UserParam> guard;
 
     @JsonProperty(value = "owner")
-    private UserParam owner;
+    private List<UserParam> owner;
 
     @JsonProperty(value = "gate-timing")
     private List<GateTimingParam> gateTimings;

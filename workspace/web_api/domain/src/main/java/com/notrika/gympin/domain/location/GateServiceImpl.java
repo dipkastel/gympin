@@ -18,6 +18,7 @@ import com.notrika.gympin.persistence.dao.repository.GateRepository;
 import com.notrika.gympin.persistence.entity.location.GateEntity;
 import com.notrika.gympin.persistence.entity.location.PlaceEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -166,6 +167,10 @@ public class GateServiceImpl extends AbstractBaseService<GateParam, GateDto, Gat
     @Override
     public List<GateDto> getGatesByOwner(UserParam owner) {
         return null;
+    }
+
+    public List<GateEntity> getGatesByOwner(UserEntity owner){
+        return gateRepository.findAllByOwnerAndDeletedIsFalse(owner);
     }
 
     @Override
