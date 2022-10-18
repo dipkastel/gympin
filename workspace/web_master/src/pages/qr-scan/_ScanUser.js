@@ -1,6 +1,7 @@
 import React from 'react';
 import {Avatar, Grid, Paper, Typography} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
+import {Image} from "react-bootstrap";
 
 const _ScanUser = (props) => {
     return (
@@ -28,8 +29,12 @@ const _ScanUser = (props) => {
                     </Typography>
                 </Grid>
                 <Grid item>
+                    <Image
+                        className={"w-25"}  src={"https://www.pngmart.com/files/3/Green-Tick-PNG-Picture.png"}/>
+                </Grid>
+                <Grid item>
                     <Avatar
-                        sx={{width: "100%", height: "100%"}} alt="Remy Sharp" src={toAbsoluteUrl(props.user.image)}/>
+                        sx={{width: "100px", height: "100px"}} alt="Remy Sharp" src={toAbsoluteUrl(props.user.image)}/>
                 </Grid>
             </Grid>
         </Paper>

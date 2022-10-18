@@ -12,8 +12,8 @@ const _PlaceAbout = () => {
     return (
 
         <div className={"nopadding"}>
-            {data.map(item => (
-                    <Card  elevation={3} sx={{margin: 1, padding: 1}}>
+            {data.map((item,number) => (
+                    <Card key={number}  elevation={3} sx={{margin: 1, padding: 1}}>
                         <Grid
                             container
                             direction="row"

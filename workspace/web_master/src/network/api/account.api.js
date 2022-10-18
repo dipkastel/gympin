@@ -8,3 +8,9 @@ export function login(loginData) {
 export function sendSms(userdata) {
     return axios.post(Api_url.Account.SEND_SMS_URL, userdata);
 }
+
+
+export function refreshToken(refreshToken) {
+    console.log(refreshToken)
+    return axios.post(Api_url.Account.REFRESH_TOKEN, {RefreshToken:refreshToken});
+}

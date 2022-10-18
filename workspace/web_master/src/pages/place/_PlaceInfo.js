@@ -1,14 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Card, CardContent, CardHeader, TextField} from "@mui/material";
 
-const _SettingsPlaceName = () => {
+const _PlaceInfo = ({place,SubmitForm}) => {
+    const [name,setName]=useState(place.Name)
+
+
+    function Submit() {
+        SubmitForm({
+            ...place,
+            Name:name
+        })
+    }
+
     return (
         <Card elevation={3} sx={{margin: 1}}>
             <CardHeader
-                title={"نام مجموعه"}
-                action={(<>
-                    <Button variant={"outlined"}>ثبت</Button>
-                </>)}
+                title={"اطلاعات مجموعه"}
             />
             <CardContent>
                 <TextField
@@ -19,13 +26,15 @@ const _SettingsPlaceName = () => {
                     margin="normal"
                     name="message"
                     type="text"
-                    defaultValue={"مجموعه ورزشی بهروز"}
+                    value={name}
+                    onChange={e=>setName(e.target.value)}
                     label={"نام مجموعه"}
                     multiline
                 />
+                <Button variant={"outlined"} sx={{width:"100%"}} onClick={()=>Submit()}>ثبت</Button>
             </CardContent>
         </Card>
     );
 };
 
-export default _SettingsPlaceName;
+export default _PlaceInfo;

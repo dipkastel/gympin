@@ -8,7 +8,7 @@ import ModalDeleteCollection from "./ModalDeleteCollection";
 import {Link} from "@mui/material";
 import ModalAddCollection from "./ModalAddCollection";
 
-const HomeCollections = ({SetSelectedItem}) => {
+const HomeCollections = ({selectedHomeCollection}) => {
     const [list, SetList] = useState([]);
     const [dataChanges, SetDataChanges] = useState([]);
     const [deleteItem, SetDeleteItem] = useState(null);
@@ -26,10 +26,10 @@ const HomeCollections = ({SetSelectedItem}) => {
                     <img alt="" src={toAbsoluteUrl("/media/users/100_11.jpg")}/>
                 </div>
                 <div className="kt-widget4__info ">
-                    <Link onClick={()=>SetSelectedItem(data)}
-                        className="kt-widget4__title"
+                    <Link onClick={() => selectedHomeCollection(data)}
+                          className="kt-widget4__title"
                     >
-                        {data.CollectionName+" - "+data.Id}
+                        {data.CollectionName + " - " + data.Id}
                     </Link>
                 </div>
                 <span className="pr-1">
@@ -49,7 +49,7 @@ const HomeCollections = ({SetSelectedItem}) => {
                             <button
                                 type="button"
                                 className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                onClick={()=>SetOpenModalAdd(true)}
+                                onClick={() => SetOpenModalAdd(true)}
                             >
                                 <AddIcon/>
                             </button>
@@ -64,8 +64,10 @@ const HomeCollections = ({SetSelectedItem}) => {
                     </div>
                 </div>
             </Portlet>
-            {openModalAdd&&<ModalAddCollection openModalAdd={openModalAdd} SetOpenModalAdd={SetOpenModalAdd} SetDataChanges={SetDataChanges}/>}
-            {deleteItem && <ModalDeleteCollection deleteItem={deleteItem} SetDeleteItem={SetDeleteItem} SetDataChanges={SetDataChanges}/>}
+            {openModalAdd && <ModalAddCollection openModalAdd={openModalAdd} SetOpenModalAdd={SetOpenModalAdd}
+                                                 SetDataChanges={SetDataChanges}/>}
+            {deleteItem && <ModalDeleteCollection deleteItem={deleteItem} SetDeleteItem={SetDeleteItem}
+                                                  SetDataChanges={SetDataChanges}/>}
         </>
     );
 };

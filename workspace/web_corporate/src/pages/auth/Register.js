@@ -18,14 +18,14 @@ export default function Register(props) {
             <Grid item >
                 <Card elevation={5} sx={{
                     borderRadius:3,
-
+                    margin:1
                 }}>
                     <CardHeader
                         sx={{
                             backgroundColor:"primary.main",
                             color:"#fff"
                         }}
-                        title="ثبت مجموعه"
+                        title="ثبت ssمجموعه"
                     />
                     <CardContent>
 

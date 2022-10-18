@@ -11,7 +11,8 @@ import "slick-carousel/slick/slick-theme.css";
 import "bootstrap/dist/css/bootstrap.rtl.min.css"
 import "../helper/style.css"
 
-function App({store, persistor, basename}) {
+const { PUBLIC_URL } = process.env;
+function App() {
     // const [connectionStatus, SetConnectionStatus] = useState(navigator.onLine);
     //
     // window.addEventListener('offline', (event) => {
@@ -22,17 +23,13 @@ function App({store, persistor, basename}) {
     // });
     return (
 
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <BrowserRouter basename={basename}>
+                <BrowserRouter basename={PUBLIC_URL}>
                     <MuiThemeProvider theme={GympinTheme}>
                         <BootStrapThemeProvider dir="rtl">
                             <MainRoutes/>
                         </BootStrapThemeProvider>
                     </MuiThemeProvider>
                 </BrowserRouter>
-            </PersistGate>
-        </Provider>
     );
 }
 

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
 import _PlaceImages from "./_PlaceImages";
 import _PlaceTabs from "./_PlaceTabs";
+import {getPlace} from "../../network/api/place.api";
 const data = {
     "id": 5,
     "name": "اکسیر جوان",
@@ -16,11 +17,13 @@ const data = {
 }
 const Place = (props) => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [place, setPlace] = useState({});
     console.log(searchParams.get("id"))
+    const [place, setPlace] = useState({});
     useEffect(() => {
-            setPlace(data)
-        console.log(data)
+        getPlace(searchParams.get("id")).then(result=>{
+            console.log("getPlace",result);
+            setPlace(result.data.Data);
+        }).catch(e=>console.log(e))
     }, [searchParams]);
 
     return (

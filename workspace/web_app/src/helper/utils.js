@@ -1,11 +1,25 @@
+import {AuthApi} from "../network/const/NETWORKCONSTS";
 
 export const toAbsoluteUrl = (pathname) => process.env.PUBLIC_URL + pathname;
 
 
-export const getImagePath = (imageId)=>"/image/display/"+imageId;
+export const getImagePath = (imageId)=>AuthApi.BASEURL+"/image/display/"+imageId;
 
 export function checkMobileValid(mobileNumber) {
     return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
+}
+export default function GetStringPrice(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export function fixMobile(mobileNumber) {
+    console.log(mobileNumber)
+    console.log(mobileNumber.toString()[0])
+    switch (mobileNumber.toString()[0]) {
+        case "0" : return  mobileNumber.toString()
+        case "+": return mobileNumber.replace("+98","0")
+        case "9": return "0"+mobileNumber
+    }
 }
 
 export function removeStorage(key) {

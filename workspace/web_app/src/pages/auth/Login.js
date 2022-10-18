@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Card, CardContent, CardHeader, Grid, Hidden, TextField, Typography} from "@mui/material";
 import {Formik} from "formik";
-import {checkMobileValid} from "../../helper/utils";
+import {checkMobileValid, fixMobile} from "../../helper/utils";
 import {Spinner} from "react-bootstrap";
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
@@ -26,10 +26,12 @@ function Login(props) {
     };
 
     function sendMessage(e, value) {
-        if (checkMobileValid(value.username)) {
+        var mobileNumber = fixMobile(value.username)
+        console.log(mobileNumber)
+        if (checkMobileValid(mobileNumber)) {
             var count = 120;
             setResend(count);
-            sendSms({"phoneNumber":value.username})
+            sendSms({"phoneNumber":mobileNumber.toString()})
                 .then((data) => {
                     let interval = setInterval(() => {
                         if (count > 0) {
@@ -75,10 +77,10 @@ function Login(props) {
                             }}
                             validate={(values) => {
                                 const errors = {};
-                                if (!values.username) {
+                                if (!values.username.toString()) {
                                     errors.username = "شماره همراه الزامی است";
                                 }
-                                if (!checkMobileValid(values.username)) {
+                                if (!checkMobileValid(values.username.toString())) {
                                     errors.username = "شماره همراه صحیح نیست";
                                 }
 
@@ -92,7 +94,7 @@ function Login(props) {
                                 enableLoading();
                                 setTimeout(() => {
                                     login({
-                                        username: values.username,
+                                        username: fixMobile(values.username),
                                         password: values.password,
                                     })
                                         .then((data) => {
@@ -142,17 +144,17 @@ function Login(props) {
                                             variant="outlined"
                                             margin="normal"
                                             name="username"
-                                            type="username"
+                                            type="number"
                                             label={"شماره همراه"}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
-                                            value={values.username}
+                                            value={fixMobile(values.username)}
                                             helperText={touched.username && errors.username}
                                             error={Boolean(touched.username && errors.username)}
                                         />
                                     </div>
 
-                                    {(checkMobileValid(values.username)) && (
+                                    {(checkMobileValid(values.username.toString())) && (
                                         (resend > 0) ? (
                                             <div>
                                                 <Spinner animation="border" size="sm"/>

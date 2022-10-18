@@ -26,8 +26,8 @@ const _PlaceFacilities = () => {
                     justifyContent="space-between"
                     alignItems="stretch"
                 >
-                    {data.map(item=>(
-                        <Chip sx={{padding:1,margin:1}} label={item.name} />
+                    {data.map((item,number)=>(
+                        <Chip key={number} sx={{padding:1,margin:1}} label={item.name} />
                     ))}
                 </Grid>
             </Card>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Avatar, Button, Card, CardContent, CardHeader, Divider, Grid, Rating, Typography} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
 import {Image} from "react-bootstrap";
@@ -8,7 +8,11 @@ import {authActions} from "../../helper/redux/actions/authActions";
 
 const Profile = (props) => {
     const user = useSelector(state=>state.auth.user)
-    console.log(user)
+    console.log("user",user)
+    useEffect(() => {
+                 props.SagaRequestUser()
+    }, []);
+
     return (
         <>
             <Card elevation={3} sx={{margin: 1}}>
@@ -18,7 +22,7 @@ const Profile = (props) => {
                             <Button href={"/profile/edit"} variant={"outlined"}>ویرایش</Button>
                             <Image fluid width={"100%"}  src={"/assets/images/charcter_orang.png"}/>
                         </Grid>
-                        <Grid container direction={"column"} alignItems={"center"} justifyContent={"start"} item xs={9}>
+                        {user&&<Grid container direction={"column"} alignItems={"center"} justifyContent={"start"} item xs={9}>
                             <Avatar
                                 sx={{width: 120, height: 120,marginTop:3}}
                                 alt="Remy Sharp"
@@ -42,7 +46,7 @@ const Profile = (props) => {
 
                             {/*</Grid>*/}
 
-                        </Grid>
+                        </Grid>}
                     </Grid>
 
                 </CardContent>

@@ -3,7 +3,6 @@ import HomeSlider from "./components/HomeSlider";
 import HomeTitle from "./components/HomeTitle";
 import HomeUserList from "./components/HomeUserList";
 import HomeBanner from "./components/HomeBanner";
-import {sendSms} from "../../network/api/account.api";
 import {getMainPage} from "../../network/api/mainPage.api";
 
 export let jsonData = [
@@ -153,19 +152,19 @@ export let jsonData = [
 
 
 export default function Home() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
     useEffect(() => {
         getMainPage()
             .then((data) => {
-                setData(jsonData);
+                console.log("data",data.data.Data.LayoutItemParams)
+                setData(data.data.Data.LayoutItemParams)
             }).catch((err)=>{
                 alert("خطا در برقراری ارتباط با سرور و یا شما اجازه دسترسی به این بخش را ندارید"+err.message)
         })
     }, [])
     return (
         <>
-            {
-                data.map((item, index) => {
+            {data&&data.map((item, index) => {
                     switch (item.Type){
                         case "SLIDER":return   <HomeSlider key={index} item={item}/>
                         case "TITLE":return   <HomeTitle key={index} item={item}/>

@@ -17,10 +17,9 @@ export default function Management(){
             <_ListItem title="پرسنل مجموعه" destination="/management/personel"/>
             <_ListItem title="درباره مرکز" destination="/management/about"/>
             <_ListItem title="امکانات مرکز" destination="/management/facilities"/>
-            <_ListItem title="پروفایل من" destination="/management/profile"/>
+            <_ListItem title="پروفایل من" destination="/management/editprofile"/>
             <_ListItem title="پشتیبانی" destination="/management/tickets"/>
-            <_ListItem title="تنظیمات پیشرفته" destination="/management/settings"/>
-            <_ListItem title="خروج" destination="/auth/logout"/>
+            <_ListItem title="تنظیمات" destination="/management/settings"/>
         </>
     );
 }

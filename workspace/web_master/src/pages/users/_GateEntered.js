@@ -1,53 +1,85 @@
 import React from "react";
-import {Avatar, Divider, Grid, Link, List, ListItem, ListItemAvatar, ListItemText, Typography} from "@mui/material";
+import {
+    Avatar, Button,
+    Divider,
+    Grid,
+    Link,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    Stack,
+    Typography
+} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
-
-export default function _GateEntered() {
+let users = [
+    {
+        userId: 1,
+        gateName: "ورودی بدنسازی",
+        sportName: "بدنسازی",
+        image: "/assets/images/2.jpg",
+        userName: "ابراهیم گلستان",
+    },
+    {
+        userId: 2,
+        gateName: "ورودی بدنسازی",
+        sportName: "بدنسازی",
+        image: "/assets/images/1.jpg",
+        userName: "محمود دولت آبادی",
+    }
+]
+export default function _GateEntered({selectUser}) {
     return (
         <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-            <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                    <Avatar
-                        sx={{width: 50, height: 50}} alt="Remy Sharp" src={toAbsoluteUrl("/assets/images/1.jpg")}/>
-                </ListItemAvatar>
-                <Link href={"/users/singleuser?id=2"} sx={{textDecoration: "none", color: "#666666"}}>
-                    <Grid
-                        container
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="center"
-                    >
-                        <ListItemText
-                            className="text-start"
-                            primary="ابراهیم میری"
-                        />
-                        <Grid
-                            container
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="center"
-                        >
-                            بدنسازی
-                            <Typography
-                                sx={{display: "inline"}}
-                                component="span"
-                                variant="caption"
-                                color="text.primary"
-                                textAlign={"end"}
+            {users.map((item, Index) => (
+                <div key={Index}>
+                    <ListItem alignItems="flex-start">
+                        <ListItemAvatar sx={{margin:0}}>
+                            <Avatar
+                                sx={{width: 50, height: 50 }}
+                                alt="Remy Sharp"
+                                src={toAbsoluteUrl(item.image)}/>
+                        </ListItemAvatar>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+
+                                <Typography
+                                    variant="body1"
+                                    textAlign={"start"}
+                                >
+                                    {item.userName}
+                                </Typography>
+                            </Grid>
+
+                            <Stack
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                width="100%"
+                                paddingX={1}
                             >
-                                {new Date().toLocaleDateString('fa-IR', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                    hour: "2-digit",
-                                    minute: "2-digit"
-                                })}
-                            </Typography>
+                                <Link href={"/users/singleuser?id="+item.userId} sx={{textDecoration:"none",color:"#666666"}}>
+                                    <Typography
+                                        sx={{display: 'inline'}}
+                                        component="span"
+                                        variant="body2"
+                                        color="text.primary"
+                                    >
+                                        {item.sportName}
+                                    </Typography>
+                                    {" — " + item.gateName}
+                                </Link>
+                                <Button variant={"contained"}
+                                        onClick={()=>selectUser(item)}>انتخاب</Button>
+                            </Stack>
                         </Grid>
-                    </Grid>
-                </Link>
-            </ListItem>
-            <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
+
+
+                    </ListItem>
+                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
+                </div>
+            ))}
+
         </List>
     );
 }

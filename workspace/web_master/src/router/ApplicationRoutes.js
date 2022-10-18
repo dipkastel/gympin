@@ -23,6 +23,9 @@ import UserPlan from "../pages/userPlan/UserPlan";
 import Tickets from "../pages/ticket/Tickets";
 import SingleTicket from "../pages/singleTicket/SingleTicket";
 import Settings from "../pages/settings/Settings";
+import Place from "../pages/place/Place";
+import QrSettings from "../pages/qrSettings/QrSettings";
+import EditProfile from "../pages/editProfile/EditProfile";
 
 export default function ApplicationRoutes() {
 
@@ -42,6 +45,9 @@ export default function ApplicationRoutes() {
                 <Route path="/management/tickets" element={<Tickets/>}/>
                 <Route path="/management/singleTicket" element={<SingleTicket/>}/>
                 <Route path="/management/settings" element={<Settings/>}/>
+                <Route path="/management/place" element={<Place/>}/>
+                <Route path="/management/qrManagement" element={<QrSettings/>}/>
+                <Route path="/management/editProfile" element={<EditProfile/>}/>
 
                 <Route path="/finance" element={<Finance/>}/>
                 <Route path="/finance/demand" element={<DemandPeyment/>}/>

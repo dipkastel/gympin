@@ -8,10 +8,11 @@ const initialAuthState = {
     user: undefined,
     userId: undefined,
     authToken: undefined,
+    refreshToken: undefined,
 };
 
 const authConfig = {
-    storage, key: "gympin-auth",
+    storage, key: "gympin-webapp-auth",
     whitelist: ["user", "authToken"]
 };
 
@@ -19,19 +20,19 @@ const baseReducer = (state = initialAuthState, action) => {
     switch (action.type) {
         case authActionTypes.Login: {
             console.log("action login");
-            return { authToken:action.payload.user.Token ,userId:action.payload.user.id, user: action.payload.user };
-        }
-
-        case authActionTypes.Register: {
-            console.log("action Register");
-            const { authToken } = action.payload.Token;
-            return { authToken, user: undefined };
+            return { authToken:action.payload.user.Token ,refreshToken:action.payload.user.RefreshToken ,userId:action.payload.user.id, user: action.payload.user };
         }
 
         case authActionTypes.Logout: {
             console.log("action Logout");
             forgotLastLocation();
             return initialAuthState;
+        }
+
+        case authActionTypes.Register: {
+            console.log("action Register");
+            const { authToken } = action.payload.Token;
+            return { authToken, user: undefined };
         }
 
         case authActionTypes.UserLoaded: {

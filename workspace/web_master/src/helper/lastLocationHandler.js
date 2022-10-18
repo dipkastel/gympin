@@ -1,4 +1,4 @@
-import * as utils from "../helper/utils";
+import * as utils from "./utils";
 
 const localStorageLastLocationKey = "gympin-lastLocation";
 

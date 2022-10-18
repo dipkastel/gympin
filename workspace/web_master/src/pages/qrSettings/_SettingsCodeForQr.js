@@ -24,7 +24,7 @@ const data=[{
     replaceWith:"شماره بند TRX :"
 }]
 
-const _SettingsCodeFotQr = () => {
+const _SettingsCodeForQr = () => {
     return (
         <Card elevation={3} sx={{margin: 1}}>
             <CardHeader
@@ -59,8 +59,8 @@ const _SettingsCodeFotQr = () => {
                 />
 
                 <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-                    {data.map(item=>(
-                        <>
+                    {data.map((item,number)=>(
+                        <div key={number}>
                             <ListItem alignItems="flex-start">
                                 <Link  href={"/management/singleTicket?id="+item.id} sx={{width:"100%",textDecoration: "none", color: "#666666"}}>
                                     <Grid
@@ -80,7 +80,7 @@ const _SettingsCodeFotQr = () => {
                                 </Link>
                             </ListItem>
                             <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
-                        </>
+                        </div>
                     ))}
 
                 </List>
@@ -88,4 +88,4 @@ const _SettingsCodeFotQr = () => {
         </Card>
     );
 };
-export default _SettingsCodeFotQr;
+export default _SettingsCodeForQr;

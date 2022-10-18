@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, Grid, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
+import {getAllPlaces} from "../../network/api/place.api";
 
 const data = {
     "Success": true,
@@ -112,23 +113,59 @@ const data = {
     ]
 }
 const _PlacesList = () => {
+    const [places,SetPlaces]=useState([])
+    useEffect(() => {
+        getAllPlaces().then(result=>{
+            console.log(result)
+            SetPlaces(result.data.Data)
+        }).catch(e=>console.log(e))
+    }, []);
+
     return (
         <>
             <Grid container
                   direction="row"
                   justifyContent="center"
                   alignItems="center">
-                {data.Data.map(item => (
-                        <Grid component={"a"} href={"/place?id="+item.id+"&name="+item.name} sx={{textDecoration:"none"}} md={6} sm={6} xs={6}>
+                {places.map(item => (
+                        <Grid key={item.Id} item component={"a"} href={"/place?id="+item.Id+"&name="+item.Name} sx={{textDecoration:"none"}} md={6} sm={6} xs={6}>
                             <Card elevation={3} sx={{margin:0.5,padding:0.5}}>
                                 <Grid container
                                       direction="row"
                                       justifyContent="center"
                                       alignItems="center">
-                                    <Grid md={6} sm={6} xs={6} sx={{padding:0.5}}>
+                                    <Grid item md={6} sm={6} xs={6} sx={{padding:0.5}}>
+                                        {/*<Image src={item.image} width={"100%"} rounded={3}/>*/}
+                                    </Grid>
+                                    <Grid item sx={{padding:0}} md={6} sm={6} xs={6}>
+                                        <Typography variant={"subtitle1"}>
+                                            {item.Name}
+                                        </Typography>
+                                        <Typography variant={"body1"}>
+                                            {'\r\n'+item.Region.Name}
+                                        </Typography>
+                                        <Typography variant={"body2"}>
+                                            {/*{item.sports.map(sport=>(*/}
+                                            {/*    sport+","*/}
+                                            {/*))}*/}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </Card>
+                        </Grid>
+                    )
+                )}
+                {data.Data.map(item => (
+                        <Grid key={item.id} item component={"a"} href={"/place?id="+item.id+"&name="+item.name} sx={{textDecoration:"none"}} md={6} sm={6} xs={6}>
+                            <Card elevation={3} sx={{margin:0.5,padding:0.5}}>
+                                <Grid container
+                                      direction="row"
+                                      justifyContent="center"
+                                      alignItems="center">
+                                    <Grid item md={6} sm={6} xs={6} sx={{padding:0.5}}>
                                         <Image src={item.image} width={"100%"} rounded={3}/>
                                     </Grid>
-                                    <Grid sx={{padding:0}} md={6} sm={6} xs={6}>
+                                    <Grid item sx={{padding:0}} md={6} sm={6} xs={6}>
                                         <Typography variant={"subtitle1"}>
                                             {item.name}
                                         </Typography>

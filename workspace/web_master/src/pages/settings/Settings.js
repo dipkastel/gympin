@@ -1,12 +1,13 @@
 import React from 'react';
-import _SettingsPlaceName from "./_SettingsPlaceName";
-import _SettingsCodeFotQr from "./_SettingsCodeFotQr";
+import _SettingsPlaces from "./_SettingsPlaces";
+import _ListItem from "../management/_ListItem";
 
 const Settings = () => {
     return (
         <>
-            <_SettingsPlaceName/>
-            <_SettingsCodeFotQr/>
+            <_SettingsPlaces/>
+            <_ListItem title="کنترل qr کد ها" destination="/management/qrManagement"/>
+            <_ListItem title="خروج" destination="/auth/logout"/>
         </>
     );
 };

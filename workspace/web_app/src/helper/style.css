@@ -1,7 +1,9 @@
 .bg-primary {
   background-color: #d90a1a !important;
 }
-
+.MuiChip-deleteIcon {
+  margin: 0 -6px 0 5px !important;
+}
 .MuiSlider-thumb {
   -webkit-transform: translate(50%, -50%) !important;
   -moz-transform: translate(50%, -50%) !important;

@@ -32,7 +32,7 @@ export default function ApplicationRoutes() {
 
                 <Route path="/places" element={<Places/>}/>
 
-                <Route path="/place" element={<Place/>}/>
+                <Route path="/place/*" element={<Place/>}/>
 
                 <Route path="/profile" element={isAuthorized?<Profile/>: <AuthRoutes/>}/>
                 <Route path="/profile/survey" element={isAuthorized?<Survey/>: <AuthRoutes/>}/>

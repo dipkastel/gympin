@@ -19,7 +19,7 @@ export default function _OurTraffic() {
             }}
             />
             <CardContent>
-                <ResponsiveContainer width="113%" aspect={3}>
+                <ResponsiveContainer width="100%" aspect={3}>
                     <LineChart
                         data={data}
                     >

@@ -7,7 +7,10 @@ export const getImagePath = (imageId)=>"/image/display/"+imageId;
 export function checkMobileValid(mobileNumber) {
     return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
 }
-
+export function compareObjs(obj1,obj2){
+    console.log(JSON.stringify(obj1)===JSON.stringify(obj2))
+    return JSON.stringify(obj1)===JSON.stringify(obj2);
+}
 export function removeStorage(key) {
     try {
         localStorage.setItem(key, "");

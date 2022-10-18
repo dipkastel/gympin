@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import _GateAwaitingEntry from "./_GateAwaitingEntry";
 import _GateEntered from "./_GateEntered";
 import _AllUsers from "./_AllUsers";
+import Nqrscan from "../qr-scan/Nqrscan";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -47,6 +48,7 @@ export default function Users() {
     const theme = useTheme();
     theme.direction = 'rtl';
     const [value, setValue] = React.useState(0);
+    const [selectedUser, setSelectedUser] = React.useState(null);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -55,6 +57,11 @@ export default function Users() {
     const handleChangeIndex = (index) => {
         setValue(index);
     };
+
+    const selectUser = (value) => {
+        setSelectedUser(value);
+        setValue(0);
+    }
     return (
         <Box sx={{ bgcolor: 'background.paper'}}>
             <AppBar position="static">
@@ -66,7 +73,7 @@ export default function Users() {
                     variant="fullWidth"
                     aria-label="full width tabs example"
                 >
-                    <Tab label="در انتظار ورود" {...a11yProps(0)} />
+                    <Tab label="اسکن" {...a11yProps(0)} />
                     <Tab label="وارد شده" {...a11yProps(1)} />
                     <Tab label="همه کاربران" {...a11yProps(2)} />
                 </Tabs>
@@ -77,10 +84,10 @@ export default function Users() {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel  value={value} index={0}  dir={theme.direction}>
-                    <_GateAwaitingEntry/>
+                    <Nqrscan user={selectedUser}/>
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    <_GateEntered/>
+                    <_GateEntered selectUser={selectUser}/>
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
                     <_AllUsers/>

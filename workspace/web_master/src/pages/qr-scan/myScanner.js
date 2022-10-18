@@ -83,7 +83,6 @@ class QRScan extends Component {
         return (
             <Card elevation={3} sx={{
                 margin: 2,
-                height: "66vw"
             }}>
                 {React.createElement("div", null, message, React.createElement("canvas", {
                     id: "qrCanvas"

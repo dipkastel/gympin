@@ -21,7 +21,7 @@ export default function _Income() {
             }}
             />
             <CardContent>
-                <ResponsiveContainer width="103%" aspect={3}>
+                <ResponsiveContainer width="100%" aspect={3}>
                     <LineChart
                         data={data}
                     >

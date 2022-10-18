@@ -10,13 +10,13 @@ import {
     InputAdornment,
     Link, TextField, Typography
 } from "@mui/material";
-import * as auth from "../../helper/ducks/auth.duck";
 import {Formik} from "formik";
 import {checkMobileValid} from "../../helper/utils";
 import {Spinner} from "react-bootstrap";
 import SendToMobileIcon from '@mui/icons-material/SendToMobile';
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
+import {authActions} from "../../helper/redux/actions/authActions";
 
 function Login(props) {
 
@@ -107,7 +107,7 @@ function Login(props) {
                                     })
                                         .then((data) => {
                                             disableLoading();
-                                             props.login(data.data.Data.Token);
+                                             props.login(data.data.Data);
                                         })
                                         .catch((ex) => {
                                             console.log(ex);
@@ -215,8 +215,7 @@ function Login(props) {
                     </CardContent>
                     <CardActions>
                         <Grid rowSpacing={1}>
-                            <Link
-                                variant="caption"  href="#">مرکز را ثبت نام کنید</Link>
+                            <Link variant="caption"  href="/auth/register">مرکز را ثبت نام کنید</Link>
                         </Grid>
                     </CardActions>
                 </Card>
@@ -225,4 +224,4 @@ function Login(props) {
         </Grid>
     );
 }
-export default connect(null, auth.actions)(Login)
+export default connect(null, authActions)(Login)

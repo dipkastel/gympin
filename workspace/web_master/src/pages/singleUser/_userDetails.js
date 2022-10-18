@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Avatar, Button, Card, CardContent, CardHeader, Grid, Typography} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
+import {format} from "date-fns";
 
 let user = {
     userId: 1,
@@ -16,11 +17,11 @@ let user = {
 
 }
 
-const _userDetails = () => {
+const _userDetails = ({user}) => {
+
     const [nationalCode, SetNationalCode] = useState(false)
     const [birthDay, SetBirthDay] = useState(false)
-    const [fatherName, SetFatherName] = useState(false)
-    const [birthLocation, SetBirthLocation] = useState(false)
+    const [name, SetName] = useState(false)
     const [phoneNumber, SetPhoneNumber] = useState(false)
     return (
 
@@ -33,6 +34,32 @@ const _userDetails = () => {
                     sx={{width: 120, height: 120}}
                     alt="Remy Sharp"
                     src={toAbsoluteUrl(user.image)}/>
+
+                <Grid container direction="row" justifyContent={"start"} sx={{marginY: 2}}>
+                    نام کاربری :
+                    <Typography
+                        sx={{display: "inline",paddingX:5}}
+                        component="P"
+                        variant="h6"
+                        color="text.primary"
+                    >
+                        {user.Username}
+                    </Typography>
+                </Grid>
+                <Grid container direction="row" justifyContent="space-between" sx={{marginY: 2}}>
+                    نام :
+                    <Typography
+                        sx={{display: "inline"}}
+                        className={!name && "blur"}
+                        component="P"
+                        variant="h6"
+                        color="text.primary"
+                    >
+                        {user.Name + " " + user.LastName}
+                    </Typography>
+                    <Button size={"small"} variant={"contained"} onClick={() => SetName(true)}> دریافت
+                        اطلاعات</Button>
+                </Grid>
                 <Grid container direction="row" justifyContent="space-between" sx={{marginY: 2}}>
                     کدملی :
                     <Typography
@@ -42,7 +69,7 @@ const _userDetails = () => {
                         variant="h6"
                         color="text.primary"
                     >
-                        {user.nationalCode}
+                        {user.NationalCode}
                     </Typography>
                     <Button size={"small"} variant={"contained"} onClick={() => SetNationalCode(true)}> دریافت
                         اطلاعات</Button>
@@ -56,37 +83,9 @@ const _userDetails = () => {
                         variant="h6"
                         color="text.primary"
                     >
-                        {user.birthday}
+                        {format(Date.parse(user.Birthday),"yyyy/MM/dd")}
                     </Typography>
                     <Button size={"small"} variant={"contained"} onClick={() => SetBirthDay(true)}> دریافت
-                        اطلاعات</Button>
-                </Grid>
-                <Grid container direction="row" justifyContent="space-between" sx={{marginY: 2}}>
-                    نام پدر :
-                    <Typography
-                        sx={{display: "inline"}}
-                        className={!fatherName && "blur"}
-                        component="P"
-                        variant="h6"
-                        color="text.primary"
-                    >
-                        {user.fathersName}
-                    </Typography>
-                    <Button size={"small"} variant={"contained"} onClick={() => SetFatherName(true)}> دریافت
-                        اطلاعات</Button>
-                </Grid>
-                <Grid container direction="row" justifyContent="space-between" sx={{marginY: 2}}>
-                    محل تولد :
-                    <Typography
-                        sx={{display: "inline"}}
-                        className={!birthLocation && "blur"}
-                        component="P"
-                        variant="h6"
-                        color="text.primary"
-                    >
-                        {user.birthLocation}
-                    </Typography>
-                    <Button size={"small"} variant={"contained"} onClick={() => SetBirthLocation(true)}> دریافت
                         اطلاعات</Button>
                 </Grid>
                 <Grid container direction="row" justifyContent="space-between" sx={{marginY: 2}}>
@@ -98,7 +97,7 @@ const _userDetails = () => {
                         variant="h6"
                         color="text.primary"
                     >
-                        {user.phoneNumber}
+                        {user.PhoneNumber}
                     </Typography>
                     <Button size={"small"} variant={"contained"} onClick={() => SetPhoneNumber(true)}> دریافت
                         اطلاعات</Button>

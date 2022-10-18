@@ -1,4 +1,6 @@
 import {AuthApi} from "../network/const/NETWORKCONSTS";
+import {authActions} from "./redux/actions/authActions";
+import {refreshToken} from "../network/api/account.api";
 
 
 export function setupAxios(axios, store) {
@@ -28,9 +30,20 @@ export function setupAxios(axios, store) {
         async function (error) {
             if (error.response.status === 401) {
                 console.log("expire");
-                window.location = "/logout";
+                reToken(result=>{
+                    window.location = window.location;
+                })
             }
             return Promise.reject(error);
         }
     );
+
+
+    function reToken(callBack) {
+        const rToken = store.getState().auth.refreshToken
+        refreshToken(rToken).then(result=>{
+            store.dispatch(authActions.login(result.data.Data))
+            callBack(result);
+        }).catch(e=>console.log(e))
+    }
 }
