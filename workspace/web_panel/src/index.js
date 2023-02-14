@@ -2,16 +2,16 @@ import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
+import store, { persistor } from "./helper/redux/store";
+import App from "./router/App";
+import {setupAxios} from "./network/setupAxios";
 import axios from "axios";
-import { setupAxios } from "./_metronic";
-import store, { persistor } from "./app/store/store";
-import App from "./App";
 import "./sass/style.react.rtl.css"; // RTL version
 import "socicon/css/socicon.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import "./_metronic/_assets/plugins/line-awesome/css/line-awesome.css";
-import "./_metronic/_assets/plugins/flaticon/flaticon.css";
-import "./_metronic/_assets/plugins/flaticon2/flaticon.css";
+import "./assets/plugins/line-awesome/css/line-awesome.css";
+import "./assets/plugins/flaticon/flaticon.css";
+import "./assets/plugins/flaticon2/flaticon.css";
 const { PUBLIC_URL } = process.env;
 
 setupAxios(axios, store);

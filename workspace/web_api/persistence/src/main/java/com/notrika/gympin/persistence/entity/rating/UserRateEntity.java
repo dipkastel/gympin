@@ -21,7 +21,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "user_rate")
+@Table(name = "userRate")
 public class UserRateEntity extends BaseEntity<UserRateEntity> {
 
     @ManyToOne

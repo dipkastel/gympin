@@ -1,71 +1,21 @@
 package com.notrika.gympin.common.location.api;
 
-import com.notrika.gympin.common.BasePagedParam;
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common._base.base.BaseController;
+import com.notrika.gympin.common._base.param.BasePagedParam;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.location.dto.*;
 import com.notrika.gympin.common.location.param.*;
-import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.location.query.LocationQuery;
+import com.notrika.gympin.common.note.dto.NoteDto;
+import com.notrika.gympin.common.note.param.NoteParam;
+import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.place.param.PlaceParam;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface LocationController {
+public interface LocationController extends BaseController<LocationParam, LocationDto, LocationQuery> {
 
-    ResponseEntity<StateDto> addState(StateParam stateParam);
 
-    ResponseEntity<StateDto> updateState(StateParam stateParam);
-
-    ResponseEntity<List<StateDto>> getAllState(BasePagedParam pagingParam);
-
-    ResponseEntity<StateDto> getStateById(long longParam);
-
-    ResponseEntity<StateDto> deleteState(StateParam stateParam);
-
-    ResponseEntity<CityDto> addCity(CityParam cityParam);
-
-    ResponseEntity<CityDto> updateCity(CityParam cityParam);
-
-    ResponseEntity<CityDto> getCityById(long longParam);
-
-    ResponseEntity<CityDto> deleteCity(CityParam cityParam);
-
-    ResponseEntity<List<CityDto>> getAllCity(BasePagedParam pagingParam);
-
-    ResponseEntity<List<CityDto>> getCitiesByState(StateParam stateParam);
-
-    ResponseEntity<RegionDto> addRegion(RegionParam regionParam);
-
-    ResponseEntity<RegionDto> updateRegion(RegionParam regionParam);
-
-    ResponseEntity<List<RegionDto>> getAllRegion(BasePagedParam pagingParam);
-
-    ResponseEntity<RegionDto> getRegionById(long longParam);
-
-    ResponseEntity<List<RegionDto>> getRegionsByCity(CityParam cityParam);
-
-    ResponseEntity<RegionDto> deleteRegion(RegionParam regionParam);
-
-    ResponseEntity<PlaceDto> addPlace(PlaceParam placeParam);
-
-    ResponseEntity<PlaceDto> updatePlace(PlaceParam placeParam);
-
-    ResponseEntity<List<PlaceDto>> getAllPlace(BasePagedParam pagingParam);
-
-    ResponseEntity<PlaceDto> getPlaceById(long longParam);
-
-    ResponseEntity<List<PlaceDto>> getPlacesByRegion(RegionParam regionParam);
-
-    ResponseEntity<PlaceDto> deletePlace(PlaceParam placeParam);
-
-    ResponseEntity<OptionOfPlaceDto> addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam);
-
-    ResponseEntity<List<PlaceDto>> getPlaceByUser(UserParam userParam);
-
-    ResponseEntity<PlaceOwnerDto> addPlaceOwner(PlaceOwnerParam placeOwnerParam);
-
-    ResponseEntity<List<UserDto>> getOwnersPlace(PlaceParam placeParam);
-
-    ResponseEntity<PlaceOwnerDto> deletePlaceOwner(PlaceOwnerParam placeOwnerParam);
 
 }

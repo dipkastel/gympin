@@ -1,16 +1,24 @@
 package com.notrika.gympin.controller.impl.user;
 
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.BasePagedParam;
+import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.user.api.UserController;
 import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.dto.UserRoleInfoDto;
+import com.notrika.gympin.common.user.enums.UserStatus;
+import com.notrika.gympin.common.user.query.UserQuery;
+import com.notrika.gympin.common.user.param.UserAvatarParam;
 import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.user.param.UserRoleUpdateParam;
+import com.notrika.gympin.common.user.param.UserStatusParam;
 import com.notrika.gympin.common.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -43,11 +51,37 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<UserDto> getById(Long id) {
         return ResponseEntity.ok(userService.getById(id));
     }
+    //status
+    @Override
+    @GetMapping("/getUserStatuses")
+    public ResponseEntity<List<String>> getUserStatuses() {
+        return ResponseEntity.ok(Arrays.stream(UserStatus.values()).map(Enum::toString).collect(Collectors.toList()));
+    }
 
     @Override
-    @PutMapping("/suspendUser")
-    public ResponseEntity<UserDto> suspendUser(UserParam userParam) {
-        return ResponseEntity.ok(userService.suspendUser(userParam));
+    @PutMapping("/updateUserStatus")
+    public ResponseEntity<UserDto> updateUserStatus(UserStatusParam userParam) {
+        return ResponseEntity.ok(userService.updateUserStatus(userParam));
+    }
+
+    //avatar
+    @Override
+    @PutMapping("/updateUserAvatar")
+    public ResponseEntity<UserDto> updateUserAvatar(UserAvatarParam userParam) {
+        return ResponseEntity.ok(userService.updateUserAvatar(userParam));
+    }
+
+    //roles
+    @Override
+    @GetMapping("/getUserRoles")
+    public ResponseEntity<List<UserRoleInfoDto>> getUserRoles() {
+        return ResponseEntity.ok(userService.getAllRules());
+    }
+
+    @Override
+    @PutMapping("/updateUserRole")
+    public ResponseEntity<UserDto> updateUserRole(@RequestBody UserRoleUpdateParam userParam) {
+        return ResponseEntity.ok(userService.UpdateUserRole(userParam));
     }
 
     @Override
@@ -57,22 +91,8 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<Long> countSearch(BaseFilter<?> filter) {
-        return null;
+    public ResponseEntity<Page<UserDto>> query(UserQuery param) {
+        return ResponseEntity.ok(userService.query(param));
     }
 
-    @Override
-    public ResponseEntity<List<UserDto>> search(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<List<UserDto>> filter(BaseFilter<?> filter) {
-        return null;
-    }
 }

@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.user.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common._base.param.BaseParam;
 import com.notrika.gympin.common.user.enums.UsernameType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

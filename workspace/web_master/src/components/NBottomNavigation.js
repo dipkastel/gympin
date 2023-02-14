@@ -7,6 +7,8 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import HomeIcon from '@mui/icons-material/Home';
 import EggAltIcon from '@mui/icons-material/EggAlt';
 import {Link} from "react-router-dom";
+import getAccessOf from "../helper/accessManager";
+import {personnelAccessEnum, personnelAccessEnumT} from "../helper/enums/personnelAccessEnum";
 
 
 export default function NBottomNavigation(){
@@ -15,6 +17,7 @@ export default function NBottomNavigation(){
             value:"home",
             lable:"خانه",
             firstDirection:"/",
+            active:getAccessOf(personnelAccessEnumT.Home),
             icon:<HomeIcon/>,
             otherRouts:[""]
         },
@@ -22,6 +25,7 @@ export default function NBottomNavigation(){
             value:"users",
             lable:"کاربران",
             firstDirection:"/users",
+            active:getAccessOf(personnelAccessEnumT.Users),
             icon:<GroupIcon/>,
             otherRouts:["users","userqrscan"]
         },
@@ -29,6 +33,7 @@ export default function NBottomNavigation(){
             value:"finance",
             lable:"مالی",
             firstDirection:"/finance",
+            active:getAccessOf(personnelAccessEnumT.Finance),
             icon:<CreditCardIcon/>,
             otherRouts:["finance"]
         },
@@ -36,6 +41,7 @@ export default function NBottomNavigation(){
             value:"management",
             lable:"مدیریت",
             firstDirection:"/management",
+            active:true,
             icon:<ManageAccountsIcon/>,
             otherRouts:["management"]
         },
@@ -43,6 +49,7 @@ export default function NBottomNavigation(){
             value:"report",
             lable:"گزارشات",
             firstDirection:"/report",
+            active:false,
             icon:<AssessmentIcon/>,
             otherRouts:["report"]
         },
@@ -50,7 +57,6 @@ export default function NBottomNavigation(){
     const pathname = window.location.pathname
     const [value, setValue] = React.useState(getTabName(pathname));
 
-    console.log(getTabName(pathname))
     function getTabName(path){
         let selectedItem =bottomItems[0].value;
         let pathParam = path.split('/')[1]
@@ -73,7 +79,7 @@ export default function NBottomNavigation(){
                     }}
                 >
                     {bottomItems.map( (item, index)=> (
-                        <BottomNavigationAction key={index} sx={{minWidth:"auto"}} component={Link} to={item.firstDirection} value={item.value} label={item.lable} icon={item.icon} />
+                        <BottomNavigationAction hidden={!item.active} key={index} sx={{minWidth:"auto"}} component={Link} to={item.firstDirection} value={item.value} label={item.lable} icon={item.icon} />
                     ))}
                 </BottomNavigation>
             </Paper>

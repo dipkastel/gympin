@@ -2,7 +2,7 @@
 //
 //import com.fasterxml.jackson.core.type.TypeReference;
 //import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.notrika.gympin.common.ResponseModel;
+//import com.notrika.gympin.common._base.base.ResponseModel;
 //import com.notrika.gympin.common.location.dto.StateDto;
 //import com.notrika.gympin.framework.spring.WebApiApplication;
 //import com.notrika.gympin.persistence.repository.StateRepository;

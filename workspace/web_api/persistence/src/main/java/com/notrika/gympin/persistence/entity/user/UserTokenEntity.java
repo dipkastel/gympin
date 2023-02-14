@@ -20,7 +20,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "user_token")
+@Table(name = "userToken")
 public class UserTokenEntity extends BaseEntity<UserTokenEntity> {
 
     @Enumerated(EnumType.STRING)
@@ -46,7 +46,7 @@ public class UserTokenEntity extends BaseEntity<UserTokenEntity> {
 
     @Override
     public int hashCode() {
-        return 424275703;
+        return getClass().hashCode();
     }
 }
 

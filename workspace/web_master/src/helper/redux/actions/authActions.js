@@ -1,12 +1,14 @@
-import {authActionTypes, authActionTypesSaga} from "./authActionTypes";
 
-export const authActions = {
-    login: (user) => ({ type: authActionTypes.Login, payload: { user } }),
-    logout: () => ({ type: authActionTypes.Logout }),
-    userLoaded: (user) => ({ type: authActionTypes.UserLoaded, payload: { user } }),
-    userPlaceSelected: (place) => ({ type: authActionTypes.userPlaceSelected, payload: { place } }),
+export const authActionTypes = {
+    SetUser: "[Auth] User",
+    SetToken: "[Auth] Token",
+    SetRefreshToken: "[Auth] Refresh Token",
+    Logout: "[Auth] Logout"
 };
 
-export const authActionsSaga = {
-    sagaRequestUser: (user) => ({type: authActionTypesSaga.SagaUserRequested,payload: { user }}),
+export const authActions = {
+    SetUser: (user) => ({ type: authActionTypes.SetUser, payload: { user } }),
+    SetToken: (token) => ({ type: authActionTypes.SetToken, payload: { token } }),
+    SetRefreshToken: (refreshToken) => ({ type: authActionTypes.SetRefreshToken, payload: { refreshToken } }),
+    Logout: () => ({ type: authActionTypes.Logout })
 };

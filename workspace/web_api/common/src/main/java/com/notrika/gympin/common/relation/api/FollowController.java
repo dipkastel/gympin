@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.relation.api;
 
-import com.notrika.gympin.common.BaseController;
-import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common._base.base.BaseController;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.relation.dto.FollowDto;
 import com.notrika.gympin.common.relation.param.FollowParam;
 import com.notrika.gympin.common.user.dto.UserDto;
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface FollowController extends BaseController<FollowParam, FollowDto, BaseFilter<?>> {
+public interface FollowController extends BaseController<FollowParam, FollowDto, BaseQuery<?>> {
 
     ResponseEntity<List<UserDto>> getFollowers(UserParam user);
 

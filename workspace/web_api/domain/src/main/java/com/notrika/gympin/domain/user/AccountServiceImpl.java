@@ -9,6 +9,8 @@ import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpiredException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoundException;
+import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
+import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
 import com.notrika.gympin.common.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
 import com.notrika.gympin.common.user.dto.UserDto;
@@ -24,10 +26,12 @@ import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
-import com.notrika.gympin.persistence.dao.repository.RoleRepository;
+import com.notrika.gympin.persistence.dao.repository.PlacePersonnelRepository;
+import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.user.PasswordEntity;
-import com.notrika.gympin.persistence.entity.user.RoleEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +43,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -57,10 +59,6 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private UserServiceImpl userService;
     @Autowired
-    private AdministratorServiceImpl administratorService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private JwtTokenProvider tokenProvider;
     @Autowired
     private SmsService smsService;
@@ -69,7 +67,10 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private PasswordRepository passwordRepository;
     @Autowired
-    private RoleRepository roleRepository;
+    private PlaceRepository placeRepository;
+    @Autowired
+    private PlacePersonnelRepository placePersonnelRepository;
+
 
     @Override
     @Transactional
@@ -94,7 +95,7 @@ public class AccountServiceImpl implements AccountService {
         log.info("Going to register user...\n");
         try {
             UserEntity insertedUser = addUser(userRegisterParam);
-            return UserConvertor.userToRegisterDto(insertedUser);
+            return UserConvertor.toRegisterDto(insertedUser);
         } catch (DataIntegrityViolationException e) {
             throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.REGISTER_USER_EXIST);
         } catch (Exception e) {
@@ -102,16 +103,12 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    private UserEntity addUser(UserRegisterParam userRegisterParam) {
+    public UserEntity addUser(UserRegisterParam userRegisterParam) {
         log.info("Going to addUser...\n");
-        List<RoleEntity> roleList = new ArrayList<>();
-        for (UserRoleParam userRole : userRegisterParam.getUserRole()) {
-            roleList.add(roleRepository.findByRole(userRole.getRole()));
-        }
         UserEntity user = new UserEntity();
-        user.setUsername(userRegisterParam.getUsername());
+        user.setUsername("USER_"+new Date().getTime());
         user.setPhoneNumber(userRegisterParam.getPhoneNumber());
-        user.setUserRole(roleList);
+        user.setUserRole(userRegisterParam.getUserRole().getRole());
         user.setUserGroup(UserGroup.CLIENT);
         user.setUserStatus(UserStatus.ENABLED);
         return userService.add(user);
@@ -136,32 +133,10 @@ public class AccountServiceImpl implements AccountService {
         activationCodeRepository.update(activationCode);
         String jwt = getJwt(loginParam, loginParam.getUsername(), TokenType.USER);
         String refreshJwt = getJwt(loginParam, loginParam.getUsername(), TokenType.REFRESH_TOKE);
-        UserDto result = UserConvertor.userToUserDtoComplete(user);
+        UserDto result = UserConvertor.toDtoComplete(user);
         result.setToken(jwt);
         result.setRefreshToken(refreshJwt);
         log.info("user logined {}...\n", result);
-        return result;
-    }
-
-    @Override
-    public UserDto loginPanel(LoginParam loginParam) throws ExceptionBase {
-        log.info("Going to loginPanel...\n");
-        if (loginParam == null || loginParam.getUsername() == null || loginParam.getPassword() == null) {
-            throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
-        }
-        String phoneNumber = getUser(loginParam).getPhoneNumber();
-        UserEntity admin = userService.getByPhoneNumber(phoneNumber);
-        ActivationCodeEntity activationCode = admin.getActivationCode();
-        if (activationCode != null) {
-            activationCode.setDeleted(true);
-            activationCodeRepository.update(activationCode);
-        }
-        String jwt = getJwt(loginParam, phoneNumber, TokenType.ADMIN);
-        String refreshJwt = getJwt(loginParam, loginParam.getUsername(), TokenType.REFRESH_TOKE);
-        UserDto result = UserConvertor.administratorToAdministratorDto(admin);
-        result.setToken(jwt);
-        result.setRefreshToken(refreshJwt);
-        log.info("Admin loggined {}...\n", result);
         return result;
     }
 
@@ -195,7 +170,6 @@ public class AccountServiceImpl implements AccountService {
         if (user == null) {
             throw new UsernameNotFoundException(phoneNumber);
         }
-        ArrayList<RoleEntity> userRoles = new ArrayList<>(user.getUserRole());
         boolean accountNonExpired = !user.isDeleted();
         boolean accountNonLocked = !(user.getUserStatus() == UserStatus.LOCKED);
         boolean credentialsNonExpired = true;
@@ -213,9 +187,7 @@ public class AccountServiceImpl implements AccountService {
         }
         setUserContext(user);
         ArrayList<UserRole> roles = new ArrayList<>();
-        for (RoleEntity userRole : userRoles) {
-            roles.add(userRole.getRole());
-        }
+        roles.add(user.getUserRole());
         UserDetailsImpl userDetails = new UserDetailsImpl(roles, password, phoneNumber, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
         log.info("User loaded: {}", userDetails);
         return userDetails;
@@ -226,7 +198,7 @@ public class AccountServiceImpl implements AccountService {
         if (StringUtils.hasText(refreshToken.getRefreshToken()) && tokenProvider.validateToken(refreshToken.getRefreshToken())) {
             return tokenProvider.refreshToken(refreshToken.getRefreshToken());
         } else {
-            throw new ExceptionBase();
+            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.INPUT_NOT_VALID);
         }
     }
 
@@ -238,5 +210,38 @@ public class AccountServiceImpl implements AccountService {
         context.getEntry().put(GympinContext.USER_KEY, user);
         GympinContextHolder.setContext(context);
     }
+    @Override
+    @Transactional
+    public Boolean requestRegisterPlace(PlaceRequestRegisterParam param) {
+        //identify user
+        UserEntity user = userService.getByPhoneNumber(param.getPhoneNumber());
+        if (user == null){
+            UserRoleParam userRole = new UserRoleParam();
+            userRole.setRole(UserRole.USER);
+            user = addUser(UserRegisterParam.builder().phoneNumber(param.getPhoneNumber()).userRole(userRole).build());
+        }
+        user.setFullName(param.getFullName());
+        userService.update(user);
+        //pre-register
+        PlaceEntity initPlace = new PlaceEntity();
+        initPlace.setName(param.getPlaceName());
+        initPlace.setStatus(PlaceStatusEnum.PREREGISTER);
+        initPlace.setAddress("");
+        initPlace.setCreatorUser(user);
+        PlaceEntity place = placeRepository.add(initPlace);
+        //add user To Place
+        PlacePersonnelEntity placePersonnelEntity = PlacePersonnelEntity.builder()
+                .place(place)
+                .user(user)
+                .userRole(PlacePersonnelRole.PLACE_OWNER)
+                .build();
+        placePersonnelRepository.add(placePersonnelEntity);
 
+        try {
+            smsService.sendRegisterCompleted(new SmsDto(param.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE,param.getPlaceName()));
+        } catch (Exception e) {
+        }
+        return true;
+
+    }
 }

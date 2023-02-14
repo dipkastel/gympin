@@ -1,14 +1,14 @@
 package com.notrika.gympin.controller.impl.sportplace;
 
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.BasePagedParam;
-import com.notrika.gympin.common.location.param.PlaceParam;
-import com.notrika.gympin.common.sport.dto.SportDto;
+import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common._base.param.BasePagedParam;
+import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.sportplace.api.SportPlaceController;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
 import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
 import com.notrika.gympin.common.sportplace.service.SportPlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,58 +23,45 @@ public class SportPlaceControllerImpl implements SportPlaceController {
     private SportPlaceService sportPlaceService;
 
     @Override
-    @PostMapping("addSportPlace")
+//    @PostMapping("addSportPlace")
     public ResponseEntity<SportPlaceDto> add(@RequestBody SportPlaceParam sportPlaceParam) {
         return new ResponseEntity<SportPlaceDto>(sportPlaceService.add(sportPlaceParam), HttpStatus.OK);
     }
 
     @Override
-    @PutMapping("updateSportPlace")
+//    @PutMapping("updateSportPlace")
     public ResponseEntity<SportPlaceDto> update(@RequestBody SportPlaceParam sportPlaceParam) {
         return new ResponseEntity<SportPlaceDto>(sportPlaceService.update(sportPlaceParam), HttpStatus.OK);
     }
 
     @Override
-    @DeleteMapping("deleteSportPlace")
-    public ResponseEntity<SportPlaceDto> delete(@RequestBody SportPlaceParam sportPlaceParam) {
-        return new ResponseEntity<SportPlaceDto>(sportPlaceService.delete(sportPlaceParam), HttpStatus.OK);
+//    @PutMapping("deleteSportPlace")
+    public ResponseEntity<SportPlaceDto> delete(SportPlaceParam sportPlaceParam) {
+        var deleted = sportPlaceService.delete(sportPlaceParam);
+        return new ResponseEntity<SportPlaceDto>(deleted, HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("getAllSportPlace")
+//    @GetMapping("getAllSportPlace")
     public ResponseEntity<List<SportPlaceDto>> getAll(BasePagedParam pagingParam) {
         return new ResponseEntity<List<SportPlaceDto>>(sportPlaceService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("getSportPlaceById")
+//    @GetMapping("getSportPlaceById")
     public ResponseEntity<SportPlaceDto> getById(Long id) {
         return new ResponseEntity<SportPlaceDto>(sportPlaceService.getById(id), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("getSportsByPlace")
-    public ResponseEntity<List<SportDto>> getSportsByPlace(PlaceParam placeParam) {
-        return new ResponseEntity<List<SportDto>>(sportPlaceService.getSportsByPlace(placeParam), HttpStatus.OK);
+    public ResponseEntity<List<SportPlaceDto>> getSportsByPlace(PlaceParam placeParam) {
+        return new ResponseEntity<List<SportPlaceDto>>(sportPlaceService.getSportsByPlace(placeParam), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Long> countSearch(BaseFilter<?> filter) {
+    public ResponseEntity<Page<SportPlaceDto>> query(BaseQuery<?> filter) {
         return null;
     }
 
-    @Override
-    public ResponseEntity<List<SportPlaceDto>> search(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<List<SportPlaceDto>> filter(BaseFilter<?> filter) {
-        return null;
-    }
 }

@@ -1,7 +1,6 @@
 package com.notrika.gympin.common.multimedia.param;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common._base.param.BaseParam;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,8 +9,6 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -19,20 +16,15 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class MultimediaStoreParam extends BaseParam<MultimediaStoreParam> {
 
-    @JsonProperty("file")
-    private MultipartFile multipartFile;
 
-    //category
-    @JsonProperty("Category")
-    private List<MultimediaCategoryParam> categoryParam;
+    private MultipartFile File;
 
-    @JsonProperty("MediaType")
-    private MediaType mediaType;
+    private Long CategoryId;
 
-    @JsonProperty("Title")
-    private String title;
+    private MediaType MediaType;
 
-    @JsonProperty("Description")
-    private String description;
+    private String Title;
+
+    private String Description;
 
 }

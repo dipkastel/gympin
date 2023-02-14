@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.user;
 
-import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.user.dto.UserRoleDto;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.param.UserRoleParam;
@@ -8,14 +8,16 @@ import com.notrika.gympin.common.user.service.UserRoleService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.persistence.dao.repository.RoleRepository;
 import com.notrika.gympin.persistence.entity.user.RoleEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, UserRoleDto, BaseFilter<?>, RoleEntity> implements UserRoleService {
+public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, UserRoleDto, BaseQuery<?>, RoleEntity> implements UserRoleService {
 
     private final RoleRepository roleRepository;
 
@@ -70,7 +72,7 @@ public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, User
 
     @Override
     public RoleEntity getEntityById(long id) {
-        return roleRepository.getById(id);
+        return roleRepository.findById(id).stream().findFirst().get();
     }
 
     @Override
@@ -79,8 +81,19 @@ public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, User
     }
 
     @Override
+    public Page<RoleEntity> findAll(Specification<RoleEntity> specification, Pageable pageable) {
+
+        return roleRepository.findAll(specification,pageable);
+    }
+
+    @Override
     public List<UserRoleDto> convertToDtos(List<RoleEntity> entities) {
         return entities.stream().map(UserRoleServiceImpl::roleToUserRoleDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<UserRoleDto> convertToDtos(Page<RoleEntity> entities) {
+        return null;
     }
 
     public RoleEntity getByUserRole(UserRole userRole) {

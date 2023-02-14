@@ -1,34 +1,55 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Avatar, Button, Card, Grid, Input, TextField} from "@mui/material";
-import {compareObjs, getImagePath} from "../../helper/utils";
+import {compareObjs} from "../../helper/utils";
 import {connect, useSelector} from "react-redux";
-import {authActionsSaga} from "../../helper/redux/actions/authActions";
-import {multimediaAddImage} from "../../network/api/multimedia.api";
+import {media_AddImage} from "../../network/api/multimedia.api";
 import {Formik} from "formik";
 import AdapterJalaali from '@date-io/jalaali';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import {UpdateUser} from "../../network/api/user.api";
+import {user_updateAvatar, user_updateMe} from "../../network/api/user.api";
 import {format} from "date-fns";
+import 'date-fns/locale/fa-IR';
+import {sagaActions} from "../../helper/redux/actions/SagaActions";
+import {useNavigate} from "react-router-dom";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const EditProfile = (props) => {
-    const [imageUrl,SetImageUrl] = useState("")
-    const currentUser = useSelector(state=>state.auth.user)
-    const [user,setUser] = useState(currentUser)
+    const error = useContext(ErrorContext);
+    const navigate = useNavigate();
+    const [imageUrl, SetImageUrl] = useState("")
+    const currentUser = useSelector(state => state.auth.user)
+    const [user, setUser] = useState(currentUser)
     useEffect(() => {
-        props.sagaRequestUser(user)
+        props.RequestUser(user)
     }, []);
     useEffect(() => {
-        if(!compareObjs(currentUser,user))
-            window.location=window.location
+        SetImageUrl(user.Avatar ? user.Avatar.Url : "")
     }, [currentUser]);
 
-
     function ChangeAvatar(e) {
-        if(e.type==="change"){
-            multimediaAddImage(e.target.files[0]).then(result=>{
-                SetImageUrl(getImagePath(result.data.Data))
-            }).catch(e=>console.log(e))
+        if (e.type === "change") {
+            const formData = new FormData();
+            formData.append("MediaType", "IMAGE");
+            formData.append("File", e.target.files[0]);
+            formData.append("CategoryId", "2");
+            formData.append("Title", user.Username);
+            formData.append("Description", user.Id);
+            //
+            media_AddImage(formData)
+                .then(data => {
+                    user_updateAvatar({UserId: currentUser.Id, MultimediaId: data.data.Data.Id}).then(result => {
+                        SetImageUrl(result.data.Data.Avatar ? (result.data.Data.Avatar.Url || "") : "")
+                    }).catch(e => {
+                        try {
+                            error.showError({message: e.response.data.Message});
+                        } catch (f) {
+                            error.showError({message: "خطا نا مشخص",});
+                            console.log(e)
+                        }
+                    });
+                }).catch(e => console.log(e))
+
 
         }
     }
@@ -63,10 +84,9 @@ const EditProfile = (props) => {
                         Id: user.Id,
                         AvatarId: user.AvatarId,
                         Bio: user.Bio,
-                        Birthday: user.Birthday?user.Birthday:"",
+                        Birthday: user.Birthday ? user.Birthday : "",
                         Email: user.Email,
-                        LastName: user.LastName,
-                        Name: user.Name,
+                        FullName: user.FullName,
                         NationalCode: user.NationalCode,
                         PhoneNumber: user.PhoneNumber,
                         Username: user.Username,
@@ -74,11 +94,18 @@ const EditProfile = (props) => {
                     }}
                     onSubmit={(values, {setStatus, setSubmitting}) => {
                         console.log(values);
-                        UpdateUser(values).then(result=>{
+                        user_updateMe(values).then(result => {
                             setUser(result.data.Data);
-                            props.sagaRequestUser(values)
+                            props.RequestUser(values)
                             console.log(result)
-                        }).catch(e=>console.log(e));
+                        }).catch(e => {
+                            try {
+                                error.showError({message: e.response.data.Message,});
+                            } catch (f) {
+                                error.showError({message: "خطا نا مشخص",});
+                                console.log(e)
+                            }
+                        });
                     }}
                 >
                     {({
@@ -103,7 +130,7 @@ const EditProfile = (props) => {
                                     name="PhoneNumber"
                                     type="text"
                                     aria-readonly
-                                    value={values.PhoneNumber}
+                                    value={values.PhoneNumber||""}
                                     label={"شماره همراه"}
                                 />
                                 <TextField
@@ -114,8 +141,8 @@ const EditProfile = (props) => {
                                     margin="normal"
                                     name="Username"
                                     type="text"
-                                    value={values.Username}
-                                    onChange={e=>setFieldValue("Username",e.target.value)}
+                                    value={values.Username||""}
+                                    onChange={e => setFieldValue("Username", e.target.value)}
                                     label={"نام کاربری"}
                                 />
                                 <TextField
@@ -124,41 +151,27 @@ const EditProfile = (props) => {
                                     className="w-100"
                                     variant="outlined"
                                     margin="normal"
-                                    name="Name"
+                                    name="FullName"
                                     type="text"
-                                    value={values.Name}
+                                    value={values.FullName||""}
                                     onChange={handleChange}
-                                    label={"نام"}
-                                />
-                                <TextField
-                                    fullWidth
-                                    id="outlined-adornment-password"
-                                    className="w-100"
-                                    variant="outlined"
-                                    margin="normal"
-                                    name="LastName"
-                                    type="text"
-                                    value={values.LastName}
-                                    onChange={handleChange}
-                                    label={"نام خانوادگی"}
+                                    label={"نام و نام خانوادگی"}
                                 />
 
                                 <LocalizationProvider
-                                    dateAdapter={AdapterJalaali}>
+                                    dateAdapter={AdapterJalaali} adapterLocale={"fa-IR"}>
                                     <DatePicker
                                         variant="outlined"
-                                        mask="____/__/__"
-                                        value={values.Birthday}
-                                        onChange={(e,w)=>{
-                                            console.log("e:",e.toString())
+                                        onChange={(e, w) => {
                                             setFieldValue('Birthday', format(Date.parse(e), "yyyy-MM-dd"))
                                         }}
+                                        toolbarFormat={"jYYYY/jMM/jDD"}
+                                        inputFormat={"jYYYY/jMM/jDD"}
+                                        value={values.Birthday||""}
                                         renderInput={(params) =>
-
                                             <TextField
                                                 {...params}
                                                 fullWidth
-                                                id="outlined-adornment-password"
                                                 className="w-100"
                                                 variant="outlined"
                                                 margin="normal"
@@ -176,7 +189,7 @@ const EditProfile = (props) => {
                                     margin="normal"
                                     name="NationalCode"
                                     type="text"
-                                    value={values.NationalCode}
+                                    value={values.NationalCode||""}
                                     onChange={handleChange}
                                     label={"کد ملی"}
                                 />
@@ -188,7 +201,7 @@ const EditProfile = (props) => {
                                     margin="normal"
                                     name="Email"
                                     type="text"
-                                    value={values.Email}
+                                    value={values.Email||""}
                                     onChange={handleChange}
                                     label={"ایمیل"}
                                 />
@@ -201,11 +214,12 @@ const EditProfile = (props) => {
                                     margin="normal"
                                     name="Bio"
                                     type="text"
-                                    value={values.Bio}
+                                    value={values.Bio||""}
                                     onChange={handleChange}
                                     label={"درباره من"}
                                 />
-                                <Button className="mt-4" variant={"outlined"} fullWidth onClick={handleSubmit}>ثبت</Button>
+                                <Button className="mt-4" variant={"contained"} fullWidth
+                                        onClick={handleSubmit}>ثبت</Button>
                             </div>
 
                         </>
@@ -217,4 +231,4 @@ const EditProfile = (props) => {
     );
 };
 
-export default connect(null, authActionsSaga)(EditProfile);
+export default connect(null, sagaActions)(EditProfile);

@@ -1,15 +1,13 @@
 package com.notrika.gympin.common.athlete.gate.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseDto;
-import com.notrika.gympin.common.location.dto.GateDto;
+import com.notrika.gympin.common._base.dto.BaseDto;
+import com.notrika.gympin.common.gate.dto.GateDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import java.util.UUID;
 
 @Data
 @SuperBuilder

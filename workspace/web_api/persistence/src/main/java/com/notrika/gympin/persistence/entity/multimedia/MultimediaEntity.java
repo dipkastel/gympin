@@ -2,7 +2,11 @@ package com.notrika.gympin.persistence.entity.multimedia;
 
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.homePage.HomePageItemEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.sport.SportMultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
+import com.notrika.gympin.persistence.entity.user.UserMultimediaEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -27,20 +31,23 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @ToString.Exclude
     private UserEntity user;
 
-    @Column(name = "file_name", nullable = false)
+    @Column(name = "fileName", nullable = false)
     private String fileName;
 
-    @Column(name = "media_type", nullable = false)
+    @Column(name = "mediaType", nullable = false)
     private MediaType mediaType;
 
-    @Column(name = "document_format")
+    @Column(name = "documentFormat")
     private String documentFormat;
 
-    @Column(name = "upload_dir")
+    @Column(name = "uploadDir")
     private String uploadDir;
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "size")
+    private String size;
 
     @Column(name = "description")
     private String description;
@@ -53,10 +60,21 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @ToString.Exclude
     private List<UserMultimediaEntity> userMultimedias;
 
-    @ManyToMany
-    @JoinTable(name = "multimedia_multimedia_category", joinColumns = @JoinColumn(name = "multimedia_id"), inverseJoinColumns = @JoinColumn(name = "multimedia_category_id"))
+    @ManyToMany(mappedBy = "multimedias")
     @ToString.Exclude
-    private List<MultimediaCategoryEntity> categories;
+    private List<PlaceEntity> places;
+
+    @OneToMany(mappedBy = "multimedia")
+    @ToString.Exclude
+    private List<HomePageItemEntity> homeMultimedia;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private MultimediaCategoryEntity category;
+
+    @OneToOne(mappedBy = "userAvatar")
+    //set forUserAvatar
+    private UserEntity AvatarForUser;
 
     @Override
     public boolean equals(Object o) {
@@ -69,6 +87,6 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
 
     @Override
     public int hashCode() {
-        return 606785354;
+        return getClass().hashCode();
     }
 }

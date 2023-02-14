@@ -10,9 +10,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "bootstrap/dist/css/bootstrap.rtl.min.css"
 import "../helper/style.css"
+import Splash from "../pages/splash/Splash";
+import {useState} from "react";
+import GympinPagesProvider from "../components/GympinPagesProvider";
 
 const { PUBLIC_URL } = process.env;
 function App() {
+    const [showSplash,SetShowSplash] = useState(true)
     // const [connectionStatus, SetConnectionStatus] = useState(navigator.onLine);
     //
     // window.addEventListener('offline', (event) => {
@@ -26,7 +30,11 @@ function App() {
                 <BrowserRouter basename={PUBLIC_URL}>
                     <MuiThemeProvider theme={GympinTheme}>
                         <BootStrapThemeProvider dir="rtl">
-                            <MainRoutes/>
+                            {/*{showSplash?<Splash onSplashComplete={()=>SetShowSplash(false)}/>:*/}
+                            <GympinPagesProvider>
+                                <MainRoutes/>
+                            </GympinPagesProvider>
+                            {/*}*/}
                         </BootStrapThemeProvider>
                     </MuiThemeProvider>
                 </BrowserRouter>

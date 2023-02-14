@@ -1,12 +1,13 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.BasePagedParam;
+import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.multimedia.api.MultimediaCategoryController;
 import com.notrika.gympin.common.multimedia.dto.MultimediaCategoryDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaCategoryParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,23 +52,10 @@ public class MultimediaCategoryControllerImpl implements MultimediaCategoryContr
         return new ResponseEntity<>(multimediaCategoryService.getById(id), HttpStatus.OK);
     }
 
+
     @Override
-    public ResponseEntity<Long> countSearch(BaseFilter<?> filter) {
+    public ResponseEntity<Page<MultimediaCategoryDto>> query(BaseQuery<?> filter) {
         return null;
     }
 
-    @Override
-    public ResponseEntity<List<MultimediaCategoryDto>> search(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<List<MultimediaCategoryDto>> filter(BaseFilter<?> filter) {
-        return null;
-    }
 }

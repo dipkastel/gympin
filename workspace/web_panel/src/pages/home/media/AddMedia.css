@@ -1,0 +1,30 @@
+.drag-div{
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  background: #fafafa;
+  text-align: center;
+  font-size: 1.2em;
+  height: 140px;
+}
+.image-div{
+  width: 100%;
+  text-align: center;
+}
+
+.upload-img{
+  max-width: 250px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #0bd398;
+}
+
+.delete-image-Upload{
+  position: absolute !important;
+}
+
+.picker-checkbox {
+  color: white !important;
+}

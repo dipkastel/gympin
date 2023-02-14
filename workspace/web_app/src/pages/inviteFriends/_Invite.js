@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, CardContent, Grid, IconButton, InputAdornment, TextField, Typography} from "@mui/material";
+import {Button, Card, CardContent, Fab, Grid, IconButton, InputAdornment, TextField, Typography} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import TelegramIcon from '@mui/icons-material/Telegram';
@@ -39,20 +39,19 @@ const _Invite = () => {
                 </div>
                 <Typography sx={{marginTop:5}} variant={"body1"}>اشتراک گذاری : </Typography>
 
-                <Button variant={"contained"} sx={{borderRadius:"50%",width:"4vw",height:"4vw",margin:1}} aria-label="delete" size="large">
-                    <WhatsAppIcon sx={{width:"3vw",height:"3vw"}} fontSize="inherit" />
-                </Button>
-                <Button variant={"contained"} sx={{borderRadius:"50%",width:"4vw",height:"4vw",margin:1}} aria-label="delete" size="large">
-                    <TelegramIcon sx={{width:"3vw",height:"3vw"}} fontSize="inherit" />
-                </Button>
-                <Button variant={"contained"} sx={{borderRadius:"50%",width:"4vw",height:"4vw",margin:1}} aria-label="delete" size="large">
-                    <InstagramIcon sx={{width:"3vw",height:"3vw"}} fontSize="inherit" />
-                </Button>
-                <Button variant={"contained"} sx={{borderRadius:"50%",width:"4vw",height:"4vw",margin:1}} aria-label="delete" size="large">
-                    <SmsIcon sx={{width:"3vw",height:"3vw"}} fontSize="inherit" />
-                </Button>
+                <Fab variant={"contained"} sx={{margin:1}} color={"error"} size="large">
+                    <WhatsAppIcon />
+                </Fab>
+                <Fab variant={"contained"} sx={{margin:1}} color={"error"} size="large">
+                    <TelegramIcon />
+                </Fab>
+                <Fab variant={"contained"} sx={{margin:1}} color={"error"} size="large">
+                    <InstagramIcon />
+                </Fab>
+                <Fab variant={"contained"} sx={{margin:1}} color={"error"} size="large">
+                    <SmsIcon />
+                </Fab>
                 <Grid container columns={"rows"}>
-
                     <Typography sx={{marginTop:5}}  variant={"body1"}>کد خود را به دوستانتان بدهید تا هنگام ثبت نام از آن استفاده کنند و هر کدام 10 هزار تومان اعتبار دریافت کنید. </Typography>
                 </Grid>
             </CardContent>

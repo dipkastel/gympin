@@ -3,8 +3,8 @@ package com.notrika.gympin.persistence.entity.sport;
 import com.notrika.gympin.common.sport.enums.LaunchStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.event.BaseEventEntity;
-import com.notrika.gympin.persistence.entity.location.GateEntity;
-import com.notrika.gympin.persistence.entity.multimedia.SportMultimediaEntity;
+import com.notrika.gympin.persistence.entity.gate.GateEntity;
+import com.notrika.gympin.persistence.entity.sport.option.OptionOfSportEntity;
 import com.notrika.gympin.persistence.entity.sportplace.SportPlaceEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class SportEntity extends BaseEntity<SportEntity> {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "launch_status")
+    @Column(name = "launchStatus")
     @Enumerated(EnumType.STRING)
     private LaunchStatus launchStatus;
 

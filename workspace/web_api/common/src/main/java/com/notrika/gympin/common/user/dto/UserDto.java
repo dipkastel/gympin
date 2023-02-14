@@ -1,7 +1,9 @@
 package com.notrika.gympin.common.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseDtoWithCreate;
+import com.notrika.gympin.common._base.dto.BaseDtoWithCreate;
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
+import com.notrika.gympin.common.user.enums.Gender;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserStatus;
 import lombok.Data;
@@ -10,8 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @SuperBuilder
@@ -23,7 +25,7 @@ public class UserDto extends BaseDtoWithCreate<UserDto> /*implements UserDetails
     //    @Builder.Default
 
     @JsonProperty("UserRole")
-    private List<UserRoleDto> userRole;
+    private UserRoleDto userRole;
 
     @JsonProperty("UserStatus")
     private UserStatus userStatus;
@@ -34,17 +36,17 @@ public class UserDto extends BaseDtoWithCreate<UserDto> /*implements UserDetails
     @JsonProperty("PhoneNumber")
     private String phoneNumber;
 
+    @JsonProperty("Gender")
+    private Gender gender;
+
     @JsonProperty("Token")
     private String token;
 
     @JsonProperty("RefreshToken")
     private String refreshToken;
 
-    @JsonProperty("Name")
-    private String name;
-
-    @JsonProperty("LastName")
-    private String lastName;
+    @JsonProperty("FullName")
+    private String fullName;
 
     @JsonProperty("FollowersCount")
     private Long followersCount;
@@ -67,10 +69,13 @@ public class UserDto extends BaseDtoWithCreate<UserDto> /*implements UserDetails
     @JsonProperty("Email")
     private String email;
 
+    @JsonProperty("Balance")
+    private BigDecimal balance;
+
     @JsonProperty("UserGroup")
     private UserGroup userGroup;
 
-    @JsonProperty("AvatarId")
-    private Long avatarId;
+    @JsonProperty("Avatar")
+    private MultimediaDto avatar;
 
 }

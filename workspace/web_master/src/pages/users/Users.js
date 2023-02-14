@@ -1,26 +1,83 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import {useState} from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import _GateAwaitingEntry from "./_GateAwaitingEntry";
-import _GateEntered from "./_GateEntered";
-import _AllUsers from "./_AllUsers";
-import Nqrscan from "../qr-scan/Nqrscan";
+import _GateEntered from "./entered/_GateEntered";
+import _ActiveTickets from "./activeTickets/_ActiveTickets";
+import _Nqrscan from "./scan/_Nqrscan";
+import getAccessOf from "../../helper/accessManager";
+import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+
+
+function Users() {
+    const theme = useTheme();
+    theme.direction = 'rtl';
+    const [tabIndex, setTabIndex] = useState(0);
+    const [selectedTicket, setSelectedTicket] = useState(null);
+
+
+    function tabindexChange(e) {
+        if([0,1,2].includes(e))
+            setTabIndex(e)
+    }
+
+    if(!getAccessOf(personnelAccessEnumT.Users))
+        return (<></>);
+    return (<>
+
+        <Box sx={{ bgcolor: 'background.paper'}}>
+            <AppBar position="static">
+                <Tabs
+                    value={tabIndex}
+                    onChange={(e,num)=>setTabIndex(num)}
+                    indicatorColor="secondary"
+                    textColor="inherit"
+                    variant="fullWidth"
+                    aria-label="full width tabs example"
+                >
+                    {getAccessOf(personnelAccessEnumT.Scan)&&<Tab label="اسکن" id={"user-tab-0"}  aria-controls={"user-tabpanel-0"}/>}
+                    {getAccessOf(personnelAccessEnumT.Entered)&&<Tab label="وارد شده"  id={"user-tab-1"}  aria-controls={"user-tabpanel-1"} />}
+                    {getAccessOf(personnelAccessEnumT.AllTickets)&&<Tab label="بلیط ها"  id={"user-tab-2"}  aria-controls={"user-tabpanel-2"} />}
+                </Tabs>
+            </AppBar>
+            <SwipeableViews
+                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                index={tabIndex}
+                onChangeIndex={(e)=>tabindexChange(e)}
+            >
+                {getAccessOf(personnelAccessEnumT.Scan)&&<TabPanel  value={tabIndex} index={0}  dir={theme.direction}>
+                    <_Nqrscan selectedTicket={selectedTicket}/>
+                </TabPanel>}
+                {getAccessOf(personnelAccessEnumT.Entered)&&<TabPanel value={tabIndex} index={1} dir={theme.direction}>
+                    <_GateEntered SetSelectedTicket={(ticket)=>{
+                        setSelectedTicket(ticket);
+                        setTabIndex(0);
+                    }}/>
+                </TabPanel>}
+                {getAccessOf(personnelAccessEnumT.AllTickets)&&<TabPanel value={tabIndex} index={2} dir={theme.direction}>
+                    <_ActiveTickets/>
+                </TabPanel>}
+            </SwipeableViews>
+        </Box>
+    </>
+    );
+}
+
+export default Users;
 
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const { children, value, index } = props;
 
     return (
         <div
             role="tabpanel"
             hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}
+            id={`user-tabpanel-${index}`}
+            aria-labelledby={`user-tab-${index}`}
         >
             {value === index && (
                 <Box>
@@ -28,71 +85,5 @@ function TabPanel(props) {
                 </Box>
             )}
         </div>
-    );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `full-width-tab-${index}`,
-        'aria-controls': `full-width-tabpanel-${index}`,
-    };
-}
-
-export default function Users() {
-    const theme = useTheme();
-    theme.direction = 'rtl';
-    const [value, setValue] = React.useState(0);
-    const [selectedUser, setSelectedUser] = React.useState(null);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    const handleChangeIndex = (index) => {
-        setValue(index);
-    };
-
-    const selectUser = (value) => {
-        setSelectedUser(value);
-        setValue(0);
-    }
-    return (
-        <Box sx={{ bgcolor: 'background.paper'}}>
-            <AppBar position="static">
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="secondary"
-                    textColor="inherit"
-                    variant="fullWidth"
-                    aria-label="full width tabs example"
-                >
-                    <Tab label="اسکن" {...a11yProps(0)} />
-                    <Tab label="وارد شده" {...a11yProps(1)} />
-                    <Tab label="همه کاربران" {...a11yProps(2)} />
-                </Tabs>
-            </AppBar>
-            <SwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={value}
-                onChangeIndex={handleChangeIndex}
-            >
-                <TabPanel  value={value} index={0}  dir={theme.direction}>
-                    <Nqrscan user={selectedUser}/>
-                </TabPanel>
-                <TabPanel value={value} index={1} dir={theme.direction}>
-                    <_GateEntered selectUser={selectUser}/>
-                </TabPanel>
-                <TabPanel value={value} index={2} dir={theme.direction}>
-                    <_AllUsers/>
-                </TabPanel>
-            </SwipeableViews>
-        </Box>
     );
 }

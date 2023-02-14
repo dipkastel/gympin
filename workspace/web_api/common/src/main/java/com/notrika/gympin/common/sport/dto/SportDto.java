@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.sport.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseDtoWithCreateUpdate;
+import com.notrika.gympin.common._base.dto.BaseDtoWithCreateUpdate;
 import com.notrika.gympin.common.sport.enums.LaunchStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

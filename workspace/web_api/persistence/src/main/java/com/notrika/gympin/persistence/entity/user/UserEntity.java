@@ -1,23 +1,28 @@
 package com.notrika.gympin.persistence.entity.user;
 
+import com.notrika.gympin.common.user.enums.Gender;
 import com.notrika.gympin.common.user.enums.UserGroup;
+import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
-import com.notrika.gympin.persistence.entity.accounting.AuditableEntitiesEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
 import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
 import com.notrika.gympin.persistence.entity.comment.CommentGateEntity;
-import com.notrika.gympin.persistence.entity.comment.CommentPlaceEntity;
 import com.notrika.gympin.persistence.entity.communication.notification.NotificationEntity;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
-import com.notrika.gympin.persistence.entity.location.GateEntity;
-import com.notrika.gympin.persistence.entity.location.PlaceOwnerEntity;
+import com.notrika.gympin.persistence.entity.gate.GateEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.multimedia.UserMultimediaEntity;
+import com.notrika.gympin.persistence.entity.note.NoteEntity;
+import com.notrika.gympin.persistence.entity.place.comment.CommentPlaceEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
 import com.notrika.gympin.persistence.entity.rating.RateGateEntity;
 import com.notrika.gympin.persistence.entity.rating.RatePlaceEntity;
 import com.notrika.gympin.persistence.entity.rating.UserRateEntity;
 import com.notrika.gympin.persistence.entity.security.service.ServiceExecutionEntity;
+import com.notrika.gympin.persistence.entity.support.SupportEntity;
+import com.notrika.gympin.persistence.entity.ticket.TicketEntryEntity;
+import com.notrika.gympin.persistence.entity.transaction.TransactionEntity;
 import com.notrika.gympin.persistence.entity.user.relation.FollowEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +33,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -40,21 +46,25 @@ import java.util.Set;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "user")
+@Table(name = "user", uniqueConstraints = {
+        @UniqueConstraint(name = "username", columnNames = {"username"}),
+        @UniqueConstraint(name = "phoneNumber", columnNames = {"phoneNumber"})
+})
 @PrimaryKeyJoinColumn(name = "id")
-public class UserEntity extends AuditableEntitiesEntity<UserEntity> {
+public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "lastname")
-    private String lastname;
+    @Column(name = "fullName")
+    private String fullName;
 
     @Column(unique = true, name = "username")
     private String username;
 
     @Column(unique = true, name = "phoneNumber", nullable = false)
     private String phoneNumber;
+
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(name = "birthday")
     private Date birthday;
@@ -65,22 +75,24 @@ public class UserEntity extends AuditableEntitiesEntity<UserEntity> {
     @Column(name = "email")
     private String email;
 
-    @Column(updatable = false, name = "user_group", nullable = false)
+    @Column(name = "balance", nullable = false, columnDefinition = "BigDecimal default 0")
+    private BigDecimal Balance;
+
+    @Column(name = "userGroup", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserGroup userGroup;
 
-    @ToString.Exclude
-    //    @OneToMany(mappedBy = "user")
-    //    @ToString.Exclude
-    @ManyToMany
-    @JoinTable(name = "role_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<RoleEntity> userRole;
+    @Column(name = "userRole", nullable = false, columnDefinition = "varchar(60) default 'USER'")
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 
-    //    @Where(clause = "deleted=0 and expired=0")
+    @Column(name = "invitedBy")
+    private String invitedBy;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<PasswordEntity> password;
 
-    @Column(updatable = false, nullable = false)
+    @Column(name = "userStatus")
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
@@ -89,9 +101,16 @@ public class UserEntity extends AuditableEntitiesEntity<UserEntity> {
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
-    private Set<PlaceOwnerEntity> placeOwners;
+    private Set<PlacePersonnelEntity> placePersonnel;
 
-    //    @Where(clause = "expiredDate<=CURRENT_DATE")
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private Set<SupportEntity> support;
+
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private List<TransactionEntity> transactions;
+
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
     @ToString.Exclude
     private ActivationCodeEntity activationCode;
@@ -139,6 +158,15 @@ public class UserEntity extends AuditableEntitiesEntity<UserEntity> {
     @ToString.Exclude
     private List<NotificationEntity> notifs;
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<NoteEntity> notes;
+
+    @OneToOne
+    @ToString.Exclude
+    private MultimediaEntity userAvatar;
+
     @OneToOne(mappedBy = "user")
     @ToString.Exclude
     private PlanRegisterEntity registeredPlan;
@@ -154,6 +182,10 @@ public class UserEntity extends AuditableEntitiesEntity<UserEntity> {
     @OneToMany(mappedBy = "guard")
     @ToString.Exclude
     private List<EnterGateEntity> enterGateGuard;
+
+    @OneToMany(mappedBy = "acceptedBy")
+    @ToString.Exclude
+    private List<TicketEntryEntity> entranceAcceptes;
 
     @OneToMany
     private List<CommentGateEntity> gateComments;
@@ -181,7 +213,7 @@ public class UserEntity extends AuditableEntitiesEntity<UserEntity> {
 
     @Override
     public int hashCode() {
-        return 562048007;
+        return getClass().hashCode();
     }
 }
 

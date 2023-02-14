@@ -1,11 +1,14 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import {Button, Card, CardActions, CardContent, CardHeader, Grid, Link, TextField} from "@mui/material";
 import {Formik} from "formik";
-import {addPlace} from "../../network/api/place.api";
+import {requestRegisterPlace} from "../../network/api/account.api";
+import {useNavigate} from "react-router-dom";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 
 export default function Register(props) {
-
+    const error = useContext(ErrorContext);
+    const navigate = useNavigate()
     return (
         <Grid
             container
@@ -15,15 +18,15 @@ export default function Register(props) {
             justifyContent="center"
             style={{minHeight: '100vh'}}
         >
-            <Grid item >
+            <Grid item>
                 <Card elevation={5} sx={{
-                    borderRadius:3,
-                    margin:2
+                    borderRadius: 3,
+                    margin: 2
                 }}>
                     <CardHeader
                         sx={{
-                            backgroundColor:"primary.main",
-                            color:"#fff"
+                            backgroundColor: "primary.main",
+                            color: "#fff"
                         }}
                         title="ثبت مجموعه"
                     />
@@ -50,24 +53,24 @@ export default function Register(props) {
                                 return errors;
                             }}
                             onSubmit={(values, {setStatus, setSubmitting}) => {
-                                console.log({
-                                    'Name': values.Name,
-                                    'about-place': "ثبت شده توسط : "+values.username+" با شماره تلفن : "+values.phoneNumber,
-                                })
-                                addPlace({
-                                    'Name': values.Name,
-                                    'about-place': "ثبت شده توسط : "+values.username+" با شماره تلفن : "+values.phoneNumber,
-                            })
-                                        .then((data) => {
-                                            props.login(data.data.Data.Token);
-                                        })
-                                        .catch((ex) => {
-                                            console.log(ex);
-                                            setSubmitting(false);
-                                            setStatus(
-                                                "اطلاعات وارد شده معتبر نبست"
-                                            );
-                                        });
+                                requestRegisterPlace({
+                                    PhoneNumber: values.phoneNumber,
+                                    fullName: values.username,
+                                    placeName: values.Name
+                                }).then(result=>{
+                                    if(result.data.Data){
+                                        alert("درخواست شما ثبت شد به زودی با شما تماس خواهیم گرفت")
+                                        navigate('/auth/login', {replace: true});
+                                    }
+                                }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+                console.log(e)
+            }
+        })
+
                             }}
                         >
                             {({
@@ -140,7 +143,7 @@ export default function Register(props) {
                                         />
                                     </div>
 
-                                    <Button type={"submit"} variant={"contained"} >ثبت اطلاعات</Button>
+                                    <Button type={"submit"} variant={"contained"}>ثبت اطلاعات</Button>
                                 </form>
                             )}
                         </Formik>
@@ -148,7 +151,7 @@ export default function Register(props) {
                     <CardActions>
                         <Grid rowSpacing={1}>
                             <Link
-                                variant="caption"  href="/auth/login">ورود کنید</Link>
+                                variant="caption" href="/auth/login">ورود کنید</Link>
                         </Grid>
                     </CardActions>
                 </Card>

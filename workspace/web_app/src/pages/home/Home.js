@@ -3,17 +3,21 @@ import HomeSlider from "./components/HomeSlider";
 import HomeTitle from "./components/HomeTitle";
 import HomeUserList from "./components/HomeUserList";
 import HomeBanner from "./components/HomeBanner";
-import {getMainPage} from "../../network/api/mainPage.api";
+import {getHomePage} from "../../network/api/mainPage.api";
 import HomeDiscountList from "./components/HomeDiscountList";
 import HomeContentList from "./components/HomeContentList";
 import "./Home.css"
+import {useSelector} from "react-redux";
+import {getHomeId} from "../../helper/serverSettingsHelper";
 
 export default function Home() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
+    const [serverSettings] = useState(useSelector(({settings:{serverSettings}})=>serverSettings))
+    console.log(getHomeId(serverSettings))
+    const homePageId = getHomeId(serverSettings);
     useEffect(() => {
-        getMainPage().then(data=>{
-            console.log("data",data.data.Data.LayoutItemParams)
-            setData(data.data.Data.LayoutItemParams);
+        getHomePage({id:homePageId}).then(result=>{
+            setData(result.data.Data);
         }).catch(ex=>{
             console.log(ex)
 
@@ -22,8 +26,7 @@ export default function Home() {
     }, [])
     return (
         <>
-            {
-                data.map((item, index) => {
+            {data&&data.Items.map((item, index) => {
                     switch (item.Type){
                         case "SLIDER":return   <HomeSlider key={index} item={item}/>
                         case "TITLE":return   <HomeTitle key={index} item={item}/>
@@ -33,8 +36,7 @@ export default function Home() {
                         case "CONTENT_LIST":return   <HomeContentList key={index} item={item}/>
                         default: return ( item.Type +"\n\r\n\r\t" )
                     }
-                })
-            }
+                })}
         </>
     );
 }

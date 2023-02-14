@@ -14,15 +14,15 @@ public final class EventConvertor {
     public static WalkingEventDto walkingEventEntityToDto(WalkingEventEntity entity) {
         WalkingEventDto dto=new WalkingEventDto();
         dto.setId(entity.getId());
-        dto.setSport(SportConvertor.sportToSportDto(entity.getSport()));
+        dto.setSport(SportConvertor.toDto(entity.getSport()));
         dto.setTitle(entity.getTitle());
         dto.setStartLatitude(entity.getStartLatitude());
         dto.setStartLongitude(entity.getStartLongitude());
         dto.setEndLatitude(entity.getEndLatitude());
         dto.setEndLongitude(entity.getEndLongitude());
         dto.setParticipantCount(entity.getParticipantCount());
-        dto.setParticipants(entity.getParticipants().stream().map(c -> UserConvertor.userToUserDtoComplete(c.getUser())).collect(Collectors.toList()));
-        dto.setOwner(UserConvertor.userToUserDtoComplete(entity.getCreatorUser()));
+        dto.setParticipants(entity.getParticipants().stream().map(c -> UserConvertor.toDtoComplete(c.getUser())).collect(Collectors.toList()));
+        dto.setOwner(UserConvertor.toDtoComplete(entity.getCreatorUser()));
         dto.setStartDate(entity.getStartDate());
         dto.setAddress(entity.getAddress());
         return dto;
@@ -32,7 +32,7 @@ public final class EventConvertor {
         EventParticipantDto dto=new EventParticipantDto();
         dto.setId(entity.getId());
         dto.setEvent(BaseEventDto.builder().id(entity.getEvent().getId()).build());
-        dto.setUser(UserConvertor.userToUserDtoComplete(entity.getUser()));
+        dto.setUser(UserConvertor.toDtoComplete(entity.getUser()));
         return dto;
     }
 

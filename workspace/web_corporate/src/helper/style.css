@@ -10,12 +10,12 @@
 }
 @media (min-width: 1000px) {
 
-  body{
-    position: absolute;
-    width: 390px;
-    max-width: 390px;
-    left: Calc(50% - 195px);
-  }
+  /*body{*/
+  /*  position: absolute;*/
+  /*  width: 390px;*/
+  /*  max-width: 390px;*/
+  /*  left: Calc(50% - 195px);*/
+  /*}*/
 }
 #qrCanvas {
   width: 100%;

@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.dao.repository;
 
-import com.notrika.gympin.persistence.entity.sport.OptionOfSportEntity;
+import com.notrika.gympin.persistence.entity.sport.option.OptionOfSportEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository

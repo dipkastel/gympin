@@ -3,16 +3,14 @@ import {Route, Routes} from "react-router-dom";
 import Home from "../pages/home/Home";
 import Finance from "../pages/finance/Finance";
 import Management from "../pages/management/Management";
-import Report from "../pages/report/Report";
 import Users from "../pages/users/Users";
 import NNavigaion from "../components/NNavigaion";
 import NBottomNavigation from "../components/NBottomNavigation";
-import Nqrscan from "../pages/qr-scan/Nqrscan";
-import IncreaseList from "../pages/IncreaseListPeyment/IncreaseList";
-import Stall from "../pages/stall/Stall";
-import CorporateDetail from "../pages/corporateDetail/CorporateDetail";
+import IncreaseList from "../pages/increaseListPeyment/IncreaseList";
+import CorporateDetail from "../pages/corporateDetail/EditCorporate";
 import IncreaseGroupCredit from "../pages/increaseGroupCredit/IncreaseGroupCredit";
 import SingleUser from "../pages/singleUser/SingleUser";
+import Settings from "../pages/settings/Settings";
 
 export default function ApplicationRoutes() {
 
@@ -20,22 +18,18 @@ export default function ApplicationRoutes() {
         <>
             <NNavigaion/>
             <Routes>
-                <Route path="/management" element={<Management/>}/>
-                <Route path="/management/details" element={<CorporateDetail/>}/>
-
-                <Route path="/finance" element={<Finance/>}/>
-                <Route path="/finance/increaselist" element={<IncreaseList/>}/>
-
-                <Route path="/users" element={<Users/>}/>
-                <Route path="/users/increasegroupcredit" element={<IncreaseGroupCredit/>}/>
-                <Route path="/users/Detail" element={<SingleUser/>}/>
-
-                <Route path="/stall" element={<Stall/>}/>
-                <Route path="/stall/qrscan" element={<Nqrscan/>}/>
-
-                <Route path="/report" element={<Report/>}/>
-
                 <Route path="/" element={<Home/>}/>
+                <Route path="/management/details" element={<CorporateDetail/>}/>
+                <Route path="/management/settings" element={<Settings/>}/>
+                <Route path="/management" element={<Management/>}/>
+
+                <Route path="/finance/increaselist" element={<IncreaseList/>}/>
+                <Route path="/finance" element={<Finance/>}/>
+
+                <Route path="/personnel/increasegroupcredit" element={<IncreaseGroupCredit/>}/>
+                <Route path="/personnel/detail/:PersonnelId" element={<SingleUser/>}/>
+                <Route path="/personnel" element={<Users/>}/>
+
             </Routes>
             <NBottomNavigation/>
         </>

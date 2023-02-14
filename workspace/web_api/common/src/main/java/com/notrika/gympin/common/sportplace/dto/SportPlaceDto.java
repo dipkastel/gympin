@@ -1,8 +1,8 @@
 package com.notrika.gympin.common.sportplace.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseDtoWithCreateUpdate;
-import com.notrika.gympin.common.location.dto.PlaceDto;
+import com.notrika.gympin.common._base.dto.BaseDtoWithCreateUpdate;
+import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

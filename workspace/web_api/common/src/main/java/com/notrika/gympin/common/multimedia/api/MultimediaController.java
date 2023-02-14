@@ -1,39 +1,25 @@
 package com.notrika.gympin.common.multimedia.api;
 
+import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
-import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 public interface MultimediaController {
 
-    ResponseEntity<Long> add(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    ResponseEntity<MultimediaDto> add(@ModelAttribute MultimediaStoreParam multimediaStoreParam) throws Exception;
 
-    ResponseEntity<Long> addImage(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    ResponseEntity<MultimediaDto> update(MultimediaStoreParam multimediaStoreParam);
 
-    ResponseEntity<Long> addVideo(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    ResponseEntity<List<MultimediaDto>> getAllImages(HttpServletResponse response,BasePagedParam pagingParam) throws Exception;
 
-    ResponseEntity<Long> addAudio(MultimediaStoreParam multimediaStoreParam) throws IOException;
+    ResponseEntity<List<MultimediaDto>> getAllVideo(HttpServletResponse response,BasePagedParam pagingParam) throws Exception;
 
-    void getByName(HttpServletResponse response,MultimediaRetrieveParam param) throws Exception;
-
-    ResponseEntity<Long> getMultimediaIdByFileName(String fileName);
-
-    void getById(HttpServletResponse response,MultimediaRetrieveParam param) throws Exception;
-
-    List<byte[]> getAllByType(MultimediaRetrieveParam multimediaRetrieveParam) throws IOException;
-
-    ResponseEntity<List<Long>> getAllId();
-
-    ResponseEntity<List<String>> getAllName();
-
-    ResponseEntity<List<MultimediaDto>> getAll();
-
-    ResponseEntity<Long> update(MultimediaStoreParam multimediaStoreParam);
+    ResponseEntity<List<MultimediaDto>> getAllAudio(HttpServletResponse response,BasePagedParam pagingParam) throws Exception;
 
     ResponseEntity<Boolean> delete(Long id);
 

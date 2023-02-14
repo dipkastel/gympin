@@ -1,4 +1,5 @@
-import {AuthApi} from "../network/const/NETWORKCONSTS";
+import {AuthApi} from "../network/api/NETWORKCONSTS";
+import {useSelector} from "react-redux";
 
 export const toAbsoluteUrl = (pathname) => process.env.PUBLIC_URL + pathname;
 
@@ -11,17 +12,29 @@ export function checkMobileValid(mobileNumber) {
 export default function GetStringPrice(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+export function compareObjs(obj1,obj2){
+    return JSON.stringify(obj1)===JSON.stringify(obj2);
+}
+
+export function toPriceWithComma(price){
+    if(!price) return "0";
+    if(price.length>1&&price.startsWith("0")) price = price.substring(1,price.length);
+    return (price+"")
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+export function toPriceWithoutComma(price){
+    if(!price) return "";
+    return (price+"").replace(/\D/g, "");
+}
 
 export function fixMobile(mobileNumber) {
-    console.log(mobileNumber)
-    console.log(mobileNumber.toString()[0])
     switch (mobileNumber.toString()[0]) {
         case "0" : return  mobileNumber.toString()
         case "+": return mobileNumber.replace("+98","0")
         case "9": return "0"+mobileNumber
     }
 }
-
 export function removeStorage(key) {
     try {
         localStorage.setItem(key, "");
@@ -86,4 +99,58 @@ export function setStorage(key, value, expires) {
         return false;
     }
     return true;
+}
+
+export function getTicketPersianStatus(text){
+    var messages = {
+        NEW:"جدید",
+        PROCESSING:"در حال انجام",
+        AWAITING_USER:"در انتظار پاسخ",
+        AWAITING_EXPERT:"در انتظار کارشناس",
+        COMPLETE:"تکمیل شده",
+        CANCEL:"لغو شده"}
+
+    return messages[text];
+}
+
+//maximum ticket id 999999999
+export function generateTicketCode(ticketId) {
+    let len = ticketId.toString().length;
+    var extraCharCount = Math.round(Math.random() * (9-len));
+    // console.log(len+extraCharCount)
+    var result = "";
+    var subs = [];
+    while (subs.length < len) {
+        let newSub = (Math.round(Math.random() * (len+extraCharCount)));
+        if (!subs.includes(newSub)) {
+            subs.push(newSub);
+        }
+    }
+    while (result.length <= (len+extraCharCount)) {
+        if (subs.includes(result.length)){
+            result += ticketId.toString().substring(subs.indexOf(result.length), subs.indexOf(result.length) + 1);
+            // result+="c"
+        }
+        // else result+="0"
+         else result += Math.round(Math.random() * 9);
+    }
+    subs.forEach(item=>{
+        result+=item;
+        // result+="N"
+    })
+    result+=len.toString();
+    return result;
+}
+
+//maximum ticket id 999999999
+export function getTicketIdByQr(qr) {
+    let charCount  = qr.substring(qr.length-1,qr.length);
+    var result = "";
+    for (var i =Number(charCount-1);i>=0;i--){
+
+        console.log(Number(qr.substring(qr.length-i-2,qr.length-i-1)));
+        // console.log(Number(qr.substring(charCount-i-1,charCount-i)));
+         result+= qr.substring(Number(qr.substring(qr.length-i-2,qr.length-i-1)),Number(qr.substring(qr.length-i-2,qr.length-i-1))+1);
+    }
+    return result;
 }

@@ -1,5 +1,6 @@
 package com.notrika.gympin.framework.config.jwt;
 
+import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.enums.TokenType;
@@ -13,6 +14,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -136,14 +138,14 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
 
     @Override
     public RefreshTokenDto refreshToken(String refreshToken) {
-        String userName = getUserNameFromJwtToken(refreshToken);
-        UserEntity user = userService.getByPhoneNumber(userName);
+        String phoneNumber = getUserNameFromJwtToken(refreshToken);
+        UserEntity user = userService.getByPhoneNumber(phoneNumber);
         if (user.isDeleted()) {
-            throw new ExceptionBase();
+            throw new ExceptionBase(HttpStatus.INTERNAL_SERVER_ERROR, Error.ErrorType.USER_NOT_FOUND);
         }
         RefreshTokenDto refreshTokenDto = new RefreshTokenDto();
-        refreshTokenDto.setToken(getjwt(userjwtExpirationInMs, userName));
-        refreshTokenDto.setRefreshToken(getjwt(refreshTokenJwtExpirationInMs, userName));
+        refreshTokenDto.setToken(getjwt(userjwtExpirationInMs, phoneNumber));
+        refreshTokenDto.setRefreshToken(getjwt(refreshTokenJwtExpirationInMs, phoneNumber));
         return refreshTokenDto;
     }
 

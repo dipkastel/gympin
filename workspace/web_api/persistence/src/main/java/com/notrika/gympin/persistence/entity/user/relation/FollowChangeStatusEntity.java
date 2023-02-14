@@ -19,21 +19,21 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "change_follow_status")
+@Table(name = "changeFollowStatus")
 public class FollowChangeStatusEntity extends BaseEntity<FollowChangeStatusEntity> {
 
     @ManyToOne
     private FollowEntity follow;
 
-    @Column(name = "pre_status")
+    @Column(name = "preStatus")
     @Enumerated(EnumType.STRING)
     private FollowingStatus preStatus;
 
-    @Column(name = "new_status")
+    @Column(name = "newStatus")
     @Enumerated(EnumType.STRING)
     private FollowingStatus newStatus;
 
-    @Column(name = "change_date")
+    @Column(name = "changeDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date changeDate;
 

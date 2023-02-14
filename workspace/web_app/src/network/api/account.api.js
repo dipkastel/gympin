@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Api_url} from "../const/NETWORKCONSTS";
+import { Api_url} from "./NETWORKCONSTS";
 import {useSelector} from "react-redux";
 
 export function login(loginData) {

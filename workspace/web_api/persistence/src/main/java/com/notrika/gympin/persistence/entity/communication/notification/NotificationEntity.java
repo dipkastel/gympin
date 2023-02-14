@@ -28,7 +28,7 @@ public class NotificationEntity extends BaseEntityWithCreateUpdate<NotificationE
     @Column(name = "notif")
     private String notif;
 
-    @Column(name = "expired_date")
+    @Column(name = "expiredDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiredDate;
 

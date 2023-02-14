@@ -1,55 +1,40 @@
 import {persistReducer} from "redux-persist";
-import {authActionTypes} from "../actions/authActionTypes";
+import {authActionTypes} from "../actions/AuthActions";
 import storage from "redux-persist/lib/storage";
 import {forgotLastLocation} from "../../lastLocationHandler";
 
 
 const initialAuthState = {
     user: undefined,
-    userId: undefined,
-    authToken: undefined,
-    refreshToken: undefined,
-    place:undefined,
+    token:undefined,
+    refreshToken:undefined,
 };
 
-const authConfig = {
+const ReducerConfig = {
     storage,
     key: "gympin-master-auth",
-    whitelist: ["user","userId", "authToken","refreshToken","place"]
+    whitelist:["user","token","refreshToken"]
 };
 
-const baseReducer = (state = initialAuthState, action) => {
-    switch (action.type) {
-        case authActionTypes.Login: {
-            console.log("action login");
-            return {...state,
-                authToken:action.payload.user.Token ,
-                refreshToken:action.payload.user.RefreshToken ,
-                userId:action.payload.user.Id,
-                user: action.payload.user };
-        }
 
+const AuthBaseReducer = (state = initialAuthState, action) => {
+    switch (action.type) {
+        case authActionTypes.SetUser: {
+            return {...state,user: action.payload.user };
+        }
+        case authActionTypes.SetToken: {
+            return {...state,token: action.payload.token };
+        }
+        case authActionTypes.SetRefreshToken: {
+            return {...state,refreshToken: action.payload.refreshToken };
+        }
         case authActionTypes.Logout: {
-            console.log("action Logout");
             forgotLastLocation();
             return initialAuthState;
         }
-
-        case authActionTypes.UserLoaded: {
-            console.log("action UserLoaded");
-            const { user } = action.payload;
-            return { ...state, user };
-        }
-
-        case authActionTypes.userPlaceSelected: {
-            console.log("action UserPlaceSelected");
-            const { place } = action.payload;
-            return { ...state, place };
-        }
-
         default:
             return state;
     }
 }
 
-export const authReducer = persistReducer(authConfig,baseReducer);
+export const authReducer = persistReducer(ReducerConfig,AuthBaseReducer);

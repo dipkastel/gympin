@@ -8,8 +8,8 @@ public final class FollowConvertor {
     public static FollowDto followEntityToDto(FollowEntity entity){
         FollowDto dto=new FollowDto();
         dto.setId(entity.getId());
-        dto.setRequesterUser(UserConvertor.userToUserDtoComplete(entity.getRequesterUser()));
-        dto.setRequestedUser(UserConvertor.userToUserDtoComplete(entity.getRequestedUser()));
+        dto.setRequesterUser(UserConvertor.toDtoComplete(entity.getRequesterUser()));
+        dto.setRequestedUser(UserConvertor.toDtoComplete(entity.getRequestedUser()));
         dto.setStatus(entity.getStatus());
         return dto;
     }

@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.plan;
 
-import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.plan.dto.PlanRegisterDto;
 import com.notrika.gympin.common.plan.param.PlanRegisterParam;
 import com.notrika.gympin.common.plan.service.PlanRegisterService;
@@ -11,14 +11,16 @@ import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PlanRegisterServiceImpl extends AbstractBaseService<PlanRegisterParam, PlanRegisterDto, BaseFilter<?>, PlanRegisterEntity> implements PlanRegisterService {
+public class PlanRegisterServiceImpl extends AbstractBaseService<PlanRegisterParam, PlanRegisterDto, BaseQuery<?>, PlanRegisterEntity> implements PlanRegisterService {
 
     @Autowired
     private PlanRegisterRepository planRegisterRepository;
@@ -74,8 +76,18 @@ public class PlanRegisterServiceImpl extends AbstractBaseService<PlanRegisterPar
     }
 
     @Override
+    public Page<PlanRegisterEntity> findAll(Specification<PlanRegisterEntity> specification, Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public List<PlanRegisterDto> convertToDtos(List<PlanRegisterEntity> entities) {
         return entities.stream().map(PlanConvertor::convertToPlanRegisterDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<PlanRegisterDto> convertToDtos(Page<PlanRegisterEntity> entities) {
+        return null;
     }
 
     public PlanRegisterEntity getPlanOfUser(UserEntity user) {

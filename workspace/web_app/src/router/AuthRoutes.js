@@ -7,12 +7,7 @@ import {shallowEqual, useSelector} from "react-redux";
 
 export default function AuthRoutes() {
 
-    const { isAuthorized } = useSelector(
-        ({ auth }) => ({
-            isAuthorized: auth.authToken != null,
-        }),
-        shallowEqual
-    );
+    const  isAuthorized  = useSelector( ({auth:{user}})=>  user.Id!=null );
     return (
         <Routes>
             <Route path="/" element={isAuthorized?<Navigate to={"/"} />:<Navigate exact={true} to="/auth/login"/>}/>

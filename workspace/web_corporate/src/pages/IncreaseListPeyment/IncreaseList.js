@@ -1,70 +1,45 @@
-import React from 'react';
-import {
-    Card,
-    CardContent,
-    Divider,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Pagination
-} from "@mui/material";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import React, {useEffect, useState} from 'react';
+import {Card, CardContent, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import {useSelector} from "react-redux";
+import {corporate_getTransactions} from "../../network/api/corporate.api";
+import {ControlPoint} from "@mui/icons-material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import {toPriceWithComma} from "../../helper/utils";
 
-const IncreaseList  = () => {
+const IncreaseList = () => {
+    const corporate = useSelector(({corporate}) => corporate.corporate);
+    const [transactions, SetTransactions] = useState([])
+
+    useEffect(() => {
+        corporate_getTransactions({CorporateId: corporate.Id}).then(result => {
+            SetTransactions(result.data.Data);
+        }).catch(e => console.log(e));
+    }, []);
+
+
     return (
-        <Card elevation={3} sx={{margin: 1}} >
+        <Card elevation={3} sx={{margin: 1}}>
             <CardContent>
-                تاریخچه افزایش اعتبار
+               تاریخچه تراکنش ها
                 <List disablePadding>
-                    <ListItem disablePadding >
-                        <ListItemButton >
-                            <ListItemIcon >
-                                <CheckCircleOutlineIcon  color={"success"}/>
-                            </ListItemIcon>
-                            <ListItemText primary="90,000,000 تومان" secondary="1401/01/15"/>
-                        </ListItemButton>
-                    </ListItem>
-                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
-                    <ListItem disablePadding >
-                        <ListItemButton >
-                            <ListItemIcon >
-                                <CheckCircleOutlineIcon  color={"success"}/>
-                            </ListItemIcon>
-                            <ListItemText primary="80,000,000 تومان" secondary="1401/01/05"/>
-                        </ListItemButton>
-                    </ListItem>
-                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
-                    <ListItem disablePadding >
-                        <ListItemButton >
-                            <ListItemIcon >
-                                <CheckCircleOutlineIcon  color={"success"}/>
-                            </ListItemIcon>
-                            <ListItemText primary="50,000,000 تومان" secondary="1400/10/25"/>
-                        </ListItemButton>
-                    </ListItem>
-                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
-                    <ListItem disablePadding >
-                        <ListItemButton >
-                            <ListItemIcon >
-                                <CheckCircleOutlineIcon  color={"success"}/>
-                            </ListItemIcon>
-                            <ListItemText primary="40,000,000 تومان" secondary="1400/09/10"/>
-                        </ListItemButton>
-                    </ListItem>
-                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
-                    <ListItem disablePadding >
-                        <ListItemButton >
-                            <ListItemIcon >
-                                <CheckCircleOutlineIcon  color={"success"}/>
-                            </ListItemIcon>
-                            <ListItemText primary="30,000,000 تومان" secondary="1400/08/22"/>
-                        </ListItemButton>
-                    </ListItem>
+                    {transactions && transactions.reverse().map(item => (
+                        <div key={"tr-" + item.Id}>
+                            <ListItem disablePadding >
+                                <ListItemButton >
+                                    <ListItemIcon >
+                                        <CheckCircleOutlineIcon  color={"success"}/>
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        primary={toPriceWithComma(item.DepositAmount)+" تومان"}
+                                        secondary={new Date(item.CreatedDate).toLocaleDateString('fa-IR', {month: 'numeric', day: 'numeric',year:"numeric"})}/>
+                                </ListItemButton>
+                            </ListItem>
+                            <Divider variant="inset" sx={{marginLeft: 0}} component="li"/>
+                        </div>
+
+                    ))}
                 </List>
 
-                <Pagination variant="outlined" count={1} color="primary" />
             </CardContent>
         </Card>
     );

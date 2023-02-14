@@ -1,33 +1,20 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Button, Card, CardContent, CardHeader, Grid, Hidden, TextField, Typography} from "@mui/material";
 import {Formik} from "formik";
 import {checkMobileValid, fixMobile} from "../../helper/utils";
 import {Spinner} from "react-bootstrap";
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
-import {authActions} from "../../helper/redux/actions/authActions";
+import {authActions} from "../../helper/redux/actions/AuthActions";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 function Login(props) {
 
-    const [loading, setLoading] = useState(false);
+    const error = useContext(ErrorContext);
     const [resend, setResend] = useState(-3);
-    const [loadingButtonStyle, setLoadingButtonStyle] = useState({
-        paddingRight: "2.5rem",
-    });
-
-    const enableLoading = () => {
-        setLoading(true);
-        setLoadingButtonStyle({paddingRight: "3.5rem"});
-    };
-
-    const disableLoading = () => {
-        setLoading(false);
-        setLoadingButtonStyle({paddingRight: "2.5rem"});
-    };
 
     function sendMessage(e, value) {
         var mobileNumber = fixMobile(value.username)
-        console.log(mobileNumber)
         if (checkMobileValid(mobileNumber)) {
             var count = 120;
             setResend(count);
@@ -40,8 +27,13 @@ function Login(props) {
                         } else clearInterval(interval);
                     }, 1000);
                 }).catch((err)=>{
-                setResend(-3);
-                alert("خطا در برقراری ارتباط با سرور و یا شما اجازه دسترسی به این بخش را ندارید")
+                    setResend(-3);
+                    try {
+                        error.showError({message: e.response.data.Message});
+                    } catch (f) {
+                        error.showError({message: "خطا در برقراری ارتباط با سرور و یا شما اجازه دسترسی به این بخش را ندارید",});
+                        console.log(e)
+                    }
             })
         }
     }
@@ -91,20 +83,17 @@ function Login(props) {
                                 return errors;
                             }}
                             onSubmit={(values, {setStatus, setSubmitting}) => {
-                                enableLoading();
                                 setTimeout(() => {
                                     login({
                                         username: fixMobile(values.username),
                                         password: values.password,
                                     })
                                         .then((data) => {
-                                            disableLoading();
-                                            console.log(data.data.Data)
-                                            props.login(data.data.Data);
+                                            props.SetUser(data.data.Data);
+                                            props.SetToken(data.data.Data.Token);
+                                            props.SetRefreshToken(data.data.Data.RefreshToken);
                                         })
                                         .catch((ex) => {
-                                            console.log(ex);
-                                            disableLoading();
                                             setSubmitting(false);
                                             setStatus(
                                                 "اطلاعات وارد شده معتبر نیست"

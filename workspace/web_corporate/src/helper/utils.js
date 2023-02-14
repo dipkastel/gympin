@@ -8,6 +8,16 @@ export function checkMobileValid(mobileNumber) {
     return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
 }
 
+export function toPriceWithComma(price){
+    if(!price) return "0";
+    return (price+"")
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+export function toPriceWithoutComma(price){
+    return price.replace(/\D/g, "");
+}
+
 export function removeStorage(key) {
     try {
         localStorage.setItem(key, "");

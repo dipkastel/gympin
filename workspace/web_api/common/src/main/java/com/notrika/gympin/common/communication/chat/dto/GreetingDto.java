@@ -1,8 +1,7 @@
 package com.notrika.gympin.common.communication.chat.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseDto;
-import com.notrika.gympin.common.BaseDtoWithCreate;
+import com.notrika.gympin.common._base.dto.BaseDtoWithCreate;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

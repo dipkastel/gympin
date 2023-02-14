@@ -1,12 +1,13 @@
 package com.notrika.gympin.controller.impl.comment.gate;
 
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.BasePagedParam;
+import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.comment.gate.api.CommentGateController;
 import com.notrika.gympin.common.comment.gate.dto.CommentGateDto;
 import com.notrika.gympin.common.comment.gate.param.CommentGateParam;
 import com.notrika.gympin.common.comment.gate.service.CommentGateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -43,23 +44,10 @@ public class CommentGateControllerImpl implements CommentGateController {
         return null;
     }
 
+
     @Override
-    public ResponseEntity<Long> countSearch(BaseFilter<?> filter) {
+    public ResponseEntity<Page<CommentGateDto>> query(BaseQuery<?> filter) {
         return null;
     }
 
-    @Override
-    public ResponseEntity<List<CommentGateDto>> search(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<List<CommentGateDto>> filter(BaseFilter<?> filter) {
-        return null;
-    }
 }

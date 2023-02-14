@@ -12,7 +12,6 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -20,20 +19,20 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "plan_register")
+@Table(name = "planRegister")
 public class PlanRegisterEntity extends BaseEntity<PlanRegisterEntity> {
 
     @OneToOne
     private UserEntity user;
 
     @OneToOne
-    private PlanGateEntity planGate;
+    private PlanGateTimingEntity planGate;
 
-    @Column(name = "register_date")
+    @Column(name = "registerDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date registerDate;
 
-    @Column(name = "expire_date")
+    @Column(name = "expireDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expireDate;
 

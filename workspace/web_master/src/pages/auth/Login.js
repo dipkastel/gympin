@@ -5,10 +5,13 @@ import {
     CardActions,
     CardContent,
     CardHeader,
-    Grid, Hidden,
+    Grid,
+    Hidden,
     IconButton,
     InputAdornment,
-    Link, TextField, Typography
+    Link,
+    TextField,
+    Typography
 } from "@mui/material";
 import {Formik} from "formik";
 import {checkMobileValid} from "../../helper/utils";
@@ -16,7 +19,7 @@ import {Spinner} from "react-bootstrap";
 import SendToMobileIcon from '@mui/icons-material/SendToMobile';
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
-import {authActions} from "../../helper/redux/actions/authActions";
+import {authActions} from "../../helper/redux/actions/AuthActions";
 
 function Login(props) {
 
@@ -107,7 +110,10 @@ function Login(props) {
                                     })
                                         .then((data) => {
                                             disableLoading();
-                                             props.login(data.data.Data);
+                                            console.log(data.data.Data);
+                                             props.SetUser(data.data.Data);
+                                             props.SetToken(data.data.Data.Token);
+                                             props.SetRefreshToken(data.data.Data.RefreshToken);
                                         })
                                         .catch((ex) => {
                                             console.log(ex);

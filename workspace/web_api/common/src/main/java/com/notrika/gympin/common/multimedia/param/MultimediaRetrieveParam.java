@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.multimedia.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BasePagedParam;
+import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,10 +14,13 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class MultimediaRetrieveParam extends BasePagedParam<MultimediaStoreParam> {
+public class MultimediaRetrieveParam extends MultimediaStoreParam {
 
     @JsonProperty("FileName")
     private String fileName;
+
+    @JsonProperty("FileUrl")
+    private String fileUrl;
 
     @JsonProperty("Height")
     private Integer height;

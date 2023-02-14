@@ -1,7 +1,7 @@
 package com.notrika.gympin.persistence.dao.repository;
 
-import com.notrika.gympin.persistence.entity.location.GateEntity;
-import com.notrika.gympin.persistence.entity.location.PlaceEntity;
+import com.notrika.gympin.persistence.entity.gate.GateEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.stereotype.Repository;

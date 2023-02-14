@@ -2,7 +2,7 @@ package com.notrika.gympin.common.relation.param;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common._base.param.BaseParam;
 import com.notrika.gympin.common.relation.enums.FollowingStatus;
 import com.notrika.gympin.common.user.param.UserParam;
 import lombok.*;

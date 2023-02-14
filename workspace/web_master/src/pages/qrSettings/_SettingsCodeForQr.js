@@ -1,68 +1,170 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Button,
     Card,
     CardContent,
     CardHeader,
-    Chip, Divider,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Divider,
     Grid,
-    Link, List,
+    List,
     ListItem,
     ListItemText,
     TextField
 } from "@mui/material";
-
-
-const data=[{
-    code:"44-",
-    replaceWith:"شماره کمد :"
-},{
-    code:"55-",
-    replaceWith:"شماره طناب :"
-},{
-    code:"66-",
-    replaceWith:"شماره بند TRX :"
-}]
+import {useSelector} from "react-redux";
+import {PlacesQr_add, PlacesQr_delete, PlacesQr_getByPlace} from "../../network/api/placeQr.api";
+import {Form} from "react-bootstrap";
+import {ErrorContext} from "../../components/GympinPagesProvider";
+import {useNavigate} from "react-router-dom";
 
 const _SettingsCodeForQr = () => {
+    const error = useContext(ErrorContext);
+    const navigate = useNavigate();
+    const [qrList, SetQrLists] = useState([]);
+    const [itemForGetList, setItemForGetList] = useState(null)
+    const [itemToDelete, setItemToDelete] = useState(null)
+    const place = useSelector(({place}) => place.place)
+    useEffect(() => {
+        getAllQrMessages();
+    }, []);
+    function getAllQrMessages(){
+        PlacesQr_getByPlace({Id: place.Id}).then(result => {
+            console.log(result.data.Data)
+            SetQrLists(result.data.Data)
+        }).catch(e => console.log(e))
+    }
+
+    function addQrMessage(e) {
+        e.preventDefault()
+        PlacesQr_add({
+            Place:place,
+            Text:e.target.Text.value,
+            ReplaceText:e.target.ReplaceText.value
+        }).then(result=>{
+            e.target.Text.value = "";
+            e.target.ReplaceText.value = "";
+            getAllQrMessages();
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+                console.log(e)
+            }
+        })
+    }
+    function renderModalDelete() {
+        const deleteItem = (e)=>{
+            e.preventDefault()
+            PlacesQr_delete({Id:itemToDelete.Id}).then(result=>{
+                getAllQrMessages()
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                    console.log(e)
+                }
+            })
+        }
+        return (
+            <div>
+                {itemToDelete&&<Dialog open={!(!itemToDelete)} onClose={()=>setItemToDelete(null)}>
+                    <Form onSubmit={(e)=>deleteItem(e)}>
+                        <DialogTitle>{"حذف "+itemToDelete.Text+"("+itemToDelete.ReplaceText+")"}</DialogTitle>
+                        <DialogContent>
+                            {"آیا از حذف "+itemToDelete.Text+"("+itemToDelete.ReplaceText+") اطمینان دارید؟"}
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={()=>setItemToDelete(null)}>لغو</Button>
+                            <Button type={"submit"}>ثبت</Button>
+                        </DialogActions>
+                    </Form>
+                </Dialog>}
+            </div>
+        );
+
+    };
+
+    function renderModalGetList() {
+
+        const goToListPage = (e)=>{
+            e.preventDefault()
+
+            navigate("/management/qrList", {state:{size:e.target.count.value,item:itemForGetList}});
+        }
+        return (
+            <div>
+                {itemForGetList&&<Dialog open={!(!itemForGetList)} onClose={()=>setItemForGetList(null)}>
+                    <Form onSubmit={(e)=>goToListPage(e)}>
+                        <DialogTitle>ایجاد کد برای چاپ</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                margin="dense"
+                                label="تعداد آیتم مورد نیاز"
+                                type="number"
+                                name={"count"}
+                                fullWidth
+                                variant="standard"
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={()=>setItemForGetList(null)}>لغو</Button>
+                            <Button type={"submit"}>دریافت</Button>
+                        </DialogActions>
+                    </Form>
+                </Dialog>}
+            </div>
+        );
+
+    };
+
     return (
-        <Card elevation={3} sx={{margin: 1}}>
-            <CardHeader
-                title={"یادداشت با qr"}
-                action={(<>
-                    <Button variant={"outlined"}>افزودن</Button>
-                </>)}
-            />
-            <CardContent>
-
-                <TextField
-                    id="outlined-message"
-                    className="w-100"
-                    aria-multiline
-                    variant="outlined"
-                    margin="normal"
-                    name="message"
-                    type="text"
-                    label={"پیشوند"}
-                    multiline
+        <>
+            <Card elevation={3} sx={{margin: 1}}>
+                <CardHeader
+                    title={"آیتم با qr"}
                 />
-                <TextField
-                    id="outlined-message"
-                    className="w-100"
-                    aria-multiline
-                    variant="outlined"
-                    margin="normal"
-                    name="message"
-                    type="text"
-                    label={"جایگزینی با"}
-                    multiline
-                />
+                <CardContent>
+                    <Form onSubmit={e => addQrMessage(e)}>
+                        <TextField
+                            className="w-100"
+                            aria-multiline
+                            variant="outlined"
+                            margin="normal"
+                            name="Text"
+                            type="text"
+                            label={"پیشوند"}
+                            multiline
+                        />
+                        <TextField
+                            className="w-100"
+                            aria-multiline
+                            variant="outlined"
+                            margin="normal"
+                            name="ReplaceText"
+                            type="text"
+                            label={"نام آیتم یا پیشوند"}
+                            multiline
+                        />
 
-                <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-                    {data.map((item,number)=>(
-                        <div key={number}>
-                            <ListItem alignItems="flex-start">
-                                <Link  href={"/management/singleTicket?id="+item.id} sx={{width:"100%",textDecoration: "none", color: "#666666"}}>
+                        <Button type={"submit"} variant={"contained"} fullWidth>افزودن</Button>
+                    </Form>
+                </CardContent>
+            </Card>
+            <Card elevation={3} sx={{margin: 1}}>
+                <CardHeader
+                    title={"یادداشت ها"}
+                />
+                <CardContent>
+                    <List sx={{width: '100%', bgcolor: 'background.paper'}}>
+                        {qrList.map((item, number) => (
+                            <div key={number}>
+                                <ListItem alignItems="flex-start">
                                     <Grid
                                         container
                                         direction="row"
@@ -71,21 +173,25 @@ const _SettingsCodeForQr = () => {
                                     >
                                         <ListItemText
                                             className="text-start"
-                                            primary={item.code}
-                                            secondary={item.replaceWith}/>
+                                            primary={item.Text}
+                                            secondary={item.ReplaceText}/>
                                         <Grid>
-                                            <Button variant={"outlined"}>حذف</Button>
+                                            <Button variant={"contained"} color={"info"} onClick={(e)=>setItemForGetList(item)}>دریافت لیست</Button>
+                                            <Button variant={"contained"} onClick={(e)=>setItemToDelete(item)}>حذف</Button>
                                         </Grid>
                                     </Grid>
-                                </Link>
-                            </ListItem>
-                            <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
-                        </div>
-                    ))}
+                                </ListItem>
+                                <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
+                            </div>
+                        ))}
 
-                </List>
-            </CardContent>
-        </Card>
+                    </List>
+                </CardContent>
+            </Card>
+            {renderModalDelete()}
+            {renderModalGetList()}
+        </>
+
     );
 };
 export default _SettingsCodeForQr;

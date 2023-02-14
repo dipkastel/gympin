@@ -1,41 +1,69 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {
-    Button, Card,
+    Button,
+    Card,
     CardContent,
     CardHeader,
     FormControl,
+    FormControlLabel,
     FormGroup,
-    FormHelperText,
     Input,
-    InputLabel
+    InputLabel,
+    Switch
 } from "@mui/material";
+import {PlaceAbout_delete, PlaceAbout_update} from "../../network/api/placeAbout.api";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
-const _AboutItem = (props) => {
+const _AboutItem = ({placeAbout, onChange}) => {
+    const error = useContext(ErrorContext);
+    const [aboutText,SetAboutText] = useState(placeAbout.Description)
+    const [acceptable,SetAcceptable] = useState(placeAbout.Acceptable)
+    console.log(placeAbout.Acceptable)
+    function deleteAbout() {
+        PlaceAbout_delete({id:placeAbout.Id}).then(result => {
+            onChange();
+        }).catch(e => console.log(e))
+    }
 
-    function renderRemoveButton() {
-        return (
-            <Button variant={"contained"} title={"btn_add"}>حذف</Button>
-        )
+    function updateAbout() {
+        PlaceAbout_update({...placeAbout,Description:aboutText,Acceptable:acceptable}).then(result=>{
+            onChange()
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+                console.log(e)
+            }
+        })
     }
-    function getValue() {
-        return Math.floor(Math.random()*10)*16000
-    }
+
     return (
         <Card elevation={3} sx={{margin: 1}}>
 
             <CardHeader
                 sx={{paddingBottom: 0}}
-                title={props.name}
-                action={renderRemoveButton()}
+                title={placeAbout.Name}
+                action={<Button variant={"outlined"} title={"btn_add"} onClick={() => deleteAbout()}>حذف</Button>}
             />
             <CardContent sx={{margin: 0}}>
                 <FormGroup>
                     <FormControl sx={{margin: 1}}>
                         <InputLabel htmlFor="my-input">توضیح</InputLabel>
-                        <Input multiline={true} aria-describedby="my-helper-text" value="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد" />
+                        <Input
+                            multiline={true}
+                            aria-describedby="my-helper-text"
+                            onChange={(e)=>SetAboutText(e.target.value)}
+                            value={aboutText}/>
                     </FormControl>
+                    <FormControlLabel
+                        checked={acceptable}
+                        onChange={e=>SetAcceptable(e.target.checked)}
+                        control={<Switch />}
+                        label={acceptable?"کاربر برای استفاده از خدمات باید این متن را بپذیرد":"این متن صرفا جهت اطلاع کاربر است"}
+                    />
                     <FormControl sx={{margin: 1}}>
-                        <Button variant={"contained"}>ثبت</Button>
+                        <Button variant={"contained"} onClick={()=>updateAbout()}>ثبت</Button>
                     </FormControl>
                 </FormGroup>
             </CardContent>

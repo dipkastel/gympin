@@ -1,25 +1,22 @@
-import { put, takeLatest } from "redux-saga/effects";
-import {authActionTypes} from "../actions/authActionTypes";
-import {authActions} from "../actions/authActions";
-import {call} from "redux-saga/effects"
-import {getUserById} from "../../../network/api/user.api";
+import {call, put, takeLatest} from "redux-saga/effects";
+import {authActions} from "../actions/AuthActions";
+import {ActionTypesSaga} from "../actions/SagaActions"
+import {user_getById} from "../../../network/api/user.api";
 
 
 export function* saga() {
-
-    yield takeLatest(authActionTypes.SagaUserRequested, function* userRequested() {
-        console.log("UserRequested")
+    yield takeLatest(ActionTypesSaga.RequestUser, function* userRequested(action) {
 
         const result = yield call(
             () => new Promise((resolve) => {
-                getUserById(55).then((_result) => {
-                    console.log(_result)
+                user_getById(action.payload.user.Id).then((_result) => {
                     resolve(_result.data.Data);
-                }).catch(e=>{
+                }).catch(e => {
                     console.log(e)
                 });
             })
         );
-        yield put(authActions.userLoaded(result));
+        yield put(authActions.SetUser(result));
     });
+
 }

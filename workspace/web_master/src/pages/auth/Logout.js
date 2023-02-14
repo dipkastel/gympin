@@ -1,10 +1,10 @@
-import React, {Component} from "react";
+import React from "react";
 import {connect} from "react-redux";
-import {authActions} from "../../helper/redux/actions/authActions";
+import {authActions} from "../../helper/redux/actions/AuthActions";
 
 function Logout(props) {
     console.log("log out page")
-    props.logout();
+    props.Logout();
     return ""
 }
 

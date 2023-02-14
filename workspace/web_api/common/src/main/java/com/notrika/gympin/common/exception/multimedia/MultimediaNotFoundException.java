@@ -8,26 +8,8 @@ import org.springframework.http.HttpStatus;
 @EqualsAndHashCode(callSuper = true)
 public class MultimediaNotFoundException extends ExceptionBase {
 
+
     public MultimediaNotFoundException() {
-    }
-
-    public MultimediaNotFoundException(HttpStatus httpStatus, Error.ErrorType errorType) {
-        super(httpStatus, errorType);
-    }
-
-    public MultimediaNotFoundException(String message, HttpStatus httpStatus, Error.ErrorType errorType) {
-        super(message, httpStatus, errorType);
-    }
-
-    public MultimediaNotFoundException(String message, Throwable cause, HttpStatus httpStatus, Error.ErrorType errorType) {
-        super(message, cause, httpStatus, errorType);
-    }
-
-    public MultimediaNotFoundException(Throwable cause, HttpStatus httpStatus, Error.ErrorType errorType) {
-        super(cause, httpStatus, errorType);
-    }
-
-    public MultimediaNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, HttpStatus httpStatus, Error.ErrorType errorType) {
-        super(message, cause, enableSuppression, writableStackTrace, httpStatus, errorType);
+        super(HttpStatus.BAD_REQUEST, Error.ErrorType.MULTIMEDIA_NOT_FOUND_EXCEPTION);
     }
 }

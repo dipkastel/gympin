@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.textField {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.dense {
+  margin-top: 10px;
+}
+.menu {
+  width: 200px;
+}
+
+.bigAvatar {
+  margin: 10px;
+  width: 60px;
+  height: 60px;
+}

@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.dao.repository;
 
-import com.notrika.gympin.persistence.entity.comment.CommentPlaceEntity;
+import com.notrika.gympin.persistence.entity.place.comment.CommentPlaceEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository

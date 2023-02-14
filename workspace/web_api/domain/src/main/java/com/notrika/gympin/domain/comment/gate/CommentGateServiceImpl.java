@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.comment.gate;
 
-import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.comment.gate.dto.CommentGateDto;
 import com.notrika.gympin.common.comment.gate.param.CommentGateParam;
 import com.notrika.gympin.common.comment.gate.service.CommentGateService;
@@ -10,13 +10,15 @@ import com.notrika.gympin.persistence.dao.repository.CommentGateRepository;
 import com.notrika.gympin.persistence.entity.comment.CommentGateEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CommentGateServiceImpl extends AbstractBaseService<CommentGateParam, CommentGateDto, BaseFilter<?>, CommentGateEntity> implements CommentGateService {
+public class CommentGateServiceImpl extends AbstractBaseService<CommentGateParam, CommentGateDto, BaseQuery<?>, CommentGateEntity> implements CommentGateService {
 
     @Autowired
     private CommentGateRepository commentGateRepository;
@@ -68,7 +70,17 @@ public class CommentGateServiceImpl extends AbstractBaseService<CommentGateParam
     }
 
     @Override
+    public Page<CommentGateEntity> findAll(Specification<CommentGateEntity> specification, Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public List<CommentGateDto> convertToDtos(List<CommentGateEntity> entities) {
+        return null;
+    }
+
+    @Override
+    public Page<CommentGateDto> convertToDtos(Page<CommentGateEntity> entities) {
         return null;
     }
 }

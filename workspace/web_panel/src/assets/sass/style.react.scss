@@ -1,0 +1,45 @@
+//
+// Main Stylesheet
+//
+
+////////////////////////////////////////////////////////////////
+///////////// DO NOT MODIFY BELOW INCLUDE ORDER ////////////////
+////////////////////////////////////////////////////////////////
+
+// 1: Include global config
+@import "src/assets/sass/config";
+
+// 2: Bootstrap framework includes
+@import "src/assets/sass/global/integration/frameworks/bootstrap/variables";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "src/assets/sass/global/integration/frameworks/bootstrap/bootstrap";
+@import "src/assets/sass/global/integration/frameworks/react/material-ui/general";
+
+// 3: Components include
+@import "src/assets/sass/global/include.react";
+
+////////////////////////////////////////////////////////////////
+///////////// DO NOT MODIFY ABOVE INCLUDE ORDER ////////////////
+////////////////////////////////////////////////////////////////
+
+// 4: Layout config
+@import "src/assets/sass/global/layout/config";
+@import "src/assets/sass/global/layout/header/config";
+@import "src/assets/sass/global/layout/brand/config";
+@import "src/assets/sass/global/layout/aside/config";
+@import "src/assets/sass/global/layout/footer/config";
+
+// 5: Layout includes
+@import "src/assets/sass/global/layout/base/base";
+@import "src/assets/sass/global/layout/header/header";
+@import "src/assets/sass/global/layout/header/base-mobile";
+@import "src/assets/sass/global/layout/header/menu";
+@import "src/assets/sass/global/layout/header/topbar";
+@import "src/assets/sass/global/layout/brand/brand";
+@import "src/assets/sass/global/layout/aside/aside";
+@import "src/assets/sass/global/layout/content/content";
+@import "src/assets/sass/global/layout/footer/footer";
+
+// 6:  User defined custom styles includes
+@import "src/assets/sass/custom/example-1";
+@import "src/assets/sass/custom/example-2";

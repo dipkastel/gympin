@@ -7,18 +7,17 @@ import {
     CardHeader,
     Grid,
     Hidden,
-    IconButton,
     InputAdornment,
     Link,
     TextField,
     Typography
 } from "@mui/material";
-import * as auth from "../../helper/ducks/auth.duck";
 import {Formik} from "formik";
 import {checkMobileValid} from "../../helper/utils";
 import {Spinner} from "react-bootstrap";
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
+import {authActions} from "../../helper/redux/actions/AuthActions";
 
 function Login(props) {
 
@@ -110,12 +109,12 @@ function Login(props) {
                                     })
                                         .then((data) => {
                                             disableLoading();
-                                            console.log(data.data.Data.Token)
-                                            props.login(data.data.Data.Token);
+                                            props.SetUser(data.data.Data);
+                                            props.SetToken(data.data.Data.Token);
+                                            props.SetRefreshToken(data.data.Data.RefreshToken);
                                         })
                                         .catch((ex) => {
                                             disableLoading();
-                                            console.log("login called")
                                             setSubmitting(false);
                                             setStatus(
                                                 "اطلاعات وارد شده معتبر نبست"
@@ -221,4 +220,4 @@ function Login(props) {
     );
 }
 
-export default connect(null, auth.actions)(Login)
+export default connect(null, authActions)(Login)

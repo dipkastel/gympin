@@ -2,9 +2,11 @@ import React, {useState} from "react";
 import {login} from "../../network/api/account.api";
 import {Button, Card, CardActions, CardContent, CardHeader, Grid, Link, TextField} from "@mui/material";
 import {Formik} from "formik";
+import {connect} from "react-redux";
+import {authActions} from "../../helper/redux/actions/AuthActions";
 
 
-export default function Register(props) {
+function Register(props) {
 
     return (
         <Grid
@@ -25,7 +27,7 @@ export default function Register(props) {
                             backgroundColor:"primary.main",
                             color:"#fff"
                         }}
-                        title="ثبت ssمجموعه"
+                        title="ثبت مجموعه"
                     />
                     <CardContent>
 
@@ -56,7 +58,9 @@ export default function Register(props) {
                                         password: values.password,
                                     })
                                         .then((data) => {
-                                            props.login(data.data.Data.Token);
+                                            props.SetUser(data.data.Data);
+                                            props.SetToken(data.data.Data.Token);
+                                            props.SetRefreshToken(data.data.Data.RefreshToken);
                                         })
                                         .catch((ex) => {
                                             console.log(ex);
@@ -155,3 +159,5 @@ export default function Register(props) {
         </Grid>
     );
 }
+
+export default connect(null, authActions)(Register)

@@ -1,6 +1,5 @@
 package com.notrika.gympin.domain.gym.gate;
 
-import com.notrika.gympin.common.exception.plan.EnterGateRequestNotFoundException;
 import com.notrika.gympin.common.gym.gate.dto.EnterGateDto;
 import com.notrika.gympin.common.gym.gate.param.EnterGateParam;
 import com.notrika.gympin.common.gym.gate.service.EnterGateService;
@@ -22,10 +21,10 @@ public class EnterGateServiceImpl implements EnterGateService {
     public EnterGateDto confirmEnterGate(EnterGateParam enterGateParam) {
         Timestamp storeTime = new Timestamp(new Date().getTime());
         EnterGateEntity enterGateEntity = enterGateRepository.findAllByReferenceIdAndDeletedIsFalse(enterGateParam.getReferenceId());
-        if(enterGateEntity==null){
-            throw new EnterGateRequestNotFoundException();
-        }
-        enterGateEntity.setEnterGateStatus(enterGateParam.getEnterStatus());
+//        if(enterGateEntity==null){
+//            throw new EnterGateRequestNotFoundException();
+//        }
+//        enterGateEntity.setEnterGateStatus(enterGateParam.getEnterStatus());
         enterGateEntity.setLastUpdateStatusDate(storeTime);
         enterGateRepository.update(enterGateEntity);
         EnterGateDto dto=new EnterGateDto();

@@ -1,6 +1,6 @@
 package com.notrika.gympin.framework.spring.aspect;
 
-import com.notrika.gympin.common.ResponseModel;
+import com.notrika.gympin.common._base.base.ResponseModel;
 import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
@@ -29,8 +29,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import static com.notrika.gympin.common.ResponseModel.ERROR;
-import static com.notrika.gympin.common.ResponseModel.SUCCESS;
+import static com.notrika.gympin.common._base.base.ResponseModel.ERROR;
+import static com.notrika.gympin.common._base.base.ResponseModel.SUCCESS;
 
 //@Order(Integer.MAX_VALUE)
 @Aspect
@@ -66,7 +66,7 @@ public class ApiAspect {
             }
             return retVal;
         } catch (ExceptionBase e) {
-            Error error = new Error(e.getErrorType(), e);
+            Error error = new Error(e);
             log.error(error.getErrorMessage(), e);
             return getFailedResponse(error, e.getHttpStatus());
         } catch (Throwable e) {
@@ -146,7 +146,7 @@ public class ApiAspect {
         DeleteMapping deleteMapping = method.getAnnotation(DeleteMapping.class);
         if (postMapping == null && putMapping == null && deleteMapping == null) return;
         ObjectMapper objectMapper = new ObjectMapper();
-        String paramJson = objectMapper.writeValueAsString(joinPoint.getArgs()[0]);
+        String paramJson = objectMapper.writeValueAsString(Arrays.stream(joinPoint.getArgs()).findFirst());
         String dtoJson = null;
         Class dtoClass;
         if (retVal.getClass().isAssignableFrom(ResponseEntity.class)) {

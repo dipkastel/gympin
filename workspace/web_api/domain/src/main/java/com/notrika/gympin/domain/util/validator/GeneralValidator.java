@@ -1,7 +1,6 @@
 package com.notrika.gympin.domain.util.validator;
 
-import com.notrika.gympin.common.BaseParam;
-import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common._base.param.BaseParam;
 import com.notrika.gympin.common.exception.general.InputNotValidException;
 import com.notrika.gympin.common.user.param.UserParam;
 import lombok.NonNull;

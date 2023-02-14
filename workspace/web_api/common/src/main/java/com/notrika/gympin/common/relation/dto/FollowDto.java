@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.relation.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseDto;
+import com.notrika.gympin.common._base.dto.BaseDto;
 import com.notrika.gympin.common.relation.enums.FollowingStatus;
 import com.notrika.gympin.common.user.dto.UserDto;
 import lombok.*;

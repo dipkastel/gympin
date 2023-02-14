@@ -5,19 +5,13 @@ import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.api.AccountController;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
-import com.notrika.gympin.common.user.param.LoginParam;
-import com.notrika.gympin.common.user.param.RefreshTokenParam;
-import com.notrika.gympin.common.user.param.UserRegisterParam;
-import com.notrika.gympin.common.user.param.UserSendSmsParam;
+import com.notrika.gympin.common.user.param.*;
 import com.notrika.gympin.common.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/account")
@@ -45,9 +39,9 @@ public class AccountControllerImpl implements AccountController {
     }
 
     @Override
-    @PostMapping("/loginPanel")
-    public ResponseEntity<UserDto> loginPanel(@RequestBody LoginParam loginParam) throws ExceptionBase {
-        return new ResponseEntity<>(accountService.loginPanel(loginParam), HttpStatus.OK);
+    @PostMapping("/requestRegisterPlace")
+    public ResponseEntity<Boolean> RequestRegisterPlace(PlaceRequestRegisterParam param) {
+        return ResponseEntity.ok(accountService.requestRegisterPlace(param));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.event;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseParam;
+import com.notrika.gympin.common._base.param.BaseParam;
 import com.notrika.gympin.common.sport.param.SportParam;
 import com.notrika.gympin.common.user.param.UserParam;
 import lombok.*;

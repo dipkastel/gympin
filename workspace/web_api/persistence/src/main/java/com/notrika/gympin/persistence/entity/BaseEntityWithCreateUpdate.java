@@ -20,11 +20,11 @@ import java.util.Objects;
 @MappedSuperclass
 public class BaseEntityWithCreateUpdate<T> extends BaseEntityWithCreate<T> {
 
-    @Column(name = "updated_date")
+    @Column(name = "updatedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
-    //        @Column(name = "updater_user")
+    //        @Column(name = "updaterUser")
     @ManyToOne(cascade = CascadeType.MERGE)
     private UserEntity updaterUser;
 

@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.event.general;
 
-import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.event.general.dto.EventParticipantDto;
@@ -28,16 +28,21 @@ import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class EventParticipantServiceImpl extends AbstractBaseService<EventParticipantParam, EventParticipantDto, BaseFilter<?>, EventParticipantEntity> implements EventParticipantService {
+public class EventParticipantServiceImpl extends AbstractBaseService<EventParticipantParam, EventParticipantDto, BaseQuery<?>, EventParticipantEntity> implements EventParticipantService {
 
     @Autowired
     private UserServiceImpl userService;
@@ -65,7 +70,7 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
             throw new ParticipantsCountLimitException();//Participants are full
         }
         UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-        if (!Collections.disjoint(user.getUserRole(), Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN)) && GeneralValidator.validateUser(eventParticipantParam.getUser())) {
+        if (!Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN).contains(user.getUserRole()) && GeneralValidator.validateUser(eventParticipantParam.getUser())) {
             user = userService.getUserByAnyKey(eventParticipantParam.getUser());
         }
         Calendar calendar = Calendar.getInstance();
@@ -105,7 +110,10 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
         BaseEventEntity event;
         EventParticipantEntity entity;
         UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-        if (!Collections.disjoint(user.getUserRole(), Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN)) && GeneralValidator.validateUser(eventParticipantParam.getUser())) {
+//        if (!Collections.disjoint(user.getUserRole(), Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN)) && GeneralValidator.validateUser(eventParticipantParam.getUser())) {
+//            user = userService.getUserByAnyKey(eventParticipantParam.getUser());
+//        }
+        if (!Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN).contains(user.getUserRole()) && GeneralValidator.validateUser(eventParticipantParam.getUser())) {
             user = userService.getUserByAnyKey(eventParticipantParam.getUser());
         }
         if (!GeneralValidator.validateId(eventParticipantParam)) {
@@ -166,6 +174,12 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
     }
 
     @Override
+    public Page<EventParticipantEntity> findAll(Specification<EventParticipantEntity> specification, Pageable pageable) {
+
+        return participantRepository.findAll(specification,pageable);
+    }
+
+    @Override
     public List<EventParticipantDto> convertToDtos(@NonNull List<EventParticipantEntity> entities) {
         List<EventParticipantDto> eventParticipantDtos = entities.stream().map(EventConvertor::eventParticipantEntityToDto).collect(Collectors.toList());
         eventParticipantDtos.forEach(p -> p.getUser().setRate(userRateService.calculateUserRate(UserParam.builder().id(p.getUser().getId()).build())));
@@ -175,10 +189,15 @@ public class EventParticipantServiceImpl extends AbstractBaseService<EventPartic
     }
 
     @Override
+    public Page<EventParticipantDto> convertToDtos(Page<EventParticipantEntity> entities) {
+        return null;
+    }
+
+    @Override
     public List<UserDto> getEventParticipant(Long id) {
         BaseEventEntity entity = eventRepository.getById(id);
         List<UserEntity> allParticipants = participantRepository.getUserByEventAndDeleted(entity);
-        List<UserDto> userDtos = UserConvertor.usersToUserDtos(allParticipants);
+        List<UserDto> userDtos = UserConvertor.toDto(allParticipants);
         userDtos.forEach(c -> c.setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getId()).build())));
         return userDtos;
     }

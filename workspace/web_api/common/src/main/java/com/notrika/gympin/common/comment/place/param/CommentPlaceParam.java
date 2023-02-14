@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.comment.place.param;
 
-import com.notrika.gympin.common.BaseParam;
-import com.notrika.gympin.common.location.param.PlaceParam;
+import com.notrika.gympin.common._base.param.BaseParam;
+import com.notrika.gympin.common.place.place.param.PlaceParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

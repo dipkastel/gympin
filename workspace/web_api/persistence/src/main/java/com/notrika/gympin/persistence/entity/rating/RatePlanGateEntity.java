@@ -17,6 +17,6 @@ import javax.persistence.Table;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "rate_plan_gate")
+@Table(name = "ratePlanGate")
 public class RatePlanGateEntity extends BaseEntityWithCreateUpdate<RatePlanGateEntity> {
 }

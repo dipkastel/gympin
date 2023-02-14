@@ -1,50 +1,68 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
     Button,
     Card,
     CardContent,
-    Dialog, DialogActions,
+    Dialog,
+    DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Stack, TextField,
+    Stack,
+    TextField,
     Typography
 } from "@mui/material";
+import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
+import {Form} from "react-bootstrap";
+import {transaction_settlementRequest} from "../../network/api/transaction.api";
+import {ErrorContext} from "../../components/GympinPagesProvider";
+import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import getAccessOf from "../../helper/accessManager";
 
-const _Wallet = () => {
-    const [open, setOpen] = React.useState(false);
+const _Wallet = ({place,onRequestComplete}) => {
+    const error = useContext(ErrorContext);
+    const [openModalRequest, setOpenModalRequest] = React.useState(false);
 
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-    function ModalDemandPayment(){
+    function ModalDemandPayment() {
+        function request(e) {
+            e.preventDefault()
+            transaction_settlementRequest({PlaceId:place.Id,Amount:toPriceWithoutComma(e.target.requestAmount.value)}).then(result=>{
+                setOpenModalRequest(false);
+                onRequestComplete();
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                    console.log(e)
+                }
+            });
+        }
         return (
             <div>
-                <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>درخواست تسویه حساب</DialogTitle>
-                    <DialogContent >
-                        <DialogContentText>
-                            درخواست شما طی 24 ساعت کاری به بانک ارسال خواهد شد
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="مبلغ درخواستی"
-                            type="number"
-                            fullWidth
-                            variant="standard"
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose}>لغو</Button>
-                        <Button onClick={handleClose}>ثبت</Button>
-                    </DialogActions>
+                <Dialog open={openModalRequest} onClose={()=>setOpenModalRequest(false)}>
+                    <Form onSubmit={e => request(e)}>
+                        <DialogTitle>درخواست تسویه حساب</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                درخواست شما طی 24 ساعت کاری به بانک ارسال خواهد شد
+                            </DialogContentText>
+                            <TextField
+                                autoFocus
+                                name={"requestAmount"}
+                                label="مبلغ درخواستی"
+                                onChange={e=>e.target.value=toPriceWithComma(e.target.value)}
+                                type="text"
+                                fullWidth
+                                variant="outlined"
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={()=>setOpenModalRequest(false)}>لغو</Button>
+                            <Button type={"submit"}>ثبت</Button>
+                        </DialogActions>
+                    </Form>
                 </Dialog>
             </div>
         )
@@ -54,23 +72,23 @@ const _Wallet = () => {
         <>
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent
-                    >
-                    اعتبار شما :
+                >
+                    موجودی :
                     <Stack
                         justifyContent="space-between"
                         alignItems="flex-start"
                         direction="row"
                         spacing={0}
                     >
-                        <Typography variant="h6" >
-                            14,500,000 تومان
+                        <Typography variant="h6">
+                            {`${toPriceWithComma(place.Balance)} تومان`}
                         </Typography>
-                        <Button variant={"contained"} onClick={handleClickOpen}>درخواست تسویه</Button>
+                        {getAccessOf(personnelAccessEnumT.FinanceAction)&&<Button variant={"contained"} onClick={()=>setOpenModalRequest(true)}>درخواست تسویه</Button>}
                     </Stack>
-                    <Typography  variant="caption"
-                                 component={"a"}
-                                 href={"/finance/demand"}
-                                 sx={{textDecoration:"none",color:"#000000"}}>
+                    <Typography variant="caption"
+                                component={"a"}
+                                href={"/finance/demand"}
+                                sx={{textDecoration: "none", color: "#000000"}}>
                         مشاهده لیست درخواست ها
                     </Typography>
                 </CardContent>

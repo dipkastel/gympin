@@ -13,10 +13,10 @@
 @media (min-width: 1000px) {
 
   body{
-    position: absolute;
-    width: 390px;
-    max-width: 390px;
-    left: Calc(50% - 195px);
+    /*position: absolute;*/
+    /*width: 390px;*/
+    /*max-width: 390px;*/
+    /*left: Calc(50% - 195px);*/
   }
 }
 #qrCanvas {
@@ -24,5 +24,19 @@
 }
 .blur{
   filter: blur(6px);
+}
+.rtl{
+  direction: rtl;
+}
+.MuiAlert-icon{
+  margin-right:0 !important;
+  margin-left:12px;
+}
+.MuiAlert-action{
+  margin-right: auto !important;
+  margin-left: -8px !important;
+}
+.qrCode{
+  border: 1px solid #000;
 }
 /*# sourceMappingURL=style.css.map */

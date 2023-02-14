@@ -26,11 +26,9 @@ public class RoleEntity extends BaseEntity<RoleEntity> {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @ToString.Exclude
-    //@ManyToMany//(cascade = CascadeType.ALL)
-    //    @JoinColumn(name = "user_id",nullable = false)
-    @ManyToMany(mappedBy = "userRole")
-    private List<UserEntity> users;
+//    @ToString.Exclude
+//    @OneToMany(mappedBy = "userRole")
+//    private List<UserEntity> users;
 
     @Override
     public boolean equals(Object o) {

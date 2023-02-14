@@ -1,107 +1,105 @@
 package com.notrika.gympin.domain.location;
 
-import com.notrika.gympin.common.location.dto.OptionOfPlaceDto;
-import com.notrika.gympin.common.location.dto.PlaceDto;
-import com.notrika.gympin.common.location.dto.PlaceOwnerDto;
-import com.notrika.gympin.common.location.param.OptionOfPlaceParam;
-import com.notrika.gympin.common.location.param.PlaceOwnerParam;
-import com.notrika.gympin.common.location.param.PlaceParam;
+import com.notrika.gympin.common.location.dto.LocationDto;
+import com.notrika.gympin.common.location.param.LocationParam;
+import com.notrika.gympin.common.location.query.LocationQuery;
 import com.notrika.gympin.common.location.service.LocationService;
-import com.notrika.gympin.common.option.place.dto.PlaceOptionDto;
-import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.param.UserParam;
-import com.notrika.gympin.domain.option.place.PlaceOptionServiceImpl;
-import com.notrika.gympin.domain.user.UserServiceImpl;
+import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.LocationConvertor;
-import com.notrika.gympin.domain.util.convertor.UserConvertor;
-import com.notrika.gympin.persistence.dao.repository.OptionOfPlaceRepository;
-import com.notrika.gympin.persistence.dao.repository.PlaceOwnerRepository;
-import com.notrika.gympin.persistence.entity.location.OptionOfPlaceEntity;
-import com.notrika.gympin.persistence.entity.location.PlaceEntity;
-import com.notrika.gympin.persistence.entity.location.PlaceOwnerEntity;
-import com.notrika.gympin.persistence.entity.option.place.PlaceOptionEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
+import com.notrika.gympin.persistence.dao.repository.LocationRepository;
+import com.notrika.gympin.persistence.entity.location.LocationEntity;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class LocationServiceImpl implements LocationService {
+public class LocationServiceImpl extends AbstractBaseService<LocationParam, LocationDto, LocationQuery, LocationEntity> implements LocationService {
+
 
     @Autowired
-    private OptionOfPlaceRepository optionOfPlaceRepository;
-
-    @Autowired
-    private PlaceOptionServiceImpl placeOptionService;
-
-    @Autowired
-    private PlaceOwnerRepository placeOwnerRepository;
-
-    @Autowired
-    private UserServiceImpl userService;
-
-    @Autowired
-    private PlaceServiceImpl placeService;
+    LocationRepository locationRepository;
 
     @Override
-    public OptionOfPlaceDto addOptionOfPlace(OptionOfPlaceParam optionOfPlaceParam) {
-        PlaceOptionEntity placeOption;
-        if (optionOfPlaceParam.getPlaceOptionParam().getId() == null) {
-            PlaceOptionEntity initPlaceOption = PlaceOptionEntity.builder().name(optionOfPlaceParam.getPlaceOptionParam().getName()).build();
-            placeOption = placeOptionService.add(initPlaceOption);
-            optionOfPlaceParam.getPlaceOptionParam().setId(placeOption.getId());
-        } else {
-            placeOption = placeOptionService.getEntityById(optionOfPlaceParam.getPlaceOptionParam().getId());
-        }
-        PlaceEntity place = placeService.getEntityById(optionOfPlaceParam.getPlaceParam().getId());
-        OptionOfPlaceEntity initOptionOfPlace = OptionOfPlaceEntity.builder().place(place).placeOption(placeOption).build();
-        OptionOfPlaceEntity optionOfPlace = optionOfPlaceRepository.add(initOptionOfPlace);
-        return OptionOfPlaceDto.builder().id(optionOfPlace.getId()).createdDate(optionOfPlace.getCreatedDate()).updatedDate(optionOfPlace.getUpdatedDate()).isDeleted(optionOfPlace.isDeleted()).place(PlaceDto.builder().id(optionOfPlace.getPlace().getId()).build()).placeOption(PlaceOptionDto.builder().id(optionOfPlace.getPlaceOption().getId()).build()).build();
-    }
-
-    //    public OptionOfPlace addOptionOfPlace(OptionOfPlace optionOfPlace){
-    //        return placeOptionService.addPlaceOption(optionOfPlace);
-    //    }
-
-    @Override
-    public List<PlaceDto> getPlaceByUser(UserParam userParam) {
-        UserEntity user = UserEntity.builder().id(userParam.getId())/*.userRole(userParam.getRole())*/.build();
-        List<PlaceEntity> placeByUser = getPlaceByUser(user);
-        return (List<PlaceDto>) LocationConvertor.placesToPlaceDtos(placeByUser);
-    }
-
-    public List<PlaceEntity> getPlaceByUser(UserEntity user) {
-        return placeService.getPlaceByUser(user);
+    public LocationDto add(@NonNull LocationParam locationParam) {
+        LocationEntity parent = null;
+        if (locationParam.getParent() != null)
+            parent = locationRepository.getById(locationParam.getParent().getId());
+        LocationEntity entity = LocationEntity.builder()
+                .name(locationParam.getName())
+                .locationType(locationParam.getLocationType())
+                .centerLat(locationParam.getCenterLat())
+                .centerLng(locationParam.getCenterLng())
+                .mapPolygon(locationParam.getMapPolygon())
+                .parent(parent)
+                .build();
+        return LocationConvertor.toDto(locationRepository.add(entity));
     }
 
     @Override
-    public PlaceOwnerDto addPlaceOwner(PlaceOwnerParam placeOwnerParam) {
-        PlaceEntity place = placeService.getEntityById(placeOwnerParam.getPlaceParam().getId());
-        UserEntity user = userService.getEntityById(placeOwnerParam.getUserParam().getId());
-        PlaceOwnerEntity initPlaceOwner = PlaceOwnerEntity.builder().place(place).user(user).userRole(placeOwnerParam.getUserRole()).build();
-        PlaceOwnerEntity placeOwner = placeOwnerRepository.add(initPlaceOwner);
-        return LocationConvertor.placeOwnerToPlaceOwnerDto(placeOwner);
-    }
-
-    public PlaceOwnerEntity getPlaceOwnerById(long id) {
-        return placeOwnerRepository.getById(id);
-    }
-
-    @Override
-    public List<UserDto> getOwnersPlace(PlaceParam placeParam) {
-        List<UserEntity> ownersPlace = userService.getOwnersPlace(PlaceEntity.builder().id(placeParam.getId()).build());
-        return UserConvertor.usersToUserDtos(ownersPlace);
+    public LocationDto update(@NonNull LocationParam locationParam) {
+        LocationEntity entity = locationRepository.getById(locationParam.getId());
+        entity.setName(entity.getName());
+        entity.setLocationType(entity.getLocationType());
+        entity.setCenterLat(entity.getCenterLat());
+        entity.setCenterLng(entity.getCenterLng());
+        entity.setMapPolygon(entity.getMapPolygon());
+        return LocationConvertor.toDto(locationRepository.update(entity));
     }
 
     @Override
-    public PlaceOwnerDto deletePlaceOwner(PlaceOwnerParam placeOwnerParam) {
-        PlaceOwnerEntity placeOwner = getPlaceOwnerById(placeOwnerParam.getId());
-        PlaceOwnerEntity deletedPlaceOwner = deletePlaceOwner(placeOwner);
-        return LocationConvertor.placeOwnerToPlaceOwnerDto(deletedPlaceOwner);
+    public LocationDto delete(@NonNull LocationParam locationParam) {
+        LocationEntity entity =locationRepository.getById(locationParam.getId());
+        return LocationConvertor.toDto(locationRepository.deleteById2(entity));
     }
 
-    public PlaceOwnerEntity deletePlaceOwner(PlaceOwnerEntity placeOwner) {
-        return placeOwnerRepository.deleteById2(placeOwner);
+    @Override
+    public LocationDto getById(long id) {
+        return LocationConvertor.toDtoWithChilds(locationRepository.getById(id));
+    }
+
+    @Override
+    public LocationEntity add(LocationEntity entity) {
+        return locationRepository.add(entity);
+    }
+
+    @Override
+    public LocationEntity update(LocationEntity entity) {
+        return locationRepository.update(entity);
+    }
+
+    @Override
+    public LocationEntity delete(LocationEntity entity) {
+        return locationRepository.deleteById2(entity);
+    }
+
+    @Override
+    public LocationEntity getEntityById(long id) {
+        return locationRepository.getById(id);
+    }
+
+    @Override
+    public List<LocationEntity> getAll(Pageable pageable) {
+        return locationRepository.findAllUndeleted(pageable);
+    }
+
+    @Override
+    public Page<LocationEntity> findAll(Specification<LocationEntity> specification, Pageable pageable) {
+        return locationRepository.findAll(specification,pageable);
+    }
+
+    @Override
+    public List<LocationDto> convertToDtos(List<LocationEntity> entities) {
+        return entities.stream().map(LocationConvertor::toDtoWithChilds).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<LocationDto> convertToDtos(Page<LocationEntity> entities) {
+        return entities.map(LocationConvertor::toDtoWithChilds);
     }
 }

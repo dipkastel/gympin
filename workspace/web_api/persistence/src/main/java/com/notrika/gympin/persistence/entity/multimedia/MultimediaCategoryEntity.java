@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.multimedia;
 
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.user.UserMultimediaEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -8,10 +9,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,13 +19,13 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "multimedia_category")
+@Table(name = "multimediaCategory")
 public class MultimediaCategoryEntity extends BaseEntity<MultimediaCategoryEntity> {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
+    @OneToMany(mappedBy = "category")
     @ToString.Exclude
     private List<MultimediaEntity> multimediaList;
 

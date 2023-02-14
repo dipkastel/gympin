@@ -19,19 +19,19 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "walking_event")
+@Table(name = "walkingEvent")
 public class WalkingEventEntity extends BaseEventEntity {
 
-    @Column(name = "start_latitude", nullable = false)
+    @Column(name = "startLatitude", nullable = false)
     private double startLatitude;
 
-    @Column(name = "start_longitude", nullable = false)
+    @Column(name = "startLongitude", nullable = false)
     private double startLongitude;
 
-    @Column(name = "end_latitude", nullable = false)
+    @Column(name = "endLatitude", nullable = false)
     private double endLatitude;
 
-    @Column(name = "end_longitude", nullable = false)
+    @Column(name = "endLongitude", nullable = false)
     private double endLongitude;
 
     @Lob

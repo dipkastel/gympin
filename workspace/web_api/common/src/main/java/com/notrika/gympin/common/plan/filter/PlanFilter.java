@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.plan.filter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class PlanFilter extends BaseFilter<PlanFilter> {
+public class PlanFilter extends BaseQuery<PlanFilter> {
 
     @JsonProperty("title")
     private String title;

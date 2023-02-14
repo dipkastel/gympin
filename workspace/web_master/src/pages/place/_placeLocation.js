@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Card, CardContent, CardHeader, TextField} from "@mui/material";
 import "leaflet/dist/leaflet.css"
 import _PlaceMap from "./_PlaceMap";
-import {Api_url} from "../../network/const/NETWORKCONSTS";
+import {Api_url} from "../../network/api/NETWORKCONSTS";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _PlaceLocation = ({place,SubmitForm}) => {
+    const error = useContext(ErrorContext);
     const [address,setAddress] = useState(place.Address)
     const [location,SetLocation] = useState({lat:place.Latitude,lng:place.longitude})
 
@@ -24,10 +26,16 @@ const _PlaceLocation = ({place,SubmitForm}) => {
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 setAddress(data.osmtags.name+"،"+data.staddress)
             })
-            .catch(e=>console.log(e));
+            .catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+                console.log(e)
+            }
+        });
     }
 
     return (

@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.comment.place.dto;
 
-import com.notrika.gympin.common.BaseDto;
-import com.notrika.gympin.common.location.dto.PlaceDto;
+import com.notrika.gympin.common._base.dto.BaseDto;
+import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

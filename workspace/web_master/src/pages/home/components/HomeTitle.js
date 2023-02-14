@@ -11,7 +11,7 @@ const HomeTitle = (prop) => {
         }}>
             <Row>
                 <Col className={"p-1 pb-2"} >
-                    {data.Items[0].Title}
+                    {data.Title}
                 </Col>
             </Row>
         </Container>

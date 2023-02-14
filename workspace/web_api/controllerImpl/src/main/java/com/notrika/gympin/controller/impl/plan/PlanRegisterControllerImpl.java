@@ -1,12 +1,13 @@
 package com.notrika.gympin.controller.impl.plan;
 
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.BasePagedParam;
+import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.plan.api.PlanRegisterController;
 import com.notrika.gympin.common.plan.dto.PlanRegisterDto;
 import com.notrika.gympin.common.plan.param.PlanRegisterParam;
 import com.notrika.gympin.common.plan.service.PlanRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,22 +47,8 @@ public class PlanRegisterControllerImpl implements PlanRegisterController {
     }
 
     @Override
-    public ResponseEntity<Long> countSearch(BaseFilter<?> filter) {
+    public ResponseEntity<Page<PlanRegisterDto>> query(BaseQuery<?> filter) {
         return null;
     }
 
-    @Override
-    public ResponseEntity<List<PlanRegisterDto>> search(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<List<PlanRegisterDto>> filter(BaseFilter<?> filter) {
-        return null;
-    }
 }

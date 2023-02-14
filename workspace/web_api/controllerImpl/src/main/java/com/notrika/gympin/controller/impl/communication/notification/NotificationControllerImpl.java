@@ -1,12 +1,13 @@
 package com.notrika.gympin.controller.impl.communication.notification;
 
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.BasePagedParam;
+import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.communication.notification.api.NotificationController;
 import com.notrika.gympin.common.communication.notification.dto.NotificationDto;
 import com.notrika.gympin.common.communication.notification.param.NotificationParam;
 import com.notrika.gympin.common.communication.notification.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,18 +23,18 @@ public class NotificationControllerImpl implements NotificationController {
     private NotificationService notificationService;
 
     @Override
-    public ResponseEntity<NotificationDto> add(NotificationParam notificationParam) {
-        return ResponseEntity.ok(notificationService.add(notificationParam));
+    public ResponseEntity<NotificationDto> add(NotificationParam corporateParam) {
+        return ResponseEntity.ok(notificationService.add(corporateParam));
     }
 
     @Override
-    public ResponseEntity<NotificationDto> update(NotificationParam notificationParam) {
-        return ResponseEntity.ok(notificationService.update(notificationParam));
+    public ResponseEntity<NotificationDto> update(NotificationParam corporateParam) {
+        return ResponseEntity.ok(notificationService.update(corporateParam));
     }
 
     @Override
-    public ResponseEntity<NotificationDto> delete(NotificationParam notificationParam) {
-        return ResponseEntity.ok(notificationService.delete(notificationParam));
+    public ResponseEntity<NotificationDto> delete(NotificationParam corporateParam) {
+        return ResponseEntity.ok(notificationService.delete(corporateParam));
     }
 
     @Override
@@ -48,27 +49,13 @@ public class NotificationControllerImpl implements NotificationController {
 
     @Override
     @GetMapping("/getUserNotifications")
-    public ResponseEntity<List<NotificationDto>> getUserNotifications(BasePagedParam<?> pagedParam) {
+    public ResponseEntity<List<NotificationDto>> getUserNotifications(BasePagedParam pagedParam) {
         return ResponseEntity.ok(notificationService.getUserNotifications(pagedParam));
     }
 
     @Override
-    public ResponseEntity<Long> countSearch(BaseFilter<?> filter) {
+    public ResponseEntity<Page<NotificationDto>> query(BaseQuery<?> filter) {
         return null;
     }
 
-    @Override
-    public ResponseEntity<List<NotificationDto>> search(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<List<NotificationDto>> filter(BaseFilter<?> filter) {
-        return null;
-    }
 }

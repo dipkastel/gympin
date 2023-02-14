@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.user;
 
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.BasePagedParam;
+import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.event.walking.dto.UserWalkingEventDto;
@@ -20,7 +20,9 @@ import com.notrika.gympin.persistence.dao.repository.UserRateRepository;
 import com.notrika.gympin.persistence.entity.rating.UserRateEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, UserRateDto, BaseFilter<?>, UserRateEntity> implements UserRateService {
+public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, UserRateDto, BaseQuery<?>, UserRateEntity> implements UserRateService {
 
     @Autowired
     private UserRateRepository userRateRepository;
@@ -44,8 +46,8 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
 
     public static UserRateDto userRateToUserRateDto(UserRateEntity userRate) {
         UserRateDto userRateDto = new UserRateDto();
-        userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(userRate.getJudgerUser()));
-        userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(userRate.getJudgingUser()));
+        userRateDto.setJudgerUser(UserConvertor.toDtoComplete(userRate.getJudgerUser()));
+        userRateDto.setJudgingUser(UserConvertor.toDtoComplete(userRate.getJudgingUser()));
         userRateDto.setRate(userRate.getRate());
         userRateDto.setId(userRate.getId());
         userRate.setDeleted(userRate.isDeleted());
@@ -65,8 +67,8 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
         userRate.setRate(userRateParam.getRate());
         UserRateEntity entity = add(userRate);
         UserRateDto userRateDto = new UserRateDto();
-        userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(entity.getJudgerUser()));
-        userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(entity.getJudgingUser()));
+        userRateDto.setJudgerUser(UserConvertor.toDtoComplete(entity.getJudgerUser()));
+        userRateDto.setJudgingUser(UserConvertor.toDtoComplete(entity.getJudgingUser()));
         userRateDto.setRate(entity.getRate());
         userRateDto.setId(userRate.getId());
         return userRateDto;
@@ -83,8 +85,8 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
         userRate.setRate(userRateParam.getRate());
         UserRateEntity entity = update(userRate);
         UserRateDto userRateDto = new UserRateDto();
-        userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(entity.getJudgerUser()));
-        userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(entity.getJudgingUser()));
+        userRateDto.setJudgerUser(UserConvertor.toDtoComplete(entity.getJudgerUser()));
+        userRateDto.setJudgingUser(UserConvertor.toDtoComplete(entity.getJudgingUser()));
         userRateDto.setRate(entity.getRate());
         userRateDto.setId(userRate.getId());
         return userRateDto;
@@ -101,8 +103,8 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     public UserRateDto getById(long id) {
         UserRateEntity userRate = getEntityById(id);
         UserRateDto userRateDto = new UserRateDto();
-        userRateDto.setJudgerUser(UserConvertor.userToUserDtoComplete(userRate.getJudgerUser()));
-        userRateDto.setJudgingUser(UserConvertor.userToUserDtoComplete(userRate.getJudgingUser()));
+        userRateDto.setJudgerUser(UserConvertor.toDtoComplete(userRate.getJudgerUser()));
+        userRateDto.setJudgingUser(UserConvertor.toDtoComplete(userRate.getJudgingUser()));
         userRateDto.setRate(userRate.getRate());
         userRateDto.setId(userRate.getId());
         userRate.setDeleted(userRate.isDeleted());
@@ -135,8 +137,18 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     }
 
     @Override
+    public Page<UserRateEntity> findAll(Specification<UserRateEntity> specification, Pageable pageable) {
+        return userRateRepository.findAll(specification,pageable);
+    }
+
+    @Override
     public List<UserRateDto> convertToDtos(List<UserRateEntity> entities) {
         return entities.stream().map(UserRateServiceImpl::userRateToUserRateDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<UserRateDto> convertToDtos(Page<UserRateEntity> entities) {
+        return null;
     }
 
     @Override
@@ -151,7 +163,7 @@ public class UserRateServiceImpl extends AbstractBaseService<UserRateParam, User
     }
 
     @Override
-    public List<RateableUsersDto> getRateableUsers(BasePagedParam<?> pagedParam) {
+    public List<RateableUsersDto> getRateableUsers(BasePagedParam pagedParam) {
         UserEntity user1 = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         List<RateableUsersDto> rateableUsers = new ArrayList<>();
         UserWalkingEventDto allEventOfUser = walkingEventService.getAllEventOfUser(null);

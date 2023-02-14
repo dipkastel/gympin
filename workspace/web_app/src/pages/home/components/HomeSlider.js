@@ -25,7 +25,7 @@ const HomeSlider = (props) => {
                     <div key={index} >
                         <Link href={"/"+item.Destination} underline="none" color="inherit" fontWeight="800">
                             <Box>
-                                <Image  height={"200px"} width={"100%"}  src={item.ImageUrl}/>
+                                <Image  height={"200px"} width={"100%"}  src={item.multimedia.Url}/>
                             </Box>
                         </Link>
                     </div>

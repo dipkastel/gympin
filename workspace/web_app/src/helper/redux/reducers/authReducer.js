@@ -1,49 +1,40 @@
 import {persistReducer} from "redux-persist";
-import {authActionTypes} from "../actions/authActionTypes";
+import {authActionTypes} from "../actions/AuthActions";
 import storage from "redux-persist/lib/storage";
 import {forgotLastLocation} from "../../lastLocationHandler";
 
 
 const initialAuthState = {
     user: undefined,
-    userId: undefined,
-    authToken: undefined,
-    refreshToken: undefined,
+    token:undefined,
+    refreshToken:undefined,
 };
 
-const authConfig = {
-    storage, key: "gympin-webapp-auth",
-    whitelist: ["user", "authToken"]
+const ReducerConfig = {
+    storage,
+    key: "gympin-pwa-auth",
+    whitelist:["user","token","refreshToken"]
 };
 
-const baseReducer = (state = initialAuthState, action) => {
+
+const AuthBaseReducer = (state = initialAuthState, action) => {
     switch (action.type) {
-        case authActionTypes.Login: {
-            console.log("action login");
-            return { authToken:action.payload.user.Token ,refreshToken:action.payload.user.RefreshToken ,userId:action.payload.user.id, user: action.payload.user };
+        case authActionTypes.SetUser: {
+            return {...state,user: action.payload.user };
         }
-
+        case authActionTypes.SetToken: {
+            return {...state,token: action.payload.token };
+        }
+        case authActionTypes.SetRefreshToken: {
+            return {...state,refreshToken: action.payload.refreshToken };
+        }
         case authActionTypes.Logout: {
-            console.log("action Logout");
             forgotLastLocation();
             return initialAuthState;
         }
-
-        case authActionTypes.Register: {
-            console.log("action Register");
-            const { authToken } = action.payload.Token;
-            return { authToken, user: undefined };
-        }
-
-        case authActionTypes.UserLoaded: {
-            console.log("action UserLoaded");
-            const { user } = action.payload;
-            return { ...state, user };
-        }
-
         default:
             return state;
     }
 }
 
-export const authReducer = persistReducer(authConfig,baseReducer);
+export const authReducer = persistReducer(ReducerConfig,AuthBaseReducer);

@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.user.api;
 
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.user.param.PlaceRequestRegisterParam;
 import com.notrika.gympin.common.user.param.LoginParam;
 import com.notrika.gympin.common.user.param.RefreshTokenParam;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
@@ -13,10 +14,9 @@ public interface AccountController {
     ResponseEntity<?> sendSms(@RequestBody UserSendSmsParam phoneNumber) throws ExceptionBase;
 
     ResponseEntity<?> register(@RequestBody UserRegisterParam userRegisterParam) throws ExceptionBase;
+    ResponseEntity<Boolean> RequestRegisterPlace(@RequestBody PlaceRequestRegisterParam place);
 
     ResponseEntity<?> loginUser(LoginParam loginParam) throws ExceptionBase;
-
-    ResponseEntity<?> loginPanel(LoginParam loginParam) throws ExceptionBase;
 
     ResponseEntity<?> refreshToken(RefreshTokenParam refreshToken);
 

@@ -1,8 +1,7 @@
 package com.notrika.gympin.persistence.entity.rating;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.location.GateEntity;
+import com.notrika.gympin.persistence.entity.gate.GateEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "rate_gate")
+@Table(name = "rateGate")
 public class RateGateEntity extends BaseEntityWithCreateUpdate<RateGateEntity> {
 
     @ManyToOne

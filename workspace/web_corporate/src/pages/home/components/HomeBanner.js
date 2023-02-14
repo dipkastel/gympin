@@ -4,7 +4,6 @@ import {Box, Link} from "@mui/material";
 import {Image} from "react-bootstrap";
 
 const HomeBanner =(props) => {
-    console.log(props)
     const settings = {
         dots: false,
         infinite: true,

@@ -36,7 +36,7 @@ public class FollowEntity extends BaseEntity<FollowEntity> {
     private FollowingStatus status;
 
     @OneToMany(mappedBy = "follow")
-    @Column(name = "change_follow_status")
+    @Column(name = "changeFollowStatus")
     @ToString.Exclude
     private List<FollowChangeStatusEntity> followChangeStatus;
 

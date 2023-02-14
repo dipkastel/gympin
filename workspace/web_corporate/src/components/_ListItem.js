@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardHeader} from "@mui/material";
+import {Card, CardHeader, Typography} from "@mui/material";
 
 const _ListItem = (props) => {
     return (
@@ -8,7 +8,11 @@ const _ListItem = (props) => {
                 component={"a"}
                 sx={{textDecoration:"none",color:"#000000"}}
                 href={props.destination}
-                title={props.title}
+                title={<Typography width={"100%"} variant={"body2"} noWrap={true} textAlign={"right"} component="div" sx={{
+                    marginY:0.1
+                }}>
+                    {props.title}
+                </Typography>}
                 action={""}/>
         </Card>
     );

@@ -1,14 +1,19 @@
 import React from 'react';
 import {
-    Avatar,
     Button,
     Card,
     CardContent,
-    CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider,
+    CardHeader,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Divider,
     List,
     ListItem,
-    ListItemAvatar,
-    ListItemText, TextField, Typography
+    ListItemText,
+    TextField
 } from "@mui/material";
 
 const _PlaceGates = () => {

@@ -1,21 +1,18 @@
 package com.notrika.gympin.common.event;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.sport.param.SportParam;
-import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @SuperBuilder(builderMethodName = "b")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class BaseEventFilter<T extends BaseEventFilter> extends BaseFilter<T> {
+public class BaseEventFilter<T extends BaseEventFilter> extends BaseQuery<T> {
 
     @JsonProperty("title")
     private String title;

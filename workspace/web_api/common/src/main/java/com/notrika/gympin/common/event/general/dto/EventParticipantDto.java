@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.event.general.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseDto;
+import com.notrika.gympin.common._base.dto.BaseDto;
 import com.notrika.gympin.common.event.BaseEventDto;
 import com.notrika.gympin.common.user.dto.UserDto;
 import lombok.*;

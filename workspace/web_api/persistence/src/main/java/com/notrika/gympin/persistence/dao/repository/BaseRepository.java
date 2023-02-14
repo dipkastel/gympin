@@ -20,7 +20,11 @@ public interface BaseRepository<T extends BaseEntity, ID extends Serializable> e
 
     <S extends T> S add(S var1);
 
+    <S extends T> List<S> addAll(List<S> var1);
+
     <S extends T> S update(S var1);
+
+    <S extends T> List<S> updateAll(List<S> var1);
 
     @Override
     Page<T> findAll(Pageable pageable);

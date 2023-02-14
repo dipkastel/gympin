@@ -19,25 +19,25 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "service_execution")
+@Table(name = "serviceExecution")
 public class ServiceExecutionEntity extends BaseEntity<ServiceExecutionEntity> {
 
     @Column(name = "service", nullable = false)
     @Lob
     private String service;
 
-    @Column(name = "param_class", nullable = false)
+    @Column(name = "paramClass", nullable = false)
     @Lob
     private Class paramClass;
 
-    @Column(name = "dto_class", nullable = false)
+    @Column(name = "dtoClass", nullable = false)
     @Lob
     private Class dtoClass;
 
     @ManyToOne
     private UserEntity executorUser;
 
-    @Column(name = "execution_date", nullable = false)
+    @Column(name = "executionDate", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date executionDate;
 

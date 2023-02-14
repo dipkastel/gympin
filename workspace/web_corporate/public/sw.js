@@ -12,7 +12,7 @@ this.addEventListener("install", (event) => {
                 '/manifest.json',
                 '/index.html',
                 '/',
-                '/users',
+                '/personnel',
                 '/finance',
                 '/management',
                 '/report',

@@ -20,7 +20,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "base_event")
+@Table(name = "baseEvent")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class BaseEventEntity extends BaseEntityWithCreateUpdate<BaseEventEntity> {
 
@@ -38,10 +38,10 @@ public class BaseEventEntity extends BaseEntityWithCreateUpdate<BaseEventEntity>
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "startDate", nullable = false)
     private Date startDate;
 
-    @Column(name = "participant_count", nullable = false, columnDefinition = "default 0")
+    @Column(name = "participantCount", nullable = false, columnDefinition = "default 0")
     private int participantCount;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)

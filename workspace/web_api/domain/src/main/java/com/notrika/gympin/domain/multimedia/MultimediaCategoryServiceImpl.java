@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.multimedia;
 
-import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.multimedia.dto.MultimediaCategoryDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaCategoryParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaCategoryService;
@@ -9,13 +9,15 @@ import com.notrika.gympin.domain.util.convertor.MultimediaCategoryConvertor;
 import com.notrika.gympin.persistence.dao.repository.MultimediaCategoryRepository;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class MultimediaCategoryServiceImpl extends AbstractBaseService<MultimediaCategoryParam, MultimediaCategoryDto, BaseFilter<?>, MultimediaCategoryEntity> implements MultimediaCategoryService {
+public class MultimediaCategoryServiceImpl extends AbstractBaseService<MultimediaCategoryParam, MultimediaCategoryDto, BaseQuery<?>, MultimediaCategoryEntity> implements MultimediaCategoryService {
 
     @Autowired
     private MultimediaCategoryRepository multimediaCategoryRepository;
@@ -60,8 +62,18 @@ public class MultimediaCategoryServiceImpl extends AbstractBaseService<Multimedi
     }
 
     @Override
+    public Page<MultimediaCategoryEntity> findAll(Specification<MultimediaCategoryEntity> specification, Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public List<MultimediaCategoryDto> convertToDtos(List<MultimediaCategoryEntity> entities) {
         return MultimediaCategoryConvertor.multimediaCategoriesToMultimediaCategoryDto(entities);
+    }
+
+    @Override
+    public Page<MultimediaCategoryDto> convertToDtos(Page<MultimediaCategoryEntity> entities) {
+        return null;
     }
 
     public List<MultimediaCategoryEntity> getAll() {

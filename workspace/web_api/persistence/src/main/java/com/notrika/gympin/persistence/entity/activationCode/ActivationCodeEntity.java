@@ -20,23 +20,23 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "activation_code")
+@Table(name = "activationCode")
 public class ActivationCodeEntity extends BaseEntity<ActivationCodeEntity> {
 
-    //@Column(name = "user_id")
+    //@Column(name = "userId")
     @OneToOne(cascade = CascadeType.ALL)
     private UserEntity user;
 
-    @Column(name = "phone_number")
+    @Column(name = "phoneNumber")
     private String phoneNumber;
 
     @Column(name = "code", nullable = false)
     private String code;
 
-    @Column(name = "sender_id")
+    @Column(name = "senderId")
     private String senderId;
 
-    @Column(name = "expired_date", nullable = false)
+    @Column(name = "expiredDate", nullable = false)
     private Date expiredDate;
 
     public ActivationCodeEntity(UserEntity user, String phoneNumber, String code, String senderId, Date expiredDate) {
@@ -58,7 +58,7 @@ public class ActivationCodeEntity extends BaseEntity<ActivationCodeEntity> {
 
     @Override
     public int hashCode() {
-        return 137237553;
+        return getClass().hashCode();
     }
 }
 

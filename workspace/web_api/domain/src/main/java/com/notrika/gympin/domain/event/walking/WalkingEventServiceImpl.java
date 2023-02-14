@@ -1,6 +1,5 @@
 package com.notrika.gympin.domain.event.walking;
 
-import com.notrika.gympin.common.SearchCriteria;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.event.BaseEventFilter;
@@ -18,16 +17,15 @@ import com.notrika.gympin.domain.sport.SportServiceImpl;
 import com.notrika.gympin.domain.user.UserRateServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.EventConvertor;
-import com.notrika.gympin.domain.util.convertor.searchfilter.EventFilterConvertor;
 import com.notrika.gympin.domain.util.validator.GeneralValidator;
 import com.notrika.gympin.persistence.dao.repository.BaseEventRepository;
 import com.notrika.gympin.persistence.dao.repository.WalkingEventRepository;
-import com.notrika.gympin.persistence.entity.event.BaseEventEntity;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.event.WalkingEventEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -141,7 +139,10 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     @Override
     public UserWalkingEventDto getAllEventOfUser(UserParam userParam) {
         UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-        if (!Collections.disjoint(user.getUserRole(), Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN)) && GeneralValidator.validateId(userParam)) {
+//        if (!Collections.disjoint(user.getUserRole(), Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN)) && GeneralValidator.validateId(userParam)) {
+//            user = userService.getEntityById(userParam.getId());
+//        }
+        if (!Arrays.asList(UserRole.SUPER_ADMIN, UserRole.ADMIN).contains(user.getUserRole()) && GeneralValidator.validateId(userParam)) {
             user = userService.getEntityById(userParam.getId());
         }
         List<WalkingEventEntity> ownedEvents = walkingEventRepository.findAllByCreatorUserAndDeletedIsFalse(user);
@@ -192,6 +193,12 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     }
 
     @Override
+    public Page<WalkingEventEntity> findAll(Specification<WalkingEventEntity> specification, Pageable pageable) {
+
+        return walkingEventRepository.findAll(specification,pageable);
+    }
+
+    @Override
     public List<WalkingEventDto> convertToDtos(List<WalkingEventEntity> entities) {
         List<WalkingEventDto> walkingEventDtos = entities.stream().map(EventConvertor::walkingEventEntityToDto).collect(Collectors.toList());
         walkingEventDtos.forEach(c -> c.getOwner().setRate(userRateService.calculateUserRate(UserParam.builder().id(c.getOwner().getId()).build())));
@@ -200,19 +207,8 @@ public class WalkingEventServiceImpl extends AbstractBaseService<WalkingEventPar
     }
 
     @Override
-    public Long countSearch(BaseEventFilter filter) {
-        Specification<BaseEventEntity> clause = null;
-        List<SearchCriteria> searchCriteriaList = EventFilterConvertor.convertToBaseEventFilter(filter);
-        if (!searchCriteriaList.isEmpty()) {
-            BaseEventEntity specification = new BaseEventEntity();
-            specification.setCriteria(searchCriteriaList.get(0));
-            clause = Specification.where(specification);
-        }
-        for (int i = 1; i < searchCriteriaList.size(); i++) {
-            BaseEventEntity specification = new BaseEventEntity();
-            specification.setCriteria(searchCriteriaList.get(i));
-            clause.and(specification);
-        }
-        return eventRepository.count(clause);
+    public Page<WalkingEventDto> convertToDtos(Page<WalkingEventEntity> entities) {
+        return null;
     }
+
 }

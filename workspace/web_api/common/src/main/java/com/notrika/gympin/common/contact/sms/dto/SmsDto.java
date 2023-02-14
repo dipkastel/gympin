@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.contact.sms.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseDto;
+import com.notrika.gympin.common._base.dto.BaseDto;
 import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

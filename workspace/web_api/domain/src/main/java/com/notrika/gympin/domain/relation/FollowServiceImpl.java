@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.relation;
 
-import com.notrika.gympin.common.BaseFilter;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.exception.general.InputNotValidException;
 import com.notrika.gympin.common.relation.dto.FollowDto;
 import com.notrika.gympin.common.relation.enums.FollowingStatus;
@@ -20,7 +20,9 @@ import com.notrika.gympin.persistence.entity.user.relation.FollowChangeStatusEnt
 import com.notrika.gympin.persistence.entity.user.relation.FollowEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDto, BaseFilter<?>, FollowEntity> implements FollowService {
+public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDto, BaseQuery<?>, FollowEntity> implements FollowService {
 
     @Autowired
     private FollowRepository followRepository;
@@ -141,20 +143,31 @@ public class FollowServiceImpl extends AbstractBaseService<FollowParam, FollowDt
     }
 
     @Override
+    public Page<FollowEntity> findAll(Specification<FollowEntity> specification, Pageable pageable) {
+
+        return followRepository.findAll(specification,pageable);
+    }
+
+    @Override
     public List<FollowDto> convertToDtos(List<FollowEntity> entities) {
+        return null;
+    }
+
+    @Override
+    public Page<FollowDto> convertToDtos(Page<FollowEntity> entities) {
         return null;
     }
 
     @Override
     public List<UserDto> getFollowers(UserParam user) {
         List<UserEntity> followers = followRepository.getFollowers(user.getId());
-        return UserConvertor.usersToUserDtos(followers);
+        return UserConvertor.toDto(followers);
     }
 
     @Override
     public List<UserDto> getFollowing(UserParam user) {
         List<UserEntity> followers = followRepository.getFollowings(user.getId());
-        return UserConvertor.usersToUserDtos(followers);
+        return UserConvertor.toDto(followers);
     }
 
     public Long getFollowersCount(UserEntity user) {

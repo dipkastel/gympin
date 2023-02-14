@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.rate.gate.dto;
 
-import com.notrika.gympin.common.BaseDto;
-import com.notrika.gympin.common.location.dto.GateDto;
+import com.notrika.gympin.common._base.dto.BaseDto;
+import com.notrika.gympin.common.gate.dto.GateDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

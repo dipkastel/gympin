@@ -9,10 +9,14 @@ import org.springframework.http.HttpStatus;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-@RequiredArgsConstructor
 public class ExceptionBase extends RuntimeException {
     private HttpStatus httpStatus;
     private Error.ErrorType errorType;
+    private int errorCode;
+    private String errorMessage;
+
+    private ExceptionBase(){
+    }
 
     public ExceptionBase(HttpStatus httpStatus, Error.ErrorType errorType) {
         this.httpStatus = httpStatus;

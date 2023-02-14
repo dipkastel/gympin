@@ -4,7 +4,6 @@ import {Box, Link} from "@mui/material";
 import { Image} from "react-bootstrap";
 
 const HomeSlider = (props) => {
-    console.log(props)
     const settings = {
         dots: false,
         infinite: true,
@@ -25,7 +24,7 @@ const HomeSlider = (props) => {
                     <div key={index} >
                         <Link href={"/"+item.Destination} underline="none" color="inherit" fontWeight="800">
                             <Box>
-                                <Image  height={"200px"} width={"100%"}  src={item.ImageUrl}/>
+                                <Image width={"100%"}  src={item.multimedia.Url}/>
                             </Box>
                         </Link>
                     </div>

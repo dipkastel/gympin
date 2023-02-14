@@ -1,7 +1,8 @@
 package com.notrika.gympin.persistence.entity.sportplace;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.location.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.plan.PlanEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,10 +11,8 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -22,7 +21,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "sport_place")
+@Table(name = "sportPlace")
 public class SportPlaceEntity extends BaseEntityWithCreateUpdate<SportPlaceEntity> {
 
     @ManyToOne
@@ -32,6 +31,10 @@ public class SportPlaceEntity extends BaseEntityWithCreateUpdate<SportPlaceEntit
     @ManyToOne
     @JoinColumn(name = "sport_id")
     private SportEntity sport;
+
+    @ManyToMany(mappedBy = "planSport")
+    @ToString.Exclude
+    private List<PlanEntity> plans;
 
     @Override
     public boolean equals(Object o) {
@@ -43,6 +46,6 @@ public class SportPlaceEntity extends BaseEntityWithCreateUpdate<SportPlaceEntit
 
     @Override
     public int hashCode() {
-        return 0;
+        return getClass().hashCode();
     }
 }

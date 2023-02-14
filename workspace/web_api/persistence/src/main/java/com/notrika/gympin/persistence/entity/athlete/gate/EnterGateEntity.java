@@ -1,8 +1,8 @@
 package com.notrika.gympin.persistence.entity.athlete.gate;
 
-import com.notrika.gympin.common.athlete.gate.enums.EnterGateStatus;
+import com.notrika.gympin.common.athlete.gate.enums.TicketEntryStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.location.GateEntity;
+import com.notrika.gympin.persistence.entity.gate.GateEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +21,14 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "enter_gate")
+@Table(name = "enterGate")
 public class EnterGateEntity extends BaseEntityWithCreateUpdate<EnterGateEntity> {
 
-    @Column(name = "reference_id", nullable = false)
+    @Column(name = "referenceId", nullable = false)
     private String referenceId;
 
     @ManyToOne(optional = false)
-    //    @JoinTable(name = "athlete_gate_enter",joinColumns=@JoinColumn(name = "enter_gate_id",nullable = false),inverseJoinColumns = @JoinColumn(name = "user_id",nullable =
+    //    @JoinTable(name = "athleteGateEnter",joinColumns=@JoinColumn(name = "enterGate_id",nullable = false),inverseJoinColumns = @JoinColumn(name = "user_id",nullable =
     //    false))
     //    @ToString.Exclude
     private UserEntity athlete;
@@ -39,15 +39,15 @@ public class EnterGateEntity extends BaseEntityWithCreateUpdate<EnterGateEntity>
     @ManyToOne(optional = false)
     private GateEntity gate;
 
-    @Column(name = "request_date", nullable = false)
+    @Column(name = "requestDate", nullable = false)
     private Timestamp requestDate;
 
-    @Column(name = "last_update_status_date", nullable = false)
+    @Column(name = "lastUpdateStatusDate", nullable = false)
     private Timestamp lastUpdateStatusDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "enter_gate_status", nullable = false)
-    private EnterGateStatus enterGateStatus;
+    @Column(name = "enterGateStatus", nullable = false)
+    private TicketEntryStatus enterGateStatus;
 
     @Override
     public boolean equals(Object o) {

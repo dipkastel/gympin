@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Api_url} from "../const/NETWORKCONSTS";
+import { Api_url} from "./NETWORKCONSTS";
 
 export function login(loginData) {
     return axios.post(Api_url.Account.LOGIN_URL, loginData);
@@ -7,6 +7,10 @@ export function login(loginData) {
 
 export function sendSms(userdata) {
     return axios.post(Api_url.Account.SEND_SMS_URL, userdata);
+}
+
+export function requestRegisterPlace(data) {
+    return axios.post(Api_url.Account.REQUEST_REGISTER_PLACE, data);
 }
 
 

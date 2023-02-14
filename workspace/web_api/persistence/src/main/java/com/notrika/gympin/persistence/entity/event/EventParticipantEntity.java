@@ -21,7 +21,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "event_participant")
+@Table(name = "eventParticipant")
 public class EventParticipantEntity extends BaseEntity<EventParticipantEntity> {
 
     @ManyToOne

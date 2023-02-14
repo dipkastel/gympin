@@ -1,8 +1,7 @@
 package com.notrika.gympin.persistence.entity.comment;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.location.GateEntity;
+import com.notrika.gympin.persistence.entity.gate.GateEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -21,7 +19,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "comment_gate")
+@Table(name = "commentGate")
 public class CommentGateEntity extends BaseEntityWithCreateUpdate<CommentGateEntity> {
 
     @ManyToOne

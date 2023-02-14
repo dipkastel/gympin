@@ -20,10 +20,10 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "service_user")
+@Table(name = "serviceUser")
 public class ServiceUserEntity extends BaseEntity<ServiceUserEntity> {
 
-    @Column(name = "user_role")
+    @Column(name = "userRole")
     private UserRole userRole;
 
     @Override

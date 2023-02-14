@@ -4,7 +4,6 @@ import {Card, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 
 const HomeUserList = (props) => {
-    console.log(props)
     const settings = {
         dots: false,
         infinite: true,
@@ -22,7 +21,7 @@ const HomeUserList = (props) => {
         <Slick {...settings}>
             {props.item.Items.map((item, index) => (
                 <div key={index} >
-                    <Link href={"/users/singleuser?id=1"} underline="none">
+                    <Link href={"/personnel/singleuser?id=1"} underline="none">
                         <Card sx={{
                             marginX:0.3,
                             marginY:1

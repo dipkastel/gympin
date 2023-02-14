@@ -56,7 +56,9 @@ export default function Register(props) {
                                         password: values.password,
                                     })
                                         .then((data) => {
-                                            props.login(data.data.Data.Token);
+                                            props.SetUser(data.data.Data);
+                                            props.SetToken(data.data.Data.Token);
+                                            props.SetRefreshToken(data.data.Data.RefreshToken);
                                         })
                                         .catch((ex) => {
                                             console.log(ex);

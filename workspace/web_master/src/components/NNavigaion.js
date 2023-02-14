@@ -1,18 +1,18 @@
 import React, {useEffect} from "react";
 import {Container, Navbar} from "react-bootstrap";
 import {useSelector} from "react-redux";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 export default function NNavigaion(){
-    const place = useSelector(({auth}) => auth.place)
+    const navigate = useNavigate();
+    const place = useSelector(({place}) => place.place)
     const location = useLocation();
     useEffect(() => {
         if(!place&&!window.location.toString().includes("/management/settings")){
-            window.location = "/management/settings"
+            navigate('/management/settings', {replace: true});
             alert("برای ادامه مجموعه خود را انتخاب کنید");
         }
-
     }, [location]);
 
     return (

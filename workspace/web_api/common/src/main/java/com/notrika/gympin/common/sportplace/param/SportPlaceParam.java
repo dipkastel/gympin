@@ -1,8 +1,8 @@
 package com.notrika.gympin.common.sportplace.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.BaseParam;
-import com.notrika.gympin.common.location.param.PlaceParam;
+import com.notrika.gympin.common._base.param.BaseParam;
+import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.sport.param.SportParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

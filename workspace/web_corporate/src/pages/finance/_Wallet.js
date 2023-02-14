@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import {
     Button,
     Card,
@@ -10,22 +10,27 @@ import {
     Stack, TextField,
     Typography
 } from "@mui/material";
+import {corporate_getTotalDeposit} from "../../network/api/corporate.api";
+import {useSelector} from "react-redux";
+import {toPriceWithComma} from "../../helper/utils";
 
 const _Wallet = () => {
-    const [open, setOpen] = React.useState(false);
+    const corporate = useSelector(({corporate}) => corporate.corporate)
+    const [openModalAdd, setOpenModalAdd] = useState(false);
+    const [totalDeposit, setTotalDeposit] = useState(0);
+
+    useEffect(() => {
+        corporate_getTotalDeposit({CorporateId:corporate.Id}).then(result=>{
+            setTotalDeposit(result.data.Data)
+        }).catch(e=>console.log(e))
+    }, []);
 
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
     function ModalDemandPayment(){
         return (
             <div>
-                <Dialog open={open} onClose={handleClose}>
+                <Dialog open={openModalAdd} onClose={()=>setOpenModalAdd(false)}>
                     <DialogTitle>افزایش اعتبار</DialogTitle>
                     <DialogContent >
                         <TextField
@@ -39,8 +44,8 @@ const _Wallet = () => {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose}>لغو</Button>
-                        <Button onClick={handleClose}>ثبت</Button>
+                        <Button onClick={()=>setOpenModalAdd(false)}>لغو</Button>
+                        <Button onClick={()=>setOpenModalAdd(false)}>ثبت</Button>
                     </DialogActions>
                 </Dialog>
             </div>
@@ -60,9 +65,9 @@ const _Wallet = () => {
                         spacing={0}
                     >
                         <Typography variant="h6" >
-                            14,500,000 تومان
+                            {toPriceWithComma(totalDeposit)+" تومان"}
                         </Typography>
-                        <Button variant={"contained"} onClick={handleClickOpen}>افزایش اعتبار</Button>
+                        <Button variant={"contained"} onClick={()=>setOpenModalAdd(true)}>افزایش اعتبار</Button>
                     </Stack>
                     <Typography  variant="caption"
                                  component={"a"}

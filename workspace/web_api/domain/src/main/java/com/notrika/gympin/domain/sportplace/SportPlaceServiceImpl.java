@@ -1,28 +1,29 @@
 package com.notrika.gympin.domain.sportplace;
 
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.location.param.PlaceParam;
-import com.notrika.gympin.common.sport.dto.SportDto;
+import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
 import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
 import com.notrika.gympin.common.sportplace.service.SportPlaceService;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.location.PlaceServiceImpl;
+import com.notrika.gympin.domain.place.PlaceServiceImpl;
 import com.notrika.gympin.domain.sport.SportServiceImpl;
-import com.notrika.gympin.domain.util.convertor.SportConvertor;
 import com.notrika.gympin.domain.util.convertor.SportPlaceConvertor;
 import com.notrika.gympin.persistence.dao.repository.SportPlaceRepository;
-import com.notrika.gympin.persistence.entity.location.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import com.notrika.gympin.persistence.entity.sportplace.SportPlaceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
-public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, SportPlaceDto, BaseFilter<?>, SportPlaceEntity> implements SportPlaceService {
+public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, SportPlaceDto, BaseQuery<?>, SportPlaceEntity> implements SportPlaceService {
 
     @Autowired
     private PlaceServiceImpl placeService;
@@ -44,6 +45,8 @@ public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, 
 
     @Override
     public SportPlaceEntity add(SportPlaceEntity sportPlace) {
+        if(getSportsByPlace(sportPlace.getPlace()).stream().anyMatch(o-> Objects.equals(o.getId(), sportPlace.getSport().getId())))
+            return null;
         return sportPlaceRepository.add(sportPlace);
     }
 
@@ -81,8 +84,18 @@ public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, 
     }
 
     @Override
+    public Page<SportPlaceEntity> findAll(Specification<SportPlaceEntity> specification, Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public List<SportPlaceDto> convertToDtos(List<SportPlaceEntity> entities) {
-        return SportPlaceConvertor.sportPlacesToSportPlaceDtos(entities);
+        return SportPlaceConvertor.toDto(entities);
+    }
+
+    @Override
+    public Page<SportPlaceDto> convertToDtos(Page<SportPlaceEntity> entities) {
+        return null;
     }
 
     @Override
@@ -97,13 +110,13 @@ public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, 
     }
 
     @Override
-    public List<SportDto> getSportsByPlace(PlaceParam placeParam) {
+    public List<SportPlaceDto> getSportsByPlace(PlaceParam placeParam) {
         PlaceEntity place = PlaceEntity.builder().id(placeParam.getId()).build();
-        List<SportEntity> sportList = getSportsByPlace(place);
-        return SportConvertor.sportsToSportDtos(sportList);
+        List<SportPlaceEntity> sportList = getSportsByPlace(place);
+        return SportPlaceConvertor.toDto(sportList);
     }
 
-    public List<SportEntity> getSportsByPlace(PlaceEntity place) {
+    public List<SportPlaceEntity> getSportsByPlace(PlaceEntity place) {
         return sportPlaceRepository.getSportPlaceByPlace(place);
     }
 

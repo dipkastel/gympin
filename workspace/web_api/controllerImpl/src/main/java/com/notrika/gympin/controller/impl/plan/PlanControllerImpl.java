@@ -1,15 +1,19 @@
 package com.notrika.gympin.controller.impl.plan;
 
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.BasePagedParam;
+import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common._base.param.BasePagedParam;
+import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.plan.api.PlanController;
 import com.notrika.gympin.common.plan.dto.PlanDto;
 import com.notrika.gympin.common.plan.param.PlanParam;
+import com.notrika.gympin.common.plan.param.PlanSportParam;
 import com.notrika.gympin.common.plan.service.PlanService;
+import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
+import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,25 +50,33 @@ public class PlanControllerImpl implements PlanController {
     }
 
     @Override
-    public ResponseEntity<Long> countSearch(BaseFilter<?> filter) {
+    public ResponseEntity<Page<PlanDto>> query(BaseQuery<?> filter) {
         return null;
+    }
+
+
+    @Override
+    @GetMapping("/getPlansByPlace")
+    public ResponseEntity<List<PlanDto>> getPlanByPlace(PlaceParam place) {
+        return ResponseEntity.ok(planService.getPlanByPlace(place));
     }
 
     @Override
-    public ResponseEntity<List<PlanDto>> search(BaseFilter<?> filter) {
-        return null;
+    @GetMapping("/getSports")
+    public ResponseEntity<List<SportPlaceDto>> getSports(Long PlanId) {
+        return ResponseEntity.ok(planService.getSports(PlanId));
     }
 
     @Override
-    public ResponseEntity<Long> countFilter(BaseFilter<?> filter) {
-        return null;
+    @PostMapping("/addSport")
+    public ResponseEntity<PlanDto> addSport(@RequestBody PlanSportParam planSportParam) {
+        return ResponseEntity.ok(planService.addSport(planSportParam));
     }
 
     @Override
-    public ResponseEntity<List<PlanDto>> filter(BaseFilter<?> filter) {
-        return null;
+    @PutMapping("/deleteSport")
+    public ResponseEntity<PlanDto> deleteSport(@RequestBody PlanSportParam planSportParam) {
+        return ResponseEntity.ok(planService.deleteSport(planSportParam));
     }
-
-
 
 }

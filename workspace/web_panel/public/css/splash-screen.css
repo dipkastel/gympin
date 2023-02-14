@@ -57,3 +57,10 @@ body {
     stroke-dashoffset: -124;
   }
 }
+.ltr{
+  direction: ltr;
+}
+
+.fullwidth{
+  width: 100%;
+}

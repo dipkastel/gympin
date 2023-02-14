@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Avatar, Button, Card, CardContent, CardHeader, Grid, Typography} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
+
 let user = {
     userId: 1,
     gateName: "ورودی بدنسازی",

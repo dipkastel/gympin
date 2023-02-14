@@ -1,42 +1,46 @@
 package com.notrika.gympin.domain.user;
 
-import com.notrika.gympin.common.BaseFilter;
-import com.notrika.gympin.common.accounting.account.enums.AccountTopic;
+import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.dto.UserRoleInfoDto;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.enums.UserStatus;
+import com.notrika.gympin.common.user.param.UserAvatarParam;
 import com.notrika.gympin.common.user.param.UserParam;
-import com.notrika.gympin.common.user.param.UserRoleParam;
+import com.notrika.gympin.common.user.param.UserRoleUpdateParam;
+import com.notrika.gympin.common.user.param.UserStatusParam;
+import com.notrika.gympin.common.user.query.UserQuery;
 import com.notrika.gympin.common.user.service.UserService;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.accounting.AccountingServiceImpl;
-import com.notrika.gympin.domain.multimedia.MultimediaServiceImpl;
 import com.notrika.gympin.domain.relation.FollowServiceImpl;
+import com.notrika.gympin.domain.ticket.TicketServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
+import com.notrika.gympin.domain.util.convertor.UserRoleConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
+import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
-import com.notrika.gympin.persistence.dao.repository.UserMultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
-import com.notrika.gympin.persistence.entity.location.PlaceEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.multimedia.UserMultimediaEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.user.PasswordEntity;
-import com.notrika.gympin.persistence.entity.user.RoleEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, BaseFilter<?>, UserEntity> implements UserService {
+public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, UserQuery, UserEntity> implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -48,91 +52,63 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
     private PasswordRepository passwordRepository;
 
     @Autowired
-    private UserRoleServiceImpl userRoleService;
+    private MultimediaRepository multimediaRepository;
+
+    @Autowired
+    private TicketServiceImpl ticketService;
 
     @Autowired
     private FollowServiceImpl followService;
 
     @Autowired
     private UserRateServiceImpl userRateService;
+//
+//    @Autowired
+//    private AccountingServiceImpl accountingService;
 
-    @Autowired
-    private UserMultimediaRepository userMultimediaRepository;
 
-    @Autowired
-    private MultimediaServiceImpl multimediaService;
-
-    @Autowired
-    private AccountingServiceImpl accountingService;
-
+    //base
     @Override
     @Transactional
     public UserDto add(UserParam userParam) {
-        List<RoleEntity> roles = new ArrayList<>();
-        for (UserRoleParam roleParam : userParam.getRole()) {
-            roles.add(userRoleService.getEntityById(roleParam.getId()));
-        }
-        if (roles.isEmpty()) {
-            roles.add(userRoleService.getByUserRole(UserRole.USER));
-        }
         UserEntity initUser = new UserEntity();
-        initUser.setName(userParam.getName());
-        initUser.setLastname(userParam.getLastname());
+        initUser.setFullName(userParam.getFullName());
         initUser.setUsername(userParam.getUsername());
         initUser.setPhoneNumber(userParam.getPhoneNumber());
         initUser.setBirthday(userParam.getBirthday());
         initUser.setNationalCode(userParam.getNationalCode());
+        initUser.setGender(userParam.getGender());
         initUser.setEmail(userParam.getEmail());
+        initUser.setUserRole(UserRole.USER);
         initUser.setUserGroup(UserGroup.CLIENT);
-        initUser.setUserRole(roles);
         initUser.setUserStatus(UserStatus.ENABLED);
         initUser.setBio(userParam.getBio());
         UserEntity user = userRepository.add(initUser);
         PasswordEntity password = PasswordEntity.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
         passwordRepository.add(password);
-        if (userParam.getAvatarId() != null && userParam.getAvatarId() > 0) {
-            MultimediaEntity multimedia = multimediaService.getMultimediaById(userParam.getAvatarId());
-            UserMultimediaEntity userAvatar = userMultimediaRepository.add(UserMultimediaEntity.builder().multimedia(multimedia).user(user).build());
-            List<UserMultimediaEntity> multimediaEntities = new ArrayList<>();
-            multimediaEntities.add(userAvatar);
-            user.setUserMultimedias(multimediaEntities);
-        }
-        return UserConvertor.userToUserDtoComplete(user);
+        return UserConvertor.toDtoComplete(user);
     }
 
     @Override
     public UserEntity add(UserEntity user) {
         user = userRepository.add(user);
-        accountingService.add(user, AccountTopic.PISH_DARYAFT);
+//        accountingService.add(user, AccountTopic.PISH_DARYAFT);
         return user;
     }
 
     @Override
     @Transactional
     public UserDto update(UserParam userParam) {
-        List<RoleEntity> roles = new ArrayList<>();
-        for (UserRoleParam roleParam : userParam.getRole() != null ? userParam.getRole() : new ArrayList<UserRoleParam>()) {
-            roles.add(userRoleService.getEntityById(roleParam.getId()));
-        }
         UserEntity initUser = getEntityById(userParam.getId());
-        if (StringUtils.hasText(userParam.getName())) initUser.setName(userParam.getName());
-        if (StringUtils.hasText(userParam.getLastname())) initUser.setLastname(userParam.getLastname());
+        if (StringUtils.hasText(userParam.getFullName())) initUser.setFullName(userParam.getFullName());
         if (StringUtils.hasText(userParam.getUsername())) initUser.setUsername(userParam.getUsername());
-        //        initUser.setPhoneNumber(userParam.getPhoneNumber());
         if (userParam.getBirthday() != null) initUser.setBirthday(userParam.getBirthday());
+        if (userParam.getGender() != null) initUser.setGender(userParam.getGender());
         if (StringUtils.hasText(userParam.getNationalCode())) initUser.setNationalCode(userParam.getNationalCode());
         if (StringUtils.hasText(userParam.getEmail())) initUser.setEmail(userParam.getEmail());
-        if (!roles.isEmpty()) initUser.setUserRole(roles);
         if (StringUtils.hasText(userParam.getBio())) initUser.setBio(userParam.getBio());
         UserEntity user = update(initUser);
-        if (userParam.getAvatarId() != null && userParam.getAvatarId() > 0) {
-            MultimediaEntity multimedia = multimediaService.getMultimediaById(userParam.getAvatarId());
-            UserMultimediaEntity userAvatar = userMultimediaRepository.add(UserMultimediaEntity.builder().multimedia(multimedia).user(user).build());
-            List<UserMultimediaEntity> multimediaEntities = new ArrayList<>();
-            multimediaEntities.add(userAvatar);
-            user.setUserMultimedias(multimediaEntities);
-        }
-        return UserConvertor.userToUserDtoComplete(user);
+        return UserConvertor.toDtoComplete(user);
     }
 
     @Override
@@ -145,7 +121,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
     public UserDto delete(UserParam userParam) {
         UserEntity user = getEntityById(userParam.getId());
         UserEntity deletedUser = delete(user);
-        return UserConvertor.userToUserDtoComplete(deletedUser);
+        return UserConvertor.toDtoComplete(deletedUser);
     }
 
     @Override
@@ -159,14 +135,24 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
     }
 
     @Override
+    public Page<UserEntity> findAll(Specification<UserEntity> specification, Pageable pageable) {
+        return userRepository.findAll(specification, pageable);
+    }
+
+    @Override
     public List<UserDto> convertToDtos(List<UserEntity> entities) {
-        return UserConvertor.usersToUserDtos(entities);
+        return UserConvertor.toDto(entities);
+    }
+
+    @Override
+    public Page<UserDto> convertToDtos(Page<UserEntity> entities) {
+        return UserConvertor.toDto(entities);
     }
 
     @Override
     public UserDto getById(long id) {
         UserEntity user = getEntityById(id);
-        UserDto userDto = UserConvertor.userToUserDtoComplete(user);
+        UserDto userDto = UserConvertor.toDtoComplete(user);
         userDto.setFollowersCount(followService.getFollowersCount(user));
         userDto.setFollowingsCount(followService.getFollowingsCount(user));
         userDto.setRate(userRateService.calculateUserRate(UserParam.builder().id(id).build()));
@@ -175,8 +161,10 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
 
     @Override
     public UserEntity getEntityById(long id) {
-        return userRepository.getById(id);
+
+        return userRepository.findById(id).stream().findFirst().get();
     }
+
 
     public List<UserEntity> getOwnersPlace(PlaceEntity place) {
         return userRepository.getOwnersPlace(place);
@@ -211,26 +199,30 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
     }
 
     @Override
-    public UserDto suspendUser(UserParam userParam) {
-        UserEntity user = getEntityById(userParam.getId());
-        UserEntity suspendUser = suspendUser(user);
-        return UserConvertor.userToUserDtoComplete(suspendUser);
-    }
-
-    public UserEntity suspendUser(UserEntity user) {
-        UserEntity initUser = getEntityById(user.getId());
-        initUser.setUserStatus(UserStatus.SUSPENDED);
-        return update(initUser);
-    }
-
-    @Override
     public UserDto getUserByUsername(UserParam userParam) {
-        return UserConvertor.userToUserDtoComplete(getByUsername(userParam.getUsername()));
+        return UserConvertor.toDtoComplete(getByUsername(userParam.getUsername()));
     }
 
     @Override
     public UserDto getUserDtoByAnyKey(@NonNull UserParam userParam) {
-        return UserConvertor.userToUserDtoComplete(getUserByAnyKey(userParam));
+        return UserConvertor.toDtoComplete(getUserByAnyKey(userParam));
+    }
+
+    @Override
+    public UserDto UpdateUserRole(UserRoleUpdateParam userRoleUpdateParam) {
+        UserEntity user = getEntityById(userRoleUpdateParam.getUserId());
+        user.setUserRole(userRoleUpdateParam.getRole());
+        return UserConvertor.toDtoComplete(userRepository.update(user));
+    }
+
+    @Override
+    public List<UserRoleInfoDto> getAllRules() {
+        return Arrays.stream(UserRole.values()).map(UserRoleConvertor::ToUserRoleInfoDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public Long getCount(BaseQuery<?> filter) {
+        return userRepository.findFilterdCount(filter);
     }
 
     public UserEntity getUserByAnyKey(@NonNull UserParam userParam) {
@@ -259,6 +251,25 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Bas
             user = this.getByEmail(email);
         }
         return user;
+    }
+
+    //status
+
+    @Override
+    public UserDto updateUserStatus(UserStatusParam userStatusParam) {
+        UserEntity user = getEntityById(userStatusParam.getId());
+        user.setUserStatus(userStatusParam.getStatus());
+        userRepository.update(user);
+        return UserConvertor.toDtoComplete(user);
+    }
+    //avatar
+
+    @Override
+    public UserDto updateUserAvatar(UserAvatarParam userParam) {
+        MultimediaEntity avatar = multimediaRepository.getById(userParam.getMultimediaId());
+        UserEntity user = userRepository.getById(userParam.getUserId());
+        user.setUserAvatar(avatar);
+        return UserConvertor.toDtoComplete(userRepository.update(user));
     }
 
 }

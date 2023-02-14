@@ -1,11 +1,9 @@
 import React from "react";
 import {BottomNavigation, BottomNavigationAction, Paper} from "@mui/material";
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import GroupIcon from '@mui/icons-material/Group';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import HomeIcon from '@mui/icons-material/Home';
-import EggAltIcon from '@mui/icons-material/EggAlt';
 import {Link} from "react-router-dom";
 
 
@@ -21,9 +19,9 @@ export default function NBottomNavigation(){
         {
             value:"users",
             lable:"کاربران",
-            firstDirection:"/users",
+            firstDirection:"/personnel",
             icon:<GroupIcon/>,
-            otherRouts:["users","userqrscan"]
+            otherRouts:["users","personnel"]
         },
         {
             value:"finance",
@@ -43,7 +41,6 @@ export default function NBottomNavigation(){
     const pathname = window.location.pathname
     const [value, setValue] = React.useState(getTabName(pathname));
 
-    console.log(getTabName(pathname))
     function getTabName(path){
         let selectedItem =bottomItems[0].value;
         let pathParam = path.split('/')[1]

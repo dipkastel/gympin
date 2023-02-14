@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.comment.gate.param;
 
-import com.notrika.gympin.common.BaseParam;
-import com.notrika.gympin.common.location.param.GateParam;
+import com.notrika.gympin.common._base.param.BaseParam;
+import com.notrika.gympin.common.gate.param.GateParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

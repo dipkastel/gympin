@@ -1,24 +1,87 @@
-import React from 'react';
-import {Button, Card, CardContent, CardHeader} from "@mui/material";
+import React, {useEffect, useState} from 'react';
+import {Button, Card, CardHeader, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import _AboutItem from "./_AboutItem";
+import {PlaceAbout_add, PlaceAbout_getByPlace} from "../../network/api/placeAbout.api";
+import {useSelector} from "react-redux";
+import {Form} from "react-bootstrap";
+import getAccessOf from "../../helper/accessManager";
+import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 
 
 const About = () => {
-    function renderAddButton() {
+    const [placeAbouts, SetPlaceAbouts] = useState([])
+    const [openDialogAdd, SetOpenDialogAdd] = useState(false)
+    const place = useSelector(({place}) => place.place)
+    useEffect(() => {
+        getPlaceAbouts();
+    }, []);
+
+    function getPlaceAbouts() {
+        PlaceAbout_getByPlace({id: place.Id}).then(result => {
+            SetPlaceAbouts(result.data.Data)
+        }).catch(e => console.log(e))
+    }
+
+    function RenderModalAdd() {
+
+        function addAbout(e) {
+            e.preventDefault()
+            PlaceAbout_add({
+                Name: e.target.title.value,
+                acceptable: false,
+                active: true,
+                description: "",
+                place: {Id: place.Id}
+            }).then(result => {
+                getPlaceAbouts();
+                e.target.title.value = "";
+                SetOpenDialogAdd(false)
+            }).catch(e => console.log(e))
+        }
+
         return (
-            <Button variant={"contained"} title={"btn_add"}>افزودن اطلاعات</Button>
+            <div>
+                <Dialog fullWidth open={openDialogAdd} onClose={() => SetOpenDialogAdd(false)}>
+                    <Form onSubmit={(e) => addAbout(e)}>
+                        <DialogTitle>افزودن مطلب</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                name="title"
+                                label="موضوع یا تیتر"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => SetOpenDialogAdd(false)}>لغو</Button>
+                            <Button type={"submit"}>ثبت</Button>
+                        </DialogActions>
+                    </Form>
+                </Dialog>
+            </div>
         )
     }
+
+    if(!getAccessOf(personnelAccessEnumT.ManagementAbout))
+        return (<></>);
 
     return (
         <>
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     title={"مدیریت اطلاعات"}
-                    action={renderAddButton()}/>
+                    action={<Button variant={"outlined"} title={"btn_add"} onClick={() => SetOpenDialogAdd(true)}>افزودن
+                        اطلاعات</Button>}/>
             </Card>
-            <_AboutItem name={"قوانین مرکز"}/>
-            <_AboutItem name={"درباره مرکز"}/>
+            {placeAbouts.map(item => (
+                <div key={item.Id}>
+                    <_AboutItem placeAbout={item} onChange={() => getPlaceAbouts()}/>
+                </div>
+            ))}
+            {RenderModalAdd()}
         </>
 
     );

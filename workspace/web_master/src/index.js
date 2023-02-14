@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './helper/App';
 import reportWebVitals from './helper/reportWebVitals';
 import swDev from "./helper/swDev"
-import {setupAxios} from "./helper/setupAxios";
+import {setupAxios} from "./network/setupAxios";
 import axios from "axios";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";

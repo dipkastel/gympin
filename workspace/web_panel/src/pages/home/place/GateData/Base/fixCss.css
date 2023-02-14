@@ -1,0 +1,3 @@
+.MuiSlider-thumb{
+    transform: translate(50%,-50%) !important;
+}

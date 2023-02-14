@@ -8,25 +8,7 @@ import org.springframework.http.HttpStatus;
 @EqualsAndHashCode(callSuper = true)
 public class CreateDirectoryException extends ExceptionBase {
     public CreateDirectoryException() {
+        super(HttpStatus.INTERNAL_SERVER_ERROR, Error.ErrorType.COULD_NOT_CREATE_DIRECTORY);
     }
 
-    public CreateDirectoryException(HttpStatus httpStatus, Error.ErrorType errorType) {
-        super(httpStatus, errorType);
-    }
-
-    public CreateDirectoryException(String message, HttpStatus httpStatus, Error.ErrorType errorType) {
-        super(message, httpStatus, errorType);
-    }
-
-    public CreateDirectoryException(String message, Throwable cause, HttpStatus httpStatus, Error.ErrorType errorType) {
-        super(message, cause, httpStatus, errorType);
-    }
-
-    public CreateDirectoryException(Throwable cause, HttpStatus httpStatus, Error.ErrorType errorType) {
-        super(cause, httpStatus, errorType);
-    }
-
-    public CreateDirectoryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, HttpStatus httpStatus, Error.ErrorType errorType) {
-        super(message, cause, enableSuppression, writableStackTrace, httpStatus, errorType);
-    }
 }
