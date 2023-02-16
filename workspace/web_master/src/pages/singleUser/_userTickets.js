@@ -30,13 +30,11 @@ const _userTickets = ({user}) => {
 
         ticket_getUserPlaceTicket({UserId:user.Id,PlaceId:place.Id}).then(result=>{
             setUserPlaceTicket(result.data.Data);
-            console.log("tickets",result)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }

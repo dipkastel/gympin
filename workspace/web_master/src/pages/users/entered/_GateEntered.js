@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     Avatar,
     Button,
@@ -13,9 +13,11 @@ import {
 } from "@mui/material";
 import {ticket_getUserEntered} from "../../../network/api/ticket.api";
 import {useSelector} from "react-redux";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 export default function _GateEntered({SetSelectedTicket}) {
 
+    const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
     const [users, SetUsers] = useState([]);
 
@@ -26,8 +28,13 @@ export default function _GateEntered({SetSelectedTicket}) {
     function getEnterdUser() {
         ticket_getUserEntered({placeId: place.Id}).then(result => {
             SetUsers(result.data.Data);
-            console.log(result);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
 

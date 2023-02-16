@@ -18,11 +18,16 @@ const _AboutItem = ({placeAbout, onChange}) => {
     const error = useContext(ErrorContext);
     const [aboutText,SetAboutText] = useState(placeAbout.Description)
     const [acceptable,SetAcceptable] = useState(placeAbout.Acceptable)
-    console.log(placeAbout.Acceptable)
     function deleteAbout() {
         PlaceAbout_delete({id:placeAbout.Id}).then(result => {
             onChange();
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     function updateAbout() {
@@ -33,7 +38,6 @@ const _AboutItem = ({placeAbout, onChange}) => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }

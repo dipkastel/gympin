@@ -20,7 +20,7 @@ import Invoice from "../pages/tickets/invoice/Invoice";
 import Checkout from "../pages/checkout/Checkout";
 
 export default function ApplicationRoutes() {
-    const  isAuthorized  = useSelector( ({auth:{user}})=>  user.Id!=null );
+    const  isAuthorized  = useSelector( ({auth:{user}})=>  user?user.Id!=null:false );
     return (
         <>
             <NNavigaion/>

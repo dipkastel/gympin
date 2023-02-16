@@ -36,7 +36,13 @@ const _PlaceGates = (props) => {
     function getPlaceGates() {
         Gates_getByPlace({Id: place.Id}).then(result => {
             props.SetGates(result.data.Data);
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
 
@@ -55,7 +61,6 @@ const _PlaceGates = (props) => {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         });
         }

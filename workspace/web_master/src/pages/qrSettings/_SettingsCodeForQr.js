@@ -33,9 +33,14 @@ const _SettingsCodeForQr = () => {
     }, []);
     function getAllQrMessages(){
         PlacesQr_getByPlace({Id: place.Id}).then(result => {
-            console.log(result.data.Data)
             SetQrLists(result.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     function addQrMessage(e) {
@@ -53,7 +58,6 @@ const _SettingsCodeForQr = () => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }
@@ -67,7 +71,6 @@ const _SettingsCodeForQr = () => {
                     error.showError({message: e.response.data.Message,});
                 } catch (f) {
                     error.showError({message: "خطا نا مشخص",});
-                    console.log(e)
                 }
             })
         }

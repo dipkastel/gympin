@@ -46,6 +46,12 @@ public class TransactionQuery extends BaseQuery<TransactionQuery> {
     @JsonProperty("PlaceId")
     private Long is_placeæid;
 
+    @JsonProperty("UserId")
+    private Long is_useræid;
+
+    @JsonProperty("CorporateId")
+    private Long is_corporateæid;
+
     @JsonProperty("Serial")
     private String like_serial;
 

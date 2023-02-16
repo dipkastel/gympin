@@ -42,7 +42,13 @@ const _PlanGatesTiming = ({plan}) => {
     function getPlanGatesTimingOfplan() {
         PlanGatesTiming_getByPlan({id: plan.Id}).then(data => {
             SetPlanGateTiming(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     function getGateTimings() {
@@ -52,7 +58,13 @@ const _PlanGatesTiming = ({plan}) => {
                 return result;
             }, []));
             SetSelectedTab(Object.keys(gateTimingGrouped)[0]);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     function ModalAddGateTiming() {
@@ -73,7 +85,13 @@ const _PlanGatesTiming = ({plan}) => {
             PlanGatesTiming_addAll(postData).then(result => {
                 setOpenModalAdd(false);
                 getPlanGatesTimingOfplan()
-            }).catch(e => console.log(e))
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            })
         }
         return (
             <div>
@@ -143,7 +161,6 @@ const _PlanGatesTiming = ({plan}) => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
             setDeleteItem(null)

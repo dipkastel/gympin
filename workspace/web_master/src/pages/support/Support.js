@@ -36,9 +36,14 @@ const Support = () => {
     }, []);
     function getAllSupport(){
         Support_getAll({Id: place.Id}).then(result => {
-            console.log(result.data.Data)
             SetSupport(result.data.Data.reverse());
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
 
     }
 
@@ -58,7 +63,6 @@ const Support = () => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         });
         }

@@ -29,10 +29,10 @@ const FinanceManagement = () => {
 
 
     useEffect(() => {
-        getTickets()
+        getTransactions()
     }, [page, rowsPerPage, filter]);
 
-    function getTickets() {
+    function getTransactions() {
         transaction_query({
             queryType: filter.queryType,
             TransactionStatus: filter.TransactionStatus,

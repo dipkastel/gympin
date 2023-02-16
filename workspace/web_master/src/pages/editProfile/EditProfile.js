@@ -45,10 +45,15 @@ const EditProfile = (props) => {
                             error.showError({message: e.response.data.Message});
                         } catch (f) {
                             error.showError({message: "خطا نا مشخص",});
-                            console.log(e)
                         }
                     });
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            })
 
 
         }
@@ -93,17 +98,14 @@ const EditProfile = (props) => {
 
                     }}
                     onSubmit={(values, {setStatus, setSubmitting}) => {
-                        console.log(values);
                         user_updateMe(values).then(result => {
                             setUser(result.data.Data);
                             props.RequestUser(values)
-                            console.log(result)
                         }).catch(e => {
                             try {
                                 error.showError({message: e.response.data.Message,});
                             } catch (f) {
                                 error.showError({message: "خطا نا مشخص",});
-                                console.log(e)
                             }
                         });
                     }}

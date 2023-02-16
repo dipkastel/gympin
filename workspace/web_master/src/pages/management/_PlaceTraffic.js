@@ -30,7 +30,6 @@ export default function PlaceTrafic() {
                 if(requestCount==gatesForTraffic.length){
                     SetGateTrafic(traffic)
                 }
-                console.log(e)
             })
         })
     }
@@ -69,7 +68,6 @@ export default function PlaceTrafic() {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         });
     }

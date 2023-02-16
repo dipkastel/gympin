@@ -67,7 +67,6 @@ export default function Register(props) {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
 
@@ -132,7 +131,7 @@ export default function Register(props) {
                                             variant="outlined"
                                             margin="normal"
                                             name="phoneNumber"
-                                            type="tel"
+                                            type="number"
                                             multiline={false}
                                             label={"شماره تماس"}
                                             onBlur={handleBlur}

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     Avatar, Button,
     Divider,
@@ -14,8 +14,10 @@ import {
 import {toAbsoluteUrl} from "../../../helper/utils";
 import {ticket_getActiveTickets} from "../../../network/api/ticket.api";
 import {useSelector} from "react-redux";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 export default function _ActiveTickets() {
+    const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
     const [activeTickets, setActiveTickets] = useState([])
     useEffect(() => {
@@ -25,8 +27,13 @@ export default function _ActiveTickets() {
     function getActiveTickets() {
         ticket_getActiveTickets({placeId: place.Id}).then(result => {
             setActiveTickets(result.data.Data);
-            console.log(result.data.Data);
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     return (

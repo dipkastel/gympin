@@ -8,7 +8,6 @@ function MapFunctions({setPosition,location}) {
     useMapEvents({
         click(e){
             setPosition([e.latlng.lat, e.latlng.lng])
-            console.log(e.latlng)
             map.flyTo(e.latlng, 18)
             location(e.latlng.lat,e.latlng.lng)
         },

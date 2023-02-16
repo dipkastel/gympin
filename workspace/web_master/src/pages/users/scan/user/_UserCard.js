@@ -5,7 +5,6 @@ const _UserCard = ({ticket}) => {
     const [inTicket, setInTicket] = useState(ticket);
     useEffect(() => {
         setInTicket(ticket)
-        console.log("ticket", ticket);
     }, [ticket]);
 
     function getLastEnterDate() {

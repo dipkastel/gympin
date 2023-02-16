@@ -2,7 +2,6 @@ import React from 'react';
 import {Card, CardContent, CardHeader, TextField} from "@mui/material";
 
 const _SingleTicketDetail = ({ticket}) => {
-    console.log(ticket)
     return (
         <Card elevation={3} sx={{margin: 1}}>
             <CardHeader

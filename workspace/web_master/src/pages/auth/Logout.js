@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import {authActions} from "../../helper/redux/actions/AuthActions";
 
 function Logout(props) {
-    console.log("log out page")
     props.Logout();
     return ""
 }

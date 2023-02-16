@@ -55,8 +55,6 @@ const QrList = () => {
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
-
-            console.log(svg);
         };
         img.src = image64;
 

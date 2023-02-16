@@ -5,13 +5,12 @@ export const toAbsoluteUrl = (pathname) => process.env.PUBLIC_URL + pathname;
 export const getImagePath = (imageId)=>"/image/display/"+imageId;
 
 export function checkMobileValid(mobileNumber) {
-    return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
+    return mobileNumber.toString().match("^(\\+98|0)?9\\d{9}$");
 }
 export default function GetStringPrice(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 export function compareObjs(obj1,obj2){
-    console.log(JSON.stringify(obj1)===JSON.stringify(obj2))
     return JSON.stringify(obj1)===JSON.stringify(obj2);
 }
 export function fixMobile(mobileNumber) {

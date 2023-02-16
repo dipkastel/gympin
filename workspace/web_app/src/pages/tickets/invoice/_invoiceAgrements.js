@@ -29,7 +29,7 @@ const _invoiceAgrements = ({plan,setAllAgrementChecked}) => {
             setAbout(result.data.Data);
             var checkableItems = [];
             checkableItems.push({Id:0,checked:false})
-            about.filter(a=>a.Acceptable).map((item,Number)=>{
+            result.data.Data.filter(a=>a.Acceptable).map((item,Number)=>{
                 checkableItems.push({Id:item.Id,checked:false})
             })
             setCheckedItem(checkableItems)
@@ -47,14 +47,10 @@ const _invoiceAgrements = ({plan,setAllAgrementChecked}) => {
     }
 
     function changeChecedItem(Id,e){
-        setCheckedItem(checkedItem.map(p=>(p.Id==Id)?{...p,checked:e.target.checked}:p));
-        var allChecked = true;
-        checkedItem.map(p=>(p.Id==Id)?((!e.target.checked)?allChecked=false:{}):p.checked?{}:allChecked=false);
-        if(allChecked){
-            setAllAgrementChecked(true);
-        }else{
-            setAllAgrementChecked(false);
-        }
+        var chItem = checkedItem.map(p=>(p.Id==Id)?{...p,checked:e.target.checked}:p);
+        var allChecked = !chItem.some(p=>!p.checked);
+        setAllAgrementChecked(allChecked);
+        setCheckedItem(chItem);
     }
 
     return (

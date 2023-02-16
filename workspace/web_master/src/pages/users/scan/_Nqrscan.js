@@ -32,7 +32,13 @@ const _Nqrscan = ({selectedTicket}) => {
     useEffect(() => {
         PlacesQr_getByPlace({Id: place.Id}).then(result => {
             SetMessages(result.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }, []);
 
     useEffect(() => {
@@ -51,7 +57,6 @@ const _Nqrscan = ({selectedTicket}) => {
                     error.showError({message: e.response.data.Message,});
                 } catch (f) {
                     error.showError({message: "خطا نا مشخص",});
-                    console.log(e)
                 }
             })
         }
@@ -91,7 +96,6 @@ const _Nqrscan = ({selectedTicket}) => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }

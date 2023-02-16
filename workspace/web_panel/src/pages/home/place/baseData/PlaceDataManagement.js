@@ -4,7 +4,7 @@ import {Place_getPlaceById, Place_updatePlace} from "../../../../network/api/pla
 import PlaceBase from "./Base/PlaceBase";
 import Gates from "./Gates/Gates";
 import Wallet from "./walet/Wallet";
-import GateTransActions from "./GateTransActions/GateTransActions";
+import SettlementRequest from "./GateTransActions/SettlementRequest";
 import PlaceSports from "./placeSport/PlaceSport";
 import OptionOfPlace from "./OptionsOfPlace/OptionOfPlace";
 import GateEnter from "./GateEnter/GateEnter";
@@ -52,11 +52,11 @@ const PlaceDataManagement = () => {
                     {place && <Plans place={place}/>}
                     {place && <PlaceAbout place={place}/>}
                     {place && <Wallet place={place}/>}
-                    {place && <GateTransActions place={place}/>}
                     {place && <DeletePlace place={place}/>}
                 </div>
                 <div className="col-md-5">
                     {place && <PlaceBalance place={place}/>}
+                    {place && <SettlementRequest place={place}/>}
                     {place && <PlaceImages place={place}/>}
                     {place && <PlaceSports place={place}/>}
                     {place && <OptionOfPlace place={place}/>}

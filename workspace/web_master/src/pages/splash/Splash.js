@@ -20,7 +20,6 @@ const Splash = (props) => {
 
     useEffect(() => {
         configs_getWebMasterSplash(null).then(result=>{
-                console.log(result)
                 props.SetServerSettings(result.data.Data.Settings)
                 setInterval(()=>{
                     // props.onSplashComplete()
@@ -30,7 +29,6 @@ const Splash = (props) => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         });
     }, []);

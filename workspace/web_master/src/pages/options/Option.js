@@ -22,7 +22,13 @@ const Option = () => {
     useEffect(() => {
         placeOption_getAll().then(result => {
             SetOptions(result.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }, []);
     useEffect(() => {
         getPlaceOptions()
@@ -30,7 +36,13 @@ const Option = () => {
     function getPlaceOptions(){
         optionOfPlace_getByPlaceId({id: place.Id}).then(result => {
             SetPlaceOption(result.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
 
@@ -51,7 +63,6 @@ const Option = () => {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }

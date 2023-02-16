@@ -19,7 +19,6 @@ function Finance(props){
 
     useEffect(() => {
         SetPlace(currentPlace);
-        console.log(currentPlace)
     }, [currentPlace,changeValues]);
 
 

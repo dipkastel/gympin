@@ -19,14 +19,12 @@ const Personnel = () => {
     function getPersonnelList() {
         SetPersonnelList(null);
         placePersonnel_ByPlace({Id:place.Id}).then(result=>{
-            console.log(result.data.Data);
             SetPersonnelList(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }

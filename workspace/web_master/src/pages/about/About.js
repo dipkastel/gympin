@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, CardHeader, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import _AboutItem from "./_AboutItem";
 import {PlaceAbout_add, PlaceAbout_getByPlace} from "../../network/api/placeAbout.api";
@@ -6,9 +6,11 @@ import {useSelector} from "react-redux";
 import {Form} from "react-bootstrap";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 
 const About = () => {
+    const error = useContext(ErrorContext);
     const [placeAbouts, SetPlaceAbouts] = useState([])
     const [openDialogAdd, SetOpenDialogAdd] = useState(false)
     const place = useSelector(({place}) => place.place)
@@ -19,7 +21,13 @@ const About = () => {
     function getPlaceAbouts() {
         PlaceAbout_getByPlace({id: place.Id}).then(result => {
             SetPlaceAbouts(result.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     function RenderModalAdd() {
@@ -36,7 +44,13 @@ const About = () => {
                 getPlaceAbouts();
                 e.target.title.value = "";
                 SetOpenDialogAdd(false)
-            }).catch(e => console.log(e))
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            })
         }
 
         return (

@@ -5,6 +5,7 @@ export const TransactionTypes = {
     PERSONNEL_USE_CREDIT: "استفاده از اعتبار شرکت به پرسنل",
     CORPORATE_PERSONNEL_USE_CREDIT: "استفاده از اعتبار شرکت",
     USER_USE_BALANCE: "استفاده از کیف پول",
-    PLACE_SETTLEMENT: "پرداخت هزینه بلیط به مجموعه",
+    PLACE_SETTLEMENT: "تسویه حساب با مجموعه",
+    PLACE_TICKET_SETTLEMENT: "پرداخت بلیط به مجموعه",
     COMMISSION:"کمیسیون"
 }

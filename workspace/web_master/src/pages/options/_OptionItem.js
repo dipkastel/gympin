@@ -14,7 +14,6 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _OptionItem = ({optionOfPlace,onDelete}) => {
     const error = useContext(ErrorContext);
-    console.log(optionOfPlace)
 
     function deleteItem(){
         optionOfPlace_delete({Id:optionOfPlace.Id}).then(result=>{
@@ -24,7 +23,6 @@ const _OptionItem = ({optionOfPlace,onDelete}) => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }

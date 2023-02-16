@@ -24,6 +24,7 @@ import com.notrika.gympin.common.user.service.AccountService;
 import com.notrika.gympin.common.user.service.JwtTokenProvider;
 import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
+import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.PlacePersonnelRepository;
@@ -76,7 +77,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
         log.info("Going to send activation sms...\n");
-        UserEntity user = userService.getByPhoneNumber(dto.getPhoneNumber());
+        UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(dto.getPhoneNumber()));
         if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
         String code = MyRandom.GenerateRandomVerificationSmsCode();
         if (user.getActivationCode() != null && user.getActivationCode().getExpiredDate() != null && user.getActivationCode().getExpiredDate().after(new Date())) {
@@ -84,7 +85,7 @@ public class AccountServiceImpl implements AccountService {
             return true;
         }
         try {
-            return smsService.sendVerificationSms(user.getId(), new SmsDto(dto.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION, code));
+            return smsService.sendVerificationSms(user.getId(), new SmsDto(user.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION, code));
         } catch (Exception e) {
             throw new ExceptionBase(HttpStatus.INTERNAL_SERVER_ERROR, Error.ErrorType.OUT_SERVICE_EXCEPTION);
         }
@@ -107,7 +108,7 @@ public class AccountServiceImpl implements AccountService {
         log.info("Going to addUser...\n");
         UserEntity user = new UserEntity();
         user.setUsername("USER_"+new Date().getTime());
-        user.setPhoneNumber(userRegisterParam.getPhoneNumber());
+        user.setPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
         user.setUserRole(userRegisterParam.getUserRole().getRole());
         user.setUserGroup(UserGroup.CLIENT);
         user.setUserStatus(UserStatus.ENABLED);
@@ -131,8 +132,8 @@ public class AccountServiceImpl implements AccountService {
         }
         activationCode.setDeleted(true);
         activationCodeRepository.update(activationCode);
-        String jwt = getJwt(loginParam, loginParam.getUsername(), TokenType.USER);
-        String refreshJwt = getJwt(loginParam, loginParam.getUsername(), TokenType.REFRESH_TOKE);
+        String jwt = getJwt(loginParam, GeneralHelper.fixPhoneNumber(loginParam.getUsername()), TokenType.USER);
+        String refreshJwt = getJwt(loginParam, GeneralHelper.fixPhoneNumber(loginParam.getUsername()), TokenType.REFRESH_TOKE);
         UserDto result = UserConvertor.toDtoComplete(user);
         result.setToken(jwt);
         result.setRefreshToken(refreshJwt);
@@ -144,7 +145,7 @@ public class AccountServiceImpl implements AccountService {
         UserEntity user = null;
         switch (loginParam.getUsernameType()) {
             case PHONENUMBER:
-                user = userService.getByPhoneNumber(loginParam.getUsername());
+                user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(loginParam.getUsername()));
                 break;
             case USERNAME:
                 user = userService.getByUsername(loginParam.getUsername());
@@ -214,11 +215,11 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public Boolean requestRegisterPlace(PlaceRequestRegisterParam param) {
         //identify user
-        UserEntity user = userService.getByPhoneNumber(param.getPhoneNumber());
+        UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(param.getPhoneNumber()));
         if (user == null){
             UserRoleParam userRole = new UserRoleParam();
             userRole.setRole(UserRole.USER);
-            user = addUser(UserRegisterParam.builder().phoneNumber(param.getPhoneNumber()).userRole(userRole).build());
+            user = addUser(UserRegisterParam.builder().phoneNumber(GeneralHelper.fixPhoneNumber(param.getPhoneNumber())).userRole(userRole).build());
         }
         user.setFullName(param.getFullName());
         userService.update(user);
@@ -238,7 +239,7 @@ public class AccountServiceImpl implements AccountService {
         placePersonnelRepository.add(placePersonnelEntity);
 
         try {
-            smsService.sendRegisterCompleted(new SmsDto(param.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE,param.getPlaceName()));
+            smsService.sendRegisterCompleted(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE,param.getPlaceName()));
         } catch (Exception e) {
         }
         return true;

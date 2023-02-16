@@ -33,7 +33,13 @@ const _PlaceGates = () => {
     function getPlacePlans() {
         Plans_getByPlace({Id: place.Id}).then(result => {
             setPlansList(result.data.Data);
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
 
@@ -53,7 +59,6 @@ const _PlaceGates = () => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         });
         }

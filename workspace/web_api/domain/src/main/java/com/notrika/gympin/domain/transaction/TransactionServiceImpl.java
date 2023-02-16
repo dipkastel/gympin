@@ -215,21 +215,21 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
 
             if (transactionRequest.getUser() != null) {
                 UserEntity userEntity = transactionRequest.getUser();
-                transactionAccepted.setTransactionType(TransactionType.PLACE_SETTLEMENT);
+                transactionAccepted.setTransactionType(TransactionType.CHARGE_USER);
                 transactionAccepted.setUser(userEntity);
                 userEntity.setBalance(userEntity.getBalance().add(transactionRequest.getAmount()));
                 userRepository.update(userEntity);
                 transactionAccepted.setBalance(userEntity.getBalance());
             } else if (transactionRequest.getPlace() != null) {
                 PlaceEntity placeEntity = transactionRequest.getPlace();
-                transactionAccepted.setTransactionType(TransactionType.PLACE_SETTLEMENT);
+                transactionAccepted.setTransactionType(TransactionType.CHARGE_USER);
                 transactionAccepted.setPlace(placeEntity);
                 placeEntity.setBalance(placeEntity.getBalance().add(transactionRequest.getAmount()));
                 placeRepository.update(placeEntity);
                 transactionAccepted.setBalance(placeEntity.getBalance());
             } else if (transactionRequest.getCorporate() != null) {
                 CorporateEntity corporateEntity = transactionRequest.getCorporate();
-                transactionAccepted.setTransactionType(TransactionType.PLACE_SETTLEMENT);
+                transactionAccepted.setTransactionType(TransactionType.CHARGE_USER);
                 transactionAccepted.setCorporate(corporateEntity);
                 corporateEntity.setBalance(corporateEntity.getBalance().add(transactionRequest.getAmount()));
                 corporateRepository.update(corporateEntity);
@@ -240,6 +240,23 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
             transactionRepository.add(transactionAccepted);
             return true;
         }else return false;
+    }
+
+    @Override
+    @Transactional
+    public Boolean placeSetteling(@NonNull TransactionPlaceSettelingParam transactionParam) {
+        TransactionEntity transactionRequest = transactionRepository.getById(transactionParam.getTransactionId());
+        transactionRepository.add(TransactionEntity.builder()
+                .serial(transactionRequest.getSerial())
+                .transactionType(TransactionType.PLACE_SETTLEMENT)
+                .transactionStatus(TransactionStatus.PAYMENT_COMPLETE)
+                .place(transactionRequest.getPlace())
+                .balance(transactionRequest.getBalance())
+                .isChecked(false)
+                .description(transactionParam.getTransactionText())
+                .amount(transactionRequest.getAmount())
+                .build());
+        return true;
     }
 
 

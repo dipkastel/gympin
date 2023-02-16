@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Box, Button, Card, Divider, Grid, InputAdornment, TextField, Typography} from "@mui/material";
-import {toPriceWithComma} from "../../helper/utils";
+import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {transactions_getPaymentGateways, transactions_setPaymentRequest} from "../../network/api/transactions.api";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -144,7 +144,7 @@ const _IncreaseCredit = () => {
                             name="code"
                             value={toPriceWithComma(amountToPay)}
                             type="text"
-                            onChange={e=>SetAmountToPay(e.target.value)}
+                            onChange={e=>SetAmountToPay(toPriceWithoutComma(e.target.value))}
                             label={"مبلغ دلخواه به تومان"}
                             InputProps={{
                                 startAdornment: (

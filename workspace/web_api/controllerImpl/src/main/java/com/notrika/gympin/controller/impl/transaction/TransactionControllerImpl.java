@@ -87,4 +87,10 @@ public class TransactionControllerImpl implements TransactionController {
     public ResponseEntity<Boolean> checkPayment(@RequestBody CheckPaymentParam param) {
         return ResponseEntity.ok(transactionService.checkPayment(param));
     }
+
+    @Override
+    @PostMapping("/placeSetteling")
+    public ResponseEntity<Boolean> placeSetteling(@RequestBody TransactionPlaceSettelingParam param) {
+        return ResponseEntity.ok(transactionService.placeSetteling(param));
+    }
 }

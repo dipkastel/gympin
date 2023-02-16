@@ -14,14 +14,12 @@ const _ListItem = (props) => {
             Id:place.Id,
             Status:e.target.checked?"ACTIVE":"INACTIVE"
         }).then(result=>{
-            console.log(result.data.Data);
             props.RequestPlace(place.Id)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }

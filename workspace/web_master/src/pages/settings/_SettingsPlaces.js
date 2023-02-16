@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Backdrop,
     Box,
@@ -21,8 +21,10 @@ import {placeActions} from "../../helper/redux/actions/PlaceActions";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {useNavigate} from "react-router-dom";
 import {accessActions} from "../../helper/redux/actions/AccessActions";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _SettingsPlaces = (props) => {
+    const error = useContext(ErrorContext);
     const navigate = useNavigate();
     const user = useSelector(({auth}) => auth.user);
     const access = useSelector(({access}) => access.access);
@@ -33,7 +35,13 @@ const _SettingsPlaces = (props) => {
     useEffect(() => {
         Places_getPlacesByUserId(user.Id).then(result => {
             SetPlaces(result.data.Data)
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
         if(selectedPlace&&!access){
             forceRefresh(45);
         }

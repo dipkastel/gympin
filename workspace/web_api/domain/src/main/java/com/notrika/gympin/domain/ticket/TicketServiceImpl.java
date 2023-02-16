@@ -16,6 +16,8 @@ import com.notrika.gympin.common.ticket.query.TicketQuery;
 import com.notrika.gympin.common.ticket.service.TicketService;
 import com.notrika.gympin.common.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.transaction.enums.TransactionType;
+import com.notrika.gympin.common.transaction.param.TransactionParam;
+import com.notrika.gympin.common.transaction.param.TransactionPlaceSettelingParam;
 import com.notrika.gympin.common.user.enums.PlanExpireType;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -570,7 +572,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
         placeRepository.update(placeEntity);
         transactions.add(TransactionEntity.builder()
                 .place(placeEntity)
-                .transactionType(TransactionType.PLACE_SETTLEMENT)
+                .transactionType(TransactionType.PLACE_TICKET_SETTLEMENT)
                 .amount(placeShare)
                 .isChecked(false)
                 .transactionStatus(TransactionStatus.COMPLETE)

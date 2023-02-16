@@ -8,7 +8,8 @@ import axios from "axios";
 import store, { persistor } from "./helper/redux/store";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
-import App2 from "./components/GympinPagesProvider";
+import {IOSView,AndroidView,BrowserView,  MobileView, isBrowser, isMobile ,browserName, CustomView,ConsoleView } from 'react-device-detect';
+
 
 
 setupAxios(axios, store);

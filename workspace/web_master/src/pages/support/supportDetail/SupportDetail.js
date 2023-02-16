@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, CardContent, CardHeader, Chip, Grid, List, TextField, Typography} from "@mui/material";
 import {Alert, Form} from "react-bootstrap";
 import {useNavigate, useParams} from "react-router-dom";
 import {Support_add, Support_addMessage, Support_getById} from "../../../network/api/support.api";
 import {getSupportPersianStatus} from "../../../helper/utils";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 const SupportDetail = () => {
+    const error = useContext(ErrorContext);
     let {supportId} = useParams()
     const [supportDetail,SetSupportDetail] = useState(null);
     const navigate = useNavigate();
@@ -14,14 +16,12 @@ const SupportDetail = () => {
     }, []);
     function getSupportDetail(){
         Support_getById({id:supportId}).then(result=>{
-            console.log(result)
             SetSupportDetail(result.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }
@@ -40,7 +40,6 @@ const SupportDetail = () => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }
@@ -58,7 +57,6 @@ const SupportDetail = () => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }

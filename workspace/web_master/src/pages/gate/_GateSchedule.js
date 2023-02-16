@@ -36,11 +36,15 @@ const _GateSchedule = ({gate}) => {
     }, [gate]);
 
     function getGateTimingOfGate() {
-        console.log(gate.Id)
         GatesTiming_getByGate({Id: gate.Id}).then(data => {
-            console.log(data)
             setGateTimings(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     function ModalDelete() {
@@ -54,7 +58,6 @@ const _GateSchedule = ({gate}) => {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
         }
@@ -99,12 +102,17 @@ const _GateSchedule = ({gate}) => {
                     }
                 }
             )
-            console.log(postData);
             GatesTiming_addAll(postData)
                 .then(data => {
                     setOpenModalAdd(false)
                     getGateTimingOfGate()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            })
         }
 
         function setFormValues(lable,newValue){

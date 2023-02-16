@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Button,
     Card,
@@ -22,9 +22,10 @@ import {DatePicker} from "@mui/x-date-pickers";
 import AdapterJalaali from '@date-io/jalaali';
 import {planExpireTypes} from "../../helper/enums/planExpireTypes";
 import {Plans_update} from "../../network/api/plans.api";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _PlanBaseData = ({plan, getPlanData}) => {
-
+    const error = useContext(ErrorContext);
     const [inPlan, setInPlan] = useState({})
     const [sellInTime, SetSellInTime] = useState(false)
 
@@ -37,7 +38,13 @@ const _PlanBaseData = ({plan, getPlanData}) => {
         e.preventDefault();
         Plans_update(inPlan).then(result => {
             getPlanData();
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     return (

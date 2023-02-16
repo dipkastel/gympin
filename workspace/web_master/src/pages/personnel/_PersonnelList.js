@@ -35,7 +35,6 @@ const _PersonnelList = ({personnelList, renewList}) => {
                     error.showError({message: e.response.data.Message,});
                 } catch (f) {
                     error.showError({message: "خطا نا مشخص",});
-                    console.log(e)
                 }
             })
         }

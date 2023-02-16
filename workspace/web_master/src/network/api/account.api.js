@@ -15,6 +15,5 @@ export function requestRegisterPlace(data) {
 
 
 export function refreshToken(refreshToken) {
-    console.log(refreshToken)
     return axios.post(Api_url.Account.REFRESH_TOKEN, {RefreshToken:refreshToken});
 }

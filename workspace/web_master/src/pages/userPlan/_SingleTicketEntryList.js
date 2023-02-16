@@ -31,7 +31,6 @@ const _SingleTicketEntryList = ({ticket,renewTicket}) => {
                     error.showError({message: e.response.data.Message});
                 } catch (f) {
                     error.showError({message: "خطا نا مشخص",});
-                    console.log(e)
                 }
             })
         }
@@ -65,11 +64,16 @@ const _SingleTicketEntryList = ({ticket,renewTicket}) => {
                     error.showError({message: e.response.data.Message,});
                 } catch (f) {
                     error.showError({message: "خطا نا مشخص",});
-                    console.log(e)
                 }
             })
             ticket_addEntryMessage({ }).then(result => {
-            }).catch(e => console.log(e))
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            })
         }
 
         return (

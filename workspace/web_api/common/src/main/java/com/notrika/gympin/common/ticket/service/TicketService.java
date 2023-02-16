@@ -10,6 +10,7 @@ import com.notrika.gympin.common.ticket.dto.TicketDto;
 import com.notrika.gympin.common.ticket.dto.TicketScannedDto;
 import com.notrika.gympin.common.ticket.param.*;
 import com.notrika.gympin.common.ticket.query.TicketQuery;
+import com.notrika.gympin.common.transaction.param.TransactionPlaceSettelingParam;
 import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.web.bind.annotation.RequestBody;
 

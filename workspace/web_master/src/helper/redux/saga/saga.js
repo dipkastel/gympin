@@ -14,11 +14,6 @@ export const getUser = (state)=> state.auth.user;
 export const getPlace = (state)=> state.place.place;
 
 export function* saga() {
-    //
-    // yield takeLatest(authActionTypes., function* loginSaga(action,payload) {
-    //     console.log("requestUserPlace saga");
-    //     yield put(ActionsSaga.sagaRequestUser(action.payload.user));
-    // });
 
     yield takeLatest(ActionTypesSaga.RequestUser, function* userRequested(action) {
         const result = yield call(
@@ -54,7 +49,6 @@ export function* saga() {
     yield takeLatest(ActionTypesSaga.RequestAccess, function* accessRequested(action) {
         const result = yield call(
             () => new Promise((resolve) => {
-                console.log("hehehehehe");
                 placePersonnel_getAccess({
                     placeId: action.payload.placeId,
                     userId: action.payload.userId

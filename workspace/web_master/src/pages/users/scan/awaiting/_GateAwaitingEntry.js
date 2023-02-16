@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     Avatar,
     Button,
@@ -16,8 +16,10 @@ import {
 import {ticket_acceptEnterRequested, ticket_getEnterRequested} from "../../../../network/api/ticket.api";
 import {useSelector} from "react-redux";
 import {useTheme} from "@mui/material/styles";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 export default function _GateAwaitingEntry({enterAccepted}) {
+    const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
     const [awaitingUsers, SetAwaitingUsers] = useState([])
 
@@ -30,14 +32,26 @@ export default function _GateAwaitingEntry({enterAccepted}) {
     function getRequestedUsers() {
         ticket_getEnterRequested({placeId: place.Id}).then(result => {
             SetAwaitingUsers(result.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     function acceptEnterRequest(e, ticketItem) {
         ticket_acceptEnterRequested({ticketId: ticketItem.Id}).then(result => {
             getRequestedUsers();
             enterAccepted(result.data.Data);
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     return (

@@ -26,7 +26,6 @@ export function setupAxios(axios, store) {
         },
         async function (error) {
             if (error.response.status === 401) {
-                console.log("expire");
                 reToken(result=>{
                     window.location = window.location;
                 })
@@ -37,12 +36,14 @@ export function setupAxios(axios, store) {
 
 
     function reToken(callBack) {
-        console.log("retolen")
         const rToken = store.getState().auth.refreshToken
         refreshToken(rToken).then(result=>{
             store.dispatch(authActions.SetToken(result.data.Data.Token))
             store.dispatch(authActions.SetRefreshToken(result.data.Data.RefreshToken))
             callBack(result);
-        }).catch(e =>  console.log(e))
+        }).catch(e => {
+            //TODO force logout
+            console.log(e)
+        })
     }
 }

@@ -63,7 +63,7 @@ const CorporateManagement = () => {
                                 <Form.Control
                                     name="formName"
                                     type="text"
-                                    corporateholder="نام مکان (مجموعه ورزشی)"
+                                    placeholder="نام مکان (مجموعه ورزشی)"
                                 />
                                 <Form.Text className="text-muted">
                                     از نوشتن هاشیه ها (مجموعه ، شرکت ، سازمان ، ارگان) خودداری

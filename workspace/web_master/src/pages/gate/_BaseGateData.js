@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, CardContent, CardHeader, FormControl, Switch, TextField, Typography} from "@mui/material";
 import {Form} from "react-bootstrap";
 import {Gates_update} from "../../network/api/gates.api";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _BaseGateData = ({gate, getGate}) => {
+    const error = useContext(ErrorContext);
     const [inGate, setInGate] = useState({})
 
     useEffect(() => {
@@ -15,7 +17,13 @@ const _BaseGateData = ({gate, getGate}) => {
         e.preventDefault()
         Gates_update(inGate).then(result => {
             getGate();
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     return (

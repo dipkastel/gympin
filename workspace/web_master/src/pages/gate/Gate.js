@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Button,
     Checkbox,
@@ -23,9 +23,9 @@ import {useParams} from "react-router-dom";
 import {Gates_getById} from "../../network/api/gates.api";
 import _BaseGateData from "./_BaseGateData";
 import _GateSchedule from "./_GateSchedule";
-import {scheduleBodyBuilding} from "../../helper/mockData/mockData";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 TimePicker.propTypes = {
     renderInput: PropTypes.func,
@@ -33,12 +33,12 @@ TimePicker.propTypes = {
 };
 const Gate = () => {
 
+    const error = useContext(ErrorContext);
     const {gateId} = useParams()
     const [gate, SetGate] = useState({})
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [fromTime, setFromTime] = useState(Date());
     const [toTime, setToTime] = useState(Date());
-    const [data, setData] = React.useState(scheduleBodyBuilding);
 
     useEffect(() => {
         getGate()
@@ -47,7 +47,13 @@ const Gate = () => {
     function getGate() {
         Gates_getById({id: gateId}).then(result => {
             SetGate(result.data.Data)
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     const handleChange = (newValue, a) => {

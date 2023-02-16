@@ -44,7 +44,6 @@ const _ByCode = (props) => {
                         //             props.login(data.data.Data.Token);
                         //         })
                         //         .catch((ex) => {
-                        //             console.log(ex);
                         //             setSubmitting(false);
                         //             setStatus(
                         //                 "اطلاعات وارد شده معتبر نبست"

@@ -27,6 +27,8 @@ import TicketsManagement from "./tickets/TicketsManagement";
 import TicketDataManagement from "./tickets/baseData/TicketDataManagement";
 import FinanceManagement from "./finance/FinanceManagement";
 import PlacePersonnelManagement from "./place/personnel/PlacePersonnelManagement";
+import ArticlesManagement from "./articles/ArticlesManagement";
+import SingleArticle from "./articles/SingleArticle/SingleArticle";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -40,6 +42,9 @@ export default function HomePage() {
         <Route path="/place/personnel/:personnelId" component={PlacePersonnelManagement} />
         <Route path="/place/placeOptionManagement" component={placeOptionsManagement} />
         <Route path="/places" component={PlaceManagement} />
+        {/*articles*/}
+        <Route path="/articles" component={ArticlesManagement} />
+        <Route path="/singlearticle/:articleId" component={SingleArticle} />
         {/*home*/}
         <Route path="/homePage/edit/:ItemId" component={HomePageDetail} />
         <Route path="/homePage/types" component={HomePageTypes} />

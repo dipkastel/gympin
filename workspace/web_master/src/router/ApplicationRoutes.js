@@ -10,7 +10,7 @@ import NBottomNavigation from "../components/NBottomNavigation";
 import _Nqrscan from "../pages/users/scan/_Nqrscan";
 import Gate from "../pages/gate/Gate";
 import About from "../pages/about/About";
-import DemandPeyment from "../pages/demandPeyment/DemandPeyment";
+import DemandPayment from "../pages/demandPeyment/DemandPayment";
 import SingleUser from "../pages/singleUser/SingleUser";
 import Option from "../pages/options/Option";
 import ManageStall from "../pages/ManageStall/ManageStall";
@@ -53,7 +53,7 @@ export default function ApplicationRoutes() {
                 <Route path="/management/editProfile" element={<EditProfile/>}/>
                 <Route path="/management" element={<Management/>}/>
 
-                <Route path="/finance/demand" element={<DemandPeyment/>}/>
+                <Route path="/finance/demand" element={<DemandPayment/>}/>
                 <Route path="/finance" element={<Finance/>}/>
 
                 <Route path="/users/singleuser" element={<SingleUser/>}/>

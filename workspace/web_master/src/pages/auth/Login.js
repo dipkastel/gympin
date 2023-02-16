@@ -75,7 +75,8 @@ function Login(props) {
                 }}>
                     <CardHeader
                         sx={{
-                            backgroundColor:"primary.main"
+                            backgroundColor:"primary.main",
+                            color:"white"
                         }}
                         title="ورود"
                     />
@@ -110,13 +111,11 @@ function Login(props) {
                                     })
                                         .then((data) => {
                                             disableLoading();
-                                            console.log(data.data.Data);
                                              props.SetUser(data.data.Data);
                                              props.SetToken(data.data.Data.Token);
                                              props.SetRefreshToken(data.data.Data.RefreshToken);
                                         })
                                         .catch((ex) => {
-                                            console.log(ex);
                                             disableLoading();
                                             setSubmitting(false);
                                             setStatus(
@@ -157,24 +156,19 @@ function Login(props) {
                                             variant="outlined"
                                             margin="normal"
                                             name="username"
-                                            type="username"
+                                            type="number"
                                             label={"شماره همراه"}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
                                             value={values.username}
+                                            disabled={resend>0}
                                             helperText={touched.username && errors.username}
                                             error={Boolean(touched.username && errors.username)}
                                             InputProps={{
                                                 startAdornment: (
                                                     <InputAdornment position="start">
-                                                        <IconButton
-                                                            edge="start"
-                                                            aria-label="Toggle password visibility"
-                                                            disabled={(resend > 0)}
-                                                            onClick={(e) => sendMessage(e, values)}
-                                                        >
                                                             {(checkMobileValid(values.username)) && (
-                                                                (resend > 0) ? (
+                                                                (resend > 0)&&(
                                                                     <div>
                                                                         <Spinner animation="border" size="sm"/>
                                                                         <Typography variant="caption" display="block"
@@ -182,15 +176,25 @@ function Login(props) {
                                                                             {resend}
                                                                         </Typography>
                                                                     </div>
-                                                                ) : <SendToMobileIcon/>
+                                                                )
                                                             )
                                                             }
-
-                                                        </IconButton>
                                                     </InputAdornment>
                                                 ),
                                             }}
                                         />
+                                    </div>
+
+                                    <div >
+                                            {(checkMobileValid(values.username)) && (
+                                                !(resend > 0)&&
+                                                    <Button
+                                                        disabled={resend > 0}
+                                                        variant={"contained"}
+                                                        onClick={(e) => sendMessage(e, values)}>ارسال کد</Button>
+                                            )
+                                            }
+
                                     </div>
 
                                     <Hidden lgDown={(resend < -1)} lgUp={(resend < -1)}>

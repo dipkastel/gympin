@@ -60,13 +60,20 @@ export default {
         translate: "MENU.MANAGE_FINANCE",
         page: "finance",
       },
-      { section: "نمایش" },
+      { section: "محتوا" },
       {
         title: "manage HomePage",
         root: true,
         icon: "flaticon-home",
         translate: "MENU.MANAGE_HOMEPAGE",
         page: "homePage",
+      },
+      {
+        title: "manage articles",
+        root: true,
+        icon: "flaticon-book",
+        translate: "MENU.MANAGE_ARTICLES",
+        page: "articles",
       },
       { section: "مدیا" },
       {

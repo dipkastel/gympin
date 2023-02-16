@@ -210,7 +210,9 @@ export let TicketApi = {
 
 };
 export let TransactionApi = {
-  query: "v1/transaction/query"
+  query: "v1/transaction/query",
+  placeSetteling: "v1/transaction/placeSetteling",
+
 };
 export let MultimediaApi = {
   add: "v1/multimedia/add",
