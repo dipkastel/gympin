@@ -93,7 +93,7 @@ public final class MultimediaServiceHelper {
             Files.createDirectories(this.videoStorageLocation);
             Files.createDirectories(this.audioStorageLocation);
         } catch (Exception e) {
-//            throw new CreateDirectoryException();
+            throw new CreateDirectoryException();
         }
     }
 
