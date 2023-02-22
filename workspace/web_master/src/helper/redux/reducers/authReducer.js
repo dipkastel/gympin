@@ -1,5 +1,5 @@
 import {persistReducer} from "redux-persist";
-import {authActionTypes} from "../actions/AuthActions";
+import {authActionTypes} from "../actions/authActions";
 import storage from "redux-persist/lib/storage";
 import {forgotLastLocation} from "../../lastLocationHandler";
 

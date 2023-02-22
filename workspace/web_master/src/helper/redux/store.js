@@ -3,7 +3,7 @@ import createSagaMiddleware from "redux-saga";
 import { persistStore } from "redux-persist";
 import {rootReducer} from "./RootReducer";
 import {all} from "redux-saga/effects";
-import {saga} from "./saga/Saga";
+import {saga} from "./saga/saga";
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
