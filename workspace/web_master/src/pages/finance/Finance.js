@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
 import _Wallet from "./_Wallet";
 import _Transactions from "./_Transactions";
-import _FinanaceReport from "./_FinanceReport";
 import {connect, useSelector} from "react-redux";
-import {authActions} from "../../helper/redux/actions/AuthActions";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";

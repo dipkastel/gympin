@@ -1,5 +1,5 @@
 import {AuthApi} from "./api/NETWORKCONSTS";
-import {authActions} from "../helper/redux/actions/AuthActions";
+import {authActions} from "../helper/redux/actions/authActions";
 import {refreshToken} from "./api/account.api";
 
 

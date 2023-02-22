@@ -19,7 +19,7 @@ import {Spinner} from "react-bootstrap";
 import SendToMobileIcon from '@mui/icons-material/SendToMobile';
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
-import {authActions} from "../../helper/redux/actions/AuthActions";
+import {authActions} from "../../helper/redux/actions/authActions";
 
 function Login(props) {
 

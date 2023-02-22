@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {authActions} from "../../helper/redux/actions/AuthActions";
+import {authActions} from "../../helper/redux/actions/authActions";
 
 function Logout(props) {
     props.Logout();
