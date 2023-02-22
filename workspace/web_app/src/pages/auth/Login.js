@@ -5,7 +5,7 @@ import {checkMobileValid, fixMobile} from "../../helper/utils";
 import {Spinner} from "react-bootstrap";
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
-import {authActions} from "../../helper/redux/actions/AuthActions";
+import {authActions} from "../../helper/redux/actions/authActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 
 function Login(props) {

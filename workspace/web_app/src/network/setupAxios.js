@@ -1,6 +1,6 @@
 import {AuthApi} from "./api/NETWORKCONSTS";
 import {refreshToken} from "./api/account.api";
-import {authActions} from "../helper/redux/actions/AuthActions";
+import {authActions} from "../helper/redux/actions/authActions";
 
 
 export function setupAxios(axios, store) {

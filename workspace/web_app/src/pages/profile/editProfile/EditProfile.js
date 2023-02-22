@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import {compareObjs, getImagePath} from "../../../helper/utils";
 import {connect, useSelector} from "react-redux";
-import {authActions} from "../../../helper/redux/actions/AuthActions";
 import {media_AddImage} from "../../../network/api/multimedia.api";
 import {Formik} from "formik";
 

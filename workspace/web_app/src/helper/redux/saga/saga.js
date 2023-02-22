@@ -1,5 +1,5 @@
 import {call, put, takeLatest} from "redux-saga/effects";
-import {authActions} from "../actions/AuthActions";
+import {authActions} from "../actions/authActions";
 import {ActionTypesSaga} from "../actions/SagaActions"
 import {user_getById} from "../../../network/api/user.api";
 
