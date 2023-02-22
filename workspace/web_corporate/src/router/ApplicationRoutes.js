@@ -6,7 +6,7 @@ import Management from "../pages/management/Management";
 import Users from "../pages/users/Users";
 import NNavigaion from "../components/NNavigaion";
 import NBottomNavigation from "../components/NBottomNavigation";
-import IncreaseList from "../pages/increaseListPeyment/IncreaseList";
+import IncreaseList from "../pages/IncreaseListPeyment/IncreaseList";
 import CorporateDetail from "../pages/corporateDetail/EditCorporate";
 import IncreaseGroupCredit from "../pages/increaseGroupCredit/IncreaseGroupCredit";
 import SingleUser from "../pages/singleUser/SingleUser";
