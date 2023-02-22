@@ -1,4 +1,4 @@
-module.exports = {
+exports = {
     trailingSlash: true,
     images: {
         loader: 'akamai',

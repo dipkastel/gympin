@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import MetisMenu from 'metismenujs'
-import 'metismenujs/dist/metismenujs.css';
+// import 'metismenujs/dist/metismenujs.min.css';
 import Link from 'next/link'
 
 
