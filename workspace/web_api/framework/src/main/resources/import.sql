@@ -15,7 +15,7 @@
 
 # USER
 
-    INSERT INTO auditable_entities(id, is_deleted, create_date)  VALUES (1,0,CURRENT_TIMESTAMP());
+#     INSERT INTO auditable_entities(id, is_deleted, create_date)  VALUES (1,0,CURRENT_TIMESTAMP());
     INSERT INTO USER (id,phone_number,username,user_role,user_group,user_status) VALUES (1,'09126540027','ADMINISTRATOR','SUPER_ADMIN','ADMINISTRATION','ENABLED');
 
 #MULTIMEDIA CATEGORY

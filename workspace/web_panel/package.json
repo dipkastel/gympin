@@ -4,8 +4,8 @@
   "private": true,
   "homepage": "http://panel.gympin.ir",
   "scripts": {
-    "start": "set PORT=2727 && react-scripts start",
-    "build": "react-scripts build",
+    "start": "set PORT=2727 && react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "format": "prettier --write \"src/**/*.{js,css,scss,html}\"",
     "rtl": "webpack"
   },
