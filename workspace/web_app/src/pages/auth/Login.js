@@ -1,12 +1,12 @@
 import React, {useContext, useState} from "react";
 import {Button, Card, CardContent, CardHeader, Grid, Hidden, TextField, Typography} from "@mui/material";
 import {Formik} from "formik";
-import {checkMobileValid, fixMobile} from "src/helper/utils";
+import {checkMobileValid, fixMobile} from "../../helper/utils";
 import {Spinner} from "react-bootstrap";
-import {login, sendSms} from "src/network/api/account.api";
+import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
-import {authActions} from "src/helper/redux/actions/AuthActions";
-import {ErrorContext} from "src/components/GympinPagesProvider";
+import {authActions} from "../../helper/redux/actions/AuthActions";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 function Login(props) {
 

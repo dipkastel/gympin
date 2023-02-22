@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {ErrorContext} from "src/components/GympinPagesProvider";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 import {connect, useSelector} from "react-redux";
-import {sagaActions} from "src/helper/redux/actions/SagaActions";
+import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {Box, Button, Card, CardContent, CardHeader, CircularProgress, Grid, Typography} from "@mui/material";
-import {transactions_checkPayment} from "src/network/api/transactions.api";
+import {transactions_checkPayment} from "../../network/api/transactions.api";
 
 const Checkout = () => {
 

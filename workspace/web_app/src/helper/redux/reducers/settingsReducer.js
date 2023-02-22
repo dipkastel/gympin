@@ -1,5 +1,5 @@
 import {persistReducer} from "redux-persist";
-import {settingsActionTypes} from "src/helper/redux/actions/SettingsActions";
+import {settingsActionTypes} from "../../../helper/redux/actions/SettingsActions";
 import storage from "redux-persist/lib/storage";
 
 
