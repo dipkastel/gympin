@@ -1,23 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
-    Card, CardActions,
-    CardContent, CardHeader, Chip,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
     Divider,
     List,
     ListItem,
-    ListItemButton,
     ListItemIcon,
     ListItemText,
     Pagination
 } from "@mui/material";
-import {ControlPoint,RemoveCircleOutline } from '@mui/icons-material';
-import {transaction_getByPlaceId, transaction_query} from "../../network/api/transaction.api";
-import {getSupportPersianStatus, toPriceWithComma} from "../../helper/utils";
+import {ControlPoint, RemoveCircleOutline} from '@mui/icons-material';
+import {transaction_query} from "../../network/api/transaction.api";
+import {toPriceWithComma} from "../../helper/utils";
 import {TransactionTypes} from "../../helper/enums/TransactionTypes";
-import {TransactionStatus} from "../../helper/enums/TransactionStatus";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _transactions = ({place}) => {
 
+    const error = useContext(ErrorContext);
     const [transactions,SetTransactions] = useState([])
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
