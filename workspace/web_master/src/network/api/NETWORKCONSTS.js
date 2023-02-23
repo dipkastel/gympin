@@ -1,7 +1,8 @@
 import {ticket_addEntryMessage, ticket_deleteEntryMessage} from "./ticket.api";
 
 export let AuthApi = {
-    BASEURL: "http://localhost:8080/api/",
+    // BASEURL: "http://localhost:8080/api/",
+    BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
