@@ -2,7 +2,7 @@ import {transactions_setPaymentRequest} from "./transactions.api";
 
 export let AuthApi = {
     //BASEURL: "http://localhost:8080/api/",
-     BASEURL: "http://api.gympin.ir/",
+     BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
