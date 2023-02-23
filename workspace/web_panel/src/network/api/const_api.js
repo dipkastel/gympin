@@ -1,9 +1,6 @@
-import {planGatesTiming_add} from "./PlanGatesTiming.api";
-import {Location_getAllCities} from "./location.api";
-
 export let AuthApi = {
-  // BASEURL: "http://api.gympin.ir/",
-  BASEURL : "http://localhost:8080/api/",
+  BASEURL: "https://api.gympin.ir/",
+  // BASEURL : "http://localhost:8080/api/",
   LOGIN_URL: "v1/account/login",
   SEND_SMS_URL: "v1/account/sendsms",
   register: "v1/account/register",
