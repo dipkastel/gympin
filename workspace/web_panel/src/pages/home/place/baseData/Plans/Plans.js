@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
 import {Button, TableCell} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
@@ -8,8 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {Plans_add, Plans_delete, Plans_getByPlaceId} from "../../../../../network/api/plans.api";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const Plans = ({place}) => {
+    const error = useContext(ErrorContext);
     const [placePlans,SetPlacePlans] = useState([])
     const [openModalAdd,setOpenModalAdd] = useState(false)
     const [itemToDelete,setItemToDelete] = useState(null)
@@ -19,7 +21,13 @@ const Plans = ({place}) => {
     function getPlansOpPlace(){
         Plans_getByPlaceId({Id:place.Id}).then(data=>{
             SetPlacePlans(data.data.Data);
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function renderModalAdd() {
@@ -30,7 +38,13 @@ const Plans = ({place}) => {
                 .then(data=>{
                     setOpenModalAdd(false)
                     getPlansOpPlace()
-                }).catch(e=>console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (
@@ -84,7 +98,13 @@ const Plans = ({place}) => {
                 .then(data=>{
                     setItemToDelete(null)
                     getPlansOpPlace()
-                }).catch(e=>console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Notice from "../../partials/content/Notice";
 import {settings_add, settings_getAll} from "../../../network/api/settings.api";
 import SettingDetail from "./detail/SettingDetail";
@@ -6,9 +6,11 @@ import {Button, Chip, Container, Grid, Typography} from "@mui/material";
 import {Form, Modal, Row} from "react-bootstrap";
 import Select from "react-select";
 import {SettingTypes} from "./settingsTypeEnum";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 
 const SettingsManagement = () => {
+    const error = useContext(ErrorContext);
     const [settings, SetSettings] = useState([])
     const [openModalAdd, SetOpenModalAdd] = useState(false)
     const [filter,SetFilter] = useState(null)
@@ -19,7 +21,13 @@ const SettingsManagement = () => {
     function getAllDatas() {
         settings_getAll().then(result => {
             SetSettings(result.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
 
     }
 
@@ -35,7 +43,13 @@ const SettingsManagement = () => {
                     SetOpenModalAdd(false);
                     getAllDatas();
                 })
-                .catch((e) => console.log(e));
+                .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AddIcon from "@mui/icons-material/Add";
 import {Button} from "react-bootstrap";
 import {toAbsoluteUrl} from "../../../../../helper";
@@ -7,8 +7,10 @@ import {Portlet, PortletHeader, PortletHeaderToolbar} from "../../../../partials
 import ModalDeleteCollection from "./ModalDeleteCollection";
 import {Link} from "@mui/material";
 import ModalAddCollection from "./ModalAddCollection";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const HomeCollections = ({selectedHomeCollection}) => {
+    const error = useContext(ErrorContext);
     const [list, SetList] = useState([]);
     const [dataChanges, SetDataChanges] = useState([]);
     const [deleteItem, SetDeleteItem] = useState(null);
@@ -16,7 +18,13 @@ const HomeCollections = ({selectedHomeCollection}) => {
     useEffect(function () {
         HomeCollection._getAll().then((data) => {
             SetList(data.data.Data)
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, [dataChanges])
 
     function renderCollectionsRow(data, index) {

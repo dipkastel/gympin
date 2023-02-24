@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Button, FormControlLabel, FormGroup, FormLabel, Switch, TextField} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader,} from "../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
 import Select from "react-select";
 import {Location_query} from "../../../../../network/api/location.api";
 import PlaceMap from "./PlaceMap";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 function PlaceBase({place, updatePlace}) {
+    const error = useContext(ErrorContext);
 
     const [location, SetLocations] = useState(null)
     const [inPlace, SetInPlace] = useState(place)
@@ -19,16 +21,20 @@ function PlaceBase({place, updatePlace}) {
         }).then(data => {
             SetInPlace(place);
             SetLocations(data.data.Data.content)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, []);
 
     function setFormValues(lable, Value) {
-        console.log(lable, Value)
         SetInPlace({...inPlace, [lable]: Value})
     }
 
     function submitForm() {
-        console.log(inPlace)
         updatePlace(inPlace)
     }
 

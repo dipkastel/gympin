@@ -5,7 +5,6 @@ import {Image} from "react-bootstrap";
 import HomeTitle from "./HomeTitle";
 
 const HomeDiscountList = (props) => {
-    console.log(props)
     const settings = {
         dots: false,
         infinite: true,

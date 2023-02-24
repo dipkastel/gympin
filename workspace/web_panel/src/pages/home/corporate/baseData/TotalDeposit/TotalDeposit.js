@@ -5,7 +5,6 @@ import {toPriceWithComma} from "../../../../../helper";
 import {corporate_getTotalDeposit} from "../../../../../network/api/corporate.api";
 
 const TotalDeposit = ({currentCorporate}) => {
-    console.log("cccc",currentCorporate)
     return (
         <Portlet>
             <PortletHeader title="مجموع شارژ شرکت"/>

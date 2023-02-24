@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import Notice from "../../../partials/content/Notice";
 import {user_getById} from "../../../../network/api/user.api";
@@ -13,8 +13,10 @@ import UserPlaces from "./places/UserPlaces";
 import UserCorporates from "./corporates/UserCorporates";
 import Notes from "../../../partials/content/notes/Notes";
 import UserCredit from "./credit/UserCredit";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const UserDetailManagement = () => {
+    const error = useContext(ErrorContext);
   const {userId} = useParams();
   const [currentUser, SetCurrentUser] = useState(null);
   useEffect(() => {
@@ -22,9 +24,13 @@ const UserDetailManagement = () => {
       .then((data) => {
         SetCurrentUser(data.data.Data);
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
   }, [userId]);
   return (
     <>

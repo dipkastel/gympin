@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {media_addImage} from "../../../../network/api/media.api";
 import {Form, Modal} from "react-bootstrap";
 import {Button, Fab} from "@mui/material";
@@ -6,54 +6,66 @@ import {useDropzone} from "react-dropzone";
 import Select from "react-select";
 import {multimediacategory_getAll} from "../../../../network/api/mediaCategories.api";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const AddImageModal = ({setOpenAddImage, done: uploadComplete}) => {
+    const error = useContext(ErrorContext);
     const [addItem, setAddItem] = useState({});
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
         setAddItem({});
         multimediacategory_getAll().then(data => {
-            console.log(data.data.Data)
             setCategories(data.data.Data)
-        }).catch(e => console.log(e));
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, []);
 
 
     function addOption(e) {
-        e.preventDefault()
-        console.log(addItem)
+        e.preventDefault();
         const formData = new FormData();
         formData.append("MediaType", "IMAGE");
         if (addItem.file&&addItem.file.length > 0)
             formData.append("File", addItem.file[0]);
         else{
-            console.log("error")
+            error.showError({message: "فایل انتخاب نشده",});
             return
         }
         if(addItem.category){
             formData.append("CategoryId", addItem.category);
         }else{
-            console.log("error")
+            error.showError({message: "دسته بندی نا مشخص",});
             return
         }
         if(addItem.title){
             formData.append("Title", addItem.title);
         }else{
-            console.log("error")
+            error.showError({message: "نام تصویر نا مشخص",});
             return
         }
         formData.append("Description", addItem.description);
         media_addImage(formData)
             .then(data => {
+                error.showError({message: "عملیات موفق",});
                 if (data.status === 200)
                     uploadComplete(data);
-            }).catch(e => console.log(e))
+            }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function MyDropzone() {
         const onDrop = useCallback(acceptedFiles => {
-            console.log(acceptedFiles);
             if (acceptedFiles.length > 0)
                 setAddItem({...addItem, file: acceptedFiles});
         }, [])

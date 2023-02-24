@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Button, FormControlLabel, FormGroup, FormLabel, Switch, TextField} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader,} from "../../../../partials/content/Portlet";
 import GateTrafficManagement from "./GateTrafficManage";
 import {Location_query} from "../../../../../network/api/location.api";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 function GateBase({gate,updateGate}){
+    const error = useContext(ErrorContext);
 
     const [regions,SetRegions] = useState([])
     const [inGate,SetInGate] = useState(gate)
@@ -15,7 +17,13 @@ function GateBase({gate,updateGate}){
             paging:{Page:0,Size:10}
         }).then(data=>{
             SetRegions(data.data.Data)
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, []);
 
     function setFormValues(lable,Value){

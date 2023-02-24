@@ -93,7 +93,7 @@ const FinanceManagement = () => {
                                 {transactions.content && transactions.content.map((row, index) => {
                                     return (
                                         <TableRow hover role="checkbox" key={row.Id.toString()}>
-                                            {console.log(row)}
+
                                             <TableCell component="th" id={`transaction-${index}`} scope="row"
                                                        padding="normal" align="right">{row.Id}</TableCell>
                                             <TableCell component="th" padding="normal" align="right">

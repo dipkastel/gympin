@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletFooter, PortletHeader} from "../../../../partials/content/Portlet";
 import {corporate_getByUser} from "../../../../../network/api/corporate.api";
 import Table from "@mui/material/Table";
@@ -7,15 +7,22 @@ import TableRow from "@mui/material/TableRow";
 import {Avatar, Chip, TableCell} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import {useHistory} from "react-router-dom";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 function UserCorporates({ currentUser }) {
+    const error = useContext(ErrorContext);
     const history = useHistory();
     const [userCorporates, setUserCorporates] = useState([]);
     useEffect(() => {
         corporate_getByUser({id:currentUser.Id}).then(result=>{
-            console.log(result)
             setUserCorporates(result.data.Data)
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, [currentUser]);
 
     return (

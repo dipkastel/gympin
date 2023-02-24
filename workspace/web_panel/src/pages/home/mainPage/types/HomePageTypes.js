@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {placeOption_delete} from "../../../../network/api/placeOptions.api";
 import {Form, Modal} from "react-bootstrap";
 import {
@@ -29,6 +29,7 @@ import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {homepage_addType, homepage_deleteType, homepage_getAllTypes} from "../../../../network/api/homepage.api";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 
 const elements = [
@@ -39,6 +40,7 @@ const elements = [
 ]
 
 const HomePageTypes = () => {
+    const error = useContext(ErrorContext);
     const [homeTypes, SetHomeTypes] = useState([])
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
@@ -49,9 +51,14 @@ const HomePageTypes = () => {
 
     function getPlaceOption() {
         homepage_getAllTypes().then(data => {
-            console.log(data)
             SetHomeTypes(data.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
 
@@ -68,7 +75,13 @@ const HomePageTypes = () => {
                 .then(data => {
                     setOpenModalAdd(false)
                     getPlaceOption()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (
@@ -176,7 +189,13 @@ const HomePageTypes = () => {
                 .then(data => {
                     setItemToDelete(null)
                     getPlaceOption()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

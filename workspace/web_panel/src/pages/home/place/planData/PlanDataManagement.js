@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import {Place_getPlaceById, Place_updatePlace} from "../../../../network/api/place.api";
 import Notice from "../../../partials/content/Notice";
@@ -8,8 +8,10 @@ import PlanGatesTiming from "./PlanGatesTiming/PlanGateTiming";
 import {Button} from "@mui/material";
 import {Place} from "@mui/icons-material";
 import PlanSport from "./planSports/PlanSport";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const PlaceDataManagement = () => {
+    const error = useContext(ErrorContext);
     let {planId} = useParams();
     let history = useHistory();
     const [plan,setPlan] = useState(null);
@@ -20,13 +22,25 @@ const PlaceDataManagement = () => {
     function getPlan() {
         Plans_getById({id: planId}).then((result) => {
             setPlan(result.data.Data)
-        }).catch(e=>console.log(e));
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function updatePlan(plan) {
         Plans_update(plan).then(data => {
             setPlan(data.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     return (

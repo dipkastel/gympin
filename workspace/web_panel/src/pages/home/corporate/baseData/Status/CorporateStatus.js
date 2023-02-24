@@ -1,20 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
 import Select from "react-select";
 import {user_GetStatuses, user_UpdateUserStatus} from "../../../../../network/api/user.api";
 import {corporate_updateStatus} from "../../../../../network/api/corporate.api";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const CorporateStatus = ({currentCorporate}) => {
+    const error = useContext(ErrorContext);
     const [inCorporate,SetInCorporate] = useState(currentCorporate)
 
 
     function changeUserStatus(data){
-       console.log(data)
-
         corporate_updateStatus({...inCorporate,Status:data}).then(response=>{
+            error.showError({message: "عملیات موفق",});
             SetInCorporate({...inCorporate,Status:data})
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function getStatusOptions() {

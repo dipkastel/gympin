@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import { connect } from "react-redux";
@@ -16,8 +16,10 @@ import SendToMobileIcon from "@mui/icons-material/SendToMobile";
 import { Spinner } from "react-bootstrap";
 import { checkMobileValid } from "../../helper";
 import {authActions} from "../../helper/redux/actions/authActions";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 function Login(props) {
+  const error = useContext(ErrorContext);
   const { intl } = props;
   const [loading, setLoading] = useState(false);
   const [resend, setResend] = useState(-3);
@@ -105,8 +107,12 @@ function Login(props) {
                     props.SetToken(data.data.Data.Token);
                     props.SetRefreshToken(data.data.Data.RefreshToken);
                   })
-                  .catch((ex) => {
-                    console.log(ex);
+                  .catch((e) => {
+                      try {
+                        error.showError({message: e.response.data.Message,});
+                      } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                      }
                     disableLoading();
                     setSubmitting(false);
                     setStatus(

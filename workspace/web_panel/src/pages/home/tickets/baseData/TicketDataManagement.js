@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import _TicketInfo from "./info/_TicketInfo";
 import Notice from "../../../partials/content/Notice";
@@ -14,8 +14,10 @@ import UserTransActions from "../../user/baseDate/TransActions/UserTransActions"
 import Notes from "../../../partials/content/notes/Notes";
 import _Transactions from "./transactions/_Transaction";
 import _TicketEntryList from "./entry/_TicketEnryList";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const TicketDataManagement = () => {
+    const error = useContext(ErrorContext);
     const {ticketId} = useParams();
     const [ticket,setTicket]=useState({})
     useEffect(() => {
@@ -24,10 +26,14 @@ const TicketDataManagement = () => {
     function getTicket(){
         ticket_getById({id:ticketId}).then(result=>{
             setTicket(result.data.Data)
-            console.log(result.data.Data)
-        }).catch(e=>console.log(e));
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
-    console.log(ticketId)
     return (
         <>
             <Notice icon="flaticon-warning kt-font-primary">

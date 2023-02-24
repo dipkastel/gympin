@@ -1,11 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Box, FormControlLabel, Slider, Switch} from "@mui/material";
 import "./fixCss.css"
 import {gateTraffic_add, gateTraffic_getByGate} from "../../../../../network/api/gateTraffic.api";
 import data from "bootstrap/js/src/dom/data";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const GateTrafficManagement = ({gate}) => {
+    const error = useContext(ErrorContext);
 
     const [val,SetVal] = useState(0)
     const [colors,setColor] = useState("secondary");
@@ -16,7 +18,13 @@ const GateTrafficManagement = ({gate}) => {
     function getGateTraffic(){
         gateTraffic_getByGate({Id:gate.Id}).then(data=>{
             setStatus(data.data.Data.Traffic)
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function valuetext(_value) {
@@ -30,7 +38,6 @@ const GateTrafficManagement = ({gate}) => {
 
 
     function getColor() {
-        console.log(Math.floor(val/33))
         switch (Math.floor(val/33)) {
             case 0:return "success";
             case 1:return "secondary";
@@ -50,9 +57,14 @@ const GateTrafficManagement = ({gate}) => {
 
     function submitTrafic(value) {
         gateTraffic_add({Gate:{Id:gate.Id},Traffic: value}).then(data=>{
-
-
-        }).catch(e=>console.log(e))
+            error.showError({message: "عملیات موفق",});
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
 

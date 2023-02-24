@@ -1,25 +1,37 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Portlet, PortletBody, PortletHeader,} from "../../../../partials/content/Portlet";
 import Select from "react-select";
 import {user_getUserRoles, user_updateUserRoles, user_UpdateUserStatus} from "../../../../../network/api/user.api";
 import {Form} from "react-bootstrap";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const UserAccess = ({currentUser}) => {
+    const error = useContext(ErrorContext);
   const [inUser,SetInUser] = useState(currentUser.UserRole)
   const [rules,SetRules] = useState([])
 
   useEffect(() => {
     user_getUserRoles().then(data=>{
-      console.log(data.data.Data)
       SetRules(data.data.Data)
-    }).catch(e=>console.log(e))
+    }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
   }, []);
 
   function changeUserAccess(data){
     user_updateUserRoles({UserId:currentUser.Id,Role:data}).then(response=>{
-      console.log(response)
       SetInUser(response.data.Data.UserRole)
-    }).catch(e=>console.log(e))
+    }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
   }
 
   return (

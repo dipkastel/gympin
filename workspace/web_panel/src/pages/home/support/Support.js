@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Notice from "../../partials/content/Notice";
 import Paper from "@mui/material/Paper";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,9 +13,11 @@ import Box from "@mui/material/Box";
 import {useHistory} from "react-router-dom";
 import TableHead from "@mui/material/TableHead";
 import {Support_getAll} from "../../../network/api/support.api";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 
 const Support = () => {
+    const error = useContext(ErrorContext);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(25);
     const [itemCount, setItemCount] = useState(0);
@@ -27,11 +29,14 @@ const Support = () => {
     useEffect(() => {
         Support_getAll()
             .then((data) => {
-                console.log(data.data.Data);
                 setSupportList(data.data.Data);
             })
-            .catch((e) => {
-                console.log(e);
+            .catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
             });
     }, [page, rowsPerPage, searchString]);
 

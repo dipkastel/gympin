@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
 import {Avatar, Button, TableCell} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
@@ -10,8 +10,10 @@ import TableBody from "@mui/material/TableBody";
 import {placePersonnel_add, placePersonnel_ByPlace, placePersonnel_delete} from "../../../../../network/api/placePersonnel.api";
 import {useHistory} from "react-router-dom";
 import {PlacePersonnelRole} from "../../../../../helper/enums/PlacePersonnelRole";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const PlacePersonnel = ({place}) => {
+    const error = useContext(ErrorContext);
     const history = useHistory();
     const [placePersonnels,SetPlacePersonnels] = useState([])
     const [openModalAdd,setOpenModalAdd] = useState(false)
@@ -21,21 +23,32 @@ const PlacePersonnel = ({place}) => {
     }, []);
     function getPersonnelsOfPlace(){
         placePersonnel_ByPlace({Id:place.Id}).then(data=>{
-            console.log("personel:",data.data.Data)
             SetPlacePersonnels(data.data.Data);
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function renderModalAdd() {
 
         function addOption(e) {
             e.preventDefault()
-            console.log({Place:{Id:place.Id},PhoneNumber:e.target.PhoneNumber.value})
             placePersonnel_add({Place:{Id:place.Id},PhoneNumber:e.target.PhoneNumber.value})
                 .then(data=>{
+                    error.showError({message: "عملیات موفق",});
                     setOpenModalAdd(false)
                     getPersonnelsOfPlace()
-                }).catch(e=>console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (
@@ -85,9 +98,16 @@ const PlacePersonnel = ({place}) => {
             e.preventDefault()
             placePersonnel_delete({Id:itemToDelete.Id})
                 .then(data=>{
+                    error.showError({message: "عملیات موفق",});
                     setItemToDelete(null)
                     getPersonnelsOfPlace()
-                }).catch(e=>console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

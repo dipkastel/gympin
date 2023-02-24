@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Notice from "../../../partials/content/Notice";
 import {useParams} from "react-router-dom";
 import {
@@ -9,7 +9,9 @@ import PersonnelCredit from "./personnelCredits/PersonnelCredit";
 import {Avatar, Grid} from "@mui/material";
 import PersonnelRole from "./PersonnelRole/PersonnelRole";
 import {toPriceWithComma} from "../../../../helper";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 const CorporatePersonnelDetailsManagement = () => {
+    const error = useContext(ErrorContext);
     const {personnelId} = useParams();
     const [personnelCredit,SetPersonnelCredit] = useState({});
     useEffect(() => {
@@ -17,9 +19,14 @@ const CorporatePersonnelDetailsManagement = () => {
     }, []);
     function getPerson(){
         corporatePersonnel_getById({id:personnelId}).then(result=>{
-            console.log(result)
             SetPersonnelCredit(result.data.Data)
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     return (

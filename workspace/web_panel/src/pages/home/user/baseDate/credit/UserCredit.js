@@ -1,17 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletFooter, PortletHeader} from "../../../../partials/content/Portlet";
 import {UserCredit_getByUser} from "../../../../../network/api/userCredit.api";
 import {Avatar, Chip, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import {creditTypes} from "../../../../../helper/enums/creditTypes";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const UserCredit = ({currentUser}) => {
+    const error = useContext(ErrorContext);
     const history = useHistory();
     const [userCredits,SetUserCredits] = useState([])
     useEffect(() => {
         UserCredit_getByUser({Id:currentUser.Id}).then(result=>{
             SetUserCredits(result.data.Data);
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, [currentUser]);
 
     return (

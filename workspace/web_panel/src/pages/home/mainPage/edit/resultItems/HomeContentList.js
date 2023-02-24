@@ -4,7 +4,6 @@ import {Box, Card, CardContent, CardMedia, Link, Typography} from "@mui/material
 import {Image} from "react-bootstrap";
 
 const HomeContentList =(props) => {
-    console.log(props)
     const settings = {
         dots: false,
         infinite: true,

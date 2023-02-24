@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Notice from "../../partials/content/Notice";
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal, Table} from "react-bootstrap";
@@ -12,9 +12,11 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {useHistory} from "react-router-dom";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 
 const CorporateManagement = () => {
+    const error = useContext(ErrorContext);
     const history = useHistory();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -44,7 +46,13 @@ const CorporateManagement = () => {
                         pathname: "/corporate/details/" + data.data.Data.Id
                     });
                 })
-                .catch((e) => console.log(e));
+                .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (
@@ -63,7 +71,7 @@ const CorporateManagement = () => {
                                 <Form.Control
                                     name="formName"
                                     type="text"
-                                    placeholder="نام مکان (مجموعه ورزشی)"
+                                    placeholder="نام مکان (شرکت)"
                                 />
                                 <Form.Text className="text-muted">
                                     از نوشتن هاشیه ها (مجموعه ، شرکت ، سازمان ، ارگان) خودداری
@@ -138,7 +146,7 @@ const CorporateManagement = () => {
                                 <TableRow>
                                     <TableCell align="right" padding="normal" sortDirection={false}>Id</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}></TableCell>
-                                    <TableCell align="right" padding="normal" sortDirection={false}>نام مجموعه</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>نام شرکت</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
                                 </TableRow>
                             </TableHead>

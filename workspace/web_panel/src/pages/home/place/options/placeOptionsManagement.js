@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, TableCell, TableHead} from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
@@ -15,8 +15,10 @@ import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import {Form, Modal} from "react-bootstrap";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const PlaceOptions = () => {
+    const error = useContext(ErrorContext);
     const [placeOptions, SetPlaceOptions] = useState([])
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
@@ -27,7 +29,13 @@ const PlaceOptions = () => {
     function getPlaceOption() {
         placeOption_getAll().then(data => {
             SetPlaceOptions(data.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
 
@@ -36,9 +44,16 @@ const PlaceOptions = () => {
             e.preventDefault()
             placeOption_add({Name:e.target.formName.value})
                 .then(data=>{
+                    error.showError({message: "عملیات موفق",});
                     setOpenModalAdd(false)
                     getPlaceOption()
-                }).catch(e=>console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (
@@ -88,9 +103,16 @@ const PlaceOptions = () => {
             e.preventDefault()
             placeOption_delete({Id:itemToDelete.Id})
                 .then(data=>{
+                    error.showError({message: "عملیات موفق",});
                     setItemToDelete(null)
                     getPlaceOption()
-                }).catch(e=>console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

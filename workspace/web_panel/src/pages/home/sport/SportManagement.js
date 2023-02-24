@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component, useContext} from "react";
 import Notice from "../../partials/content/Notice";
 import AddIcon from "@mui/icons-material/Add";
 import { Form, Modal, Table } from "react-bootstrap";
@@ -19,6 +19,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import { style } from "../../partials/content/generalStyle";
 import * as utils from "../../../helper/utils/utils";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 class SportManagement extends Component {
   constructor(props) {
@@ -140,29 +141,38 @@ class SportManagement extends Component {
         PictureIds: [this.state.selectedFile.Id],
       })
         .then((data) => {
+          useContext(ErrorContext).showError({message: "عملیات موفق",});
           this.getSports();
           this.toggleAddMode(e);
         })
-        .catch((e) => {
-          console.log(e);
-        });
+          .catch(e => {
+            try {
+              useContext(ErrorContext).showError({message: e.response.data.Message,});
+            } catch (f) {
+              useContext(ErrorContext).showError({message: "خطا نا مشخص",});
+            }
+          });
     } else {
       sport_addSport({
         Name: e.target.formName.value,
         PictureIds: [this.state.selectedFile.Id],
       })
         .then((data) => {
+          useContext(ErrorContext).showError({message: "عملیات موفق",});
           this.getSports();
           this.toggleAddMode(e);
         })
-        .catch((e) => {
-          console.log(e);
-        });
+          .catch(e => {
+            try {
+              useContext(ErrorContext).showError({message: e.response.data.Message,});
+            } catch (f) {
+              useContext(ErrorContext).showError({message: "خطا نا مشخص",});
+            }
+          });
     }
   }
   getSports() {
     sport_getAllSport().then((data) => {
-      console.log(data.data.Data);
       this.setState(() => ({
         allSportsArray: data.data.Data,
       }));
@@ -174,13 +184,18 @@ class SportManagement extends Component {
       Id: sport.Id,
     })
       .then((data) => {
+        useContext(ErrorContext).showError({message: "عملیات موفق",});
         this.getSports();
         this.closeModalDelete();
         this.clearForm();
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch(e => {
+                    try {
+                      useContext(ErrorContext).showError({message: e.response.data.Message,});
+                    } catch (f) {
+                      useContext(ErrorContext).showError({message: "خطا نا مشخص",});
+                    }
+                });
   }
   onImageSelect = (images) => {
     this.setState(() => ({

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Notice from "../../partials/content/Notice";
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal, Table} from "react-bootstrap";
@@ -12,9 +12,11 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {useHistory} from "react-router-dom";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 
 const PlaceManagement = () => {
+    const error = useContext(ErrorContext);
     const history = useHistory();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -40,11 +42,18 @@ const PlaceManagement = () => {
             e.preventDefault()
             Place_addPlace({Address: "", Name: e.target.formName.value , Region: {Id: 1}})
                 .then((data) => {
+                    error.showError({message: "عملیات موفق",});
                     history.push({
                         pathname: "/place/data/" + data.data.Data.Id
                     });
                 })
-                .catch((e) => console.log(e));
+                .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

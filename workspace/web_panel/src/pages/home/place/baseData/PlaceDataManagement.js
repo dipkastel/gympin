@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {Place_getPlaceById, Place_updatePlace} from "../../../../network/api/place.api";
 import PlaceBase from "./Base/PlaceBase";
@@ -18,8 +18,10 @@ import PlaceImages from "./Images/PlaceImages";
 import {Note} from "@mui/icons-material";
 import Notes from "../../../partials/content/notes/Notes";
 import PlaceBalance from "./Balance/PlaceBalance";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const PlaceDataManagement = () => {
+    const error = useContext(ErrorContext);
     let {placeId} = useParams();
     const [place,setPlace] = useState(null);
     useEffect(() => {
@@ -29,20 +31,32 @@ const PlaceDataManagement = () => {
     function getPlace() {
         Place_getPlaceById({id: placeId}).then((result) => {
             setPlace(result.data.Data)
-        }).catch(e=>console.log(e));
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function updatePlace(place) {
         Place_updatePlace(place).then(data => {
             setPlace(data.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     return (
         <>
             <Notice icon="flaticon-warning kt-font-primary">
                 {place && (
-                    <p>مدیریت مشخصات باشگاه {place.Name}</p>
+                    <p>مدیریت مشخصات مجموعه {place.Name}</p>
                 )}
             </Notice>
             {place && <div className="row">

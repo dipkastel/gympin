@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import {homepage_add, homepage_getAll} from "../../../network/api/homepage.api";
@@ -9,8 +9,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {Form, Modal} from "react-bootstrap";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 const MainPageList = () => {
+    const error = useContext(ErrorContext);
 
     const [list, SetList] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
@@ -20,8 +22,13 @@ const MainPageList = () => {
     useEffect(function () {
         homepage_getAll().then((data) => {
             SetList(data.data.Data)
-            console.log(data.data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, [])
 
     function RenderModalAdd() {
@@ -33,7 +40,13 @@ const MainPageList = () => {
                         pathname: "/homePageEdit/"+data.data.Data.Id
                     });
                 })
-                .catch((e) => console.log(e));
+                .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import Notice from "../../partials/content/Notice";
 import Table from "@mui/material/Table";
@@ -15,8 +15,10 @@ import {Form, Modal} from "react-bootstrap";
 import {Avatar, Button, Chip, TextField} from "@mui/material";
 import {account_registerUser} from "../../../network/api/auth.api";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 const UserManagement = () => {
+    const error = useContext(ErrorContext);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [userList, setUserList] = useState([]);
@@ -37,10 +39,15 @@ const UserManagement = () => {
                 Desc: true
             }
         }).then((data) => {
-            console.log(data.data.Data);
             setUserList(data.data.Data);
         })
-            .catch((e) => {console.log(e);});
+            .catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
     }, [page, rowsPerPage, searchString]);
 
     function RenderModalAdd() {
@@ -48,11 +55,18 @@ const UserManagement = () => {
             e.preventDefault()
             account_registerUser({PhoneNumber: e.target.formPhoneNumber.value})
                 .then((data) => {
+                    error.showError({message: "عملیات موفق",});
                     history.push({
                         pathname: "/users/details/" + data.data.Data.Id
                     });
                 })
-                .catch((e) => console.log(e));
+                .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

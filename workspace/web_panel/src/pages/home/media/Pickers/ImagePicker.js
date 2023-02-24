@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import {
     Box,
@@ -16,6 +16,7 @@ import {ExpandMore, FilterAlt} from '@mui/icons-material';
 import {media_getAllImages} from "../../../../network/api/media.api";
 import AddIcon from "@mui/icons-material/Add";
 import AddImageModal from "../Image/AddImageModal";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const defaultPageSize = {Page: 0, Size: 20}
 const defaultSettings = {
@@ -25,6 +26,7 @@ const defaultSettings = {
 }
 
 const ImagePicker = ({setClose, onSelect, options}) => {
+    const error = useContext(ErrorContext);
     const [images, setImages] = useState([])
     const [selectedImages, setSelectedImages] = useState([])
     const [pagination, setPagination] = useState(defaultPageSize)
@@ -46,7 +48,13 @@ const ImagePicker = ({setClose, onSelect, options}) => {
             }
             items.push(...result.data.Data)
             setImages(items);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function imageClicked(item) {

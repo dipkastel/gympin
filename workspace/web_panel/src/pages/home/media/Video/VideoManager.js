@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect, useImperativeHandle, useState} from 'react';
+import React, {forwardRef, useContext, useEffect, useImperativeHandle, useState} from 'react';
 import {media_getAllImages} from "../../../../network/api/media.api";
 import {Delete, Share, ExpandMore} from '@mui/icons-material';
 import {
@@ -12,7 +12,9 @@ import {
     IconButton,
     Typography
 } from "@mui/material";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 const VideoManager = (props, ref) => {
+    const error = useContext(ErrorContext);
     const [images, setImages] = useState([])
     const [pagination, setPagination] = useState({Page: 0, Size: 20})
 
@@ -33,7 +35,13 @@ const VideoManager = (props, ref) => {
             }
             items.push(...result.data.Data)
             setImages(items);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function goForNexPage() {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import * as HomeChildApi from "../../../../../network/api/homeChild.api";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -19,8 +19,10 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModalAddChild from "./ModalAddChild";
 import {Image} from "react-bootstrap";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const SelectChild = ({addItemToList}) => {
+    const error = useContext(ErrorContext);
 
     const [possibleItems, SetPossibleItems] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
@@ -28,16 +30,27 @@ const SelectChild = ({addItemToList}) => {
 
     useEffect(() => {
         HomeChildApi._getAll().then(result => {
-            console.log(result)
             SetPossibleItems(result.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, [dataChanges]);
 
 
     function DeleteItem(item) {
         HomeChildApi._delete({Id:item.Id}).then(result=>{
             SetDataChanges(result)
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     return (

@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../Portlet";
 import {AppBar, Button, Checkbox, FormControlLabel, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
 import {Alert, Form} from "react-bootstrap";
 import {note_add, note_getByParam, note_update} from "../../../../network/api/note.api";
 import {Row} from "reactstrap";
 import {getUserFixedName} from "../../../../helper";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const Notes = ({source}) => {
+    const error = useContext(ErrorContext);
     const [selectedTab,setSelectedTab] = useState("NOTE")
     const [notes,setNotes] = useState([])
 
@@ -17,7 +19,13 @@ const Notes = ({source}) => {
     function getData(){
         note_getByParam(source).then(result=>{
             setNotes(result.data.Data)
-        }).then(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
 
@@ -37,17 +45,31 @@ const Notes = ({source}) => {
                 IsToDo:false}
         }
         note_add(data).then(result=>{
+            error.showError({message: "عملیات موفق",});
             getData()
             e.target.Name.value = "";
             e.target.Number.value="";
             e.target.Text.value ="";
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
     function doneItem(e,item){
         e.preventDefault();
         note_update({...item,IsToDo:false}).then(result=>{
+            error.showError({message: "عملیات موفق",});
             getData();
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     return (

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
 import {Avatar, Button, TableCell, Tooltip} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
@@ -15,8 +15,10 @@ import {
 import {useHistory} from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const CorporatePersonnel = ({currentCorporate}) => {
+    const error = useContext(ErrorContext);
     const history = useHistory();
     const [corporatePersonnels, SetCorporatePersonnels] = useState([])
     const [openModalAdd, setOpenModalAdd] = useState(false)
@@ -27,21 +29,32 @@ const CorporatePersonnel = ({currentCorporate}) => {
 
     function getPersonnelsOfCorporate() {
         corporatePersonnel_ByCorporate({Id: currentCorporate.Id}).then(data => {
-            console.log(data.data.Data)
             SetCorporatePersonnels(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function renderModalAdd() {
 
         function addOption(e) {
             e.preventDefault()
-            console.log({Corporate: {Id: currentCorporate.Id}, PhoneNumber: e.target.PhoneNumber.value})
             corporatePersonnel_add({Corporate: {Id: currentCorporate.Id}, PhoneNumber: e.target.PhoneNumber.value})
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setOpenModalAdd(false)
                     getPersonnelsOfCorporate()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
 
         return (
@@ -91,9 +104,16 @@ const CorporatePersonnel = ({currentCorporate}) => {
             e.preventDefault()
             corporatePersonnel_delete({Id: itemToDelete.Id})
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setItemToDelete(null)
                     getPersonnelsOfCorporate()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
 
         return (

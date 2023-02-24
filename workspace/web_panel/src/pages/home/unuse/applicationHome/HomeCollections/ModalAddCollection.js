@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Button, Modal} from "react-bootstrap";
 import {Formik} from "formik";
 import {TextField} from "@mui/material";
 import * as collection from "../../../../../network/api/homeCollection.api";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const ModalAddCollection = ({openModalAdd, SetOpenModalAdd,SetDataChanges}) => {
+    const error = useContext(ErrorContext);
     return (
         <Formik
             initialValues={{CollectionName: ""}}
@@ -12,9 +14,13 @@ const ModalAddCollection = ({openModalAdd, SetOpenModalAdd,SetDataChanges}) => {
                 collection._add(values).then(data=>{
                     SetDataChanges(data.data);
                     SetOpenModalAdd(false)
-                }).catch(ex=>{
-                    console.log(ex);
-                })
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
 
             }}
         >

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AddIcon from "@mui/icons-material/Add";
 import {Image} from "react-bootstrap";
 import {toAbsoluteUrl} from "../../../../../helper";
@@ -8,10 +8,11 @@ import {Container, Grid, IconButton, Link} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SelectItem from "../HomeItem/SelectItem";
 import SelectChild from "./SelectChild";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const HomeChild = ({selectedHomeItem,SetDataChanges}) => {
+    const error = useContext(ErrorContext);
     const [showAdd, SetShowAdd] = useState(false);
-    console.log("selectedHomeItem",selectedHomeItem)
 
 
     function removeItem(item) {
@@ -20,11 +21,16 @@ const HomeChild = ({selectedHomeItem,SetDataChanges}) => {
             Name:selectedHomeItem.Name,
             Items: selectedHomeItem.Items.filter(p => p.Id !== item.Id).map(o=>{ return { Id:o.Id}})
         };
-        console.log(update_data)
         HomeItemApi._update(update_data).then(result => {
-            console.log(result)
+            error.showError({message: "عملیات موفق",});
             SetDataChanges(selectedHomeItem.Items.filter(p => p.Id !== item.Id))
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function addItem(item) {
@@ -34,9 +40,15 @@ const HomeChild = ({selectedHomeItem,SetDataChanges}) => {
             Items: selectedHomeItem.Items.concat(item).map(o=>{ return { Id:o.Id}})
         };
         HomeItemApi._update(update_data).then(result => {
-            console.log(result)
+            error.showError({message: "عملیات موفق",});
             SetDataChanges(selectedHomeItem.Items.filter(p => p.Id !== item.Id))
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function renderCollectionsRow(data, index) {

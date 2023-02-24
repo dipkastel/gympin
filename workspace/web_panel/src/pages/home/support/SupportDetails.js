@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Notice from "../../partials/content/Notice";
 import {Support_addMessage, Support_getById} from "../../../network/api/support.api";
@@ -7,8 +7,10 @@ import {Checkbox, FormControlLabel, FormGroup, Grid, List, TextField, Typography
 import {Alert} from "react-bootstrap";
 import {Row} from "reactstrap";
 import {getUserFixedName} from "../../../helper";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 const SupportDetails = () => {
+    const error = useContext(ErrorContext);
     const {supportId} = useParams();
     const [support, SetSupport] = useState({})
     const [Messages, SetMessages] = useState([])
@@ -20,10 +22,15 @@ const SupportDetails = () => {
 
     function getSupportDetail() {
         Support_getById({id: supportId}).then(result => {
-            console.log(result.data.Data)
             SetSupport(result.data.Data);
             SetMessages(result.data.Data.Messages.reverse())
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function SendAnswer() {
@@ -33,12 +40,18 @@ const SupportDetails = () => {
             "Message":answer,
             "IsAnswer":true
         }).then(result => {
-                console.log("hasan")
+            error.showError({message: "عملیات موفق",});
                 SetIsLastMessage(false)
                 SetAnswer("")
                 getSupportDetail()
             })
-            .catch(e => console.log(e))
+            .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
 
     }
 

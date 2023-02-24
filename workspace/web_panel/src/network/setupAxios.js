@@ -30,7 +30,6 @@ export function setupAxios(axios, store) {
             if (!error.response) {
                 console.log("error");
             } else if (error.response.status === 401) {
-                console.log("expire");
                 reToken(result=>{
                     window.location = window.location;
                 })
@@ -40,7 +39,6 @@ export function setupAxios(axios, store) {
     );
 
     function reToken(callBack) {
-        console.log("retolen")
         const rToken = store.getState().auth.refreshToken
         refreshToken(rToken).then(result=>{
             store.dispatch(authActions.SetToken(result.data.Data.Token))

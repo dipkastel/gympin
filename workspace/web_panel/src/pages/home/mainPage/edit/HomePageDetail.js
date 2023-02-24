@@ -1,18 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Notice from "../../../partials/content/Notice";
 import BaseItem from "./BaseItem";
 import {homepage_getHome} from "../../../../network/api/homepage.api";
 import HomePageEditor from "./HomePageEditor";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 export default function HomePageDetail() {
+    const error = useContext(ErrorContext);
     const [homeItems,setHomeItems] = useState([]);
     const [renderId,setRenderId] = useState(400);
     let {ItemId} = useParams();
     useEffect(() => {
         homepage_getHome({id:ItemId}).then(result=>{
             setHomeItems(result.data.Data)
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, [renderId]);
 
     return (

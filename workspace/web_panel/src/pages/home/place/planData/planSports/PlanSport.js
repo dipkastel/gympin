@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TableCell} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
@@ -16,8 +16,10 @@ import {gateTiming_getByPlace} from "../../../../../network/api/gateTiming.api";
 import {dayOfWeekEnum} from "../../../../../helper/enums/dayOfWeekEnum";
 import {placeSport_getAll, placeSport_getSportsByPlace} from "../../../../../network/api/placeSport.api";
 import {Plans_addSport, Plans_deleteSport, Plans_getAll, Plans_getSports} from "../../../../../network/api/plans.api";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const PlanSport = ({plan}) => {
+    const error = useContext(ErrorContext);
     const [planSports, SetPlanSports] = useState([])
     const [sportsPlace, SetSportsPlace] = useState([])
     const [openModalAdd, setOpenModalAdd] = useState(false)
@@ -30,12 +32,24 @@ const PlanSport = ({plan}) => {
     function getPlanSports() {
         Plans_getSports({PlanId: plan.Id}).then(data => {
             SetPlanSports(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
     function getPlaceSports() {
         placeSport_getSportsByPlace({Id: plan.Place.Id}).then(data => {
             SetSportsPlace(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
 
@@ -51,7 +65,13 @@ const PlanSport = ({plan}) => {
                 .then(data => {
                     setOpenModalAdd(false)
                     getPlanSports()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         function handleChange(sportPlaceId,status) {
@@ -122,7 +142,13 @@ const PlanSport = ({plan}) => {
                 .then(data => {
                     setItemToDelete(null)
                     getPlanSports()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

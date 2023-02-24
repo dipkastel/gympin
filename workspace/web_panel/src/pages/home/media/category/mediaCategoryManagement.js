@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component, useContext} from "react";
 import Notice from "../../../partials/content/Notice";
 import {
   Portlet,
@@ -14,6 +14,7 @@ import {
   multimediacategory_getAll,
   multimediacategory_update,
 } from "../../../../network/api/mediaCategories.api";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 class MediaCategoryManagement extends Component {
   constructor(props) {
@@ -37,9 +38,13 @@ class MediaCategoryManagement extends Component {
           categories: data.data.Data,
         }));
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch(e => {
+                    try {
+                      useContext(ErrorContext).showError({message: e.response.data.Message,});
+                    } catch (f) {
+                      useContext(ErrorContext).showError({message: "خطا نا مشخص",});
+                    }
+                });
   }
 
   RenderRaw = (User, index) => {
@@ -103,21 +108,31 @@ class MediaCategoryManagement extends Component {
         Name: e.target.category_name.value,
       })
         .then(function (data) {
+          useContext(ErrorContext).showError({message: "عملیات موفق",});
           that.getAllCategories();
           that.toggleAddMode(e);
         })
-        .catch(function (err) {
-          console.log(err);
-        });
+          .catch(e => {
+            try {
+              useContext(ErrorContext).showError({message: e.response.data.Message,});
+            } catch (f) {
+              useContext(ErrorContext).showError({message: "خطا نا مشخص",});
+            }
+          });
     } else {
       multimediacategory_add({ Name: e.target.category_name.value })
         .then(function (data) {
+          useContext(ErrorContext).showError({message: "عملیات موفق",});
           that.getAllCategories();
           that.toggleAddMode(e);
         })
-        .catch(function (err) {
-          console.log(err);
-        });
+          .catch(e => {
+            try {
+              useContext(ErrorContext).showError({message: e.response.data.Message,});
+            } catch (f) {
+              useContext(ErrorContext).showError({message: "خطا نا مشخص",});
+            }
+          });
     }
   }
 
@@ -179,12 +194,17 @@ class MediaCategoryManagement extends Component {
     e.preventDefault();
     multimediacategory_delete(catToDelete)
       .then((data) => {
+        useContext(ErrorContext).showError({message: "عملیات موفق",});
         this.getAllCategories();
         this.closeModalDelete();
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch(e => {
+                    try {
+                      useContext(ErrorContext).showError({message: e.response.data.Message,});
+                    } catch (f) {
+                      useContext(ErrorContext).showError({message: "خطا نا مشخص",});
+                    }
+                });
   }
   render() {
     return (

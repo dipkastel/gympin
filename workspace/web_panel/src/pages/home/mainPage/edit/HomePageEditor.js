@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Grid, IconButton, List, ListItem, ListItemText, Tooltip} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
@@ -18,8 +18,10 @@ import ImagePicker from "../../media/Pickers/ImagePicker";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../homePageEditor.css"
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
+    const error = useContext(ErrorContext);
     const [openModalSelectImage, setOpenModalSelectImage] = useState(false)
     const [selectedParent, setSelectedParent] = useState(homeitems)
     const [formVisibleElements, setFormVisibleElements] = useState({Title: false, Description: false})
@@ -37,7 +39,13 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
     useEffect(() => {
         homepage_getAllTypes().then(result => {
             setElements(result.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, [homeitems])
 
 
@@ -58,10 +66,17 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
             }
             data.parent.Items = null;
             homepage_add(data).then(result => {
+                error.showError({message: "عملیات موفق",});
                 setType(null)
                 onTypeChange(null)
                 setRenderId(Math.random())
-            }).catch(e => console.log(e))
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
 
         }
 
@@ -199,8 +214,15 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
         parent.Items = null;
         item.Parent = parent
         homepage_update(item).then(result => {
+            error.showError({message: "عملیات موفق",});
             setRenderId(Math.random())
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function UpdatePriority(item, nextItem) {
@@ -211,18 +233,39 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
         nextItem.Items=null
 
         homepage_update(item).then(result => {
+            error.showError({message: "عملیات موفق",});
             homepage_update(nextItem).then(result => {
+                error.showError({message: "عملیات موفق",});
                 setRenderId(Math.random())
-            }).catch(e => console.log(e));
-        }).catch(e => console.log(e));
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
 
     function deleteItem(item) {
         item.Items = null;
         homepage_delete(item).then(result => {
+            error.showError({message: "عملیات موفق",});
             setRenderId(Math.random())
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function renderItem(rootItem, item, index, isRoot) {

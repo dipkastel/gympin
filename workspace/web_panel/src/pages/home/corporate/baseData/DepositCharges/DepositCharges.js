@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {corporate_getTransactions} from "../../../../../network/api/corporate.api";
 import Table from "@mui/material/Table";
@@ -12,14 +12,21 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 import RemoveDoneIcon from '@mui/icons-material/RemoveDone';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import {toPriceWithComma} from "../../../../../helper";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const DepositCharges = ({currentCorporate}) => {
+    const error = useContext(ErrorContext);
     const [transactions, SetTransactions] = useState([])
     useEffect(() => {
         corporate_getTransactions({CorporateId: currentCorporate.Id}).then(result => {
-            console.log(result.data.Data);
             SetTransactions(result.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, []);
 
     return (

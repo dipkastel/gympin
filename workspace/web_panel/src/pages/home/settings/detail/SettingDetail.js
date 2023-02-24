@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Portlet,
     PortletBody,
@@ -11,8 +11,10 @@ import {Form} from "react-bootstrap";
 import {Button, Typography} from "@mui/material";
 import {settings_delete, settings_update} from "../../../../network/api/settings.api";
 import {SettingTypes} from "../settingsTypeEnum";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const SettingDetail = ({setting,refreshData}) => {
+    const error = useContext(ErrorContext);
     const [inSetting,SetInSetting] = useState({});
     useEffect(() => {
         SetInSetting(setting)
@@ -22,9 +24,16 @@ const SettingDetail = ({setting,refreshData}) => {
 
         settings_delete(setting)
             .then((data) => {
+                error.showError({message: "عملیات موفق",});
                 SetInSetting(null)
             })
-            .catch((e) => console.log(e));
+            .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function updateSetting(e) {
@@ -39,9 +48,16 @@ const SettingDetail = ({setting,refreshData}) => {
             Value: e.target.Value.value,
             Data: e.target.Data.value
         }).then((data) => {
+            error.showError({message: "عملیات موفق",});
                  refreshData()
             })
-            .catch((e) => console.log(e));
+            .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     return (

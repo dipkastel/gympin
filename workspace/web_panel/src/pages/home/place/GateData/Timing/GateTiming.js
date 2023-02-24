@@ -1,5 +1,5 @@
 
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, Link, TableCell, TextField} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
@@ -16,12 +16,14 @@ import {
     gateTiming_getByGate,
 } from "../../../../../network/api/gateTiming.api";
 import {dayOfWeekEnum} from "../../../../../helper/enums/dayOfWeekEnum";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 
 
 
 
 const GateTiming = ({gate}) => {
+    const error = useContext(ErrorContext);
     const [GateTiming, SetGateTiming] = useState([])
     const [openModalAdd, setOpenModalAdd] = useState(false)
     const [itemToDelete, setItemToDelete] = useState(null)
@@ -32,9 +34,14 @@ const GateTiming = ({gate}) => {
 
     function getGateTimingOfGate() {
         gateTiming_getByGate({Id: gate.Id}).then(data => {
-            console.log(data.data.Data);
             SetGateTiming(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
     function getDayOfWeek(en){
         return dayOfWeekEnum[en]
@@ -56,12 +63,18 @@ const GateTiming = ({gate}) => {
                     }
                 }
             )
-            console.log(JSON.stringify(postData))
             gateTiming_addAll(postData)
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setOpenModalAdd(false)
                     getGateTimingOfGate()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         function setFormValues(lable,newValue){
@@ -160,7 +173,13 @@ const GateTiming = ({gate}) => {
                 .then(data => {
                     setItemToDelete(null)
                     getGateTimingOfGate()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

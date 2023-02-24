@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar,} from "../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import {Button, TableCell} from "@mui/material";
@@ -9,8 +9,10 @@ import Select from "react-select";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const PlaceSports = ({place}) => {
+    const error = useContext(ErrorContext);
   const [placeSports,setPlaceSports]=useState([])
   const [sports,setSports]=useState([])
   const [openModalAdd,setOpenModalAdd]=useState(false)
@@ -24,22 +26,41 @@ const PlaceSports = ({place}) => {
     placeSport_getSportsByPlace({Id:place.Id})
         .then((data) => {
           setPlaceSports(data.data.Data)
-        }).catch(e=>console.log(e));
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
   }
 
   useEffect(() => {
     sport_getAllSport()
         .then((data) => {
       setSports(data.data.Data)
-    }).catch(e=>console.log(e));
+    }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
   }, []);
 
   function renderModalDelete(){
     function deleteSport(){
       placeSport_delete({Id:itemToDelete.Id}).then(data=>{
+          error.showError({message: "عملیات موفق",});
         setItemToDelete(null)
         getSportPlace()
-      }).catch(e=>console.log(e));
+      }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
     return (
         <>
@@ -74,10 +95,17 @@ const PlaceSports = ({place}) => {
     function addPlace(){
       placeSport_add({place:{Id:place.Id},sport:{Id:selectedId}})
           .then(data=>{
+              error.showError({message: "عملیات موفق",});
             selectedId=0;
             setOpenModalAdd(false)
             getSportPlace()
-      }).catch(e=>console.log(e))
+      }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
     return (
         <>

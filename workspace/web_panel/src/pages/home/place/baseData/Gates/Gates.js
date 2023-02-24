@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
 import {Button, TableCell} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
@@ -8,8 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {gates_add, gates_delete, gates_getByPlaceId} from "../../../../../network/api/gates.api";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const Gates = ({place}) => {
+    const error = useContext(ErrorContext);
     const [placeGates, SetPlaceGates] = useState([])
     const [openModalAdd, setOpenModalAdd] = useState(false)
     const [itemToDelete, setItemToDelete] = useState(null)
@@ -20,7 +22,13 @@ const Gates = ({place}) => {
     function getGatesOfPlace() {
         gates_getByPlaceId({Id: place.Id}).then(data => {
             SetPlaceGates(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function renderModalAdd() {
@@ -29,9 +37,16 @@ const Gates = ({place}) => {
             e.preventDefault()
             gates_add({Place: {Id: place.Id}, Name: e.target.Name.value})
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setOpenModalAdd(false)
                     getGatesOfPlace()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (
@@ -86,7 +101,13 @@ const Gates = ({place}) => {
                 .then(data => {
                     setItemToDelete(null)
                     getGatesOfPlace()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

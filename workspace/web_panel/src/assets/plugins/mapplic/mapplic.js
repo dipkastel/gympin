@@ -1123,7 +1123,6 @@
 
       // Developer tools
       if (self.o.developer) self.devtools = new DevTools().init();
-      console.log(self.devtools);
 
       // Level switcher
       if (nrlevels > 1) {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import {Button, Checkbox, Fab, IconButton, ImageList, ImageListItem, ImageListItemBar, TableCell} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
@@ -6,9 +6,11 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImagePicker from "../../../media/Pickers/ImagePicker";
 import {Place_addMultimeida, Place_deleteMultimedia, Place_GetMultimedias} from "../../../../../network/api/place.api";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 
 const PlaceImage = ({place}) => {
+    const error = useContext(ErrorContext);
     const [placeImages, SetPlaceImages] = useState([])
     const [openModalAdd, setOpenModalAdd] = useState(false)
     const [itemToDelete, setItemToDelete] = useState(null)
@@ -19,14 +21,27 @@ const PlaceImage = ({place}) => {
     function getPlaceImages() {
         Place_GetMultimedias({Id: place.Id}).then(data => {
             SetPlaceImages(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function selectImage(image){
 
         Place_addMultimeida({Place:{Id: place.Id},Multimedia:{Id:image.Id}}).then(data => {
+            error.showError({message: "عملیات موفق",});
             getPlaceImages()
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function renderModalDelete() {
@@ -35,9 +50,16 @@ const PlaceImage = ({place}) => {
             e.preventDefault()
             Place_deleteMultimedia({Place:{Id: place.Id},Multimedia:{Id:itemToDelete.Id}})
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setItemToDelete(null)
                     getPlaceImages()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

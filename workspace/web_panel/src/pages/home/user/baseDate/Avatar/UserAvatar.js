@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Avatar, Grid} from "@mui/material";
 import ImagePicker from "../../../media/Pickers/ImagePicker";
 import {user_UpdateUserAvatar, user_UpdateUserStatus} from "../../../../../network/api/user.api";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const UserAvatar = ({currentUser}) => {
+    const error = useContext(ErrorContext);
     const [openModalSelectAvatar,setOpenModalSelectAvatar] = useState(false)
     const [userAvatar,setUserAvatar] = useState(currentUser.Avatar||{Url:""})
 
@@ -14,9 +16,14 @@ const UserAvatar = ({currentUser}) => {
 
     function selectImage(image) {
         user_UpdateUserAvatar({UserId:currentUser.Id,MultimediaId:image.Id}).then(result=>{
-            console.log("rada",result.data.Data.Avatar||{Url:""})
             setUserAvatar(result.data.Data.Avatar||{Url:""});
-        }).catch(e=>console.log(e));
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     return (

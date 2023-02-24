@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Button, Modal} from "react-bootstrap";
 import {Formik} from "formik";
 import {FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import * as HomeItems from "../../../../../network/api/homeItem.api";
 import {widgetList} from "../widgetList";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const ModalAddItem = ({openModalAdd, SetOpenModalAdd, SetDataChanges}) => {
+    const error = useContext(ErrorContext);
     return (
         <Formik
             initialValues={{
@@ -17,9 +19,13 @@ const ModalAddItem = ({openModalAdd, SetOpenModalAdd, SetDataChanges}) => {
                 HomeItems._add(values).then(data => {
                     SetDataChanges(data.data);
                     SetOpenModalAdd(false)
-                }).catch(ex => {
-                    console.log(ex);
-                })
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
 
             }}
         >

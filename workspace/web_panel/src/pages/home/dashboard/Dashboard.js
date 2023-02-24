@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Row} from "react-bootstrap";
 import {Button, Card, CardContent, CardHeader, Grid,} from "@mui/material";
 import {sport_query} from "../../../network/api/sport.api";
 import {user_query} from "../../../network/api/user.api";
 import {Place_query} from "../../../network/api/place.api";
 import {Location_query} from "../../../network/api/location.api";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 export default function Dashboard() {
+    const error = useContext(ErrorContext);
     const [userCount, setUserCount] = useState(0);
     const [cityCount, SetCityCount] = useState(0);
     const [regionCount, SetRegionCount] = useState(0);
@@ -15,27 +17,57 @@ export default function Dashboard() {
     useEffect(() => {
         user_query({ paging:{Page:0,Size:1}}).then(data => {
             setUserCount(data.data.Data.totalElements)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, []);
     useEffect(() => {
         Location_query({ Type:"CITY",paging:{Page:0,Size:1}}).then(data => {
             SetCityCount(data.data.Data.totalElements)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, []);
     useEffect(() => {
         Location_query({ Type:"REGION",paging:{Page:0,Size:1}}).then(data => {
             SetRegionCount(data.data.Data.totalElements)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, []);
     useEffect(() => {
         sport_query({ paging:{Page:0,Size:1}}).then(data => {
             SetSportCount(data.data.Data.totalElements)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, []);
     useEffect(() => {
         Place_query({ paging:{Page:0,Size:1}}).then(data => {
             SetPlaceCount(data.data.Data.totalElements)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, []);
 
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import Table from "@mui/material/Table";
@@ -14,8 +14,10 @@ import {
 } from "../../../../../network/api/optionOfPlace.api";
 import {Form, Modal} from "react-bootstrap";
 import Select from "react-select";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const OptionOfPlace = ({place}) => {
+    const error = useContext(ErrorContext);
   const [placeOptions,SetPlaceOptions] = useState([])
   const [allOptions,SetAllOptions] = useState([])
   const [openModalAdd,setOpenModalAdd] = useState(false)
@@ -27,13 +29,25 @@ const OptionOfPlace = ({place}) => {
       placeOption_getAll()
           .then(data=>{
               SetAllOptions(data.data.Data);
-          }).catch(e=>console.log(e))
+          }).catch(e => {
+          try {
+              error.showError({message: e.response.data.Message,});
+          } catch (f) {
+              error.showError({message: "خطا نا مشخص",});
+          }
+      });
   },[])
 
   function getOptionOfPlace(){
       optionOfPlace_getByPlaceId({Id:place.Id}).then(data=>{
           SetPlaceOptions(data.data.Data);
-      }).catch(e=>console.log(e))
+      }).catch(e => {
+          try {
+              error.showError({message: e.response.data.Message,});
+          } catch (f) {
+              error.showError({message: "خطا نا مشخص",});
+          }
+      });
   }
 
     function renderModalAdd() {
@@ -43,9 +57,16 @@ const OptionOfPlace = ({place}) => {
             e.preventDefault()
             optionOfPlace_add({Place:{Id:place.Id},PlaceOption:{Id:selectedId}})
                 .then(data=>{
+                    error.showError({message: "عملیات موفق",});
                     setOpenModalAdd(false)
                     getOptionOfPlace()
-                }).catch(e=>console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         function getAllOptions() {
@@ -101,9 +122,16 @@ const OptionOfPlace = ({place}) => {
             e.preventDefault()
             optionOfPlace_delete({Id:itemToDelete.Id})
                 .then(data=>{
+                    error.showError({message: "عملیات موفق",});
                     setItemToDelete(null)
                     getOptionOfPlace()
-                }).catch(e=>console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

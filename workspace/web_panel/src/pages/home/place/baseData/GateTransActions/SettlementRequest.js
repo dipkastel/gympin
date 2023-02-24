@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {transaction_placeSetteling, transaction_query} from "../../../../../network/api/transactions.api";
 import {Form, Modal, Table} from "react-bootstrap";
@@ -8,8 +8,10 @@ import {Button, IconButton, TableCell, TextField, Tooltip} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import {toPriceWithComma} from "../../../../../helper";
 import FeedIcon from '@mui/icons-material/Feed';
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const SettlementRequest = ({place}) => {
+    const error = useContext(ErrorContext);
     const [transactions,setTransactions] = useState([])
     const [transactionToSettle,setTransactionToSettle] = useState(null)
     useEffect(() => {
@@ -39,9 +41,16 @@ const SettlementRequest = ({place}) => {
         function submitTransaction(e) {
             e.preventDefault()
             transaction_placeSetteling({TransactionId:transactionToSettle.Id,TransactionText:e.target.TransactionText.value}).then(result=>{
+                error.showError({message: "عملیات موفق",});
                 getTransactions();
                 setTransactionToSettle(null);
-            }).catch(e => console.log(e));
+            }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

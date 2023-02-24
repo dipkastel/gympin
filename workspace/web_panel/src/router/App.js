@@ -7,6 +7,7 @@ import { Routes } from "./Routes";
 import { I18nProvider, LayoutSplashScreen } from "../helper";
 import { NThemeSite } from "../components/NThemeSite";
 import { ThemeProvider } from "@mui/material/styles";
+import GympinPagesProvider from "../components/GympinPagesProvider";
 
 export default function App({ store, persistor, basename }) {
   return (
@@ -18,7 +19,9 @@ export default function App({ store, persistor, basename }) {
             <LastLocationProvider>
               <ThemeProvider theme={NThemeSite}>
                 <I18nProvider>
-                  <Routes />
+                  <GympinPagesProvider>
+                    <Routes />
+                  </GympinPagesProvider>
                 </I18nProvider>
               </ThemeProvider>
             </LastLocationProvider>

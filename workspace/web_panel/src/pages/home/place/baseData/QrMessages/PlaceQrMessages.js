@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
 import {Button, FormControlLabel, FormGroup, FormLabel, Switch, TableCell} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
@@ -19,9 +19,11 @@ import {
     placeQrMessages_getByPlace,
     placeQrMessages_update
 } from "../../../../../network/api/placeQrMessages.api";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 
 const PlaceQrMessages = ({place}) => {
+    const error = useContext(ErrorContext);
     const [placeQrMessages, SetPlaceQrMessages] = useState([])
     const [itemToDelete, setItemToDelete] = useState(null)
     const [itemToEdit, setItemToEdit] = useState(null)
@@ -33,7 +35,13 @@ const PlaceQrMessages = ({place}) => {
     function getQrMessagesOfPlace() {
         placeQrMessages_getByPlace({Id: place.Id}).then(data => {
             SetPlaceQrMessages(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
 
@@ -43,9 +51,16 @@ const PlaceQrMessages = ({place}) => {
             e.preventDefault()
             placeQrMessages_add(newAboutItem)
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setNewAboutItem(null)
                     getQrMessagesOfPlace()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         function setFormValues(lable,Value){
@@ -109,9 +124,16 @@ const PlaceQrMessages = ({place}) => {
             e.preventDefault()
             placeQrMessages_update(itemToEdit)
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setItemToEdit(null)
                     getQrMessagesOfPlace()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         function setFormValues(lable,Value){
@@ -174,12 +196,18 @@ const PlaceQrMessages = ({place}) => {
 
         function DeleteItem(e) {
             e.preventDefault()
-            console.log(itemToDelete)
             placeQrMessages_delete({Id: itemToDelete.Id})
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setItemToDelete(null)
                     getQrMessagesOfPlace()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

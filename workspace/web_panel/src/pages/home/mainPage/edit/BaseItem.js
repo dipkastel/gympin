@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import {homepage_getById, homepage_getHome, homepage_update} from "../../../../network/api/homepage.api";
 import {Form, Modal} from "react-bootstrap";
 import {Button} from "@mui/material";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const BaseItem = ({itemId}) => {
+    const error = useContext(ErrorContext);
     const [homeItems,setHomeItems] = useState([])
     useEffect(() => {
         getBaseData();
@@ -13,13 +15,26 @@ const BaseItem = ({itemId}) => {
     function getBaseData(){
         homepage_getById({id:itemId}).then(result=>{
             setHomeItems(result.data.Data)
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
     function formSubmit(e){
         e.preventDefault()
         homepage_update(homeItems).then(result=>{
+            error.showError({message: "عملیات موفق",});
             getBaseData();
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
     return (
         <div>

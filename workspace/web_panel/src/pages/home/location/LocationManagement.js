@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Notice from "../../partials/content/Notice";
 import {useHistory, useParams} from "react-router-dom";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
@@ -13,8 +13,10 @@ import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {Location_add, Location_addCity, Location_getById, Location_query} from "../../../network/api/location.api";
 import {Place_addPlace} from "../../../network/api/place.api";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 export default function LocationManagement() {
+    const error = useContext(ErrorContext);
     const history = useHistory();
     const {parentId} = useParams();
     const [page, setPage] = useState(0);
@@ -35,18 +37,28 @@ export default function LocationManagement() {
             Name:searchString,
             paging:{Page:page,Size:rowsPerPage,orderBy:"Id",Desc:true}
         }
-        console.log(data)
         Location_query(data).then(result=>{
-            console.log(result.data.Data)
             SetLocation(result.data.Data)
-        }).catch(e=>console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, [parentId,searchString,rowsPerPage,page,refreshId]);
 
     useEffect(() => {
         SetParent([]);
         Location_getById({id:parentId}).then(result=>{
             SetParent(result.data.Data);
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, [parentId,refreshId]);
 
     function getTypeName(type){
@@ -70,7 +82,13 @@ export default function LocationManagement() {
                 }}).then(result=>{
                 SetOpenModalAdd(false);
                 SetRefreshId(Math.random())
-            }).catch(e=>console.log(e));
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
         function getChildTypeByParent(parentType){
             switch (parentType){

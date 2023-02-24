@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TableCell} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
@@ -14,8 +14,10 @@ import {
 } from "../../../../../network/api/PlanGatesTiming.api";
 import {gateTiming_getByPlace} from "../../../../../network/api/gateTiming.api";
 import {dayOfWeekEnum} from "../../../../../helper/enums/dayOfWeekEnum";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const PlanGatesTiming = ({plan}) => {
+    const error = useContext(ErrorContext);
     const [planGatesTiming, SetplanGatesTiming] = useState([])
     const [GateTimings, SetGateTimings] = useState([])
     const [openModalAdd, setOpenModalAdd] = useState(false)
@@ -28,12 +30,24 @@ const PlanGatesTiming = ({plan}) => {
     function getPlanGatesTimingOfplan() {
         planGatesTiming_getByPlan({Id: plan.Id}).then(data => {
             SetplanGatesTiming(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
     function getGateTimings() {
         gateTiming_getByPlace({Id: plan.Place.Id}).then(data => {
             SetGateTimings(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     function GetFormatedGateTiming(gateTiming) {
@@ -56,7 +70,13 @@ const PlanGatesTiming = ({plan}) => {
                 .then(data => {
                     setOpenModalAdd(false)
                     getPlanGatesTimingOfplan()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         function handleChange(GateTimingId,status) {
@@ -127,7 +147,13 @@ const PlanGatesTiming = ({plan}) => {
                 .then(data => {
                     setItemToDelete(null)
                     getPlanGatesTimingOfplan()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

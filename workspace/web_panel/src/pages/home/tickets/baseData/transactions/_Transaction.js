@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {transaction_query} from "../../../../../network/api/transactions.api";
 import {Typography} from "@mui/material";
 import {TransactionTypes} from "../../../../../helper/enums/TransactionTypes";
 import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
 import {toPriceWithComma} from "../../../../../helper";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const _Transactions = ({ticket}) => {
+    const error = useContext(ErrorContext);
 
     const [transactions, SetTransactions] = useState(null);
 
@@ -22,7 +24,13 @@ const _Transactions = ({ticket}) => {
             paging: {Page: 0, Size: 99, Desc: true}
         }).then(result => {
             SetTransactions(result.data.Data.content)
-        }).catch(e => console.log(e));
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     return (transactions) ? (

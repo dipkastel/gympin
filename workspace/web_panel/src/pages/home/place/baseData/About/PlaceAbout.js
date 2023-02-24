@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
 import {Button, FormControlLabel, FormGroup, FormLabel, Switch, TableCell} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
@@ -13,9 +13,11 @@ import {
     placeAbout_getByPlace,
     placeAbout_update
 } from "../../../../../network/api/placeAbout.api";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 
 const PlaceAbout = ({place}) => {
+    const error = useContext(ErrorContext);
     const [placeAbouts, SetPlaceAbouts] = useState([])
     const [openModalAdd, setOpenModalAdd] = useState(false)
     const [itemToDelete, setItemToDelete] = useState(null)
@@ -27,7 +29,13 @@ const PlaceAbout = ({place}) => {
     function getAboutsOfPlace() {
         placeAbout_getByPlace({Id: place.Id}).then(data => {
             SetPlaceAbouts(data.data.Data);
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
 
@@ -42,9 +50,16 @@ const PlaceAbout = ({place}) => {
             e.preventDefault()
             placeAbout_add(newAboutItem)
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setOpenModalAdd(false)
                     getAboutsOfPlace()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         function setFormValues(lable,Value){
@@ -130,9 +145,16 @@ const PlaceAbout = ({place}) => {
             e.preventDefault()
             placeAbout_update(itemToEdit)
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setItemToEdit(null)
                     getAboutsOfPlace()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         function setFormValues(lable,Value){
@@ -216,12 +238,18 @@ const PlaceAbout = ({place}) => {
 
         function DeleteItem(e) {
             e.preventDefault()
-            console.log(itemToDelete)
             placeAbout_delete({Id: itemToDelete.Id})
                 .then(data => {
+                    error.showError({message: "عملیات موفق",});
                     setItemToDelete(null)
                     getAboutsOfPlace()
-                }).catch(e => console.log(e))
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         }
 
         return (

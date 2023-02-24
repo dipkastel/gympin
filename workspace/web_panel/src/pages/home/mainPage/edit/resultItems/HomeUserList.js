@@ -4,7 +4,6 @@ import {Card, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 
 const HomeUserList = (props) => {
-    console.log(props)
     const settings = {
         dots: false,
         infinite: true,

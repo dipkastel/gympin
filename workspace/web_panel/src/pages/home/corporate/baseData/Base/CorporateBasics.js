@@ -1,21 +1,28 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Portlet, PortletBody, PortletFooter, PortletHeader,} from "../../../../partials/content/Portlet";
 import {TextField} from "@mui/material";
 import {corporate_update} from "../../../../../network/api/corporate.api";
 import {Form} from "react-bootstrap";
 import Select from "react-select";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 export default function CorporateBasics({currentCorporate}) {
+    const error = useContext(ErrorContext);
     const [values, setValues] = React.useState(currentCorporate);
     const handleChange = (name) => (event) => {
-        console.log(values);
         setValues({...values, [name]: event.target.value});
     };
 
     function ChangeCorporateBaseData() {
         corporate_update(values).then(result => {
-            console.log(result);
-        }).catch(e => console.log(e))
+            error.showError({message: "عملیات موفق",});
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
 

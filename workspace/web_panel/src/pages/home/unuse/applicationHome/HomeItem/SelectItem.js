@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import * as HomeItemApi from "../../../../../network/api/homeItem.api";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -10,9 +10,11 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModalAddItem from "./ModalAddItem";
 import HomeChild from "../HomeMyChild/HomeChild";
+import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const SelectItem = ({addItemToList}) => {
 
+    const error = useContext(ErrorContext);
     const [possibleItems, SetPossibleItems] = useState([]);
     const [selectedHomeItem, SetSelectedHomeItem] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
@@ -20,16 +22,28 @@ const SelectItem = ({addItemToList}) => {
 
     useEffect(() => {
         HomeItemApi._getAll().then(result => {
-            console.log(result)
             SetPossibleItems(result.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }, [dataChanges]);
 
 
     function DeleteItem(item) {
         HomeItemApi._delete(item).then(result => {
+            error.showError({message: "عملیات موفق",});
             SetDataChanges(result)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
     }
 
     return (
