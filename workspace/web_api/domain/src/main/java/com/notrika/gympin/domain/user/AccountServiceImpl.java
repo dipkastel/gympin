@@ -48,6 +48,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -112,6 +113,7 @@ public class AccountServiceImpl implements AccountService {
         user.setUserRole(userRegisterParam.getUserRole().getRole());
         user.setUserGroup(UserGroup.CLIENT);
         user.setUserStatus(UserStatus.ENABLED);
+        user.setBalance(BigDecimal.ZERO);
         return userService.add(user);
     }
 
