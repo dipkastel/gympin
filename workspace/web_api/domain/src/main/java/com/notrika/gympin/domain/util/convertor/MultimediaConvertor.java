@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public final class MultimediaConvertor {
 
-    private static String urlPreFix = "http://localhost:8080/resource/image?Id=";
+    private static String urlPreFix = "https://api.gympin.ir/resource/image?Id=";
 
     public static MultimediaDto toDto(MultimediaEntity entity) {
         if(entity==null)return null;

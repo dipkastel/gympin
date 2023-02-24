@@ -18,6 +18,7 @@ import java.io.InputStream;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
+@RequestMapping("/api")
 public class ResourceControllerImpl implements ResourceController {
 
     @Autowired
