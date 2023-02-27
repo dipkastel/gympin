@@ -9,11 +9,12 @@ import com.notrika.gympin.common.gympin.homePage.dto.HomePageTypeDto;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageDestinationParam;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageItemParam;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageTypeParam;
+import com.notrika.gympin.common.gympin.homePage.query.HomePageQuery;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface HomePageService extends BaseService<HomePageItemParam, HomePageDeadendDto, BaseQuery<?>> {
+public interface HomePageService extends BaseService<HomePageItemParam, HomePageDeadendDto, HomePageQuery> {
     HomePageItemDto getByHomeList(Long Id);
     List<HomePageTypeDto> getAllTypes(Pageable pageable);
     HomePageTypeDto addType(HomePageTypeParam param);

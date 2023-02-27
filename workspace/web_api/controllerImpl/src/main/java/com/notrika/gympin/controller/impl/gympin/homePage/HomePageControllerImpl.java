@@ -10,6 +10,7 @@ import com.notrika.gympin.common.gympin.homePage.dto.HomePageTypeDto;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageDestinationParam;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageItemParam;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageTypeParam;
+import com.notrika.gympin.common.gympin.homePage.query.HomePageQuery;
 import com.notrika.gympin.common.gympin.homePage.service.HomePageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -59,7 +60,7 @@ public class HomePageControllerImpl implements HomePageController {
     }
 
     @Override
-    public ResponseEntity<Page<HomePageDeadendDto>> query(BaseQuery<?> filter) {
+    public ResponseEntity<Page<HomePageDeadendDto>> query(HomePageQuery filter) {
         return new ResponseEntity<>(homePageService.query(filter), HttpStatus.OK);
     }
 

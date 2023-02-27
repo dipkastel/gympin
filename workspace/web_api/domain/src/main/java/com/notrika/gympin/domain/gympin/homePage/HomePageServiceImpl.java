@@ -8,6 +8,7 @@ import com.notrika.gympin.common.gympin.homePage.dto.HomePageTypeDto;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageDestinationParam;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageItemParam;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageTypeParam;
+import com.notrika.gympin.common.gympin.homePage.query.HomePageQuery;
 import com.notrika.gympin.common.gympin.homePage.service.HomePageService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.HomePageConvertor;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class HomePageServiceImpl extends AbstractBaseService<HomePageItemParam, HomePageDeadendDto, BaseQuery<?>, HomePageItemEntity> implements HomePageService {
+public class HomePageServiceImpl extends AbstractBaseService<HomePageItemParam, HomePageDeadendDto, HomePageQuery, HomePageItemEntity> implements HomePageService {
 
     @Autowired
     private HomePageRepository homeRepository;
@@ -110,7 +111,7 @@ public class HomePageServiceImpl extends AbstractBaseService<HomePageItemParam, 
 
     @Override
     public Page<HomePageItemEntity> findAll(Specification<HomePageItemEntity> specification, Pageable pageable) {
-        return null;
+        return homeRepository.findAll(specification,pageable);
     }
 
     @Override

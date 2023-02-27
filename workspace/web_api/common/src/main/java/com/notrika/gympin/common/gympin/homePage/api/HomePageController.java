@@ -9,6 +9,7 @@ import com.notrika.gympin.common.gympin.homePage.dto.HomePageTypeDto;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageDestinationParam;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageItemParam;
 import com.notrika.gympin.common.gympin.homePage.param.HomePageTypeParam;
+import com.notrika.gympin.common.gympin.homePage.query.HomePageQuery;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-public interface HomePageController extends BaseController<HomePageItemParam, HomePageDeadendDto, BaseQuery<?>> {
+public interface HomePageController extends BaseController<HomePageItemParam, HomePageDeadendDto, HomePageQuery> {
 
     ResponseEntity<HomePageItemDto> getHome(Long id);
 

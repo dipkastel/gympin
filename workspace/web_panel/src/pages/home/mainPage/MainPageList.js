@@ -31,6 +31,7 @@ const MainPageList = () => {
             queryType: "SEARCH",
             paging: {Page: page, Size: rowsPerPage,Desc:true}
         }).then((data) => {
+            console.log(data)
             SetList(data.data.Data)
         }).catch(e => {
             try {
