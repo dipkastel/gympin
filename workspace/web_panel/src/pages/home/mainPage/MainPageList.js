@@ -29,10 +29,9 @@ const MainPageList = () => {
     function getListPages(){
         homepage_query({
             queryType: "SEARCH",
-            ParentId:null,
+            ParentId:1,
             paging: {Page: page, Size: rowsPerPage,Desc:true}
         }).then((data) => {
-            console.log(data)
             SetList(data.data.Data)
         }).catch(e => {
             try {
@@ -46,7 +45,7 @@ const MainPageList = () => {
     function RenderModalAdd() {
         function addPlace(e) {
             e.preventDefault()
-            homepage_add({Title:e.target.PageName.value,Description:e.target.pageDescription.value})
+            homepage_add({Title:e.target.PageName.value,Description:e.target.pageDescription.value,Parent:{Id:1}})
                 .then((data) => {
                     history.push({
                         pathname: "/homePage/edit/"+data.data.Data.Id
@@ -117,7 +116,7 @@ const MainPageList = () => {
 
         function DeleteItem(e) {
             e.preventDefault()
-            homepage_delete(itemToDelete).then((data) => {
+            homepage_delete({Id:itemToDelete.Id}).then((data) => {
                 error.showError({message: "حذف موفق",});
                 setItemToDelete(null);
                 getListPages();
@@ -200,7 +199,7 @@ const MainPageList = () => {
                                                 size={"small"}
                                                 color={"primary"}
                                                 href={"/homePage/edit/" + row.Id}>جزئیات</Button>
-                                        {(row.Id!=1)&&<Button variant={"contained"}
+                                        {(row.Id!=2)&&<Button variant={"contained"}
                                                 size={"small"}
                                                 color={"error"}
                                                 onClick={e=>setItemToDelete(row)}>حذف</Button>}
