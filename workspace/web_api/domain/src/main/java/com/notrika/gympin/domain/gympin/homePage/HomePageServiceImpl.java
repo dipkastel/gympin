@@ -122,7 +122,7 @@ public class HomePageServiceImpl extends AbstractBaseService<HomePageItemParam, 
 
     @Override
     public Page<HomePageDeadendDto> convertToDtos(Page<HomePageItemEntity> entities) {
-        return null;
+        return entities.map(HomePageConvertor::toDeadendDto);
     }
 
     @Override
