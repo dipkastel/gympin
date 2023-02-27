@@ -243,6 +243,7 @@ export let homepage = {
   update: "v1/homepage/update",
   delete: "v1/homepage/delete",
   getAll: "v1/homepage/getall",
+  query: "v1/homepage/query",
   getById: "v1/homepage/getbyid",
   getHome: "v1/homepage/getHome",
   getAllTypes: "v1/homepage/getAllTypes",

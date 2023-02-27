@@ -11,6 +11,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePer
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelService;
 import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.param.UserRoleParam;
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,10 +55,15 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
     public CorporatePersonnelDto add(@NonNull CorporatePersonnelParam Param) {
 
         UserEntity user = userRepository.findByPhoneNumber(Param.getPhoneNumber());
+        CorporateEntity corporate = corporateRepository.getById(Param.getCorporate().getId());
         if(user==null) {
             user = accountService.addUser(UserRegisterParam.builder().phoneNumber(Param.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
+        }else{
+            //check for duplication
+            UserEntity finalUser = user;
+            if(corporate.getPersonnel().stream().anyMatch(p-> Objects.equals(p.getUser().getId(), finalUser.getId())))
+                throw new DuplicateEntryAddExeption();
         }
-        CorporateEntity corporate = corporateRepository.getById(Param.getCorporate().getId());
 
         CorporatePersonnelEntity corporatePersonnelEntity = CorporatePersonnelEntity.builder()
                 .corporate(corporate)

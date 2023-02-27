@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.sportplace;
 
 import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
 import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
@@ -45,8 +46,8 @@ public class SportPlaceServiceImpl extends AbstractBaseService<SportPlaceParam, 
 
     @Override
     public SportPlaceEntity add(SportPlaceEntity sportPlace) {
-        if(getSportsByPlace(sportPlace.getPlace()).stream().anyMatch(o-> Objects.equals(o.getId(), sportPlace.getSport().getId())))
-            return null;
+        if(getSportsByPlace(sportPlace.getPlace()).stream().anyMatch(o-> Objects.equals(o.getSport().getId(), sportPlace.getSport().getId())))
+            throw new DuplicateEntryAddExeption();
         return sportPlaceRepository.add(sportPlace);
     }
 

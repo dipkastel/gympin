@@ -1,5 +1,5 @@
 import axios from "axios";
-import {homepage} from "./const_api";
+import {CorporateApi, homepage} from "./const_api";
 
 export function homepage_add(item) {
     return axios.post(homepage.add, item);
@@ -10,6 +10,10 @@ export function homepage_delete(item) {
 export function homepage_getAll() {
     return axios.get(homepage.getAll);
 }
+export function homepage_query(data) {
+    return axios.post(homepage.query,data);
+}
+
 export function homepage_getHome(item) {
     return axios.get(homepage.getHome,{ params: item });
 }

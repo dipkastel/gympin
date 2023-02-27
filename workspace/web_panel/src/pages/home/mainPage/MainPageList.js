@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
-import {homepage_add, homepage_delete, homepage_getAll} from "../../../network/api/homepage.api";
+import {homepage_add, homepage_delete, homepage_getAll, homepage_query} from "../../../network/api/homepage.api";
 import {Button, TableCell} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import Table from "@mui/material/Table";
@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {Form, Modal} from "react-bootstrap";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {Place_deleteMultimedia} from "../../../network/api/place.api";
+import TablePagination from "@mui/material/TablePagination";
 
 const MainPageList = () => {
     const error = useContext(ErrorContext);
@@ -18,6 +18,8 @@ const MainPageList = () => {
     const [list, SetList] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const history = useHistory();
 
 
@@ -25,7 +27,10 @@ const MainPageList = () => {
         getListPages()
     }, [])
     function getListPages(){
-        homepage_getAll().then((data) => {
+        homepage_query({
+            queryType: "SEARCH",
+            paging: {Page: page, Size: rowsPerPage,Desc:true}
+        }).then((data) => {
             SetList(data.data.Data)
         }).catch(e => {
             try {
@@ -183,7 +188,7 @@ const MainPageList = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list.map(row => (
+                            {list.content && list.content.map(row => (
                                 <TableRow key={row.Id}>
                                     <TableCell align="right" component="th" scope="row">{row.Id}</TableCell>
                                     <TableCell align="right">{row.Title}</TableCell>
@@ -202,6 +207,24 @@ const MainPageList = () => {
                             ))}
                         </TableBody>
                     </Table>
+
+                    {(list.totalElements>0) &&<TablePagination
+                        rowsPerPageOptions={[5, 10, 15, 25, 50, 100]}
+                        component="div"
+                        sx={{direction: "rtl"}}
+                        count={list.totalElements||0}
+                        labelRowsPerPage={"تعداد نمایش"}
+                        labelDisplayedRows={(param)=>{
+                            return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
+                        }}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={(event, newPage) => setPage(newPage)}
+                        onRowsPerPageChange={(event) => {
+                            setRowsPerPage(parseInt(event.target.value, 10));
+                            setPage(0);
+                        }}
+                    />}
                 </PortletBody>
             </Portlet>
             {RenderModalAdd()}

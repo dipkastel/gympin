@@ -78,7 +78,8 @@ public class Error {
         EXCEPTION(4001),
         OUT_SERVICE_EXCEPTION(4002),
         INPUT_NOT_VALID(4003),
-        COULD_NOT_CREATE_DIRECTORY(4004)
+        COULD_NOT_CREATE_DIRECTORY(4004),
+        DUPLICATE_ENTRY_ADD_EXEPTION(4005)
 
         ;
         private final int value;

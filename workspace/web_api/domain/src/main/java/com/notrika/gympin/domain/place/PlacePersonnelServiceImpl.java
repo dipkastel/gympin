@@ -6,6 +6,7 @@ import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
 import com.notrika.gympin.common.contact.sms.service.SmsService;
 import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
+import com.notrika.gympin.common.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.exception.user.UnknownUserException;
 import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
@@ -40,6 +41,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,10 +69,16 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     @Transactional
     public PlacePersonnelDto add(@NonNull PlacePersonnelParam placePersonnelParam) {
         UserEntity user = userRepository.findByPhoneNumber(placePersonnelParam.getPhoneNumber());
+        PlaceEntity place = placeRepository.getById(placePersonnelParam.getPlaceParam().getId());
+
         if (user == null) {
             user = accountService.addUser(UserRegisterParam.builder().phoneNumber(placePersonnelParam.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
+        }else{
+            //check for duplication
+            UserEntity finalUser = user;
+            if(place.getPlaceOwners().stream().anyMatch(p-> Objects.equals(p.getUser().getId(), finalUser.getId())))
+                throw new DuplicateEntryAddExeption();
         }
-        PlaceEntity place = placeRepository.getById(placePersonnelParam.getPlaceParam().getId());
 
         PlacePersonnelEntity placePersonnelEntity = PlacePersonnelEntity.builder()
                 .place(place)

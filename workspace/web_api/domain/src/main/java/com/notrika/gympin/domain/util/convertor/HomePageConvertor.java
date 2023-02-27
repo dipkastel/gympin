@@ -37,7 +37,7 @@ public final class HomePageConvertor {
 
         if (entity.getItems().size() > 0) {
             Set<HomePageItemDto> items = new HashSet<>();
-            for (HomePageItemEntity item : entity.getItems()) {
+            for (HomePageItemEntity item : entity.getItems().stream().filter(o -> !o.isDeleted()).collect(Collectors.toList())) {
                 items.add(toDtoWithChild(item));
             }
             dto.setItems((items));
