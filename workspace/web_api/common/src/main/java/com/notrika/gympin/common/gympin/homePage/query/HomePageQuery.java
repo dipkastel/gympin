@@ -33,6 +33,9 @@ import lombok.experimental.SuperBuilder;
     */
 public class HomePageQuery extends BaseQuery<HomePageQuery> {
 
+    @JsonProperty("ParentId")
+    private Long is_parent_id;
+
     @JsonProperty("deleted")
     private Boolean is_deleted = false;
 }

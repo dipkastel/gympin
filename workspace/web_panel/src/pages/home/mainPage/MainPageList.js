@@ -25,10 +25,11 @@ const MainPageList = () => {
 
     useEffect(function () {
         getListPages()
-    }, [])
+    }, [page, rowsPerPage])
     function getListPages(){
         homepage_query({
             queryType: "SEARCH",
+            ParentId:null,
             paging: {Page: page, Size: rowsPerPage,Desc:true}
         }).then((data) => {
             console.log(data)
