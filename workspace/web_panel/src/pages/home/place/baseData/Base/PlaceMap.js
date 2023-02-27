@@ -7,13 +7,15 @@ import "./map.css"
 
 var markerLayer = null;
 let leaflet = null;
+const tehranCenterLat = 35.7019;
+const tehranCenterLong = 51.4047;
 class PlaceMap extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedLat: props.place.Latitude,
-            selectedLng: props.place.Longitude
+            selectedLat: props.place.Latitude==0?tehranCenterLat:props.place.Latitude,
+            selectedLng: props.place.Longitude==0?tehranCenterLong:props.place.Longitude
         };
     }
     componentDidMount() {
@@ -22,7 +24,7 @@ class PlaceMap extends Component {
     prepareMap() {
         leaflet = L.map("kt_leaflet_map", {
             center: [this.state.selectedLat ,this.state.selectedLng],
-            zoom: 18,
+            zoom: this.state.selectedLat==tehranCenterLat?10:18,
         });
         leaflet.panTo(leaflet.getCenter());
         // set leaflet tile layer

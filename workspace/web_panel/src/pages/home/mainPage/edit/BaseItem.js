@@ -1,8 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import AddIcon from "@mui/icons-material/Add";
-import {homepage_getById, homepage_getHome, homepage_update} from "../../../../network/api/homepage.api";
-import {Form, Modal} from "react-bootstrap";
+import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
+import {homepage_getById, homepage_update} from "../../../../network/api/homepage.api";
+import {Form} from "react-bootstrap";
 import {Button} from "@mui/material";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
@@ -44,7 +43,7 @@ const BaseItem = ({itemId}) => {
                 />
 
                 <PortletBody>
-                    <form onSubmit={(e) => formSubmit(e)}>
+                    <Form onSubmit={(e) => formSubmit(e)}>
                         <Form.Group>
                             <Form.Label>عنوان</Form.Label>
                             <Form.Control
@@ -76,7 +75,7 @@ const BaseItem = ({itemId}) => {
                             >
                                 ثبت
                             </Button>
-                    </form>
+                    </Form>
 
                 </PortletBody>
             </Portlet>

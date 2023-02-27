@@ -30,7 +30,7 @@ const PlaceDataManagement = () => {
 
     function getPlace() {
         Place_getPlaceById({id: placeId}).then((result) => {
-            setPlace(result.data.Data)
+            setPlace(result.data.Data);
         }).catch(e => {
                     try {
                         error.showError({message: e.response.data.Message,});
@@ -42,7 +42,8 @@ const PlaceDataManagement = () => {
 
     function updatePlace(place) {
         Place_updatePlace(place).then(data => {
-            setPlace(data.data.Data)
+            setPlace(data.data.Data);
+            error.showError({message: "با موفقیت ثبت شد"});
         }).catch(e => {
                     try {
                         error.showError({message: e.response.data.Message,});

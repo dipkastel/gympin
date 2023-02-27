@@ -44,12 +44,12 @@ const AddImageModal = ({setOpenAddImage, done: uploadComplete}) => {
             return
         }
         if(addItem.title){
-            formData.append("Title", addItem.title);
+            formData.append("Title", addItem.title||"");
         }else{
             error.showError({message: "نام تصویر نا مشخص",});
             return
         }
-        formData.append("Description", addItem.description);
+        formData.append("Description", addItem.description||"");
         media_addImage(formData)
             .then(data => {
                 error.showError({message: "عملیات موفق",});

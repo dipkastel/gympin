@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
-import {homepage_add, homepage_getAll} from "../../../network/api/homepage.api";
+import {homepage_add, homepage_delete, homepage_getAll} from "../../../network/api/homepage.api";
 import {Button, TableCell} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import Table from "@mui/material/Table";
@@ -10,16 +10,21 @@ import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {Form, Modal} from "react-bootstrap";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {Place_deleteMultimedia} from "../../../network/api/place.api";
 
 const MainPageList = () => {
     const error = useContext(ErrorContext);
 
     const [list, SetList] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null);
     const history = useHistory();
 
 
     useEffect(function () {
+        getListPages()
+    }, [])
+    function getListPages(){
         homepage_getAll().then((data) => {
             SetList(data.data.Data)
         }).catch(e => {
@@ -29,7 +34,7 @@ const MainPageList = () => {
                 error.showError({message: "خطا نا مشخص",});
             }
         });
-    }, [])
+    }
 
     function RenderModalAdd() {
         function addPlace(e) {
@@ -37,7 +42,7 @@ const MainPageList = () => {
             homepage_add({Title:e.target.PageName.value,Description:e.target.pageDescription.value})
                 .then((data) => {
                     history.push({
-                        pathname: "/homePageEdit/"+data.data.Data.Id
+                        pathname: "/homePage/edit/"+data.data.Data.Id
                     });
                 })
                 .catch(e => {
@@ -101,6 +106,53 @@ const MainPageList = () => {
         );
     }
 
+    function RenderModalDelete() {
+
+        function DeleteItem(e) {
+            e.preventDefault()
+            homepage_delete(itemToDelete).then((data) => {
+                error.showError({message: "حذف موفق",});
+                setItemToDelete(null);
+                getListPages();
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        }
+
+        return (
+            <>
+                <Modal show={!(!itemToDelete)} onHide={() => setItemToDelete(null)}>
+                    <form onSubmit={(e) => DeleteItem(e)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{"حذف صفحه "}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {itemToDelete && "حذف " + itemToDelete.Title}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                className={"button_edit"}
+                                onClick={() => setItemToDelete(null)}
+                            >
+                                خیر
+                            </Button>
+                            <Button
+                                className={"button_danger"}
+                                type={"submit"}
+                            >
+                                حذف
+                            </Button>
+                        </Modal.Footer>
+                    </form>
+                </Modal>
+            </>
+        );
+    }
+
     return (
         <>
             <Portlet>
@@ -141,6 +193,10 @@ const MainPageList = () => {
                                                 size={"small"}
                                                 color={"primary"}
                                                 href={"/homePage/edit/" + row.Id}>جزئیات</Button>
+                                        {(row.Id!=1)&&<Button variant={"contained"}
+                                                size={"small"}
+                                                color={"error"}
+                                                onClick={e=>setItemToDelete(row)}>حذف</Button>}
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -149,6 +205,7 @@ const MainPageList = () => {
                 </PortletBody>
             </Portlet>
             {RenderModalAdd()}
+            {RenderModalDelete()}
         </>
     );
 };

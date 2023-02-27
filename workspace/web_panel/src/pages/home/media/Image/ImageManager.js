@@ -73,8 +73,11 @@ const ImageManager = (props, ref) => {
                                     <Typography gutterBottom variant="h6" component="h3">
                                         {item.Name}
                                     </Typography>
+                                    <Typography variant="body2" color={"darkgray"} component="p">
+                                        {item.Title||""}
+                                    </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        {item.Description}
+                                        {item.Description||""}
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>

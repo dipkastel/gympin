@@ -30,6 +30,9 @@ const HomeSlider = (props) => {
                         </Link>
                     </div>
                 ))}
+                {!props.item.Items&&
+                    <h5>لطفا به اسلایدر اسلاید اضافه نمایید.</h5>
+                }
             </Slick>
     );
 };

@@ -19,6 +19,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../homePageEditor.css"
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import HomeClickableTitle from "./resultItems/HomeClickableTitle";
+import HomeClickableBanner from "./resultItems/HomeClickableBanner";
+import HomeSingleUser from "./resultItems/HomeSingleUser";
+import HomeSingleContent from "./resultItems/HomeSingleContent";
+import HomeSingleDiscount from "./resultItems/HomeSingleDiscount";
 
 const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
     const error = useContext(ErrorContext);
@@ -71,6 +76,7 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
                 onTypeChange(null)
                 setRenderId(Math.random())
             }).catch(e => {
+                console.log(e);
                 try {
                     error.showError({message: e.response.data.Message,});
                 } catch (f) {
@@ -88,7 +94,7 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
             setTitle("")
             setImage(null)
             var items = {};
-            elements.find(e => e.Type === value.value).Elements.forEach(item => {
+            value&&elements.find(e => e.Type === value.value).Elements.forEach(item => {
                 items = {...items, [item]: true}
             })
             setFormVisibleElements(items);
@@ -315,7 +321,7 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
             >
                 {elements&&<ListItemText
                     primary={item.Title + " - ( " + elements.find(e => e.Type === item.Type).Name + " ) "}
-                    secondary={item.Description}
+                    secondary={item.Description.substring(0,60)}
                 />}
             </ListItem>
             <Grid sx={{paddingRight: 2}}>
@@ -334,10 +340,15 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
         switch (item.Type){
             case "SLIDER":return   <HomeSlider key={item.Id} item={item}/>
             case "TITLE":return   <HomeTitle key={item.Id} item={item}/>
+            case "CLICKABLE_TITLE":return   <HomeClickableTitle key={item.Id} item={item}/>
             case "USER_LIST":return   <HomeUserList key={item.Id} item={item}/>
+            case "SINGLE_USER":return   <HomeSingleUser key={item.Id} item={item}/>
             case "BANNER":return   <HomeBanner key={item.Id} item={item}/>
+            case "CLICKABLE_BANNER":return   <HomeClickableBanner key={item.Id} item={item}/>
             case "DISCOUNT_LIST":return   <HomeDiscountList key={item.Id} item={item}/>
+            case "SINGLE_DISCOUNT":return   <HomeSingleDiscount key={item.Id} item={item}/>
             case "CONTENT_LIST":return   <HomeContentList key={item.Id} item={item}/>
+            case "SINGLE_CONTENT":return   <HomeSingleContent key={item.Id} item={item}/>
             default: return ( item.Type +"\n\r\n\r\t" )
         }
     }
