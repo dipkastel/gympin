@@ -319,10 +319,10 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
                 </IconButton>
             </>)}
             >
-                {elements&&<ListItemText
-                    primary={item.Title + " - ( " + elements.find(e => e.Type === item.Type).Name + " ) "}
-                    secondary={item.Description&&item.Description.substring(0,60)}
-                />}
+                {elements&&(<ListItemText
+                        primary={item.Title + " - ( " + elements.find(e => e.Type === item.Type).Name + " ) "}
+                        secondary={item.Description&&item.Description.substring(0,60)}
+                />)}
             </ListItem>
             <Grid sx={{paddingRight: 2}}>
                 <List>

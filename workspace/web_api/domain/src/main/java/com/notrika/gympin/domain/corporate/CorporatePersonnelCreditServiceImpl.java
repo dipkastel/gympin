@@ -75,7 +75,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     public BigDecimal getTotalUserCredits(CorporatePersonnelCreditParam param) {
         CorporateEntity corporate = corporateRepository.getById(param.getCorporateId());
         BigDecimal totalCredit = BigDecimal.ZERO;
-        for (var person : corporate.getPersonnel()) {
+        for (var person : corporate.getPersonnel().stream().filter(p->!p.isDeleted()).collect(Collectors.toList())) {
             totalCredit = totalCredit.add(person.getCreditBalance());
         }
         return totalCredit;

@@ -33,16 +33,29 @@ export let Api_url = {
     homePage: {
         GET_HOME_PAGE: "v1/homepage/getHome",
     },
-    user: {
-        GET_BY_ID: "v1/user/getById",
-        UPDATE_USER: "v1/user/update",
-        UPDATE_AVATAR: "v1/user/updateUserAvatar",
-    },
     multimedia:{
         add:"v1/multimedia/add"
     },
     Notification:{
         getUserNotifications:"v1/Notification/getUserNotifications"
+    },
+    optionOfPlace:{
+        GET_BY_PLACE_ID: "v1/OptionOfPlace/getByPlaceId",
+    },
+    place:{
+        GET_ALL:"v1/place/getAll",
+        GET_BY_ID:"v1/place/getById",
+    },
+    placeAbout:{
+        GET_BY_PLACE_ID:"v1/placeAbout/getByPlaceId",
+    },
+    plans:{
+        GET_BY_ID:"v1/plan/getById",
+        GET_BY_PLACE_ID:"v1/plan/getPlansByPlace"
+    },
+    region:{
+        GET_ALL:"v1/region/getAll",
+        GET_BY_CITY:"v1/region/getRegionsByCity"
     },
     sport:{
         GET_ALL:"v1/sport/getAll"
@@ -50,22 +63,9 @@ export let Api_url = {
     state:{
         GET_ALL:"v1/state/getAll"
     },
-    region:{
-        GET_ALL:"v1/region/getAll",
-        GET_BY_CITY:"v1/region/getRegionsByCity"
+    user: {
+        GET_BY_ID: "v1/user/getById",
+        UPDATE_USER: "v1/user/update",
+        UPDATE_AVATAR: "v1/user/updateUserAvatar",
     },
-    place:{
-        GET_ALL:"v1/place/getAll",
-        GET_BY_ID:"v1/place/getById",
-    },
-    plans:{
-        GET_BY_ID:"v1/plan/getById",
-        GET_BY_PLACE_ID:"v1/plan/getPlansByPlace"
-    },
-    optionOfPlace:{
-        GET_BY_PLACE_ID: "v1/OptionOfPlace/getByPlaceId",
-    },
-    placeAbout:{
-        GET_BY_PLACE_ID:"v1/placeAbout/getByPlaceId",
-    }
 };
