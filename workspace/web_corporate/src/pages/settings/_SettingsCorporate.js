@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Button,
     Card,
@@ -14,8 +14,10 @@ import {
 import {connect, useSelector} from "react-redux";
 import {corporate_getByUser} from "../../network/api/corporate.api";
 import {corporateActions} from "../../helper/redux/actions/CorporateActions";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _SettingsCorporate = (props) => {
+    const error = useContext(ErrorContext);
     const  user  = useSelector(({auth}) => auth.user);
     const [selectedCorporate,SetSelectedCorporate] = useState(useSelector(({corporate}) => corporate.corporate))
     const [corporates, SetCorporates] = useState([]);
@@ -26,7 +28,13 @@ const _SettingsCorporate = (props) => {
                 SetSelectedCorporate(result.data.Data[0]);
                 props.SetCorporate(result.data.Data[0]);
             }
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, []);
 
     function selectedPlaceChanged(event) {

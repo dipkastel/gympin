@@ -22,11 +22,9 @@ export function* saga() {
         yield put(authActions.SetUser(result));
     });
     yield takeLatest(ActionTypesSaga.RequestCorporate, function* corporateRequested(action) {
-        console.log(action.payload.corporate.Id);
         const result = yield call(
             () => new Promise((resolve) => {
                 corporate_getById(action.payload.corporate.Id).then((_result) => {
-                    console.log(_result)
                     resolve(_result.data.Data);
                 }).catch(e => {
                     console.log(e)

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import HomeSlider from "./components/HomeSlider";
 import HomeTitle from "./components/HomeTitle";
 import HomeUserList from "./components/HomeUserList";
@@ -6,16 +6,22 @@ import HomeBanner from "./components/HomeBanner";
 import {HomePage_getHome} from "../../network/api/homePage.api";
 import {useSelector} from "react-redux";
 import {getHomeId} from "../../helper/serverSettingsHelper";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 export default function Home() {
+    const error = useContext(ErrorContext);
     const [homeList, setHomeList] = useState(null);
     const settings = useSelector(state=>state.settings)
     useEffect(() => {
         HomePage_getHome({id:getHomeId(settings)})
             .then(result => {
                 setHomeList(result.data.Data)
-            }).catch((err)=>{
-            alert("خطا در برقراری ارتباط با سرور و یا شما اجازه دسترسی به این بخش را ندارید"+err.message)
+            }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
         })
     }, [])
     return (

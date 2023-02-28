@@ -1,18 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Card, CardContent, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {useSelector} from "react-redux";
 import {corporate_getTransactions} from "../../network/api/corporate.api";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import {toPriceWithComma} from "../../helper/utils";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const IncreaseList = () => {
+    const error = useContext(ErrorContext);
     const corporate = useSelector(({corporate}) => corporate.corporate);
     const [transactions, SetTransactions] = useState([])
 
     useEffect(() => {
         corporate_getTransactions({CorporateId: corporate.Id}).then(result => {
             SetTransactions(result.data.Data);
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, []);
 
 

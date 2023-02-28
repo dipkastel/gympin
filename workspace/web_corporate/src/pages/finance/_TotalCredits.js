@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Button,
     Card,
@@ -13,14 +13,22 @@ import {
 import {corporatePersonnel_getTotalUserCredits} from "../../network/api/corporatePersonnel.api";
 import {useSelector} from "react-redux";
 import {toPriceWithComma} from "../../helper/utils";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _TotalCredits = () => {
+    const error = useContext(ErrorContext);
     const corporate = useSelector(({corporate}) => corporate.corporate)
     const [totalCredit,setTotlaCredit] = useState(0);
     useEffect(() => {
         corporatePersonnel_getTotalUserCredits({CorporateId:corporate.Id}).then(result=>{
             setTotlaCredit(result.data.Data);
-        }).catch(e=>console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, [corporate]);
 
     return (

@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Card, CardContent, CardHeader, TextField} from "@mui/material";
 import {Form} from "react-bootstrap";
 import {corporatePersonnel_addCreditToAll} from "../../network/api/corporatePersonnel.api";
 import {useSelector} from "react-redux";
 import { useNavigate} from "react-router-dom";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const IncreaseGroupCredit = () => {
+    const error = useContext(ErrorContext);
     const navigate = useNavigate()
     const corporate = useSelector(({corporate}) => corporate.corporate)
 
@@ -17,7 +19,13 @@ const IncreaseGroupCredit = () => {
             CreditAmount: toPriceWithoutComma(e.target.credit.value)
         }).then(result => {
             navigate('/personnel', {replace: true});
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     return (

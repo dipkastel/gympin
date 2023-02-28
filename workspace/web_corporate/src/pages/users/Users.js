@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import _ListItem from "../../components/_ListItem";
 import {
     Avatar,
@@ -25,9 +25,11 @@ import {toAbsoluteUrl, toPriceWithComma} from "../../helper/utils";
 import {corporatePersonnel_add, corporatePersonnel_ByCorporate} from "../../network/api/corporatePersonnel.api";
 import {useSelector} from "react-redux";
 import {Form} from "react-bootstrap";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 
 const Users = () => {
+    const error = useContext(ErrorContext);
     const corporate = useSelector(({corporate}) => corporate.corporate)
     const [personnel, setPersonnel] = useState([]);
     const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -39,7 +41,13 @@ const Users = () => {
     function getPersonnel() {
         corporatePersonnel_ByCorporate(corporate).then(result => {
             setPersonnel(result.data.Data);
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
 
@@ -54,7 +62,13 @@ const Users = () => {
                 .then(result => {
                     setOpenModalAdd(false);
                     getPersonnel();
-                }).catch(e => console.log(e));
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
 
         return (

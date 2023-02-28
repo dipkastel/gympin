@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Button,
     Card,
@@ -13,8 +13,10 @@ import {
 import {corporate_getTotalDeposit} from "../../network/api/corporate.api";
 import {useSelector} from "react-redux";
 import {toPriceWithComma} from "../../helper/utils";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _Wallet = () => {
+    const error = useContext(ErrorContext);
     const corporate = useSelector(({corporate}) => corporate.corporate)
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [totalDeposit, setTotalDeposit] = useState(0);
@@ -22,7 +24,13 @@ const _Wallet = () => {
     useEffect(() => {
         corporate_getTotalDeposit({CorporateId:corporate.Id}).then(result=>{
             setTotalDeposit(result.data.Data)
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }, []);
 
 

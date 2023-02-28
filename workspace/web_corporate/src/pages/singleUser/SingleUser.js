@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {
     corporatePersonnel_add,
@@ -20,8 +20,10 @@ import {
 } from "@mui/material";
 import {Form} from "react-bootstrap";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const SingleUser = (props) => {
+    const error = useContext(ErrorContext);
     const {PersonnelId} = useParams();
     const [person,setPerson] = useState([]);
     const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -32,7 +34,13 @@ const SingleUser = (props) => {
     function getPerson(){
         corporatePersonnel_getById({id:PersonnelId}).then(result=>{
             setPerson(result.data.Data);
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     function renderModalAdd() {
@@ -45,7 +53,13 @@ const SingleUser = (props) => {
                 .then(result => {
                     setOpenModalAdd(false);
                     getPerson();
-                }).catch(e => console.log(e));
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
 
         return (

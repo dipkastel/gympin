@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Avatar, Button, Card, CardContent, CardHeader, FormControl, Grid, Input, TextField} from "@mui/material";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {connect, useSelector} from "react-redux";
 import {media_AddImage} from "../../network/api/multimedia.api";
 import {corporate_Update, corporate_UpdateLogo} from "../../network/api/corporate.api";
 import {Form} from "react-bootstrap";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const EditCorporate = (props) => {
+    const error = useContext(ErrorContext);
     const corporate = useSelector(({corporate}) => corporate.corporate)
     const [imageUrl, SetImageUrl] = useState("")
     const [inCorporate,SetInCorporate] = useState(corporate);
@@ -14,7 +16,6 @@ const EditCorporate = (props) => {
     useEffect(() => {
         SetImageUrl(corporate.Logo?corporate.Logo.Url:"");
         SetInCorporate(corporate);
-        console.log(corporate);
     }, [corporate]);
     useEffect(() => {
         props.RequestCorporate(corporate);
@@ -24,7 +25,13 @@ const EditCorporate = (props) => {
         e.preventDefault()
         corporate_Update({Id:corporate.Id,Name:inCorporate.Name,Address:inCorporate.Address}).then(result=>{
             props.RequestCorporate(corporate);
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
     function updateLogo(e) {
@@ -40,8 +47,20 @@ const EditCorporate = (props) => {
                 .then(data => {
                     corporate_UpdateLogo({CorporateId: corporate.Id, MultimediaId: data.data.Data.Id}).then(result => {
                         props.RequestCorporate(corporate)
-                    }).catch(e => console.log(e));
-                }).catch(e => console.log(e))
+                    }).catch(e => {
+                        try {
+                            error.showError({message: e.response.data.Message,});
+                        } catch (f) {
+                            error.showError({message: "خطا نا مشخص",});
+                        }
+                    });
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            })
 
 
         }
