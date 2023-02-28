@@ -14,7 +14,11 @@ const EditCorporate = (props) => {
     useEffect(() => {
         SetImageUrl(corporate.Logo?corporate.Logo.Url:"");
         SetInCorporate(corporate);
+        console.log(corporate);
     }, [corporate]);
+    useEffect(() => {
+        props.RequestCorporate(corporate);
+    }, []);
 
     function updateCorporate(e){
         e.preventDefault()
