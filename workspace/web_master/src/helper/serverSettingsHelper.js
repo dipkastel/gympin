@@ -5,6 +5,6 @@ export function getHomeId(settings) {
     try{
         return settings.serverSettings.find(s=>s.Key==="WEB_MASTER_HOMEPAGE_ID").Value;
     }catch (e) {
-        return 1
+        return 2
     }
 }
