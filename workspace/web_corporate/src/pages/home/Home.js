@@ -33,7 +33,7 @@ export default function Home() {
     }, [])
     return (
         <>
-            {homeList&&homeList.Items.map((item, index) => {
+            {homeList&&homeList.Items.sort((a, b) => a.Priority - b.Priority).map((item, index) => {
                 switch (item.Type){
                     case "SLIDER":return   <HomeSlider key={index} item={item}/>
                     case "TITLE":return   <HomeTitle key={index} item={item}/>
