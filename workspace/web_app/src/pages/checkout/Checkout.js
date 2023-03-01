@@ -11,7 +11,6 @@ const Checkout = () => {
     const navigate = useNavigate()
     const {paymentId} = useParams();
     const error = useContext(ErrorContext);
-    const currentUser = useSelector(state => state.auth.user);
     const [counter,SetCounter] = useState(null);
     const [transActionTitle,SetTransactionTitle] = useState("لطفا صبر کنید");
     useEffect(() => {
@@ -41,7 +40,6 @@ const Checkout = () => {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     },[])

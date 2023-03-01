@@ -116,7 +116,6 @@ export function getTicketPersianStatus(text){
 export function generateTicketCode(ticketId) {
     let len = ticketId.toString().length;
     var extraCharCount = Math.round(Math.random() * (9-len));
-    // console.log(len+extraCharCount)
     var result = "";
     var subs = [];
     while (subs.length < len) {
@@ -146,9 +145,6 @@ export function getTicketIdByQr(qr) {
     let charCount  = qr.substring(qr.length-1,qr.length);
     var result = "";
     for (var i =Number(charCount-1);i>=0;i--){
-
-        console.log(Number(qr.substring(qr.length-i-2,qr.length-i-1)));
-        // console.log(Number(qr.substring(charCount-i-1,charCount-i)));
          result+= qr.substring(Number(qr.substring(qr.length-i-2,qr.length-i-1)),Number(qr.substring(qr.length-i-2,qr.length-i-1))+1);
     }
     return result;

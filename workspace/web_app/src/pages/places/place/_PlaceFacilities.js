@@ -1,27 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Card, CardHeader, Chip, Grid} from "@mui/material";
 import {PlaceOptions_getByPlace} from "../../../network/api/placeOptions.api";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
-const data = [{
-    name:"دوش"
-},{
-    name:"کمد(locker)"
-},{
-    name:"سشوار"
-},{
-    name:"آب سردکن"
-},{
-    name:"مربی"
-},{
-    name:"ماساژ"
-}]
 const _PlaceFacilities = ({place}) => {
-
+    const error = useContext(ErrorContext);
     const [placeOptions,SetPlaceOptions] = useState([])
     useEffect(() => {
         PlaceOptions_getByPlace({Id:place.Id}).then(result=>{
             SetPlaceOptions(result.data.Data)
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, [place]);
 
 

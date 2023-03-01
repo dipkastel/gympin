@@ -61,7 +61,6 @@ export default function Register(props) {
                                             props.SetRefreshToken(data.data.Data.RefreshToken);
                                         })
                                         .catch((ex) => {
-                                            console.log(ex);
                                             setSubmitting(false);
                                             setStatus(
                                                 "اطلاعات وارد شده معتبر نبست"

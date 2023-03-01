@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Avatar, Button, Card, CardContent, Grid, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 import _ListItem from "../../components/_ListItem";
@@ -7,7 +7,6 @@ import {sagaActions} from "../../helper/redux/actions/SagaActions";
 
 const Profile = (props) => {
     const user = useSelector(state => state.auth.user)
-    console.log("user", user)
     useEffect(() => {
         props.RequestUser(user)
     }, []);

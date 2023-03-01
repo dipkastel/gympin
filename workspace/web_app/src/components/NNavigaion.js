@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Container, Navbar} from "react-bootstrap";
 import {FormControlLabel, Grid, IconButton, Typography} from "@mui/material";
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
@@ -6,10 +6,12 @@ import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalance
 import {UserCredit_getByUser} from "../network/api/userCredit.api";
 import {useSelector} from "react-redux";
 import {toPriceWithComma} from "../helper/utils";
+import {ErrorContext} from "./GympinPagesProvider";
 
 
 export default function NNavigaion() {
 
+    const error = useContext(ErrorContext);
     const currentUser = useSelector(state => state.auth.user);
     const [userCredit, setUserCredit] = useState(null)
 
@@ -23,7 +25,13 @@ export default function NNavigaion() {
         if(currentUser){
             UserCredit_getByUser({Id: currentUser.Id}).then(result => {
                 setUserCredit(result.data.Data);
-            }).catch(e => console.log(e))
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
     }
     return (

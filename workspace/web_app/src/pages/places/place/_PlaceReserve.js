@@ -38,7 +38,6 @@ const _PlaceReserve = ({place}) => {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }, [place]);
@@ -96,7 +95,6 @@ const _PlaceReserve = ({place}) => {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
 
@@ -132,7 +130,6 @@ const _PlaceReserve = ({place}) => {
             <List disablePadding>
                 {plans.map((item, number) => (
                         <div key={number}>
-                            {console.log(item)}
                             <ListItem disablePadding>
                                 <ListItemButton disabled={!item.Enable} onClick={() => addToTickets(item)}>
                                     <ListItemText sx={{textAlign: "right"}}

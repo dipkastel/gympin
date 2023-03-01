@@ -32,7 +32,6 @@ function Login(props) {
                         error.showError({message: e.response.data.Message});
                     } catch (f) {
                         error.showError({message: "خطا در برقراری ارتباط با سرور و یا شما اجازه دسترسی به این بخش را ندارید",});
-                        console.log(e)
                     }
             })
         }

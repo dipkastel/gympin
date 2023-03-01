@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Card, CardContent, CardHeader, Collapse, Divider, Grid, IconButton, Typography} from "@mui/material";
 import {toPriceWithComma} from "../../helper/utils";
 import {planGatesTiming_getByPlan} from "../../network/api/Plans.api";
 import {dayOfWeekEnum} from "../../helper/enums/dayOfWeekEnum";
 import HistoryToggleOffIcon from '@mui/icons-material/HistoryToggleOff';
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _TicketDetail = ({ticket}) => {
+    const error = useContext(ErrorContext);
     const [timing,setTiming]= useState(null)
     const [openTiming,setOpenTiming]= useState(false)
     useEffect(() => {
@@ -15,7 +17,13 @@ const _TicketDetail = ({ticket}) => {
     function getTiming(ticket){
         planGatesTiming_getByPlan({Id:ticket.Plan.Id}).then(result=>{
             setTiming(result.data.Data);
-        }).catch(e=>console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     return (

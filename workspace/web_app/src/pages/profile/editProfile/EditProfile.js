@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Avatar,
     Button,
@@ -23,14 +23,15 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {user_updateAvatar, user_updateMe} from "../../../network/api/user.api";
 import {useNavigate} from "react-router-dom";
 import {sagaActions} from "../../../helper/redux/actions/SagaActions";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 const EditProfile = (props) => {
-    const navigation = useNavigate()
+    const error = useContext(ErrorContext);
+    const navigation = useNavigate();
     const currentUser = useSelector(state=>state.auth.user)
     const [imageUrl,SetImageUrl] = useState("")
     const [user,setUser] = useState(currentUser)
     useEffect(() => {
-        console.log(currentUser)
         props.RequestUser(user)
     }, []);
 
@@ -53,10 +54,20 @@ const EditProfile = (props) => {
                 .then(data => {
                     user_updateAvatar({UserId:currentUser.Id,MultimediaId:data.data.Data.Id}).then(result=>{
                         SetImageUrl(result.data.Data.Avatar?result.data.Data.Avatar.Url:"")
-                    }).catch(e=>console.log(e));
-                }).catch(e => console.log(e))
-
-
+                    }).catch(e => {
+                        try {
+                            error.showError({message: e.response.data.Message});
+                        } catch (f) {
+                            error.showError({message: "خطا نا مشخص",});
+                        }
+                    });
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
     }
 
@@ -105,12 +116,16 @@ const EditProfile = (props) => {
 
                     }}
                     onSubmit={(values, {setStatus, setSubmitting}) => {
-                        console.log("values",JSON.stringify(values));
                         user_updateMe(values).then(result=>{
                             props.RequestUser(values)
                             setUser(result.data.Data);
-                            console.log(result)
-                        }).catch(e=>console.log(e));
+                        }).catch(e => {
+                            try {
+                                error.showError({message: e.response.data.Message});
+                            } catch (f) {
+                                error.showError({message: "خطا نا مشخص",});
+                            }
+                        });
                     }}
                 >
                     {({
@@ -180,7 +195,6 @@ const EditProfile = (props) => {
                                           mask="____/__/__"
                                           value={values.Birthday||""}
                                           onChange={(e,w)=>{
-                                              console.log("e:",e.toString())
                                               setFieldValue('Birthday', Date.parse(e))
                                           }}
                                           renderInput={(params) =>

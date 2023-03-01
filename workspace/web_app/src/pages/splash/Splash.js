@@ -1,13 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import Lottie from 'react-lottie';
 import splash from './splash.json'
 import "./Splash.css"
 import {configs_getWebAppSplash} from "../../network/api/configs.api";
 import {connect} from "react-redux";
 import {settingActions} from "../../helper/redux/actions/SettingsActions";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const Splash = (props) => {
-    console.log("hamin ke man migam ")
+    const error = useContext(ErrorContext);
     const defaultOptions = {
         loop: true,
         autoplay: true,
@@ -19,12 +20,17 @@ const Splash = (props) => {
 
     useEffect(() => {
             configs_getWebAppSplash(null).then(result=>{
-                console.log(result)
                 props.SetServerSettings(result.data.Data.Settings)
                 setInterval(()=>{
                     props.onSplashComplete()
                 },1000)
-            }).catch(e=>console.log(e));
+            }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, []);
 
     return (

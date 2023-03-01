@@ -11,7 +11,6 @@ export function sendSms(userdata) {
 
 
 export function refreshToken(refreshToken) {
-    console.log(refreshToken)
     return axios.post(Api_url.Account.REFRESH_TOKEN, {RefreshToken:refreshToken});
 }
 

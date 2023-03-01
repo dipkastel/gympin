@@ -12,7 +12,6 @@ const _EnterList = ({ticket,getTicket,setUserCanEnter}) => {
     }, [ticket]);
 
     useEffect(() => {
-        console.log(entryList);
         setUserCanEnter(!entryList.some(entry=>entry.ExitDate==null))
     }, [entryList]);
 
@@ -24,7 +23,6 @@ const _EnterList = ({ticket,getTicket,setUserCanEnter}) => {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }

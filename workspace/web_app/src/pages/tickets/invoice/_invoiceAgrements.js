@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {PlaceAbout_getByPlace} from "../../../network/api/placeAbout.api";
 import {
     Button,
@@ -13,11 +13,12 @@ import {
     Switch
 } from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 
 const _invoiceAgrements = ({plan,setAllAgrementChecked}) => {
 
-    const navigate = useNavigate();
+    const error = useContext(ErrorContext);
     const [about, setAbout] = useState(null);
     const [itemToView, setItemToView] = useState(null);
     const [checkedItem,setCheckedItem] = useState([]);
@@ -34,7 +35,13 @@ const _invoiceAgrements = ({plan,setAllAgrementChecked}) => {
                 checkableItems.push({Id:item.Id,checked:false})
             })
             setCheckedItem(checkableItems)
-        }).catch(e => console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function renderModalView(){

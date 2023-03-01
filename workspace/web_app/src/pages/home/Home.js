@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import HomeTitle from "./components/HomeTitle";
 import {getHomePage} from "../../network/api/mainPage.api";
 import "./Home.css"
@@ -14,20 +14,23 @@ import HomeDiscountList from "./components/HomeDiscountList";
 import HomeSingleDiscount from "./components/HomeSingleDiscount";
 import HomeContentList from "./components/HomeContentList";
 import HomeSingleContent from "./components/HomeSingleContent";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 export default function Home() {
+    const error = useContext(ErrorContext);
     const [data, setData] = useState(null);
-    const [serverSettings] = useState(useSelector(({settings:{serverSettings}})=>serverSettings))
-    console.log(getHomeId(serverSettings))
+    const [serverSettings] = useState(useSelector(({settings:{serverSettings}})=>serverSettings));
     const homePageId = getHomeId(serverSettings);
     useEffect(() => {
         getHomePage({id:homePageId}).then(result=>{
-            console.log(result.data.Data);
             setData(result.data.Data);
-        }).catch(ex=>{
-            console.log(ex)
-
-        })
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
 
     }, [])
     return (

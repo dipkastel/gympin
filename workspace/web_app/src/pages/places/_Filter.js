@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Box,
     Chip,
@@ -18,8 +18,10 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import {getAllSports} from "../../network/api/sport.api";
 import {getAllByCity} from "../../network/api/region.api";
 import GetStringPrice from "../../helper/utils";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const _Filter = () => {
+    const error = useContext(ErrorContext);
     const [sortBy, SetSortBy] = useState(0)
     const minPrice = 10000;
     const maxPrice = 2000000;
@@ -73,12 +75,22 @@ const _Filter = () => {
     useEffect(() => {
         getAllSports().then(result => {
             SetSports(result.data.Data)
-            console.log("sports", result.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
         getAllByCity(1).then(result => {
             SetRegions(result.data.Data)
-            console.log("states", result)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, []);
 
 

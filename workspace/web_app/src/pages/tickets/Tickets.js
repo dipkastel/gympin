@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Alert,
     Button,
@@ -20,8 +20,10 @@ import {ticket_delete, ticket_getByUser} from "../../network/api/tickets.api";
 import {toPriceWithComma} from "../../helper/utils";
 import {useNavigate} from "react-router-dom";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const Tickets = () => {
+    const error = useContext(ErrorContext);
     const navigate = useNavigate();
     const  user  = useSelector( ({auth:{user}})=>  user );
     const  [tickets,setTickets]  = useState( []);
@@ -33,7 +35,13 @@ const Tickets = () => {
     function getUserTickets(){
         ticket_getByUser({id:user.Id}).then(result=>{
             setTickets(result.data.Data);
-        }).catch(e=>console.log(e));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function getStatus(Status) {
@@ -53,9 +61,14 @@ const Tickets = () => {
             ticket_delete({id:ticketToDelete.Id}).then(result=>{
                 setTicketToDelete(null);
                 getUserTickets();
-            }).catch(e=>console.log(e))
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
-        console.log(ticketToDelete)
         return(<>
             <Dialog
                 className={"w-100"}
@@ -111,7 +124,6 @@ const Tickets = () => {
                                     <Typography variant={"body1"}>{toPriceWithComma(item.Price)+" تومان برای "+item.EntryTotalCount+" ورود"}</Typography>
                                 </Grid>
                             </Grid>
-                            {console.log(openDescription[item.Id])}
 
                             <Collapse in={openDescription[item.Id]} timeout={10} sx={{my:1}} unmountOnExit>
                                 <Alert severity="info">

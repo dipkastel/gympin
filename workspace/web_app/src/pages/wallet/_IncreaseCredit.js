@@ -2,17 +2,16 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Box, Button, Card, Divider, Grid, InputAdornment, TextField, Typography} from "@mui/material";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {transactions_getPaymentGateways, transactions_setPaymentRequest} from "../../network/api/transactions.api";
-import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {Image} from "react-bootstrap";
 
 const _IncreaseCredit = () => {
     const error = useContext(ErrorContext);
-    const navigation = useNavigate();
     const currentUser = useSelector(state => state.auth.user);
     const [amountToPay,SetAmountToPay]= useState(null)
     const [paymentGateways,setPaymentGateways] = useState([]);
+
     useEffect(() => {
         getPaymentGateways();
     }, []);
@@ -25,20 +24,17 @@ const _IncreaseCredit = () => {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }
 
     function submitPayment(e){
         e.preventDefault()
-        console.log(amountToPay)
         if(!amountToPay||parseInt(amountToPay)<5000){
             error.showError({message: "حداقل مبلغ شارژ 5،000 تومان می باشد",});
             return;
         }
         var selectedGatway = paymentGateways.filter(item=>item.IsDefault == true)[0];
-        console.log(selectedGatway.Id)
         transactions_setPaymentRequest({
             SelectedPaymentId:selectedGatway.Id,
             TransactionType:"CHARGE_USER",
@@ -51,7 +47,6 @@ const _IncreaseCredit = () => {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         })
     }

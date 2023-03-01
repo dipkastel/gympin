@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import _IncreaseCredit from "./_IncreaseCredit";
 import {Card, Divider, Grid, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
@@ -7,9 +7,10 @@ import {useSelector} from "react-redux";
 import {UserCredit_getByUser} from "../../network/api/userCredit.api";
 import {toPriceWithComma} from "../../helper/utils";
 import {creditTypes} from "../../helper/enums/creditTypes";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const Wallet = () => {
-    const navigation = useNavigate();
+    const error = useContext(ErrorContext);
     const currentUser = useSelector(state => state.auth.user);
     const [userCredit, setUserCredit] = useState([])
     useEffect(() => {
@@ -19,8 +20,13 @@ const Wallet = () => {
     function getUserCredit(){
         UserCredit_getByUser({Id: currentUser.Id}).then(result => {
             setUserCredit(result.data.Data);
-            console.log(result.data.Data)
-        }).catch(e => console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     return (

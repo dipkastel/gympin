@@ -1,14 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Avatar, Divider, Grid, List, ListItem, ListItemAvatar, ListItemText, Typography} from "@mui/material";
 import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
 import {notificationGetByUser} from "../../network/api/notification.api";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const Notifs = (props) => {
+    const error = useContext(ErrorContext);
     const [notifs,SetNotifs] = useState([]);
     useEffect(() => {
         notificationGetByUser().then(result=>{
             SetNotifs(result.data.Data);
-        }).catch(e=>console.log(e))
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, []);
 
     return (

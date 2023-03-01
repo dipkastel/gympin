@@ -9,8 +9,6 @@ import _UsageProgress from "./_UsageProgress";
 import _PhoneLessEnter from "./_PhoneLessEnter";
 
 const SingleTicket = () => {
-
-    const navigate = useNavigate()
     const {ticketId} = useParams();
     const [ticket, setTicket] = useState(null)
     const [userCanEnter, setUserCanEnter] = useState(null)
@@ -28,7 +26,6 @@ const SingleTicket = () => {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
-                console.log(e)
             }
         });
     }

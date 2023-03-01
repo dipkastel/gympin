@@ -40,8 +40,6 @@ export default function NBottomNavigation(){
     ]
     const pathname = window.location.pathname
     const [value, setValue] = React.useState(getTabName(pathname));
-
-    console.log("NBN",getTabName(pathname));
     function getTabName(path){
         let selectedItem =bottomItems[0].value;
         let pathParam = path.split('/')[1]
