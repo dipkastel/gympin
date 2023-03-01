@@ -67,22 +67,39 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
 
     @Override
     public List<TransactionDto> getByPlace(Long PlaceId) {
-        return convertToDtos(transactionRepository.findAllByPlaceIdAndDeletedFalse(PlaceId));
+        List<TransactionDto> resultList = new ArrayList<>();
+        try{
+            resultList.addAll(convertToDtos(transactionRepository.findAllByPlaceIdAndDeletedFalse(PlaceId)));
+        }catch (Exception e){}
+        return resultList;
     }
 
     @Override
     public List<TransactionDto> getByCorporate(Long corporateId) {
-        return convertToDtos(transactionRepository.findAllByCorporateIdAndDeletedFalse(corporateId));
+        List<TransactionDto> resultList = new ArrayList<>();
+        try{
+            resultList.addAll(convertToDtos(transactionRepository.findAllByCorporateIdAndDeletedFalse(corporateId)));
+        }catch (Exception e){}
+        return resultList;
     }
 
     @Override
     public List<TransactionDto> getByUser(Long userId) {
-        return convertToDtos(transactionRepository.findAllByUserIdAndDeletedFalse(userId));
+        List<TransactionDto> resultList = new ArrayList<>();
+        try{
+            resultList.addAll(convertToDtos(transactionRepository.findAllByUserIdAndDeletedFalse(userId)));
+        }catch (Exception e){}
+        return resultList;
     }
 
     @Override
     public List<TransactionDto> getByPersonel(Long personnelId) {
-        return convertToDtos(transactionRepository.findAllByCorporatePersonnelIdAndDeletedIsFalse(personnelId));
+
+        List<TransactionDto> resultList = new ArrayList<>();
+        try{
+            resultList.addAll(convertToDtos(transactionRepository.findAllByCorporatePersonnelIdAndDeletedIsFalse(personnelId)));
+        }catch (Exception e){}
+        return resultList;
     }
 
     @Override
