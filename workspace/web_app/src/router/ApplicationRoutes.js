@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import {Navigate, Route, Routes} from "react-router-dom";
-import {shallowEqual, useSelector} from "react-redux";
+import React from "react";
+import {Route, Routes} from "react-router-dom";
+import {useSelector} from "react-redux";
 import Home from "../pages/home/Home";
 import NNavigaion from "../components/NNavigaion";
 import NBottomNavigation from "../components/NBottomNavigation";
@@ -15,7 +15,6 @@ import SingleTicket from "../pages/tickets/singleTicket/SingleTicket";
 import Survey from "../pages/survey/Survey";
 import InviteFriends from "../pages/inviteFriends/InviteFriends";
 import EditProfile from "../pages/profile/editProfile/EditProfile";
-import Splash from "../pages/splash/Splash";
 import Invoice from "../pages/tickets/invoice/Invoice";
 import Checkout from "../pages/checkout/Checkout";
 

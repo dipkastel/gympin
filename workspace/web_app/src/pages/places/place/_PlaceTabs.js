@@ -10,7 +10,6 @@ import _PlaceAbout from "./_PlaceAbout";
 import _PlaceFacilities from "./_PlaceFacilities";
 
 
-
 const _PlaceTabs = ({place}) => {
     const theme = useTheme();
     const [selectedTab, setSelectedTab] = React.useState(0);

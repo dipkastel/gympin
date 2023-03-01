@@ -1,6 +1,5 @@
 import React from 'react';
-import {Button, Card, CardContent, Fab, Grid, IconButton, InputAdornment, TextField, Typography} from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import {Button, Card, CardContent, Fab, Grid, InputAdornment, TextField, Typography} from "@mui/material";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import InstagramIcon from '@mui/icons-material/Instagram';

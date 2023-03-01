@@ -12,7 +12,7 @@ import {
     Select,
     TextField
 } from "@mui/material";
-import {compareObjs, getImagePath} from "../../../helper/utils";
+import {compareObjs} from "../../../helper/utils";
 import {connect, useSelector} from "react-redux";
 import {media_AddImage} from "../../../network/api/multimedia.api";
 import {Formik} from "formik";

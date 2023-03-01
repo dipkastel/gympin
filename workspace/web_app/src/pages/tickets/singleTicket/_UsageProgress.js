@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, CardContent, Grid, IconButton, LinearProgress, Typography} from "@mui/material";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
+import {Card, CardContent, LinearProgress} from "@mui/material";
 
 const _UsageProgress = ({ticket,setUserCanEnter}) => {
     const [entryList,setEntryList] = useState([]);

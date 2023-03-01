@@ -1,27 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {
     Alert,
-    AlertTitle,
-    Box,
     Button,
     Card,
     CardContent,
     CardHeader,
-    Chip, Collapse, Dialog, DialogActions,
-    DialogContent,
-    DialogTitle, FormControl,
+    Chip,
+    Collapse,
+    Dialog,
+    DialogActions,
+    DialogTitle,
     Grid,
-    IconButton, InputLabel, MenuItem, Select, Slider,
+    IconButton,
     Typography
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import AutorenewIcon from '@mui/icons-material/Autorenew';
 import {useSelector} from "react-redux";
 import {ticket_delete, ticket_getByUser} from "../../network/api/tickets.api";
-import GetStringPrice, {toPriceWithComma} from "../../helper/utils";
-import { useNavigate} from "react-router-dom";
+import {toPriceWithComma} from "../../helper/utils";
+import {useNavigate} from "react-router-dom";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import _PlanTimingReserve from "../places/place/_PlanTimingReserve";
+
 const Tickets = () => {
     const navigate = useNavigate();
     const  user  = useSelector( ({auth:{user}})=>  user );

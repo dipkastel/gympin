@@ -7,8 +7,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "bootstrap/dist/css/bootstrap.rtl.min.css"
 import "../helper/style.css"
-import {useState} from "react";
-import Splash from "../pages/splash/Splash";
 import GympinPagesProvider from "../components/GympinPagesProvider";
 
 const { PUBLIC_URL } = process.env;

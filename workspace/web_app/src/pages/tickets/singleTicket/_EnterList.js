@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Card, CardContent, Grid, IconButton, Typography} from "@mui/material";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
+import {Button, Card, CardContent, Grid, Typography} from "@mui/material";
 import {ticket_exitRequest} from "../../../network/api/tickets.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 

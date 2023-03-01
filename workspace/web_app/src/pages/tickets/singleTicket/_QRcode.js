@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Card, CardContent, Grid, Typography} from "@mui/material";
 import QRCode from "react-qr-code";
-import {generateTicketCode, getTicketIdByQr} from "../../../helper/utils";
+import {generateTicketCode} from "../../../helper/utils";
 
 const _QRcode = ({ticket}) => {
     const [code, SetCode] = useState(8);

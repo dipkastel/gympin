@@ -1,6 +1,5 @@
 import axios from "axios";
-import { Api_url} from "./NETWORKCONSTS";
-import {useSelector} from "react-redux";
+import {Api_url} from "./NETWORKCONSTS";
 
 export function login(loginData) {
     return axios.post(Api_url.Account.LOGIN_URL, loginData);

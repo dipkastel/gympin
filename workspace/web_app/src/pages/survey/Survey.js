@@ -1,8 +1,5 @@
 import React from 'react';
-import {Avatar, Button, Card, CardContent, Grid, IconButton, Rating, Typography} from "@mui/material";
-import {toAbsoluteUrl} from "../../helper/utils";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
+import {Card, CardContent, Grid, Rating, Typography} from "@mui/material";
 
 const data = [{
     id:458,

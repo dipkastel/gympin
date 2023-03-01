@@ -1,13 +1,9 @@
 import React from "react";
 import {BottomNavigation, BottomNavigationAction, Paper} from "@mui/material";
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import GroupIcon from '@mui/icons-material/Group';
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
 import HomeIcon from '@mui/icons-material/Home';
 import GrainIcon from '@mui/icons-material/Grain';
-import EggAltIcon from '@mui/icons-material/EggAlt';
 import {Link} from "react-router-dom";
 
 

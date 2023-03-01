@@ -4,12 +4,13 @@ import {
     Button,
     Card,
     CardContent,
-    CardHeader, Dialog, DialogActions, DialogContent, DialogTitle,
+    CardHeader,
+    Dialog,
+    DialogContent,
     FormControlLabel,
     FormGroup,
     Grid,
-    Switch,
-    Typography
+    Switch
 } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 

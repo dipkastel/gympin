@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import ErrorsRoutes from "./ErrorRoutes";
 import ApplicationRoutes from "./ApplicationRoutes";
 import {saveLastLocation} from "../helper/lastLocationHandler";

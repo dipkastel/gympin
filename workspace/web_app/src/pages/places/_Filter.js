@@ -10,7 +10,9 @@ import {
     IconButton,
     InputLabel,
     MenuItem,
-    Select, Slider, SliderMarkLabel, SliderValueLabel, Typography
+    Select,
+    Slider,
+    Typography
 } from "@mui/material";
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import {getAllSports} from "../../network/api/sport.api";

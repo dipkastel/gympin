@@ -1,17 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-    Button,
-    Card,
-    CardContent, Dialog,
-    DialogActions,
-    DialogContent, DialogTitle,
-    Grid,
-    IconButton,
-    LinearProgress,
-    Typography
-} from "@mui/material";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import {ticket_enterRequest, ticket_getById} from "../../../network/api/tickets.api";
+import {Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@mui/material";
+import {ticket_enterRequest} from "../../../network/api/tickets.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 const _PhoneLessEnter = ({ticket,getTicket}) => {

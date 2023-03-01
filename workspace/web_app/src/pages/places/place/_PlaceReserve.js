@@ -12,7 +12,7 @@ import {
     ListItemText,
     Typography
 } from "@mui/material";
-import {planGatesTiming_getByPlan, Plans_getByPlace} from "../../../network/api/Plans.api";
+import {Plans_getByPlace} from "../../../network/api/Plans.api";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";

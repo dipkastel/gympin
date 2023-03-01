@@ -1,5 +1,4 @@
 import {AuthApi} from "../network/api/NETWORKCONSTS";
-import {useSelector} from "react-redux";
 
 export const toAbsoluteUrl = (pathname) => process.env.PUBLIC_URL + pathname;
 

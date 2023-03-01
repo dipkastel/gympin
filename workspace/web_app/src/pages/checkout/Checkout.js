@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {connect, useSelector} from "react-redux";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
-import {Box, Button, Card, CardContent, CardHeader, CircularProgress, Grid, Typography} from "@mui/material";
+import {Box, Card, CardContent, CardHeader, CircularProgress, Grid, Typography} from "@mui/material";
 import {transactions_checkPayment} from "../../network/api/transactions.api";
 
 const Checkout = () => {

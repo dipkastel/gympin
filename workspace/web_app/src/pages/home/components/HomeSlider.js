@@ -1,10 +1,9 @@
-import React  from 'react';
+import React from 'react';
 import Slick from "react-slick"
 import {Box, Link} from "@mui/material";
-import { Image} from "react-bootstrap";
+import {Image} from "react-bootstrap";
 
 const HomeSlider = (props) => {
-    console.log(props)
     const settings = {
         dots: false,
         infinite: true,
@@ -19,13 +18,14 @@ const HomeSlider = (props) => {
         rtl: true
 
     };
+
     return (
             <Slick {...settings}>
-                {props.item.Items.map((item, index) => (
-                    <div key={index} >
-                        <Link href={"/"+item.Destination} underline="none" color="inherit" fontWeight="800">
+                {props.item.Items&&props.item.Items.map((singleItem, index) => (
+                    <div className={"slider-item"} key={index} >
+                        <Link href={singleItem.Data} underline="none" color="inherit" fontWeight="800">
                             <Box>
-                                <Image  height={"200px"} width={"100%"}  src={item.multimedia.Url}/>
+                                <Image  height={"50%"} width={"100%"}  src={singleItem.multimedia.Url}/>
                             </Box>
                         </Link>
                     </div>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, Grid, Typography} from "@mui/material";
+import {Card, Grid, Typography} from "@mui/material";
 import {PlaceAbout_getByPlace} from "../../../network/api/placeAbout.api";
 
 const data = [{
