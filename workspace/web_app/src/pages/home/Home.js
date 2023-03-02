@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import HomeTitle from "./components/HomeTitle";
 import {getHomePage} from "../../network/api/mainPage.api";
 import "./Home.css"
-import {useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {getHomeId} from "../../helper/serverSettingsHelper";
 import HomeSlider from "./components/HomeSlider";
 import HomeClickableTitle from "./components/HomeClickableTitle";
@@ -15,13 +15,16 @@ import HomeSingleDiscount from "./components/HomeSingleDiscount";
 import HomeContentList from "./components/HomeContentList";
 import HomeSingleContent from "./components/HomeSingleContent";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import {authActions} from "../../helper/redux/actions/authActions";
+import {sagaActions} from "../../helper/redux/actions/SagaActions";
 
-export default function Home() {
+function Home(props) {
     const error = useContext(ErrorContext);
     const [data, setData] = useState(null);
     const [serverSettings] = useState(useSelector(({settings:{serverSettings}})=>serverSettings));
     const homePageId = getHomeId(serverSettings);
     useEffect(() => {
+        props.RequestServerSettings();
         getHomePage({id:homePageId}).then(result=>{
             setData(result.data.Data);
         }).catch(e => {
@@ -35,7 +38,7 @@ export default function Home() {
     }, [])
     return (
         <>
-            {data&&data.Items.sort((a, b) => a.Priority - b.Priority).map((item, index) => {
+            {data&&data.Items&&data.Items.sort((a, b) => a.Priority - b.Priority).map((item, index) => {
                     switch (item.Type){
                         case "SLIDER":return   <HomeSlider key={item.Id} item={item}/>
                         case "TITLE":return   <HomeTitle key={item.Id} item={item}/>
@@ -54,3 +57,5 @@ export default function Home() {
         </>
     );
 }
+
+export default connect(null, sagaActions)(Home)

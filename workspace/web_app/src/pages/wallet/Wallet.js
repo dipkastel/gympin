@@ -43,7 +43,7 @@ const Wallet = () => {
                         {"اعتبار : " + toPriceWithComma(userCredit.TotalCredit) + " تومان"}
                     </Typography>
                     <Image
-                        src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQR8QTGSZL4Oq6rXd0eXYM_QqhOmCbqFhTWKw&usqp=CAU"}
+                        src={"https://api.gympin.ir/resource/image?Id=12"}
                         width={"200px"}/>
 
                     {userCredit.CreditDetails&&userCredit.CreditDetails.map((item, number) => (

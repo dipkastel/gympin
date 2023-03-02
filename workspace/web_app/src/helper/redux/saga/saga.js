@@ -19,4 +19,18 @@ export function* saga() {
         yield put(authActions.SetUser(result));
     });
 
+    yield takeLatest(ActionTypesSaga.RequestServerSettings, function* settingRequested(action) {
+
+        // const result = yield call(
+        //     () => new Promise((resolve) => {
+        //         settings_(action.payload.user.Id).then((_result) => {
+        //             resolve(_result.data.Data);
+        //         }).catch(e => {
+        //             console.log(e)
+        //         });
+        //     })
+        // );
+        // yield put(authActions.SetUser(result));
+    });
+
 }

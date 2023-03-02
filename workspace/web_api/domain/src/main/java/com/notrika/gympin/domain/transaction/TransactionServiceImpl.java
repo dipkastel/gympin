@@ -128,31 +128,47 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
     @Transactional
     public List<PaymentGatewaysDto> getPaymentGateways(PaymentGatewaysParam param) {
         List<PaymentGatewaysDto> paymentGatewaysDtos = new ArrayList<>();
-        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
-                .id(80l)
-                .name("پارسیان")
-                .imageUrl("http://localhost:8080/resource/image?Id=14")
-                .gatewayType(GatwayType.BANK_PORTAL)
-                .build());
-        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
-                .id(81l)
-                .name("ملت")
-                .imageUrl("http://localhost:8080/resource/image?Id=15")
-                .gatewayType(GatwayType.BANK_PORTAL)
-                .build());
-        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
-                .id(82l)
-                .name("سامان")
-                .imageUrl("http://localhost:8080/resource/image?Id=16")
-                .gatewayType(GatwayType.BANK_PORTAL)
-                .isDefault(true)
-                .build());
+//        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
+//                .id(80l)
+//                .name("درگاه پارسیان")
+//                .imageUrl("https://api.gympin.ir/resource/image?Id=5")
+//                .gatewayType(GatwayType.BANK_PORTAL)
+//                .isDefault(true)
+//                .build());
+//        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
+//                .id(81l)
+//                .name("ملت")
+//                .imageUrl("http://localhost:8080/resource/image?Id=15")
+//                .gatewayType(GatwayType.BANK_PORTAL)
+//                .build());
+//        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
+//                .id(82l)
+//                .name("سامان")
+//                .imageUrl("http://localhost:8080/resource/image?Id=16")
+//                .gatewayType(GatwayType.BANK_PORTAL)
+//                .isDefault(true)
+//                .build());
         paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
                 .id(90l)
                 .name("کارت به کارت")
-                .imageUrl("http://localhost:8080/resource/image?Id=17")
+                .isDefault(true)
+                .imageUrl("https://api.gympin.ir/resource/image?Id=5")
                 .gatewayType(GatwayType.CARD_TRANSFER)
                 .description("شماره کارت جهت واریز مبلغ 6221061225406448 به نام پیشکامان داده نوتریکا")
+                .build());
+        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
+                .id(95l)
+                .name("پرداخت بانکی")
+                .imageUrl("https://api.gympin.ir/resource/image?Id=5")
+                .gatewayType(GatwayType.BANK_TRANSFER)
+                .description("مبالغ از طریق باجه بانک به حساب : 88548550505 بانک پارسیان با شماره شبای : 540540840450 در وجه پیشکامان داده نوتریکا")
+                .build());
+        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
+                .id(98l)
+                .name("چک")
+                .imageUrl("https://api.gympin.ir/resource/image?Id=5")
+                .gatewayType(GatwayType.CHEQUE)
+                .description("چک باید در وجه پیشکامان داده نوتریکا به شماره ثبت 885215 ")
                 .build());
         return paymentGatewaysDtos;
     }
@@ -170,21 +186,34 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
         if (!param.getTransactionType().toString().startsWith("CHARGE"))
             throw new unsupportedTransactionType();
 
+        TransactionEntity transaction = new TransactionEntity();
+
+
         if (param.getSelectedPaymentType() == 80L) {
             //ToDo change with real gateway url
             result = "http://localhost:3025/checkout/" + serial;
+            transaction.setDescription("پرداخت از درگاه -- ");
         } else if (param.getSelectedPaymentType() == 81L) {
             //ToDo change with real gateway url
             result = "http://localhost:3025/checkout/" + serial;
+            transaction.setDescription("پرداخت از درگاه -- ");
         } else if (param.getSelectedPaymentType() == 82L) {
             //ToDo change with real gateway url
             result = "http://localhost:3025/checkout/" + serial;
+            transaction.setDescription("پرداخت از درگاه -- ");
         } else if (param.getSelectedPaymentType() == 90L) {
-            result = serial;
+            result = serial.split("-")[0];
+            transaction.setDescription("پرداخت کارت به کارت با شماره تراکنش : "+param.getTransactionReference());
+        } else  if (param.getSelectedPaymentType() == 95L) {
+            result = serial.split("-")[0];
+            transaction.setDescription("پرداخت بانکی با شماره تراکنش : "+param.getTransactionReference());
+        } else  if (param.getSelectedPaymentType() == 98L) {
+            result = serial.split("-")[0];
+            transaction.setDescription("پرداخت چک با شماره سریال :"+param.getTransactionReference()+" و تاریخ :"+param.getChequeDate());
         } else {
             throw new unknownPaymentType();
         }
-        TransactionEntity transaction = new TransactionEntity();
+
         transaction.setTransactionType(param.getTransactionType());
         transaction.setAmount(param.getAmount());
         transaction.setTransactionStatus(TransactionStatus.REQUEST);
@@ -208,6 +237,7 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
         }
 
         transactionRepository.add(transaction);
+
         return result;
     }
 

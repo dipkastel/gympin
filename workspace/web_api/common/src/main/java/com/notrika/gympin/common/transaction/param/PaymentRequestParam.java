@@ -10,6 +10,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @SuperBuilder
@@ -37,5 +38,10 @@ public class PaymentRequestParam extends BaseParam<PaymentRequestParam> {
     @JsonProperty("UserId")
     private Long UserId;
 
+    @JsonProperty("TransactionReference")
+    private String transactionReference;
+
+    @JsonProperty("ChequeDate")
+    private Date chequeDate;
 
 }
