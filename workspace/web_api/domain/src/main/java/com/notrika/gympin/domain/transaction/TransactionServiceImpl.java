@@ -68,27 +68,30 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
     @Override
     public List<TransactionDto> getByPlace(Long PlaceId) {
         List<TransactionDto> resultList = new ArrayList<>();
-        try{
+        try {
             resultList.addAll(convertToDtos(transactionRepository.findAllByPlaceIdAndDeletedFalse(PlaceId)));
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return resultList;
     }
 
     @Override
     public List<TransactionDto> getByCorporate(Long corporateId) {
         List<TransactionDto> resultList = new ArrayList<>();
-        try{
+        try {
             resultList.addAll(convertToDtos(transactionRepository.findAllByCorporateIdAndDeletedFalse(corporateId)));
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return resultList;
     }
 
     @Override
     public List<TransactionDto> getByUser(Long userId) {
         List<TransactionDto> resultList = new ArrayList<>();
-        try{
+        try {
             resultList.addAll(convertToDtos(transactionRepository.findAllByUserIdAndDeletedFalse(userId)));
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return resultList;
     }
 
@@ -96,9 +99,10 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
     public List<TransactionDto> getByPersonel(Long personnelId) {
 
         List<TransactionDto> resultList = new ArrayList<>();
-        try{
+        try {
             resultList.addAll(convertToDtos(transactionRepository.findAllByCorporatePersonnelIdAndDeletedIsFalse(personnelId)));
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return resultList;
     }
 
@@ -203,18 +207,17 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
             transaction.setDescription("پرداخت از درگاه -- ");
         } else if (param.getSelectedPaymentType() == 90L) {
             result = serial.split("-")[0];
-            transaction.setDescription("پرداخت کارت به کارت با شماره تراکنش : "+param.getTransactionReference());
-        } else  if (param.getSelectedPaymentType() == 95L) {
+            transaction.setDescription("پرداخت کارت به کارت با شماره تراکنش : " + param.getTransactionReference());
+        } else if (param.getSelectedPaymentType() == 95L) {
             result = serial.split("-")[0];
-            transaction.setDescription("پرداخت بانکی با شماره تراکنش : "+param.getTransactionReference());
-        } else  if (param.getSelectedPaymentType() == 98L) {
+            transaction.setDescription("پرداخت بانکی با شماره تراکنش : " + param.getTransactionReference());
+        } else if (param.getSelectedPaymentType() == 98L) {
             result = serial.split("-")[0];
-            transaction.setDescription("پرداخت چک با شماره سریال :"+param.getTransactionReference()+" و تاریخ :"+param.getChequeDate());
+            transaction.setDescription("پرداخت چک با شماره سریال :" + param.getTransactionReference() + " و تاریخ :" + param.getChequeDate());
         } else {
             throw new unknownPaymentType();
         }
 
-        transaction.setTransactionType(param.getTransactionType());
         transaction.setAmount(param.getAmount());
         transaction.setTransactionStatus(TransactionStatus.REQUEST);
         transaction.setSerial(serial);
@@ -224,14 +227,17 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
             UserEntity userEntity = userRepository.getById(param.getUserId());
             transaction.setUser(userEntity);
             transaction.setBalance(userEntity.getBalance());
+            transaction.setTransactionType(TransactionType.CHARGE_USER);
         } else if (param.getPlaceId() != null) {
             PlaceEntity placeEntity = placeRepository.getById(param.getPlaceId());
             transaction.setPlace(placeEntity);
             transaction.setBalance(placeEntity.getBalance());
+            transaction.setTransactionType(TransactionType.CHARGE_PLACE);
         } else if (param.getCorporateId() != null) {
             CorporateEntity corporateEntity = corporateRepository.getById(param.getCorporateId());
             transaction.setCorporate(corporateEntity);
             transaction.setBalance(corporateEntity.getBalance());
+            transaction.setTransactionType(TransactionType.CHARGE_CORPORATE);
         } else {
             throw new unknownPaymentBuyer();
         }
@@ -251,9 +257,12 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
             throw new TransactionAlreadyChecked();
         }
         TransactionEntity transactionRequest = transactionsList.get(0);
+        var transactionCompleted = false;
 
         //TODO check Payment by bank and create payment transaction
-        if(true) {//TODO bank accepted
+        transactionCompleted = true;
+
+        if (transactionCompleted) {
             TransactionEntity transactionAccepted = new TransactionEntity();
             transactionAccepted.setAmount(transactionRequest.getAmount());
             transactionAccepted.setTransactionStatus(TransactionStatus.PAYMENT_COMPLETE);
@@ -269,14 +278,14 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
                 transactionAccepted.setBalance(userEntity.getBalance());
             } else if (transactionRequest.getPlace() != null) {
                 PlaceEntity placeEntity = transactionRequest.getPlace();
-                transactionAccepted.setTransactionType(TransactionType.CHARGE_USER);
+                transactionAccepted.setTransactionType(TransactionType.CHARGE_PLACE);
                 transactionAccepted.setPlace(placeEntity);
                 placeEntity.setBalance(placeEntity.getBalance().add(transactionRequest.getAmount()));
                 placeRepository.update(placeEntity);
                 transactionAccepted.setBalance(placeEntity.getBalance());
             } else if (transactionRequest.getCorporate() != null) {
                 CorporateEntity corporateEntity = transactionRequest.getCorporate();
-                transactionAccepted.setTransactionType(TransactionType.CHARGE_USER);
+                transactionAccepted.setTransactionType(TransactionType.CHARGE_CORPORATE);
                 transactionAccepted.setCorporate(corporateEntity);
                 corporateEntity.setBalance(corporateEntity.getBalance().add(transactionRequest.getAmount()));
                 corporateRepository.update(corporateEntity);
@@ -286,7 +295,55 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
             }
             transactionRepository.add(transactionAccepted);
             return true;
-        }else return false;
+        } else
+            return transactionCompleted;
+    }
+
+    @Override
+    @Transactional
+    public Boolean handCheckPayment(CheckPaymentParam param) {
+        List<TransactionEntity> transactionsList = transactionRepository.findAllBySerialAndDeletedFalse(param.getSerial());
+        if (transactionsList.isEmpty())
+            throw new TransactionNotFound();
+        if (transactionsList.size() > 1) {
+            throw new TransactionAlreadyChecked();
+        }
+        TransactionEntity transactionRequest = transactionsList.get(0);
+        TransactionEntity transactionAccepted = new TransactionEntity();
+        transactionAccepted.setAmount(transactionRequest.getAmount());
+        transactionAccepted.setIsChecked(false);
+        transactionAccepted.setSerial(transactionRequest.getSerial());
+        transactionAccepted.setCorporate(transactionRequest.getCorporate());
+        transactionAccepted.setPlace(transactionRequest.getPlace());
+        transactionAccepted.setUser(transactionRequest.getUser());
+        transactionAccepted.setTransactionType(transactionRequest.getTransactionType());
+        transactionAccepted.setDescription(param.getDescription());
+        if (param.getAccept()) {
+            transactionAccepted.setTransactionStatus(TransactionStatus.PAYMENT_COMPLETE);
+            if (transactionRequest.getUser() != null) {
+                UserEntity userEntity = transactionRequest.getUser();
+                userEntity.setBalance(userEntity.getBalance().add(transactionRequest.getAmount()));
+                userRepository.update(userEntity);
+                transactionAccepted.setBalance(userEntity.getBalance());
+            } else if (transactionRequest.getPlace() != null) {
+                PlaceEntity placeEntity = transactionRequest.getPlace();
+                placeEntity.setBalance(placeEntity.getBalance().add(transactionRequest.getAmount()));
+                placeRepository.update(placeEntity);
+                transactionAccepted.setBalance(placeEntity.getBalance());
+            } else if (transactionRequest.getCorporate() != null) {
+                CorporateEntity corporateEntity = transactionRequest.getCorporate();
+                corporateEntity.setBalance(corporateEntity.getBalance().add(transactionRequest.getAmount()));
+                corporateRepository.update(corporateEntity);
+                transactionAccepted.setBalance(corporateEntity.getBalance());
+            } else {
+                throw new unknownPaymentBuyer();
+            }
+        } else {
+            transactionAccepted.setTransactionStatus(TransactionStatus.PAYMENT_REJECTED);
+            transactionAccepted.setBalance(transactionRequest.getBalance());
+        }
+        transactionRepository.add(transactionAccepted);
+        return true;
     }
 
     @Override

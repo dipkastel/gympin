@@ -17,6 +17,7 @@ import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -86,6 +87,13 @@ public class TransactionControllerImpl implements TransactionController {
     @PostMapping("/checkPayment")
     public ResponseEntity<Boolean> checkPayment(@RequestBody CheckPaymentParam param) {
         return ResponseEntity.ok(transactionService.checkPayment(param));
+    }
+
+    @Override
+    @PostMapping("/handCheckPayment")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    public ResponseEntity<Boolean> handCheckPayment(@RequestBody CheckPaymentParam param) {
+        return ResponseEntity.ok(transactionService.handCheckPayment(param));
     }
 
     @Override

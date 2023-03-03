@@ -9,3 +9,6 @@ export function transaction_query(data) {
 export function transaction_placeSetteling(data) {
     return axios.post(TransactionApi.placeSetteling, data);
 }
+export function transaction_handCheckPayment(data) {
+    return axios.post(TransactionApi.handCheckPayment, data);
+}

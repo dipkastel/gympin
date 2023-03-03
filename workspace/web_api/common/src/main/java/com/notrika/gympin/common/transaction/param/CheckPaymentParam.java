@@ -18,4 +18,11 @@ public class CheckPaymentParam extends BaseParam<CheckPaymentParam> {
     @JsonProperty("Serial")
     private String serial;
 
+    @JsonProperty("Accept")
+    private Boolean accept;
+
+    @JsonProperty("Description")
+    private String Description;
+
+
 }

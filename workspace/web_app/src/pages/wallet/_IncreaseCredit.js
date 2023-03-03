@@ -53,8 +53,8 @@ const _IncreaseCredit = () => {
     }
     function submitPayment(e) {
         e.preventDefault()
-        if (!amountToPay || parseInt(amountToPay) < 5000) {
-            error.showError({message: "حداقل مبلغ شارژ 5،000 تومان می باشد",});
+        if (!amountToPay || parseInt(amountToPay) < 50000) {
+            error.showError({message: "حداقل مبلغ شارژ 50،000 تومان می باشد",});
             return;
         }
         var selectedGatway = paymentGateways.filter(item => item.IsDefault == true)[0];
@@ -120,16 +120,20 @@ const _IncreaseCredit = () => {
                         alignItems="center"
                         sx={{padding: 1}}
                     >
-                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(200000)} color={"info"} variant={"contained"}>200,000
+                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(1000000)} color={"info"} variant={"contained"}>1,000,000
                             تومان</Button>
-                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(400000)} color={"info"} variant={"contained"}>400,000
+                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(2000000)} color={"info"} variant={"contained"}>2,000,000
                             تومان</Button>
-                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(800000)} color={"info"} variant={"contained"}>800,000
+                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(4000000)} color={"info"} variant={"contained"}>4,000,000
                             تومان</Button>
-                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(1000000)} color={"info"}
-                                variant={"contained"}>1,000,000 تومان</Button>
+                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(5000000)} color={"info"}
+                                variant={"contained"}>5,000,000 تومان</Button>
                     </Grid>
-                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="div"/>
+                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0,width:"100%"}} component="div"/>
+
+                    <Typography sx={{width: "100%", textAlign: "start",pt: 3,pr: 3}} variant={"subtitle1"}>
+                       نوع پرداخت
+                    </Typography>
                     <Grid
                         container
                         direction="row"
@@ -158,6 +162,11 @@ const _IncreaseCredit = () => {
                         ))}
                     </Grid>
 
+                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0,width:"100%"}} component="div"/>
+
+                    <Typography sx={{width: "100%", textAlign: "start",pt: 3,pr: 3}} variant={"h5"}>
+                        {paymentGateways.find(p => p.IsDefault)&&paymentGateways.find(p => p.IsDefault).Description}
+                    </Typography>
                     <Grid
                         container
                         direction="row"

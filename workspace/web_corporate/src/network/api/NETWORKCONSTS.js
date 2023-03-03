@@ -68,4 +68,8 @@ export let Api_url = {
         UPDATE_USER: "v1/user/update",
         UPDATE_AVATAR: "v1/user/updateUserAvatar",
     },
+    transaction:{
+        getPaymentGateways:"v1/transaction/getPaymentGateways",
+        setPaymentRequest:"v1/transaction/setPaymentRequest",
+    }
 };

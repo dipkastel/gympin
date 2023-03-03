@@ -21,7 +21,7 @@ import _financeFilter, {defaultFilterFinance} from "./_financeFilter";
 const FinanceManagement = () => {
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(15);
     const [transactions, SetTransactions] = useState({});
 
     const [openModalFilter, setOpenModalFilter] = useState(false);
@@ -43,6 +43,7 @@ const FinanceManagement = () => {
             SetTransactions(data.data.Data)
         });
     }
+
 
 
     return (
@@ -137,7 +138,7 @@ const FinanceManagement = () => {
                         </Table>
                     </TableContainer>
                     {(transactions.totalElements > 0) && <TablePagination
-                        rowsPerPageOptions={[5, 10, 15, 25, 50, 100]}
+                        rowsPerPageOptions={[15, 25, 50, 100]}
                         component="div"
                         sx={{direction: "rtl"}}
                         count={transactions.totalElements || 0}

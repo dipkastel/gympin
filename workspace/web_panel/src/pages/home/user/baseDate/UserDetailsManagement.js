@@ -14,6 +14,7 @@ import UserCorporates from "./corporates/UserCorporates";
 import Notes from "../../../partials/content/notes/Notes";
 import UserCredit from "./credit/UserCredit";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import UserTransActionRequests from "./TransActionRequests/UserTransActionRequests";
 
 const UserDetailManagement = () => {
     const error = useContext(ErrorContext);
@@ -46,6 +47,7 @@ const UserDetailManagement = () => {
         </div>
         <div className="col-md-5">
           {currentUser && <UserStatus currentUser={currentUser} />}
+          {currentUser && <UserTransActionRequests currentUser={currentUser} />}
           {currentUser && <UserCredit currentUser={currentUser} />}
           {currentUser && <UserPlaces currentUser={currentUser} />}
           {currentUser && <UserCorporates currentUser={currentUser} />}

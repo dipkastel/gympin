@@ -11,6 +11,7 @@ import TotalCredit from "./TotalCredit/TotalCredit";
 import TotalDeposit from "./TotalDeposit/TotalDeposit";
 import DepositCharges from "./DepositCharges/DepositCharges";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import CorporateTransactionRequests from "./TransActionRequests/CorporateTransactionRequests";
 
 const CorporateDetailsManagement = () => {
     const error = useContext(ErrorContext);
@@ -42,7 +43,8 @@ const CorporateDetailsManagement = () => {
                 <div className="col-md-5">
                     <TotalCredit currentCorporate={currentCorporate} />
                     <TotalDeposit currentCorporate={currentCorporate} />
-                    <DepositCharges currentCorporate={currentCorporate} />
+                    <CorporateTransactionRequests currentCorporate={currentCorporate} />
+                    {/*<DepositCharges currentCorporate={currentCorporate} />*/}
                     <CorporatePersonnel currentCorporate={currentCorporate} />
                 </div>
                 <div className="col-md-2">
