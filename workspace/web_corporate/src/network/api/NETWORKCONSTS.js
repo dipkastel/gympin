@@ -71,5 +71,6 @@ export let Api_url = {
     transaction:{
         getPaymentGateways:"v1/transaction/getPaymentGateways",
         setPaymentRequest:"v1/transaction/setPaymentRequest",
+        query:"v1/transaction/query",
     }
 };

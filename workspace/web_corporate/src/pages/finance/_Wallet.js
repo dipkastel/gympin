@@ -67,6 +67,7 @@ const _Wallet = () => {
             return;
         }
         var selectedGatway = paymentGateways.filter(item => item.IsDefault == true)[0];
+        setOpenModalAdd(false)
         transactions_setPaymentRequest({
             SelectedPaymentId: selectedGatway.Id,
             TransactionReference: transactionReference,
@@ -78,8 +79,10 @@ const _Wallet = () => {
             if(result.data.Data.startsWith("http"))
                 window.location.href = result.data.Data;
             else{
+                setChequeDate(null);
+                SetAmountToPay(0);
+                SetTransactionRefrence(null);
                 error.showError({message: "درخواست شما با موفقیت ثبت شد شماره پیگیری : "+result.data.Data,});
-                setOpenModalAdd(false)
             }
         }).catch(e => {
             try {
@@ -169,14 +172,12 @@ const _Wallet = () => {
                                 justifyContent="space-around"
                                 alignItems="center"
                                 sx={{padding: 1}}
-                                md={12}
-                                lg={12}
-                                xs={12}
                             >
 
                                 {paymentGateways.map(item => (
 
                                     <Grid
+                                        key={item.Id}
                                         xs={3}
                                         item
                                         onClick={() => changePaymentType(item)}
@@ -210,7 +211,7 @@ const _Wallet = () => {
                                     variant="outlined"
                                     margin="normal"
                                     name="code"
-                                    value={toPriceWithComma(amountToPay)}
+                                    value={toPriceWithComma(amountToPay||0)}
                                     type="text"
                                     onChange={e => SetAmountToPay(toPriceWithoutComma(e.target.value))}
                                     label={"مبلغ دلخواه به تومان"}
@@ -221,7 +222,7 @@ const _Wallet = () => {
                                     variant="outlined"
                                     margin="normal"
                                     name="code"
-                                    value={transactionReference}
+                                    value={transactionReference||""}
                                     type="text"
                                     onChange={e => SetTransactionRefrence(e.target.value)}
                                     label={getlabelOfRefrence()}

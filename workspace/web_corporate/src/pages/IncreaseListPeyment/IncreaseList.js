@@ -1,19 +1,41 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, CardContent, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import {
+    Card,
+    CardContent,
+    Divider, Grid,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    TableCell, Tooltip, Typography
+} from "@mui/material";
 import {useSelector} from "react-redux";
-import {corporate_getTransactions} from "../../network/api/corporate.api";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import {toPriceWithComma} from "../../helper/utils";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import {transactions_query} from "../../network/api/transactions.api";
+import FeedIcon from "@mui/icons-material/Feed";
+import {QuestionMark} from "@mui/icons-material";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 const IncreaseList = () => {
     const error = useContext(ErrorContext);
     const corporate = useSelector(({corporate}) => corporate.corporate);
+
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(100);
     const [transactions, SetTransactions] = useState([])
 
     useEffect(() => {
-        corporate_getTransactions({CorporateId: corporate.Id}).then(result => {
-            SetTransactions(result.data.Data);
+        transactions_query({
+            queryType: "FILTER",
+            CorporateId:corporate.Id,
+            TransactionType:"CHARGE_CORPORATE",
+            paging: {Page: page, Size: rowsPerPage, Desc: true}
+        }).then((data) => {
+            SetTransactions(data.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -24,31 +46,72 @@ const IncreaseList = () => {
     }, []);
 
 
+    const groupBySerial = (result, { Serial, ...cats }) => {
+        if (!result.some(r=>r.Serial==Serial))result.push({Serial:Serial,Items:[]})
+        result.find(r=>r.Serial==Serial).Items.push(cats);
+        return result;
+    }
+    const getRequest = (items) =>{
+        console.log("pa",items)
+        return items.Items.find(o=>o.TransactionStatus=="REQUEST");
+    }
+    const getPayment = (items) =>{
+        console.log("pa",items)
+        return items.Items.find(o=>o.TransactionStatus!="REQUEST");
+    }
+
     return (
-        <Card elevation={3} sx={{margin: 1}}>
-            <CardContent>
-               تاریخچه تراکنش ها
-                <List disablePadding>
-                    {transactions && transactions.reverse().map(item => (
-                        <div key={"tr-" + item.Id}>
-                            <ListItem disablePadding >
-                                <ListItemButton >
-                                    <ListItemIcon >
-                                        <CheckCircleOutlineIcon  color={"success"}/>
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary={toPriceWithComma(item.DepositAmount)+" تومان"}
-                                        secondary={new Date(item.CreatedDate).toLocaleDateString('fa-IR', {month: 'numeric', day: 'numeric',year:"numeric"})}/>
-                                </ListItemButton>
-                            </ListItem>
-                            <Divider variant="inset" sx={{marginLeft: 0}} component="li"/>
-                        </div>
+        <>
+            {transactions.content && transactions.content.reduce(groupBySerial, []).filter(row=>getRequest(row)).map((row, index) => {
+                return (
+                    <div key={"tr-" + row.Serial}>
+                        <Card elevation={3} sx={{margin: 1}}>
+                            <CardContent>
+                                <Grid container justifyContent={"space-between"} alignItems={"center"}>
 
-                    ))}
-                </List>
+                                    <Typography variant={"subtitle1"}>
+                                        {toPriceWithComma(getRequest(row).Amount)+" تومان"}
+                                    </Typography>
 
-            </CardContent>
-        </Card>
+                                    <Typography variant={"caption"}>
+                                        {new Date(getRequest(row).CreatedDate).toLocaleDateString('fa-IR', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                            hour: "2-digit",
+                                            minute: "2-digit"
+                                        })}
+                                    </Typography>
+
+                                </Grid>
+                            <ListItemText
+                                primary={getRequest(row)&&(
+                                    <Typography variant={"caption"}>
+                                        {getRequest(row).Description}
+                                        {/*<FeedIcon color={"success"} />*/}
+                                    </Typography>)}
+                                secondary={getPayment(row)?(
+                                    <Typography variant={"subtitle2"}>
+                                        {getPayment(row).Description}
+                                        {getPayment(row).TransactionStatus=="PAYMENT_COMPLETE"?
+                                            <CheckCircleIcon color={"success"} />:
+                                            <RemoveCircleIcon color={"error"} />}
+                                    </Typography>
+                                ):(
+                                    <Typography variant={"subtitle2"}>
+                                        <QuestionMark color={"warning"} />
+                                        در انتظار بررسی
+                                    </Typography>
+                                )}
+                            />
+                            </CardContent>
+                        </Card>
+                    </div>
+                );
+            })}
+
+        </>
+
     );
 };
 
