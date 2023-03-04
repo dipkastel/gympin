@@ -8,6 +8,8 @@ import {Gates_getByPlace} from "../../../network/api/gates.api";
 import {placePersonnel_getAccess} from "../../../network/api/placePersonnel.api";
 import {accessActions} from "../actions/AccessActions";
 import {select} from "@redux-saga/core/effects";
+import {settingActions} from "../actions/SettingsActions";
+import {configs_getWebMasterSplash} from "../../../network/api/configs.api";
 
 
 export const getUser = (state)=> state.auth.user;
@@ -73,6 +75,21 @@ export function* saga() {
             })
         );
         yield put(placeActions.SetGates(result));
+    });
+
+
+    yield takeLatest(ActionTypesSaga.RequestServerSettings, function* settingRequested(action) {
+
+        const result = yield call(
+            () => new Promise((resolve) => {
+                configs_getWebMasterSplash(action.payload.user.Id).then((_result) => {
+                    resolve(_result.data.Data);
+                }).catch(e => {
+                    console.log(e)
+                });
+            })
+        );
+        yield put(settingActions.SetServerSettings(result));
     });
 
 }
