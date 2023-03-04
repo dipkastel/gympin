@@ -4,6 +4,8 @@ import {ActionTypesSaga} from "../actions/SagaActions"
 import {user_getById} from "../../../network/api/user.api";
 import {corporate_getById} from "../../../network/api/corporate.api";
 import {corporateActions} from "../actions/CorporateActions";
+import {configs_getCorporateSplash} from "../../../network/api/configs.api";
+import {settingActions} from "../actions/SettingsActions";
 
 
 export function* saga() {
@@ -34,4 +36,17 @@ export function* saga() {
         yield put(corporateActions.SetCorporate(result));
     });
 
+    yield takeLatest(ActionTypesSaga.RequestServerSettings, function* settingRequested(action) {
+
+        const result = yield call(
+            () => new Promise((resolve) => {
+                configs_getCorporateSplash(action.payload.user.Id).then((_result) => {
+                    resolve(_result.data.Data);
+                }).catch(e => {
+                    console.log(e)
+                });
+            })
+        );
+        yield put(settingActions.SetServerSettings(result));
+    });
 }

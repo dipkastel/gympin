@@ -9,7 +9,7 @@ export let Api_url = {
         REFRESH_TOKEN:"v1/account/refreshToken"
     },
     configs:{
-        WebAppSplash:"v1/configs/WebAppSplash"
+        CorporateSplash:"v1/configs/CorporateSplash"
     },
     corporate:{
         GET_BY_USER:"v1/corporate/getByUser",

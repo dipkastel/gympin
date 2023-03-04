@@ -1,12 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useHistory, useParams} from "react-router-dom";
-import {Place_getPlaceById, Place_updatePlace} from "../../../../network/api/place.api";
 import Notice from "../../../partials/content/Notice";
 import {Plans_getById, Plans_update} from "../../../../network/api/plans.api";
 import PlanBase from "./Base/PlanBase";
 import PlanGatesTiming from "./PlanGatesTiming/PlanGateTiming";
 import {Button} from "@mui/material";
-import {Place} from "@mui/icons-material";
 import PlanSport from "./planSports/PlanSport";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 

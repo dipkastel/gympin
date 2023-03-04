@@ -3,7 +3,7 @@ import {Api_url} from "../network/api/NETWORKCONSTS";
 
 export function getHomeId(serverSettings) {
     try{
-        return serverSettings.find(s=>s.Key==="WEB_CORPORATE_HOMEPAGE_ID").Value;
+        return serverSettings.server.Settings.find(s=>s.Key==="WEB_CORPORATE_HOMEPAGE_ID").Value;
     }catch (e) {
         return 2
     }

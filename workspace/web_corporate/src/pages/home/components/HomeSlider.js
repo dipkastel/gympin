@@ -22,7 +22,7 @@ const HomeSlider = (props) => {
             <Slick {...settings}>
                 {props.item.Items&&props.item.Items.map((item, index) => (
 
-                    <div key={index} >{console.log(item)}
+                    <div key={index} >
                         <Link href={"/"+item.Destination} underline="none" color="inherit" fontWeight="800">
                             <Box>
                                 <Image width={"100%"}  src={item.multimedia.Url}/>

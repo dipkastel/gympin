@@ -20,7 +20,7 @@ import {sagaActions} from "../../helper/redux/actions/SagaActions";
 function Home(props) {
     const error = useContext(ErrorContext);
     const [data, setData] = useState(null);
-    const [serverSettings] = useState(useSelector(({settings:{server:{Settings}}})=>Settings));
+    const [serverSettings] = useState(useSelector(settings=>settings));
     const currentUser = useSelector(state => state.auth.user);
     const homePageId = getHomeId(serverSettings);
     useEffect(() => {

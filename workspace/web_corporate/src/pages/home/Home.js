@@ -4,7 +4,7 @@ import HomeTitle from "./components/HomeTitle";
 import HomeUserList from "./components/HomeUserList";
 import HomeBanner from "./components/HomeBanner";
 import {HomePage_getHome} from "../../network/api/homePage.api";
-import {useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {getHomeId} from "../../helper/serverSettingsHelper";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import HomeClickableTitle from "./components/HomeClickableTitle";
@@ -14,13 +14,20 @@ import HomeDiscountList from "./components/HomeDiscountList";
 import HomeSingleDiscount from "./components/HomeSingleDiscount";
 import HomeContentList from "./components/HomeContentList";
 import HomeSingleContent from "./components/HomeSingleContent";
+import {sagaActions} from "../../helper/redux/actions/SagaActions";
 
-export default function Home() {
+function Home(props) {
     const error = useContext(ErrorContext);
     const [homeList, setHomeList] = useState(null);
-    const settings = useSelector(state=>state.settings)
+    const [serverSettings] = useState(useSelector(({settings})=>settings));
+    const user = useSelector(state => state.auth.user);
+    const homePageId = getHomeId(serverSettings);
+
     useEffect(() => {
-        HomePage_getHome({id:getHomeId(settings)})
+        if(user){
+            props.RequestServerSettings(user);
+        }
+        HomePage_getHome({id:homePageId})
             .then(result => {
                 setHomeList(result.data.Data)
             }).catch(e => {
@@ -53,3 +60,5 @@ export default function Home() {
         </>
     );
 }
+
+export default connect(null, sagaActions)(Home)
