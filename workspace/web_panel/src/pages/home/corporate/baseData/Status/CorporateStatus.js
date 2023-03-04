@@ -35,7 +35,7 @@ const CorporateStatus = ({currentCorporate}) => {
     return (
         <>
             <Portlet>
-                <PortletHeader title="وضعیت کاربر" />
+                <PortletHeader title="وضعیت شرکت" />
                 <PortletBody>
                     <Form.Group>
                         <Select

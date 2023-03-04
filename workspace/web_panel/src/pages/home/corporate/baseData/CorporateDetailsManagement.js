@@ -9,9 +9,9 @@ import CorporateStatus from "./Status/CorporateStatus";
 import Notes from "../../../partials/content/notes/Notes";
 import TotalCredit from "./TotalCredit/TotalCredit";
 import TotalDeposit from "./TotalDeposit/TotalDeposit";
-import DepositCharges from "./DepositCharges/DepositCharges";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import CorporateTransactionRequests from "./TransActionRequests/CorporateTransactionRequests";
+import DeleteCorporate from "./Delete/DeleteCorporate";
 
 const CorporateDetailsManagement = () => {
     const error = useContext(ErrorContext);
@@ -39,6 +39,7 @@ const CorporateDetailsManagement = () => {
                 <div className="col-md-5">
                     <CorporateStatus currentCorporate={currentCorporate} />
                     <CorporateBasics currentCorporate={currentCorporate} />
+                    <DeleteCorporate currentCorporate={currentCorporate} />
                 </div>
                 <div className="col-md-5">
                     <TotalCredit currentCorporate={currentCorporate} />
