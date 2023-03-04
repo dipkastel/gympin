@@ -15,16 +15,18 @@ import HomeSingleDiscount from "./components/HomeSingleDiscount";
 import HomeContentList from "./components/HomeContentList";
 import HomeSingleContent from "./components/HomeSingleContent";
 import {ErrorContext} from "../../components/GympinPagesProvider";
-import {authActions} from "../../helper/redux/actions/authActions";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 
 function Home(props) {
     const error = useContext(ErrorContext);
     const [data, setData] = useState(null);
-    const [serverSettings] = useState(useSelector(({settings:{serverSettings}})=>serverSettings));
+    const [serverSettings] = useState(useSelector(({settings:{server:{Settings}}})=>Settings));
+    const currentUser = useSelector(state => state.auth.user);
     const homePageId = getHomeId(serverSettings);
     useEffect(() => {
-        props.RequestServerSettings();
+        if(currentUser){
+            props.RequestServerSettings(currentUser);
+        }
         getHomePage({id:homePageId}).then(result=>{
             setData(result.data.Data);
         }).catch(e => {

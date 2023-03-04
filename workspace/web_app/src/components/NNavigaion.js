@@ -22,7 +22,7 @@ export default function NNavigaion() {
 
 
     function getUserCredit(){
-        if(currentUser){
+        if(currentUser.Id){
             UserCredit_getByUser({Id: currentUser.Id}).then(result => {
                 setUserCredit(result.data.Data);
             }).catch(e => {

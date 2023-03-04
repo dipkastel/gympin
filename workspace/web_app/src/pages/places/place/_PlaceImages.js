@@ -26,7 +26,7 @@ const _PlaceImages = ({Multimedias}) => {
                     <div key={index} >
                          <Link  underline="none" color="inherit" fontWeight="800">
                             <Box>
-                                <Image width={"100%"} height={"250px"} src={item.Url}/>
+                                <Image width={"100%"} src={item.Url}/>
                             </Box>
                         </Link>
                     </div>
