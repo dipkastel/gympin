@@ -9,6 +9,7 @@ const data = {
     clickable: false,
     message: '',
     buttonTitle: '',
+    duration: 3000,
     onClick: () => {
     }
 };
@@ -45,7 +46,7 @@ class GympinPagesProvider extends React.Component {
 
                 <Snackbar sx={{mb:8,p:0}}
                           open={this.state.data.show}
-                          autoHideDuration={3000}
+                          autoHideDuration={this.state.data.duration}
                           TransitionComponent={ SlideTransition}
                           onClose={() => this.hideError()} >
                     <Paper sx={{width:"100%",backgroundColor:"#333",p:1}}>

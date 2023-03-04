@@ -69,7 +69,7 @@ const _IncreaseCredit = () => {
             if(result.data.Data.startsWith("http"))
                 window.location.href = result.data.Data;
             else
-                error.showError({message: "درخواست شما با موفقیت ثبت شد شماره پیگیری : "+result.data.Data,});
+                error.showError({message: "درخواست شما با موفقیت ثبت شد برای پیگیری به تاریخچه مراجعه نمایید.",duration:5000});
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
