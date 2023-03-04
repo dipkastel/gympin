@@ -34,6 +34,7 @@ const PlaceDataManagement = () => {
     function updatePlan(plan) {
         Plans_update(plan).then(data => {
             setPlan(data.data.Data)
+            error.showError({message: "با موفقیت ثبت شد",});
         }).catch(e => {
                     try {
                         error.showError({message: e.response.data.Message,});
