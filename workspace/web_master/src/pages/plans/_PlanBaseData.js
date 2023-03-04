@@ -23,6 +23,7 @@ import AdapterJalaali from '@date-io/jalaali';
 import {planExpireTypes} from "../../helper/enums/planExpireTypes";
 import {Plans_update} from "../../network/api/plans.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 
 const _PlanBaseData = ({plan, getPlanData}) => {
     const error = useContext(ErrorContext);
@@ -103,8 +104,8 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                         </FormControl>
                         <TextField
                             name={"Price"}
-                            value={inPlan.Price || ""}
-                            onChange={(e) => setInPlan({...inPlan, Price: e.target.value})}
+                            value={toPriceWithComma(inPlan.Price)}
+                            onChange={(e) => setInPlan({...inPlan, Price: toPriceWithoutComma(e.target.value)})}
                             margin="dense"
                             label="قیمت پلن"
                             type="number"
@@ -113,8 +114,8 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                         />
                         <TextField
                             name={"ValuePrice"}
-                            value={inPlan.ValuePrice || ""}
-                            onChange={(e) => setInPlan({...inPlan, ValuePrice: e.target.value})}
+                            value={toPriceWithComma(inPlan.ValuePrice)}
+                            onChange={(e) => setInPlan({...inPlan,  ValuePrice:toPriceWithoutComma(e.target.value)})}
                             margin="dense"
                             label="ارزش پلن"
                             type="number"
@@ -152,7 +153,7 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                         <LocalizationProvider
                             dateAdapter={AdapterJalaali}>
                             <DatePicker
-                                className={"ltr datePicker"}
+                                className={"datePicker"}
                                 inputFormat={"jYYYY/jMM/jDD"}
                                 label="تاریخ اتمام اعتبار"
                                 value={inPlan.Expire_date}
@@ -174,46 +175,46 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                         />
                         }
 
-                        <FormGroup>
-                            <FormControlLabel
-                                control={<Switch
-                                    checked={sellInTime}
-                                    onChange={(e) => {
-                                        setInPlan({...inPlan, End_selling_date: null, Start_selling_date: null})
-                                        SetSellInTime(e.target.checked)
-                                    }}
-                                    value="gilad"/>}
-                                label="فروش فقط برای زمان مشخص"
-                            />
-                        </FormGroup>
-                        {sellInTime && (
-                            <>
-                                <LocalizationProvider
-                                    dateAdapter={AdapterJalaali}>
-                                    <DatePicker
-                                        className={"ltr datePicker"}
-                                        fullWidth
-                                        inputFormat={"jYYYY/jMM/jDD"}
-                                        label="فروش این پلن از تاریخ"
-                                        value={inPlan.Start_selling_date}
-                                        onChange={(e) => setInPlan({...inPlan, Start_selling_date: e})}
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
-                                </LocalizationProvider>
-                                <LocalizationProvider
-                                    dateAdapter={AdapterJalaali}>
-                                    <DatePicker
-                                        className={"ltr datePicker"}
-                                        fullWidth
-                                        inputFormat={"jYYYY/jMM/jDD"}
-                                        label="فروش این پلن تا تاریخ"
-                                        value={inPlan.End_selling_date}
-                                        onChange={(e) => setInPlan({...inPlan, End_selling_date: e})}
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
-                                </LocalizationProvider>
-                            </>
-                        )}
+                        {/*<FormGroup>*/}
+                        {/*    <FormControlLabel*/}
+                        {/*        control={<Switch*/}
+                        {/*            checked={sellInTime}*/}
+                        {/*            onChange={(e) => {*/}
+                        {/*                setInPlan({...inPlan, End_selling_date: null, Start_selling_date: null})*/}
+                        {/*                SetSellInTime(e.target.checked)*/}
+                        {/*            }}*/}
+                        {/*            value="gilad"/>}*/}
+                        {/*        label="فروش فقط برای زمان مشخص"*/}
+                        {/*    />*/}
+                        {/*</FormGroup>*/}
+                        {/*{sellInTime && (*/}
+                        {/*    <>*/}
+                        {/*        <LocalizationProvider*/}
+                        {/*            dateAdapter={AdapterJalaali}>*/}
+                        {/*            <DatePicker*/}
+                        {/*                className={"ltr datePicker"}*/}
+                        {/*                fullWidth*/}
+                        {/*                inputFormat={"jYYYY/jMM/jDD"}*/}
+                        {/*                label="فروش این پلن از تاریخ"*/}
+                        {/*                value={inPlan.Start_selling_date}*/}
+                        {/*                onChange={(e) => setInPlan({...inPlan, Start_selling_date: e})}*/}
+                        {/*                renderInput={(params) => <TextField {...params} />}*/}
+                        {/*            />*/}
+                        {/*        </LocalizationProvider>*/}
+                        {/*        <LocalizationProvider*/}
+                        {/*            dateAdapter={AdapterJalaali}>*/}
+                        {/*            <DatePicker*/}
+                        {/*                className={"ltr datePicker"}*/}
+                        {/*                fullWidth*/}
+                        {/*                inputFormat={"jYYYY/jMM/jDD"}*/}
+                        {/*                label="فروش این پلن تا تاریخ"*/}
+                        {/*                value={inPlan.End_selling_date}*/}
+                        {/*                onChange={(e) => setInPlan({...inPlan, End_selling_date: e})}*/}
+                        {/*                renderInput={(params) => <TextField {...params} />}*/}
+                        {/*            />*/}
+                        {/*        </LocalizationProvider>*/}
+                        {/*    </>*/}
+                        {/*)}*/}
 
                         <FormControl fullWidth>
                             <Button variant={"contained"} type={"submit"}>ثبت</Button>

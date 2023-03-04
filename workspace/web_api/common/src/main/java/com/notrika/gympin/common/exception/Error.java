@@ -74,6 +74,8 @@ public class Error {
         UNSUPPORTED_TRANSACTION_TYPE(1506),
         TRANSACTION_NOT_FOUND(1507),
         TRANSACTION_ALREADY_CHECKED(1508),
+        //plan
+        UNCOMFORTABLE_VALUE_EXEPTION(1601),
         //general
         EXCEPTION(4001),
         OUT_SERVICE_EXCEPTION(4002),

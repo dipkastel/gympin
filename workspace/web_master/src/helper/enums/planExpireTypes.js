@@ -1,4 +1,4 @@
 export const planExpireTypes = {
-    Duration:"مدت زمان",
+    Duration:"تعداد روز",
     Date:"تاریخ مشخص",
 }

@@ -2,6 +2,7 @@ package com.notrika.gympin.domain.plan;
 
 import com.notrika.gympin.common._base.param.BaseParam;
 import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.exception.plan.UncomfortableValueExeption;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.plan.dto.PlanDto;
 import com.notrika.gympin.common.plan.param.PlanParam;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +43,8 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Bas
 
     @Override
     public PlanDto add(@NonNull PlanParam planParam) {
+        if(planParam.getValuePrice().compareTo(planParam.getPrice())<0)
+            throw new UncomfortableValueExeption();
         PlaceEntity place = placeRepository.getById(planParam.getPlace().getId());
         PlanEntity planEntity = PlanEntity.builder()
                 .place(place)
