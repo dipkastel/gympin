@@ -56,7 +56,7 @@ const Gates = ({place}) => {
 
 
                         <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن گیت "}</Modal.Title>
+                            <Modal.Title>{"افزودن درگاه "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
 
@@ -65,11 +65,11 @@ const Gates = ({place}) => {
                                 <Form.Control
                                     name="Name"
                                     type="text"
-                                    placeholder="نام گیت"
+                                    placeholder="نام درگاه"
                                 />
                                 <Form.Text className="text-muted">
-                                    گیت را میتوان خدمات قابل ارائه به کاربر در زمان های مشخص نیز بیان کرد اما دید کلی
-                                    ورودی های متفاوت برای کاربرد های مختلف است
+                                    درگاه را میتوان تقسیم بندی خدمات قابل ارائه در زمان های مشخص نیز بیان کرد اما دید کلی
+                                    بخش های متفاوت برای ارائه خدمات در زمان های مختلف است
                                 </Form.Text>
                             </Form.Group>
                         </Modal.Body>
@@ -117,7 +117,7 @@ const Gates = ({place}) => {
 
 
                         <Modal.Header closeButton>
-                            <Modal.Title>{"حذف گیت"}</Modal.Title>
+                            <Modal.Title>{"حذف درگاه"}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             {itemToDelete && "حذف " + itemToDelete.Name}
@@ -146,7 +146,7 @@ const Gates = ({place}) => {
         <>
             <Portlet>
                 <PortletHeader
-                    title="گیت ها"
+                    title="درگاه ها"
                     toolbar={
                         <PortletHeaderToolbar>
                             <button

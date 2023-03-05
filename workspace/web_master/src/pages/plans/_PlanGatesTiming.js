@@ -96,7 +96,7 @@ const _PlanGatesTiming = ({plan}) => {
         return (
             <div>
                 <Dialog fullWidth open={openModalAdd} onClose={() => setOpenModalAdd(false)}>
-                    <DialogTitle>افزودن گیت به پلن</DialogTitle>
+                    <DialogTitle>افزودن درگاه به پلن</DialogTitle>
                     <DialogContent>
                         <Tabs
                             id="controlled-tab-example"
@@ -193,7 +193,7 @@ const _PlanGatesTiming = ({plan}) => {
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     sx={{paddingBottom: 0}}
-                    title={"گیت های قابل استفاده"}
+                    title={"درگاه های قابل استفاده"}
                     action={<Button onClick={() => setOpenModalAdd(true)}>افزودن</Button>}
                 />
 

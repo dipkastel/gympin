@@ -42,7 +42,7 @@ const GateDataManagement = () => {
         <>
             <Notice icon="flaticon-warning kt-font-primary">
                 {gate && (
-                    <p>مدیریت مشخصات گیت {gate.Name}</p>
+                    <p>مدیریت مشخصات درگاه {gate.Name}</p>
                 )}
             </Notice>
             {gate && <div className="row">

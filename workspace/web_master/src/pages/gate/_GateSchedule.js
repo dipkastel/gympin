@@ -127,7 +127,7 @@ const _GateSchedule = ({gate}) => {
             <div>
                 <Dialog open={openModalAdd} onClose={() => setOpenModalAdd(false)}>
                     <form onSubmit={(e) => addItems(e)}>
-                    <DialogTitle>افزودن زمان فعالیت گیت</DialogTitle>
+                    <DialogTitle>افزودن زمان فعالیت درگاه</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
 

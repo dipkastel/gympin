@@ -39,6 +39,7 @@ const _PlanBaseData = ({plan, getPlanData}) => {
         e.preventDefault();
         Plans_update(inPlan).then(result => {
             getPlanData();
+            error.showError({message: "با موفقیت ثبت شد",});
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -84,7 +85,7 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                             label="نام پلن"
                             type="text"
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                         />
 
                         <FormControl variant="standard"
@@ -94,6 +95,7 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                                 value={inPlan["Gender"] || ""}
                                 onChange={(e) => setInPlan({...inPlan, Gender: e.target.value})}
                                 label="جنسیت"
+                                variant={"outlined"}
                                 fullWidth
                             >
                                 <MenuItem>انتخاب کنید</MenuItem>
@@ -108,9 +110,9 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                             onChange={(e) => setInPlan({...inPlan, Price: toPriceWithoutComma(e.target.value)})}
                             margin="dense"
                             label="قیمت پلن"
-                            type="number"
+                            type="text"
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                         />
                         <TextField
                             name={"ValuePrice"}
@@ -118,9 +120,9 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                             onChange={(e) => setInPlan({...inPlan,  ValuePrice:toPriceWithoutComma(e.target.value)})}
                             margin="dense"
                             label="ارزش پلن"
-                            type="number"
+                            type="text"
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                         />
 
                         <TextField
@@ -131,7 +133,7 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                             label="تعداد ورود"
                             type="number"
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                         />
 
                         <FormControl variant="standard"
@@ -141,6 +143,7 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                                 value={inPlan["Expire_type"] || ""}
                                 onChange={(e) => setInPlan({...inPlan, Expire_type: e.target.value})}
                                 label="تاریخ انقضا"
+                                variant={"outlined"}
                                 fullWidth
                             >
                                 <MenuItem>انتخاب کنید</MenuItem>
@@ -153,12 +156,12 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                         <LocalizationProvider
                             dateAdapter={AdapterJalaali}>
                             <DatePicker
-                                className={"datePicker"}
+                                className={"datePicker ltr"}
                                 inputFormat={"jYYYY/jMM/jDD"}
                                 label="تاریخ اتمام اعتبار"
                                 value={inPlan.Expire_date}
                                 onChange={(e) => setInPlan({...inPlan, Expire_date: e})}
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField {...params} variant={"outlined"} />}
                             />
                         </LocalizationProvider>
                         }
@@ -171,9 +174,22 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                             label="تعداد روز از تاریخ خرید"
                             type="number"
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                         />
                         }
+
+                        <TextField
+                            name={"Description"}
+                            value={inPlan.Description || ""}
+                            onChange={(e) => setInPlan({...inPlan, Description: e.target.value})}
+                            margin="dense"
+                            label="توضیح مخصوص این بلیط"
+                            type="text"
+                            fullWidth
+                            multiline
+                            variant="outlined"
+                        />
+
 
                         {/*<FormGroup>*/}
                         {/*    <FormControlLabel*/}

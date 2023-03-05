@@ -21,9 +21,9 @@ export function fixMobile(mobileNumber) {
     }
 }
 
-
 export function toPriceWithComma(price){
     if(!price) return "0";
+    if(price.length>1&&price.startsWith("0")) price = price.substring(1,price.length);
     return (price+"")
         .replace(/\D/g, "")
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -32,6 +32,7 @@ export function toPriceWithoutComma(price){
     if(!price) return "";
     return (price+"").replace(/\D/g, "");
 }
+
 
 export function removeStorage(key) {
     try {

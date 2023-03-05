@@ -43,8 +43,6 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Bas
 
     @Override
     public PlanDto add(@NonNull PlanParam planParam) {
-        if(planParam.getValuePrice().compareTo(planParam.getPrice())<0)
-            throw new UncomfortableValueExeption();
         PlaceEntity place = placeRepository.getById(planParam.getPlace().getId());
         PlanEntity planEntity = PlanEntity.builder()
                 .place(place)
@@ -67,6 +65,8 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Bas
 
     @Override
     public PlanDto update(@NonNull PlanParam planParam) {
+        if(planParam.getValuePrice().compareTo(planParam.getPrice())<0)
+            throw new UncomfortableValueExeption();
         PlanEntity planEntity = getEntityById(planParam.getId());
         planEntity.setName(planParam.getName());
         planEntity.setPrice(planParam.getPrice());

@@ -93,12 +93,12 @@ const PlanGatesTiming = ({plan}) => {
 
 
                         <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن گیت "}</Modal.Title>
+                            <Modal.Title>{"افزودن درگاه "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
 
                             <FormControl component="fieldset">
-                                <FormLabel component="legend">گیت های قابل استفاده</FormLabel>
+                                <FormLabel component="legend">درگاه های قابل استفاده</FormLabel>
                                 {GateTimings.map(gateTiming=>{
 
                                     return (
@@ -192,7 +192,7 @@ const PlanGatesTiming = ({plan}) => {
         <>
             <Portlet>
                 <PortletHeader
-                    title={"گیت های "+plan.Name}
+                    title={"درگاه های "+plan.Name}
                     toolbar={
                         <PortletHeaderToolbar>
                             <button

@@ -10,7 +10,7 @@ export const personnelAccessEnum = {
     Finance:"بخش مالی",
     FinanceAction:"درخواست های مالی",
     ManagementStatus:"تغییر وضعیت مرکز (فعال یا غیر فعال)",
-    ManagementGates:"مدیریت گیت ها (ساخت گیت جدید یا ویرایش)",
+    ManagementGates:"مدیریت درگاه ها (ساخت درگاه جدید یا ویرایش)",
     ManagementPlans:"مدیریت پلن ها (ساخت پلن جدید یا ویرایش)",
     ManagementImages:"مدیریت تصاویر مجموعه",
     ManagementPersonnel:"مدیریت پرسنل (و دسترسی پرسنل)",

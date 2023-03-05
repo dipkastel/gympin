@@ -59,7 +59,7 @@ const _BaseGateData = ({gate, getGate}) => {
                             value={inGate.Name || ""}
                             onChange={(e) => setInGate({...inGate, Name: e.target.value})}
                             margin="dense"
-                            label="نام گیت"
+                            label="نام درگاه"
                             type="text"
                             fullWidth
                             variant="standard"
@@ -69,10 +69,10 @@ const _BaseGateData = ({gate, getGate}) => {
                             onChange={(e) => setInGate({...inGate, TrafficManagement: e.target.checked})}
                         />
                         {inGate.TrafficManagement ?
-                            <Typography variant={"caption"}>تراکم جمعیت در این گیت به کاربر نمایش داده
+                            <Typography variant={"caption"}>تراکم جمعیت در این درگاه به کاربر نمایش داده
                                 بشود</Typography>
                             :
-                            <Typography variant={"caption"}>تراکم جمعیت در این گیت به کاربر نمایش داده
+                            <Typography variant={"caption"}>تراکم جمعیت در این درگاه به کاربر نمایش داده
                                 نشود</Typography>}
                         <FormControl fullWidth>
                             <Button variant={"contained"} type={"submit"}>ثبت</Button>

@@ -52,9 +52,9 @@ function GateBase({gate,updateGate}){
 
                         <TextField
                             id="standard-full-width"
-                            label="نام گیت"
+                            label="نام درگاه"
                             style={{ margin: 8 }}
-                            placeholder="نام گیت"
+                            placeholder="نام درگاه"
                             value={inGate.Name}
                             onChange={(e)=>setFormValues("Name",e.target.value)}
                             fullWidth
