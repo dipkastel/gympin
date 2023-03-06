@@ -330,6 +330,7 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
                 UserEntity userEntity = transactionRequest.getUser();
                 userEntity.setBalance(userEntity.getBalance().add(transactionRequest.getAmount()));
                 userRepository.update(userEntity);
+
                 transactionAccepted.setBalance(userEntity.getBalance());
             } else if (transactionRequest.getPlace() != null) {
                 PlaceEntity placeEntity = transactionRequest.getPlace();

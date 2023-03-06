@@ -20,20 +20,23 @@ export default function NNavigaion() {
     }, [currentUser]);
 
 
-
-    function getUserCredit(){
-        if(currentUser.Id){
-            UserCredit_getByUser({Id: currentUser.Id}).then(result => {
-                setUserCredit(result.data.Data);
-            }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            });
+    function getUserCredit() {
+        try {
+            if (currentUser.Id) {
+                UserCredit_getByUser({Id: currentUser.Id}).then(result => {
+                    setUserCredit(result.data.Data);
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
+            }
+        } catch (f) {
         }
     }
+
     return (
         <Navbar className="" bg="light" variant="dark" expand="lg">
 
@@ -50,10 +53,13 @@ export default function NNavigaion() {
                         <NotificationsNoneOutlinedIcon/>
                     </IconButton>
 
-                    {userCredit&&<FormControlLabel
+                    {userCredit && <FormControlLabel
                         control={
                             <Typography variant="subtitle1" component="a" href={"/wallet"}
-                                        sx={{textDecoration: "none", color: "#000"}}>{toPriceWithComma(userCredit.TotalCredit)}</Typography>
+                                        sx={{
+                                            textDecoration: "none",
+                                            color: "#000"
+                                        }}>{toPriceWithComma(userCredit.TotalCredit)}</Typography>
                         }
 
                         label={
