@@ -12,3 +12,7 @@ export function transaction_placeSetteling(data) {
 export function transaction_handCheckPayment(data) {
     return axios.post(TransactionApi.handCheckPayment, data);
 }
+
+export function transaction_setPaymentRequest(data) {
+    return axios.post(TransactionApi.setPaymentRequest, data);
+}

@@ -57,6 +57,10 @@ const _IncreaseCredit = () => {
             error.showError({message: "حداقل مبلغ شارژ 50،000 تومان می باشد",});
             return;
         }
+        if (!transactionReference) {
+            error.showError({message: "کد مرجع تراکنش نمیتواند خالی باشد",});
+            return;
+        }
         var selectedGatway = paymentGateways.filter(item => item.IsDefault == true)[0];
         transactions_setPaymentRequest({
             SelectedPaymentId: selectedGatway.Id,
@@ -68,8 +72,12 @@ const _IncreaseCredit = () => {
         }).then(result => {
             if(result.data.Data.startsWith("http"))
                 window.location.href = result.data.Data;
-            else
+            else{
+                SetTransactionRefrence("");
+                SetAmountToPay(null);
                 error.showError({message: "درخواست شما با موفقیت ثبت شد برای پیگیری به تاریخچه مراجعه نمایید.",duration:5000});
+
+            }
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});

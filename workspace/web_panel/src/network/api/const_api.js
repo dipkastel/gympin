@@ -231,6 +231,7 @@ export let TransactionApi = {
   query: "v1/transaction/query",
   placeSetteling: "v1/transaction/placeSetteling",
   handCheckPayment: "v1/transaction/handCheckPayment",
+  setPaymentRequest: "v1/transaction/setPaymentRequest",
 
 };
 export let UserApi = {

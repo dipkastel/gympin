@@ -1,5 +1,7 @@
 package com.notrika.gympin.domain.transaction;
 
+import com.notrika.gympin.common.context.GympinContext;
+import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.transactions.*;
 import com.notrika.gympin.common.transaction.dto.PaymentGatewaysDto;
 import com.notrika.gympin.common.transaction.dto.TransactionDto;
@@ -214,6 +216,10 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
         } else if (param.getSelectedPaymentType() == 98L) {
             result = serial.split("-")[0];
             transaction.setDescription("پرداخت چک با شماره سریال :" + param.getTransactionReference() + " و تاریخ :" + param.getChequeDate());
+        } else if (param.getSelectedPaymentType() == 99L) {
+            result = serial.split("-")[0];
+            UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+            transaction.setDescription("درخواست افزایش اعتبار از پنل توسط : "+user.getId()+" - "+ user.getUsername());
         } else {
             throw new unknownPaymentType();
         }
@@ -340,7 +346,15 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
             }
         } else {
             transactionAccepted.setTransactionStatus(TransactionStatus.PAYMENT_REJECTED);
-            transactionAccepted.setBalance(transactionRequest.getBalance());
+            if (transactionRequest.getUser() != null) {
+                transactionAccepted.setBalance(transactionRequest.getUser().getBalance());
+            } else if (transactionRequest.getPlace() != null) {
+                transactionAccepted.setBalance(transactionRequest.getPlace().getBalance());
+            } else if (transactionRequest.getCorporate() != null) {
+                transactionAccepted.setBalance(transactionRequest.getCorporate().getBalance());
+            } else {
+                throw new unknownPaymentBuyer();
+            }
         }
         transactionRepository.add(transactionAccepted);
         return true;
