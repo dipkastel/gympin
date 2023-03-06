@@ -1,6 +1,6 @@
 export let AuthApi = {
-  BASEURL: "https://api.gympin.ir/",
-  // BASEURL : "http://localhost:8080/api/",
+  // BASEURL: "https://api.gympin.ir/",
+  BASEURL : "http://localhost:8080/api/",
   LOGIN_URL: "v1/account/login",
   SEND_SMS_URL: "v1/account/sendsms",
   register: "v1/account/register",
@@ -33,7 +33,8 @@ export let CorporatePersonnelApi = {
   getById: "v1/corporatePersonnel/getById",
   update: "v1/corporatePersonnel/update",
   getTotalUserCredits: "v1/corporatePersonnel/getTotalUserCredits",
-  PersonnelByCorporate:"v1/corporatePersonnel/PersonnelByCorporate"
+  PersonnelByCorporate:"v1/corporatePersonnel/PersonnelByCorporate",
+  addPersonnelCredit: "v1/corporatePersonnel/addPersonnelCredit",
 };
 export let GatesApi = {
   add: "v1/gate/add",

@@ -54,7 +54,7 @@ const CorporatePersonnelDetailsManagement = () => {
                     <PersonnelRole personnelId={personnelId} />
                 </div>
                 <div className="col-md-12">
-                    <PersonnelCredit personelCredit={personnelCredit}/>
+                    <PersonnelCredit personelCredit={personnelCredit} getPerson={getPerson}/>
                 </div>
             </div>}
         </>

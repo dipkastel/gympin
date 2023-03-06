@@ -28,13 +28,13 @@ import AddIcon from "@mui/icons-material/Add";
 function UserTransActionRequests({currentUser}) {
     const error = useContext(ErrorContext);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(15);
+    const [rowsPerPage, setRowsPerPage] = useState(14);
     const [transactions, SetTransactions] = useState({});
-    const [transactionToSettle, setTransactionToSettle] = useState(null)
-    const [acceptTransaction, setAcceptTransaction] = useState(null)
-    const [transactionText, setTransactionText] = useState(null)
-    const [openModalAdd, setOpenModalAdd] = useState(false)
-    const [amountToPay, setAmountToPay] = useState(null)
+    const [transactionToSettle, setTransactionToSettle] = useState(null);
+    const [acceptTransaction, setAcceptTransaction] = useState(null);
+    const [transactionText, setTransactionText] = useState(null);
+    const [openModalAdd, setOpenModalAdd] = useState(false);
+    const [amountToPay, setAmountToPay] = useState(null);
 
     useEffect(() => {
         getTransactions()
@@ -45,7 +45,7 @@ function UserTransActionRequests({currentUser}) {
             queryType: "FILTER",
             UserId: currentUser.Id,
             TransactionType: "CHARGE_USER",
-            paging: {Page: page, Size: rowsPerPage, Desc: true}
+            paging: {Page: page, Size: (rowsPerPage*2), Desc: true}
         }).then((data) => {
             SetTransactions(data.data.Data)
         });
@@ -324,7 +324,7 @@ function UserTransActionRequests({currentUser}) {
 
                 <PortletFooter>
                     {(transactions.totalElements > 0) && <TablePagination
-                        rowsPerPageOptions={[15, 25, 50, 100]}
+                        rowsPerPageOptions={[14, 28, 50, 100]}
                         component="div"
                         sx={{direction: "rtl"}}
                         count={transactions.totalElements || 0}

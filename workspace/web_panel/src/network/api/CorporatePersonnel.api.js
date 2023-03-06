@@ -4,6 +4,9 @@ import {CorporatePersonnelApi} from "./const_api";
 export function corporatePersonnel_add(data) {
   return axios.post(CorporatePersonnelApi.add, data);
 }
+export function corporatePersonnel_addPersonnelCredit(data) {
+  return axios.post(CorporatePersonnelApi.addPersonnelCredit, data);
+}
 export function corporatePersonnel_delete(data) {
   return axios.put(CorporatePersonnelApi.delete, null,{ params: data });
 }

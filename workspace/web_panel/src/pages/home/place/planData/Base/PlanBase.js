@@ -72,7 +72,7 @@ function PlanBase({plan,updatePlan}){
 
                         <TextField
                             id="standard-full-width"
-                            label="قیمت"
+                            label="قیمت به تومان"
                             placeholder="قیمت به تومان"
                             value={inPlan.Price}
                             type={"number"}
@@ -86,7 +86,7 @@ function PlanBase({plan,updatePlan}){
 
                         <TextField
                             id="standard-full-width"
-                            label="قیمت"
+                            label="ارزش به تومان"
                             placeholder="ارزش به تومان"
                             value={inPlan.ValuePrice}
                             onChange={(e)=>setFormValues("ValuePrice",e.target.value)}
