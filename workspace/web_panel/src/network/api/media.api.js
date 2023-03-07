@@ -12,3 +12,7 @@ export function media_addImage(data) {
 export function media_getAllImages(data) {
   return axios.get(MultimediaApi.getAllImages, { params: data });
 }
+
+export function media_delete(data) {
+  return axios.put(MultimediaApi.delete, null,{ params: data });
+}

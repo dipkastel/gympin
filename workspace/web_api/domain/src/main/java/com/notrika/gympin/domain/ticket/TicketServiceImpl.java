@@ -128,9 +128,6 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
         if (ticketEntity.getStatus() == TicketStatus.PAYMENT_WAIT) {
             throw new TicketNotPayedException();
         } else if (ticketEntity.getStatus() == TicketStatus.READY_TO_ACTIVE) {
-            //activate user
-            ticketEntity.setStatus(TicketStatus.ACTIVE);
-            ticketRepository.update(ticketEntity);
             //check for user registerd in place before
             List<TicketEntity> userPlaceTickets = ticketRepository.getUserPlaceTicket(ticketEntity.getUser().getId(), ticketEntity.getPlan().getPlace().getId());
             if (userPlaceTickets.stream().anyMatch(p -> (p.getStatus() == TicketStatus.ACTIVE) || (p.getStatus() == TicketStatus.COMPLETE) || (p.getStatus() == EXPIRE))) {
@@ -140,6 +137,9 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
                 //new user for Place
                 ticketScannedDto.setUserPlaceStatus(TicketUserPlaceStatus.NEW_USER);
             }
+            //activate user
+            ticketEntity.setStatus(TicketStatus.ACTIVE);
+            ticketRepository.update(ticketEntity);
             ticketScannedDto.setScanResult(ScanResult.REGISTERED);
         } else if (ticketEntity.getStatus() == EXPIRE) {
             throw new TicketExpiredException();

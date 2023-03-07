@@ -106,6 +106,7 @@ export let LocationApi = {
 export let MultimediaApi = {
   add: "v1/multimedia/add",
   getAllImages: "v1/multimedia/getAllImages",
+  delete: "v1/multimedia/delete",
 };
 export let multimediaCategoryApi = {
   add: "v1/multimediacategory/add",

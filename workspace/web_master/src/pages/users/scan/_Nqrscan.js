@@ -42,6 +42,10 @@ const _Nqrscan = ({selectedTicket}) => {
     }, []);
 
     useEffect(() => {
+        codeChanged();
+    }, [scannedCode]);
+
+    function codeChanged(){
         if (!scannedCode) return;
         function addMessage(codeValue) {
             if(!messages){
@@ -64,6 +68,7 @@ const _Nqrscan = ({selectedTicket}) => {
         var code = decryptId(scannedCode);
         var codeType = code.substring(0, 1);
         var codeValue = code.substring(1, code.length);
+
         switch (codeType) {
             case "1": {
                 if (openModalNewTicket) return;
@@ -86,7 +91,7 @@ const _Nqrscan = ({selectedTicket}) => {
             }
 
         }
-    }, [scannedCode]);
+    }
 
     function scanTicket(codeValue) {
         ticket_scanned({id: codeValue}).then(result => {
@@ -100,6 +105,7 @@ const _Nqrscan = ({selectedTicket}) => {
         })
     }
     function enterAccepted(scannedResult){
+        SetTicket(scannedResult);
         if (scannedResult.ScanResult=="REGISTERED") {
             if (scannedResult.UserPlaceStatus == "NEW_USER") {
                 SetOpenModalNewUser(true);
@@ -107,7 +113,6 @@ const _Nqrscan = ({selectedTicket}) => {
                 SetOpenModalNewTicket(true);
             }
         } else if (["ACCEPTED"].includes(scannedResult.ScanResult)) {
-            SetTicket(scannedResult);
             error.showError({
                 clickable: false,
                 message: 'ورود با موفقیت ثبت شد',
@@ -125,7 +130,9 @@ const _Nqrscan = ({selectedTicket}) => {
             <_ScannerCore scannWork={(!scannedCode)} onFind={(e) => {
                 SetScannedCode(e);
             }}/>
-            <_ByCode/>
+            <_ByCode setCode={(e) => {
+                SetScannedCode(e);
+            }}/>
             <_GateAwaitingEntry enterAccepted={enterAccepted}/>
             {openModalNewUser && renderModalNewUser()}
             {openModalNewTicket && renderModalNewTicket()}
@@ -143,13 +150,14 @@ const _Nqrscan = ({selectedTicket}) => {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => {
-                            navigate('/users/singleuser/' + ticket.User.Id, {replace: true})
+                            console.log(ticket);
+                            navigate('/users/singleuser?id=' + ticket.User.Id, {replace: true})
                         }}>اطلاعات کاربر</Button>
                         <Button onClick={() => {
                             SetOpenModalNewUser(false);
                             var code = decryptId(scannedCode);
                             var codeValue = code.substring(1, code.length);
-                            scanTicket(codeValue)
+                            scanTicket(codeValue);
                         }}>ثبت ورود</Button>
                     </DialogActions>
                 </Dialog>
@@ -172,13 +180,14 @@ const _Nqrscan = ({selectedTicket}) => {
 
                     <DialogActions>
                         <Button onClick={() => {
-                            navigate('/users/singleuser/' + ticket.User.Id, {replace: true})
+                            console.log(ticket);
+                            navigate('/users/singleuser?id=' + ticket.User.Id, {replace: true})
                         }}>پروفایل کاربر</Button>
                         <Button onClick={() => {
                             SetOpenModalNewTicket(false);
                             var code = decryptId(scannedCode);
                             var codeValue = code.substring(1, code.length);
-                            scanTicket(codeValue)
+                            scanTicket(codeValue);
                         }}>ثبت ورود</Button>
                     </DialogActions>
                 </Dialog>

@@ -143,7 +143,7 @@ const AddImageModal = ({setOpenAddImage, done: uploadComplete}) => {
                                 rows="3"
                                 placeholder="توضیح تصویر"
                                 value={addItem.description}
-                                onChange={e => setAddItem({...addItem, description: e.target.value})}
+                                onChange={e => setAddItem({...addItem, description: e.target.value||""})}
                             />
                     </Form.Group>
                 </Modal.Body>

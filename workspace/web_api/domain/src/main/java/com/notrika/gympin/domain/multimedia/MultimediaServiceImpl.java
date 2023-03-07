@@ -63,7 +63,7 @@ public class MultimediaServiceImpl implements MultimediaService {
     @Override
     public List<MultimediaDto> getAll(BasePagedParam pageableParam, MediaType mediaType) {
         Pageable pageable = PageRequest.of(pageableParam.getPage(), pageableParam.getSize());
-        return multimediaRepository.findAllByMediaTypeOrderByIdDesc(mediaType,pageable).stream().map(MultimediaConvertor::toDto).collect(Collectors.toList());
+        return multimediaRepository.findAllByMediaTypeAndDeletedFalseOrderByIdDesc(mediaType,pageable).stream().map(MultimediaConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

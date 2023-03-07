@@ -119,6 +119,7 @@ const EditProfile = (props) => {
                         user_updateMe(values).then(result=>{
                             props.RequestUser(values)
                             setUser(result.data.Data);
+                            error.showError({message: "با موفقیت ثبت شد",});
                         }).catch(e => {
                             try {
                                 error.showError({message: e.response.data.Message});
@@ -202,7 +203,7 @@ const EditProfile = (props) => {
                                               <TextField
                                                   {...params}
                                                   fullWidth
-                                                  sx={{mt:3}}
+                                                  sx={{mt:3,direction:"ltr"}}
                                                   id="outlined-adornment-password"
                                                   className="w-100"
                                                   variant="outlined"

@@ -21,6 +21,7 @@ import {toPriceWithComma} from "../../helper/utils";
 import {useNavigate} from "react-router-dom";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import {Image} from "react-bootstrap";
 
 const Tickets = () => {
     const error = useContext(ErrorContext);
@@ -84,7 +85,7 @@ const Tickets = () => {
 
     return (
         <>
-            {tickets.sort((a,b)=>b.Id-a.Id).map(item=>(
+            {(tickets.length>0)?tickets.sort((a,b)=>b.Id-a.Id).map(item=>(
                 <div key={item.Id}>
                     <Card elevation={3} sx={{margin:1}}>
                         <CardHeader title={item.PlanName} sx={{pb:0}}
@@ -163,7 +164,18 @@ const Tickets = () => {
 
                     </Card>
                 </div>
-            ))}
+            )):(<>
+                <Grid
+                    container
+                    sx={{width:"100%",height:"80vh"}}
+                    direction="row"
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                >
+                    <Image src={"https://api.gympin.ir/resource/image?Id=7"} width={"80%"}/>
+
+                </Grid>
+            </>)}
             {ticketToDelete&&renderModalDelete()}
         </>
     );

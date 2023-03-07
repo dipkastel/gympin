@@ -2,11 +2,12 @@ import React from 'react';
 import {Button, Card, InputAdornment, TextField} from "@mui/material";
 import {Formik} from "formik";
 
-const _ByCode = (props) => {
+const _ByCode = ({setCode}) => {
 
 
     const AcceptLogin=(e, values)=> {
-
+        e.preventDefault();
+        setCode(values.code.toString())
     }
 
     return (
@@ -26,30 +27,10 @@ const _ByCode = (props) => {
                             errors.code = "ورود کد الزامی است";
                             return errors;
                         }
-
-                        if (values.code.toString().length < 7 || values.code.toString().length > 9) {
-                            errors.code = "کد وارد شده صحیح نیست";
-                            return errors;
-                        }
                         return errors;
 
                     }}
                     onSubmit={(values, {setStatus, setSubmitting}) => {
-                        // setTimeout(() => {
-                        //     login({
-                        //         username: values.username,
-                        //         password: values.password,
-                        //     })
-                        //         .then((data) => {
-                        //             props.login(data.data.Data.Token);
-                        //         })
-                        //         .catch((ex) => {
-                        //             setSubmitting(false);
-                        //             setStatus(
-                        //                 "اطلاعات وارد شده معتبر نبست"
-                        //             );
-                        //         });
-                        // }, 1000);
                     }}
                 >
                     {({
