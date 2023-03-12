@@ -7,6 +7,7 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from "@mui/x-date-pickers";
 import adapterJalali from "@date-io/date-fns-jalali"
 import {genders} from "../../../../../helper/enums/genders";
+import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 
 function PlanBase({plan,updatePlan}){
 
@@ -74,9 +75,9 @@ function PlanBase({plan,updatePlan}){
                             id="standard-full-width"
                             label="قیمت به تومان"
                             placeholder="قیمت به تومان"
-                            value={inPlan.Price}
-                            type={"number"}
-                            onChange={(e)=>setFormValues("Price",e.target.value)}
+                            value={toPriceWithComma(inPlan.Price)}
+                            type={"text"}
+                            onChange={(e)=>setFormValues("Price",toPriceWithoutComma(e.target.value))}
                             fullWidth
                             margin="normal"
                             InputLabelProps={{
@@ -88,9 +89,9 @@ function PlanBase({plan,updatePlan}){
                             id="standard-full-width"
                             label="ارزش به تومان"
                             placeholder="ارزش به تومان"
-                            value={inPlan.ValuePrice}
-                            onChange={(e)=>setFormValues("ValuePrice",e.target.value)}
-                            type={"number"}
+                            value={toPriceWithComma(inPlan.ValuePrice)}
+                            onChange={(e)=>setFormValues("ValuePrice",toPriceWithoutComma(e.target.value))}
+                            type={"text"}
                             fullWidth
                             margin="normal"
                             InputLabelProps={{

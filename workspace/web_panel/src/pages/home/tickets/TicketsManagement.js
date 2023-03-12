@@ -1,45 +1,166 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Notice from "../../partials/content/Notice";
 import {useHistory} from "react-router-dom";
-import {Place_query} from "../../../network/api/place.api";
-import {ticket_query} from "../../../network/api/tickets.api";
+import {ticket_add, ticket_query} from "../../../network/api/tickets.api";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
-import {Chip, TextField} from "@mui/material";
+import {Button, Chip, Grid, IconButton, Typography} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
-import {Table} from "react-bootstrap";
+import {Form, Modal, Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {getUserFixedName, toPriceWithComma} from "../../../helper";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {defaultFilterTicket} from "./_ticketFilter";
+import {FilterAlt} from "@mui/icons-material";
+import AsyncSelect from "react-select/async";
+import {user_query} from "../../../network/api/user.api";
+import {Label} from "reactstrap";
+import {Plans_query} from "../../../network/api/plans.api";
 
 const TicketsManagement = () => {
+    const error = useContext(ErrorContext);
     const history = useHistory();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [searchString, setSearchString] = useState("");
     const [tickets, SetTickets] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
+    const [filter, SetFilter] = useState(defaultFilterTicket);
+    const [openModalFilter, setOpenModalFilter] = useState(false);
 
     useEffect(() => {
         getTickets()
-    }, [page, rowsPerPage, searchString]);
+    }, [page, rowsPerPage]);
 
     function getTickets() {
         ticket_query({
             queryType: "SEARCH",
-            name: searchString,
-            paging: {Page: page, Size: rowsPerPage,Desc:true}
+            paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             SetTickets(data.data.Data)
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
         });
     }
+
+    function RenderModalAdd() {
+        function addTicket(e) {
+            e.preventDefault()
+            ticket_add({Plan: {Id: e.target.Select_plan.value}, User: {Id: e.target.Select_user.value}})
+                .then((data) => {
+                    error.showError({message: "با موفقیت افزوده شد",});
+                    SetOpenModalAdd(false);
+                    getTickets();
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        }
+
+        const promiseUserOptions = (inputValue) => {
+            return new Promise((resolve) => {
+                function getLabelOfUser(itm) {
+                    return (<Grid container direction="row" justifyContent="space-between" alignItems="center">
+                        <Typography variant={"body2"}>{itm.Username}</Typography>
+                        <Typography variant={"body2"}>{((itm.FullName) ? `(${itm.FullName})` : "")}</Typography>
+                        <Typography variant={"body2"}>{itm.PhoneNumber}</Typography>
+                    </Grid>)
+                }
+
+                user_query({
+                    queryType: "SEARCH",
+                    Username: inputValue,
+                    FullName: inputValue,
+                    PhoneNumber: inputValue,
+                    paging: {Page: 0, Size: 50, Desc: true}
+                }).then((data) => {
+                    resolve(data.data.Data.content.map(itm => {
+                        return {label: getLabelOfUser(itm), value: itm.Id}
+                    }));
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
+            });
+        }
+        const promisePlansOptions = (inputValue) => {
+            return new Promise((resolve) => {
+                Plans_query({
+                    queryType: "SEARCH",
+                    name:inputValue,
+                    paging: {Page: 0, Size: 50, Desc: true}
+                }).then((data) => {
+                    resolve(data.data.Data.content.map(itm => {
+                        return {label: itm.Name+" - "+itm.Place.Name, value: itm.Id}
+                    }));
+                }).catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
+            });
+        }
+
+        return (
+            <>
+                <Modal show={openModalAdd} onHide={() => SetOpenModalAdd(false)}>
+                    <Form
+                        noValidate
+                        autoComplete="off"
+                        onSubmit={(e) => addTicket(e)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{"افزودن بلیط "}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Label for={"Select-user"}>کاربر</Label>
+                            <AsyncSelect id={"Select-user"} cacheOptions defaultOptions
+                                         name={"Select_user"}
+                                         loadOptions={promiseUserOptions}/>
+                            <Label for={"Select-plan"}>بلیط</Label>
+                            <AsyncSelect id={"Select-plan"} cacheOptions defaultOptions
+                                         name={"Select_plan"}
+                                         loadOptions={promisePlansOptions}/>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                className={"button_edit"}
+                                onClick={() => SetOpenModalAdd(false)}
+                            >
+                                خیر
+                            </Button>
+                            <Button
+                                className={"button_danger"}
+                                type={"submit"}
+                            >
+                                اضافه
+                            </Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
+            </>
+        );
+    }
+
     return (
         <>
             <Notice icon="flaticon-warning kt-font-primary">
-                <p>تیکت یا بلیط ، دسترسی کاربر برای دریافت خدماتی می باشد که خریداری می شود و مجموعه موضف به ارائه آن خدمات می باشد</p>
+                <p>تیکت یا بلیط ، دسترسی کاربر برای دریافت خدماتی می باشد که خریداری می شود و مجموعه موضف به ارائه آن
+                    خدمات می باشد</p>
                 <p>کاربر با خرید بلیط شرایط و قوانین جیم پین و مراکز را می پذیرد.</p>
             </Notice>
 
@@ -48,29 +169,16 @@ const TicketsManagement = () => {
                     title="بلیط ها"
                     toolbar={
                         <PortletHeaderToolbar>
-
-
-                            <TextField
-                                fullWidth
-                                id="outlined-adornment-password"
-                                className="w-100"
-                                variant="outlined"
-                                margin="normal"
-                                type="text"
-                                value={searchString}
-                                onChange={(event) => {
-                                    setSearchString(event.target.value);
-                                    setPage(0);
-                                }}
-                                label={"جستجو"}
-                            />
-                            <button
-                                type="button"
-                                className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                onClick={(e) => SetOpenModalAdd(true)}
-                            >
-                                <AddIcon/>
-                            </button>
+                            <IconButton aria-label="fingerprint"
+                                        color={JSON.stringify(filter) == JSON.stringify(defaultFilterTicket) ? "default" : "secondary"}
+                                        onClick={() => setOpenModalFilter(true)}>
+                                <FilterAlt fontSize={"large"}/>
+                            </IconButton>
+                            <IconButton aria-label="fingerprint"
+                                        color={"default"}
+                                        onClick={(e) => SetOpenModalAdd(true)}>
+                                <AddIcon fontSize={"large"}/>
+                            </IconButton>
                         </PortletHeaderToolbar>
                     }
                 />
@@ -104,31 +212,33 @@ const TicketsManagement = () => {
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">{getUserFixedName(row.User)}</TableCell>
-                                            <TableCell align="right">{row.Plan.Place.Name||"ثبت نشده"}</TableCell>
-                                            <TableCell align="right">{row.PlanName||"ثبت نشده"}</TableCell>
+                                            <TableCell align="right">{row.Plan.Place.Name || "ثبت نشده"}</TableCell>
+                                            <TableCell align="right">{row.PlanName || "ثبت نشده"}</TableCell>
                                             <TableCell align="right">{toPriceWithComma(row.Price)}</TableCell>
-                                            <TableCell align="right">{new Date(row.ExpireDate).toLocaleDateString('fa-IR', {
+                                            <TableCell
+                                                align="right">{new Date(row.ExpireDate).toLocaleDateString('fa-IR', {
                                                 year: 'numeric',
                                                 month: 'long',
                                                 day: 'numeric',
                                                 hour: "2-digit",
                                                 minute: "2-digit"
                                             })}</TableCell><TableCell align="right">
-                                                <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
-                                            </TableCell>
+                                            <Chip label={row.Status}
+                                                  color={(row.Status.startsWith("ACTIVE")) ? "success" : "error"}/>
+                                        </TableCell>
                                         </TableRow>
                                     );
                                 })}
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    {(tickets.totalElements>0) &&<TablePagination
+                    {(tickets.totalElements > 0) && <TablePagination
                         rowsPerPageOptions={[5, 10, 15, 25, 50, 100]}
                         component="div"
                         sx={{direction: "rtl"}}
-                        count={tickets.totalElements||0}
+                        count={tickets.totalElements || 0}
                         labelRowsPerPage={"تعداد نمایش"}
-                        labelDisplayedRows={(param)=>{
+                        labelDisplayedRows={(param) => {
                             return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
                         }}
                         rowsPerPage={rowsPerPage}
@@ -141,6 +251,7 @@ const TicketsManagement = () => {
                     />}
                 </PortletBody>
             </Portlet>
+            {RenderModalAdd()}
         </>
     );
 };

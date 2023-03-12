@@ -70,7 +70,6 @@ public class GateTimingControllerImpl implements GateTimingController {
     @Override
     @PostMapping("/addAll")
     public ResponseEntity<List<GateTimingDto>> addAll(@RequestBody List<GateTimingParam> gateTimingParams) {
-        List<GateTimingDto> list = gateTimingParams.stream().map(o->gateTimingService.add(o)).collect(Collectors.toList());
-        return new ResponseEntity<List<GateTimingDto>>(list, HttpStatus.OK);
+        return new ResponseEntity<List<GateTimingDto>>(gateTimingService.addAll(gateTimingParams), HttpStatus.OK);
     }
 }

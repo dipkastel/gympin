@@ -1,5 +1,5 @@
 import axios from "axios";
-import {PlansApi} from "./const_api";
+import {PlaceApi, PlansApi} from "./const_api";
 
 export function Plans_add(data) {
     return axios.post(PlansApi.add, data);
@@ -34,4 +34,8 @@ export function Plans_addSport(data) {
 
 export function Plans_deleteSport(data) {
     return axios.put(PlansApi.deleteSport, data);
+}
+
+export function Plans_query(data) {
+    return axios.post(PlansApi.query, data);
 }

@@ -34,7 +34,13 @@ const PlaceManagement = () => {
             paging: {Page: page, Size: rowsPerPage,Desc:true}
         }).then((data) => {
             SetPlaces(data.data.Data)
-        });
+        }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
     }
 
     function RenderModalAdd() {

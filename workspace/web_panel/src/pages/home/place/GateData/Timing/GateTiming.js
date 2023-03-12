@@ -50,6 +50,12 @@ const GateTiming = ({gate}) => {
         var addDays =[];
         function addItems(e) {
             e.preventDefault()
+            if(!(addValues["Name"])){
+
+                error.showError({message: "نام برای زمان ها اجباری است",});
+                return;
+            }
+            setOpenModalAdd(false);
             var postData = [];
             Object.keys(addDays).map(key =>                {
                     if(addDays[key]){
@@ -66,7 +72,6 @@ const GateTiming = ({gate}) => {
             gateTiming_addAll(postData)
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
-                    setOpenModalAdd(false)
                     getGateTimingOfGate()
                 }).catch(e => {
                     try {
@@ -99,7 +104,7 @@ const GateTiming = ({gate}) => {
                             <FormControl fullWidth>
                                 <TextField
                                     type="text"
-                                    label="نام دلخواه"
+                                    label="نام دلخواه ( بدنسازی صبح ویژه بانوان ) "
                                     margin="normal"
                                     name={"Name"}
                                     fullWidth={true}

@@ -162,6 +162,7 @@ export let PlansApi = {
   addSport: "v1/plan/addSport",
   deleteSport: "v1/plan/deleteSport",
   update: "v1/plan/update",
+  query: "v1/plan/query",
   getByPlaceId: "v1/plan/getPlansByPlace",
   countFilter: "v1/plan/count-filter",
 };
@@ -197,7 +198,10 @@ export let PlacePersonelApi = {
   delete: "v1/placePersonnel/delete",
   getAll: "v1/placePersonnel/getAll",
   update: "v1/placePersonnel/update",
-  PersonnelByPlace:"v1/placePersonnel/PersonnelByPlace"
+  PersonnelByPlace:"v1/placePersonnel/PersonnelByPlace",
+  getUserPlaceAccess:"v1/placePersonnel/getUserPlaceAccess",
+  updatePersonnelAccess:"v1/placePersonnel/updatePersonnelAccess",
+  getById:"v1/placePersonnel/getById"
 };
 export let SportApi = {
   addSport: "v1/sport/add",

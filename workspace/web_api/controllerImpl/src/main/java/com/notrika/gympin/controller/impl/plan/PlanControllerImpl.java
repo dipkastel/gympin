@@ -7,6 +7,7 @@ import com.notrika.gympin.common.plan.api.PlanController;
 import com.notrika.gympin.common.plan.dto.PlanDto;
 import com.notrika.gympin.common.plan.param.PlanParam;
 import com.notrika.gympin.common.plan.param.PlanSportParam;
+import com.notrika.gympin.common.plan.query.PlanQuery;
 import com.notrika.gympin.common.plan.service.PlanService;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
 import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
@@ -50,8 +51,8 @@ public class PlanControllerImpl implements PlanController {
     }
 
     @Override
-    public ResponseEntity<Page<PlanDto>> query(BaseQuery<?> filter) {
-        return null;
+    public ResponseEntity<Page<PlanDto>> query(PlanQuery filter) {
+        return ResponseEntity.ok(planService.query(filter));
     }
 
 

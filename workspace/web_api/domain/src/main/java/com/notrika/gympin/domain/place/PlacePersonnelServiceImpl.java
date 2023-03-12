@@ -97,7 +97,10 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Override
     public PlacePersonnelDto update(@NonNull PlacePersonnelParam placePersonnelParam) {
-        return null;
+        PlacePersonnelEntity entity = getEntityById(placePersonnelParam.getId());
+        entity.setUserRole(placePersonnelParam.getUserRole());
+        placePersonnelRepository.update(entity);
+        return PlaceConvertor.personnelToDto(entity);
     }
 
     @Override

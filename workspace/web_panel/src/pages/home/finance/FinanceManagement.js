@@ -37,6 +37,9 @@ const FinanceManagement = () => {
             queryType: filter.queryType,
             TransactionStatus: filter.TransactionStatus,
             TransactionType: filter.TransactionType,
+            UserId: filter.UserId,
+            PlaceId: filter.PlaceId,
+            CorporateId: filter.CorporateId,
             Serial:filter.Serial,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {

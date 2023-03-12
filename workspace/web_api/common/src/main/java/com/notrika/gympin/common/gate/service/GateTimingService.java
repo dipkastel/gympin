@@ -13,4 +13,5 @@ public interface GateTimingService extends BaseService<GateTimingParam, GateTimi
     List<GateTimingDto> getByGateId(Long id);
 
     List<GateTimingDto> getByPlaceId(Long id);
+    List<GateTimingDto> addAll(List<GateTimingParam> params);
 }

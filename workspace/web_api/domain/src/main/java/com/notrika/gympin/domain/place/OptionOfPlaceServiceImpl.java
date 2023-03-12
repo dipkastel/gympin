@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.place;
 
 import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.place.option.dto.OptionOfPlaceDto;
 import com.notrika.gympin.common.place.option.param.OptionOfPlaceParam;
 import com.notrika.gympin.common.place.option.service.OptionOfPlaceService;
@@ -19,6 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OptionOfPlaceServiceImpl extends AbstractBaseService<OptionOfPlaceParam, OptionOfPlaceDto, BaseQuery<?>, OptionOfPlaceEntity> implements OptionOfPlaceService {
@@ -42,6 +44,8 @@ public class OptionOfPlaceServiceImpl extends AbstractBaseService<OptionOfPlaceP
 
     @Override
     public OptionOfPlaceEntity add(OptionOfPlaceEntity placeOption) {
+        if(getByPlaceId(placeOption.getPlace().getId()).stream().anyMatch(o-> Objects.equals(o.getPlaceOption().getId(), placeOption.getPlaceOption().getId())))
+            throw new DuplicateEntryAddExeption();
         return OptionOfPlaceRepository.add(placeOption);
     }
 

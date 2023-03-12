@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -116,5 +117,22 @@ public class GateTimingServiceImpl extends AbstractBaseService<GateTimingParam, 
     @Override
     public List<GateTimingDto> getByPlaceId(Long id) {
         return convertToDtos(gateTimingRepository.findAllByGatePlaceIdAndDeletedFalse(id));
+    }
+
+    @Override
+    public List<GateTimingDto> addAll(List<GateTimingParam> params) {
+        GateEntity gate = gateRepository.getById(params.get(0).getGate().getId());
+        List<GateTimingEntity> list = new ArrayList<>();
+        for (GateTimingParam p : params) {
+            GateTimingEntity gateTimingEntity = GateTimingEntity.builder()
+                    .gate(gate)
+                    .dayOfWeek(p.getDayOfWeek())
+                    .openingTime(p.getOpeningTime())
+                    .closingTime(p.getClosingTime())
+                    .name(p.getName())
+                    .build();
+            list.add(gateTimingEntity);
+        }
+        return convertToDtos(gateTimingRepository.addAll(list));
     }
 }

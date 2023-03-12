@@ -7,6 +7,7 @@ import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.plan.dto.PlanDto;
 import com.notrika.gympin.common.plan.param.PlanParam;
 import com.notrika.gympin.common.plan.param.PlanSportParam;
+import com.notrika.gympin.common.plan.query.PlanQuery;
 import com.notrika.gympin.common.plan.service.PlanService;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -31,7 +32,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, BaseQuery<?>, PlanEntity> implements PlanService {
+public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, PlanQuery, PlanEntity> implements PlanService {
 
     @Autowired
     private PlanRepository planRepository;
@@ -122,7 +123,7 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Bas
 
     @Override
     public Page<PlanEntity> findAll(Specification<PlanEntity> specification, Pageable pageable) {
-        return null;
+        return planRepository.findAll(specification,pageable);
     }
 
     @Override
@@ -132,7 +133,7 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Bas
 
     @Override
     public Page<PlanDto> convertToDtos(Page<PlanEntity> entities) {
-        return null;
+        return entities.map(PlanConvertor::toDto);
     }
 
     @Override

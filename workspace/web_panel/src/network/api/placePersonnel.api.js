@@ -16,3 +16,16 @@ export function placePersonnel_update(data) {
 export function placePersonnel_ByPlace(data) {
   return axios.get(PlacePersonelApi.PersonnelByPlace,{params: data});
 }
+
+export function placePersonnel_getById(data) {
+  return axios.get(PlacePersonelApi.getById,{params: data});
+}
+
+
+export function placePersonnel_getAccess(data) {
+  return axios.get(PlacePersonelApi.getUserPlaceAccess, {params: data});
+}
+
+export function placePersonnel_updatePersonnelAccess(data) {
+  return axios.post(PlacePersonelApi.updatePersonnelAccess,  data);
+}
