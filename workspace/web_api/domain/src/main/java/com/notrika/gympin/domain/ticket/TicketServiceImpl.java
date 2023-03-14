@@ -86,7 +86,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
             throw new UnknownUserException();
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
 
-        if (plan.getGender() != userRequester.getGender())
+        if (plan.getGender() != user.getGender())
             throw new TicketGenderIsNotCompatible();
         entity.setStatus(TicketStatus.PAYMENT_WAIT);
         entity.setPlan(plan);
