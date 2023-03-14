@@ -78,18 +78,19 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
     public TicketDto add(@NonNull TicketParam ticketParam) {
 
         PlanEntity plan = planRepository.getById(ticketParam.getPlan().getId());
+        UserEntity user = userRepository.getById(ticketParam.getUser().getId());
         TicketEntity entity = new TicketEntity();
 
         GympinContext context = GympinContextHolder.getContext();
         if (context == null)
             throw new UnknownUserException();
-        UserEntity userEntity = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
 
-        if (plan.getGender() != userEntity.getGender())
+        if (plan.getGender() != userRequester.getGender())
             throw new TicketGenderIsNotCompatible();
         entity.setStatus(TicketStatus.PAYMENT_WAIT);
         entity.setPlan(plan);
-        entity.setUser(userRepository.getById(ticketParam.getUser().getId()));
+        entity.setUser(user);
         entity.setPlanName(plan.getName());
         entity.setPrice(plan.getPrice());
         entity.setDescription(plan.getDescription());
