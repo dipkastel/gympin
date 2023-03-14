@@ -25,6 +25,24 @@ public class MultimediaCategoryEntity extends BaseEntity<MultimediaCategoryEntit
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    //aspect ratio width
+    @Column(name = "arw")
+    private Integer arw;
+
+    //aspect ratio height
+    @Column(name = "arh")
+    private Integer arh;
+
+    @Column(name = "minw")
+    private Integer minw;
+    @Column(name = "minh")
+    private Integer minh;
+    @Column(name = "maxw")
+    private Integer maxw;
+    @Column(name = "maxh")
+    private Integer maxh;
+
+
     @OneToMany(mappedBy = "category")
     @ToString.Exclude
     private List<MultimediaEntity> multimediaList;

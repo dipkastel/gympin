@@ -17,5 +17,17 @@ public class MultimediaCategoryParam extends BaseParam<MultimediaCategoryParam> 
 
     @JsonProperty("Name")
     private String name;
+    @JsonProperty("ARW")
+    private Integer arw;
+    @JsonProperty("ARH")
+    private Integer arh;
+    @JsonProperty("MINW")
+    private Integer minw;
+    @JsonProperty("MINH")
+    private Integer minh;
+    @JsonProperty("MAXW")
+    private Integer maxw;
+    @JsonProperty("MAXH")
+    private Integer maxh;
 
 }

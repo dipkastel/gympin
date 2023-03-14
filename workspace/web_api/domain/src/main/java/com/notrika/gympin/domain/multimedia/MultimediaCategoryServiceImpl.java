@@ -63,7 +63,7 @@ public class MultimediaCategoryServiceImpl extends AbstractBaseService<Multimedi
 
     @Override
     public Page<MultimediaCategoryEntity> findAll(Specification<MultimediaCategoryEntity> specification, Pageable pageable) {
-        return null;
+        return multimediaCategoryRepository.findAll(specification,pageable);
     }
 
     @Override

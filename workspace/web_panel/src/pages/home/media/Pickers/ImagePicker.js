@@ -9,52 +9,53 @@ import {
     Grid,
     ImageList,
     ImageListItem,
-    ImageListItemBar,
+    ImageListItemBar, Pagination,
     Paper
 } from "@mui/material";
 import {ExpandMore, FilterAlt} from '@mui/icons-material';
-import {media_getAllImages} from "../../../../network/api/media.api";
+import {media_getAllImages, media_query} from "../../../../network/api/media.api";
 import AddIcon from "@mui/icons-material/Add";
 import AddImageModal from "../Image/AddImageModal";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import {defaultFilterImages} from "../Image/_ImageFilter";
 
-const defaultPageSize = {Page: 0, Size: 20}
 const defaultSettings = {
     rowCount: 3,
     isSingle: false,
-    filter_cat: "ALL"
+    filters:defaultFilterImages
 }
 
 const ImagePicker = ({setClose, onSelect, options}) => {
     const error = useContext(ErrorContext);
     const [images, setImages] = useState([])
     const [selectedImages, setSelectedImages] = useState([])
-    const [pagination, setPagination] = useState(defaultPageSize)
-    const [filter, setFilter] = useState(defaultPageSize)
+    const [page, setPage] = useState(1)
     const [settings, setSettings] = useState({...defaultSettings, ...options})
     const [expanded, setExpanded] = React.useState(false);
     const [openModalAdd, setOpenModalAdd] = useState(false)
 
     useEffect(() => {
-        getImageByFilter(pagination, filter);
-    }, [pagination, filter]);
+        getImageByFilter();
+    }, [page, settings]);
 
-    function getImageByFilter(page) {
+    function getImageByFilter() {
 
-        media_getAllImages(page).then(result => {
-            var items = [];
-            if (images.length > 0 && pagination.Page !== 0) {
-                items.push(...images)
-            }
-            items.push(...result.data.Data)
-            setImages(items);
+        console.log({
+            ...settings.filters,
+            paging: {Page: page - 1, Size: 20, Desc: true}
+        })
+        media_query({
+            ...settings.filters,
+            paging: {Page: page - 1, Size: 20, Desc: true}
+        }).then(result => {
+            setImages(result.data.Data);
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function imageClicked(item) {
@@ -77,7 +78,7 @@ const ImagePicker = ({setClose, onSelect, options}) => {
 
     function imageUploadComplete(item) {
         setOpenModalAdd(false);
-        setPagination({Page: 0, Size: 20});
+        setPage(1);
     }
     return (
         <>
@@ -116,12 +117,12 @@ const ImagePicker = ({setClose, onSelect, options}) => {
 
 
 
-                    {images.length > 0 && <ImageList cols={settings.rowCount} sx={{width: "100%"}}>
-                        {images.map((item, number) => (
+                    {images.content && <><ImageList cols={settings.rowCount} sx={{width: "100%"}}>
+                        {images.content.map((item, number) => (
                             <ImageListItem key={number} onClick={() => imageClicked(item)}>
                                 <img
-                                    src={item.Url}
-                                    srcSet={item.Url}
+                                    src={item.Url+ "&width=200"}
+                                    srcSet={item.Url+ "&width=200"}
                                     alt={item.Title}
                                     loading="lazy"
                                 />
@@ -135,11 +136,20 @@ const ImagePicker = ({setClose, onSelect, options}) => {
 
                                 />
                             </ImageListItem>
+
+
                         ))}
-                    </ImageList>}
-                    {images && <Grid container sx={{margin: 2}} justifyContent={"center"} alignContent={"center"}><Fab
-                        variant="extended" color="primary" aria-label="Add"
-                        onClick={e => setPagination({Page: pagination.Page + 1, Size: 20})}><ExpandMore/>Load More</Fab></Grid>}
+                    </ImageList>
+
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent={"center"}
+                            alignItems="center">
+                            <Pagination count={images.totalPages} page={page} onChange={(e, value) => setPage(value)}/>
+                        </Grid>
+
+                    </>}
 
 
                 </Modal.Body>

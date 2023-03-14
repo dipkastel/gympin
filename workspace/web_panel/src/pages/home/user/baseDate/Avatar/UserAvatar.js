@@ -44,7 +44,10 @@ const UserAvatar = ({currentUser}) => {
                 </PortletBody>
             </Portlet>
 
-            {openModalSelectAvatar&&<ImagePicker setClose={()=>setOpenModalSelectAvatar(false)} onSelect={selectImage} options={{rowCount: 4,isSingle:true}} />}
+            {openModalSelectAvatar&&<ImagePicker
+                setClose={()=>setOpenModalSelectAvatar(false)}
+                onSelect={selectImage}
+                options={{rowCount: 4,isSingle:true,filters:{CategoryId:2}}} />}
         </>
     );
 };

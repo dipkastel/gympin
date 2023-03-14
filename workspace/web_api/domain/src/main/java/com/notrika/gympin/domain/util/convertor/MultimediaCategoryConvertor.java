@@ -10,11 +10,17 @@ import java.util.stream.Collectors;
 public final class MultimediaCategoryConvertor {
 
     public static MultimediaCategoryDto multimediaCategoryToMultimediaCategoryDto(MultimediaCategoryEntity multimediaCategory) {
-        MultimediaCategoryDto dto = MultimediaCategoryDto.builder().id(multimediaCategory.getId()).name(multimediaCategory.getName())
-                //                .createdDate(multimediaCategory.getCreatedDate())
-                //                .updatedDate(multimediaCategory.getUpdatedDate())
-                .isDeleted(multimediaCategory.isDeleted()).build();
-        return dto;
+        return MultimediaCategoryDto.builder()
+                .id(multimediaCategory.getId())
+                .name(multimediaCategory.getName())
+                .arw(multimediaCategory.getArw())
+                .arh(multimediaCategory.getArh())
+                .minw(multimediaCategory.getMinw())
+                .minh(multimediaCategory.getMinh())
+                .maxw(multimediaCategory.getMaxw())
+                .maxh(multimediaCategory.getMaxh())
+                .isDeleted(multimediaCategory.isDeleted())
+                .build();
     }
 
     public static List<MultimediaCategoryDto> multimediaCategoriesToMultimediaCategoryDto(List<MultimediaCategoryEntity> multimediaCategories) {
@@ -22,27 +28,29 @@ public final class MultimediaCategoryConvertor {
     }
 
     public static MultimediaCategoryEntity multimediaCategoryDtoToMultimediaCategory(MultimediaCategoryDto dto) {
-        MultimediaCategoryEntity multimediaCategory = MultimediaCategoryEntity.builder().id(dto.getId()).name(dto.getName())
-                //                .createdDate(dto.getCreatedDate())
-                //                .updatedDate(dto.getUpdatedDate())
+        return  MultimediaCategoryEntity.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .arw(dto.getArw())
+                .arh(dto.getArh())
+                .minw(dto.getMinw())
+                .minh(dto.getMinh())
+                .maxw(dto.getMaxw())
+                .maxh(dto.getMaxh())
                 .deleted(dto.isDeleted()).build();
-        return multimediaCategory;
-    }
-
-    public static List<MultimediaCategoryEntity> multimediaCategoryDtoToMultimediaCategories(List<MultimediaCategoryDto> dtoList) {
-        return dtoList.stream().map(MultimediaCategoryConvertor::multimediaCategoryDtoToMultimediaCategory).collect(Collectors.toList());
     }
 
     public static MultimediaCategoryEntity multimediaCategoryParamToMultimediaCategory(MultimediaCategoryParam param) {
-        MultimediaCategoryEntity multimediaCategory = MultimediaCategoryEntity.builder().id(param.getId()).name(param.getName())
-                //                .createdDate(param.getCreatedDate())
-                //                .updatedDate(param.getUpdatedDate())
+        return MultimediaCategoryEntity.builder()
+                .id(param.getId())
+                .name(param.getName())
+                .arw(param.getArw())
+                .arh(param.getArh())
+                .minw(param.getMinw())
+                .minh(param.getMinh())
+                .maxw(param.getMaxw())
+                .maxh(param.getMaxh())
                 .deleted(param.isDeleted()).build();
-        return multimediaCategory;
-    }
-
-    public static List<MultimediaCategoryEntity> multimediaCategoryParamsToMultimediaCategories(List<MultimediaCategoryParam> paramList) {
-        return paramList.stream().map(MultimediaCategoryConvertor::multimediaCategoryParamToMultimediaCategory).collect(Collectors.toList());
     }
 
 }

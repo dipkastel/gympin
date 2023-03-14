@@ -146,7 +146,7 @@ const PlaceImage = ({place}) => {
                     </ImageList>}
                 </PortletBody>
             </Portlet>
-            {openModalAdd&&<ImagePicker setClose={()=>setOpenModalAdd(false)} onSelect={selectImage} options={{rowCount: 4,isSingle:true}} />}
+            {openModalAdd&&<ImagePicker setClose={()=>setOpenModalAdd(false)} onSelect={selectImage} options={{rowCount: 4,isSingle:true,filters:{CategoryId:3}}} />}
             {itemToDelete&&renderModalDelete()}
         </>
     );

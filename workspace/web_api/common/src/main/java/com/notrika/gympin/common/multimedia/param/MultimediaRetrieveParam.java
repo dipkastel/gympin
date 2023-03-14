@@ -16,19 +16,16 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class MultimediaRetrieveParam extends MultimediaStoreParam {
 
-    @JsonProperty("FileName")
     private String fileName;
 
-    @JsonProperty("FileUrl")
     private String fileUrl;
 
-    @JsonProperty("Height")
     private Integer height;
 
-    @JsonProperty("Width")
     private Integer width;
 
-    @JsonProperty("Type")
+    private boolean ratio;
+
     private MediaType mediaType;
 
 }

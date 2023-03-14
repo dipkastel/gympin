@@ -2,24 +2,19 @@ package com.notrika.gympin.domain.util.helper;
 
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
-import com.notrika.gympin.common.exception.Error;
-import com.notrika.gympin.common.exception.multimedia.CreateDirectoryException;
-import com.notrika.gympin.common.exception.multimedia.InvalidFileNameException;
-import com.notrika.gympin.common.multimedia.param.MultimediaCategoryParam;
+import com.notrika.gympin.common.exception.general.NotFoundException;
+import com.notrika.gympin.common.exception.multimedia.*;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.domain.multimedia.MultimediaCategoryServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
-import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategoryEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,13 +24,12 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -97,12 +91,12 @@ public final class MultimediaServiceHelper {
         }
     }
 
-    public MultimediaEntity saveFile(MultimediaStoreParam multimediaStoreParam) throws Exception {
+    public MultimediaEntity saveFile(MultimediaStoreParam multimediaStoreParam)  {
         switch (multimediaStoreParam.getMediaType()){
             case IMAGE: return saveImage(multimediaStoreParam);
             case VIDEO: return saveVideo(multimediaStoreParam);
             case AUDIO: return saveAudio(multimediaStoreParam);
-            default: throw new NotFoundException("MediaType Not Found");
+            default: throw new MediaTypeNotFound();
         }
     }
 
@@ -114,7 +108,7 @@ public final class MultimediaServiceHelper {
         return null;
     }
 
-    private MultimediaEntity saveImage(MultimediaStoreParam multimediaStoreParam) throws IOException {
+    private MultimediaEntity saveImage(MultimediaStoreParam multimediaStoreParam) {
         //create entity
         MultimediaEntity multimedia = new MultimediaEntity();
         //multipartfile
@@ -124,12 +118,17 @@ public final class MultimediaServiceHelper {
             throw new InvalidFileNameException();
         }
         if (Arrays.stream(supportImageTypes).noneMatch(c->c.equals(multipartFile.getContentType()))) {
-            throw new IOException("Unsupported Image Type.");
+            throw new UnsupportedImageType();
         }
         multimedia.setFileName(fileName);
         //image dimension
 
-        BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
+        BufferedImage bufferedImage = null;
+        try {
+            bufferedImage = ImageIO.read(multipartFile.getInputStream());
+        } catch (IOException e) {
+            throw new ImageReadError();
+        }
         multimedia.setSize(bufferedImage.getWidth() + "X" + bufferedImage.getHeight());
         //set values
         multimedia.setDocumentFormat(multipartFile.getContentType());
@@ -138,7 +137,12 @@ public final class MultimediaServiceHelper {
         multimedia.setTitle(multimediaStoreParam.getTitle());
         multimedia.setDescription(multimediaStoreParam.getDescription());
         //save and get address
-        Path targetLocation = saveInStorage(getPathToStoreOrginal(multimediaStoreParam), multipartFile.getInputStream(), fileName);
+        Path targetLocation = null;
+        try {
+            targetLocation = saveInStorage(getPathToStoreOrginal(multimediaStoreParam), multipartFile.getInputStream(), fileName);
+        } catch (IOException e) {
+            throw new ImageSaveError();
+        }
         multimedia.setUploadDir(targetLocation.toString());
         multimedia.setCategory(categoryService.getEntityById(multimediaStoreParam.getCategoryId()));
         return multimediaRepository.add(multimedia);
@@ -154,50 +158,63 @@ public final class MultimediaServiceHelper {
             case VIDEO:
                 return loadVideoAsResource(multimediaParam);
             default:
-                throw new NotFoundException("MediaType not found For : " + multimediaParam.getFileName());
+                throw new javassist.NotFoundException("MediaType not found For : " + multimediaParam.getFileName());
 
         }
     }
 
     //helper
-    private InputStream loadImageAsResource(MultimediaRetrieveParam multimediaParam) throws Exception {
+    private InputStream loadImageAsResource(MultimediaRetrieveParam multimediaParam) {
 
-        Resource resource = new UrlResource(Paths.get(multimediaParam.getFileUrl()).toAbsolutePath().normalize().toUri());
+        Resource resource = null;
+        try {
+            resource = new UrlResource(Paths.get(multimediaParam.getFileUrl()).toAbsolutePath().normalize().toUri());
+        } catch (MalformedURLException e) {
+            throw new NotFoundException();
+        }
         //checks
         if (!resource.exists()) {
-            throw new FileNotFoundException("File not found " + multimediaParam.getFileName());
+            throw new NotFoundException();
         }
         //orginal file
         if (multimediaParam.getWidth() == null && multimediaParam.getHeight() == null) {
-            return new FileInputStream(resource.getFile());
+            try {
+                return new FileInputStream(resource.getFile());
+            } catch (IOException e) {
+                throw new ImageReadError();
+            }
         } else {
             if (multimediaParam.getWidth() == 0 || multimediaParam.getHeight() == 0) {
-                throw new FileNotFoundException("File dimensions cannot be 0");
+                throw new FileDimensionsCannotBeZiro();
             }
             return resizeFile(multimediaParam, resource);
         }
     }
 
-    private InputStream resizeFile(MultimediaRetrieveParam multimediaParam, Resource resource) throws Exception {
-        BufferedImage inputBI = ImageIO.read(resource.getFile());
-        Path resourcePath = Paths.get(multimediaParam.getFileUrl()).toAbsolutePath().normalize();
-        String fileName = resourcePath.getFileName().toString();
-        Path sizedPath = GetPathForSizes(multimediaParam);
-        Path imagePath = Paths.get(sizedPath.toString() +"/"+ multimediaParam.getWidth()+"X"+multimediaParam.getHeight()+"_"+fileName).toAbsolutePath().normalize();
-        UrlResource fileResource = new UrlResource(imagePath.toUri());
-        if(fileResource.exists()){
-            //return image
-            return new FileInputStream(fileResource.getFile());
-        }else{
-            //save and return image
-            BufferedImage outputBI = new BufferedImage(multimediaParam.getWidth(), multimediaParam.getHeight(), inputBI.getType());
-            Graphics2D g2d = outputBI.createGraphics();
-            g2d.drawImage(inputBI, 0, 0, multimediaParam.getWidth(), multimediaParam.getHeight(), null);
-            g2d.dispose();
-            String formatName = resource.getFile().getName().substring(resource.getFile().getName().lastIndexOf(".") + 1);
-            ImageIO.write(outputBI, formatName, new File(imagePath.toUri()));
-            resource = new UrlResource(imagePath.toUri());
-            return new FileInputStream(resource.getFile());
+    private InputStream resizeFile(MultimediaRetrieveParam multimediaParam, Resource resource) {
+        try {
+            BufferedImage inputBI = ImageIO.read(resource.getFile());
+            Path resourcePath = Paths.get(multimediaParam.getFileUrl()).toAbsolutePath().normalize();
+            String fileName = resourcePath.getFileName().toString();
+            Path sizedPath = GetPathForSizes(multimediaParam);
+            Path imagePath = Paths.get(sizedPath.toString() + "/" + multimediaParam.getWidth() + "X" + multimediaParam.getHeight() + "_" + fileName).toAbsolutePath().normalize();
+            UrlResource fileResource = new UrlResource(imagePath.toUri());
+            if (fileResource.exists()) {
+                //return image
+                return new FileInputStream(fileResource.getFile());
+            } else {
+                //save and return image
+                BufferedImage outputBI = new BufferedImage(multimediaParam.getWidth(), multimediaParam.getHeight(), inputBI.getType());
+                Graphics2D g2d = outputBI.createGraphics();
+                g2d.drawImage(inputBI, 0, 0, multimediaParam.getWidth(), multimediaParam.getHeight(), null);
+                g2d.dispose();
+                String formatName = resource.getFile().getName().substring(resource.getFile().getName().lastIndexOf(".") + 1);
+                ImageIO.write(outputBI, formatName, new File(imagePath.toUri()));
+                resource = new UrlResource(imagePath.toUri());
+                return new FileInputStream(resource.getFile());
+            }
+        }catch (Exception e){
+            throw new ImageSaveError();
         }
     }
 
@@ -234,8 +251,8 @@ public final class MultimediaServiceHelper {
             multimediaParam.setId(entity.getId());
             multimediaParam.setFileUrl(entity.getUploadDir());
 
-            Integer baseH = Integer.parseInt(entity.getSize().split("X")[0]);
-            Integer baseW = Integer.parseInt(entity.getSize().split("X")[1]);
+            Integer baseW = Integer.parseInt(entity.getSize().split("X")[0]);
+            Integer baseH = Integer.parseInt(entity.getSize().split("X")[1]);
             if (multimediaParam.getWidth() == null&&multimediaParam.getHeight() != null) {
                 multimediaParam.setWidth((multimediaParam.getHeight() * baseW) / baseH);
             }

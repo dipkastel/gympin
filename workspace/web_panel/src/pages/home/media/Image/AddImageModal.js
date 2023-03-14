@@ -12,6 +12,8 @@ const AddImageModal = ({setOpenAddImage, done: uploadComplete}) => {
     const error = useContext(ErrorContext);
     const [addItem, setAddItem] = useState({});
     const [categories, setCategories] = useState([])
+    const [uploading, setUploading] = useState(false)
+
 
     useEffect(() => {
         setAddItem({});
@@ -27,7 +29,7 @@ const AddImageModal = ({setOpenAddImage, done: uploadComplete}) => {
     }, []);
 
 
-    function addOption(e) {
+    function uploadImage(e) {
         e.preventDefault();
         const formData = new FormData();
         formData.append("MediaType", "IMAGE");
@@ -50,12 +52,17 @@ const AddImageModal = ({setOpenAddImage, done: uploadComplete}) => {
             return
         }
         formData.append("Description", addItem.description||"");
+
+        setUploading(true);
         media_addImage(formData)
             .then(data => {
+                setUploading(false);
                 error.showError({message: "عملیات موفق",});
-                if (data.status === 200)
+                if (data.status === 200){
                     uploadComplete(data);
+                }
             }).catch(e => {
+                    setUploading(false);
                     try {
                         error.showError({message: e.response.data.Message,});
                     } catch (f) {
@@ -151,13 +158,19 @@ const AddImageModal = ({setOpenAddImage, done: uploadComplete}) => {
                     <Button
                         className={"button_edit"}
                         onClick={() => setOpenAddImage(false)}
+                        variant={"contained"}
+                        color={"error"}
+                        disabled={uploading}
                     >
                         خیر
                     </Button>
                     <Button
                         className={"button_danger"}
                         type={"submit"}
-                        onClick={(e) => addOption(e)}
+                        onClick={(e) => uploadImage(e)}
+                        variant={"contained"}
+                        color={"success"}
+                        disabled={uploading}
                     >
                         اضافه
                     </Button>

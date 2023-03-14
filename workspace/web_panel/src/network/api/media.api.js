@@ -9,6 +9,9 @@ export function media_addImage(data) {
     },
   });
 }
+export function media_query(data) {
+  return axios.post(MultimediaApi.query, data);
+}
 export function media_getAllImages(data) {
   return axios.get(MultimediaApi.getAllImages, { params: data });
 }

@@ -1,6 +1,6 @@
 import React, {useRef, useState} from "react";
 import Notice from "../../partials/content/Notice";
-import {Button, Card, CardContent, CardHeader, Grid, Tab} from "@mui/material";
+import {Button, Card, CardContent, CardHeader, Grid, IconButton, Tab} from "@mui/material";
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar,} from "../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
@@ -8,11 +8,16 @@ import ImageManager from "./Image/ImageManager";
 import VideoManager from "./Video/VideoManager";
 import AudioManager from "./Audio/AudioManager";
 import "./AddMedia.css"
+import {FilterAlt} from "@mui/icons-material";
+import {defaultFilterImages} from "./Image/_ImageFilter";
+
 
 
 const MediaManagement = () => {
     const [tab, setTab] = useState('IMAGE');
+
     const openAddModalRef = useRef();
+    const openFilterModalRef = useRef();
     const changeTab = (event, newValue) => {
         setTab(newValue);
     };
@@ -53,13 +58,28 @@ const MediaManagement = () => {
                         }
                         toolbar={
                             <PortletHeaderToolbar>
-                                <button
-                                    type="button"
-                                    className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                    onClick={(e) =>openAddModalRef.current.OpenModal(tab)}
-                                >
-                                    <AddIcon/>
-                                </button>
+
+                                <div className="kt-section__body">
+                                    <TabPanel sx={{padding: 0}} value="IMAGE">
+                                        <IconButton aria-label="fingerprint"
+                                                    color={"default"}
+                                                    onClick={(e) =>openAddModalRef.current.OpenModal(tab)}>
+                                            <AddIcon />
+                                        </IconButton>
+
+                                        <IconButton aria-label="fingerprint"
+                                                    color={"default"}
+                                                    onClick={() => openFilterModalRef.current.OpenModal(true)}>
+                                            <FilterAlt />
+                                        </IconButton>
+                                    </TabPanel>
+                                    <TabPanel sx={{padding: 0}} value="VIDEO">
+
+                                    </TabPanel>
+                                    <TabPanel sx={{padding: 0}} value="AUDIO">
+
+                                    </TabPanel>
+                                </div>
                             </PortletHeaderToolbar>
                         }
                     />
@@ -68,13 +88,13 @@ const MediaManagement = () => {
                         <div className="kt-section ">
                             <div className="kt-section__body">
                                 <TabPanel sx={{padding: 0}} value="IMAGE">
-                                    <ImageManager ref={openAddModalRef}/>
+                                    <ImageManager openAddModalRef={openAddModalRef} openFilterModalRef={openFilterModalRef} />
                                 </TabPanel>
                                 <TabPanel sx={{padding: 0}} value="VIDEO">
-                                    <VideoManager ref={openAddModalRef}/>
+                                    <VideoManager/>
                                 </TabPanel>
                                 <TabPanel sx={{padding: 0}} value="AUDIO">
-                                    <AudioManager ref={openAddModalRef}/>
+                                    <AudioManager/>
                                 </TabPanel>
                             </div>
                         </div>

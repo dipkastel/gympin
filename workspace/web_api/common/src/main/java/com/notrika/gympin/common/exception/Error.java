@@ -65,6 +65,11 @@ public class Error {
         //multimedia
         MULTIMEDIA_NOT_FOUND_EXCEPTION(1401),
         INVALID_FILE_NAME(1402),
+        FILE_DIMENSIONS_CANNOT_BE_ZIRO(1403),
+        UNSUPPORTED_IMAGE_TYPE(1404),
+        MEDIA_TYPE_NOT_FOUND(1405),
+        IMAGE_READ_ERROR(1406),
+        IMAGE_SAVE_ERROR(1407),
         //transactions
         REQUEST_OVER_CREDIT_LIMIT(1501),
         REQUEST_UNDER_LIMIT(1502),
@@ -81,7 +86,8 @@ public class Error {
         OUT_SERVICE_EXCEPTION(4002),
         INPUT_NOT_VALID(4003),
         COULD_NOT_CREATE_DIRECTORY(4004),
-        DUPLICATE_ENTRY_ADD_EXEPTION(4005)
+        DUPLICATE_ENTRY_ADD_EXEPTION(4005),
+        NOT_FOUND_EXEPTION(4006)
 
         ;
         private final int value;

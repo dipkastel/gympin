@@ -5,8 +5,10 @@ import com.notrika.gympin.common.multimedia.api.MultimediaController;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
+import com.notrika.gympin.common.multimedia.query.MultimediaQuery;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -27,15 +29,36 @@ public class MultimediaControllerImpl implements MultimediaController {
     @Override
     @RequestMapping(path = "/add", method = POST, consumes = {org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
-    public ResponseEntity<MultimediaDto> add(MultimediaStoreParam multimediaStoreParam) throws Exception {
+    public ResponseEntity<MultimediaDto> add(MultimediaStoreParam multimediaStoreParam) {
         return ResponseEntity.ok(multimediaService.add(multimediaStoreParam));
     }
 
     @Override
     @PutMapping("/update")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER')")
     public ResponseEntity<MultimediaDto> update(MultimediaStoreParam multimediaStoreParam) {
         return ResponseEntity.ok(multimediaService.update(multimediaStoreParam));
+    }
+
+    @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<MultimediaDto> delete(MultimediaStoreParam param) {
+        return ResponseEntity.ok(multimediaService.delete(param));
+    }
+
+    @Override
+    public ResponseEntity<List<MultimediaDto>> getAll(BasePagedParam pagingParam) {
+        return ResponseEntity.ok(multimediaService.getAll(pagingParam));
+    }
+
+    @Override
+    public ResponseEntity<MultimediaDto> getById(Long id) {
+        return ResponseEntity.ok(multimediaService.getById(id));
+    }
+
+    @Override
+    public ResponseEntity<Page<MultimediaDto>> query(MultimediaQuery param) {
+        return ResponseEntity.ok(multimediaService.query(param));
     }
 
     @Override
@@ -54,13 +77,6 @@ public class MultimediaControllerImpl implements MultimediaController {
     @RequestMapping(path = "/getAllAudios", method = GET)
     public ResponseEntity<List<MultimediaDto>> getAllAudio(HttpServletResponse response, BasePagedParam pagingParam) throws Exception {
         return ResponseEntity.ok(multimediaService.getAll(pagingParam,MediaType.AUDIO));
-    }
-
-    @Override
-    @PutMapping("/delete")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
-    public ResponseEntity<Boolean> delete(Long id) {
-        return ResponseEntity.ok(multimediaService.delete(id));
     }
 
 

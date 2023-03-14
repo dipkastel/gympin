@@ -107,6 +107,7 @@ export let MultimediaApi = {
   add: "v1/multimedia/add",
   getAllImages: "v1/multimedia/getAllImages",
   delete: "v1/multimedia/delete",
+  query: "v1/multimedia/query"
 };
 export let multimediaCategoryApi = {
   add: "v1/multimediacategory/add",
