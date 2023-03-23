@@ -9,6 +9,7 @@ import com.notrika.gympin.common.communication.notification.service.Notification
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,16 +24,19 @@ public class NotificationControllerImpl implements NotificationController {
     private NotificationService notificationService;
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET')")
     public ResponseEntity<NotificationDto> add(NotificationParam corporateParam) {
         return ResponseEntity.ok(notificationService.add(corporateParam));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public ResponseEntity<NotificationDto> update(NotificationParam corporateParam) {
         return ResponseEntity.ok(notificationService.update(corporateParam));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public ResponseEntity<NotificationDto> delete(NotificationParam corporateParam) {
         return ResponseEntity.ok(notificationService.delete(corporateParam));
     }

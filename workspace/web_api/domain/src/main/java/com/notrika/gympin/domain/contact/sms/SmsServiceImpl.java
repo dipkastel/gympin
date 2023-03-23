@@ -3,6 +3,8 @@ package com.notrika.gympin.domain.contact.sms;
 import com.notrika.gympin.common._base.base.Consts;
 import com.notrika.gympin.common.contact.sms.dto.SmsDto;
 import com.notrika.gympin.common.contact.sms.service.SmsService;
+import com.notrika.gympin.common.gympin.base.dto.SettingDto;
+import com.notrika.gympin.common.gympin.base.service.SettingsService;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
@@ -10,6 +12,7 @@ import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,7 @@ import java.util.Calendar;
 @Service
 public class SmsServiceImpl implements SmsService {
 
+
     @Autowired
     private ActivationCodeRepository activationCodeRepository;
 
@@ -34,10 +38,17 @@ public class SmsServiceImpl implements SmsService {
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private SettingsService settingsService;
+
     @Transactional
     @Override
     public boolean sendVerificationSms(Long userId, SmsDto smsDto) throws Exception {
         log.info("Going to send verification sms with params: {} || {}...\n", userId, smsDto);
+        SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
+        if(FixNumber!=null && !FixNumber.getValue().isEmpty()){
+            smsDto.setUserNumber(FixNumber.getValue());
+        }
         String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTERN_SENDCODE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+ "=code" + "&v1=" + URLEncoder.encode(smsDto.getText(), StandardCharsets.UTF_8);
 
         URL url2 = new URL(url);
@@ -67,6 +78,10 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public boolean sendJoinedToPlaceSms(SmsDto smsDto) throws Exception {
         log.info("Going to send joined to place sms with params: {} ...\n", smsDto);
+        SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
+        if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
+            smsDto.setUserNumber(FixNumber.getValue());
+        }
         String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_JOINTOPLACE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText(), StandardCharsets.UTF_8);
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();
@@ -80,6 +95,10 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public boolean sendJoinedToCorporateSms(SmsDto smsDto) throws Exception {
         log.info("Going to send joined to corporate sms with params: {} ...\n", smsDto);
+        SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
+        if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
+            smsDto.setUserNumber(FixNumber.getValue());
+        }
         String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_JOINTOCORPORATE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=corporate" + "&v1=" + URLEncoder.encode( smsDto.getText(), StandardCharsets.UTF_8);
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();
@@ -93,6 +112,10 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public boolean sendRegisterCompleted(SmsDto smsDto) throws Exception {
         log.info("Going to send join to place sms with params: {} ...\n", smsDto);
+        SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
+        if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
+            smsDto.setUserNumber(FixNumber.getValue());
+        }
         String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_JOINREQUEST + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText(), StandardCharsets.UTF_8);
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();

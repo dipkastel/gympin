@@ -20,6 +20,7 @@ import com.notrika.gympin.common.transaction.param.TransactionParam;
 import com.notrika.gympin.common.transaction.param.TransactionPlaceSettelingParam;
 import com.notrika.gympin.common.user.enums.PlanExpireType;
 import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.util.GeneralUtil;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.TicketConvertor;
 import com.notrika.gympin.persistence.dao.repository.*;
@@ -33,6 +34,7 @@ import com.notrika.gympin.persistence.entity.ticket.TicketEntryMessageEntity;
 import com.notrika.gympin.persistence.entity.transaction.TransactionEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
+import org.slf4j.helpers.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -86,7 +88,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
             throw new UnknownUserException();
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
 
-        if (plan.getGender() != user.getGender())
+        if (GeneralUtil.isGenderCompatible(plan.getGender() , user.getGender()))
             throw new TicketGenderIsNotCompatible();
         entity.setStatus(TicketStatus.PAYMENT_WAIT);
         entity.setPlan(plan);

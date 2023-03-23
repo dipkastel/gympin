@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface SettingsRepository extends BaseRepository<SettingsEntity, Long> {
     List<SettingsEntity> findAllByDeletedIsFalseAndType(settingsType type);
+    SettingsEntity findByKeyAndDeletedFalse(String key);
 }

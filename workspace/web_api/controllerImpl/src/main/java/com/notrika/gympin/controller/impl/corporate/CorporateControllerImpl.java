@@ -14,6 +14,7 @@ import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -29,6 +30,7 @@ public class CorporateControllerImpl implements CorporateController {
     private TransactionService TransactionService;
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<CorporateDto> add(CorporateParam corporateParam) {
         return ResponseEntity.ok(corporateService.add(corporateParam));
     }
@@ -39,6 +41,7 @@ public class CorporateControllerImpl implements CorporateController {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<CorporateDto> delete(CorporateParam corporateParam) {
         return ResponseEntity.ok(corporateService.delete(corporateParam));
     }

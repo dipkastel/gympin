@@ -12,7 +12,7 @@ import {
     Select,
     TextField
 } from "@mui/material";
-import {compareObjs} from "../../../helper/utils";
+import {checkEmailValid, checkMobileValid, checkNationalCode, compareObjs} from "../../../helper/utils";
 import {connect, useSelector} from "react-redux";
 import {media_AddImage} from "../../../network/api/multimedia.api";
 import {Formik} from "formik";
@@ -24,12 +24,12 @@ import {user_updateAvatar, user_updateMe} from "../../../network/api/user.api";
 import {useNavigate} from "react-router-dom";
 import {sagaActions} from "../../../helper/redux/actions/SagaActions";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import _EditImage from "./_EditImage";
 
 const EditProfile = (props) => {
     const error = useContext(ErrorContext);
     const navigation = useNavigate();
     const currentUser = useSelector(state=>state.auth.user)
-    const [imageUrl,SetImageUrl] = useState("")
     const [user,setUser] = useState(currentUser)
     useEffect(() => {
         props.RequestUser(user)
@@ -38,38 +38,7 @@ const EditProfile = (props) => {
     useEffect(() => {
         if(!compareObjs(currentUser,user))
             navigation.reload()
-        SetImageUrl(user.Avatar?user.Avatar.Url:"")
     }, []);
-
-    function ChangeAvatar(e) {
-        if(e.type==="change"){
-            const formData = new FormData();
-            formData.append("MediaType", "IMAGE");
-            formData.append("File", e.target.files[0]);
-            formData.append("CategoryId", "2");
-            formData.append("Title", user.Username);
-            formData.append("Description", user.Id);
-            //
-            media_AddImage(formData)
-                .then(data => {
-                    user_updateAvatar({UserId:currentUser.Id,MultimediaId:data.data.Data.Id}).then(result=>{
-                        SetImageUrl(result.data.Data.Avatar?result.data.Data.Avatar.Url:"")
-                    }).catch(e => {
-                        try {
-                            error.showError({message: e.response.data.Message});
-                        } catch (f) {
-                            error.showError({message: "خطا نا مشخص",});
-                        }
-                    });
-                }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            });
-        }
-    }
 
 
     function getGenderOptions() {
@@ -86,21 +55,7 @@ const EditProfile = (props) => {
                 alignItems="center"
             >
 
-                <label htmlFor="raised-button-file">
-                    <Avatar
-                        sx={{width: 120, height: 120, marginTop: 3}}
-                        alt="Remy Sharp"
-                        src={imageUrl}
-                    />
-                </label>
-                <Input
-                    accept="image/*"
-                    className={"input"}
-                    style={{display: 'none'}}
-                    id="raised-button-file"
-                    onChange={ChangeAvatar}
-                    type="file"
-                />
+                {user&&<_EditImage user={user} />}
                 <Formik
                     initialValues={{
                         Id: user.Id,
@@ -127,6 +82,22 @@ const EditProfile = (props) => {
                                 error.showError({message: "خطا نا مشخص",});
                             }
                         });
+                    }}
+                    validate={(values) => {
+                        const errors = {};
+                        if (!values.NationalCode.toString()) {
+                            errors.NationalCode = "کد ملی الزامی است";
+                        }
+                        if (!checkNationalCode(values.NationalCode.toString())) {
+                            errors.NationalCode = "کد ملی صحیح نیست";
+                        }
+                        if (!values.Email.toString()) {
+                            errors.Email = "ایمیل الزامی است";
+                        }
+                        if (!checkEmailValid(values.Email.toString())) {
+                            errors.Email = "ایمیل صحیح نیست";
+                        }
+                        return errors;
                     }}
                 >
                     {({
@@ -224,6 +195,8 @@ const EditProfile = (props) => {
                                       value={values.NationalCode||""}
                                       onChange={handleChange}
                                       label={"کد ملی"}
+                                      helperText={errors.NationalCode}
+                                      error={Boolean(touched.NationalCode && errors.NationalCode)}
                                   />
                                   <TextField
                                       fullWidth
@@ -235,6 +208,8 @@ const EditProfile = (props) => {
                                       value={values.Email||""}
                                       onChange={handleChange}
                                       label={"ایمیل"}
+                                      helperText={errors.Email}
+                                      error={Boolean(touched.Email && errors.Email)}
                                   />
                                   <TextField
                                       fullWidth

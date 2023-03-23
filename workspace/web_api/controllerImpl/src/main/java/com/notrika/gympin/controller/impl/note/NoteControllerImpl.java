@@ -9,6 +9,7 @@ import com.notrika.gympin.common.note.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,21 +25,25 @@ public class NoteControllerImpl implements NoteController {
     private NoteService noteService;
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<NoteDto> add(NoteParam param) {
         return ResponseEntity.ok(noteService.add(param));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<NoteDto> update(NoteParam param) {
         return ResponseEntity.ok(noteService.update(param));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<NoteDto> delete(NoteParam param) {
         return ResponseEntity.ok(noteService.delete(param));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<List<NoteDto>> getAll(BasePagedParam pagingParam) {
         return ResponseEntity.ok(noteService.getAll(pagingParam));
     }

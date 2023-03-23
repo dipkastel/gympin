@@ -20,6 +20,7 @@
     "prop-types": "^15.8.1",
     "qrscan": "^1.0.6",
     "react": "^18.2.0",
+    "react-advanced-cropper": "^0.18.0",
     "react-bootstrap": "^2.4.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",

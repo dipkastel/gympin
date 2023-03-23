@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,31 +27,29 @@ public class SportControllerImpl implements SportController {
     private SportService sportService;
 
     @Override
-    //    @PostMapping("/addSport")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<SportDto> add(@RequestBody SportParam sportParam) {
         return new ResponseEntity<>(sportService.add(sportParam), HttpStatus.OK);
     }
 
     @Override
-    //    @PutMapping("/updateSport")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<SportDto> update(@RequestBody SportParam sportParam) {
         return new ResponseEntity<>(sportService.update(sportParam), HttpStatus.OK);
     }
 
     @Override
-    //    @GetMapping("/getSportById")
     public ResponseEntity<SportDto> getById(Long id) {
         return new ResponseEntity<>(sportService.getById(id), HttpStatus.OK);
     }
 
     @Override
-    //    @GetMapping("/getAllSport")
     public ResponseEntity<List<SportDto>> getAll(BasePagedParam pagingParam) {
         return new ResponseEntity<>(sportService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
-    //    @PutMapping("/deleteSport")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<SportDto> delete(SportParam sportParam) {
         SportDto deletedSport = sportService.delete(sportParam);
         return new ResponseEntity<>(deletedSport, HttpStatus.OK);

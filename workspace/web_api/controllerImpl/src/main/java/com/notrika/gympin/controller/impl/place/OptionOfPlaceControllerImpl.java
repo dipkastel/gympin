@@ -26,31 +26,26 @@ public class OptionOfPlaceControllerImpl implements OptionOfPlaceController {
     private OptionOfPlaceService optionOfPlaceService;
 
     @Override
-    //    @PostMapping("/addPlaceOption")
     public ResponseEntity<OptionOfPlaceDto> add(@RequestBody OptionOfPlaceParam placeOptionParam) {
         return new ResponseEntity<OptionOfPlaceDto>(optionOfPlaceService.add(placeOptionParam), HttpStatus.OK);
     }
 
     @Override
-    //    @PutMapping("/updatePlaceOption")
     public ResponseEntity<OptionOfPlaceDto> update(@RequestBody OptionOfPlaceParam placeOptionParam) {
         return new ResponseEntity<OptionOfPlaceDto>(optionOfPlaceService.update(placeOptionParam), HttpStatus.OK);
     }
 
     @Override
-    //    @GetMapping("/getAllPlaceOption")
     public ResponseEntity<List<OptionOfPlaceDto>> getAll(BasePagedParam pagingParam) {
         return new ResponseEntity<List<OptionOfPlaceDto>>(optionOfPlaceService.getAll(pagingParam), HttpStatus.OK);
     }
 
     @Override
-    //    @GetMapping("/getPlaceOptionById")
     public ResponseEntity<OptionOfPlaceDto> getById(Long id) {
         return new ResponseEntity<OptionOfPlaceDto>(optionOfPlaceService.getById(id), HttpStatus.OK);
     }
 
     @Override
-    //    @DeleteMapping("/deletePlaceOption")
     public ResponseEntity<OptionOfPlaceDto> delete(OptionOfPlaceParam placeOptionParam) {
         OptionOfPlaceDto deletedOptionOfPlace = optionOfPlaceService.delete(placeOptionParam);
         return new ResponseEntity<OptionOfPlaceDto>(deletedOptionOfPlace, HttpStatus.OK);

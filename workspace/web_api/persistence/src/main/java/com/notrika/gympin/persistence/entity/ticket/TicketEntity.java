@@ -1,11 +1,9 @@
 package com.notrika.gympin.persistence.entity.ticket;
 
-import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
 import com.notrika.gympin.common.ticket.enums.TicketStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.note.NoteEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanEntity;
-import com.notrika.gympin.persistence.entity.plan.PlanGateTimingEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +50,12 @@ public class TicketEntity extends BaseEntityWithCreateUpdate<TicketEntity> {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "voucher")
+    private String voucher;
+
+    @Column(name = "discount")
+    private Short discount;
 
     @Column(name = "entryTotalCount", nullable = false)
     private Short entryTotalCount;

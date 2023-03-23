@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,16 +26,19 @@ public class LocationControllerImpl implements LocationController {
     LocationService locationService;
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<LocationDto> add(LocationParam locationParam) {
         return ResponseEntity.ok(locationService.add(locationParam));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<LocationDto> update(LocationParam locationParam) {
         return ResponseEntity.ok(locationService.update(locationParam));
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<LocationDto> delete(LocationParam locationParam) {
         return ResponseEntity.ok(locationService.delete(locationParam));
     }

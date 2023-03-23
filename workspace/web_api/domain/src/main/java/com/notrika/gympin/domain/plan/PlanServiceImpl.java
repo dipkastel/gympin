@@ -2,6 +2,7 @@ package com.notrika.gympin.domain.plan;
 
 import com.notrika.gympin.common._base.param.BaseParam;
 import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.exception.plan.UncomfortableValueExeption;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.plan.dto.PlanDto;
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -148,11 +150,15 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
     }
 
     @Override
+    @Transactional
     public PlanDto addSport(PlanSportParam planSportParam) {
         PlanEntity plan = planRepository.getById(planSportParam.getPlan().getId());
+
         List<SportPlaceEntity> planSports = plan.getPlanSport();
         if(planSports==null)planSports=new ArrayList<>();
         for(var sportPlaceParam:planSportParam.getSportsPlace()){
+            if(plan.getPlanSport().stream().anyMatch(s->s.getId().equals(sportPlaceParam.getId())))
+                throw new DuplicateEntryAddExeption();
             SportPlaceEntity sportPlace = sportPlaceRepository.getById(sportPlaceParam.getId());
             planSports.add(sportPlace);
         }

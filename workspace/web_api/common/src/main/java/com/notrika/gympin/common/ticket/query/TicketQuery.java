@@ -2,6 +2,7 @@ package com.notrika.gympin.common.ticket.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.ticket.enums.TicketStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -34,13 +35,16 @@ public class TicketQuery extends BaseQuery<TicketQuery> {
 
 
     @JsonProperty("Status")
-    private String is_status;
+    private TicketStatus is_status;
 
     @JsonProperty("PlanId")
-    private String is_plan;
+    private Long is_planæid;
+
+    @JsonProperty("PlaceId")
+    private Long is_planæplaceæid;
 
     @JsonProperty("UserId")
-    private String is_user;
+    private Long is_useræid;
 
     @JsonProperty("PlanName")
     private String like_planName;

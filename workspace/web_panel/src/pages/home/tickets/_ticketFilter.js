@@ -1,20 +1,28 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import {Form} from "reactstrap";
-import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import {TransactionStatus} from "../../../helper/enums/TransactionStatus";
 import {TransactionTypes} from "../../../helper/enums/TransactionTypes";
+import {TicketStatus} from "../../../helper/enums/TicketStatus";
+import AsyncSelect from "react-select/async";
+import {user_query} from "../../../network/api/user.api";
+import {Place_query} from "../../../network/api/place.api";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {Plans_query} from "../../../network/api/plans.api";
 
 export const defaultFilterTicket = {
     queryType: "FILTER",
-    TransactionStatus: null,
-    TransactionType: null,
-    Serial: null
+    userId:null,
+    planId:null,
+    status:null,
 };
 
-const _financeFilter = ({openModal, setOpenModal,filter,setFilter}) => {
+const _ticketFilter = ({openModal, setOpenModal,filter,setFilter}) => {
 
+    const error = useContext(ErrorContext);
     const [modalFilter, SetModalFilter] = useState(defaultFilterTicket);
+
     useEffect(() => {
         if (!openModal) return;
         SetModalFilter(filter);
@@ -26,12 +34,82 @@ const _financeFilter = ({openModal, setOpenModal,filter,setFilter}) => {
         setOpenModal(false);
     }
 
+
+    const promiseUserOptions = (inputValue) => {
+        return new Promise((resolve) => {
+            function getLabelOfUser(itm) {
+                return (<Grid container direction="row" justifyContent="space-between" alignItems="center">
+                    <Typography variant={"body2"}>{itm.Username}</Typography>
+                    <Typography variant={"body2"}>{((itm.FullName) ? `(${itm.FullName})` : "")}</Typography>
+                    <Typography variant={"body2"}>{itm.PhoneNumber}</Typography>
+                </Grid>)
+            }
+
+            user_query({
+                queryType: "SEARCH",
+                Username: inputValue,
+                FullName: inputValue,
+                PhoneNumber: inputValue,
+                paging: {Page: 0, Size: 50, Desc: true}
+            }).then((data) => {
+                resolve(data.data.Data.content.map(itm => {
+                    return {label: getLabelOfUser(itm), value: itm.Id}
+                }));
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        });
+    }
+    const promisePlanOptions = (inputValue) => {
+        return new Promise((resolve) => {
+
+            Plans_query({
+                queryType: "SEARCH",
+                Name: inputValue,
+                paging: {Page: 0, Size: 50, Desc: true}
+            }).then((data) => {
+                resolve(data.data.Data.content.map(itm => {
+                    return {label: itm.Place.Name+" - "+itm.Name, value: itm.Id}
+                }));
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        });
+    }
+    const promisePlaceOptions = (inputValue) => {
+        return new Promise((resolve) => {
+
+            Place_query({
+                queryType: "SEARCH",
+                Name: inputValue,
+                paging: {Page: 0, Size: 50, Desc: true}
+            }).then((data) => {
+                resolve(data.data.Data.content.map(itm => {
+                    return {label: itm.Name, value: itm.Id}
+                }));
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        });
+    }
     return (<>
 
             <Modal show={openModal} onHide={() => setOpenModal(false)}>
                 <Form onSubmit={(e) => submitForm(e)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>{"فیلتر تراکنش ها"}</Modal.Title>
+                        <Modal.Title>{"فیلتر بلیط ها"}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <FormControl fullWidth sx={{mt: 2}}>
@@ -41,51 +119,53 @@ const _financeFilter = ({openModal, setOpenModal,filter,setFilter}) => {
                                 id="status-select"
                                 name={"status"}
                                 label="status"
-                                value={modalFilter.TransactionStatus || "null"}
+                                value={modalFilter.status || "null"}
                                 onChange={e => SetModalFilter({
                                     ...modalFilter,
-                                    TransactionStatus: e.target.value == "null" ? null : e.target.value
+                                    status: e.target.value == "null" ? null : e.target.value
                                 })}
                             >
                                 <MenuItem value={"null"}>بدون فیلتر</MenuItem>
-                                {Object.keys(TransactionStatus).map((item, number) => (
-                                    <MenuItem key={number} value={item}>{TransactionStatus[item]}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <FormControl fullWidth sx={{mt: 2}}>
-                            <InputLabel id="type-select-label">نوع</InputLabel>
-                            <Select
-                                labelId="type-select-label"
-                                id="type-select"
-                                name={"Type"}
-                                label="Type"
-                                value={modalFilter.TransactionType || "null"}
-                                onChange={e => SetModalFilter({
-                                    ...modalFilter,
-                                    TransactionType: e.target.value == "null" ? null : e.target.value
-                                })}
-                            >
-                                <MenuItem value={"null"}>بدون فیلتر</MenuItem>
-                                {Object.keys(TransactionTypes).map((item, number) => (
-                                    <MenuItem key={number} value={item}>{TransactionTypes[item]}</MenuItem>
+                                {Object.keys(TicketStatus).map((item, number) => (
+                                    <MenuItem key={number} value={item}>{TicketStatus[item]}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
 
-                        <TextField
-                            id="serial-filter"
-                            label="سریال"
-                            sx={{mt:2}}
-                            placeholder="سریال"
-                            value={modalFilter.Serial}
-                            onChange={(e)=>SetModalFilter({...modalFilter,Serial:e.target.value})}
-                            fullWidth
-                            margin="normal"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
+                        <FormControl fullWidth sx={{mt: 2}}>
+
+                            <AsyncSelect cacheOptions defaultOptions
+                                         name={"Select_user"}
+                                         label="کاربر"
+                                         placeholder="کاربر"
+                                         onChange={e => SetModalFilter({
+                                             ...modalFilter,
+                                             userId: e.value
+                                         })}
+                                         loadOptions={promiseUserOptions}/>
+                        </FormControl>
+                        <FormControl fullWidth sx={{mt: 2}}>
+                            <AsyncSelect cacheOptions defaultOptions
+                                         name={"Select_plan"}
+                                         label="پلن"
+                                         placeholder="پلن"
+                                         onChange={e => SetModalFilter({
+                                             ...modalFilter,
+                                             planId: e.value
+                                         })}
+                                         loadOptions={promisePlanOptions}/>
+                        </FormControl>
+                        <FormControl fullWidth sx={{mt: 2}}>
+                            <AsyncSelect cacheOptions defaultOptions
+                                         name={"Select_place"}
+                                         label="مرکز"
+                                         placeholder="مرکز"
+                                         onChange={e => SetModalFilter({
+                                             ...modalFilter,
+                                             placeId: e.value
+                                         })}
+                                         loadOptions={promisePlaceOptions}/>
+                        </FormControl>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant={"outlined"} color={"error"} onClick={() => setOpenModal(false)}>لغو</Button>
@@ -102,4 +182,4 @@ const _financeFilter = ({openModal, setOpenModal,filter,setFilter}) => {
     );
 };
 
-export default _financeFilter;
+export default _ticketFilter;

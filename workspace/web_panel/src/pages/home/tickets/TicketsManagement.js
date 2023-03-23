@@ -14,12 +14,14 @@ import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {getUserFixedName, toPriceWithComma} from "../../../helper";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {defaultFilterTicket} from "./_ticketFilter";
+import _ticketFilter, {defaultFilterTicket} from "./_ticketFilter";
 import {FilterAlt} from "@mui/icons-material";
 import AsyncSelect from "react-select/async";
 import {user_query} from "../../../network/api/user.api";
 import {Label} from "reactstrap";
 import {Plans_query} from "../../../network/api/plans.api";
+import _financeFilter from "../finance/_financeFilter";
+import {TicketStatus} from "../../../helper/enums/TicketStatus";
 
 const TicketsManagement = () => {
     const error = useContext(ErrorContext);
@@ -33,13 +35,18 @@ const TicketsManagement = () => {
 
     useEffect(() => {
         getTickets()
-    }, [page, rowsPerPage]);
+    }, [page, rowsPerPage,filter]);
 
     function getTickets() {
         ticket_query({
-            queryType: "SEARCH",
+            queryType: "FILTER",
+            UserId:filter.userId,
+            PlanId:filter.planId,
+            Status:filter.status,
+            PlaceId:filter.placeId,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
+            console.log(data)
             SetTickets(data.data.Data)
         }).catch(e => {
             try {
@@ -216,14 +223,19 @@ const TicketsManagement = () => {
                                             <TableCell align="right">{row.PlanName || "ثبت نشده"}</TableCell>
                                             <TableCell align="right">{toPriceWithComma(row.Price)}</TableCell>
                                             <TableCell
-                                                align="right">{new Date(row.ExpireDate).toLocaleDateString('fa-IR', {
+                                                align="right">{((new Date(row.ExpireDate)).getHours()==0&(new Date(row.ExpireDate)).getMinutes()==0)?new Date(row.ExpireDate).toLocaleDateString('fa-IR', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            }):new Date(row.ExpireDate).toLocaleDateString('fa-IR', {
                                                 year: 'numeric',
                                                 month: 'long',
                                                 day: 'numeric',
                                                 hour: "2-digit",
                                                 minute: "2-digit"
-                                            })}</TableCell><TableCell align="right">
-                                            <Chip label={row.Status}
+                                            })}</TableCell>
+                                            <TableCell align="right">
+                                            <Chip label={TicketStatus[row.Status]}
                                                   color={(row.Status.startsWith("ACTIVE")) ? "success" : "error"}/>
                                         </TableCell>
                                         </TableRow>
@@ -251,6 +263,7 @@ const TicketsManagement = () => {
                     />}
                 </PortletBody>
             </Portlet>
+            <_ticketFilter filter={filter} setFilter={SetFilter} openModal={openModalFilter} setOpenModal={(e)=>setOpenModalFilter(e)}/>
             {RenderModalAdd()}
         </>
     );

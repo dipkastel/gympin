@@ -1,7 +1,10 @@
 package com.notrika.gympin.common.user.enums;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 public enum
 UserRole {
+    COACH(8,"مربی"),
     SUPER_ADMIN(7,"مدیر ارشد"),
     ADMIN(6,"مدیر سیستم"),
     MANAGER(3,"مدیر داخلی"),

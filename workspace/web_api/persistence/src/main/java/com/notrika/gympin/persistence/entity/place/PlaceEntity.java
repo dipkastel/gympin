@@ -63,6 +63,9 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Column(name = "inviteCode")
     private String inviteCode;
 
+    @Column(name = "autoDiscount", nullable = false,columnDefinition = "bit default 1")
+    private boolean autoDiscount;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id")
     @JsonIgnore

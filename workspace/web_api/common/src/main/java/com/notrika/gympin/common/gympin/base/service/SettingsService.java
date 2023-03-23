@@ -11,4 +11,5 @@ import java.util.List;
 public interface SettingsService extends BaseService<SettingParam, SettingDto, BaseQuery<?>> {
 
     List<SettingDto> getByType(settingsType type);
+    SettingDto getByKey(String Key);
 }

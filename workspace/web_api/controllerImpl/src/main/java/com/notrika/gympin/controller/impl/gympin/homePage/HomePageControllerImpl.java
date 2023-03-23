@@ -79,6 +79,7 @@ public class HomePageControllerImpl implements HomePageController {
 
     @Override
     @PostMapping("/addType")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<HomePageTypeDto> addType(HomePageTypeParam param) {
         return ResponseEntity.ok(homePageService.addType(param));
     }
@@ -86,6 +87,7 @@ public class HomePageControllerImpl implements HomePageController {
 
     @Override
     @PutMapping("/deleteType")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<HomePageTypeDto> deleteType(HomePageTypeParam param) {
         return ResponseEntity.ok(homePageService.deleteType(param));
     }
@@ -100,12 +102,14 @@ public class HomePageControllerImpl implements HomePageController {
 
     @Override
     @PostMapping("/addDestination")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<HomePageDestinationDto> addDestination(HomePageDestinationParam param) {
         return ResponseEntity.ok(homePageService.addDestination(param));
     }
 
     @Override
     @PutMapping("/deleteDestination")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<HomePageDestinationDto> deleteDestination(HomePageDestinationParam param) {
         return ResponseEntity.ok(homePageService.deleteDestination(param));
     }

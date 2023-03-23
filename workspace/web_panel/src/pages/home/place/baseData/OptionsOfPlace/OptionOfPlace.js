@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import {Button, TableCell} from "@mui/material";
+import {Button, Chip, Collapse, Paper, TableCell} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import {placeOption_add, placeOption_delete, placeOption_getAll} from "../../../../../network/api/placeOptions.api";
 import {
@@ -15,17 +15,21 @@ import {
 import {Form, Modal} from "react-bootstrap";
 import Select from "react-select";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
+import {ExpandMore} from "@mui/icons-material";
 
 const OptionOfPlace = ({place}) => {
     const error = useContext(ErrorContext);
   const [placeOptions,SetPlaceOptions] = useState([])
   const [allOptions,SetAllOptions] = useState([])
   const [openModalAdd,setOpenModalAdd] = useState(false)
+  const [openBoxAdd,setOpenBoxAdd] = useState(false)
   const [itemToDelete,setItemToDelete] = useState(null)
   useEffect(() => {
       getOptionOfPlace();
   }, []);
-  useEffect(()=>{
+
+  function getAllOptions(){
+
       placeOption_getAll()
           .then(data=>{
               SetAllOptions(data.data.Data);
@@ -36,11 +40,11 @@ const OptionOfPlace = ({place}) => {
               error.showError({message: "خطا نا مشخص",});
           }
       });
-  },[])
-
+  }
   function getOptionOfPlace(){
       optionOfPlace_getByPlaceId({Id:place.Id}).then(data=>{
           SetPlaceOptions(data.data.Data);
+          getAllOptions();
       }).catch(e => {
           try {
               error.showError({message: e.response.data.Message,});
@@ -50,24 +54,22 @@ const OptionOfPlace = ({place}) => {
       });
   }
 
+    function addOption(selectedId) {
+        optionOfPlace_add({Place:{Id:place.Id},PlaceOption:{Id:selectedId}})
+            .then(data=>{
+                error.showError({message: "عملیات موفق",});
+                getOptionOfPlace()
+            }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }
+
     function renderModalAdd() {
       var selectedId = 0;
-
-        function addOption(e) {
-            e.preventDefault()
-            optionOfPlace_add({Place:{Id:place.Id},PlaceOption:{Id:selectedId}})
-                .then(data=>{
-                    error.showError({message: "عملیات موفق",});
-                    setOpenModalAdd(false)
-                    getOptionOfPlace()
-                }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
-        }
 
         function getAllOptions() {
             return allOptions.map(o=>{return{label:o.Name,value:o.Id}});
@@ -176,7 +178,7 @@ const OptionOfPlace = ({place}) => {
                     <button
                         type="button"
                         className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                        onClick={(e) =>setOpenModalAdd(true)}
+                        onClick={(e) =>setOpenBoxAdd(!openBoxAdd)}
                     >
                       <AddIcon />
                     </button>
@@ -186,7 +188,17 @@ const OptionOfPlace = ({place}) => {
 
             <PortletBody>
 
-              <Table className={"table"}>
+                <Collapse in={openBoxAdd} timeout="auto" unmountOnExit>
+
+                    <Paper variant="outlined"  sx={{margin:1}} >
+                        {allOptions.filter(op=>!placeOptions.map(po=>po.PlaceOption.Id).includes(op.Id)).map(row => (
+
+                            <Chip onClick={(e)=>addOption(row.Id)} sx={{m:1}} label={row.Name} color={"error"} />
+                        ))}
+                    </Paper>
+                </Collapse>
+
+                <Table className={"table"}>
                 <TableHead>
                   <TableRow>
                     <TableCell align="right">Id</TableCell>

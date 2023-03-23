@@ -54,6 +54,12 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
     public List<SettingDto> getByType(settingsType type) {
         return convertToDtos(settingsRepository.findAllByDeletedIsFalseAndType(type));
     }
+
+    @Override
+    public SettingDto getByKey(String key) {
+        return SettingsConvertor.toDto(settingsRepository.findByKeyAndDeletedFalse(key));
+    }
+
     @Override
     public List<SettingsEntity> getAll(Pageable pageable) {
         return settingsRepository.findAllUndeleted(pageable);
