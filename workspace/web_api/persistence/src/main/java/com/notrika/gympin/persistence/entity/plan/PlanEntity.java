@@ -53,7 +53,7 @@ public class PlanEntity extends BaseEntity<PlanEntity> {
     @Column(name = "entryTotalCount", nullable = false)
     private Short entryTotalCount;
 
-    @Column(name = "discount", nullable = false,columnDefinition = "default 0")
+    @Column(name = "discount", nullable = false,columnDefinition = "smallint default 0")
     private Short discount;
 
     @Column(name = "startSellingDate")

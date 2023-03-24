@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +35,7 @@ public class OptionOfPlaceServiceImpl extends AbstractBaseService<OptionOfPlaceP
     private PlaceOptionRepository placeOptionRepository;
 
     @Override
+    @Transactional
     public OptionOfPlaceDto add(OptionOfPlaceParam optionOfPlaceParam) {
         PlaceEntity place = placeRepository.findById(optionOfPlaceParam.getPlace().getId()).get();
         PlaceOptionEntity placeOption = placeOptionRepository.findById(optionOfPlaceParam.getPlaceOption().getId()).get();
@@ -43,6 +45,7 @@ public class OptionOfPlaceServiceImpl extends AbstractBaseService<OptionOfPlaceP
     }
 
     @Override
+    @Transactional
     public OptionOfPlaceEntity add(OptionOfPlaceEntity placeOption) {
         if(getByPlaceId(placeOption.getPlace().getId()).stream().anyMatch(o-> Objects.equals(o.getPlaceOption().getId(), placeOption.getPlaceOption().getId())))
             throw new DuplicateEntryAddExeption();
