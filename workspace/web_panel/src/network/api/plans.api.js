@@ -13,6 +13,10 @@ export function Plans_getAll() {
     return axios.get(PlansApi.getAll);
 }
 
+export function Plans_getDiscountHistory(data) {
+    return axios.get(PlansApi.getPlanDiscountHistory,{params:data});
+}
+
 export function Plans_update(data) {
     return axios.put(PlansApi.update, data);
 }

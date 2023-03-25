@@ -3,6 +3,7 @@ package com.notrika.gympin.common.plan.service;
 import com.notrika.gympin.common._base.base.BaseService;
 import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.plan.dto.PlanDiscountHistoryDto;
 import com.notrika.gympin.common.plan.dto.PlanDto;
 import com.notrika.gympin.common.plan.param.PlanParam;
 import com.notrika.gympin.common.plan.param.PlanSportParam;
@@ -18,4 +19,5 @@ public interface PlanService extends BaseService<PlanParam, PlanDto, PlanQuery> 
     List<SportPlaceDto> getSports(Long planId);
     PlanDto addSport(PlanSportParam planSportParam);
     PlanDto deleteSport(PlanSportParam planSportParam);
+    List<PlanDiscountHistoryDto> getPlanDiscountHistory(Long planId);
 }

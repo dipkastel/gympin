@@ -9,8 +9,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableCaching
+@EnableScheduling
 @SpringBootApplication(scanBasePackages = {"com.notrika.gympin.*"})
 @EnableJpaRepositories(basePackages = {"com.notrika.gympin.persistence.dao.*"}, repositoryBaseClass = BaseRepositoryImpl.class)
 @EntityScan("com.notrika.gympin.persistence.entity.*")

@@ -30,6 +30,12 @@ public class PlanParam extends BaseParam<PlanParam> {
     @JsonProperty("ValuePrice")
     private BigDecimal valuePrice;
 
+    @JsonProperty("PlacePrice")
+    private BigDecimal placePrice;
+
+    @JsonProperty("Discount")
+    private Short discount;
+
     @JsonProperty("Enable")
     private Boolean enable;
 

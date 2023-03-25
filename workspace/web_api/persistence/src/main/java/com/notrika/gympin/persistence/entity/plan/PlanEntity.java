@@ -47,6 +47,9 @@ public class PlanEntity extends BaseEntity<PlanEntity> {
     @Column(name = "valuePrice")
     private BigDecimal valuePrice;
 
+    @Column(name = "placePrice")
+    private BigDecimal placePrice;
+
     @Column(name = "enable")
     private Boolean enable;
 
@@ -76,13 +79,16 @@ public class PlanEntity extends BaseEntity<PlanEntity> {
     @ToString.Exclude
     private List<TicketEntity> ticket;
 
-
     @ManyToOne(cascade = CascadeType.ALL)
     private PlaceEntity place;
 
     @OneToMany(mappedBy = "plan")
     @ToString.Exclude
     private List<PlanGateTimingEntity> planGates;
+
+    @OneToMany(mappedBy = "plan")
+    @ToString.Exclude
+    private List<PlanDiscountHistoryEntity> planDiscountHistory;
 
     @ManyToMany
     @JoinTable(name = "planSport", joinColumns = @JoinColumn(name = "planId"), inverseJoinColumns = @JoinColumn(name = "sportPlaceId"))

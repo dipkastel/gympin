@@ -73,11 +73,25 @@ function PlanBase({plan,updatePlan}){
 
                         <TextField
                             id="standard-full-width"
-                            label="قیمت به تومان"
-                            placeholder="قیمت به تومان"
+                            label="پرداختی کاربر به تومان"
+                            placeholder="پرداختی کاربر به تومان"
                             value={toPriceWithComma(inPlan.Price)}
                             type={"text"}
                             onChange={(e)=>setFormValues("Price",toPriceWithoutComma(e.target.value))}
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+
+                        <TextField
+                            id="standard-full-width"
+                            label="قیمت مرکز به تومان"
+                            placeholder="قیمت مرکز به تومان"
+                            value={toPriceWithComma(inPlan.PlacePrice)}
+                            onChange={(e)=>setFormValues("PlacePrice",toPriceWithoutComma(e.target.value))}
+                            type={"text"}
                             fullWidth
                             margin="normal"
                             InputLabelProps={{
@@ -91,6 +105,20 @@ function PlanBase({plan,updatePlan}){
                             placeholder="ارزش به تومان"
                             value={toPriceWithComma(inPlan.ValuePrice)}
                             onChange={(e)=>setFormValues("ValuePrice",toPriceWithoutComma(e.target.value))}
+                            type={"text"}
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+
+                        <TextField
+                            id="standard-full-width"
+                            label="درصد تخفیف"
+                            placeholder="درصد تخفیف"
+                            value={inPlan.Discount}
+                            onChange={(e)=>setFormValues("Discount",e.target.value)}
                             type={"text"}
                             fullWidth
                             margin="normal"

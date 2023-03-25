@@ -30,6 +30,12 @@ public class PlanDto extends BaseDto<PlanDto> {
     @JsonProperty("ValuePrice")
     private BigDecimal valuePrice;
 
+    @JsonProperty("PlacePrice")
+    private BigDecimal placePrice;
+
+    @JsonProperty("Discount")
+    private Short discount;
+
     @JsonProperty("Enable")
     private Boolean enable;
 

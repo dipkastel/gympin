@@ -29,6 +29,7 @@ import FinanceManagement from "./finance/FinanceManagement";
 import PlacePersonnelManagement from "./place/personnel/PlacePersonnelManagement";
 import ArticlesManagement from "./articles/ArticlesManagement";
 import SingleArticle from "./articles/SingleArticle/SingleArticle";
+import Reports from "./report/Reports";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -49,6 +50,8 @@ export default function HomePage() {
         <Route path="/homePage/edit/:ItemId" component={HomePageDetail} />
         <Route path="/homePage/types" component={HomePageTypes} />
         <Route path="/homePage/" component={MainPageManagement} />
+        {/*Report*/}
+        <Route path="/report" component={Reports} />
         {/*user*/}
         <Route path="/users/details/:userId" component={UserDetailsManagement} />
         <Route path="/users" component={UserManagement} />

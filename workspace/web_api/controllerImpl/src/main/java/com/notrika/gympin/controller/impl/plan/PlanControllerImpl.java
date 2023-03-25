@@ -4,6 +4,7 @@ import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.plan.api.PlanController;
+import com.notrika.gympin.common.plan.dto.PlanDiscountHistoryDto;
 import com.notrika.gympin.common.plan.dto.PlanDto;
 import com.notrika.gympin.common.plan.param.PlanParam;
 import com.notrika.gympin.common.plan.param.PlanSportParam;
@@ -78,6 +79,12 @@ public class PlanControllerImpl implements PlanController {
     @PutMapping("/deleteSport")
     public ResponseEntity<PlanDto> deleteSport(@RequestBody PlanSportParam planSportParam) {
         return ResponseEntity.ok(planService.deleteSport(planSportParam));
+    }
+
+    @Override
+    @GetMapping("/getPlanDiscountHistory")
+    public ResponseEntity<List<PlanDiscountHistoryDto>> getPlanDiscountHistory(Long planId) {
+        return ResponseEntity.ok(planService.getPlanDiscountHistory(planId));
     }
 
 }

@@ -2,6 +2,7 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
+import com.notrika.gympin.common.plan.dto.PlanDiscountHistoryDto;
 import com.notrika.gympin.common.plan.dto.PlanDto;
 import com.notrika.gympin.common.plan.dto.PlanGateTimingDto;
 import com.notrika.gympin.common.plan.dto.PlanRegisterDto;
@@ -9,6 +10,7 @@ import com.notrika.gympin.common.plan.param.PlanRegisterParam;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
 import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
+import com.notrika.gympin.persistence.entity.plan.PlanDiscountHistoryEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanGateTimingEntity;
 import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
@@ -28,6 +30,8 @@ public class PlanConvertor {
         dto.setName(entity.getName());
         dto.setPrice(entity.getPrice());
         dto.setValuePrice(entity.getValuePrice());
+        dto.setPlacePrice(entity.getPlacePrice());
+        dto.setDiscount(entity.getDiscount());
         dto.setEnable(entity.getEnable());
         dto.setGender(entity.getGender());
         dto.setDescription(entity.getDescription());
@@ -37,6 +41,16 @@ public class PlanConvertor {
         dto.setPlanExpireType(entity.getPlanExpireType());
         dto.setExpireDate(entity.getExpireDate());
         dto.setExpireDuration(entity.getExpireDuration());
+        return dto;
+    }
+
+    public static PlanDiscountHistoryDto toDto(PlanDiscountHistoryEntity entity) {
+        PlanDiscountHistoryDto dto = new PlanDiscountHistoryDto();
+        dto.setId(entity.getId());
+        dto.setCreatedDate(entity.getCreatedDate());
+        dto.setAfterPrice(entity.getAfterPrice());
+        dto.setBeforPrice(entity.getBeforPrice());
+        dto.setDiscount(entity.getDiscount());
         return dto;
     }
 

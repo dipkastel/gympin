@@ -55,6 +55,7 @@ const OptionOfPlace = ({place}) => {
   }
 
     function addOption(selectedId) {
+        SetAllOptions([]);
         optionOfPlace_add({Place:{Id:place.Id},PlaceOption:{Id:selectedId}})
             .then(data=>{
                 error.showError({message: "عملیات موفق",});

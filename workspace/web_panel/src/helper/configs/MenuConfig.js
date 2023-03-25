@@ -24,6 +24,14 @@ export default {
         translate: "MENU.SUPPORT",
         bullet: "dot",
       },
+      {
+        title: "Report",
+        root: true,
+        icon: "flaticon2-line-chart",
+        page: "Report",
+        translate: "MENU.REPORT",
+        bullet: "dot",
+      },
       { section: "مدیریت" },
       {
         title: "manage places",

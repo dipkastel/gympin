@@ -13,6 +13,8 @@ public interface PlaceRepository extends BaseRepository<PlaceEntity, Long> {
 
     List<PlaceEntity> findAllByLocationAndDeletedIsFalse(LocationEntity region);
 
+    List<PlaceEntity> findAllByDeletedIsFalseAndAutoDiscountIsTrue();
+
     @Query("select p from PlaceEntity p,PlacePersonnelEntity po where p.id=po.place.id and po.deleted = 0 and po.user.id = :#{#userId} ")
     List<PlaceEntity> getPlaceByUser(Long userId);
 

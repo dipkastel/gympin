@@ -40,6 +40,9 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
     @JsonProperty("Address")
     private String address;
 
+    @JsonProperty("AutoDiscount")
+    private Boolean autoDiscount;
+
     @JsonProperty("Status")
     private PlaceStatusEnum status = PlaceStatusEnum.ACTIVE;
 

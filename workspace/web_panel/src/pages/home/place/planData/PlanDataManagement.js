@@ -7,6 +7,7 @@ import PlanGatesTiming from "./PlanGatesTiming/PlanGateTiming";
 import {Button} from "@mui/material";
 import PlanSport from "./planSports/PlanSport";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import _PlanHistoryChart from "./HistoryChart/_PlanHistoryChart";
 
 const PlaceDataManagement = () => {
     const error = useContext(ErrorContext);
@@ -62,6 +63,8 @@ const PlaceDataManagement = () => {
                 <div className="col-md-6">
                     {plan&&<PlanGatesTiming plan={plan} />}
                     {plan&&<PlanSport plan={plan} />}
+                    {plan&&<_PlanHistoryChart plan={plan} />}
+
                 </div>
             </div>}
         </>

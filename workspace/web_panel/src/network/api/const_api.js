@@ -158,6 +158,7 @@ export let PlansApi = {
   add: "v1/plan/add",
   delete: "v1/plan/delete",
   getAll: "v1/plan/getAll",
+  getPlanDiscountHistory: "v1/plan/getPlanDiscountHistory",
   getById: "v1/plan/getById",
   getSports: "v1/plan/getSports",
   addSport: "v1/plan/addSport",
@@ -204,6 +205,10 @@ export let PlacePersonelApi = {
   updatePersonnelAccess:"v1/placePersonnel/updatePersonnelAccess",
   getById:"v1/placePersonnel/getById"
 };
+export let ReportSettings = {
+  getAll:"v1/reportSettings/getAll",
+  update:"v1/reportSettings/update",
+}
 export let SportApi = {
   addSport: "v1/sport/add",
   deleteSport: "v1/sport/delete",

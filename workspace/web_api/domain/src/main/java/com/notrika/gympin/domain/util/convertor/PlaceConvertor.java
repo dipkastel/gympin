@@ -40,6 +40,7 @@ public final class PlaceConvertor {
         placeDto.setLatitude(entity.getLatitude());
         placeDto.setLongitude(entity.getLongitude());
         placeDto.setAddress(entity.getAddress());
+        placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setStatus(entity.getStatus());
         placeDto.setCommissionFee(entity.getCommissionFee());
         placeDto.setBalance(entity.getBalance());

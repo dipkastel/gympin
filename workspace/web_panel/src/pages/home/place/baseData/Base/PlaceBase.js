@@ -140,6 +140,14 @@ function PlaceBase({place, updatePlace}) {
                         />
 
                     </Form.Group>
+                    <Form.Group>
+                        <Form.Label>تخفیف اتوماتیک</Form.Label>
+                        <Switch
+                            edge="end"
+                            onChange={(e) =>setFormValues("AutoDiscount",e.target.checked)}
+                            checked={inPlace.AutoDiscount}
+                        />
+                    </Form.Group>
 
                     <Form.Group>
                         <Button

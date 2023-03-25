@@ -5,6 +5,7 @@ import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.exception.plan.UncomfortableValueExeption;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.plan.dto.PlanDiscountHistoryDto;
 import com.notrika.gympin.common.plan.dto.PlanDto;
 import com.notrika.gympin.common.plan.param.PlanParam;
 import com.notrika.gympin.common.plan.param.PlanSportParam;
@@ -52,6 +53,8 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
                 .name(planParam.getName())
                 .price(planParam.getPrice())
                 .valuePrice(planParam.getValuePrice())
+                .placePrice(planParam.getPlacePrice())
+                .discount(planParam.getDiscount())
                 .enable(planParam.getEnable())
                 .entryTotalCount(planParam.getEntryTotalCount())
                 .startSellingDate(planParam.getStartSellingDate())
@@ -74,6 +77,8 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
         planEntity.setName(planParam.getName());
         planEntity.setPrice(planParam.getPrice());
         planEntity.setValuePrice(planParam.getValuePrice());
+        planEntity.setPlacePrice(planParam.getPlacePrice());
+        planEntity.setDiscount(planParam.getDiscount());
         planEntity.setEnable(planParam.getEnable());
         planEntity.setEntryTotalCount(planParam.getEntryTotalCount());
         planEntity.setStartSellingDate(planParam.getStartSellingDate());
@@ -176,5 +181,11 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
         plan.setPlanSport(afterfilter);
         planRepository.update(plan);
         return PlanConvertor.toDto(plan);
+    }
+
+    @Override
+    public List<PlanDiscountHistoryDto> getPlanDiscountHistory(Long planId) {
+        PlanEntity plan = planRepository.getById(planId);
+        return plan.getPlanDiscountHistory().stream().skip(Math.max(0, plan.getPlanDiscountHistory().size() - 30)).map(PlanConvertor::toDto).collect(Collectors.toList());
     }
 }
