@@ -87,7 +87,8 @@ public class Error {
         INPUT_NOT_VALID(4003),
         COULD_NOT_CREATE_DIRECTORY(4004),
         DUPLICATE_ENTRY_ADD_EXEPTION(4005),
-        NOT_FOUND_EXEPTION(4006)
+        NOT_FOUND_EXEPTION(4006),
+        SEND_SMS_EXCEPTION(4007)
 
         ;
         private final int value;

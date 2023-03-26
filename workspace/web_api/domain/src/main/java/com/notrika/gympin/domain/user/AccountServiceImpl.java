@@ -10,6 +10,7 @@ import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpiredException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeManyRequestException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoundException;
+import com.notrika.gympin.common.exception.general.SendSmsException;
 import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
 import com.notrika.gympin.common.user.dto.RefreshTokenDto;
@@ -88,7 +89,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             return smsService.sendVerificationSms(user.getId(), new SmsDto(user.getPhoneNumber(), SmsTypes.CODE_TO_VERIFICATION, code));
         } catch (Exception e) {
-            throw new ExceptionBase(HttpStatus.INTERNAL_SERVER_ERROR, Error.ErrorType.OUT_SERVICE_EXCEPTION);
+            throw new SendSmsException();
         }
     }
 
@@ -243,6 +244,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             smsService.sendRegisterCompleted(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE,param.getPlaceName()));
         } catch (Exception e) {
+            throw new SendSmsException();
         }
         return true;
 

@@ -48,6 +48,7 @@ const GateTiming = ({gate}) => {
     }
     function renderModalAdd() {
         var addDays =[];
+
         function addItems(e) {
             e.preventDefault()
             if(!(addValues["Name"])){
@@ -55,6 +56,22 @@ const GateTiming = ({gate}) => {
                 error.showError({message: "نام برای زمان ها اجباری است",});
                 return;
             }
+            if(!(addValues["Opening-time"])){
+
+                error.showError({message: "زمان شروع فعالیت اجباری است",});
+                return;
+            }
+            if(!(addValues["Closing-time"])){
+
+                error.showError({message: "زمان پایان فعالیت اجباری است",});
+                return;
+            }
+
+            if(addDays.length<1){
+                error.showError({message: "حد اقل یکی از روزهای هفته باید انتخاب شود",});
+                return;
+            }
+
             setOpenModalAdd(false);
             var postData = [];
             Object.keys(addDays).map(key =>                {
@@ -69,10 +86,12 @@ const GateTiming = ({gate}) => {
                     }
                 }
             )
+            console.log(postData);
             gateTiming_addAll(postData)
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
                     getGateTimingOfGate()
+                    setAddValues([]);
                 }).catch(e => {
                     try {
                         error.showError({message: e.response.data.Message,});
@@ -107,6 +126,7 @@ const GateTiming = ({gate}) => {
                                     label="نام دلخواه ( بدنسازی صبح ویژه بانوان ) "
                                     margin="normal"
                                     name={"Name"}
+                                    value={addValues["Name"]||""}
                                     fullWidth={true}
                                     onChange={(e)=>setFormValues("Name",e.target.value)}
                                 />
@@ -115,7 +135,7 @@ const GateTiming = ({gate}) => {
                                     <TimePicker
                                         className={"ltr fullwidth mt-3"}
                                         label="از ساعت"
-                                        value={addValues["Opening-time"]}
+                                        value={addValues["Opening-time"]||""}
                                         ampm={false}
                                         onChange={(e)=>setFormValues("Opening-time",e)}
                                         // onChange={(e)=>setFormValues("Opening-time",new Date(e).getHours() + ":"+new Date(e).getMinutes())}
@@ -125,7 +145,7 @@ const GateTiming = ({gate}) => {
                                         className={"ltr fullwidth mt-4"}
                                         label="تا ساعت"
                                         ampm={false}
-                                        value={addValues["Closing-time"]}
+                                        value={addValues["Closing-time"]||""}
                                         onChange={(e)=>setFormValues("Closing-time",e)}
                                         // onChange={(e)=>setFormValues("Closing-time",new Date(e).getHours() + ":"+new Date(e).getMinutes())}
                                         renderInput={(params) => <TextField {...params} />}
@@ -268,8 +288,8 @@ const GateTiming = ({gate}) => {
                     </Table>
                 </PortletBody>
             </Portlet>
-            {renderModalAdd()}
-            {renderModalDelete()}
+            {openModalAdd&&renderModalAdd()}
+            {itemToDelete&&renderModalDelete()}
         </>
     );
 };

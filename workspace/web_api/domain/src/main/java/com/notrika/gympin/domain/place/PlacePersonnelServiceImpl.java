@@ -7,6 +7,7 @@ import com.notrika.gympin.common.contact.sms.service.SmsService;
 import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.general.DuplicateEntryAddExeption;
+import com.notrika.gympin.common.exception.general.SendSmsException;
 import com.notrika.gympin.common.exception.user.UnknownUserException;
 import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
@@ -90,7 +91,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         try {
             smsService.sendJoinedToPlaceSms(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE, place.getName()));
         } catch (Exception e) {
-            throw new ExceptionBase(HttpStatus.INTERNAL_SERVER_ERROR, Error.ErrorType.OUT_SERVICE_EXCEPTION);
+            throw new SendSmsException();
         }
         return PlaceConvertor.personnelToDto(placePersonnelEntity);
     }

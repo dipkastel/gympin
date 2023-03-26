@@ -130,10 +130,6 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @ToString.Exclude
     private Set<MultimediaEntity> multimediaSet;
 
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    private List<EventParticipantEntity> participants;
-
     @OneToMany(mappedBy = "requesterUser")
     @ToString.Exclude
     private List<FollowEntity> followings;

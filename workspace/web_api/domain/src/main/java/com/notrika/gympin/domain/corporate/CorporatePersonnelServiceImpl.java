@@ -12,6 +12,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporateP
 import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.general.DuplicateEntryAddExeption;
+import com.notrika.gympin.common.exception.general.SendSmsException;
 import com.notrika.gympin.common.user.enums.UserRole;
 import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.param.UserRoleParam;
@@ -76,7 +77,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
         try {
             smsService.sendJoinedToCorporateSms(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_CORPORATE,corporate.getName()));
         } catch (Exception e) {
-            throw new ExceptionBase(HttpStatus.INTERNAL_SERVER_ERROR, Error.ErrorType.OUT_SERVICE_EXCEPTION);
+            throw new SendSmsException();
         }
         return CorporateConvertor.toPersonnelDto(corporatePersonnelEntity);
     }

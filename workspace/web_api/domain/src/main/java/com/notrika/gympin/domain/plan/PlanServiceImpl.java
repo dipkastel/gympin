@@ -54,7 +54,7 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
                 .price(planParam.getPrice())
                 .valuePrice(planParam.getValuePrice())
                 .placePrice(planParam.getPlacePrice())
-                .discount(planParam.getDiscount())
+                .discount((planParam.getDiscount()==null)?(short) 0:planParam.getDiscount())
                 .enable(planParam.getEnable())
                 .entryTotalCount(planParam.getEntryTotalCount())
                 .startSellingDate(planParam.getStartSellingDate())
@@ -65,6 +65,7 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
                 .expireDate(planParam.getExpireDate())
                 .expireDuration(planParam.getExpireDuration())
                 .build();
+
         planEntity = this.add(planEntity);
         return PlanConvertor.toDto(planEntity);
     }
