@@ -11,8 +11,10 @@ import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpired
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeManyRequestException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoundException;
 import com.notrika.gympin.common.exception.general.SendSmsException;
-import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
-import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
+import com.notrika.gympin.common.support.enums.SupportMessageStatus;
+import com.notrika.gympin.common.support.param.SupportMessageParam;
+import com.notrika.gympin.common.support.param.SupportParam;
+import com.notrika.gympin.common.support.service.SupportService;
 import com.notrika.gympin.common.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.dto.UserDetailsImpl;
 import com.notrika.gympin.common.user.dto.UserDto;
@@ -32,8 +34,6 @@ import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.PlacePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.user.PasswordEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -74,6 +74,8 @@ public class AccountServiceImpl implements AccountService {
     private PlaceRepository placeRepository;
     @Autowired
     private PlacePersonnelRepository placePersonnelRepository;
+    @Autowired
+    private SupportService supportService;
 
 
     @Override
@@ -216,36 +218,68 @@ public class AccountServiceImpl implements AccountService {
     }
     @Override
     @Transactional
-    public Boolean requestRegisterPlace(PlaceRequestRegisterParam param) {
+    public Boolean requestRegisterPlace(RequestRegisterParam param) {
         //identify user
-        UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(param.getPhoneNumber()));
-        if (user == null){
-            UserRoleParam userRole = new UserRoleParam();
-            userRole.setRole(UserRole.USER);
-            user = addUser(UserRegisterParam.builder().phoneNumber(GeneralHelper.fixPhoneNumber(param.getPhoneNumber())).userRole(userRole).build());
-        }
-        user.setFullName(param.getFullName());
-        userService.update(user);
-        //pre-register
-        PlaceEntity initPlace = new PlaceEntity();
-        initPlace.setName(param.getPlaceName());
-        initPlace.setStatus(PlaceStatusEnum.PREREGISTER);
-        initPlace.setAddress("");
-        initPlace.setCreatorUser(user);
-        PlaceEntity place = placeRepository.add(initPlace);
-        //add user To Place
-        PlacePersonnelEntity placePersonnelEntity = PlacePersonnelEntity.builder()
-                .place(place)
-                .user(user)
-                .userRole(PlacePersonnelRole.PLACE_OWNER)
-                .build();
-        placePersonnelRepository.add(placePersonnelEntity);
+//        UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(param.getPhoneNumber()));
+//        if (user == null){
+//            UserRoleParam userRole = new UserRoleParam();
+//            userRole.setRole(UserRole.USER);
+//            user = addUser(UserRegisterParam.builder().phoneNumber(GeneralHelper.fixPhoneNumber(param.getPhoneNumber())).userRole(userRole).build());
+//        }
+//        user.setFullName(param.getFullName());
+//        userService.update(user);
+//        //pre-register
+//        PlaceEntity initPlace = new PlaceEntity();
+//        initPlace.setName(param.getPlaceName());
+//        initPlace.setStatus(PlaceStatusEnum.PREREGISTER);
+//        initPlace.setAddress("");
+//        initPlace.setCreatorUser(user);
+//        PlaceEntity place = placeRepository.add(initPlace);
+//        //add user To Place
+//        PlacePersonnelEntity placePersonnelEntity = PlacePersonnelEntity.builder()
+//                .place(place)
+//                .user(user)
+//                .userRole(PlacePersonnelRole.PLACE_OWNER)
+//                .build();
+//        placePersonnelRepository.add(placePersonnelEntity);
+//
+//        try {
+//            smsService.sendRegisterCompleted(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE,param.getPlaceName()));
+//        } catch (Exception e) {
+//            throw new SendSmsException();
+//        }
+        String title = "درخواست افزودن مجموعه توسط "+param.getFullName();
+        String message = "افزودن مجموعه ورزشی "+param.getPlaceName()+" توسط "+param.getFullName()+" با شماره "+param.getPhoneNumber()+" درخواست شده.";
+        supportService.add(SupportParam.builder()
+                .title(title)
+                        .supportMessages(SupportMessageParam.builder()
+                                .status(SupportMessageStatus.AWAITING_EXPERT)
+                                .isAnswer(false)
+                                .messages(message)
+                                .build())
+                .build());
 
-        try {
-            smsService.sendRegisterCompleted(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE,param.getPlaceName()));
-        } catch (Exception e) {
-            throw new SendSmsException();
-        }
+//        try {
+//            smsService.sendRegisterCompleted(new SmsDto(param.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE,param.getPlaceName()));
+//        } catch (Exception e) {
+//            throw new SendSmsException();
+//        }
+        return true;
+
+    }
+    @Override
+    @Transactional
+    public Boolean requestRegisterCorporate(RequestRegisterParam param) {
+        String title = "درخواست افزودن سازمان توسط "+param.getFullName();
+        String message = "افزودن سازمان "+param.getPlaceName()+" توسط "+param.getFullName()+" با شماره "+param.getPhoneNumber()+" درخواست شده.";
+        supportService.add(SupportParam.builder()
+                .title(title)
+                        .supportMessages(SupportMessageParam.builder()
+                                .status(SupportMessageStatus.AWAITING_EXPERT)
+                                .isAnswer(false)
+                                .messages(message)
+                                .build())
+                .build());
         return true;
 
     }

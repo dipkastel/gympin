@@ -57,18 +57,18 @@ export default function Register(props) {
                                     PhoneNumber: values.phoneNumber,
                                     fullName: values.username,
                                     placeName: values.Name
-                                }).then(result=>{
-                                    if(result.data.Data){
+                                }).then(result => {
+                                    if (result.data.Data) {
                                         alert("درخواست شما ثبت شد به زودی با شما تماس خواهیم گرفت")
                                         navigate('/auth/login', {replace: true});
                                     }
                                 }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        })
+                                    try {
+                                        error.showError({message: e.response.data.Message,});
+                                    } catch (f) {
+                                        error.showError({message: "خطا نا مشخص",});
+                                    }
+                                })
 
                             }}
                         >

@@ -16,6 +16,7 @@ public interface AccountService extends UserDetailsService {
     UserDto loginUser(LoginParam loginParam) throws ExceptionBase;
 
     RefreshTokenDto refreshToken(RefreshTokenParam refreshToken);
-    Boolean requestRegisterPlace(PlaceRequestRegisterParam param);
+    Boolean requestRegisterPlace(RequestRegisterParam param);
+    Boolean requestRegisterCorporate(RequestRegisterParam param);
 
 }

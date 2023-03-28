@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @ToString
-public class PlaceRequestRegisterParam {
+public class RequestRegisterParam {
 
     @JsonProperty("fullName")
     private String fullName;

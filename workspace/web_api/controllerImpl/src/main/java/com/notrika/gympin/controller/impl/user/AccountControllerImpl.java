@@ -10,7 +10,6 @@ import com.notrika.gympin.common.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,8 +39,14 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     @PostMapping("/requestRegisterPlace")
-    public ResponseEntity<Boolean> RequestRegisterPlace(PlaceRequestRegisterParam param) {
+    public ResponseEntity<Boolean> RequestRegisterPlace(RequestRegisterParam param) {
         return ResponseEntity.ok(accountService.requestRegisterPlace(param));
+    }
+
+    @Override
+    @PostMapping("/requestRegisterCorporate")
+    public ResponseEntity<Boolean> RequestRegisterCorporate(RequestRegisterParam param) {
+        return ResponseEntity.ok(accountService.requestRegisterCorporate(param));
     }
 
     @Override

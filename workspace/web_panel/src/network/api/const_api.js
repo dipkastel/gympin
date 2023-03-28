@@ -14,6 +14,25 @@ export let AdministratorApi = {
   getAll: "v1/administrator/getall",
   getById: "v1/administrator/getbyid",
 };
+
+export let ArticleApi = {
+  add: "v1/article/add",
+  delete: "v1/article/delete",
+  getAll: "v1/article/getall",
+  query: "v1/article/query",
+  getById: "v1/article/getById",
+  update: "v1/article/update",
+  updateArticleImage: "v1/article/updateArticleImage",
+};
+
+export let ArticleCategoryApi = {
+  add: "v1/articleCategory/add",
+  delete: "v1/articleCategory/delete",
+  getAll: "v1/articleCategory/getall",
+  getById: "v1/articleCategory/getbyid",
+  update: "v1/articleCategory/update",
+};
+
 export let CorporateApi = {
   add: "v1/corporate/add",
   delete: "v1/corporate/delete",

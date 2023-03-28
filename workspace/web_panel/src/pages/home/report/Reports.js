@@ -26,7 +26,7 @@ import UserPlaces from "../user/baseDate/places/UserPlaces";
 import UserCorporates from "../user/baseDate/corporates/UserCorporates";
 import UserTransActions from "../user/baseDate/TransActions/UserTransActions";
 import Notes from "../../partials/content/notes/Notes";
-import _reportSettings from "../dashboard/reportSettings/_reportSettings";
+import _reportSettings from "./reportSettings/_reportSettings";
 
 const Reports = () => {
     return (

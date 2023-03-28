@@ -20,7 +20,7 @@ import {Image, Modal} from "react-bootstrap";
 import _imageFilter, {defaultFilterImages} from "./_ImageFilter";
 
 
-const ImageManager = ({openAddModalRef,openFilterModalRef}) => {
+const ImageManager = ({openAddModalRef,openFilterModalRef},ref) => {
     const error = useContext(ErrorContext);
     const [images, setImages] = useState([])
     const [page, setPage] = useState(1)

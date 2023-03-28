@@ -2,6 +2,7 @@ package com.notrika.gympin.persistence.entity.multimedia;
 
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.article.ArticleEntity;
 import com.notrika.gympin.persistence.entity.homePage.HomePageItemEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.sport.SportMultimediaEntity;
@@ -75,6 +76,9 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @OneToOne(mappedBy = "userAvatar")
     //set forUserAvatar
     private UserEntity AvatarForUser;
+
+    @OneToOne(mappedBy = "articleImage")
+    private ArticleEntity article;
 
     @Override
     public boolean equals(Object o) {

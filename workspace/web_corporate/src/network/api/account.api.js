@@ -9,6 +9,10 @@ export function sendSms(userdata) {
     return axios.post(Api_url.Account.SEND_SMS_URL, userdata);
 }
 
+export function requestRegisterPlace(data) {
+    return axios.post(Api_url.Account.REQUEST_REGISTER_PLACE, data);
+}
+
 export function refreshToken(refreshToken) {
     return axios.post(Api_url.Account.REFRESH_TOKEN, {RefreshToken:refreshToken});
 }

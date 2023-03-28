@@ -1,12 +1,16 @@
-import React, {useState} from "react";
-import {login} from "../../network/api/account.api";
+import React, {useContext, useState} from "react";
+import {login, requestRegisterPlace} from "../../network/api/account.api";
 import {Button, Card, CardActions, CardContent, CardHeader, Grid, Link, TextField} from "@mui/material";
 import {Formik} from "formik";
 import {connect} from "react-redux";
 import {authActions} from "../../helper/redux/actions/AuthActions";
+import {ErrorContext} from "../../components/GympinPagesProvider";
+import {useNavigate} from "react-router-dom";
 
 
 function Register(props) {
+    const navigate = useNavigate();
+    const error = useContext(ErrorContext);
 
     return (
         <Grid
@@ -52,23 +56,22 @@ function Register(props) {
                                 return errors;
                             }}
                             onSubmit={(values, {setStatus, setSubmitting}) => {
-                                setTimeout(() => {
-                                    login({
-                                        username: values.username,
-                                        password: values.password,
-                                    })
-                                        .then((data) => {
-                                            props.SetUser(data.data.Data);
-                                            props.SetToken(data.data.Data.Token);
-                                            props.SetRefreshToken(data.data.Data.RefreshToken);
-                                        })
-                                        .catch((ex) => {
-                                            setSubmitting(false);
-                                            setStatus(
-                                                "اطلاعات وارد شده معتبر نبست"
-                                            );
-                                        });
-                                }, 1000);
+                                requestRegisterPlace({
+                                    PhoneNumber: values.phoneNumber,
+                                    fullName: values.username,
+                                    placeName: values.corporateName
+                                }).then(result => {
+                                    if (result.data.Data) {
+                                        alert("درخواست شما ثبت شد به زودی با شما تماس خواهیم گرفت")
+                                        navigate('/auth/login', {replace: true});
+                                    }
+                                }).catch(e => {
+                                    try {
+                                        error.showError({message: e.response.data.Message,});
+                                    } catch (f) {
+                                        error.showError({message: "خطا نا مشخص",});
+                                    }
+                                })
                             }}
                         >
                             {({
@@ -116,7 +119,7 @@ function Register(props) {
                                             variant="outlined"
                                             margin="normal"
                                             name="corporateName"
-                                            type="username"
+                                            type="text"
                                             label={"نام مجموعه"}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
