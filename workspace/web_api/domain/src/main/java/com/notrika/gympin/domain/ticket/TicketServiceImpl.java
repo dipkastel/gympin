@@ -350,17 +350,15 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
     @Transactional
     public TicketDto checkout(TicketCheckoutParam param) throws Exception {
         TicketEntity ticketEntity = ticketRepository.getById(param.getTicket().getId());
+        UserEntity userEntity = ticketEntity.getUser();
         BigDecimal ticketRemainderPrice = ticketEntity.getPrice();
         String transaction_serial = java.util.UUID.randomUUID().toString();
         List<TransactionEntity> transactions = new ArrayList<>();
         GympinContext context = GympinContextHolder.getContext();
-        if (context == null)
-            throw new UnknownUserException();
-        UserEntity userEntity = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
 
         if (ticketEntity.getPrice().compareTo(param.getPrice()) != 0)
             throw new Exception("قیمت ارسالی با قیمت بلیط تفاوت دارد");
-        if (ticketEntity.getPlan().getGender() != userEntity.getGender())
+        if (!GeneralUtil.isGenderCompatible(ticketEntity.getPlan().getGender() , userEntity.getGender()))
             throw new TicketGenderIsNotCompatible();
         if (ticketEntity.getPrice().compareTo(param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
             throw new Exception("مجموع پرداخت های ارسالی با قیمت بلیط تفاوت دارد");
