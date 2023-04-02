@@ -23,7 +23,7 @@ import java.util.Objects;
 @Table(name = "articleCategory")
 public class ArticleCategoryEntity extends BaseEntity<ArticleCategoryEntity> {
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
     private String name;
 
 
