@@ -21,4 +21,5 @@ public interface PlanController extends BaseController<PlanParam, PlanDto, PlanQ
     ResponseEntity<PlanDto> addSport(PlanSportParam planSportParam);
     ResponseEntity<PlanDto> deleteSport(PlanSportParam planSportParam);
     ResponseEntity<List<PlanDiscountHistoryDto>> getPlanDiscountHistory(Long planId);
+    ResponseEntity<PlanDto> PlanStatusChange(PlanParam planParam);
 }

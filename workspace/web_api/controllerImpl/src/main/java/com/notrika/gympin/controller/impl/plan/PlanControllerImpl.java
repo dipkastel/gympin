@@ -86,5 +86,10 @@ public class PlanControllerImpl implements PlanController {
     public ResponseEntity<List<PlanDiscountHistoryDto>> getPlanDiscountHistory(Long planId) {
         return ResponseEntity.ok(planService.getPlanDiscountHistory(planId));
     }
+    @Override
+    @PostMapping("/PlanStatusChange")
+    public ResponseEntity<PlanDto> PlanStatusChange(@RequestBody PlanParam planParam) {
+        return ResponseEntity.ok(planService.PlanStatusChange(planParam));
+    }
 
 }

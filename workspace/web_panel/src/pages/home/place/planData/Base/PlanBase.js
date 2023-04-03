@@ -48,18 +48,6 @@ function PlanBase({plan,updatePlan}){
                             }}
                         />
 
-                        <FormGroup>
-
-                            <FormLabel component="legend">وضعیت :</FormLabel>
-                            <FormControlLabel
-                                control={<Switch
-                                    checked={inPlan.Enable}
-                                    onChange={(e)=>setFormValues('Enable',e.target.checked)}
-                                    value="gilad" />}
-                                label="فعال"
-                            />
-                        </FormGroup>
-
                         <Form.Group  controlId="formAddGender">
                             <Form.Label>جنسیت</Form.Label>
                             <Select
@@ -134,6 +122,19 @@ function PlanBase({plan,updatePlan}){
                             value={inPlan.EntryTotalCount}
                             type={"number"}
                             onChange={(e)=>setFormValues("EntryTotalCount",e.target.value)}
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <TextField
+                            id="standard-full-width"
+                            label="تعداد بلیط قابل فروش"
+                            placeholder="تعداد"
+                            value={inPlan.Ticket_Capacity}
+                            type={"number"}
+                            onChange={(e)=>setFormValues("Ticket_Capacity",e.target.value)}
                             fullWidth
                             margin="normal"
                             InputLabelProps={{

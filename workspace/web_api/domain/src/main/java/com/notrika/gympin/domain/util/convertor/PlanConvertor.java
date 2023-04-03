@@ -41,6 +41,7 @@ public class PlanConvertor {
         dto.setPlanExpireType(entity.getPlanExpireType());
         dto.setExpireDate(entity.getExpireDate());
         dto.setExpireDuration(entity.getExpireDuration());
+        dto.setTicketCapacity(entity.getTicketCapacity());
         return dto;
     }
 

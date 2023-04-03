@@ -21,6 +21,10 @@ export function Plans_update(data) {
     return axios.put(PlansApi.update, data);
 }
 
+export function Plans_PlanStatusChange(data) {
+    return axios.post(PlansApi.PlanStatusChange, data);
+}
+
 export function Plans_getById(data) {
     return axios.get(PlansApi.getById, {params: data});
 }

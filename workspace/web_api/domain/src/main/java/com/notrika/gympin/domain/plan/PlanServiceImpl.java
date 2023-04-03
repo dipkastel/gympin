@@ -1,9 +1,8 @@
 package com.notrika.gympin.domain.plan;
 
 import com.notrika.gympin.common._base.param.BaseParam;
-import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.exception.general.DuplicateEntryAddExeption;
-import com.notrika.gympin.common.exception.plan.UncomfortableValueExeption;
+import com.notrika.gympin.common.exception.plan.*;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.plan.dto.PlanDiscountHistoryDto;
 import com.notrika.gympin.common.plan.dto.PlanDto;
@@ -12,6 +11,7 @@ import com.notrika.gympin.common.plan.param.PlanSportParam;
 import com.notrika.gympin.common.plan.query.PlanQuery;
 import com.notrika.gympin.common.plan.service.PlanService;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
+import com.notrika.gympin.common.user.enums.PlanExpireType;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.PlanConvertor;
 import com.notrika.gympin.domain.util.convertor.SportPlaceConvertor;
@@ -29,7 +29,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,8 +53,8 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
                 .price(planParam.getPrice())
                 .valuePrice(planParam.getValuePrice())
                 .placePrice(planParam.getPlacePrice())
-                .discount((planParam.getDiscount()==null)?(short) 0:planParam.getDiscount())
-                .enable(planParam.getEnable())
+                .discount((planParam.getDiscount() == null) ? (short) 0 : planParam.getDiscount())
+                .enable(false)
                 .entryTotalCount(planParam.getEntryTotalCount())
                 .startSellingDate(planParam.getStartSellingDate())
                 .endSellingDate(planParam.getEndSellingDate())
@@ -64,6 +63,7 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
                 .planExpireType(planParam.getPlanExpireType())
                 .expireDate(planParam.getExpireDate())
                 .expireDuration(planParam.getExpireDuration())
+                .ticketCapacity(planParam.getTicketCapacity())
                 .build();
 
         planEntity = this.add(planEntity);
@@ -72,7 +72,7 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
 
     @Override
     public PlanDto update(@NonNull PlanParam planParam) {
-        if(planParam.getValuePrice().compareTo(planParam.getPrice())<0)
+        if (planParam.getValuePrice().compareTo(planParam.getPlacePrice()) < 0)
             throw new UncomfortableValueExeption();
         PlanEntity planEntity = getEntityById(planParam.getId());
         planEntity.setName(planParam.getName());
@@ -80,7 +80,6 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
         planEntity.setValuePrice(planParam.getValuePrice());
         planEntity.setPlacePrice(planParam.getPlacePrice());
         planEntity.setDiscount(planParam.getDiscount());
-        planEntity.setEnable(planParam.getEnable());
         planEntity.setEntryTotalCount(planParam.getEntryTotalCount());
         planEntity.setStartSellingDate(planParam.getStartSellingDate());
         planEntity.setEndSellingDate(planParam.getEndSellingDate());
@@ -89,6 +88,7 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
         planEntity.setDescription(planParam.getDescription());
         planEntity.setExpireDate(planParam.getExpireDate());
         planEntity.setExpireDuration(planParam.getExpireDuration());
+        planEntity.setTicketCapacity(planParam.getTicketCapacity());
         return PlanConvertor.toDto(planRepository.update(planEntity));
     }
 
@@ -131,7 +131,7 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
 
     @Override
     public Page<PlanEntity> findAll(Specification<PlanEntity> specification, Pageable pageable) {
-        return planRepository.findAll(specification,pageable);
+        return planRepository.findAll(specification, pageable);
     }
 
     @Override
@@ -161,9 +161,9 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
         PlanEntity plan = planRepository.getById(planSportParam.getPlan().getId());
 
         List<SportPlaceEntity> planSports = plan.getPlanSport();
-        if(planSports==null)planSports=new ArrayList<>();
-        for(var sportPlaceParam:planSportParam.getSportsPlace()){
-            if(plan.getPlanSport().stream().anyMatch(s->s.getId().equals(sportPlaceParam.getId())))
+        if (planSports == null) planSports = new ArrayList<>();
+        for (var sportPlaceParam : planSportParam.getSportsPlace()) {
+            if (plan.getPlanSport().stream().anyMatch(s -> s.getId().equals(sportPlaceParam.getId())))
                 throw new DuplicateEntryAddExeption();
             SportPlaceEntity sportPlace = sportPlaceRepository.getById(sportPlaceParam.getId());
             planSports.add(sportPlace);
@@ -178,7 +178,7 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
         PlanEntity plan = planRepository.getById(planSportParam.getPlan().getId());
         var sports = plan.getPlanSport();
         var sportPlaceremoveIds = planSportParam.getSportsPlace().stream().map(BaseParam::getId).collect(Collectors.toList());
-        var afterfilter = sports.stream().filter(a->!sportPlaceremoveIds.contains(a.getId())).collect(Collectors.toList());
+        var afterfilter = sports.stream().filter(a -> !sportPlaceremoveIds.contains(a.getId())).collect(Collectors.toList());
         plan.setPlanSport(afterfilter);
         planRepository.update(plan);
         return PlanConvertor.toDto(plan);
@@ -188,5 +188,60 @@ public class PlanServiceImpl extends AbstractBaseService<PlanParam, PlanDto, Pla
     public List<PlanDiscountHistoryDto> getPlanDiscountHistory(Long planId) {
         PlanEntity plan = planRepository.getById(planId);
         return plan.getPlanDiscountHistory().stream().skip(Math.max(0, plan.getPlanDiscountHistory().size() - 30)).map(PlanConvertor::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public PlanDto PlanStatusChange(PlanParam planParam) {
+        PlanEntity planEntity = getEntityById(planParam.getId());
+        if (planParam.getEnable()) {
+            if (planEntity.getName() == null) {
+                throw new PlanNameCannotBeNull();
+            }
+            if (planEntity.getPrice() == null) {
+                throw new PlanPriceCannotBeNull();
+            }
+            if (planEntity.getGender() == null) {
+                throw new PlanGenderCannotBeNull();
+            }
+            if (planEntity.getValuePrice() == null) {
+                throw new PlanPriceCannotBeNull();
+            }
+            if (planEntity.getPlacePrice() == null) {
+                throw new PlanPriceCannotBeNull();
+            }
+            if (planEntity.getEntryTotalCount() == null || planEntity.getEntryTotalCount() == 0) {
+                throw new PlanEntryCountCanNotBeNullOrZiro();
+            }
+            if (planEntity.getDiscount() == null) {
+                throw new PlanDiscountCannotBeNull();
+            }
+            if (planEntity.getPlanExpireType() == null) {
+                throw new PlanExpireTypeCannotBeNull();
+            } else {
+                if (planEntity.getPlanExpireType() == PlanExpireType.Duration && planEntity.getExpireDuration() == null) {
+                    throw new PlanExpireDurationCannotBeNull();
+                } else if (planEntity.getPlanExpireType() == PlanExpireType.Date && planEntity.getExpireDate() == null) {
+                    throw new PlanExpireDateCannotBeNull();
+                }
+            }
+            if (planEntity.getTicketCapacity() == null || planEntity.getTicketCapacity() < 1) {
+                throw new PlanTicketCapacityCannotBeNullorZiro();
+            }
+            if(planEntity.getPlanSport()==null){
+                throw new PlanSportCannotBeNull();
+            }
+            if(planEntity.getPlanSport().size()<1){
+                throw new PlanSportCannotBeNull();
+            }
+            if(planEntity.getPlanGates()==null){
+                throw new PlanGatesCannotBeNull();
+            }
+            if(planEntity.getPlanGates().size()<1){
+                throw new PlanGatesCannotBeNull();
+            }
+        }
+        planEntity.setEnable(planParam.getEnable());
+        planRepository.update(planEntity);
+        return PlanConvertor.toDto(planEntity);
     }
 }

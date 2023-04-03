@@ -183,6 +183,7 @@ export let PlansApi = {
   addSport: "v1/plan/addSport",
   deleteSport: "v1/plan/deleteSport",
   update: "v1/plan/update",
+  PlanStatusChange: "v1/plan/PlanStatusChange",
   query: "v1/plan/query",
   getByPlaceId: "v1/plan/getPlansByPlace",
   countFilter: "v1/plan/count-filter",

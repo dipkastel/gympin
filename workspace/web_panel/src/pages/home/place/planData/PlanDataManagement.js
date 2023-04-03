@@ -8,6 +8,7 @@ import {Button} from "@mui/material";
 import PlanSport from "./planSports/PlanSport";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import _PlanHistoryChart from "./HistoryChart/_PlanHistoryChart";
+import _changeStatus from "./changeStatus/_ChangeStatus";
 
 const PlaceDataManagement = () => {
     const error = useContext(ErrorContext);
@@ -58,6 +59,7 @@ const PlaceDataManagement = () => {
             </Notice>
             {plan && <div className="row">
                 <div className="col-md-6">
+                    {plan&&<_changeStatus plan={plan} updatePlan={updatePlan}/>}
                     {plan&&<PlanBase plan={plan} updatePlan={updatePlan}/>}
                 </div>
                 <div className="col-md-6">

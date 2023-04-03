@@ -64,6 +64,9 @@ public class PlanParam extends BaseParam<PlanParam> {
     @JsonProperty( "Expire_duration")
     private Short expireDuration;
 
+    @JsonProperty( "Ticket_Capacity")
+    private Integer ticketCapacity;
+
     @JsonProperty(value = "Place", required = true)
     private PlaceParam place;
 

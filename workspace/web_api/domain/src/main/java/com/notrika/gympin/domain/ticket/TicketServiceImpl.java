@@ -108,6 +108,14 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
             entity.setPlanExpireDate(plan.getExpireDate());
             entity.setExpireDate(plan.getExpireDate());
         }
+        if(plan.getTicketCapacity()!=null){
+            var ticketCount = plan.getTicketCapacity()-1;
+            if(ticketCount<1){
+                plan.setEnable(false);
+            }
+            plan.setTicketCapacity(ticketCount);
+            planRepository.update(plan);
+        }
         return TicketConvertor.toDto(ticketRepository.add(entity));
     }
 
@@ -443,6 +451,10 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
     @Override
     public TicketDto delete(@NonNull TicketParam ticketParam) {
         TicketEntity entity = ticketRepository.getById(ticketParam.getId());
+        if(entity.getPlan().getTicketCapacity()!=null){
+            entity.getPlan().setTicketCapacity(entity.getPlan().getTicketCapacity()+1);
+            planRepository.update(entity.getPlan());
+        }
         return TicketConvertor.toDto(ticketRepository.deleteById2(entity));
     }
 

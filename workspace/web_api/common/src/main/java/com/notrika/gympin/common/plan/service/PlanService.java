@@ -9,6 +9,7 @@ import com.notrika.gympin.common.plan.param.PlanParam;
 import com.notrika.gympin.common.plan.param.PlanSportParam;
 import com.notrika.gympin.common.plan.query.PlanQuery;
 import com.notrika.gympin.common.sportplace.dto.SportPlaceDto;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface PlanService extends BaseService<PlanParam, PlanDto, PlanQuery> 
     PlanDto addSport(PlanSportParam planSportParam);
     PlanDto deleteSport(PlanSportParam planSportParam);
     List<PlanDiscountHistoryDto> getPlanDiscountHistory(Long planId);
+    PlanDto PlanStatusChange(PlanParam planParam);
 }

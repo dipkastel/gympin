@@ -75,6 +75,9 @@ public class PlanEntity extends BaseEntity<PlanEntity> {
     @Column(name = "expireDuration")
     private Short expireDuration;
 
+    @Column(name = "ticketCapacity")
+    private Integer ticketCapacity;
+
     @OneToMany(mappedBy = "plan")
     @ToString.Exclude
     private List<TicketEntity> ticket;

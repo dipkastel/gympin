@@ -63,6 +63,9 @@ public class PlanDto extends BaseDto<PlanDto> {
     @JsonProperty( "Expire_duration")
     private Short expireDuration;
 
+    @JsonProperty( "Ticket_Capacity")
+    private Integer ticketCapacity;
+
     @JsonProperty(value = "Place")
     private PlaceDto place;
 
