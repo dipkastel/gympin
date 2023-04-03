@@ -47,7 +47,7 @@ export default function _ActiveTickets() {
                             <Avatar
                                 sx={{width: 50, height: 50}}
                                 alt="Remy Sharp"
-                                src={item.User.Avatar.Url}/>
+                                src={item.User.Avatar ? (item.User.Avatar.Url || "https://api.gympin.ir/resource/image?Id=11") : "https://api.gympin.ir/resource/image?Id=11"}/>
                         </ListItemAvatar>
                         <Link href={"/users/singleuser?id=" + item.User.Id}
                               sx={{textDecoration: "none", color: "#666666" ,width:"100%"}}>
