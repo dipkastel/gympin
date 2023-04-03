@@ -80,6 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/placeAbout/getByPlaceId"
                         ,"/api/v1/OptionOfPlace/getByPlaceId"
                         ,"/api/v1/OptionOfPlace/getByPlaceId"
+                        ,"/api/v1/plan-gate-timing/getByPlan"
                 )
                 .permitAll()
                 .antMatchers("/api/test/**")

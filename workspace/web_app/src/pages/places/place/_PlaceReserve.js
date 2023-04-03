@@ -43,11 +43,24 @@ const _PlaceReserve = ({place}) => {
     }, [place]);
 
     function addToTickets(item) {
+        if(!currentUser){
+            error.showError({
+                clickable: true,
+                message: 'برای خرید بلیط ابتدا باید وارد شوید',
+                buttonTitle: 'پروفایل',
+                duration:6000,
+                onClick: () => {
+                    navigate("/profile/edit", {replace: false});
+                }
+            });
+            return;
+        }
         if (!currentUser.FullName) {
             error.showError({
                 clickable: true,
                 message: 'تکمیل نام و نام خانوادگی',
                 buttonTitle: 'پروفایل',
+                duration:6000,
                 onClick: () => {
                     navigate("/profile/edit", {replace: false});
                 }
@@ -59,28 +72,30 @@ const _PlaceReserve = ({place}) => {
                 clickable: true,
                 message: 'تکمیل تاریخ تولد',
                 buttonTitle: 'پروفایل',
+                duration:6000,
                 onClick: () => {
                     navigate("/profile/edit", {replace: false});
                 }
             });
             return;
         }
-        if (!currentUser.NationalCode) {
-            error.showError({
-                clickable: true,
-                message: 'تکمیل کد ملی',
-                buttonTitle: 'پروفایل',
-                onClick: () => {
-                    navigate("/profile/edit", {replace: false});
-                }
-            });
-            return;
-        }
+        // if (!currentUser.NationalCode) {
+        //     error.showError({
+        //         clickable: true,
+        //         message: 'تکمیل کد ملی',
+        //         buttonTitle: 'پروفایل',
+        //         onClick: () => {
+        //             navigate("/profile/edit", {replace: false});
+        //         }
+        //     });
+        //     return;
+        // }
         if (!currentUser.Gender) {
             error.showError({
                 clickable: true,
                 message: 'تکمیل جنسیت',
                 buttonTitle: 'پروفایل',
+                duration:6000,
                 onClick: () => {
                     navigate("/profile/edit", {replace: false});
                 }

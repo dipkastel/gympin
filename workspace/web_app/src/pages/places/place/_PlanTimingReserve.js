@@ -1,16 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import {planGatesTiming_getByPlan} from "../../../network/api/Plans.api";
 import {dayOfWeekEnum} from "../../../helper/enums/dayOfWeekEnum";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 const _PlanTimingReserve = ({plan}) => {
+    const error = useContext(ErrorContext);
     const [planTimes,SetPlanTimes] = useState([]);
 
     useEffect(() => {
         planGatesTiming_getByPlan({Id: plan.Id}).then(result => {
             SetPlanTimes(result.data.Data);
         }).catch(e => {
-            return []
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
         });
     },[plan])
     return (
