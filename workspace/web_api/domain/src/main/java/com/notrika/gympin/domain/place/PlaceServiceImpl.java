@@ -1,6 +1,8 @@
 package com.notrika.gympin.domain.place;
 
 import com.notrika.gympin.common.contact.sms.service.SmsService;
+import com.notrika.gympin.common.exception.place.*;
+import com.notrika.gympin.common.exception.plan.PlanPriceCannotBeNull;
 import com.notrika.gympin.common.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
@@ -43,22 +45,10 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     private PlaceRepository placeRepository;
 
     @Autowired
-    private PlacePersonnelRepository placePersonnelRepository;
-
-    @Autowired
-    private AccountServiceImpl accountService;
-
-    @Autowired
-    private UserServiceImpl userService;
-
-    @Autowired
     private MultimediaRepository multimediaRepository;
 
     @Autowired
     private LocationRepository locationRepository;
-
-    @Autowired
-    private SmsService smsService;
 
     @Override
     public PlaceDto add(PlaceParam placeParam) {
@@ -80,7 +70,6 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     public PlaceDto update(PlaceParam placeParam) {
         PlaceEntity initPlace = getEntityById(placeParam.getId());
         initPlace.setName(placeParam.getName());
-        initPlace.setStatus(placeParam.getStatus());
         initPlace.setLatitude(placeParam.getLatitude());
         initPlace.setLongitude(placeParam.getLongitude());
         initPlace.setAddress(placeParam.getAddress());
@@ -146,6 +135,44 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     public PlaceDto changeStatus(PlaceParam param) {
         PlaceEntity place = placeRepository.getById(param.getId());
         place.setStatus(param.getStatus());
+        if(param.getStatus()==PlaceStatusEnum.ACTIVE) {
+            if (place.getName() == null) {
+                throw new PlaceNameCanNotBeNull();
+            }
+            if (place.getPlaceOwners().size() < 1) {
+                throw new PlaceOwnersCanNotBeEmpty();
+            }
+            if (place.getLatitude() == 0) {
+                throw new PlaceLocationMustSelectOnMap();
+            }
+            if (place.getLongitude() == 0) {
+                throw new PlaceLocationMustSelectOnMap();
+            }
+            if (place.getLocation() == null) {
+                throw new PlaceLocationCanNotBeNull();
+            }
+            if (place.getAddress() == null) {
+                throw new PlaceAdressCanNotBeNull();
+            }
+            if (place.getCommissionFee() > 100 || place.getCommissionFee() < 0) {
+                throw new PlaceCommissionIsNotCorrect();
+            }
+            if (place.getGates().size() < 1) {
+                throw new PlaceGateMustBeAdded();
+            }
+            if (place.getPlans().size() < 1) {
+                throw new PlacePlansCanNotBeEmpty();
+            }
+            if (place.getMultimedias().size() < 1) {
+                throw new PlaceImagesIsEmpty();
+            }
+            if (place.getOptionsOfPlaces().size() < 1) {
+                throw new PlaceOptionsIsEmpty();
+            }
+            if (place.isDeleted()) {
+                throw new PlaceIsDeleted();
+            }
+        }
         return PlaceConvertor.toDto(placeRepository.update(place));
     }
 

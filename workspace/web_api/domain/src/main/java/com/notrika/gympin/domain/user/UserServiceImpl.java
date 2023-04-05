@@ -105,8 +105,8 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         if (userParam.getBirthday() != null) initUser.setBirthday(userParam.getBirthday());
         if (userParam.getGender() != null) initUser.setGender(userParam.getGender());
         if (StringUtils.hasText(userParam.getNationalCode())) initUser.setNationalCode(userParam.getNationalCode());
-        if (StringUtils.hasText(userParam.getEmail())) initUser.setEmail(userParam.getEmail());
-        if (StringUtils.hasText(userParam.getBio())) initUser.setBio(userParam.getBio());
+        initUser.setEmail(userParam.getEmail());
+        initUser.setBio(userParam.getBio());
         UserEntity user = update(initUser);
         return UserConvertor.toDtoComplete(user);
     }

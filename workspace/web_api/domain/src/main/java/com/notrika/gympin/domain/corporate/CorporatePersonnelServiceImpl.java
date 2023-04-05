@@ -44,7 +44,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
     @Autowired
     private CorporatePersonnelRepository corporatePersonnelRepository;
     @Autowired
-    private CorporateRepository corporateRepository;
+    private CorporateServiceImpl corporateService;
     @Autowired
     private AccountServiceImpl accountService;
     @Autowired
@@ -56,7 +56,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
     public CorporatePersonnelDto add(@NonNull CorporatePersonnelParam Param) {
 
         UserEntity user = userRepository.findByPhoneNumber(Param.getPhoneNumber());
-        CorporateEntity corporate = corporateRepository.getById(Param.getCorporate().getId());
+        CorporateEntity corporate = corporateService.getEntityById(Param.getCorporate().getId());
         if(user==null) {
             user = accountService.addUser(UserRegisterParam.builder().phoneNumber(Param.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
         }else{
@@ -142,7 +142,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public List<CorporatePersonnelDto> getPersonnelByCorporate(CorporateParam corporateParam) {
-        CorporateEntity corporate = corporateRepository.getById(corporateParam.getId());
+        CorporateEntity corporate = corporateService.getEntityById(corporateParam.getId());
         return corporatePersonnelRepository.findByCorporateAndDeletedIsFalse(corporate).stream().map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
     }
 }

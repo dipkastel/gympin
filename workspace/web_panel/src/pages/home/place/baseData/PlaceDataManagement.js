@@ -19,6 +19,7 @@ import {Note} from "@mui/icons-material";
 import Notes from "../../../partials/content/notes/Notes";
 import PlaceBalance from "./Balance/PlaceBalance";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import _ChangePlaceStatus from "./status/_ChangePlaceStatus";
 
 const PlaceDataManagement = () => {
     const error = useContext(ErrorContext);
@@ -63,6 +64,7 @@ const PlaceDataManagement = () => {
             </Notice>
             {place && <div className="row">
                 <div className="col-md-5">
+                    {place && <_ChangePlaceStatus place={place} updatePlace={updatePlace}/>}
                     {place && <PlaceBase place={place} updatePlace={updatePlace}/>}
                     {place && <Gates place={place}/>}
                     {place && <Plans place={place}/>}

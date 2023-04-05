@@ -12,6 +12,7 @@ import com.notrika.gympin.common.transaction.param.*;
 import com.notrika.gympin.common.transaction.query.TransactionQuery;
 import com.notrika.gympin.common.transaction.service.TransactionService;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
 import com.notrika.gympin.persistence.dao.repository.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
@@ -44,7 +45,7 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
     @Autowired
     UserRepository userRepository;
     @Autowired
-    CorporateRepository corporateRepository;
+    CorporateServiceImpl corporateService;
 
     @Override
     public TransactionDto add(@NonNull TransactionParam transactionParam) {
@@ -240,7 +241,7 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
             transaction.setBalance(placeEntity.getBalance());
             transaction.setTransactionType(TransactionType.CHARGE_PLACE);
         } else if (param.getCorporateId() != null) {
-            CorporateEntity corporateEntity = corporateRepository.getById(param.getCorporateId());
+            CorporateEntity corporateEntity = corporateService.getEntityById(param.getCorporateId());
             transaction.setCorporate(corporateEntity);
             transaction.setBalance(corporateEntity.getBalance());
             transaction.setTransactionType(TransactionType.CHARGE_CORPORATE);
@@ -294,7 +295,7 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
                 transactionAccepted.setTransactionType(TransactionType.CHARGE_CORPORATE);
                 transactionAccepted.setCorporate(corporateEntity);
                 corporateEntity.setBalance(corporateEntity.getBalance().add(transactionRequest.getAmount()));
-                corporateRepository.update(corporateEntity);
+                corporateService.update(corporateEntity);
                 transactionAccepted.setBalance(corporateEntity.getBalance());
             } else {
                 throw new unknownPaymentBuyer();
@@ -340,7 +341,7 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
             } else if (transactionRequest.getCorporate() != null) {
                 CorporateEntity corporateEntity = transactionRequest.getCorporate();
                 corporateEntity.setBalance(corporateEntity.getBalance().add(transactionRequest.getAmount()));
-                corporateRepository.update(corporateEntity);
+                corporateService.update(corporateEntity);
                 transactionAccepted.setBalance(corporateEntity.getBalance());
             } else {
                 throw new unknownPaymentBuyer();

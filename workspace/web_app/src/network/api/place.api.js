@@ -8,3 +8,7 @@ export function place_getAll() {
 export function place_getById(id) {
     return axios.get(Api_url.place.GET_BY_ID,{params:{id:id}});
 }
+
+export function Place_query(data) {
+    return axios.post(Api_url.place.query, data);
+}

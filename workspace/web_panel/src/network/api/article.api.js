@@ -5,7 +5,7 @@ export function Article_add(data) {
     return axios.post(ArticleApi.add, data);
 }
 export function Article_delete(data) {
-    return axios.delete(ArticleApi.delete, {data: data});
+    return axios.put(ArticleApi.delete,  null,{ params: data });
 }
 
 export function Article_getAll(_page, _size) {

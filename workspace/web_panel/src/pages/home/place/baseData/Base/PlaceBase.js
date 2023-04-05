@@ -47,14 +47,6 @@ function PlaceBase({place, updatePlace}) {
         }):[]
     }
 
-    function getStatusOptions() {
-        return [
-            {value: "ACTIVE", label: "فعال"},
-            {value: "INACTIVE", label: "غیر فعال"},
-            {value: "PREREGISTER", label: "پیش ثبت نام"}
-        ]
-    }
-
     return (
         <>
             <Portlet>
@@ -83,19 +75,6 @@ function PlaceBase({place, updatePlace}) {
                     </Form.Group>
                     <Form.Group>
                         <PlaceMap place={inPlace} setFormValues={setFormValues}/>
-                    </Form.Group>
-                    <Form.Group >
-                        <Form.Label>وضعیت</Form.Label>
-                        <Select
-                            className={"dropdown"}
-                            name="formStatus"
-                            value={
-                                getStatusOptions().filter(option =>
-                                    option.value === inPlace.Status)
-                            }
-                            options={getStatusOptions()}
-                            onChange={(e) => setFormValues("Status",  e.value)}
-                        />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>منطقه</Form.Label>

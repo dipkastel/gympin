@@ -123,7 +123,7 @@ const GateTiming = ({gate}) => {
                             <FormControl fullWidth>
                                 <TextField
                                     type="text"
-                                    label="نام دلخواه ( بدنسازی صبح ویژه بانوان ) "
+                                    label="نام دلخواه (مثال : صبح بانوان ) "
                                     margin="normal"
                                     name={"Name"}
                                     value={addValues["Name"]||""}

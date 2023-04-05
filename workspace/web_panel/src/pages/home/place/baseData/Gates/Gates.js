@@ -70,6 +70,27 @@ const Gates = ({place}) => {
                                 <Form.Text className="text-muted">
                                     درگاه را میتوان تقسیم بندی خدمات قابل ارائه در زمان های مشخص نیز بیان کرد اما دید کلی
                                     بخش های متفاوت برای ارائه خدمات در زمان های مختلف است
+                                    <br/>
+                                    <span>
+                                        مثال :
+                                    </span>
+                                    <br/>
+                                    <span>
+                                        بدنسازی
+                                    </span>
+                                    <br/>
+                                    <span>
+                                        Trx
+                                    </span>
+                                    <br/>
+                                    <span>
+                                        استخر کودک
+                                    </span>
+                                    <br/>
+                                    <span>
+                                       سالن شماره 2
+                                    </span>
+
                                 </Form.Text>
                             </Form.Group>
                         </Modal.Body>

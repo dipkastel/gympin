@@ -128,7 +128,7 @@ function CorporateTransactionRequests({ currentCorporate }) {
                                     className="textField"
                                     margin="normal"
                                     variant="outlined"
-                                    placeholder="یادداشت تایید یا رد درخواست کاربر"
+                                    placeholder="یادداشت تایید یا رد درخواست شرکت"
                                 />
                             </Form.Group>
 
@@ -201,7 +201,7 @@ function CorporateTransactionRequests({ currentCorporate }) {
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
                     <form onSubmit={(e) => addOption(e)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن اعتبار به کاربر "}</Modal.Title>
+                            <Modal.Title>{"افزودن اعتبار به شرکت "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
 

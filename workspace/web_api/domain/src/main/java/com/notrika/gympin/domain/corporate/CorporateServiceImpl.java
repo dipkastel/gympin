@@ -14,6 +14,7 @@ import com.notrika.gympin.persistence.dao.repository.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
@@ -24,6 +25,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +57,7 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         CorporateEntity entity = corporateRepository.getById(corporateParam.getId());
         entity.setName(corporateParam.getName());
         entity.setAddress(corporateParam.getAddress());
+        entity.setStatus(CalculateStatus(entity));
         return CorporateConvertor.toDto(corporateRepository.update(entity));
     }
 
@@ -90,6 +94,7 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
 
     @Override
     public CorporateEntity update(CorporateEntity entity) {
+        entity.setStatus(CalculateStatus(entity));
         return corporateRepository.update(entity);
     }
 
@@ -126,5 +131,41 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
     @Override
     public List<CorporateDto> getByUser(UserParam userParam) {
         return convertToDtos(corporateRepository.findByUserId(userParam.getId()));
+    }
+
+    public CorporateStatusEnum CalculateStatus(CorporateEntity entity){
+        if(entity.getStatus().equals(CorporateStatusEnum.INACTIVE)) return entity.getStatus();
+        if(entity.getStatus().equals(CorporateStatusEnum.PREREGISTER)) return entity.getStatus();
+        if(entity.getPersonnel().size()<1){
+            //corporate has not any personel
+            return CorporateStatusEnum.ACTIVE;
+        }else{
+            BigDecimal MaxUserCredit = entity.getPersonnel().stream().sorted(Comparator.comparing(CorporatePersonnelEntity::getCreditBalance)).findFirst().get().getCreditBalance();
+            BigDecimal sumUserCredits = entity.getPersonnel().stream().map(CorporatePersonnelEntity::getCreditBalance).reduce(BigDecimal.ZERO, BigDecimal::add);
+            if(MaxUserCredit.compareTo(BigDecimal.ZERO) > 0){
+                //corporate personel has creadit
+                Double zarib = 0.15;
+                BigDecimal result = new BigDecimal("100")
+                        .subtract(new BigDecimal("100").subtract(new BigDecimal("10"))
+                                .multiply(new BigDecimal("1").subtract(BigDecimal.valueOf(Math.exp(BigDecimal.valueOf(-1)
+                                        .multiply(BigDecimal.valueOf(zarib)
+                                                .multiply(sumUserCredits))
+                                        .doubleValue())))))
+                        .setScale(2, RoundingMode.HALF_UP);
+                if(result.compareTo(MaxUserCredit)<0){
+                    result = MaxUserCredit;
+                }
+                if(entity.getBalance().compareTo(result)<0){
+                    return CorporateStatusEnum.LOW_BUDGET;
+                }else {
+                    return CorporateStatusEnum.ACTIVE;
+                }
+
+
+            }else{
+                //corporate personel has not any creadit
+                return CorporateStatusEnum.ACTIVE;
+            }
+        }
     }
 }

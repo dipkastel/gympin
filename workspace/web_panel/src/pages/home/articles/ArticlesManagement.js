@@ -1,11 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
-import {user_query} from "../../../network/api/user.api";
-import {Article_add, Article_query} from "../../../network/api/article.api";
+import {Article_add, Article_delete, Article_query} from "../../../network/api/article.api";
 import Notice from "../../partials/content/Notice";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
-import {Avatar, Button, Card, CardContent, CardHeader, Chip, Grid, TextField} from "@mui/material";
+import {Button, Card, CardContent, CardHeader, Chip, Grid, TextField} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -24,13 +23,19 @@ const ArticlesManagement = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [articleList, setArticleList] = useState([]);
     const [searchString, setSearchString] = useState(null);
+    const [itemToDelete, setItemToDelete] = useState(null);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
+        getArticles();
+    }, [page, rowsPerPage, searchString]);
+
+    function getArticles() {
+
         Article_query({
             queryType: "SEARCH",
-            Title:searchString,
+            Title: searchString,
             paging: {
                 Page: page,
                 Size: rowsPerPage,
@@ -46,10 +51,10 @@ const ArticlesManagement = () => {
                     error.showError({message: "خطا نا مشخص",});
                 }
             });
-    }, [page, rowsPerPage, searchString]);
+    }
 
     function RenderModalAdd() {
-        function addPlace(e) {
+        function addArticle(e) {
             e.preventDefault()
             Article_add({Title: e.target.Title.value})
                 .then((data) => {
@@ -70,13 +75,13 @@ const ArticlesManagement = () => {
         return (
             <>
                 <Modal show={openModalAdd} onHide={() => SetOpenModalAdd(false)}>
-                    <Form noValidate autoComplete="off" onSubmit={(e) => addPlace(e)}>
+                    <Form noValidate autoComplete="off" onSubmit={(e) => addArticle(e)}>
                         <Modal.Header closeButton>
                             <Modal.Title>{"افزودن مطلب "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
 
-                            <Form.Group >
+                            <Form.Group>
                                 <Form.Control
                                     name="Title"
                                     type="text"
@@ -103,6 +108,54 @@ const ArticlesManagement = () => {
             </>
         );
     }
+    function RenderModalDelete() {
+        function deleteArticle(e) {
+            e.preventDefault()
+            Article_delete({Id: itemToDelete.Id})
+                .then((data) => {
+                    error.showError({message: "عملیات موفق",});
+                    setItemToDelete(null);
+                })
+                .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
+        }
+
+        return (
+            <>
+                <Modal show={!!itemToDelete} onHide={() => setItemToDelete(null)}>
+                    <Form noValidate autoComplete="off" onSubmit={(e) => deleteArticle(e)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{"حذف مطلب "}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+
+                            {"حذف مطلب "+itemToDelete.Title}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                className={"button_edit"}
+                                onClick={() => setItemToDelete(null)}
+                            >
+                                خیر
+                            </Button>
+                            <Button
+                                className={"button_danger"}
+                                type={"submit"}
+                            >
+                                حذف
+                            </Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
+            </>
+        );
+    }
+
     return (
         <>
             <Notice icon="flaticon-warning kt-font-primary">مدیریت مطالب</Notice>
@@ -171,24 +224,31 @@ const ArticlesManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>تصویر</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>موضوع</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>action</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {articleList.content && articleList.content.map((row, index) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
-                                        <TableRow hover onClick={(event) => {
-                                            history.push({pathname: "/articles/details/" + row.Id});
-                                        }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
-                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
+                                        <TableRow hover  role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+                                            <TableCell onClick={(event) => {history.push({pathname: "/articles/details/" + row.Id});}} component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
-                                            <TableCell align="right">
-                                                <Image  width={"35px"} src={row.ArticleImage?row.ArticleImage.Url:"https://api.gympin.ir/resource/image?Id=11"} />
+                                            <TableCell onClick={(event) => {history.push({pathname: "/articles/details/" + row.Id});}} align="right">
+                                                <Image width={"35px"}
+                                                       src={row.ArticleImage ? row.ArticleImage.Url : "https://api.gympin.ir/resource/image?Id=11"}/>
                                             </TableCell>
-                                            <TableCell align="right">{row.Title}</TableCell>
-                                            <TableCell align="right">
+                                            <TableCell onClick={(event) => {history.push({pathname: "/articles/details/" + row.Id});}} align="right">{row.Title}</TableCell>
+                                            <TableCell onClick={(event) => {history.push({pathname: "/articles/details/" + row.Id});}} align="right">
                                                 <Chip label={ArticleStatus[row.ArticleStatus]}
-                                                      color={(row.ArticleStatus?(row.ArticleStatus.startsWith("PUBLISHED")?"success":"error"):"error")} />
+                                                      color={(row.ArticleStatus ? (row.ArticleStatus.startsWith("PUBLISHED") ? "success" : "error") : "error")}/>
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Button variant="contained" color={"error"}
+                                                        sx={{marginRight: "auto"}} size="large"
+                                                        onClick={(e) => setItemToDelete(row)}>
+                                                    حذف
+                                                </Button>
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -213,6 +273,7 @@ const ArticlesManagement = () => {
                 </PortletBody>
             </Portlet>
             {RenderModalAdd()}
+            {itemToDelete&&RenderModalDelete()}
         </>
     );
 };

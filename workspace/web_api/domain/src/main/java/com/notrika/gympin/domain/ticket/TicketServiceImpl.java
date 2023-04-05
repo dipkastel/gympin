@@ -22,6 +22,7 @@ import com.notrika.gympin.common.user.enums.PlanExpireType;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.util.GeneralUtil;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.util.convertor.TicketConvertor;
 import com.notrika.gympin.persistence.dao.repository.*;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
@@ -71,7 +72,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
     @Autowired
     CorporatePersonnelRepository corporatePersonnelRepository;
     @Autowired
-    CorporateRepository corporateRepository;
+    CorporateServiceImpl corporateService;
     @Autowired
     CorporatePersonnelCreditRepository corporatePersonnelCreditRepository;
 
@@ -398,7 +399,8 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
                                 .build());
                         //corporate change balance
                         corporateEntity.setBalance(corporateEntity.getBalance().subtract(checkoutParam.getAmount()));
-                        corporateRepository.update(corporateEntity);
+
+                        corporateService.update(corporateEntity);
                         transactions.add(TransactionEntity.builder()
                                 .serial(transaction_serial)
                                 .transactionType(TransactionType.CORPORATE_PERSONNEL_USE_CREDIT)
@@ -573,7 +575,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
     private void PayToPlace(TicketEntity ticketEntity) {
 
         var placeEntity = ticketEntity.getPlan().getPlace();
-        var gympinEntity = corporateRepository.getById(1l);
+        var gympinEntity = corporateService.getEntityById(1l);
         var commission = ticketEntity.getPrice().multiply(BigDecimal.valueOf(placeEntity.getCommissionFee() / 100));
         var placeShare = ticketEntity.getPrice().multiply(BigDecimal.valueOf(1 - (placeEntity.getCommissionFee() / 100)));
 

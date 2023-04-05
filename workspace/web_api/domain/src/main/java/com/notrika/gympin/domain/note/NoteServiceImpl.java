@@ -12,6 +12,7 @@ import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.ticket.param.TicketParam;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.util.convertor.NoteConvertor;
 import com.notrika.gympin.domain.util.convertor.OptionConvertor;
 import com.notrika.gympin.persistence.dao.repository.*;
@@ -37,7 +38,7 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Bas
     @Autowired
     private PlaceRepository placeRepository;
     @Autowired
-    private CorporateRepository corporateRepository;
+    private CorporateServiceImpl corporateService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -49,7 +50,7 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Bas
         if(noteParam.getPlace()!=null)
             entity.setPlace(placeRepository.getById(noteParam.getPlace().getId()));
         if(noteParam.getCorporate()!=null)
-            entity.setCorporate(corporateRepository.getById(noteParam.getCorporate().getId()));
+            entity.setCorporate(corporateService.getEntityById(noteParam.getCorporate().getId()));
         if (noteParam.getUser()!=null)
             entity.setUser(userRepository.getById(noteParam.getUser().getId()));
         if (noteParam.getTicket()!=null)

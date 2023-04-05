@@ -38,7 +38,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     @Autowired
     CorporatePersonnelRepository corporatePersonnelRepository;
     @Autowired
-    CorporateRepository corporateRepository;
+    CorporateServiceImpl corporateService;
     @Autowired
     TransactionRepository transactionRepository;
 
@@ -62,12 +62,14 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
                 .isChecked(false)
                 .serial(java.util.UUID.randomUUID().toString())
                 .build());
+
+        corporateService.update(personnelEntity.getCorporate());
         return CorporateConvertor.toCreditDto(corporatePersonnelCreditRepository.add(entity));
     }
     @Override
     @Transactional
     public List<CorporatePersonnelCreditDto> addToAll(@NonNull CorporatePersonnelCreditParam param) {
-        CorporateEntity corporate = corporateRepository.getById(param.getCorporateId());
+        CorporateEntity corporate = corporateService.getEntityById(param.getCorporateId());
         List<CorporatePersonnelEntity> personnels = new ArrayList<>();
         List<CorporatePersonnelCreditEntity> credits = new ArrayList<>();
 
@@ -94,12 +96,13 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         }
         corporatePersonnelRepository.updateAll(personnels);
 
+        corporateService.update(corporate);
         return convertToDtos(corporatePersonnelCreditRepository.addAll(credits));
     }
 
     @Override
     public BigDecimal getTotalUserCredits(CorporatePersonnelCreditParam param) {
-        CorporateEntity corporate = corporateRepository.getById(param.getCorporateId());
+        CorporateEntity corporate = corporateService.getEntityById(param.getCorporateId());
         BigDecimal totalCredit = BigDecimal.ZERO;
         for (var person : corporate.getPersonnel().stream().filter(p->!p.isDeleted()).collect(Collectors.toList())) {
             totalCredit = totalCredit.add(person.getCreditBalance());
@@ -139,6 +142,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
                 .isChecked(false)
                 .serial(java.util.UUID.randomUUID().toString())
                 .build());
+        corporateService.update(corporatePersonnel.getCorporate());
         return corporatePersonnelCreditRepository.add(entity);
     }
 

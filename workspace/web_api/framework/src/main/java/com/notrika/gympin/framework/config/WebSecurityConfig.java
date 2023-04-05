@@ -76,6 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/location/getPlaceById"
                         ,"/api/v1/place/getAll"
                         ,"/api/v1/place/getById"
+                        ,"/api/v1/place/query"
                         ,"/api/v1/plan/getPlansByPlace"
                         ,"/api/v1/placeAbout/getByPlaceId"
                         ,"/api/v1/OptionOfPlace/getByPlaceId"

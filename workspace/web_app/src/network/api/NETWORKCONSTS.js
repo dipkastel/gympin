@@ -41,6 +41,7 @@ export let Api_url = {
     place:{
         GET_ALL:"v1/place/getAll",
         GET_BY_ID:"v1/place/getById",
+        query:"v1/place/query",
     },
     plans:{
         GET_BY_ID:"v1/plan/getById",

@@ -2,6 +2,7 @@ package com.notrika.gympin.common.place.place.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,9 @@ public class PlaceQuery extends BaseQuery<PlaceQuery> {
 
     @JsonProperty("Name")
     private String like_name;
+
+    @JsonProperty("Status")
+    private PlaceStatusEnum is_status;
 
     @JsonProperty("deleted")
     private Boolean is_deleted = false;

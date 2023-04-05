@@ -18,6 +18,11 @@ export function Place_addPlace(place) {
     return axios.post(PlaceApi.addPlace, place);
 }
 
+export  function place_changeStatus(place){
+    return axios.put(PlaceApi.CHANGE_STATUS,place)
+}
+
+
 export function Place_deletePlace(place) {
     return axios.put(PlaceApi.deletePlace,  place);
 }

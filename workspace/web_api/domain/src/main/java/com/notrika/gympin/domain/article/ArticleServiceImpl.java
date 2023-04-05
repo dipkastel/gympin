@@ -65,7 +65,7 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
     }
 
     @Override
-    public ArticleDto delete(@NonNull ArticleParam articleParam) {
+    public ArticleDto delete( ArticleParam articleParam) {
         ArticleEntity entity = articleRepository.getById(articleParam.getId());
         return ArticleConvertor.toDto(articleRepository.deleteById2(entity));
     }

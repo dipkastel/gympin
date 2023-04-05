@@ -155,6 +155,7 @@ export let PlaceApi = {
   getAllPlace: "v1/place/getAll",
   getPlaceById: "v1/place/getById",
   addPlace: "v1/place/add",
+  CHANGE_STATUS:"v1/place/changeStatus",
   deletePlace: "v1/place/delete",
   updatePlace: "v1/place/update",
   countFilter: "v1/place/count-filter",

@@ -71,6 +71,7 @@ const EditProfile = (props) => {
 
                     }}
                     onSubmit={(values, {setStatus, setSubmitting}) => {
+                        console.log("sssss");
                         user_updateMe(values).then(result=>{
                             props.RequestUser(values)
                             setUser(result.data.Data);
@@ -84,19 +85,31 @@ const EditProfile = (props) => {
                         });
                     }}
                     validate={(values) => {
+
                         const errors = {};
-                        if (!values.NationalCode.toString()) {
-                            errors.NationalCode = "کد ملی الزامی است";
-                        }
-                        if (!checkNationalCode(values.NationalCode.toString())) {
-                            errors.NationalCode = "کد ملی صحیح نیست";
-                        }
-                        if (!values.Email.toString()) {
-                            errors.Email = "ایمیل الزامی است";
-                        }
-                        if (!checkEmailValid(values.Email.toString())) {
-                            errors.Email = "ایمیل صحیح نیست";
-                        }
+                        try{
+                            if (!values.Username) {
+                                errors.Username = "نام کاربری الزامی است";
+                            }
+                            if (!values.FullName) {
+                                errors.FullName = "نام و نام خانوادگی الزامی است";
+                            }
+                            if (values.Gender==null) {
+                                errors.Gender = "جنسیت الزامی است";
+                            }
+                            if (!values.NationalCode||!values.NationalCode.toString()) {
+                                errors.NationalCode = "کد ملی الزامی است";
+                            }
+                            if (!checkNationalCode(values.NationalCode.toString())) {
+                                errors.NationalCode = "کد ملی صحیح نیست";
+                            }
+                            // if (!values.Email||!values.Email.toString()) {
+                            //     errors.Email = "ایمیل الزامی است";
+                            // }
+                            // if (!checkEmailValid(values.Email.toString())) {
+                            //     errors.Email = "ایمیل صحیح نیست";
+                            // }
+                        }catch (e) {}
                         return errors;
                     }}
                 >
@@ -122,7 +135,7 @@ const EditProfile = (props) => {
                                       type="text"
                                       aria-readonly
                                       value={values.PhoneNumber||""}
-                                      label={"شماره همراه"}
+                                      label={"شماره همراه * "}
                                   />
                                   <TextField
                                       fullWidth
@@ -133,7 +146,9 @@ const EditProfile = (props) => {
                                       type="text"
                                       value={values.Username||""}
                                       onChange={e=>setFieldValue("Username",e.target.value)}
-                                      label={"نام کاربری"}
+                                      label={"نام کاربری * "}
+                                      helperText={errors.Username}
+                                      error={Boolean(touched.Username && errors.Username)}
                                   />
                                   <TextField
                                       fullWidth
@@ -144,16 +159,20 @@ const EditProfile = (props) => {
                                       type="text"
                                       value={values.FullName||""}
                                       onChange={handleChange}
-                                      label={"نام و نام خانوادگی"}
+                                      label={"نام و نام خانوادگی * "}
+                                      helperText={errors.FullName}
+                                      error={Boolean(touched.FullName && errors.FullName)}
                                   />
                                   <FormControl sx={{mt:2}} variant={"outlined"} fullWidth>
-                                      <InputLabel id="demo-simple-select-label">جنسیت</InputLabel>
+                                      <InputLabel id="demo-simple-select-label">جنسیت * </InputLabel>
                                       <Select
                                           className="w-100"
                                           name="Gender"
                                           onChange={handleChange}
                                           value={values.Gender||""}
-                                          input={<OutlinedInput label="جنسیت" />}
+                                          input={<OutlinedInput label="جنسیت * " />}
+                                          helperText={errors.Gender}
+                                          error={Boolean(touched.Gender && errors.Gender)}
                                       >
                                           <MenuItem value={"FEMALE"} >خانم</MenuItem>
                                           <MenuItem value={"MALE"}>آقا</MenuItem>
@@ -179,7 +198,7 @@ const EditProfile = (props) => {
                                                   className="w-100"
                                                   variant="outlined"
                                                   margin="normal"
-                                                  label={"تاریخ تولد"}
+                                                  label={"تاریخ تولد * "}
                                               />
                                           }
                                       />
@@ -194,7 +213,7 @@ const EditProfile = (props) => {
                                       type="text"
                                       value={values.NationalCode||""}
                                       onChange={handleChange}
-                                      label={"کد ملی"}
+                                      label={"کد ملی * "}
                                       helperText={errors.NationalCode}
                                       error={Boolean(touched.NationalCode && errors.NationalCode)}
                                   />
@@ -207,7 +226,7 @@ const EditProfile = (props) => {
                                       type="text"
                                       value={values.Email||""}
                                       onChange={handleChange}
-                                      label={"ایمیل"}
+                                      label={"ایمیل (اختیاری)"}
                                       helperText={errors.Email}
                                       error={Boolean(touched.Email && errors.Email)}
                                   />
@@ -221,7 +240,7 @@ const EditProfile = (props) => {
                                       type="text"
                                       value={values.Bio||""}
                                       onChange={handleChange}
-                                      label={"درباره من"}
+                                      label={"درباره من (اختیاری)"}
                                   />
                                   <Button className="mt-4" variant={"outlined"} fullWidth onClick={handleSubmit}>ثبت</Button>
                               </div>
