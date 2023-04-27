@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.dao.repository;
 
+import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.data.jpa.repository.Query;
@@ -12,4 +13,5 @@ public interface CorporateRepository extends BaseRepository<CorporateEntity, Lon
 
     @Query("select c from CorporateEntity c,CorporatePersonnelEntity cp where c.id=cp.corporate.id and cp.deleted = 0 and cp.user.id = :#{#userId} ")
     List<CorporateEntity> findByUserId(Long userId);
+    List<CorporateEntity> findAllByDeletedIsFalseAndStatus(CorporateStatusEnum corporateStatusEnum);
 }

@@ -16,12 +16,12 @@ const Profile = (props) => {
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent>
                     <Grid container>
-                        <Grid item xs={3}>
-                            <Button href={"/profile/edit"} variant={"outlined"}>ویرایش</Button>
-                            <Image fluid width={"100%"} src={"/assets/images/charcter_orang.png"}/>
-                        </Grid>
+                        {/*<Grid item xs={3}>*/}
+                        {/*    <Image fluid width={"100%"} src={"/assets/images/charcter_orang.png"}/>*/}
+                        {/*</Grid>*/}
                         {user &&
-                        <Grid container direction={"column"} alignItems={"center"} justifyContent={"start"} item xs={9}>
+                        <Grid container direction={"column"} alignItems={"center"} justifyContent={"start"} item xs={12}>
+                            <Button href={"/profile/edit"} variant={"outlined"}>ویرایش</Button>
                             <Avatar
                                 sx={{width: 120, height: 120, marginTop: 3}}
                                 alt="Remy Sharp"

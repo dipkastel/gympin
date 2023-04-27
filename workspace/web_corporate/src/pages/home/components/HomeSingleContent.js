@@ -2,12 +2,15 @@ import React from 'react';
 import Slick from "react-slick";
 import {Box, Card, CardContent, CardMedia, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
+import clickHandler from "../homeClick";
 
 const HomeSingleContent =(props) => {
+    const navigate = useNavigate()
     return (
         <>
                     <div >
-                        <Link href={"/"+props.item.Destination} underline="none" color="inherit" fontWeight="800">
+                        <Link onClick={()=>clickHandler(props.item,navigate)} underline="none" color="inherit" fontWeight="800">
                             <Card sx={{margin:1}} elevation={3}>
 
                                 <CardMedia

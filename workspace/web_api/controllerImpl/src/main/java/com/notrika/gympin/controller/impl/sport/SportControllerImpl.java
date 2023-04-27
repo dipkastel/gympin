@@ -6,6 +6,7 @@ import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.sport.api.SportController;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
+import com.notrika.gympin.common.sport.query.SportQuery;
 import com.notrika.gympin.common.sport.service.SportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -62,7 +63,7 @@ public class SportControllerImpl implements SportController {
     }
 
     @Override
-    public ResponseEntity<Page<SportDto>> query(BaseQuery<?> filter) {
+    public ResponseEntity<Page<SportDto>> query(SportQuery filter) {
         return new ResponseEntity<>(sportService.query(filter), HttpStatus.OK);
     }
 

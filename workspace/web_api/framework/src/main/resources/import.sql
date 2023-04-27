@@ -453,6 +453,7 @@ INSERT INTO location(id, name, type,parent_id) values (351,'یوسف‌آباد'
     INSERT INTO home_page_destinations(id, name,description) VALUES (11,'INVITEFRIENDS','');
     INSERT INTO home_page_destinations(id, name,description) VALUES (12,'SURVEYLIST','');
     INSERT INTO home_page_destinations(id, name,description) VALUES (13,'LOGOUT','');
+    INSERT INTO home_page_destinations(id, name,description) VALUES (14,'TICKETS','');
 
     #place Options
 

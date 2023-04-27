@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.yaml.snakeyaml.introspector.PropertyUtils;
 
 import javax.ws.rs.BadRequestException;
 import java.lang.reflect.Field;
@@ -22,7 +23,9 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class AbstractBaseService<I extends BaseParam, O extends BaseDto, F extends BaseQuery, ET extends BaseEntity> implements BaseService<I, O, F> {
 

@@ -126,4 +126,21 @@ public class SmsServiceImpl implements SmsService {
         return Integer.parseInt(body) > 0;
     }
 
+    @Override
+    public boolean sendLowBudgetToCorporate(SmsDto smsDto) throws Exception {
+        log.info("Going to send join to place sms with params: {} ...\n", smsDto);
+        SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
+        if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
+            smsDto.setUserNumber(FixNumber.getValue());
+        }
+        String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_LOWBUDGET_CORPORATE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText(), StandardCharsets.UTF_8);
+        URL url2 = new URL(url);
+        URLConnection con = url2.openConnection();
+        InputStream in = con.getInputStream();
+        String encoding = con.getContentEncoding();
+        encoding = encoding == null ? "UTF-8" : encoding;
+        String body = IOUtils.toString(in, encoding);
+        return Integer.parseInt(body) > 0;
+    }
+
 }

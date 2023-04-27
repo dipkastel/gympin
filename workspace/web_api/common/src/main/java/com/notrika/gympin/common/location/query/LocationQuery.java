@@ -45,5 +45,8 @@ public class LocationQuery extends BaseQuery<LocationQuery> {
     @JsonProperty("Id")
     private Long is_id;
 
+    @JsonProperty("HasPlace")
+    private Long min_placesæid;
+
 
 }

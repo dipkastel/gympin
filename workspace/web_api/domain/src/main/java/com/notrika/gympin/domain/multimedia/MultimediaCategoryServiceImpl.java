@@ -35,9 +35,8 @@ public class MultimediaCategoryServiceImpl extends AbstractBaseService<Multimedi
 
     @Override
     public MultimediaCategoryDto update(MultimediaCategoryParam multimediaCategoryParam) {
-        MultimediaCategoryEntity category = getEntityById(multimediaCategoryParam.getId());
-        category.setName(multimediaCategoryParam.getName());
-        return MultimediaCategoryConvertor.multimediaCategoryToMultimediaCategoryDto(update(category));
+        MultimediaCategoryEntity multimediaCategory = MultimediaCategoryConvertor.multimediaCategoryParamToMultimediaCategory(multimediaCategoryParam);
+        return MultimediaCategoryConvertor.multimediaCategoryToMultimediaCategoryDto(update(multimediaCategory));
     }
 
     @Override

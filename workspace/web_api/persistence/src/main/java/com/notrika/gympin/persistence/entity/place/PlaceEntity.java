@@ -67,8 +67,7 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     private boolean autoDiscount;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id")
-    @JsonIgnore
+    @ToString.Exclude
     private LocationEntity location;
 
     @OneToMany(mappedBy = "place")

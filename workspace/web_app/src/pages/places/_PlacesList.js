@@ -4,20 +4,36 @@ import {Image} from "react-bootstrap";
 import {place_getAll, Place_query} from "../../network/api/place.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {Filter, Filter3, FilterAltRounded} from "@mui/icons-material";
+import {compareObjs} from "../../helper/utils";
+import _Filter, {defaultFilters} from "./_Filter";
+import {useSelector} from "react-redux";
 
 
 const _PlacesList = () => {
     const error = useContext(ErrorContext);
+    const currentUser = useSelector(state => state.auth.user);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(15);
     const [places, SetPlaces] = useState([])
+    const [filters, SetFilters] = useState([...defaultFilters,{
+        type: "gender",
+        name: "جنسیت",
+        value: currentUser.Gender,
+        selectedName: ""
+    }])
+    const [sortBy, SetSortBy] = useState("Id")
+    const [openModalFilter, setOpenModalFilter] = useState(false)
     useEffect(() => {
+        console.log(filters)
         Place_query({
             queryType: "FILTER",
-            Status:'ACTIVE',
-            paging: {Page: page, Size: rowsPerPage,Desc:true}
+            Status:"Active",
+            Sports:filters.find(f=>f.type==="Sports").value,
+            LocationId:filters.find(f=>f.type==="location").value,
+            Gender:filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null,
+            Option:null,
+            paging: {Page: page, Size: rowsPerPage,Desc:false,OrderBy:sortBy}
         }).then(result => {
-            console.log(result.data.Data.content)
             SetPlaces(result.data.Data)
         }).catch(e => {
             try {
@@ -26,13 +42,11 @@ const _PlacesList = () => {
                 error.showError({message: "خطا نا مشخص",});
             }
         });
-    }, []);
+    }, [filters,sortBy]);
 
     return (
         <>
-            <IconButton >
-                <FilterAltRounded/>
-            </IconButton>
+            <_Filter setBaseFilters={(e)=>SetFilters(e)} setBaseSortBy={(e)=>SetSortBy(e)} />
             <Grid container
                   direction="row"
                   justifyContent="center"
@@ -46,10 +60,10 @@ const _PlacesList = () => {
                                       justifyContent="center"
                                       alignItems="center">
                                     <Grid item md={6} sm={6} xs={12} sx={{padding: 0.5}}>
-                                        <Image src={item.Multimedias[0] ? item.Multimedias[0].Url : "https://api.gympin.ir/resource/image?Id=11"} width={"100%"}
+                                        <Image src={item.Multimedias[0] ? (item.Multimedias[0].Url+"&width=200") : "https://api.gympin.ir/resource/image?Id=11"} width={"100%"}
                                                rounded={3}/>
                                     </Grid>
-                                    <Grid item sx={{padding: 0}} md={6} sm={6} xs={12}>
+                                    <Grid item sx={{padding: 0,minHeight:"88px"}} md={6} sm={6} xs={12}>
                                         <Typography variant={"h5"}>
                                             {item.Name}
                                         </Typography>

@@ -19,6 +19,7 @@ public class Consts {
     public static String FARAZ_SMS_PATTERN_JOINREQUEST = "4m6dd8bc1k26dxf";
     public static String FARAZ_SMS_PATTERN_JOINTOPLACE = "75tum3ve8b1lxhq";
     public static String FARAZ_SMS_PATTERN_JOINTOCORPORATE = "ipn2tr1uoz9dn49";
+    public static String FARAZ_SMS_PATTERN_LOWBUDGET_CORPORATE = "ch6j8p5ziy29ats";
 
 
 }

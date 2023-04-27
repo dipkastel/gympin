@@ -66,7 +66,7 @@ public class HomePageServiceImpl extends AbstractBaseService<HomePageItemParam, 
 
         itemEntity.setTitle(homePageParam.getTitle());
         itemEntity.setDescription(homePageParam.getDescription());
-        itemEntity.setDestination(homePageParam.getDestination());
+        itemEntity.setDestination(homePageDestinationRepository.getById(homePageParam.getDestination().getId()));
         itemEntity.setData(homePageParam.getData());
         itemEntity.setPriority(homePageParam.getPriority());
         return HomePageConvertor.toDeadendDto(update(itemEntity));

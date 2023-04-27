@@ -2,8 +2,11 @@ import React  from 'react';
 import Slick from "react-slick"
 import {Box, Link} from "@mui/material";
 import { Image} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
+import clickHandler from "../homeClick";
 
 const HomeSlider = (props) => {
+    const navigate = useNavigate()
     const settings = {
         dots: false,
         infinite: true,
@@ -23,7 +26,7 @@ const HomeSlider = (props) => {
                 {props.item.Items&&props.item.Items.map((item, index) => (
 
                     <div key={index} >
-                        <Link href={"/"+item.Destination} underline="none" color="inherit" fontWeight="800">
+                        <Link onClick={()=>clickHandler(item,navigate)} underline="none" color="inherit" fontWeight="800">
                             <Box>
                                 <Image width={"100%"}  src={item.multimedia.Url}/>
                             </Box>

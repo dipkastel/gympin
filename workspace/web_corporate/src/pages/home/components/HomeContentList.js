@@ -1,8 +1,11 @@
 import React from 'react';
 import Slick from "react-slick";
 import {Card, CardContent, CardMedia, Link, Typography} from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import clickHandler from "../homeClick";
 
 const HomeContentList = (props) => {
+    const navigate = useNavigate()
     const settings = {
         dots: false,
         infinite: true,
@@ -22,7 +25,7 @@ const HomeContentList = (props) => {
             <Slick {...settings}>
                 {props.item.Items && props.item.Items.map((item, index) => (
                     <div key={index}>
-                        <Link href={"/" + item.Destination} underline="none" color="inherit" fontWeight="800">
+                        <Link onClick={()=>clickHandler(props.item,navigate)} underline="none" color="inherit" fontWeight="800">
                             <Card sx={{margin: 1}} elevation={3}>
 
                                 <CardMedia

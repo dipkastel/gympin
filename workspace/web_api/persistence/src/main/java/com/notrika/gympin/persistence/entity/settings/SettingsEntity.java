@@ -1,9 +1,7 @@
 package com.notrika.gympin.persistence.entity.settings;
 
 import com.notrika.gympin.common.gympin.base.enums.settingsType;
-import com.notrika.gympin.common.gympin.homePage.enums.HomePageDestination;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

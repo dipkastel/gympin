@@ -34,3 +34,14 @@ export function homepage_addType(item) {
 export function homepage_deleteType(item) {
     return axios.put(homepage.deleteType, null,{ params: item });
 }
+
+//Destinations
+export function homepage_getAllDestinations() {
+    return axios.get(homepage.getAllDestinations);
+}
+export function homepage_addDestinations(item) {
+    return axios.post(homepage.addDestinations, item);
+}
+export function homepage_deleteDestinations(item) {
+    return axios.put(homepage.deleteDestinations, null,{ params: item });
+}

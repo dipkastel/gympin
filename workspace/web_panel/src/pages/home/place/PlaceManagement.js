@@ -134,6 +134,23 @@ const PlaceManagement = () => {
                         </CardContent>
                     </Card>
                 </Grid>
+                <Grid item xs={4}>
+                    <Card>
+                        <CardHeader title={"مراکز روی نقشه"} color={"primary"}/>
+                        <CardContent className={"kt-space-between"}>
+                            نقشه مراکز تهران
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                href="place/placeOnMap"
+                                sx={{marginRight: "auto"}}
+                                size="large"
+                            >
+                                مشاهده
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </Grid>
             <Portlet>
                 <PortletHeader

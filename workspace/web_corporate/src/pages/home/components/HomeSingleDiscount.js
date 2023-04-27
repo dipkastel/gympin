@@ -3,12 +3,15 @@ import Slick from "react-slick";
 import {Card, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 import HomeTitle from "./HomeTitle";
+import {useNavigate} from "react-router-dom";
+import clickHandler from "../homeClick";
 
 const HomeSingleDiscount = (props) => {
+    const navigate = useNavigate()
     return (<>
                 <div >
                     <Card elevation={3} sx={{margin: 1}}>
-                        <Link href={"/" + props.item.Data} underline="none" color="inherit" fontWeight="800">
+                        <Link onClick={()=>clickHandler(props.item,navigate)} underline="none" color="inherit" fontWeight="800">
                             <div className={"discount"}>
                                 <div className={"percent"}>
                                     <Typography variant={"subtitle2"} sx={{padding:0.5}} textAlign={"start"} color={"red"}>

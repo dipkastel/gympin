@@ -2,7 +2,6 @@ package com.notrika.gympin.common.gympin.homePage.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common._base.dto.BaseDto;
-import com.notrika.gympin.common.gympin.homePage.enums.HomePageDestination;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,7 +28,7 @@ public class HomePageItemDto extends BaseDto<HomePageItemDto> {
     private String description;
 
     @JsonProperty("Destination")
-    private HomePageDestination destination;
+    private HomePageDestinationDto destination;
 
     @JsonProperty("Data")
     private String data;

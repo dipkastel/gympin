@@ -14,6 +14,9 @@ public class gympinScheduleService {
     @Autowired
     scheduleReports scheduleReports;
 
+    @Autowired
+    scheduleCorporateSms scheduleCorporateSms;
+
     @Scheduled(cron = "0 0 2 * * ?")
     public void setDiscounts(){
         scheduleDiscounts.UpdateAutoPlansDiscount();
@@ -25,5 +28,9 @@ public class gympinScheduleService {
         scheduleReports.updateMaxSellByPlan();
         scheduleReports.updateMaxPlanPrice();
         scheduleReports.updateMinPlanPrice();
+    }
+    @Scheduled(cron = "0 0 10 ? * SUN,MON,TUE,WED,THU,SAT")
+    public void checkCorporatesLowBudget(){
+        scheduleCorporateSms.checkLowBudgets();
     }
 }

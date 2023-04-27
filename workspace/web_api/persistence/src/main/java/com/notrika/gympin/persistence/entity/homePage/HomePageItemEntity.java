@@ -2,7 +2,6 @@ package com.notrika.gympin.persistence.entity.homePage;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.gympin.homePage.enums.HomePageDestination;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import lombok.Getter;
@@ -38,9 +37,10 @@ public class HomePageItemEntity extends BaseEntity<HomePageItemEntity> {
     @Column(name = "priority")
     private Integer priority;
 
-    @Column(name = "destination")
-    @Enumerated(EnumType.STRING)
-    private HomePageDestination destination;
+    @ManyToOne
+    @JoinTable(name = "HomeItemDestination", joinColumns = @JoinColumn(name = "homeItemId"), inverseJoinColumns = @JoinColumn(name = "destination_Id"))
+    @ToString.Exclude
+    private HomePageDestionationEntity destination;
 
     @Column(name = "type")
     private String type;

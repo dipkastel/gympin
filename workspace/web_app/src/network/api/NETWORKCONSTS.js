@@ -14,13 +14,8 @@ export let Api_url = {
     homePage: {
         GET_HOME_PAGE: "v1/homepage/getHome",
     },
-    user: {
-        GET_BY_ID: "v1/user/getById",
-        UPDATE_USER: "v1/user/update",
-        UPDATE_AVATAR: "v1/user/updateUserAvatar",
-    },
-    userCredit: {
-        getByUser: "v1/userCredit/getByUser",
+    location:{
+        query:"v1/location/query"
     },
     multimedia:{
         add:"v1/multimedia/add"
@@ -28,15 +23,14 @@ export let Api_url = {
     Notification:{
         getUserNotifications:"v1/Notification/getUserNotifications"
     },
-    sport:{
-        GET_ALL:"v1/sport/getAll"
+    optionOfPlace:{
+        GET_BY_PLACE_ID: "v1/OptionOfPlace/getByPlaceId",
     },
-    state:{
-        GET_ALL:"v1/state/getAll"
+    placeAbout:{
+        GET_BY_PLACE_ID:"v1/placeAbout/getByPlaceId",
     },
-    region:{
-        GET_ALL:"v1/region/getAll",
-        GET_BY_CITY:"v1/region/getRegionsByCity"
+    PlanGateTimingApi:{
+        getByPlan:"v1/plan-gate-timing/getByPlan"
     },
     place:{
         GET_ALL:"v1/place/getAll",
@@ -47,11 +41,9 @@ export let Api_url = {
         GET_BY_ID:"v1/plan/getById",
         GET_BY_PLACE_ID:"v1/plan/getPlansByPlace"
     },
-    optionOfPlace:{
-        GET_BY_PLACE_ID: "v1/OptionOfPlace/getByPlaceId",
-    },
-    placeAbout:{
-        GET_BY_PLACE_ID:"v1/placeAbout/getByPlaceId",
+    sport:{
+        GET_ALL:"v1/sport/getAll",
+        query:"v1/sport/query"
     },
     ticket:{
         ADD:"v1/ticket/add",
@@ -62,12 +54,17 @@ export let Api_url = {
         exitRequest:"v1/ticket/exitRequest",
         enterRequest:"v1/ticket/enterRequest"
     },
-    PlanGateTimingApi:{
-        getByPlan:"v1/plan-gate-timing/getByPlan"
-    },
     transaction:{
         getPaymentGateways:"v1/transaction/getPaymentGateways",
         setPaymentRequest:"v1/transaction/setPaymentRequest",
         checkPayment:"v1/transaction/checkPayment",
+    },
+    user: {
+        GET_BY_ID: "v1/user/getById",
+        UPDATE_USER: "v1/user/update",
+        UPDATE_AVATAR: "v1/user/updateUserAvatar",
+    },
+    userCredit: {
+        getByUser: "v1/userCredit/getByUser",
     }
 };

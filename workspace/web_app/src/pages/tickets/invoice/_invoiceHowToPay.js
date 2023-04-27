@@ -27,7 +27,7 @@ export function CalculatePay(ticket, creditToPay, i) {
         if (ticketPrice <= 0) return 0
         var reminderPrice = ticketPrice - Math.min(item.credit.CreditPayableAmount, ticketPrice);
         if (i.priority == item.priority) {
-            result = ticketPrice-reminderPrice;
+            result = ticketPrice - reminderPrice;
         }
         ticketPrice = reminderPrice;
 
@@ -36,18 +36,17 @@ export function CalculatePay(ticket, creditToPay, i) {
 }
 
 
-
 const _invoiceHowToPay = ({credits, ticket, creditSortToPay, setCreditSortToPay}) => {
 
     const [openHelp, SetOpenHelp] = useState(false)
     const [creditToPay, SetCreditToPay] = useState(creditSortToPay)
     const navigate = useNavigate()
     useEffect(() => {
-        if(JSON.stringify(creditSortToPay)!=JSON.stringify(creditToPay))
+        if (JSON.stringify(creditSortToPay) != JSON.stringify(creditToPay))
             SetCreditToPay(creditSortToPay);
     }, [creditSortToPay]);
     useEffect(() => {
-        if(JSON.stringify(creditSortToPay)!=JSON.stringify(creditToPay))
+        if (JSON.stringify(creditSortToPay) != JSON.stringify(creditToPay))
             setCreditSortToPay(creditToPay);
     }, [creditToPay]);
 
@@ -56,15 +55,15 @@ const _invoiceHowToPay = ({credits, ticket, creditSortToPay, setCreditSortToPay}
         var newCreadits = [];
         creditToPay.sort((a, b) => a.priority - b.priority).map((i, Number) => {
             if (item.priority == i.priority) {
-                tempCreadits.push({...i, priority: i.priority+1});
-            } else if (item.priority+1 == i.priority) {
+                tempCreadits.push({...i, priority: i.priority + 1});
+            } else if (item.priority + 1 == i.priority) {
                 tempCreadits.push({...i, priority: i.priority - 1});
             } else {
                 tempCreadits.push({...i});
             }
         })
         tempCreadits.sort((a, b) => a.priority - b.priority).map((i, Number) => {
-                newCreadits.push({...i,payment:CalculatePay(ticket,tempCreadits,i)});
+            newCreadits.push({...i, payment: CalculatePay(ticket, tempCreadits, i)});
         })
         SetCreditToPay(newCreadits);
         SetOpenHelp(false);
@@ -103,7 +102,7 @@ const _invoiceHowToPay = ({credits, ticket, creditSortToPay, setCreditSortToPay}
                 </Collapse>
                 <CardContent>
 
-                    {creditToPay.sort((a, b) => a.priority - b.priority).map((item, Number) => (
+                    {creditToPay.filter(t => t.credit.CreditPayableAmount > 0).sort((a, b) => a.priority - b.priority).map((item, Number) => (
                         <div key={Number}>
                             <ButtonGroup
                                 disableElevation
@@ -111,11 +110,13 @@ const _invoiceHowToPay = ({credits, ticket, creditSortToPay, setCreditSortToPay}
                                 aria-label="Disabled elevation buttons"
                             >
 
-                                <IconButton aria-label="down" color={"inherit"}
-                                            disabled={(creditToPay.length - 1 == Number)}
-                                            onClick={() => changePriority(item)}>
-                                    <ArrowDownwardIcon/>
-                                </IconButton>
+                                {creditToPay.filter(t => t.credit.CreditPayableAmount > 0).length > 1 &&
+                                    <IconButton aria-label="down" color={"inherit"}
+                                                disabled={(creditToPay.length - 1 == Number)}
+                                                onClick={() => changePriority(item)}>
+                                        <ArrowDownwardIcon/>
+                                    </IconButton>
+                                }
                                 <Grid sx={{mb: 1}}><Typography
                                     sx={{display: "inline"}}
                                     component="p"
@@ -125,7 +126,6 @@ const _invoiceHowToPay = ({credits, ticket, creditSortToPay, setCreditSortToPay}
                                     {item.credit.CreditType == "SPONSOR" && creditTypes[item.credit.CreditType] + " (" + item.credit.Corporate.Name + ") "}
                                     {item.credit.CreditType == "PERSONAL" && creditTypes[item.credit.CreditType]}
                                     {toPriceWithComma(item.credit.CreditAmount) + " تومان"}
-
 
 
                                 </Typography>

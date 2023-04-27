@@ -1,19 +1,13 @@
-package com.notrika.gympin.common.place.place.query;
+package com.notrika.gympin.common.sport.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
-import com.notrika.gympin.common.sport.param.SportParam;
-import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
-import com.notrika.gympin.common.sportplace.service.SportPlaceService;
-import com.notrika.gympin.common.user.enums.Gender;
+import com.notrika.gympin.common.location.enums.LocationType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @Data
 @SuperBuilder
@@ -37,27 +31,19 @@ import java.util.List;
     private Long min_id
     private Long max_id
     */
-public class PlaceQuery extends BaseQuery<PlaceQuery> {
+public class SportQuery extends BaseQuery<SportQuery> {
 
     @JsonProperty("Name")
     private String like_name;
 
-    @JsonProperty("Status")
-    private PlaceStatusEnum is_status;
+    @JsonProperty("Id")
+    private Long is_id;
 
-    @JsonProperty("Sports")
-    private Long is_sportPlacesæsportæid;
+    @JsonProperty("HasPlace")
+    private Long min_sportPlacesæid;
 
-    @JsonProperty("Option")
-    private Long is_optionsOfPlacesæplaceOptionæid;
 
-    @JsonProperty("LocationId")
-    private Long is_locationæid;
 
-    @JsonProperty("Gender")
-    private Gender is_plansægender;
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 
 }

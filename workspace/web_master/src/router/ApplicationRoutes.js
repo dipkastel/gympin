@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Route, Routes} from "react-router-dom";
 import Home from "../pages/home/Home";
 import Finance from "../pages/finance/Finance";
@@ -28,8 +28,27 @@ import QrSettings from "../pages/qrSettings/QrSettings";
 import EditProfile from "../pages/editProfile/EditProfile";
 import QrList from "../pages/qrSettings/QrList";
 import PersonnelAccess from "../pages/personnelAccess/PersonnelAccess";
+import {useSelector} from "react-redux";
+import store from "../helper/redux/store";
+import {sagaActions} from "../helper/redux/actions/SagaActions";
 
 export default function ApplicationRoutes() {
+
+    const user = useSelector(state => state.auth.user);
+    const place = useSelector(({place}) => place.place);
+    useEffect(() => {
+        getAccess();
+        var interval = setInterval(function () {
+            getAccess();
+        },1000*60*5)
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+    function getAccess(){
+        store.dispatch(sagaActions.RequestAccess(user.Id,place.Id));
+    }
 
     return (
         <>

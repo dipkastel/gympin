@@ -1,3 +1,5 @@
+import {homepage_getAllDestinations} from "./homepage.api";
+
 export let AuthApi = {
   BASEURL: "https://api.gympin.ir/",
   // BASEURL : "http://localhost:8080/api/",
@@ -113,6 +115,9 @@ export let homepage = {
   getAllTypes: "v1/homepage/getAllTypes",
   addType: "v1/homepage/addType",
   deleteType: "v1/homepage/deleteType",
+  getAllDestinations: "v1/homepage/getAllDestinations",
+  addDestinations: "v1/homepage/addDestinations",
+  deleteDestinations: "v1/homepage/deleteDestinations",
 };
 export let LocationApi = {
   add: "v1/location/add",

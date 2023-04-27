@@ -1,11 +1,14 @@
 import React from 'react';
 import {Card, CardContent, CardMedia, Link, Typography} from "@mui/material";
+import clickHandler from "../homeClick";
+import {useNavigate} from "react-router-dom";
 
 const HomeSingleContent =(props) => {
+    const navigate = useNavigate()
     return (
         <>
                     <div >
-                        <Link href={"/"+props.item.Destination} underline="none" color="inherit" fontWeight="800">
+                        <Link onClick={()=>clickHandler(props.item,navigate)} underline="none" color="inherit" fontWeight="800">
                             <Card sx={{margin:1}} elevation={3}>
 
                                 <CardMedia

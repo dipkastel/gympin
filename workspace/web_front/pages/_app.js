@@ -15,6 +15,39 @@ import '../public/fonts/iransansweb/style.css'
 function MyApp({ Component, pageProps }) {
   const [activePreLoader, setActivePreLoader] = useState(true);
   useEffect(() => {
+      if(detectIEEdge()){
+      alert('مرورگر شما این وبسایت را پشتیبانی نمی کند .');
+    }
+      function detectIEEdge() {
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf('MSIE ');
+      if (msie > 0) {
+      // IE 10 or older => return version number
+      return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10)<13;
+    }
+
+      var trident = ua.indexOf('Trident/');
+      if (trident > 0) {
+      // IE 11 => return version number
+      var rv = ua.indexOf('rv:');
+      return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10)<13;
+    }
+
+      var edge = ua.indexOf('Edg/');
+      if (edge > 0) {
+      // Edge => return version number
+      return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10)<13;
+    }
+
+      var samsung = ua.indexOf('SamsungBrowser/');
+      if (samsung > 0) {
+      // sumsung => return version number
+      return parseInt(ua.substring(samsung+15, ua.indexOf('.', samsung)), 10)<15;
+    }
+
+      // other browser
+      return false;
+    }
     setTimeout(() => {
       setActivePreLoader(false);
     }, 3000);
@@ -28,7 +61,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="description" content="printing service template" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
         <link rel="icon" href="images/logo/favicon.ico" />
-      </Head>      
+      </Head>
       {activePreLoader && <Preloader />}
       <Component {...pageProps} />
 

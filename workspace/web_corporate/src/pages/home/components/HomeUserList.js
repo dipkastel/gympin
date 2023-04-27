@@ -2,8 +2,11 @@ import React from 'react';
 import Slick from "react-slick";
 import {Card, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
+import clickHandler from "../homeClick";
 
 const HomeUserList = (props) => {
+    const navigate = useNavigate()
     const settings = {
         dots: false,
         infinite: true,
@@ -22,7 +25,7 @@ const HomeUserList = (props) => {
             <Slick {...settings}>
                 {props.item.Items&&props.item.Items.map((item, index) => (
                     <div key={index} >
-                        <Link href={"/users/singleuser?id=1"} underline="none">
+                        <Link onClick={()=>clickHandler(item,navigate)} underline="none">
                             <Card sx={{
                                 marginX:0.3,
                                 marginY:1

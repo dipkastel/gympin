@@ -2,8 +2,10 @@ import React from 'react';
 import Slick from "react-slick";
 import {Card, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
 const HomeUserList = (props) => {
+    const navigate = useNavigate()
     const settings = {
         dots: false,
         infinite: true,

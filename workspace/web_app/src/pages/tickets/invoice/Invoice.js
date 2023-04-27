@@ -81,6 +81,24 @@ const Invoice = (props) => {
         return credit.Corporate.Name;
     }
 
+    function openModalConfirmToPay() {
+        if(!allAgrementChecked){
+            error.showError({
+                clickable: false,
+                message: 'همه قوانین و مقررات باید خوانده و پذیرفته شود',
+            });
+            return;
+        }
+        if (ticket.Price>userCredit.TotalCredit){
+            error.showError({
+                clickable: false,
+                message: 'متاسفانه هزینه بلیط پوشش داده نشده',
+            });
+            return;
+        }
+        setOpenModalConfirm(true)
+    }
+
     function renderModalConfirm() {
         function onConfirm(){
             if(!allAgrementChecked){
@@ -156,7 +174,7 @@ const Invoice = (props) => {
             {ticket && <_invoiceAgrements plan={ticket.Plan} setAllAgrementChecked={setAllAgrementChecked}/>}
             {ticket && userCredit &&
             <Card elevation={3} sx={{margin: 1}}>
-                <Button fullWidth variant={"contained"} color={"primary"} onClick={() => setOpenModalConfirm(true)}>خرید
+                <Button fullWidth variant={"contained"} color={"primary"} onClick={() => openModalConfirmToPay()}>خرید
                     بلیط</Button>
             </Card>
             }

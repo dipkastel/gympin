@@ -2,7 +2,6 @@ package com.notrika.gympin.common.gympin.homePage.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common._base.param.BaseParam;
-import com.notrika.gympin.common.gympin.homePage.enums.HomePageDestination;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -28,7 +27,7 @@ public class HomePageItemParam extends BaseParam<HomePageItemParam> {
     private String description;
 
     @JsonProperty("Destination")
-    private HomePageDestination destination;
+    private HomePageDestinationParam destination;
 
     @JsonProperty("Data")
     private String data;

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.location.enums.LocationType;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.homePage.HomePageItemEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.option.OptionOfPlaceEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -42,6 +44,10 @@ public class LocationEntity extends BaseEntity<LocationEntity> {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private LocationType locationType;
+
+    @OneToMany(mappedBy = "location")
+    @ToString.Exclude
+    private List<PlaceEntity> places;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Getter

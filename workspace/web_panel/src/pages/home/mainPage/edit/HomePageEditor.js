@@ -4,10 +4,15 @@ import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../.
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal} from "react-bootstrap";
 import Select from "react-select";
-import {widgetDestination} from "../../unuse/applicationHome/widgetDestination";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {ExpandLess, ExpandMore, NavigateBefore, NavigateNext} from '@mui/icons-material';
-import {homepage_add, homepage_delete, homepage_getAllTypes, homepage_update} from "../../../../network/api/homepage.api";
+import {
+    homepage_add,
+    homepage_delete,
+    homepage_getAllDestinations,
+    homepage_getAllTypes,
+    homepage_update
+} from "../../../../network/api/homepage.api";
 import HomeTitle from "./resultItems/HomeTitle";
 import HomeSlider from "./resultItems/HomeSlider";
 import HomeUserList from "./resultItems/HomeUserList";
@@ -33,6 +38,7 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [destination, setDestination] = useState(null)
+    const [destinations, setDestinations] = useState(null)
     const [formData, setFormData] = useState("")
     const [image, setImage] = useState(null)
     const [elements, setElements] = useState(null);
@@ -42,6 +48,11 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
     }, [homeitems])
 
     useEffect(() => {
+        getTypes();
+        getDestinations();
+    }, [])
+
+    function getTypes() {
         homepage_getAllTypes().then(result => {
             setElements(result.data.Data);
         }).catch(e => {
@@ -51,7 +62,18 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
                 error.showError({message: "خطا نا مشخص",});
             }
         });
-    }, [homeitems])
+    }
+    function getDestinations() {
+        homepage_getAllDestinations().then(result => {
+            setDestinations(result.data.Data);
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }
 
 
     function RenderModalAdd() {
@@ -63,7 +85,7 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
                 Type: type.value,
                 Title: title,
                 Description: description,
-                Destination: (destination) ? destination.value : destination,
+                Destination: (destination) ? destinations.find(d=>d.Id==destination.value) : "",
                 Data: formData,
                 ImageId: image?image.Id:null,
                 parent: selectedParent,
@@ -175,10 +197,10 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
                                 <Select
                                     className={"dropdown"}
                                     inputId="select-Destination"
-                                    options={widgetDestination.map(item => {
-                                        return {label: item, value: item}
+                                    options={destinations.map(item => {
+                                        return {label: item.Name, value: item.Id}
                                     })}
-                                    onChange={(e) => setDestination({label: e.value, value: e.value})}
+                                    onChange={(e) => setDestination({label: e.label, value: e.value})}
                                     value={destination}
                                 />
                             </Form.Group>}

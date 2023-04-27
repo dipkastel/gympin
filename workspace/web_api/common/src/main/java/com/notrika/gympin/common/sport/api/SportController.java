@@ -5,11 +5,12 @@ import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.sport.dto.SportDto;
 import com.notrika.gympin.common.sport.param.SportParam;
+import com.notrika.gympin.common.sport.query.SportQuery;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface SportController extends BaseController<SportParam,SportDto, BaseQuery<?>> {
+public interface SportController extends BaseController<SportParam,SportDto, SportQuery> {
 
     ResponseEntity<List<MultimediaDto>> getSportMultimedia(SportParam sportParam);
 

@@ -104,7 +104,7 @@ const _PlaceReserve = ({place}) => {
         }
         ticket_add({Plan: {Id: item.Id}, User: {Id: currentUser.Id}})
             .then(result => {
-                setOpenDialogAdded(true)
+                navigate("/tickets", {replace: false});
             }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});

@@ -2,6 +2,7 @@ package com.notrika.gympin.common.corporate.corporate.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,9 @@ public class CorporateQuery extends BaseQuery<CorporateQuery> {
 
     @JsonProperty("Name")
     private String like_name;
+
+    @JsonProperty("Status")
+    private CorporateStatusEnum is_status;
 
     @JsonProperty("deleted")
     private Boolean is_deleted = false;

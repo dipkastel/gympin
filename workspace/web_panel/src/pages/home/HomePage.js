@@ -31,6 +31,7 @@ import ArticlesManagement from "./articles/ArticlesManagement";
 import SingleArticle from "./articles/SingleArticle/SingleArticle";
 import Reports from "./report/Reports";
 import ArticleCategories from "./articles/categories/ArticleCategories";
+import PlacesMap from "./place/PlacesMap/PlacesMap";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -43,6 +44,7 @@ export default function HomePage() {
         <Route path="/place/plan/:planId" component={PlanDataManagement} />
         <Route path="/place/personnel/:personnelId" component={PlacePersonnelManagement} />
         <Route path="/place/placeOptionManagement" component={placeOptionsManagement} />
+        <Route path="/place/placeOnMap" component={PlacesMap} />
         <Route path="/places" component={PlaceManagement} />
         {/*articles*/}
         <Route path="/articles/details/:articleId" component={SingleArticle} />
