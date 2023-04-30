@@ -3,6 +3,7 @@ import BlogDetailsArea from '../components/BlogDetails/BlogDetailsArea'
 import BlogDetailsBreadcrumb from '../components/BlogDetails/BlogDetailsBreadcrumb'
 import Layout from '../layouts/Layout'
 import { useRouter } from 'next/router'
+import getBaseUrl from "./api/network";
 
 export default function BlogDetails() {
 
@@ -21,7 +22,7 @@ export default function BlogDetails() {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         };
-        await fetch("http://localhost:8080/api/v1/article/getById?id="+id, requestOptions)
+        await fetch(getBaseUrl()+"/api/v1/article/getById?id="+id, requestOptions)
             .then(response => response.json())
             .then(result => {
                 setBlogpost(result.Data);

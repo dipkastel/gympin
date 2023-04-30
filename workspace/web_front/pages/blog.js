@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import BlogArea from '../components/Blog/BlogArea'
 import BlogBreadcrumb from '../components/Blog/BlogBreadcrumb'
 import Layout from '../layouts/Layout'
+import getBaseUrl from "./api/network";
 
 export default function blog() {
 
@@ -24,7 +25,7 @@ export default function blog() {
                 }
             })
         };
-        await fetch("http://localhost:8080/api/v1/article/query", requestOptions)
+        await fetch(getBaseUrl()+"/api/v1/article/query", requestOptions)
             .then(response => response.json())
             .then(result => {
                 setBlogs(result.Data);
