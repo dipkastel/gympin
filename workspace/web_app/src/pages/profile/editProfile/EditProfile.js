@@ -20,17 +20,19 @@ import {Formik} from "formik";
 import AdapterJalali from '@date-io/date-fns-jalali';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import {user_updateAvatar, user_updateMe} from "../../../network/api/user.api";
+import {user_checkUsernameAvailable, user_updateAvatar, user_updateMe} from "../../../network/api/user.api";
 import {useNavigate} from "react-router-dom";
 import {sagaActions} from "../../../helper/redux/actions/SagaActions";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import _EditImage from "./_EditImage";
+import {validateDate} from "@mui/x-date-pickers/internals";
 
 const EditProfile = (props) => {
     const error = useContext(ErrorContext);
     const navigation = useNavigate();
     const currentUser = useSelector(state=>state.auth.user)
     const [user,setUser] = useState(currentUser)
+    const [lastUsername,setLastUserame] = useState(currentUser.Username)
     useEffect(() => {
         props.RequestUser(user)
     }, []);
@@ -55,7 +57,7 @@ const EditProfile = (props) => {
                 alignItems="center"
             >
 
-                {user&&<_EditImage user={user} />}
+                {user&&<_EditImage user={user} RequestUser={()=>props.RequestUser(user)}/>}
                 <Formik
                     initialValues={{
                         Id: user.Id,
@@ -84,7 +86,7 @@ const EditProfile = (props) => {
                             }
                         });
                     }}
-                    validate={(values) => {
+                    validate={(values ) => {
 
                         const errors = {};
                         try{
@@ -103,6 +105,32 @@ const EditProfile = (props) => {
                             if (!checkNationalCode(values.NationalCode.toString())) {
                                 errors.NationalCode = "کد ملی صحیح نیست";
                             }
+
+                            if(lastUsername !== values.Username){
+
+                                new Promise(resolve => user_checkUsernameAvailable(values.Username).then((result) => {
+                                    if(!result.data.Data){
+                                        error.showError({message: "نام کاربری قبلا توسط کاربر دیگری دریافت شده.",});
+                                    }else{
+                                        error.showError({message: "نام کاربری قابل ثبت است.",});
+                                    }
+                                }).catch(e => {
+                                    try {
+                                        error.showError({message: e.response.data.Message});
+                                    } catch (f) {
+                                        error.showError({message: "خطا نا مشخص",});
+                                    }
+                                }));
+
+                            }else{
+                                console.log("sub");
+                                setLastUserame(values.Username);
+                            }
+
+
+                            // if(touched.Username){
+                            //     console.log("v:",values,t,s)
+                            // }
                             // if (!values.Email||!values.Email.toString()) {
                             //     errors.Email = "ایمیل الزامی است";
                             // }
@@ -135,6 +163,7 @@ const EditProfile = (props) => {
                                       type="text"
                                       aria-readonly
                                       value={values.PhoneNumber||""}
+                                      color={(errors.PhoneNumber)?"error":"success"}
                                       label={"شماره همراه * "}
                                   />
                                   <TextField
@@ -145,9 +174,12 @@ const EditProfile = (props) => {
                                       name="Username"
                                       type="text"
                                       value={values.Username||""}
-                                      onChange={e=>setFieldValue("Username",e.target.value)}
+                                      onChange={e=>{
+                                          setFieldValue("Username",e.target.value)
+                                      }}
                                       label={"نام کاربری * "}
                                       helperText={errors.Username}
+                                      color={(errors.Username)?"error":"success"}
                                       error={Boolean(touched.Username && errors.Username)}
                                   />
                                   <TextField
@@ -161,10 +193,12 @@ const EditProfile = (props) => {
                                       onChange={handleChange}
                                       label={"نام و نام خانوادگی * "}
                                       helperText={errors.FullName}
+                                      color={(errors.FullName)?"error":"success"}
                                       error={Boolean(touched.FullName && errors.FullName)}
                                   />
                                   <FormControl sx={{mt:2}} variant={"outlined"} fullWidth>
-                                      <InputLabel id="demo-simple-select-label">جنسیت * </InputLabel>
+                                      <InputLabel
+                                          color={(errors.Gender)?"error":"success"} id="demo-simple-select-label">جنسیت * </InputLabel>
                                       <Select
                                           className="w-100"
                                           name="Gender"
@@ -172,6 +206,7 @@ const EditProfile = (props) => {
                                           value={values.Gender||""}
                                           input={<OutlinedInput label="جنسیت * " />}
                                           helperText={errors.Gender}
+                                          color={(errors.Gender)?"error":"success"}
                                           error={Boolean(touched.Gender && errors.Gender)}
                                       >
                                           <MenuItem value={"FEMALE"} >خانم</MenuItem>
@@ -188,6 +223,7 @@ const EditProfile = (props) => {
                                           onChange={(e,w)=>{
                                               setFieldValue('Birthday', Date.parse(e))
                                           }}
+                                          color={(errors.Birthday)?"error":"success"}
                                           renderInput={(params) =>
 
                                               <TextField
@@ -215,6 +251,7 @@ const EditProfile = (props) => {
                                       onChange={handleChange}
                                       label={"کد ملی * "}
                                       helperText={errors.NationalCode}
+                                      color={(errors.NationalCode)?"error":"success"}
                                       error={Boolean(touched.NationalCode && errors.NationalCode)}
                                   />
                                   <TextField
@@ -228,6 +265,7 @@ const EditProfile = (props) => {
                                       onChange={handleChange}
                                       label={"ایمیل (اختیاری)"}
                                       helperText={errors.Email}
+                                      color={(errors.Email)?"error":"success"}
                                       error={Boolean(touched.Email && errors.Email)}
                                   />
                                   <TextField
@@ -240,6 +278,7 @@ const EditProfile = (props) => {
                                       type="text"
                                       value={values.Bio||""}
                                       onChange={handleChange}
+                                      color={(errors.Bio)?"error":"success"}
                                       label={"درباره من (اختیاری)"}
                                   />
                                   <Button className="mt-4" variant={"outlined"} fullWidth onClick={handleSubmit}>ثبت</Button>

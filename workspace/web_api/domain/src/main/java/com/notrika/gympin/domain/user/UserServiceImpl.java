@@ -272,4 +272,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         return UserConvertor.toDtoComplete(userRepository.update(user));
     }
 
+    @Override
+    public Boolean checkUsernameAvailable(String userParam) {
+        return userRepository.findByUsername(userParam)==null;
+    }
+
 }

@@ -85,3 +85,19 @@ export function setStorage(key, value, expires) {
     }
     return true;
 }
+
+export function resizeCanvas(canvas,newH,newW) {
+    if(newH&&!newW)
+        newW = (canvas.width*newH)/canvas.height
+    else if(newW&&!newH)
+        newH = (canvas.height*newW)/canvas.width
+    else if(!newW&&!newH){
+        return null;
+    }
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = newW;
+    tempCanvas.height = newH;
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCtx.drawImage(canvas, 0, 0, newW, newH);
+    return tempCanvas;
+}

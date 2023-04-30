@@ -1,8 +1,8 @@
 import {ticket_addEntryMessage, ticket_deleteEntryMessage} from "./ticket.api";
 
 export let AuthApi = {
-    // BASEURL: "http://localhost:8080/api/",
-    BASEURL: "https://api.gympin.ir/",
+    BASEURL: "http://localhost:8080/api/",
+    // BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
@@ -23,7 +23,8 @@ export let Api_url = {
         UPDATE_AVATAR: "v1/user/updateUserAvatar",
     },
     multimedia:{
-        add:"v1/multimedia/add"
+        add:"v1/multimedia/add",
+        categoryGetById:"v1/multimediacategory/getById"
     },
     Notification:{
         getUserNotifications:"v1/Notification/getUserNotifications"

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 
-export default function NewsBreadcrumb() {
+export default function BlogDetailsBreadcrumb({blogpost}) {
+
     return (
         <>
             {/* <!-- breadcrumb section start --> */}
@@ -10,9 +11,9 @@ export default function NewsBreadcrumb() {
                     <div className="row">
                         <div className="col-xl-8 d-flex pr-0">
                             <div className="breadcrumb-text">
-                                <h2 className="breadcrumb-text__title">
-                                    New Article
-                                </h2>
+                                <h1 className="breadcrumb-text__title">
+                                    {blogpost.Title}
+                                </h1>
                             </div>
                         </div>
                     </div>

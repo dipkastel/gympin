@@ -21,10 +21,13 @@ public interface UserService extends BaseService<UserParam, UserDto, UserQuery> 
     UserDto getUserDtoByAnyKey(UserParam userParam);
 
     List<UserRoleInfoDto> getAllRules();
+    
     UserDto UpdateUserRole(UserRoleUpdateParam userParam);
 
     Long getCount(BaseQuery<?> filter);
 
     UserDto updateUserAvatar(UserAvatarParam userParam);
+
+    Boolean checkUsernameAvailable(String userParam);
 
 }

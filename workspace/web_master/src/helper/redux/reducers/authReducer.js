@@ -20,6 +20,7 @@ const ReducerConfig = {
 const AuthBaseReducer = (state = initialAuthState, action) => {
     switch (action.type) {
         case authActionTypes.SetUser: {
+            console.log("authsetuser",{...state,user: action.payload.user })
             return {...state,user: action.payload.user };
         }
         case authActionTypes.SetToken: {

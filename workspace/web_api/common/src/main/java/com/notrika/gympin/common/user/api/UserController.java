@@ -30,5 +30,7 @@ public interface UserController extends BaseController<UserParam, UserDto, UserQ
 
     ResponseEntity<UserDto> getUserByUsername(UserParam userParam);
 
+    ResponseEntity<Boolean> checkUsernameAvailable(String username);
+
 
 }

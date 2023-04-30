@@ -1,6 +1,6 @@
 export let AuthApi = {
-    // BASEURL: "http://localhost:8080/api/",
-     BASEURL: "https://api.gympin.ir/",
+    BASEURL: "http://localhost:8080/api/",
+     // BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
@@ -18,7 +18,8 @@ export let Api_url = {
         query:"v1/location/query"
     },
     multimedia:{
-        add:"v1/multimedia/add"
+        add:"v1/multimedia/add",
+        categoryGetById:"v1/multimediacategory/getById"
     },
     Notification:{
         getUserNotifications:"v1/Notification/getUserNotifications"
@@ -63,6 +64,7 @@ export let Api_url = {
         GET_BY_ID: "v1/user/getById",
         UPDATE_USER: "v1/user/update",
         UPDATE_AVATAR: "v1/user/updateUserAvatar",
+        checkUsernameAvailable: "v1/user/checkUsernameAvailable",
     },
     userCredit: {
         getByUser: "v1/userCredit/getByUser",

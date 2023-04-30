@@ -1,235 +1,325 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Avatar, Button, Card, Grid, Input, TextField} from "@mui/material";
-import {compareObjs} from "../../helper/utils";
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {Avatar, Button, Card, Dialog, DialogActions, DialogContent, Grid, Input, TextField} from "@mui/material";
 import {connect, useSelector} from "react-redux";
-import {media_AddImage} from "../../network/api/multimedia.api";
+import {media_AddImage, media_getCatById} from "../../network/api/multimedia.api";
 import {Formik} from "formik";
 import AdapterJalaali from '@date-io/jalaali';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {user_updateAvatar, user_updateMe} from "../../network/api/user.api";
 import {format} from "date-fns";
-import 'date-fns/locale/fa-IR';
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
-import {useNavigate} from "react-router-dom";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import {CircleStencil, FixedCropper} from 'react-advanced-cropper'
+import 'date-fns/locale/fa-IR';
+import 'react-advanced-cropper/dist/style.css';
+import {resizeCanvas} from "../../helper/utils";
 
 const EditProfile = (props) => {
     const error = useContext(ErrorContext);
-    const navigate = useNavigate();
     const [imageUrl, SetImageUrl] = useState("")
+    const [imageToCrop, SetImageToCrop] = useState(null)
+    const cropperRef = useRef(null);
     const currentUser = useSelector(state => state.auth.user)
     const [user, setUser] = useState(currentUser)
+    const [ratio, setRatio] = useState(null)
+
     useEffect(() => {
-        props.RequestUser(user)
-    }, []);
-    useEffect(() => {
-        SetImageUrl(user.Avatar ? user.Avatar.Url : "")
+        SetImageUrl(currentUser.Avatar ? currentUser.Avatar.Url : "")
     }, [currentUser]);
 
-    function ChangeAvatar(e) {
-        if (e.type === "change") {
-            const formData = new FormData();
-            formData.append("MediaType", "IMAGE");
-            formData.append("File", e.target.files[0]);
-            formData.append("CategoryId", "2");
-            formData.append("Title", user.Username);
-            formData.append("Description", user.Id);
-            //
-            media_AddImage(formData)
-                .then(data => {
-                    user_updateAvatar({UserId: currentUser.Id, MultimediaId: data.data.Data.Id}).then(result => {
-                        SetImageUrl(result.data.Data.Avatar ? (result.data.Data.Avatar.Url || "") : "")
-                    }).catch(e => {
+    useEffect(() => {
+        props.RequestUser(user)
+        getratio()
+    }, []);
+
+    function getratio() {
+        media_getCatById({id: 2})
+            .then(result => {
+                setRatio(result.data.Data);
+            })
+            .catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+    }
+
+    function uploadImage(e) {
+
+        let canvas = cropperRef.current?.getCanvas();
+        if (canvas) {
+            if (canvas.height < ratio.MINH) {
+                error.showError({message: "تصویر کوچک است",});
+                return;
+            }
+            if (canvas.height > ratio.MAXH) {
+                canvas = resizeCanvas(canvas, ratio.MAXH, null);
+            }
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    error.showError({message: "لطفا تا ارسال کامل تصویر صبر کنید."});
+                    SetImageToCrop(null)
+                    const formData = new FormData();
+                    formData.append("MediaType", "IMAGE");
+                    formData.append("File", blob);
+                    formData.append("CategoryId", "2");
+                    formData.append("Title", user.Username);
+                    formData.append("Description", user.Id);
+                    //
+                    media_AddImage(formData)
+                        .then(data => {
+                            user_updateAvatar({
+                                UserId: currentUser.Id,
+                                MultimediaId: data.data.Data.Id
+                            }).then(result => {
+                                console.log("result",result)
+                                SetImageUrl(result.data.Data.Avatar ? (result.data.Data.Avatar.Url + "&width=200") : "")
+                                error.showError({message: "با موفقیت ثبت شد",});
+                                props.RequestUser(user)
+                            }).catch(e => {
+                                try {
+                                    error.showError({message: e.response.data.Message});
+                                } catch (f) {
+                                    error.showError({message: "خطا نا مشخص",});
+                                }
+                            });
+                        }).catch(e => {
                         try {
-                            error.showError({message: e.response.data.Message});
+                            error.showError({message: e.response.data.Message,});
                         } catch (f) {
                             error.showError({message: "خطا نا مشخص",});
                         }
                     });
-                }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message,});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
                 }
-            })
+            });
 
 
         }
     }
 
-    return (
 
-        <Card elevation={3} sx={{margin: 1}}>
-            <Grid
-                container
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-            >
+    function renderModalCrop() {
 
-                <label htmlFor="raised-button-file">
-                    <Avatar
-                        sx={{width: 120, height: 120, marginTop: 3}}
-                        alt="Remy Sharp"
-                        src={imageUrl}
+        const onChange = (cropper) => {
+            console.log(cropper.getCoordinates(), cropper.getCanvas());
+
+        };
+        return (<>
+
+            <Dialog
+                className={"w-100"}
+                open={!!imageToCrop} onClose={() => SetImageToCrop(null)}>
+                <DialogContent>
+                    <FixedCropper
+
+                        ref={cropperRef}
+                        src={imageToCrop}
+                        stencilComponent={CircleStencil}
+                        stencilProps={{
+                            aspectRatio: 1,
+                            handlers: false,
+                            lines: false,
+                            movable: false,
+                            resizable: false
+
+                        }}
+                        stencilSize={{
+                            width: ratio ? ratio.MAXW : 1000,
+                            height: ratio ? ratio.MAXH : 1000,
+                        }}
+                        onChange={onChange}
+                        className={'cropper'}
                     />
-                </label>
-                <Input
-                    accept="image/*"
-                    className={"input"}
-                    style={{display: 'none'}}
-                    id="raised-button-file"
-                    onChange={ChangeAvatar}
-                    type="file"
-                />
-                <Formik
-                    initialValues={{
-                        Id: user.Id,
-                        AvatarId: user.AvatarId,
-                        Bio: user.Bio,
-                        Birthday: user.Birthday ? user.Birthday : "",
-                        Email: user.Email,
-                        FullName: user.FullName,
-                        NationalCode: user.NationalCode,
-                        PhoneNumber: user.PhoneNumber,
-                        Username: user.Username,
+                </DialogContent>
+                <DialogActions>
+                    <Button variant={"contained"} color={"primary"} onClick={() => uploadImage()}>تایید</Button>
+                </DialogActions>
+            </Dialog>
+        </>)
+    }
 
-                    }}
-                    onSubmit={(values, {setStatus, setSubmitting}) => {
-                        user_updateMe(values).then(result => {
-                            setUser(result.data.Data);
-                            props.RequestUser(values)
-                        }).catch(e => {
-                            try {
-                                error.showError({message: e.response.data.Message,});
-                            } catch (f) {
-                                error.showError({message: "خطا نا مشخص",});
-                            }
-                        });
-                    }}
+    return (
+        <>
+            <Card elevation={3} sx={{margin: 1}}>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
                 >
-                    {({
-                          values,
-                          status,
-                          errors,
-                          touched,
-                          handleChange,
-                          handleBlur,
-                          handleSubmit,
-                          isSubmitting,
-                          setFieldValue
-                      }) => (
-                        <>
-                            <div className="form-group p-4">
-                                <TextField
-                                    fullWidth
-                                    id="outlined-adornment-password"
-                                    className="w-100"
-                                    variant="outlined"
-                                    margin="normal"
-                                    name="PhoneNumber"
-                                    type="text"
-                                    aria-readonly
-                                    value={values.PhoneNumber||""}
-                                    label={"شماره همراه"}
-                                />
-                                <TextField
-                                    fullWidth
-                                    id="outlined-adornment-password"
-                                    className="w-100"
-                                    variant="outlined"
-                                    margin="normal"
-                                    name="Username"
-                                    type="text"
-                                    value={values.Username||""}
-                                    onChange={e => setFieldValue("Username", e.target.value)}
-                                    label={"نام کاربری"}
-                                />
-                                <TextField
-                                    fullWidth
-                                    id="outlined-adornment-password"
-                                    className="w-100"
-                                    variant="outlined"
-                                    margin="normal"
-                                    name="FullName"
-                                    type="text"
-                                    value={values.FullName||""}
-                                    onChange={handleChange}
-                                    label={"نام و نام خانوادگی"}
-                                />
 
-                                <LocalizationProvider
-                                    dateAdapter={AdapterJalaali} adapterLocale={"fa-IR"}>
-                                    <DatePicker
+                    <label htmlFor="raised-button-file">
+                        <Avatar
+                            sx={{width: 120, height: 120, marginTop: 3}}
+                            alt="userImage"
+                            src={imageUrl}
+                        />
+                    </label>
+                    <Input
+                        accept="image/*"
+                        className={"input"}
+                        style={{display: 'none'}}
+                        id="raised-button-file"
+                        onChange={(e) => {
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                                SetImageToCrop(reader.result);
+                            };
+                            reader.readAsDataURL(e.target.files[0]);
+                        }}
+                        type="file"
+                    />
+                    <Formik
+                        initialValues={{
+                            Id: user.Id,
+                            AvatarId: user.AvatarId,
+                            Bio: user.Bio,
+                            Birthday: user.Birthday ? user.Birthday : "",
+                            Email: user.Email,
+                            FullName: user.FullName,
+                            NationalCode: user.NationalCode,
+                            PhoneNumber: user.PhoneNumber,
+                            Username: user.Username,
+
+                        }}
+                        onSubmit={(values, {setStatus, setSubmitting}) => {
+                            user_updateMe(values).then(result => {
+                                setUser(result.data.Data);
+                                props.RequestUser(values)
+                            }).catch(e => {
+                                try {
+                                    error.showError({message: e.response.data.Message,});
+                                } catch (f) {
+                                    error.showError({message: "خطا نا مشخص",});
+                                }
+                            });
+                        }}
+                    >
+                        {({
+                              values,
+                              status,
+                              errors,
+                              touched,
+                              handleChange,
+                              handleBlur,
+                              handleSubmit,
+                              isSubmitting,
+                              setFieldValue
+                          }) => (
+                            <>
+                                <div className="form-group p-4">
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-password"
+                                        className="w-100"
                                         variant="outlined"
-                                        onChange={(e, w) => {
-                                            setFieldValue('Birthday', format(Date.parse(e), "yyyy-MM-dd"))
-                                        }}
-                                        toolbarFormat={"jYYYY/jMM/jDD"}
-                                        inputFormat={"jYYYY/jMM/jDD"}
-                                        value={values.Birthday||""}
-                                        renderInput={(params) =>
-                                            <TextField
-                                                {...params}
-                                                fullWidth
-                                                className="w-100"
-                                                variant="outlined"
-                                                margin="normal"
-                                                label={"تاریخ تولد"}
-                                            />
-                                        }
+                                        margin="normal"
+                                        name="PhoneNumber"
+                                        type="text"
+                                        aria-readonly
+                                        value={values.PhoneNumber || ""}
+                                        label={"شماره همراه"}
                                     />
-                                </LocalizationProvider>
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-password"
+                                        className="w-100"
+                                        variant="outlined"
+                                        margin="normal"
+                                        name="Username"
+                                        type="text"
+                                        value={values.Username || ""}
+                                        onChange={e => setFieldValue("Username", e.target.value)}
+                                        label={"نام کاربری"}
+                                    />
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-password"
+                                        className="w-100"
+                                        variant="outlined"
+                                        margin="normal"
+                                        name="FullName"
+                                        type="text"
+                                        value={values.FullName || ""}
+                                        onChange={handleChange}
+                                        label={"نام و نام خانوادگی"}
+                                    />
 
-                                <TextField
-                                    fullWidth
-                                    id="outlined-adornment-password"
-                                    className="w-100"
-                                    variant="outlined"
-                                    margin="normal"
-                                    name="NationalCode"
-                                    type="text"
-                                    value={values.NationalCode||""}
-                                    onChange={handleChange}
-                                    label={"کد ملی"}
-                                />
-                                <TextField
-                                    fullWidth
-                                    id="outlined-adornment-password"
-                                    className="w-100"
-                                    variant="outlined"
-                                    margin="normal"
-                                    name="Email"
-                                    type="text"
-                                    value={values.Email||""}
-                                    onChange={handleChange}
-                                    label={"ایمیل"}
-                                />
-                                <TextField
-                                    fullWidth
-                                    id="outlined-adornment-password"
-                                    className="w-100"
-                                    variant="outlined"
-                                    multiline
-                                    margin="normal"
-                                    name="Bio"
-                                    type="text"
-                                    value={values.Bio||""}
-                                    onChange={handleChange}
-                                    label={"درباره من"}
-                                />
-                                <Button className="mt-4" variant={"contained"} fullWidth
-                                        onClick={handleSubmit}>ثبت</Button>
-                            </div>
+                                    <LocalizationProvider
+                                        dateAdapter={AdapterJalaali} adapterLocale={"fa-IR"}>
+                                        <DatePicker
+                                            variant="outlined"
+                                            onChange={(e, w) => {
+                                                setFieldValue('Birthday', format(Date.parse(e), "yyyy-MM-dd"))
+                                            }}
+                                            toolbarFormat={"jYYYY/jMM/jDD"}
+                                            inputFormat={"jYYYY/jMM/jDD"}
+                                            value={values.Birthday || ""}
+                                            renderInput={(params) =>
+                                                <TextField
+                                                    {...params}
+                                                    fullWidth
+                                                    className="w-100"
+                                                    variant="outlined"
+                                                    margin="normal"
+                                                    label={"تاریخ تولد"}
+                                                />
+                                            }
+                                        />
+                                    </LocalizationProvider>
 
-                        </>
-                    )}
-                </Formik>
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-password"
+                                        className="w-100"
+                                        variant="outlined"
+                                        margin="normal"
+                                        name="NationalCode"
+                                        type="text"
+                                        value={values.NationalCode || ""}
+                                        onChange={handleChange}
+                                        label={"کد ملی"}
+                                    />
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-password"
+                                        className="w-100"
+                                        variant="outlined"
+                                        margin="normal"
+                                        name="Email"
+                                        type="text"
+                                        value={values.Email || ""}
+                                        onChange={handleChange}
+                                        label={"ایمیل"}
+                                    />
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-password"
+                                        className="w-100"
+                                        variant="outlined"
+                                        multiline
+                                        margin="normal"
+                                        name="Bio"
+                                        type="text"
+                                        value={values.Bio || ""}
+                                        onChange={handleChange}
+                                        label={"درباره من"}
+                                    />
+                                    <Button className="mt-4" variant={"contained"} fullWidth
+                                            onClick={handleSubmit}>ثبت</Button>
+                                </div>
 
-            </Grid>
-        </Card>
+                            </>
+                        )}
+                    </Formik>
+
+                </Grid>
+            </Card>
+            {renderModalCrop()}
+        </>
     );
 };
 

@@ -7,3 +7,6 @@ export function media_AddImage(data) {
             "Content-Type": "multipart/form-data",
         },});
 }
+export function media_getCatById(data) {
+    return axios.get(Api_url.multimedia.categoryGetById,{params:data});
+}

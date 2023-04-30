@@ -3,7 +3,7 @@ import VenuesArea from '../components/Venues/VenuesArea'
 import VenuesBreadcrumb from '../components/Venues/VenuesBreadcrumb'
 import Layout from '../layouts/Layout'
 
-export default function NewsDetails() {
+export default function VenuesDetails() {
     return (
         <>
             <Layout>

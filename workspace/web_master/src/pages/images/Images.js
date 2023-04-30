@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {media_AddImage} from "../../network/api/multimedia.api";
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {media_AddImage, media_getCatById} from "../../network/api/multimedia.api";
 import {place_AddMultimedia, Place_deleteMultimedia, place_getMultimedias} from "../../network/api/place.api";
 import {
     Box,
@@ -25,17 +25,38 @@ import getArrenge from "./imageListArrenges";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import {CircleStencil, FixedCropper} from 'react-advanced-cropper'
+import 'react-advanced-cropper/dist/style.css';
+import {resizeCanvas} from "../../helper/utils";
 
 const Images = () => {
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [imageList,SetImageList] = useState([])
+    const [imageToCrop, SetImageToCrop] = useState(null)
     const [image, SetImage] = useState(null);
+    const [ratio, setRatio] = useState(null)
+    const cropperRef = useRef(null);
 
     useEffect(() => {
         getImageList();
+        getratio()
     }, []);
+
+    function getratio() {
+        media_getCatById({id: 3})
+            .then(result => {
+                setRatio(result.data.Data);
+            })
+            .catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+    }
 
     function getImageList(){
         place_getMultimedias(place.Id).then(result=>{
@@ -47,15 +68,6 @@ const Images = () => {
                 error.showError({message: "خطا نا مشخص",});
             }
         })
-    }
-
-    function srcset(image, size, rows = 1, cols = 1) {
-        return {
-            src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-            srcSet: `${image}?w=${size * cols}&h=${
-                size * rows
-            }&fit=crop&auto=format&dpr=2 2x`,
-        };
     }
 
     function deleteMultimedia(event,item){
@@ -73,47 +85,109 @@ const Images = () => {
         })
     }
 
-    function addImageToPlace(e) {
-        e.preventDefault()
-        if (!image) return;
-        const formData = new FormData();
-        formData.append("MediaType", "IMAGE");
-        formData.append("File", image);
-        formData.append("CategoryId", "3");
-        formData.append("Title", e.target.title.value);
-        formData.append("Description", e.target.description.value);
-        //
-        media_AddImage(formData)
-            .then(data => {
-                place_AddMultimedia({
-                    Place:{Id:place.Id},
-                    Multimedia:{Id:data.data.Data.Id}
-                }).then(result => {
-                    getImageList();
-                    setOpenModalAdd(false);
-                    SetImage(null);
-
-                }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                })
-            }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        })
-    }
 
     function ModalAddImage() {
+
+        function uploadImage(e) {
+            e.preventDefault()
+            if (!image) return;
+            const formData = new FormData();
+            formData.append("MediaType", "IMAGE");
+            formData.append("File", image);
+            formData.append("CategoryId", "3");
+            formData.append("Title", e.target.title.value);
+            formData.append("Description", e.target.description.value);
+            //
+            media_AddImage(formData)
+                .then(data => {
+                    place_AddMultimedia({
+                        Place:{Id:place.Id},
+                        Multimedia:{Id:data.data.Data.Id}
+                    }).then(result => {
+                        getImageList();
+                        setOpenModalAdd(false);
+                        SetImage(null);
+
+                    }).catch(e => {
+                        try {
+                            error.showError({message: e.response.data.Message,});
+                        } catch (f) {
+                            error.showError({message: "خطا نا مشخص",});
+                        }
+                    })
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            })
+        }
+
+        function renderModalCrop() {
+
+            const onChange = (cropper) => {
+                console.log(cropper.getCoordinates(), cropper.getCanvas());
+
+            };
+            const croppedImage = () => {
+
+                let canvas = cropperRef.current?.getCanvas();
+                if (canvas) {
+                    if (canvas.height < ratio.MINH) {
+                        error.showError({message: "تصویر کوچک است",});
+                        return;
+                    }
+                    if (canvas.height > ratio.MAXH) {
+                        canvas = resizeCanvas(canvas,ratio.MAXH,null);
+                    }
+                    canvas.toBlob((blob) => {
+                        if (blob) {
+                            SetImage(blob);
+                            SetImageToCrop(null)
+
+                        }
+                    }, 'image/jpeg');
+                }
+            }
+
+            return (<>
+
+                <Dialog
+                    className={"w-100"}
+                    open={!!imageToCrop} onClose={() => SetImageToCrop(null)}>
+                    <DialogContent>
+                        <FixedCropper
+
+                            ref={cropperRef}
+                            src={imageToCrop}
+                            stencilProps={{
+                                aspectRatio: ratio?.ARW/ratio?.ARH,
+                                handlers: false,
+                                lines: false,
+                                movable: false,
+                                resizable: false
+
+                            }}
+                            stencilSize={{
+                                width: ratio?ratio.MAXW:1000,
+                                height: ratio?ratio.MAXH:1000,
+                            }}
+                            onChange={onChange}
+                            className={'cropper'}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant={"contained"} color={"primary"} onClick={() => croppedImage()}>تایید</Button>
+                    </DialogActions>
+                </Dialog>
+            </>)
+        }
+
         return (
             <div>
                 <Dialog open={openModalAdd} onClose={() => setOpenModalAdd(false)}>
-                    <Form onSubmit={(e) => addImageToPlace(e)}>
+                    <Form onSubmit={(e) => uploadImage(e)}>
                         <DialogTitle>افزودن تصویر</DialogTitle>
                         <DialogContent>
                             {image ? (<>
@@ -136,7 +210,13 @@ const Images = () => {
                                     className={"input"}
                                     style={{display: 'none'}}
                                     id="raised-button-file"
-                                    onChange={e => SetImage(e.target.files[0])}
+                                    onChange={(e) => {
+                                        const reader = new FileReader();
+                                        reader.onload = () => {
+                                            SetImageToCrop(reader.result);
+                                        };
+                                        reader.readAsDataURL(e.target.files[0]);
+                                    }}
                                     type="file"
                                 />
                             </>)}
@@ -171,6 +251,7 @@ const Images = () => {
                         </DialogActions>
                     </Form>
                 </Dialog>
+                {renderModalCrop()}
             </div>
         )
     }

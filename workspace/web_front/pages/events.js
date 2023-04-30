@@ -3,7 +3,7 @@ import EventsArea from '../components/Events/EventsArea'
 import EventsBreadcrumb from '../components/Events/EventsBreadcrumb'
 import Layout from '../layouts/Layout'
 
-export default function NewsDetails() {
+export default function EventsDetails() {
     return (
         <>
             <Layout>

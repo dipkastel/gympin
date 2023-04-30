@@ -27,10 +27,10 @@ export function* saga() {
                 });
             })
         );
+        yield put(authActions.SetUser(result));
         const place =yield select(getPlace);
         if(place)
             yield put(sagaActions.RequestAccess(result.Id,place.Id));
-        yield put(authActions.SetUser(result));
     });
     yield takeLatest(ActionTypesSaga.RequestPlace, function* placeRequested(action) {
         const result = yield call(

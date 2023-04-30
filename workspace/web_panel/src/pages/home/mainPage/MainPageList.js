@@ -28,7 +28,7 @@ const MainPageList = () => {
     }, [page, rowsPerPage])
     function getListPages(){
         homepage_query({
-            queryType: "SEARCH",
+            queryType: "FILTER",
             ParentId:1,
             paging: {Page: page, Size: rowsPerPage,Desc:true}
         }).then((data) => {

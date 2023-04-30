@@ -91,6 +91,12 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
+    @GetMapping("/checkUsernameAvailable")
+    public ResponseEntity<Boolean> checkUsernameAvailable(String username) {
+        return ResponseEntity.ok(userService.checkUsernameAvailable(username));
+    }
+
+    @Override
     public ResponseEntity<Page<UserDto>> query(UserQuery param) {
         return ResponseEntity.ok(userService.query(param));
     }

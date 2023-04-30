@@ -2,14 +2,11 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Button, Grid, IconButton, List, ListItem, ListItemText, Tooltip} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
-import {Form, Modal} from "react-bootstrap";
-import Select from "react-select";
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/EditSharp';
 import {ExpandLess, ExpandMore, NavigateBefore, NavigateNext} from '@mui/icons-material';
 import {
-    homepage_add,
-    homepage_delete,
-    homepage_getAllDestinations,
+    homepage_delete, homepage_getAllDestinations,
     homepage_getAllTypes,
     homepage_update
 } from "../../../../network/api/homepage.api";
@@ -19,7 +16,6 @@ import HomeUserList from "./resultItems/HomeUserList";
 import HomeBanner from "./resultItems/HomeBanner";
 import HomeDiscountList from "./resultItems/HomeDiscountList";
 import HomeContentList from "./resultItems/HomeContentList";
-import ImagePicker from "../../media/Pickers/ImagePicker";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../homePageEditor.css"
@@ -29,40 +25,24 @@ import HomeClickableBanner from "./resultItems/HomeClickableBanner";
 import HomeSingleUser from "./resultItems/HomeSingleUser";
 import HomeSingleContent from "./resultItems/HomeSingleContent";
 import HomeSingleDiscount from "./resultItems/HomeSingleDiscount";
+import HomePageAddItem from "./HomePageAddItem";
+import HomePageEditItem from "./HomePageEditItem";
 
 const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
     const error = useContext(ErrorContext);
-    const [openModalSelectImage, setOpenModalSelectImage] = useState(false)
-    const [selectedParent, setSelectedParent] = useState(homeitems)
-    const [formVisibleElements, setFormVisibleElements] = useState({Title: false, Description: false})
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [destination, setDestination] = useState(null)
-    const [destinations, setDestinations] = useState(null)
-    const [formData, setFormData] = useState("")
-    const [image, setImage] = useState(null)
-    const [elements, setElements] = useState(null);
+    const [selectedParent, setSelectedParent] = useState(homeitems);
     const [type, setType] = useState(null);
-    useEffect(() => {
-        setSelectedParent(homeitems);
-    }, [homeitems])
+    const [itemToEdit, setItemToEdit] = useState(null);
+    const [elements, setElements] = useState(null);
+    const [destinations, setDestinations] = useState(null);
 
     useEffect(() => {
         getTypes();
         getDestinations();
-    }, [])
+        setSelectedParent(homeitems);
+    }, [homeitems])
 
-    function getTypes() {
-        homepage_getAllTypes().then(result => {
-            setElements(result.data.Data);
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
-    }
+
     function getDestinations() {
         homepage_getAllDestinations().then(result => {
             setDestinations(result.data.Data);
@@ -75,166 +55,16 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
         });
     }
 
-
-    function RenderModalAdd() {
-
-        function addItem(e) {
-            e.preventDefault()
-            var maxPriority = selectedParent.Items ? Math.max(...selectedParent.Items.map(o => o.Priority)) : -1;
-            var data = {
-                Type: type.value,
-                Title: title,
-                Description: description,
-                Destination: (destination) ? destinations.find(d=>d.Id==destination.value) : "",
-                Data: formData,
-                ImageId: image?image.Id:null,
-                parent: selectedParent,
-                Priority: (maxPriority + 1)
+    function getTypes() {
+        homepage_getAllTypes().then(result => {
+            setElements(result.data.Data);
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
             }
-            data.parent.Items = null;
-            homepage_add(data).then(result => {
-                error.showError({message: "عملیات موفق",});
-                setType(null)
-                onTypeChange(null)
-                setRenderId(Math.random())
-            }).catch(e => {
-                console.log(e);
-                try {
-                    error.showError({message: e.response.data.Message,});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            });
-
-        }
-
-        function onTypeChange(value) {
-            setType(value)
-            setDescription("")
-            setDestination(null)
-            setFormData("")
-            setTitle("")
-            setImage(null)
-            var items = {};
-            value&&elements.find(e => e.Type === value.value).Elements.forEach(item => {
-                items = {...items, [item]: true}
-            })
-            setFormVisibleElements(items);
-
-        }
-
-        function ImageSelect(image) {
-            setImage(image)
-        }
-
-        return (
-            <>
-                <Modal aria-labelledby="parent-modal-editor"
-                       aria-describedby="parent-description-editor" show={type !== null} onHide={() => setType(null)}>
-                    <Form
-                        noValidate
-                        autoComplete="off"
-                        onSubmit={(e) => addItem(e)}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن المنت به " + selectedParent.Title}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Form.Group controlId="formType">
-                                <Form.Label>نوع آیتم مورد نظر را انتخاب کنید</Form.Label>
-                                <Select
-                                    className={"dropdown"}
-                                    inputId="select-type"
-                                    options={elements&&elements.map(item => {
-                                        return {label: item.Name, value: item.Type}
-                                    })}
-                                    onChange={(e) => onTypeChange({label: e.value, value: e.value})}
-                                    defaultValue={type}
-                                />
-
-                                <Form.Text className="text-muted">
-                                    {(type && elements && elements.find(e => e.Type === type.value)) && elements.find(e => e.Type === type.value).Description}
-                                </Form.Text>
-                            </Form.Group>
-
-                            {formVisibleElements["Title"] && <Form.Group>
-                                <Form.Label>عنوان</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={title}
-                                    onChange={(e) => {
-                                        setTitle(e.target.value)
-                                    }}
-                                />
-                            </Form.Group>}
-                            {formVisibleElements["Multimedia"] && (
-                                (image) ? (<>
-                                    <img className={"home-add-form-image"} src={image.Url}/>
-                                </>) : (<>
-                                    <Form.Group>
-                                        <Form.Label>تصویر</Form.Label>
-                                        <Button
-                                            fullWidth
-                                            variant={"outlined"}
-                                            onClick={() => setOpenModalSelectImage(true)}
-                                        >انتخاب تصویر</Button>
-                                    </Form.Group>
-                                </>)
-                            )
-                            }
-                            {formVisibleElements["Description"] && <Form.Group>
-                                <Form.Label>توضیح :</Form.Label>
-                                <textarea
-                                    className="form-control"
-                                    rows="3"
-                                    value={description}
-                                    onChange={(e) => {
-                                        setDescription(e.target.value)
-                                    }}
-                                />
-                            </Form.Group>}
-                            {formVisibleElements["Destination"] && <Form.Group controlId="formAddSport">
-                                <Form.Label>مقصد را انتخاب کنید</Form.Label>
-                                <Select
-                                    className={"dropdown"}
-                                    inputId="select-Destination"
-                                    options={destinations.map(item => {
-                                        return {label: item.Name, value: item.Id}
-                                    })}
-                                    onChange={(e) => setDestination({label: e.label, value: e.value})}
-                                    value={destination}
-                                />
-                            </Form.Group>}
-                            {destination && <Form.Group>
-                                <Form.Label>مقادیر به مقصد</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={formData}
-                                    onChange={(e) => {
-                                        setFormData(e.target.value)
-                                    }}
-                                />
-                            </Form.Group>}
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button
-                                className={"button_edit"}
-                                onClick={() => setType(null)}
-                            >
-                                خیر
-                            </Button>
-                            <Button
-                                className={"button_danger"}
-                                type={"submit"}
-                            >
-                                اضافه
-                            </Button>
-                        </Modal.Footer>
-                    </Form>
-                </Modal>
-
-                {openModalSelectImage&&<ImagePicker setClose={()=>setOpenModalSelectImage(false)} onSelect={ImageSelect} options={{rowCount: 4,isSingle:true}} />}
-            </>
-        );
+        });
     }
 
 
@@ -280,7 +110,6 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
             }
         });
     }
-
 
     function deleteItem(item) {
         item.Items = null;
@@ -338,6 +167,9 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
 
                 <IconButton aria-label="delete" onClick={() => deleteItem(item)}>
                     <DeleteIcon/>
+                </IconButton>
+                <IconButton aria-label="edit" onClick={() => setItemToEdit(item)}>
+                    <EditIcon/>
                 </IconButton>
             </>)}
             >
@@ -415,7 +247,8 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
                     })}
                 </List>
             </div>
-            {RenderModalAdd()}
+            {elements&&<HomePageAddItem elements={elements} selectedParent={selectedParent} type={type} setType={setType} destinations={destinations}/>}
+            {itemToEdit&&elements&&<HomePageEditItem elements={elements} selectedParent={selectedParent} itemToEdit={itemToEdit} setItemToEdit={setItemToEdit} destinations={destinations}/>}
         </>
     );
 };

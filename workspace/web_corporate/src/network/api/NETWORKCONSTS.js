@@ -1,6 +1,6 @@
 export let AuthApi = {
-    // BASEURL: "http://localhost:8080/api/",
-     BASEURL: "https://api.gympin.ir/",
+    BASEURL: "http://localhost:8080/api/",
+     // BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
@@ -35,7 +35,8 @@ export let Api_url = {
         GET_HOME_PAGE: "v1/homepage/getHome",
     },
     multimedia:{
-        add:"v1/multimedia/add"
+        add:"v1/multimedia/add",
+        categoryGetById:"v1/multimediacategory/getById"
     },
     Notification:{
         getUserNotifications:"v1/Notification/getUserNotifications"
