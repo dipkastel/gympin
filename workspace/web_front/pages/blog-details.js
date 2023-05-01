@@ -22,7 +22,7 @@ export default function BlogDetails() {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         };
-        await fetch(getBaseUrl()+"/api/v1/article/getById?id="+id, requestOptions)
+        await fetch(getBaseUrl()+"/v1/article/getById?id="+id, requestOptions)
             .then(response => response.json())
             .then(result => {
                 setBlogpost(result.Data);

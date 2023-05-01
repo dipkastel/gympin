@@ -25,7 +25,7 @@ export default function blog() {
                 }
             })
         };
-        await fetch(getBaseUrl()+"/api/v1/article/query", requestOptions)
+        await fetch(getBaseUrl()+"/v1/article/query", requestOptions)
             .then(response => response.json())
             .then(result => {
                 setBlogs(result.Data);
