@@ -57,7 +57,7 @@ export default function BlogArea({blogs, selectedPage, setSelectedPage}) {
                                 <article key={item.Id} className="blog__box blog__box--3 blog__box--image mb-40">
                                     <div className="thumb">
                                         <a href="news-details.html">
-                                            <img src={item.ArticleImage.Url} alt={item.Title}/>
+                                            <img src={item.ArticleImage?item.ArticleImage.Url:""} alt={item.Title}/>
                                         </a>
                                     </div>
                                     <div className="content pt-50">

@@ -17,7 +17,8 @@ export default function blog() {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                "queryType": "SEARCH",
+                "queryType": "FILTER",
+                "Status":"PUBLISHED",
                 "paging": {
                     "Page": page,
                     "Size": 10,
