@@ -1,5 +1,4 @@
 import React from 'react'
-import CounterUp from '../Plugins/CounterUp'
 
 export default function HomeTwoCounter() {
     return (
@@ -13,7 +12,7 @@ export default function HomeTwoCounter() {
                         <div className="counter_box__icon">
                             <img src="/images/icons/c-1.png" alt=""/>
                         </div>
-                        <h2 className="counter_box__title"><span className="odometer" ><CounterUp count={875} /></span></h2>
+                        <h2 className="counter_box__title"><span className="odometer" >875</span></h2>
                         <p>Complete Work</p>
                     </div>
                 </div>
@@ -22,7 +21,7 @@ export default function HomeTwoCounter() {
                         <div className="counter_box__icon">
                             <img src="/images/icons/c-2.png" alt=""/>
                         </div>
-                        <h2 className="counter_box__title"><span className="odometer" ><CounterUp count={245} /></span></h2>
+                        <h2 className="counter_box__title"><span className="odometer" >245</span></h2>
                         <p>Expert Member</p>
                     </div>
                 </div>
@@ -31,7 +30,7 @@ export default function HomeTwoCounter() {
                         <div className="counter_box__icon">
                             <img src="/images/icons/c-3.png" alt=""/>
                         </div>
-                        <h2 className="counter_box__title"><span className="odometer" ><CounterUp count={452} /></span></h2>
+                        <h2 className="counter_box__title"><span className="odometer" >452</span></h2>
                         <p>Satisfied Client</p>
                     </div>
                 </div>
@@ -40,7 +39,7 @@ export default function HomeTwoCounter() {
                         <div className="counter_box__icon">
                             <img src="/images/icons/c-4.png" alt=""/>
                         </div>
-                        <h2 className="counter_box__title"><span className="odometer" ><CounterUp count={624} /></span></h2>
+                        <h2 className="counter_box__title"><span className="odometer" >624</span></h2>
                         <p>Total Coffees</p>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import getBaseUrl from "./api/network";
 
 export default function blog() {
 
-    const [blogs, setBlogs] = useState([])
+    const [Blogs, setBlogs] = useState([])
     const [selectedPage, setSelectedPage] = useState(0)
     useEffect(() => {
         getPosts(selectedPage);
@@ -37,7 +37,7 @@ export default function blog() {
         <>
             <Layout>
                 <BlogBreadcrumb/>
-                <BlogArea blogs={blogs} selectedPage={selectedPage} setSelectedPage={setSelectedPage}/>
+                <BlogArea blogs={Blogs} selectedPage={selectedPage} setSelectedPage={setSelectedPage}/>
             </Layout>
         </>
     )
