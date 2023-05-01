@@ -36,7 +36,7 @@ export default function BlogDetailsArea({blogpost}) {
                                     </div>
                                     <div className="blog-inner-img mt-40 mb-40">
                                         <div className="inner-content">
-                                            <img src={blogpost.ArticleImage.Url} alt="blog image"/>
+                                            <img src={blogpost.ArticleImage?blogpost.ArticleImage.Url:""} alt={blogpost.Title}/>
                                         </div>
                                     </div>
                                     <div className="inner-content">
