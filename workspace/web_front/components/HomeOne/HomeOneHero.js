@@ -11,7 +11,7 @@ export default function HomeOneHero() {
     const team = [
         {
             title: ["ورزش بیشتر", "سلامتی بیشتر"],
-            desc: "شادابی و نشاط بیشتر ارمغان و هدف جیم پین است",
+            desc: "پلتفرم آنلاین مدیریت و رزرو مجموعه‌های ورزشی",
             src: "/images/banner/hp-slide-1.jpeg",
             destination:"https://web.gympin.ir/profile",
             btnTitle:"ثبت نام"

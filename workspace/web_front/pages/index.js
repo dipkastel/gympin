@@ -2,6 +2,7 @@ import Image from 'next/image'
 import HomeOneAbout from '../components/HomeOne/HomeOneAbout'
 import HomeOneBrand from '../components/HomeOne/HomeOneBrand'
 import HomeOneCTA from '../components/HomeOne/HomeOneCTA'
+import HomeOneCTA2 from '../components/HomeOne/HomeOneCTA2'
 import HomeOneFAQ from '../components/HomeOne/HomeOneFAQ'
 import HomeOneFeature from '../components/HomeOne/HomeOneFeature'
 import HomeOneGTA from '../components/HomeOne/HomeOneGTA'
@@ -19,13 +20,14 @@ export default function Home() {
             <Layout>
                 <HomeOneHero />
                 <HomeOneFeature />
+                <HomeOneTestimonial />
                 <HomeOneService />
                 {/*<HomeOneProject />*/}
-                <HomeOneTestimonial />
                 {/*<HomeOnePricing />*/}
                 {/*<HomeOneNews />*/}
-                <HomeOneAbout />
                 <HomeOneCTA />
+                <HomeOneAbout />
+                <HomeOneCTA2 />
                 <HomeOneGTA />
                 <HomeOneFAQ />
                 {/*<HomeOneBrand />*/}

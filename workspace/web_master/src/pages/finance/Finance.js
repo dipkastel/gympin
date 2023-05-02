@@ -12,6 +12,7 @@ function Finance(props){
     const[place,SetPlace] = useState(currentPlace);
     const[changeValues,SetChangeValues] = useState(0);
     useEffect(() => {
+        if(!place) return;
         props.RequestPlace(place.Id)
     }, [changeValues]);
 

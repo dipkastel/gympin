@@ -25,8 +25,8 @@ export default function HomeOneService() {
                             <img src="/images/icons/s-1.png" alt=""/>
                         </div>
                         <div className="service-item__content">
-                            <h4 className="service-item__title">گستردگی ورزش ها</h4>
-                            <p>از میان 30 ورزش که توسط بیش از 150 مرکز ورزشی ارائه شده است انتخاب کنید</p>
+                            <h4 className="service-item__title">شرکت ها و سازمان ها</h4>
+                            <p>امکانات رفاهی‌ لازم را برای کارکنان شرکت خود فراهم کنید</p>
                         </div>
                     </div>
                 </div>
@@ -36,8 +36,8 @@ export default function HomeOneService() {
                             <img src="/images/icons/s-2.png" alt=""/>
                         </div>
                         <div className="service-item__content">
-                            <h4 className="service-item__title">پوشش ورزش های جدید</h4>
-                            <p>شما هرگز خسته نخواهید شد .ما هر روز ورزش های جدیدی ارائه میکنیم</p>
+                            <h4 className="service-item__title">مراکز و اماکن ورزشی</h4>
+                            <p>مراکز ورزشی خود را به  شرکت‌ها و سازمان‌ها متصل کنید</p>
                         </div>
                     </div>
                 </div>

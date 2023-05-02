@@ -10,10 +10,12 @@ const _ListItem = (props) => {
     const place = useSelector(({place}) => place.place)
 
     function changePlaceStatus(e) {
+        if(!place)return;
         place_changeStatus({
             Id:place.Id,
             Status:e.target.checked?"ACTIVE":"INACTIVE"
         }).then(result=>{
+            if(!place) return;
             props.RequestPlace(place.Id)
         }).catch(e => {
             try {
@@ -23,6 +25,9 @@ const _ListItem = (props) => {
             }
         })
     }
+
+    if(!place)
+        return (<></>);
 
     return (
         <Card elevation={3} sx={{margin: 1}} >

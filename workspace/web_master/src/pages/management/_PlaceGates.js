@@ -34,6 +34,7 @@ const _PlaceGates = (props) => {
     }, []);
 
     function getPlaceGates() {
+        if(!place) return;
         Gates_getByPlace({Id: place.Id}).then(result => {
             props.SetGates(result.data.Data);
         }).catch(e => {

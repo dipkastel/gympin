@@ -28,8 +28,12 @@ const _transactions = ({place}) => {
         getPlaceTransactions()
     }, [page]);
 
+    if(!place)
+        return (<></>);
+
     function getPlaceTransactions() {
 
+        if(!place) return;
         transaction_query({
             queryType: "FILTER",
             TransactionType:"PLACE_TICKET_SETTLEMENT",

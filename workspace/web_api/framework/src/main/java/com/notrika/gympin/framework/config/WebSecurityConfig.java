@@ -74,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/homepage/getHome"
                         ,"/api/v1/location/getAllPlace"
                         ,"/api/v1/location/getPlaceById"
+                        ,"/api/v1/location/query"
                         ,"/api/v1/place/getAll"
                         ,"/api/v1/place/getById"
                         ,"/api/v1/place/query"
@@ -82,6 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/OptionOfPlace/getByPlaceId"
                         ,"/api/v1/OptionOfPlace/getByPlaceId"
                         ,"/api/v1/plan-gate-timing/getByPlan"
+                        ,"/api/v1/sport/query"
                         ,"/api/v1/article/query"
                         ,"/api/v1/article/getById"
                 )

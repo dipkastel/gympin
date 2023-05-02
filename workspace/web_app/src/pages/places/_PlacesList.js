@@ -18,13 +18,13 @@ const _PlacesList = () => {
     const [filters, SetFilters] = useState([...defaultFilters,{
         type: "gender",
         name: "جنسیت",
-        value: currentUser.Gender,
+        value: currentUser?currentUser.Gender:null,
         selectedName: ""
     }])
     const [sortBy, SetSortBy] = useState("Id")
     const [openModalFilter, setOpenModalFilter] = useState(false)
     useEffect(() => {
-        console.log(filters)
+        console.log(filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null)
         Place_query({
             queryType: "FILTER",
             Status:"Active",

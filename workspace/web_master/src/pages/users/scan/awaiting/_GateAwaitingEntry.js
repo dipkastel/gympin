@@ -30,6 +30,7 @@ export default function _GateAwaitingEntry({enterAccepted}) {
     }, []);
 
     function getRequestedUsers() {
+        if(!place) return;
         ticket_getEnterRequested({placeId: place.Id}).then(result => {
             SetAwaitingUsers(result.data.Data);
         }).catch(e => {

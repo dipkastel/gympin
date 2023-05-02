@@ -83,8 +83,8 @@ const _Filter = ({setBaseFilters,BaseFilters, setBaseSortBy}) => {
     const [filters, SetFilters] = useState([...defaultFilters,{
             type: "gender",
             name: "جنسیت",
-            value: genders.find(i=>i.value===currentUser.Gender).value,
-            selectedName: genders.find(i=>i.value===currentUser.Gender).Name
+            value: currentUser?currentUser.Gender:null,
+            selectedName: currentUser?genders.find(i=>i.value===currentUser.Gender).Name:null
         }]
     )
     useEffect(() => {

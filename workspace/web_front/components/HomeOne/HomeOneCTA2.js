@@ -9,13 +9,13 @@ export default function HomeOneCTA() {
                     <div className="row">
                         <div className="col-xl-8">
                             <div className="section-header">
-                                <h2 className="section-title section-title__white">برای شرکت نیازمند<br/>
-                                    راه کارهای ورزشی هستید؟</h2>
+                                <h2 className="section-title section-title__white">برای مرکز ورزشی خود<br/>
+                                    کاربران جدید داشته باشید</h2>
                             </div>
                         </div>
                         <div className="col-xl-4 text-right ltr">
                             <div className="cta-right">
-                                <a href="/corporate" className="site-btn site-btn__s3">
+                                <a href="/places" className="site-btn site-btn__s3">
                                     <span className="icon"><i className="far fa-arrow-left"></i></span>
                                     همراه شوید
                                 </a>

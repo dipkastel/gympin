@@ -32,6 +32,7 @@ const _SettingsCodeForQr = () => {
         getAllQrMessages();
     }, []);
     function getAllQrMessages(){
+        if(!place) return;
         PlacesQr_getByPlace({Id: place.Id}).then(result => {
             SetQrLists(result.data.Data)
         }).catch(e => {

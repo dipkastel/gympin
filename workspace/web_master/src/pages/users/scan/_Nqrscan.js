@@ -30,6 +30,7 @@ const _Nqrscan = ({selectedTicket}) => {
         SetScannedCode(null);
     }, [openModalNewUser, openModalNewTicket]);
     useEffect(() => {
+        if(!place) return;
         PlacesQr_getByPlace({Id: place.Id}).then(result => {
             SetMessages(result.data.Data)
         }).catch(e => {

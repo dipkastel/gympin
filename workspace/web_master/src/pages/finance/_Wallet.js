@@ -24,7 +24,12 @@ const _Wallet = ({place,onRequestComplete}) => {
     const [openModalRequest, setOpenModalRequest] = React.useState(false);
 
 
+
+    if(!place)
+        return (<></>);
+
     function ModalDemandPayment() {
+        if(!place) return;
         function request(e) {
             e.preventDefault()
             transaction_settlementRequest({PlaceId:place.Id,Amount:toPriceWithoutComma(e.target.requestAmount.value)}).then(result=>{

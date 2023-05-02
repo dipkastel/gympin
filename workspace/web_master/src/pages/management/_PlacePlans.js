@@ -31,6 +31,7 @@ const _PlaceGates = () => {
     }, []);
 
     function getPlacePlans() {
+        if(!place) return;
         Plans_getByPlace({Id: place.Id}).then(result => {
             setPlansList(result.data.Data);
         }).catch(e => {

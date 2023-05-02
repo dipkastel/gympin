@@ -47,7 +47,9 @@ export default function ApplicationRoutes() {
     }, []);
 
     function getAccess(){
-        store.dispatch(sagaActions.RequestAccess(user.Id,place.Id));
+        try{
+            store.dispatch(sagaActions.RequestAccess(user.Id,place.Id));
+        }catch (e) {}
     }
 
     return (
