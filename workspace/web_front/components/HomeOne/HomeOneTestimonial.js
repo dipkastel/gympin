@@ -12,9 +12,9 @@ export default function HomeOneTestimonial() {
         {
             sub:"سوال",
             title:"جیم پین چیست؟",
-            text:"جیم پین، پلتفرمی برای ارتباط بین مراکز ورزشی و شرکت‌هاست. با جیم پین، شرکت‌ها می‌توانند به کارمندانشان دسترسی به مراکز ورزشی بدهند و همچنین مراکز ورزشی می‌توانند مشتریان جدید داشته باشند.",
-            userName:"",
-            position:"",
+            text:"جیم پین، پلتفرمی برای ارتباط بین مراکز ورزشی و شرکت‌هاست. با جیم پین، شرکت‌ها می‌توانند به کارمندانشان دسترسی به مراکز ورزشی بدهند و همچنین مراکز ورزشی می‌توانند مشتریان جدید داشته باشند",
+            userName:"و سازمان ها شادابتر خواهند بود",
+            position:"مراکز با جیم پین عضو جدید میگیرند",
             src: "/images/other/author-1.png"
         },
         {
@@ -23,7 +23,7 @@ export default function HomeOneTestimonial() {
             text: "جیم پین این امکان را فراهم کرده تا شما قبل از ورود به مراکز از وضعیت شلوغی آن مرکز مطلع شوید و بتوانید ورزش لذت بخشتری را تجربه کنید . کیف پول جیم پین به شما این امکان را میدهد تا دیگر برای خرید پلن های ورزشی دست به کارت هم نشوید ",
             userName:"",
             position:"",
-            src: "/images/other/author-2.png"
+            src: "/images/other/traffic.jpg"
         }
     ];
     return (
@@ -79,8 +79,7 @@ export default function HomeOneTestimonial() {
                                                     <p>
                                                         {item.text}
                                                     </p>
-                                                    <h4 className="name mt-40">{item.userName} - <span className="designation">{item.position}</span></h4>
-                                                    <h4 className="name mt-40">{item.userName} - <span className="designation">{item.position}</span></h4>
+                                                    <h4 className="name mt-80">{item.userName} <span className="designation">{item.position}</span></h4>
                                                 </div>
                                             </div>
                                         </div>

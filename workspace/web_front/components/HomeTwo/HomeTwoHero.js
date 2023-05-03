@@ -15,7 +15,7 @@ export default function HomeTwoHero() {
                                 <div className="hero-text">
                                     <h2>همکارانی پر انرژی <br />
                                         در محیطی پویا</h2>
-                                    <p>هدف شما اولویت ماست</p>
+                                    <p>سلامتی، ارزشمندترین سرمایه‌ است</p>
                                     <a href="#corporate-contact" className="site-btn site-btn__2"><span className="icon"><i
                                         className="far fa-arrow-left"/></span> مشاوره</a>
                                 </div>

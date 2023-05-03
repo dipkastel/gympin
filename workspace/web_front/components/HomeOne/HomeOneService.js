@@ -19,28 +19,28 @@ export default function HomeOneService() {
                 </div>
             </div>
             <div className="row mt-none-50">
-                <div className="col-xl-6 col-lg-6 mt-50">
+                <a href={"/corporate"} className="col-xl-6 col-lg-6 mt-50">
                     <div className="service-item d-flex">
                         <div className="service-item__icon service-item__icon--1">
-                            <img src="/images/icons/s-1.png" alt=""/>
+                            <img src="/images/icons/s-3.png" alt=""/>
                         </div>
                         <div className="service-item__content">
                             <h4 className="service-item__title">شرکت ها و سازمان ها</h4>
                             <p>امکانات رفاهی‌ لازم را برای کارکنان شرکت خود فراهم کنید</p>
                         </div>
                     </div>
-                </div>
-                <div className="col-xl-6 col-lg-6 mt-50">
+                </a>
+                <a href={"https://place.gympin.ir"} className="col-xl-6 col-lg-6 mt-50">
                     <div className="service-item d-flex">
                         <div className="service-item__icon service-item__icon--2">
-                            <img src="/images/icons/s-2.png" alt=""/>
+                            <img src="/images/icons/s-5.png" alt=""/>
                         </div>
                         <div className="service-item__content">
                             <h4 className="service-item__title">مراکز و اماکن ورزشی</h4>
                             <p>مراکز ورزشی خود را به  شرکت‌ها و سازمان‌ها متصل کنید</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div className="row justify-content-center">
                 <div className="col-xl-8 text-center">

@@ -11,13 +11,13 @@ export default function AboutBreadcrumb() {
                         <div className="col-xl-5 d-flex">
                             <div className="breadcrumb-text">
                                 <h2 className="breadcrumb-text__title">
-                                    برند جیم پین
+                                    درباره ما
                                 </h2>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
             </section>
             {/* <!-- breadcrumb section end --> */}
         </>

@@ -10,7 +10,6 @@ export default function FAQ() {
             <Layout>
                 <FAQBreadcrumb />
                 <FAQArea />
-                <FAQGTA />
             </Layout>
         </>
     )

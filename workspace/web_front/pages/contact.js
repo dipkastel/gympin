@@ -10,7 +10,7 @@ export default function Contact() {
         <>
             <Layout>
                 <ContactBreadcrumb/>
-                {/*<ContactInfo/>*/}
+                <ContactInfo/>
                 <ContactGTA/>
                 {/*<ContactMap/>*/}
             </Layout>

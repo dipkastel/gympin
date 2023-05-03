@@ -16,19 +16,21 @@ export default function HomeOneAbout() {
                             <div className="section-header mb-40">
                                 <h4 className="sub-heading mb-10">جیم پین</h4>
                                 <h3 className=" mb-35">ورزشکاران خود را هوشمند مدیریت کنید</h3>
-                                <p>جیم پین موقعیتی را فراهم کرده تا شما بتوانید در یک پلتفرم یکپارچه آنلاین خدمات خود را ارائه کنید و با دریافت گزارشات روند کاری خود را بهبود بخشید.</p>
+                                <p>جیم پین موقعیتی را فراهم کرده تا شما بتوانید در یک پلتفرم یکپارچه آنلاین خدمات خود را ارائه کنید </p>
                             </div>
                             <div className="about-lists">
                                 <ul>
-                                    <li><i className="fa fa-check"></i>امکان مدیریت ترافیک مرکز
-                                    </li>
-                                    <li><i className="fa fa-check"></i>امکان مدیریت پرسنل</li>
-                                    <li><i className="fa fa-check"></i>گزارشات حرفه ای</li>
+                                    <li><i className="fa fa-check"></i>اپلیکیشن مجزا برای مراکز ورزشی</li>
+                                    <li><i className="fa fa-check"></i>امکان مدیریت مالی دقیق</li>
+                                    <li><i className="fa fa-check"></i>امکان مدیریت ورزشکاران</li>
+                                    <li><i className="fa fa-check"></i>امکان مدیریت ترافیک مرکز</li>
+                                    <li><i className="fa fa-check"></i>امکان مدیریت پرسنل و مدیریت دسترسی ها</li>
                                     <li><i className="fa fa-check"></i>مدیریت پلن ها و تخفیف ها</li>
                                     <li><i className="fa fa-check"></i>اطلاع رسانی کمپین ها</li>
+                                    <li><i className="fa fa-check"></i>امکان پرداخت آنلاین</li>
                                     <li><i className="fa fa-check"></i>و ...</li>
                                 </ul>
-                                <a href="about.html" className="site-btn site-btn__s2 mt-55"><span className="icon icon__black"><i
+                                <a href="https://place.gympin.ir/auth/register" className="site-btn site-btn__s2 mt-55"><span className="icon icon__black"><i
                                     className="far fa-arrow-left"></i></span> یک قدم تا همکاری</a>
                             </div>
                         </div>

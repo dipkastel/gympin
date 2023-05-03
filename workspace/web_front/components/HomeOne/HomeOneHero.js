@@ -12,14 +12,14 @@ export default function HomeOneHero() {
         {
             title: ["ورزش بیشتر", "سلامتی بیشتر"],
             desc: "پلتفرم آنلاین مدیریت و رزرو مجموعه‌های ورزشی",
-            src: "/images/banner/hp-slide-1.jpeg",
+            src: "/images/banner/front-banner5.jpg",
             destination:"https://web.gympin.ir/profile",
             btnTitle:"ثبت نام"
         },
         {
             title: ["تجربه بینظیر", "ورزش های جدید"],
             desc: "ورزش های مختلفی برای استفاده شما گرداوری شده است",
-            src: "/images/banner/hp-slide-2.jpeg",
+            src: "/images/banner/front-banner7.jpg",
             destination:"https://web.gympin.ir/places",
             btnTitle:"مراکز و ورزش‌ها"
         }

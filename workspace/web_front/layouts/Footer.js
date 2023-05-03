@@ -17,8 +17,9 @@ export default function Footer() {
                             <div className="footer-widget footer-widget__2">
                                 <ul>
                                     <li><a href="/term-and-conditions">قوانین و مقررات<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="/privacy-policy">حریم شخصی<i className="fa fa-angle-left"></i></a></li>
                                     <li><a href="/faq">سوالات متداول<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="/blog">وبلاگ<i className="fa fa-angle-left"></i></a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -26,11 +27,9 @@ export default function Footer() {
                             <div className="footer-widget footer-widget__2">
                                 <h4 className="widget-title">خدمات</h4>
                                 <ul>
-                                    <li><a href="https://web.gympin.ir">پیشنهادات ورزشی<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="/corporate">شرکت ها و سازمان ها<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="/places">مجموعه ها<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="/blog">وبلاگ<i className="fa fa-angle-left"></i></a>
-                                    </li>
+                                    <li><a href="https://web.gympin.ir/places">پیشنهادات ورزشی<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="https://corporate.gympin.ir">بخش شرکت ها و سازمان ها<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="https://place.gympin.ir">بخش مراکز ورزشی<i className="fa fa-angle-left"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -41,19 +40,21 @@ export default function Footer() {
                                 <ul>
                                     <li><a href="/contact">تماس با ما<i className="fa fa-angle-left"></i></a>
                                     </li>
+                                    <li><a href="/about">درباره ما<i className="fa fa-angle-left"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div className="col-xl-4 col-lg-6 mt-50">
                             <div className="footer-widget footer-widget__2">
                                 <div className="newslater ltr">
-                                    <h4 className="newslater__title">عضویت در خبرنامه</h4>
-                                    <div className="newslater__form">
-                                        <form action="index.html">
-                                            <input type="email" name="email" id="email" placeholder="Email" />
-                                            <button type="submit"><i className="far fa-paper-plane"></i></button>
-                                        </form>
-                                    </div>
+
+                                    {/*<h4 className="newslater__title">عضویت در خبرنامه</h4>*/}
+                                    {/*<div className="newslater__form">*/}
+                                    {/*    <form action="index.html">*/}
+                                    {/*        <input type="email" name="email" id="email" placeholder="Email" />*/}
+                                    {/*        <button type="submit"><i className="far fa-paper-plane"></i></button>*/}
+                                    {/*    </form>*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
                         </div>
@@ -64,15 +65,15 @@ export default function Footer() {
                         <div className="row">
                             <div className="col-lg-6 my-auto">
                                 <div className="copyright-text">
-                                    <p>تمامی حقوق متعلق به <a href="https://themeforest.net/user/theme_pure">جیم پین &copy;</a> میباشد.</p>
+                                    <p>تمامی حقوق متعلق به <a href="#">جیم پین &copy;</a> میباشد.</p>
                                 </div>
                             </div>
                             <div className="col-lg-6">
                                 <div className="social__links social__links--2">
-                                    <a href="#0"><i className="fab fa-telegram-plane"></i></a>
-                                    <a href="#0"><i className="fab fa-twitter"></i></a>
-                                    <a href="#0"><i className="fab fa-instagram"></i></a>
-                                    <a href="#0"><i className="fab fa-linkedin-in"></i></a>
+                                    <a href="https://instagram.com/gympin_ir"><i className="fab fa-telegram-plane"></i></a>
+                                    <a href="https://instagram.com/gympin_ir"><i className="fab fa-twitter"></i></a>
+                                    <a href="https://instagram.com/gympin_ir"><i className="fab fa-instagram"></i></a>
+                                    <a href="https://instagram.com/gympin_ir"><i className="fab fa-linkedin-in"></i></a>
                                 </div>
                             </div>
                         </div>

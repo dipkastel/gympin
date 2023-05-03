@@ -2,6 +2,7 @@ import React from 'react'
 // Import Swiper styles
 import SwiperCore, {EffectFade, Navigation} from 'swiper';
 import 'swiper/swiper.min.css';
+import BlogSidebar from "../../layouts/BlogSidebar";
 
 SwiperCore.use([Navigation, EffectFade]);
 

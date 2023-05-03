@@ -15,7 +15,7 @@ export default function HomeOneCTA() {
                         </div>
                         <div className="col-xl-4 text-right ltr">
                             <div className="cta-right">
-                                <a href="/places" className="site-btn site-btn__s3">
+                                <a href="https://place.gympin.ir/auth/register" className="site-btn site-btn__s3">
                                     <span className="icon"><i className="far fa-arrow-left"></i></span>
                                     همراه شوید
                                 </a>

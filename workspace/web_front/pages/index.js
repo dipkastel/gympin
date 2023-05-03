@@ -28,7 +28,7 @@ export default function Home() {
                 <HomeOneCTA />
                 <HomeOneAbout />
                 <HomeOneCTA2 />
-                <HomeOneGTA />
+                {/*<HomeOneGTA />*/}
                 <HomeOneFAQ />
                 {/*<HomeOneBrand />*/}
             </Layout>
