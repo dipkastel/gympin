@@ -133,7 +133,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public Page<SupportEntity> findAll(Specification<SupportEntity> specification, Pageable pageable) {
-        return null;
+        return supportRepository.findAll(specification,pageable);
     }
 
     @Override
@@ -143,6 +143,6 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public Page<SupportDto> convertToDtos(Page<SupportEntity> entities) {
-        return null;
+        return entities.map(SupportConvertor::toDto);
     }
 }

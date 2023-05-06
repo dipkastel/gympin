@@ -1,13 +1,70 @@
-import React, {useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import VideoPopUp from '../Plugins/VideoPopup'
+import {GoogleReCaptcha, useGoogleReCaptcha} from 'react-google-recaptcha-v3';
+import getBaseUrl from "../../pages/api/network";
 
 export default function HomeTwoVideo() {
-    const [isPopUp, setPopUp] = useState(false)
+    const { executeRecaptcha } = useGoogleReCaptcha();
+
+    const handleReCaptchaVerify= useCallback(async (e) => {
+        if (!executeRecaptcha) {
+            console.log('Execute recaptcha not yet available');
+            return;
+        }
+        const token = await executeRecaptcha();
+        handleVerify(token,e)
+    }, [executeRecaptcha]);
+
+    function submitForm(value) {
+        value.preventDefault();
+        handleReCaptchaVerify(value);
+        // console.log("form value:", value);
+    }
+    function handleVerify(value,e) {
+        if(value){
+            requestRegisterAdvise(e)
+        }
+    }
+
+
+    const requestRegisterAdvise = async (e) => {
+        if(!e.target.Name.value){
+            alert("نام نباید خالی باشد");
+            return;
+        }
+        if(!e.target.Tel.value){
+            alert("تلفن نباید خالی باشد");
+            return;
+        }
+        if(!e.target.Message.value){
+            alert("پیام نباید خالی باشد");
+            return;
+        }
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                PhoneNumber: e.target.Tel.value,
+                fullName: e.target.Name.value,
+                placeName: e.target.Message.value
+            })
+        };
+        await fetch(getBaseUrl()+"/v1/account/requestRegisterAdvise", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                alert("پیام شما ثبت شد به زودی با شما تماس خواهیم گرفت .")
+                e.target.Tel.value = "";
+                e.target.Name.value = "";
+                e.target.Message.value = "";
+            }).catch(e=>{
+                alert("خطا")
+            })
+    }
     return (
         <>
             {/* <!-- video area start --> */}
             <section className="video-area" id="corporate-contact">
-                <div className={"mt-160"}>
+                <div className={"mt-110 mb-80"}>
                     <div className="container-fluid">
                         <div className="row no-gutters">
                             <div className="col-xl-8 ">
@@ -15,7 +72,7 @@ export default function HomeTwoVideo() {
                                      style={{"background": "url(/images/bg/quotebg-1.jpeg)"}} data-overlay="dark"
                                      data-opacity="34">
                                     <div className="video-container-wrap">
-                                        <a onClick={setPopUp}
+                                        <div
                                            data-rel="lightcase:myCollection" data-animation="fadeInLeft"
                                            data-delay=".1s"
                                            className="video-link pointer">
@@ -28,17 +85,15 @@ export default function HomeTwoVideo() {
                                                     <i className="fa fa-play"></i>
                                                 </div>
                                             </div>
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
-                                {isPopUp && <VideoPopUp setShow={() => setPopUp(false)}
-                                                        src={"//www.youtube.com/embed/4xe72U7mXNg"}/>}
                             </div>
                             <div className="col-xl-4">
                                 <div className="quote-wrapper">
                                     <h2 className="quote-title">مشاوره رایگان</h2>
                                     <div className="quote-form rtl">
-                                        <form action="index.html" className="mt-none-15">
+                                        <form onSubmit={submitForm} className="mt-none-15">
                                             <div className="form-group mt-15">
                                                 <input type="text" name="Name" id="name" placeholder="نام"/>
                                             </div>

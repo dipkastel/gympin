@@ -11,5 +11,6 @@ public enum TransactionType {
     USER_USE_BALANCE,
     PLACE_TICKET_SETTLEMENT,
     PLACE_SETTLEMENT,
-    COMMISSION
+    COMMISSION,
+    DISCOUNT
 }

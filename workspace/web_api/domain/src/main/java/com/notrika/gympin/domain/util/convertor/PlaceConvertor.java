@@ -24,12 +24,12 @@ public final class PlaceConvertor {
 
     public static List<PlaceDto> toDto(Collection<PlaceEntity> entities) {
         if (entities == null) return null;
-        return entities.stream().map(PlaceConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().map(PlaceConvertor::toDtoSecure).collect(Collectors.toList());
     }
 
     public static Page<PlaceDto> toDto(Page<PlaceEntity> entities) {
         if (entities == null) return null;
-        return entities.map(PlaceConvertor::toDto);
+        return entities.map(PlaceConvertor::toDtoSecure);
     }
 
     public static PlaceDto toDto(PlaceEntity entity) {
@@ -44,6 +44,22 @@ public final class PlaceConvertor {
         placeDto.setStatus(entity.getStatus());
         placeDto.setCommissionFee(entity.getCommissionFee());
         placeDto.setBalance(entity.getBalance());
+        if (entity.getSportPlaces() != null)
+            placeDto.setSports(SportConvertor.toDto(entity.getSportPlaces().stream().filter(p->!p.isDeleted()).map(SportPlaceEntity::getSport).collect(Collectors.toList())));
+        placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
+        placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
+        return placeDto;
+    }
+    public static PlaceDto toDtoSecure(PlaceEntity entity) {
+        if (entity == null) return null;
+        PlaceDto placeDto = new PlaceDto();
+        placeDto.setId(entity.getId());
+        placeDto.setName(entity.getName());
+        placeDto.setLatitude(entity.getLatitude());
+        placeDto.setLongitude(entity.getLongitude());
+        placeDto.setAddress(entity.getAddress());
+        placeDto.setAutoDiscount(entity.isAutoDiscount());
+        placeDto.setStatus(entity.getStatus());
         if (entity.getSportPlaces() != null)
             placeDto.setSports(SportConvertor.toDto(entity.getSportPlaces().stream().filter(p->!p.isDeleted()).map(SportPlaceEntity::getSport).collect(Collectors.toList())));
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));

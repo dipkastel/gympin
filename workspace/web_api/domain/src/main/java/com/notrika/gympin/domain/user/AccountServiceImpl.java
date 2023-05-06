@@ -286,4 +286,36 @@ public class AccountServiceImpl implements AccountService {
         return true;
 
     }
+
+    @Override
+    public Boolean requestRegisterAdvice(RequestRegisterParam param) {
+        String title = "درخواست مشاوره از طرف "+param.getFullName();
+        String message = param.getPlaceName()+" - "+param.getFullName()+" - "+param.getPhoneNumber();
+        supportService.add(SupportParam.builder()
+                .title(title)
+                .supportMessages(SupportMessageParam.builder()
+                        .status(SupportMessageStatus.AWAITING_EXPERT)
+                        .isAnswer(false)
+                        .messages(message)
+                        .build())
+                .build());
+        return true;
+
+    }
+
+    @Override
+    public Boolean requestPublicMessage(RequestRegisterParam param) {
+        String title = "پیام از"+param.getFullName();
+        String message = param.getPlaceName()+" - "+param.getFullName()+" - "+param.getPhoneNumber();
+        supportService.add(SupportParam.builder()
+                .title(title)
+                .supportMessages(SupportMessageParam.builder()
+                        .status(SupportMessageStatus.AWAITING_EXPERT)
+                        .isAnswer(false)
+                        .messages(message)
+                        .build())
+                .build());
+        return true;
+
+    }
 }

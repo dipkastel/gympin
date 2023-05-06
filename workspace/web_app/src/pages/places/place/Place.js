@@ -4,6 +4,8 @@ import _PlaceImages from "./_PlaceImages";
 import _PlaceTabs from "./_PlaceTabs";
 import {place_getById} from "../../../network/api/place.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import "./place.css"
+import _PlaceMap from "./_PlaceMap";
 
 const Place = () => {
     const error = useContext(ErrorContext);
@@ -28,8 +30,8 @@ const Place = () => {
 
     return (
         <>
-            {place.Multimedias&&<_PlaceImages Multimedias={place.Multimedias}/>}
-            {place&&<_PlaceTabs place={place}/>}
+            {place.Multimedias&&<_PlaceImages place={place}/>}
+            <_PlaceTabs place={place}/>
         </>
     );
 };

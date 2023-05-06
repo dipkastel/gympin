@@ -12,12 +12,6 @@ export default function HomeTwoAbout() {
                                 <div className="big-thumb">
                                     <img src="/images/about/about-bg-1.jpg" alt="" />
                                 </div>
-                                <div className="mid-thumb position-absulate">
-                                    <img src="/images/about/about-bg-2.jpg" alt="" />
-                                </div>
-                                <div className="small-thumb position-absulate">
-                                    <img src="/images/about/about-bg-3.jpg" alt="" />
-                                </div>
                                 <span className="circle-shape position-absulate"><img src="/images/shape/border-shape-2.png" alt="" /></span>
                                 <span className="patternt-shape position-absulate"><img src="/images/shape/about-shape-1.png" alt="" /></span>
                             </div>

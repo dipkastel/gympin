@@ -8,5 +8,6 @@ export const TransactionTypes = {
     USER_USE_BALANCE: "استفاده از کیف پول",
     PLACE_SETTLEMENT: "تسویه حساب با مجموعه",
     PLACE_TICKET_SETTLEMENT: "پرداخت بلیط به مجموعه",
-    COMMISSION:"کمیسیون"
+    COMMISSION:"کمیسیون",
+    DISCOUNT:"تخفیف جیم پین"
 }

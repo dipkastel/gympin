@@ -126,6 +126,7 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
     }
 
     function renderItem(rootItem, item, index, isRoot) {
+        if(!elements) return (<></>);
         return (<div key={"index"+index}>
             <ListItem sx={{backgroundColor: "#eaeaea", borderRadius: 2}}
                       secondaryAction={(<>

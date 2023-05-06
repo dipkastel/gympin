@@ -5,8 +5,8 @@ export default function AboutBreadcrumb() {
     return (
         <>
             {/* <!-- breadcrumb section start --> */}
-            <section className="breadcrumb-section pt-180 pb-180 bg_img" style={{"backgroundImage":"url(/images/bg/breadcrumb-bg-1.jpeg)"}} data-overlay="dark" data-opacity="3">
-                <div className="container">
+            <section className="breadcrumb-section pt-180 pb-180 bg_img" style={{"backgroundImage":"url(/images/banner/front-banner_about.jpg)"}} data-overlay="dark" data-opacity="3">
+                <div className="container rtl">
                     <div className="row">
                         <div className="col-xl-5 d-flex">
                             <div className="breadcrumb-text">

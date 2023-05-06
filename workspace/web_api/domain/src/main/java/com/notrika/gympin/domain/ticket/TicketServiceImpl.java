@@ -96,6 +96,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
         entity.setUser(user);
         entity.setPlanName(plan.getName());
         entity.setPrice(plan.getPrice());
+        entity.setDiscount(plan.getDiscount());
         entity.setDescription(plan.getDescription());
         entity.setEntryTotalCount(plan.getEntryTotalCount());
         if (plan.getPlanExpireType() == PlanExpireType.Duration) {
@@ -140,6 +141,8 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
         if (ticketEntity.getStatus() == TicketStatus.PAYMENT_WAIT) {
             throw new TicketNotPayedException();
         } else if (ticketEntity.getStatus() == TicketStatus.READY_TO_ACTIVE) {
+            if (!userEntity.getPlacePersonnel().stream().map(p -> p.getPlace().getId()).anyMatch(p -> p.equals(ticketEntity.getPlan().getPlace().getId())))
+                throw new TicketOwnedByOtherPlaceException();
             //check for user registerd in place before
             List<TicketEntity> userPlaceTickets = ticketRepository.getUserPlaceTicket(ticketEntity.getUser().getId(), ticketEntity.getPlan().getPlace().getId());
             if (userPlaceTickets.stream().anyMatch(p -> (p.getStatus() == TicketStatus.ACTIVE) || (p.getStatus() == TicketStatus.COMPLETE) || (p.getStatus() == EXPIRE))) {
@@ -576,7 +579,15 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
 
         var placeEntity = ticketEntity.getPlan().getPlace();
         var gympinEntity = corporateService.getEntityById(1l);
-        var commission = ticketEntity.getPrice().multiply(BigDecimal.valueOf(placeEntity.getCommissionFee() / 100));
+        BigDecimal commission = null;
+        BigDecimal discount = null;
+
+        if(ticketEntity.getDiscount()==null){
+            commission = ticketEntity.getPrice().multiply(BigDecimal.valueOf((float) placeEntity.getCommissionFee()/ 100));
+        }else{
+             commission = ticketEntity.getPrice().multiply(BigDecimal.valueOf(((float)placeEntity.getCommissionFee()-(float)ticketEntity.getDiscount()) / 100));
+             discount = ticketEntity.getPrice().multiply(BigDecimal.valueOf((float)ticketEntity.getDiscount() / 100));
+        }
         var placeShare = ticketEntity.getPrice().multiply(BigDecimal.valueOf(1 - (placeEntity.getCommissionFee() / 100)));
 
         List<TransactionEntity> transactions = new ArrayList<>();
@@ -595,6 +606,17 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
                 .serial(ticketEntity.getPaymentSerial())
                 .build());
 
+        //discount
+        if(discount!=null){
+            transactions.add(TransactionEntity.builder()
+                    .transactionType(TransactionType.DISCOUNT)
+                    .amount(discount)
+                    .isChecked(false)
+                    .transactionStatus(TransactionStatus.COMPLETE)
+                    .serial(ticketEntity.getPaymentSerial())
+                    .balance(BigDecimal.ZERO.add(commission).add(discount).add(placeShare))
+                    .build());
+        }
         //comission
         transactions.add(TransactionEntity.builder()
                 .transactionType(TransactionType.COMMISSION)

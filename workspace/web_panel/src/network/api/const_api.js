@@ -255,6 +255,7 @@ export let SupportApi = {
   addMessage: "v1/Support/addMessage",
   getAll: "v1/Support/getall",
   getById: "v1/Support/getById",
+  query: "v1/Support/query",
 };
 export let TicketApi = {
   add: "v1/ticket/add",

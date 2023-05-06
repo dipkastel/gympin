@@ -12,8 +12,9 @@ import TablePagination from "@mui/material/TablePagination";
 import Box from "@mui/material/Box";
 import {useHistory} from "react-router-dom";
 import TableHead from "@mui/material/TableHead";
-import {Support_getAll} from "../../../network/api/support.api";
+import {Support_getAll, Support_query} from "../../../network/api/support.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {Chip} from "@mui/material";
 
 
 const Support = () => {
@@ -22,13 +23,16 @@ const Support = () => {
     const [rowsPerPage, setRowsPerPage] = useState(25);
     const [itemCount, setItemCount] = useState(0);
     const [SupportList, setSupportList] = useState([]);
-    const [searchString, setSearchString] = useState("");
     const history = useHistory();
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - itemCount) : 0;
 
     useEffect(() => {
-        Support_getAll()
+        Support_query({
+            queryType: "SEARCH",
+            paging: {Page: page, Size: rowsPerPage,Desc:true}
+        })
             .then((data) => {
+                console.log(data.data.Data);
                 setSupportList(data.data.Data);
             })
             .catch(e => {
@@ -38,7 +42,7 @@ const Support = () => {
                     error.showError({message: "خطا نا مشخص",});
                 }
             });
-    }, [page, rowsPerPage, searchString]);
+    }, [page, rowsPerPage]);
 
     return (
         <>
@@ -68,7 +72,7 @@ const Support = () => {
                                 <TableCell align="right">Status</TableCell>
                             </TableHead>
                             <TableBody>
-                                {SupportList.map((row, index) => {
+                                {SupportList.content&&SupportList.content.map((row, index) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
                                         <TableRow
@@ -96,7 +100,12 @@ const Support = () => {
                                                 {row.User&&"کاربر : "+row.User.Username}
                                             </TableCell>
                                             <TableCell align="right">{row.Title}</TableCell>
-                                            <TableCell align="right">{row.Messages[row.Messages.length-1].Status}</TableCell>
+                                            <TableCell align="right">
+
+                                                <Chip
+                                                    label={row.Messages[row.Messages.length-1].Status}
+                                                    color={(row.Messages[row.Messages.length-1].Status.startsWith("AWAITING"))?"error":"success"} />
+                                                </TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -116,7 +125,7 @@ const Support = () => {
                         rowsPerPageOptions={[25, 50, 100]}
                         component="div"
                         sx={{direction: "ltr"}}
-                        count={itemCount}
+                        count={SupportList.totalElements}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={(event, newPage) => setPage(newPage)}

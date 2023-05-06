@@ -50,6 +50,18 @@ public class AccountControllerImpl implements AccountController {
     }
 
     @Override
+    @PostMapping("/requestRegisterAdvise")
+    public ResponseEntity<Boolean> RequestRegisterAdvice(RequestRegisterParam param) {
+        return ResponseEntity.ok(accountService.requestRegisterAdvice(param));
+    }
+
+    @Override
+    @PostMapping("/requestPublicMessage")
+    public ResponseEntity<Boolean> RequestPublicMessage(RequestRegisterParam param) {
+        return ResponseEntity.ok(accountService.requestPublicMessage(param));
+    }
+
+    @Override
     @PostMapping("/refreshToken")
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenParam refreshToken) {
         return new ResponseEntity<>(accountService.refreshToken(refreshToken), HttpStatus.OK);

@@ -35,9 +35,9 @@ const _PlaceTabs = ({place}) => {
                 slideClassName={"rtl"}
                 index={selectedTab}
                 onChangeIndex={(e) => setSelectedTab(e)}>
-                        <_PlaceReserve place={place}/>
-                        <_PlaceAbout place={place}/>
-                        <_PlaceFacilities place={place}/>
+                <_PlaceReserve place={place}/>
+                <_PlaceAbout place={place}/>
+                <_PlaceFacilities place={place}/>
             </SwipeableViews>
         </Box>
     );

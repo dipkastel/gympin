@@ -19,6 +19,10 @@ public interface AccountController {
 
     ResponseEntity<Boolean> RequestRegisterCorporate(@RequestBody RequestRegisterParam place);
 
+    ResponseEntity<Boolean> RequestRegisterAdvice(@RequestBody RequestRegisterParam place);
+
+    ResponseEntity<Boolean> RequestPublicMessage(@RequestBody RequestRegisterParam place);
+
     ResponseEntity<?> loginUser(LoginParam loginParam) throws ExceptionBase;
 
     ResponseEntity<?> refreshToken(RefreshTokenParam refreshToken);

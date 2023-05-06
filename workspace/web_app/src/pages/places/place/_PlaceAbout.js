@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Card, Grid, Typography} from "@mui/material";
 import {PlaceAbout_getByPlace} from "../../../network/api/placeAbout.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import _PlaceMap from "./_PlaceMap";
+import _PlaceTabs from "./_PlaceTabs";
 
 const _PlaceAbout = ({place}) => {
     const error = useContext(ErrorContext);
@@ -41,6 +43,8 @@ const _PlaceAbout = ({place}) => {
                     </Card>
                 )
             )}
+
+            {place.Latitude&&place.Longitude&&<_PlaceMap place={place} />}
         </div>
     );
 };

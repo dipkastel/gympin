@@ -8,7 +8,8 @@ import '../public/css/nice-select.css'
 import '../public/css/magnific-popup.css'
 import Head from 'next/head'
 import Preloader from '../layouts/Preloader'
-import { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import '../public/css/bootstrap.rtl.css'
 import '../public/fonts/iransansweb/style.css'
 
@@ -61,9 +62,13 @@ function MyApp({ Component, pageProps }) {
         <meta name="description" content="printing service template" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
         <link rel="icon" href="images/logo/favicon.ico" />
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+
       </Head>
       {activePreLoader && <Preloader />}
-      <Component {...pageProps} />
+      <GoogleReCaptchaProvider reCaptchaKey="6LdJ3t8lAAAAACj5ztepkxe1UhNFavRqVCFYYViE" >
+        <Component {...pageProps} />
+      </GoogleReCaptchaProvider>
 
     </Fragment>
   )

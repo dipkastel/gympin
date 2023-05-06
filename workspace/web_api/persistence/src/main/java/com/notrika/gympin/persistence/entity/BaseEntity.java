@@ -72,7 +72,8 @@ public class BaseEntity<T> implements Specification<T> {
     private void addQuery(String key, CriteriaBuilder builder, Predicate predicate, From<Objects, Objects> root, QueryOperationsEnum operation, Predicate queries, Object value ) {
         Path<?> path = root;
         while (path!=null){
-            queries.getExpressions().add(builder.equal(path.get("deleted"), false));
+            if(queries.getOperator().name().equals("AND"))
+                queries.getExpressions().add(builder.equal(path.get("deleted"), false));
             path= path.getParentPath();
         }
         if(key.equals("deleted")){

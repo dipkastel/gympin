@@ -17,3 +17,7 @@ export function Support_add(data) {
 export function Support_addMessage(data) {
     return axios.post(SupportApi.addMessage, data);
 }
+
+export function Support_query(data) {
+    return axios.post(SupportApi.query, data);
+}

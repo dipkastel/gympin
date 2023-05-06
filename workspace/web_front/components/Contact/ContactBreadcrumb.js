@@ -4,7 +4,7 @@ export default function ContactBreadcrumb() {
     return (
         <>
             {/* <!-- breadcrumb section start --> */}
-            <section className="breadcrumb-section pt-180 pb-180 bg_img" style={{ "background": "url(/images/bg/breadcrumb-bg-1.jpeg)" }}
+            <section className="breadcrumb-section pt-180 pb-180 bg_img" style={{ "background": "url(/images/banner/front-banner_contact.jpg)" }}
                 data-overlay="dark" data-opacity="3">
                 <div className="container  rtl">
                     <div className="row">

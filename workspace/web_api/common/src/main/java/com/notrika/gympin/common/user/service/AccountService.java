@@ -18,5 +18,7 @@ public interface AccountService extends UserDetailsService {
     RefreshTokenDto refreshToken(RefreshTokenParam refreshToken);
     Boolean requestRegisterPlace(RequestRegisterParam param);
     Boolean requestRegisterCorporate(RequestRegisterParam param);
+    Boolean requestRegisterAdvice(RequestRegisterParam param);
+    Boolean requestPublicMessage(RequestRegisterParam param);
 
 }
