@@ -6,7 +6,7 @@ const HomeBanner =(props) => {
     return (
 
         <div>
-                <Box>
+                <Box className={"simple-banner"}>
                     <Image width={"100%"}  src={props.item.multimedia.Url}/>
                 </Box>
         </div>

@@ -1,3 +1,6 @@
+body{
+    font-family: 'IRANSans-web' !important;
+}
 .discount{
     z-index: 1;
     position: absolute;
@@ -7,7 +10,8 @@
 .discount .discountbg{
     border-style: solid;
     border-width: 0 60px 60px 0;
-    border-color: transparent #ff0000 transparent transparent;
+    border-color: transparent #e7333e transparent transparent;
+    border-radius: 0px 10px 0 0;
 }
 
 .discount .percent{
@@ -18,10 +22,46 @@
 
 .title{
     color: #FFFFFF;
-    position: absolute;
     font-size: 0.8em;
-    bottom: 0;
-    margin-bottom: 18px;
-    margin-right: 3px;
-    text-shadow: 0px 0px 4px #000;
+    background-color: #e7333e;
+    padding: 3px;
+}
+.home-header{
+    height: 42px;
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+    background: linear-gradient(180deg, rgb(207 207 207) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 100%);
+}
+.slider-main{
+    margin-top: 10px;
+}
+.slider-item{
+    padding: 10px;
+}
+.slider-item-image{
+    border-radius: 10px;
+    box-shadow: #cbcbcb 1px 1px 6px 3px;
+}
+.content-list{
+    padding: 0px 5px;
+}
+.simple-banner{
+    margin: 10px;
+}
+.simple-banner img{
+    border-radius: 10px;
+    box-shadow: #cbcbcb 1px 1px 6px 3px;
+}
+.home-title{
+    width: fit-content;
+    background-color: #e7333e;
+    padding: 4px 15px 4px 20px;
+    margin: 23px 0px 8px 0px;
+    color: #ffffff;
+    border-radius: 8px 0px 0px 8px;
+}
+.slick-slide img {
+    object-fit: contain !important;
+    height: auto !important;
 }

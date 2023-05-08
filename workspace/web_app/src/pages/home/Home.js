@@ -41,6 +41,7 @@ function Home(props) {
     }, [])
     return (
         <>
+            <div className={"home-header"}/>
             {data&&data.Items&&data.Items.sort((a, b) => a.Priority - b.Priority).map((item, index) => {
                     switch (item.Type){
                         case "SLIDER":return   <HomeSlider key={item.Id} item={item}/>

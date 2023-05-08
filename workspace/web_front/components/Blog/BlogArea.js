@@ -57,7 +57,7 @@ export default function BlogArea({blogs, selectedPage, setSelectedPage}) {
                             {blogs.content && blogs.content.map(item => (
                                 <article key={item.Id} className="blog__box blog__box--3 blog__box--image mb-40">
                                     <div className="thumb">
-                                        <a href="news-details.html">
+                                        <a href={"/blog-details/?id=" + item.Id + "&slug=" + createSlug(item.Title)}>
                                             <img src={item.ArticleImage?item.ArticleImage.Url:""} alt={item.Title}/>
                                         </a>
                                     </div>

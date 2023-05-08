@@ -1,8 +1,8 @@
 import {homepage_getAllDestinations} from "./homepage.api";
 
 export let AuthApi = {
-  // BASEURL: "https://api.gympin.ir/",
-  BASEURL : "http://localhost:8080/api/",
+  BASEURL: "https://api.gympin.ir/",
+  // BASEURL : "http://localhost:8080/api/",
   LOGIN_URL: "v1/account/login",
   SEND_SMS_URL: "v1/account/sendsms",
   register: "v1/account/register",

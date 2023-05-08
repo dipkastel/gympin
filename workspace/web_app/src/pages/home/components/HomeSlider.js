@@ -23,12 +23,12 @@ const HomeSlider = (props) => {
     };
 
     return (
-            <Slick {...settings}>
+            <Slick className={"slider-main"} {...settings}>
                 {props.item.Items&&props.item.Items.map((singleItem, index) => (
                     <div className={"slider-item"} key={index} >
                         <Link onClick={()=>clickHandler(singleItem,navigate)} underline="none" color="inherit" fontWeight="800">
                             <Box>
-                                <Image  height={"50%"} width={"100%"}  src={singleItem.multimedia.Url}/>
+                                <Image className={"slider-item-image"}  height={"50%"} width={"100%"}  src={singleItem.multimedia.Url}/>
                             </Box>
                         </Link>
                     </div>

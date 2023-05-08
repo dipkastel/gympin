@@ -8,10 +8,7 @@ const HomeClickableTitle = (prop) => {
     const navigate = useNavigate()
     const [data] = useState(prop.item);
     return (
-        <Container sx={{
-            backgroundColor: "#e7333e",
-            color:"#ffffff"
-        }}>
+        <Container sx={{}}>
             <Row>
                 <Link onClick={()=>clickHandler(data,navigate)} underline="none" color="inherit" fontWeight="800">
                     <Col className={"p-1 pb-2"} >

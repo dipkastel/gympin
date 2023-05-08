@@ -22,11 +22,11 @@ const HomeContentList = (props) => {
     };
     return (
         <>
-            <Slick {...settings}>
+            <Slick className={"content-list"} {...settings}>
                 {props.item.Items && props.item.Items.map((item, index) => (
                     <div key={index}>
                         <Link onClick={()=>clickHandler(props.item,navigate)} underline="none" color="inherit" fontWeight="800">
-                            <Card sx={{margin: 1}} elevation={3}>
+                            <Card sx={{margin:"5px",borderRadius:"10px",direction:"rtl"}} elevation={3} >
 
                                 <CardMedia
                                     component="img"
@@ -35,15 +35,15 @@ const HomeContentList = (props) => {
                                     alt={item.Title}
                                 />
 
-                                <CardContent>
-                                    <Typography variant="h5" textAlign={"center"} color="text.secondary">
-                                        {item.Title}
-                                    </Typography>
-                                    <Typography sx={{mt: 1}} variant={"body2"} textAlign={"center"}
+                                {item.Title&&item.Description&&<CardContent>
+                                    {item.Title&&<Typography  variant={"subtitle1"} textAlign={"center"} color="text.secondary">
+                                        {item.Title.substr(0,15)+"..."}
+                                    </Typography>}
+                                    {item.Description&&<Typography sx={{mt: 1}} variant={"body2"} textAlign={"center"}
                                                 color="text.secondary">
-                                        {item.Description}
-                                    </Typography>
-                                </CardContent>
+                                        {item.Description.substr(0,99)+"..."}
+                                    </Typography>}
+                                </CardContent>}
                             </Card>
                         </Link>
                     </div>

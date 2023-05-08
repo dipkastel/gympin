@@ -10,7 +10,7 @@ const HomeClickableBanner =(props) => {
 
         <div>
                 <Link onClick={()=>clickHandler(props.item,navigate)} underline="none" color="inherit" fontWeight="800">
-                    <Box>
+                    <Box className={"simple-banner"}>
                         <Image width={"100%"}  src={props.item.multimedia.Url}/>
                     </Box>
                 </Link>
