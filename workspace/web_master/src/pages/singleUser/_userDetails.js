@@ -18,7 +18,7 @@ const _userDetails = ({user}) => {
                 <Avatar
                     sx={{width: 120, height: 120}}
                     alt="Remy Sharp"
-                    src={user.Avatar.Url}/>
+                    src={user.Avatar?.Url}/>
                 <Grid container direction="row" justifyContent={"space-around"} sx={{marginY: 2}}>
                     نام :
                     <Typography

@@ -201,7 +201,7 @@ function Login(props) {
                                         <div className="form-group"
                                         >
                                             <TextField
-                                                type="password"
+                                                type="number"
                                                 margin="normal"
                                                 label={"کد پیامک"}
                                                 className="kt-width-full"
