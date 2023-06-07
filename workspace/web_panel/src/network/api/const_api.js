@@ -1,8 +1,8 @@
 import {homepage_getAllDestinations} from "./homepage.api";
 
 export let AuthApi = {
-  BASEURL: "https://api.gympin.ir/",
-  // BASEURL : "http://localhost:8080/api/",
+  // BASEURL: "https://api.gympin.ir/",
+  BASEURL : "http://localhost:8080/api/",
   LOGIN_URL: "v1/account/login",
   SEND_SMS_URL: "v1/account/sendsms",
   register: "v1/account/register",
@@ -229,6 +229,8 @@ export let PlacePersonelApi = {
   PersonnelByPlace:"v1/placePersonnel/PersonnelByPlace",
   getUserPlaceAccess:"v1/placePersonnel/getUserPlaceAccess",
   updatePersonnelAccess:"v1/placePersonnel/updatePersonnelAccess",
+  getUserPlaceGateAccess:"v1/placePersonnel/getUserPlaceGateAccess",
+  updatePersonnelGateAccess:"v1/placePersonnel/updatePersonnelGateAccess",
   getById:"v1/placePersonnel/getById"
 };
 export let ReportSettings = {

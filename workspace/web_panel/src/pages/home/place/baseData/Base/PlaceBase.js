@@ -97,7 +97,7 @@ function PlaceBase({place, updatePlace}) {
                             id="exampleTextarea"
                             rows="3"
                             name="formAddress"
-                            value={inPlace.Address}
+                            value={inPlace.Address?inPlace.Address:""}
                             onChange={(e) => setFormValues("Address", e.target.value)}
                         />
                     </Form.Group>

@@ -62,7 +62,7 @@ const _PersonnelList = ({personnelList, renewList}) => {
                         {personnelList && personnelList.map(item => (
                             <div key={"person-" + item.Id}>
                                 <Grid container direction={"row"} justifyContent="space-between" sx={{marginY: 2}}>
-                                    <ListItemButton alignItems="flex-start" onClick={()=>navigate("/management/personnelAccess", {state:{user:item.User}})} >
+                                    <ListItemButton alignItems="flex-start" onClick={()=>item.UserRole=="PLACE_OWNER"?"#":navigate("/management/personnelAccess", {state:{user:item.User}})} >
                                         <ListItemAvatar>
                                             <Avatar sx={{width: 40, height: 40}}
                                                     src={item.User.Avatar ? (item.User.Avatar.Url || "") : ""}/>
@@ -74,7 +74,7 @@ const _PersonnelList = ({personnelList, renewList}) => {
                                         />
                                     </ListItemButton>
                                     <IconButton onClick={(e)=>SetPersonnelToDelete(item)}>
-                                        <DeleteIcon color={"error"}  />
+                                        {item.UserRole=="PLACE_OWNER"?<></>:<DeleteIcon color={"error"}  />}
                                     </IconButton>
                                 </Grid>
                                 <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>

@@ -1,5 +1,5 @@
 export const accessActionTypes = {
-    SetAccess: "[Access] access "
+    SetAccess: "[Access] set access "
 };
 
 export const accessActions = {

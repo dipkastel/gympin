@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, Grid, IconButton, Typography} from "@mui/material";
+import {Card, CircularProgress, Grid, IconButton, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 import {place_getAll, Place_query} from "../../network/api/place.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
@@ -14,11 +14,11 @@ const _PlacesList = () => {
     const currentUser = useSelector(state => state.auth.user);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(15);
-    const [places, SetPlaces] = useState([])
+    const [places, SetPlaces] = useState(null)
     const [filters, SetFilters] = useState([...defaultFilters,{
         type: "gender",
         name: "جنسیت",
-        value: currentUser?currentUser.Gender:null,
+        value: currentUser?currentUser?.Gender:null,
         selectedName: ""
     }])
     const [sortBy, SetSortBy] = useState("Id")
@@ -45,7 +45,7 @@ const _PlacesList = () => {
     }, [filters,sortBy]);
 
     return (
-        <>
+        <>{places?(<>
             <_Filter setBaseFilters={(e)=>SetFilters(e)} setBaseSortBy={(e)=>SetSortBy(e)} />
             <Grid container
                   direction="row"
@@ -82,7 +82,16 @@ const _PlacesList = () => {
                     )
                 )}
             </Grid>
-        </>
+        </>):(<Grid
+        container
+        sx={{width:"100%",height:"80vh"}}
+        direction={"column"}
+        justifyContent={"center"}
+        alignItems={"center"}
+    >
+        <CircularProgress />
+    </Grid>
+)}</>
     );
 };
 

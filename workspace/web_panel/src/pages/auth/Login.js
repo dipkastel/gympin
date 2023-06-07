@@ -39,7 +39,7 @@ function Login(props) {
 
   function sendMessage(e, value) {
     if (checkMobileValid(value.username)) {
-      account_sendSms({ phoneNumber: value.username })
+      account_sendSms({ phoneNumber: value.username,Application:"WEBPANEL" })
         .then((data) => {
           var count = 120;
           setResend(count);
@@ -100,6 +100,7 @@ function Login(props) {
                 account_login({
                   username: values.username,
                   password: values.password,
+                  Application:"WEBPANEL"
                 })
                   .then((data) => {
                     disableLoading();

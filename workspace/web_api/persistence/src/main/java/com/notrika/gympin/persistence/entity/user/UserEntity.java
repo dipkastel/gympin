@@ -9,6 +9,7 @@ import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity
 import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
 import com.notrika.gympin.persistence.entity.comment.CommentGateEntity;
 import com.notrika.gympin.persistence.entity.communication.notification.NotificationEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
 import com.notrika.gympin.persistence.entity.gate.GateEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
@@ -182,6 +183,10 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @OneToMany(mappedBy = "acceptedBy")
     @ToString.Exclude
     private List<TicketEntryEntity> entranceAcceptes;
+
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private List<CorporatePersonnelEntity> corporatesPersonel;
 
     @OneToMany
     private List<CommentGateEntity> gateComments;

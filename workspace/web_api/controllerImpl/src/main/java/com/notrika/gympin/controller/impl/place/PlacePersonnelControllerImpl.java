@@ -5,7 +5,9 @@ import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.place.personnel.api.PlacePersonnelController;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
+import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelGateAccessDto;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
+import com.notrika.gympin.common.place.personnel.param.PlacePersonnelGateAccessParam;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
 import com.notrika.gympin.common.place.personnel.service.PlacePersonnelService;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
@@ -63,10 +65,23 @@ public class PlacePersonnelControllerImpl implements PlacePersonnelController {
     }
 
     @Override
+    @GetMapping("getUserPlaceGateAccess")
+    public ResponseEntity<List<PlacePersonnelGateAccessDto>> getUserPlaceGateAccess(Long placeId, Long userId) {
+        return new ResponseEntity<>(placePersonnelService.getUserPlaceGateAccess(placeId,userId),HttpStatus.OK);
+    }
+
+    @Override
+    @PostMapping("updatePersonnelGateAccess")
+    public ResponseEntity<List<PlacePersonnelGateAccessDto>> updatePersonnelGateAccess(List<PlacePersonnelGateAccessParam> param) {
+        return new ResponseEntity<>(placePersonnelService.updatePersonnelGateAccess(param),HttpStatus.OK);
+    }
+
+    @Override
     @PostMapping("updatePersonnelAccess")
     public ResponseEntity<List<PlacePersonnelAccessDto>> updatePersonnelAccess(List<PlacePersonnelAccessParam> param) {
         return new ResponseEntity<>(placePersonnelService.updatePersonnelAccess(param),HttpStatus.OK);
     }
+
 
     @Override
     public ResponseEntity<Page<PlacePersonnelDto>> query(BaseQuery<?> param) {

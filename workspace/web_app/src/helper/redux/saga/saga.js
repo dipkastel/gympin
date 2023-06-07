@@ -4,6 +4,7 @@ import {ActionTypesSaga} from "../actions/SagaActions"
 import {user_getById} from "../../../network/api/user.api";
 import {configs_getWebAppSplash} from "../../../network/api/configs.api";
 import {settingActions} from "../actions/SettingsActions";
+import store from "../store";
 
 
 export function* saga() {
@@ -33,6 +34,11 @@ export function* saga() {
             })
         );
         yield put(settingActions.SetServerSettings(result));
+    });
+    yield takeLatest(ActionTypesSaga.RequestLogout, function* logoutRequested(action) {
+        try{store.dispatch(settingActions.SetServerSettings(undefined));}catch (e) {}
+        try{store.dispatch(settingActions.SetAppSettings(undefined));}catch (e) {}
+        try{store.dispatch(authActions.Logout());}catch (e) {}
     });
 
 }

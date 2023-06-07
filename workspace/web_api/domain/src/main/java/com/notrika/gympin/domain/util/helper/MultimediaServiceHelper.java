@@ -139,7 +139,7 @@ public final class MultimediaServiceHelper {
         //save and get address
         Path targetLocation = null;
         try {
-            targetLocation = saveInStorage(getPathToStoreOrginal(multimediaStoreParam), multipartFile.getInputStream(), fileName);
+            targetLocation = saveInStorage(getPathToStoreOrginal(multimediaStoreParam), multipartFile.getInputStream(), fileName,multimedia.getDocumentFormat());
         } catch (IOException e) {
             throw new ImageSaveError();
         }
@@ -280,8 +280,12 @@ public final class MultimediaServiceHelper {
 
     }
 
-    public Path saveInStorage(Path path, InputStream fileStream, String fileName) throws IOException {
-        Path targetLocation = path.resolve(System.currentTimeMillis() + "." + fileName.split("\\.")[fileName.split("\\.").length - 1]);
+    public Path saveInStorage(Path path, InputStream fileStream, String fileName,String fileType) throws IOException {
+        String extension = fileName.split("\\.")[fileName.split("\\.").length - 1];
+        if(extension.isEmpty()||extension.equals("blob")){
+            extension=fileType.split("/")[1];
+        }
+        Path targetLocation = path.resolve(System.currentTimeMillis() + "." +extension);
         Files.copy(fileStream, targetLocation, StandardCopyOption.REPLACE_EXISTING);
         return targetLocation;
     }

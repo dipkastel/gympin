@@ -5,6 +5,7 @@ import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ticket.*;
 import com.notrika.gympin.common.exception.user.UnknownUserException;
+import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.ticket.dto.TicketDto;
 import com.notrika.gympin.common.ticket.dto.TicketEntryDto;
 import com.notrika.gympin.common.ticket.dto.TicketScannedDto;
@@ -44,10 +45,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.notrika.gympin.common.ticket.enums.TicketStatus.*;
@@ -292,7 +290,21 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
 
     @Override
     public List<TicketScannedDto> getUserEnteredByPlace(Long placeId) {
-        List<TicketEntity> ticketEntities = ticketRepository.findTicketsHasOpenEnterByPlaceId(placeId).stream().map(this::checkForExpire).collect(Collectors.toList());
+
+
+        GympinContext context = GympinContextHolder.getContext();
+        if (context == null)
+            throw new UnknownUserException();
+        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+        var usergateAccess = userRequester.getPlacePersonnel().stream().filter(p->p.getPlace().getId()==placeId).findFirst().get();
+        List<TicketEntity> ticketEntities = ticketRepository.findTicketsHasOpenEnterByPlaceId(placeId).stream().map(this::checkForExpire).filter(t->{
+            for (var gate : t.getPlan().getPlanGates().stream().map(m->m.getGateTimings().getGate()).collect(Collectors.toSet())) {
+                var gateAccess = usergateAccess.getPlacePersonnelGateAccess().stream().filter(c-> Objects.equals(c.getGate().getId(), gate.getId())).findFirst().get();
+                if(usergateAccess.getUserRole() != PlacePersonnelRole.PLACE_OWNER && !gateAccess.getAccess())
+                    return false;
+            }
+            return true;
+        }).collect(Collectors.toList());
         List<TicketScannedDto> result = new ArrayList<>();
         for (TicketEntity ticket : ticketEntities) {
             try {
@@ -308,7 +320,21 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
 
     @Override
     public List<TicketDto> getActiveTicketsOfPlace(Long placeId) {
-        List<TicketEntity> ticketEntities = ticketRepository.getActiveTicketsOfPlace(placeId).stream().map(this::checkForExpire).collect(Collectors.toList());
+
+        GympinContext context = GympinContextHolder.getContext();
+        if (context == null)
+            throw new UnknownUserException();
+        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+        var usergateAccess = userRequester.getPlacePersonnel().stream().filter(p->p.getPlace().getId()==placeId).findFirst().get();
+
+        List<TicketEntity> ticketEntities = ticketRepository.getActiveTicketsOfPlace(placeId).stream().map(this::checkForExpire).filter(t->{
+            for (var gate : t.getPlan().getPlanGates().stream().map(m->m.getGateTimings().getGate()).collect(Collectors.toSet())) {
+                var gateAccess = usergateAccess.getPlacePersonnelGateAccess().stream().filter(c-> Objects.equals(c.getGate().getId(), gate.getId())).findFirst().get();
+                if(usergateAccess.getUserRole() != PlacePersonnelRole.PLACE_OWNER && !gateAccess.getAccess())
+                    return false;
+            }
+            return true;
+        }).collect(Collectors.toList());
         return convertToDtos(ticketEntities);
     }
 

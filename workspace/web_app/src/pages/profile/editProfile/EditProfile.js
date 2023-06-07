@@ -25,7 +25,6 @@ import {useNavigate} from "react-router-dom";
 import {sagaActions} from "../../../helper/redux/actions/SagaActions";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import _EditImage from "./_EditImage";
-import {validateDate} from "@mui/x-date-pickers/internals";
 
 const EditProfile = (props) => {
     const error = useContext(ErrorContext);
@@ -41,11 +40,6 @@ const EditProfile = (props) => {
         if(!compareObjs(currentUser,user))
             navigation.reload()
     }, []);
-
-
-    function getGenderOptions() {
-        return [{label:"خانم",value:"FEMALE"},{label:"آقا",value:"MALE"}]
-    }
 
     return (
 
@@ -73,7 +67,6 @@ const EditProfile = (props) => {
 
                     }}
                     onSubmit={(values, {setStatus, setSubmitting}) => {
-                        console.log("sssss");
                         user_updateMe(values).then(result=>{
                             props.RequestUser(values)
                             setUser(result.data.Data);
@@ -178,7 +171,7 @@ const EditProfile = (props) => {
                                           setFieldValue("Username",e.target.value)
                                       }}
                                       label={"نام کاربری * "}
-                                      helperText={errors.Username}
+                                      helpertext={errors.Username}
                                       color={(errors.Username)?"error":"success"}
                                       error={Boolean(touched.Username && errors.Username)}
                                   />
@@ -192,7 +185,7 @@ const EditProfile = (props) => {
                                       value={values.FullName||""}
                                       onChange={handleChange}
                                       label={"نام و نام خانوادگی * "}
-                                      helperText={errors.FullName}
+                                      helpertext={errors.FullName}
                                       color={(errors.FullName)?"error":"success"}
                                       error={Boolean(touched.FullName && errors.FullName)}
                                   />
@@ -205,7 +198,7 @@ const EditProfile = (props) => {
                                           onChange={handleChange}
                                           value={values.Gender||""}
                                           input={<OutlinedInput label="جنسیت * " />}
-                                          helperText={errors.Gender}
+                                          helpertext={errors.Gender}
                                           color={(errors.Gender)?"error":"success"}
                                           error={Boolean(touched.Gender && errors.Gender)}
                                       >
@@ -250,7 +243,7 @@ const EditProfile = (props) => {
                                       value={values.NationalCode||""}
                                       onChange={handleChange}
                                       label={"کد ملی * "}
-                                      helperText={errors.NationalCode}
+                                      helpertext={errors.NationalCode}
                                       color={(errors.NationalCode)?"error":"success"}
                                       error={Boolean(touched.NationalCode && errors.NationalCode)}
                                   />
@@ -264,7 +257,7 @@ const EditProfile = (props) => {
                                       value={values.Email||""}
                                       onChange={handleChange}
                                       label={"ایمیل (اختیاری)"}
-                                      helperText={errors.Email}
+                                      helpertext={errors.Email}
                                       color={(errors.Email)?"error":"success"}
                                       error={Boolean(touched.Email && errors.Email)}
                                   />

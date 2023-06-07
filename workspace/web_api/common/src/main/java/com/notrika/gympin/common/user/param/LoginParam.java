@@ -3,6 +3,7 @@ package com.notrika.gympin.common.user.param;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common._base.param.BaseParam;
 import com.notrika.gympin.common.user.enums.UsernameType;
+import com.notrika.gympin.common.util.ApplicationEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,6 @@ public class LoginParam extends BaseParam<LoginParam> {
     @JsonProperty("Password")
     private String password;
 
+    @JsonProperty("Application")
+    private ApplicationEnum application;
 }

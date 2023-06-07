@@ -7,6 +7,7 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import _placePersonelStatus from "./status/_placePersonelStatus";
 import PersonnelRole from "../../corporate/persoanel/PersonnelRole/PersonnelRole";
 import PersonnelCredit from "../../corporate/persoanel/personnelCredits/PersonnelCredit";
+import _placePersonelGateAccess from "./access/_placePersonelGateAccess";
 
 const PlacePersonnelManagement = () => {
     const error = useContext(ErrorContext);
@@ -35,6 +36,7 @@ const PlacePersonnelManagement = () => {
             {person && <div className="row">
                 <div className="col-md-6 kt-mt-20">
                     {(person.UserRole=="PLACE_PERSONNEL")&&<_placePersonelAccess personel={person} getPerson={getPerson}/>}
+                    {(person.UserRole=="PLACE_PERSONNEL")&&<_placePersonelGateAccess personel={person} getPerson={getPerson}/>}
 
                 </div>
                 <div className="col-md-6 kt-mt-20">

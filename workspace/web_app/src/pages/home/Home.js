@@ -16,6 +16,7 @@ import HomeContentList from "./components/HomeContentList";
 import HomeSingleContent from "./components/HomeSingleContent";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
+import {CircularProgress, Grid} from "@mui/material";
 
 function Home(props) {
     const error = useContext(ErrorContext);
@@ -41,8 +42,7 @@ function Home(props) {
     }, [])
     return (
         <>
-            <div className={"home-header"}/>
-            {data&&data.Items&&data.Items.sort((a, b) => a.Priority - b.Priority).map((item, index) => {
+            {data?data.Items&&data.Items.sort((a, b) => a.Priority - b.Priority).map((item, index) => {
                     switch (item.Type){
                         case "SLIDER":return   <HomeSlider key={item.Id} item={item}/>
                         case "TITLE":return   <HomeTitle key={item.Id} item={item}/>
@@ -57,7 +57,19 @@ function Home(props) {
                         case "SINGLE_CONTENT":return   <HomeSingleContent key={item.Id} item={item}/>
                         default: return ( item.Type +"\n\r\n\r\t" )
                     }
-                })}
+                }):(
+                (<>
+                    <Grid
+                        container
+                        sx={{width:"100%",height:"80vh"}}
+                        direction={"column"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                    >
+                        <CircularProgress />
+                    </Grid>
+                </>)
+            )}
         </>
     );
 }

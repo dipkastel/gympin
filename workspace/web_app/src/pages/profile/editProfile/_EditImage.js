@@ -15,8 +15,9 @@ const _EditImage = ({user, RequestUser}) => {
     const [ratio, setRatio] = useState(null)
 
     useEffect(() => {
-        // SetImageUrl(user.Avatar?(user.Avatar.Url+"&width=200"):"")
-        SetImageUrl(user.Avatar ? (user.Avatar.Url + "") : "")
+        console.log(user?.Avatar?(user?.Avatar?.Url+"&width=200"):"")
+        SetImageUrl(user?.Avatar?(user?.Avatar?.Url+"&width=200"):"")
+        // SetImageUrl(user.Avatar ? (user.Avatar.Url + "") : "")
         getratio()
     }, []);
 
@@ -47,6 +48,7 @@ const _EditImage = ({user, RequestUser}) => {
             }
             canvas.toBlob((blob) => {
                 if (blob) {
+                    console.log("getblob")
                     error.showError({message: "لطفا تا ارسال کامل تصویر صبر کنید."});
                     SetImageToCrop(null)
                     const formData = new FormData();
@@ -55,11 +57,11 @@ const _EditImage = ({user, RequestUser}) => {
                     formData.append("CategoryId", "2");
                     formData.append("Title", user.Username);
                     formData.append("Description", user.Id);
-                    //
                     media_AddImage(formData)
                         .then(data => {
                             user_updateAvatar({UserId: user.Id, MultimediaId: data.data.Data.Id}).then(result => {
                                 SetImageUrl(result.data.Data.Avatar ? (result.data.Data.Avatar.Url + "&width=200") : "")
+                                console.log(result.data.Data.Avatar ? (result.data.Data.Avatar.Url + "&width=200") : "")
                                 error.showError({message: "با موفقیت ثبت شد",});
                                 RequestUser();
                             }).catch(e => {

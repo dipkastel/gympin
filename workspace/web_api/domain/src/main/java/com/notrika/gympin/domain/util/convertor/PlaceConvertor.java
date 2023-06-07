@@ -4,6 +4,7 @@ import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
+import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelGateAccessDto;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
@@ -12,6 +13,7 @@ import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelGateAccessEntity;
 import com.notrika.gympin.persistence.entity.sportplace.SportPlaceEntity;
 import org.springframework.data.domain.Page;
 
@@ -111,10 +113,25 @@ public final class PlaceConvertor {
                 .access(entity.getAccess())
                 .build();
     }
+    public static PlacePersonnelGateAccessDto personnelGateAccessToDto(PlacePersonnelGateAccessEntity entity) {
+        if (entity == null) return null;
+        return PlacePersonnelGateAccessDto.builder()
+                .id(entity.getId())
+                .isDeleted(entity.isDeleted())
+                .gate(GateConvertor.convertToDto(entity.getGate()))
+                .access(entity.getAccess())
+                .build();
+    }
 
     public static List<PlacePersonnelAccessDto> personnelAccessToDto(List<PlacePersonnelAccessEntity> entities) {
         if (entities == null) return null;
         return entities.stream().map(PlaceConvertor::personnelAccessToDto).collect(Collectors.toList());
+
+    }
+
+    public static List<PlacePersonnelGateAccessDto> personnelGateAccessToDto(List<PlacePersonnelGateAccessEntity> entities) {
+        if (entities == null) return null;
+        return entities.stream().map(PlaceConvertor::personnelGateAccessToDto).collect(Collectors.toList());
 
     }
 }

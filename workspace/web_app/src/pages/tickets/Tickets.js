@@ -5,7 +5,7 @@ import {
     Card,
     CardContent,
     CardHeader,
-    Chip,
+    Chip, CircularProgress,
     Collapse,
     Dialog,
     DialogActions,
@@ -21,19 +21,23 @@ import {toPriceWithComma} from "../../helper/utils";
 import {useNavigate} from "react-router-dom";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import Lottie from 'react-lottie';
 import {Image} from "react-bootstrap";
+import * as noTicketAnimation from '../../helper/jsonAnim/noTicketAnimation.json';
 
 const Tickets = () => {
     const error = useContext(ErrorContext);
     const navigate = useNavigate();
     const  user  = useSelector( ({auth:{user}})=>  user );
-    const  [tickets,setTickets]  = useState( []);
+    const  [loading,setLoading]  = useState( true);
+    const  [tickets,setTickets]  = useState( null);
     const  [ticketToDelete,setTicketToDelete]  = useState( null);
     const  [openDescription,SetOpenDescription]  = useState({});
     useEffect(() => {
         getUserTickets()
     }, []);
     function getUserTickets(){
+        setLoading(true);
         ticket_getByUser({id:user.Id}).then(result=>{
             setTickets(result.data.Data);
         }).catch(e => {
@@ -85,7 +89,18 @@ const Tickets = () => {
 
     return (
         <>
-            {(tickets.length>0)?tickets.sort((a,b)=>b.Id-a.Id).map(item=>(
+            {!tickets?(<>
+                    <Grid
+                        container
+                        sx={{width:"100%",height:"80vh"}}
+                        direction={"column"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                    >
+                        <CircularProgress />
+                    </Grid>
+                </>):
+                (tickets.length>0)?tickets.sort((a,b)=>b.Id-a.Id).map(item=>(
                 <div key={item.Id}>
                     <Card elevation={3} sx={{margin:1}}>
                         <CardHeader title={item.PlanName} sx={{pb:0}}
@@ -168,11 +183,14 @@ const Tickets = () => {
                 <Grid
                     container
                     sx={{width:"100%",height:"80vh"}}
-                    direction="row"
+                    direction={"column"}
                     justifyContent={"center"}
                     alignItems={"center"}
                 >
-                    <Image src={"https://api.gympin.ir/resource/image?Id=7"} width={"80%"}/>
+                    <Image src={"https://api.gympin.ir/resource/image?Id=100"}  width={"40%"}/>
+                    <Typography variant={"body"} sx={{m:2}} >
+                        شما هنوز بلیط ندارید
+                    </Typography>
 
                 </Grid>
             </>)}

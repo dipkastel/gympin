@@ -194,7 +194,7 @@ const OptionOfPlace = ({place}) => {
                     <Paper variant="outlined"  sx={{margin:1}} >
                         {allOptions.filter(op=>!placeOptions.map(po=>po.PlaceOption.Id).includes(op.Id)).map(row => (
 
-                            <Chip onClick={(e)=>addOption(row.Id)} sx={{m:1}} label={row.Name} color={"error"} />
+                            <Chip key={"p-"+row.Id} onClick={(e)=>addOption(row.Id)} sx={{m:1}} label={row.Name} color={"error"} />
                         ))}
                     </Paper>
                 </Collapse>

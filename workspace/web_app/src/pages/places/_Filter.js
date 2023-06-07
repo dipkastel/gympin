@@ -56,19 +56,21 @@ const _Filter = ({setBaseFilters,BaseFilters, setBaseSortBy}) => {
     },{
         Name: "آقایان",
         value: "MALE"
-    },{
-        Name: "پسرها(نوجوان)",
-        value: "BOYS"
-    },{
-        Name: "دخترها(نوجوان)",
-        value: "MALE"
-    },{
-        Name: "بدون تفکیک جنسیت",
-        value: "NONE"
-    },{
-        Name: "کودکان",
-        value: "KIDS"
-    }]
+    }
+    // ,{
+    //     Name: "پسرها(نوجوان)",
+    //     value: "BOYS"
+    // },{
+    //     Name: "دخترها(نوجوان)",
+    //     value: "GIRLS"
+    // },{
+    //     Name: "بدون تفکیک جنسیت",
+    //     value: "NONE"
+    // },{
+    //     Name: "کودکان",
+    //     value: "KIDS"
+    // }
+    ]
     const sortItems = [{
         Name: "جدید ترین",
         Value: "id"
@@ -83,8 +85,8 @@ const _Filter = ({setBaseFilters,BaseFilters, setBaseSortBy}) => {
     const [filters, SetFilters] = useState([...defaultFilters,{
             type: "gender",
             name: "جنسیت",
-            value: currentUser?currentUser.Gender:null,
-            selectedName: currentUser?genders.find(i=>i.value===currentUser.Gender).Name:null
+            value: currentUser?currentUser?.Gender:null,
+            selectedName: currentUser?genders.find(i=>i.value===currentUser?.Gender)?.Name:null
         }]
     )
     useEffect(() => {

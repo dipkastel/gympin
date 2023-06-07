@@ -4,6 +4,7 @@ import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
 import com.notrika.gympin.persistence.entity.comment.CommentGateEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelGateAccessEntity;
 import com.notrika.gympin.persistence.entity.rating.RateGateEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -49,6 +50,10 @@ public class GateEntity extends BaseEntityWithCreateUpdate<GateEntity> {
 
     @ManyToOne
     private SportEntity sport;
+
+    @OneToMany(mappedBy = "gate")
+    @ToString.Exclude
+    private List<PlacePersonnelGateAccessEntity> placePersonnelGateAccess;
 
     @ManyToMany
     @JoinTable(name = "gateGuard", joinColumns = @JoinColumn(name = "gate_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))

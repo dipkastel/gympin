@@ -4,7 +4,9 @@ import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common._base.base.BaseService;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
+import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelGateAccessDto;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
+import com.notrika.gympin.common.place.personnel.param.PlacePersonnelGateAccessParam;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 
@@ -17,4 +19,8 @@ public interface PlacePersonnelService extends BaseService<PlacePersonnelParam, 
     List<PlacePersonnelAccessDto> updatePersonnelAccess(List<PlacePersonnelAccessParam> personnelAccess);
 
     List<PlacePersonnelAccessDto> getUserPlaceAccess(Long placeId, Long userId);
+
+    List<PlacePersonnelGateAccessDto> updatePersonnelGateAccess(List<PlacePersonnelGateAccessParam> personnelGateAccess);
+
+    List<PlacePersonnelGateAccessDto> getUserPlaceGateAccess(Long placeId, Long userId);
 }

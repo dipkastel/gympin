@@ -41,7 +41,8 @@ function Login(props) {
         if (checkMobileValid(value.username)) {
             var count = 120;
             setResend(count);
-            sendSms({"phoneNumber": value.username})
+            sendSms({"phoneNumber": value.username,
+                Application:"WEBCORPORATE"})
                 .then((data) => {
                     let interval = setInterval(() => {
                         if (count > 0) {
@@ -106,6 +107,7 @@ function Login(props) {
                                     login({
                                         username: values.username,
                                         password: values.password,
+                                        Application:"WEBCORPORATE"
                                     })
                                         .then((data) => {
                                             disableLoading();
@@ -153,7 +155,7 @@ function Login(props) {
                                             variant="outlined"
                                             margin="normal"
                                             name="username"
-                                            type="username"
+                                            type="number"
                                             label={"شماره همراه"}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -185,7 +187,7 @@ function Login(props) {
                                         <div className="form-group"
                                         >
                                             <TextField
-                                                type="password"
+                                                type="number"
                                                 margin="normal"
                                                 label={"کد پیامک"}
                                                 className="kt-width-full"

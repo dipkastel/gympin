@@ -12,8 +12,10 @@ import com.notrika.gympin.common.exception.user.UnknownUserException;
 import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
+import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelGateAccessDto;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
+import com.notrika.gympin.common.place.personnel.param.PlacePersonnelGateAccessParam;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
 import com.notrika.gympin.common.place.personnel.service.PlacePersonnelService;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
@@ -22,14 +24,14 @@ import com.notrika.gympin.common.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.param.UserRoleParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
+import com.notrika.gympin.domain.util.convertor.GateConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
-import com.notrika.gympin.persistence.dao.repository.PlacePersonnelAccessRepository;
-import com.notrika.gympin.persistence.dao.repository.PlacePersonnelRepository;
-import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
-import com.notrika.gympin.persistence.dao.repository.UserRepository;
+import com.notrika.gympin.persistence.dao.repository.*;
+import com.notrika.gympin.persistence.entity.gate.GateEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelGateAccessEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,9 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Autowired
     PlacePersonnelAccessRepository placePersonnelAccessRepository;
+
+    @Autowired
+    PlacePersonnelGateAccessRepository placePersonnelGateAccessRepository;
 
     @Autowired
     private PlaceRepository placeRepository;
@@ -168,9 +173,66 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             resultItem.setAccess(placePersonnel.getUserRole() == PlacePersonnelRole.PLACE_OWNER || hasAccess);
             result.add(resultItem);
         }
-        if(toAdd.size()>0)
+        if(toAdd.size()>0){
             placePersonnelAccessRepository.addAll(toAdd);
+        }
         return result;
+    }
+
+    @Override
+    public List<PlacePersonnelGateAccessDto> updatePersonnelGateAccess(List<PlacePersonnelGateAccessParam> personnelGateAccess) {
+
+        PlacePersonnelEntity placePersonnel = placePersonnelRepository.getById(personnelGateAccess.get(0).getPlacePersonelId());
+        List<PlacePersonnelGateAccessEntity> toUpdate = new ArrayList<>();
+        for (PlacePersonnelGateAccessParam param : personnelGateAccess) {
+            try {
+                PlacePersonnelGateAccessEntity access =  placePersonnel.getPlacePersonnelGateAccess().stream().filter(a->a.getGate().getId()==param.getGate().getId()).findFirst().get();
+                access.setAccess(param.getAccess());
+                toUpdate.add(access);
+            }catch (Exception e){}
+        }
+        placePersonnelGateAccessRepository.updateAll(toUpdate);
+        return PlaceConvertor.personnelGateAccessToDto(toUpdate);
+    }
+
+    @Override
+    public List<PlacePersonnelGateAccessDto> getUserPlaceGateAccess(Long placeId, Long userId) {
+        PlaceEntity place = placeRepository.getById(placeId);
+        PlacePersonnelEntity placePersonnel = placePersonnelRepository.findByUserIdAndPlaceIdAndDeletedFalse(userId, placeId);
+        if (placePersonnel == null)
+            throw new UnknownUserException();
+        List<PlacePersonnelGateAccessEntity> currentAccess = placePersonnel.getPlacePersonnelGateAccess();
+        List<PlacePersonnelGateAccessEntity> toAdd = new ArrayList<>();
+        List<PlacePersonnelGateAccessDto> result = new ArrayList<>();
+
+        for (GateEntity placeGate : place.getGates()) {
+            PlacePersonnelGateAccessDto resultItem = new PlacePersonnelGateAccessDto();
+            resultItem.setGate(GateConvertor.convertToDto(placeGate));
+            resultItem.setPlacePersonelId(placePersonnel.getId());
+            var hasAccess = false;
+            try {
+                var currentAccessItem = currentAccess.stream().filter(a -> a.getGate().getId().equals(placeGate.getId())).findFirst();
+                if (currentAccessItem.isEmpty()) {
+                    toAdd.add(
+                            PlacePersonnelGateAccessEntity.builder()
+                                    .access(placePersonnel.getUserRole() == PlacePersonnelRole.PLACE_OWNER || hasAccess)
+                                    .placePerson(placePersonnel)
+                                    .gate(placeGate)
+                                    .build()
+                    );
+                }
+                hasAccess = currentAccessItem.get().getAccess();
+            } catch (Exception e) {
+            }
+            resultItem.setAccess(placePersonnel.getUserRole() == PlacePersonnelRole.PLACE_OWNER || hasAccess);
+            result.add(resultItem);
+        }
+
+        if(toAdd.size()>0){
+            placePersonnelGateAccessRepository.addAll(toAdd);
+        }
+        return result;
+
     }
 
     @Override

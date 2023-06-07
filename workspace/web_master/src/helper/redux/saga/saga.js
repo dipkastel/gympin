@@ -1,5 +1,6 @@
 import {call, put, takeLatest} from "redux-saga/effects";
 import {authActions} from "../actions/authActions";
+import store from "../store";
 import {ActionTypesSaga, sagaActions} from "../actions/SagaActions"
 import {user_getById} from "../../../network/api/user.api";
 import {place_getById} from "../../../network/api/place.api";
@@ -90,6 +91,14 @@ export function* saga() {
             })
         );
         yield put(settingActions.SetServerSettings(result));
+    });
+    yield takeLatest(ActionTypesSaga.RequestLogout, function* logoutRequested(action) {
+        try{store.dispatch(settingActions.SetServerSettings(undefined));}catch (e) {}
+        try{store.dispatch(settingActions.SetAppSettings(undefined));}catch (e) {}
+        try{store.dispatch(placeActions.SetPlace(undefined));}catch (e) {}
+        try{store.dispatch(placeActions.SetGates(undefined));}catch (e) {}
+        try{store.dispatch(accessActions.SetAccess(undefined));}catch (e) {}
+        try{store.dispatch(authActions.Logout());}catch (e) {}
     });
 
 }

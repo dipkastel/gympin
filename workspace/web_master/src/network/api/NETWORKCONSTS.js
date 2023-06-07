@@ -1,8 +1,8 @@
 import {ticket_addEntryMessage, ticket_deleteEntryMessage} from "./ticket.api";
 
 export let AuthApi = {
-    // BASEURL: "http://localhost:8080/api/",
-    BASEURL: "https://api.gympin.ir/",
+    BASEURL: "http://localhost:8080/api/",
+    // BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
@@ -48,7 +48,9 @@ export let Api_url = {
         update: "v1/placePersonnel/update",
         PersonnelByPlace:"v1/placePersonnel/PersonnelByPlace",
         updatePersonnelAccess:"v1/placePersonnel/updatePersonnelAccess",
-        getUserPlaceAccess:"v1/placePersonnel/getUserPlaceAccess"
+        getUserPlaceAccess:"v1/placePersonnel/getUserPlaceAccess",
+        updatePersonnelGateAccess:"v1/placePersonnel/updatePersonnelGateAccess",
+        getUserPlaceGateAccess:"v1/placePersonnel/getUserPlaceGateAccess"
     },
     optionOfPlace:{
         ADD: "v1/OptionOfPlace/add",

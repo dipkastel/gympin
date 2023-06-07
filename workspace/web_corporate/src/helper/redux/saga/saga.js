@@ -6,6 +6,7 @@ import {corporate_getById} from "../../../network/api/corporate.api";
 import {corporateActions} from "../actions/CorporateActions";
 import {configs_getCorporateSplash} from "../../../network/api/configs.api";
 import {settingActions} from "../actions/SettingsActions";
+import store from "../store";
 
 
 export function* saga() {
@@ -48,5 +49,13 @@ export function* saga() {
             })
         );
         yield put(settingActions.SetServerSettings(result));
+    });
+
+
+    yield takeLatest(ActionTypesSaga.RequestLogout, function* logoutRequested(action) {
+        try{store.dispatch(settingActions.SetServerSettings(undefined));}catch (e) {}
+        try{store.dispatch(settingActions.SetAppSettings(undefined));}catch (e) {}
+        try{store.dispatch(corporateActions.SetCorporate(undefined));}catch (e) {}
+        try{store.dispatch(authActions.Logout());}catch (e) {}
     });
 }

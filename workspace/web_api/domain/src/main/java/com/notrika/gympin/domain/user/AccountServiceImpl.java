@@ -11,6 +11,7 @@ import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpired
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeManyRequestException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoundException;
 import com.notrika.gympin.common.exception.general.SendSmsException;
+import com.notrika.gympin.common.exception.general.UserNotAllowedException;
 import com.notrika.gympin.common.support.enums.SupportMessageStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
@@ -26,13 +27,12 @@ import com.notrika.gympin.common.user.enums.UserStatus;
 import com.notrika.gympin.common.user.param.*;
 import com.notrika.gympin.common.user.service.AccountService;
 import com.notrika.gympin.common.user.service.JwtTokenProvider;
+import com.notrika.gympin.common.util.ApplicationEnum;
 import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
-import com.notrika.gympin.persistence.dao.repository.PlacePersonnelRepository;
-import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
 import com.notrika.gympin.persistence.entity.user.PasswordEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -71,10 +71,6 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private PasswordRepository passwordRepository;
     @Autowired
-    private PlaceRepository placeRepository;
-    @Autowired
-    private PlacePersonnelRepository placePersonnelRepository;
-    @Autowired
     private SupportService supportService;
 
 
@@ -87,6 +83,8 @@ public class AccountServiceImpl implements AccountService {
         if (user == null) {
             user = addUser(UserRegisterParam.builder().userRole(UserRoleParam.builder().role(UserRole.USER).build()).phoneNumber(dto.getPhoneNumber()).build());
         }
+        if (!CheckUserAccess(user, dto.getApplication()))
+            throw new UserNotAllowedException();
         String code = MyRandom.GenerateRandomVerificationSmsCode();
         if (user.getActivationCode() != null && user.getActivationCode().getExpiredDate() != null && user.getActivationCode().getExpiredDate().after(new Date())) {
             throw new ActivationCodeManyRequestException();
@@ -114,7 +112,7 @@ public class AccountServiceImpl implements AccountService {
     public UserEntity addUser(UserRegisterParam userRegisterParam) {
         log.info("Going to addUser...\n");
         UserEntity user = new UserEntity();
-        user.setUsername("USER_"+new Date().getTime());
+        user.setUsername("USER_" + new Date().getTime());
         user.setPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
         user.setUserRole(userRegisterParam.getUserRole().getRole());
         user.setUserGroup(UserGroup.CLIENT);
@@ -138,6 +136,10 @@ public class AccountServiceImpl implements AccountService {
         if (activationCode.isDeleted()) {
             throw new ActivationCodeExpiredException();
         }
+
+        if (!CheckUserAccess(user, loginParam.getApplication()))
+            throw new UserNotAllowedException();
+
         activationCode.setDeleted(true);
         activationCodeRepository.update(activationCode);
         String jwt = getJwt(loginParam, GeneralHelper.fixPhoneNumber(loginParam.getUsername()), TokenType.USER);
@@ -169,6 +171,34 @@ public class AccountServiceImpl implements AccountService {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(phoneNumber, loginParam.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return tokenProvider.generateJwtToken(authentication, tokenType);
+    }
+
+    private boolean CheckUserAccess(UserEntity user, ApplicationEnum application) {
+        if(application==null) return false;
+        switch (application) {
+            case ANDROID:
+                return user.getUserRole() == UserRole.USER;
+            case IOS:
+                return user.getUserRole() == UserRole.USER;
+            case WEBPANEL:
+                return user.getUserRole() == UserRole.ADMIN
+                        || user.getUserRole() == UserRole.SUPER_ADMIN
+                        || user.getUserRole() == UserRole.CONTENT
+                        || user.getUserRole() == UserRole.MANAGER
+                        || user.getUserRole() == UserRole.MARKET;
+            case WEBAPP:
+                return user.getUserRole() == UserRole.USER
+                        ||user.getUserRole() == UserRole.ADMIN
+                        || user.getUserRole() == UserRole.SUPER_ADMIN
+                        || user.getUserRole() == UserRole.CONTENT
+                        || user.getUserRole() == UserRole.MANAGER
+                        || user.getUserRole() == UserRole.MARKET;
+            case WEBMASTER:
+                return user.getPlacePersonnel().size() > 0;
+            case WEBCORPORATE:
+                return user.getCorporatesPersonel().size() > 0;
+        }
+        return false;
     }
 
     @Transactional
@@ -219,6 +249,7 @@ public class AccountServiceImpl implements AccountService {
         context.getEntry().put(GympinContext.USER_KEY, user);
         GympinContextHolder.setContext(context);
     }
+
     @Override
     @Transactional
     public Boolean requestRegisterPlace(RequestRegisterParam param) {
@@ -251,15 +282,15 @@ public class AccountServiceImpl implements AccountService {
 //        } catch (Exception e) {
 //            throw new SendSmsException();
 //        }
-        String title = "درخواست افزودن مجموعه توسط "+param.getFullName();
-        String message = "افزودن مجموعه ورزشی "+param.getPlaceName()+" توسط "+param.getFullName()+" با شماره "+param.getPhoneNumber()+" درخواست شده.";
+        String title = "درخواست افزودن مجموعه توسط " + param.getFullName();
+        String message = "افزودن مجموعه ورزشی " + param.getPlaceName() + " توسط " + param.getFullName() + " با شماره " + param.getPhoneNumber() + " درخواست شده.";
         supportService.add(SupportParam.builder()
                 .title(title)
-                        .supportMessages(SupportMessageParam.builder()
-                                .status(SupportMessageStatus.AWAITING_EXPERT)
-                                .isAnswer(false)
-                                .messages(message)
-                                .build())
+                .supportMessages(SupportMessageParam.builder()
+                        .status(SupportMessageStatus.AWAITING_EXPERT)
+                        .isAnswer(false)
+                        .messages(message)
+                        .build())
                 .build());
 
 //        try {
@@ -270,18 +301,19 @@ public class AccountServiceImpl implements AccountService {
         return true;
 
     }
+
     @Override
     @Transactional
     public Boolean requestRegisterCorporate(RequestRegisterParam param) {
-        String title = "درخواست افزودن سازمان توسط "+param.getFullName();
-        String message = "افزودن سازمان "+param.getPlaceName()+" توسط "+param.getFullName()+" با شماره "+param.getPhoneNumber()+" درخواست شده.";
+        String title = "درخواست افزودن سازمان توسط " + param.getFullName();
+        String message = "افزودن سازمان " + param.getPlaceName() + " توسط " + param.getFullName() + " با شماره " + param.getPhoneNumber() + " درخواست شده.";
         supportService.add(SupportParam.builder()
                 .title(title)
-                        .supportMessages(SupportMessageParam.builder()
-                                .status(SupportMessageStatus.AWAITING_EXPERT)
-                                .isAnswer(false)
-                                .messages(message)
-                                .build())
+                .supportMessages(SupportMessageParam.builder()
+                        .status(SupportMessageStatus.AWAITING_EXPERT)
+                        .isAnswer(false)
+                        .messages(message)
+                        .build())
                 .build());
         return true;
 
@@ -289,8 +321,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Boolean requestRegisterAdvice(RequestRegisterParam param) {
-        String title = "درخواست مشاوره از طرف "+param.getFullName();
-        String message = param.getPlaceName()+" - "+param.getFullName()+" - "+param.getPhoneNumber();
+        String title = "درخواست مشاوره از طرف " + param.getFullName();
+        String message = param.getPlaceName() + " - " + param.getFullName() + " - " + param.getPhoneNumber();
         supportService.add(SupportParam.builder()
                 .title(title)
                 .supportMessages(SupportMessageParam.builder()
@@ -305,8 +337,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Boolean requestPublicMessage(RequestRegisterParam param) {
-        String title = "پیام از"+param.getFullName();
-        String message = param.getPlaceName()+" - "+param.getFullName()+" - "+param.getPhoneNumber();
+        String title = "پیام از" + param.getFullName();
+        String message = param.getPlaceName() + " - " + param.getFullName() + " - " + param.getPhoneNumber();
         supportService.add(SupportParam.builder()
                 .title(title)
                 .supportMessages(SupportMessageParam.builder()

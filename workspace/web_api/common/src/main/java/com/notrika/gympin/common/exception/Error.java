@@ -111,7 +111,8 @@ public class Error {
         COULD_NOT_CREATE_DIRECTORY(4004),
         DUPLICATE_ENTRY_ADD_EXEPTION(4005),
         NOT_FOUND_EXEPTION(4006),
-        SEND_SMS_EXCEPTION(4007)
+        SEND_SMS_EXCEPTION(4007),
+        USER_NOT_ALLOWED(4008)
 
         ;
         private final int value;

@@ -41,6 +41,10 @@ public class PlacePersonnelEntity extends BaseEntity<PlacePersonnelEntity> {
     @ToString.Exclude
     private List<PlacePersonnelAccessEntity> placePersonnelAccess;
 
+    @OneToMany(mappedBy = "placePerson")
+    @ToString.Exclude
+    private List<PlacePersonnelGateAccessEntity> placePersonnelGateAccess;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

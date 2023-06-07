@@ -38,7 +38,7 @@ export default function NNavigaion() {
     }
 
     return (
-        <Navbar className="" bg="light" variant="dark" expand="lg">
+        <><Navbar className="" bg="light" variant="dark" expand="lg">
 
 
             <Container className={"w-100"} fluid>
@@ -71,5 +71,8 @@ export default function NNavigaion() {
                 </Grid>
             </Container>
         </Navbar>
+            <div className={"home-header"}/>
+
+        </>
     );
 }

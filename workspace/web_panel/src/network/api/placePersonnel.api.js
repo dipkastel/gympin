@@ -29,3 +29,12 @@ export function placePersonnel_getAccess(data) {
 export function placePersonnel_updatePersonnelAccess(data) {
   return axios.post(PlacePersonelApi.updatePersonnelAccess,  data);
 }
+
+
+export function placePersonnel_getGateAccess(data) {
+  return axios.get(PlacePersonelApi.getUserPlaceGateAccess, {params: data});
+}
+
+export function placePersonnel_updatePersonnelGateAccess(data) {
+  return axios.post(PlacePersonelApi.updatePersonnelGateAccess,  data);
+}
