@@ -50,7 +50,7 @@ public class PlanEntity extends BaseEntity<PlanEntity> {
     @Column(name = "placePrice")
     private BigDecimal placePrice;
 
-    @Column(name = "enable")
+    @Column(name = "enable",nullable = false)
     private Boolean enable;
 
     @Column(name = "entryTotalCount", nullable = false)

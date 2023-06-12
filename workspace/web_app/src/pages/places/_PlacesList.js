@@ -64,7 +64,7 @@ const _PlacesList = () => {
                   justifyContent="center"
                   alignItems="center">
                 {places.content&&places.content.map(item => (
-                        <Grid key={item.Id} item component={"a"} href={"/place/" + item.Id} sx={{textDecoration: "none"}}
+                        <Grid key={"5i"+item.Id} item component={"a"} href={"/place/" + item.Id} sx={{textDecoration: "none"}}
                               lg={3} md={4} sm={6} xs={12}>
                             <Card elevation={8} sx={{margin: 2, padding: 0,borderRadius:3}} >
                                 <Grid container
@@ -93,25 +93,25 @@ const _PlacesList = () => {
                                                 </Typography>
                                             </Grid>
                                             <Grid >
-                                                {item.Genders.map(gender=>(<>
-                                                        {gender==="MALE"&&<ManRounded  sx={{fontSize:20,color:"#cc0f0f"}}/>}
+                                                {item.Genders&&item.Genders.map((gender,number)=>(<div key={"kh"+number} className={"d-inline"}>
+                                                        {gender==="MALE"&&<ManRounded sx={{fontSize:20,color:"#cc0f0f"}}/>}
                                                         {gender==="FEMALE"&&<WomanRounded  sx={{fontSize:20,color:"#cc0f0f"}}/>}
                                                         {gender==="BOYS"&&<BoyRounded  sx={{fontSize:20,color:"#cc0f0f"}}/>}
-                                                        {gender==="GIRLS"&&<GirlRounded  sx={{fontSize:20,color:"#cc0f0f"}}/>}
-                                                        {gender==="KIDS"&&<ChildCare  sx={{fontSize:20,color:"#cc0f0f"}}/>}
-                                                </>))}
+                                                        {gender==="GIRLS"&&<GirlRounded   sx={{fontSize:20,color:"#cc0f0f"}}/>}
+                                                        {gender==="KIDS"&&<ChildCare   sx={{fontSize:20,color:"#cc0f0f"}}/>}
+                                                </div>))}
                                             </Grid>
                                         </Grid>
-                                        <Typography sx={{paddingY:0.5}} variant={"body1"}>
+                                        <Typography sx={{paddingY:0.5}} variant={"body1"} component={"div"}>
                                             {item.Location&&<>
                                                 <LocationOnOutlined  sx={{fontSize:15,color:"#cc0f0f"}}/>  {item.Location.Name}
                                             </>}
                                         </Typography>
-                                        <Typography sx={{paddingY:0.5}} variant={"body1"}>
-                                            {item.Sports&&item.Sports.map((sport, number) => (<>
-                                                    <FiberManualRecordIcon className={"sportBullet"} sx={{fontSize:8,color:"#cc0f0f"}} />
+                                        <Typography sx={{paddingY:0.5}} variant={"body1"} component={"div"}>
+                                            {item.Sports&&item.Sports.map((sport, number) => (<div key={"ph"+number} className={"d-inline"}>
+                                                    <FiberManualRecordIcon  className={"sportBullet"} sx={{fontSize:8,color:"#cc0f0f"}} />
                                                     {sport.Name}
-                                            </>
+                                            </div>
                                             ))}
                                         </Typography>
                                         <Divider variant="inset" sx={{marginY:1,marginLeft: 0, marginRight: 0}} component="div"/>

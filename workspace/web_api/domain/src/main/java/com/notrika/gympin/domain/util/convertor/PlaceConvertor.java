@@ -14,10 +14,13 @@ import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelGateAccessEntity;
+import com.notrika.gympin.persistence.entity.plan.PlanEntity;
 import com.notrika.gympin.persistence.entity.sportplace.SportPlaceEntity;
 import org.springframework.data.domain.Page;
 
+import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,8 +66,12 @@ public final class PlaceConvertor {
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setStatus(entity.getStatus());
         if(entity.getPlans().size()>0){
-            placeDto.setGenders(entity.getPlans().stream().map(p->p.getGender()).collect(Collectors.toSet()));
-            placeDto.setMinPrice(entity.getPlans().stream().sorted((a,b)->a.getPrice().compareTo(b.getPrice())).findFirst().get().getPrice());
+            try {
+                placeDto.setGenders(entity.getPlans().stream().filter(PlanEntity::getEnable).map(PlanEntity::getGender).collect(Collectors.toSet()));
+            }catch (Exception e){}
+            try {
+                placeDto.setMinPrice(entity.getPlans().stream().filter(p->p.getEnable()&&p.getPrice()!=null).min(Comparator.comparing(PlanEntity::getPrice)).get().getPrice());
+            }catch (Exception e){}
         }
         if (entity.getSportPlaces() != null)
             placeDto.setSports(SportConvertor.toDto(entity.getSportPlaces().stream().filter(p->!p.isDeleted()).map(SportPlaceEntity::getSport).collect(Collectors.toList())));
