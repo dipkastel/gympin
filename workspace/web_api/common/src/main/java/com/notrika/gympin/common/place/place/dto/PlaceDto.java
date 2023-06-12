@@ -6,6 +6,7 @@ import com.notrika.gympin.common.location.dto.LocationDto;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
 import com.notrika.gympin.common.sport.dto.SportDto;
+import com.notrika.gympin.common.user.enums.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @SuperBuilder
@@ -42,6 +44,12 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
 
     @JsonProperty("AutoDiscount")
     private Boolean autoDiscount;
+
+    @JsonProperty("Genders")
+    private Set<Gender> genders;
+
+    @JsonProperty("MinPrice")
+    private BigDecimal minPrice;
 
     @JsonProperty("Status")
     private PlaceStatusEnum status = PlaceStatusEnum.ACTIVE;

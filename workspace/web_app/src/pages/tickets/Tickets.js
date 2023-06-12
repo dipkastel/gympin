@@ -104,7 +104,7 @@ const Tickets = () => {
                 <div key={item.Id}>
                     <Card elevation={3} sx={{margin:1}}>
                         <CardHeader title={item.PlanName} sx={{pb:0}}
-                            action={<IconButton aria-label="openDescription" color="info" onClick={()=>SetOpenDescription({...openDescription,[item.Id]:!openDescription[item.Id]})}>
+                            action={<IconButton hidden={(item.Description==null)} aria-label="openDescription" color="info" onClick={()=>SetOpenDescription({...openDescription,[item.Id]:!openDescription[item.Id]})}>
                                 <HelpOutlineIcon/>
                             </IconButton>}
                         />

@@ -70,6 +70,7 @@ const EditProfile = (props) => {
                         user_updateMe(values).then(result=>{
                             props.RequestUser(values)
                             setUser(result.data.Data);
+                            navigation(-1);
                             error.showError({message: "با موفقیت ثبت شد",});
                         }).catch(e => {
                             try {
@@ -98,8 +99,7 @@ const EditProfile = (props) => {
                             if (!checkNationalCode(values.NationalCode.toString())) {
                                 errors.NationalCode = "کد ملی صحیح نیست";
                             }
-
-                            if(lastUsername !== values.Username){
+                            if(lastUsername !== values.Username && user.Username!==values.Username){
 
                                 new Promise(resolve => user_checkUsernameAvailable(values.Username).then((result) => {
                                     if(!result.data.Data){
@@ -107,6 +107,7 @@ const EditProfile = (props) => {
                                     }else{
                                         error.showError({message: "نام کاربری قابل ثبت است.",});
                                     }
+                                    setLastUserame(values.Username);
                                 }).catch(e => {
                                     try {
                                         error.showError({message: e.response.data.Message});
@@ -116,7 +117,6 @@ const EditProfile = (props) => {
                                 }));
 
                             }else{
-                                console.log("sub");
                                 setLastUserame(values.Username);
                             }
 
@@ -239,7 +239,7 @@ const EditProfile = (props) => {
                                       variant="outlined"
                                       margin="normal"
                                       name="NationalCode"
-                                      type="text"
+                                      type="number"
                                       value={values.NationalCode||""}
                                       onChange={handleChange}
                                       label={"کد ملی * "}

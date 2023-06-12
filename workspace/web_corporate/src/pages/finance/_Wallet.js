@@ -49,7 +49,7 @@ const _Wallet = () => {
         })
     }
     function getPaymentGateways() {
-        transactions_getPaymentGateways({}).then(result => {
+        transactions_getPaymentGateways({Application:"WEBCORPORATE"}).then(result => {
             setPaymentGateways(result.data.Data);
         }).catch(e => {
             try {

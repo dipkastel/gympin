@@ -79,7 +79,7 @@ const _Filter = ({setBaseFilters,BaseFilters, setBaseSortBy}) => {
         Value: "name"
     }, {
         Name: "منطقه (الفبا)",
-        Value: "location_id"
+        Value: "location"
     }]
     const [region, SetRegions] = useState([])
     const [filters, SetFilters] = useState([...defaultFilters,{
@@ -95,7 +95,6 @@ const _Filter = ({setBaseFilters,BaseFilters, setBaseSortBy}) => {
             HasPlace:0,
             paging:{Page:0,Size:50}
         }).then(result => {
-            console.log(result.data.Data.content);
             SetSports(result.data.Data.content)
         }).catch(e => {
             try {
@@ -135,7 +134,6 @@ const _Filter = ({setBaseFilters,BaseFilters, setBaseSortBy}) => {
     }
 
     function handleChangeGender(evt, allItems) {
-        console.log(evt)
         if (evt.value === null) {
             removeFilter(evt.name)
             return
@@ -182,9 +180,9 @@ const _Filter = ({setBaseFilters,BaseFilters, setBaseSortBy}) => {
 
     return (
         <>
-            <Grid container direction={"row"} justifyContent={"space-between"} alignContent={"center"} sx={{paddingX:2}}>
+            <Grid className={"mt-3 z1040 position-relative"} container direction={"row"} justifyContent={"space-between"} alignContent={"center"} sx={{paddingX:2}}>
                 <Grid>
-                    <IconButton onClick={() => setOpenModal(!openModal)} sx={{color: "#000000"}} aria-label=""
+                    <IconButton  onClick={() => setOpenModal(!openModal)} sx={{color: "#000000"}} aria-label=""
                                 name="filter">
                         <FilterAltOutlinedIcon/>
                     </IconButton>
@@ -195,22 +193,20 @@ const _Filter = ({setBaseFilters,BaseFilters, setBaseSortBy}) => {
                     )}
                 </Grid>
 
-                <Grid>
-                    <FormControl>
-                        <Select
-                            labelId="sort-select-label"
-                            id="sort-select"
-                            name={"sort"}
-                            size={"small"}
-                            value={sortBy}
-                            variant={"standard"}
-                            onChange={(e) => changeSort(e.target.value)}
-                        >
-                            {sortItems.map(item => (
-                                <MenuItem key={item.Value} value={item.Value}>{item.Name}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                <Grid >
+                    <Select
+                        labelId="sort-select-label"
+                        id="sort-select"
+                        name={"sortby"}
+                        size={"small"}
+                        value={sortBy}
+                        variant={"outlined"}
+                        onChange={(e) => changeSort(e.target.value)}
+                    >
+                        {sortItems.map(item => (
+                            <MenuItem key={item.Value} value={item.Value}>{item.Name}</MenuItem>
+                        ))}
+                    </Select>
                 </Grid>
             </Grid>
             <Dialog

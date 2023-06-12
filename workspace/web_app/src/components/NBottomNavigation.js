@@ -1,13 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {BottomNavigation, BottomNavigationAction, Paper} from "@mui/material";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import GrainIcon from '@mui/icons-material/Grain';
 import {Link} from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 
 export default function NBottomNavigation(){
+    const location = useLocation();
     const bottomItems = [
         {
             value:"home",
@@ -39,7 +41,9 @@ export default function NBottomNavigation(){
         }
     ]
     const pathname = window.location.pathname
+
     const [value, setValue] = React.useState(getTabName(pathname));
+
     function getTabName(path){
         let selectedItem =bottomItems[0].value;
         let pathParam = path.split('/')[1]
@@ -51,6 +55,10 @@ export default function NBottomNavigation(){
         })
         return selectedItem;
     }
+
+    useEffect(() => {
+        setValue(getTabName(location.pathname));
+    }, [location]);
     return (
         <>
             <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 , zIndex:5}} elevation={3}>

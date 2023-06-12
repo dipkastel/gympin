@@ -135,48 +135,74 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
     @Transactional
     public List<PaymentGatewaysDto> getPaymentGateways(PaymentGatewaysParam param) {
         List<PaymentGatewaysDto> paymentGatewaysDtos = new ArrayList<>();
-//        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
-//                .id(80l)
-//                .name("درگاه پارسیان")
-//                .imageUrl("https://api.gympin.ir/resource/image?Id=5")
-//                .gatewayType(GatwayType.BANK_PORTAL)
-//                .isDefault(true)
-//                .build());
-//        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
-//                .id(81l)
-//                .name("ملت")
-//                .imageUrl("http://localhost:8080/resource/image?Id=15")
-//                .gatewayType(GatwayType.BANK_PORTAL)
-//                .build());
-//        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
-//                .id(82l)
-//                .name("سامان")
-//                .imageUrl("http://localhost:8080/resource/image?Id=16")
-//                .gatewayType(GatwayType.BANK_PORTAL)
-//                .isDefault(true)
-//                .build());
-        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
+        PaymentGatewaysDto cardTransaction = PaymentGatewaysDto.builder()
                 .id(90l)
                 .name("کارت به کارت")
                 .isDefault(true)
                 .imageUrl("https://api.gympin.ir/resource/image?Id=18")
                 .gatewayType(GatwayType.CARD_TRANSFER)
                 .description("شماره کارت جهت واریز مبلغ 6221061225406448 به نام پیشکامان داده نوتریکا")
-                .build());
-        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
+                .build();
+        PaymentGatewaysDto bankTransaction = PaymentGatewaysDto.builder()
                 .id(95l)
                 .name("پرداخت بانکی")
                 .imageUrl("https://api.gympin.ir/resource/image?Id=15")
                 .gatewayType(GatwayType.BANK_TRANSFER)
                 .description("مبالغ از طریق باجه بانک به حساب : 88548550505 بانک پارسیان با شماره شبای : 540540840450 در وجه پیشکامان داده نوتریکا")
-                .build());
-        paymentGatewaysDtos.add(PaymentGatewaysDto.builder()
+                .build();
+        PaymentGatewaysDto chequeTransaction = PaymentGatewaysDto.builder()
                 .id(98l)
                 .name("چک")
                 .imageUrl("https://api.gympin.ir/resource/image?Id=13")
                 .gatewayType(GatwayType.CHEQUE)
                 .description("چک باید در وجه پیشکامان داده نوتریکا به شماره ثبت 885215 ")
-                .build());
+                .build();
+       PaymentGatewaysDto parsianGatway = PaymentGatewaysDto.builder()
+                .id(80l)
+                .name("درگاه پارسیان")
+                .imageUrl("https://api.gympin.ir/resource/image?Id=5")
+                .gatewayType(GatwayType.BANK_PORTAL)
+                .isDefault(true)
+                .build();
+        PaymentGatewaysDto mellatGatway =PaymentGatewaysDto.builder()
+                .id(81l)
+                .name("ملت")
+                .imageUrl("http://localhost:8080/resource/image?Id=15")
+                .gatewayType(GatwayType.BANK_PORTAL)
+                .build();
+        PaymentGatewaysDto samanGatway = PaymentGatewaysDto.builder()
+                .id(82l)
+                .name("سامان")
+                .imageUrl("http://localhost:8080/resource/image?Id=16")
+                .gatewayType(GatwayType.BANK_PORTAL)
+                .isDefault(true)
+                .build();
+
+        switch (param.getApplication()){
+            case ANDROID:
+                paymentGatewaysDtos.add(parsianGatway);
+                break;
+            case IOS:
+                paymentGatewaysDtos.add(parsianGatway);
+                break;
+            case WEBPANEL:
+                paymentGatewaysDtos.add(cardTransaction);
+                break;
+            case WEBAPP:
+                paymentGatewaysDtos.add(parsianGatway);
+                break;
+            case WEBMASTER:
+                paymentGatewaysDtos.add(cardTransaction);
+                paymentGatewaysDtos.add(bankTransaction);
+                paymentGatewaysDtos.add(chequeTransaction);
+                break;
+            case WEBCORPORATE:
+                paymentGatewaysDtos.add(cardTransaction);
+                paymentGatewaysDtos.add(bankTransaction);
+                paymentGatewaysDtos.add(chequeTransaction);
+                break;
+        }
+
         return paymentGatewaysDtos;
     }
 

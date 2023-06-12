@@ -21,12 +21,6 @@ const Notifs = (props) => {
 
     return (
         <>
-            <Grid item  xs display="flex" justifyContent="center" alignItems="center">
-                <Typography variant={"h3"} sx={{padding:1}}>
-                    اعلانات
-                </Typography>
-            </Grid>
-
             <List dense={false}>
                 {notifs.map(item=>(
                     <div key={item.Id}>

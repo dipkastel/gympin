@@ -62,6 +62,10 @@ public final class PlaceConvertor {
         placeDto.setAddress(entity.getAddress());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setStatus(entity.getStatus());
+        if(entity.getPlans().size()>0){
+            placeDto.setGenders(entity.getPlans().stream().map(p->p.getGender()).collect(Collectors.toSet()));
+            placeDto.setMinPrice(entity.getPlans().stream().sorted((a,b)->a.getPrice().compareTo(b.getPrice())).findFirst().get().getPrice());
+        }
         if (entity.getSportPlaces() != null)
             placeDto.setSports(SportConvertor.toDto(entity.getSportPlaces().stream().filter(p->!p.isDeleted()).map(SportPlaceEntity::getSport).collect(Collectors.toList())));
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));

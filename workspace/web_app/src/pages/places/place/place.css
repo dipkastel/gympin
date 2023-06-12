@@ -6,8 +6,9 @@
 }
 .pdata .ptext{
     margin: 5px;
-    background: #ffffff88;
+    background: #ffffffaa;
     padding: 5px 10px;
+    max-width: 60%;
     border-radius: 5px;
 }
 .map{

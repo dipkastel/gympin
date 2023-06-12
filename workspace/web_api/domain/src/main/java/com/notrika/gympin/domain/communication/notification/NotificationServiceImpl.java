@@ -119,6 +119,7 @@ public class NotificationServiceImpl extends AbstractBaseService<NotificationPar
         List<NotificationDto> notifications = new ArrayList<>();
         UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         List<NotificationEntity> allByUserAndDeletedIsFalse = notificationRepository.findAllByUserAndDeletedIsFalse(user);
+        notifications.add(NotificationDto.builder().notif("خوش آمدید").build());
         for (NotificationEntity entity : allByUserAndDeletedIsFalse) {
             NotificationDto notificationDto = new NotificationDto();
             notificationDto.setId(entity.getId());

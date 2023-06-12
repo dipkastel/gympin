@@ -10,6 +10,18 @@
   -ms-transform: translate(50%, -50%) !important;
   transform: translate(50%, -50%) !important;
 }
+.z1040{
+  z-index: 1040;
+}
+.end-10{
+  left: 10px;
+}
+.sportBullet{
+  margin: 5px 5px;
+}
+.sportBullet:first-child{
+  margin: 0 0px 0 5px;
+}
 @media (min-width: 1000px) {
 
   body{

@@ -15,7 +15,6 @@ const _EditImage = ({user, RequestUser}) => {
     const [ratio, setRatio] = useState(null)
 
     useEffect(() => {
-        console.log(user?.Avatar?(user?.Avatar?.Url+"&width=200"):"")
         SetImageUrl(user?.Avatar?(user?.Avatar?.Url+"&width=200"):"")
         // SetImageUrl(user.Avatar ? (user.Avatar.Url + "") : "")
         getratio()
@@ -48,7 +47,6 @@ const _EditImage = ({user, RequestUser}) => {
             }
             canvas.toBlob((blob) => {
                 if (blob) {
-                    console.log("getblob")
                     error.showError({message: "لطفا تا ارسال کامل تصویر صبر کنید."});
                     SetImageToCrop(null)
                     const formData = new FormData();
@@ -61,7 +59,6 @@ const _EditImage = ({user, RequestUser}) => {
                         .then(data => {
                             user_updateAvatar({UserId: user.Id, MultimediaId: data.data.Data.Id}).then(result => {
                                 SetImageUrl(result.data.Data.Avatar ? (result.data.Data.Avatar.Url + "&width=200") : "")
-                                console.log(result.data.Data.Avatar ? (result.data.Data.Avatar.Url + "&width=200") : "")
                                 error.showError({message: "با موفقیت ثبت شد",});
                                 RequestUser();
                             }).catch(e => {
@@ -88,7 +85,7 @@ const _EditImage = ({user, RequestUser}) => {
     function renderModalCrop() {
 
         const onChange = (cropper) => {
-            console.log(cropper.getCoordinates(), cropper.getCanvas());
+
 
         };
         return (<>

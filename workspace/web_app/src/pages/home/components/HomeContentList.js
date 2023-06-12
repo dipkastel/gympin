@@ -25,7 +25,7 @@ const HomeContentList = (props) => {
             <Slick className={"content-list"} {...settings}>
                 {props.item.Items && props.item.Items.map((item, index) => (
                     <div key={index}>
-                        <Link onClick={()=>clickHandler(props.item,navigate)} underline="none" color="inherit" fontWeight="800">
+                        <Link onClick={()=>clickHandler(item,navigate)} underline="none" color="inherit" fontWeight="800">
                             <Card sx={{margin:"5px",borderRadius:"10px",direction:"rtl"}} elevation={3} >
 
                                 <CardMedia

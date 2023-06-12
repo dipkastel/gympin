@@ -1,12 +1,24 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, CircularProgress, Grid, IconButton, Typography} from "@mui/material";
+import {Box, Card, CircularProgress, Divider, Grid, IconButton, Paper, Rating, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 import {place_getAll, Place_query} from "../../network/api/place.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
-import {Filter, Filter3, FilterAltRounded} from "@mui/icons-material";
-import {compareObjs} from "../../helper/utils";
+import {
+    Boy, BoyRounded, ChildCare,
+    ControlPoint, ElderlyWoman,
+    Filter,
+    Filter3,
+    FilterAltRounded, FormatListBulleted, GirlRounded,
+    LocationCity,
+    LocationOn, LocationOnOutlined, Man, ManOutlined, ManRounded,
+    MyLocationOutlined,
+    Pin, Woman, WomanOutlined, WomanRounded, WomanSharp
+} from "@mui/icons-material";
+import {compareObjs, toPriceWithComma} from "../../helper/utils";
 import _Filter, {defaultFilters} from "./_Filter";
 import {useSelector} from "react-redux";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 
 const _PlacesList = () => {
@@ -24,7 +36,6 @@ const _PlacesList = () => {
     const [sortBy, SetSortBy] = useState("Id")
     const [openModalFilter, setOpenModalFilter] = useState(false)
     useEffect(() => {
-        console.log(filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null)
         Place_query({
             queryType: "FILTER",
             Status:"Active",
@@ -34,6 +45,7 @@ const _PlacesList = () => {
             Option:null,
             paging: {Page: page, Size: rowsPerPage,Desc:false,OrderBy:sortBy}
         }).then(result => {
+            console.log(result.data.Data)
             SetPlaces(result.data.Data)
         }).catch(e => {
             try {
@@ -53,29 +65,72 @@ const _PlacesList = () => {
                   alignItems="center">
                 {places.content&&places.content.map(item => (
                         <Grid key={item.Id} item component={"a"} href={"/place/" + item.Id} sx={{textDecoration: "none"}}
-                              lg={3} md={4} sm={6} xs={6}>
-                            <Card elevation={3} sx={{margin: 0.5, padding: 0.5}}>
+                              lg={3} md={4} sm={6} xs={12}>
+                            <Card elevation={8} sx={{margin: 2, padding: 0,borderRadius:3}} >
                                 <Grid container
                                       direction="row"
                                       justifyContent="center"
                                       alignItems="center">
-                                    <Grid item md={6} sm={6} xs={12} sx={{padding: 0.5}}>
-                                        <Image src={item.Multimedias[0] ? (item.Multimedias[0].Url+"&width=200") : "https://api.gympin.ir/resource/image?Id=11"} width={"100%"}
+                                    <Grid item  sx={{padding: 0,display:"flex",flexDirection:"column-reverse",alignItems:"center"}}>
+                                        <Image src={item.Multimedias[0] ? (item.Multimedias[0].Url+"&width=400") : "https://api.gympin.ir/resource/image?Id=11"} width={"100%"}
                                                rounded={3}/>
+                                        {/*<Box sx={{width:"160px",marginTop:1,height:"30px",opacity:"0.6",backgroundColor:"black",position:"absolute",borderRadius:"15px 15px 0 0"}}>*/}
+
+                                        {/*</Box>*/}
+                                        {/*<Rating name="read-only" value={4} sx={{position:"absolute",marginBottom:"5px"}}  />*/}
                                     </Grid>
-                                    <Grid item sx={{padding: 0,minHeight:"88px"}} md={6} sm={6} xs={12}>
-                                        <Typography variant={"h5"}>
-                                            {item.Name}
+                                    <Grid item sx={{padding: 1,minHeight:"88px",width:"100%"}} >
+
+                                        <Grid container
+                                              direction="row"
+                                              justifyContent={"space-between"}
+                                              alignItems="center">
+
+                                            <Grid >
+
+                                                <Typography className={"sportBullet"} sx={{paddingTop:0.5,paddingBottom:0.5}} variant={"h5"}>
+                                                    {item.Name}
+                                                </Typography>
+                                            </Grid>
+                                            <Grid >
+                                                {item.Genders.map(gender=>(<>
+                                                        {gender==="MALE"&&<ManRounded  sx={{fontSize:20,color:"#cc0f0f"}}/>}
+                                                        {gender==="FEMALE"&&<WomanRounded  sx={{fontSize:20,color:"#cc0f0f"}}/>}
+                                                        {gender==="BOYS"&&<BoyRounded  sx={{fontSize:20,color:"#cc0f0f"}}/>}
+                                                        {gender==="GIRLS"&&<GirlRounded  sx={{fontSize:20,color:"#cc0f0f"}}/>}
+                                                        {gender==="KIDS"&&<ChildCare  sx={{fontSize:20,color:"#cc0f0f"}}/>}
+                                                </>))}
+                                            </Grid>
+                                        </Grid>
+                                        <Typography sx={{paddingY:0.5}} variant={"body1"}>
+                                            {item.Location&&<>
+                                                <LocationOnOutlined  sx={{fontSize:15,color:"#cc0f0f"}}/>  {item.Location.Name}
+                                            </>}
                                         </Typography>
-                                        <Typography variant={"body1"}>
-                                            {item.Location&&item.Location.Name}
-                                        </Typography>
-                                        <Typography variant={"body1"}>
-                                            {item.Sports&&item.Sports.map((sport, number) => (
-                                                sport.Name + ((number !== (item.Sports.length - 1)) ? ",\t" : "")
+                                        <Typography sx={{paddingY:0.5}} variant={"body1"}>
+                                            {item.Sports&&item.Sports.map((sport, number) => (<>
+                                                    <FiberManualRecordIcon className={"sportBullet"} sx={{fontSize:8,color:"#cc0f0f"}} />
+                                                    {sport.Name}
+                                            </>
                                             ))}
                                         </Typography>
+                                        <Divider variant="inset" sx={{marginY:1,marginLeft: 0, marginRight: 0}} component="div"/>
+                                        <Grid sx={{width:"100%"}}
+                                              container
+                                              direction="row"
+                                              alignItems={"center"}
+                                              justifyContent={"center"}
+
+                                        >
+                                            <Typography sx={{color:"#757575"}} variant={"subtitle2"}>
+                                                {"شروع قیمت از "}
+                                            </Typography>
+                                            <Typography sx={{paddingRight:1,color:"#26881a",fontWeight:700}}  variant={"subtitle1"}>
+                                                {toPriceWithComma( item.MinPrice)+" تومان"}
+                                            </Typography>
+                                        </Grid>
                                     </Grid>
+
                                 </Grid>
                             </Card>
                         </Grid>

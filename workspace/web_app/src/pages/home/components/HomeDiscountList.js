@@ -27,7 +27,7 @@ const HomeDiscountList = (props) => {
             {props.item.Items&&props.item.Items.map((singleItem, index) => (
                 <div key={index}>
                     <Card elevation={3} sx={{margin: 1,borderRadius:"10px"}}>
-                        <Link onClick={()=>clickHandler(props.item,navigate)} underline="none" color="inherit" fontWeight="800">
+                        <Link onClick={()=>clickHandler(singleItem,navigate)} underline="none" color="inherit" fontWeight="800">
                             <div className={"discount"}>
                                 <div className={"percent"}>
                                     <Typography variant={"subtitle2"} sx={{padding:0.5}} textAlign={"start"} color={"white"}>

@@ -15,14 +15,14 @@ const _IncreaseCredit = () => {
     const [amountToPay, SetAmountToPay] = useState(null);
     const [transactionReference, SetTransactionRefrence] = useState(null);
     const [chequeDate, setChequeDate] = useState(null);
-    const [paymentGateways, setPaymentGateways] = useState([]);
+    const [paymentGateways, setPaymentGateways] = useState(null);
 
     useEffect(() => {
         getPaymentGateways();
     }, []);
 
     function getPaymentGateways() {
-        transactions_getPaymentGateways({}).then(result => {
+        transactions_getPaymentGateways({Application:"WEBAPP"}).then(result => {
             setPaymentGateways(result.data.Data);
         }).catch(e => {
             try {
@@ -103,7 +103,7 @@ const _IncreaseCredit = () => {
 
 
     return (<>
-            <Card elevation={3} sx={{margin: 1}}>
+            {paymentGateways&& <Card elevation={3} sx={{margin: 1}}>
 
 
                 <Typography
@@ -242,7 +242,7 @@ const _IncreaseCredit = () => {
                         </Button>
                     </Grid>
                 </Grid>
-            </Card>
+            </Card>}
         </>
     );
 };

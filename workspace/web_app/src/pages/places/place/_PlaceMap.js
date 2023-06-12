@@ -30,7 +30,6 @@ const _PlaceMap = ({place}) => {
                 map.remove();
             }catch (e) {}
         }
-        console.log([place.Latitude,place.Longitude],place)
         map = L.map("kt_leaflet_map", {center: [place.Latitude,place.Longitude],zoom:15,});
         // set leaflet tile layer
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -56,7 +55,6 @@ const _PlaceMap = ({place}) => {
 
         // markerl.clearLayers();
         let marker = L.marker([place.Latitude,place.Longitude], { icon: leafletIcon,title:place.Name });
-        console.log(marker)
         marker.on('click', function(e) {
             // history.push({pathname: "/place/data/" + place.Id});
         });
