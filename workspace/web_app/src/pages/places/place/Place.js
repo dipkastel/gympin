@@ -1,11 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import _PlaceImages from "./_PlaceImages";
-import _PlaceTabs from "./_PlaceTabs";
+import _TabsPlace from "./_TabsPlace";
 import {place_getById} from "../../../network/api/place.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import "./place.css"
-import _PlaceMap from "./_PlaceMap";
 
 const Place = () => {
     const error = useContext(ErrorContext);
@@ -16,8 +15,8 @@ const Place = () => {
         getPlace();
     }, [placeId]);
 
-    function getPlace(){
-        place_getById(placeId).then(result=>{
+    function getPlace() {
+        place_getById(placeId).then(result => {
             setPlace(result.data.Data);
         }).catch(e => {
             try {
@@ -29,10 +28,14 @@ const Place = () => {
     }
 
     return (
-        <>
-            {place.Multimedias&&<_PlaceImages place={place}/>}
-            <_PlaceTabs place={place}/>
-        </>
+        <div className={"row m-0"}>
+            {place.Multimedias && <div className={"col-sm-12 col-md-6 p-0"}>
+                <_PlaceImages place={place}/>
+            </div>}
+            <div className={"col-sm-12 col-md-6 p-0"}>
+                <_TabsPlace place={place}/>
+            </div>
+        </div>
     );
 };
 

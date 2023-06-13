@@ -39,21 +39,22 @@ function Home(props) {
         });
 
     }, [])
+    var classe = "col-sm-12 col-md-10 col-lg-7 col-xl-5 col-xxl-4";
     return (
-        <>
+        <div className={"home-center"}>
             {data?data.Items&&data.Items.sort((a, b) => a.Priority - b.Priority).map((item, index) => {
                     switch (item.Type){
-                        case "SLIDER":return   <HomeSlider key={item.Id} item={item}/>
-                        case "TITLE":return   <HomeTitle key={item.Id} item={item}/>
-                        case "CLICKABLE_TITLE":return   <HomeClickableTitle key={item.Id} item={item}/>
-                        case "USER_LIST":return   <HomeUserList key={item.Id} item={item}/>
-                        case "SINGLE_USER":return   <HomeSingleUser key={item.Id} item={item}/>
-                        case "BANNER":return   <HomeBanner key={item.Id} item={item}/>
-                        case "CLICKABLE_BANNER":return   <HomeClickableBanner key={item.Id} item={item}/>
-                        case "DISCOUNT_LIST":return   <HomeDiscountList key={item.Id} item={item}/>
-                        case "SINGLE_DISCOUNT":return   <HomeSingleDiscount key={item.Id} item={item}/>
-                        case "CONTENT_LIST":return   <HomeContentList key={item.Id} item={item}/>
-                        case "SINGLE_CONTENT":return   <HomeSingleContent key={item.Id} item={item}/>
+                        case "SLIDER":return   <div className={classe}><HomeSlider key={item.Id} item={item}/></div>
+                        case "TITLE":return   <div className={classe}><HomeTitle key={item.Id} item={item}/></div>
+                        case "CLICKABLE_TITLE":return   <div className={classe}><HomeClickableTitle key={item.Id} item={item}/></div>
+                        case "USER_LIST":return   <div className={classe}><HomeUserList key={item.Id} item={item}/></div>
+                        case "SINGLE_USER":return   <div className={classe}><HomeSingleUser key={item.Id} item={item}/></div>
+                        case "BANNER":return   <div className={classe}><HomeBanner key={item.Id} item={item}/></div>
+                        case "CLICKABLE_BANNER":return   <div className={classe}><HomeClickableBanner key={item.Id} item={item}/></div>
+                        case "DISCOUNT_LIST":return   <div className={classe}><HomeDiscountList key={item.Id} item={item}/></div>
+                        case "SINGLE_DISCOUNT":return   <div className={classe}><HomeSingleDiscount key={item.Id} item={item}/></div>
+                        case "CONTENT_LIST":return   <div className={classe}><HomeContentList key={item.Id} item={item}/></div>
+                        case "SINGLE_CONTENT":return   <div className={classe}><HomeSingleContent key={item.Id} item={item}/></div>
                         default: return ( item.Type +"\n\r\n\r\t" )
                     }
                 }):(
@@ -69,7 +70,7 @@ function Home(props) {
                     </Grid>
                 </>)
             )}
-        </>
+        </div>
     );
 }
 

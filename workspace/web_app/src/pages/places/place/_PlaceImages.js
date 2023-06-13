@@ -32,7 +32,7 @@ const _PlaceImages = ({place}) => {
 
                 </Typography>}
             </div>
-            <Slick {...settings}>
+            <Slick className={"mb--8"} {...settings}>
                 {place.Multimedias.map((item, index) => (
                     <div key={index}  onClick={()=>setShowDetails(!showDetails)}>
                          <Link  underline="none" color="inherit" fontWeight="800">

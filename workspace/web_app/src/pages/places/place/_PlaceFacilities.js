@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, CardHeader, Chip, Grid} from "@mui/material";
+import {Card, CardHeader, Chip, Grid, Typography} from "@mui/material";
 import {PlaceOptions_getByPlace} from "../../../network/api/placeOptions.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 
@@ -22,9 +22,9 @@ const _PlaceFacilities = ({place}) => {
     return (
         <div className={"nopadding"}>
             <Card elevation={3} sx={{margin: 1, padding: 1}}>
-                <CardHeader
-                    title="امکانات مجموعه"
-                />
+                <Typography variant={"subtitle1"}>
+                    امکانات مجموعه
+                </Typography>
                 <Grid
                     container
                     direction="row"
@@ -32,7 +32,7 @@ const _PlaceFacilities = ({place}) => {
                     alignItems="stretch"
                 >
                     {placeOptions.map((item,number)=>(
-                        <Chip key={number} sx={{padding:1,margin:1}} label={item.PlaceOption.Name} />
+                        <Chip size={"small"} key={number} sx={{padding:1,margin:1}} label={item.PlaceOption.Name} />
                     ))}
                 </Grid>
             </Card>

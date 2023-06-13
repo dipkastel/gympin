@@ -5,17 +5,18 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import _PlaceReserve from "./_PlaceReserve";
-import _PlaceAbout from "./_PlaceAbout";
+import _TabPlaceReserve from "./_TabPlaceReserve";
+import _TabPlaceAbout from "./_TabPlaceAbout";
 import _PlaceFacilities from "./_PlaceFacilities";
+import _TabPlaceComments from "./_TabPlaceComments";
 
 
-const _PlaceTabs = ({place}) => {
+const _TabsPlace = ({place}) => {
     const theme = useTheme();
     const [selectedTab, setSelectedTab] = React.useState(0);
 
     return (
-        <Box sx={{bgcolor: 'background.paper', marginTop: -1}}>
+        <Box sx={{bgcolor: 'background.paper',zIndex:1005,position:"relative"}}>
             <AppBar position="static">
                 <Tabs
                     value={selectedTab}
@@ -27,7 +28,7 @@ const _PlaceTabs = ({place}) => {
                 >
                     <Tab label="رزرو"/>
                     <Tab label="درباره مرکز"/>
-                    <Tab label="امکانات"/>
+                    {/*<Tab label="نظرات"/>*/}
                 </Tabs>
             </AppBar>
             <SwipeableViews
@@ -35,12 +36,12 @@ const _PlaceTabs = ({place}) => {
                 slideClassName={"rtl"}
                 index={selectedTab}
                 onChangeIndex={(e) => setSelectedTab(e)}>
-                <_PlaceReserve place={place}/>
-                <_PlaceAbout place={place}/>
-                <_PlaceFacilities place={place}/>
+                <_TabPlaceReserve place={place}/>
+                <_TabPlaceAbout place={place}/>
+                {/*<_TabPlaceComments place={place}/>*/}
             </SwipeableViews>
         </Box>
     );
 };
 
-export default _PlaceTabs;
+export default _TabsPlace;

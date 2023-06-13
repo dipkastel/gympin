@@ -22,7 +22,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {ExpandMore} from "@mui/icons-material";
 import _PlanTimingReserve from "./_PlanTimingReserve";
 
-const _PlaceReserve = ({place}) => {
+const _TabPlaceReserve = ({place}) => {
     const navigate = useNavigate()
     const error = useContext(ErrorContext);
     const currentUser = useSelector(state => state.auth.user)
@@ -218,4 +218,4 @@ const _PlaceReserve = ({place}) => {
     );
 };
 
-export default _PlaceReserve;
+export default _TabPlaceReserve;

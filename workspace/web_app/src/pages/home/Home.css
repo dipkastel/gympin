@@ -1,6 +1,10 @@
 body{
     font-family: 'IRANSans-web' !important;
 }
+
+.home-center{
+    text-align: -webkit-center;
+}
 .discount{
     z-index: 1;
     position: absolute;
@@ -59,7 +63,7 @@ body{
     padding: 4px 15px 4px 20px;
     margin: 23px 0px 8px 0px;
     color: #ffffff;
-    border-radius: 8px 0px 0px 8px;
+    border-radius: 8px 8px 8px 8px;
 }
 .slick-slide img {
     object-fit: contain !important;

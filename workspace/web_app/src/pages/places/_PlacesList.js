@@ -122,12 +122,15 @@ const _PlacesList = () => {
                                               justifyContent={"center"}
 
                                         >
-                                            <Typography sx={{color:"#757575"}} variant={"subtitle2"}>
+                                            {item.MinPrice&&<Typography sx={{color:"#757575"}} variant={"subtitle2"}>
                                                 {"شروع قیمت از "}
-                                            </Typography>
-                                            <Typography sx={{paddingRight:1,color:"#26881a",fontWeight:700}}  variant={"subtitle1"}>
+                                            </Typography>}
+                                            {item.MinPrice&&<Typography sx={{paddingRight:1,color:"#26881a",fontWeight:700}}  variant={"subtitle1"}>
                                                 {toPriceWithComma( item.MinPrice)+" تومان"}
-                                            </Typography>
+                                            </Typography>}
+                                            {!item.MinPrice&&<Typography sx={{color:"#757575"}} variant={"subtitle1"}>
+                                                {"بدون پلن فعال "}
+                                            </Typography>}
                                         </Grid>
                                     </Grid>
 
