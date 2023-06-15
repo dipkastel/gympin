@@ -61,7 +61,7 @@ export default function NBottomNavigation(){
     }, [location]);
     return (
         <>
-            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 , zIndex:5}} elevation={3}>
+            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 , zIndex:9999999}} elevation={3}>
                 <BottomNavigation
                     showLabels
                     value={value}

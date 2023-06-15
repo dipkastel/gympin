@@ -13,10 +13,10 @@ export default function HomeOneFeature() {
                             </div>
                         </div>
                     </div>
-                    <div className="row mt-none-30">
-                        <a href={"https://corporate.gympin.ir"} className="col-xl-4 col-lg-4 col-md-12  col-sm-12 col-12 mt-30">
+                    <div className="row mt-none-30 rtl">
+                        <a href={"https://web.gympin.ir"} className="col-xl-4 col-lg-4 col-md-12  col-sm-12 col-12 mt-30">
                             <div className="feature-item">
-                                <img src="/images/logo/gym-pwa3.jpg" alt="" />
+                                <img src="/images/logo/gym-pwa.jpg" alt="" />
                             </div>
                         </a>
                         <a href={"https://place.gympin.ir"} className="col-xl-4 col-lg-4 col-md-12  col-sm-12 col-12 mt-30">
@@ -24,9 +24,9 @@ export default function HomeOneFeature() {
                                 <img src="/images/logo/gym-pwa2.jpg" alt="" />
                             </div>
                         </a>
-                        <a href={"https://web.gympin.ir"} className="col-xl-4 col-lg-4 col-md-12  col-sm-12 col-12 mt-30">
+                        <a href={"https://corporate.gympin.ir"} className="col-xl-4 col-lg-4 col-md-12  col-sm-12 col-12 mt-30">
                             <div className="feature-item">
-                                <img src="/images/logo/gym-pwa.jpg" alt="" />
+                                <img src="/images/logo/gym-pwa3.jpg" alt="" />
                             </div>
                         </a>
                         {/*<a href={"/download"} className="col-xl-3 col-lg-6 col-md-6  col-sm-6 col-6 mt-30">*/}
