@@ -20,6 +20,13 @@ export function toPriceWithoutComma(price){
     return (price+"").replace(/\D/g, "");
 }
 
+export function fixMobile(mobileNumber) {
+    switch (mobileNumber.toString()[0]) {
+        case "0" : return  mobileNumber.toString()
+        case "+": return mobileNumber.replace("+98","0")
+        case "9": return "0"+mobileNumber
+    }
+}
 export function removeStorage(key) {
     try {
         localStorage.setItem(key, "");

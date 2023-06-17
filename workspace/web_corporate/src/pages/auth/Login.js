@@ -13,7 +13,7 @@ import {
     Typography
 } from "@mui/material";
 import {Formik} from "formik";
-import {checkMobileValid} from "../../helper/utils";
+import {checkMobileValid, fixMobile} from "../../helper/utils";
 import {Spinner} from "react-bootstrap";
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
@@ -41,8 +41,10 @@ function Login(props) {
         if (checkMobileValid(value.username)) {
             var count = 120;
             setResend(count);
-            sendSms({"phoneNumber": value.username,
-                Application:"WEBCORPORATE"})
+            sendSms({
+                "phoneNumber": value.username,
+                Application: "WEBCORPORATE"
+            })
                 .then((data) => {
                     let interval = setInterval(() => {
                         if (count > 0) {
@@ -88,10 +90,10 @@ function Login(props) {
                             }}
                             validate={(values) => {
                                 const errors = {};
-                                if (!values.username) {
+                                if (!values.username.toString()) {
                                     errors.username = "شماره همراه الزامی است";
                                 }
-                                if (!checkMobileValid(values.username)) {
+                                if (!checkMobileValid(values.username.toString())) {
                                     errors.username = "شماره همراه صحیح نیست";
                                 }
 
@@ -105,9 +107,9 @@ function Login(props) {
                                 enableLoading();
                                 setTimeout(() => {
                                     login({
-                                        username: values.username,
+                                        username: fixMobile(values.username),
                                         password: values.password,
-                                        Application:"WEBCORPORATE"
+                                        Application: "WEBCORPORATE"
                                     })
                                         .then((data) => {
                                             disableLoading();
@@ -159,29 +161,25 @@ function Login(props) {
                                             label={"شماره همراه"}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
-                                            value={values.username}
+                                            value={fixMobile(values.username)}
                                             helperText={touched.username && errors.username}
                                             error={Boolean(touched.username && errors.username)}
                                         />
                                     </div>
 
-                                    <InputAdornment position="start">
-                                            {(checkMobileValid(values.username)) && (
-                                                (resend > 0) ? (
-                                                    <div>
-                                                        <Spinner animation="border" size="sm"/>
-                                                        <Typography variant="caption" display="block"
-                                                                    gutterBottom>
-                                                            {resend}
-                                                        </Typography>
-                                                    </div>
-                                                ) : <Button variant={"contained"}
-                                                            disabled={(resend > 0)}
-                                                            onClick={(e) => sendMessage(e, values)}>ارسال کد</Button>
-                                            )
-                                            }
-
-                                    </InputAdornment>
+                                    {(checkMobileValid(values.username.toString())) && (
+                                        (resend > 0) ? (
+                                            <div>
+                                                <Spinner animation="border" size="sm"/>
+                                                <Typography variant="caption" display="block"
+                                                            gutterBottom>
+                                                    {resend}
+                                                </Typography>
+                                            </div>
+                                        ) : <Button onClick={(e) => sendMessage(e, values)} disabled={(resend > 0)}
+                                                    variant={"contained"}>ارسال کد</Button>
+                                    )
+                                    }
 
                                     <Hidden lgDown={(resend < -1)} lgUp={(resend < -1)}>
                                         <div className="form-group"

@@ -27,9 +27,9 @@ export default function Footer() {
                             <div className="footer-widget footer-widget__2">
                                 <h4 className="widget-title">خدمات</h4>
                                 <ul>
-                                    <li><a href="https://web.gympin.ir/places">پیشنهادات ورزشی<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="https://corporate.gympin.ir">بخش شرکت ها و سازمان ها<i className="fa fa-angle-left"></i></a></li>
-                                    <li><a href="https://place.gympin.ir">بخش مراکز ورزشی<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="https://web.gympin.ir/places" target="_blank">پیشنهادات ورزشی<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="https://corporate.gympin.ir" target="_blank">بخش شرکت ها و سازمان ها<i className="fa fa-angle-left"></i></a></li>
+                                    <li><a href="https://place.gympin.ir" target="_blank">بخش مراکز ورزشی<i className="fa fa-angle-left"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -47,6 +47,11 @@ export default function Footer() {
                         <div className="col-xl-4 col-lg-6 mt-50">
                             <div className="footer-widget footer-widget__2">
                                 <div className="newslater ltr">
+                                    <a referrerPolicy="origin" target="_blank"
+                                       href="https://trustseal.enamad.ir/?id=350330&amp;Code=8so7ze5fUKxlhyBfuiiT"><img
+                                        referrerPolicy="origin"
+                                        src="https://Trustseal.eNamad.ir/logo.aspx?id=350330&amp;Code=8so7ze5fUKxlhyBfuiiT"
+                                        alt="" id="8so7ze5fUKxlhyBfuiiT"/></a>
 
                                     {/*<h4 className="newslater__title">عضویت در خبرنامه</h4>*/}
                                     {/*<div className="newslater__form">*/}

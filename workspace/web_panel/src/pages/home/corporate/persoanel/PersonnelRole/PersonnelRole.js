@@ -31,6 +31,7 @@ const PersonnelRole = ({personnelId}) => {
     function updateUserRole(e){
         corporatePersonnel_update({Id:personnelId,Role:e.value}).then(result=>{
             getPerson();
+            error.showError({message: "با موفقیت ثبت شد",});
 
         }).catch(e => {
             try {
