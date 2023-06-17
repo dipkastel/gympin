@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {
     Button,
     Card,
@@ -18,9 +18,11 @@ import {Spinner} from "react-bootstrap";
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
 import {authActions} from "../../helper/redux/actions/AuthActions";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 function Login(props) {
 
+    const error = useContext(ErrorContext);
     const [loading, setLoading] = useState(false);
     const [resend, setResend] = useState(-3);
     const [loadingButtonStyle, setLoadingButtonStyle] = useState({
@@ -38,11 +40,12 @@ function Login(props) {
     };
 
     function sendMessage(e, value) {
-        if (checkMobileValid(value.username)) {
+        var mobileNumber = fixMobile(value.username)
+        if (checkMobileValid(mobileNumber)) {
             var count = 120;
             setResend(count);
             sendSms({
-                "phoneNumber": value.username,
+                "phoneNumber": mobileNumber,
                 Application: "WEBCORPORATE"
             })
                 .then((data) => {
@@ -54,7 +57,11 @@ function Login(props) {
                     }, 1000);
                 }).catch((err) => {
                 setResend(-3);
-                alert("خطا در برقراری ارتباط با سرور و یا شما اجازه دسترسی به این بخش را ندارید")
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا در برقراری ارتباط با سرور و یا شما اجازه دسترسی به این بخش را ندارید",});
+                }
             })
         }
     }

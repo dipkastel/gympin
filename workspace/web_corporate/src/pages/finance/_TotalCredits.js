@@ -20,6 +20,7 @@ const _TotalCredits = () => {
     const corporate = useSelector(({corporate}) => corporate.corporate)
     const [totalCredit,setTotlaCredit] = useState(0);
     useEffect(() => {
+        if(!corporate) return;
         corporatePersonnel_getTotalUserCredits({CorporateId:corporate.Id}).then(result=>{
             setTotlaCredit(result.data.Data);
         }).catch(e => {

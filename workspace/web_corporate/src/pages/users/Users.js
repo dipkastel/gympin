@@ -39,6 +39,7 @@ const Users = () => {
     }, []);
 
     function getPersonnel() {
+        if(!corporate) return;
         corporatePersonnel_ByCorporate(corporate).then(result => {
             setPersonnel(result.data.Data);
         }).catch(e => {

@@ -38,6 +38,7 @@ const _Wallet = () => {
     }, []);
 
     function getTotalDeposit() {
+        if(!corporate) return;
         corporate_getTotalDeposit({CorporateId:corporate.Id}).then(result=>{
             setTotalDeposit(result.data.Data)
         }).catch(e => {
