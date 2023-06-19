@@ -387,96 +387,97 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
     @Override
     @Transactional
     public TicketDto checkout(TicketCheckoutParam param) throws Exception {
-        TicketEntity ticketEntity = ticketRepository.getById(param.getTicket().getId());
-        UserEntity userEntity = ticketEntity.getUser();
-        BigDecimal ticketRemainderPrice = ticketEntity.getPrice();
-        String transaction_serial = java.util.UUID.randomUUID().toString();
-        List<TransactionEntity> transactions = new ArrayList<>();
-        GympinContext context = GympinContextHolder.getContext();
+            TicketEntity ticketEntity = ticketRepository.getById(param.getTicket().getId());
+            UserEntity userEntity = ticketEntity.getUser();
+            BigDecimal ticketRemainderPrice = ticketEntity.getPrice();
+            String transaction_serial = java.util.UUID.randomUUID().toString();
+            List<TransactionEntity> transactions = new ArrayList<>();
+            GympinContext context = GympinContextHolder.getContext();
+            if (ticketEntity.getPaymentSerial()!=null)
+                throw new TicketIsAlreadyPayedException();
+            if (ticketEntity.getPrice().compareTo(param.getPrice()) != 0)
+                throw new TicketPriceConflictException();
+            if (!GeneralUtil.isGenderCompatible(ticketEntity.getPlan().getGender() , userEntity.getGender()))
+                throw new TicketGenderIsNotCompatible();
+            if (ticketEntity.getPrice().compareTo(param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
+                throw new TicketPriceTotalConflictException();
+            for (CheckoutDetailParam checkoutParam : param.getCheckout().stream().sorted((a, b) -> (int) (a.getPriority() - b.getPriority())).collect(Collectors.toList())) {
+                if (checkoutParam.getAmount().compareTo(BigDecimal.ZERO) != 0) {
+                    ticketRemainderPrice = ticketRemainderPrice.subtract(checkoutParam.getAmount());
+                    switch (checkoutParam.getCreditType()) {
+                        case SPONSOR: {
+                            CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(checkoutParam.getPersonnelId());
+                            CorporateEntity corporateEntity = personnelEntity.getCorporate();
+                            if (userEntity.getId() != personnelEntity.getUser().getId())
+                                throw new TicketPayByOthersException();
+                            //personnel add credit row
+                            var PersonnelCredit = CorporatePersonnelCreditEntity.builder().corporatePersonnel(personnelEntity).creditAmount(checkoutParam.getAmount().negate()).build();
+                            corporatePersonnelCreditRepository.add(PersonnelCredit);
 
-        if (ticketEntity.getPrice().compareTo(param.getPrice()) != 0)
-            throw new Exception("قیمت ارسالی با قیمت بلیط تفاوت دارد");
-        if (!GeneralUtil.isGenderCompatible(ticketEntity.getPlan().getGender() , userEntity.getGender()))
-            throw new TicketGenderIsNotCompatible();
-        if (ticketEntity.getPrice().compareTo(param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
-            throw new Exception("مجموع پرداخت های ارسالی با قیمت بلیط تفاوت دارد");
-        for (CheckoutDetailParam checkoutParam : param.getCheckout().stream().sorted((a, b) -> (int) (a.getPriority() - b.getPriority())).collect(Collectors.toList())) {
-            if (checkoutParam.getAmount().compareTo(BigDecimal.ZERO) != 0) {
-                ticketRemainderPrice = ticketRemainderPrice.subtract(checkoutParam.getAmount());
-                switch (checkoutParam.getCreditType()) {
-                    case SPONSOR: {
-                        CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(checkoutParam.getPersonnelId());
-                        CorporateEntity corporateEntity = personnelEntity.getCorporate();
-                        if (userEntity.getId() != personnelEntity.getUser().getId())
-                            throw new Exception("بلیط توسط شخص دیگری نمیتواند پرداخت شود");
-                        //personnel add credit row
-                        var PersonnelCredit = CorporatePersonnelCreditEntity.builder().corporatePersonnel(personnelEntity).creditAmount(checkoutParam.getAmount().negate()).build();
-                        corporatePersonnelCreditRepository.add(PersonnelCredit);
+                            //personnel change balance
+                            personnelEntity.setCreditBalance(personnelEntity.getCreditBalance().subtract(checkoutParam.getAmount()));
+                            corporatePersonnelRepository.update(personnelEntity);
+                            //setTransAction
+                            transactions.add(TransactionEntity.builder()
+                                    .serial(transaction_serial)
+                                    .transactionType(TransactionType.PERSONNEL_USE_CREDIT)
+                                    .corporatePersonnel(personnelEntity)
+                                    .balance(personnelEntity.getCreditBalance())
+                                    .isChecked(false)
+                                    .amount(checkoutParam.getAmount())
+                                    .transactionStatus(TransactionStatus.COMPLETE)
+                                    .build());
+                            //corporate change balance
+                            corporateEntity.setBalance(corporateEntity.getBalance().subtract(checkoutParam.getAmount()));
 
-                        //personnel change balance
-                        personnelEntity.setCreditBalance(personnelEntity.getCreditBalance().subtract(checkoutParam.getAmount()));
-                        corporatePersonnelRepository.update(personnelEntity);
-                        //setTransAction
-                        transactions.add(TransactionEntity.builder()
-                                .serial(transaction_serial)
-                                .transactionType(TransactionType.PERSONNEL_USE_CREDIT)
-                                .corporatePersonnel(personnelEntity)
-                                .balance(personnelEntity.getCreditBalance())
-                                .isChecked(false)
-                                .amount(checkoutParam.getAmount())
-                                .transactionStatus(TransactionStatus.COMPLETE)
-                                .build());
-                        //corporate change balance
-                        corporateEntity.setBalance(corporateEntity.getBalance().subtract(checkoutParam.getAmount()));
+                            corporateService.update(corporateEntity);
+                            transactions.add(TransactionEntity.builder()
+                                    .serial(transaction_serial)
+                                    .transactionType(TransactionType.CORPORATE_PERSONNEL_USE_CREDIT)
+                                    .corporate(corporateEntity)
+                                    .balance(corporateEntity.getBalance())
+                                    .isChecked(false)
+                                    .amount(checkoutParam.getAmount())
+                                    .transactionStatus(TransactionStatus.COMPLETE)
+                                    .build());
 
-                        corporateService.update(corporateEntity);
-                        transactions.add(TransactionEntity.builder()
-                                .serial(transaction_serial)
-                                .transactionType(TransactionType.CORPORATE_PERSONNEL_USE_CREDIT)
-                                .corporate(corporateEntity)
-                                .balance(corporateEntity.getBalance())
-                                .isChecked(false)
-                                .amount(checkoutParam.getAmount())
-                                .transactionStatus(TransactionStatus.COMPLETE)
-                                .build());
+                            break;
+                        }
+                        case PERSONAL: {
+                            BigDecimal newBalance = userEntity.getBalance().subtract(checkoutParam.getAmount());
+                            userEntity.setBalance(newBalance);
 
-                        break;
-                    }
-                    case PERSONAL: {
-                        BigDecimal newBalance = userEntity.getBalance().subtract(checkoutParam.getAmount());
-                        userEntity.setBalance(newBalance);
-
-                        userRepository.update(userEntity);
-                        context.getEntry().put(GympinContext.USER_KEY, userEntity);
-                        transactions.add(TransactionEntity.builder()
-                                .serial(transaction_serial)
-                                .transactionType(TransactionType.USER_USE_BALANCE)
-                                .user(userEntity)
-                                .balance(userEntity.getBalance())
-                                .isChecked(false)
-                                .amount(checkoutParam.getAmount())
-                                .transactionStatus(TransactionStatus.COMPLETE)
-                                .build());
+                            userRepository.update(userEntity);
+                            context.getEntry().put(GympinContext.USER_KEY, userEntity);
+                            transactions.add(TransactionEntity.builder()
+                                    .serial(transaction_serial)
+                                    .transactionType(TransactionType.USER_USE_BALANCE)
+                                    .user(userEntity)
+                                    .balance(userEntity.getBalance())
+                                    .isChecked(false)
+                                    .amount(checkoutParam.getAmount())
+                                    .transactionStatus(TransactionStatus.COMPLETE)
+                                    .build());
 
 
-                        break;
+                            break;
 
+                        }
                     }
                 }
             }
-        }
 
-        if (ticketRemainderPrice.compareTo(BigDecimal.ZERO) != 0)
-            throw new Exception("باقی مانده قیمت 0 نمیشود");
-        //set Transactions
-        transactionRepository.addAll(transactions);
+            if (ticketRemainderPrice.compareTo(BigDecimal.ZERO) != 0)
+                throw new TicketPriceTotalConflictException();
+            //set Transactions
+            transactionRepository.addAll(transactions);
 
-        //change ticket status and serial
-        ticketEntity.setPaymentSerial(transaction_serial);
-        ticketEntity.setStatus(TicketStatus.READY_TO_ACTIVE);
-        ticketRepository.update(ticketEntity);
+            //change ticket status and serial
+            ticketEntity.setPaymentSerial(transaction_serial);
+            ticketEntity.setStatus(TicketStatus.READY_TO_ACTIVE);
+            ticketRepository.update(ticketEntity);
 
-        return TicketConvertor.toDto(ticketEntity);
+            return TicketConvertor.toDto(ticketEntity);
     }
 
     @Override

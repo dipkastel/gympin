@@ -3,7 +3,7 @@ import {Card, Grid, Typography} from "@mui/material";
 
 const _PlaceSingleAbout = ({about,number}) => {
     return (
-        <Card key={number}  elevation={3} sx={{margin: 1, padding: 1}}>
+        <Card   elevation={3} sx={{margin: 1, padding: 1}}>
             <Grid
                 container
                 direction="row"

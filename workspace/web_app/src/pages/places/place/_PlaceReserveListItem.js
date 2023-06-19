@@ -20,7 +20,7 @@ import {genders} from "../../../helper/enums/genders";
 const _PlaceReserveListItem = ({plan, number, addToTickets}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     return (
-        <div key={number}>
+        <div >
             <ListItem disablePadding>
                 <ListItemButton disabled={!plan.Enable}>
                     <Card sx={{width: "100%"}} elevation={6}>
@@ -43,7 +43,7 @@ const _PlaceReserveListItem = ({plan, number, addToTickets}) => {
                             </Typography></>}
                             action={
                                 <IconButton
-                                    expand={isExpanded}
+                                    expand={isExpanded.toString()}
                                     onClick={() => setIsExpanded(!isExpanded)}
                                     aria-expanded={isExpanded}
                                     aria-label="مشاهده روز های قابل استفاده"

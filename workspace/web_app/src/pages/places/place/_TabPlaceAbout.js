@@ -30,7 +30,7 @@ const _TabPlaceAbout = ({place}) => {
             {place.Latitude&&place.Longitude&&<_PlaceMap place={place} />}
             <_PlaceFacilities place={place}/>
             {abouts.map((item,number) => (
-                    <_PlaceSingleAbout about={item} number={number}/>
+                    <_PlaceSingleAbout key={"a"+number} about={item} number={number}/>
                 )
             )}
         </div>

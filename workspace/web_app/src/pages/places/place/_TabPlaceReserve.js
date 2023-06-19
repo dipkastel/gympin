@@ -16,6 +16,11 @@ const _TabPlaceReserve = ({place}) => {
     const [plans, setPlans] = useState([]);
     useEffect(() => {
         if (!place.Id) return;
+        getPlans();
+    }, [place]);
+
+
+    function getPlans() {
         Plans_getByPlace({Id: place.Id}).then(result => {
             setPlans(result.data.Data);
         }).catch(e => {
@@ -25,7 +30,7 @@ const _TabPlaceReserve = ({place}) => {
                 error.showError({message: "خطا نا مشخص",});
             }
         })
-    }, [place]);
+    }
 
     function addToTickets(item) {
         if(!currentUser){
@@ -103,10 +108,8 @@ const _TabPlaceReserve = ({place}) => {
 
     return (
             <List className={"nopadding"} disablePadding>
-                {plans.map((item, number) => (
-                    <_PlaceReserveListItem plan={item} number={number} addToTickets={addToTickets}/>
-                    )
-                )}
+                {plans.filter(t=>t.Enable).map((item, number) => (<_PlaceReserveListItem key={"ac"+number} plan={item} number={number} addToTickets={addToTickets}/>))}
+                {plans.filter(t=>!t.Enable).map((item, number) => (<_PlaceReserveListItem key={"de"+number} plan={item} number={number} addToTickets={addToTickets}/>))}
             </List>
     );
 };

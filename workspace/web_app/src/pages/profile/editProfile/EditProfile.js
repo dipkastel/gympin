@@ -239,7 +239,7 @@ const EditProfile = (props) => {
                                       variant="outlined"
                                       margin="normal"
                                       name="NationalCode"
-                                      type="number"
+                                      type="text"
                                       value={values.NationalCode||""}
                                       onChange={handleChange}
                                       label={"کد ملی * "}
