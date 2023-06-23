@@ -29,6 +29,7 @@ class GympinPagesProvider extends React.Component {
     }
 
     showError = (error) => {
+        if(error.message)
         this.setState({...this.state, data: {...data, ...error, show: true}})
     }
 

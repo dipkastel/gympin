@@ -340,7 +340,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
 
     @Override
     public List<TicketDto> getUserTicketsByPlace(UserTicketsParam param) {
-        List<TicketEntity> ticketEntities = ticketRepository.getUserPlaceTicket(param.getUserId(), param.getPlaceId()).stream().map(this::checkForExpire).collect(Collectors.toList());
+        List<TicketEntity> ticketEntities = ticketRepository.getUserPlaceTicket(param.getUserId(), param.getPlaceId()).stream().map(this::checkForExpire).filter(f-> READY_TO_ACTIVE != f.getStatus()).collect(Collectors.toList());
         return convertToDtos(ticketEntities);
     }
 

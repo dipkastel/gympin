@@ -1,6 +1,7 @@
 import {AuthApi} from "./api/NETWORKCONSTS";
 import {authActions} from "../helper/redux/actions/authActions";
 import {refreshToken} from "./api/account.api";
+import {sagaActions} from "../helper/redux/actions/SagaActions";
 
 
 export function setupAxios(axios, store) {
@@ -42,8 +43,7 @@ export function setupAxios(axios, store) {
             store.dispatch(authActions.SetRefreshToken(result.data.Data.RefreshToken))
             callBack(result);
         }).catch(e => {
-            //TODO force logout
-            console.log(e)
+            store.dispatch(sagaActions.RequestLogout());
         })
     }
 }

@@ -1,6 +1,8 @@
 import {AuthApi} from "./api/NETWORKCONSTS";
 import {refreshToken} from "./api/account.api";
 import {authActions} from "../helper/redux/actions/authActions";
+import store from "../helper/redux/store";
+import {sagaActions} from "../helper/redux/actions/SagaActions";
 
 
 export function setupAxios(axios, store) {
@@ -46,7 +48,7 @@ export function setupAxios(axios, store) {
             store.dispatch(authActions.SetRefreshToken(result.data.Data.RefreshToken))
             callBack(result);
         }).catch(e=> {
-            window.location = window.location;
+            store.dispatch(sagaActions.RequestLogout());
         })
     }
 

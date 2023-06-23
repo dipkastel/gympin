@@ -4,137 +4,50 @@ export default function PrivacySection() {
     return (
         <>
             {/* <!-- privacy section start --> */}
-            <div className="privacy-policy-section pt-125 pb-125">
+            <div className="privacy-policy-section pt-125 pb-125 rtl">
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-xl-8 text-center">
                             <div className="section-header mb-60">
-                                <h2 className="section-title section-title__2">حریم شخصی</h2>
+                                <h2 className="section-title section-title__2">قوانبن و مقررات</h2>
                             </div>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-xl-12">
                             <div className="privacy__highlight mb-30">
-                                <p>Libero aliquam eiget rhoncus elit quis mattis tos neque ullco qua praesent interdum orce
-                                    torristique aenean at dictumst
-                                    velit fames molestie tristique magna sociosqu iner rhoncuis in cubilia here are some best
-                                    and catchy dolor for printing
-                                    company</p>
+                                <p>این وبگاه یک وبگاه خدماتی ملی است که با هدف معرفی ورزشکارانِ در جستجوی مراکز ورزشی به مرکز ورزشی و برعکس فعالیت می‌کند. ما نشانی و مشخصات این مراکز و سالن‌های ورزشی هر شهر را به تفکیک به صورت رایگان در دسترس جویندگان قرار می‌دهیم تا کسانی که مراکز ورزشی را در اینترنت جستجو می‌کنند، در زمان کمتری به اطلاعات بیشتری دست پیدا کنند.</p>
                             </div>
                         </div>
                         <div className="col-xl-12">
-                            <h4 className="privacy__heading mb-15">01. Licensing Policy:</h4>
-                            <p>Aliquam fringilla pretium class Ide facilisis volutpat amet cras. Nam sociis sem sollicitudin
-                                dictum dapibus ullamcorper
-                                cras on aptent suscipit posuere tace Morbi aenean laoreet dictum porta donec sapien neque nisl
-                                laoreet aptent fringilla
-                                dolor. Conubia sociosqu enim fermentum. Hace ester tore condimentum lorem mauris tincidunt sem
-                                ornare id vehicula.
-                                Malesuada quam feugiat sociosqu eu elementum dis parturient nisle condimentum ullamcorper leo
-                                ullamcor auctor arcu vel
-                                potenti netus hac ute Ad natoque curabitur augue adipiscing nec.</p>
+                            <h4 className="privacy__heading mb-15">خدمات ما به کاربران</h4>
+                            <p>ورزشکاری که با هدف ثبت‌نام و عضویت در یک مرکز ورزشی به جیم پین وارد می‌شود، می‌تواند بعد از کسب اطلاعات کافی و اطمینان از صحت اطلاعات، در صفحۀ اختصاصی مرکز ورزشی موردنظر خودش اقدام به ثبت‌نام در آن مرکز ورزشی کند. در اینجا ورزشکار متقاضی باید مبلغی را که ازطرف مرکز ورزشی بابت ثبت‌نام مشخص شده است، به جیم پین بپردازد. جیم پین امانت‌دار این وجه خواهد بود تا زمانی که ورزشکار متقاضی در مرکز ورزشی که ثبت‌نام کرده است، ثبت‌نامش را تأیید و شروع به فعالیت کند. اگر این تأیید توسط صاحب مرکز ورزشی در جیم پین انجام نشود، ورزشکار می‌تواند درخواست برگشت وجه بدهد و وجه خودش را در کمتر از 48 ساعت پس از درخواست (در روزهای غیر تعطیل) دریافت کند.</p>
                         </div>
                         <div className="col-xl-12">
-                            <h4 className="privacy__heading mt-30 mb-20">02. General Information:</h4>
-                            <ul className="privacy__lists">
-                                <li>Nam sociis sem sollicitudin dictum dapibus ullamcorper cras on aptent suscipit posuere tace
-                                    Morbi aenean laoreet dictum
-                                    porta donec sapien neque nire for laoreet aptent fringilla dolor. Conubia sociosqu enim
-                                    fermentum. Hace ester tore
-                                    condimentum lorem mauris</li>
-                                <li>Platea nullam dignissim augue ac vulputate varius tristique porttitor ac sociosqu ad
-                                    vehicula quis molestie pretium
-                                    tempus ut ullamcorper vehicula pede, vehicula hymenaeos sodales aptent</li>
-                                <li>Egestas quisque class ornare facilisis senectus eleifend Lorem senectus eu facilisi dapibus
-                                    Faucibus netus. Torquent
-                                    elementum augue ac mattis ridicu</li>
-                            </ul>
+                            <h4 className="privacy__heading mt-30 mb-20">خدمات ما به مراکز ورزشی</h4>
+                            <p>مراکزی که در جیم پین صفحه ای اختصاصی  را تعریف و اطلاعات لازم را تکمیل کرده باشند، باید بعد از مطالعۀ قوانین جیم پین، قراردادی با ما تنظیم و امضا کنند تا میزان درصد پرداختی‌شان بابت هر تراکنش در جیم پین مشخص شود. جیم پین طبق قرارداد منعقده با هر مرکز ورزشی، درصد توافق‌شده را از مبالغ دریافت‌شده از ورزشکاران متقاضی ثبت‌نام کسر کرده و بقیۀ وجه را به مرکز ورزشی تقدیم می‌کند.</p>
                         </div>
                         <div className="col-xl-12">
-                            <h4 className="privacy__heading mt-30 mb-20">03. Copyright Policy:</h4>
-                            <p>Ad feugiat pellentesque velit semper in vestibulum praesent proin felis magna venenatis sapien
-                                hendrerit, potenti
-                                Vestibulum, vehicula risus montes senec tus auctor metus dis aliquam. Sociis inceptos. Id
-                                tristique aptent risus arcu
-                                aptent conubia viverra nec eros. Sociosqu senectus habitasse elit conubia sollic itudin. Fames
-                                odio augue curabitur
-                                malesuada libero posuere nisi proin lobortis, imperdiet lectus massa senectus ligula mollis
-                                interdum mi dui aenean
-                                turpis lacus. Egestas quisque dis. Est nisi cum netus dictum tristique id quis tincidunt nullam
-                                hymenaeos adipiscing
-                                taciti augue pharetra hendrerit pede curae; sem cubilia facilisis sagittis. Fames nunc luctus
-                                orci natoque cras sociis
-                                fames condimentum sed velit. Ante penatibus suscipit quis enim varius quam primis mi eget
-                                Iaculis suscipit sagittis
-                                facilisis. Pellentesque integer cras gravida convallis pellentesque vestibulum quisque venenatis
-                                feugiat. Netus molestie
-                                etiam mauris natoque mollis maecenas vitae foot clear nisl risus mauris natoque</p>
-                            <ul className="privacy__lists mt-20">
-                                <li>Nam sociis sem sollicitudin dictum dapibus ullamcorper cras on aptent suscipit posuere tace
-                                    Morbi aenean laoreet dictum
-                                    porta donec sapien neque nire for laoreet aptent fringilla dolor. Conubia sociosqu enim
-                                    fermentum. Hace ester tore
-                                    condimentum lorem mauris</li>
-                                <li>Egestas quisque class ornare facilisis senectus eleifend Lorem senectus eu facilisi dapibus
-                                    Faucibus netus. Torquent
-                                    elementum augue ac mattis ridicu</li>
-                            </ul>
+                            <h4 className="privacy__heading mt-30 mb-20">تخلفات</h4>
+                            <p>چنانچه ورزشکارانِ عضوشده در یک مرکز ورزشی که ثبت‌نامشان را از طریق جیم پین انجام داده‌اند از آن مرکز ورزشی شکایتی داشته و تخلفی را به جیم پین گزارش کنند، جیم پین وظیفۀ شرعی و قانونی خودش می‌داند که پس از اعلام به مدیر مرکز ورزشی و درخواست توضیح از ایشان، چنانچه اقناع نشد یا شاهد تکرار تخلفات مرکز ورزشی بود، حساب مرکز ورزشی‌ را در جیم پین مسدود کند. پیگیری‌های قانونی تخلفات مدیران مراکز و مشکلات احتمالی موجود در مرکز ورزشی، ارتباطی به جیم پین ندارد.</p>
                         </div>
                         <div className="col-xl-12">
-                            <h4 className="privacy__heading mt-30 mb-20">04. Advertising and sponsorship:</h4>
-                            <p>Volutpat erat tortor penatibus neque quisque eget nisi in nulla platea tempor eget torquent odio.
-                                Gravida hymenaeos
-                                rutrum auctor proin cras pellentesque class nascetur volutpat tortor malesuada. Primis senectus
-                                natoque mattis nisi
-                                convallis porttitor est. Justo vestibulum praesent dictumst ligula or phasellus ultricies
-                                phasellus. Integer ornare
-                                augue platea class eleifend adipiscing curae; vehicula placerat eros. Per tempus sollicitudin
-                                pede to vehicula netus
-                                morbi varius cras eget nullam. Per nostra nibh pretium molestie. Massa blandit ornare sem mollis
-                                mauris, a tempor ad
-                                maecenas laoreet egestas. Litora elementum odio massa euismod dolor nunc sodales iaculis
-                                inceptos quisque netus varius
-                                luctus.</p>
-                            <p>Primis augue parturient hendrerit maecenas imperdiet tortor pharetra vivamus eget tole libero
-                                nibh vehicula aptent
-                                posuere tempor convallis odio cum cras mauris potenti in Interdum. Hendrerit ipsum fringilla
-                                pharetra mollis. Aptent
-                                arcu cras vel tempus facilisi gravida sollicitudin semper primis potenti hac veslit ullamcorper
-                                aptent faucibus
-                                parturient ontario tamu cool lorem venenatis quam.</p>
+                            <h4 className="privacy__heading mt-30 mb-20">برگشت وجه</h4>
+                            <p>وجوه دریافتی از ورزشکاران بابت ثبت‌نام در هر مرکز ورزشی متعلق به همان مرکز ورزشی است و جیم پین چنانچه ورزشکار متقاضی ثبت‌نام به مرکز ورزشی مراجعه و ثبت‌نامش را کامل کند، تا زمانی که مدیر مرکز ورزشی در پنل کاربری خودش اقدام به تأیید ورود کاربرنکند، وجه موردنظر به مرکز پرداخت نخواهد شد. </p>
+                            <p>چنانچه ورزشکاری بعد از ثبت‌نام در یکی از مراکز ثبت‌شده در جیم پین وجه مطالبه‌شده توسط مدیریت مرکز را بپردازد، فقط تا زمانی می‌تواند مبلغ پرداختی را از جیم پین مطالبه کند که حضور و ثبت‌نامش در مرکز ورزشی مذکور قطعی نشده و مدیریت اعلام قطعیت را در جیم پین ثبت نکرده باشد. بعد از این زمان، وجوه پرداختی توسط ورزشکاران به ایشان قابل برگشت نخواهد بود.</p>
                         </div>
                         <div className="col-xl-12">
-                            <h4 className="privacy__heading mt-30 mb-20">05. Additional Policy</h4>
-                            <p>Volutpat erat tortor penatibus neque quisque eget nisi in nulla platea tempor eget torquent odio.
-                                Gravida hymenaeos
-                                rutrum auctor proin cras pellentesque class nascetur volutpat tortor malesuada. Primis senectus
-                                natoque mattis nisi
-                                convallis porttitor est. Justo vestibulum praesent dictumst ligula or phasellus ultricies
-                                phasellus. Integer ornare
-                                augue platea class eleifend adipiscing curae; vehicula placerat eros. Per tempus sollicitudin
-                                pede to vehicula netus
-                                morbi varius cras eget nullam. Per nostra nibh pretium molestie. Massa blandit ornare sem mollis
-                                mauris, a tempor ad
-                                maecenas laoreet egestas. Litora elementum odio massa euismod dolor nunc sodales iaculis
-                                inceptos quisque netus varius
-                                luctus.</p>
+                            <h4 className="privacy__heading mt-30 mb-20">نقش جیم پین</h4>
+                            <p>جیم پین فقط نقش معرفی‌کننده را دارد و حتی دربارۀ درستی یا نادرستی اطلاعات درج‌شده در صفحات اختصاصی هر مرکز ورزشی وظیفه‌ای ندارد. چنانچه اختلافی بین مطالب موجود در صفحۀ اختصاصی هر مرکز ورزشی با واقعیت آن مرکز ورزشی وجود داشته باشد، پاسخگویی به مدعیان و مراجع قانونی برعهدۀ مدیریت مرکز ورزشی است و مسئولیتی متوجه جیم پین نیست.</p>
+                            <p>همچنین، چنانچه ورزشکاری که در یکی از مراکز ورزشی عضوِ جیم پین ثبت‌نام کرده است، شئونات اخلاقی و اجتماعی و… و نیز شروط مرکز ورزشی را رعایت نکند، مسئولیتی متوجه جیم پین نخواهد بود و پیگیری آن برعهدۀ مدیریت مرکز و پاسخگویی برعهدۀ خود ورزشکار است.</p>
                         </div>
                         <div className="col-xl-12">
-                            <h4 className="privacy__heading mt-30 mb-20">06. Company Notices:</h4>
-                            <ul className="privacy__lists">
-                                <li>Nam sociis sem sollicitudin dictum dapibus ullamcorper cras on aptent suscipit posuere tace
-                                    Morbi aenean laoreet dictum
-                                    porta donec sapien neque nire for laoreet aptent fringilla dolor. Conubia sociosqu enim
-                                    fermentum. Hace ester tore
-                                    condimentum lorem mauris</li>
-                                <li>Platea nullam dignissim augue ac vulputate varius tristique porttitor ac sociosqu ad
-                                    vehicula quis molestie pretium
-                                    tempus ut ullamcorper vehicula pede, vehicula hymenaeos sodales aptent</li>
-                                <li>Egestas quisque class ornare facilisis senectus eleifend Lorem senectus eu facilisi dapibus
-                                    Faucibus netus. Torquent
-                                    elementum augue ac mattis ridicu</li>
-                            </ul>
+                            <h4 className="privacy__heading mt-30 mb-20">به‌روزرسانی اطلاعات مراکز ورزشی</h4>
+                            <p>                                اعلام تغییرات احتمالی در نشانی، مدیریت، شماره‌های تماس و راه‌های ارتباطی مراکز ورزشی برعهدۀ مدیران است و جیم پین مسئولیتی در قبال این تغییرات ندارد. بدیهی است چنانچه گزارش نادرستی اطلاعات مرکز ورزشی توسط کاربران یا منبع دیگری به جیم پین برسد و جیم پین از صحت آن اطمینان حاصل کند ، تصمیم‌گیری دربارۀ مسدودشدن حساب مرکز ورزشی در جیم پین به‌صورت یکطرفه یا ادامۀ فعالیت با او، حق مسلّم جیم پین خواهد بود.</p>
+                        </div>
+                        <div className="col-xl-12">
+                            <h4 className="privacy__heading mt-30 mb-20">پشتیبانی خدمات</h4>
+                            <p>خدمات جیم پین به کاربران و مدیران مراکز ورزشی شامل پشتیبانی نیست و چنانچه کاربری در تعامل با جیم پین در بخش فنی یا مالی دچار ایراد یا ابهام شود، وظیفۀ جیم پین است که مسئله را شناسایی، پیگیری و رفع کند. در عین حال، مسلماً رضایت، امنیت و راحتی کاربران جیم پین، مهم‌ترین دستاورد فعالیت ماست و از انجام هرگونه فعالیتی در حد توان و امکان و در محدودۀ وظایفمان جهت افزایش رضایت خاطر و بیشتر بهره‌مندشدن کاربرانمان دریغ نخوهیم کرد.</p>
                         </div>
                     </div>
                 </div>
