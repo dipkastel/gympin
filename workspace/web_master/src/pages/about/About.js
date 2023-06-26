@@ -7,6 +7,7 @@ import {Form} from "react-bootstrap";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import AccessDenied from "../../components/AccessDenied";
 
 
 const About = () => {
@@ -80,7 +81,7 @@ const About = () => {
     }
 
     if(!getAccessOf(personnelAccessEnumT.ManagementAbout))
-        return (<></>);
+        return <AccessDenied/>;
 
     return (
         <>

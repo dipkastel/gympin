@@ -8,6 +8,7 @@ import {Button, Card, CardContent, CardHeader, Grid} from "@mui/material";
 import _SingleTicketActions from "./_SingleTicketActions";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import AccessDenied from "../../components/AccessDenied";
 
 const SingleTicket = () => {
     const error = useContext(ErrorContext);
@@ -32,7 +33,7 @@ const SingleTicket = () => {
     }
 
     if(!getAccessOf(personnelAccessEnumT.TicketDetail))
-        return (<></>);
+        return <AccessDenied/>;
 
     return (
         <>

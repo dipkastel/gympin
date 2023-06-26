@@ -6,6 +6,7 @@ import {placePersonnel_ByPlace} from "../../network/api/placePersonnel.api";
 import {useSelector} from "react-redux";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import AccessDenied from "../../components/AccessDenied";
 
 const Personnel = () => {
     const error = useContext(ErrorContext);
@@ -30,7 +31,7 @@ const Personnel = () => {
     }
 
     if(!getAccessOf(personnelAccessEnumT.ManagementPersonnel))
-        return (<></>);
+        return <AccessDenied/>;
 
     return (
         <>

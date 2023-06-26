@@ -8,6 +8,7 @@ import {user_getById} from "../../network/api/user.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import AccessDenied from "../../components/AccessDenied";
 
 const SingleUser = (props) => {
 
@@ -29,7 +30,7 @@ const SingleUser = (props) => {
     }, []);
 
     if(!getAccessOf(personnelAccessEnumT.UserDetail))
-        return (<></>);
+        return <AccessDenied/>;
 
     if(!user)
         return (<><Loading width={"100%"} height={"Calc(100Vh - 120px)"}/></>);

@@ -5,13 +5,14 @@ import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import getAccessOf from "../../helper/accessManager";
 import _generalAccess from "./_generalAccess";
 import _gateAccess from "./_gateAccess";
+import AccessDenied from "../../components/AccessDenied";
 
 const PersonnelAccess = () => {
     const location = useLocation();
     const {user} = location.state;
 
     if(!getAccessOf(personnelAccessEnumT.ManagementPersonnel))
-        return (<></>);
+        return <AccessDenied/>;
     return (
         <>
             <Card elevation={3} sx={{margin: 1}}>

@@ -5,6 +5,7 @@ import {connect, useSelector} from "react-redux";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import AccessDenied from "../../components/AccessDenied";
 
 
 function Finance(props){
@@ -22,7 +23,7 @@ function Finance(props){
 
 
     if(!getAccessOf(personnelAccessEnumT.Finance))
-        return (<></>);
+        return <AccessDenied/>;
 
     return (
         <>

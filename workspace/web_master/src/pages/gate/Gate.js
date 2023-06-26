@@ -26,6 +26,7 @@ import _GateSchedule from "./_GateSchedule";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import AccessDenied from "../../components/AccessDenied";
 
 TimePicker.propTypes = {
     renderInput: PropTypes.func,
@@ -76,7 +77,7 @@ const Gate = () => {
     };
 
     if(!getAccessOf(personnelAccessEnumT.ManagementGates))
-        return (<></>);
+        return <AccessDenied/>;
 
     function ModalAddPlan() {
         return (

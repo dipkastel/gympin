@@ -9,7 +9,7 @@ export default function PrivacySection() {
                     <div className="row justify-content-center">
                         <div className="col-xl-8 text-center">
                             <div className="section-header mb-60">
-                                <h2 className="section-title section-title__2">قوانبن و مقررات</h2>
+                                <h2 className="section-title section-title__2">قوانین و مقررات</h2>
                             </div>
                         </div>
                     </div>

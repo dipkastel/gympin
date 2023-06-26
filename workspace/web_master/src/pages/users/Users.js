@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import {useTheme} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -11,22 +11,34 @@ import _ActiveTickets from "./activeTickets/_ActiveTickets";
 import _Nqrscan from "./scan/_Nqrscan";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import AccessDenied from "../../components/AccessDenied";
+import {useParams} from "react-router-dom";
 
 
 function Users() {
     const theme = useTheme();
     theme.direction = 'rtl';
+    const {section} = useParams()
     const [tabIndex, setTabIndex] = useState(0);
     const [selectedTicket, setSelectedTicket] = useState(null);
 
+    useEffect(() => {
+        try{
+            tabindexChange(Number.parseInt(section));
+        }catch (e){}
+    }, [section]);
+
+
 
     function tabindexChange(e) {
-        if([0,1,2].includes(e))
+        if([0,1,2].includes(e)){
             setTabIndex(e)
+        }
     }
 
     if(!getAccessOf(personnelAccessEnumT.Users))
-        return (<></>);
+        return <AccessDenied/>;
+
     return (<>
 
         <Box sx={{ bgcolor: 'background.paper'}}>

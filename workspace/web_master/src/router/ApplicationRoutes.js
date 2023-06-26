@@ -31,6 +31,8 @@ import PersonnelAccess from "../pages/personnelAccess/PersonnelAccess";
 import {useSelector} from "react-redux";
 import store from "../helper/redux/store";
 import {sagaActions} from "../helper/redux/actions/SagaActions";
+import AccessDenied from "../components/AccessDenied";
+import PageNotFound from "../components/PageNotFound";
 
 export default function ApplicationRoutes() {
 
@@ -80,12 +82,15 @@ export default function ApplicationRoutes() {
                 <Route path="/users/singleuser" element={<SingleUser/>}/>
                 <Route path="/users/SingleTicket" element={<SingleTicket/>}/>
                 <Route path="/users" element={<Users/>}/>
+                <Route path="/users/:section" element={<Users/>}/>
 
                 <Route path="/stall" element={<Stall/>}/>
 
                 <Route path="/report" element={<Report/>}/>
 
                 <Route path="/" element={<Home/>}/>
+                <Route path="/*" element={<PageNotFound/>}/>
+
             </Routes>
             <NBottomNavigation/>
         </>

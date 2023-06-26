@@ -10,7 +10,7 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    Fab,
+    Fab, Grid,
     IconButton,
     ImageList,
     ImageListItem,
@@ -28,6 +28,7 @@ import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import {CircleStencil, FixedCropper} from 'react-advanced-cropper'
 import 'react-advanced-cropper/dist/style.css';
 import {resizeCanvas} from "../../helper/utils";
+import AccessDenied from "../../components/AccessDenied";
 
 const Images = () => {
     const error = useContext(ErrorContext);
@@ -257,7 +258,7 @@ const Images = () => {
     }
 
     if(!getAccessOf(personnelAccessEnumT.ManagementImages))
-        return (<></>);
+        return <AccessDenied/>;
 
 
     return (

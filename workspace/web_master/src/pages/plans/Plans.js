@@ -6,6 +6,7 @@ import _PlanGatesTiming from "./_PlanGatesTiming";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import AccessDenied from "../../components/AccessDenied";
 
 const Plans = () => {
     const error = useContext(ErrorContext);
@@ -27,7 +28,7 @@ const Plans = () => {
     }
 
     if(!getAccessOf(personnelAccessEnumT.ManagementPlans))
-        return (<></>);
+        return <AccessDenied/>;
 
     return (
         <>

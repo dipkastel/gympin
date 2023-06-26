@@ -9,6 +9,7 @@ import {useSelector} from "react-redux";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import AccessDenied from "../../components/AccessDenied";
 
 const Option = () => {
     const error = useContext(ErrorContext);
@@ -68,7 +69,7 @@ const Option = () => {
     }
 
     if(!getAccessOf(personnelAccessEnumT.ManagementOptions))
-        return (<></>);
+        return <AccessDenied/>;
 
     function ModalAddOption() {
         return (
