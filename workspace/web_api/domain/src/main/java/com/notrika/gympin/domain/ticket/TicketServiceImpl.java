@@ -610,12 +610,12 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
         BigDecimal discount = null;
 
         if(ticketEntity.getDiscount()==null){
-            commission = ticketEntity.getPrice().multiply(BigDecimal.valueOf((float) placeEntity.getCommissionFee()/ 100));
+            commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf((float) placeEntity.getCommissionFee()/ 100));
         }else{
-             commission = ticketEntity.getPrice().multiply(BigDecimal.valueOf(((float)placeEntity.getCommissionFee()-(float)ticketEntity.getDiscount()) / 100));
-             discount = ticketEntity.getPrice().multiply(BigDecimal.valueOf((float)ticketEntity.getDiscount() / 100));
+             commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf(((float)placeEntity.getCommissionFee()-(float)ticketEntity.getDiscount()) / 100));
+             discount = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf((float)ticketEntity.getDiscount() / 100));
         }
-        var placeShare = ticketEntity.getPrice().multiply(BigDecimal.valueOf(1 - (placeEntity.getCommissionFee() / 100)));
+        var placeShare = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (placeEntity.getCommissionFee() / 100)));
 
         List<TransactionEntity> transactions = new ArrayList<>();
 

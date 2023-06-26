@@ -46,6 +46,9 @@ public class TicketScannedDto extends BaseDtoWithCreateUpdate<TicketScannedDto> 
     @JsonProperty("Price")
     private BigDecimal price;
 
+    @JsonProperty("PlacePrice")
+    private BigDecimal placePrice;
+
     @JsonProperty("Description")
     private String description;
 

@@ -48,6 +48,9 @@ public class TicketEntity extends BaseEntityWithCreateUpdate<TicketEntity> {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "placePrice")
+    private BigDecimal placePrice;
+
     @Column(name = "description")
     private String description;
 

@@ -43,6 +43,9 @@ public class TicketDto extends BaseDtoWithCreateUpdate<TicketDto> {
     @JsonProperty("Price")
     private BigDecimal price;
 
+    @JsonProperty("PlacePrice")
+    private BigDecimal placePrice;
+
     @JsonProperty("Description")
     private String description;
 

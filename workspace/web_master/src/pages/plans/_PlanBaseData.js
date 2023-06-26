@@ -31,6 +31,7 @@ const _PlanBaseData = ({plan, getPlanData}) => {
     const [sellInTime, SetSellInTime] = useState(false)
 
     useEffect(() => {
+        console.log(plan)
         setInPlan(plan);
         SetSellInTime((!!plan.Start_selling_date) || (!!plan.End_selling_date))
     }, [plan]);
@@ -106,7 +107,7 @@ const _PlanBaseData = ({plan, getPlanData}) => {
                         </FormControl>
                         <TextField
                             name={"Price"}
-                            value={toPriceWithComma(inPlan.Price)}
+                            value={toPriceWithComma(inPlan.PlacePrice)}
                             onChange={(e) => setInPlan({...inPlan, Price: toPriceWithoutComma(e.target.value)})}
                             margin="dense"
                             label="قیمت پلن"
