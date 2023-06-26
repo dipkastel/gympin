@@ -94,6 +94,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
         entity.setUser(user);
         entity.setPlanName(plan.getName());
         entity.setPrice(plan.getPrice());
+        entity.setPlacePrice(plan.getPlacePrice());
         entity.setDiscount(plan.getDiscount());
         entity.setDescription(plan.getDescription());
         entity.setEntryTotalCount(plan.getEntryTotalCount());
