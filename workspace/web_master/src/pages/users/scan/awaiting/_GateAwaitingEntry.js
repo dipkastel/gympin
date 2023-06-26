@@ -70,7 +70,7 @@ export default function _GateAwaitingEntry({enterAccepted}) {
                                 <Avatar
                                     sx={{width: 50, height: 50}}
                                     alt="Remy Sharp"
-                                    src={item.User.Avatar.Url}/>
+                                    src={item.User.Avatar ? (item.User.Avatar.Url || "") : ""}/>
                             </ListItemAvatar>
                             <Link href={"/users/singleuser?id=" + item.User.Id}
                                   sx={{textDecoration: "none", color: "#666666"}}>
