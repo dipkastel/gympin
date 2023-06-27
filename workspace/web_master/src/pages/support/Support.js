@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
 import {
     Button,
     Card,
@@ -27,6 +28,7 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const Support = () => {
     const error = useContext(ErrorContext);
+    const navigate = useNavigate();
     const [support, SetSupport] = useState([]);
     const [openModalAdd, setOpenModalAdd] = React.useState(false);
     const place = useSelector(({place}) => place.place)
@@ -50,6 +52,10 @@ const Support = () => {
     function renderModalAdd() {
         const addSupport = (e)=>{
             e.preventDefault()
+            e.target.btnCancel.setAttribute("disabled",true);
+            e.target.btnSubmit.setAttribute("disabled",true);
+            e.target.Message.setAttribute("disabled",true);
+            e.target.Title.setAttribute("disabled",true);
             Support_add({Title:e.target.Title.value,
                 Message:{
                     Status:"NEW",
@@ -57,7 +63,7 @@ const Support = () => {
                 },
                 PlaceId:place.Id
             }).then(result=>{
-                getAllSupport();
+                navigate('/management/Support/detail/' + result.data.Data.Id, {replace: false})
             }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -93,8 +99,8 @@ const Support = () => {
                             />
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={()=>setOpenModalAdd(false)}>لغو</Button>
-                            <Button type={"submit"}>ثبت</Button>
+                            <Button name={"btnCancel"} onClick={()=>setOpenModalAdd(false)}>لغو</Button>
+                            <Button name={"btnSubmit"} type={"submit"}>ثبت</Button>
                         </DialogActions>
                     </Form>
                 </Dialog>
@@ -113,7 +119,7 @@ const Support = () => {
                     )}
                 />
                 <CardContent>
-                    <Typography variant={"body1"}>شما می توانید سوالات متداول را در <a href={"https://gympin.ir/faq"}> اینجا </a>مطالعه کنید .</Typography>
+                    <Typography variant={"body1"}>شما می توانید سوالات متداول را در <a target={"_blank"} href={"https://gympin.ir/faq"}> اینجا </a>مطالعه کنید .</Typography>
                     <br/>
                     <Typography variant={"body1"}>مشکلات ، پرسش ها و نظرات خود را برای ما ارسال کنید.</Typography>
                     <br/>

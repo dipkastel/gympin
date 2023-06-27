@@ -1,6 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 import jsQR from 'jsqr';
-import {Card} from "@mui/material";
+import {Card, Grid} from "@mui/material";
 
 
 export default function _ScannerCore({onFind,scannWork}){
@@ -55,19 +55,34 @@ export default function _ScannerCore({onFind,scannWork}){
         }
 
     }, []);
+    function loadCamera(){
+        return (<Grid container direction={"row"} justifyContent={"center"} alignItems={"center"}  sx={{width:"100%",height:"250px"}}>
+            <progress></progress>
+
+        </Grid>)
+    }
+
+    function failedToLoadCamera(){
+        return (<Grid container direction={"row"} justifyContent={"center"} alignItems={"center"}  sx={{width:"100%",height:"250px"}}>
+            <h5>
+                خطا در اتصال به دوربین (لطفا سلامت دوربین دستگاه خود را بررسی نمایید)
+            </h5>
+
+        </Grid>)
+    }
 
     useEffect(() => {
         setMessage(enabled?React.createElement("div", null, React.createElement("span", {
             role: "img",
             "aria-label": "camera"
-        }, ""), " خطا در اتصال به دوربین (لطفا سلامت دوربین دستگاه خود را بررسی نمایید)"):null);
+        }, ""), failedToLoadCamera()):null);
     }, [enabled,loading]);
 
     useEffect(() => {
         setMessage(loading?React.createElement("div", null, React.createElement("span", {
             role: "img",
             "aria-label": "time"
-        }, ""), "در حال اتصال به دوربین"):null);
+        }, ""), loadCamera()):null);
     }, [loading]);
 
     useEffect(() => {
