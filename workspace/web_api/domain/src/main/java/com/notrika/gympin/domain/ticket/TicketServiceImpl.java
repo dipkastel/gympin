@@ -291,21 +291,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
 
     @Override
     public List<TicketScannedDto> getUserEnteredByPlace(Long placeId) {
-
-
-        GympinContext context = GympinContextHolder.getContext();
-        if (context == null)
-            throw new UnknownUserException();
-        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-        var usergateAccess = userRequester.getPlacePersonnel().stream().filter(p->p.getPlace().getId()==placeId).findFirst().get();
-        List<TicketEntity> ticketEntities = ticketRepository.findTicketsHasOpenEnterByPlaceId(placeId).stream().map(this::checkForExpire).filter(t->{
-            for (var gate : t.getPlan().getPlanGates().stream().map(m->m.getGateTimings().getGate()).collect(Collectors.toSet())) {
-                var gateAccess = usergateAccess.getPlacePersonnelGateAccess().stream().filter(c-> Objects.equals(c.getGate().getId(), gate.getId())).findFirst().get();
-                if(usergateAccess.getUserRole() != PlacePersonnelRole.PLACE_OWNER && !gateAccess.getAccess())
-                    return false;
-            }
-            return true;
-        }).collect(Collectors.toList());
+        List<TicketEntity> ticketEntities = ticketRepository.findTicketsHasOpenEnterByPlaceId(placeId).stream().map(this::checkForExpire).filter(t->checkForAccess(t,placeId)).collect(Collectors.toList());
         List<TicketScannedDto> result = new ArrayList<>();
         for (TicketEntity ticket : ticketEntities) {
             try {
@@ -321,21 +307,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
 
     @Override
     public List<TicketDto> getActiveTicketsOfPlace(Long placeId) {
-
-        GympinContext context = GympinContextHolder.getContext();
-        if (context == null)
-            throw new UnknownUserException();
-        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-        var usergateAccess = userRequester.getPlacePersonnel().stream().filter(p->p.getPlace().getId()==placeId).findFirst().get();
-
-        List<TicketEntity> ticketEntities = ticketRepository.getActiveTicketsOfPlace(placeId).stream().map(this::checkForExpire).filter(t->{
-            for (var gate : t.getPlan().getPlanGates().stream().map(m->m.getGateTimings().getGate()).collect(Collectors.toSet())) {
-                var gateAccess = usergateAccess.getPlacePersonnelGateAccess().stream().filter(c-> Objects.equals(c.getGate().getId(), gate.getId())).findFirst().get();
-                if(usergateAccess.getUserRole() != PlacePersonnelRole.PLACE_OWNER && !gateAccess.getAccess())
-                    return false;
-            }
-            return true;
-        }).collect(Collectors.toList());
+        List<TicketEntity> ticketEntities = ticketRepository.getActiveTicketsOfPlace(placeId).stream().map(this::checkForExpire).filter(t->checkForAccess(t,placeId)).collect(Collectors.toList());
         return convertToDtos(ticketEntities);
     }
 
@@ -539,6 +511,24 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
     @Override
     public List<TicketDto> getByUser(UserParam userParam) {
         return convertToDtos(ticketRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId()));
+    }
+
+    private boolean checkForAccess(TicketEntity ticket,Long placeId){
+
+        GympinContext context = GympinContextHolder.getContext();
+        if (context == null)
+            throw new UnknownUserException();
+        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+        var usergateAccess = userRequester.getPlacePersonnel().stream().filter(p->p.getPlace().getId()==placeId).findFirst().get();
+
+        for (var gate : ticket.getPlan().getPlanGates().stream().map(m->m.getGateTimings().getGate()).collect(Collectors.toSet())) {
+            if(usergateAccess.getUserRole() == PlacePersonnelRole.PLACE_OWNER) return true;
+            if(usergateAccess.getPlacePersonnelGateAccess().size()<1) return false;
+            var gateAccess = usergateAccess.getPlacePersonnelGateAccess().stream().filter(c-> Objects.equals(c.getGate().getId(), gate.getId())).findFirst().get();
+            if(!gateAccess.getAccess())
+                return false;
+        }
+        return true;
     }
 
     public TicketEntity checkForExpire(TicketEntity ticket) {
