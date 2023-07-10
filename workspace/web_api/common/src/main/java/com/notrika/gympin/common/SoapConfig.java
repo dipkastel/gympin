@@ -1,4 +1,4 @@
-package com.notrika.gympin.framework.config;
+package com.notrika.gympin.common;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
