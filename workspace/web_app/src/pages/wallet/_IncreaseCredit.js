@@ -53,14 +53,14 @@ const _IncreaseCredit = () => {
     }
     function submitPayment(e) {
         e.preventDefault()
-        if (!amountToPay || parseInt(amountToPay) < 50000) {
+        if (!amountToPay || parseInt(amountToPay) < 0) {
             error.showError({message: "حداقل مبلغ شارژ 50،000 تومان می باشد",});
             return;
         }
-        if (!transactionReference) {
-            error.showError({message: "کد مرجع تراکنش نمیتواند خالی باشد",});
-            return;
-        }
+        // if (!transactionReference) {
+        //     error.showError({message: "کد مرجع تراکنش نمیتواند خالی باشد",});
+        //     return;
+        // }
         var selectedGatway = paymentGateways.filter(item => item.IsDefault == true)[0];
         transactions_setPaymentRequest({
             SelectedPaymentId: selectedGatway.Id,
