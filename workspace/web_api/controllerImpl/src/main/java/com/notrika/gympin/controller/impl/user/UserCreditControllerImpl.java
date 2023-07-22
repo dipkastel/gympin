@@ -27,10 +27,6 @@ public class UserCreditControllerImpl implements UserCreditController {
         return ResponseEntity.ok(userCreditService.increaseUserCredit(userCreditParam));
     }
 
-    @PostMapping("checkPayment")
-    public ResponseEntity<Boolean> checkPayment(@RequestBody PaymentParam paymentParam) {
-        return ResponseEntity.ok(userCreditService.checkPayment(paymentParam));
-    }
 
     @GetMapping("getByUser")
     public ResponseEntity<UserCreditDto> getCreditsByUser(UserParam userParam) {

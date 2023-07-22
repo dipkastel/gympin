@@ -19,7 +19,7 @@ public interface TransactionService extends BaseService<TransactionParam, Transa
 
     List<PaymentGatewaysDto> getPaymentGateways(PaymentGatewaysParam param);
     String setPaymentRequest(PaymentRequestParam param);
-    Boolean checkPayment(CheckPaymentParam param);
+    void CalculatePayment(Long transactionId,Boolean transactionResult,String description,String additionalDescription) throws Exception;
     Boolean handCheckPayment(CheckPaymentParam param);
     Boolean placeSetteling(TransactionPlaceSettelingParam param);
 }

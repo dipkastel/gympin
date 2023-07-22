@@ -22,7 +22,11 @@ public class Error {
 
     public Error(ExceptionBase e) {
         this.Code = e.getErrorCode();
-        this.errorMessage = ErrorMessageHelper.getMessage(e.getErrorType().toString(), ErrorMessageHelper.Language.fa);
+        if(e instanceof BadRequestRunTimeMessage){
+            this.errorMessage =e.getErrorMessage();
+        }else {
+            this.errorMessage = ErrorMessageHelper.getMessage(e.getErrorType().toString(), ErrorMessageHelper.Language.fa);
+        }
         //if (AppConfig.IsDebugModel)
         this.stackTrace = Arrays.toString(e.getStackTrace());
 
@@ -110,6 +114,7 @@ public class Error {
         PLACE_OPTIONS_IS_EMPTY(1710),
         PLACE_IS_DELETED(1711),
         //general
+        BAD_REQUEST_RUN_TIME_MESSAGE(4000),
         EXCEPTION(4001),
         OUT_SERVICE_EXCEPTION(4002),
         INPUT_NOT_VALID(4003),

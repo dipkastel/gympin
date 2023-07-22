@@ -38,13 +38,6 @@ public class UserCreditServiceImpl implements UserCreditService {
         return "http://shaparak.ir/payment";
     }
 
-    @Override
-    public Boolean checkPayment(PaymentParam paymentParam) {
-        //check transaction
-        //change transaction status
-        //return returnSuccess;
-        return true;
-    }
 
     @Override
     public UserCreditDto getCreditsByUser(UserParam userParam) {

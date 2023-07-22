@@ -39,7 +39,8 @@ export default function ApplicationRoutes() {
                 <Route path="/tickets" element={isAuthorized?<Tickets/>: <AuthRoutes/>}/>
 
                 <Route path="/wallet" element={isAuthorized?<Wallet/>: <AuthRoutes/>}/>
-                <Route path="/checkout/:paymentId" element={isAuthorized?<Checkout/>: <AuthRoutes/>}/>
+                <Route path="/checkout/:formData"  element={isAuthorized?<Checkout/>: <AuthRoutes/>}/>
+
 
                 <Route path="/invoice/:ticketId" element={isAuthorized?<Invoice/>: <AuthRoutes/>}/>
 

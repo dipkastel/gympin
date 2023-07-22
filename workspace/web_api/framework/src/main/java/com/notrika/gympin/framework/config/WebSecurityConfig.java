@@ -97,6 +97,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/sport/query"
                         ,"/api/v1/article/query"
                         ,"/api/v1/article/getById"
+                        ,"/api/v1/parsianGateway/CallbackMethod"
                 )
                 .permitAll()
                 .antMatchers("/api/test/**")

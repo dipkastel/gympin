@@ -25,12 +25,14 @@ public class ExceptionBase extends RuntimeException {
 
     public ExceptionBase(String message, HttpStatus httpStatus, Error.ErrorType errorType) {
         super(message);
+        this.errorMessage = message;
         this.httpStatus = httpStatus;
         this.errorType = errorType;
     }
 
     public ExceptionBase(String message, Throwable cause, HttpStatus httpStatus, Error.ErrorType errorType) {
         super(message, cause);
+        this.errorMessage = message;
         this.httpStatus = httpStatus;
         this.errorType = errorType;
     }
@@ -43,6 +45,7 @@ public class ExceptionBase extends RuntimeException {
 
     public ExceptionBase(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, HttpStatus httpStatus, Error.ErrorType errorType) {
         super(message, cause, enableSuppression, writableStackTrace);
+        this.errorMessage = message;
         this.httpStatus = httpStatus;
         this.errorType = errorType;
     }

@@ -6,10 +6,12 @@ import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {Box, Card, CardContent, CardHeader, CircularProgress, Grid, Typography} from "@mui/material";
 import {transactions_checkPayment} from "../../network/api/transactions.api";
 
-const Checkout = () => {
-
+const Checkout = (params) => {
+    console.log("params",params)
     const navigate = useNavigate()
-    const {paymentId} = useParams();
+    const {formData} = useParams();
+    const decodedFormData = decodeURIComponent(formData);
+    console.log("decodedFormData",decodedFormData)
     const error = useContext(ErrorContext);
     const [counter,SetCounter] = useState(null);
     const [transActionTitle,SetTransactionTitle] = useState("لطفا صبر کنید");
@@ -24,25 +26,25 @@ const Checkout = () => {
     }, []);
 
     var request = false;
-    useEffect(()=>{
-        if (request) return;
-        request = true;
-        transactions_checkPayment({
-            Serial:paymentId,
-        }).then(result=>{
-            if(result.data.Data){
-                SetTransactionTitle("تراکنش موفق")
-            }else{
-                SetTransactionTitle("تراکنش ناموفق")
-            }
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        })
-    },[])
+    // useEffect(()=>{
+    //     if (request) return;
+    //     request = true;
+    //     transactions_checkPayment({
+    //         Serial:paymentId,
+    //     }).then(result=>{
+    //         if(result.data.Data){
+    //             SetTransactionTitle("تراکنش موفق")
+    //         }else{
+    //             SetTransactionTitle("تراکنش ناموفق")
+    //         }
+    //     }).catch(e => {
+    //         try {
+    //             error.showError({message: e.response.data.Message});
+    //         } catch (f) {
+    //             error.showError({message: "خطا نا مشخص",});
+    //         }
+    //     })
+    // },[])
 
     return (
         <>

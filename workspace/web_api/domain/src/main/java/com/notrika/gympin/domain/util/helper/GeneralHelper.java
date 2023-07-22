@@ -2,6 +2,7 @@ package com.notrika.gympin.domain.util.helper;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public final class GeneralHelper {

@@ -8,6 +8,5 @@ import com.notrika.gympin.common.user.param.UserParam;
 public interface UserCreditService  {
 
     String increaseUserCredit(UserCreditIncreaseParam userCreditParam);
-    Boolean checkPayment(PaymentParam paymentParam);
     UserCreditDto getCreditsByUser(UserParam userParam);
 }

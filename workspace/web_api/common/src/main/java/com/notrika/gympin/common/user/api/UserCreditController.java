@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface UserCreditController {
 
      ResponseEntity<String> increaseUserCredit(UserCreditIncreaseParam userCreditParam);
-     ResponseEntity<Boolean> checkPayment(PaymentParam paymentParam);
      ResponseEntity<UserCreditDto> getCreditsByUser(UserParam userParam);
 
 

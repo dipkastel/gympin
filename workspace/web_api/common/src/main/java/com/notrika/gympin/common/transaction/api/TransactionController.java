@@ -15,7 +15,6 @@ public interface TransactionController extends BaseController<TransactionParam, 
         ResponseEntity<Boolean> settlementRequest(PlaceSettlementRequestParam param);
         ResponseEntity<List<PaymentGatewaysDto>> getPaymentGateways(PaymentGatewaysParam param);
         ResponseEntity<String> setPaymentRequest(PaymentRequestParam param);
-        ResponseEntity<Boolean> checkPayment(CheckPaymentParam param);
         ResponseEntity<Boolean> handCheckPayment(CheckPaymentParam param);
         ResponseEntity<Boolean> placeSetteling(TransactionPlaceSettelingParam param);
 }

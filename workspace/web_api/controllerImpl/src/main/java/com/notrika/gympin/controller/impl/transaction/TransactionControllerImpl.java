@@ -84,12 +84,6 @@ public class TransactionControllerImpl implements TransactionController {
     }
 
     @Override
-    @PostMapping("/checkPayment")
-    public ResponseEntity<Boolean> checkPayment(@RequestBody CheckPaymentParam param) {
-        return ResponseEntity.ok(transactionService.checkPayment(param));
-    }
-
-    @Override
     @PostMapping("/handCheckPayment")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public ResponseEntity<Boolean> handCheckPayment(@RequestBody CheckPaymentParam param) {

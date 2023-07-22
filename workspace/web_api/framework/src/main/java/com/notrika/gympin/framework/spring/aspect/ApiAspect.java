@@ -56,13 +56,13 @@ public class ApiAspect {
         try {
             Object retVal = pjp.proceed();
             try {
-                saveServiceCall(pjp, retVal);
+                IgnoreWrapAspect ignoreWrapAspect = method.getAnnotation(IgnoreWrapAspect.class);
+                if (ignoreWrapAspect == null) {
+                    saveServiceCall(pjp, retVal);
+                    return getResponseModelResponseEntity(resultBuffer, (ResponseEntity) retVal);
+                }
             } catch (Exception e) {
                 log.error("Error in Save Service Data: \n", e);
-            }
-            IgnoreWrapAspect ignoreWrapAspect = method.getAnnotation(IgnoreWrapAspect.class);
-            if (ignoreWrapAspect == null) {
-                return getResponseModelResponseEntity(resultBuffer, (ResponseEntity) retVal);
             }
             return retVal;
         } catch (ExceptionBase e) {
