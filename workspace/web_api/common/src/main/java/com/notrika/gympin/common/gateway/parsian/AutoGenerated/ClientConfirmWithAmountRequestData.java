@@ -15,19 +15,19 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Product complex type.
+ * <p>Java class for ClientConfirmWithAmountRequestData complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Product"&gt;
+ * &lt;complexType name="ClientConfirmWithAmountRequestData"&gt;
  *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *     &lt;extension base="{https://pec.Shaparak.ir/NewIPGServices/Confirm/ConfirmService}ClientConfirmRequestData"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="PGroupId" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="OrderId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *         &lt;element name="Amount" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *       &lt;/sequence&gt;
- *     &lt;/restriction&gt;
+ *     &lt;/extension&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
@@ -35,31 +35,33 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Product", propOrder = {
-    "pGroupId",
+@XmlType(name = "ClientConfirmWithAmountRequestData", namespace = "https://pec.Shaparak.ir/NewIPGServices/Confirm/ConfirmService", propOrder = {
+    "orderId",
     "amount"
 })
-public class Product {
+public class ClientConfirmWithAmountRequestData
+    extends ClientConfirmRequestData
+{
 
-    @XmlElement(name = "PGroupId")
-    protected int pGroupId;
+    @XmlElement(name = "OrderId")
+    protected long orderId;
     @XmlElement(name = "Amount")
     protected long amount;
 
     /**
-     * Gets the value of the pGroupId property.
+     * Gets the value of the orderId property.
      * 
      */
-    public int getPGroupId() {
-        return pGroupId;
+    public long getOrderId() {
+        return orderId;
     }
 
     /**
-     * Sets the value of the pGroupId property.
+     * Sets the value of the orderId property.
      * 
      */
-    public void setPGroupId(int value) {
-        this.pGroupId = value;
+    public void setOrderId(long value) {
+        this.orderId = value;
     }
 
     /**

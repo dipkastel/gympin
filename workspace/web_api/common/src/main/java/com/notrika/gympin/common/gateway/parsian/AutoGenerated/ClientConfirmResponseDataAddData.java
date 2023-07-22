@@ -15,16 +15,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ClientSaleDiscountRequestData complex type.
+ * <p>Java class for ClientConfirmResponseDataAddData complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ClientSaleDiscountRequestData"&gt;
+ * &lt;complexType name="ClientConfirmResponseDataAddData"&gt;
  *   &lt;complexContent&gt;
- *     &lt;extension base="{https://pec.Shaparak.ir/NewIPGServices/Sale/SaleService}ClientSaleRequestData"&gt;
+ *     &lt;extension base="{https://pec.Shaparak.ir/NewIPGServices/Confirm/ConfirmService}ClientConfirmResponseData"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="DiscountProduct" type="{https://pec.Shaparak.ir/NewIPGServices/Sale/SaleService}ArrayOfProduct" minOccurs="0"/&gt;
+ *         &lt;element name="AddData" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/extension&gt;
  *   &lt;/complexContent&gt;
@@ -34,38 +34,38 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ClientSaleDiscountRequestData", propOrder = {
-    "discountProduct"
+@XmlType(name = "ClientConfirmResponseDataAddData", namespace = "https://pec.Shaparak.ir/NewIPGServices/Confirm/ConfirmService", propOrder = {
+    "addData"
 })
-public class ClientSaleDiscountRequestData
-    extends ClientSaleRequestData
+public class ClientConfirmResponseDataAddData
+    extends ClientConfirmResponseData
 {
 
-    @XmlElement(name = "DiscountProduct")
-    protected ArrayOfProduct discountProduct;
+    @XmlElement(name = "AddData")
+    protected String addData;
 
     /**
-     * Gets the value of the discountProduct property.
+     * Gets the value of the addData property.
      * 
      * @return
      *     possible object is
-     *     {@link ArrayOfProduct }
+     *     {@link String }
      *     
      */
-    public ArrayOfProduct getDiscountProduct() {
-        return discountProduct;
+    public String getAddData() {
+        return addData;
     }
 
     /**
-     * Sets the value of the discountProduct property.
+     * Sets the value of the addData property.
      * 
      * @param value
      *     allowed object is
-     *     {@link ArrayOfProduct }
+     *     {@link String }
      *     
      */
-    public void setDiscountProduct(ArrayOfProduct value) {
-        this.discountProduct = value;
+    public void setAddData(String value) {
+        this.addData = value;
     }
 
 }
