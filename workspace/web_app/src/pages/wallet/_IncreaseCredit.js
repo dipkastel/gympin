@@ -240,25 +240,6 @@ const _IncreaseCredit = () => {
                             onClick={(e) => submitPayment(e)}
                         > پرداخت
                         </Button>
-                        <form action={"http://localhost:8080/api/v1/parsianGateway/CallbackMethod?ref=WEBAPP"} method={"post"} content>
-
-                            <input name="OrderId" id="OrderId" value="495" />
-                            <input name="Token" id="Token" value="244692623186415" />
-                            <input name="TerminalNo" id="TerminalNo" value="45028996" />
-                            <input name="RRN" id="RRN" value="739090967988" />
-                            <input name="status" id="status" value="0" />
-                            <input name="Amount" id="Amount" value="100000" />
-                            <input name="SwAmount" id="SwAmount" value="" />
-                            <input name="HashCardNumber" id="HashCardNumber" value="E12B95B96392499B1AC6A613309233C5127EB7CA220BFC7402959B9E796D5B5E" />
-                            <Button
-                                edge="end"
-                                aria-label="Toggle password visibility"
-                                variant={"contained"}
-                                fullWidth
-                                type={"submit"}
-                            >Go
-                            </Button>
-                        </form>
                     </Grid>
                 </Grid>
             </Card>}
