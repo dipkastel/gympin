@@ -198,26 +198,20 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
 
         switch (param.getApplication()) {
             case ANDROID:
-                paymentGatewaysDtos.add(parsianGatway);
                 break;
             case IOS:
-                paymentGatewaysDtos.add(parsianGatway);
                 break;
             case WEBPANEL:
-                paymentGatewaysDtos.add(cardTransaction);
                 break;
             case WEBAPP:
                 paymentGatewaysDtos.add(parsianGatway);
+                paymentGatewaysDtos.add(cardTransaction);
                 break;
             case WEBMASTER:
-                paymentGatewaysDtos.add(cardTransaction);
-                paymentGatewaysDtos.add(bankTransaction);
-                paymentGatewaysDtos.add(chequeTransaction);
                 break;
             case WEBCORPORATE:
-                paymentGatewaysDtos.add(cardTransaction);
+                paymentGatewaysDtos.add(parsianGatway);
                 paymentGatewaysDtos.add(bankTransaction);
-                paymentGatewaysDtos.add(chequeTransaction);
                 break;
         }
 
@@ -239,12 +233,13 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
 
 
         if (param.getSelectedPaymentType() == 80L) {
+            String callbackUrl = "https://api.gympin.ir/v1/parsianGateway/CallbackMethod?ref="+getStringType(param.getTransactionType());
             var transaction = submitTransAction("پرداخت از درگاه پارسیان ", param, serial);
             //Parsian
             ClientSaleRequestData requestData = new ClientSaleRequestData();
             requestData.setOrderId(GeneralUtil.UnifyOrderId(transaction.getId()));
             requestData.setAmount(param.getAmount().longValue()*10);
-            requestData.setCallBackUrl("https://api.gympin.ir/v1/parsianGateway/CallbackMethod?ref=WEBAPP");
+            requestData.setCallBackUrl(callbackUrl);
             requestData.setAdditionalData(serial);
             UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
             requestData.setOriginator(user.getPhoneNumber());
@@ -290,6 +285,15 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
         }
 
         return result;
+    }
+
+    private String getStringType(TransactionType transactionType) {
+        switch (transactionType){
+            case CHARGE_CORPORATE:return "WEBCORPORATE";
+            case CHARGE_USER:return "WEBAPP";
+            case CHARGE_PLACE:return "WEBPLACE";
+            default:return "UNKNOWN";
+        }
     }
 
     private TransactionEntity submitTransAction(String description, PaymentRequestParam param, String serial) {

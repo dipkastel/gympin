@@ -109,7 +109,8 @@ public class ParsianGatewayControllerImpl implements ParsianGatewayController {
     private String getRefrence(String ref) {
         switch (ref){
             case "WEBAPP":return "https://web.gympin.ir/wallet";
-            case "WEBCORPORATE":return "https://corporate.gympin.ir";
+            case "WEBCORPORATE":return "https://corporate.gympin.ir/finance";
+            case "WEBPLACE":return "https://place.gympin.ir";
             default:return "https://gympin.ir";
         }
     }

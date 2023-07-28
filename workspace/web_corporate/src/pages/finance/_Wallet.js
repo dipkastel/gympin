@@ -63,7 +63,7 @@ const _Wallet = () => {
 
     function submitPayment(e) {
         e.preventDefault()
-        if (!amountToPay || parseInt(amountToPay) < 50000) {
+        if (!amountToPay || parseInt(amountToPay) < 0) {
             error.showError({message: "حداقل مبلغ شارژ 50،000 تومان می باشد",});
             return;
         }
