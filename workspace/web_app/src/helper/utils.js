@@ -183,7 +183,6 @@ export function getTicketIdByQr(qr) {
     return result;
 }
 
-
 export function resizeCanvas(canvas,newH,newW) {
     if(newH&&!newW)
         newW = (canvas.width*newH)/canvas.height

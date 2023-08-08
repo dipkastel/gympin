@@ -17,8 +17,8 @@ public class UserRegisterParam extends BaseParam<UserRegisterParam> {
     @JsonProperty("UserRole")
     private UserRoleParam userRole;
 
-    @JsonProperty("Username")
-    private String username;
+    @JsonProperty("FullName")
+    private String fullName;
 
     @JsonProperty("PhoneNumber")
     private String phoneNumber;

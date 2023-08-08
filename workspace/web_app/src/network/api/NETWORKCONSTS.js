@@ -6,7 +6,9 @@ export let Api_url = {
     Account: {
         LOGIN_URL: "v1/account/login",
         SEND_SMS_URL: "v1/account/sendsms",
-        REFRESH_TOKEN:"v1/account/refreshToken"
+        REFRESH_TOKEN:"v1/account/refreshToken",
+        REGISTER_WITH_INVITE_CODE:"v1/account/registerByInviteCode",
+        GET_INVITE_CODES:"v1/account/userInviteCodes"
     },
     configs:{
         WebAppSplash:"v1/configs/WebAppSplash"

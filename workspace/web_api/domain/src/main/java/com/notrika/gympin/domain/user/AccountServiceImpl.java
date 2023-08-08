@@ -10,16 +10,18 @@ import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpiredException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeManyRequestException;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoundException;
+import com.notrika.gympin.common.exception.activation.code.InviteCodeNotValid;
+import com.notrika.gympin.common.exception.general.InputNotValidException;
+import com.notrika.gympin.common.exception.general.NotFoundException;
 import com.notrika.gympin.common.exception.general.SendSmsException;
 import com.notrika.gympin.common.exception.general.UserNotAllowedException;
+import com.notrika.gympin.common.exception.ticket.EntryAlreadyExistException;
+import com.notrika.gympin.common.exception.user.UnknownUserException;
 import com.notrika.gympin.common.support.enums.SupportMessageStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
 import com.notrika.gympin.common.support.service.SupportService;
-import com.notrika.gympin.common.user.dto.RefreshTokenDto;
-import com.notrika.gympin.common.user.dto.UserDetailsImpl;
-import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.dto.UserRegisterDto;
+import com.notrika.gympin.common.user.dto.*;
 import com.notrika.gympin.common.user.enums.TokenType;
 import com.notrika.gympin.common.user.enums.UserGroup;
 import com.notrika.gympin.common.user.enums.UserRole;
@@ -33,6 +35,7 @@ import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
+import com.notrika.gympin.persistence.dao.repository.UserRepository;
 import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
 import com.notrika.gympin.persistence.entity.user.PasswordEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -53,6 +56,7 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -62,6 +66,8 @@ public class AccountServiceImpl implements AccountService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private JwtTokenProvider tokenProvider;
     @Autowired
@@ -79,10 +85,10 @@ public class AccountServiceImpl implements AccountService {
     public boolean sendActivationSms(UserSendSmsParam dto) throws ExceptionBase {
         log.info("Going to send activation sms...\n");
         UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(dto.getPhoneNumber()));
-//        if (user == null) throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.USER_NOT_FOUND);
-        if (user == null) {
-            user = addUser(UserRegisterParam.builder().userRole(UserRoleParam.builder().role(UserRole.USER).build()).phoneNumber(dto.getPhoneNumber()).build());
-        }
+        if (user == null) throw new UnknownUserException();
+//        if (user == null) {
+//            user = addUser(UserRegisterParam.builder().userRole(UserRoleParam.builder().role(UserRole.USER).build()).phoneNumber(dto.getPhoneNumber()).build());
+//        }
         if (!CheckUserAccess(user, dto.getApplication()))
             throw new UserNotAllowedException();
         String code = MyRandom.GenerateRandomVerificationSmsCode();
@@ -109,12 +115,25 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Override
+    public UserRegisterDto registerByInviteCode(UserRegisterParam userRegisterParam) {
+        log.info("Going to register user by invite code...\n");
+        UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
+        if (user != null) throw new EntryAlreadyExistException();
+        if(!checkInviteCode(userRegisterParam.getInvitedBy())) throw new InviteCodeNotValid();
+        return register(userRegisterParam);
+    }
+
     public UserEntity addUser(UserRegisterParam userRegisterParam) {
         log.info("Going to addUser...\n");
         UserEntity user = new UserEntity();
         user.setUsername("USER_" + new Date().getTime());
         user.setPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
         user.setUserRole(userRegisterParam.getUserRole().getRole());
+        if(userRegisterParam.getFullName()!=null)
+            user.setFullName(userRegisterParam.getFullName());
+        if(userRegisterParam.getInvitedBy()!=null)
+            user.setInvitedBy(userRegisterParam.getInvitedBy());
         user.setUserGroup(UserGroup.CLIENT);
         user.setUserStatus(UserStatus.ENABLED);
         user.setBalance(BigDecimal.ZERO);
@@ -253,35 +272,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public Boolean requestRegisterPlace(RequestRegisterParam param) {
-        //identify user
-//        UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(param.getPhoneNumber()));
-//        if (user == null){
-//            UserRoleParam userRole = new UserRoleParam();
-//            userRole.setRole(UserRole.USER);
-//            user = addUser(UserRegisterParam.builder().phoneNumber(GeneralHelper.fixPhoneNumber(param.getPhoneNumber())).userRole(userRole).build());
-//        }
-//        user.setFullName(param.getFullName());
-//        userService.update(user);
-//        //pre-register
-//        PlaceEntity initPlace = new PlaceEntity();
-//        initPlace.setName(param.getPlaceName());
-//        initPlace.setStatus(PlaceStatusEnum.PREREGISTER);
-//        initPlace.setAddress("");
-//        initPlace.setCreatorUser(user);
-//        PlaceEntity place = placeRepository.add(initPlace);
-//        //add user To Place
-//        PlacePersonnelEntity placePersonnelEntity = PlacePersonnelEntity.builder()
-//                .place(place)
-//                .user(user)
-//                .userRole(PlacePersonnelRole.PLACE_OWNER)
-//                .build();
-//        placePersonnelRepository.add(placePersonnelEntity);
-//
-//        try {
-//            smsService.sendRegisterCompleted(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE,param.getPlaceName()));
-//        } catch (Exception e) {
-//            throw new SendSmsException();
-//        }
         String title = "درخواست افزودن مجموعه توسط " + param.getFullName();
         String message = "افزودن مجموعه ورزشی " + param.getPlaceName() + " توسط " + param.getFullName() + " با شماره " + param.getPhoneNumber() + " درخواست شده.";
         supportService.add(SupportParam.builder()
@@ -350,4 +340,59 @@ public class AccountServiceImpl implements AccountService {
         return true;
 
     }
+
+    @Override
+    public UserInviteCodesDto getUserInviteCodes() {
+        GympinContext context = GympinContextHolder.getContext();
+        if (context == null)
+            throw new UnknownUserException();
+        UserEntity userEntity = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+
+        UserInviteCodesDto codesDto = new UserInviteCodesDto();
+        codesDto.setTitle("کد های دعوت شما");
+        codesDto.setDescriptoin("با کد دعوت زیر 2 نفر از دوستان خود را به جیم پین دعوت کنید");
+        String inviteCode1 = getInviteCode(userEntity.getId(),1);
+        String inviteCode2 = getInviteCode(userEntity.getId(),2);
+        codesDto.setFirstInviteCode(
+                InviteCode
+                        .builder()
+                        .code(inviteCode1)
+                        .isActive(userRepository.findByInvitedBy(inviteCode1).isEmpty())
+                        .build());
+        codesDto.setSecondInviteCode(
+                InviteCode
+                        .builder()
+                        .code(inviteCode2)
+                        .isActive(userRepository.findByInvitedBy(inviteCode2).isEmpty())
+                        .build());
+        return codesDto;
+    }
+
+
+    private String[] secret =new String[] {"M","L","P","O","K","N","B","J","I","U","H","V","C","G","Y","T","F","X","Z","D","R","E","S","A","W","Q"};
+
+    private boolean checkInviteCode(String inviteCode) {
+        try{
+            String code = inviteCode.substring(3,inviteCode.length()-2);
+            Long userId = Long.decode(code);
+            String num = inviteCode.substring(2,3);
+            String inviteCodeL = getInviteCode(userId,Integer.parseInt(num));
+            List<UserEntity> alreadyUseByUser = userRepository.findByInvitedBy(inviteCodeL);
+            if(alreadyUseByUser.size()<1&&inviteCodeL.equals(inviteCode))
+                return true;
+        }catch (Exception e){}
+        return false;
+    }
+
+
+    private String getInviteCode(Long userId,Integer num) {
+        var Token=secret[(int) (userId%secret.length)]+
+                secret[(int) (userId%(secret.length-1))]+
+                num+
+                Long.toHexString(userId)+
+                secret[(int) (userId%(secret.length-2))]+
+                secret[(int) (userId%(secret.length-3))];
+        return Token.toUpperCase();
+    }
+
 }

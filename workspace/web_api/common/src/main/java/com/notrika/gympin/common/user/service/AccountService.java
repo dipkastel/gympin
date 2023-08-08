@@ -3,6 +3,7 @@ package com.notrika.gympin.common.user.service;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.dto.UserInviteCodesDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.param.*;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +13,7 @@ public interface AccountService extends UserDetailsService {
     boolean sendActivationSms(UserSendSmsParam phoneNumber) throws ExceptionBase;
 
     UserRegisterDto register(UserRegisterParam userRegisterParam) throws ExceptionBase;
+    UserRegisterDto registerByInviteCode(UserRegisterParam userRegisterParam);
 
     UserDto loginUser(LoginParam loginParam) throws ExceptionBase;
 
@@ -21,4 +23,5 @@ public interface AccountService extends UserDetailsService {
     Boolean requestRegisterAdvice(RequestRegisterParam param);
     Boolean requestPublicMessage(RequestRegisterParam param);
 
+    UserInviteCodesDto getUserInviteCodes();
 }

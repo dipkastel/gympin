@@ -4,6 +4,7 @@ package com.notrika.gympin.controller.impl.user;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.user.api.AccountController;
 import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.dto.UserInviteCodesDto;
 import com.notrika.gympin.common.user.dto.UserRegisterDto;
 import com.notrika.gympin.common.user.param.*;
 import com.notrika.gympin.common.user.service.AccountService;
@@ -29,6 +30,18 @@ public class AccountControllerImpl implements AccountController {
     @PostMapping("/register")
     public ResponseEntity<UserRegisterDto> register(@RequestBody UserRegisterParam userRegisterParam) throws ExceptionBase {
         return new ResponseEntity<>(accountService.register(userRegisterParam), HttpStatus.OK);
+    }
+
+    @Override
+    @PostMapping("/registerByInviteCode")
+    public ResponseEntity<UserRegisterDto> registerByInviteCode(UserRegisterParam userRegisterParam) throws ExceptionBase {
+        return new ResponseEntity<>(accountService.registerByInviteCode(userRegisterParam), HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/userInviteCodes")
+    public ResponseEntity<UserInviteCodesDto> registerByInviteCode() throws ExceptionBase {
+        return new ResponseEntity<>(accountService.getUserInviteCodes(), HttpStatus.OK);
     }
 
     @Override

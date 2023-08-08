@@ -71,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/resource/video"
                         ,"/api/v1/account/sendsms"
                         ,"/api/v1/account/login"
+                        ,"/api/v1/account/registerByInviteCode"
                         ,"/api/v1/account/requestRegisterPlace"
                         ,"/api/v1/account/requestRegisterCorporate"
                         ,"/api/v1/account/requestRegisterAdvise"

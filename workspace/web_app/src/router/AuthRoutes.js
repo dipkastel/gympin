@@ -12,7 +12,6 @@ export default function AuthRoutes() {
         <Routes>
             <Route path="/" element={isAuthorized?<Navigate to={"/"} />:<Navigate exact={true} to="/auth/login"/>}/>
             <Route path="/login" element={isAuthorized?<Navigate to={"/"} />:<Login/>}/>
-            <Route path="/register" element={isAuthorized?<Navigate to={"/"} />:<Register/>}/>
             <Route path="/logout" element={isAuthorized?<LogoutPage/>:<Navigate to={"/"} />}/>
         </Routes>
     )

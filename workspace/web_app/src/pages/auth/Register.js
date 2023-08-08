@@ -2,10 +2,12 @@ import React from "react";
 import {login} from "../../network/api/account.api";
 import {Button, Card, CardActions, CardContent, CardHeader, Grid, Link, TextField} from "@mui/material";
 import {Formik} from "formik";
+import {useParams} from "react-router-dom";
 
 
 export default function Register(props) {
-
+    const {inviteCode} = useParams();
+    alert(inviteCode);
     return (
         <Grid
             container
@@ -25,7 +27,7 @@ export default function Register(props) {
                             backgroundColor:"primary.main",
                             color:"#fff"
                         }}
-                        title="ثبت مجموعه"
+                        title="ثبت نام"
                     />
                     <CardContent>
 

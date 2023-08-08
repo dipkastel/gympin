@@ -21,7 +21,11 @@ public class Error {
     }
 
     public Error(ExceptionBase e) {
-        this.Code = e.getErrorCode();
+        try{
+        this.Code = e.getErrorType().value;
+        }catch (Exception ex){
+            this.Code = -100;
+        }
         if(e instanceof BadRequestRunTimeMessage){
             this.errorMessage =e.getErrorMessage();
         }else {
@@ -41,6 +45,7 @@ public class Error {
         ACTIVATION_CODE_EXPIRED(1004),
         ACTIVATION_CODE_MANY_REQUEST(1005),
         ACTIVATION_CODE_NOT_FOUND(1006),
+        INVITE_CODE_NOT_VALID(1007),
         //user
         USER_RATE_OUT_OF_BOUND(1101),
         UNKNOWN_USER(1102),

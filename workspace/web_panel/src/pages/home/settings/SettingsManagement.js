@@ -64,7 +64,7 @@ const SettingsManagement = () => {
                         </Modal.Header>
                         <Modal.Body>
                             <Form.Label>کلید (عبارتی متشکل از حروف بزرگ انگلیسی که تنظیم را تعریف میکند بدون فاصله و
-                                علاعم به جر _ و باید یکتا باشد)</Form.Label>
+                                علاعم به جز _ و باید یکتا باشد)</Form.Label>
                             <Form.Group controlId="Key">
                                 <Form.Control
                                     name="Key"
@@ -130,20 +130,15 @@ const SettingsManagement = () => {
                 <Typography sx={{mt:3}} variant={"h6"}>
                     فیلتر
                 </Typography>
-                {Object.entries(SettingTypes).filter(f=>filter?f[0]===filter:true).map(item=>(<>
-                    <Chip size={"medium"} sx={{fontSize:15,mx:"5px",}} label={item[1]} color={item[0]===filter?"error":"default"} onClick={()=>SetFilter((item[0]===filter)?null:item[0])}/>
-                </>))}
+                {Object.entries(SettingTypes).filter(f=>filter?f[0]===filter:true).map(item=>(
+                    <Chip key={item[1]} size={"medium"} sx={{fontSize:15,mx:"5px",}} label={item[1]} color={item[0]===filter?"error":"default"} onClick={()=>SetFilter((item[0]===filter)?null:item[0])}/>
+                ))}
             </Notice>
             <div className="container-fluid">
-                <Row>
-                    <Grid container spacing={3}>
-                        {settings.filter(f=>filter?f.Type===filter:true).map((setting, index) => (
-                            <Grid item xs={4} key={index}>
-                                <SettingDetail setting={setting} refreshData={()=>getAllDatas()}/>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Row>
+
+                {settings.filter(f=>filter?f.Type===filter:true).map((setting, index) => (
+                    <SettingDetail key={index} setting={setting} refreshData={()=>getAllDatas()}/>
+                ))}
             </div>
             {RenderModalAdd()}
         </div>

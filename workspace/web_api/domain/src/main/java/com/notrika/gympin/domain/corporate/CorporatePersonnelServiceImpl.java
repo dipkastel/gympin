@@ -58,7 +58,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
         UserEntity user = userRepository.findByPhoneNumber(Param.getPhoneNumber());
         CorporateEntity corporate = corporateService.getEntityById(Param.getCorporate().getId());
         if(user==null) {
-            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(Param.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
+            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(Param.getPhoneNumber()).invitedBy("C-"+corporate.getId()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
         }else{
             //check for duplication
             UserEntity finalUser = user;

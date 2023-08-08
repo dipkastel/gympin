@@ -23,11 +23,11 @@ const Profile = (props) => {
                         <Grid container direction={"column"} alignItems={"center"} justifyContent={"start"} item xs={12}>
                             <Button href={"/profile/edit"} variant={"outlined"}>ویرایش</Button>
                             <Avatar
-                                sx={{width: 120, height: 120, marginTop: 3}}
+                                sx={{width: 120, height: 120, marginTop: 3,marginBottom:1}}
                                 alt="Remy Sharp"
                                 src={user.Avatar&&user.Avatar.Url}/>
-                            <Typography variant={"h4"} color={"black"}>{user.Username}</Typography>
-                            <Typography variant={"h6"} color={"darkgray"}>{user.PhoneNumber}</Typography>
+                            <Typography variant={"h4"} color={"black"}>{(user.FullName)?user.FullName:user.Username}</Typography>
+                            {/*<Typography variant={"h6"} color={"darkgray"}>{user.PhoneNumber}</Typography>*/}
                             {/*<Rating name="read-only" value={user.rate} readOnly />*/}
                             <Typography variant={"body1"} color={"darkgray"} sx={{marginY: 1}}>{user.Bio}</Typography>
                             {/*<Grid  container direction={"row"} columns={13}   >*/}

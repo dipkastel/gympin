@@ -78,7 +78,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         PlaceEntity place = placeRepository.getById(placePersonnelParam.getPlaceParam().getId());
 
         if (user == null) {
-            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(placePersonnelParam.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
+            user = accountService.addUser(UserRegisterParam.builder().invitedBy("P-"+place.getId()).phoneNumber(placePersonnelParam.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
         }else{
             //check for duplication
             UserEntity finalUser = user;

@@ -15,6 +15,8 @@ public interface UserRepository extends BaseRepository<UserEntity, Long> {
     @Query("select u from UserEntity u,PlacePersonnelEntity po where u.id=po.user.id and po.place.id=:#{#place.id}")
     List<UserEntity> getOwnersPlace(PlaceEntity place);
 
+    List<UserEntity> findByInvitedBy(String inviteBy);
+
     UserEntity findByPhoneNumberAndUsernameAndEmail(String phoneNumber, String username, String email);
 
     UserEntity findByPhoneNumberAndUsername(String phoneNumber, String username);
