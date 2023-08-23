@@ -16,9 +16,9 @@ const Plans = ({place}) => {
     const [openModalAdd,setOpenModalAdd] = useState(false)
     const [itemToDelete,setItemToDelete] = useState(null)
     useEffect(() => {
-        getPlansOpPlace();
+        getPlansOfPlace();
     }, []);
-    function getPlansOpPlace(){
+    function getPlansOfPlace(){
         Plans_getByPlaceId({Id:place.Id}).then(data=>{
             SetPlacePlans(data.data.Data);
         }).catch(e => {
@@ -32,12 +32,12 @@ const Plans = ({place}) => {
 
     function renderModalAdd() {
 
-        function addOption(e) {
+        function addPlan(e) {
             e.preventDefault()
             Plans_add({Place:{Id:place.Id},Name:e.target.Name.value,EntryTotalCount:1})
                 .then(data=>{
                     setOpenModalAdd(false)
-                    getPlansOpPlace()
+                    getPlansOfPlace()
                 }).catch(e => {
                     try {
                         error.showError({message: e.response.data.Message,});
@@ -50,7 +50,7 @@ const Plans = ({place}) => {
         return (
             <>
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
-                    <form onSubmit={(e)=>addOption(e)}>
+                    <form onSubmit={(e)=>addPlan(e)}>
 
 
                         <Modal.Header closeButton>
@@ -97,7 +97,7 @@ const Plans = ({place}) => {
             Plans_delete({Id:itemToDelete.Id})
                 .then(data=>{
                     setItemToDelete(null)
-                    getPlansOpPlace()
+                    getPlansOfPlace()
                 }).catch(e => {
                     try {
                         error.showError({message: e.response.data.Message,});

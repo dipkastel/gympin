@@ -26,6 +26,7 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
 import com.notrika.gympin.domain.util.convertor.GateConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
+import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.*;
 import com.notrika.gympin.persistence.entity.gate.GateEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
@@ -78,7 +79,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         PlaceEntity place = placeRepository.getById(placePersonnelParam.getPlaceParam().getId());
 
         if (user == null) {
-            user = accountService.addUser(UserRegisterParam.builder().invitedBy("P-"+place.getId()).phoneNumber(placePersonnelParam.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
+            user = accountService.addUser(UserRegisterParam.builder().invitedBy("P"+ GeneralHelper.getInviteCode(place.getId(),1)).phoneNumber(placePersonnelParam.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
         }else{
             //check for duplication
             UserEntity finalUser = user;

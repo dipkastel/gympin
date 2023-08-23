@@ -19,6 +19,7 @@ import com.notrika.gympin.common.user.param.UserRoleParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
+import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
@@ -58,7 +59,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
         UserEntity user = userRepository.findByPhoneNumber(Param.getPhoneNumber());
         CorporateEntity corporate = corporateService.getEntityById(Param.getCorporate().getId());
         if(user==null) {
-            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(Param.getPhoneNumber()).invitedBy("C-"+corporate.getId()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
+            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(Param.getPhoneNumber()).invitedBy("C"+ GeneralHelper.getInviteCode(corporate.getId(),1)).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
         }else{
             //check for duplication
             UserEntity finalUser = user;

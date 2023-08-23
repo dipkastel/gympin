@@ -42,7 +42,6 @@ const PlaceDataManagement = () => {
     }
 
     function updatePlace(place) {
-        console.log(place);
         Place_updatePlace(place).then(data => {
             setPlace(data.data.Data);
             error.showError({message: "با موفقیت ثبت شد"});

@@ -120,7 +120,7 @@ public class AccountServiceImpl implements AccountService {
         log.info("Going to register user by invite code...\n");
         UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
         if (user != null) throw new EntryAlreadyExistException();
-        if(!checkInviteCode(userRegisterParam.getInvitedBy())) throw new InviteCodeNotValid();
+        if(!GeneralHelper.checkInviteCode(userRegisterParam.getInvitedBy(),userRepository)) throw new InviteCodeNotValid();
         return register(userRegisterParam);
     }
 
@@ -351,8 +351,8 @@ public class AccountServiceImpl implements AccountService {
         UserInviteCodesDto codesDto = new UserInviteCodesDto();
         codesDto.setTitle("کد های دعوت شما");
         codesDto.setDescriptoin("با کد دعوت زیر 2 نفر از دوستان خود را به جیم پین دعوت کنید");
-        String inviteCode1 = getInviteCode(userEntity.getId(),1);
-        String inviteCode2 = getInviteCode(userEntity.getId(),2);
+        String inviteCode1 = GeneralHelper.getInviteCode(userEntity.getId(),1);
+        String inviteCode2 = GeneralHelper.getInviteCode(userEntity.getId(),2);
         codesDto.setFirstInviteCode(
                 InviteCode
                         .builder()
@@ -369,30 +369,5 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    private String[] secret =new String[] {"M","L","P","O","K","N","B","J","I","U","H","V","C","G","Y","T","F","X","Z","D","R","E","S","A","W","Q"};
-
-    private boolean checkInviteCode(String inviteCode) {
-        try{
-            String code = inviteCode.substring(3,inviteCode.length()-2);
-            Long userId = Long.decode(code);
-            String num = inviteCode.substring(2,3);
-            String inviteCodeL = getInviteCode(userId,Integer.parseInt(num));
-            List<UserEntity> alreadyUseByUser = userRepository.findByInvitedBy(inviteCodeL);
-            if(alreadyUseByUser.size()<1&&inviteCodeL.equals(inviteCode))
-                return true;
-        }catch (Exception e){}
-        return false;
-    }
-
-
-    private String getInviteCode(Long userId,Integer num) {
-        var Token=secret[(int) (userId%secret.length)]+
-                secret[(int) (userId%(secret.length-1))]+
-                num+
-                Long.toHexString(userId)+
-                secret[(int) (userId%(secret.length-2))]+
-                secret[(int) (userId%(secret.length-3))];
-        return Token.toUpperCase();
-    }
 
 }

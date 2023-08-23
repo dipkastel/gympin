@@ -15,7 +15,7 @@ import {
 import {gateTiming_getByPlace} from "../../../../../network/api/gateTiming.api";
 import {dayOfWeekEnum} from "../../../../../helper/enums/dayOfWeekEnum";
 import {placeSport_getAll, placeSport_getSportsByPlace} from "../../../../../network/api/placeSport.api";
-import {Plans_addSport, Plans_deleteSport, Plans_getAll, Plans_getSports} from "../../../../../network/api/plans.api";
+import {Plans_addSport, Plans_deleteSport, Plans_getAll, Plans_getPlanSports} from "../../../../../network/api/plans.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const PlanSport = ({plan}) => {
@@ -25,12 +25,11 @@ const PlanSport = ({plan}) => {
     const [openModalAdd, setOpenModalAdd] = useState(false)
     const [itemToDelete, setItemToDelete] = useState(null)
     useEffect(() => {
-        getPlanSports();
         getPlaceSports();
     }, []);
 
     function getPlanSports() {
-        Plans_getSports({PlanId: plan.Id}).then(data => {
+        Plans_getPlanSports({PlanId: plan.Id}).then(data => {
             SetPlanSports(data.data.Data);
         }).catch(e => {
                     try {
@@ -43,6 +42,7 @@ const PlanSport = ({plan}) => {
     function getPlaceSports() {
         placeSport_getSportsByPlace({Id: plan.Place.Id}).then(data => {
             SetSportsPlace(data.data.Data);
+            getPlanSports();
         }).catch(e => {
                     try {
                         error.showError({message: e.response.data.Message,});

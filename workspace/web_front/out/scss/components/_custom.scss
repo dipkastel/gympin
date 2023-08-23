@@ -1,0 +1,39 @@
+.pointer,
+.custom-prev,
+.custom-next {
+    cursor: pointer;
+}
+
+.mobile-nav{
+    z-index: 9999;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right:0;
+}
+.metismenu {
+    float: left;
+    width: 100%;
+    background: #0c1923;
+    margin-top: 44px;
+    margin-top: 0;
+    transform: translateY(15px);
+    a{
+        display: block;
+        padding: 12px 15px;
+        margin: 0;
+        text-align: right;
+        color: #fff;
+        border-top: 1px solid #383838;
+        border-top: 1px solid rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+    li ul {
+        padding-left: 50px;
+        a{
+            opacity: 0.7;
+        }
+    }
+}

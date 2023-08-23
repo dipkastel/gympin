@@ -32,7 +32,6 @@ const Support = () => {
             paging: {Page: page, Size: rowsPerPage,Desc:true}
         })
             .then((data) => {
-                console.log(data.data.Data);
                 setSupportList(data.data.Data);
             })
             .catch(e => {

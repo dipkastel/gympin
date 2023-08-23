@@ -39,11 +39,6 @@ const ImagePicker = ({setClose, onSelect, options}) => {
     }, [page, settings]);
 
     function getImageByFilter() {
-
-        console.log({
-            ...settings.filters,
-            paging: {Page: page - 1, Size: 20, Desc: true}
-        })
         media_query({
             ...settings.filters,
             paging: {Page: page - 1, Size: 20, Desc: true}

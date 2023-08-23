@@ -27,7 +27,6 @@ const SingleArticle = () => {
     function getArticle() {
         Article_getById({id: articleId}).then(result => {
             setArticle(result.data.Data);
-            console.log(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -38,7 +37,6 @@ const SingleArticle = () => {
     }
 
     function updateArticle(name, data) {
-        // console.log(data)
         setArticle({...article, [name]: data})
     }
 

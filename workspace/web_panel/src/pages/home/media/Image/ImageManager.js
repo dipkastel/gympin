@@ -58,7 +58,6 @@ const ImageManager = ({openAddModalRef,openFilterModalRef},ref) => {
             ...filters,
             paging: {Page: page - 1, Size: perPage, Desc: true}
         }).then(result => {
-            console.log(result)
             setImages(result.data.Data);
         }).catch(e => {
             try {

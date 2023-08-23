@@ -10,6 +10,7 @@ import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.place.query.PlaceQuery;
 import com.notrika.gympin.common.place.place.service.PlaceService;
 import com.notrika.gympin.common.sport.dto.SportDto;
+import com.notrika.gympin.common.user.dto.InviteCode;
 import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -105,6 +106,12 @@ public class PlaceControllerImpl implements PlaceController {
     @GetMapping("/getPlacesByUser")
     public ResponseEntity<List<PlaceDto>> getPlaceByUser(UserParam userParam) {
         return new ResponseEntity<>(placeService.getPlacesByUser(userParam), HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/getPlacesInviteCode")
+    public ResponseEntity<InviteCode> getPlaceInviteCode(PlaceParam placeParam) {
+        return new ResponseEntity<>(placeService.getPlaceInviteCode(placeParam), HttpStatus.OK);
     }
 
 

@@ -8,6 +8,7 @@ import com.notrika.gympin.common.place.place.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.place.query.PlaceQuery;
 import com.notrika.gympin.common.sport.dto.SportDto;
+import com.notrika.gympin.common.user.dto.InviteCode;
 import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +30,7 @@ public interface PlaceController extends BaseController<PlaceParam, PlaceDto, Pl
     ResponseEntity<PlaceDto> addMultimedia(@RequestBody PlaceMultimediaParam place);
 
     ResponseEntity<PlaceDto> deleteMultimedia(@RequestBody PlaceMultimediaParam place);
+
+    ResponseEntity<InviteCode> getPlaceInviteCode(PlaceParam placeParam);
 
 }

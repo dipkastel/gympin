@@ -31,7 +31,8 @@ function Login(props) {
     const [userInviteCode,SetUserInviteCode] = useState(searchParams.get("p"));
     const [fullName,setFullName] = useState("");
 
-    function sendMessage(phoneNumber) {
+    function sendMessage(e,phoneNumber) {
+        e.preventDefault()
         setMobileNumber(phoneNumber)
         if (checkMobileValid(mobileNumber)) {
             var count = 120;
@@ -68,14 +69,14 @@ function Login(props) {
 
     function RegisterPopup() {
 
-        const submit = () => {
+        const submit = (f) => {
             setNotRegisterd(false);
             registerWithInviteCode({
                 PhoneNumber:mobileNumber,
                 FullName:fullName,
                 InvitedBy:userInviteCode
             }).then((data) => {
-                sendMessage(mobileNumber);
+                sendMessage(f,mobileNumber);
             }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message});
@@ -115,7 +116,7 @@ function Login(props) {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button variant={"contained"} color={"primary"} onClick={() => submit()}>ثبت</Button>
+                    <Button variant={"contained"} color={"primary"} onClick={(e) => submit(e)}>ثبت</Button>
                 </DialogActions>
             </Dialog>
         </>)
@@ -236,7 +237,7 @@ function Login(props) {
                                                         {resend}
                                                     </Typography>
                                                 </div>
-                                            ) : <Button onClick={(e) => sendMessage(values.username.toString())} disabled={(resend > 0)}
+                                            ) : <Button onClick={(e) => sendMessage(e,values.username.toString())} disabled={(resend > 0)}
                                                         variant={"contained"}>ارسال کد</Button>
                                         )
                                         }

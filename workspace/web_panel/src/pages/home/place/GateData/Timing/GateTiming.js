@@ -86,7 +86,6 @@ const GateTiming = ({gate}) => {
                     }
                 }
             )
-            console.log(postData);
             gateTiming_addAll(postData)
                 .then(data => {
                     error.showError({message: "عملیات موفق",});

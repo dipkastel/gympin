@@ -16,14 +16,14 @@ export function ErrorPage404() {
             <div className="kt-error_number">
               <h1>404</h1>
             </div>
-            <p className="kt-error_title kt-font-light">How did you get here</p>
+            <p className="kt-error_title kt-font-light">اینجا چیزی نیست!</p>
             <p className="kt-error_subtitle">
-              Sorry we can't seem to find the page you're looking for.
+              متاسفانه ما نتوانستیم چیزی که به دنبالش بودید را پیدا کنیم.
             </p>
             <p className="kt-error_description">
-              There may be a misspelling in the URL entered,
+              این مشکل ممکن است از اشتباه در نگارش url باشد,
               <br />
-              or the page you are looking for may no longer exist.
+              و یا صفحه ای که به دنبالش هستید دیگر وجود ندارد.
             </p>
           </div>
         </div>

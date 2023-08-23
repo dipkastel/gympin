@@ -19,7 +19,6 @@ const HomePageEditItem = ({elements,selectedParent,itemToEdit,setItemToEdit,dest
 
 
 
-    console.log(itemToEdit)
 
     function updateItem(e) {
         e.preventDefault()

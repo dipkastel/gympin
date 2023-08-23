@@ -4,7 +4,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { useLastLocation } from "react-router-last-location";
 import HomePage from "../pages/home/HomePage";
 import AuthPage from "../pages/auth/AuthPage";
-import ErrorsPage from "../pages/errors/ErrorsPage";
+import ErrorsPage from "./ErrorsPage";
 import LogoutPage from "../pages/auth/Logout";
 import { LayoutContextProvider } from "../helper";
 import Layout from "../components/Layout";

@@ -21,7 +21,6 @@ const _PlanHistoryChart = ({plan}) => {
     }, []);
 
     function getData() {
-        console.log(history)
         return history
     }
 

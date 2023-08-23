@@ -32,8 +32,7 @@ const Gates = ({place}) => {
     }
 
     function renderModalAdd() {
-
-        function addOption(e) {
+        function addGate(e) {
             e.preventDefault()
             gates_add({Place: {Id: place.Id}, Name: e.target.Name.value})
                 .then(data => {
@@ -52,7 +51,7 @@ const Gates = ({place}) => {
         return (
             <>
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
-                    <form onSubmit={(e) => addOption(e)}>
+                    <form onSubmit={(e) => addGate(e)}>
 
 
                         <Modal.Header closeButton>

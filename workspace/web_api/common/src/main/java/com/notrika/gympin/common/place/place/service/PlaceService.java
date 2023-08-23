@@ -8,6 +8,7 @@ import com.notrika.gympin.common.place.place.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.place.query.PlaceQuery;
 import com.notrika.gympin.common.sport.dto.SportDto;
+import com.notrika.gympin.common.user.dto.InviteCode;
 import com.notrika.gympin.common.user.param.UserParam;
 
 import java.util.List;
@@ -21,4 +22,5 @@ public interface PlaceService extends BaseService<PlaceParam, PlaceDto, PlaceQue
     List<MultimediaDto> getMultimedias(PlaceParam param);
     PlaceDto addMultimedia(PlaceMultimediaParam param);
     PlaceDto removeMultimedia(PlaceMultimediaParam param);
+    InviteCode getPlaceInviteCode(PlaceParam param);
 }

@@ -46,7 +46,6 @@ const TicketsManagement = () => {
             PlaceId:filter.placeId,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
-            console.log(data)
             SetTickets(data.data.Data)
         }).catch(e => {
             try {

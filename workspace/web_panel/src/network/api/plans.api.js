@@ -32,7 +32,7 @@ export function Plans_getByPlaceId(data) {
     return axios.get(PlansApi.getByPlaceId, {params: data});
 }
 
-export function Plans_getSports(data) {
+export function Plans_getPlanSports(data) {
     return axios.get(PlansApi.getSports, {params: data});
 }
 

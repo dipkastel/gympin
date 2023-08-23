@@ -243,11 +243,9 @@ function CorporateTransactionRequests({ currentCorporate }) {
         return result;
     }
     const getRequest = (items) =>{
-        console.log("pa",items)
         return items.Items.find(o=>o.TransactionStatus=="REQUEST");
     }
     const getPayment = (items) =>{
-        console.log("pa",items)
         return items.Items.find(o=>o.TransactionStatus!="REQUEST");
     }
 

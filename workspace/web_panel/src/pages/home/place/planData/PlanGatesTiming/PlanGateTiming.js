@@ -60,7 +60,7 @@ const PlanGatesTiming = ({plan}) => {
 
     function renderModalAdd() {
         var gateTimingsToAdd = [];
-        function addOption(e) {
+        function addPlaceGateTiming(e) {
             e.preventDefault()
             var postData = [];
             for(var index in gateTimingsToAdd){
@@ -89,7 +89,7 @@ const PlanGatesTiming = ({plan}) => {
         return (
             <>
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
-                    <form onSubmit={(e) => addOption(e)}>
+                    <form onSubmit={(e) => addPlaceGateTiming(e)}>
 
 
                         <Modal.Header closeButton>
@@ -240,3 +240,6 @@ const PlanGatesTiming = ({plan}) => {
 };
 
 export default PlanGatesTiming;
+
+
+

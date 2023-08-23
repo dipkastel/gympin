@@ -35,7 +35,7 @@ const PlacePersonnel = ({place}) => {
 
     function renderModalAdd() {
 
-        function addOption(e) {
+        function addPerson(e) {
             e.preventDefault()
             placePersonnel_add({Place:{Id:place.Id},PhoneNumber:e.target.PhoneNumber.value})
                 .then(data=>{
@@ -54,7 +54,7 @@ const PlacePersonnel = ({place}) => {
         return (
             <>
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
-                    <form onSubmit={(e)=>addOption(e)}>
+                    <form onSubmit={(e)=>addPerson(e)}>
 
 
                         <Modal.Header closeButton>

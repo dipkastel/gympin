@@ -63431,3 +63431,14 @@ body {
   -webkit-animation-name: fadeInUpContent;
   animation-name: fadeInUpContent;
 }
+
+.css-vnkopk-MuiStepLabel-iconContainer{
+    padding-right: 0px;
+    padding-left: 8px;
+}
+ .h-f-map{
+     height:367px;
+ }
+ .fix-date{
+     margin-top: 16px;
+ }

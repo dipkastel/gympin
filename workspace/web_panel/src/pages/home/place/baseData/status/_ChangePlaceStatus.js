@@ -21,7 +21,6 @@ const _ChangePlaceStatus = ({place, updatePlace}) => {
         ]
     }
     function setStatusOptions(status) {
-        console.log(status)
         place_changeStatus({
             Id:inPlace.Id,
             Status:status

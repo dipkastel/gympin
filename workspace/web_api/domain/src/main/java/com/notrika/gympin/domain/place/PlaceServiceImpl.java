@@ -12,6 +12,7 @@ import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.place.query.PlaceQuery;
 import com.notrika.gympin.common.place.place.service.PlaceService;
 import com.notrika.gympin.common.sport.dto.SportDto;
+import com.notrika.gympin.common.user.dto.InviteCode;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
@@ -19,6 +20,7 @@ import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.MultimediaConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.convertor.SportConvertor;
+import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.LocationRepository;
 import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.PlacePersonnelRepository;
@@ -221,6 +223,16 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     @Override
     public List<SportDto> getSportsOfPlace(PlaceDto place) {
         return SportConvertor.toDto(placeRepository.getSportsOfPlace(PlaceEntity.builder().id(place.getId()).build()));
+    }
+
+    @Override
+    public InviteCode getPlaceInviteCode(PlaceParam param){
+        PlaceEntity place = placeRepository.getById(param.getId());
+        InviteCode code = InviteCode.builder()
+                .code("P"+GeneralHelper.getInviteCode(place.getId(),1))
+                .isActive(true)
+                .build();
+        return code;
     }
 
 

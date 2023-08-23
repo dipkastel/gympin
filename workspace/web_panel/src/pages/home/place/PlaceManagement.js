@@ -151,6 +151,23 @@ const PlaceManagement = () => {
                         </CardContent>
                     </Card>
                 </Grid>
+                <Grid item xs={4}>
+                    <Card>
+                        <CardHeader title={"افزودن مجموعه"} color={"primary"}/>
+                        <CardContent className={"kt-space-between"}>
+                            افرودن سریع مجموعه
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                href="place/wizard/0"
+                                sx={{marginRight: "auto"}}
+                                size="large"
+                            >
+                                شروع
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </Grid>
             <Portlet>
                 <PortletHeader
