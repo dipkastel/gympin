@@ -28,21 +28,15 @@ import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import {TimePicker} from "@mui/x-date-pickers/TimePicker";
 import ___wizardFormAddTimingToGate from "./___wizardFormAddTimingToGate";
 import ___wizardFormAddGate from "./___wizardFormAddGate";
+import __wizardModalSelectGateTimings from "./__wizardModalSelectGateTimings";
 
-const __wizardPlanGates = ({plan}) => {
+const __wizardPlanGates = ({plan,setCanGoNext}) => {
 
     const error = useContext(ErrorContext);
-    let {placeId} = useParams();
 
     const [planGatesTiming, SetPlanGatesTiming] = useState([])
-    const [placeGateTimings, setPlaceGateTimings] = useState([]);
-    const [placeGates, setPlaceGates] = useState([]);
 
-
-    const [expandedItems, setExpandedItems] = useState({});
     const [openModalAddGates, setOpenModalAddGates] = useState(false)
-    const [openCollapsableAddGate, setOpenCollapsableAddGate] = useState(false)
-    const [openCollapsableAddTiming, setOpenCollapsableAddTiming] = useState(null)
     const [gatesComplete, setGatesComplete] = useState(false)
     const [openCollapsableGates, setOpenCollapsableGates] = useState(false)
 
@@ -52,16 +46,16 @@ const __wizardPlanGates = ({plan}) => {
             getPlanGatesTimingOfplan();
     }, [openCollapsableGates]);
 
-    useEffect(() => {
-        if (openModalAddGates)
-            getTimingByPlace();
-    }, [openModalAddGates]);
+
+
+
 
 
     function getPlanGatesTimingOfplan() {
         planGatesTiming_getByPlan({Id: plan.Id}).then(data => {
             SetPlanGatesTiming(data.data.Data);
             setGatesComplete(data.data.Data.length > 0)
+            setCanGoNext(data.data.Data.length > 0)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -71,191 +65,6 @@ const __wizardPlanGates = ({plan}) => {
         });
     }
 
-    function getGatesOfPlace() {
-        gates_getByPlaceId({Id: placeId}).then(data => {
-            setPlaceGates(data.data.Data);
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
-    }
-
-    function getTimingByPlace() {
-
-        gateTiming_getByPlace({Id: plan.Place.Id}).then(data => {
-            setPlaceGateTimings(data.data.Data);
-            getGatesOfPlace();
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
-    }
-
-    function renderModalAddGate() {
-        function addGateTimingsToPlan(e) {
-            e.preventDefault()
-        }
-
-
-        return (
-            <>
-                <Modal show={openModalAddGates} onHide={() => setOpenModalAddGates(false)}>
-
-
-                    <Modal.Header closeButton>
-                        <Modal.Title>{"انتخاب زمان بندی ها"}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-
-                        <form onSubmit={(e) => addGateTimingsToPlan(e)}>
-
-
-                            {placeGates.map((Gate) => (
-                                    <div key={"Gate" + Gate.Id}>
-                                        <Grid container alignItems={"center"} justifyContent={"space-between"}
-                                              direction={"row"}>
-                                            <Grid item>
-                                                <FormControl component="fieldset" onClick={() => setExpandedItems({
-                                                    ...expandedItems,
-                                                    [Gate.Id]: !expandedItems[Gate.Id]
-                                                })}>
-                                                    <FormLabel
-                                                        component="legend">{Gate.Name}</FormLabel>
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item>
-
-                                                <IconButton
-                                                    onClick={() => setExpandedItems({
-                                                        ...expandedItems,
-                                                        [Gate.Id]: !expandedItems[Gate.Id]
-                                                    })}>
-                                                    {!expandedItems[Gate.Id] ? <ExpandLess/> : <ExpandMore/>}
-                                                </IconButton>
-                                            </Grid>
-                                        </Grid>
-                                        <Collapse in={expandedItems[Gate.Id]} timeout="auto" unmountOnExit>
-                                            {placeGateTimings.filter(timing => timing.Gate.Id == Gate.Id).map(item => (
-
-                                                <FormGroup key={item.Id} aria-label="position" name="position"
-                                                    // onChange={(e)=>handleChange(gateTiming.Id,e.target.checked)}
-                                                           row>
-                                                    <FormControlLabel
-                                                        value="end"
-                                                        sx={{marginY: 0}}
-                                                        control={<Checkbox color="primary"/>}
-                                                        label={GetFormatedGateTiming(item)}
-                                                        labelPlacement="end"
-                                                    />
-                                                </FormGroup>
-                                            ))}
-
-                                            <Button
-                                                variant={"contained"}
-                                                color={"info"}
-                                                sx={{mb: 2}}
-                                                onClick={() => setOpenCollapsableAddTiming(Gate)}
-                                            >
-                                                افزودن زمانبندی جدید
-                                            </Button>
-                                        </Collapse>
-                                    </div>
-                                )
-                            )}
-                            <Divider variant="inset" sx={{mx: 0, mb: 2}} component="p"/>
-
-                            <Collapse in={((!openCollapsableAddGate) && (openCollapsableAddTiming == null))}
-                                      timeout="auto" unmountOnExit>
-                                <Grid container alignItems={"center"} justifyContent={"space-between"}
-                                      direction={"row"}>
-                                    <Grid item>
-                                        <Button
-                                            variant={"contained"}
-                                            color={"info"}
-                                            onClick={() => setOpenCollapsableAddGate(!openCollapsableAddGate)}
-                                        >
-                                            افزودن درگاه جدید
-                                        </Button>
-                                    </Grid>
-                                    <Grid item>
-
-                                        <Button
-                                            variant={"contained"}
-                                            color={"error"}
-                                            onClick={() => setOpenModalAddGates(false)}
-                                        >
-                                            لغو
-                                        </Button>
-                                        <Button
-                                            variant={"contained"}
-                                            color={"success"}
-                                            type={"submit"}
-                                        >
-                                            اضافه
-                                        </Button>
-                                    </Grid>
-
-
-                                </Grid>
-                            </Collapse>
-
-
-                        </form>
-                        <Collapse in={openCollapsableAddGate} timeout="auto" unmountOnExit>
-
-                            <Grid container alignItems={"center"} justifyContent={"space-between"} direction={"row"}>
-                                <Grid item>
-                                    <Typography variant={"subtitle1"}>افزودن درگاه جدید</Typography>
-                                </Grid>
-                                <Grid item>
-                                    <IconButton onClick={() => setOpenCollapsableAddGate(!openCollapsableAddGate)}>
-                                        <CloseOutlined/>
-                                    </IconButton>
-                                </Grid>
-
-
-                            </Grid>
-                            <___wizardFormAddGate getTimingByPlace={getTimingByPlace} setOpenCollapsableAddGate={setOpenCollapsableAddGate} />
-                        </Collapse>
-                        <Collapse in={openCollapsableAddTiming != null} timeout="auto" unmountOnExit>
-
-                            <Grid container alignItems={"center"} justifyContent={"space-between"}
-                                  direction={"row"}>
-                                <Grid item>
-                                    <Typography
-                                        variant={"subtitle1"}>{"افزودن زمان بندی به " + openCollapsableAddTiming?.Name}</Typography>
-                                </Grid>
-                                <Grid item>
-                                    <IconButton onClick={() => setOpenCollapsableAddTiming(null)}>
-                                        <CloseOutlined/>
-                                    </IconButton>
-                                </Grid>
-
-
-                            </Grid>
-                            <___wizardFormAddTimingToGate  />
-
-
-                        </Collapse>
-                    </Modal.Body>
-                </Modal>
-            </>
-        );
-    }
-
-    function GetFormatedGateTiming(gateTiming) {
-        return gateTiming.Gate.Name + " - " +
-            gateTiming.Name + " - " +
-            dayOfWeekEnum[gateTiming["Day-of-week"]] + " از " +
-            gateTiming["Opening-time"].substring(0, 5) + " تا " +
-            gateTiming["Closing-time"].substring(0, 5) + " ";
-    }
 
     function deleteGateTime(e, gateTime) {
         e.preventDefault();
@@ -272,6 +81,14 @@ const __wizardPlanGates = ({plan}) => {
     }
 
 
+
+    function GetFormatedGateTiming(gateTiming) {
+        return gateTiming.Gate.Name + " - " +
+            gateTiming.Name + " - " +
+            dayOfWeekEnum[gateTiming["Day-of-week"]] + " از " +
+            gateTiming["Opening-time"].substring(0, 5) + " تا " +
+            gateTiming["Closing-time"].substring(0, 5) + " ";
+    }
     return (
         <>
             <Grid container alignItems={"center"} justifyContent={"space-between"} direction={"row"}>
@@ -316,7 +133,7 @@ const __wizardPlanGates = ({plan}) => {
                 </Button>
 
             </Collapse>
-            {openModalAddGates && renderModalAddGate()}
+            {openModalAddGates && <__wizardModalSelectGateTimings plan={plan} openModalAddGates={openModalAddGates} setOpenModalAddGates={setOpenModalAddGates} getPlanGatesTimingOfplan={getPlanGatesTimingOfplan}/>}
         </>
     );
 };

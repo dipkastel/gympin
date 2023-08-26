@@ -6,7 +6,7 @@ import {useParams} from "react-router-dom";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 import {Plans_addSport, Plans_deleteSport, Plans_getPlanSports} from "../../../../../../network/api/plans.api";
 
-const __wizardPlanSports = ({plan}) => {
+const __wizardPlanSports = ({plan,setCanGoNext}) => {
 
     const error = useContext(ErrorContext);
     let {placeId} = useParams();
@@ -23,15 +23,15 @@ const __wizardPlanSports = ({plan}) => {
             getPlaceSports()
     }, [openCollapsableSports]);
 
-    useEffect(() => {
-        setSportsComplete(planSports.length>0);
-    }, [planSports]);
 
 
 
     function getPlanSports() {
         Plans_getPlanSports({PlanId: plan.Id}).then(data => {
             setPlanSports(data.data.Data);
+
+            setSportsComplete(data.data.Data.length>0);
+            setCanGoNext(data.data.Data.length>0)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

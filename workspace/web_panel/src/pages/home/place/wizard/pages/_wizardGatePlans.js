@@ -18,7 +18,33 @@ const _wizardGatePlans = ({allowNext}) => {
     const error = useContext(ErrorContext);
     let {placeId} = useParams();
     const [placePlans, SetPlacePlans] = useState([])
+    const [canGoNext, SetCanGoNext] = useState([])
 
+    function checkDetails(plan) {
+        return(
+            plan.PlacePrice&&
+            plan.ValuePrice&&
+            plan.EntryTotalCount&&
+            plan.Ticket_Capacity&&
+            (plan.Expire_date||plan.Expire_duration)&&
+            !!plan.Gender);
+    }
+    useEffect(() => {
+        if(placePlans.length<1)return;
+        var result = true;
+
+
+        try{
+            Object.keys(canGoNext).map(item=>{
+                if(!checkDetails(placePlans.find(pp=>pp.Id==item))||!canGoNext[item].gate||!canGoNext[item].sport){
+                    result = false;
+                }
+            });
+        }catch (e){
+            result = false;
+        }
+        allowNext(result);
+    }, [canGoNext]);
 
 
 
@@ -27,9 +53,18 @@ const _wizardGatePlans = ({allowNext}) => {
     }, []);
 
 
+    function createCanGoNext(Data) {
+        var result = {} ;
+        Data.map(e=>{
+            result = {...result,[e.Id]:{gate:false,sport:false}}
+        });
+        SetCanGoNext(result);
+    }
+
     function getPlansOfPlace() {
         Plans_getByPlaceId({Id:placeId}).then(data=>{
             SetPlacePlans(data.data.Data);
+            createCanGoNext(data.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -132,9 +167,9 @@ const _wizardGatePlans = ({allowNext}) => {
                                 </PortletHeaderToolbar>}
                             />
                             <PortletBody>
-                                <__wizardPlanDetails plan={plan} updatePlan={updatePlan}/>
-                                <__wizardPlanGates plan={plan} />
-                                <__wizardPlanSports plan={plan} />
+                                <__wizardPlanDetails plan={plan} updatePlan={updatePlan} />
+                                <__wizardPlanGates plan={plan} setCanGoNext={e=>SetCanGoNext({...canGoNext,[plan.Id]:{...canGoNext[plan.Id],"gate":e}})}/>
+                                <__wizardPlanSports plan={plan} setCanGoNext={e=>SetCanGoNext({...canGoNext,[plan.Id]:{...canGoNext[plan.Id],"sport":e}})}/>
                             </PortletBody>
                         </Portlet>
                     </div>

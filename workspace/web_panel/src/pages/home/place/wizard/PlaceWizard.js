@@ -6,6 +6,9 @@ import Toolbar from "@mui/material/Toolbar";
 import _wizardPlaceBase from "./pages/_wizardPlaceBase";
 import _wizardOtherInfo from "./pages/_wizardOtherInfo";
 import _wizardGatePlans from "./pages/_wizardGatePlans";
+import _wizardImages from "./pages/_wizardImages";
+import _wizardPlaceAbout from "./pages/_wizardPlaceAbout";
+import _wizardActivePlace from "./pages/_wizardActivePlace";
 
 const stepsStatusEnum = {empty:"empty",completed:"completed",skipped:"skipped"}
 
@@ -22,9 +25,9 @@ const PlaceWizard = () => {
         {id:0,name: 'اطلاعات اولیه', isOptional: false,fragment:<_wizardPlaceBase allowNext={(e)=>setAllowGoNext(e)}/>},
         {id:1,name: 'اطلاعات تکمیلی', isOptional: false,fragment:<_wizardOtherInfo allowNext={(e)=>setAllowGoNext(e)}/>},
         {id:3,name: 'درگاه ها و پلن ها', isOptional: false,fragment:<_wizardGatePlans allowNext={(e)=>setAllowGoNext(e)}/>},
-        {id:4,name: 'تصاویر', isOptional: true,fragment:null},
-        {id:5,name: 'قوانین', isOptional: true,fragment:null},
-        {id:6,name: 'فعالسازی', isOptional: false,fragment:null}
+        {id:4,name: 'تصاویر', isOptional: false,fragment:<_wizardImages allowNext={(e)=>setAllowGoNext(e)}/>},
+        {id:5,name: 'قوانین', isOptional: false,fragment:<_wizardPlaceAbout allowNext={(e)=>setAllowGoNext(e)} />},
+        {id:6,name: 'فعالسازی', isOptional: false,fragment:<_wizardActivePlace allowNext={(e)=>setAllowGoNext(e)} />}
     ];
 
 
