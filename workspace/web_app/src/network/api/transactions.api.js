@@ -13,3 +13,7 @@ export function transactions_setPaymentRequest(data) {
 export function transactions_checkPayment(data) {
     return axios.post(Api_url.transaction.checkPayment,  data);
 }
+
+export function transactions_query(data) {
+    return axios.post(Api_url.transaction.query, data);
+}

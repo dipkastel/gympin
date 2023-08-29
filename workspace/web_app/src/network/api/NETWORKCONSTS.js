@@ -61,6 +61,7 @@ export let Api_url = {
         getPaymentGateways:"v1/transaction/getPaymentGateways",
         setPaymentRequest:"v1/transaction/setPaymentRequest",
         checkPayment:"v1/transaction/checkPayment",
+        query:"v1/transaction/query",
     },
     user: {
         GET_BY_ID: "v1/user/getById",

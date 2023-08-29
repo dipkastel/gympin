@@ -8,6 +8,7 @@ import {UserCredit_getByUser} from "../../network/api/userCredit.api";
 import {toPriceWithComma} from "../../helper/utils";
 import {creditTypes} from "../../helper/enums/creditTypes";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import _UserTransactions from "./_UserTransactions";
 
 const Wallet = () => {
     const error = useContext(ErrorContext);
@@ -31,17 +32,23 @@ const Wallet = () => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{margin: 1,backgroundColor:"#469391"}} >
+
                 <Grid container direction={"column"} justifyContent={"center"} alignItems={"center"}>
 
                     <Typography
-                        sx={{display: "inline", marginTop: 5}}
-                        component="p"
-                        variant="h2"
-                        color="text.primary"
+                        sx={{display: "inline", m: 3}}
+                        variant={"h3"}
+                        color={"white"}
+
                     >
                         {"اعتبار : " + toPriceWithComma(userCredit.TotalCredit) + " تومان"}
                     </Typography>
+                </Grid>
+            </Card>
+            <_IncreaseCredit/>
+            <Card elevation={3} sx={{margin: 1}}>
+                <Grid container direction={"column"} justifyContent={"center"} alignItems={"center"}>
                     <Image
                         src={"https://api.gympin.ir/resource/image?Id=12"}
                         width={"200px"}/>
@@ -74,7 +81,7 @@ const Wallet = () => {
 
             </Card>
 
-           <_IncreaseCredit/>
+           <_UserTransactions user={currentUser}/>
         </>
     );
 };

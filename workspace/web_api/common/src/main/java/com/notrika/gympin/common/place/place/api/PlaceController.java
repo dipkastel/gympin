@@ -4,6 +4,7 @@ import com.notrika.gympin.common._base.base.BaseController;
 import com.notrika.gympin.common.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.place.param.PlaceMultimediaListParam;
 import com.notrika.gympin.common.place.place.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.place.query.PlaceQuery;
@@ -28,6 +29,8 @@ public interface PlaceController extends BaseController<PlaceParam, PlaceDto, Pl
     ResponseEntity<List<MultimediaDto>> getMultimedias(PlaceParam place);
 
     ResponseEntity<PlaceDto> addMultimedia(@RequestBody PlaceMultimediaParam place);
+
+    ResponseEntity<PlaceDto> addMultimediaList(@RequestBody PlaceMultimediaListParam place);
 
     ResponseEntity<PlaceDto> deleteMultimedia(@RequestBody PlaceMultimediaParam place);
 

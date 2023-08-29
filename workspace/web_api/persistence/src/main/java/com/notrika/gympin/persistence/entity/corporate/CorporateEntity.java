@@ -39,6 +39,9 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     @Column(name = "address")
     private String address;
 
+    @Column(name = "steps_pay",columnDefinition = "Boolean default 0")
+    private Boolean stepspay;
+
     @Column(name = "balance", nullable = false, columnDefinition = "BigDecimal default 0")
     private BigDecimal Balance;
 

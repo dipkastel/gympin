@@ -53,8 +53,8 @@ const _IncreaseCredit = () => {
     }
     function submitPayment(e) {
         e.preventDefault()
-        if (!amountToPay || parseInt(amountToPay) < 0) {
-            error.showError({message: "حداقل مبلغ شارژ 50،000 تومان می باشد",});
+        if (!amountToPay || parseInt(amountToPay) < 10000) {
+            error.showError({message: "حداقل مبلغ شارژ 10000 تومان می باشد",});
             return;
         }
         // if (!transactionReference) {
@@ -128,11 +128,11 @@ const _IncreaseCredit = () => {
                         alignItems="center"
                         sx={{padding: 1}}
                     >
+                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(500000)} color={"info"} variant={"contained"}>500,000
+                            تومان</Button>
                         <Button sx={{m: 2}} onClick={() => SetAmountToPay(1000000)} color={"info"} variant={"contained"}>1,000,000
                             تومان</Button>
-                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(2000000)} color={"info"} variant={"contained"}>2,000,000
-                            تومان</Button>
-                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(4000000)} color={"info"} variant={"contained"}>4,000,000
+                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(3000000)} color={"info"} variant={"contained"}>3,000,000
                             تومان</Button>
                         <Button sx={{m: 2}} onClick={() => SetAmountToPay(5000000)} color={"info"}
                                 variant={"contained"}>5,000,000 تومان</Button>
@@ -156,6 +156,7 @@ const _IncreaseCredit = () => {
                         {paymentGateways.map(item => (
 
                             <Grid
+                                key={"Getway"+item.Id}
                                 xs={3}
                                 item
                                 onClick={() => changePaymentType(item)}

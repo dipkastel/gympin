@@ -166,6 +166,7 @@ export let PlaceApi = {
   countFilter: "v1/place/count-filter",
   getMultimedias:"v1/place/getMultimedias",
   addMultimedia:"v1/place/addMultimedia",
+  addMultimediaList:"v1/place/addMultimediaList",
   getByUser:"v1/place/getPlacesByUser",
   query: "v1/place/query",
   deleteMultimedia:"v1/place/deleteMultimedia"

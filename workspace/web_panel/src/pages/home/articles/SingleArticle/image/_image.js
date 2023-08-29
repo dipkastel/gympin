@@ -43,7 +43,7 @@ const _image = ({article,updateArticle}) => {
             {openModalSelectAvatar&&<ImagePicker
                 setClose={()=>setOpenModalSelectAvatar(false)}
                 onSelect={selectImage}
-                options={{rowCount: 4,isSingle:true,filters:{CategoryId:7}}} />}
+                options={{rowCount: 8,isSingle:true,filters:{CategoryId:7}}} />}
         </>
     );
 };

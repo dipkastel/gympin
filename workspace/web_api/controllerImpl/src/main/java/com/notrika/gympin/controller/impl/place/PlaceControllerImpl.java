@@ -5,6 +5,7 @@ import com.notrika.gympin.common.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.place.api.PlaceController;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.place.param.PlaceMultimediaListParam;
 import com.notrika.gympin.common.place.place.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.place.query.PlaceQuery;
@@ -82,6 +83,12 @@ public class PlaceControllerImpl implements PlaceController {
     @PostMapping("/addMultimedia")
     public ResponseEntity<PlaceDto> addMultimedia(PlaceMultimediaParam param) {
         return ResponseEntity.ok(placeService.addMultimedia(param));
+    }
+
+    @Override
+    @PostMapping("/addMultimediaList")
+    public ResponseEntity<PlaceDto> addMultimediaList(PlaceMultimediaListParam param) {
+        return ResponseEntity.ok(placeService.addMultimediaList(param));
     }
 
     @Override

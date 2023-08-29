@@ -24,6 +24,7 @@ import FeedIcon from "@mui/icons-material/Feed";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {corporatePersonnel_add} from "../../../../../network/api/CorporatePersonnel.api";
 import AddIcon from "@mui/icons-material/Add";
+import {BusAlert, Warning} from "@mui/icons-material";
 
 function UserTransActionRequests({currentUser}) {
     const error = useContext(ErrorContext);
@@ -45,7 +46,7 @@ function UserTransActionRequests({currentUser}) {
             queryType: "FILTER",
             UserId: currentUser.Id,
             TransactionType: "CHARGE_USER",
-            paging: {Page: page, Size: (rowsPerPage*2), Desc: true}
+            paging: {Page: page, Size: (rowsPerPage*2),orderBy: "Serial", Desc: false}
         }).then((data) => {
             SetTransactions(data.data.Data)
         });
@@ -248,6 +249,17 @@ function UserTransActionRequests({currentUser}) {
         return items.Items.find(o => o.TransactionStatus != "REQUEST");
     }
 
+    function checkForError(row) {
+         if(row.Items.length>2)
+             return (<>
+                 <Tooltip placement={"top"} title={row.Items?.length+" جواب برای یک سریال "}>
+                     <Warning color={"error"} />
+                 </Tooltip>
+             </>)
+        else
+            return "";
+    }
+
     return (
         <>
             <Portlet>
@@ -313,7 +325,7 @@ function UserTransActionRequests({currentUser}) {
                                                 align="right">{toPriceWithComma(getRequest(row).Amount)}</TableCell>
                                             <TableCell align="left">{!getPayment(row) ?
                                                 <Button variant={"contained"} size={"small"} color={"error"}
-                                                        onClick={(e) => setTransactionToSettle(row)}>تسویه</Button> : ""}</TableCell>
+                                                        onClick={(e) => setTransactionToSettle(row)}>تسویه</Button> :checkForError(row)}</TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -327,9 +339,10 @@ function UserTransActionRequests({currentUser}) {
                         rowsPerPageOptions={[14, 28, 50, 100]}
                         component="div"
                         sx={{direction: "rtl"}}
-                        count={transactions.totalElements || 0}
+                        count={transactions.totalElements/2 || 0}
                         labelRowsPerPage={"تعداد نمایش"}
                         labelDisplayedRows={(param) => {
+                            console.log(param.count)
                             return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
                         }}
                         rowsPerPage={rowsPerPage}

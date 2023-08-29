@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
-    Place_addMultimeida,
+    Place_addMultimeida, Place_addMultimeidaList,
     Place_deleteMultimedia,
     Place_GetMultimedias
 } from "../../../../../network/api/place.api";
@@ -56,9 +56,13 @@ const _wizardImages = ({allowNext}) => {
     }
 
 
-    function selectImage(image){
+    function selectImage(images){
 
-        Place_addMultimeida({Place:{Id: placeId},Multimedia:{Id:image.Id}}).then(data => {
+        var multimedia = [];
+        images.map( image=>{
+            multimedia.push({Id:image.Id})
+        })
+        Place_addMultimeidaList({Place:{Id: placeId},Multimedia:multimedia}).then(data => {
             error.showError({message: "عملیات موفق",});
             getPlaceImages()
         }).catch(e => {
@@ -119,7 +123,7 @@ const _wizardImages = ({allowNext}) => {
                     </ImageList>
                 </PortletBody>
             </Portlet>
-            {openModalAdd&&<ImagePicker setClose={()=>setOpenModalAdd(false)} onSelect={selectImage} options={{rowCount: 4,isSingle:true,filters:{CategoryId:3}}} />}
+            {openModalAdd&&<ImagePicker setClose={()=>setOpenModalAdd(false)} onSelect={selectImage} options={{rowCount: 8,isSingle:false,filters:{CategoryId:3}}} />}
         </>
     );
 };

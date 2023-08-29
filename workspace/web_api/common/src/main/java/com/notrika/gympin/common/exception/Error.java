@@ -118,6 +118,8 @@ public class Error {
         PLACE_IMAGES_IS_EMPTY(1709),
         PLACE_OPTIONS_IS_EMPTY(1710),
         PLACE_IS_DELETED(1711),
+        //corporate
+        LOW_CREDIT_EXCEPTION(1801),
         //general
         BAD_REQUEST_RUN_TIME_MESSAGE(4000),
         EXCEPTION(4001),

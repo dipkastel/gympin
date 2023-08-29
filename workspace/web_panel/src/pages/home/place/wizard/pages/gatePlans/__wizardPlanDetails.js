@@ -17,6 +17,7 @@ const __wizardPlanDetails = ({plan,updatePlan}) => {
     const [inPlan, SetInPlan] = useState(plan)
 
     useEffect(() => {
+        console.log(plan);
         setDetailsComplete(
             plan.PlacePrice&&
             plan.ValuePrice&&
@@ -30,7 +31,11 @@ const __wizardPlanDetails = ({plan,updatePlan}) => {
 
 
     function setFormValues(lable, value) {
-        SetInPlan({...inPlan, [lable]: value})
+        if(lable=="PlacePrice"){
+            SetInPlan({...inPlan, [lable]: value,"Price":value,})
+        }else{
+            SetInPlan({...inPlan, [lable]: value})
+        }
     }
 
     function submitForm(e) {

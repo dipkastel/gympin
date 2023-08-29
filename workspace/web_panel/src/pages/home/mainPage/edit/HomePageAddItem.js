@@ -171,7 +171,7 @@ const HomePageAddItem = ({elements,selectedParent,type,setType,destinations}) =>
                 </Form>
             </Modal>
 
-            {openModalSelectImage&&<ImagePicker setClose={()=>setOpenModalSelectImage(false)} onSelect={ImageSelect} options={{rowCount: 4,isSingle:true}} />}
+            {openModalSelectImage&&<ImagePicker setClose={()=>setOpenModalSelectImage(false)} onSelect={ImageSelect} options={{rowCount: 8,isSingle:true}} />}
         </>
     );
 };

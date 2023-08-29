@@ -46,6 +46,10 @@ export function Place_addMultimeida(data) {
     return axios.post(PlaceApi.addMultimedia, data);
 }
 
+export function Place_addMultimeidaList(data) {
+    return axios.post(PlaceApi.addMultimediaList, data);
+}
+
 export function Place_deleteMultimedia(data) {
     return axios.put(PlaceApi.deleteMultimedia,data );
 }

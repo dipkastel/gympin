@@ -4,6 +4,7 @@ import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelCreditService;
+import com.notrika.gympin.common.exception.corporate.LowCreditException;
 import com.notrika.gympin.common.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.transaction.enums.TransactionType;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -46,6 +47,8 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     @Transactional
     public CorporatePersonnelCreditDto add(@NonNull CorporatePersonnelCreditParam param) {
         CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(param.getPersonnel().getId());
+        if(!personnelEntity.getCorporate().getStepspay()&&personnelEntity.getCorporate().getPersonnel().stream().map(p-> p.getCredits().stream().map(cpc->cpc.getCreditAmount()).reduce(BigDecimal.ZERO, (f, q) -> f.add(q))).reduce(BigDecimal.ZERO, (p, q) -> p.add(q)).add(param.getCreditAmount()).compareTo(personnelEntity.getCorporate().getBalance())>0)
+            throw new LowCreditException();
         BigDecimal newCreditBalance = personnelEntity.getCreditBalance().add(param.getCreditAmount());
         personnelEntity.setCreditBalance(newCreditBalance);
         corporatePersonnelRepository.update(personnelEntity);
@@ -66,6 +69,8 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         corporateService.update(personnelEntity.getCorporate());
         return CorporateConvertor.toCreditDto(corporatePersonnelCreditRepository.add(entity));
     }
+
+
     @Override
     @Transactional
     public List<CorporatePersonnelCreditDto> addToAll(@NonNull CorporatePersonnelCreditParam param) {
@@ -73,6 +78,9 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         List<CorporatePersonnelEntity> personnels = new ArrayList<>();
         List<CorporatePersonnelCreditEntity> credits = new ArrayList<>();
 
+        BigDecimal totalAddBalance = param.getCreditAmount().multiply(BigDecimal.valueOf(corporate.getPersonnel().size()));
+        if(!corporate.getStepspay()&&corporate.getPersonnel().stream().map(p-> p.getCredits().stream().map(cpc->cpc.getCreditAmount()).reduce(BigDecimal.ZERO, (f, q) -> f.add(q))).reduce(BigDecimal.ZERO, (p, q) -> p.add(q)).add(totalAddBalance).compareTo(corporate.getBalance())>0)
+            throw new LowCreditException();
         for (CorporatePersonnelEntity person :corporate.getPersonnel()) {
             BigDecimal newCreditBalance = person.getCreditBalance().add(param.getCreditAmount());
             CorporatePersonnelEntity per = person;

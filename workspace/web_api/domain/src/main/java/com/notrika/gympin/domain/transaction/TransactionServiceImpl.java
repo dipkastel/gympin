@@ -156,7 +156,6 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
         PaymentGatewaysDto cardTransaction = PaymentGatewaysDto.builder()
                 .id(90l)
                 .name("کارت به کارت")
-                .isDefault(true)
                 .imageUrl("https://api.gympin.ir/resource/image?Id=18")
                 .gatewayType(GatwayType.CARD_TRANSFER)
                 .description("شماره کارت جهت واریز مبلغ 6221061225406448 به نام پیشکامان داده نوتریکا")
@@ -180,7 +179,6 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
                 .name("درگاه پارسیان")
                 .imageUrl("https://api.gympin.ir/resource/image?Id=16")
                 .gatewayType(GatwayType.BANK_PORTAL)
-                .isDefault(true)
                 .build();
         PaymentGatewaysDto mellatGatway = PaymentGatewaysDto.builder()
                 .id(81l)
@@ -193,7 +191,6 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
                 .name("سامان")
                 .imageUrl("https://api.gympin.ir/resource/image?Id=16")
                 .gatewayType(GatwayType.BANK_PORTAL)
-                .isDefault(true)
                 .build();
 
         switch (param.getApplication()) {
@@ -204,18 +201,23 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
             case WEBPANEL:
                 break;
             case WEBAPP:
-                paymentGatewaysDtos.add(parsianGatway);
+                paymentGatewaysDtos.add(defaultGetway(parsianGatway));
                 paymentGatewaysDtos.add(cardTransaction);
                 break;
             case WEBMASTER:
                 break;
             case WEBCORPORATE:
-                paymentGatewaysDtos.add(parsianGatway);
+                paymentGatewaysDtos.add(defaultGetway(parsianGatway));
                 paymentGatewaysDtos.add(bankTransaction);
                 break;
         }
 
         return paymentGatewaysDtos;
+    }
+
+    private PaymentGatewaysDto defaultGetway(PaymentGatewaysDto gatway) {
+        gatway.setIsDefault(true);
+        return gatway;
     }
 
     @Override

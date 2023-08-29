@@ -5,7 +5,12 @@ import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../.
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImagePicker from "../../../media/Pickers/ImagePicker";
-import {Place_addMultimeida, Place_deleteMultimedia, Place_GetMultimedias} from "../../../../../network/api/place.api";
+import {
+    Place_addMultimeida,
+    Place_addMultimeidaList,
+    Place_deleteMultimedia,
+    Place_GetMultimedias
+} from "../../../../../network/api/place.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 
@@ -30,9 +35,12 @@ const PlaceImage = ({place}) => {
                 });
     }
 
-    function selectImage(image){
-
-        Place_addMultimeida({Place:{Id: place.Id},Multimedia:{Id:image.Id}}).then(data => {
+    function selectImage(images){
+        var multimedia = [];
+        images.map( image=>{
+            multimedia.push({Id:image.Id})
+        })
+        Place_addMultimeidaList({Place:{Id: place.Id},Multimedias:multimedia}).then(data => {
             error.showError({message: "عملیات موفق",});
             getPlaceImages()
         }).catch(e => {
@@ -146,7 +154,12 @@ const PlaceImage = ({place}) => {
                     </ImageList>}
                 </PortletBody>
             </Portlet>
-            {openModalAdd&&<ImagePicker setClose={()=>setOpenModalAdd(false)} onSelect={selectImage} options={{rowCount: 4,isSingle:true,filters:{CategoryId:3}}} />}
+            {openModalAdd&&<ImagePicker setClose={()=>setOpenModalAdd(false)} onSelect={selectImage} options={{
+                    rowCount: 8,
+                    isSingle:false,
+                    filters:{CategoryId:3},
+                    DefaultDiscHelper:"مجموعه "+place.Name
+                }} />}
             {itemToDelete&&renderModalDelete()}
         </>
     );

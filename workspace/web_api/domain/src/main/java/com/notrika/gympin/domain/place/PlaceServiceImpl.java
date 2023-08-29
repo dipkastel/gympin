@@ -5,8 +5,10 @@ import com.notrika.gympin.common.exception.place.*;
 import com.notrika.gympin.common.exception.plan.PlanPriceCannotBeNull;
 import com.notrika.gympin.common.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
+import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
+import com.notrika.gympin.common.place.place.param.PlaceMultimediaListParam;
 import com.notrika.gympin.common.place.place.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.place.query.PlaceQuery;
@@ -208,6 +210,17 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         PlaceEntity place = getEntityById(param.getPlaceParam().getId());
         MultimediaEntity multimedia = multimediaRepository.getById(param.getMultimedia().getId());
         place.getMultimedias().add(multimedia);
+        update(place);
+        return PlaceConvertor.toDto(place);
+    }
+
+    @Override
+    public PlaceDto addMultimediaList(PlaceMultimediaListParam param) {
+        PlaceEntity place = getEntityById(param.getPlaceParam().getId());
+        for(MultimediaRetrieveParam image : param.getMultimedias()){
+            MultimediaEntity multimedia = multimediaRepository.getById(image.getId());
+            place.getMultimedias().add(multimedia);
+        }
         update(place);
         return PlaceConvertor.toDto(place);
     }
