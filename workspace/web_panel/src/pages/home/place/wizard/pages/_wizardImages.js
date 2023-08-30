@@ -62,7 +62,7 @@ const _wizardImages = ({allowNext}) => {
         images.map( image=>{
             multimedia.push({Id:image.Id})
         })
-        Place_addMultimeidaList({Place:{Id: placeId},Multimedia:multimedia}).then(data => {
+        Place_addMultimeidaList({Place:{Id: placeId},Multimedias:multimedia}).then(data => {
             error.showError({message: "عملیات موفق",});
             getPlaceImages()
         }).catch(e => {
