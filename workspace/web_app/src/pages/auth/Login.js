@@ -34,11 +34,11 @@ function Login(props) {
     function sendMessage(e,phoneNumber) {
         e.preventDefault()
         setMobileNumber(phoneNumber)
-        if (checkMobileValid(mobileNumber)) {
+        if (checkMobileValid(phoneNumber)) {
             var count = 120;
             setResend(count);
             sendSms({
-                "phoneNumber": mobileNumber.toString(),
+                "phoneNumber": phoneNumber.toString(),
                 Application: "WEBAPP"
             })
                 .then((data) => {
@@ -222,7 +222,7 @@ function Login(props) {
                                                 label={"شماره همراه"}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
-                                                value={fixMobile(values.username)}
+                                                value={fixMobile(values.username||0)}
                                                 helperText={touched.username && errors.username}
                                                 error={Boolean(touched.username && errors.username)}
                                             />

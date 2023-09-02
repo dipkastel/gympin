@@ -42,8 +42,8 @@ public final class GeneralHelper {
     public static boolean checkInviteCode(String inviteCode, UserRepository userRepository) {
         try {
             String pureInviteCode = "";
-            if (inviteCode.startsWith("P") || inviteCode.startsWith("C"))
-                pureInviteCode = inviteCode.substring(1);
+            pureInviteCode = (inviteCode.startsWith("P") || inviteCode.startsWith("C"))?
+                 inviteCode.substring(1): inviteCode;
             String code = pureInviteCode.substring(3, pureInviteCode.length() - 2);
             Long inviterId = Long.decode(code);
             String num = pureInviteCode.substring(2, 3);

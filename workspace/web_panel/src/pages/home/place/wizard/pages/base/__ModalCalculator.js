@@ -25,6 +25,7 @@ const __ModalCalculator = ({inPlace,setInPlace,openModalCalculator,setOpenModalC
 
     useEffect(() => {
         getOptionOfPlace();
+        getAllOptions();
     }, []);
     function getAllOptions(){
         placeOption_getAll().then(data => {
@@ -41,7 +42,6 @@ const __ModalCalculator = ({inPlace,setInPlace,openModalCalculator,setOpenModalC
     function getOptionOfPlace(){
         optionOfPlace_getByPlaceId({Id:inPlace.Id}).then(data=>{
             setPlaceOptions(data.data.Data);
-            getAllOptions();
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -54,7 +54,6 @@ const __ModalCalculator = ({inPlace,setInPlace,openModalCalculator,setOpenModalC
 
     function addOptionToPlace(e,option){
         e.preventDefault()
-        setAllOptions([]);
         optionOfPlace_add({Place:{Id:inPlace.Id},PlaceOption:{Id:option.Id}})
             .then(data=>{
                 error.showError({message: "عملیات موفق",});
