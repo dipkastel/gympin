@@ -5,6 +5,7 @@ import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
 import com.notrika.gympin.common.contact.sms.service.SmsService;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.exception.Error;
 import com.notrika.gympin.common.exception.ExceptionBase;
 import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpiredException;
@@ -57,6 +58,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -215,7 +217,7 @@ public class AccountServiceImpl implements AccountService {
             case WEBMASTER:
                 return user.getPlacePersonnel().size() > 0;
             case WEBCORPORATE:
-                return user.getCorporatesPersonel().size() > 0;
+                return user.getCorporatesPersonel().stream().filter(f -> f.getRole() == CorporatePersonnelRoleEnum.ADMIN).count() > 0;
         }
         return false;
     }

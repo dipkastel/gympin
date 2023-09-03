@@ -2,11 +2,11 @@ import {call, put, takeLatest} from "redux-saga/effects";
 import {authActions} from "../actions/AuthActions";
 import {ActionTypesSaga} from "../actions/SagaActions"
 import {user_getById} from "../../../network/api/user.api";
-import {corporate_getById} from "../../../network/api/corporate.api";
 import {corporateActions} from "../actions/CorporateActions";
 import {configs_getCorporateSplash} from "../../../network/api/configs.api";
 import {settingActions} from "../actions/SettingsActions";
 import store from "../store";
+import {corporate_getById} from "../../../network/api/corporate.api";
 
 
 export function* saga() {

@@ -13,7 +13,6 @@ export let Api_url = {
         CorporateSplash:"v1/configs/CorporateSplash"
     },
     corporate:{
-        GET_BY_USER:"v1/corporate/getByUser",
         GET_BY_ID:"v1/corporate/getById",
         updateLogo:"v1/corporate/updateLogo",
         getTransactions:"v1/corporate/getTransactions",
@@ -22,6 +21,7 @@ export let Api_url = {
     },
     CorporatePersonnel:{
         add: "v1/corporatePersonnel/add",
+        corporateOwnedByUserId: "v1/corporatePersonnel/corporateOwnedByUserId",
         addPersonnelCredit: "v1/corporatePersonnel/addPersonnelCredit",
         addCreditToAll: "v1/corporatePersonnel/addCreditToAll",
         getTotalUserCredits: "v1/corporatePersonnel/getTotalUserCredits",

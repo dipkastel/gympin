@@ -128,10 +128,6 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         return entities.map(CorporateConvertor::toDto);
     }
 
-    @Override
-    public List<CorporateDto> getByUser(UserParam userParam) {
-        return convertToDtos(corporateRepository.findByUserId(userParam.getId()));
-    }
 
     public CorporateStatusEnum CalculateStatus(CorporateEntity entity){
         if(entity.getStatus().equals(CorporateStatusEnum.INACTIVE)) return entity.getStatus();

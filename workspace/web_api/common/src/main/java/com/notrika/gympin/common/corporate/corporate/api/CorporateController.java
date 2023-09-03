@@ -16,7 +16,6 @@ import java.util.List;
 
 public interface CorporateController extends BaseController<CorporateParam, CorporateDto, CorporateQuery> {
 
-    ResponseEntity<List<CorporateDto>> getByUser(UserParam userParam);
     ResponseEntity<CorporateDto> updateStatus(@RequestBody CorporateParam param);
     ResponseEntity<CorporateDto> updateLogo(@RequestBody CorporateLogoParam param);
 
@@ -27,3 +26,4 @@ public interface CorporateController extends BaseController<CorporateParam, Corp
 
 
 }
+

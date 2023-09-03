@@ -2,10 +2,6 @@ import axios from "axios";
 import {Api_url} from "./NETWORKCONSTS";
 
 
-export  function corporate_getByUser(params){
-    return axios.get(Api_url.corporate.GET_BY_USER,{params:params})
-}
-
 export  function corporate_getById(params){
     return axios.get(Api_url.corporate.GET_BY_ID,{params: {id:params}})
 }

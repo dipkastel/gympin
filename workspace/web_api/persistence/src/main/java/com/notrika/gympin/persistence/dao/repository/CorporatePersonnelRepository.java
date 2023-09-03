@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.dao.repository;
 
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -12,4 +13,5 @@ public interface CorporatePersonnelRepository extends BaseRepository<CorporatePe
 
     List<CorporatePersonnelEntity> findByCorporateAndDeletedIsFalse(CorporateEntity entity);
     List<CorporatePersonnelEntity> findByUserIdAndDeletedIsFalse(Long userId);
+    List<CorporatePersonnelEntity> findByUserIdAndRoleAndDeletedIsFalse(Long userId, CorporatePersonnelRoleEnum userRole);
 }

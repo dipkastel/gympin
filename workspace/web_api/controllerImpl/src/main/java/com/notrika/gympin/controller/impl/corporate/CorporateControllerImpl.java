@@ -62,12 +62,6 @@ public class CorporateControllerImpl implements CorporateController {
     }
 
     @Override
-    @GetMapping("getByUser")
-    public ResponseEntity<List<CorporateDto>> getByUser(UserParam userParam) {
-        return ResponseEntity.ok(corporateService.getByUser(userParam));
-    }
-
-    @Override
     @PutMapping("updateStatus")
     public ResponseEntity<CorporateDto> updateStatus(CorporateParam param) {
         return ResponseEntity.ok(corporateService.updateStatus(param));

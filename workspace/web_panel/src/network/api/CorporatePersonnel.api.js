@@ -16,6 +16,9 @@ export function corporatePersonnel_getAll() {
 export function corporatePersonnel_getById(param) {
   return axios.get(CorporatePersonnelApi.getById,{params:param});
 }
+export function corporatePersonnel_getByUser(param) {
+  return axios.get(CorporatePersonnelApi.getByUser,{params:param});
+}
 export function corporatePersonnel_getTotalUserCredits(data) {
   return axios.get(CorporatePersonnelApi.getTotalUserCredits,{params: data});
 }

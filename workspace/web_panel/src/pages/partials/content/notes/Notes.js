@@ -3,21 +3,20 @@ import {Portlet, PortletBody, PortletHeader} from "../Portlet";
 import {AppBar, Button, Checkbox, FormControlLabel, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
 import {Alert, Form} from "react-bootstrap";
 import {note_add, note_getByParam, note_update} from "../../../../network/api/note.api";
-import {Row} from "reactstrap";
 import {getUserFixedName} from "../../../../helper";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const Notes = ({source}) => {
     const error = useContext(ErrorContext);
-    const [selectedTab,setSelectedTab] = useState("NOTE")
-    const [notes,setNotes] = useState([])
+    const [selectedTab, setSelectedTab] = useState("NOTE")
+    const [notes, setNotes] = useState([])
 
     useEffect(() => {
         getData()
     }, [source]);
 
-    function getData(){
-        note_getByParam(source).then(result=>{
+    function getData() {
+        note_getByParam(source).then(result => {
             setNotes(result.data.Data)
         }).catch(e => {
             try {
@@ -31,66 +30,73 @@ const Notes = ({source}) => {
 
     function addNote(e) {
         e.preventDefault()
-        var data ;
-        if (selectedTab==="NOTE"){
-            data = {...source,
+        var data;
+        if (selectedTab === "NOTE") {
+            data = {
+                ...source,
                 Text: e.target.Text.value,
                 Type: selectedTab,
-                IsToDo: e.target.IsToDo.checked}
+                IsToDo: e.target.IsToDo.checked
+            }
         }
-        if(selectedTab==="CONTACT"){
-            data = {...source,
-                Text: e.target.Name.value+" : "+e.target.Number.value,
+        if (selectedTab === "CONTACT") {
+            data = {
+                ...source,
+                Text: e.target.Name.value + " : " + e.target.Number.value,
                 Type: selectedTab,
-                IsToDo:false}
+                IsToDo: false
+            }
         }
-        note_add(data).then(result=>{
+        note_add(data).then(result => {
             error.showError({message: "عملیات موفق",});
             getData()
             e.target.Name.value = "";
-            e.target.Number.value="";
-            e.target.Text.value ="";
+            e.target.Number.value = "";
+            e.target.Text.value = "";
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
-    function doneItem(e,item){
+
+    function doneItem(e, item) {
         e.preventDefault();
-        note_update({...item,IsToDo:false}).then(result=>{
+        note_update({...item, IsToDo: false}).then(result => {
             error.showError({message: "عملیات موفق",});
             getData();
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     return (
         <>
-            {notes.some(n=>n.Type==="NOTE")&&<Portlet>
+            {notes.some(n => n.Type === "NOTE") && <Portlet>
                 <PortletHeader
                     title="یادداشت جیم پین"
                 />
                 <PortletBody className={"p-1"}>
-                    {notes&&notes.filter(n=>n.Type==="NOTE").reverse().map(item=>(
-                        <><Alert key={item.Id} variant={item.IsToDo?"warning":"info"} className={"m-0 px-2  d-block"}>
-                            <Typography variant={"body2"} >{item.Text}</Typography>
-                            {item.IsToDo&&<Button  color={"error"} onClick={(e)=>doneItem(e,item)} fullWidth variant={"contained"} > انجام شد </Button>}
-                        </Alert>
+                    {notes && notes.filter(n => n.Type === "NOTE").reverse().map(item => (
+                        <div key={"note-" + item.Id}>
+                            <Alert variant={item.IsToDo ? "warning" : "info"} className={"m-0 px-2  d-block"}>
+                                <Typography variant={"body2"}>{item.Text}</Typography>
+                                {item.IsToDo && <Button color={"error"} onClick={(e) => doneItem(e, item)} fullWidth
+                                                        variant={"contained"}> انجام شد </Button>}
+                            </Alert>
                             <Typography
-                                sx={{m:0,lineHeight:"inherit"}}
-                                variant={"overline"}  component={"p"}>
+                                sx={{m: 0, lineHeight: "inherit"}}
+                                variant={"overline"} component={"p"}>
                                 {getUserFixedName(item.CreatorUser)}</Typography>
                             <Typography
-                                sx={{m:0,lineHeight:"inherit"}}
-                                variant={"overline"}  component={"p"}>
+                                sx={{m: 0, lineHeight: "inherit"}}
+                                variant={"overline"} component={"p"}>
                                 {new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
                                     year: 'numeric',
                                     month: 'long',
@@ -98,27 +104,28 @@ const Notes = ({source}) => {
                                     hour: "2-digit",
                                     minute: "2-digit"
                                 })}</Typography>
-                        </>
+                        </div>
                     ))}
                 </PortletBody>
             </Portlet>}
 
-            {notes.some(n=>n.Type==="CONTACT")&&<Portlet>
+            {notes.some(n => n.Type === "CONTACT") && <Portlet>
                 <PortletHeader
                     title="دفترچه تلفن"
                 />
                 <PortletBody className={"p-1"}>
-                    {notes.filter(n=>n.Type==="CONTACT").reverse().map(item=>(
-                        <><Alert key={item.Id} variant={"dark"} className={"m-0 px-2  d-block"}>
-                            <Typography variant={"body2"} >{item.Text}</Typography>
-                        </Alert>
+                    {notes.filter(n => n.Type === "CONTACT").reverse().map(item => (
+                        <div key={"CONTACT-" + item.Id}>
+                            <Alert variant={"dark"} className={"m-0 px-2  d-block"}>
+                                <Typography variant={"body2"}>{item.Text}</Typography>
+                            </Alert>
                             <Typography
-                                sx={{m:0,lineHeight:"inherit"}}
-                                variant={"overline"}  component={"p"}>
+                                sx={{m: 0, lineHeight: "inherit"}}
+                                variant={"overline"} component={"p"}>
                                 {getUserFixedName(item.CreatorUser)}</Typography>
                             <Typography
-                                sx={{m:0,lineHeight:"inherit"}}
-                                variant={"overline"}  component={"p"}>
+                                sx={{m: 0, lineHeight: "inherit"}}
+                                variant={"overline"} component={"p"}>
                                 {new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
                                     year: 'numeric',
                                     month: 'long',
@@ -126,7 +133,7 @@ const Notes = ({source}) => {
                                     hour: "2-digit",
                                     minute: "2-digit"
                                 })}</Typography>
-                        </>
+                        </div>
                     ))}
                 </PortletBody>
             </Portlet>}
@@ -134,20 +141,20 @@ const Notes = ({source}) => {
             <AppBar position="static">
                 <Tabs
                     value={selectedTab}
-                    onChange={(e,n)=>setSelectedTab(n)}
+                    onChange={(e, n) => setSelectedTab(n)}
                     indicatorColor="primary"
                     textColor="inherit"
                     variant="fullWidth"
                     aria-label="full width tabs example"
                 >
-                    <Tab label="یادداشت" value={"NOTE"} />
+                    <Tab label="یادداشت" value={"NOTE"}/>
                     <Tab label="تلفن" value={"CONTACT"}/>
                 </Tabs>
             </AppBar>
-            <Paper sx={{padding:1}}>
+            <Paper sx={{padding: 1}}>
 
-                <div hidden={selectedTab !== "NOTE"} >
-                    <Form onSubmit={(e)=>addNote(e)}>
+                <div hidden={selectedTab !== "NOTE"}>
+                    <Form onSubmit={(e) => addNote(e)}>
 
                         <TextField
                             label="متن"
@@ -159,14 +166,14 @@ const Notes = ({source}) => {
                             minRows={3}
                         />
 
-                        <FormControlLabel name={"IsToDo"} control={<Checkbox  />} label="باید بعدا انجام شود؟" />
+                        <FormControlLabel name={"IsToDo"} control={<Checkbox/>} label="باید بعدا انجام شود؟"/>
 
-                        <Button type={"submit"} color={"primary"} fullWidth variant={"contained"} > افزودن </Button>
+                        <Button type={"submit"} color={"primary"} fullWidth variant={"contained"}> افزودن </Button>
                     </Form>
 
                 </div>
-                <div hidden={selectedTab !== "CONTACT"} >
-                    <Form onSubmit={(e)=>addNote(e)}>
+                <div hidden={selectedTab !== "CONTACT"}>
+                    <Form onSubmit={(e) => addNote(e)}>
                         <TextField
                             label="نام"
                             className="textField"
@@ -182,7 +189,7 @@ const Notes = ({source}) => {
                             type={"number"}
                             variant="outlined"
                         />
-                        <Button type={"submit"} color={"primary"} fullWidth variant={"contained"} > ثبت </Button>
+                        <Button type={"submit"} color={"primary"} fullWidth variant={"contained"}> ثبت </Button>
                     </Form>
                 </div>
             </Paper>

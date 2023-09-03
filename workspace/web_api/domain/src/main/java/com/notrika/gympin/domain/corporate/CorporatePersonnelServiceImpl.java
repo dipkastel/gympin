@@ -146,4 +146,13 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
         CorporateEntity corporate = corporateService.getEntityById(corporateParam.getId());
         return corporatePersonnelRepository.findByCorporateAndDeletedIsFalse(corporate).stream().map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
     }
+
+    @Override
+    public List<CorporatePersonnelDto> getByUserid(Long userId) {
+        return corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(userId).stream().map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
+    }
+    @Override
+    public List<CorporatePersonnelDto> getOwnedByUserid(Long userId) {
+        return corporatePersonnelRepository.findByUserIdAndRoleAndDeletedIsFalse(userId,CorporatePersonnelRoleEnum.ADMIN).stream().map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
+    }
 }

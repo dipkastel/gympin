@@ -8,13 +8,15 @@ import {Avatar, Chip, TableCell} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import {useHistory} from "react-router-dom";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
+import {corporatePersonnel_getByUser} from "../../../../../network/api/CorporatePersonnel.api";
+
 
 function UserCorporates({ currentUser }) {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [userCorporates, setUserCorporates] = useState([]);
     useEffect(() => {
-        corporate_getByUser({id:currentUser.Id}).then(result=>{
+        corporatePersonnel_getByUser({id:currentUser.Id}).then(result=>{
             setUserCorporates(result.data.Data)
         }).catch(e => {
                     try {
@@ -38,6 +40,7 @@ function UserCorporates({ currentUser }) {
                                 <TableCell align="right">Id</TableCell>
                                 <TableCell align="right"></TableCell>
                                 <TableCell align="right">نام سازمان</TableCell>
+                                <TableCell align="right">نقش در سازمان</TableCell>
                                 <TableCell align="left">وضعیت سازمان</TableCell>
                             </TableRow>
                         </TableHead>
@@ -45,10 +48,11 @@ function UserCorporates({ currentUser }) {
                             {userCorporates&&userCorporates.map(row => (
                                 <TableRow key={row.Id}>
                                     <TableCell align="right" component="th" scope="row" >{row.Id}</TableCell>
-                                    <TableCell align="right"><Avatar onClick={()=>history.push("/corporate/details/"+row.Id)}  alt={row.Name} src={row.Multimedias?row.Multimedias[0].Url:""}  sx={{width:20,height:20}} /></TableCell>
-                                    <TableCell align="right">{row.Name}</TableCell>
+                                    <TableCell align="right"><Avatar onClick={()=>history.push("/corporate/details/"+row.Corporate.Id)}  alt={row.Corporate.Name} src={row.Corporate.Multimedias?row.Corporate.Multimedias[0].Url:""}  sx={{width:20,height:20}} /></TableCell>
+                                    <TableCell align="right">{row.Corporate.Name}</TableCell>
+                                    <TableCell align="right">{row.Role}</TableCell>
                                     <TableCell align="left">
-                                        <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
+                                        <Chip label={row.Corporate.Status} color={(row.Corporate.Status.startsWith("ACTIVE"))?"success":"error"} />
                                     </TableCell>
                                 </TableRow>
                             ))}

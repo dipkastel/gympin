@@ -10,6 +10,9 @@ export function corporatePersonnel_delete(data) {
 export function corporatePersonnel_getAll() {
   return axios.get(Api_url.CorporatePersonnel.getAll);
 }
+export function corporatePersonnel_corporateOwnedByUserId(data) {
+  return axios.get(Api_url.CorporatePersonnel.corporateOwnedByUserId,{params: data});
+}
 export function corporatePersonnel_getById(data) {
   return axios.get(Api_url.CorporatePersonnel.getById,{params: data});
 }

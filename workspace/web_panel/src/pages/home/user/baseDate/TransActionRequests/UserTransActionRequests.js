@@ -250,9 +250,9 @@ function UserTransActionRequests({currentUser}) {
     }
 
     function checkForError(row) {
-         if(row.Items.length>2)
+         if(row.Items?.length>2)
              return (<>
-                 <Tooltip placement={"top"} title={row.Items?.length+" جواب برای یک سریال "}>
+                 <Tooltip placement={"top"} title={row?.Items?.length+" جواب برای یک سریال "|""}>
                      <Warning color={"error"} />
                  </Tooltip>
              </>)

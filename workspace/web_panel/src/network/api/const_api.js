@@ -52,6 +52,7 @@ export let CorporatePersonnelApi = {
   delete: "v1/corporatePersonnel/delete",
   getAll: "v1/corporatePersonnel/getAll",
   getById: "v1/corporatePersonnel/getById",
+  getByUser: "v1/corporatePersonnel/corporateByUserId",
   update: "v1/corporatePersonnel/update",
   getTotalUserCredits: "v1/corporatePersonnel/getTotalUserCredits",
   PersonnelByCorporate:"v1/corporatePersonnel/PersonnelByCorporate",

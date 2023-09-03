@@ -10,6 +10,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePer
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelCreditService;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelService;
+import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -62,6 +63,18 @@ public class CorporatePersonnelControllerImpl implements CorporatePersonnelContr
     @GetMapping("PersonnelByCorporate")
     public ResponseEntity<List<CorporatePersonnelDto>> getPersonnelByCorporate(CorporateParam corporateParam) {
         return new ResponseEntity<>(corporatePersonnelService.getPersonnelByCorporate(corporateParam),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("corporateByUserId")
+    public ResponseEntity<List<CorporatePersonnelDto>> getCorporateByUser(UserParam userParam) {
+        return new ResponseEntity<>(corporatePersonnelService.getByUserid(userParam.getId()),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("corporateOwnedByUserId")
+    public ResponseEntity<List<CorporatePersonnelDto>> getCorporateOwnedByUser(UserParam userParam) {
+        return new ResponseEntity<>(corporatePersonnelService.getOwnedByUserid(userParam.getId()),HttpStatus.OK);
     }
 
     @Override

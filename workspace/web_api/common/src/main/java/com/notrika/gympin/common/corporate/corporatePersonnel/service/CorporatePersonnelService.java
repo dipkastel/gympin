@@ -11,6 +11,8 @@ import java.util.List;
 public interface CorporatePersonnelService extends BaseService<CorporatePersonnelParam, CorporatePersonnelDto, BaseQuery<?>> {
 
     List<CorporatePersonnelDto> getPersonnelByCorporate(CorporateParam corporateParam);
+    List<CorporatePersonnelDto> getByUserid(Long userId);
+    List<CorporatePersonnelDto> getOwnedByUserid(Long userId);
 
 
 }
