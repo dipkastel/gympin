@@ -19,10 +19,10 @@ const _SettingsCorporate = (props) => {
     const error = useContext(ErrorContext);
     const user = useSelector(({auth}) => auth.user);
     const [selectedCorporate, SetSelectedCorporate] = useState(useSelector(({corporate}) => corporate.corporate))
-    const [corporates, SetCorporates] = useState([]);
+    const [personCorporates, SetPersonCorporates] = useState([]);
     useEffect(() => {
         corporatePersonnel_corporateOwnedByUserId({id: user.Id}).then(result => {
-            SetCorporates(result.data.Data)
+            SetPersonCorporates(result.data.Data)
             if (result.data.Data.length == 1) {
                 SetSelectedCorporate(result.data.Data[0]);
                 props.SetCorporate(result.data.Data[0]);
@@ -37,10 +37,10 @@ const _SettingsCorporate = (props) => {
     }, []);
 
     function selectedPlaceChanged(event) {
-        const place = corporates.find(r => r.Id == event.target.value);
-        if (place) {
-            SetSelectedCorporate(place);
-            props.SetCorporate(place);
+        const corporate = personCorporates.find(r => r.Corporate.Id == event.target.value).Corporate;
+        if (corporate) {
+            SetSelectedCorporate(corporate);
+            props.SetCorporate(corporate);
         }
     }
 
@@ -61,7 +61,7 @@ const _SettingsCorporate = (props) => {
                             value={(selectedCorporate) ? selectedCorporate.Id : 9999}
                             onChange={(event) => selectedPlaceChanged(event)}
                         >
-                            {corporates.map((item, number) => (
+                            {personCorporates.map((item, number) => (
                                 <div key={number}>
                                     <FormControlLabel value={item.Corporate.Id} control={<Radio/>} label={item.Corporate.Name}/>
                                     <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
