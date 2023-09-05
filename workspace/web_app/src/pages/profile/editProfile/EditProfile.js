@@ -44,8 +44,7 @@ const EditProfile = (props) => {
             if (!currentUser.FullName) can=false;
             if (!currentUser.Gender) can=false;
             if (!currentUser.Birthday) can=false;
-            if (!currentUser.NationalCode || !currentUser.NationalCode.toString()) can=false;
-            if (!checkNationalCode(currentUser.NationalCode.toString())) can=false;
+            if (!checkNationalCode(currentUser.NationalCode)) can=false;
             if(!!usernameAvalableError) can=false;
             setCanSubmit(can);
     }, [currentUser,usernameAvalableError]);

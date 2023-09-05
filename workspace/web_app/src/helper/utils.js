@@ -15,7 +15,9 @@ export function checkUsername(username) {
     return !username.match("^(?=[0-9|A-Z|a-z|_|-]{3,20}$)(?!.*[_-]{2})[^_-].*[^_-]$");
 }
 export function checkNationalCode(code) {
-    if (code.trim() == '') {
+    if (!code) {
+        return false;
+    }else if (code.trim() == '') {
         return false;
     } else if (code.length != 10) {
         return false;

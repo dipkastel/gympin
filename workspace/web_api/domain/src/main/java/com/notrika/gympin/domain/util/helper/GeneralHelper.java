@@ -45,7 +45,7 @@ public final class GeneralHelper {
             pureInviteCode = (inviteCode.startsWith("P") || inviteCode.startsWith("C"))?
                  inviteCode.substring(1): inviteCode;
             String code = pureInviteCode.substring(3, pureInviteCode.length() - 2);
-            Long inviterId = Long.decode(code);
+            Long inviterId = Long.parseLong(code,16);
             String num = pureInviteCode.substring(2, 3);
             String generatedInviteCode = getInviteCode(inviterId, Integer.parseInt(num));
             switch (inviteCode.substring(0, 1)) {
