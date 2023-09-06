@@ -21,19 +21,40 @@ import {
 import {Form} from "react-bootstrap";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import {transactions_query} from "../../network/api/transactions.api";
 
 const SingleUser = (props) => {
     const error = useContext(ErrorContext);
     const {PersonnelId} = useParams();
     const [person,setPerson] = useState([]);
+    const [personCredits,setPersonCredits] = useState([]);
     const [openModalAdd, setOpenModalAdd] = useState(false);
     useEffect(() => {
         getPerson();
     }, [PersonnelId]);
 
+    function getAddCreditTransaction(userId,CorporateId) {
+        transactions_query({
+            queryType: "FILTER",
+            UserId: userId,
+            CorporateId: CorporateId,
+            TransactionType:"CORPORATE_PERSONNEL_ADD_CREDIT",
+            paging: {Page: 0, Size: 300, orderBy: "Serial", Desc: false}
+        }).then(result=>{
+            setPersonCredits(result.data.Data.content)
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
+    }
+
     function getPerson(){
         corporatePersonnel_getById({id:PersonnelId}).then(result=>{
             setPerson(result.data.Data);
+            getAddCreditTransaction(result.data.Data.User.Id,result.data.Data.Corporate.Id);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -139,7 +160,7 @@ const SingleUser = (props) => {
                 />
                 <CardContent>
                     <List>
-                        {person.CreditList&&person.CreditList.reverse().map(item => (
+                        {personCredits.map(item => (
                             <ListItem key={item.Id}>
                                 <Grid
                                     container
@@ -147,7 +168,7 @@ const SingleUser = (props) => {
                                     justifyContent="space-between"
                                     alignItems="center"
                                 >
-                                    <Typography variant={"subtitle1"}>{"افزایش : "+toPriceWithComma(item.CreditAmount)+" تومان"}</Typography>
+                                    <Typography variant={"subtitle1"}>{"افزایش : "+toPriceWithComma(item.Amount)+" تومان"}</Typography>
 
                                     <Typography variant={"overline"}>{new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
                                         year: 'numeric',

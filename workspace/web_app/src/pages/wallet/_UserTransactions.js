@@ -1,32 +1,55 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, CardContent, Grid, ListItemText, Typography} from "@mui/material";
+import {Box, Card, CardContent, Grid, ListItemText, Typography} from "@mui/material";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {transactions_query} from "../../network/api/transactions.api";
 import {toPriceWithComma} from "../../helper/utils";
 import {QuestionMark} from "@mui/icons-material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import {useParams} from "react-router-dom";
+import {useTheme} from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import __sharePersonelCreadits from "./__sharePersonelCreadits";
+import __personalTransactions from "./__personalTransactions";
 
 const _UserTransactions = ({user}) => {
     const error = useContext(ErrorContext);
-    const [transactions,setTransactions]=useState([]);
-    const [page,setPage]=useState(0);
+    const [transactions, setTransactions] = useState([]);
+    const [page, setPage] = useState(0);
+
+
+    const theme = useTheme();
+    theme.direction = 'rtl';
+    const {section} = useParams()
+    const [tabIndex, setTabIndex] = useState(0);
+
+    useEffect(() => {
+        try {
+            tabindexChange(Number.parseInt(section));
+        } catch (e) {
+        }
+    }, [section]);
+
+
+    function tabindexChange(e) {
+        if ([0, 1].includes(e)) {
+            setTabIndex(e)
+        }
+    }
 
     useEffect(() => {
         getTransActions()
     }, []);
 
     function getTransActions() {
-
         transactions_query({
             queryType: "FILTER",
-            UserId:user.Id,
-            TransactionType:"CHARGE_USER",
-            paging: {Page: page, Size: 300,orderBy: "Serial", Desc: false}
+            UserId: user.Id,
+            paging: {Page: page, Size: 300, orderBy: "Serial", Desc: false}
         }).then((data) => {
             setTransactions(data.data.Data)
-            console.log(user.Id)
-            console.log(data.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -36,86 +59,51 @@ const _UserTransactions = ({user}) => {
         });
     }
 
-    const groupBySerial = (result, { Serial, ...cats }) => {
-        if (!result.some(r=>r.Serial==Serial))result.push({Serial:Serial,Items:[]})
-        result.find(r=>r.Serial==Serial).Items.push(cats);
-        return result;
-    }
-    const getRequest = (items) =>{
-        // console.log("pa",items)
-        return items.Items.find(o=>o.TransactionStatus=="REQUEST");
-    }
-    const getPayment = (items) =>{
-        // console.log("pa",items)
-        return items.Items.find(o=>o.TransactionStatus!="REQUEST");
-    }
-
 
     return (
         <>
-            <Card elevation={3} >
-                <Grid container direction={"column"} justifyContent={"center"} alignItems={"center"}>
-                    <Typography
-                        sx={{display: "inline", m: 3}}
-                        component="p"
-                        variant="h2"
-                        color="text.primary"
+            <Box sx={{bgcolor: 'background.paper'}}>
+                <AppBar position="static">
+                    <Tabs
+                        value={tabIndex}
+                        onChange={(e, num) => setTabIndex(num)}
+                        indicatorColor="secondary"
+                        textColor="inherit"
+                        variant="fullWidth"
+                        aria-label="full width tabs example"
                     >
-                        تراکنش های من
-                    </Typography>
-                </Grid>
-            </Card>
-
-            {transactions.content && transactions.content.reduce(groupBySerial, []).filter(row=>getRequest(row)).map((row, index) => {
-                return (
-                    <div key={"tr-" + row.Serial}>
-                        <Card elevation={3} sx={{margin: 1}}>
-                            <CardContent>
-                                <Grid container justifyContent={"space-between"} alignItems={"center"}>
-
-                                    <Typography variant={"subtitle1"}>
-                                        {toPriceWithComma(getRequest(row).Amount)+" تومان"}
-                                    </Typography>
-
-                                    <Typography variant={"caption"}>
-                                        {new Date(getRequest(row).CreatedDate).toLocaleDateString('fa-IR', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric',
-                                            hour: "2-digit",
-                                            minute: "2-digit"
-                                        })}
-                                    </Typography>
-
-                                </Grid>
-                                <ListItemText
-                                    primary={getRequest(row)&&(
-                                        <Typography variant={"caption"}>
-                                            {getRequest(row).Description}
-                                            {/*<FeedIcon color={"success"} />*/}
-                                        </Typography>)}
-                                    secondary={getPayment(row)?(
-                                        <Typography variant={"subtitle2"}>
-                                            {getPayment(row).Description}
-                                            {getPayment(row).TransactionStatus=="PAYMENT_COMPLETE"?
-                                                <CheckCircleIcon color={"success"} />:
-                                                <RemoveCircleIcon color={"error"} />}
-                                        </Typography>
-                                    ):(
-                                        <Typography variant={"subtitle2"}>
-                                            <QuestionMark color={"warning"} />
-                                            در انتظار بررسی
-                                        </Typography>
-                                    )}
-                                />
-                            </CardContent>
-                        </Card>
-                    </div>
-                );
-            })}
-
+                        <Tab label="شارژهای اشتراکی" id={"user-tab-0"} aria-controls={"user-tabpanel-0"}/>
+                        <Tab label="تراکنش های شخصی" id={"user-tab-1"} aria-controls={"user-tabpanel-1"}/>
+                    </Tabs>
+                </AppBar>
+                <TabPanel value={tabIndex} index={0} dir={theme.direction}>
+                    <__sharePersonelCreadits transactions={transactions} />
+                </TabPanel>
+                <TabPanel value={tabIndex} index={1} dir={theme.direction}>
+                    <__personalTransactions  transactions={transactions} />
+                </TabPanel>
+            </Box>
         </>
     );
 };
 
 export default _UserTransactions;
+
+function TabPanel(props) {
+    const {children, value, index} = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`user-tabpanel-${index}`}
+            aria-labelledby={`user-tab-${index}`}
+        >
+            {value === index && (
+                <Box>
+                    {children}
+                </Box>
+            )}
+        </div>
+    );
+}

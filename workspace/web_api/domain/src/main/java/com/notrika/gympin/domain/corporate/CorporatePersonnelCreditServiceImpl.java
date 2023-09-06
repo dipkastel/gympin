@@ -59,6 +59,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         transactionRepository.add(TransactionEntity.builder()
                 .corporate(personnelEntity.getCorporate())
                 .balance(personnelEntity.getCreditBalance())
+                .user(personnelEntity.getUser())
                 .amount(param.getCreditAmount())
                 .transactionStatus(TransactionStatus.COMPLETE)
                 .transactionType(TransactionType.CORPORATE_PERSONNEL_ADD_CREDIT)
