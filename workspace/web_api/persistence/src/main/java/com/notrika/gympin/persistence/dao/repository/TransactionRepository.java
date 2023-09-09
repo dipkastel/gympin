@@ -20,4 +20,8 @@ public interface TransactionRepository extends BaseRepository<TransactionEntity,
 
     @Query("select sum (t.amount) from TransactionEntity t where t.user.id=:#{#id}")
     BigDecimal getUserTotalDeposit(Long id);
+
+
+    @Query(value = "SELECT tr1.* FROM `transaction` as tr1 RIGHT JOIN (SELECT Id, count(*) as count FROM `transaction` WHERE type = \"CHARGE_USER\" AND bank_pend = 1 GROUP BY serial) as tr2 ON tr1.Id = tr2.Id WHERE tr2.count <2",nativeQuery = true)
+    List<TransactionEntity> findPendingRequests();
 }

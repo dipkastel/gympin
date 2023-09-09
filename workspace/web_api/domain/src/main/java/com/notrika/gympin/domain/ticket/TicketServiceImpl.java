@@ -1,6 +1,9 @@
 package com.notrika.gympin.domain.ticket;
 
 import com.notrika.gympin.common.athlete.gate.enums.TicketEntryStatus;
+import com.notrika.gympin.common.contact.sms.dto.SmsDto;
+import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
+import com.notrika.gympin.common.contact.sms.service.SmsService;
 import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.exception.ticket.*;
@@ -17,8 +20,6 @@ import com.notrika.gympin.common.ticket.query.TicketQuery;
 import com.notrika.gympin.common.ticket.service.TicketService;
 import com.notrika.gympin.common.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.transaction.enums.TransactionType;
-import com.notrika.gympin.common.transaction.param.TransactionParam;
-import com.notrika.gympin.common.transaction.param.TransactionPlaceSettelingParam;
 import com.notrika.gympin.common.user.enums.PlanExpireType;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.common.util.GeneralUtil;
@@ -36,7 +37,6 @@ import com.notrika.gympin.persistence.entity.ticket.TicketEntryMessageEntity;
 import com.notrika.gympin.persistence.entity.transaction.TransactionEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
-import org.slf4j.helpers.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -73,6 +73,8 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
     CorporateServiceImpl corporateService;
     @Autowired
     CorporatePersonnelCreditRepository corporatePersonnelCreditRepository;
+    @Autowired
+    SmsService smsService;
 
     @Override
     @Transactional
@@ -87,7 +89,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
             throw new UnknownUserException();
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
 
-        if (!GeneralUtil.isGenderCompatible(plan.getGender() , user.getGender()))
+        if (!GeneralUtil.isGenderCompatible(plan.getGender(), user.getGender()))
             throw new TicketGenderIsNotCompatible();
         entity.setStatus(TicketStatus.PAYMENT_WAIT);
         entity.setPlan(plan);
@@ -109,9 +111,9 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
             entity.setPlanExpireDate(plan.getExpireDate());
             entity.setExpireDate(plan.getExpireDate());
         }
-        if(plan.getTicketCapacity()!=null){
-            var ticketCount = plan.getTicketCapacity()-1;
-            if(ticketCount<1){
+        if (plan.getTicketCapacity() != null) {
+            var ticketCount = plan.getTicketCapacity() - 1;
+            if (ticketCount < 1) {
                 plan.setEnable(false);
             }
             plan.setTicketCapacity(ticketCount);
@@ -291,7 +293,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
 
     @Override
     public List<TicketScannedDto> getUserEnteredByPlace(Long placeId) {
-        List<TicketEntity> ticketEntities = ticketRepository.findTicketsHasOpenEnterByPlaceId(placeId).stream().map(this::checkForExpire).filter(t->checkForAccess(t,placeId)).collect(Collectors.toList());
+        List<TicketEntity> ticketEntities = ticketRepository.findTicketsHasOpenEnterByPlaceId(placeId).stream().map(this::checkForExpire).filter(t -> checkForAccess(t, placeId)).collect(Collectors.toList());
         List<TicketScannedDto> result = new ArrayList<>();
         for (TicketEntity ticket : ticketEntities) {
             try {
@@ -307,13 +309,13 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
 
     @Override
     public List<TicketDto> getActiveTicketsOfPlace(Long placeId) {
-        List<TicketEntity> ticketEntities = ticketRepository.getActiveTicketsOfPlace(placeId).stream().map(this::checkForExpire).filter(t->checkForAccess(t,placeId)).collect(Collectors.toList());
+        List<TicketEntity> ticketEntities = ticketRepository.getActiveTicketsOfPlace(placeId).stream().map(this::checkForExpire).filter(t -> checkForAccess(t, placeId)).collect(Collectors.toList());
         return convertToDtos(ticketEntities);
     }
 
     @Override
     public List<TicketDto> getUserTicketsByPlace(UserTicketsParam param) {
-        List<TicketEntity> ticketEntities = ticketRepository.getUserPlaceTicket(param.getUserId(), param.getPlaceId()).stream().map(this::checkForExpire).filter(f-> READY_TO_ACTIVE != f.getStatus()).collect(Collectors.toList());
+        List<TicketEntity> ticketEntities = ticketRepository.getUserPlaceTicket(param.getUserId(), param.getPlaceId()).stream().map(this::checkForExpire).filter(f -> READY_TO_ACTIVE != f.getStatus()).collect(Collectors.toList());
         return convertToDtos(ticketEntities);
     }
 
@@ -343,13 +345,13 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
     @Override
     public Boolean increaseExpireDate(IncreaseExpireParam param) {
         TicketEntity ticketEntity = ticketRepository.getById(param.getTicketId());
-        if(param.getIncreaseDayCount()>0){
+        if (param.getIncreaseDayCount() > 0) {
             Calendar c = Calendar.getInstance();
             c.setTime(ticketEntity.getExpireDate());
-            c.add(Calendar.DATE,param.getIncreaseDayCount());
+            c.add(Calendar.DATE, param.getIncreaseDayCount());
             ticketEntity.setExpireDate(c.getTime());
         }
-        if(param.getChangeDate()!=null){
+        if (param.getChangeDate() != null) {
             ticketEntity.setExpireDate(param.getChangeDate());
         }
         ticketRepository.update(ticketEntity);
@@ -360,104 +362,117 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
     @Override
     @Transactional
     public TicketDto checkout(TicketCheckoutParam param) throws Exception {
-            TicketEntity ticketEntity = ticketRepository.getById(param.getTicket().getId());
-            UserEntity userEntity = ticketEntity.getUser();
-            BigDecimal ticketRemainderPrice = ticketEntity.getPrice();
-            String transaction_serial = java.util.UUID.randomUUID().toString();
-            List<TransactionEntity> transactions = new ArrayList<>();
-            GympinContext context = GympinContextHolder.getContext();
-            if (ticketEntity.getPaymentSerial()!=null)
-                throw new TicketIsAlreadyPayedException();
-            if (ticketEntity.getPrice().compareTo(param.getPrice()) != 0)
-                throw new TicketPriceConflictException();
-            if (!GeneralUtil.isGenderCompatible(ticketEntity.getPlan().getGender() , userEntity.getGender()))
-                throw new TicketGenderIsNotCompatible();
-            if (ticketEntity.getPrice().compareTo(param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
-                throw new TicketPriceTotalConflictException();
-            for (CheckoutDetailParam checkoutParam : param.getCheckout().stream().sorted((a, b) -> (int) (a.getPriority() - b.getPriority())).collect(Collectors.toList())) {
-                if (checkoutParam.getAmount().compareTo(BigDecimal.ZERO) != 0) {
-                    ticketRemainderPrice = ticketRemainderPrice.subtract(checkoutParam.getAmount());
-                    switch (checkoutParam.getCreditType()) {
-                        case SPONSOR: {
-                            CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(checkoutParam.getPersonnelId());
-                            CorporateEntity corporateEntity = personnelEntity.getCorporate();
-                            if (userEntity.getId() != personnelEntity.getUser().getId())
-                                throw new TicketPayByOthersException();
-                            //personnel add credit row
-                            var PersonnelCredit = CorporatePersonnelCreditEntity.builder().corporatePersonnel(personnelEntity).creditAmount(checkoutParam.getAmount().negate()).build();
-                            corporatePersonnelCreditRepository.add(PersonnelCredit);
+        TicketEntity ticketEntity = ticketRepository.getById(param.getTicket().getId());
+        UserEntity userEntity = ticketEntity.getUser();
+        BigDecimal ticketRemainderPrice = ticketEntity.getPrice();
+        String transaction_serial = java.util.UUID.randomUUID().toString();
+        List<TransactionEntity> transactions = new ArrayList<>();
+        GympinContext context = GympinContextHolder.getContext();
+        if (ticketEntity.getPaymentSerial() != null)
+            throw new TicketIsAlreadyPayedException();
+        if (ticketEntity.getPrice().compareTo(param.getPrice()) != 0)
+            throw new TicketPriceConflictException();
+        if (!GeneralUtil.isGenderCompatible(ticketEntity.getPlan().getGender(), userEntity.getGender()))
+            throw new TicketGenderIsNotCompatible();
+        if (ticketEntity.getPrice().compareTo(param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
+            throw new TicketPriceTotalConflictException();
+        for (CheckoutDetailParam checkoutParam : param.getCheckout().stream().sorted((a, b) -> (int) (a.getPriority() - b.getPriority())).collect(Collectors.toList())) {
+            if (checkoutParam.getAmount().compareTo(BigDecimal.ZERO) != 0) {
+                ticketRemainderPrice = ticketRemainderPrice.subtract(checkoutParam.getAmount());
+                switch (checkoutParam.getCreditType()) {
+                    case SPONSOR: {
+                        CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(checkoutParam.getPersonnelId());
+                        CorporateEntity corporateEntity = personnelEntity.getCorporate();
+                        if (userEntity.getId() != personnelEntity.getUser().getId())
+                            throw new TicketPayByOthersException();
+                        //personnel add credit row
+                        var PersonnelCredit = CorporatePersonnelCreditEntity.builder().corporatePersonnel(personnelEntity).creditAmount(checkoutParam.getAmount().negate()).build();
+                        corporatePersonnelCreditRepository.add(PersonnelCredit);
 
-                            //personnel change balance
-                            personnelEntity.setCreditBalance(personnelEntity.getCreditBalance().subtract(checkoutParam.getAmount()));
-                            corporatePersonnelRepository.update(personnelEntity);
-                            //setTransAction
-                            transactions.add(TransactionEntity.builder()
-                                    .serial(transaction_serial)
-                                    .transactionType(TransactionType.PERSONNEL_USE_CREDIT)
-                                    .corporatePersonnel(personnelEntity)
-                                    .balance(personnelEntity.getCreditBalance())
-                                    .isChecked(false)
-                                    .amount(checkoutParam.getAmount())
-                                    .transactionStatus(TransactionStatus.COMPLETE)
-                                    .build());
-                            //corporate change balance
-                            corporateEntity.setBalance(corporateEntity.getBalance().subtract(checkoutParam.getAmount()));
+                        //personnel change balance
+                        personnelEntity.setCreditBalance(personnelEntity.getCreditBalance().subtract(checkoutParam.getAmount()));
+                        corporatePersonnelRepository.update(personnelEntity);
+                        //setTransAction
+                        transactions.add(TransactionEntity.builder()
+                                .serial(transaction_serial)
+                                .transactionType(TransactionType.PERSONNEL_USE_CREDIT)
+                                .corporatePersonnel(personnelEntity)
+                                .balance(personnelEntity.getCreditBalance())
+                                .isChecked(false)
+                                .bankPend(false)
+                                .amount(checkoutParam.getAmount())
+                                .transactionStatus(TransactionStatus.COMPLETE)
+                                .build());
+                        //corporate change balance
+                        corporateEntity.setBalance(corporateEntity.getBalance().subtract(checkoutParam.getAmount()));
 
-                            corporateService.update(corporateEntity);
-                            transactions.add(TransactionEntity.builder()
-                                    .serial(transaction_serial)
-                                    .transactionType(TransactionType.CORPORATE_PERSONNEL_USE_CREDIT)
-                                    .corporate(corporateEntity)
-                                    .balance(corporateEntity.getBalance())
-                                    .isChecked(false)
-                                    .amount(checkoutParam.getAmount())
-                                    .transactionStatus(TransactionStatus.COMPLETE)
-                                    .build());
+                        corporateService.update(corporateEntity);
+                        transactions.add(TransactionEntity.builder()
+                                .serial(transaction_serial)
+                                .transactionType(TransactionType.CORPORATE_PERSONNEL_USE_CREDIT)
+                                .corporate(corporateEntity)
+                                .balance(corporateEntity.getBalance())
+                                .isChecked(false)
+                                .bankPend(false)
+                                .amount(checkoutParam.getAmount())
+                                .transactionStatus(TransactionStatus.COMPLETE)
+                                .build());
 
-                            break;
-                        }
-                        case PERSONAL: {
-                            BigDecimal newBalance = userEntity.getBalance().subtract(checkoutParam.getAmount());
-                            userEntity.setBalance(newBalance);
+                        break;
+                    }
+                    case PERSONAL: {
+                        BigDecimal newBalance = userEntity.getBalance().subtract(checkoutParam.getAmount());
+                        userEntity.setBalance(newBalance);
 
-                            userRepository.update(userEntity);
-                            context.getEntry().put(GympinContext.USER_KEY, userEntity);
-                            transactions.add(TransactionEntity.builder()
-                                    .serial(transaction_serial)
-                                    .transactionType(TransactionType.USER_USE_BALANCE)
-                                    .user(userEntity)
-                                    .balance(userEntity.getBalance())
-                                    .isChecked(false)
-                                    .amount(checkoutParam.getAmount())
-                                    .transactionStatus(TransactionStatus.COMPLETE)
-                                    .build());
+                        userRepository.update(userEntity);
+                        context.getEntry().put(GympinContext.USER_KEY, userEntity);
+                        transactions.add(TransactionEntity.builder()
+                                .serial(transaction_serial)
+                                .transactionType(TransactionType.USER_USE_BALANCE)
+                                .user(userEntity)
+                                .balance(userEntity.getBalance())
+                                .isChecked(false)
+                                .bankPend(false)
+                                .amount(checkoutParam.getAmount())
+                                .transactionStatus(TransactionStatus.COMPLETE)
+                                .build());
 
 
-                            break;
+                        break;
 
-                        }
                     }
                 }
             }
+        }
 
-            if (ticketRemainderPrice.compareTo(BigDecimal.ZERO) != 0)
-                throw new TicketPriceTotalConflictException();
-            //set Transactions
-            transactionRepository.addAll(transactions);
+        if (ticketRemainderPrice.compareTo(BigDecimal.ZERO) != 0)
+            throw new TicketPriceTotalConflictException();
+        //set Transactions
+        transactionRepository.addAll(transactions);
+        //send sms
+        try {
+            smsService.sendYouBuyTicket(SmsDto.builder()
+                    .smsType(SmsTypes.USER_BUY_TICKET)
+                    .userNumber(userEntity.getPhoneNumber())
+                    .text1(ticketEntity.getPlanName())
+                    .text2(ticketEntity.getPlan().getPlace().getName())
+                    .build()
+            );
+        }catch (Exception e){}
 
-            //change ticket status and serial
-            ticketEntity.setPaymentSerial(transaction_serial);
-            ticketEntity.setStatus(TicketStatus.READY_TO_ACTIVE);
-            ticketRepository.update(ticketEntity);
+        //change ticket status and serial
+        ticketEntity.setPaymentSerial(transaction_serial);
+        ticketEntity.setStatus(TicketStatus.READY_TO_ACTIVE);
+        ticketRepository.update(ticketEntity);
 
-            return TicketConvertor.toDto(ticketEntity);
+        return TicketConvertor.toDto(ticketEntity);
     }
 
     @Override
     public TicketDto delete(@NonNull TicketParam ticketParam) {
         TicketEntity entity = ticketRepository.getById(ticketParam.getId());
-        if(entity.getPlan().getTicketCapacity()!=null){
-            entity.getPlan().setTicketCapacity(entity.getPlan().getTicketCapacity()+1);
+        if (entity.getPlan().getTicketCapacity() != null) {
+            entity.getPlan().setTicketCapacity(entity.getPlan().getTicketCapacity() + 1);
             planRepository.update(entity.getPlan());
         }
         return TicketConvertor.toDto(ticketRepository.deleteById2(entity));
@@ -513,19 +528,19 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
         return convertToDtos(ticketRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId()));
     }
 
-    private boolean checkForAccess(TicketEntity ticket,Long placeId){
+    private boolean checkForAccess(TicketEntity ticket, Long placeId) {
 
         GympinContext context = GympinContextHolder.getContext();
         if (context == null)
             throw new UnknownUserException();
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-        var usergateAccess = userRequester.getPlacePersonnel().stream().filter(p->p.getPlace().getId()==placeId).findFirst().get();
+        var usergateAccess = userRequester.getPlacePersonnel().stream().filter(p -> p.getPlace().getId() == placeId).findFirst().get();
 
-        for (var gate : ticket.getPlan().getPlanGates().stream().map(m->m.getGateTimings().getGate()).collect(Collectors.toSet())) {
-            if(usergateAccess.getUserRole() == PlacePersonnelRole.PLACE_OWNER) return true;
-            if(usergateAccess.getPlacePersonnelGateAccess().size()<1) return false;
-            var gateAccess = usergateAccess.getPlacePersonnelGateAccess().stream().filter(c-> Objects.equals(c.getGate().getId(), gate.getId())).findFirst().get();
-            if(!gateAccess.getAccess())
+        for (var gate : ticket.getPlan().getPlanGates().stream().map(m -> m.getGateTimings().getGate()).collect(Collectors.toSet())) {
+            if (usergateAccess.getUserRole() == PlacePersonnelRole.PLACE_OWNER) return true;
+            if (usergateAccess.getPlacePersonnelGateAccess().size() < 1) return false;
+            var gateAccess = usergateAccess.getPlacePersonnelGateAccess().stream().filter(c -> Objects.equals(c.getGate().getId(), gate.getId())).findFirst().get();
+            if (!gateAccess.getAccess())
                 return false;
         }
         return true;
@@ -600,11 +615,11 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
         BigDecimal commission = null;
         BigDecimal discount = null;
 
-        if(ticketEntity.getDiscount()==null){
-            commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf((float) placeEntity.getCommissionFee()/ 100));
-        }else{
-             commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf(((float)placeEntity.getCommissionFee()-(float)ticketEntity.getDiscount()) / 100));
-             discount = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf((float)ticketEntity.getDiscount() / 100));
+        if (ticketEntity.getDiscount() == null) {
+            commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf((float) placeEntity.getCommissionFee() / 100));
+        } else {
+            commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf(((float) placeEntity.getCommissionFee() - (float) ticketEntity.getDiscount()) / 100));
+            discount = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf((float) ticketEntity.getDiscount() / 100));
         }
         var placeShare = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (placeEntity.getCommissionFee() / 100)));
 
@@ -619,17 +634,19 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
                 .transactionType(TransactionType.PLACE_TICKET_SETTLEMENT)
                 .amount(placeShare)
                 .isChecked(false)
+                .bankPend(false)
                 .transactionStatus(TransactionStatus.COMPLETE)
                 .balance(placeEntity.getBalance())
                 .serial(ticketEntity.getPaymentSerial())
                 .build());
 
         //discount
-        if(discount!=null){
+        if (discount != null) {
             transactions.add(TransactionEntity.builder()
                     .transactionType(TransactionType.DISCOUNT)
                     .amount(discount)
                     .isChecked(false)
+                    .bankPend(false)
                     .transactionStatus(TransactionStatus.COMPLETE)
                     .serial(ticketEntity.getPaymentSerial())
                     .balance(BigDecimal.ZERO.add(commission).add(discount).add(placeShare))
@@ -641,6 +658,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
                 .amount(commission)
                 .corporate(gympinEntity)
                 .isChecked(false)
+                .bankPend(false)
                 .transactionStatus(TransactionStatus.COMPLETE)
                 .serial(ticketEntity.getPaymentSerial())
                 .balance(gympinEntity.getBalance())

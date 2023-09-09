@@ -20,6 +20,10 @@ public class Consts {
     public static String FARAZ_SMS_PATTERN_JOINTOPLACE = "75tum3ve8b1lxhq";
     public static String FARAZ_SMS_PATTERN_JOINTOCORPORATE = "ipn2tr1uoz9dn49";
     public static String FARAZ_SMS_PATTERN_LOWBUDGET_CORPORATE = "ch6j8p5ziy29ats";
+    public static String FARAZ_SMS_PATTERN_USER_CHARGE = "ffdn7qlz485gpt2";
+    public static String FARAZ_SMS_PATTERN_CORPORATE_CHARGE = "k0pyzc0atwmqiy8";
+    public static String FARAZ_SMS_PATTERN_USER_BUY_TICKET = "zn9ewsfhggm48od";
+    public static String FARAZ_SMS_PATTERN_SUPPORT_ANSWERED = "rgmw67l84zc28y3";
 
 
 }

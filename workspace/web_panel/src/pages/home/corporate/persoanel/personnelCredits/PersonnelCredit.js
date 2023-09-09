@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import {Modal, Table} from "react-bootstrap";
@@ -9,22 +9,46 @@ import TableBody from "@mui/material/TableBody";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {corporatePersonnel_addPersonnelCredit} from "../../../../../network/api/CorporatePersonnel.api";
+import {transaction_query} from "../../../../../network/api/transactions.api";
 
-const PersonnelCredit = ({personelCredit,getPerson}) => {
+const PersonnelCredit = ({corporatePersonnel,getPerson}) => {
     const error = useContext(ErrorContext);
     const [openModalAdd,setOpenModalAdd]=useState(false)
-    const [creditToAdd,setCreditToAdd]=useState(null)
+    const [credits,setCredits]=useState(null)
+    useEffect(() => {
+        getTransactions();
+    }, []);
+    function getTransactions(){
+        transaction_query({
+            queryType: "FILTER",
+            CorporateId:corporatePersonnel.Corporate.Id,
+            UserId:corporatePersonnel.User.Id,
+            paging: {Page: 0, Size: 200, Desc: true}
+        }).then(result=>{
+            setCredits(result.data.Data);
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }
+
+
 
     function renderModalAdd() {
         function addOption(e) {
             e.preventDefault()
+            setOpenModalAdd(false);
             corporatePersonnel_addPersonnelCredit({
-                CorporatePersonnel: {Id: personelCredit.Id},
-                CreditAmount: creditToAdd
+                CorporatePersonnel: {Id: corporatePersonnel.Id},
+                CreditAmount: toPriceWithoutComma(e.target.creditToAdd.value)
             })
                 .then(result => {
-                    setOpenModalAdd(false);
+                    getTransactions();
                     getPerson();
+                    error.showError({message: "با موفقیت انجام شد",});
                 }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message,});
@@ -39,7 +63,7 @@ const PersonnelCredit = ({personelCredit,getPerson}) => {
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
                     <form onSubmit={(e) => addOption(e)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>{personelCredit.User?("افزودن اعتبار به "+(personelCredit.User.FullName||personelCredit.User.Username)+" از مجموعه "+personelCredit.Corporate.Name):""}</Modal.Title>
+                            <Modal.Title>{corporatePersonnel.User?("افزودن اعتبار به "+(corporatePersonnel.User.FullName||corporatePersonnel.User.Username)+" از مجموعه "+corporatePersonnel.Corporate.Name):""}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
 
@@ -50,9 +74,10 @@ const PersonnelCredit = ({personelCredit,getPerson}) => {
                                 variant="outlined"
                                 margin="normal"
                                 name="creditToAdd"
-                                value={toPriceWithComma(creditToAdd)}
                                 type="text"
-                                onChange={e => setCreditToAdd(toPriceWithoutComma(e.target.value))}
+                                onChange={e=>
+                                    e.target.value= toPriceWithComma(e.target.value)
+                                }
                                 label={"مبلغ دلخواه به تومان"}
                             />
 
@@ -82,7 +107,7 @@ const PersonnelCredit = ({personelCredit,getPerson}) => {
 
             <Portlet>
                 <PortletHeader
-                    title={personelCredit.Corporate&&("اعتبار های "+personelCredit.Corporate.Name)}
+                    title={corporatePersonnel.Corporate&&("اعتبار های "+corporatePersonnel.Corporate.Name)}
                     toolbar={
                         <PortletHeaderToolbar>
                             <button
@@ -107,10 +132,10 @@ const PersonnelCredit = ({personelCredit,getPerson}) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {personelCredit.CreditList&&personelCredit.CreditList.map(row => (
+                            {credits&&credits.content&&credits.content.map(row => (
                                 <TableRow key={row.Id}>
                                     <TableCell align="right" component="th" scope="row" >{row.Id}</TableCell>
-                                    <TableCell align="right">{toPriceWithComma(row.CreditAmount)}</TableCell>
+                                    <TableCell align="right">{toPriceWithComma(row.Amount)}</TableCell>
                                     <TableCell align="right">{new Date(row.CreatedDate).toLocaleDateString('fa-IR', {
                                         year: 'numeric',
                                         month: 'long',

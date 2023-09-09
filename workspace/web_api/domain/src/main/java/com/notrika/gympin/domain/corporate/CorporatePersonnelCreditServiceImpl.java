@@ -64,6 +64,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
                 .transactionStatus(TransactionStatus.COMPLETE)
                 .transactionType(TransactionType.CORPORATE_PERSONNEL_ADD_CREDIT)
                 .isChecked(false)
+                        .bankPend(false)
                 .serial(java.util.UUID.randomUUID().toString())
                 .build());
 
@@ -100,6 +101,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
                     .transactionStatus(TransactionStatus.COMPLETE)
                     .transactionType(TransactionType.CORPORATE_PERSONNEL_ADD_CREDIT)
                     .isChecked(false)
+                    .bankPend(false)
                     .serial(java.util.UUID.randomUUID().toString())
                     .build());
         }
@@ -149,6 +151,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
                 .transactionStatus(TransactionStatus.COMPLETE)
                 .transactionType(TransactionType.CORPORATE_PERSONNEL_ADD_CREDIT)
                 .isChecked(false)
+                .bankPend(false)
                 .serial(java.util.UUID.randomUUID().toString())
                 .build());
         corporateService.update(corporatePersonnel.getCorporate());

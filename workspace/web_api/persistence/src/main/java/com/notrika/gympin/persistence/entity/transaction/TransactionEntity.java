@@ -48,6 +48,9 @@ public class TransactionEntity extends BaseEntityWithCreateUpdate<TransactionEnt
     @Column(name = "isChecked", nullable = false, columnDefinition = "boolean default false")
     private Boolean isChecked = false;
 
+    @Column(name = "bankPend", nullable = false, columnDefinition = "boolean default false")
+    private Boolean bankPend = false;
+
     @Column(name = "balance", nullable = false, columnDefinition = "BigDecimal default 0")
     private BigDecimal balance;
 

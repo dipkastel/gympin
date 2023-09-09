@@ -16,15 +16,17 @@ const Notes = ({source}) => {
     }, [source]);
 
     function getData() {
-        note_getByParam(source).then(result => {
-            setNotes(result.data.Data)
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
+        if((source.ticket&&source.ticket.Id)||(source.Corporate&&source.Corporate.Id)||(source.User&&source.User.Id)||(source.Place&&source.Place.Id)){
+            note_getByParam(source).then(result => {
+                setNotes(result.data.Data)
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        }
     }
 
 

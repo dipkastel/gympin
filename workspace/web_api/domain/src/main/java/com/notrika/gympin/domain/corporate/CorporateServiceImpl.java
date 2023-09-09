@@ -48,6 +48,7 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
                 .address(corporateParam.getAddress())
                 .status(CorporateStatusEnum.INACTIVE)
                 .Balance(BigDecimal.ZERO)
+                .stepspay(false)
                 .build();
         return CorporateConvertor.toDto(corporateRepository.add(corporateEntity));
     }

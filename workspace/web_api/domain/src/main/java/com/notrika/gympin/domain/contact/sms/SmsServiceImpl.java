@@ -44,12 +44,12 @@ public class SmsServiceImpl implements SmsService {
     @Transactional
     @Override
     public boolean sendVerificationSms(Long userId, SmsDto smsDto) throws Exception {
-        log.info("Going to send verification sms with params: {} || {}...\n", userId, smsDto);
+        log.info("Going to sendVerificationSms params: {} || {}...\n", userId, smsDto);
         SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
         if(FixNumber!=null && !FixNumber.getValue().isEmpty()){
             smsDto.setUserNumber(FixNumber.getValue());
         }
-        String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTERN_SENDCODE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+ "=code" + "&v1=" + URLEncoder.encode(smsDto.getText(), StandardCharsets.UTF_8);
+        String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTERN_SENDCODE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+ "=code" + "&v1=" + URLEncoder.encode(smsDto.getText1(), StandardCharsets.UTF_8);
 
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();
@@ -65,24 +65,24 @@ public class SmsServiceImpl implements SmsService {
             code = new ActivationCodeEntity();
             code.setUser(user);
         }
-        code.setCode(passwordEncoder.encode(smsDto.getText()));
+        code.setCode(passwordEncoder.encode(smsDto.getText1()));
         code.setSenderId(body);
         code.setExpiredDate(expireDate.getTime());
         code.setDeleted(false);
         activationCodeRepository.update(code);
-        log.info("Verification sms sent to user: {} with following code {}...\n", user, smsDto.getText());
+        log.info("Verification sms sent to user: {} with following code {}...\n", user, smsDto.getText1());
         return Integer.parseInt(body) > 0;
     }
 
     @Transactional
     @Override
     public boolean sendJoinedToPlaceSms(SmsDto smsDto) throws Exception {
-        log.info("Going to send joined to place sms with params: {} ...\n", smsDto);
+        log.info("Going to sendJoinedToPlaceSms with params: {} ...\n", smsDto);
         SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
         if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
             smsDto.setUserNumber(FixNumber.getValue());
         }
-        String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_JOINTOPLACE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText(), StandardCharsets.UTF_8);
+        String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_JOINTOPLACE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText1(), StandardCharsets.UTF_8);
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();
         InputStream in = con.getInputStream();
@@ -94,12 +94,12 @@ public class SmsServiceImpl implements SmsService {
 
     @Override
     public boolean sendJoinedToCorporateSms(SmsDto smsDto) throws Exception {
-        log.info("Going to send joined to corporate sms with params: {} ...\n", smsDto);
+        log.info("Going to sendJoinedToCorporateSms with params: {} ...\n", smsDto);
         SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
         if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
             smsDto.setUserNumber(FixNumber.getValue());
         }
-        String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_JOINTOCORPORATE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=corporate" + "&v1=" + URLEncoder.encode( smsDto.getText(), StandardCharsets.UTF_8);
+        String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_JOINTOCORPORATE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=corporate" + "&v1=" + URLEncoder.encode( smsDto.getText1(), StandardCharsets.UTF_8);
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();
         InputStream in = con.getInputStream();
@@ -111,12 +111,12 @@ public class SmsServiceImpl implements SmsService {
 
     @Override
     public boolean sendRegisterCompleted(SmsDto smsDto) throws Exception {
-        log.info("Going to send join to place sms with params: {} ...\n", smsDto);
+        log.info("Going to sendRegisterCompleted with params: {} ...\n", smsDto);
         SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
         if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
             smsDto.setUserNumber(FixNumber.getValue());
         }
-        String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_JOINREQUEST + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText(), StandardCharsets.UTF_8);
+        String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_JOINREQUEST + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText1(), StandardCharsets.UTF_8);
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();
         InputStream in = con.getInputStream();
@@ -128,12 +128,103 @@ public class SmsServiceImpl implements SmsService {
 
     @Override
     public boolean sendLowBudgetToCorporate(SmsDto smsDto) throws Exception {
-        log.info("Going to send join to place sms with params: {} ...\n", smsDto);
+        log.info("Going to sendLowBudgetToCorporate with params: {} ...\n", smsDto);
         SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
         if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
             smsDto.setUserNumber(FixNumber.getValue());
         }
-        String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_LOWBUDGET_CORPORATE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText(), StandardCharsets.UTF_8);
+        String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_LOWBUDGET_CORPORATE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText1(), StandardCharsets.UTF_8);
+        URL url2 = new URL(url);
+        URLConnection con = url2.openConnection();
+        InputStream in = con.getInputStream();
+        String encoding = con.getContentEncoding();
+        encoding = encoding == null ? "UTF-8" : encoding;
+        String body = IOUtils.toString(in, encoding);
+        return Integer.parseInt(body) > 0;
+    }
+
+    @Override
+    public boolean sendUserTransactionComplete(SmsDto smsDto) throws Exception {
+
+        log.info("Going to sendUserTransactionComplete with params: {} ...\n", smsDto);
+        SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
+        if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
+            smsDto.setUserNumber(FixNumber.getValue());
+        }
+        String url = Consts.FARAZ_SMS_FIXPART +
+                "&pid=" + Consts.FARAZ_SMS_PATTERN_USER_CHARGE +
+                "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER +
+                "&tnum=" + smsDto.getUserNumber() +
+                "&p1"+"=amount" +
+                "&v1=" + URLEncoder.encode( smsDto.getText1(), StandardCharsets.UTF_8);
+        URL url2 = new URL(url);
+        URLConnection con = url2.openConnection();
+        InputStream in = con.getInputStream();
+        String encoding = con.getContentEncoding();
+        encoding = encoding == null ? "UTF-8" : encoding;
+        String body = IOUtils.toString(in, encoding);
+        return Integer.parseInt(body) > 0;
+    }
+
+    @Override
+    public boolean sendCorporateTransactionComplete(SmsDto smsDto) throws Exception {
+        log.info("Going to sendCorporateTransactionComplete with params: {} ...\n", smsDto);
+        SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
+        if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
+            smsDto.setUserNumber(FixNumber.getValue());
+        }
+        String url = Consts.FARAZ_SMS_FIXPART +
+                "&pid=" + Consts.FARAZ_SMS_PATTERN_CORPORATE_CHARGE +
+                "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER +
+                "&tnum=" + smsDto.getUserNumber() +
+                "&p1"+"=amount" +
+                "&v1=" + URLEncoder.encode( smsDto.getText1(), StandardCharsets.UTF_8);
+        URL url2 = new URL(url);
+        URLConnection con = url2.openConnection();
+        InputStream in = con.getInputStream();
+        String encoding = con.getContentEncoding();
+        encoding = encoding == null ? "UTF-8" : encoding;
+        String body = IOUtils.toString(in, encoding);
+        return Integer.parseInt(body) > 0;
+    }
+
+    @Override
+    public boolean sendYouBuyTicket(SmsDto smsDto) throws Exception {
+        log.info("Going to sendYouBuyTicket with params: {} ...\n", smsDto);
+        SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
+        if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
+            smsDto.setUserNumber(FixNumber.getValue());
+        }
+        String url = Consts.FARAZ_SMS_FIXPART +
+                "&pid=" + Consts.FARAZ_SMS_PATTERN_USER_BUY_TICKET +
+                "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER +
+                "&tnum=" + smsDto.getUserNumber() +
+                "&p1"+"=ticket-name" +
+                "&v1=" + URLEncoder.encode( smsDto.getText1(), StandardCharsets.UTF_8)+
+                "&p2"+"=place-name" +
+                "&v2=" + URLEncoder.encode( smsDto.getText2(), StandardCharsets.UTF_8);
+        URL url2 = new URL(url);
+        URLConnection con = url2.openConnection();
+        InputStream in = con.getInputStream();
+        String encoding = con.getContentEncoding();
+        encoding = encoding == null ? "UTF-8" : encoding;
+        String body = IOUtils.toString(in, encoding);
+        return Integer.parseInt(body) > 0;
+    }
+
+    @Override
+    public boolean sendSupportAnswered(SmsDto smsDto) throws Exception {
+        log.info("Going to sendSupportAnswered with params: {} ...\n", smsDto);
+        SettingDto FixNumber = settingsService.getByKey("SMS_FIX_NUMBER");
+        if(FixNumber!=null&&!FixNumber.getValue().isEmpty()){
+            smsDto.setUserNumber(FixNumber.getValue());
+        }
+        String url = Consts.FARAZ_SMS_FIXPART +
+                "&pid=" + Consts.FARAZ_SMS_PATTERN_SUPPORT_ANSWERED +
+                "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER +
+                "&tnum=" + smsDto.getUserNumber() +
+                "&p1"+"=ticket-id" +
+                "&v1=" + URLEncoder.encode( smsDto.getText1(), StandardCharsets.UTF_8);
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();
         InputStream in = con.getInputStream();

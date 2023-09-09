@@ -11,5 +11,5 @@ public interface GateTimingRepository extends BaseRepository<GateTimingEntity,Lo
 
     List<GateTimingEntity> findAllByGateIdAndDeletedFalse(Long GateId);
 
-    List<GateTimingEntity> findAllByGatePlaceIdAndDeletedFalse(Long placeId);
+    List<GateTimingEntity> findAllByGatePlaceIdAndGate_DeletedFalseAndDeletedFalse(Long placeId);
 }

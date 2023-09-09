@@ -48,5 +48,7 @@ public class LocationQuery extends BaseQuery<LocationQuery> {
     @JsonProperty("HasPlace")
     private Long min_placesæid;
 
+    @JsonProperty("deleted")
+    private Boolean is_deleted = false;
 
 }

@@ -9,5 +9,9 @@ public interface SmsService {
     boolean sendJoinedToCorporateSms(SmsDto smsDto) throws Exception;
     boolean sendRegisterCompleted(SmsDto smsDto) throws Exception;
     boolean sendLowBudgetToCorporate(SmsDto smsDto) throws Exception;
+    boolean sendUserTransactionComplete(SmsDto smsDto) throws Exception;
+    boolean sendCorporateTransactionComplete(SmsDto smsDto) throws Exception;
+    boolean sendYouBuyTicket(SmsDto smsDto) throws Exception;
+    boolean sendSupportAnswered(SmsDto smsDto) throws Exception;
 
 }

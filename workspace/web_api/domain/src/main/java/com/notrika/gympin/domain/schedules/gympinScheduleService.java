@@ -17,11 +17,15 @@ public class gympinScheduleService {
     @Autowired
     scheduleCorporateSms scheduleCorporateSms;
 
+    @Autowired
+    schedulePeymentCheck schedulePeymentCheck;
+
     @Scheduled(cron = "0 0 2 * * ?")
     public void setDiscounts(){
         scheduleDiscounts.UpdateAutoPlansDiscount();
 
     }
+
     @Scheduled(cron = "0 0 2 * * ?")
     public void UpdateBaseReports(){
         scheduleReports.updateMaxSellByPlace();
@@ -29,8 +33,16 @@ public class gympinScheduleService {
         scheduleReports.updateMaxPlanPrice();
         scheduleReports.updateMinPlanPrice();
     }
+
     @Scheduled(cron = "0 0 10 ? * SUN,MON,TUE,WED,THU,SAT")
     public void checkCorporatesLowBudget(){
         scheduleCorporateSms.checkLowBudgets();
+    }
+
+
+    @Scheduled(cron = "0 0 */1 * * ?")
+    public void setPeymentChecks(){
+        schedulePeymentCheck.checkPendingPayments();
+
     }
 }

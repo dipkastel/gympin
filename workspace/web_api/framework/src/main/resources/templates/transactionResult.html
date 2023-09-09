@@ -59,7 +59,7 @@
                 پاسخ درگاه :
                 <span th:text="${Message}" />
                 <br/>
-                <button class="box-btn" id="btn-back"  >بازگشت  - 15</button>
+                <button class="box-btn" id="btn-back" href="[[${Ref}]]"  >بازگشت  - 15</button>
             </div>
         </div>
         <!-- Add your main content here -->
@@ -73,7 +73,7 @@
         $(".box-header").css("background",result?"#128865":"#f54554");
         $(".box-btn").css("background",result?"#128865":"#f54554");
         $(".box-header").html(result?"عملیات موفق":"عملیات ناموفق");
-
+        $("#btn-back").attr("href","[[${Ref}]]");
         var inretval = setInterval(()=>{
             if(count===0){
                 $("#btn-back").html("بازگشت");

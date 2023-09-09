@@ -163,7 +163,7 @@ const PlanGatesTiming = ({plan}) => {
 
 
                         <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن امکانات "}</Modal.Title>
+                            <Modal.Title>{"حذف امکانات "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             {itemToDelete && "حذف " + GetFormatedGateTiming(itemToDelete["gate-timing"])}

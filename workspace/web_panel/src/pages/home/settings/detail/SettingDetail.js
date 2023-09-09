@@ -37,12 +37,12 @@ const SettingDetail = ({setting, refreshData}) => {
         SetInSetting({
             ...inSetting,
             Value: e.target.Value.value,
-            Data: e.target.Data.value
+            Data: e.target?.Data?.value||""
         })
         settings_update({
             ...inSetting,
             Value: e.target.Value.value,
-            Data: e.target.Data.value
+            Data: e.target?.Data?.value||""
         }).then((data) => {
             error.showError({message: "عملیات موفق",});
             refreshData()

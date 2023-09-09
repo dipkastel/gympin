@@ -1,6 +1,10 @@
 package com.notrika.gympin.domain.support;
 
 import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.contact.sms.dto.SmsDto;
+import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
+import com.notrika.gympin.common.contact.sms.service.SmsService;
+import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.support.dto.SupportDto;
 import com.notrika.gympin.common.support.enums.SupportMessageStatus;
@@ -10,7 +14,10 @@ import com.notrika.gympin.common.support.service.SupportService;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.SupportConvertor;
-import com.notrika.gympin.persistence.dao.repository.*;
+import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.SupportMessageRepository;
+import com.notrika.gympin.persistence.dao.repository.SupportRepository;
+import com.notrika.gympin.persistence.dao.repository.UserRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.support.SupportMessagesEntity;
@@ -41,17 +48,20 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     @Autowired
     PlaceRepository placeRepository;
 
+    @Autowired
+    SmsService smsService;
+
 
     @Override
     @Transactional
     public SupportDto add(@NonNull SupportParam supportParam) {
         SupportEntity supportEntity = new SupportEntity();
         supportEntity.setTitle(supportParam.getTitle());
-        if(supportParam.getPlaceId()!=null){
+        if (supportParam.getPlaceId() != null) {
             PlaceEntity place = placeRepository.getById(supportParam.getPlaceId());
             supportEntity.setPlace(place);
         }
-        if(supportParam.getUserId()!=null){
+        if (supportParam.getUserId() != null) {
             UserEntity user = userRepository.getById(supportParam.getUserId());
             supportEntity.setUser(user);
         }
@@ -72,10 +82,22 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         tme.setAnswer(param.isAnswer());
         SupportEntity support = supportRepository.getById(param.getSupportId());
         tme.setSupport(support);
-        for (SupportMessagesEntity t :support.getSupportMessages()){
+        for (SupportMessagesEntity t : support.getSupportMessages()) {
             t.setSupportMessageStatus(SupportMessageStatus.COMPLETE);
         }
         supportMessageRepository.saveAll(support.getSupportMessages());
+        try {
+            if (param.isAnswer()) {
+                UserEntity user = (tme.getSupport().getUser()!=null)?tme.getSupport().getUser():tme.getSupport().getPlace().getPlaceOwners().stream().filter(po->po.getUserRole()== PlacePersonnelRole.PLACE_OWNER).findFirst().get().getUser();
+                smsService.sendSupportAnswered(SmsDto.builder()
+                        .smsType(SmsTypes.SUPPORT_ANSWERED)
+                        .userNumber(user.getPhoneNumber())
+                        .text1(support.getId().toString())
+                        .build()
+                );
+            }
+        } catch (Exception e) {
+        }
         return SupportConvertor.toDto(supportMessageRepository.add(tme).getSupport());
     }
 
@@ -133,7 +155,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public Page<SupportEntity> findAll(Specification<SupportEntity> specification, Pageable pageable) {
-        return supportRepository.findAll(specification,pageable);
+        return supportRepository.findAll(specification, pageable);
     }
 
     @Override

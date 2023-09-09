@@ -4,7 +4,6 @@ import Dashboard from "./dashboard/Dashboard";
 import { LayoutSplashScreen } from "../../helper";
 import PlaceManagement from "./place/PlaceManagement";
 import LocationManagement from "./location/LocationManagement";
-import SportManagement from "./sport/SportManagement";
 import UserManagement from "./user/UserManagement";
 import UserDetailsManagement from "./user/baseDate/UserDetailsManagement";
 import MediaManagement from "./media/MediaManagement";
@@ -33,6 +32,7 @@ import Reports from "./report/Reports";
 import ArticleCategories from "./articles/categories/ArticleCategories";
 import PlacesMap from "./place/PlacesMap/PlacesMap";
 import PlaceWizard from "./place/wizard/PlaceWizard";
+import SportsManagement from "./sport/SportsManagement";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -76,7 +76,7 @@ export default function HomePage() {
 
         <Route path="/locations/:parentId" component={LocationManagement} />
         <Route path="/locations" component={LocationManagement} />
-        <Route path="/sports" component={SportManagement} />
+        <Route path="/sports" component={SportsManagement} />
         <Route path="/media" component={MediaManagement} />
         <Route path="/events" component={EventManagement} />
         <Route path="/media-category" component={MediaCategoryManagement} />

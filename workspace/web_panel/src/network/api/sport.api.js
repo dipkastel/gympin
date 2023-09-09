@@ -6,7 +6,7 @@ export function sport_addSport(sport) {
   return axios.post(SportApi.addSport, sport);
 }
 export function sport_deleteSport(sport) {
-  return axios.delete(SportApi.deleteSport, { params: sport });
+  return axios.put(SportApi.deleteSport, null,{ params: sport })
 }
 export function sport_getAllSport() {
   return axios.get(SportApi.getAllSport);

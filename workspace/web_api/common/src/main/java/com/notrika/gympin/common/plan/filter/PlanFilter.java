@@ -41,4 +41,6 @@ public class PlanFilter extends BaseQuery<PlanFilter> {
     @JsonProperty(value = "discount-price-end")
     private BigDecimal discountPriceEnd;
 
+    @JsonProperty("deleted")
+    private Boolean is_deleted = false;
 }

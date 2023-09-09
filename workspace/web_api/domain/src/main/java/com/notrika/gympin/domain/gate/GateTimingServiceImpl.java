@@ -116,7 +116,7 @@ public class GateTimingServiceImpl extends AbstractBaseService<GateTimingParam, 
 
     @Override
     public List<GateTimingDto> getByPlaceId(Long id) {
-        return convertToDtos(gateTimingRepository.findAllByGatePlaceIdAndDeletedFalse(id));
+        return convertToDtos(gateTimingRepository.findAllByGatePlaceIdAndGate_DeletedFalseAndDeletedFalse(id));
     }
 
     @Override

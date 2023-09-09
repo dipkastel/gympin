@@ -67,12 +67,12 @@ const SingleUser = (props) => {
     function renderModalAdd() {
         function addCredit(e) {
             e.preventDefault()
+            setOpenModalAdd(false);
             corporatePersonnel_addPersonnelCredit({
                 CorporatePersonnel: {Id: person.Id},
                 CreditAmount: toPriceWithoutComma(e.target.CreditAmount.value)
             })
                 .then(result => {
-                    setOpenModalAdd(false);
                     getPerson();
                 }).catch(e => {
                 try {
