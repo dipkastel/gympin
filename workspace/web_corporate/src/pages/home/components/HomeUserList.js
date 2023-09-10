@@ -2,8 +2,8 @@ import React from 'react';
 import Slick from "react-slick";
 import {Card, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
 import clickHandler from "../homeClick";
+import {useNavigate} from "react-router-dom";
 
 const HomeUserList = (props) => {
     const navigate = useNavigate()
@@ -29,7 +29,6 @@ const HomeUserList = (props) => {
                             <Card sx={{
                                 marginX:0.3,
                                 marginY:1
-
                             }} elevation={3}>
                                 <Image  height={"100%"} width={"100%"}  src={item.multimedia.Url}/>
                                 <Typography width={"100%"} variant="overline"noWrap={true} textAlign={"center"} fontSize={"0.5em"} component="div" sx={{
@@ -42,7 +41,6 @@ const HomeUserList = (props) => {
                     </div>
                 ))}
             </Slick>
-            {!props.item.Items&&<h5>لطفا آیتم کاربر به این لیست اضافه کنید</h5>}
         </>
     );
 };

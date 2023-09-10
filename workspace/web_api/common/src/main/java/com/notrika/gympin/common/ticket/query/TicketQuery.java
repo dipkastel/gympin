@@ -49,6 +49,4 @@ public class TicketQuery extends BaseQuery<TicketQuery> {
     @JsonProperty("PlanName")
     private String like_planName;
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 }

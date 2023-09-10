@@ -51,6 +51,13 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<UserDto> getById(Long id) {
         return ResponseEntity.ok(userService.getById(id));
     }
+
+    @Override
+    @GetMapping("/getMyInfo")
+    public ResponseEntity<UserDto> getMyInfo() {
+        return ResponseEntity.ok(userService.getMyInfo());
+    }
+
     //status
     @Override
     @GetMapping("/getUserStatuses")

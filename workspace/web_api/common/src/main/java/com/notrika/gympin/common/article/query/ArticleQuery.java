@@ -46,7 +46,5 @@ public class ArticleQuery extends BaseQuery<ArticleQuery> {
     @JsonProperty("Summary")
     private String like_summary;
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 
 }

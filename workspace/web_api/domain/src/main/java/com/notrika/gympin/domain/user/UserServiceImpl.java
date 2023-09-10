@@ -1,6 +1,9 @@
 package com.notrika.gympin.domain.user;
 
 import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.context.GympinContext;
+import com.notrika.gympin.common.context.GympinContextHolder;
+import com.notrika.gympin.common.exception.user.UnknownUserException;
 import com.notrika.gympin.common.user.dto.UserDto;
 import com.notrika.gympin.common.user.dto.UserRoleInfoDto;
 import com.notrika.gympin.common.user.enums.UserGroup;
@@ -62,6 +65,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 
     @Autowired
     private UserRateServiceImpl userRateService;
+
+    @Autowired
+    private UserCreditServiceImpl userCreditService;
 //
 //    @Autowired
 //    private AccountingServiceImpl accountingService;
@@ -156,6 +162,21 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         userDto.setFollowersCount(followService.getFollowersCount(user));
         userDto.setFollowingsCount(followService.getFollowingsCount(user));
         userDto.setRate(userRateService.calculateUserRate(UserParam.builder().id(id).build()));
+        return userDto;
+    }
+
+    @Override
+    public UserDto getMyInfo() {
+
+        GympinContext context = GympinContextHolder.getContext();
+        if (context == null)
+            throw new UnknownUserException();
+        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+        UserDto userDto = UserConvertor.toDtoComplete(userRequester);
+        userDto.setFollowersCount(followService.getFollowersCount(userRequester));
+        userDto.setFollowingsCount(followService.getFollowingsCount(userRequester));
+        userDto.setBalance(userCreditService.getCreditsByUser(UserParam.builder().id(userRequester.getId()).build()).getTotalCredit());
+        userDto.setRate(userRateService.calculateUserRate(UserParam.builder().id(userRequester.getId()).build()));
         return userDto;
     }
 

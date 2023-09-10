@@ -4,7 +4,7 @@ export const ActionTypesSaga = {
     RequestLogout: "[Saga] Request Logout"
 };
 export const sagaActions = {
-    RequestUser: (user) => ({type: ActionTypesSaga.RequestUser,payload: { user }}),
+    RequestUser: () => ({type: ActionTypesSaga.RequestUser}),
     RequestServerSettings: (user) => ({type: ActionTypesSaga.RequestServerSettings,payload: { user }}),
     RequestLogout: () => ({type: ActionTypesSaga.RequestLogout})
 };

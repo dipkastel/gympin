@@ -1,9 +1,7 @@
 import React from 'react';
-import Slick from "react-slick";
-import {Box, Card, CardContent, CardMedia, Link, Typography} from "@mui/material";
-import {Image} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+import {Card, CardContent, CardMedia, Link, Typography} from "@mui/material";
 import clickHandler from "../homeClick";
+import {useNavigate} from "react-router-dom";
 
 const HomeSingleContent =(props) => {
     const navigate = useNavigate()

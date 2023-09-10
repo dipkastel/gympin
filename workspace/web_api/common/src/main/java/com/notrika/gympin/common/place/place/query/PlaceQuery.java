@@ -57,7 +57,5 @@ public class PlaceQuery extends BaseQuery<PlaceQuery> {
     @JsonProperty("Gender")
     private Gender is_plansægender;
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 
 }

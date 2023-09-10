@@ -26,7 +26,7 @@ export default function ApplicationRoutes() {
                 <Route path="/finance/increaselist" element={<IncreaseList/>}/>
                 <Route path="/finance" element={<Finance/>}/>
 
-                <Route path="/personnel/increasegroupcredit" element={<IncreaseGroupCredit/>}/>
+                <Route path="/personnel/increasegroupcredit/:PersonelCount" element={<IncreaseGroupCredit/>}/>
                 <Route path="/personnel/detail/:PersonnelId" element={<SingleUser/>}/>
                 <Route path="/personnel" element={<Users/>}/>
 

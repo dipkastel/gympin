@@ -207,6 +207,7 @@ export let PlaceOptionApi = {
   add: "v1/PlaceOption/add",
   delete: "v1/PlaceOption/delete",
   getAll: "v1/PlaceOption/getAll",
+  query: "v1/PlaceOption/query",
   update: "v1/PlaceOption/update"
 };
 export let PlaceAboutApi = {

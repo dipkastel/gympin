@@ -45,7 +45,6 @@ const _PlacesList = () => {
             Option:null,
             paging: {Page: page, Size: rowsPerPage,Desc:false,OrderBy:sortBy}
         }).then(result => {
-            console.log(result.data.Data)
             SetPlaces(result.data.Data)
         }).catch(e => {
             try {

@@ -21,7 +21,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {toAbsoluteUrl, toPriceWithComma} from "../../helper/utils";
+import {checkMobileValid, toAbsoluteUrl, toPriceWithComma} from "../../helper/utils";
 import {corporatePersonnel_add, corporatePersonnel_ByCorporate} from "../../network/api/corporatePersonnel.api";
 import {useSelector} from "react-redux";
 import {Form} from "react-bootstrap";
@@ -56,6 +56,10 @@ const Users = () => {
 
         function addPersonnel(e) {
             e.preventDefault()
+            if(!checkMobileValid(e.target.PhoneNumber.value)){
+                error.showError({message: "شماره موبایل صحیح نیست",});
+                return;
+            }
             corporatePersonnel_add({
                 Corporate: {Id: corporate.Id},
                 PhoneNumber: e.target.PhoneNumber.value
@@ -101,7 +105,7 @@ const Users = () => {
 
     return (
         <>
-            <_ListItem title="افزایش اعتبار گروهی" destination="/personnel/increasegroupcredit"/>
+            <_ListItem title="افزایش اعتبار گروهی" destination={"/personnel/increasegroupcredit/"+personnel.length}/>
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     sx={{paddingBottom: 0}}

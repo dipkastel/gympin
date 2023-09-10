@@ -3,7 +3,12 @@ import {Button, TableCell, TableHead} from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
-import {placeOption_add, placeOption_delete, placeOption_getAll} from "../../../../network/api/placeOptions.api";
+import {
+    placeOption_add,
+    placeOption_delete,
+    placeOption_getAll,
+    placeOption_query
+} from "../../../../network/api/placeOptions.api";
 import Notice from "../../../partials/content/Notice";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -20,14 +25,20 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 const PlaceOptions = () => {
     const error = useContext(ErrorContext);
     const [placeOptions, SetPlaceOptions] = useState([])
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(50);
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     useEffect(() => {
         getPlaceOption()
-    }, []);
+    }, [page, rowsPerPage]);
 
     function getPlaceOption() {
-        placeOption_getAll().then(data => {
+        placeOption_query({
+            queryType: "SEARCH",
+            paging: {Page: page, Size: rowsPerPage, Desc: true}
+        }).then(data => {
+            console.log(data)
             SetPlaceOptions(data.data.Data)
         }).catch(e => {
                     try {
@@ -178,7 +189,7 @@ const PlaceOptions = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {placeOptions.map(row => (
+                                {placeOptions&&placeOptions.content&&placeOptions.content.map(row => (
                                     <TableRow key={row.Id}>
                                         <TableCell align="right" component="th" scope="row">
                                             {row.Id}
@@ -191,16 +202,23 @@ const PlaceOptions = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
+                    {placeOptions&&(placeOptions.totalElements>0) &&<TablePagination
+                        rowsPerPageOptions={[5, 10, 15, 25, 50, 100]}
                         component="div"
-                        sx={{direction: "ltr"}}
-                    />
-                    {/*    count={itemCount}*/}
-                    {/*    rowsPerPage={rowsPerPage}*/}
-                    {/*    page={page}*/}
-                    {/*    onPageChange={handleChangePage}*/}
-                    {/*    onRowsPerPageChange={handleChangeRowsPerPage}*/}
+                        sx={{direction: "rtl"}}
+                        count={placeOptions.totalElements||0}
+                        labelRowsPerPage={"تعداد نمایش"}
+                        labelDisplayedRows={(param)=>{
+                            return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
+                        }}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={(event, newPage) => setPage(newPage)}
+                        onRowsPerPageChange={(event) => {
+                            setRowsPerPage(parseInt(event.target.value, 10));
+                            setPage(0);
+                        }}
+                    />}
                 </Paper>
             </Box>
             {renderModalAdd()}

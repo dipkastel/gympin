@@ -63,7 +63,6 @@ const __sharePersonelCreadits = ({transactions}) => {
         ))
     }
     if(transactions?.content?.filter(row => row.TransactionType=="CORPORATE_PERSONNEL_ADD_CREDIT")?.length){
-        console.log(transactionList(transactions.content.filter(row => row.TransactionType=="CORPORATE_PERSONNEL_ADD_CREDIT")))
         return transactionList(transactions.content.filter(row => row.TransactionType=="CORPORATE_PERSONNEL_ADD_CREDIT"));
     }
     return itsEmpty();

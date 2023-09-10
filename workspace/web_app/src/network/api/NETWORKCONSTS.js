@@ -65,6 +65,7 @@ export let Api_url = {
     },
     user: {
         GET_BY_ID: "v1/user/getById",
+        get_My_Info: "v1/user/getMyInfo",
         UPDATE_USER: "v1/user/update",
         UPDATE_AVATAR: "v1/user/updateUserAvatar",
         checkUsernameAvailable: "v1/user/checkUsernameAvailable",

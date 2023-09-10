@@ -54,7 +54,7 @@ public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam
 
     @Override
     public Page<PlaceOptionEntity> findAll(Specification<PlaceOptionEntity> specification, Pageable pageable) {
-        return null;
+        return placeOptionRepository.findAll(specification, pageable);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam
 
     @Override
     public Page<PlaceOptionDto> convertToDtos(Page<PlaceOptionEntity> entities) {
-        return null;
+        return entities.map(OptionConvertor::placeOptionToPlaceOptionDto);
     }
 
     @Override

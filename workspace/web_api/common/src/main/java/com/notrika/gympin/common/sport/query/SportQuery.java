@@ -42,8 +42,6 @@ public class SportQuery extends BaseQuery<SportQuery> {
     @JsonProperty("HasPlace")
     private Long min_sportPlacesæid;
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 
 
 

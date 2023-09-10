@@ -33,7 +33,5 @@ public class GateFilter extends BaseQuery<GateFilter> {
     @JsonProperty(value = "name")
     private String like_name;
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 
 }

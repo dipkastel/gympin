@@ -1,13 +1,12 @@
 import React from 'react';
-import Slick from "react-slick";
-import {Box, Link} from "@mui/material";
+import {Box} from "@mui/material";
 import {Image} from "react-bootstrap";
 
 const HomeBanner =(props) => {
     return (
 
         <div>
-                <Box>
+                <Box className={"simple-banner"}>
                     <Image width={"100%"}  src={props.item.multimedia.Url}/>
                 </Box>
         </div>

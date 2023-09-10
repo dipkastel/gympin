@@ -1,19 +1,16 @@
 import React, {useState} from 'react';
-import {Col, Image, Row} from "react-bootstrap";
-import {Box, Container, Link} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import {Col, Row} from "react-bootstrap";
+import {Container, Link} from "@mui/material";
 import clickHandler from "../homeClick";
+import {useNavigate} from "react-router-dom";
 
 const HomeClickableTitle = (prop) => {
     const navigate = useNavigate()
     const [data] = useState(prop.item);
     return (
-        <Container sx={{
-            backgroundColor: "#e7333e",
-            color:"#ffffff"
-        }}>
+        <Container sx={{}}>
             <Row>
-                <Link onClick={()=>clickHandler(prop.item,navigate)} underline="none" color="inherit" fontWeight="800">
+                <Link onClick={()=>clickHandler(data,navigate)} underline="none" color="inherit" fontWeight="800">
                     <Col className={"p-1 pb-2"} >
                         {data.Title}
                     </Col>

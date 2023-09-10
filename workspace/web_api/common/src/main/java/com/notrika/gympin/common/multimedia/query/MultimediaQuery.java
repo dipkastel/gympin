@@ -51,6 +51,4 @@ public class MultimediaQuery extends BaseQuery<MultimediaQuery> {
     @JsonProperty("CategoryId")
     private Long is_categoryæid;
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 }

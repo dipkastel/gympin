@@ -8,7 +8,7 @@ import {sagaActions} from "../../helper/redux/actions/SagaActions";
 const Profile = (props) => {
     const user = useSelector(state => state.auth.user)
     useEffect(() => {
-        props.RequestUser(user)
+        props.RequestUser()
     }, []);
 
     return (

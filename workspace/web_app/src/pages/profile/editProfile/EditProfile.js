@@ -34,7 +34,7 @@ const EditProfile = (props) => {
     const [usernameAvalableError, setUsernameAvalableError] = useState();
 
     useEffect(() => {
-        props.RequestUser(user)
+        props.RequestUser()
         if (!compareObjs(currentUser, user))
             window.location = window.location
     }, []);
@@ -64,7 +64,7 @@ const EditProfile = (props) => {
     function submitForm(el) {
         el.preventDefault();
         user_updateMe(currentUser).then(result => {
-            props.RequestUser(result.data.Data)
+            props.RequestUser()
             setUser(result.data.Data);
             navigate(-1);
             error.showError({message: "با موفقیت ثبت شد",});
@@ -93,7 +93,6 @@ const EditProfile = (props) => {
             return;
         }
             new Promise(resolve => user_checkUsernameAvailable(username).then((result) => {
-                console.log(result.data.Data);
                 if (!result.data.Data) {
                     setUsernameAvalableError( "نام کاربری قبلا توسط کاربر دیگری دریافت شده.");
                 } else {
@@ -158,7 +157,7 @@ const EditProfile = (props) => {
                 justifyContent="center"
                 alignItems="center"
             >
-                {user && <_EditImage user={user} RequestUser={() => props.RequestUser(user)}/>}
+                {user && <_EditImage user={user} RequestUser={() => props.RequestUser()}/>}
                 <form onSubmit={e => submitForm(e)}>
                     <div className="form-group p-4">
                         <TextField

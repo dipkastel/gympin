@@ -44,7 +44,5 @@ public class UserQuery extends BaseQuery<UserQuery> {
     @JsonProperty("Email")
     private String like_email;
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 
 }

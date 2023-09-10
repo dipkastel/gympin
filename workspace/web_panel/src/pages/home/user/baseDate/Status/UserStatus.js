@@ -25,6 +25,7 @@ const Userstatus = ({currentUser}) => {
     function changeUserStatus(data){
         user_UpdateUserStatus({...inUser,UserStatus:data}).then(response=>{
             SetInUser({...inUser,UserStatus:data})
+            error.showError({message: "ثبت موفق",});
         }).catch(e => {
                     try {
                         error.showError({message: e.response.data.Message,});

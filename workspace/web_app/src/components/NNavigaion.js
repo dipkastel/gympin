@@ -4,38 +4,20 @@ import {FormControlLabel, Grid, IconButton, Typography} from "@mui/material";
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import {UserCredit_getByUser} from "../network/api/userCredit.api";
-import {useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {toPriceWithComma} from "../helper/utils";
 import {ErrorContext} from "./GympinPagesProvider";
+import {sagaActions} from "../helper/redux/actions/SagaActions";
 
+const NNavigaion = (props) => {
 
-export default function NNavigaion() {
-
-    const error = useContext(ErrorContext);
     const currentUser = useSelector(state => state.auth.user);
-    const [userCredit, setUserCredit] = useState(null)
 
     useEffect(() => {
-        getUserCredit();
-    }, [currentUser]);
+        props.RequestUser()
+    }, []);
 
 
-    function getUserCredit() {
-        try {
-            if (currentUser.Id) {
-                UserCredit_getByUser({Id: currentUser.Id}).then(result => {
-                    setUserCredit(result.data.Data);
-                }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
-            }
-        } catch (f) {
-        }
-    }
 
     return (
         <><Navbar className="" bg="light" variant="dark" expand="lg">
@@ -53,13 +35,13 @@ export default function NNavigaion() {
                         <NotificationsNoneOutlinedIcon/>
                     </IconButton>
 
-                    {userCredit && <FormControlLabel
+                    {currentUser && <FormControlLabel
                         control={
                             <Typography variant="subtitle1" component="a" href={"/wallet"}
                                         sx={{
                                             textDecoration: "none",
                                             color: "#000"
-                                        }}>{toPriceWithComma(userCredit.TotalCredit)}</Typography>
+                                        }}>{toPriceWithComma(currentUser.Balance)}</Typography>
                         }
 
                         label={
@@ -76,3 +58,5 @@ export default function NNavigaion() {
         </>
     );
 }
+
+export default connect(null, sagaActions)(NNavigaion);

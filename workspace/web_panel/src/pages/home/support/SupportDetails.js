@@ -16,6 +16,7 @@ const SupportDetails = () => {
     const [Messages, SetMessages] = useState([])
     const [answer, SetAnswer] = useState("")
     const [isLastMessage, SetIsLastMessage] = useState(false)
+    const [sending,setSending] = useState(false);
     useEffect(() => {
         getSupportDetail()
     }, []);
@@ -34,6 +35,11 @@ const SupportDetails = () => {
     }
 
     function SendAnswer() {
+        if(!answer||answer==""||sending){
+            error.showError({message: "پیام وارد نشده",});
+            return;
+        }
+            setSending(true);
         Support_addMessage({
             "SupportId":support.Id,
             "Status":isLastMessage?"COMPLETE":"AWAITING_USER",
@@ -41,9 +47,10 @@ const SupportDetails = () => {
             "IsAnswer":true
         }).then(result => {
             error.showError({message: "عملیات موفق",});
+                getSupportDetail()
                 SetIsLastMessage(false)
                 SetAnswer("")
-                getSupportDetail()
+                setSending(false);
             })
             .catch(e => {
                     try {
@@ -104,6 +111,7 @@ const SupportDetails = () => {
                         type="button"
                         className="btn btn-primary btn-sm "
                         onClick={() => SendAnswer()}
+                        disabled={sending}
                     >
                         ارسال
                     </button>

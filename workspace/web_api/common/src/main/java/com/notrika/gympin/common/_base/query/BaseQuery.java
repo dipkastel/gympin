@@ -23,4 +23,6 @@ public class BaseQuery<T> {
     @JsonIgnore
     private T childFilter;
 
+    @JsonProperty("deleted")
+    private Boolean is_deleted = false;
 }

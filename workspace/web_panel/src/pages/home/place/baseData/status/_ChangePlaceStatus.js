@@ -26,6 +26,7 @@ const _ChangePlaceStatus = ({place, updatePlace}) => {
             Status:status
         }).then(result=>{
             SetInPlace(result.data.Data);
+            error.showError({message: "ثبت موفق",});
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

@@ -63,8 +63,8 @@ const _Wallet = () => {
 
     function submitPayment(e) {
         e.preventDefault()
-        if (!amountToPay || parseInt(amountToPay) < 0) {
-            error.showError({message: "حداقل مبلغ شارژ 50،000 تومان می باشد",});
+        if (!amountToPay || parseInt(amountToPay) < 5000) {
+            error.showError({message: "حداقل مبلغ شارژ 5،000 تومان می باشد",});
             return;
         }
         var selectedGatway = paymentGateways.filter(item => item.IsDefault == true)[0];
@@ -133,7 +133,7 @@ const _Wallet = () => {
         return (
             <div>
                 <Dialog open={openModalAdd} onClose={()=>setOpenModalAdd(false)}>
-                    <DialogTitle>افزایش اعتبار</DialogTitle>
+                    <DialogTitle>افزایش شارژ</DialogTitle>
                     <DialogContent >
                         <Grid
                             container
@@ -286,13 +286,13 @@ const _Wallet = () => {
                         <Typography variant="h6" >
                             {toPriceWithComma(totalDeposit)+" تومان"}
                         </Typography>
-                        <Button variant={"contained"} onClick={()=>setOpenModalAdd(true)}>افزایش اعتبار</Button>
+                        <Button variant={"contained"} onClick={()=>setOpenModalAdd(true)}>افزایش شارژ مجموعه</Button>
                     </Stack>
                     <Typography  variant="caption"
                                  component={"a"}
                                  href={"/finance/IncreaseList"}
                                  sx={{textDecoration:"none",color:"#000000"}}>
-                        مشاهده تاریخچه افزایش اعتبار
+                        مشاهده تاریخچه افزایش شارژ
                     </Typography>
                 </CardContent>
             </Card>

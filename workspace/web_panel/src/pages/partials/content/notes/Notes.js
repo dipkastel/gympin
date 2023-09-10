@@ -52,9 +52,15 @@ const Notes = ({source}) => {
         note_add(data).then(result => {
             error.showError({message: "عملیات موفق",});
             getData()
-            e.target.Name.value = "";
-            e.target.Number.value = "";
-            e.target.Text.value = "";
+            try{
+                e.target.Name.value = "";
+            }catch (e){}
+            try{
+                e.target.Number.value = "";
+            }catch (e){}
+            try{
+                e.target.Text.value = "";
+            }catch (e){}
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

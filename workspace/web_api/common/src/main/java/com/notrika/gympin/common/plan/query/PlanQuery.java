@@ -35,7 +35,5 @@ public class PlanQuery extends BaseQuery<PlanQuery> {
     @JsonProperty("Name")
     private String like_name;
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 
 }

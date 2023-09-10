@@ -59,33 +59,33 @@ public class scheduleReports {
 
 
     public void updateMaxSellByPlace() {
-        queryLong("SELECT P.place_id FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id GROUP BY P.place_id order by Count(*) DESC limit 1",ID_OF_MAX_SELL_PLACE);
-        queryString("SELECT C.name FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id Left Join place C On P.place_id = C.id GROUP BY C.id order by Count(*) DESC limit 1",NAME_OF_MAX_SELL_PLACE);
-        queryInt("SELECT count(*) FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id Left Join place C On P.place_id = C.id GROUP BY C.id order by Count(*) DESC limit 1",COUNT_OF_MAX_SELL_PLACE);
+        queryLong("SELECT P.place_id FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" GROUP BY P.place_id order by Count(*) DESC limit 1",ID_OF_MAX_SELL_PLACE);
+        queryString("SELECT C.name FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id Left Join place C On P.place_id = C.id where C.Status = \"ACTIVE\" GROUP BY C.id order by Count(*) DESC limit 1",NAME_OF_MAX_SELL_PLACE);
+        queryInt("SELECT count(*) FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id Left Join place C On P.place_id = C.id where C.Status = \"ACTIVE\" GROUP BY C.id order by Count(*) DESC limit 1",COUNT_OF_MAX_SELL_PLACE);
     }
 
 
     public void updateMaxSellByPlan() {
-        queryLong("SELECT P.id FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id GROUP BY P.id order by Count(*) DESC limit 1",ID_OF_MAX_SELL_PLAN);
-        queryString("SELECT P.name FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id GROUP BY P.id order by Count(*) DESC limit 1",NAME_OF_MAX_SELL_PLAN);
-        queryString("SELECT C.Name FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id Left Join place C On P.place_id = C.id GROUP BY P.id order by Count(*) DESC limit 1",PLACE_NAME_OF_MAX_SELL_PLAN);
-        queryInt("SELECT count(*) FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id GROUP BY P.id order by Count(*) DESC limit 1",COUNT_OF_MAX_SELL_PLAN);
+        queryLong("SELECT P.id FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" GROUP BY P.id order by Count(*) DESC limit 1",ID_OF_MAX_SELL_PLAN);
+        queryString("SELECT P.name FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" GROUP BY P.id order by Count(*) DESC limit 1",NAME_OF_MAX_SELL_PLAN);
+        queryString("SELECT C.Name FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id Left Join place C On P.place_id = C.id where C.Status = \"ACTIVE\" GROUP BY P.id order by Count(*) DESC limit 1",PLACE_NAME_OF_MAX_SELL_PLAN);
+        queryInt("SELECT count(*) FROM ticket T LEFT JOIN plan P ON T.plan_id = P.id Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" GROUP BY P.id order by Count(*) DESC limit 1",COUNT_OF_MAX_SELL_PLAN);
     }
 
     public void updateMinPlanPrice() {
 
-        queryLong("SELECT P.id FROM plan P order by P.price limit 1",ID_OF_MIN_PLAN_PRICE);
-        queryString("SELECT P.name FROM plan P order by P.price limit 1",NAME_OF_MIN_PLAN_PRICE);
-        queryString("SELECT C.Name FROM plan P JOIN place C ON P.place_id = C.id order by P.price limit 1",PLACE_NAME_OF_MIN_PLAN_PRICE);
-        queryBigDecimal("SELECT P.price FROM plan P order by P.price limit 1",PRICE_OF_MIN_PLAN_PRICE);
+        queryLong("SELECT P.id FROM plan P Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" order by P.price limit 1",ID_OF_MIN_PLAN_PRICE);
+        queryString("SELECT P.name FROM plan P Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" order by P.price limit 1",NAME_OF_MIN_PLAN_PRICE);
+        queryString("SELECT C.Name FROM plan P JOIN place C ON P.place_id = C.id where C.Status = \"ACTIVE\" order by P.price limit 1",PLACE_NAME_OF_MIN_PLAN_PRICE);
+        queryBigDecimal("SELECT P.price FROM plan P Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" order by P.price limit 1",PRICE_OF_MIN_PLAN_PRICE);
     }
 
     public void updateMaxPlanPrice() {
 
-        queryLong("SELECT P.id FROM plan P order by P.price Desc limit 1",ID_OF_MAX_PLAN_PRICE);
-        queryString("SELECT P.name FROM plan P order by P.price Desc limit 1",NAME_OF_MAX_PLAN_PRICE);
-        queryString("SELECT C.Name FROM plan P JOIN place C ON P.place_id = C.id order by P.price Desc limit 1",PLACE_NAME_OF_MAX_PLAN_PRICE);
-        queryBigDecimal("SELECT P.price FROM plan P order by P.price Desc limit 1",PRICE_OF_MAX_PLAN_PRICE);
+        queryLong("SELECT P.id FROM plan P Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" order by P.price Desc limit 1",ID_OF_MAX_PLAN_PRICE);
+        queryString("SELECT P.name FROM plan P Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" order by P.price Desc limit 1",NAME_OF_MAX_PLAN_PRICE);
+        queryString("SELECT C.Name FROM plan P JOIN place C ON P.place_id = C.id where C.Status = \"ACTIVE\" order by P.price Desc limit 1",PLACE_NAME_OF_MAX_PLAN_PRICE);
+        queryBigDecimal("SELECT P.price FROM plan P Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" order by P.price Desc limit 1",PRICE_OF_MAX_PLAN_PRICE);
     }
 
 

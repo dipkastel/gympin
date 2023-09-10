@@ -56,7 +56,7 @@ public class PlaceOptionControllerImpl implements PlaceOptionController {
 
     @Override
     public ResponseEntity<Page<PlaceOptionDto>> query(BaseQuery<?> filter) {
-        return null;
+        return new ResponseEntity<>(placeOptionService.query(filter), HttpStatus.OK);
     }
 
 }

@@ -39,7 +39,5 @@ public class CorporateQuery extends BaseQuery<CorporateQuery> {
     @JsonProperty("Status")
     private CorporateStatusEnum is_status;
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 
 }

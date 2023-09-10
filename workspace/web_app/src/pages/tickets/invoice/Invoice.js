@@ -116,7 +116,7 @@ const Invoice = (props) => {
                 return;
             }
             ticket_checkout(getData()).then(result=>{
-                props.RequestUser(currentUser)
+                props.RequestUser()
                 navigate("/tickets", {replace: false});
             }).catch(e => {
                 try {

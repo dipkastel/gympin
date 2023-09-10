@@ -34,8 +34,6 @@ import lombok.experimental.SuperBuilder;
     */
 public class TransactionQuery extends BaseQuery<TransactionQuery> {
 
-    @JsonProperty("deleted")
-    private Boolean is_deleted = false;
 
     @JsonProperty("TransactionStatus")
     private TransactionStatus is_transactionStatus;
