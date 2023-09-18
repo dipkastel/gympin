@@ -20,6 +20,7 @@ import Notes from "../../../partials/content/notes/Notes";
 import PlaceBalance from "./Balance/PlaceBalance";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import _ChangePlaceStatus from "./status/_ChangePlaceStatus";
+import PlaceInviteCode from "./Invite/PlaceInviteCode";
 
 const PlaceDataManagement = () => {
     const error = useContext(ErrorContext);
@@ -69,6 +70,7 @@ const PlaceDataManagement = () => {
                     {place && <Plans place={place}/>}
                     {place && <PlaceAbout place={place}/>}
                     {place && <Wallet place={place}/>}
+                    {place && <PlaceInviteCode place={place}/>}
                     {place && <DeletePlace place={place}/>}
                 </div>
                 <div className="col-md-5">

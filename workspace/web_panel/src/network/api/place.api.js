@@ -10,6 +10,10 @@ export function Place_getPlaceById(place) {
     return axios.get(PlaceApi.getPlaceById, {params: place});
 }
 
+export function Place_getPlacesInviteCode(place) {
+    return axios.get(PlaceApi.getPlacesInviteCode, {params: place});
+}
+
 export function Place_getPlaceByUser(place) {
     return axios.get(PlaceApi.getByUser, {params: place});
 }

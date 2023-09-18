@@ -160,6 +160,7 @@ export let optionOfPlaceApi = {
 export let PlaceApi = {
   getAllPlace: "v1/place/getAll",
   getPlaceById: "v1/place/getById",
+  getPlacesInviteCode: "v1/place/getPlacesInviteCode",
   addPlace: "v1/place/add",
   CHANGE_STATUS:"v1/place/changeStatus",
   deletePlace: "v1/place/delete",
