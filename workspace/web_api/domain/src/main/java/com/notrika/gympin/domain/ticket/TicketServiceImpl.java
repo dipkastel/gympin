@@ -615,18 +615,22 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
         var gympinEntity = corporateService.getEntityById(1l);
         BigDecimal commission = null;
         BigDecimal discount = null;
+        BigDecimal placeShare = null;
 
 
 
         if(ticketEntity.getUser().getInvitedBy()!=null&&ticketEntity.getUser().getInvitedBy().startsWith("P")&&ticketEntity.getUser().getInvitedBy().equals("P"+GeneralHelper.getInviteCode(ticketEntity.getPlan().getPlace().getId(),1))){
             commission = BigDecimal.ZERO;
+            placeShare = ticketEntity.getPlacePrice();
         }else if (ticketEntity.getDiscount() == null) {
             commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf((float) placeEntity.getCommissionFee() / 100));
+            placeShare = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (placeEntity.getCommissionFee() / 100)));
         } else {
             commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf(((float) placeEntity.getCommissionFee() - (float) ticketEntity.getDiscount()) / 100));
             discount = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf((float) ticketEntity.getDiscount() / 100));
+            placeShare = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (placeEntity.getCommissionFee() / 100)));
         }
-        var placeShare = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (placeEntity.getCommissionFee() / 100)));
+
 
         List<TransactionEntity> transactions = new ArrayList<>();
 
