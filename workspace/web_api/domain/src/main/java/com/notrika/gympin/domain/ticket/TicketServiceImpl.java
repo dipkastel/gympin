@@ -618,7 +618,7 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
 
 
 
-        if(ticketEntity.getUser().getInvitedBy().equals(GeneralHelper.getInviteCode(ticketEntity.getPlan().getPlace().getId(),1))){
+        if(ticketEntity.getUser().getInvitedBy()!=null&&ticketEntity.getUser().getInvitedBy().startsWith("P")&&ticketEntity.getUser().getInvitedBy().equals("P"+GeneralHelper.getInviteCode(ticketEntity.getPlan().getPlace().getId(),1))){
             commission = BigDecimal.ZERO;
         }else if (ticketEntity.getDiscount() == null) {
             commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf((float) placeEntity.getCommissionFee() / 100));
