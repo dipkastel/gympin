@@ -26,6 +26,7 @@ import com.notrika.gympin.common.util.GeneralUtil;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.util.convertor.TicketConvertor;
+import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.*;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelCreditEntity;
@@ -615,7 +616,11 @@ public class TicketServiceImpl extends AbstractBaseService<TicketParam, TicketDt
         BigDecimal commission = null;
         BigDecimal discount = null;
 
-        if (ticketEntity.getDiscount() == null) {
+
+
+        if(ticketEntity.getUser().getInvitedBy().equals(GeneralHelper.getInviteCode(ticketEntity.getPlan().getPlace().getId(),1))){
+            commission = BigDecimal.ZERO;
+        }else if (ticketEntity.getDiscount() == null) {
             commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf((float) placeEntity.getCommissionFee() / 100));
         } else {
             commission = ticketEntity.getPlacePrice().multiply(BigDecimal.valueOf(((float) placeEntity.getCommissionFee() - (float) ticketEntity.getDiscount()) / 100));
