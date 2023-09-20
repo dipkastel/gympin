@@ -40,6 +40,8 @@ public class schedulePeymentCheck {
                        .transactionType(transaction.getTransactionType())
                        .transactionStatus(TransactionStatus.PAYMENT_REJECTED)
                        .place(transaction.getPlace())
+                       .user(transaction.getUser())
+                       .corporate(transaction.getCorporate())
                        .balance(transaction.getBalance())
                        .isChecked(false)
                        .bankPend(false)
