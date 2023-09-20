@@ -40,7 +40,7 @@ public class gympinScheduleService {
     }
 
 
-    @Scheduled(cron = "0 0 */1 * * ?")
+    @Scheduled(cron = "0 */10 * * * ?")
     public void setPeymentChecks(){
         schedulePeymentCheck.checkPendingPayments();
 
