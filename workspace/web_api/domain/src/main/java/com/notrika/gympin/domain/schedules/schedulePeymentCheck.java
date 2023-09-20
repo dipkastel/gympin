@@ -24,8 +24,12 @@ public class schedulePeymentCheck {
     TransactionRepository transactionRepository;
 
     public void checkPendingPayments() {
+
+       log.error("Going to checkPendingPayments\n");
        List<TransactionEntity> pendingTransactions =  transactionRepository.findPendingRequests();
+        log.error("Going to checkPendingPayments for count:"+pendingTransactions.stream().count()+"\n");
        for (TransactionEntity transaction : pendingTransactions){
+           log.error("Going to checkPendingPayments for transactionId :"+transaction.getId()+"\n");
            Calendar instance = Calendar.getInstance();
            instance.setTime(transaction.getCreatedDate());
            instance.add(Calendar.HOUR, 1);
