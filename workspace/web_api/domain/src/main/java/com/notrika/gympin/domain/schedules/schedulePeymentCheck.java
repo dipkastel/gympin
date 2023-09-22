@@ -43,8 +43,8 @@ public class schedulePeymentCheck {
                        .user(transaction.getUser())
                        .corporate(transaction.getCorporate())
                        .balance(transaction.getBalance())
-                       .isChecked(false)
-                       .bankPend(false)
+                       .isChecked(transaction.getBankPend())
+                       .bankPend(transaction.getBankPend())
                        .description("پاسخ از بانک دریافت نشد.")
                        .amount(transaction.getAmount())
                        .build());

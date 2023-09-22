@@ -93,7 +93,7 @@ public class ParsianGatewayControllerImpl implements ParsianGatewayController {
             message = getFailierResult((short) -312)+param.getOrderId();
         }catch (TransactionAlreadyChecked e){
             log.error("CallbackMethod CalculatePayment Faild - already calculated", e);
-            result=true;
+            result=false;
             message = getFailierResult((short) -313)+param.getOrderId();
         }catch (Exception e){
             log.error("CallbackMethod CalculatePayment Faild - ex : ", e);
