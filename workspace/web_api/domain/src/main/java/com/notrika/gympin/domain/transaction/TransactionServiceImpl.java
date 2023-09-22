@@ -358,8 +358,8 @@ public class TransactionServiceImpl extends AbstractBaseService<TransactionParam
         transaction.setAmount(transactionRequest.getAmount());
 
         transaction.setTransactionStatus((TransactionResult) ? TransactionStatus.PAYMENT_COMPLETE : TransactionStatus.PAYMENT_REJECTED);
-        transaction.setIsChecked(false);
-        transaction.setBankPend(false);
+        transaction.setIsChecked(transactionRequest.getIsChecked());
+        transaction.setBankPend(transactionRequest.getBankPend());
         transaction.setSerial(transactionRequest.getSerial());
         transaction.setDescription(description + additionalDescription);
 
