@@ -1,9 +1,11 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
+import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCategoryDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelCategoryEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 
@@ -21,6 +23,14 @@ public final class CorporateConvertor {
         dto.setBalance(entity.getBalance());
         dto.setStatus(entity.getStatus());
         dto.setLogo(MultimediaConvertor.toDto(entity.getLogo()));
+        return dto;
+    }
+
+    public static CorporatePersonnelCategoryDto toDto(CorporatePersonnelCategoryEntity entity) {
+        if(entity==null) return null;
+        CorporatePersonnelCategoryDto dto = new CorporatePersonnelCategoryDto();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
         return dto;
     }
 
@@ -50,6 +60,7 @@ public final class CorporateConvertor {
         dto.setId(entity.getId());
         dto.setCorporate(toDto(entity.getCorporate()));
         dto.setRole(entity.getRole());
+        dto.setPersonnelCategory(toDto(entity.getPersonnelCategory()));
         dto.setUser(UserConvertor.toDtoLessDetails(entity.getUser()));
         dto.setCreditBalance(entity.getCreditBalance());
         if(entity.getCredits()!=null)

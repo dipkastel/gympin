@@ -99,6 +99,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
                     .balance(per.getCreditBalance())
                     .amount(param.getCreditAmount())
                     .transactionStatus(TransactionStatus.COMPLETE)
+                    .user(person.getUser())
                     .transactionType(TransactionType.CORPORATE_PERSONNEL_ADD_CREDIT)
                     .isChecked(false)
                     .bankPend(false)

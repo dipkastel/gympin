@@ -11,6 +11,7 @@ import CorporateDetail from "../pages/corporateDetail/EditCorporate";
 import IncreaseGroupCredit from "../pages/increaseGroupCredit/IncreaseGroupCredit";
 import SingleUser from "../pages/singleUser/SingleUser";
 import Settings from "../pages/settings/Settings";
+import Categories from "../pages/categories/Categories";
 
 export default function ApplicationRoutes() {
 
@@ -21,6 +22,7 @@ export default function ApplicationRoutes() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/management/details" element={<CorporateDetail/>}/>
                 <Route path="/management/settings" element={<Settings/>}/>
+                <Route path="/management/categories" element={<Categories/>}/>
                 <Route path="/management" element={<Management/>}/>
 
                 <Route path="/finance/increaselist" element={<IncreaseList/>}/>

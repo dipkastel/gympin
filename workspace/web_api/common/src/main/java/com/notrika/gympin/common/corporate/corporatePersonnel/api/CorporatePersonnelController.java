@@ -2,6 +2,7 @@ package com.notrika.gympin.common.corporate.corporatePersonnel.api;
 
 import com.notrika.gympin.common._base.base.BaseController;
 import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCategoryDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
@@ -10,6 +11,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePer
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigDecimal;

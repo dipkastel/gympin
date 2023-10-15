@@ -30,6 +30,11 @@ public class CorporatePersonnelEntity extends BaseEntity<CorporatePersonnelEntit
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "personel_category_id")
+    private CorporatePersonnelCategoryEntity PersonnelCategory;
+
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private CorporatePersonnelRoleEnum role;

@@ -6,14 +6,18 @@ import com.notrika.gympin.common.corporate.corporate.param.CorporateLogoParam;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
 import com.notrika.gympin.common.corporate.corporate.service.CorporateService;
+import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCategoryDto;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCategoryParam;
 import com.notrika.gympin.common.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.multimedia.MultimediaServiceImpl;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
+import com.notrika.gympin.persistence.dao.repository.CorporatePersonnelCategoryRepository;
 import com.notrika.gympin.persistence.dao.repository.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelCategoryEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -35,6 +39,8 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
 
     @Autowired
     private CorporateRepository corporateRepository;
+    @Autowired
+    private CorporatePersonnelCategoryRepository corporatePersonnelCategoryRepository;
     @Autowired
     private MultimediaRepository multimediaRepository;
 
@@ -75,6 +81,26 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         MultimediaEntity logo = multimediaRepository.getById(param.getMultimediaId());
         entity.setLogo(logo);
         return CorporateConvertor.toDto(corporateRepository.update(entity));
+    }
+
+    @Override
+    public List<CorporatePersonnelCategoryDto> getCorporateCategories(CorporateParam corporateParam) {
+        CorporateEntity entity = corporateRepository.getById(corporateParam.getId());
+        return entity.getCategory().stream().filter(c->!c.isDeleted()).map(CorporateConvertor::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public CorporatePersonnelCategoryDto addCategory(CorporatePersonnelCategoryParam Param) {
+        CorporateEntity corporate = corporateRepository.getById(Param.getCorporateId());
+        var category = corporatePersonnelCategoryRepository.add(CorporatePersonnelCategoryEntity.builder().corporate(corporate).name(Param.getName()).build());
+        return CorporateConvertor.toDto(category);
+    }
+
+    @Override
+    public CorporatePersonnelCategoryDto deleteCategory(CorporatePersonnelCategoryParam Param) {
+        var category = corporatePersonnelCategoryRepository.getById(Param.getId());
+
+        return CorporateConvertor.toDto(corporatePersonnelCategoryRepository.deleteById2(category));
     }
 
     @Override

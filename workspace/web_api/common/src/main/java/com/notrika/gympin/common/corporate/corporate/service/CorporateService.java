@@ -5,6 +5,8 @@ import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateLogoParam;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
+import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCategoryDto;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCategoryParam;
 import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -14,4 +16,9 @@ public interface CorporateService extends BaseService<CorporateParam, CorporateD
 
     CorporateDto updateStatus(CorporateParam userParam);
     CorporateDto updateLogo(CorporateLogoParam param);
+
+    List<CorporatePersonnelCategoryDto> getCorporateCategories(CorporateParam corporateParam);
+    CorporatePersonnelCategoryDto addCategory(CorporatePersonnelCategoryParam Param);
+    CorporatePersonnelCategoryDto deleteCategory(CorporatePersonnelCategoryParam Param);
+
 }

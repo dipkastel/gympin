@@ -1,4 +1,4 @@
-package com.notrika.gympin.persistence.entity.place.option;
+package com.notrika.gympin.persistence.entity.corporate;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
@@ -8,10 +8,8 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,24 +19,25 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "placeOption")
-public class PlaceOptionEntity extends BaseEntityWithCreateUpdate<PlaceOptionEntity> {
+@Table(name = "corporatePersonelCategory")
+public class CorporatePersonnelCategoryEntity extends BaseEntityWithCreateUpdate<CorporatePersonnelCategoryEntity> {
 
-    @Column(name = "name")
+    @Column(name = "category_name")
     private String name;
 
-    @Column(name = "weight")
-    private Short weight;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "corporate_id")
+    private CorporateEntity corporate;
 
-    @OneToMany(mappedBy = "placeOption")
+    @OneToMany(mappedBy = "PersonnelCategory")
     @ToString.Exclude
-    private List<OptionOfPlaceEntity> optionsOfPlaces;
+    private List<CorporatePersonnelEntity> personels;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        PlaceOptionEntity that = (PlaceOptionEntity) o;
+        CorporatePersonnelCategoryEntity that = (CorporatePersonnelCategoryEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

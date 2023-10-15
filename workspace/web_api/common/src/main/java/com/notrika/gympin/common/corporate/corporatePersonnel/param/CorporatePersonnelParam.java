@@ -26,5 +26,8 @@ public class CorporatePersonnelParam extends BaseParam<CorporatePersonnelParam> 
     @JsonProperty("Role")
     private CorporatePersonnelRoleEnum role;
 
+    @JsonProperty("PersonelCategory")
+    private CorporatePersonnelCategoryParam PersonelCategory;
+
 
 }

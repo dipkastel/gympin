@@ -20,3 +20,17 @@ export function corporate_getTransactions(data) {
 export  function corporate_Update(data){
     return axios.put(Api_url.corporate.update,data)
 }
+
+export  function corporate_deleteCorporateCategory(data){
+    return axios.put(Api_url.corporate.deleteCategory, null,{ params: data });
+}
+
+export  function corporate_addCorporateCategory(data){
+    return axios.post(Api_url.corporate.addCategory,data)
+}
+
+export  function corporate_getCorporateCategories(data){
+    return axios.get(Api_url.corporate.getCorproteCategories,{ params: data })
+}
+
+

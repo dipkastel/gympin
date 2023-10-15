@@ -17,4 +17,7 @@ public class PlaceOptionParam extends BaseParam<PlaceOptionParam> {
 
     @JsonProperty("Name")
     private String name;
+
+    @JsonProperty("Weight")
+    private Short weight;
 }

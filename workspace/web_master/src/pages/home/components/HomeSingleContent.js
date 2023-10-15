@@ -5,6 +5,8 @@ import {useNavigate} from "react-router-dom";
 
 const HomeSingleContent =(props) => {
     const navigate = useNavigate()
+
+    console.log(props.item)
     return (
         <>
                     <div >

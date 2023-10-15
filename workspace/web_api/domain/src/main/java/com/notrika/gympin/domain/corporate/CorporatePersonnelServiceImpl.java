@@ -5,6 +5,7 @@ import com.notrika.gympin.common.contact.sms.dto.SmsDto;
 import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
 import com.notrika.gympin.common.contact.sms.service.SmsService;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCategoryDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
@@ -20,10 +21,12 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
+import com.notrika.gympin.persistence.dao.repository.CorporatePersonnelCategoryRepository;
 import com.notrika.gympin.persistence.dao.repository.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelCategoryEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
@@ -44,6 +47,8 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Autowired
     private CorporatePersonnelRepository corporatePersonnelRepository;
+    @Autowired
+    private CorporatePersonnelCategoryRepository corporatePersonnelCategoryRepository;
     @Autowired
     private CorporateServiceImpl corporateService;
     @Autowired
@@ -86,7 +91,12 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
     @Override
     public CorporatePersonnelDto update(@NonNull CorporatePersonnelParam corporatePersonnelParam) {
         CorporatePersonnelEntity entity = corporatePersonnelRepository.getById(corporatePersonnelParam.getId());
-        entity.setRole(corporatePersonnelParam.getRole());
+        if(corporatePersonnelParam.getRole()!=null)
+            entity.setRole(corporatePersonnelParam.getRole());
+        if(corporatePersonnelParam.getPersonelCategory()!=null){
+            CorporatePersonnelCategoryEntity category = corporatePersonnelCategoryRepository.getById(corporatePersonnelParam.getPersonelCategory().getId());
+            entity.setPersonnelCategory(category);
+        }
         return CorporateConvertor.toPersonnelDto(corporatePersonnelRepository.update(entity));
     }
 

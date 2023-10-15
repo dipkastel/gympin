@@ -7,7 +7,7 @@ import {
     placeOption_add,
     placeOption_delete,
     placeOption_getAll,
-    placeOption_query
+    placeOption_query, placeOption_update
 } from "../../../../network/api/placeOptions.api";
 import Notice from "../../../partials/content/Notice";
 import Box from "@mui/material/Box";
@@ -29,6 +29,7 @@ const PlaceOptions = () => {
     const [rowsPerPage, setRowsPerPage] = useState(50);
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
+    const [itemToEdit, setItemToEdit] = useState(null);
     useEffect(() => {
         getPlaceOption()
     }, [page, rowsPerPage]);
@@ -53,7 +54,7 @@ const PlaceOptions = () => {
     function renderModalAdd() {
         function addOption(e) {
             e.preventDefault()
-            placeOption_add({Name:e.target.formName.value})
+            placeOption_add({Name:e.target.formName.value,Weight:e.target.formWeight.value})
                 .then(data=>{
                     error.showError({message: "عملیات موفق",});
                     setOpenModalAdd(false)
@@ -85,6 +86,16 @@ const PlaceOptions = () => {
                                     name="formName"
                                     type="text"
                                     placeholder="نام امکانات"
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control
+                                    type="number"
+                                    step="any"
+                                    min="0"
+                                    max="10"
+                                    name={"formWeight"}
+                                    placeholder="وزن"
                                 />
                             </Form.Group>
                         </Modal.Body>
@@ -133,7 +144,7 @@ const PlaceOptions = () => {
 
 
                         <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن امکانات "}</Modal.Title>
+                            <Modal.Title>{"حذف امکانات "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             {itemToDelete&&"حذف "+itemToDelete.Name}
@@ -150,6 +161,79 @@ const PlaceOptions = () => {
                                 type={"submit"}
                             >
                                 حذف
+                            </Button>
+                        </Modal.Footer>
+                    </form>
+                </Modal>
+            </>
+        );
+    }
+
+    function renderModalEdit(){
+        if(!itemToEdit) return ;
+        function EditOption(e) {
+            e.preventDefault()
+            placeOption_update({Id:itemToEdit.Id,Name:e.target.formName.value,Weight:e.target.formWeight.value})
+                .then(data=>{
+                    error.showError({message: "عملیات موفق",});
+                    setItemToEdit(null)
+                    getPlaceOption()
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        }
+
+        return (
+            <>
+                <Modal show={itemToEdit} onHide={() => setItemToEdit(null)}>
+                    <form onSubmit={(e)=>EditOption(e)}>
+
+
+                        <Modal.Header closeButton>
+                            <Modal.Title>{"ویرایش "+itemToEdit.Name}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+
+
+
+                            <Form.Group controlId="formOptionName">
+                                <Form.Control
+                                    name="formName"
+                                    type="text"
+                                    value={itemToEdit.Name}
+                                    placeholder="نام امکانات"
+                                    onChange={(e)=>setItemToEdit({...itemToEdit,Name:e.target.value})}
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Control
+                                    type="number"
+                                    step="any"
+                                    min="0"
+                                    max="10"
+                                    value={itemToEdit.Weight}
+                                    name={"formWeight"}
+                                    placeholder="وزن"
+                                    onChange={(e)=>setItemToEdit({...itemToEdit,Weight:e.target.value})}
+                                />
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                className={"button_edit"}
+                                onClick={() => setItemToEdit(null)}
+                            >
+                                لغو
+                            </Button>
+                            <Button
+                                className={"button_danger"}
+                                type={"submit"}
+                            >
+                                ویرایش
                             </Button>
                         </Modal.Footer>
                     </form>
@@ -185,6 +269,7 @@ const PlaceOptions = () => {
                                 <TableRow>
                                     <TableCell align="right">id</TableCell>
                                     <TableCell align="right">name</TableCell>
+                                    <TableCell align="right">weight</TableCell>
                                     <TableCell align="left">action</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -195,8 +280,11 @@ const PlaceOptions = () => {
                                             {row.Id}
                                         </TableCell>
                                         <TableCell align="right">{row.Name}</TableCell>
-                                        <TableCell align="left"><Button variant={"contained"}
-                                                                        color={"error"} onClick={(e)=>setItemToDelete(row)}>حذف</Button></TableCell>
+                                        <TableCell align="right">{row.Weight}</TableCell>
+                                        <TableCell align="left">
+                                            <Button variant={"contained"} color={"primary"} onClick={(e)=>setItemToEdit(row)}>ویرایش</Button>
+                                            <Button variant={"contained"} color={"error"} onClick={(e)=>setItemToDelete(row)}>حذف</Button>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -222,6 +310,7 @@ const PlaceOptions = () => {
                 </Paper>
             </Box>
             {renderModalAdd()}
+            {renderModalEdit()}
             {renderModalDelete()}
         </>
     );

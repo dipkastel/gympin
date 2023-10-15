@@ -30,6 +30,9 @@ public class CorporatePersonnelDto extends BaseDto<CorporatePersonnelDto> {
     @JsonProperty("Role")
     private CorporatePersonnelRoleEnum role;
 
+    @JsonProperty("PersonnelCategory")
+    private CorporatePersonnelCategoryDto personnelCategory;
+
     @JsonProperty("CreditBalance")
     private BigDecimal creditBalance;
 

@@ -3,6 +3,8 @@ package com.notrika.gympin.controller.impl.corporate;
 import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.corporate.corporate.api.CorporateController;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
+import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCategoryDto;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCategoryParam;
 import com.notrika.gympin.common.transaction.dto.TransactionDto;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateLogoParam;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
@@ -84,4 +86,23 @@ public class CorporateControllerImpl implements CorporateController {
     public ResponseEntity<BigDecimal> getTotalDeposit(TransactionParam param) {
         return ResponseEntity.ok(corporateService.getById(param.getCorporateId()).getBalance());
     }
+
+    @Override
+    @GetMapping("getCorporateCategories")
+    public ResponseEntity<List<CorporatePersonnelCategoryDto>> getCorporateCategories(CorporateParam corporateParam) {
+        return ResponseEntity.ok(corporateService.getCorporateCategories(corporateParam));
+    }
+
+    @Override
+    @PostMapping("addCategory")
+    public ResponseEntity<CorporatePersonnelCategoryDto> addCorporateCategory(CorporatePersonnelCategoryParam param) {
+        return ResponseEntity.ok(corporateService.addCategory(param));
+    }
+
+    @Override
+    @PutMapping("deleteCategory")
+    public ResponseEntity<CorporatePersonnelCategoryDto> deleteCorporateCategory(CorporatePersonnelCategoryParam param) {
+        return ResponseEntity.ok(corporateService.deleteCategory(param));
+    }
+
 }

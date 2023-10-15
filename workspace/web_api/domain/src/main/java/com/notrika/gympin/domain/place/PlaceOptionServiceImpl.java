@@ -24,7 +24,7 @@ public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam
 
     @Override
     public PlaceOptionDto add(PlaceOptionParam placeOptionParam) {
-        PlaceOptionEntity initPlaceOption = PlaceOptionEntity.builder().name(placeOptionParam.getName()).build();
+        PlaceOptionEntity initPlaceOption = PlaceOptionEntity.builder().name(placeOptionParam.getName()).weight(placeOptionParam.getWeight()).build();
         PlaceOptionEntity placeOption = add(initPlaceOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }
@@ -38,6 +38,7 @@ public class PlaceOptionServiceImpl extends AbstractBaseService<PlaceOptionParam
     public PlaceOptionDto update(PlaceOptionParam placeOptionParam) {
         PlaceOptionEntity initPlaceOption = getEntityById(placeOptionParam.getId());
         initPlaceOption.setName(placeOptionParam.getName());
+        initPlaceOption.setWeight(placeOptionParam.getWeight());
         PlaceOptionEntity placeOption = update(initPlaceOption);
         return OptionConvertor.placeOptionToPlaceOptionDto(placeOption);
     }

@@ -18,6 +18,9 @@ export let Api_url = {
         getTransactions:"v1/corporate/getTransactions",
         getTotalDeposit:"v1/corporate/getTotalDeposit",
         update:"v1/corporate/update",
+        getCorproteCategories:"v1/corporate/getCorporateCategories",
+        addCategory:"v1/corporate/addCategory",
+        deleteCategory:"v1/corporate/deleteCategory"
     },
     CorporatePersonnel:{
         add: "v1/corporatePersonnel/add",

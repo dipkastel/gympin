@@ -2,7 +2,6 @@ package com.notrika.gympin.persistence.entity.corporate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
-import com.notrika.gympin.common.corporate.corporate.enums.CorporateTransactionTypesEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.location.LocationEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
@@ -61,6 +60,10 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     @OneToMany(mappedBy = "corporate")
     @ToString.Exclude
     private List<CorporatePersonnelEntity> personnel;
+
+    @OneToMany(mappedBy = "corporate")
+    @ToString.Exclude
+    private List<CorporatePersonnelCategoryEntity> category;
 
     @OneToMany(mappedBy = "corporate")
     @ToString.Exclude

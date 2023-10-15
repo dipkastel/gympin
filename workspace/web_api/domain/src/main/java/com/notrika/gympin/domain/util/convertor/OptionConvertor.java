@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public final class OptionConvertor {
 
     public static PlaceOptionDto placeOptionToPlaceOptionDto(PlaceOptionEntity placeOption) {
-        return PlaceOptionDto.builder().id(placeOption.getId()).createdDate(placeOption.getCreatedDate()).updatedDate(placeOption.getUpdatedDate()).isDeleted(placeOption.isDeleted()).name(placeOption.getName()).build();
+        return PlaceOptionDto.builder().id(placeOption.getId()).createdDate(placeOption.getCreatedDate()).updatedDate(placeOption.getUpdatedDate()).isDeleted(placeOption.isDeleted()).name(placeOption.getName()).weight(placeOption.getWeight()).build();
     }
 
     public static List<PlaceOptionDto> placeOptionsToPlaceOptionDtos(List<PlaceOptionEntity> placeOptions) {
@@ -19,7 +19,7 @@ public final class OptionConvertor {
     }
 
     public static PlaceOptionEntity placeOptionDtoToPlaceOption(PlaceOptionDto placeOption) {
-        return PlaceOptionEntity.builder().id(placeOption.getId()).createdDate(placeOption.getCreatedDate()).updatedDate(placeOption.getUpdatedDate()).deleted(placeOption.isDeleted()).name(placeOption.getName()).build();
+        return PlaceOptionEntity.builder().id(placeOption.getId()).createdDate(placeOption.getCreatedDate()).updatedDate(placeOption.getUpdatedDate()).deleted(placeOption.isDeleted()).name(placeOption.getName()).weight(placeOption.getWeight()).build();
     }
 
     public static OptionOfPlaceDto optionOfPlaceToOptionOfPlaceDto(OptionOfPlaceEntity optionOfPlace) {
