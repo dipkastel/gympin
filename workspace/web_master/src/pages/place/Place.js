@@ -4,6 +4,9 @@ import {useSearchParams} from "react-router-dom";
 import {place_getById, Place_update} from "../../network/api/place.api";
 import _PlaceLocation from "./_placeLocation";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import getAccessOf from "../../helper/accessManager";
+import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import _PlaceActivity from "../management/_PlaceActivity";
 
 const Place = (props) => {
     const error = useContext(ErrorContext);
@@ -35,6 +38,8 @@ const Place = (props) => {
 
     return (
         <div>
+
+            {getAccessOf(personnelAccessEnumT.ManagementStatus)&&<_PlaceActivity/>}
             {place&&<_PlaceInfo place={place} SubmitForm={(e)=>submitEdit(e)}/>}
             {place&&<_PlaceLocation place={place} SubmitForm={(e)=>submitEdit(e)}/>}
         </div>

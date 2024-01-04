@@ -1,31 +1,22 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {Place_getPlaceById, Place_updatePlace} from "../../../../network/api/place.api";
-import PlaceBase from "./Base/PlaceBase";
-import Gates from "./Gates/Gates";
-import Wallet from "./walet/Wallet";
-import SettlementRequest from "./GateTransActions/SettlementRequest";
-import PlaceSports from "./placeSport/PlaceSport";
-import OptionOfPlace from "./OptionsOfPlace/OptionOfPlace";
-import GateEnter from "./GateEnter/GateEnter";
-import DeletePlace from "./Delete/DeletePlace";
-import Plans from "./Plans/Plans";
-import PlacePersonnel from "./Personnel/PlacePersonnel";
 import Notice from "../../../partials/content/Notice";
-import PlaceAbout from "./About/PlaceAbout";
-import PlaceQrMessages from "./QrMessages/PlaceQrMessages";
-import PlaceImages from "./Images/PlaceImages";
-import {Note} from "@mui/icons-material";
 import Notes from "../../../partials/content/notes/Notes";
-import PlaceBalance from "./Balance/PlaceBalance";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import _ChangePlaceStatus from "./status/_ChangePlaceStatus";
-import PlaceInviteCode from "./Invite/PlaceInviteCode";
+import {Paper, Tab, Tabs} from "@mui/material";
+import PlaceManagementDataTab from "./placeManagementTabs/PlaceManagementDataTab";
+import PlaceManagementTicketsTab from "./placeManagementTabs/PlaceManagementTicketTab";
+import PlaceManagementSettingTab from "./placeManagementTabs/PlaceManagementSettingTab";
+import PlaceManagementPlaceTab from "./placeManagementTabs/PlaceManagementPlaceTab";
+import PlaceManagementBeneficiariesTab from "./placeManagementTabs/PlaceManagementBeneficiariesTab";
+import PlaceManagementSellsTab from "./placeManagementTabs/PlaceManagementSellTab";
 
 const PlaceDataManagement = () => {
     const error = useContext(ErrorContext);
     let {placeId} = useParams();
-    const [place,setPlace] = useState(null);
+    const [place, setPlace] = useState(null);
+    const [selectedTab, setSelectedTab] = useState("PLACE");
     useEffect(() => {
         getPlace();
     }, []);
@@ -34,12 +25,12 @@ const PlaceDataManagement = () => {
         Place_getPlaceById({id: placeId}).then((result) => {
             setPlace(result.data.Data);
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function updatePlace(place) {
@@ -47,12 +38,12 @@ const PlaceDataManagement = () => {
             setPlace(data.data.Data);
             error.showError({message: "با موفقیت ثبت شد"});
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     return (
@@ -63,28 +54,33 @@ const PlaceDataManagement = () => {
                 )}
             </Notice>
             {place && <div className="row">
-                <div className="col-md-5">
-                    {place && <_ChangePlaceStatus place={place} updatePlace={updatePlace}/>}
-                    {place && <PlaceBase place={place} updatePlace={updatePlace}/>}
-                    {place && <Gates place={place}/>}
-                    {place && <Plans place={place}/>}
-                    {place && <PlaceAbout place={place}/>}
-                    {place && <Wallet place={place}/>}
-                    {place && <PlaceInviteCode place={place}/>}
-                    {place && <DeletePlace place={place}/>}
-                </div>
-                <div className="col-md-5">
-                    {place && <PlaceBalance place={place}/>}
-                    {place && <SettlementRequest place={place}/>}
-                    {place && <PlaceImages place={place}/>}
-                    {place && <PlaceSports place={place}/>}
-                    {place && <OptionOfPlace place={place}/>}
-                    {place && <PlacePersonnel place={place}/>}
-                    {place && <PlaceQrMessages place={place}/>}
-                    {place && <GateEnter place={place}/>}
+                <div className={"col-md-10"}>
+                    <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
+                        <Tabs
+                            value={selectedTab}
+                            onChange={(e, n) => setSelectedTab(n)}
+                            indicatorColor="primary"
+                            textColor="inherit"
+                            variant={"standard"}
+                            aria-label="full width tabs example"
+                        >
+                            <Tab label="مرکز" value={"PLACE"}/>
+                            <Tab label="اطلاعات" value={"DATA"}/>
+                            <Tab label="بلیط ها" value={"TICKET"}/>
+                            <Tab label="فروش ها" value={"SELLS"}/>
+                            <Tab label="ذینفعان" value={"BENEFICIARIES"}/>
+                            <Tab label="تنظیمات" value={"SETTING"}/>
+                        </Tabs>
+                    </Paper>
+                    {selectedTab === "PLACE"&&<PlaceManagementPlaceTab place={place} updatePlace={updatePlace}/>}
+                    {selectedTab === "DATA"&&<PlaceManagementDataTab place={place} updatePlace={updatePlace}/>}
+                    {selectedTab === "TICKET"&&<PlaceManagementTicketsTab place={place}/>}
+                    {selectedTab === "SELLS"&&<PlaceManagementSellsTab place={place}/>}
+                    {selectedTab === "BENEFICIARIES"&&<PlaceManagementBeneficiariesTab place={place}/>}
+                    {selectedTab === "SETTING"&&<PlaceManagementSettingTab place={place} updatePlace={updatePlace}/>}
                 </div>
                 <div className="col-md-2">
-                    {place && <Notes source={{Place:{Id:place.Id}}}/>}
+                    {place && <Notes source={{Place: {Id: place.Id}}}/>}
                 </div>
             </div>}
         </>

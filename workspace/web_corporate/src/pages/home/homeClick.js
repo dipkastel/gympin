@@ -70,8 +70,8 @@ export default function clickHandler(item, navigator) {
 
         }
             break;
-        case "TICKETS": {
-            navigator("/tickets", {replace: false});
+        case "SUBSCRIBE": {
+            navigator("/subscribes", {replace: false});
         }
             break;
         default: {

@@ -59,7 +59,7 @@ export class QuickActions extends React.Component {
                 <li className="kt-nav__item">
                   <a href="#" className="kt-nav__link">
                     <i className="kt-nav__link-icon flaticon2-calendar-8" />
-                    <span className="kt-nav__link-text">Ticket</span>
+                    <span className="kt-nav__link-text">Subscribe</span>
                   </a>
                 </li>
                 <li className="kt-nav__item">

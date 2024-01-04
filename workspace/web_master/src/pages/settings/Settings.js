@@ -3,7 +3,7 @@ import _SettingsPlaces from "./_SettingsPlaces";
 import _ListItem from "../management/_ListItem";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
-import _PlaceGates from "../management/_PlaceGates";
+import _PlaceGates from "../management/_PlaceHalls";
 import {connect, useSelector} from "react-redux";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 

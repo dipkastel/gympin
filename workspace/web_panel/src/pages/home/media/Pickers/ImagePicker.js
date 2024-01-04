@@ -50,7 +50,6 @@ const ImagePicker = ({setClose, onSelect, options}) => {
         setSettings({...defaultSettings, ...options})
         multimediacategory_getAll().then(data => {
             setCategories(data.data.Data)
-            console.log(data.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -92,7 +91,6 @@ const ImagePicker = ({setClose, onSelect, options}) => {
                 img.src = fr.result; // is the data URL because called with readAsDataURL
             };
             fr.readAsDataURL(file.image);
-            console.log(cErrors);
             setCompatibleErrors(cErrors);
         })
     }, [addItem]);
@@ -182,6 +180,7 @@ const ImagePicker = ({setClose, onSelect, options}) => {
         var lastHtml = e.target.innerHTML;
 
         e.target.innerHTML = getUploadHtmlHelper("progress")
+        console.log(formData);
         media_addImage(formData)
             .then(data => {
                 error.showError({message: "عملیات موفق",});

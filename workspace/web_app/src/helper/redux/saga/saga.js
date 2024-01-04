@@ -5,6 +5,8 @@ import {user_getById, user_getMyInfo} from "../../../network/api/user.api";
 import {configs_getWebAppSplash} from "../../../network/api/configs.api";
 import {settingActions} from "../actions/SettingsActions";
 import store from "../store";
+import {invoiceActions} from "../actions/InvoiceActions";
+import {invoice_query} from "../../../network/api/invoice.api";
 
 
 export function* saga() {
@@ -38,9 +40,29 @@ export function* saga() {
         );
         yield put(settingActions.SetServerSettings(result));
     });
+    yield takeLatest(ActionTypesSaga.RequestUserInvoices, function* InvoicesRequested(action) {
+        const result = yield call(
+            () => new Promise((resolve) => {
+                invoice_query({
+                    queryType: "FILTER",
+                    UserId:action.payload.user.Id,
+                    paging:{Page:0,Size:100}
+                }).then((_result) => {
+                    resolve(_result.data.Data);
+                }).catch(e => {
+                    console.log(e)
+                });
+            })
+        );
+
+        yield put(invoiceActions.SetInvoices(result?.content?.filter(i=>i.Status!="DRAFT")));
+        yield put(invoiceActions.SetUserBasket(result?.content?.filter(i=>i.Status=="DRAFT")?.[0]));
+    });
     yield takeLatest(ActionTypesSaga.RequestLogout, function* logoutRequested(action) {
         try{store.dispatch(settingActions.SetServerSettings(undefined));}catch (e) {}
         try{store.dispatch(settingActions.SetAppSettings(undefined));}catch (e) {}
+        try{store.dispatch(invoiceActions.SetInvoices(undefined));}catch (e) {}
+        try{store.dispatch(invoiceActions.SetUserBasket(undefined));}catch (e) {}
         try{store.dispatch(authActions.Logout());}catch (e) {}
     });
 

@@ -6,12 +6,12 @@ import Management from "../pages/management/Management";
 import Users from "../pages/users/Users";
 import NNavigaion from "../components/NNavigaion";
 import NBottomNavigation from "../components/NBottomNavigation";
-import IncreaseList from "../pages/IncreaseListPeyment/IncreaseList";
 import CorporateDetail from "../pages/corporateDetail/EditCorporate";
 import IncreaseGroupCredit from "../pages/increaseGroupCredit/IncreaseGroupCredit";
 import SingleUser from "../pages/singleUser/SingleUser";
 import Settings from "../pages/settings/Settings";
-import Categories from "../pages/categories/Categories";
+import Groups from "../pages/Groups/Groups";
+import IncreaseHistory from "../pages/IncreaseListPeyment/IncreaseHistory";
 
 export default function ApplicationRoutes() {
 
@@ -22,13 +22,13 @@ export default function ApplicationRoutes() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/management/details" element={<CorporateDetail/>}/>
                 <Route path="/management/settings" element={<Settings/>}/>
-                <Route path="/management/categories" element={<Categories/>}/>
+                <Route path="/management/categories" element={<Groups/>}/>
                 <Route path="/management" element={<Management/>}/>
 
-                <Route path="/finance/increaselist" element={<IncreaseList/>}/>
+                <Route path="/finance/IncreaseHistory" element={<IncreaseHistory/>}/>
                 <Route path="/finance" element={<Finance/>}/>
 
-                <Route path="/personnel/increasegroupcredit/:PersonelCount" element={<IncreaseGroupCredit/>}/>
+                <Route path="/personnel/increasegroupcredit" element={<IncreaseGroupCredit/>}/>
                 <Route path="/personnel/detail/:PersonnelId" element={<SingleUser/>}/>
                 <Route path="/personnel" element={<Users/>}/>
 

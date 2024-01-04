@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import _userDetails from "./_userDetails";
-import _userTickets from "./_userTickets";
+import _userSubscribes from "./_userSubscribes";
 import _userActions from "./_userActions";
 import {useSearchParams} from "react-router-dom";
 import Loading from "../../components/Loading";
@@ -38,7 +38,7 @@ const SingleUser = (props) => {
     return (
         <>
             <_userDetails user={user}/>
-            <_userTickets user={user}/>
+            <_userSubscribes user={user}/>
         </>
     );
 };

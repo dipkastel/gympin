@@ -7,16 +7,17 @@ import NBottomNavigation from "../components/NBottomNavigation";
 import AuthRoutes from "./AuthRoutes"
 import Places from "../pages/places/Places";
 import Profile from "../pages/profile/Profile";
-import Tickets from "../pages/tickets/Tickets";
+import Purchased from "../pages/tickets/Purchased";
 import Wallet from "../pages/wallet/Wallet";
 import Notifs from "../pages/notifs/Notifs";
 import Place from "../pages/places/place/Place";
-import SingleTicket from "../pages/tickets/singleTicket/SingleTicket";
+import SingleSubscribe from "../pages/tickets/singleSubscribe/SingleSubscribe";
 import Survey from "../pages/survey/Survey";
 import InviteFriends from "../pages/inviteFriends/InviteFriends";
 import EditProfile from "../pages/profile/editProfile/EditProfile";
-import Invoice from "../pages/tickets/invoice/Invoice";
 import Checkout from "../pages/checkout/Checkout";
+import Invoices from "../pages/invoices/invoices";
+import UserBasket from "../pages/basket/UserBasket";
 
 export default function ApplicationRoutes() {
     const  isAuthorized  = useSelector( ({auth:{user}})=>  user?user.Id!=null:false );
@@ -34,17 +35,18 @@ export default function ApplicationRoutes() {
                 <Route path="/profile/edit" element={isAuthorized?<EditProfile/>: <AuthRoutes/>}/>
                 <Route path="/profile" element={isAuthorized?<Profile/>: <AuthRoutes/>}/>
 
-                {/*ticket*/}
-                <Route path="/tickets/singleTicket/:ticketId" element={isAuthorized?<SingleTicket/>: <AuthRoutes/>}/>
-                <Route path="/tickets" element={isAuthorized?<Tickets/>: <AuthRoutes/>}/>
+                {/*purchasedSubscribe*/}
+                <Route path="/tickets/singleSubscribe/:subscribeId" element={isAuthorized?<SingleSubscribe/>: <AuthRoutes/>}/>
+                <Route path="/tickets" element={isAuthorized?<Purchased/>: <AuthRoutes/>}/>
 
                 <Route path="/wallet" element={isAuthorized?<Wallet/>: <AuthRoutes/>}/>
                 <Route path="/checkout/:formData"  element={isAuthorized?<Checkout/>: <AuthRoutes/>}/>
 
-
-                <Route path="/invoice/:ticketId" element={isAuthorized?<Invoice/>: <AuthRoutes/>}/>
-
                 <Route path="/notifs" element={isAuthorized?<Notifs/>: <AuthRoutes/>}/>
+
+                <Route path="/invoices" element={isAuthorized?<Invoices/>: <AuthRoutes/>}/>
+
+                <Route path="/basket" element={isAuthorized?<UserBasket/>: <AuthRoutes/>}/>
 
                 <Route path="/auth/*" element={<AuthRoutes/>} />
 

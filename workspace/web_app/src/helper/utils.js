@@ -138,7 +138,7 @@ export function setStorage(key, value, expires) {
     return true;
 }
 
-export function getTicketPersianStatus(text){
+export function getSubscribePersianStatus(text){
     var messages = {
         NEW:"جدید",
         PROCESSING:"در حال انجام",
@@ -150,9 +150,9 @@ export function getTicketPersianStatus(text){
     return messages[text];
 }
 
-//maximum ticket id 999999999
-export function generateTicketCode(ticketId) {
-    let len = ticketId.toString().length;
+//maximum purchasedSubscribe id 999999999
+export function generateSubscribeCode(subscribeId) {
+    let len = subscribeId.toString().length;
     var extraCharCount = Math.round(Math.random() * (9-len));
     var result = "";
     var subs = [];
@@ -164,7 +164,7 @@ export function generateTicketCode(ticketId) {
     }
     while (result.length <= (len+extraCharCount)) {
         if (subs.includes(result.length)){
-            result += ticketId.toString().substring(subs.indexOf(result.length), subs.indexOf(result.length) + 1);
+            result += subscribeId.toString().substring(subs.indexOf(result.length), subs.indexOf(result.length) + 1);
             // result+="c"
         }
         // else result+="0"
@@ -178,8 +178,8 @@ export function generateTicketCode(ticketId) {
     return result;
 }
 
-//maximum ticket id 999999999
-export function getTicketIdByQr(qr) {
+//maximum purchasedSubscribe id 999999999
+export function getSubscribeIdByQr(qr) {
     let charCount  = qr.substring(qr.length-1,qr.length);
     var result = "";
     for (var i =Number(charCount-1);i>=0;i--){

@@ -1,11 +1,10 @@
 package com.notrika.gympin.persistence.entity.sport;
 
-import com.notrika.gympin.common.sport.enums.LaunchStatus;
+import com.notrika.gympin.common.sport.sport.enums.LaunchStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.event.BaseEventEntity;
-import com.notrika.gympin.persistence.entity.gate.GateEntity;
-import com.notrika.gympin.persistence.entity.sport.option.OptionOfSportEntity;
-import com.notrika.gympin.persistence.entity.sportplace.SportPlaceEntity;
+import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
+import com.notrika.gympin.persistence.entity.sport.option.sportOptionOfSportEntity;
+import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -35,23 +34,19 @@ public class SportEntity extends BaseEntity<SportEntity> {
 
     @OneToMany(mappedBy = "sport")
     @ToString.Exclude
-    private List<OptionOfSportEntity> optionsOfSports;
+    private List<sportOptionOfSportEntity> optionsOfSports;
 
     @OneToMany(mappedBy = "sport")
     @ToString.Exclude
-    private List<SportPlaceEntity> sportPlaces;
+    private List<PlaceSportEntity> placeSports;
 
     @OneToMany(mappedBy = "sport", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<SportMultimediaEntity> sportMultimedias;
 
-    @OneToMany(mappedBy = "sport", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private List<BaseEventEntity> events;
-
     @OneToMany(mappedBy = "sport")
     @ToString.Exclude
-    private List<GateEntity> gates;
+    private List<HallEntity> halls;
 
     @Override
     public boolean equals(Object o) {

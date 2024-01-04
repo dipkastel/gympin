@@ -111,7 +111,7 @@ const ArticleCategories = () => {
 
 
                         <Modal.Header closeButton>
-                            <Modal.Title>{"حذف پلن"}</Modal.Title>
+                            <Modal.Title>{"حذف عضویت"}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             {itemToDelete&&"حذف "+itemToDelete.Name}

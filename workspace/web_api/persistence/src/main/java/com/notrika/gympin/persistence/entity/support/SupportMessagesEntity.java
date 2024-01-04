@@ -23,11 +23,11 @@ import java.util.Objects;
 public class SupportMessagesEntity extends BaseEntityWithCreateUpdate<SupportMessagesEntity> {
 
     @ManyToOne
-    @JoinColumn(name = "support_id")
+    @JoinColumn(name = "supportId")
     private SupportEntity support;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "supportUserId")
     private UserEntity user;
 
     @Column(name = "supportMessageStatus")

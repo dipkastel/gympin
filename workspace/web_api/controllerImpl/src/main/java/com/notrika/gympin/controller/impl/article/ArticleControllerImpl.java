@@ -1,6 +1,6 @@
 package com.notrika.gympin.controller.impl.article;
 
-import com.notrika.gympin.common._base.param.BasePagedParam;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.article.api.ArticleController;
 import com.notrika.gympin.common.article.dto.ArticleDto;
 import com.notrika.gympin.common.article.param.ArticleImageParam;
@@ -31,12 +31,12 @@ public class ArticleControllerImpl implements ArticleController {
     }
 
     @Override
-    public ResponseEntity<ArticleDto> update(@RequestBody ArticleParam articleParam) {
+    public ResponseEntity<ArticleDto> update( ArticleParam articleParam) {
         return ResponseEntity.ok(articleService.update(articleParam));
     }
 
     @Override
-    public ResponseEntity<ArticleDto> delete(ArticleParam articleParam) {
+    public ResponseEntity<ArticleDto> delete( ArticleParam articleParam) {
         return ResponseEntity.ok(articleService.delete(articleParam));
     }
 

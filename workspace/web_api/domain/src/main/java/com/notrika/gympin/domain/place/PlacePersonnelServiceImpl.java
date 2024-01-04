@@ -1,45 +1,46 @@
 package com.notrika.gympin.domain.place;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common.contact.sms.dto.SmsDto;
-import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
-import com.notrika.gympin.common.contact.sms.service.SmsService;
-import com.notrika.gympin.common.exception.Error;
-import com.notrika.gympin.common.exception.ExceptionBase;
-import com.notrika.gympin.common.exception.general.DuplicateEntryAddExeption;
-import com.notrika.gympin.common.exception.general.SendSmsException;
-import com.notrika.gympin.common.exception.user.UnknownUserException;
-import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
+import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelGateAccessDto;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelGateAccessParam;
+import com.notrika.gympin.common.place.personnel.param.PlacePersonnelBuyableAccessParam;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
 import com.notrika.gympin.common.place.personnel.service.PlacePersonnelService;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
-import com.notrika.gympin.common.user.enums.UserRole;
-import com.notrika.gympin.common.user.param.UserRegisterParam;
-import com.notrika.gympin.common.user.param.UserRoleParam;
+import com.notrika.gympin.common.settings.sms.dto.SmsDto;
+import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
+import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.param.UserRegisterParam;
+import com.notrika.gympin.common.user.user.param.UserRoleParam;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
+import com.notrika.gympin.common.util.exception.general.SendSmsException;
+import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
-import com.notrika.gympin.domain.util.convertor.GateConvertor;
+import com.notrika.gympin.domain.util.convertor.BuyableConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
-import com.notrika.gympin.persistence.dao.repository.*;
-import com.notrika.gympin.persistence.entity.gate.GateEntity;
+import com.notrika.gympin.persistence.dao.repository.place.PlacePersonnelAccessRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlacePersonnelHallAccessRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlacePersonnelRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
-import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelGateAccessEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -58,7 +59,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     PlacePersonnelAccessRepository placePersonnelAccessRepository;
 
     @Autowired
-    PlacePersonnelGateAccessRepository placePersonnelGateAccessRepository;
+    PlacePersonnelHallAccessRepository placePersonnelHallAccessRepository;
 
     @Autowired
     private PlaceRepository placeRepository;
@@ -76,14 +77,14 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     @Transactional
     public PlacePersonnelDto add(@NonNull PlacePersonnelParam placePersonnelParam) {
         UserEntity user = userRepository.findByPhoneNumber(placePersonnelParam.getPhoneNumber());
-        PlaceEntity place = placeRepository.getById(placePersonnelParam.getPlaceParam().getId());
+        PlaceEntity place = placeRepository.getById(placePersonnelParam.getPlace().getId());
 
         if (user == null) {
-            user = accountService.addUser(UserRegisterParam.builder().invitedBy("P"+ GeneralHelper.getInviteCode(place.getId(),1)).phoneNumber(placePersonnelParam.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
-        }else{
+            user = accountService.addUser(UserRegisterParam.builder().invitedBy("P" + GeneralHelper.getInviteCode(place.getId(), 1)).phoneNumber(placePersonnelParam.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
+        } else {
             //check for duplication
             UserEntity finalUser = user;
-            if(place.getPlaceOwners().stream().anyMatch(p-> Objects.equals(p.getUser().getId(), finalUser.getId())))
+            if (place.getPlaceOwners().stream().anyMatch(p -> Objects.equals(p.getUser().getId(), finalUser.getId())))
                 throw new DuplicateEntryAddExeption();
         }
 
@@ -91,6 +92,8 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
                 .place(place)
                 .user(user)
                 .userRole(place.getPlaceOwners().size() > 0 ? PlacePersonnelRole.PLACE_PERSONNEL : PlacePersonnelRole.PLACE_OWNER)
+                .isBeneficiary(false)
+                .commissionFee(0.0)
                 .build();
         placePersonnelRepository.add(placePersonnelEntity);
 
@@ -129,15 +132,24 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     }
 
     @Override
+    public PlacePersonnelDto updatePersonnelCommissionFee(PlacePersonnelParam param) {
+        PlacePersonnelEntity placePersonnel = placePersonnelRepository.getById(param.getId());
+        placePersonnel.setIsBeneficiary(param.getCommissionFee() > 0);
+        placePersonnel.setCommissionFee(param.getCommissionFee());
+        return PlaceConvertor.personnelToDto(placePersonnelRepository.update(placePersonnel));
+    }
+
+    @Override
     public List<PlacePersonnelAccessDto> updatePersonnelAccess(List<PlacePersonnelAccessParam> personnelAccess) {
         PlacePersonnelEntity placePersonnel = placePersonnelRepository.getById(personnelAccess.get(0).getPlacePersonelId());
         List<PlacePersonnelAccessEntity> toUpdate = new ArrayList<>();
         for (PlacePersonnelAccessParam param : personnelAccess) {
             try {
-                PlacePersonnelAccessEntity access =  placePersonnel.getPlacePersonnelAccess().stream().filter(a->a.getSection()==param.getSection()).findFirst().get();
+                PlacePersonnelAccessEntity access = placePersonnel.getPlacePersonnelAccess().stream().filter(a -> a.getSection() == param.getSection()).findFirst().get();
                 access.setAccess(param.getAccess());
                 toUpdate.add(access);
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
         }
         placePersonnelAccessRepository.updateAll(toUpdate);
         return PlaceConvertor.personnelAccessToDto(toUpdate);
@@ -174,51 +186,61 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             resultItem.setAccess(placePersonnel.getUserRole() == PlacePersonnelRole.PLACE_OWNER || hasAccess);
             result.add(resultItem);
         }
-        if(toAdd.size()>0){
+        if (toAdd.size() > 0) {
             placePersonnelAccessRepository.addAll(toAdd);
         }
         return result;
     }
 
     @Override
-    public List<PlacePersonnelGateAccessDto> updatePersonnelGateAccess(List<PlacePersonnelGateAccessParam> personnelGateAccess) {
-
-        PlacePersonnelEntity placePersonnel = placePersonnelRepository.getById(personnelGateAccess.get(0).getPlacePersonelId());
-        List<PlacePersonnelGateAccessEntity> toUpdate = new ArrayList<>();
-        for (PlacePersonnelGateAccessParam param : personnelGateAccess) {
-            try {
-                PlacePersonnelGateAccessEntity access =  placePersonnel.getPlacePersonnelGateAccess().stream().filter(a->a.getGate().getId()==param.getGate().getId()).findFirst().get();
-                access.setAccess(param.getAccess());
-                toUpdate.add(access);
-            }catch (Exception e){}
+    public List<PlacePersonnelDto> getPlaceBeneficiaries(Long placeId) {
+        try {
+            return placeRepository.getById(placeId).getPlaceOwners().stream().filter(PlacePersonnelEntity::getIsBeneficiary).map(PlaceConvertor::personnelToDto).collect(Collectors.toList());
+        } catch (Exception e) {
+            return null;
         }
-        placePersonnelGateAccessRepository.updateAll(toUpdate);
-        return PlaceConvertor.personnelGateAccessToDto(toUpdate);
     }
 
     @Override
-    public List<PlacePersonnelGateAccessDto> getUserPlaceGateAccess(Long placeId, Long userId) {
+    public List<PlacePersonnelBuyableAccessDto> updatePersonnelBuyableAccess(List<PlacePersonnelBuyableAccessParam> personnelhallAccess) {
+
+        PlacePersonnelEntity placePersonnel = placePersonnelRepository.getById(personnelhallAccess.get(0).getPlacePersonelId());
+        List<PlacePersonelBuyableAccessEntity> toUpdate = new ArrayList<>();
+        for (PlacePersonnelBuyableAccessParam param : personnelhallAccess) {
+            try {
+                PlacePersonelBuyableAccessEntity access = placePersonnel.getPlacePersonnelBuyableAccess().stream().filter(a -> a.getBuyable().getId() == param.getBuyableParam().getId()).findFirst().get();
+                access.setAccess(param.getAccess());
+                toUpdate.add(access);
+            } catch (Exception e) {
+            }
+        }
+        placePersonnelHallAccessRepository.updateAll(toUpdate);
+        return PlaceConvertor.personelBuyableAccessToDto(toUpdate);
+    }
+
+    @Override
+    public List<PlacePersonnelBuyableAccessDto> getUserPlaceHallAccess(Long placeId, Long userId) {
         PlaceEntity place = placeRepository.getById(placeId);
         PlacePersonnelEntity placePersonnel = placePersonnelRepository.findByUserIdAndPlaceIdAndDeletedFalse(userId, placeId);
         if (placePersonnel == null)
             throw new UnknownUserException();
-        List<PlacePersonnelGateAccessEntity> currentAccess = placePersonnel.getPlacePersonnelGateAccess();
-        List<PlacePersonnelGateAccessEntity> toAdd = new ArrayList<>();
-        List<PlacePersonnelGateAccessDto> result = new ArrayList<>();
+        List<PlacePersonelBuyableAccessEntity> currentAccess = placePersonnel.getPlacePersonnelBuyableAccess();
+        List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
+        List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
 
-        for (GateEntity placeGate : place.getGates()) {
-            PlacePersonnelGateAccessDto resultItem = new PlacePersonnelGateAccessDto();
-            resultItem.setGate(GateConvertor.convertToDto(placeGate));
+        for (BuyableEntity placeBuyable : place.getBuyables()) {
+            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
+            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
             resultItem.setPlacePersonelId(placePersonnel.getId());
             var hasAccess = false;
             try {
-                var currentAccessItem = currentAccess.stream().filter(a -> a.getGate().getId().equals(placeGate.getId())).findFirst();
+                var currentAccessItem = currentAccess.stream().filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
                 if (currentAccessItem.isEmpty()) {
                     toAdd.add(
-                            PlacePersonnelGateAccessEntity.builder()
+                            PlacePersonelBuyableAccessEntity.builder()
                                     .access(placePersonnel.getUserRole() == PlacePersonnelRole.PLACE_OWNER || hasAccess)
                                     .placePerson(placePersonnel)
-                                    .gate(placeGate)
+                                    .buyable(placeBuyable)
                                     .build()
                     );
                 }
@@ -229,8 +251,8 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             result.add(resultItem);
         }
 
-        if(toAdd.size()>0){
-            placePersonnelGateAccessRepository.addAll(toAdd);
+        if (toAdd.size() > 0) {
+            placePersonnelHallAccessRepository.addAll(toAdd);
         }
         return result;
 

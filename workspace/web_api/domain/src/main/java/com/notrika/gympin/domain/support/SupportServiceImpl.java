@@ -1,23 +1,26 @@
 package com.notrika.gympin.domain.support;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common.contact.sms.dto.SmsDto;
-import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
-import com.notrika.gympin.common.contact.sms.service.SmsService;
-import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
+import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.settings.sms.dto.SmsDto;
+import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
+import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.support.dto.SupportDto;
 import com.notrika.gympin.common.support.enums.SupportMessageStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
 import com.notrika.gympin.common.support.service.SupportService;
-import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.SupportConvertor;
-import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
-import com.notrika.gympin.persistence.dao.repository.SupportMessageRepository;
-import com.notrika.gympin.persistence.dao.repository.SupportRepository;
-import com.notrika.gympin.persistence.dao.repository.UserRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.support.SupportMessageRepository;
+import com.notrika.gympin.persistence.dao.repository.support.SupportRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
+import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.support.SupportMessagesEntity;
@@ -49,6 +52,9 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     PlaceRepository placeRepository;
 
     @Autowired
+    CorporateRepository corporateRepository;
+
+    @Autowired
     SmsService smsService;
 
 
@@ -61,10 +67,17 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
             PlaceEntity place = placeRepository.getById(supportParam.getPlaceId());
             supportEntity.setPlace(place);
         }
+
         if (supportParam.getUserId() != null) {
             UserEntity user = userRepository.getById(supportParam.getUserId());
             supportEntity.setUser(user);
         }
+
+        if (supportParam.getCorporateId() != null) {
+            CorporateEntity corporate = corporateRepository.getById(supportParam.getUserId());
+            supportEntity.setCorporate(corporate);
+        }
+
         SupportMessagesEntity supportMessagesEntity = new SupportMessagesEntity();
         supportMessagesEntity.setSupportMessage(supportParam.getSupportMessages().getMessages());
         supportMessagesEntity.setSupportMessageStatus(supportParam.getSupportMessages().getStatus());
@@ -75,7 +88,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     }
 
     @Override
-    public SupportDto addMessageToSupport(@NonNull SupportMessageParam param) {
+    public SupportDto addMessageToSupport(@NonNull SupportMessageParam param) throws Exception {
         SupportMessagesEntity tme = new SupportMessagesEntity();
         tme.setSupportMessage(param.getMessages());
         tme.setSupportMessageStatus(param.getStatus());
@@ -97,6 +110,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
                 );
             }
         } catch (Exception e) {
+            throw new Exception(e);
         }
         return SupportConvertor.toDto(supportMessageRepository.add(tme).getSupport());
     }
@@ -111,6 +125,12 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     public List<SupportDto> getByPlace(PlaceParam param) {
         PlaceEntity place = placeRepository.getById(param.getId());
         return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndPlace(place));
+    }
+
+    @Override
+    public List<SupportDto> getByCorporate(CorporateParam param) {
+        CorporateEntity corporate = corporateRepository.getById(param.getId());
+        return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndCorporate(corporate));
     }
 
     @Override

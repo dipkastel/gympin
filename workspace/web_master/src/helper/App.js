@@ -1,16 +1,12 @@
-
 import {ThemeProvider as MuiThemeProvider} from "@mui/material/styles";
 import {ThemeProvider as BootStrapThemeProvider} from "react-bootstrap"
 import {GympinTheme} from "../helper/GympinTheme"
 import {MainRoutes} from "../router/MainRoutes";
-import {PersistGate} from "redux-persist/integration/react";
-import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "bootstrap/dist/css/bootstrap.rtl.min.css"
 import "../helper/style.css"
-import Splash from "../pages/splash/Splash";
 import {useState} from "react";
 import GympinPagesProvider from "../components/GympinPagesProvider";
 

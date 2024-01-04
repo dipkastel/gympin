@@ -5,7 +5,7 @@ import {ActionTypesSaga, sagaActions} from "../actions/SagaActions"
 import {user_getById} from "../../../network/api/user.api";
 import {place_getById} from "../../../network/api/place.api";
 import {placeActions} from "../actions/PlaceActions";
-import {Gates_getByPlace} from "../../../network/api/gates.api";
+import {Halls_getByPlace} from "../../../network/api/halls.api";
 import {placePersonnel_getAccess} from "../../../network/api/placePersonnel.api";
 import {accessActions} from "../actions/AccessActions";
 import {select} from "@redux-saga/core/effects";
@@ -65,17 +65,17 @@ export function* saga() {
         yield put(accessActions.SetAccess(result));
     });
 
-    yield takeLatest(ActionTypesSaga.RequestGates, function* gatesRequested(action) {
+    yield takeLatest(ActionTypesSaga.RequestHalls, function* hallsRequested(action) {
         const result = yield call(
             () => new Promise((resolve) => {
-                Gates_getByPlace({Id: action.payload.place.Id}).then((_result) => {
+                Halls_getByPlace({Id: action.payload.place.Id}).then((_result) => {
                     resolve(_result.data.Data);
                 }).catch(e => {
                     console.log(e)
                 });
             })
         );
-        yield put(placeActions.SetGates(result));
+        yield put(placeActions.SetHalls(result));
     });
 
 
@@ -96,7 +96,7 @@ export function* saga() {
         try{store.dispatch(settingActions.SetServerSettings(undefined));}catch (e) {}
         try{store.dispatch(settingActions.SetAppSettings(undefined));}catch (e) {}
         try{store.dispatch(placeActions.SetPlace(undefined));}catch (e) {}
-        try{store.dispatch(placeActions.SetGates(undefined));}catch (e) {}
+        try{store.dispatch(placeActions.SetHalls(undefined));}catch (e) {}
         try{store.dispatch(accessActions.SetAccess(undefined));}catch (e) {}
         try{store.dispatch(authActions.Logout());}catch (e) {}
     });

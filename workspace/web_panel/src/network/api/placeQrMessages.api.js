@@ -5,7 +5,7 @@ export function placeQrMessages_add(data) {
   return axios.post(PlaceQrMessageApi.add, data);
 }
 export function placeQrMessages_delete(data) {
-  return axios.put(PlaceQrMessageApi.delete, null,{ params: data });
+  return axios.put(PlaceQrMessageApi.delete,data );
 }
 export function placeQrMessages_getAll() {
   return axios.get(PlaceQrMessageApi.getAll);

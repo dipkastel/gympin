@@ -2,7 +2,8 @@ package com.notrika.gympin.persistence.entity.corporate;
 
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.transaction.TransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.CorporatePersonnelCreditEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,17 +24,17 @@ import java.util.Objects;
 public class CorporatePersonnelEntity extends BaseEntity<CorporatePersonnelEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "corporate_id")
+    @JoinColumn(name = "corporateId")
     private CorporateEntity corporate;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "personnelUserId")
     private UserEntity user;
 
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "personel_category_id")
-    private CorporatePersonnelCategoryEntity PersonnelCategory;
+    @JoinColumn(name = "personelGroupId")
+    private CorporatePersonnelGroupEntity personnelGroup;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
@@ -42,13 +43,13 @@ public class CorporatePersonnelEntity extends BaseEntity<CorporatePersonnelEntit
     @Column( name = "CreditBalance",nullable = false)
     private BigDecimal creditBalance = BigDecimal.ZERO;
 
-    @OneToMany(mappedBy = "corporatePersonnel")
+    @OneToMany(mappedBy = "corporatePersonnel",fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<CorporatePersonnelCreditEntity> credits;
 
-    @OneToMany(mappedBy = "corporatePersonnel")
+    @OneToMany(mappedBy = "corporatePersonnel",fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<TransactionEntity> transactions;
+    private List<FinanceCorporateTransactionEntity> transactions;
 
     @Override
     public boolean equals(Object o) {

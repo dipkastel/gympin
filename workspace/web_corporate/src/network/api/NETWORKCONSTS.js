@@ -1,6 +1,8 @@
+import {increaseCorporateDeposit_requestIncreaseCorporateDeposits} from "./increaseCorporateDeposit.api";
+
 export let AuthApi = {
-    BASEURL: "http://localhost:8080/api/",
-     // BASEURL: "https://api.gympin.ir/",
+    // BASEURL: "http://localhost:8080/api/",
+     BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
@@ -18,9 +20,9 @@ export let Api_url = {
         getTransactions:"v1/corporate/getTransactions",
         getTotalDeposit:"v1/corporate/getTotalDeposit",
         update:"v1/corporate/update",
-        getCorproteCategories:"v1/corporate/getCorporateCategories",
-        addCategory:"v1/corporate/addCategory",
-        deleteCategory:"v1/corporate/deleteCategory"
+        getCorproteCategories:"v1/corporate/getCorporateGroups",
+        addCategory:"v1/corporate/addGroup",
+        deleteCategory:"v1/corporate/deleteGroup"
     },
     CorporatePersonnel:{
         add: "v1/corporatePersonnel/add",
@@ -32,7 +34,15 @@ export let Api_url = {
         getAll: "v1/corporatePersonnel/getAll",
         getById: "v1/corporatePersonnel/getById",
         update: "v1/corporatePersonnel/update",
+        query: "v1/corporatePersonnel/query",
         PersonnelByCorporate:"v1/corporatePersonnel/PersonnelByCorporate"
+    },
+    gateway:{
+        getPaymentGateways:"v1/Gateway/getPaymentGateways",
+        getPaymentSuggest:"v1/suggest/getall",
+    },
+    gatewayApplication:{
+        query: "v1/GatewayApplication/query",
     },
     homePage: {
         GET_HOME_PAGE: "v1/homepage/getHome",
@@ -68,14 +78,20 @@ export let Api_url = {
     state:{
         GET_ALL:"v1/state/getAll"
     },
+    suggest: {
+        query: "v1/suggest/query",
+    },
     user: {
         GET_BY_ID: "v1/user/getById",
         UPDATE_USER: "v1/user/update",
         UPDATE_AVATAR: "v1/user/updateUserAvatar",
     },
+    increaseCorporateDeposit:{
+        requestIncreaseCorporateDeposits:"v1/increaseCorporateDeposit/requestIncreaseCorporateDeposits"
+    },
     transaction:{
-        getPaymentGateways:"v1/transaction/getPaymentGateways",
         setPaymentRequest:"v1/transaction/setPaymentRequest",
-        query:"v1/transaction/query",
+        query:"v1/TransactionCorporate/query",
+        increaseQuery: "v1/increaseCorporateDeposit/query",
     }
 };

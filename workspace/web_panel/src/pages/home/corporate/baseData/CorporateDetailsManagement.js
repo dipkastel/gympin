@@ -2,22 +2,24 @@ import React, {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import Notice from "../../../partials/content/Notice";
 import "./corporateCss.css";
-import CorporateBasics from "./Base/CorporateBasics";
 import {corporate_getById} from "../../../../network/api/corporate.api";
-import CorporatePersonnel from "./Personnel/CorporatePersonnel";
-import CorporateStatus from "./Status/CorporateStatus";
 import Notes from "../../../partials/content/notes/Notes";
-import TotalCredit from "./TotalCredit/TotalCredit";
-import TotalDeposit from "./TotalDeposit/TotalDeposit";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import CorporateTransactionRequests from "./TransActionRequests/CorporateTransactionRequests";
-import DeleteCorporate from "./Delete/DeleteCorporate";
+import {Paper, Tab, Tabs} from "@mui/material";
+import CorporateManagementCorporateTab from "./CorporateManagementTabs/CorporateManagementCorporateTab";
+import CorporateManagementFinanceTab from "./CorporateManagementTabs/CorporateManagementFinanceTab";
+import CorporateManagementSettingTab from "./CorporateManagementTabs/CorporateManagementSettingTab";
 
 const CorporateDetailsManagement = () => {
     const error = useContext(ErrorContext);
     const {corporateId} = useParams();
     const [currentCorporate, SetCurrentCorporate] = useState(null);
+    const [selectedTab, setSelectedTab] = useState("CORPORATE");
     useEffect(() => {
+        getCorporateData();
+    }, [corporateId]);
+
+    function getCorporateData(){
         corporate_getById({id: corporateId})
             .then((data) => {
                 SetCurrentCorporate(data.data.Data);
@@ -29,27 +31,34 @@ const CorporateDetailsManagement = () => {
                     error.showError({message: "خطا نا مشخص",});
                 }
             });
-    }, [corporateId]);
+    }
     return (
         <>
             <Notice icon="flaticon-warning kt-font-primary">
                 <p>تمامی شرکت ها در این قسمت مدیریت میشوند</p>
             </Notice>
-            {currentCorporate&&<div className="row">
-                <div className="col-md-5">
-                    <CorporateStatus currentCorporate={currentCorporate} />
-                    <CorporateBasics currentCorporate={currentCorporate} />
-                    <DeleteCorporate currentCorporate={currentCorporate} />
-                </div>
-                <div className="col-md-5">
-                    <TotalCredit currentCorporate={currentCorporate} />
-                    <TotalDeposit currentCorporate={currentCorporate} />
-                    <CorporateTransactionRequests currentCorporate={currentCorporate} />
-                    {/*<DepositCharges currentCorporate={currentCorporate} />*/}
-                    <CorporatePersonnel currentCorporate={currentCorporate} />
+            {currentCorporate && <div className="row">
+                <div className={"col-md-10"}>
+                    <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
+                        <Tabs
+                            value={selectedTab}
+                            onChange={(e, n) => setSelectedTab(n)}
+                            indicatorColor="primary"
+                            textColor="inherit"
+                            variant={"standard"}
+                            aria-label="full width tabs example"
+                        >
+                            <Tab label="سازمان" value={"CORPORATE"}/>
+                            <Tab label="مالی" value={"FINANCE"}/>
+                            <Tab label="تنظیمات" value={"SETTING"}/>
+                        </Tabs>
+                    </Paper>
+                    {selectedTab === "CORPORATE" && <CorporateManagementCorporateTab currentCorporate={currentCorporate}/>}
+                    {selectedTab === "FINANCE" && <CorporateManagementFinanceTab currentCorporate={currentCorporate}/>}
+                    {selectedTab === "SETTING" && <CorporateManagementSettingTab currentCorporate={currentCorporate} updatePage={getCorporateData}/>}
                 </div>
                 <div className="col-md-2">
-                     <Notes source={{Corporate:{Id:currentCorporate.Id}}} />
+                    <Notes source={{Corporate: {Id: currentCorporate.Id}}}/>
                 </div>
             </div>}
         </>

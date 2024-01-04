@@ -14,15 +14,17 @@ import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {toPriceWithComma} from "../../../../../helper";
+import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
+import {Form} from "react-bootstrap";
+import Select from "react-select";
 
 const _placePersonelDetails = ({personel}) => {
     return (
         <>
 
-            <Notice icon="flaticon-warning kt-font-primary"> {"مدیریت پرسنل "+personel.User.Username+" از مرکز "+personel.Place.Name}</Notice>
+            <Portlet >
 
-            <Box sx={{width: "100%"}}>
-                <Paper sx={{width: "100%",p:1}}>
+                <PortletBody>
                     <Grid
                         container
                         direction="row"
@@ -36,8 +38,8 @@ const _placePersonelDetails = ({personel}) => {
 
                         <Avatar  alt="userImage" src={(personel.User.Avatar)?(personel.User.Avatar.Url||""):""}  sx={{width:130,height:130}} />
                     </Grid>
-                </Paper>
-            </Box>
+                </PortletBody>
+            </Portlet>
         </>
     );
 };

@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.corporate.corporatePersonnel.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.dto.BaseDtoWithCreateUpdate;
+import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -20,4 +20,5 @@ public class CorporatePersonnelCreditDto extends BaseDtoWithCreateUpdate<Corpora
 
     @JsonProperty("CreditAmount")
     private BigDecimal creditAmount;
+
 }

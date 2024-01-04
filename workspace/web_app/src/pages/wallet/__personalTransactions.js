@@ -15,11 +15,9 @@ const __personalTransactions = ({transactions}) => {
         return result;
     }
     const getRequest = (items) => {
-        // console.log("pa",items)
         return items.Items.find(o => o.TransactionStatus == "REQUEST"&&o.TransactionType=="CHARGE_USER");
     }
     const getPayment = (items) => {
-        // console.log("pa",items)
         return items.Items.find(o => o.TransactionStatus != "REQUEST"&&o.TransactionType=="CHARGE_USER");
     }
 

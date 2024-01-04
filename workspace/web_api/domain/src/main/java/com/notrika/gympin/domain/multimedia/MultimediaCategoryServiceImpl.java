@@ -1,12 +1,12 @@
 package com.notrika.gympin.domain.multimedia;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.multimedia.dto.MultimediaCategoryDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaCategoryParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaCategoryService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.MultimediaCategoryConvertor;
-import com.notrika.gympin.persistence.dao.repository.MultimediaCategoryRepository;
+import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaCategoryRepository;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

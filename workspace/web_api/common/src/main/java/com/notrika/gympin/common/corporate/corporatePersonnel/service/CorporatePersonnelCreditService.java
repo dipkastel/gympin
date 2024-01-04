@@ -1,7 +1,9 @@
 package com.notrika.gympin.common.corporate.corporatePersonnel.service;
 
-import com.notrika.gympin.common._base.base.BaseService;
-import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelFileParam;
+import com.notrika.gympin.common.util._base.base.BaseService;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
 

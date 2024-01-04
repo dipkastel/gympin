@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.article;
 
-import com.notrika.gympin.common._base.param.BaseParam;
+import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.article.dto.ArticleDto;
 import com.notrika.gympin.common.article.param.ArticleImageParam;
 import com.notrika.gympin.common.article.param.ArticleParam;
@@ -8,9 +8,9 @@ import com.notrika.gympin.common.article.query.ArticleQuery;
 import com.notrika.gympin.common.article.service.ArticleService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.ArticleConvertor;
-import com.notrika.gympin.persistence.dao.repository.ArticleCategoryRepository;
-import com.notrika.gympin.persistence.dao.repository.ArticleRepository;
-import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
+import com.notrika.gympin.persistence.dao.repository.article.ArticleCategoryRepository;
+import com.notrika.gympin.persistence.dao.repository.article.ArticleRepository;
+import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.entity.article.ArticleCategoryEntity;
 import com.notrika.gympin.persistence.entity.article.ArticleEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;

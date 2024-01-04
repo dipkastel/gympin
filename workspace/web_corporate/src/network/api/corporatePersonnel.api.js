@@ -22,6 +22,11 @@ export function corporatePersonnel_update(data) {
 export function corporatePersonnel_ByCorporate(data) {
   return axios.get(Api_url.CorporatePersonnel.PersonnelByCorporate,{params: data});
 }
+
+
+export function corporatePersonnel_query(data) {
+  return axios.post(Api_url.CorporatePersonnel.query,data);
+}
 export function corporatePersonnel_getTotalUserCredits(data) {
   return axios.get(Api_url.CorporatePersonnel.getTotalUserCredits,{params: data});
 }

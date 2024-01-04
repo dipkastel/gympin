@@ -1,24 +1,21 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {ErrorContext} from "../../components/GympinPagesProvider";
-import {connect, useSelector} from "react-redux";
+import {connect} from "react-redux";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {Box, Card, CardContent, CardHeader, CircularProgress, Grid, Typography} from "@mui/material";
-import {transactions_checkPayment} from "../../network/api/transactions.api";
 
 const Checkout = (params) => {
-    console.log("params",params)
     const navigate = useNavigate()
     const {formData} = useParams();
     const decodedFormData = decodeURIComponent(formData);
-    console.log("decodedFormData",decodedFormData)
     const error = useContext(ErrorContext);
-    const [counter,SetCounter] = useState(null);
-    const [transActionTitle,SetTransactionTitle] = useState("لطفا صبر کنید");
+    const [counter, SetCounter] = useState(null);
+    const [transActionTitle, SetTransactionTitle] = useState("لطفا صبر کنید");
     useEffect(() => {
         var incounter = 15;
         const interval = setInterval(() => {
-            if(incounter<=0)
+            if (incounter <= 0)
                 navigate("/wallet");
             SetCounter(incounter--);
         }, 1000);
@@ -49,37 +46,37 @@ const Checkout = (params) => {
     return (
         <>
             <Grid
-                sx={{height:"80vh"}}
+                sx={{height: "80vh"}}
                 container
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
             >
-            <Card elevation={3} sx={{margin: 1}}>
-                <CardHeader title={transActionTitle}/>
-                <CardContent>
-                    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-                        <CircularProgress variant="determinate" value={(counter*100)/15} />
-                        <Box
-                            sx={{
-                                top: 0,
-                                left: 0,
-                                bottom: 0,
-                                right: 0,
-                                position: 'absolute',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <Typography variant={"subtitle1"} component="div" color="text.secondary">
-                                {`${Math.round(counter)}`}
-                            </Typography>
+                <Card elevation={3} sx={{margin: 1}}>
+                    <CardHeader title={transActionTitle}/>
+                    <CardContent>
+                        <Box sx={{position: 'relative', display: 'inline-flex'}}>
+                            <CircularProgress variant="determinate" value={(counter * 100) / 15}/>
+                            <Box
+                                sx={{
+                                    top: 0,
+                                    left: 0,
+                                    bottom: 0,
+                                    right: 0,
+                                    position: 'absolute',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Typography variant={"subtitle1"} component="div" color="text.secondary">
+                                    {`${Math.round(counter)}`}
+                                </Typography>
+                            </Box>
                         </Box>
-                    </Box>
 
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
             </Grid>
         </>
     );

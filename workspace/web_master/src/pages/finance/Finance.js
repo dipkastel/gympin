@@ -10,16 +10,27 @@ import AccessDenied from "../../components/AccessDenied";
 
 function Finance(props){
     const currentPlace = useSelector(({place}) => place.place);
+    const currentUser = useSelector(({auth}) => auth.user);
     const[place,SetPlace] = useState(currentPlace);
+    const[user,SetUser] = useState(currentUser);
     const[changeValues,SetChangeValues] = useState(0);
     useEffect(() => {
-        if(!place) return;
-        props.RequestPlace(place.Id)
+        if(!user) return;
+        props.RequestUser(user)
     }, [changeValues]);
 
     useEffect(() => {
+        if(!place) return;
+        props.RequestPlace(place.Id)
+    }, []);
+
+    useEffect(() => {
         SetPlace(currentPlace);
-    }, [currentPlace,changeValues]);
+    }, [currentPlace]);
+
+    useEffect(() => {
+        SetUser(currentUser);
+    }, [currentUser,changeValues]);
 
 
     if(!getAccessOf(personnelAccessEnumT.Finance))
@@ -27,7 +38,7 @@ function Finance(props){
 
     return (
         <>
-            <_Wallet place={place} onRequestComplete={()=>SetChangeValues(Math.random())}/>
+            <_Wallet place={place} user={user} onRequestComplete={()=>SetChangeValues(Math.random())}/>
             {/*<_FinanaceReport place={place}/>*/}
             <_Transactions place={place}/>
 

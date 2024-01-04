@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.corporate.corporatePersonnel.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.param.BaseParam;
+import com.notrika.gympin.common.util._base.param.BaseParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,5 +25,8 @@ public class CorporatePersonnelCreditParam extends BaseParam<CorporatePersonnelC
 
     @JsonProperty("CreditAmount")
     private BigDecimal creditAmount;
+
+    @JsonProperty("GroupId")
+    private Long groupId;
 
 }

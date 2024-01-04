@@ -5,10 +5,10 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import _TabPlaceReserve from "./_TabPlaceReserve";
+import _TabPlaceBuyable from "./_TabPlaceBuyable";
 import _TabPlaceAbout from "./_TabPlaceAbout";
-import _PlaceFacilities from "./_PlaceFacilities";
-import _TabPlaceComments from "./_TabPlaceComments";
+import BadgeIcon from '@mui/icons-material/Badge';
+import InfoIcon from '@mui/icons-material/Info';
 
 
 const _TabsPlace = ({place}) => {
@@ -26,8 +26,8 @@ const _TabsPlace = ({place}) => {
                     variant="fullWidth"
                     aria-label="full width tabs example"
                 >
-                    <Tab label="رزرو"/>
-                    <Tab label="درباره مرکز"/>
+                    <Tab label={<BadgeIcon fontSize={"large"} />}/>
+                    <Tab label={<InfoIcon fontSize={"large"} />}/>
                     {/*<Tab label="نظرات"/>*/}
                 </Tabs>
             </AppBar>
@@ -36,7 +36,7 @@ const _TabsPlace = ({place}) => {
                 slideClassName={"rtl"}
                 index={selectedTab}
                 onChangeIndex={(e) => setSelectedTab(e)}>
-                <_TabPlaceReserve place={place}/>
+                <_TabPlaceBuyable place={place}/>
                 <_TabPlaceAbout place={place}/>
                 {/*<_TabPlaceComments place={place}/>*/}
             </SwipeableViews>

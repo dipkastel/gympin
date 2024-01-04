@@ -101,7 +101,7 @@ const PlaceAbout = ({place}) => {
 
                             <FormGroup>
 
-                                <FormLabel component="legend">آیا باید توسط کاربر قبل از خرید بلیط تایید شود؟</FormLabel>
+                                <FormLabel component="legend">آیا باید توسط کاربر قبل از خرید عضویت تایید شود؟</FormLabel>
                                 <FormControlLabel
                                     control={<Switch
                                         defaultChecked={newAboutItem.Acceptable}
@@ -195,7 +195,7 @@ const PlaceAbout = ({place}) => {
 
                             <FormGroup>
 
-                                <FormLabel component="legend">آیا باید توسط کاربر قبل از خرید بلیط تایید شود؟</FormLabel>
+                                <FormLabel component="legend">آیا باید توسط کاربر قبل از خرید عضویت تایید شود؟</FormLabel>
                                 <FormControlLabel
                                     control={<Switch
                                         defaultChecked={itemToEdit.Acceptable}

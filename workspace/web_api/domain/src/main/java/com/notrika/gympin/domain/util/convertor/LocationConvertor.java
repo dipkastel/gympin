@@ -1,20 +1,14 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.location.dto.*;
-import com.notrika.gympin.persistence.entity.location.*;
-import org.springframework.data.domain.Page;
+import com.notrika.gympin.common.settings.location.dto.*;
+import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public final class LocationConvertor {
 
 
-    public static LocationDto toDto(LocationEntity entity) {
+    public static LocationDto toDto(ManageLocationEntity entity) {
         if(entity==null) return null;
         LocationDto dto = new LocationDto();
         dto.setId(entity.getId());
@@ -25,7 +19,7 @@ public final class LocationConvertor {
         dto.setMapPolygon(entity.getMapPolygon());
         return dto;
     }
-    public static LocationDto toDtoWithChilds(LocationEntity entity) {
+    public static LocationDto toDtoWithChilds(ManageLocationEntity entity) {
         if(entity==null) return null;
         LocationDto dto = new LocationDto();
         dto.setId(entity.getId());
@@ -38,7 +32,7 @@ public final class LocationConvertor {
             dto.setChildes(entity.getChildes().stream().filter(p-> !p.isDeleted()).map(LocationConvertor::toDto).collect(Collectors.toList()));
         return dto;
     }
-    public static LocationDto toDtoWithParrent(LocationEntity entity) {
+    public static LocationDto toDtoWithParrent(ManageLocationEntity entity) {
         if(entity==null) return null;
         LocationDto dto = new LocationDto();
         dto.setId(entity.getId());

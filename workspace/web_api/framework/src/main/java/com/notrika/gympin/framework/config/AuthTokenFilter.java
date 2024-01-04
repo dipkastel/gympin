@@ -1,6 +1,6 @@
 package com.notrika.gympin.framework.config;
 
-import com.notrika.gympin.common.user.service.AccountService;
+import com.notrika.gympin.common.user.user.service.AccountService;
 import com.notrika.gympin.framework.config.jwt.JwtTokenProviderImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

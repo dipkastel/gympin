@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.support;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
@@ -31,12 +32,16 @@ public class SupportEntity extends BaseEntityWithCreateUpdate<SupportEntity> {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "place_id")
+    @JoinColumn(name = "supportPlaceId")
     private PlaceEntity place;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "supportUserId")
     private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "CorporateId")
+    private CorporateEntity corporate;
 
     @Override
     public boolean equals(Object o) {

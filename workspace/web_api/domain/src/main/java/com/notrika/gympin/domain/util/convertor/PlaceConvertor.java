@@ -1,24 +1,20 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.context.GympinContext;
 import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelGateAccessDto;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
+import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
-import com.notrika.gympin.domain.place.PlacePersonnelServiceImpl;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
-import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelGateAccessEntity;
-import com.notrika.gympin.persistence.entity.plan.PlanEntity;
-import com.notrika.gympin.persistence.entity.sportplace.SportPlaceEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import org.springframework.data.domain.Page;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -47,12 +43,20 @@ public final class PlaceConvertor {
         placeDto.setAddress(entity.getAddress());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setStatus(entity.getStatus());
-        placeDto.setCommissionFee(entity.getCommissionFee());
         placeDto.setBalance(entity.getBalance());
-        if (entity.getSportPlaces() != null)
-            placeDto.setSports(SportConvertor.toDto(entity.getSportPlaces().stream().filter(p->!p.isDeleted()).map(SportPlaceEntity::getSport).collect(Collectors.toList())));
+        if (entity.getPlaceSport() != null)
+            placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p->!p.isDeleted()).map(PlaceSportEntity::getSport).collect(Collectors.toList())));
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
+        return placeDto;
+    }
+    public static PlaceDto toSimpleDto(PlaceEntity entity) {
+        if (entity == null) return null;
+        PlaceDto placeDto = new PlaceDto();
+        placeDto.setId(entity.getId());
+        placeDto.setName(entity.getName());
+        placeDto.setAddress(entity.getAddress());
+        placeDto.setStatus(entity.getStatus());
         return placeDto;
     }
     public static PlaceDto toDtoSecure(PlaceEntity entity) {
@@ -65,16 +69,16 @@ public final class PlaceConvertor {
         placeDto.setAddress(entity.getAddress());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setStatus(entity.getStatus());
-        if(entity.getPlans().size()>0){
+        if(entity.getBuyables().size()>0){
             try {
-                placeDto.setGenders(entity.getPlans().stream().filter(PlanEntity::getEnable).map(PlanEntity::getGender).collect(Collectors.toSet()));
+                placeDto.setGenders(entity.getBuyables().stream().filter(BuyableEntity::getEnable).map(BuyableEntity::getGender).collect(Collectors.toSet()));
             }catch (Exception e){}
             try {
-                placeDto.setMinPrice(entity.getPlans().stream().filter(p->p.getEnable()&&p.getPrice()!=null).min(Comparator.comparing(PlanEntity::getPrice)).get().getPrice());
+                placeDto.setMinPrice(entity.getBuyables().stream().filter(p->p.getEnable()&&p.getPrice()!=null).min(Comparator.comparing(BuyableEntity::getPrice)).get().getPrice());
             }catch (Exception e){}
         }
-        if (entity.getSportPlaces() != null)
-            placeDto.setSports(SportConvertor.toDto(entity.getSportPlaces().stream().filter(p->!p.isDeleted()).map(SportPlaceEntity::getSport).collect(Collectors.toList())));
+        if (entity.getPlaceSport() != null)
+            placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p->!p.isDeleted()).map(PlaceSportEntity::getSport).collect(Collectors.toList())));
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
         return placeDto;
@@ -112,6 +116,8 @@ public final class PlaceConvertor {
                 .placeDto(toDto(entity.getPlace()))
                 .userDto(UserConvertor.toDtoComplete(entity.getUser()))
                 .userRole(entity.getUserRole())
+                .isBeneficiary(entity.getIsBeneficiary())
+                .commissionFee(entity.getCommissionFee())
                 .build();
     }
 
@@ -124,13 +130,13 @@ public final class PlaceConvertor {
                 .access(entity.getAccess())
                 .build();
     }
-    public static PlacePersonnelGateAccessDto personnelGateAccessToDto(PlacePersonnelGateAccessEntity entity) {
+    public static PlacePersonnelBuyableAccessDto personelBuyableAccessToDto(PlacePersonelBuyableAccessEntity entity) {
         if (entity == null) return null;
-        return PlacePersonnelGateAccessDto.builder()
+        return PlacePersonnelBuyableAccessDto.builder()
                 .id(entity.getId())
                 .isDeleted(entity.isDeleted())
-                .gate(GateConvertor.convertToDto(entity.getGate()))
                 .access(entity.getAccess())
+                .buyableDto(BuyableConvertor.ToDto(entity.getBuyable()))
                 .build();
     }
 
@@ -140,9 +146,9 @@ public final class PlaceConvertor {
 
     }
 
-    public static List<PlacePersonnelGateAccessDto> personnelGateAccessToDto(List<PlacePersonnelGateAccessEntity> entities) {
+    public static List<PlacePersonnelBuyableAccessDto> personelBuyableAccessToDto(List<PlacePersonelBuyableAccessEntity> entities) {
         if (entities == null) return null;
-        return entities.stream().map(PlaceConvertor::personnelGateAccessToDto).collect(Collectors.toList());
+        return entities.stream().map(PlaceConvertor::personelBuyableAccessToDto).collect(Collectors.toList());
 
     }
 }

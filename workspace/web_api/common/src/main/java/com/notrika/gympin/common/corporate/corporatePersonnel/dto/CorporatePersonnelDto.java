@@ -1,10 +1,11 @@
 package com.notrika.gympin.common.corporate.corporatePersonnel.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.dto.BaseDto;
+import com.notrika.gympin.common.util._base.dto.BaseDto;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
-import com.notrika.gympin.common.user.dto.UserDto;
+import com.notrika.gympin.common.user.user.dto.UserDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,8 +22,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class CorporatePersonnelDto extends BaseDto<CorporatePersonnelDto> {
 
-    @JsonProperty("Corporate")
-    private CorporateDto corporate;
 
     @JsonProperty("User")
     private UserDto user;
@@ -30,12 +29,15 @@ public class CorporatePersonnelDto extends BaseDto<CorporatePersonnelDto> {
     @JsonProperty("Role")
     private CorporatePersonnelRoleEnum role;
 
-    @JsonProperty("PersonnelCategory")
-    private CorporatePersonnelCategoryDto personnelCategory;
+    @JsonProperty("PersonnelGroup")
+    private CorporatePersonnelGroupDto personnelGroup;
 
     @JsonProperty("CreditBalance")
     private BigDecimal creditBalance;
 
     @JsonProperty("CreditList")
     private List<CorporatePersonnelCreditDto> creditList;
+
+    @JsonProperty("Corporate")
+    private CorporateDto corporate;
 }

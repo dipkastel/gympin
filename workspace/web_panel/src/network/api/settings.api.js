@@ -5,7 +5,7 @@ export function settings_add(data) {
   return axios.post(SettingsApi.add, data);
 }
 export function settings_delete(data) {
-  return axios.put(SettingsApi.delete, null,{ params: data });
+  return axios.put(SettingsApi.delete,  data );
 }
 export function settings_getAll() {
   return axios.get(SettingsApi.getAll);

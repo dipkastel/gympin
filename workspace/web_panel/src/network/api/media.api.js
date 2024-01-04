@@ -17,5 +17,5 @@ export function media_getAllImages(data) {
 }
 
 export function media_delete(data) {
-  return axios.put(MultimediaApi.delete, null,{ params: data });
+  return axios.put(MultimediaApi.delete,  data );
 }

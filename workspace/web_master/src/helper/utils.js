@@ -144,7 +144,7 @@ export function encryptId(id,dynamic) {
     return result;
 }
 
-//maximum ticket id 999999999
+//maximum subscribe id 999999999
 export function decryptId(qr) {
     let charCount  = qr.substring(qr.length-1,qr.length);
     var result = "";

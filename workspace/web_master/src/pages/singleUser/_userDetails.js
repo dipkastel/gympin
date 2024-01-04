@@ -53,7 +53,11 @@ const _userDetails = ({user}) => {
                         color="text.primary"
                         onClick={() => SetBirthDay(true)}
                     >
-                        {format(Date.parse(user.Birthday),"yyyy/MM/dd")}
+                        {new Date(user.Birthday).toLocaleDateString('fa-IR', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}
                     </Typography>
                 </Grid>
                 <Grid container direction="row" justifyContent="space-around" sx={{marginY: 2}}>

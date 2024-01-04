@@ -23,6 +23,10 @@ const __wizardBaseInfo = ({inPlace, setInPlace, locations,updateInPlace}) => {
     return (
         <>
             <div className="row">
+
+                <div className="col-md-6  col-xs-12">
+                    <__wizardMap  inPlace={inPlace} setInPlace={setInPlace} updateInPlace={updateInPlace}/>
+                </div>
                 <div className="col-md-6 col-xs-12">
                     <Portlet>
                         <PortletBody>
@@ -98,9 +102,6 @@ const __wizardBaseInfo = ({inPlace, setInPlace, locations,updateInPlace}) => {
                             </Form.Group>
                         </PortletBody>
                     </Portlet>
-                </div>
-                <div className="col-md-6  col-xs-12">
-                    <__wizardMap  inPlace={inPlace} setInPlace={setInPlace} updateInPlace={updateInPlace}/>
                 </div>
             </div>
             <__ModalCalculator inPlace={inPlace} setInPlace={setInPlace} openModalCalculator={openModalCalculator}

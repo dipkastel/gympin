@@ -7,7 +7,9 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import _placePersonelStatus from "./status/_placePersonelStatus";
 import PersonnelRole from "../../corporate/persoanel/PersonnelRole/PersonnelRole";
 import PersonnelCredit from "../../corporate/persoanel/personnelCredits/PersonnelCredit";
-import _placePersonelGateAccess from "./access/_placePersonelGateAccess";
+import _placePersonelBuyableAccess from "./access/_placePersonelBuyableAccess";
+import _placePersonnelCommitionFee from "./commissionFee/_placePersonnelCommitionFee";
+import Notice from "../../../partials/content/Notice";
 
 const PlacePersonnelManagement = () => {
     const error = useContext(ErrorContext);
@@ -31,16 +33,18 @@ const PlacePersonnelManagement = () => {
     }
     return (
         <>
-            {person&&<_placePersonelDetails personel={person} />}
+
+            {person &&<Notice icon="flaticon-warning kt-font-primary"> {"مدیریت پرسنل "+person.User.Username+" از مرکز "+person.Place.Name}</Notice>}
 
             {person && <div className="row">
                 <div className="col-md-6 kt-mt-20">
-                    {(person.UserRole=="PLACE_PERSONNEL")&&<_placePersonelAccess personel={person} getPerson={getPerson}/>}
-                    {(person.UserRole=="PLACE_PERSONNEL")&&<_placePersonelGateAccess personel={person} getPerson={getPerson}/>}
-
+                    <_placePersonelDetails personel={person} />
+                    <_placePersonelStatus personel={person} getPerson={getPerson}/>
+                    <_placePersonnelCommitionFee personel={person} getPerson={getPerson}/>
+                    {(person.UserRole=="PLACE_PERSONNEL")&&<_placePersonelBuyableAccess personel={person} getPerson={getPerson}/>}
                 </div>
                 <div className="col-md-6 kt-mt-20">
-                    <_placePersonelStatus personel={person} getPerson={getPerson}/>
+                    {(person.UserRole=="PLACE_PERSONNEL")&&<_placePersonelAccess personel={person} getPerson={getPerson}/>}
                 </div>
             </div>}
         </>

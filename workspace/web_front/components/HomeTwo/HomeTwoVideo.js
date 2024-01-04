@@ -5,6 +5,7 @@ import getBaseUrl from "../../pages/api/network";
 
 export default function HomeTwoVideo() {
     const { executeRecaptcha } = useGoogleReCaptcha();
+    const [loading,setLoading] = useState(false)
 
     const handleReCaptchaVerify= useCallback(async (e) => {
         if (!executeRecaptcha) {
@@ -49,14 +50,17 @@ export default function HomeTwoVideo() {
                 placeName: e.target.Message.value
             })
         };
+        setLoading(true);
         await fetch(getBaseUrl()+"/v1/account/requestRegisterAdvise", requestOptions)
             .then(response => response.json())
             .then(result => {
+                setLoading(false);
                 alert("پیام شما ثبت شد به زودی با شما تماس خواهیم گرفت .")
                 e.target.Tel.value = "";
                 e.target.Name.value = "";
                 e.target.Message.value = "";
             }).catch(e=>{
+                setLoading(false);
                 alert("خطا")
             })
     }
@@ -93,18 +97,18 @@ export default function HomeTwoVideo() {
                                 <div className="quote-wrapper">
                                     <h2 className="quote-title">مشاوره رایگان</h2>
                                     <div className="quote-form rtl">
-                                        <form onSubmit={submitForm} className="mt-none-15">
-                                            <div className="form-group mt-15">
-                                                <input type="text" name="Name" id="name" placeholder="نام"/>
+                                        <form onSubmit={submitForm} className="mt-none-30">
+                                            <div className="form-group mt-10">
+                                                <input disabled={loading} type="text" name="Name" id="name" placeholder="نام"/>
                                             </div>
-                                            <div className="form-group mt-15">
-                                                <input type="tel" name="Tel" id="tel" placeholder="تلفن"/>
+                                            <div className="form-group mt-10">
+                                                <input disabled={loading} type={"number"} name="Tel" id="tel" placeholder="تلفن"/>
                                             </div>
-                                            <div className="form-group mt-15">
-                                                <textarea name="Message" id="message" placeholder="پیام"/>
+                                            <div className="form-group mt-10">
+                                                <textarea  disabled={loading} name="Message" id="message" placeholder="پیام"/>
                                             </div>
-                                            <div className="form-group mt-15">
-                                                <button type="submit" className="quote-btn"> ارسال
+                                            <div className="form-group mt-10">
+                                                <button disabled={loading} type="submit" className="quote-btn"> ارسال
                                                     <span className="icon"><i
                                                         className="far fa-arrow-left"/></span>
                                                 </button>

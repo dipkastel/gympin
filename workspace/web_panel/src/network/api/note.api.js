@@ -5,7 +5,7 @@ export function note_add(data) {
     return axios.post(NoteApi.add, data);
 }
 export function note_delete(data) {
-    return axios.put(NoteApi.delete, null,{ params: data });
+    return axios.put(NoteApi.delete,  data );
 }
 export function note_getAll() {
     return axios.get(NoteApi.getAll);

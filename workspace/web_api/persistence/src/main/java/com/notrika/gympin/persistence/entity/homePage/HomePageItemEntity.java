@@ -38,7 +38,7 @@ public class HomePageItemEntity extends BaseEntity<HomePageItemEntity> {
     private Integer priority;
 
     @ManyToOne
-    @JoinTable(name = "HomeItemDestination", joinColumns = @JoinColumn(name = "homeItemId"), inverseJoinColumns = @JoinColumn(name = "destination_Id"))
+    @JoinTable(name = "HomeItemDestination", joinColumns = @JoinColumn(name = "homeItemId"), inverseJoinColumns = @JoinColumn(name = "destinationId"))
     @ToString.Exclude
     private HomePageDestionationEntity destination;
 
@@ -47,12 +47,13 @@ public class HomePageItemEntity extends BaseEntity<HomePageItemEntity> {
 
 
     @ManyToOne
-    @JoinTable(name = "HomeImage", joinColumns = @JoinColumn(name = "homeItemId"), inverseJoinColumns = @JoinColumn(name = "multimedia_id"))
+    @JoinTable(name = "HomeImage", joinColumns = @JoinColumn(name = "homeItemId"), inverseJoinColumns = @JoinColumn(name = "multimediaId"))
     @ToString.Exclude
     private MultimediaEntity multimedia;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parentId")
     @Getter
     @Setter
     private HomePageItemEntity parent;

@@ -34,9 +34,8 @@ export default function Header() {
                                             <ul>
                                                 <li ><Link href="/"><a>صفحه اصلی</a></Link></li>
                                                 <li ><Link href="/blog"><a>مطالب و مقالات</a></Link></li>
-                                                <li ><Link href="https://web.gympin.ir"><a>پیشنهادات ورزشی</a></Link></li>
                                                 <li><Link href="/corporate"><a>شرکت ها</a></Link></li>
-                                                <li><Link href="/#places"><a>مرکز ورزشی دارید؟</a></Link></li>
+                                                <li><Link href="https://place.gympin.ir/auth/register"><a>مرکز ورزشی دارید؟</a></Link></li>
                                                 {/*<li><Link href="shop.gympin.ir?c=cards"><a>کارت هدیه</a></Link></li>*/}
                                             </ul>
                                         </nav>

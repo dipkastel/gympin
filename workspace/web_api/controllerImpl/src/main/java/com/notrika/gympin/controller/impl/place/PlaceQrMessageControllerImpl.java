@@ -1,7 +1,7 @@
 package com.notrika.gympin.controller.impl.place;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common._base.param.BasePagedParam;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.qrMessage.api.PlaceQrMessageController;
 import com.notrika.gympin.common.place.qrMessage.dto.PlaceQrMessageDto;
@@ -26,12 +26,12 @@ public class PlaceQrMessageControllerImpl implements PlaceQrMessageController {
     private PlaceQrMessageService placeQrMessageService;
 
     @Override
-    public ResponseEntity<PlaceQrMessageDto> add(@RequestBody PlaceQrMessageParam placeQrMessageParam) {
+    public ResponseEntity<PlaceQrMessageDto> add( PlaceQrMessageParam placeQrMessageParam) {
         return new ResponseEntity<PlaceQrMessageDto>(placeQrMessageService.add(placeQrMessageParam), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<PlaceQrMessageDto> update(@RequestBody PlaceQrMessageParam placeQrMessageParam) {
+    public ResponseEntity<PlaceQrMessageDto> update( PlaceQrMessageParam placeQrMessageParam) {
         return new ResponseEntity<PlaceQrMessageDto>(placeQrMessageService.update(placeQrMessageParam), HttpStatus.OK);
     }
 

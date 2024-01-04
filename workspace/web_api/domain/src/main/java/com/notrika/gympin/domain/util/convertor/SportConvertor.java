@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.sport.dto.SportDto;
+import com.notrika.gympin.common.sport.sport.dto.SportDto;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import org.springframework.data.domain.Page;
 

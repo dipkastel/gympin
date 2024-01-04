@@ -3,6 +3,7 @@ package com.notrika.gympin.persistence.entity.multimedia;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.article.ArticleEntity;
+import com.notrika.gympin.persistence.entity.finance.gateway.FinanceGatewayEntity;
 import com.notrika.gympin.persistence.entity.homePage.HomePageItemEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.sport.SportMultimediaEntity;
@@ -29,6 +30,7 @@ import java.util.Objects;
 public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntity> {
 
     @ManyToOne(cascade = CascadeType.MERGE, optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "mediaUserId")
     @ToString.Exclude
     private UserEntity user;
 
@@ -53,31 +55,33 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "multimedia")
+    @OneToMany(mappedBy = "multimedia",fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<SportMultimediaEntity> sportMultimedias;
 
-    @OneToMany(mappedBy = "multimedia")
+    @OneToMany(mappedBy = "multimedia",fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<UserMultimediaEntity> userMultimedias;
 
-    @ManyToMany(mappedBy = "multimedias")
+    @ManyToMany(mappedBy = "multimedias",fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<PlaceEntity> places;
 
-    @OneToMany(mappedBy = "multimedia")
+    @OneToMany(mappedBy = "multimedia",fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<HomePageItemEntity> homeMultimedia;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "categoryId")
     private MultimediaCategoryEntity category;
 
-    @OneToOne(mappedBy = "userAvatar")
-    //set forUserAvatar
-    private UserEntity AvatarForUser;
+    @OneToMany(mappedBy = "userAvatar",fetch = FetchType.LAZY)
+    private List<UserEntity> AvatarForUser;
 
-    @OneToOne(mappedBy = "articleImage")
+    @OneToOne(mappedBy = "gatewayImage",fetch = FetchType.LAZY)
+    private FinanceGatewayEntity gateway;
+
+    @OneToOne(mappedBy = "articleImage",fetch = FetchType.LAZY)
     private ArticleEntity article;
 
     @Override

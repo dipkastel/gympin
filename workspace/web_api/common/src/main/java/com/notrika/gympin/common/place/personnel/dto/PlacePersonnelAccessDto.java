@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.place.personnel.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.dto.BaseDto;
+import com.notrika.gympin.common.util._base.dto.BaseDto;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

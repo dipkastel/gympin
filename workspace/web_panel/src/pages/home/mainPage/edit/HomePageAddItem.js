@@ -37,7 +37,6 @@ const HomePageAddItem = ({elements,selectedParent,type,setType,destinations}) =>
             onTypeChange(null)
             // setRenderId(Math.random())
         }).catch(e => {
-            console.log(e);
             try {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {

@@ -1,9 +1,8 @@
 package com.notrika.gympin.domain.place;
 
-import com.notrika.gympin.common.contact.sms.service.SmsService;
-import com.notrika.gympin.common.exception.place.*;
-import com.notrika.gympin.common.exception.plan.PlanPriceCannotBeNull;
-import com.notrika.gympin.common.location.param.LocationParam;
+import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
+import com.notrika.gympin.common.util.exception.place.*;
+import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
@@ -13,23 +12,22 @@ import com.notrika.gympin.common.place.place.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.place.query.PlaceQuery;
 import com.notrika.gympin.common.place.place.service.PlaceService;
-import com.notrika.gympin.common.sport.dto.SportDto;
-import com.notrika.gympin.common.user.dto.InviteCode;
-import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.sport.sport.dto.SportDto;
+import com.notrika.gympin.common.user.user.dto.InviteCode;
+import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.user.AccountServiceImpl;
-import com.notrika.gympin.domain.user.UserServiceImpl;
+import com.notrika.gympin.domain.util.convertor.BuyableConvertor;
 import com.notrika.gympin.domain.util.convertor.MultimediaConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.convertor.SportConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
-import com.notrika.gympin.persistence.dao.repository.LocationRepository;
-import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
-import com.notrika.gympin.persistence.dao.repository.PlacePersonnelRepository;
-import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
-import com.notrika.gympin.persistence.entity.location.LocationEntity;
+import com.notrika.gympin.persistence.dao.repository.settings.ManageLocationRepository;
+import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,7 +50,7 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     private MultimediaRepository multimediaRepository;
 
     @Autowired
-    private LocationRepository locationRepository;
+    private ManageLocationRepository manageLocationRepository;
 
     @Override
     public PlaceDto add(PlaceParam placeParam) {
@@ -78,9 +76,8 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         initPlace.setLongitude(placeParam.getLongitude());
         initPlace.setAddress(placeParam.getAddress());
         initPlace.setAutoDiscount(placeParam.getAutoDiscount());
-        initPlace.setCommissionFee(placeParam.getCommissionFee());
         if (placeParam.getLocation() != null && placeParam.getLocation().getId() != null && placeParam.getLocation().getId() > 0) {
-            LocationEntity location = locationRepository.getById(placeParam.getLocation().getId());
+            ManageLocationEntity location = manageLocationRepository.getById(placeParam.getLocation().getId());
             initPlace.setLocation(location);
         }
         PlaceEntity place = update(initPlace);
@@ -158,14 +155,15 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
             if (place.getAddress() == null) {
                 throw new PlaceAdressCanNotBeNull();
             }
-            if (place.getCommissionFee() > 100 || place.getCommissionFee() < 0) {
-                throw new PlaceCommissionIsNotCorrect();
+            //TODO fix this
+//            if (place.getCommissionFee() > 100 || place.getCommissionFee() < 0) {
+//                throw new PlaceCommissionIsNotCorrect();
+//            }
+            if (place.getHalls().size() < 1) {
+                throw new PlaceHALLMustBeAdded();
             }
-            if (place.getGates().size() < 1) {
-                throw new PlaceGateMustBeAdded();
-            }
-            if (place.getPlans().size() < 1) {
-                throw new PlacePlansCanNotBeEmpty();
+            if (place.getBuyables().size() < 1) {
+                throw new PlaceTicketSubscribesCanNotBeEmpty();
             }
             if (place.getMultimedias().size() < 1) {
                 throw new PlaceImagesIsEmpty();
@@ -182,12 +180,12 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
 
     @Override
     public List<PlaceDto> getPlacesByLocation(LocationParam param) {
-        LocationEntity location = LocationEntity.builder().id(param.getId()).build();
+        ManageLocationEntity location = ManageLocationEntity.builder().id(param.getId()).build();
         List<PlaceEntity> placeList = getPlacesByLocation(location);
         return PlaceConvertor.toDto(placeList);
     }
 
-    public List<PlaceEntity> getPlacesByLocation(LocationEntity location) {
+    public List<PlaceEntity> getPlacesByLocation(ManageLocationEntity location) {
         return placeRepository.findAllByLocationAndDeletedIsFalse(location);
     }
 
@@ -246,6 +244,12 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
                 .isActive(true)
                 .build();
         return code;
+    }
+
+    @Override
+    public List<TicketBuyableDto> getBuyableByPlace(PlaceParam param) {
+        PlaceEntity place = placeRepository.getById(param.getId());
+        return place.getBuyables().stream().map(BuyableConvertor::ToDto).collect(Collectors.toList());
     }
 
 

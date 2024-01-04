@@ -1,19 +1,14 @@
 package com.notrika.gympin.common.place.place.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
-import com.notrika.gympin.common.sport.param.SportParam;
-import com.notrika.gympin.common.sportplace.param.SportPlaceParam;
-import com.notrika.gympin.common.sportplace.service.SportPlaceService;
-import com.notrika.gympin.common.user.enums.Gender;
+import com.notrika.gympin.common.user.user.enums.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @Data
 @SuperBuilder
@@ -46,7 +41,7 @@ public class PlaceQuery extends BaseQuery<PlaceQuery> {
     private PlaceStatusEnum is_status;
 
     @JsonProperty("Sports")
-    private Long is_sportPlacesæsportæid;
+    private Long is_placeSportsæsportæid;
 
     @JsonProperty("Option")
     private Long is_optionsOfPlacesæplaceOptionæid;
@@ -55,7 +50,7 @@ public class PlaceQuery extends BaseQuery<PlaceQuery> {
     private Long is_locationæid;
 
     @JsonProperty("Gender")
-    private Gender is_plansægender;
+    private Gender is_buyablesægender;
 
 
 }

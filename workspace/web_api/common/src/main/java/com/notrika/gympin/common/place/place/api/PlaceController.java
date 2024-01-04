@@ -1,16 +1,17 @@
 package com.notrika.gympin.common.place.place.api;
 
-import com.notrika.gympin.common._base.base.BaseController;
-import com.notrika.gympin.common.location.param.LocationParam;
+import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
+import com.notrika.gympin.common.util._base.base.BaseController;
+import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.place.place.param.PlaceMultimediaListParam;
 import com.notrika.gympin.common.place.place.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.place.query.PlaceQuery;
-import com.notrika.gympin.common.sport.dto.SportDto;
-import com.notrika.gympin.common.user.dto.InviteCode;
-import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.sport.sport.dto.SportDto;
+import com.notrika.gympin.common.user.user.dto.InviteCode;
+import com.notrika.gympin.common.user.user.param.UserParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -35,5 +36,8 @@ public interface PlaceController extends BaseController<PlaceParam, PlaceDto, Pl
     ResponseEntity<PlaceDto> deleteMultimedia(@RequestBody PlaceMultimediaParam place);
 
     ResponseEntity<InviteCode> getPlaceInviteCode(PlaceParam placeParam);
+
+    ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceParam placeParam);
+
 
 }

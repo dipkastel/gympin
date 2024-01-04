@@ -29,7 +29,7 @@ public class SportOptionEntity extends BaseEntityWithCreateUpdate<SportOptionEnt
 
     @OneToMany(mappedBy = "sportOption")
     @ToString.Exclude
-    private List<OptionOfSportEntity> optionsOfSports;
+    private List<sportOptionOfSportEntity> optionsOfSports;
 
     @Override
     public boolean equals(Object o) {

@@ -1,22 +1,23 @@
 package com.notrika.gympin.persistence.entity.place;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.location.LocationEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
+import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.note.NoteEntity;
-import com.notrika.gympin.persistence.entity.place.comment.CommentPlaceEntity;
-import com.notrika.gympin.persistence.entity.gate.GateEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
+import com.notrika.gympin.persistence.entity.place.comment.PlaceCommentEntity;
+import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
+import com.notrika.gympin.persistence.entity.place.option.PlaceOptionOfPlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntity;
-import com.notrika.gympin.persistence.entity.plan.PlanEntity;
-import com.notrika.gympin.persistence.entity.rating.RatePlaceEntity;
-import com.notrika.gympin.persistence.entity.sportplace.SportPlaceEntity;
-import com.notrika.gympin.persistence.entity.place.option.OptionOfPlaceEntity;
+import com.notrika.gympin.persistence.entity.place.rating.PlaceRateEntity;
+import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
+import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
-import com.notrika.gympin.persistence.entity.transaction.TransactionEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -51,10 +52,7 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Enumerated(EnumType.STRING)
     private PlaceStatusEnum status;
 
-    @Column(name = "commissionFee")
-    private double commissionFee;
-
-    @Column(name = "balance", nullable = false, columnDefinition = "BigDecimal default 0")
+    @Column(name = "balance", nullable = false, columnDefinition = "decimal(19,2) default 0")
     private BigDecimal balance;
 
     @Column(name = "address")
@@ -63,61 +61,70 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Column(name = "inviteCode")
     private String inviteCode;
 
-    @Column(name = "autoDiscount", nullable = false,columnDefinition = "bit default 1")
+    @Column(name = "autoDiscount", nullable = false, columnDefinition = "bit default 1")
     private boolean autoDiscount;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "locationId")
     @ToString.Exclude
-    private LocationEntity location;
+    private ManageLocationEntity location;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<OptionOfPlaceEntity> optionsOfPlaces;
+    private List<PlaceOptionOfPlaceEntity> optionsOfPlaces;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<SupportEntity> support;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<PlaceAboutEntity> aboutPlaces;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<PlaceQrMessageEntity> qrMessages;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<PlacePersonnelEntity> placeOwners;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<SportPlaceEntity> sportPlaces;
+    private List<PlaceSportEntity> placeSport;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<GateEntity> gates;
+    private List<HallEntity> halls;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<PlanEntity> plans;
+    private List<BuyableEntity> buyables;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<NoteEntity> notes;
+    private List<InvoiceBuyableEntity> invoiceBuyables;
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<TransactionEntity> transactions;
+    private List<ManageNoteEntity> notes;
 
-    @OneToMany
-    private List<CommentPlaceEntity> placeComments;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<PlaceCommentEntity> placeComments;
 
-    @OneToMany
-    private List<RatePlaceEntity> placeRates;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<PlaceRateEntity> placeRates;
 
-    @ManyToMany
-    @JoinTable(name = "placeImage", joinColumns = @JoinColumn(name = "place_id"), inverseJoinColumns = @JoinColumn(name = "multimedia_id"))
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    private List<PurchasedBaseEntity> purchased;
+
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<FinanceUserTransactionEntity> userTransactions;
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "placeImage", joinColumns = @JoinColumn(name = "multimediaPlaceId"), inverseJoinColumns = @JoinColumn(name = "multimediaId"))
     @ToString.Exclude
     private List<MultimediaEntity> multimedias;
 

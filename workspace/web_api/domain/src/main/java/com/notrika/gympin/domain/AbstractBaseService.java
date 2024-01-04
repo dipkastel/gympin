@@ -1,21 +1,18 @@
 package com.notrika.gympin.domain;
 
-import com.notrika.gympin.common._base.base.BaseService;
-import com.notrika.gympin.common._base.dto.BaseDto;
-import com.notrika.gympin.common._base.param.BasePagedParam;
-import com.notrika.gympin.common._base.param.BaseParam;
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common._base.query.QueryCriteria;
-import com.notrika.gympin.common._base.query.Query;
-import com.notrika.gympin.common._base.query.Enums.QueryOperationsEnum;
+import com.notrika.gympin.common.util._base.base.BaseService;
+import com.notrika.gympin.common.util._base.dto.BaseDto;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util._base.param.BaseParam;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.query.QueryCriteria;
+import com.notrika.gympin.common.util._base.query.Query;
+import com.notrika.gympin.common.util._base.query.Enums.QueryOperationsEnum;
 import com.notrika.gympin.domain.util.convertor.PagingConvertor;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.yaml.snakeyaml.introspector.PropertyUtils;
 
 import javax.ws.rs.BadRequestException;
 import java.lang.reflect.Field;
@@ -23,9 +20,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class AbstractBaseService<I extends BaseParam, O extends BaseDto, F extends BaseQuery, ET extends BaseEntity> implements BaseService<I, O, F> {
 
@@ -66,19 +61,22 @@ public abstract class AbstractBaseService<I extends BaseParam, O extends BaseDto
         List<QueryCriteria> queryCriteriaList = new ArrayList<>();
 
         query.setQueryType(filter.getQueryType());
-        for (Field field : filter.getClass().getDeclaredFields()) {
-            try {
+        Class aClass = filter.getClass();
+        while (aClass!=null){
+            for (Field field : aClass.getDeclaredFields()) {
+                try {
 
-                field.setAccessible(true);
-                Object value = field.get(filter);
-                String fieldName = field.getName();
-                if (value != null) {
-                    queryCriteriaList.add(getCriteria(fieldName,value));
+                    field.setAccessible(true);
+                    Object value = field.get(filter);
+                    String fieldName = field.getName();
+                    if (value != null) {
+                        queryCriteriaList.add(getCriteria(fieldName,value));
+                    }
+                } catch (Exception e) {
                 }
-            } catch (Exception e) {
             }
+            aClass = aClass.getSuperclass();
         }
-
         return clauseCreator(queryCriteriaList,query);
     }
 

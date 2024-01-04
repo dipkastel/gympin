@@ -23,7 +23,7 @@ import java.util.Objects;
 public class PlaceAboutEntity extends BaseEntityWithCreateUpdate<PlaceAboutEntity> {
 
     @ManyToOne
-    @JoinColumn(name = "place_id")
+    @JoinColumn(name = "aboutPlaceId")
     private PlaceEntity place;
 
 

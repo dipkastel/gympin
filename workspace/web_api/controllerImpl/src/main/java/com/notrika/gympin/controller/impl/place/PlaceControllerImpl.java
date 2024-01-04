@@ -1,7 +1,8 @@
 package com.notrika.gympin.controller.impl.place;
 
-import com.notrika.gympin.common._base.param.BasePagedParam;
-import com.notrika.gympin.common.location.param.LocationParam;
+import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.place.api.PlaceController;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
@@ -10,9 +11,9 @@ import com.notrika.gympin.common.place.place.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.place.query.PlaceQuery;
 import com.notrika.gympin.common.place.place.service.PlaceService;
-import com.notrika.gympin.common.sport.dto.SportDto;
-import com.notrika.gympin.common.user.dto.InviteCode;
-import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.sport.sport.dto.SportDto;
+import com.notrika.gympin.common.user.user.dto.InviteCode;
+import com.notrika.gympin.common.user.user.param.UserParam;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +35,13 @@ public class PlaceControllerImpl implements PlaceController {
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN','MANAGER')")
-    public ResponseEntity<PlaceDto> add(@RequestBody PlaceParam placeParam) {
+    public ResponseEntity<PlaceDto> add( PlaceParam placeParam) {
         return new ResponseEntity<>(placeService.add(placeParam), HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN','MANAGER')")
-    public ResponseEntity<PlaceDto> update(@RequestBody PlaceParam placeParam) {
+    public ResponseEntity<PlaceDto> update( PlaceParam placeParam) {
         return new ResponseEntity<>(placeService.update(placeParam), HttpStatus.OK);
     }
 
@@ -119,6 +120,12 @@ public class PlaceControllerImpl implements PlaceController {
     @GetMapping("/getPlacesInviteCode")
     public ResponseEntity<InviteCode> getPlaceInviteCode(PlaceParam placeParam) {
         return new ResponseEntity<>(placeService.getPlaceInviteCode(placeParam), HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/getBuyableByPlace")
+    public ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceParam placeParam) {
+        return new ResponseEntity<>(placeService.getBuyableByPlace(placeParam), HttpStatus.OK);
     }
 
 

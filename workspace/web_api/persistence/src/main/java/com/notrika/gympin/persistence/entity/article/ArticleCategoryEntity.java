@@ -1,8 +1,6 @@
 package com.notrika.gympin.persistence.entity.article;
 
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.plan.PlanEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -27,7 +25,7 @@ public class ArticleCategoryEntity extends BaseEntity<ArticleCategoryEntity> {
     private String name;
 
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories",fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<ArticleEntity> articleList;
 

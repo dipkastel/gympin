@@ -1,13 +1,17 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Box, Button, Card, Divider, Grid, TextField, Typography} from "@mui/material";
+import {Box, Button, Card, Divider, Grid, TextField, ToggleButton, Typography} from "@mui/material";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
-import {transactions_getPaymentGateways, transactions_setPaymentRequest} from "../../network/api/transactions.api";
+import {transactions_setPaymentRequest} from "../../network/api/transactions.api";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {Image} from "react-bootstrap";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import AdapterJalali from "@date-io/date-fns-jalali";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import {gatewayApplication_query} from "../../network/api/gatewayApplication.api";
+import {suggest_query} from "../../network/api/suggest.api";
+import {InsertComment} from "@mui/icons-material";
+import {increaseUserDeposit_requestIncreaseUserDeposits} from "../../network/api/increaseUserDeposit.api";
 
 const _IncreaseCredit = () => {
     const error = useContext(ErrorContext);
@@ -15,15 +19,30 @@ const _IncreaseCredit = () => {
     const [amountToPay, SetAmountToPay] = useState(null);
     const [transactionReference, SetTransactionRefrence] = useState(null);
     const [chequeDate, setChequeDate] = useState(null);
-    const [paymentGateways, setPaymentGateways] = useState(null);
+    const [paymentGatewaysApplication, setPaymentGatewaysApplication] = useState(null);
+    const [selectedGateway, setSelectedGatewayApplication] = useState(null);
+    const [loading,setLoading] = useState(false);
+    const [suggests, setSuggests] = useState(null);
+    const [commentToggle,setCommentToggle] = useState(false);
+    const [transactionDescription, SetTransactionDescription] = useState(null);
 
     useEffect(() => {
         getPaymentGateways();
+        getPaymentSuggest();
     }, []);
 
     function getPaymentGateways() {
-        transactions_getPaymentGateways({Application:"WEBAPP"}).then(result => {
-            setPaymentGateways(result.data.Data);
+        gatewayApplication_query({
+            queryType: "FILTER",
+            Application: "WEBAPP",
+            paging: {Page: 0, Size: 300, orderBy: "Id", Desc: false}
+        }).then(result => {
+            setPaymentGatewaysApplication(result.data.Data);
+            try {
+                setSelectedGatewayApplication(result.data.Data.content.filter(g => g.IsDefault == true)[0])
+            } catch (e) {
+            }
+            console.log("resultgateway",result)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -33,23 +52,41 @@ const _IncreaseCredit = () => {
         })
     }
 
+    function getPaymentSuggest() {
+        suggest_query({
+            queryType: "FILTER",
+            Application: "WEBAPP",
+            paging: {Page: 0, Size: 300, orderBy: "amount", Desc: false}
+        }).then(result => {
+            setSuggests(result.data.Data.content);
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
+    }
+
+
     function getlabelOfRefrence() {
-        if(!paymentGateways.find(p => p.IsDefault))
-        return "نوع تراکنش انتخاب نشده";
-        switch (paymentGateways.find(p => p.IsDefault).Id) {
-            case 90:
+        if (!selectedGateway)
+            return "نوع تراکنش انتخاب نشده";
+        switch (selectedGateway?.Gateway?.GatewayType) {
+            case 'CARD_TRANSFER':
                 return "کد مرجع تراکنش";
                 break;
-            case 95:
+            case 'BANK_TRANSFER':
                 return "کد رهگیری پرداخت";
                 break;
-            case 98:
+            case 'CHEQUE':
                 return "شماره سریال چک";
                 break;
             default:
                 return "شناسایی ربات";
                 break;
         }
+
     }
     function submitPayment(e) {
         e.preventDefault()
@@ -57,16 +94,22 @@ const _IncreaseCredit = () => {
             error.showError({message: "حداقل مبلغ شارژ 10000 تومان می باشد",});
             return;
         }
+        if (!selectedGateway) {
+            error.showError({message: "درگاه انتخاب نشده",});
+            return;
+        }
         // if (!transactionReference) {
         //     error.showError({message: "کد مرجع تراکنش نمیتواند خالی باشد",});
         //     return;
         // }
-        var selectedGatway = paymentGateways.filter(item => item.IsDefault == true)[0];
-        transactions_setPaymentRequest({
-            SelectedPaymentId: selectedGatway.Id,
-            TransactionType: "CHARGE_USER",
+        setLoading(true);
+        increaseUserDeposit_requestIncreaseUserDeposits({
+            GatewayApplication: {Id:selectedGateway?.Id},
             TransactionReference: transactionReference,
+            Application:"WEBAPP",
             ChequeDate: chequeDate,
+            TransactionType: "CHARGE_CORPORATE",
+            Description:transactionDescription,
             Amount: amountToPay,
             UserId: currentUser.Id
         }).then(result => {
@@ -87,23 +130,9 @@ const _IncreaseCredit = () => {
         })
     }
 
-    function changePaymentType(selected) {
-        let items = paymentGateways.map(item => {
-            if (item.IsDefault) item.IsDefault = false;
-            return item;
-        });
-        var newItems = items.map(item => {
-            if (item.Id == selected.Id)
-                item.IsDefault = true;
-            return item;
-        })
-        SetTransactionRefrence("");
-        setPaymentGateways(newItems);
-    }
-
 
     return (<>
-            {paymentGateways&& <Card elevation={3} sx={{margin: 1}}>
+            {paymentGatewaysApplication&& <Card elevation={3} sx={{margin: 1}}>
 
 
                 <Typography
@@ -128,19 +157,14 @@ const _IncreaseCredit = () => {
                         alignItems="center"
                         sx={{padding: 1}}
                     >
-                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(500000)} color={"info"} variant={"contained"}>500,000
-                            تومان</Button>
-                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(1000000)} color={"info"} variant={"contained"}>1,000,000
-                            تومان</Button>
-                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(3000000)} color={"info"} variant={"contained"}>3,000,000
-                            تومان</Button>
-                        <Button sx={{m: 2}} onClick={() => SetAmountToPay(5000000)} color={"info"}
-                                variant={"contained"}>5,000,000 تومان</Button>
+                        {suggests&&suggests.map(suggest=>(
+                            <Button key={"suggest-"+suggest.Id} sx={{m: 2}} onClick={() => SetAmountToPay(suggest.Amount)} color={"info"} variant={"contained"}>{toPriceWithComma(suggest.Amount)+" تومان "}</Button>
+                        ))}
                     </Grid>
-                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0,width:"100%"}} component="div"/>
+                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>
 
-                    <Typography sx={{width: "100%", textAlign: "start",pt: 3,pr: 3}} variant={"subtitle1"}>
-                       نوع پرداخت
+                    <Typography sx={{width: "100%", textAlign: "start", pt: 3, pr: 3}} variant={"subtitle1"}>
+                        نوع پرداخت
                     </Typography>
                     <Grid
                         container
@@ -153,28 +177,30 @@ const _IncreaseCredit = () => {
                         xs={12}
                     >
 
-                        {paymentGateways.map(item => (
+                        {paymentGatewaysApplication.content&&paymentGatewaysApplication.content.map(item => (
 
                             <Grid
-                                key={"Getway"+item.Id}
+                                key={item.Id}
                                 xs={3}
                                 item
-                                onClick={() => changePaymentType(item)}
+                                onClick={() => setSelectedGatewayApplication(item)}
                             >
-                                <Box sx={(item.IsDefault) ? {border: "2px solid #37aa60"} : {border: "1px solid #ddd"}}>
-                                    <Image width={"100%"} rounded={"8px"} src={item.ImageUrl}/>
-                                    <Typography sx={{width: "100%", textAlign: "center"}} variant={"subtitle1"}>
-                                        {item.Name}
+                                <Box
+                                    sx={{border: (item.Gateway.Id == selectedGateway.Gateway.Id) ? "2px solid #37aa60" : "1px solid #ddd"}}>
+                                    <Image width={"100%"} rounded={"8px"} src={item?.Gateway?.Image?.Url}/>
+                                    <Typography sx={{width: "100%", textAlign: "center", minHeight: 55}}
+                                                variant={"subtitle1"}>
+                                        {item.Gateway.Name}
                                     </Typography>
                                 </Box>
                             </Grid>
                         ))}
                     </Grid>
 
-                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0,width:"100%"}} component="div"/>
+                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>
 
-                    <Typography sx={{width: "100%", textAlign: "start",pt: 3,pr: 3}} variant={"h5"}>
-                        {paymentGateways.find(p => p.IsDefault)&&paymentGateways.find(p => p.IsDefault).Description}
+                    <Typography sx={{width: "100%", textAlign: "start", pt: 3, pr: 3}} variant={"h5"}>
+                        {selectedGateway?.Gateway?.Description}
                     </Typography>
                     <Grid
                         container
@@ -183,25 +209,44 @@ const _IncreaseCredit = () => {
                         alignItems="center"
                         sx={{padding: 1}}
                     >
-
-
                         <TextField
-                            className="w-100"
                             variant="outlined"
                             margin="normal"
                             name="code"
-                            value={toPriceWithComma(amountToPay)}
+                            sx={{flex:"auto"}}
+                            value={toPriceWithComma(amountToPay || 0)}
                             type="text"
                             onChange={e => SetAmountToPay(toPriceWithoutComma(e.target.value))}
                             label={"مبلغ دلخواه به تومان"}
                         />
+                        <ToggleButton
+                            sx={{margin:"9px 9px 0px 0px"}}
+                            value="comment"
+                            onClick={(e)=>setCommentToggle(!commentToggle)}
+                        >
+                            <InsertComment />
+                        </ToggleButton>
                         <TextField
-                            hidden={paymentGateways.length > 0 ? (![95, 98, 90].includes(paymentGateways.find(p => p.IsDefault).Id)) : false}
+                            hidden={!commentToggle}
+                            className="w-100"
+                            variant="outlined"
+                            margin="normal"
+                            name="description"
+                            value={transactionDescription || ""}
+                            multiline={true}
+                            minRows={3}
+                            type="text"
+                            onChange={e => SetTransactionDescription(e.target.value)}
+                            label={"در صورت نیاز توضیح درج شود."}
+                        />
+
+                        <TextField
+                            hidden={selectedGateway?.Gateway?.GatewayType == 'BANK_PORTAL'}
                             className="w-100"
                             variant="outlined"
                             margin="normal"
                             name="code"
-                            value={transactionReference}
+                            value={transactionReference || ""}
                             type="text"
                             onChange={e => SetTransactionRefrence(e.target.value)}
                             label={getlabelOfRefrence()}
@@ -209,21 +254,21 @@ const _IncreaseCredit = () => {
 
 
                         <LocalizationProvider
-                           dateAdapter={AdapterJalali}>
+                            dateAdapter={AdapterJalali}>
                             <DatePicker
                                 variant="outlined"
                                 mask="____/__/__"
-                                value={chequeDate||""}
-                                onChange={(e,w)=>{
+                                value={chequeDate || ""}
+                                onChange={(e, w) => {
                                     setChequeDate(Date.parse(e))
                                 }}
                                 renderInput={(params) =>
 
                                     <TextField
-                                        hidden={paymentGateways.length > 0 ? (![98].includes(paymentGateways.find(p => p.IsDefault).Id)) : false}
+                                        hidden={selectedGateway?.Gateway?.GatewayType !== 'CHEQUE'}
                                         {...params}
                                         fullWidth
-                                        sx={{mt:3,direction:"ltr"}}
+                                        sx={{mt: 3, direction: "ltr"}}
                                         className="w-100"
                                         variant="outlined"
                                         margin="normal"

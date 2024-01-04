@@ -6,3 +6,7 @@ export const genders = {
     NONE:"همه",
     KIDS:"کودکان",
 }
+export const userGenders = {
+    MALE:"آقا",
+    FEMALE:"خانم"
+}

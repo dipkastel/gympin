@@ -1,12 +1,12 @@
 package com.notrika.gympin.common.place.personnel.service;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common._base.base.BaseService;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelGateAccessDto;
+import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelGateAccessParam;
+import com.notrika.gympin.common.place.personnel.param.PlacePersonnelBuyableAccessParam;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 
@@ -20,7 +20,11 @@ public interface PlacePersonnelService extends BaseService<PlacePersonnelParam, 
 
     List<PlacePersonnelAccessDto> getUserPlaceAccess(Long placeId, Long userId);
 
-    List<PlacePersonnelGateAccessDto> updatePersonnelGateAccess(List<PlacePersonnelGateAccessParam> personnelGateAccess);
+    List<PlacePersonnelDto> getPlaceBeneficiaries(Long placeId);
 
-    List<PlacePersonnelGateAccessDto> getUserPlaceGateAccess(Long placeId, Long userId);
+    List<PlacePersonnelBuyableAccessDto> updatePersonnelBuyableAccess(List<PlacePersonnelBuyableAccessParam> personnelHallAccess);
+
+    List<PlacePersonnelBuyableAccessDto> getUserPlaceHallAccess(Long placeId, Long userId);
+
+    PlacePersonnelDto updatePersonnelCommissionFee(PlacePersonnelParam param);
 }

@@ -2,7 +2,7 @@
 
 .service-area {
     &__2 {
-        background: $blue-dark;
+        background: $gray-700;
     }
 }
 
@@ -45,7 +45,7 @@
             background: $blue;
         }
         &--noborder {
-            border-radius: 5px 0px 0px 5px;
+            border-radius: 0px 5px 5px 0px;
             @include respond(xs) {
                 @include flexWidth(100%);
                 border-radius: 0px;

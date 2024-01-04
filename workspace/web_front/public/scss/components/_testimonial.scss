@@ -39,28 +39,28 @@
     }
     overflow: hidden;
     &__2 {
-        margin: 0px 120px;
+        margin: 0px 0px;
         margin-bottom: -225px;
         overflow: auto;
-        @media (max-width: 1690px) { 
-            margin: 0px 95px;
+        @media (max-width: 1690px) {
+            margin: 0px 0px;
             margin-bottom: -225px;
         }
-        @media (max-width: 1690px) { 
-            margin: 0px 30px;
+        @media (max-width: 1690px) {
+            margin: 0px 0px;
             margin-bottom: -225px;
         }
         @include respond(laptop) {
-            margin: 0px 15px;
+            margin: 0px 0px;
             margin-bottom: -225px;
         }
         @include respond(md) {
-            margin: 0px 15px;
+            margin: 0px 0px;
             margin-bottom: -225px;
         }
     }
     &__3 {
-        background: $blue-dark;
+        background: $gray-800;
         margin-bottom: 0px;
     }
 }
@@ -68,7 +68,8 @@
 
 .testimonial-item {
     @include d-flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+
     padding-top: 25px;
     @include respond(md) {
         flex-direction: column;
@@ -285,7 +286,7 @@
                 @include transform(translateY(-50%));
                 font-size: 36px;
                 color: $primary-color;
-                @media (max-width: 1610px) { 
+                @media (max-width: 1610px) {
                     left: -80px;
                 }
                 @include respond(laptop) {

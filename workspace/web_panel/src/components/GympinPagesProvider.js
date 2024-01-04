@@ -1,5 +1,5 @@
 import React, {createContext} from 'react';
-import {Alert, Button, Grid, Paper, Snackbar, Typography} from "@mui/material";
+import {Button, Grid, Paper, Snackbar, Typography} from "@mui/material";
 import Slide from '@mui/material/Slide';
 
 export const ErrorContext = createContext(null);
@@ -14,7 +14,7 @@ const data = {
 };
 
 function SlideTransition(props) {
-    return <Slide {...props} direction="up" />;
+    return <Slide {...props} direction="up"/>;
 }
 
 class GympinPagesProvider extends React.Component {
@@ -43,12 +43,12 @@ class GympinPagesProvider extends React.Component {
                     {this.props.children}
                 </ErrorContext.Provider>
 
-                <Snackbar sx={{mb:8,p:0}}
+                <Snackbar sx={{mb: 8, p: 0}}
                           open={this.state.data.show}
                           autoHideDuration={3000}
-                          TransitionComponent={ SlideTransition}
-                          onClose={() => this.hideError()} >
-                    <Paper sx={{width:"100%",backgroundColor:"#333",p:1}}>
+                          TransitionComponent={SlideTransition}
+                          onClose={() => this.hideError()}>
+                    <Paper sx={{width: "100%", backgroundColor: "#333", p: 1}}>
                         <Grid
                             container
                             direction="row"
@@ -56,11 +56,12 @@ class GympinPagesProvider extends React.Component {
                             alignItems="center"
                         >
 
-                            <Typography variant={"subtitle1"}  textAlign={"center"} color={"white"}>
+                            <Typography variant={"subtitle1"} textAlign={"center"} color={"white"}>
                                 {this.state.data.message}
                             </Typography>
 
-                            {this.state.data.clickable&&<Button variant={"contained"} color={"primary"} onClick={()=>this.clickButton()}>{this.state.data.buttonTitle}</Button>}
+                            {this.state.data.clickable && <Button variant={"contained"} color={"primary"}
+                                                                  onClick={() => this.clickButton()}>{this.state.data.buttonTitle}</Button>}
 
                         </Grid>
                     </Paper>

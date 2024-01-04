@@ -8,24 +8,22 @@ import {Button, TableCell, TextField, Tooltip} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {corporatePersonnel_addPersonnelCredit} from "../../../../../network/api/CorporatePersonnel.api";
-import {transaction_query} from "../../../../../network/api/transactions.api";
+import {
+    corporatePersonnel_addPersonnelCredit,
+    corporatePersonnel_getById
+} from "../../../../../network/api/CorporatePersonnel.api";
 
-const PersonnelCredit = ({corporatePersonnel,getPerson}) => {
+const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
     const error = useContext(ErrorContext);
-    const [openModalAdd,setOpenModalAdd]=useState(false)
-    const [credits,setCredits]=useState(null)
+    const [openModalAdd, setOpenModalAdd] = useState(false)
+    const [credits, setCredits] = useState(null)
     useEffect(() => {
         getTransactions();
     }, []);
-    function getTransactions(){
-        transaction_query({
-            queryType: "FILTER",
-            CorporateId:corporatePersonnel.Corporate.Id,
-            UserId:corporatePersonnel.User.Id,
-            paging: {Page: 0, Size: 200, Desc: true}
-        }).then(result=>{
-            setCredits(result.data.Data);
+
+    function getTransactions() {
+        corporatePersonnel_getById({id: corporatePersonnel.Id}).then(result => {
+            setCredits(result.data.Data.CreditList);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -34,7 +32,6 @@ const PersonnelCredit = ({corporatePersonnel,getPerson}) => {
             }
         });
     }
-
 
 
     function renderModalAdd() {
@@ -63,10 +60,9 @@ const PersonnelCredit = ({corporatePersonnel,getPerson}) => {
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
                     <form onSubmit={(e) => addOption(e)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>{corporatePersonnel.User?("افزودن اعتبار به "+(corporatePersonnel.User.FullName||corporatePersonnel.User.Username)+" از مجموعه "+corporatePersonnel.Corporate.Name):""}</Modal.Title>
+                            <Modal.Title>{corporatePersonnel.User ? ("افزودن اعتبار به " + (corporatePersonnel.User.FullName || corporatePersonnel.User.Username) + " از مجموعه " + corporatePersonnel.Corporate.Name) : ""}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-
 
 
                             <TextField
@@ -75,8 +71,8 @@ const PersonnelCredit = ({corporatePersonnel,getPerson}) => {
                                 margin="normal"
                                 name="creditToAdd"
                                 type="text"
-                                onChange={e=>
-                                    e.target.value= toPriceWithComma(e.target.value)
+                                onChange={e =>
+                                    e.target.value = toPriceWithComma(e.target.value)
                                 }
                                 label={"مبلغ دلخواه به تومان"}
                             />
@@ -107,15 +103,15 @@ const PersonnelCredit = ({corporatePersonnel,getPerson}) => {
 
             <Portlet>
                 <PortletHeader
-                    title={corporatePersonnel.Corporate&&("اعتبار های "+corporatePersonnel.Corporate.Name)}
+                    title={corporatePersonnel.Corporate && ("اعتبار های " + corporatePersonnel.Corporate.Name)}
                     toolbar={
                         <PortletHeaderToolbar>
                             <button
                                 type="button"
                                 className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                onClick={(e) =>setOpenModalAdd(true)}
+                                onClick={(e) => setOpenModalAdd(true)}
                             >
-                                <AddIcon />
+                                <AddIcon/>
                             </button>
                         </PortletHeaderToolbar>
                     }
@@ -132,10 +128,10 @@ const PersonnelCredit = ({corporatePersonnel,getPerson}) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {credits&&credits.content&&credits.content.map(row => (
+                            {credits && credits.map(row => (
                                 <TableRow key={row.Id}>
-                                    <TableCell align="right" component="th" scope="row" >{row.Id}</TableCell>
-                                    <TableCell align="right">{toPriceWithComma(row.Amount)}</TableCell>
+                                    <TableCell align="right" component="th" scope="row">{row.Id}</TableCell>
+                                    <TableCell align="right">{toPriceWithComma(row.CreditAmount)}</TableCell>
                                     <TableCell align="right">{new Date(row.CreatedDate).toLocaleDateString('fa-IR', {
                                         year: 'numeric',
                                         month: 'long',
@@ -144,8 +140,8 @@ const PersonnelCredit = ({corporatePersonnel,getPerson}) => {
                                         minute: "2-digit"
                                     })}</TableCell>
                                     <TableCell align="right">
-                                        <Tooltip title={row.CreatorUser.Username||""} placement="left">
-                                            <span>{(row.CreatorUser.FullName||"")}</span>
+                                        <Tooltip title={row.CreatorUser.Username || ""} placement="left">
+                                            <span>{(row.CreatorUser.FullName || row.CreatorUser.Username)}</span>
                                         </Tooltip>
                                     </TableCell>
                                 </TableRow>

@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.corporate.corporatePersonnel.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.param.BaseParam;
+import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import lombok.Data;
@@ -26,8 +26,8 @@ public class CorporatePersonnelParam extends BaseParam<CorporatePersonnelParam> 
     @JsonProperty("Role")
     private CorporatePersonnelRoleEnum role;
 
-    @JsonProperty("PersonelCategory")
-    private CorporatePersonnelCategoryParam PersonelCategory;
+    @JsonProperty("PersonelGroup")
+    private CorporatePersonnelGroupParam PersonelGroup;
 
 
 }

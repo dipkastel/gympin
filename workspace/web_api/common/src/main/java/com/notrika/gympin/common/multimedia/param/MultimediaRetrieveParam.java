@@ -1,7 +1,5 @@
 package com.notrika.gympin.common.multimedia.param;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.param.BasePagedParam;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

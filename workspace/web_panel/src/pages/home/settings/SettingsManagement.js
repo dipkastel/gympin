@@ -1,147 +1,41 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Notice from "../../partials/content/Notice";
-import {settings_add, settings_getAll} from "../../../network/api/settings.api";
-import SettingDetail from "./detail/SettingDetail";
-import {Button, Chip, Container, Grid, Typography} from "@mui/material";
-import {Form, Modal, Row} from "react-bootstrap";
-import Select from "react-select";
-import {SettingTypes} from "./settingsTypeEnum";
-import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {Paper, Tab, Tabs} from "@mui/material";
+import TransactionAllTab from "../finance/TransactionTabs/TransactionAllTab";
+import TransactionUserTab from "../finance/TransactionTabs/TransactionUserTab";
+import TransactionCorporateTab from "../finance/TransactionTabs/TransactionCorporateTab";
+import TransactionPlaceTab from "../finance/TransactionTabs/TransactionPlaceTab";
+import TransactionIncomeTab from "../finance/TransactionTabs/TransactionIncomeTab";
+import _SettingGeneral from "./General/_SettingGeneral";
+import _SettingFinance from "./Finance/_SettingFinance";
 
 
 const SettingsManagement = () => {
-    const error = useContext(ErrorContext);
-    const [settings, SetSettings] = useState([])
-    const [openModalAdd, SetOpenModalAdd] = useState(false)
-    const [filter,SetFilter] = useState(null)
-    useEffect(() => {
-        getAllDatas();
-    }, [filter]);
-
-    function getAllDatas() {
-        settings_getAll().then(result => {
-            SetSettings(result.data.Data);
-        }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
-
-    }
-
-    function RenderModalAdd() {
-        function addSetting(e) {
-            e.preventDefault()
-            settings_add({
-                Key: e.target.Key.value,
-                Description: e.target.Description.value,
-                Type: e.target.Type.value
-            })
-                .then((data) => {
-                    SetOpenModalAdd(false);
-                    getAllDatas();
-                })
-                .catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
-        }
-
-        return (
-            <>
-                <Modal show={openModalAdd} onHide={() => SetOpenModalAdd(false)}>
-                    <Form
-                        noValidate
-                        autoComplete="off"
-                        onSubmit={(e) => addSetting(e)}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن تنظیم جدید "}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Form.Label>کلید (عبارتی متشکل از حروف بزرگ انگلیسی که تنظیم را تعریف میکند بدون فاصله و
-                                علاعم به جز _ و باید یکتا باشد)</Form.Label>
-                            <Form.Group controlId="Key">
-                                <Form.Control
-                                    name="Key"
-                                    type="Text"
-                                    placeholder="STH_STH_STH"
-
-                                />
-                            </Form.Group>
-                            <Form.Group controlId="Description">
-                                <Form.Label>لطفا توضیح کاملی از استفاده تنظیم بنویسید به نحوی که دیگران متوجه
-                                    شوند.</Form.Label>
-                                <Form.Control
-                                    name="Description"
-                                    type="text"
-                                    placeholder="توضیح برای کاربرد تنظیم"
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>نوع (از نوع برای دسته بندی و ارسال به بخش هدف استفاده میشود)</Form.Label>
-                                <Select
-                                    className={"dropdown"}
-                                    inputId="react-select-single"
-                                    name="Type"
-                                    options={Object.entries(SettingTypes).map(data => {
-                                        return {label: data[1], value: data[0]}
-                                    })}
-                                />
-                            </Form.Group>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button
-                                className={"button_edit"}
-                                onClick={() => SetOpenModalAdd(false)}
-                            >
-                                خیر
-                            </Button>
-                            <Button
-                                className={"button_danger"}
-                                type={"submit"}
-                            >
-                                اضافه
-                            </Button>
-                        </Modal.Footer>
-                    </Form>
-                </Modal>
-            </>
-        );
-    }
+    const [selectedTab, setSelectedTab] = useState("GENERAL");
 
     return (
-        <div>
+        <>
 
-            <Notice  icon="flaticon-warning kt-font-primary">
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent={"space-between"}
-                    alignItems={"end"}
-                >
+            <Notice icon="flaticon-warning kt-font-primary">
                 <p>مدیریت تنظیمات</p>
-                <Button variant={"contained"} size={"large"} onClick={() => SetOpenModalAdd(true)}>افزودن</Button>
-                </Grid>
-                <Typography sx={{mt:3}} variant={"h6"}>
-                    فیلتر
-                </Typography>
-                {Object.entries(SettingTypes).filter(f=>filter?f[0]===filter:true).map(item=>(
-                    <Chip key={item[1]} size={"medium"} sx={{fontSize:15,mx:"5px",}} label={item[1]} color={item[0]===filter?"error":"default"} onClick={()=>SetFilter((item[0]===filter)?null:item[0])}/>
-                ))}
             </Notice>
-            <div className="container-fluid">
 
-                {settings.filter(f=>filter?f.Type===filter:true).map((setting, index) => (
-                    <SettingDetail key={index} setting={setting} refreshData={()=>getAllDatas()}/>
-                ))}
-            </div>
-            {RenderModalAdd()}
-        </div>
+            <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
+                <Tabs
+                    value={selectedTab}
+                    onChange={(e, n) => setSelectedTab(n)}
+                    indicatorColor="primary"
+                    textColor="inherit"
+                    variant={"standard"}
+                    aria-label="full width tabs example"
+                >
+                    <Tab label="عمومی" value={"GENERAL"}/>
+                    <Tab label="مالی" value={"FINANCE"}/>
+                </Tabs>
+            </Paper>
+            {selectedTab == "GENERAL" && <_SettingGeneral />}
+            {selectedTab == "FINANCE" && <_SettingFinance />}
+        </>
     );
 };
 

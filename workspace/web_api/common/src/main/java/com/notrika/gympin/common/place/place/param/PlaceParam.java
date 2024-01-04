@@ -1,8 +1,8 @@
 package com.notrika.gympin.common.place.place.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.param.BaseParam;
-import com.notrika.gympin.common.location.param.LocationParam;
+import com.notrika.gympin.common.util._base.param.BaseParam;
+import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,9 +34,6 @@ public class PlaceParam extends BaseParam<PlaceParam> {
 
     @JsonProperty("Status")
     private PlaceStatusEnum status = PlaceStatusEnum.ACTIVE ;
-
-    @JsonProperty("CommissionFee")
-    private double commissionFee;
 
     @JsonProperty("Location")
     private LocationParam location;

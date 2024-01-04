@@ -25,11 +25,11 @@ import java.util.Objects;
 public class UserMultimediaEntity extends BaseEntityWithCreateUpdate<UserMultimediaEntity> {
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "multimediaUserId")
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "multimedia_id")
+    @JoinColumn(name = "multimediaId")
     private MultimediaEntity multimedia;
 
     @Override

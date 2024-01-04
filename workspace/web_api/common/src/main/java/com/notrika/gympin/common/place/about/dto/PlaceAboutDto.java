@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.place.about.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.dto.BaseDtoWithCreateUpdate;
+import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

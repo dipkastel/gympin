@@ -25,11 +25,11 @@ import java.util.Objects;
 public class SportMultimediaEntity extends BaseEntity<SportMultimediaEntity> {
 
     @ManyToOne
-    @JoinColumn(name = "sport_id")
+    @JoinColumn(name = "sportId")
     private SportEntity sport;
 
     @ManyToOne
-    @JoinColumn(name = "multimedia_id")
+    @JoinColumn(name = "multimediaId")
     private MultimediaEntity multimedia;
 
     @Override

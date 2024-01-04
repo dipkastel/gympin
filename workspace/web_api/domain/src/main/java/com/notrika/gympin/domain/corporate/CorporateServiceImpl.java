@@ -6,19 +6,25 @@ import com.notrika.gympin.common.corporate.corporate.param.CorporateLogoParam;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
 import com.notrika.gympin.common.corporate.corporate.service.CorporateService;
-import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCategoryDto;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCategoryParam;
-import com.notrika.gympin.common.user.param.UserParam;
+import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelGroupDto;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelGroupParam;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
+import com.notrika.gympin.common.finance.transaction.param.FinanceCorporateParam;
+import com.notrika.gympin.common.finance.transaction.param.FinanceUserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.multimedia.MultimediaServiceImpl;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
-import com.notrika.gympin.persistence.dao.repository.CorporatePersonnelCategoryRepository;
-import com.notrika.gympin.persistence.dao.repository.CorporateRepository;
-import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
-import com.notrika.gympin.persistence.dao.repository.UserRepository;
+import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
+import com.notrika.gympin.domain.util.convertor.UserConvertor;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
+import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelCategoryEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
@@ -40,23 +46,30 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
     @Autowired
     private CorporateRepository corporateRepository;
     @Autowired
-    private CorporatePersonnelCategoryRepository corporatePersonnelCategoryRepository;
+    private CorporatePersonnelGroupRepository corporatePersonnelGroupRepository;
     @Autowired
     private MultimediaRepository multimediaRepository;
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FinanceCorporateRepository financeCorporateRepository;
 
     @Override
     public CorporateDto add(@NonNull CorporateParam corporateParam) {
-        CorporateEntity corporateEntity = CorporateEntity.builder()
+        CorporateEntity corporateEntity = corporateRepository.add(CorporateEntity.builder()
                 .name(corporateParam.getName())
                 .address(corporateParam.getAddress())
                 .status(CorporateStatusEnum.INACTIVE)
-                .Balance(BigDecimal.ZERO)
-                .stepspay(false)
-                .build();
-        return CorporateConvertor.toDto(corporateRepository.add(corporateEntity));
+                .stepsPay(false)
+                .build());
+
+        financeCorporateRepository.add(FinanceCorporateEntity.builder()
+                .corporate(corporateEntity)
+                .totalCredits(BigDecimal.ZERO)
+                .totalDeposit(BigDecimal.ZERO)
+                .build());
+        return CorporateConvertor.toDto(corporateEntity);
     }
 
     @Override
@@ -76,6 +89,13 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
     }
 
     @Override
+    public CorporateDto updateStepPayment(@NonNull CorporateParam corporateParam) {
+        CorporateEntity entity = corporateRepository.getById(corporateParam.getId());
+        entity.setStepsPay(corporateParam.getStepPeyment());
+        return CorporateConvertor.toDto(corporateRepository.update(entity));
+    }
+
+    @Override
     public CorporateDto updateLogo(CorporateLogoParam param) {
         CorporateEntity entity = corporateRepository.getById(param.getCorporateId());
         MultimediaEntity logo = multimediaRepository.getById(param.getMultimediaId());
@@ -84,23 +104,23 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
     }
 
     @Override
-    public List<CorporatePersonnelCategoryDto> getCorporateCategories(CorporateParam corporateParam) {
+    public List<CorporatePersonnelGroupDto> getCorporateGroups(CorporateParam corporateParam) {
         CorporateEntity entity = corporateRepository.getById(corporateParam.getId());
         return entity.getCategory().stream().filter(c->!c.isDeleted()).map(CorporateConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public CorporatePersonnelCategoryDto addCategory(CorporatePersonnelCategoryParam Param) {
+    public CorporatePersonnelGroupDto addGroup(CorporatePersonnelGroupParam Param) {
         CorporateEntity corporate = corporateRepository.getById(Param.getCorporateId());
-        var category = corporatePersonnelCategoryRepository.add(CorporatePersonnelCategoryEntity.builder().corporate(corporate).name(Param.getName()).build());
+        var category = corporatePersonnelGroupRepository.add(CorporatePersonnelGroupEntity.builder().corporate(corporate).name(Param.getName()).build());
         return CorporateConvertor.toDto(category);
     }
 
     @Override
-    public CorporatePersonnelCategoryDto deleteCategory(CorporatePersonnelCategoryParam Param) {
-        var category = corporatePersonnelCategoryRepository.getById(Param.getId());
+    public CorporatePersonnelGroupDto deleteGroup(CorporatePersonnelGroupParam Param) {
+        var category = corporatePersonnelGroupRepository.getById(Param.getId());
 
-        return CorporateConvertor.toDto(corporatePersonnelCategoryRepository.deleteById2(category));
+        return CorporateConvertor.toDto(corporatePersonnelGroupRepository.deleteById2(category));
     }
 
     @Override
@@ -155,6 +175,12 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         return entities.map(CorporateConvertor::toDto);
     }
 
+    @Override
+    public FinanceCorporateDto getFinanceCorporate(FinanceCorporateParam param) {
+        CorporateEntity corporateEntity = getEntityById(param.getId());
+        return TransactionConvertor.toDto(corporateEntity.getFinanceCorporate());
+    }
+
 
     public CorporateStatusEnum CalculateStatus(CorporateEntity entity){
         if(entity.getStatus().equals(CorporateStatusEnum.INACTIVE)) return entity.getStatus();
@@ -178,7 +204,7 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
                 if(result.compareTo(MaxUserCredit)<0){
                     result = MaxUserCredit;
                 }
-                if(entity.getBalance().compareTo(result)<0){
+                if(entity.getFinanceCorporate().getTotalDeposit().compareTo(result)<0){
                     return CorporateStatusEnum.LOW_BUDGET;
                 }else {
                     return CorporateStatusEnum.ACTIVE;

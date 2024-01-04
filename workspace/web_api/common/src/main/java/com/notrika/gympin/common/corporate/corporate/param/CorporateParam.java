@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.corporate.corporate.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.param.BaseParam;
+import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,5 +24,8 @@ public class CorporateParam extends BaseParam<CorporateParam> {
 
     @JsonProperty("Status")
     private CorporateStatusEnum status;
+
+    @JsonProperty("StepPeyment")
+    private Boolean stepPeyment;
 
 }

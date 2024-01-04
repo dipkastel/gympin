@@ -1,15 +1,15 @@
 package com.notrika.gympin.domain.sport;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
-import com.notrika.gympin.common.sport.dto.SportDto;
-import com.notrika.gympin.common.sport.param.SportParam;
-import com.notrika.gympin.common.sport.query.SportQuery;
-import com.notrika.gympin.common.sport.service.SportService;
+import com.notrika.gympin.common.sport.sport.dto.SportDto;
+import com.notrika.gympin.common.sport.sport.param.SportParam;
+import com.notrika.gympin.common.sport.sport.query.SportQuery;
+import com.notrika.gympin.common.sport.sport.service.SportService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.multimedia.MultimediaServiceImpl;
 import com.notrika.gympin.domain.util.convertor.SportConvertor;
-import com.notrika.gympin.persistence.dao.repository.SportRepository;
+import com.notrika.gympin.persistence.dao.repository.sport.SportRepository;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

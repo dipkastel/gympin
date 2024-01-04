@@ -64,21 +64,6 @@ const _AddPersonnel = ({renewList}) => {
             </div>
         )
     }
-    //
-    // <FormGroup>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت پرسنل"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مشاهده گزارشات"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت درگاه بدنسازی"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت درگاه تکواندو"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت درگاه پیلاتس"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت درگاه استخر"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت درگاه ایروبیک"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت درگاه trx"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت مالی"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت ترافیک"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت درباره"/>
-    //     <FormControlLabel control={<Switch defaultChecked/>} label="مدیریت کاربران"/>
-    // </FormGroup>
     return (
         <>
             <Card elevation={3} sx={{margin: 1}}>

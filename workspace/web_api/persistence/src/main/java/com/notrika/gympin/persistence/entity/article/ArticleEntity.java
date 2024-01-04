@@ -2,15 +2,8 @@ package com.notrika.gympin.persistence.entity.article;
 
 import com.notrika.gympin.common.article.enums.ArticleStatus;
 import com.notrika.gympin.common.article.enums.ArticleType;
-import com.notrika.gympin.common.note.enums.NoteType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.multimedia.MultimediaCategoryEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.sportplace.SportPlaceEntity;
-import com.notrika.gympin.persistence.entity.ticket.TicketEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -41,11 +34,11 @@ public class ArticleEntity extends BaseEntityWithCreateUpdate<ArticleEntity> {
     @Column(name = "summary",columnDefinition = "longtext")
     private String summary;
 
-    @Column(name = "articleStatus",columnDefinition = "varchar(255) default DRAFT ")
+    @Column(name = "articleStatus",columnDefinition = "varchar(255) default 'DRAFT' ")
     @Enumerated(EnumType.STRING)
     private ArticleStatus articleStatus;
 
-    @Column(name = "articleType",columnDefinition = "varchar(255) default SIMPLE ")
+    @Column(name = "articleType",columnDefinition = "varchar(255) default 'SIMPLE' ")
     @Enumerated(EnumType.STRING)
     private ArticleType articleType;
 

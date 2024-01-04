@@ -1,16 +1,9 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.dto.UserRegisterDto;
-import com.notrika.gympin.common.user.dto.UserRoleDto;
-import com.notrika.gympin.common.user.dto.UserRoleInfoDto;
-import com.notrika.gympin.common.user.enums.UserRole;
-import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.user.RoleEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import com.notrika.gympin.common.user.user.dto.UserRoleDto;
+import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
+import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.persistence.entity.user.UserRoleEntity;
 
 public final class UserRoleConvertor {
 
@@ -21,7 +14,7 @@ public final class UserRoleConvertor {
         return dto;
     }
 
-    public static UserRoleDto ToUserRoleDto(RoleEntity userRole) {
+    public static UserRoleDto ToUserRoleDto(UserRoleEntity userRole) {
         if (userRole == null) return null;
         UserRoleDto dto = new UserRoleDto();
         dto.setRole(userRole.getRole());

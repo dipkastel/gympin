@@ -5,17 +5,16 @@ import Paper from "@mui/material/Paper";
 import Toolbar from "@mui/material/Toolbar";
 import _wizardPlaceBase from "./pages/_wizardPlaceBase";
 import _wizardOtherInfo from "./pages/_wizardOtherInfo";
-import _wizardGatePlans from "./pages/_wizardGatePlans";
 import _wizardImages from "./pages/_wizardImages";
 import _wizardPlaceAbout from "./pages/_wizardPlaceAbout";
 import _wizardActivePlace from "./pages/_wizardActivePlace";
+import _wizardTickets from "./pages/tickets/_wizardTickets";
+import _wizardBeneficiaries from "./pages/_wizardBeneficiaries";
 
 const stepsStatusEnum = {empty:"empty",completed:"completed",skipped:"skipped"}
 
 
 const PlaceWizard = () => {
-
-
 
     const [allowGoNext, setAllowGoNext] = React.useState(false);
     const [activeStep, setActiveStep] = React.useState(0);
@@ -24,7 +23,8 @@ const PlaceWizard = () => {
     const steps = [
         {id:0,name: 'اطلاعات اولیه', isOptional: false,fragment:<_wizardPlaceBase allowNext={(e)=>setAllowGoNext(e)}/>},
         {id:1,name: 'اطلاعات تکمیلی', isOptional: false,fragment:<_wizardOtherInfo allowNext={(e)=>setAllowGoNext(e)}/>},
-        {id:3,name: 'درگاه ها و پلن ها', isOptional: false,fragment:<_wizardGatePlans allowNext={(e)=>setAllowGoNext(e)}/>},
+        {id:2,name: 'مالی', isOptional: false,fragment:<_wizardBeneficiaries allowNext={(e)=>setAllowGoNext(e)}/>},
+        {id:3,name: 'بلیط ها', isOptional: false,fragment:<_wizardTickets allowNext={(e)=>setAllowGoNext(e)}/>},
         {id:4,name: 'تصاویر', isOptional: false,fragment:<_wizardImages allowNext={(e)=>setAllowGoNext(e)}/>},
         {id:5,name: 'قوانین', isOptional: false,fragment:<_wizardPlaceAbout allowNext={(e)=>setAllowGoNext(e)} />},
         {id:6,name: 'فعالسازی', isOptional: false,fragment:<_wizardActivePlace allowNext={(e)=>setAllowGoNext(e)} />}

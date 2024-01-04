@@ -1,6 +1,6 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
-import com.notrika.gympin.common._base.param.BasePagedParam;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.multimedia.api.MultimediaController;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
@@ -28,7 +28,6 @@ public class MultimediaControllerImpl implements MultimediaController {
 
     @Override
     @RequestMapping(path = "/add", method = POST, consumes = {org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE})
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
     public ResponseEntity<MultimediaDto> add(MultimediaStoreParam multimediaStoreParam) {
         return ResponseEntity.ok(multimediaService.add(multimediaStoreParam));
     }

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
     Button,
     Card,
@@ -14,13 +14,19 @@ import {
 } from "@mui/material";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {Form} from "react-bootstrap";
-import {transaction_settlementRequest} from "../../network/api/transaction.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import getAccessOf from "../../helper/accessManager";
+import {SettlementUserDeposit_add} from "../../network/api/settlement.api";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {sagaActions} from "../../helper/redux/actions/SagaActions";
 
-const _Wallet = ({place,onRequestComplete}) => {
+const _Wallet = ({place,user,onRequestComplete}) => {
+    const navigate = useNavigate();
     const error = useContext(ErrorContext);
+    const currentUser = useSelector(({auth}) => auth.user);
+    const minPrice = 50000;
     const [openModalRequest, setOpenModalRequest] = React.useState(false);
 
 
@@ -28,20 +34,31 @@ const _Wallet = ({place,onRequestComplete}) => {
     if(!place)
         return (<></>);
 
+    if(!user)
+        return (<></>);
+
     function ModalDemandPayment() {
         if(!place) return;
         function request(e) {
             e.preventDefault()
-            transaction_settlementRequest({PlaceId:place.Id,Amount:toPriceWithoutComma(e.target.requestAmount.value)}).then(result=>{
-                setOpenModalRequest(false);
-                onRequestComplete();
+            console.log("minPrice",toPriceWithoutComma(e.target.requestAmount.value)<minPrice,toPriceWithoutComma(e.target.requestAmount.value),minPrice)
+            if(toPriceWithoutComma(e.target.requestAmount.value)<minPrice){
+                error.showError({message: "مبلغ درخواست تسویه باید بیش از "+toPriceWithComma(minPrice)+" تومان باشد",});
+                return;
+            }
+            setOpenModalRequest(false)
+            SettlementUserDeposit_add({
+                Amount: toPriceWithoutComma(e.target.requestAmount.value),
+                UserId: currentUser.Id
+            }).then(result => {
+                navigate('/finance/demand', {replace: true});
             }).catch(e => {
                 try {
-                    error.showError({message: e.response.data.Message,});
+                    error.showError({message: e.response.data.Message});
                 } catch (f) {
                     error.showError({message: "خطا نا مشخص",});
                 }
-            });
+            })
         }
         return (
             <div>
@@ -55,7 +72,7 @@ const _Wallet = ({place,onRequestComplete}) => {
                             <TextField
                                 autoFocus
                                 name={"requestAmount"}
-                                label="مبلغ درخواستی"
+                                label="مبلغ درخواستی (تومان)"
                                 onChange={e=>e.target.value=toPriceWithComma(e.target.value)}
                                 type="text"
                                 fullWidth
@@ -85,7 +102,7 @@ const _Wallet = ({place,onRequestComplete}) => {
                         spacing={0}
                     >
                         <Typography variant="h6">
-                            {`${toPriceWithComma(place.Balance)} تومان`}
+                            {`${toPriceWithComma(user.FinanceUser.TotalDeposit)} تومان`}
                         </Typography>
                         {getAccessOf(personnelAccessEnumT.FinanceAction)&&<Button variant={"contained"} onClick={()=>setOpenModalRequest(true)}>درخواست تسویه</Button>}
                     </Stack>

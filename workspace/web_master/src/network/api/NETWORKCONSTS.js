@@ -1,7 +1,9 @@
-import {ticket_addEntryMessage, ticket_deleteEntryMessage} from "./ticket.api";
+import {subscribe_addEntryMessage, subscribe_deleteEntryMessage} from "./subscribe.api";
+import {Halls_getById} from "./halls.api";
 
 export let AuthApi = {
-    // BASEURL: "http://localhost:8080/api/",
+    //BASEURL: "http://localhost:8080/api/",
+    // BASEURL: "http://192.168.0.117:8080/api/",
     BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
@@ -49,8 +51,8 @@ export let Api_url = {
         PersonnelByPlace:"v1/placePersonnel/PersonnelByPlace",
         updatePersonnelAccess:"v1/placePersonnel/updatePersonnelAccess",
         getUserPlaceAccess:"v1/placePersonnel/getUserPlaceAccess",
-        updatePersonnelGateAccess:"v1/placePersonnel/updatePersonnelGateAccess",
-        getUserPlaceGateAccess:"v1/placePersonnel/getUserPlaceGateAccess"
+        updatePersonnelHallAccess:"v1/placePersonnel/updatePersonnelHallAccess",
+        getUserPlaceHallAccess:"v1/placePersonnel/getUserPlaceHallAccess"
     },
     optionOfPlace:{
         ADD: "v1/OptionOfPlace/add",
@@ -68,34 +70,41 @@ export let Api_url = {
         GET_BY_PLACE_ID:"v1/placeAbout/getByPlaceId",
         UPDATE: "/v1/placeAbout/update",
     },
-    Gates:{
-        ADD:"v1/gate/add",
-        DELETE:"v1/gate/delete",
-        GET_BY_ID:"v1/gate/getById",
-        GET_BY_PLACE_ID:"v1/gate/getGatesByPlace",
-        UPDATE: "/v1/gate/update",
+    Halls:{
+        ADD:"v1/hall/add",
+        DELETE:"v1/hall/delete",
+        GET_BY_ID:"v1/hall/getById",
+        GET_BY_PLACE_ID:"v1/hall/getHallsByPlace",
+        UPDATE: "/v1/hall/update",
     },
-    GateTraffic:{
-        ADD:"v1/gateTraffic/add",
-        GET_BY_GATE:"v1/gateTraffic/getByGate",
+    HallTraffic:{
+        ADD:"v1/hallTraffic/add",
+        GET_BY_HALL:"v1/hallTraffic/getByHall",
     },
-    GateTiming:{
-        ADD_ALL:"v1/gateTiming/addAll",
-        GET_BY_GATE:"v1/gateTiming/getByGate",
-        GET_BY_PLACE:"v1/gateTiming/getByPlace",
-        DELETE:"v1/gateTiming/Delete",
+    ticketSubscribeActiveTimes:{
+        ADD_ALL:"v1/ticketSubscribeActiveTimes/addAll",
+        GET_BY_HALL:"v1/ticketSubscribeActiveTimes/getByHall",
+        GET_BY_PLACE:"v1/ticketSubscribeActiveTimes/getByPlace",
+        DELETE:"v1/ticketSubscribeActiveTimes/Delete",
     },
-    PlanGatesTiming:{
-        ADD_ALL:"v1/plan-gate-timing/addAll",
-        DELETE:"v1/plan-gate-timing/delete",
-        GET_BY_PLAN:"v1/plan-gate-timing/getByPlan",
-    },
-    placePlans:{
-        ADD:"v1/plan/add",
-        DELETE:"v1/plan/delete",
-        GET_BY_ID:"v1/plan/getById",
-        GET_BY_PLACE_ID:"v1/plan/getPlansByPlace",
-        UPDATE: "/v1/plan/update",
+    TicketSubscribe:{
+        add: "v1/TicketSubscribe/add",
+        delete: "v1/TicketSubscribe/delete",
+        getAll: "v1/TicketSubscribe/getAll",
+        getTicketSubscribeDiscountHistory: "v1/TicketSubscribe/getTicketSubscribeDiscountHistory",
+        getById: "v1/TicketSubscribe/getById",
+        getSports: "v1/TicketSubscribe/getSports",
+        addSport: "v1/TicketSubscribe/addSport",
+        deleteSport: "v1/TicketSubscribe/deleteSport",
+        update: "v1/TicketSubscribe/update",
+        ChangeTicketSubscribeStatus: "v1/TicketSubscribe/ChangeTicketSubscribeStatus",
+        query: "v1/TicketSubscribe/query",
+        getByPlaceId: "v1/TicketSubscribe/getByPlace",
+        countFilter: "v1/TicketSubscribe/count-filter",
+        addSubscribeActiveTimes: "v1/TicketSubscribe/addSubscribeActiveTimes",
+        getActiveTimesByTicketSubscribe: "v1/TicketSubscribe/getActiveTimesByTicketSubscribe",
+        deleteSubscribeActiveTimes: "v1/TicketSubscribe/deleteSubscribeActiveTimes",
+
     },
     support:{
         ADD:"v1/support/add",
@@ -103,24 +112,45 @@ export let Api_url = {
         GET_BY_PLACE:"v1/support/getByPlace",
         GET_BY_ID:"v1/support/getById",
     },
-    ticket:{
-        enter:"v1/ticket/enter",
-        getById:"v1/ticket/getById",
-        exitRequest:"v1/ticket/exitRequest",
-        enterRequest:"v1/ticket/enterRequest",
-        getEnterRequested:"v1/ticket/getEnterRequested",
-        increaseExpireDate:"v1/ticket/increaseExpireDate",
-        acceptEnterRequested:"v1/ticket/acceptEnterRequested",
-        getUserEntered:"v1/ticket/getUserEntered",
-        getActiveTickets:"v1/ticket/getActiveTickets",
-        getUserTicketsByPlace:"v1/ticket/getUserTicketsByPlace",
-        addEntryMessage:"v1/ticket/addEntryMessage",
-        deleteEntryMessage:"v1/ticket/deleteEntryMessage",
-        scannedTicket:"v1/ticket/scannedTicket"
+    settlementUserDeposit:{
+        query: "v1/settlementUserDeposit/query",
+        add: "v1/settlementUserDeposit/add",
     },
-    transaction:{
-        getByPlaceId:"v1/transaction/getByPlaceId",
-        settlementRequest:"v1/transaction/settlementRequest",
-        query:"v1/transaction/query"
+    PlaceSport:{
+        add: "v1/placeSport/add",
+        delete: "v1/placeSport/delete",
+        getAll: "v1/placeSport/getAll",
+        update: "v1/placeSport/update",
+        getSportsByPlace: "v1/placeSport/getSportsByPlace"
+    },
+    Purchased:{
+        add: "v1/Purchased/add",
+        delete: "v1/Purchased/delete",
+        getAll: "v1/Purchased/getAll",
+        update: "v1/Purchased/update",
+        query: "v1/Purchased/query",
+    },
+    purchasedSubscribe:{
+        enter:"v1/purchasedSubscribe/enter",
+        getById:"v1/purchasedSubscribe/getById",
+        exitRequest:"v1/purchasedSubscribe/exitRequest",
+        enterRequest:"v1/purchasedSubscribe/enterRequest",
+        exitUserOfPlace:"v1/purchasedSubscribe/exitUserOfPlace",
+        getEnterRequested:"v1/purchasedSubscribe/getEnterRequested",
+        increaseExpireDate:"v1/purchasedSubscribe/increaseExpireDate",
+        addEnterToSubscribe:"v1/purchasedSubscribe/addEnterToSubscribe",
+        acceptEnterRequested:"v1/purchasedSubscribe/acceptEnterRequested",
+        getUserEntered:"v1/purchasedSubscribe/getUserEntered",
+        getActiveSubscribes:"v1/purchasedSubscribe/getActiveSubscribes",
+        getUserSubscribesByPlace:"v1/purchasedSubscribe/getUserSubscribesByPlace",
+        addEntryMessage:"v1/purchasedSubscribe/addEntryMessage",
+        deleteEntryMessage:"v1/purchasedSubscribe/deleteEntryMessage",
+        scannedSubscribe:"v1/purchasedSubscribe/scannedSubscribe"
+    },
+    qrCode: {
+        getCode: "v1/qrCode/getCode",
+    },
+    transactionUser:{
+        query: "v1/TransactionUser/query",
     }
 };

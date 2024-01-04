@@ -10,18 +10,18 @@ SwiperCore.use([Navigation, Pagination]);
 export default function HomeOneHero() {
     const team = [
         {
-            title: ["ورزش بیشتر", "سلامتی بیشتر"],
-            desc: "پلتفرم آنلاین مدیریت و رزرو مجموعه‌های ورزشی",
+            title: ["ورزش بیشتر", "شادابی بیشتر"],
+            desc: "پلتفرم آنلاین خدمات ورزشی ویژه سازمان ها",
             src: "/images/banner/front-banner5.jpg",
-            destination:"https://web.gympin.ir/profile",
-            btnTitle:"ثبت نام"
+            destination:"https://corporate.gympin.ir/auth/register",
+            btnTitle:"ثبت رایگان"
         },
         {
-            title: ["تجربه بینظیر", "ورزش های جدید"],
-            desc: "ورزش های مختلفی برای استفاده شما گرداوری شده است",
+            title: [ "مناسب با بودجه","سازمان شما"],
+            desc: "روش های مختلف و متنوع پرداخت ",
             src: "/images/banner/front-banner7.jpg",
-            destination:"https://web.gympin.ir/places",
-            btnTitle:"مراکز و ورزش‌ها"
+            destination:"https://gympin.ir/corporate",
+            btnTitle:"اطلاعات بیشتر"
         }
     ];
 

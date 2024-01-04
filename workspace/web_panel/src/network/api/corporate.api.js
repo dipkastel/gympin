@@ -5,7 +5,7 @@ export function corporate_add(data) {
     return axios.post(CorporateApi.add, data);
 }
 export function corporate_delete(data) {
-    return axios.put(CorporateApi.delete, null,{ params: data });
+    return axios.put(CorporateApi.delete,  data );
 }
 export function corporate_getAll() {
     return axios.get(CorporateApi.getAll);
@@ -28,6 +28,24 @@ export function corporate_update(data) {
 export function corporate_updateStatus(data) {
     return axios.put(CorporateApi.updateStatus, data);
 }
+export function corporate_updateStepPayment(data) {
+    return axios.put(CorporateApi.updateStepPayment, data);
+}
 export function corporate_query(data) {
     return axios.post(CorporateApi.query,data);
+}
+export function corporate_getFinanceCorporate(data) {
+    return axios.get(CorporateApi.getFinanceCorporate,{ params: data });
+}
+
+// groups
+
+export function corporate_getCorporateGroups(data) {
+    return axios.get(CorporateApi.getCorporateGroups,{ params: data });
+}
+export function corporate_addGroup(data) {
+    return axios.post(CorporateApi.addGroup, data);
+}
+export function corporate_deleteGroup(data) {
+    return axios.put(CorporateApi.deleteGroup,  data );
 }

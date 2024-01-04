@@ -1,20 +1,18 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
 import Select from "react-select";
-import {user_GetStatuses, user_UpdateUserStatus} from "../../../../../network/api/user.api";
 import {corporate_updateStatus} from "../../../../../network/api/corporate.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
-const CorporateStatus = ({currentCorporate}) => {
+const CorporateStatus = ({currentCorporate, updatePage}) => {
     const error = useContext(ErrorContext);
-    const [inCorporate,SetInCorporate] = useState(currentCorporate)
 
 
-    function changeUserStatus(data){
-        corporate_updateStatus({...inCorporate,Status:data}).then(response=>{
+    function changeUserStatus(data) {
+        corporate_updateStatus({Id: currentCorporate.Id, Status: data}).then(response => {
             error.showError({message: "عملیات موفق",});
-            SetInCorporate({...inCorporate,Status:data})
+            updatePage();
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -32,17 +30,18 @@ const CorporateStatus = ({currentCorporate}) => {
             {value: "PREREGISTER", label: "پیش ثبت نام"},
         ]
     }
+
     return (
         <>
             <Portlet>
-                <PortletHeader title="وضعیت شرکت" />
+                <PortletHeader title="وضعیت شرکت"/>
                 <PortletBody>
                     <Form.Group>
                         <Select
                             className={"dropdown"}
                             options={getStatusOptions()}
-                            value={{label: inCorporate.Status, value: inCorporate.Status}}
-                            onChange={e => changeUserStatus( e.value)}
+                            value={{label: getStatusOptions().filter(d=>d.value==currentCorporate.Status)[0].label, value: currentCorporate.Status}}
+                            onChange={e => changeUserStatus(e.value)}
                         />
                     </Form.Group>
                 </PortletBody>

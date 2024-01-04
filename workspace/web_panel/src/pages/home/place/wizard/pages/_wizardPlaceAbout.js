@@ -163,7 +163,6 @@ const _wizardPlaceAbout = ({allowNext}) => {
                             </PortletHeaderToolbar>}
                         />
                         <PortletBody>
-                            {console.log(row)}
                             <FormGroup>
                                 <FormControlLabel
                                     checked={row.Active}

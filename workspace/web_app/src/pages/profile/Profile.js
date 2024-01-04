@@ -50,10 +50,11 @@ const Profile = (props) => {
 
                 </CardContent>
             </Card>
-            <_ListItem title="شرایط و قوانین" destination="https://gympin.ir/term-and-conditions/"/>
+            <_ListItem title="فاکتور ها" destination="/invoices"/>
             <_ListItem title="دعوت از دوستان" destination="/profile/invitefriends"/>
             <_ListItem title="سوالات متداول" destination="https://gympin.ir/faq/"/>
             {/*<_ListItem title="امتیاز و بازخورد" destination="/profile/survey"/>*/}
+            <_ListItem title="شرایط و قوانین" destination="https://gympin.ir/term-and-conditions/"/>
             <_ListItem title="تماس با ما" destination="https://gympin.ir/contact/"/>
             <_ListItem title="خروج" destination="/auth/logout"/>
 

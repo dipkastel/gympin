@@ -42,11 +42,11 @@ const _ManageGatePrice = (props) => {
         )
     }
 
-    function ModalDeletePlan(){
+    function ModalDeleteFood(){
         return (
             <div>
                 <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>حذف پلن</DialogTitle>
+                    <DialogTitle>حذف عضویت</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                            آیا حذف منو {props.name} را تایید میکنید؟
@@ -125,7 +125,7 @@ const _ManageGatePrice = (props) => {
                 </CardContent>
             </Card>
 
-            {ModalDeletePlan()}
+            {ModalDeleteFood()}
         </>
     );
 };

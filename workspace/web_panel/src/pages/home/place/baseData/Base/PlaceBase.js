@@ -102,24 +102,6 @@ function PlaceBase({place, updatePlace}) {
                         />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>کمیسیون</Form.Label>
-                        <TextField
-                            id="standard-full-width"
-                            label="درصد کمیسیون"
-                            style={{margin: 8}}
-                            placeholder="0"
-                            value={inPlace.CommissionFee}
-                            type={"number"}
-                            onChange={(e) => setFormValues("CommissionFee", e.target.value)}
-                            fullWidth
-                            margin="normal"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-
-                    </Form.Group>
-                    <Form.Group>
                         <Form.Label>تخفیف اتوماتیک</Form.Label>
                         <Switch
                             edge="end"

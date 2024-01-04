@@ -158,7 +158,6 @@ const _PlacesList = () => {
             content.push(...result.data.Data.content);
             SetPlaces({...result.data.Data,content:content});
             // SetPlaces(result.data.Data);
-            console.log(result);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -170,7 +169,6 @@ const _PlacesList = () => {
 
     function handleChange(evt, allItems) {
         SetPlaces(null);
-        console.log(evt.target.value);
         if (evt.target.value === null) {
             removeFilter(evt.target.name)
             return
@@ -210,8 +208,7 @@ const _PlacesList = () => {
     }
 
     const handleScroll = () => {
-        console.log(window.innerHeight + document.documentElement.scrollTop,document.documentElement.offsetHeight)
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) {
+       if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) {
             return;
         }
          setLoadedPage(loadedPage+1);

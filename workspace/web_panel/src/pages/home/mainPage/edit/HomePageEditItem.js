@@ -41,7 +41,6 @@ const HomePageEditItem = ({elements,selectedParent,itemToEdit,setItemToEdit,dest
             onTypeChange(null)
             // setRenderId(Math.random())
         }).catch(e => {
-            console.log(e);
             try {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {

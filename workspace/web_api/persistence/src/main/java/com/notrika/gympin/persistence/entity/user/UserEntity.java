@@ -1,30 +1,31 @@
 package com.notrika.gympin.persistence.entity.user;
 
-import com.notrika.gympin.common.user.enums.Gender;
-import com.notrika.gympin.common.user.enums.UserGroup;
-import com.notrika.gympin.common.user.enums.UserRole;
-import com.notrika.gympin.common.user.enums.UserStatus;
+import com.notrika.gympin.common.user.user.enums.Gender;
+import com.notrika.gympin.common.user.user.enums.UserGroup;
+import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
-import com.notrika.gympin.persistence.entity.athlete.gate.EnterGateEntity;
-import com.notrika.gympin.persistence.entity.comment.CommentGateEntity;
-import com.notrika.gympin.persistence.entity.communication.notification.NotificationEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
-import com.notrika.gympin.persistence.entity.event.EventParticipantEntity;
-import com.notrika.gympin.persistence.entity.gate.GateEntity;
+import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseUserDepositEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.settlement.FinanceSettlementUserDepositEntity;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
+import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
+import com.notrika.gympin.persistence.entity.management.notification.ManageNotificationEntity;
+import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.note.NoteEntity;
-import com.notrika.gympin.persistence.entity.place.comment.CommentPlaceEntity;
+import com.notrika.gympin.persistence.entity.place.comment.PlaceCommentEntity;
+import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
-import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
-import com.notrika.gympin.persistence.entity.rating.RateGateEntity;
-import com.notrika.gympin.persistence.entity.rating.RatePlaceEntity;
-import com.notrika.gympin.persistence.entity.rating.UserRateEntity;
-import com.notrika.gympin.persistence.entity.security.service.ServiceExecutionEntity;
+import com.notrika.gympin.persistence.entity.place.rating.PlaceRateEntity;
+import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
+import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryEntity;
+import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryRequstEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
-import com.notrika.gympin.persistence.entity.ticket.TicketEntryEntity;
-import com.notrika.gympin.persistence.entity.transaction.TransactionEntity;
-import com.notrika.gympin.persistence.entity.user.relation.FollowEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.user.activationCode.UserActivationCodeEntity;
+import com.notrika.gympin.persistence.entity.user.relation.UserFollowEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -34,7 +35,6 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -48,8 +48,8 @@ import java.util.Set;
 @SuperBuilder
 @Entity
 @Table(name = "user", uniqueConstraints = {
-        @UniqueConstraint(name = "username", columnNames = {"username"}),
-        @UniqueConstraint(name = "phoneNumber", columnNames = {"phoneNumber"})
+        @UniqueConstraint(columnNames = {"username"}),
+        @UniqueConstraint(columnNames = {"phoneNumber"})
 })
 @PrimaryKeyJoinColumn(name = "id")
 public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
@@ -76,9 +76,6 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "balance", nullable = false, columnDefinition = "BigDecimal default 0")
-    private BigDecimal Balance;
-
     @Column(name = "userGroup", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserGroup userGroup;
@@ -90,9 +87,6 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @Column(name = "invitedBy")
     private String invitedBy;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<PasswordEntity> password;
-
     @Column(name = "userStatus")
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
@@ -100,108 +94,108 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @Column(name = "bio", length = 250)
     private String bio;
 
-    @OneToMany(mappedBy = "user")
+    @Transient
+    private Float rate;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<UserPasswordEntity> password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<PlacePersonnelEntity> placePersonnel;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<SupportEntity> support;
 
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    private List<TransactionEntity> transactions;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
-    @ToString.Exclude
-    private ActivationCodeEntity activationCode;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "finance_user_id", referencedColumnName = "id")
+    private FinanceUserEntity financeUser;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    //@OrderBy("expireDate desc")
-    //@Where(clause = "userTokens.tokenStatus='ACTIVE'")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private UserActivationCodeEntity activationCode;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @Where(clause = "token_status='ACTIVE'")
     @ToString.Exclude
     private Set<UserTokenEntity> userTokens;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @ToString.Exclude
-    private Set<ServiceExecutionEntity> serviceExecutions;
+    private Set<ManageServiceExecutionEntity> serviceExecutions;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<MultimediaEntity> multimediaSet;
 
-    @OneToMany(mappedBy = "requesterUser")
+    @OneToMany(mappedBy = "requesterUser",fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<FollowEntity> followings;
+    private List<UserFollowEntity> followings;
 
-    @OneToMany(mappedBy = "requestedUser")
+    @OneToMany(mappedBy = "requestedUser",fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<FollowEntity> followers;
+    private List<UserFollowEntity> followers;
 
-    @OneToMany(mappedBy = "judgingUser")
-    @ToString.Exclude
-    private List<UserRateEntity> judged;
 
-    @OneToMany(mappedBy = "judgerUser")
-    @ToString.Exclude
-    private List<UserRateEntity> hasJudged;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<UserMultimediaEntity> userMultimedias;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<NotificationEntity> notifs;
+    private List<ManageNotificationEntity> notifs;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<NoteEntity> notes;
+    private List<ManageNoteEntity> notes;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     private MultimediaEntity userAvatar;
 
-    @OneToOne(mappedBy = "user")
-    @ToString.Exclude
-    private PlanRegisterEntity registeredPlan;
 
-    @ManyToMany(mappedBy = "guard")
+    @OneToMany(mappedBy = "requester",fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<GateEntity> gates;
+    private List<PurchasedSubscribeEntryRequstEntity> enterHallAthlete;
 
-    @OneToMany(mappedBy = "athlete")
+
+    @OneToMany(mappedBy = "acceptedBy",fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<EnterGateEntity> enterGateAthlete;
+    private List<PurchasedSubscribeEntryEntity> entranceAcceptes;
 
-    @OneToMany(mappedBy = "guard")
-    @ToString.Exclude
-    private List<EnterGateEntity> enterGateGuard;
-
-    @OneToMany(mappedBy = "acceptedBy")
-    @ToString.Exclude
-    private List<TicketEntryEntity> entranceAcceptes;
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<CorporatePersonnelEntity> corporatesPersonel;
 
-    @OneToMany
-    private List<CommentGateEntity> gateComments;
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<FinanceIncreaseUserDepositEntity> userIncreases;
 
-    @OneToMany
-    private List<CommentPlaceEntity> placeComments;
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<FinanceSettlementUserDepositEntity> userSettlements;
 
-    @OneToMany
-    private List<RateGateEntity> gateRates;
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<PurchasedBaseEntity> userPurchased;
 
-    @OneToMany
-    private List<RatePlaceEntity> placeRates;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<PlaceCommentEntity> placeComments;
 
-    @Transient
-    private Float rate;
+
+    @OneToMany( fetch = FetchType.LAZY)
+    private List<PlaceRateEntity> placeRates;
+
+    @ManyToMany(mappedBy = "owner",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<HallEntity> halls;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<InvoiceEntity> invoices;
 
     @Override
     public boolean equals(Object o) {

@@ -1,9 +1,9 @@
 package com.notrika.gympin.persistence.entity;
 
-import com.notrika.gympin.common._base.query.Query;
-import com.notrika.gympin.common._base.query.QueryCriteria;
-import com.notrika.gympin.common._base.query.Enums.QueryTypesEnum;
-import com.notrika.gympin.common._base.query.Enums.QueryOperationsEnum;
+import com.notrika.gympin.common.util._base.query.Query;
+import com.notrika.gympin.common.util._base.query.QueryCriteria;
+import com.notrika.gympin.common.util._base.query.Enums.QueryTypesEnum;
+import com.notrika.gympin.common.util._base.query.Enums.QueryOperationsEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

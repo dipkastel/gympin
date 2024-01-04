@@ -1,7 +1,8 @@
 package com.notrika.gympin.common.corporate.corporate.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.dto.BaseDtoWithCreateUpdate;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
+import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import lombok.Data;
@@ -25,11 +26,14 @@ public class CorporateDto extends BaseDtoWithCreateUpdate<CorporateDto> {
     @JsonProperty("Address")
     private String address;
 
-    @JsonProperty("Balance")
-    private BigDecimal balance;
+    @JsonProperty("FinanceCorporate")
+    private FinanceCorporateDto financeCorporate;
 
     @JsonProperty("Status")
     private CorporateStatusEnum status;
+
+    @JsonProperty("StepPeyment")
+    private Boolean stepPeyment;
 
     @JsonProperty("Logo")
     private MultimediaDto logo;

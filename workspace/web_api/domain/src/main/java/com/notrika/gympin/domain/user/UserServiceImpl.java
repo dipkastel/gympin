@@ -1,32 +1,34 @@
 package com.notrika.gympin.domain.user;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common.context.GympinContext;
-import com.notrika.gympin.common.context.GympinContextHolder;
-import com.notrika.gympin.common.exception.user.UnknownUserException;
-import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.dto.UserRoleInfoDto;
-import com.notrika.gympin.common.user.enums.UserGroup;
-import com.notrika.gympin.common.user.enums.UserRole;
-import com.notrika.gympin.common.user.enums.UserStatus;
-import com.notrika.gympin.common.user.param.UserAvatarParam;
-import com.notrika.gympin.common.user.param.UserParam;
-import com.notrika.gympin.common.user.param.UserRoleUpdateParam;
-import com.notrika.gympin.common.user.param.UserStatusParam;
-import com.notrika.gympin.common.user.query.UserQuery;
-import com.notrika.gympin.common.user.service.UserService;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
+import com.notrika.gympin.common.finance.transaction.param.FinanceUserParam;
+import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
+import com.notrika.gympin.common.user.user.dto.UserCreditDto;
+import com.notrika.gympin.common.user.user.enums.*;
+import com.notrika.gympin.common.user.user.param.*;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
+import com.notrika.gympin.common.util.exception.user.UnknownUserException;
+import com.notrika.gympin.common.user.user.dto.UserDto;
+import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
+import com.notrika.gympin.common.user.user.query.UserQuery;
+import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.relation.FollowServiceImpl;
-import com.notrika.gympin.domain.ticket.TicketServiceImpl;
+import com.notrika.gympin.domain.user.relation.FollowServiceImpl;
+import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.convertor.UserRoleConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
-import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
-import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
-import com.notrika.gympin.persistence.dao.repository.UserRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceIncreaseUserDepositRepository;
+import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.user.PasswordEntity;
+import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,25 +56,20 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordRepository passwordRepository;
+    private UserPasswordRepository userPasswordRepository;
+
+    @Autowired
+    CorporatePersonnelRepository corporatePersonnelRepository;
 
     @Autowired
     private MultimediaRepository multimediaRepository;
 
     @Autowired
-    private TicketServiceImpl ticketService;
-
-    @Autowired
     private FollowServiceImpl followService;
 
     @Autowired
-    private UserRateServiceImpl userRateService;
+    private FinanceIncreaseUserDepositRepository financeIncreaseUserDepositRepository;
 
-    @Autowired
-    private UserCreditServiceImpl userCreditService;
-//
-//    @Autowired
-//    private AccountingServiceImpl accountingService;
 
 
     //base
@@ -90,8 +89,8 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setUserStatus(UserStatus.ENABLED);
         initUser.setBio(userParam.getBio());
         UserEntity user = userRepository.add(initUser);
-        PasswordEntity password = PasswordEntity.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
-        passwordRepository.add(password);
+        UserPasswordEntity password = UserPasswordEntity.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
+        userPasswordRepository.add(password);
         return UserConvertor.toDtoComplete(user);
     }
 
@@ -106,13 +105,21 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Transactional
     public UserDto update(UserParam userParam) {
         UserEntity initUser = getEntityById(userParam.getId());
-        if (StringUtils.hasText(userParam.getFullName())) initUser.setFullName(userParam.getFullName());
-        if (StringUtils.hasText(userParam.getUsername())) initUser.setUsername(userParam.getUsername());
-        if (userParam.getBirthday() != null) initUser.setBirthday(userParam.getBirthday());
-        if (userParam.getGender() != null) initUser.setGender(userParam.getGender());
-        if (StringUtils.hasText(userParam.getNationalCode())) initUser.setNationalCode(userParam.getNationalCode());
-        initUser.setEmail(userParam.getEmail());
-        initUser.setBio(userParam.getBio());
+        if (StringUtils.hasText(userParam.getFullName()))
+            initUser.setFullName(userParam.getFullName());
+        if (StringUtils.hasText(userParam.getUsername()))
+            initUser.setUsername(userParam.getUsername());
+        if (userParam.getBirthday() != null)
+            initUser.setBirthday(userParam.getBirthday());
+        if (userParam.getGender() != null)
+            initUser.setGender(userParam.getGender());
+        if (StringUtils.hasText(userParam.getNationalCode()))
+            initUser.setNationalCode(userParam.getNationalCode());
+        if (StringUtils.hasText(userParam.getEmail()))
+            initUser.setEmail(userParam.getEmail());
+        if (StringUtils.hasText(userParam.getBio()))
+            initUser.setBio(userParam.getBio());
+
         UserEntity user = update(initUser);
         return UserConvertor.toDtoComplete(user);
     }
@@ -161,7 +168,6 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         UserDto userDto = UserConvertor.toDtoComplete(user);
         userDto.setFollowersCount(followService.getFollowersCount(user));
         userDto.setFollowingsCount(followService.getFollowingsCount(user));
-        userDto.setRate(userRateService.calculateUserRate(UserParam.builder().id(id).build()));
         return userDto;
     }
 
@@ -175,8 +181,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         UserDto userDto = UserConvertor.toDtoComplete(userRequester);
         userDto.setFollowersCount(followService.getFollowersCount(userRequester));
         userDto.setFollowingsCount(followService.getFollowingsCount(userRequester));
-        userDto.setBalance(userCreditService.getCreditsByUser(UserParam.builder().id(userRequester.getId()).build()).getTotalCredit());
-        userDto.setRate(userRateService.calculateUserRate(UserParam.builder().id(userRequester.getId()).build()));
+        userDto.setBalance(getCreditsByUser(UserParam.builder().id(userRequester.getId()).build()).getTotalCredit());
         return userDto;
     }
 
@@ -298,4 +303,80 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         return userRepository.findByUsername(userParam)==null;
     }
 
+
+    @Override
+    public UserCreditDto getCreditsByUser(UserParam userParam) {
+        UserCreditDto result = new UserCreditDto();
+        List<UserCreditDetailDto> detalsList = new ArrayList<>();
+
+//        corporate credits
+        List<CorporatePersonnelEntity> personnelEntity = corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(userParam.getId());
+        for (CorporatePersonnelEntity personnel:personnelEntity){
+            UserCreditDetailDto detail = new UserCreditDetailDto();
+            detail.setCreditAmount(personnel.getCreditBalance());
+            detail.setPersonnelId(personnel.getId());
+            detail.setCreditType(CreditType.SPONSOR);
+            if(personnel.getCorporate().getFinanceCorporate().getTotalDeposit().compareTo(personnel.getCreditBalance())>0){
+                detail.setCreditPayableAmount(personnel.getCreditBalance());
+            }else{
+                detail.setCreditPayableAmount(personnel.getCorporate().getFinanceCorporate().getTotalDeposit());
+            }
+            detail.setCorporate(CorporateConvertor.toDto(personnel.getCorporate()));
+            detalsList.add(detail);
+        }
+
+//        user personal credit
+        UserEntity user =  userRepository.getById(userParam.getId());
+        UserCreditDetailDto detail = new UserCreditDetailDto();
+        BigDecimal userDebit = user.getFinanceUser().getTotalDeposit();
+        detail.setCreditAmount(userDebit);
+        detail.setCreditType(CreditType.PERSONAL);
+        detail.setCreditPayableAmount(userDebit);
+        detalsList.add(detail);
+
+
+        result.setCreditDetail(detalsList);
+        result.setTotalCredit(detalsList.stream().map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
+        return result;
+    }
+
+    @Override
+    public UserCreditDto getMyCredits() {
+        UserCreditDto result = new UserCreditDto();
+        List<UserCreditDetailDto> detalsList = new ArrayList<>();
+
+        GympinContext context = GympinContextHolder.getContext();
+        if (context == null)
+            throw new UnknownUserException();
+        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+//        corporate credits
+        List<CorporatePersonnelEntity> personnelEntity = corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(userRequester.getId());
+        for (CorporatePersonnelEntity personnel:personnelEntity){
+            UserCreditDetailDto detail = new UserCreditDetailDto();
+            detail.setCreditAmount(personnel.getCreditBalance());
+            detail.setPersonnelId(personnel.getId());
+            detail.setCreditType(CreditType.SPONSOR);
+            if(personnel.getCorporate().getFinanceCorporate().getTotalDeposit().compareTo(personnel.getCreditBalance())>0){
+                detail.setCreditPayableAmount(personnel.getCreditBalance());
+            }else{
+                detail.setCreditPayableAmount(personnel.getCorporate().getFinanceCorporate().getTotalDeposit());
+            }
+            detail.setCorporate(CorporateConvertor.toDto(personnel.getCorporate()));
+            detalsList.add(detail);
+        }
+
+//        user personal credit
+        UserEntity user =  userRepository.getById(userRequester.getId());
+        UserCreditDetailDto detail = new UserCreditDetailDto();
+        BigDecimal userDebit = user.getFinanceUser().getTotalDeposit();
+        detail.setCreditAmount(userDebit);
+        detail.setCreditType(CreditType.PERSONAL);
+        detail.setCreditPayableAmount(userDebit);
+        detalsList.add(detail);
+
+
+        result.setCreditDetail(detalsList);
+        result.setTotalCredit(detalsList.stream().map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
+        return result;
+    }
 }

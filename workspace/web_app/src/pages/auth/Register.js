@@ -3,6 +3,8 @@ import {login} from "../../network/api/account.api";
 import {Button, Card, CardActions, CardContent, CardHeader, Grid, Link, TextField} from "@mui/material";
 import {Formik} from "formik";
 import {useParams} from "react-router-dom";
+import store from "../../helper/redux/store";
+import {sagaActions} from "../../helper/redux/actions/SagaActions";
 
 
 export default function Register(props) {
@@ -61,6 +63,7 @@ export default function Register(props) {
                                             props.SetUser(data.data.Data);
                                             props.SetToken(data.data.Data.Token);
                                             props.SetRefreshToken(data.data.Data.RefreshToken);
+
                                         })
                                         .catch((ex) => {
                                             setSubmitting(false);

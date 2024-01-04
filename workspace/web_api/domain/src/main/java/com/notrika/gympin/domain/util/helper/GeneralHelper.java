@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.util.helper;
 
-import com.notrika.gympin.persistence.dao.repository.UserRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 
 import java.util.Calendar;
@@ -42,7 +42,7 @@ public final class GeneralHelper {
     public static boolean checkInviteCode(String inviteCode, UserRepository userRepository) {
         try {
             String pureInviteCode = "";
-            pureInviteCode = (inviteCode.startsWith("P") || inviteCode.startsWith("C"))?
+            pureInviteCode = (inviteCode.startsWith("P") || inviteCode.startsWith("C")|| inviteCode.startsWith("G"))?
                  inviteCode.substring(1): inviteCode;
             String code = pureInviteCode.substring(3, pureInviteCode.length() - 2);
             Long inviterId = Long.parseLong(code,16);
@@ -53,6 +53,9 @@ public final class GeneralHelper {
                     if (generatedInviteCode.equals(pureInviteCode))
                         return true;
                 case "P":
+                    if (generatedInviteCode.equals(pureInviteCode))
+                        return true;
+                case "G":
                     if (generatedInviteCode.equals(pureInviteCode))
                         return true;
                 default:

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody, PortletFooter, PortletHeader} from "../../../../partials/content/Portlet";
-import { Place_getPlaceByUser} from "../../../../../network/api/place.api";
+import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
+import {Place_getPlaceByUser} from "../../../../../network/api/place.api";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -9,25 +9,25 @@ import TableBody from "@mui/material/TableBody";
 import {useHistory} from "react-router-dom";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
-function UserPlaces({ currentUser }) {
+function UserPlaces({currentUser}) {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [userPlaces, setUserPlaces] = useState([]);
     useEffect(() => {
-        Place_getPlaceByUser({id:currentUser.Id}).then(result=>{
+        Place_getPlaceByUser({id: currentUser.Id}).then(result => {
             setUserPlaces(result.data.Data)
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }, [currentUser]);
 
     return (
         <Portlet>
-            <PortletHeader title="مراکز های کاربر" />
+            <PortletHeader title="مراکز های کاربر"/>
 
             <PortletBody>
 
@@ -36,18 +36,21 @@ function UserPlaces({ currentUser }) {
                         <TableRow>
                             <TableCell align="right">Id</TableCell>
                             <TableCell align="right"></TableCell>
-                            <TableCell align="right">نام سازمان</TableCell>
-                            <TableCell align="left">وضعیت سازمان</TableCell>
+                            <TableCell align="right">نام مرکز</TableCell>
+                            <TableCell align="left">وضعیت</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {userPlaces&&userPlaces.map(row => (
+                        {userPlaces && userPlaces.map(row => (
                             <TableRow key={row.Id}>
-                                <TableCell align="right" component="th" scope="row" >{row.Id}</TableCell>
-                                <TableCell align="right"><Avatar onClick={()=>history.push("/place/data/"+row.Id)}  alt={row.Name} src={row.Logo?row.Logo.Url:""}  sx={{width:20,height:20}} /></TableCell>
+                                <TableCell align="right" component="th" scope="row">{row.Id}</TableCell>
+                                <TableCell align="right"><Avatar onClick={() => history.push("/place/data/" + row.Id)}
+                                                                 alt={row.Name} src={row.Logo ? row.Logo.Url : ""}
+                                                                 sx={{width: 20, height: 20}}/></TableCell>
                                 <TableCell align="right">{row.Name}</TableCell>
                                 <TableCell align="left">
-                                    <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
+                                    <Chip label={row.Status}
+                                          color={(row.Status.startsWith("ACTIVE")) ? "success" : "error"}/>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -57,4 +60,5 @@ function UserPlaces({ currentUser }) {
         </Portlet>
     );
 }
+
 export default UserPlaces;

@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.article.api;
 
-import com.notrika.gympin.common._base.base.BaseController;
+import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.article.dto.ArticleDto;
 import com.notrika.gympin.common.article.param.ArticleImageParam;
 import com.notrika.gympin.common.article.param.ArticleParam;

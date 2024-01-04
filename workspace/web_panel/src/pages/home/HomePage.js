@@ -12,8 +12,8 @@ import EventManagement from "./unuse/event/EventManagement";
 import PlaceDataManagement from "./place/baseData/PlaceDataManagement";
 import MainPageManagement from "./mainPage/MainPageManagement";
 import placeOptionsManagement from "./place/options/placeOptionsManagement";
-import GateDataManagement from "./place/GateData/GateDataManagement";
-import PlanDataManagement from "./place/planData/PlanDataManagement";
+import HallDataManagement from "./place/HallData/HallDataManagement";
+import TicketSubscribeDataManagement from "./place/tickets/ticketSubscribe/TicketSubscribeDataManagement";
 import HomePageDetail from "./mainPage/edit/HomePageDetail";
 import HomePageTypes from "./mainPage/types/HomePageTypes";
 import SettingsManagement from "./settings/SettingsManagement";
@@ -22,9 +22,8 @@ import Support from "./support/Support";
 import SupportDetails from "./support/SupportDetails";
 import CorporateDetailsManagement from "./corporate/baseData/CorporateDetailsManagement";
 import CorporatePersonnelDetailsManagement from "./corporate/persoanel/CorporatePersonnelDetailsManagement";
-import TicketsManagement from "./tickets/TicketsManagement";
-import TicketDataManagement from "./tickets/baseData/TicketDataManagement";
-import FinanceManagement from "./finance/FinanceManagement";
+import SubscribeDataManagement from "./purchased/subscribes/baseData/SubscribeDataManagement";
+import TransactionsAllManagement from "./finance/all/TransactionsAllManagement";
 import PlacePersonnelManagement from "./place/personnel/PlacePersonnelManagement";
 import ArticlesManagement from "./articles/ArticlesManagement";
 import SingleArticle from "./articles/SingleArticle/SingleArticle";
@@ -33,6 +32,10 @@ import ArticleCategories from "./articles/categories/ArticleCategories";
 import PlacesMap from "./place/PlacesMap/PlacesMap";
 import PlaceWizard from "./place/wizard/PlaceWizard";
 import SportsManagement from "./sport/SportsManagement";
+import InvoiceDetailManagement from "./invoice/invoiceDetails/InvoiceDetailManagement";
+import InvoiceManagement from "./invoice/InvoiceManagement";
+import SellsManagement from "./sells/SellsManagement";
+import TransactionManagement from "./finance/TransactionManagement";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -41,8 +44,8 @@ export default function HomePage() {
         <Route path="/dashboard" component={Dashboard} />
         {/*place*/}
         <Route path="/place/data/:placeId" component={PlaceDataManagement} />
-        <Route path="/place/gate/:gateId" component={GateDataManagement} />
-        <Route path="/place/plan/:planId" component={PlanDataManagement} />
+        <Route path="/place/hall/:hallId" component={HallDataManagement} />
+        <Route path="/place/ticketSubscribe/:ticketSubscribeId" component={TicketSubscribeDataManagement} />
         <Route path="/place/personnel/:personnelId" component={PlacePersonnelManagement} />
         <Route path="/place/placeOptionManagement" component={placeOptionsManagement} />
         <Route path="/place/placeOnMap" component={PlacesMap} />
@@ -68,11 +71,15 @@ export default function HomePage() {
         <Route path="/corporate/details/:corporateId" component={CorporateDetailsManagement} />
         <Route path="/corporate/personnel/:personnelId" component={CorporatePersonnelDetailsManagement} />
         <Route path="/corporates" component={CorporateManagement} />
-        {/*tickets*/}
-        <Route path="/ticket/data/:ticketId" component={TicketDataManagement} />
-        <Route path="/tickets" component={TicketsManagement} />
+        {/*  sells */}
+        <Route path="/sells/" component={SellsManagement} />
+        {/*subscribes*/}
+        <Route path="/subscribe/data/:subscribeId" component={SubscribeDataManagement} />
         {/*finance*/}
-        <Route path="/finance" component={FinanceManagement} />
+        <Route path="/FinanceTransactions" component={TransactionManagement} />
+        {/* invoice */}
+        <Route path="/invoice/detail/:invoiceId" component={InvoiceDetailManagement} />
+        <Route path="/invoices" component={InvoiceManagement} />
 
         <Route path="/locations/:parentId" component={LocationManagement} />
         <Route path="/locations" component={LocationManagement} />

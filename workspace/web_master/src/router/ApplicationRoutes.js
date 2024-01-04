@@ -7,8 +7,7 @@ import Report from "../pages/report/Report";
 import Users from "../pages/users/Users";
 import NNavigaion from "../components/NNavigaion";
 import NBottomNavigation from "../components/NBottomNavigation";
-import _Nqrscan from "../pages/users/scan/_Nqrscan";
-import Gate from "../pages/gate/Gate";
+import Hall from "../pages/halls/singleHall/Hall";
 import About from "../pages/about/About";
 import DemandPayment from "../pages/demandPeyment/DemandPayment";
 import SingleUser from "../pages/singleUser/SingleUser";
@@ -17,9 +16,9 @@ import ManageStall from "../pages/ManageStall/ManageStall";
 import Profile from "../pages/profile/Profile";
 import Stall from "../pages/stall/Stall";
 import Personnel from "../pages/personnel/Personnel";
-import Plans from "../pages/plans/Plans";
+import Subscribe from "../pages/tickets/subscribe/singleSubscribe/Subscribe";
 import Images from "../pages/images/Images";
-import SingleTicket from "../pages/userPlan/SingleTicket";
+import SingleSubscribe from "../pages/purchased/subscribe/single/SingleSubscribe";
 import Support from "../pages/support/Support";
 import SupportDetail from "../pages/support/supportDetail/SupportDetail";
 import Settings from "../pages/settings/Settings";
@@ -31,8 +30,11 @@ import PersonnelAccess from "../pages/personnelAccess/PersonnelAccess";
 import {useSelector} from "react-redux";
 import store from "../helper/redux/store";
 import {sagaActions} from "../helper/redux/actions/SagaActions";
-import AccessDenied from "../components/AccessDenied";
 import PageNotFound from "../components/PageNotFound";
+import Halls from "../pages/halls/Halls";
+import TicketsManagement from "../pages/tickets/TicketsManagement";
+import SubscribesList from "../pages/tickets/subscribe/SubscribesList";
+import PurchasedSubscribe from "../pages/purchased/subscribe/PurchasedSubscribe";
 
 export default function ApplicationRoutes() {
 
@@ -58,8 +60,8 @@ export default function ApplicationRoutes() {
         <>
             <NNavigaion/>
             <Routes>
-                <Route path="/management/gate/:gateId" element={<Gate/>}/>
-                <Route path="/management/plans/:planId" element={<Plans/>}/>
+                <Route path="/management/hall/:hallId" element={<Hall/>}/>
+                <Route path="/management/halls" element={<Halls/>}/>
                 <Route path="/management/about" element={<About/>}/>
                 <Route path="/management/facilities" element={<Option/>}/>
                 <Route path="/management/stall" element={<ManageStall/>}/>
@@ -76,13 +78,20 @@ export default function ApplicationRoutes() {
                 <Route path="/management/editProfile" element={<EditProfile/>}/>
                 <Route path="/management" element={<Management/>}/>
 
+
+                <Route path="/management/tickets" element={<TicketsManagement/>}/>
+                <Route path="/ticket/subscribes" element={<SubscribesList/>}/>
+                <Route path="/ticket/Subscribe/:subscribeId" element={<Subscribe/>}/>
+
+                <Route path="/purchased/subscribes" element={<PurchasedSubscribe/>}/>
+
                 <Route path="/finance/demand" element={<DemandPayment/>}/>
                 <Route path="/finance" element={<Finance/>}/>
 
                 <Route path="/users/singleuser" element={<SingleUser/>}/>
-                <Route path="/users/SingleTicket" element={<SingleTicket/>}/>
+                <Route path="/users/SingleSubscribe" element={<SingleSubscribe/>}/>
                 <Route path="/users" element={<Users/>}/>
-                <Route path="/users/:section" element={<Users/>}/>
+                {/*<Route path="/users/:section" element={<Users/>}/>*/}
 
                 <Route path="/stall" element={<Stall/>}/>
 

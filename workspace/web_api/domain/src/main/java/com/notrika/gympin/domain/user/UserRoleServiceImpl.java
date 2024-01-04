@@ -1,13 +1,13 @@
 package com.notrika.gympin.domain.user;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common.user.dto.UserRoleDto;
-import com.notrika.gympin.common.user.enums.UserRole;
-import com.notrika.gympin.common.user.param.UserRoleParam;
-import com.notrika.gympin.common.user.service.UserRoleService;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.user.user.dto.UserRoleDto;
+import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.param.UserRoleParam;
+import com.notrika.gympin.common.user.user.service.UserRoleService;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.persistence.dao.repository.RoleRepository;
-import com.notrika.gympin.persistence.entity.user.RoleEntity;
+import com.notrika.gympin.persistence.dao.repository.user.UserRoleRepository;
+import com.notrika.gympin.persistence.entity.user.UserRoleEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -17,87 +17,87 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, UserRoleDto, BaseQuery<?>, RoleEntity> implements UserRoleService {
+public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, UserRoleDto, BaseQuery<?>, UserRoleEntity> implements UserRoleService {
 
-    private final RoleRepository roleRepository;
+    private final UserRoleRepository userRoleRepository;
 
-    public UserRoleServiceImpl(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    public UserRoleServiceImpl(UserRoleRepository userRoleRepository) {
+        this.userRoleRepository = userRoleRepository;
     }
 
-    public static UserRoleDto roleToUserRoleDto(RoleEntity role) {
+    public static UserRoleDto roleToUserRoleDto(UserRoleEntity role) {
         return UserRoleDto.builder().id(role.getId()).role(role.getRole()).build();
     }
 
     @Override
     public UserRoleDto add(UserRoleParam userRoleParam) {
-        RoleEntity initBuild = RoleEntity.builder().role(userRoleParam.getRole()).build();
-        RoleEntity role = add(initBuild);
+        UserRoleEntity initBuild = UserRoleEntity.builder().role(userRoleParam.getRole()).build();
+        UserRoleEntity role = add(initBuild);
         return UserRoleDto.builder().id(role.getId()).role(role.getRole()).build();
     }
 
     @Override
-    public RoleEntity add(RoleEntity role) {
-        return roleRepository.add(role);
+    public UserRoleEntity add(UserRoleEntity role) {
+        return userRoleRepository.add(role);
     }
 
     @Override
     public UserRoleDto update(UserRoleParam userRoleParam) {
-        RoleEntity role = getEntityById(userRoleParam.getId());
+        UserRoleEntity role = getEntityById(userRoleParam.getId());
         role.setRole(userRoleParam.getRole());
         return roleToUserRoleDto(update(role));
     }
 
     @Override
-    public RoleEntity update(RoleEntity role) {
-        return roleRepository.update(role);
+    public UserRoleEntity update(UserRoleEntity role) {
+        return userRoleRepository.update(role);
     }
 
     @Override
     public UserRoleDto delete(UserRoleParam userRoleParam) {
-        RoleEntity roleById = getEntityById(userRoleParam.getId());
+        UserRoleEntity roleById = getEntityById(userRoleParam.getId());
         return roleToUserRoleDto(delete(roleById));
     }
 
     @Override
-    public RoleEntity delete(RoleEntity role) {
-        return roleRepository.deleteById2(role);
+    public UserRoleEntity delete(UserRoleEntity role) {
+        return userRoleRepository.deleteById2(role);
     }
 
     @Override
     public UserRoleDto getById(long id) {
-        RoleEntity role = getEntityById(id);
+        UserRoleEntity role = getEntityById(id);
         return roleToUserRoleDto(role);
     }
 
     @Override
-    public RoleEntity getEntityById(long id) {
-        return roleRepository.findById(id).stream().findFirst().get();
+    public UserRoleEntity getEntityById(long id) {
+        return userRoleRepository.findById(id).stream().findFirst().get();
     }
 
     @Override
-    public List<RoleEntity> getAll(Pageable pageable) {
-        return roleRepository.findAllUndeleted(pageable);
+    public List<UserRoleEntity> getAll(Pageable pageable) {
+        return userRoleRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public Page<RoleEntity> findAll(Specification<RoleEntity> specification, Pageable pageable) {
+    public Page<UserRoleEntity> findAll(Specification<UserRoleEntity> specification, Pageable pageable) {
 
-        return roleRepository.findAll(specification,pageable);
+        return userRoleRepository.findAll(specification,pageable);
     }
 
     @Override
-    public List<UserRoleDto> convertToDtos(List<RoleEntity> entities) {
+    public List<UserRoleDto> convertToDtos(List<UserRoleEntity> entities) {
         return entities.stream().map(UserRoleServiceImpl::roleToUserRoleDto).collect(Collectors.toList());
     }
 
     @Override
-    public Page<UserRoleDto> convertToDtos(Page<RoleEntity> entities) {
+    public Page<UserRoleDto> convertToDtos(Page<UserRoleEntity> entities) {
         return null;
     }
 
-    public RoleEntity getByUserRole(UserRole userRole) {
-        return roleRepository.findByRole(userRole);
+    public UserRoleEntity getByUserRole(UserRole userRole) {
+        return userRoleRepository.findByRole(userRole);
     }
 
 }

@@ -4,7 +4,7 @@ import {Card, CardHeader} from "@mui/material";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import getAccessOf from "../../helper/accessManager";
 import _generalAccess from "./_generalAccess";
-import _gateAccess from "./_gateAccess";
+import _hallAccess from "./_hallAccess";
 import AccessDenied from "../../components/AccessDenied";
 
 const PersonnelAccess = () => {
@@ -22,7 +22,7 @@ const PersonnelAccess = () => {
                 />
             </Card>
             <_generalAccess user={user}/>
-            <_gateAccess user={user}/>
+            <_hallAccess user={user}/>
         </>
     );
 };

@@ -1,13 +1,12 @@
 package com.notrika.gympin.controller.impl.sport;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common._base.param.BasePagedParam;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
-import com.notrika.gympin.common.sport.api.SportController;
-import com.notrika.gympin.common.sport.dto.SportDto;
-import com.notrika.gympin.common.sport.param.SportParam;
-import com.notrika.gympin.common.sport.query.SportQuery;
-import com.notrika.gympin.common.sport.service.SportService;
+import com.notrika.gympin.common.sport.sport.api.SportController;
+import com.notrika.gympin.common.sport.sport.dto.SportDto;
+import com.notrika.gympin.common.sport.sport.param.SportParam;
+import com.notrika.gympin.common.sport.sport.query.SportQuery;
+import com.notrika.gympin.common.sport.sport.service.SportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -29,13 +28,13 @@ public class SportControllerImpl implements SportController {
 
     @Override
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
-    public ResponseEntity<SportDto> add(@RequestBody SportParam sportParam) {
+    public ResponseEntity<SportDto> add( SportParam sportParam) {
         return new ResponseEntity<>(sportService.add(sportParam), HttpStatus.OK);
     }
 
     @Override
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
-    public ResponseEntity<SportDto> update(@RequestBody SportParam sportParam) {
+    public ResponseEntity<SportDto> update( SportParam sportParam) {
         return new ResponseEntity<>(sportService.update(sportParam), HttpStatus.OK);
     }
 

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
-import {Avatar, Button, TableCell} from "@mui/material";
+import {Avatar, Button, TableCell, Tooltip} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import Table from "@mui/material/Table";
@@ -11,6 +11,7 @@ import {placePersonnel_add, placePersonnel_ByPlace, placePersonnel_delete} from 
 import {useHistory} from "react-router-dom";
 import {PlacePersonnelRole} from "../../../../../helper/enums/PlacePersonnelRole";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
+import PriceChangeIcon from '@mui/icons-material/PriceChange';
 
 const PlacePersonnel = ({place}) => {
     const error = useContext(ErrorContext);
@@ -169,6 +170,7 @@ const PlacePersonnel = ({place}) => {
                                 <TableCell align="right"></TableCell>
                                 <TableCell align="right">نام</TableCell>
                                 <TableCell align="right">نقش</TableCell>
+                                <TableCell align="right"></TableCell>
                                 <TableCell align="left">action</TableCell>
                             </TableRow>
                         </TableHead>
@@ -182,6 +184,12 @@ const PlacePersonnel = ({place}) => {
                                         sx={{width: 20, height: 20}}/></TableCell>
                                     <TableCell align="right">{row.User.FullName||""}-{row.User.Username}</TableCell>
                                     <TableCell align="right">{PlacePersonnelRole[row.UserRole]}</TableCell>
+                                    <TableCell align="right">
+                                        {(row.IsBeneficiary)&&
+                                        <Tooltip title={row.CommissionFee || 0} placement="left">
+                                            <PriceChangeIcon color={"secondary"}/>
+                                        </Tooltip>}
+                                    </TableCell>
                                     <TableCell align="left">
 
                                         <Button variant={"contained"} size={"small"} color={"primary"} href={"/place/personnel/"+row.Id }>جزئیات</Button>

@@ -1,22 +1,18 @@
 package com.notrika.gympin.domain.multimedia;
 
-import com.notrika.gympin.common._base.param.BasePagedParam;
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common.exception.multimedia.MultimediaNotFoundException;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.exception.multimedia.MultimediaNotFoundException;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.multimedia.query.MultimediaQuery;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
-import com.notrika.gympin.common.plan.dto.PlanGateTimingDto;
-import com.notrika.gympin.common.plan.param.PlanGateTimingParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.MultimediaConvertor;
 import com.notrika.gympin.domain.util.helper.MultimediaServiceHelper;
-import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
+import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.plan.PlanGateTimingEntity;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

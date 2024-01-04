@@ -25,7 +25,8 @@ public class BaseEntityWithCreate<T> extends BaseEntity<T> {
     private Date createdDate;
 
     //        @Column(name = "creatorUser")
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @JoinColumn(name = "creatorUserId")
     private UserEntity creatorUser;
 
     @Override

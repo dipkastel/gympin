@@ -1,11 +1,11 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.relation.dto.FollowDto;
-import com.notrika.gympin.persistence.entity.user.relation.FollowEntity;
+import com.notrika.gympin.common.user.relation.dto.FollowDto;
+import com.notrika.gympin.persistence.entity.user.relation.UserFollowEntity;
 
 public final class FollowConvertor {
 
-    public static FollowDto followEntityToDto(FollowEntity entity){
+    public static FollowDto followEntityToDto(UserFollowEntity entity){
         FollowDto dto=new FollowDto();
         dto.setId(entity.getId());
         dto.setRequesterUser(UserConvertor.toDtoComplete(entity.getRequesterUser()));

@@ -10,36 +10,36 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Pagination
+    Pagination, Typography
 } from "@mui/material";
-import {transaction_query} from "../../network/api/transaction.api";
 import {toPriceWithComma} from "../../helper/utils";
 import {TransactionTypes} from "../../helper/enums/TransactionTypes";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import DoDisturbAltIcon from '@mui/icons-material/DoDisturbAlt';
+import {SettlementUserDeposit_query} from "../../network/api/settlement.api";
 
 const DemandPayment = () => {
     const error = useContext(ErrorContext);
-    const place = useSelector(({place}) => place.place)
+    const currentUser = useSelector(({auth}) => auth.user);
     const [transactions, SetTransactions] = useState([])
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(100);
 
     useEffect(() => {
-        getPlaceTransactions()
+        getSettelmentRequests()
     }, [page]);
 
-    function getPlaceTransactions() {
+    function getSettelmentRequests() {
 
-        transaction_query({
+        SettlementUserDeposit_query({
             queryType: "FILTER",
-            TransactionType: "PLACE_SETTLEMENT",
-            PlaceId: place.Id,
+            UserId: currentUser.Id,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             SetTransactions(data.data.Data)
+            console.log(data.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -49,37 +49,28 @@ const DemandPayment = () => {
         });
     }
 
-
-    const groupBySerial = (result, {Serial, ...cats}) => {
-        if (!result.some(r => r.Serial == Serial)) result.push({Serial: Serial, Items: []})
-        result.find(r => r.Serial == Serial).Items.push(cats);
-        return result;
-    }
-
-    const getRequest = (group) => {
-        return group.Items.find(o => o.TransactionStatus == "REQUEST");
-    }
-    const getPayment = (group) => {
-        return group.Items.find(o => o.TransactionStatus == "PAYMENT_COMPLETE");
-    }
     return (
         <Card elevation={3} sx={{margin: 1}}>
-            <CardHeader title={"تراکنش ها"}/>
+            <CardHeader title={"درخواست های تسویه"}/>
             <CardContent>
                 <List disablePadding>
-                    {transactions.content && transactions.content.reduce(groupBySerial, []).map((row) => (
-                        <div key={"transaction-" + row.Serial}>
+                    {transactions.content && transactions.content.map((row) => (
+                        <div key={"transaction-" + row.Id}>
                             <ListItem disablePadding sx={{direction: "rtl", textAlign: "right"}}>
-                                {console.log(row)}
                                 <ListItemText>
-                                    <ListItemText primary={toPriceWithComma(getRequest(row).Amount) + " تومان"}
-                                                  secondary={TransactionTypes[getRequest(row).TransactionType]}/>
-                                    {getPayment(row) &&<Alert severity="success">{getPayment(row).Description}</Alert>}
-                                    <ListItemText secondary={"مانده اعتبار : " + getRequest(row).Balance}/>
-                                    <ListItemText secondary={"سریال : " + row.Serial}/>
+                                    <ListItemText primary={toPriceWithComma(row.Amount) + " تومان"}
+                                                  secondary={TransactionTypes[row.TransactionType]}/>
+                                    {row.SettlementStatus=="CONFIRMED" && <Alert severity="success" sx={{px:1}}><Typography variant={"caption"} sx={{px:1}} >{row.Description}</Typography></Alert>}
+                                    {row.SettlementStatus=="REJECTED" && <Alert severity={"error"} sx={{px:1}}><Typography variant={"caption"} sx={{px:1}} >{row.Description}</Typography></Alert>}
+                                    <ListItemText secondary={"تاریخ : " + new Date(row.CreatedDate).toLocaleDateString('fa-IR', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}/>
+                                    <ListItemText secondary={"سریال : " + row.Serial.Serial}/>
                                 </ListItemText>
                                 <ListItemIcon sx={{minWidth: "auto"}}>
-                                    {!getPayment(row) && <HourglassEmptyIcon color={"error"}/>}
+                                    {row.SettlementStatus=="REQUESTED" && <HourglassEmptyIcon color={"error"}/>}
                                 </ListItemIcon>
                             </ListItem>
                             <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>

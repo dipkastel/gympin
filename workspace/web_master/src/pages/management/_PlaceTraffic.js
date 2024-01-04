@@ -54,12 +54,12 @@ export default function PlaceTrafic() {
     }
 
     const setStatus=(item,e)=> {
-        SetGateTrafic([...gateTafic.filter(t=>t.gate.Id!==item.gate.Id),{...item,traffic:{...item.Traffic,Traffic:e.value}}])
+        SetGateTrafic([...gateTafic.filter(t=>t.hall.Id!==item.hall.Id),{...item,traffic:{...item.Traffic,Traffic:e.value}}])
     }
 
     function submitTrafic(item,value) {
         GatesTraffic_addAll({
-            Gate:{Id:item.gate.Id},
+            Gate:{Id:item.hall.Id},
             traffic:value
         }).then(result=>{
             getTraffics();
@@ -83,8 +83,8 @@ export default function PlaceTrafic() {
                 title="ترافیک مجموعه"
             />
             <CardContent>
-                {gateTafic&&gateTafic.sort((a,b)=> a.gate.Id-b.gate.Id).map((item,number)=>(<div key={number}>
-                    {item.gate.Name}
+                {gateTafic&&gateTafic.sort((a,b)=> a.hall.Id-b.hall.Id).map((item, number)=>(<div key={number}>
+                    {item.hall.Name}
                     <Slider
                         value={item.traffic?(item.traffic.Traffic||50):50}
                         valueLabelDisplay={"on"}

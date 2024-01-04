@@ -1,15 +1,15 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.context.GympinContext;
-import com.notrika.gympin.common.gympin.homePage.dto.HomePageDeadendDto;
-import com.notrika.gympin.common.gympin.homePage.dto.HomePageDestinationDto;
-import com.notrika.gympin.common.gympin.homePage.dto.HomePageItemDto;
-import com.notrika.gympin.common.gympin.homePage.dto.HomePageTypeDto;
-import com.notrika.gympin.common.gympin.homePage.param.HomePageDestinationParam;
-import com.notrika.gympin.common.gympin.homePage.param.HomePageItemParam;
-import com.notrika.gympin.common.gympin.homePage.param.HomePageTypeParam;
-import com.notrika.gympin.persistence.dao.repository.HomePageDestinationRepository;
-import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.home.dto.HomePageDeadendDto;
+import com.notrika.gympin.common.home.dto.HomePageDestinationDto;
+import com.notrika.gympin.common.home.dto.HomePageItemDto;
+import com.notrika.gympin.common.home.dto.HomePageTypeDto;
+import com.notrika.gympin.common.home.param.HomePageDestinationParam;
+import com.notrika.gympin.common.home.param.HomePageItemParam;
+import com.notrika.gympin.common.home.param.HomePageTypeParam;
+import com.notrika.gympin.persistence.dao.repository.home.HomePageDestinationRepository;
+import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.entity.homePage.HomePageDestionationEntity;
 import com.notrika.gympin.persistence.entity.homePage.HomePageItemEntity;
 import com.notrika.gympin.persistence.entity.homePage.HomePageTypeEntity;

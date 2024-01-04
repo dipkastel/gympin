@@ -26,7 +26,6 @@ const _wizardActivePlace = ({allowNext}) => {
     function getPlace(placeId){
         Place_getPlaceById({id:placeId}).then(result=>{
             SetInPlace(result.data.Data);
-            console.log(result.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -59,7 +58,7 @@ const _wizardActivePlace = ({allowNext}) => {
 
             <Portlet>
                 <PortletHeader
-                    title={"افزودن پلن"}
+                    title={"افزودن عضویت"}
                 />
                 <PortletBody>
                     {(inPlace&&inPlace.Status=="ACTIVE")?(<>

@@ -16,13 +16,13 @@
             font-family: $defaultfont;
             line-height: 27px;
             position: relative;
-            padding-left: 20px;
+            padding-right: 20px;
             &::after {
                 width: 9px;
                 height: 9px;
                 content: "";
                 position: absolute;
-                left: 0;
+                right: 0;
                 top: 7px;
                 background: #F7968A;
                 border-radius: 50%;

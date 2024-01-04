@@ -123,7 +123,7 @@ const OptionOfPlace = ({place}) => {
 
         function DeleteItem(e) {
             e.preventDefault()
-            optionOfPlace_delete({Id:itemToDelete.Id})
+            optionOfPlace_delete({id:itemToDelete.Id})
                 .then(data=>{
                     error.showError({message: "عملیات موفق",});
                     setItemToDelete(null)

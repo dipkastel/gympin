@@ -1,13 +1,13 @@
 package com.notrika.gympin.domain.place;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.place.qrMessage.dto.PlaceQrMessageDto;
 import com.notrika.gympin.common.place.qrMessage.param.PlaceQrMessageParam;
 import com.notrika.gympin.common.place.qrMessage.service.PlaceQrMessageService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.PlaceQrMessageConvertor;
-import com.notrika.gympin.persistence.dao.repository.PlaceQrMessageRepository;
-import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceQrMessageRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntity;
 import lombok.NonNull;

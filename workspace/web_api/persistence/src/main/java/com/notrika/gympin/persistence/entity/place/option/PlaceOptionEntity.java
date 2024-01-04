@@ -32,7 +32,7 @@ public class PlaceOptionEntity extends BaseEntityWithCreateUpdate<PlaceOptionEnt
 
     @OneToMany(mappedBy = "placeOption")
     @ToString.Exclude
-    private List<OptionOfPlaceEntity> optionsOfPlaces;
+    private List<PlaceOptionOfPlaceEntity> optionsOfPlaces;
 
     @Override
     public boolean equals(Object o) {

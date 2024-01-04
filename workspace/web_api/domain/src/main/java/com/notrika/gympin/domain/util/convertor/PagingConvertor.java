@@ -1,13 +1,6 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common._base.param.BasePagedParam;
-import com.notrika.gympin.common.comment.gate.dto.CommentGateDto;
-import com.notrika.gympin.common.comment.gate.param.CommentGateParam;
-import com.notrika.gympin.common.context.GympinContext;
-import com.notrika.gympin.common.context.GympinContextHolder;
-import com.notrika.gympin.domain.gate.GateServiceImpl;
-import com.notrika.gympin.persistence.entity.comment.CommentGateEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

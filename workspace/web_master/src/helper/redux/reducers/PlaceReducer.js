@@ -5,13 +5,13 @@ import storage from "redux-persist/lib/storage";
 
 const initialPlaceState = {
     place:undefined,
-    gates:undefined,
+    halls:undefined,
 };
 
 const ReducerConfig = {
     storage,
     key: "gympin-master-place",
-    whitelist:["place","gates"]
+    whitelist:["place","halls"]
 };
 
 const PlaceReducer = (state = initialPlaceState, action) => {
@@ -19,8 +19,8 @@ const PlaceReducer = (state = initialPlaceState, action) => {
         case placeActionTypes.SetPlace: {
             return {...state,place: action.payload.place};
         }
-        case placeActionTypes.SetGates: {
-            return {...state ,gates: action.payload.gates};
+        case placeActionTypes.SetHalls: {
+            return {...state ,halls: action.payload.halls};
         }
         default:
             return state;

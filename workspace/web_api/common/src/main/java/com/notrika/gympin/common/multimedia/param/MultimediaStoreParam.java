@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.multimedia.param;
 
-import com.notrika.gympin.common._base.param.BaseParam;
+import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

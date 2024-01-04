@@ -1,8 +1,8 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.gympin.base.dto.SettingDto;
-import com.notrika.gympin.common.gympin.base.param.SettingParam;
-import com.notrika.gympin.persistence.entity.settings.SettingsEntity;
+import com.notrika.gympin.common.settings.base.dto.SettingDto;
+import com.notrika.gympin.common.settings.base.param.SettingParam;
+import com.notrika.gympin.persistence.entity.management.settings.SettingsEntity;
 
 public final class SettingsConvertor {
 

@@ -28,7 +28,7 @@ const ManageStall = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    function ModalAddPlan(){
+    function ModalAddMenu(){
         return (
             <div>
                 <Dialog open={open} onClose={handleClose}>
@@ -80,7 +80,7 @@ const ManageStall = () => {
             <_StallPrice name={"تخم مرغ آب پز"}/>
             <_StallPrice name={"فیله مرغ آب پز"}/>
             <_StallPrice name={"ماهی"}/>
-            {ModalAddPlan()}
+            {ModalAddMenu()}
         </>
 
     );

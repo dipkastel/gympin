@@ -1,13 +1,13 @@
 package com.notrika.gympin.controller.impl.user;
 
 
-import com.notrika.gympin.common.exception.ExceptionBase;
-import com.notrika.gympin.common.user.api.AccountController;
-import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.dto.UserInviteCodesDto;
-import com.notrika.gympin.common.user.dto.UserRegisterDto;
-import com.notrika.gympin.common.user.param.*;
-import com.notrika.gympin.common.user.service.AccountService;
+import com.notrika.gympin.common.user.user.param.*;
+import com.notrika.gympin.common.util.exception.ExceptionBase;
+import com.notrika.gympin.common.user.user.api.AccountController;
+import com.notrika.gympin.common.user.user.dto.UserDto;
+import com.notrika.gympin.common.user.user.dto.UserInviteCodesDto;
+import com.notrika.gympin.common.user.user.dto.UserRegisterDto;
+import com.notrika.gympin.common.user.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +26,11 @@ public class AccountControllerImpl implements AccountController {
         return new ResponseEntity<>(accountService.sendActivationSms(phoneNumber), HttpStatus.OK);
     }
 
-    @Override
-    @PostMapping("/register")
-    public ResponseEntity<UserRegisterDto> register(@RequestBody UserRegisterParam userRegisterParam) throws ExceptionBase {
-        return new ResponseEntity<>(accountService.register(userRegisterParam), HttpStatus.OK);
-    }
+//    @Override
+//    @PostMapping("/register")
+//    public ResponseEntity<UserRegisterDto> register(@RequestBody UserRegisterParam userRegisterParam) throws ExceptionBase {
+//        return new ResponseEntity<>(accountService.register(userRegisterParam), HttpStatus.OK);
+//    }
 
     @Override
     @PostMapping("/registerByInviteCode")
@@ -39,8 +39,8 @@ public class AccountControllerImpl implements AccountController {
     }
 
     @Override
-    @GetMapping("/userInviteCodes")
-    public ResponseEntity<UserInviteCodesDto> registerByInviteCode() throws ExceptionBase {
+    @GetMapping("/getUserInviteCodes")
+    public ResponseEntity<UserInviteCodesDto> getUserInviteCodes() throws ExceptionBase {
         return new ResponseEntity<>(accountService.getUserInviteCodes(), HttpStatus.OK);
     }
 

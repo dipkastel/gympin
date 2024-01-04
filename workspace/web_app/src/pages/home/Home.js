@@ -17,6 +17,7 @@ import HomeSingleContent from "./components/HomeSingleContent";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {CircularProgress, Grid} from "@mui/material";
+import store from "../../helper/redux/store";
 
 function Home(props) {
     const error = useContext(ErrorContext);
@@ -26,8 +27,10 @@ function Home(props) {
     const homePageId = getHomeId(serverSettings);
     useEffect(() => {
         if(currentUser){
-            props.RequestServerSettings(currentUser);
+                console.log("get my info");
+                props.RequestUser();
         }
+
         getHomePage({id:homePageId}).then(result=>{
             setData(result.data.Data);
         }).catch(e => {
@@ -39,6 +42,16 @@ function Home(props) {
         });
 
     }, [])
+
+    useEffect(() => {
+
+        if(currentUser){
+            props.RequestServerSettings(currentUser);
+            props.RequestUserInvoices(currentUser);
+        }
+
+    }, [currentUser]);
+
     var classe = "col-sm-12 col-md-10 col-lg-7 col-xl-5 col-xxl-4";
     return (
         <div className={"home-center"}>

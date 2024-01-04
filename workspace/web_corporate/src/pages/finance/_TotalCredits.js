@@ -1,42 +1,21 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {
-    Button,
-    Card,
-    CardContent,
-    Dialog, DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Stack, TextField,
-    Typography
-} from "@mui/material";
-import {corporatePersonnel_getTotalUserCredits} from "../../network/api/corporatePersonnel.api";
-import {useSelector} from "react-redux";
+import React, {useEffect} from 'react';
+import {Card, CardContent, Stack, Typography} from "@mui/material";
+import {connect, useSelector} from "react-redux";
 import {toPriceWithComma} from "../../helper/utils";
-import {ErrorContext} from "../../components/GympinPagesProvider";
+import {sagaActions} from "../../helper/redux/actions/SagaActions";
 
-const _TotalCredits = () => {
-    const error = useContext(ErrorContext);
+const _TotalCredits = (props) => {
     const corporate = useSelector(({corporate}) => corporate.corporate)
-    const [totalCredit,setTotlaCredit] = useState(0);
+
     useEffect(() => {
-        if(!corporate) return;
-        corporatePersonnel_getTotalUserCredits({CorporateId:corporate.Id}).then(result=>{
-            setTotlaCredit(result.data.Data);
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
-    }, [corporate]);
+        if (!corporate) return;
+        props.RequestCorporate(corporate);
+    }, []);
 
     return (
         <>
             <Card elevation={3} sx={{margin: 1}}>
-                <CardContent
-                    >
+                <CardContent>
                     مجموع اعتبار پرسنل :
                     <Stack
                         justifyContent="space-between"
@@ -45,9 +24,9 @@ const _TotalCredits = () => {
                         spacing={0}
                     >
                         <Typography width={"100%"} variant={"h6"} noWrap={true} textAlign={"left"} component="div" sx={{
-                            marginY:0.1
+                            marginY: 0.1
                         }}>
-                            {toPriceWithComma(totalCredit) + " تومان"}
+                            {toPriceWithComma(corporate.FinanceCorporate.TotalCredits) + " تومان"}
                         </Typography>
                     </Stack>
                 </CardContent>
@@ -56,4 +35,4 @@ const _TotalCredits = () => {
     );
 };
 
-export default _TotalCredits;
+export default connect(null, sagaActions)(_TotalCredits);

@@ -26,7 +26,7 @@ import {Form} from "react-bootstrap";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {transactions_query} from "../../network/api/transactions.api";
-import {corporate_getCorporateCategories} from "../../network/api/corporate.api";
+import {corporate_getCorporateGroups} from "../../network/api/corporate.api";
 import {useSelector} from "react-redux";
 
 const SingleUser = (props) => {
@@ -34,9 +34,9 @@ const SingleUser = (props) => {
     const corporate = useSelector(({corporate}) => corporate.corporate)
     const {PersonnelId} = useParams();
     const navigate = useNavigate();
-    const [category,setCategory] = useState([])
+    const [groups,setGroups] = useState([])
     const [person, setPerson] = useState([]);
-    const [personCredits, setPersonCredits] = useState([]);
+    // const [personCredits, setPersonCredits] = useState([]);
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [openModalDeleteUser, setOpenModalDeleteUser] = useState(false);
     useEffect(() => {
@@ -45,8 +45,8 @@ const SingleUser = (props) => {
     }, [PersonnelId]);
 
     function getCorporateCategories(){
-        corporate_getCorporateCategories({Id: corporate.Id}).then(result => {
-            setCategory(result.data.Data);
+        corporate_getCorporateGroups({Id: corporate.Id}).then(result => {
+            setGroups(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -55,30 +55,30 @@ const SingleUser = (props) => {
             }
         })
     }
+    //
+    // function getAddCreditTransaction(userId, CorporateId) {
+    //     transactions_query({
+    //         queryType: "FILTER",
+    //         UserId: userId,
+    //         CorporateId: CorporateId,
+    //         TransactionType: "CORPORATE_PERSONNEL_ADD_CREDIT",
+    //         paging: {Page: 0, Size: 300, orderBy: "Id", Desc: true}
+    //     }).then(result => {
+    //         setPersonCredits(result.data.Data.content)
+    //     }).catch(e => {
+    //         try {
+    //             error.showError({message: e.response.data.Message,});
+    //         } catch (f) {
+    //             error.showError({message: "خطا نا مشخص",});
+    //         }
+    //     })
+    // }
 
-    function getAddCreditTransaction(userId, CorporateId) {
-        transactions_query({
-            queryType: "FILTER",
-            UserId: userId,
-            CorporateId: CorporateId,
-            TransactionType: "CORPORATE_PERSONNEL_ADD_CREDIT",
-            paging: {Page: 0, Size: 300, orderBy: "Id", Desc: true}
-        }).then(result => {
-            setPersonCredits(result.data.Data.content)
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        })
-    }
 
-
-    function setPersonCategory(category,d){
-        console.log(category.target,d)
-        corporatePersonnel_update({id: PersonnelId,PersonelCategory:{Id:category.target.value}}).then(result => {
+    function setPersonGroup(group){
+        corporatePersonnel_update({id: PersonnelId,PersonelGroup:{Id:group.target.value}}).then(result => {
             getPerson();
+            error.showError({message: "ثبت موفق",});
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -90,8 +90,7 @@ const SingleUser = (props) => {
     function getPerson() {
         corporatePersonnel_getById({id: PersonnelId}).then(result => {
             setPerson(result.data.Data);
-            console.log(result.data.Data)
-            getAddCreditTransaction(result.data.Data.User.Id, result.data.Data.Corporate.Id);
+            // getAddCreditTransaction(result.data.Data.User.Id, result.data.Data.Corporate.Id);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -239,7 +238,7 @@ const SingleUser = (props) => {
                 />
                 <CardContent>
                     <List>
-                        {personCredits.map(item => (
+                        {person.CreditList&&person.CreditList.reverse().map(item => (
                             <ListItem key={item.Id}>
                                 <Grid
                                     container
@@ -248,7 +247,7 @@ const SingleUser = (props) => {
                                     alignItems="center"
                                 >
                                     <Typography
-                                        variant={"subtitle1"}>{"افزایش : " + toPriceWithComma(item.Amount) + " تومان"}</Typography>
+                                        variant={"subtitle1"}>{"افزایش : " + toPriceWithComma(item.CreditAmount) + " تومان"}</Typography>
 
                                     <Typography
                                         variant={"overline"}>{new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
@@ -264,7 +263,6 @@ const SingleUser = (props) => {
                 </CardContent>
             </Card>
 
-            {person.Role != "ADMIN" &&
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent>
                     <FormControl fullWidth>
@@ -273,21 +271,21 @@ const SingleUser = (props) => {
                             labelId="demo-multiple-name-label"
                             id="demo-multiple-name"
                             input={<OutlinedInput label="تغییر گروه کاربر  " />}
-                            value={person.PersonnelCategory?person.PersonnelCategory.Id:0}
-                            onChange={(e)=>setPersonCategory(e)}
+                            value={person.PersonnelGroup?person.PersonnelGroup.Id:0}
+                            onChange={(e)=>setPersonGroup(e)}
                         >
-                            {category&&category.map((cat) => (
+                            {groups&&groups.map((cat) => (
                                 <MenuItem
                                     key={cat.Id}
                                     value={cat.Id}
                                 >
-                                    {cat.CategoryName}
+                                    {cat.Name}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
                 </CardContent>
-            </Card>}
+            </Card>
             {person.Role != "ADMIN" &&
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent>

@@ -46,6 +46,9 @@ export function Place_query(data) {
 export function Place_GetMultimedias(data) {
     return axios.get(PlaceApi.getMultimedias, {params:data});
 }
+export function place_getBuyableByPlace(data) {
+    return axios.get(PlaceApi.getBuyableByPlace, {params:data});
+}
 export function Place_addMultimeida(data) {
     return axios.post(PlaceApi.addMultimedia, data);
 }

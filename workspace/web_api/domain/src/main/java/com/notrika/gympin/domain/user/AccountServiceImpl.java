@@ -1,45 +1,45 @@
 package com.notrika.gympin.domain.user;
 
-import com.notrika.gympin.common.contact.sms.dto.SmsDto;
-import com.notrika.gympin.common.contact.sms.enums.SmsTypes;
-import com.notrika.gympin.common.contact.sms.service.SmsService;
-import com.notrika.gympin.common.context.GympinContext;
-import com.notrika.gympin.common.context.GympinContextHolder;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
-import com.notrika.gympin.common.exception.Error;
-import com.notrika.gympin.common.exception.ExceptionBase;
-import com.notrika.gympin.common.exception.activation.code.ActivationCodeExpiredException;
-import com.notrika.gympin.common.exception.activation.code.ActivationCodeManyRequestException;
-import com.notrika.gympin.common.exception.activation.code.ActivationCodeNotFoundException;
-import com.notrika.gympin.common.exception.activation.code.InviteCodeNotValid;
-import com.notrika.gympin.common.exception.general.InputNotValidException;
-import com.notrika.gympin.common.exception.general.NotFoundException;
-import com.notrika.gympin.common.exception.general.SendSmsException;
-import com.notrika.gympin.common.exception.general.UserNotAllowedException;
-import com.notrika.gympin.common.exception.ticket.EntryAlreadyExistException;
-import com.notrika.gympin.common.exception.user.UnknownUserException;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
+import com.notrika.gympin.common.settings.sms.dto.SmsDto;
+import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
+import com.notrika.gympin.common.settings.sms.service.SmsService;
 import com.notrika.gympin.common.support.enums.SupportMessageStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
 import com.notrika.gympin.common.support.service.SupportService;
-import com.notrika.gympin.common.user.dto.*;
-import com.notrika.gympin.common.user.enums.TokenType;
-import com.notrika.gympin.common.user.enums.UserGroup;
-import com.notrika.gympin.common.user.enums.UserRole;
-import com.notrika.gympin.common.user.enums.UserStatus;
-import com.notrika.gympin.common.user.param.*;
-import com.notrika.gympin.common.user.service.AccountService;
-import com.notrika.gympin.common.user.service.JwtTokenProvider;
+import com.notrika.gympin.common.user.user.dto.*;
+import com.notrika.gympin.common.user.user.enums.TokenType;
+import com.notrika.gympin.common.user.user.enums.UserGroup;
+import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.enums.UserStatus;
+import com.notrika.gympin.common.user.user.param.*;
+import com.notrika.gympin.common.user.user.service.AccountService;
+import com.notrika.gympin.common.user.user.service.JwtTokenProvider;
 import com.notrika.gympin.common.util.ApplicationEnum;
 import com.notrika.gympin.common.util.MyRandom;
+import com.notrika.gympin.common.util.exception.Error;
+import com.notrika.gympin.common.util.exception.ExceptionBase;
+import com.notrika.gympin.common.util.exception.activation.code.ActivationCodeExpiredException;
+import com.notrika.gympin.common.util.exception.activation.code.ActivationCodeManyRequestException;
+import com.notrika.gympin.common.util.exception.activation.code.ActivationCodeNotFoundException;
+import com.notrika.gympin.common.util.exception.activation.code.InviteCodeNotValid;
+import com.notrika.gympin.common.util.exception.general.SendSmsException;
+import com.notrika.gympin.common.util.exception.general.UserNotAllowedException;
+import com.notrika.gympin.common.util.exception.subscribe.EntryAlreadyExistException;
+import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
-import com.notrika.gympin.persistence.dao.repository.ActivationCodeRepository;
-import com.notrika.gympin.persistence.dao.repository.PasswordRepository;
-import com.notrika.gympin.persistence.dao.repository.UserRepository;
-import com.notrika.gympin.persistence.entity.activationCode.ActivationCodeEntity;
-import com.notrika.gympin.persistence.entity.user.PasswordEntity;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserActivationCodeRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
+import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;
+import com.notrika.gympin.persistence.entity.user.activationCode.UserActivationCodeEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -57,8 +57,6 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -75,11 +73,13 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private SmsService smsService;
     @Autowired
-    private ActivationCodeRepository activationCodeRepository;
+    private UserActivationCodeRepository userActivationCodeRepository;
     @Autowired
-    private PasswordRepository passwordRepository;
+    private UserPasswordRepository userPasswordRepository;
     @Autowired
     private SupportService supportService;
+    @Autowired
+    private FinanceUserRepository financeUserRepository;
 
 
     @Override
@@ -104,9 +104,26 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+//    @Override
+//    public UserRegisterDto register(UserRegisterParam userRegisterParam) throws ExceptionBase {
+//        log.info("Going to register user...\n");
+//        try {
+//            UserEntity insertedUser = addUser(userRegisterParam);
+//            return UserConvertor.toRegisterDto(insertedUser);
+//        } catch (DataIntegrityViolationException e) {
+//            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.REGISTER_USER_EXIST);
+//        } catch (Exception e) {
+//            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
+//        }
+//    }
+
     @Override
-    public UserRegisterDto register(UserRegisterParam userRegisterParam) throws ExceptionBase {
-        log.info("Going to register user...\n");
+    public UserRegisterDto registerByInviteCode(UserRegisterParam userRegisterParam) {
+        log.info("Going to register user by invite code...\n");
+        UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
+        if (user != null) throw new EntryAlreadyExistException();
+        if (!GeneralHelper.checkInviteCode(userRegisterParam.getInvitedBy(), userRepository))
+            throw new InviteCodeNotValid();
         try {
             UserEntity insertedUser = addUser(userRegisterParam);
             return UserConvertor.toRegisterDto(insertedUser);
@@ -117,28 +134,20 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    @Override
-    public UserRegisterDto registerByInviteCode(UserRegisterParam userRegisterParam) {
-        log.info("Going to register user by invite code...\n");
-        UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
-        if (user != null) throw new EntryAlreadyExistException();
-        if(!GeneralHelper.checkInviteCode(userRegisterParam.getInvitedBy(),userRepository)) throw new InviteCodeNotValid();
-        return register(userRegisterParam);
-    }
-
     public UserEntity addUser(UserRegisterParam userRegisterParam) {
         log.info("Going to addUser...\n");
         UserEntity user = new UserEntity();
         user.setUsername("USER_" + new Date().getTime());
         user.setPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
         user.setUserRole(userRegisterParam.getUserRole().getRole());
-        if(userRegisterParam.getFullName()!=null)
+        if (userRegisterParam.getFullName() != null)
             user.setFullName(userRegisterParam.getFullName());
-        if(userRegisterParam.getInvitedBy()!=null)
+        if (userRegisterParam.getInvitedBy() != null)
             user.setInvitedBy(userRegisterParam.getInvitedBy());
         user.setUserGroup(UserGroup.CLIENT);
         user.setUserStatus(UserStatus.ENABLED);
-        user.setBalance(BigDecimal.ZERO);
+        FinanceUserEntity financeUser = financeUserRepository.add(FinanceUserEntity.builder().totalDeposit(BigDecimal.ZERO).build());
+        user.setFinanceUser(financeUser);
         return userService.add(user);
     }
 
@@ -150,7 +159,7 @@ public class AccountServiceImpl implements AccountService {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
         UserEntity user = getUser(loginParam);
-        ActivationCodeEntity activationCode = user.getActivationCode();
+        UserActivationCodeEntity activationCode = user.getActivationCode();
         if (activationCode == null) {
             throw new ActivationCodeNotFoundException();
         }
@@ -162,7 +171,7 @@ public class AccountServiceImpl implements AccountService {
             throw new UserNotAllowedException();
 
         activationCode.setDeleted(true);
-        activationCodeRepository.update(activationCode);
+        userActivationCodeRepository.update(activationCode);
         String jwt = getJwt(loginParam, GeneralHelper.fixPhoneNumber(loginParam.getUsername()), TokenType.USER);
         String refreshJwt = getJwt(loginParam, GeneralHelper.fixPhoneNumber(loginParam.getUsername()), TokenType.REFRESH_TOKE);
         UserDto result = UserConvertor.toDtoComplete(user);
@@ -195,7 +204,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private boolean CheckUserAccess(UserEntity user, ApplicationEnum application) {
-        if(application==null) return false;
+        if (application == null) return false;
         switch (application) {
             case ANDROID:
                 return user.getUserRole() == UserRole.USER;
@@ -209,7 +218,7 @@ public class AccountServiceImpl implements AccountService {
                         || user.getUserRole() == UserRole.MARKET;
             case WEBAPP:
                 return user.getUserRole() == UserRole.USER
-                        ||user.getUserRole() == UserRole.ADMIN
+                        || user.getUserRole() == UserRole.ADMIN
                         || user.getUserRole() == UserRole.SUPER_ADMIN
                         || user.getUserRole() == UserRole.CONTENT
                         || user.getUserRole() == UserRole.MANAGER
@@ -239,7 +248,7 @@ public class AccountServiceImpl implements AccountService {
             password = user.getActivationCode().getCode();
         }
         if (password == null) {
-            PasswordEntity pass = passwordRepository.findByUserAndExpiredIsFalseAndDeletedIsFalse(user);
+            UserPasswordEntity pass = userPasswordRepository.findByUserAndExpiredIsFalseAndDeletedIsFalse(user);
             password = pass != null ? pass.getPassword() : null;
         }
         if (password == null) {
@@ -275,7 +284,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public Boolean requestRegisterPlace(RequestRegisterParam param) {
         String title = "درخواست افزودن مجموعه توسط " + param.getFullName();
-        String message = "افزودن مجموعه ورزشی " + param.getPlaceName() + " توسط " + param.getFullName() + " با شماره " + param.getPhoneNumber() + " درخواست شده.";
+        String message = "افزودن مجموعه ورزشی " + param.getText() + " توسط " + param.getFullName() + " با شماره " + param.getPhoneNumber() + " درخواست شده.";
         supportService.add(SupportParam.builder()
                 .title(title)
                 .supportMessages(SupportMessageParam.builder()
@@ -298,7 +307,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public Boolean requestRegisterCorporate(RequestRegisterParam param) {
         String title = "درخواست افزودن سازمان توسط " + param.getFullName();
-        String message = "افزودن سازمان " + param.getPlaceName() + " توسط " + param.getFullName() + " با شماره " + param.getPhoneNumber() + " درخواست شده.";
+        String message = "افزودن سازمان " + param.getText() + " توسط " + param.getFullName() + " با شماره " + param.getPhoneNumber() + " درخواست شده.";
         supportService.add(SupportParam.builder()
                 .title(title)
                 .supportMessages(SupportMessageParam.builder()
@@ -314,7 +323,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Boolean requestRegisterAdvice(RequestRegisterParam param) {
         String title = "درخواست مشاوره از طرف " + param.getFullName();
-        String message = param.getPlaceName() + " - " + param.getFullName() + " - " + param.getPhoneNumber();
+        String message = param.getText() + " - " + param.getFullName() + " - " + param.getPhoneNumber();
         supportService.add(SupportParam.builder()
                 .title(title)
                 .supportMessages(SupportMessageParam.builder()
@@ -330,7 +339,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Boolean requestPublicMessage(RequestRegisterParam param) {
         String title = "پیام از" + param.getFullName();
-        String message = param.getPlaceName() + " - " + param.getFullName() + " - " + param.getPhoneNumber();
+        String message = param.getText() + " - " + param.getFullName() + " - " + param.getPhoneNumber();
         supportService.add(SupportParam.builder()
                 .title(title)
                 .supportMessages(SupportMessageParam.builder()
@@ -353,8 +362,8 @@ public class AccountServiceImpl implements AccountService {
         UserInviteCodesDto codesDto = new UserInviteCodesDto();
         codesDto.setTitle("کد های دعوت شما");
         codesDto.setDescriptoin("با کد دعوت زیر 2 نفر از دوستان خود را به جیم پین دعوت کنید");
-        String inviteCode1 = GeneralHelper.getInviteCode(userEntity.getId(),1);
-        String inviteCode2 = GeneralHelper.getInviteCode(userEntity.getId(),2);
+        String inviteCode1 = GeneralHelper.getInviteCode(userEntity.getId(), 1);
+        String inviteCode2 = GeneralHelper.getInviteCode(userEntity.getId(), 2);
         codesDto.setFirstInviteCode(
                 InviteCode
                         .builder()
@@ -369,7 +378,6 @@ public class AccountServiceImpl implements AccountService {
                         .build());
         return codesDto;
     }
-
 
 
 }

@@ -1,12 +1,12 @@
 package com.notrika.gympin.domain.place;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.place.option.dto.PlaceOptionDto;
 import com.notrika.gympin.common.place.option.param.PlaceOptionParam;
 import com.notrika.gympin.common.place.option.service.PlaceOptionService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.OptionConvertor;
-import com.notrika.gympin.persistence.dao.repository.PlaceOptionRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceOptionRepository;
 import com.notrika.gympin.persistence.entity.place.option.PlaceOptionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

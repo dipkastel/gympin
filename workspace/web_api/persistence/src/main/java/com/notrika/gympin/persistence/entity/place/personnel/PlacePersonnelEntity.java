@@ -1,9 +1,10 @@
 package com.notrika.gympin.persistence.entity.place.personnel;
 
-import com.notrika.gympin.common.place.enums.PlacePersonnelRole;
-import com.notrika.gympin.common.user.enums.UserRole;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRole;
 import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,16 +27,22 @@ import java.util.Objects;
 public class PlacePersonnelEntity extends BaseEntity<PlacePersonnelEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "place_id")
+    @JoinColumn(name = "personnelPlaceId")
     private PlaceEntity place;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "personnelUserId")
     private UserEntity user;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private PlacePersonnelRole userRole;
+
+    @Column(name = "isBeneficiary", nullable = false, columnDefinition = "boolean default false")
+    private Boolean isBeneficiary;
+
+    @Column(name = "commissionFee")
+    private Double commissionFee;
 
     @OneToMany(mappedBy = "placePerson")
     @ToString.Exclude
@@ -43,7 +50,17 @@ public class PlacePersonnelEntity extends BaseEntity<PlacePersonnelEntity> {
 
     @OneToMany(mappedBy = "placePerson")
     @ToString.Exclude
-    private List<PlacePersonnelGateAccessEntity> placePersonnelGateAccess;
+    private List<PlacePersonelBuyableAccessEntity> placePersonnelBuyableAccess;
+
+
+    @OneToMany(mappedBy = "beneficiary",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<BuyableEntity> buyables;
+
+    @OneToMany(mappedBy = "beneficiary",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<InvoiceBuyableEntity> invoiceBuyable;
+
 
     @Override
     public boolean equals(Object o) {

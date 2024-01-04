@@ -27,7 +27,7 @@ export default function NBottomNavigation(){
         },
         {
             value:"tickets",
-            lable:"بلیت ها",
+            lable:"خرید ها",
             firstDirection:"/tickets",
             icon:<ConfirmationNumberOutlinedIcon/>,
             otherRouts:["tickets"]
@@ -40,8 +40,8 @@ export default function NBottomNavigation(){
             otherRouts:["profile","wallet","notifs",]
         }
     ]
-    const pathname = window.location.pathname
 
+    const pathname = window.location.pathname
     const [value, setValue] = React.useState(getTabName(pathname));
 
     function getTabName(path){

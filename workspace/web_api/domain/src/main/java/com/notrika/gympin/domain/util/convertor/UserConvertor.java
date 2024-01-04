@@ -1,11 +1,12 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.dto.UserRegisterDto;
-import com.notrika.gympin.common.user.enums.UserRole;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
+import com.notrika.gympin.common.user.user.dto.UserDto;
+import com.notrika.gympin.common.user.user.dto.UserRegisterDto;
+import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public final class UserConvertor {
         dto.setNationalCode(user.getNationalCode());
         dto.setEmail(user.getEmail());
         dto.setUserGroup(user.getUserGroup());
+        dto.setFinanceUser(toFinanceDto(user.getFinanceUser()));
         if (user.getUserRole() == null) {
             dto.setUserRole(UserRoleConvertor.ToUserRoleDto(UserRole.USER));
         } else {
@@ -55,6 +57,18 @@ public final class UserConvertor {
         dto.setFullName(user.getFullName());
         dto.setUsername(user.getUsername());
         dto.setAvatar(MultimediaConvertor.toDto(user.getUserAvatar()));
+        dto.setFinanceUser(toFinanceDto(user.getFinanceUser()));
+        return dto;
+    }
+
+    public static UserDto toDto(UserEntity user) {
+        if (user == null) return null;
+        UserDto dto = new UserDto();
+        dto.setId(user.getId());
+        dto.setFullName(user.getFullName());
+        dto.setUsername(user.getUsername());
+        dto.setAvatar(MultimediaConvertor.toDto(user.getUserAvatar()));
+        dto.setFinanceUser(toFinanceDto(user.getFinanceUser()));
         return dto;
     }
 
@@ -75,6 +89,17 @@ public final class UserConvertor {
 
     public static List<UserDto> toDto(List<UserEntity> users) {
         return users.stream().map(UserConvertor::toDtoComplete).collect(Collectors.toList());
+    }
+    public static List<FinanceUserDto> toFinanceDto(List<FinanceUserEntity> finance) {
+        return finance.stream().map(UserConvertor::toFinanceDto).collect(Collectors.toList());
+    }
+
+    public static FinanceUserDto toFinanceDto(FinanceUserEntity finance) {
+        if (finance == null) return null;
+        FinanceUserDto dto = new FinanceUserDto();
+        dto.setId(finance.getId());
+        dto.setTotalDeposit(finance.getTotalDeposit());
+        return dto;
     }
 
     public static Page<UserDto> toDto(Page<UserEntity> users) {

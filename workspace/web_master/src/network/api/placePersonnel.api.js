@@ -28,9 +28,9 @@ export function placePersonnel_updatePersonnelAccess(data) {
 
 
 export function placePersonnel_getGateAccess(data) {
-    return axios.get(Api_url.placePersonnel.getUserPlaceGateAccess, {params: data});
+    return axios.get(Api_url.placePersonnel.getUserPlaceHallAccess, {params: data});
 }
 
 export function placePersonnel_updatePersonnelGateAccess(data) {
-    return axios.post(Api_url.placePersonnel.updatePersonnelGateAccess,  data);
+    return axios.post(Api_url.placePersonnel.updatePersonnelHallAccess,  data);
 }

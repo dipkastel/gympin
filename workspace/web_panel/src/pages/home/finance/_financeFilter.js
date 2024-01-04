@@ -3,7 +3,7 @@ import {Modal, Tab, Tabs} from "react-bootstrap";
 import {Form} from "reactstrap";
 import {Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import {TransactionStatus} from "../../../helper/enums/TransactionStatus";
-import {TransactionTypes} from "../../../helper/enums/TransactionTypes";
+import {TransactionCorporateTypes} from "../../../helper/enums/TransactionCorporateTypes";
 import AsyncSelect from "react-select/async";
 import {user_query} from "../../../network/api/user.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
@@ -144,8 +144,8 @@ const _financeFilter = ({openModal, setOpenModal,filter,setFilter}) => {
                                 })}
                             >
                                 <MenuItem value={"null"}>بدون فیلتر</MenuItem>
-                                {Object.keys(TransactionTypes).map((item, number) => (
-                                    <MenuItem key={number} value={item}>{TransactionTypes[item]}</MenuItem>
+                                {Object.keys(TransactionCorporateTypes).map((item, number) => (
+                                    <MenuItem key={number} value={item}>{TransactionCorporateTypes[item]}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>

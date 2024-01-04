@@ -39,7 +39,6 @@ const PlaceOptions = () => {
             queryType: "SEARCH",
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then(data => {
-            console.log(data)
             SetPlaceOptions(data.data.Data)
         }).catch(e => {
                     try {

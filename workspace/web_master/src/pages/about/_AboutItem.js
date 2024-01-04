@@ -32,7 +32,8 @@ const _AboutItem = ({placeAbout, onChange}) => {
 
     function updateAbout() {
         PlaceAbout_update({...placeAbout,Description:aboutText,Acceptable:acceptable}).then(result=>{
-            onChange()
+            onChange();
+            error.showError({message: "با موفقیت ثبت شد.",});
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

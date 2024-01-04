@@ -2,11 +2,11 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.article.dto.ArticleCategoryDto;
 import com.notrika.gympin.common.article.dto.ArticleDto;
-import com.notrika.gympin.common.report.reportSettings.dto.ReportSettingsDto;
+import com.notrika.gympin.common.article.param.ArticleCategoryParam;
 import com.notrika.gympin.persistence.entity.article.ArticleCategoryEntity;
 import com.notrika.gympin.persistence.entity.article.ArticleEntity;
-import com.notrika.gympin.persistence.entity.settings.ReportSettingsEntity;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ArticleConvertor {
@@ -36,6 +36,18 @@ public class ArticleConvertor {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         return dto;
+    }
+
+    public static ArticleCategoryParam toParam(ArticleCategoryDto category) {
+        if(category==null) return null;
+        ArticleCategoryParam param = ArticleCategoryParam.builder()
+                .id(category.getId())
+                .name(category.getName()).build();
+        return param;
+    }
+
+    public static List<ArticleCategoryParam> toParam(List<ArticleCategoryDto> categories){
+       return categories.stream().map(ArticleConvertor::toParam).collect(Collectors.toList());
     }
 
 }

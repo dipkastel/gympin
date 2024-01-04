@@ -27,6 +27,12 @@ export function fixMobile(mobileNumber) {
         case "9": return "0"+mobileNumber
     }
 }
+
+export function getUserFixedName(user) {
+    if(!user) return "";
+    return (user.FullName || "") + " " + " ( " + (user.Username || "") + " ) ";
+}
+
 export function removeStorage(key) {
     try {
         localStorage.setItem(key, "");

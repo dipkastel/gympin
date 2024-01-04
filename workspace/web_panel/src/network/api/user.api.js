@@ -1,5 +1,5 @@
 import axios from "axios";
-import {UserApi} from "./const_api";
+import {UserApi, UserCreditApi} from "./const_api";
 
 //user
 export function user_add(data) {
@@ -49,4 +49,10 @@ export function user_UpdateUserAvatar(data) {
     return axios.put(UserApi.updateUserAvatar, data);
 }
 
-
+export function user_getFinanceUser(data) {
+    return axios.get(UserApi.getFinanceUser,{ params: data });
+}
+//userCredit
+export function User_getUserCredits(data) {
+    return axios.get(UserApi.getUserCredits,{params:data});
+}

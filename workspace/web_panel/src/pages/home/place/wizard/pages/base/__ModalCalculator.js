@@ -69,7 +69,7 @@ const __ModalCalculator = ({inPlace,setInPlace,openModalCalculator,setOpenModalC
 
     function DeleteItem(e,itemToDelete) {
         e.preventDefault()
-        optionOfPlace_delete({Id:itemToDelete.Id})
+        optionOfPlace_delete({id:itemToDelete.Id})
             .then(data=>{
                 error.showError({message: "عملیات موفق",});
                 getOptionOfPlace()

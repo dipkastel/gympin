@@ -1,11 +1,11 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
-import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
+import com.notrika.gympin.common.util.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.multimedia.api.ResourceController;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.service.MultimediaService;
-import com.notrika.gympin.common.user.enums.MyMediaType;
+import com.notrika.gympin.common.user.user.enums.MyMediaType;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
 import Notice from "../../../partials/content/Notice";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -7,7 +7,6 @@ import {Form} from "react-bootstrap";
 import "./map.css"
 import {Place_query} from "../../../../network/api/place.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {Button} from "@mui/material";
 import {useHistory} from "react-router-dom";
 
 const PlacesMap = () => {
@@ -17,8 +16,8 @@ const PlacesMap = () => {
     const [markerLayer, setMarkerLayer] = useState(null);
 
     useEffect(() => {
-        if(leaflet)return;
-        const map = L.map("kt_leaflet_map", {center: [35.7019, 51.4047],zoom:12,});
+        if (leaflet) return;
+        const map = L.map("kt_leaflet_map", {center: [35.7019, 51.4047], zoom: 12,});
         prepareMap(map);
     }, []);
 
@@ -27,25 +26,27 @@ const PlacesMap = () => {
     }, [markerLayer]);
 
     const getPlaces = (page) => {
-            Place_query({
-                queryType: "SEARCH",
-                paging: {Page: page, Size: 100,Desc:true}
-            }).then((data) => {
-                addMarkers(data.data.Data.content);
-            }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message,});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            });
-    }
-    function addMarkers(places){
-        places.forEach(place=>{
-            if(place.Latitude!=null&&place.Longitude!=null)
-            addMarker(place);
+        Place_query({
+            queryType: "SEARCH",
+            paging: {Page: page, Size: 100, Desc: true}
+        }).then((data) => {
+            addMarkers(data.data.Data.content);
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
         });
     }
+
+    function addMarkers(places) {
+        places.forEach(place => {
+            if (place.Latitude != null && place.Longitude != null)
+                addMarker(place);
+        });
+    }
+
     const prepareMap = (map) => {
         map.panTo(map.getCenter());
         // set leaflet tile layer
@@ -55,13 +56,13 @@ const PlacesMap = () => {
         }).addTo(map);
 
         setLeaflet(map);
-
         var markerLaye = L.layerGroup().addTo(map)
         setMarkerLayer(markerLaye);
 
+
     };
 
-    function addMarker(place){
+    function addMarker(place) {
         // set custom SVG icon marker
         var leafletIcon = L.divIcon({
             html: getIconHtml(),
@@ -72,11 +73,13 @@ const PlacesMap = () => {
         });
 
         // markerl.clearLayers();
-        let marker = L.marker([place.Latitude,place.Longitude], { icon: leafletIcon,title:place.Name });
-        marker.on('click', function(e) {
+        let marker = L.marker([place.Latitude, place.Longitude], {icon: leafletIcon, title: place.Name});
+        marker.on('click', function (e) {
             history.push({pathname: "/place/data/" + place.Id});
         });
-            marker.addTo(markerLayer);
+        if(markerLayer)
+        marker.addTo(markerLayer);
+
         function getIconHtml() {
             return ` <span class="svg-icon svg-icon-danger svg-icon-3x">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 21 21" version="1.1">
@@ -108,7 +111,7 @@ const PlacesMap = () => {
                 <PortletBody>
 
                     <Form.Group controlId="MyMap">
-                        <div id="kt_leaflet_map" className={"map"} />
+                        <div id="kt_leaflet_map" className={"map"}/>
                     </Form.Group>
                 </PortletBody>
             </Portlet>

@@ -1,9 +1,9 @@
 package com.notrika.gympin.persistence.dao;
 
-import com.notrika.gympin.common._base.query.QueryCriteria;
-import com.notrika.gympin.common._base.query.Query;
-import com.notrika.gympin.common.context.GympinContext;
-import com.notrika.gympin.common.context.GympinContextHolder;
+import com.notrika.gympin.common.util._base.query.QueryCriteria;
+import com.notrika.gympin.common.util._base.query.Query;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import static com.notrika.gympin.common._base.query.Enums.QueryOperationsEnum.EQUAL_TO;
+import static com.notrika.gympin.common.util._base.query.Enums.QueryOperationsEnum.EQUAL_TO;
 
 public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
 

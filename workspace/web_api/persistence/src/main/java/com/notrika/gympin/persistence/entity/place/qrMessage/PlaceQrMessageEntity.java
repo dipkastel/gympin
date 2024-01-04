@@ -22,7 +22,7 @@ import java.util.Objects;
 public class PlaceQrMessageEntity extends BaseEntityWithCreateUpdate<PlaceQrMessageEntity> {
 
     @ManyToOne
-    @JoinColumn(name = "place_id")
+    @JoinColumn(name = "qrplaceId")
     private PlaceEntity place;
 
 

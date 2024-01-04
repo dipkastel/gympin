@@ -4,7 +4,7 @@ export default function HomeOneAbout() {
     return (
         <>
             {/* <!-- about section start --> */}
-            <section id="places" className="about-area pt-130 pb-130">
+            <section id="places" className="about-area pt-70 pb-70">
                 <div className="container">
                     <div className="row justify-content-between">
                         <div className="col-xl-6 pr-0">
@@ -14,24 +14,24 @@ export default function HomeOneAbout() {
                         </div>
                         <div className="col-xl-6 pl-80">
                             <div className="section-header mb-40">
-                                <h4 className="sub-heading mb-10">جیم پین</h4>
-                                <h3 className=" mb-35">ورزشکاران خود را هوشمند مدیریت کنید</h3>
-                                <p>جیم پین موقعیتی را فراهم کرده تا شما بتوانید در یک پلتفرم یکپارچه آنلاین خدمات خود را ارائه کنید </p>
+                                <h3 className=" mb-35">برخی امکانات جیم پین</h3>
                             </div>
                             <div className="about-lists">
                                 <ul>
-                                    <li><i className="fa fa-check"></i>اپلیکیشن مجزا برای مراکز ورزشی</li>
-                                    <li><i className="fa fa-check"></i>امکان مدیریت مالی دقیق</li>
-                                    <li><i className="fa fa-check"></i>امکان مدیریت ورزشکاران</li>
-                                    <li><i className="fa fa-check"></i>امکان مدیریت ترافیک مرکز</li>
-                                    <li><i className="fa fa-check"></i>امکان مدیریت پرسنل و مدیریت دسترسی ها</li>
-                                    <li><i className="fa fa-check"></i>مدیریت پلن ها و تخفیف ها</li>
-                                    <li><i className="fa fa-check"></i>اطلاع رسانی کمپین ها</li>
-                                    <li><i className="fa fa-check"></i>امکان پرداخت آنلاین</li>
-                                    <li><i className="fa fa-check"></i>و ...</li>
+                                    <li><i className="fa fa-check"></i>اپلیکیشن اختصاصی ویژه شرکت ها</li>
+                                    <li><i className="fa fa-check"></i>بدون محدودیت در اندازه سازمان</li>
+                                    <li><i className="fa fa-check"></i>امکان پرداخت های متفاوت (پلکانی)</li>
+                                    <li><i className="fa fa-check"></i>مدیریت آسان پرسنل</li>
+                                    <li><i className="fa fa-check"></i>عدم اتلاف بودجه رفاهی سازمان</li>
+                                    <li><i className="fa fa-check"></i>مجموعه های مورد علاقه کارمندان</li>
+                                    <li><i className="fa fa-check"></i>بررسی و مقایسه امکانات مراکز</li>
+                                    <li><i className="fa fa-check"></i>همه سازمان ها با هر بودجه ای</li>
+                                    <li><i className="fa fa-check"></i>گروهبندی پرسنل (افزایش اعتبار گروهی)</li>
+                                    <li><i className="fa fa-check"></i>گزارشات ویژه سازمان ها</li>
+                                    <li><i className="fa fa-check"></i>و...</li>
                                 </ul>
-                                <a href="https://place.gympin.ir/auth/register" className="site-btn site-btn__s2 mt-55"><span className="icon icon__black"><i
-                                    className="far fa-arrow-left"></i></span> یک قدم تا همکاری</a>
+                                <a href="https://corporate.gympin.ir/auth/register" className="site-btn site-btn__s2 mt-55"><span className="icon icon__black"><i
+                                    className="far fa-arrow-left"></i></span> یک قدم تا ورزش</a>
                             </div>
                         </div>
                     </div>

@@ -21,3 +21,7 @@ export function user_updateAvatar(avatar) {
 export function user_checkUsernameAvailable(username) {
     return axios.get(Api_url.user.checkUsernameAvailable,{params:{username:username}});
 }
+
+export function User_getMyCredits() {
+    return axios.get(Api_url.user.getMyCredits);
+}

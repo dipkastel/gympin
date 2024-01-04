@@ -1,19 +1,20 @@
 package com.notrika.gympin.controller.impl.user;
 
-import com.notrika.gympin.common._base.param.BasePagedParam;
-import com.notrika.gympin.common.user.api.UserController;
-import com.notrika.gympin.common.user.dto.UserDto;
-import com.notrika.gympin.common.user.dto.UserRoleInfoDto;
-import com.notrika.gympin.common.user.enums.UserStatus;
-import com.notrika.gympin.common.user.query.UserQuery;
-import com.notrika.gympin.common.user.param.UserAvatarParam;
-import com.notrika.gympin.common.user.param.UserParam;
-import com.notrika.gympin.common.user.param.UserRoleUpdateParam;
-import com.notrika.gympin.common.user.param.UserStatusParam;
-import com.notrika.gympin.common.user.service.UserService;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
+import com.notrika.gympin.common.finance.transaction.param.FinanceUserParam;
+import com.notrika.gympin.common.user.user.dto.UserCreditDto;
+import com.notrika.gympin.common.user.user.param.*;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.user.user.api.UserController;
+import com.notrika.gympin.common.user.user.dto.UserDto;
+import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
+import com.notrika.gympin.common.user.user.enums.UserStatus;
+import com.notrika.gympin.common.user.user.query.UserQuery;
+import com.notrika.gympin.common.user.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -29,7 +30,8 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public ResponseEntity<UserDto> add(UserParam userParam) {
-        return ResponseEntity.ok(userService.add(userParam));
+//        return ResponseEntity.ok(userService.add(userParam));
+        return null;
     }
 
     @Override
@@ -56,6 +58,18 @@ public class UserControllerImpl implements UserController {
     @GetMapping("/getMyInfo")
     public ResponseEntity<UserDto> getMyInfo() {
         return ResponseEntity.ok(userService.getMyInfo());
+    }
+
+    @Override
+    @GetMapping("/getUserCredits")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<UserCreditDto> getUserCredits(UserParam param) {
+        return ResponseEntity.ok(userService.getCreditsByUser(param));
+    }
+    @Override
+    @GetMapping("/getMyCredits")
+    public ResponseEntity<UserCreditDto> getMyCredits() {
+        return ResponseEntity.ok(userService.getMyCredits());
     }
 
     //status

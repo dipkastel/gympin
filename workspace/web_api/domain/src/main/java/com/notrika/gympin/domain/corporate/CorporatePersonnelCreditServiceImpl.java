@@ -1,22 +1,27 @@
 package com.notrika.gympin.domain.corporate;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelCreditService;
-import com.notrika.gympin.common.exception.corporate.LowCreditException;
-import com.notrika.gympin.common.transaction.enums.TransactionStatus;
-import com.notrika.gympin.common.transaction.enums.TransactionType;
+import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
+import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
+import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.util.exception.corporate.LowCreditException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
-import com.notrika.gympin.persistence.dao.repository.CorporatePersonnelCreditRepository;
-import com.notrika.gympin.persistence.dao.repository.CorporatePersonnelRepository;
-import com.notrika.gympin.persistence.dao.repository.CorporateRepository;
-import com.notrika.gympin.persistence.dao.repository.TransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
-import com.notrika.gympin.persistence.entity.transaction.TransactionEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
+import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.CorporatePersonnelCreditEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateTransactionEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,35 +46,64 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     @Autowired
     CorporateServiceImpl corporateService;
     @Autowired
-    TransactionRepository transactionRepository;
+    FinanceCorporateRepository financeCorporateRepository;
+    @Autowired
+    FinanceSerialRepository financeSerialRepository;
+    @Autowired
+    FinanceCorporateTransactionRepository financeCorporateTransactionRepository;
+    @Autowired
+    CorporatePersonnelGroupRepository corporatePersonnelGroupRepository;
 
     @Override
     @Transactional
     public CorporatePersonnelCreditDto add(@NonNull CorporatePersonnelCreditParam param) {
+        //get personel
         CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(param.getPersonnel().getId());
-        if(!personnelEntity.getCorporate().getStepspay()&&personnelEntity.getCorporate().getPersonnel().stream().map(p-> p.getCredits().stream().map(cpc->cpc.getCreditAmount()).reduce(BigDecimal.ZERO, (f, q) -> f.add(q))).reduce(BigDecimal.ZERO, (p, q) -> p.add(q)).add(param.getCreditAmount()).compareTo(personnelEntity.getCorporate().getBalance())>0)
+        if (!personnelEntity.getCorporate().getStepsPay() && personnelEntity.getCorporate().getPersonnel().stream().map(p -> p.getCredits().stream().map(cpc -> cpc.getCreditAmount()).reduce(BigDecimal.ZERO, (f, q) -> f.add(q))).reduce(BigDecimal.ZERO, (p, q) -> p.add(q)).add(param.getCreditAmount()).compareTo(personnelEntity.getCorporate().getFinanceCorporate().getTotalDeposit()) > 0)
             throw new LowCreditException();
-        BigDecimal newCreditBalance = personnelEntity.getCreditBalance().add(param.getCreditAmount());
-        personnelEntity.setCreditBalance(newCreditBalance);
+
+        var serial = financeSerialRepository.add(FinanceSerialEntity.builder().serial(java.util.UUID.randomUUID().toString()).build());
+
+        //corporate Transaction
+        financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
+                .financeCorporate(personnelEntity.getCorporate().getFinanceCorporate())
+                .latestBalance(personnelEntity.getCorporate().getFinanceCorporate().getTotalCredits())
+                .transactionCorporateType(TransactionCorporateType.CREDIT)
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .transactionType(TransactionBaseType.CORPORATE)
+                .amount(param.getCreditAmount())
+                .isChecked(false)
+                .serial(serial)
+                .build());
+        //create new credit and set to personel entity
+        BigDecimal newCorporateCreditBalance = personnelEntity.getCorporate().getFinanceCorporate().getTotalCredits().add(param.getCreditAmount());
+        BigDecimal newPersonnelCreditBalance = personnelEntity.getCreditBalance().add(param.getCreditAmount());
+        personnelEntity.setCreditBalance(newPersonnelCreditBalance);
+        personnelEntity.getCorporate().getFinanceCorporate().setTotalCredits(newCorporateCreditBalance);
         corporatePersonnelRepository.update(personnelEntity);
+
+
         CorporatePersonnelCreditEntity entity = new CorporatePersonnelCreditEntity();
         entity.setCorporatePersonnel(personnelEntity);
         entity.setCreditAmount(param.getCreditAmount());
-
-        transactionRepository.add(TransactionEntity.builder()
-                .corporate(personnelEntity.getCorporate())
-                .balance(personnelEntity.getCreditBalance())
-                .user(personnelEntity.getUser())
-                .amount(param.getCreditAmount())
+        corporatePersonnelCreditRepository.add(entity);
+        //add transactions
+        //personel transaction
+        financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
+                .financeCorporate(personnelEntity.getCorporate().getFinanceCorporate())
+                .corporatePersonnel(personnelEntity)
+                .latestBalance(personnelEntity.getCreditBalance())
+                .transactionCorporateType(TransactionCorporateType.CREDIT)
                 .transactionStatus(TransactionStatus.COMPLETE)
-                .transactionType(TransactionType.CORPORATE_PERSONNEL_ADD_CREDIT)
+                .transactionType(TransactionBaseType.PERSONNEL)
+                .amount(param.getCreditAmount())
                 .isChecked(false)
-                        .bankPend(false)
-                .serial(java.util.UUID.randomUUID().toString())
+                .serial(serial)
                 .build());
 
+
         corporateService.update(personnelEntity.getCorporate());
-        return CorporateConvertor.toCreditDto(corporatePersonnelCreditRepository.add(entity));
+        return CorporateConvertor.toCreditDto(entity);
     }
 
 
@@ -77,46 +111,88 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     @Transactional
     public List<CorporatePersonnelCreditDto> addToAll(@NonNull CorporatePersonnelCreditParam param) {
         CorporateEntity corporate = corporateService.getEntityById(param.getCorporateId());
-        List<CorporatePersonnelEntity> personnels = new ArrayList<>();
-        List<CorporatePersonnelCreditEntity> credits = new ArrayList<>();
+        List<CorporatePersonnelEntity> getPersonnelsForProcess = corporatePersonnelRepository.findByCorporateAndDeletedIsFalse(corporate);
+        List<CorporatePersonnelEntity> personnelsToAddCredit = new ArrayList<>();
+        List<CorporatePersonnelCreditEntity> corporatePersonnelCredit = new ArrayList<>();
+        List<FinanceCorporateTransactionEntity> corporateTransactions = new ArrayList<>();
+        CorporatePersonnelGroupEntity group = null;
+        String description = "";
+        var serial = financeSerialRepository.add(FinanceSerialEntity.builder().serial(java.util.UUID.randomUUID().toString()).build());
 
-        BigDecimal totalAddBalance = param.getCreditAmount().multiply(BigDecimal.valueOf(corporate.getPersonnel().size()));
-        if(!corporate.getStepspay()&&corporate.getPersonnel().stream().map(p-> p.getCredits().stream().map(cpc->cpc.getCreditAmount()).reduce(BigDecimal.ZERO, (f, q) -> f.add(q))).reduce(BigDecimal.ZERO, (p, q) -> p.add(q)).add(totalAddBalance).compareTo(corporate.getBalance())>0)
+        if (param.getGroupId() != null) {
+            getPersonnelsForProcess = getPersonnelsForProcess.stream().filter(p->p.getPersonnelGroup().getId()==param.getGroupId()).collect(Collectors.toList());
+        }
+
+        BigDecimal totalAddAmount = param.getCreditAmount().multiply(BigDecimal.valueOf(getPersonnelsForProcess.size()));
+
+        if (!corporate.getStepsPay() && corporate.getFinanceCorporate().getTotalCredits().add(totalAddAmount).compareTo(corporate.getFinanceCorporate().getTotalDeposit()) > 0)
             throw new LowCreditException();
-        for (CorporatePersonnelEntity person :corporate.getPersonnel()) {
-            BigDecimal newCreditBalance = person.getCreditBalance().add(param.getCreditAmount());
-            CorporatePersonnelEntity per = person;
-            per.setCreditBalance(newCreditBalance);
-            personnels.add(per);
 
-            credits.add(CorporatePersonnelCreditEntity.builder()
+
+        for (CorporatePersonnelEntity person : getPersonnelsForProcess) {
+
+            //add corporate Transaction
+            corporateTransactions.add(FinanceCorporateTransactionEntity.builder()
+                    .financeCorporate(corporate.getFinanceCorporate())
+                    .corporatePersonnel(person)
+                    .latestBalance(person.getCreditBalance())
+                    .transactionCorporateType(TransactionCorporateType.CREDIT)
+                    .transactionStatus(TransactionStatus.COMPLETE)
+                    .transactionType(TransactionBaseType.PERSONNEL)
+                    .amount(param.getCreditAmount())
+                    .isChecked(false)
+                    .serial(serial)
+                    .build());
+
+            //add personel credit
+            BigDecimal newCreditBalance = person.getCreditBalance().add(param.getCreditAmount());
+            person.setCreditBalance(newCreditBalance);
+            personnelsToAddCredit.add(person);
+
+            corporatePersonnelCredit.add(CorporatePersonnelCreditEntity.builder()
                     .corporatePersonnel(person)
                     .creditAmount(param.getCreditAmount())
                     .build());
 
-            transactionRepository.add(TransactionEntity.builder()
-                    .corporate(per.getCorporate())
-                    .balance(per.getCreditBalance())
-                    .amount(param.getCreditAmount())
-                    .transactionStatus(TransactionStatus.COMPLETE)
-                    .user(person.getUser())
-                    .transactionType(TransactionType.CORPORATE_PERSONNEL_ADD_CREDIT)
-                    .isChecked(false)
-                    .bankPend(false)
-                    .serial(java.util.UUID.randomUUID().toString())
-                    .build());
-        }
-        corporatePersonnelRepository.updateAll(personnels);
 
-        corporateService.update(corporate);
-        return convertToDtos(corporatePersonnelCreditRepository.addAll(credits));
+        }
+
+        if(param.getGroupId()!=null){
+            group = corporatePersonnelGroupRepository.getById(param.getGroupId());
+            description ="افزودن اعتبار به گروه "+group.getName()+" به تعداد "+personnelsToAddCredit.size()+" نفر هر کاربر مبلغ "+param.getCreditAmount()+" تومان در مجموع "+totalAddAmount + " تومان ";
+        }else{
+            description ="افزودن اعتبار به همه پرسنل "+personnelsToAddCredit.size()+" نفر هر کاربر مبلغ "+param.getCreditAmount()+" تومان در مجموع "+totalAddAmount + " تومان ";
+        }
+        corporateTransactions.add(FinanceCorporateTransactionEntity.builder()
+                .financeCorporate(corporate.getFinanceCorporate())
+                .latestBalance(corporate.getFinanceCorporate().getTotalCredits())
+                .transactionCorporateType(TransactionCorporateType.CREDIT)
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .transactionType(TransactionBaseType.CORPORATE)
+                .amount(totalAddAmount)
+                .description(description)
+                .isChecked(false)
+                .serial(serial)
+                .build());
+
+        corporatePersonnelRepository.updateAll(personnelsToAddCredit);
+        corporatePersonnelCreditRepository.addAll(corporatePersonnelCredit);
+        financeCorporateTransactionRepository.addAll(corporateTransactions);
+
+        //change corporate
+        var financeCorpote = corporate.getFinanceCorporate();
+        financeCorpote.setTotalCredits(financeCorpote.getTotalCredits().add(totalAddAmount));
+        financeCorporateRepository.update(financeCorpote);
+
+        return convertToDtos(corporatePersonnelCredit);
     }
+
 
     @Override
     public BigDecimal getTotalUserCredits(CorporatePersonnelCreditParam param) {
         CorporateEntity corporate = corporateService.getEntityById(param.getCorporateId());
         BigDecimal totalCredit = BigDecimal.ZERO;
-        for (var person : corporate.getPersonnel().stream().filter(p->!p.isDeleted()).collect(Collectors.toList())) {
+        for (var person : corporate.getPersonnel().stream().filter(p -> !p.isDeleted()).collect(Collectors.toList())) {
             totalCredit = totalCredit.add(person.getCreditBalance());
         }
         return totalCredit;
@@ -140,23 +216,24 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     @Override
     @Transactional
     public CorporatePersonnelCreditEntity add(CorporatePersonnelCreditEntity entity) {
-        CorporatePersonnelEntity corporatePersonnel = entity.getCorporatePersonnel();
-        BigDecimal newCreditBalance = entity.getCorporatePersonnel().getCreditBalance().add(entity.getCreditAmount());
-        corporatePersonnel.setCreditBalance(newCreditBalance);
-        corporatePersonnelRepository.update(corporatePersonnel);
-
-        transactionRepository.add(TransactionEntity.builder()
-                .corporate(corporatePersonnel.getCorporate())
-                .balance(corporatePersonnel.getCreditBalance())
-                .amount(entity.getCreditAmount())
-                .transactionStatus(TransactionStatus.COMPLETE)
-                .transactionType(TransactionType.CORPORATE_PERSONNEL_ADD_CREDIT)
-                .isChecked(false)
-                .bankPend(false)
-                .serial(java.util.UUID.randomUUID().toString())
-                .build());
-        corporateService.update(corporatePersonnel.getCorporate());
-        return corporatePersonnelCreditRepository.add(entity);
+//        CorporatePersonnelEntity corporatePersonnel = entity.getCorporatePersonnel();
+//        BigDecimal newCreditBalance = entity.getCorporatePersonnel().getCreditBalance().add(entity.getCreditAmount());
+//        corporatePersonnel.setCreditBalance(newCreditBalance);
+//        corporatePersonnelRepository.update(corporatePersonnel);
+//
+//        financeCorporateRepository.add(TransactionEntity.builder()
+//                .corporate(corporatePersonnel.getCorporate())
+//                .balance(corporatePersonnel.getCreditBalance())
+//                .amount(entity.getCreditAmount())
+//                .transactionStatus(TransactionStatus.COMPLETE)
+//                .transactionType(TransactionType.CORPORATE_PERSONNEL_ADD_CREDIT)
+//                .isChecked(false)
+//                .bankPend(false)
+//                .serial(java.util.UUID.randomUUID().toString())
+//                .build());
+//        corporateService.update(corporatePersonnel.getCorporate());
+//        return corporatePersonnelCreditRepository.add(entity);
+        return null;
     }
 
     @Override
@@ -181,7 +258,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
     @Override
     public Page<CorporatePersonnelCreditEntity> findAll(Specification<CorporatePersonnelCreditEntity> specification, Pageable pageable) {
-        return corporatePersonnelCreditRepository.findAll(specification,pageable);
+        return corporatePersonnelCreditRepository.findAll(specification, pageable);
     }
 
     @Override

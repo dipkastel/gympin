@@ -1,10 +1,7 @@
 package com.notrika.gympin.common.multimedia.api;
 
-import com.notrika.gympin.common._base.base.BaseController;
-import com.notrika.gympin.common._base.param.BasePagedParam;
-import com.notrika.gympin.common.location.dto.LocationDto;
-import com.notrika.gympin.common.location.param.LocationParam;
-import com.notrika.gympin.common.location.query.LocationQuery;
+import com.notrika.gympin.common.util._base.base.BaseController;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.multimedia.query.MultimediaQuery;

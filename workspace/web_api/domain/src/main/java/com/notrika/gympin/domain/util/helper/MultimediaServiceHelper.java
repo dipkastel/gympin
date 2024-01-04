@@ -1,14 +1,14 @@
 package com.notrika.gympin.domain.util.helper;
 
-import com.notrika.gympin.common.context.GympinContext;
-import com.notrika.gympin.common.context.GympinContextHolder;
-import com.notrika.gympin.common.exception.general.NotFoundException;
-import com.notrika.gympin.common.exception.multimedia.*;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
+import com.notrika.gympin.common.util.exception.general.NotFoundException;
+import com.notrika.gympin.common.util.exception.multimedia.*;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.domain.multimedia.MultimediaCategoryServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
-import com.notrika.gympin.persistence.dao.repository.MultimediaRepository;
+import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

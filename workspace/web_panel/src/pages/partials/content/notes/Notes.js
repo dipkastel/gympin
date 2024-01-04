@@ -12,11 +12,16 @@ const Notes = ({source}) => {
     const [notes, setNotes] = useState([])
 
     useEffect(() => {
-        getData()
+        getData();
     }, [source]);
 
+
     function getData() {
-        if((source.ticket&&source.ticket.Id)||(source.Corporate&&source.Corporate.Id)||(source.User&&source.User.Id)||(source.Place&&source.Place.Id)){
+        if((source.subscribe&&source.subscribe.Id)||
+            (source.Corporate&&source.Corporate.Id)||
+            (source.User&&source.User.Id)||
+            (source.Invoice&&source.Invoice.Id)||
+            (source.Place&&source.Place.Id)){
             note_getByParam(source).then(result => {
                 setNotes(result.data.Data)
             }).catch(e => {

@@ -25,7 +25,8 @@ public class BaseEntityWithCreateUpdate<T> extends BaseEntityWithCreate<T> {
     private Date updatedDate;
 
     //        @Column(name = "updaterUser")
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @JoinColumn(name = "updaterUserId")
     private UserEntity updaterUser;
 
     @Override

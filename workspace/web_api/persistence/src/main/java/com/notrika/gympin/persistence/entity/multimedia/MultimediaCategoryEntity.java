@@ -43,7 +43,7 @@ public class MultimediaCategoryEntity extends BaseEntity<MultimediaCategoryEntit
     private Integer maxh;
 
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<MultimediaEntity> multimediaList;
 

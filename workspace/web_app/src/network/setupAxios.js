@@ -11,7 +11,7 @@ export function setupAxios(axios, store) {
             const {auth: { token }} = store.getState();
 
             if (token) {
-                console.log("Bearer " + token);
+                console.log("url : "+axios.getUri(config),"Bearer " + token);
                 config.headers.Authorization = "Bearer " + token;
             }
             config.baseURL = AuthApi.BASEURL;

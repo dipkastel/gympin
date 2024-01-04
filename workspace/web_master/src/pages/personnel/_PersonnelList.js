@@ -61,7 +61,7 @@ const _PersonnelList = ({personnelList, renewList}) => {
                     <List>
                         {personnelList && personnelList.map(item => (
                             <div key={"person-" + item.Id}>
-                                <Grid container direction={"row"} justifyContent="space-between" sx={{marginY: 2}}>
+                                <Grid container direction={"row"} justifyContent="space-between" sx={{marginY: 1}}>
                                     <ListItemButton alignItems="flex-start" onClick={()=>item.UserRole=="PLACE_OWNER"?"#":navigate("/management/personnelAccess", {state:{user:item.User}})} >
                                         <ListItemAvatar>
                                             <Avatar sx={{width: 40, height: 40}}
@@ -69,13 +69,19 @@ const _PersonnelList = ({personnelList, renewList}) => {
                                         </ListItemAvatar>
                                         <ListItemText
                                             className="text-start"
-                                            primary={(item.User.FullName||"")+"("+item.User.Username+")"}
-                                            secondary={personnelRoles[item.UserRole]}
+                                            primary={(item.User?.FullName||"نام ثبت نشده")}
+                                            secondary={item.User?.Username}
                                         />
                                     </ListItemButton>
-                                    <IconButton onClick={(e)=>SetPersonnelToDelete(item)}>
-                                        {item.UserRole=="PLACE_OWNER"?<></>:<DeleteIcon color={"error"}  />}
-                                    </IconButton>
+
+                                    <ListItemText
+                                        className="text-end"
+                                        primary={(<IconButton onClick={(e)=>item.UserRole=="PLACE_OWNER"?{}:SetPersonnelToDelete(item)}>
+                                            {item.UserRole=="PLACE_OWNER"?<></>:<DeleteIcon color={"error"}  />}
+                                        </IconButton>)}
+                                        secondary={personnelRoles[item.UserRole]}
+                                    />
+
                                 </Grid>
                                 <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
                             </div>

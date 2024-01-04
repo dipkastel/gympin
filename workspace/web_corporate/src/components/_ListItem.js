@@ -1,17 +1,18 @@
 import React from 'react';
 import {Card, CardHeader, Typography} from "@mui/material";
 
-const _ListItem = (props) => {
+const _ListItem = ({destination,title,onClick}) => {
     return (
         <Card elevation={3} sx={{margin: 1}} >
             <CardHeader
                 component={"a"}
                 sx={{textDecoration:"none",color:"#000000"}}
-                href={props.destination}
+                href={destination}
+                onClick={onClick}
                 title={<Typography width={"100%"} variant={"body2"} noWrap={true} textAlign={"right"} component="div" sx={{
                     marginY:0.1
                 }}>
-                    {props.title}
+                    {title}
                 </Typography>}
                 action={""}/>
         </Card>

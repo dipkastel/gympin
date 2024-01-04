@@ -1,25 +1,11 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.context.GympinContext;
-import com.notrika.gympin.common.context.GympinContextHolder;
-import com.notrika.gympin.common.plan.dto.PlanDto;
-import com.notrika.gympin.common.plan.dto.PlanGateTimingDto;
-import com.notrika.gympin.common.plan.dto.PlanRegisterDto;
-import com.notrika.gympin.common.plan.param.PlanRegisterParam;
-import com.notrika.gympin.common.report.reportSettings.dto.ReportSettingsDto;
-import com.notrika.gympin.domain.util.helper.GeneralHelper;
-import com.notrika.gympin.persistence.entity.plan.PlanEntity;
-import com.notrika.gympin.persistence.entity.plan.PlanGateTimingEntity;
-import com.notrika.gympin.persistence.entity.plan.PlanRegisterEntity;
-import com.notrika.gympin.persistence.entity.settings.ReportSettingsEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
-
-import java.util.Calendar;
-import java.util.Date;
+import com.notrika.gympin.common.settings.reportSettings.dto.ReportSettingsDto;
+import com.notrika.gympin.persistence.entity.management.settings.ManageReportSettingsEntity;
 
 public class ReportSettingsConvertor {
 
-    public static ReportSettingsDto toDto(ReportSettingsEntity entity) {
+    public static ReportSettingsDto toDto(ManageReportSettingsEntity entity) {
         ReportSettingsDto dto = new ReportSettingsDto();
         dto.setId(entity.getId());
         dto.setValue(entity.getValue());

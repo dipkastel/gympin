@@ -1,14 +1,14 @@
 package com.notrika.gympin.framework.spring.aspect;
 
-import com.notrika.gympin.common._base.base.ResponseModel;
-import com.notrika.gympin.common.annotation.IgnoreWrapAspect;
-import com.notrika.gympin.common.context.GympinContext;
-import com.notrika.gympin.common.context.GympinContextHolder;
-import com.notrika.gympin.common.exception.Error;
-import com.notrika.gympin.common.exception.ExceptionBase;
-import com.notrika.gympin.common.user.dto.UserDetailsImpl;
-import com.notrika.gympin.persistence.dao.repository.ServiceExecutionRepository;
-import com.notrika.gympin.persistence.entity.security.service.ServiceExecutionEntity;
+import com.notrika.gympin.common.util._base.base.ResponseModel;
+import com.notrika.gympin.common.util.annotation.IgnoreWrapAspect;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
+import com.notrika.gympin.common.util.exception.Error;
+import com.notrika.gympin.common.util.exception.ExceptionBase;
+import com.notrika.gympin.common.user.user.dto.UserDetailsImpl;
+import com.notrika.gympin.persistence.dao.repository.settings.ManageServiceExecutionRepository;
+import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -29,8 +29,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import static com.notrika.gympin.common._base.base.ResponseModel.ERROR;
-import static com.notrika.gympin.common._base.base.ResponseModel.SUCCESS;
+import static com.notrika.gympin.common.util._base.base.ResponseModel.ERROR;
+import static com.notrika.gympin.common.util._base.base.ResponseModel.SUCCESS;
 
 //@Order(Integer.MAX_VALUE)
 @Aspect
@@ -39,7 +39,7 @@ import static com.notrika.gympin.common._base.base.ResponseModel.SUCCESS;
 public class ApiAspect {
 
     @Autowired
-    private ServiceExecutionRepository serviceExecutionRepository;
+    private ManageServiceExecutionRepository manageServiceExecutionRepository;
 
     @Around("execution(* com.notrika.gympin.controller.impl..*.*(..))")
     public Object process(ProceedingJoinPoint pjp) {
@@ -159,14 +159,14 @@ public class ApiAspect {
         }
         UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
 
-        ServiceExecutionEntity serviceExecution = new ServiceExecutionEntity();
+        ManageServiceExecutionEntity serviceExecution = new ManageServiceExecutionEntity();
         serviceExecution.setService(method.toGenericString());
         serviceExecution.setParamClass(joinPoint.getArgs()[0].getClass());
         serviceExecution.setParam(paramJson);
         serviceExecution.setDto(dtoJson);
         serviceExecution.setDtoClass(dtoClass);
         serviceExecution.setExecutorUser(user);
-        serviceExecutionRepository.add(serviceExecution);
+        manageServiceExecutionRepository.add(serviceExecution);
 
     }
 

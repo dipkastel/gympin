@@ -2,7 +2,7 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.place.option.dto.PlaceOptionDto;
 import com.notrika.gympin.common.place.option.dto.OptionOfPlaceDto;
-import com.notrika.gympin.persistence.entity.place.option.OptionOfPlaceEntity;
+import com.notrika.gympin.persistence.entity.place.option.PlaceOptionOfPlaceEntity;
 import com.notrika.gympin.persistence.entity.place.option.PlaceOptionEntity;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public final class OptionConvertor {
         return PlaceOptionEntity.builder().id(placeOption.getId()).createdDate(placeOption.getCreatedDate()).updatedDate(placeOption.getUpdatedDate()).deleted(placeOption.isDeleted()).name(placeOption.getName()).weight(placeOption.getWeight()).build();
     }
 
-    public static OptionOfPlaceDto optionOfPlaceToOptionOfPlaceDto(OptionOfPlaceEntity optionOfPlace) {
+    public static OptionOfPlaceDto optionOfPlaceToOptionOfPlaceDto(PlaceOptionOfPlaceEntity optionOfPlace) {
         return OptionOfPlaceDto.builder()
                 .id(optionOfPlace.getId())
                 .place(PlaceConvertor.toDto(optionOfPlace.getPlace()))
@@ -30,7 +30,7 @@ public final class OptionConvertor {
                 .build();
     }
 
-    public static List<OptionOfPlaceDto> optionsOfPlaceToOptionsOfPlaceDto(List<OptionOfPlaceEntity> placeOptions) {
+    public static List<OptionOfPlaceDto> optionsOfPlaceToOptionsOfPlaceDto(List<PlaceOptionOfPlaceEntity> placeOptions) {
         return placeOptions.stream().map(OptionConvertor::optionOfPlaceToOptionOfPlaceDto).collect(Collectors.toList());
     }
 }

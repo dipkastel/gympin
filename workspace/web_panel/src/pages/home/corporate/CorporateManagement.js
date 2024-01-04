@@ -13,6 +13,7 @@ import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {useHistory} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {toPriceWithComma} from "../../../helper";
 
 
 const CorporateManagement = () => {
@@ -147,6 +148,8 @@ const CorporateManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>Id</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}></TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>نام شرکت</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>شارژ شرکت</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>اعتبار پرسنل</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -162,6 +165,8 @@ const CorporateManagement = () => {
                                             <TableCell align="right">
                                                 <Avatar alt="corporate Logo" src={(row.Logo)?(row.Logo.Url||""):""}  sx={{width:40,height:40}} /></TableCell>
                                             <TableCell align="right">{row.Name||"ثبت نشده"}</TableCell>
+                                            <TableCell align="right">{toPriceWithComma(row.FinanceCorporate.TotalDeposit)}</TableCell>
+                                            <TableCell align="right">{toPriceWithComma(row.FinanceCorporate.TotalCredits)}</TableCell>
                                             <TableCell align="right">
                                                 <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
                                             </TableCell>

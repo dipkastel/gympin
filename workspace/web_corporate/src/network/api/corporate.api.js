@@ -21,15 +21,15 @@ export  function corporate_Update(data){
     return axios.put(Api_url.corporate.update,data)
 }
 
-export  function corporate_deleteCorporateCategory(data){
+export  function corporate_deleteCorporateGroup(data){
     return axios.put(Api_url.corporate.deleteCategory, null,{ params: data });
 }
 
-export  function corporate_addCorporateCategory(data){
+export  function corporate_addCorporateGroups(data){
     return axios.post(Api_url.corporate.addCategory,data)
 }
 
-export  function corporate_getCorporateCategories(data){
+export  function corporate_getCorporateGroups(data){
     return axios.get(Api_url.corporate.getCorproteCategories,{ params: data })
 }
 

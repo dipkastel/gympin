@@ -1,10 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody} from "../../../../partials/content/Portlet";
-import {Form} from "react-bootstrap";
-import {Button, Switch, TextField} from "@mui/material";
-import Select from "react-select";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {Place_addPlace, Place_getPlaceById, Place_updatePlace} from "../../../../../network/api/place.api";
+import {Place_getPlaceById, Place_updatePlace} from "../../../../../network/api/place.api";
 import __wizardRegister from "./base/__wizardRegister";
 import {useParams} from "react-router-dom";
 import {Location_query} from "../../../../../network/api/location.api";
@@ -26,14 +22,14 @@ const _wizardPlaceBase = ({allowNext}) => {
     }, []);
 
     useEffect(() => {
-        if(inPlace&&placeId==0){
-            window.location.href = "/place/wizard/"+inPlace.Id
+        if (inPlace && placeId == 0) {
+            window.location.href = "/place/wizard/" + inPlace.Id
         }
     }, [inPlace]);
 
     function checkAllowNext() {
-        if(inPlace)
-        allowNext(inPlace.Location&&inPlace.Address&&inPlace.CommissionFee&&inPlace.Latitude,inPlace.Longitude)
+        if (inPlace)
+            allowNext(inPlace.Location && inPlace.Address && inPlace.CommissionFee && inPlace.Latitude, inPlace.Longitude)
     }
 
     function updateInPlace() {
@@ -54,12 +50,12 @@ const _wizardPlaceBase = ({allowNext}) => {
     function getLocations() {
 
         Location_query({
-            queryType:"FILTER",
-            Type:"REGION",
-            paging:{Page:0,Size:1000}
+            queryType: "FILTER",
+            Type: "REGION",
+            paging: {Page: 0, Size: 1000}
         }).then(data => {
             SetLocations(data.data.Data.content);
-            if(placeId!=0)
+            if (placeId != 0)
                 getPlace(placeId);
         }).catch(e => {
             try {
@@ -70,8 +66,8 @@ const _wizardPlaceBase = ({allowNext}) => {
         });
     }
 
-    function getPlace(placeId){
-        Place_getPlaceById({id:placeId}).then(result=>{
+    function getPlace(placeId) {
+        Place_getPlaceById({id: placeId}).then(result => {
             SetInPlace(result.data.Data);
         }).catch(e => {
             try {
@@ -82,7 +78,8 @@ const _wizardPlaceBase = ({allowNext}) => {
         });
     }
 
-    return inPlace ? <__wizardBaseInfo inPlace={inPlace} setInPlace={SetInPlace} locations={locations} updateInPlace={updateInPlace} /> : <__wizardRegister setPlace={SetInPlace}  />;
+    return inPlace ? <__wizardBaseInfo inPlace={inPlace} setInPlace={SetInPlace} locations={locations}
+                                       updateInPlace={updateInPlace}/> : <__wizardRegister setPlace={SetInPlace}/>;
 
 };
 

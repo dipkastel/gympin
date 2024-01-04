@@ -1,7 +1,7 @@
 package com.notrika.gympin.persistence.entity.homePage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.gympin.homePage.enums.HomePageElementsEnum;
+import com.notrika.gympin.common.home.enums.HomePageElementsEnum;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Objects;
 
 @Getter

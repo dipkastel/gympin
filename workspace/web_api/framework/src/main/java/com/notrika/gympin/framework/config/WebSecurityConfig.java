@@ -1,6 +1,6 @@
 package com.notrika.gympin.framework.config;
 
-import com.notrika.gympin.common.user.service.AccountService;
+import com.notrika.gympin.common.user.user.service.AccountService;
 import com.notrika.gympin.framework.config.jwt.AuthEntryPointJwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -90,11 +90,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/place/getAll"
                         ,"/api/v1/place/getById"
                         ,"/api/v1/place/query"
-                        ,"/api/v1/plan/getPlansByPlace"
+                        ,"/api/v1/ticketSubscribe/getTicketSubscribesByPlace"
+                        ,"/api/v1/TicketSubscribe/getByPlace"
                         ,"/api/v1/placeAbout/getByPlaceId"
                         ,"/api/v1/OptionOfPlace/getByPlaceId"
                         ,"/api/v1/OptionOfPlace/getByPlaceId"
-                        ,"/api/v1/plan-gate-timing/getByPlan"
+                        ,"/api/v1/TicketSubscribeAction/getByTicketSubscribe"
                         ,"/api/v1/sport/query"
                         ,"/api/v1/article/query"
                         ,"/api/v1/article/getById"

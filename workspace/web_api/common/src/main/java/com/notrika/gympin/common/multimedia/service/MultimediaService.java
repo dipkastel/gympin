@@ -1,10 +1,7 @@
 package com.notrika.gympin.common.multimedia.service;
 
-import com.notrika.gympin.common._base.base.BaseService;
-import com.notrika.gympin.common._base.param.BasePagedParam;
-import com.notrika.gympin.common.gate.dto.GateDto;
-import com.notrika.gympin.common.gate.filter.GateFilter;
-import com.notrika.gympin.common.gate.param.GateParam;
+import com.notrika.gympin.common.util._base.base.BaseService;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;

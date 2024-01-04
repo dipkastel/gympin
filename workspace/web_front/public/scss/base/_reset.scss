@@ -66,5 +66,9 @@ p, li, span {
   color: #6B727E;
   margin-bottom: 0;
 }
+input::-webkit-inner-spin-button{
 
+  -webkit-appearance: none;
+  margin: 0;
+}
 /* reset css end */

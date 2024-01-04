@@ -59,8 +59,6 @@ function UserCorporates({ currentUser }) {
                         </TableBody>
                     </Table>
                 </PortletBody>
-
-                <PortletFooter></PortletFooter>
             </Portlet>
         </>
 

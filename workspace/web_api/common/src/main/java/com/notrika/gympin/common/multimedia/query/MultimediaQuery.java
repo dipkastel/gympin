@@ -1,8 +1,7 @@
 package com.notrika.gympin.common.multimedia.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common.location.enums.LocationType;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

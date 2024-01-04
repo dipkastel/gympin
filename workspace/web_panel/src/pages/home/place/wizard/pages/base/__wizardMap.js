@@ -4,6 +4,7 @@ import {Form} from "react-bootstrap";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {Button} from "@mui/material";
+import {Place} from "@mui/icons-material";
 
 let leaflet = null;
 const tehranCenterLat = 35.7019;
@@ -27,9 +28,12 @@ const __wizardMap = ({inPlace,setInPlace,updateInPlace}) => {
             addMarker(leaflet.getCenter());
         }
     }, [leaflet,markerLayer]);
+
+
     useEffect(()=>{
-        if(selectedLocation.lat!=tehranCenterLat)
-                    updateInPlace();
+        if(selectedLocation.lat!=tehranCenterLat){
+            updateInPlace();
+        }
     },[selectedLocation])
 
     function prepareOnClickMap() {

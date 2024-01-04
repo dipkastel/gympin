@@ -1,18 +1,19 @@
 package com.notrika.gympin.controller.impl.corporate;
 
-import com.notrika.gympin.common._base.param.BasePagedParam;
+import com.notrika.gympin.common.finance.transaction.dto.CorporateTransactionDto;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
+import com.notrika.gympin.common.finance.transaction.param.CorporateTransactionParam;
+import com.notrika.gympin.common.finance.transaction.param.FinanceCorporateParam;
+import com.notrika.gympin.common.finance.transaction.service.CorporateTransactionService;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.corporate.corporate.api.CorporateController;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
-import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCategoryDto;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCategoryParam;
-import com.notrika.gympin.common.transaction.dto.TransactionDto;
+import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelGroupDto;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelGroupParam;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateLogoParam;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
-import com.notrika.gympin.common.transaction.param.TransactionParam;
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
 import com.notrika.gympin.common.corporate.corporate.service.CorporateService;
-import com.notrika.gympin.common.transaction.service.TransactionService;
-import com.notrika.gympin.common.user.param.UserParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class CorporateControllerImpl implements CorporateController {
     @Autowired
     private CorporateService corporateService;
     @Autowired
-    private TransactionService TransactionService;
+    private CorporateTransactionService corporateTransactionService;
 
     @Override
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
@@ -70,6 +71,13 @@ public class CorporateControllerImpl implements CorporateController {
     }
 
     @Override
+    @PutMapping("updateStepPayment")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<CorporateDto> updateStepPayment(CorporateParam param) {
+        return ResponseEntity.ok(corporateService.updateStepPayment(param));
+    }
+
+    @Override
     @PutMapping("updateLogo")
     public ResponseEntity<CorporateDto> updateLogo(CorporateLogoParam param) {
         return ResponseEntity.ok(corporateService.updateLogo(param));
@@ -77,32 +85,33 @@ public class CorporateControllerImpl implements CorporateController {
 
     @Override
     @GetMapping("getTransactions")
-    public ResponseEntity<List<TransactionDto>> getTransactions(TransactionParam param) {
-        return ResponseEntity.ok(TransactionService.getByCorporate(param.getCorporateId()));
+    public ResponseEntity<List<CorporateTransactionDto>> getTransactions(CorporateTransactionParam param) {
+        return ResponseEntity.ok(corporateTransactionService.getByCorporate(param.getCorporateId()));
+    }
+
+
+    @Override
+    @GetMapping("getCorporateGroups")
+    public ResponseEntity<List<CorporatePersonnelGroupDto>> getCorporateGroups(CorporateParam corporateParam) {
+        return ResponseEntity.ok(corporateService.getCorporateGroups(corporateParam));
     }
 
     @Override
-    @GetMapping("getTotalDeposit")
-    public ResponseEntity<BigDecimal> getTotalDeposit(TransactionParam param) {
-        return ResponseEntity.ok(corporateService.getById(param.getCorporateId()).getBalance());
+    @GetMapping("getFinanceCorporate")
+    public ResponseEntity<FinanceCorporateDto> getFinanceCorporate(FinanceCorporateParam param) {
+        return ResponseEntity.ok(corporateService.getFinanceCorporate(param));
     }
 
     @Override
-    @GetMapping("getCorporateCategories")
-    public ResponseEntity<List<CorporatePersonnelCategoryDto>> getCorporateCategories(CorporateParam corporateParam) {
-        return ResponseEntity.ok(corporateService.getCorporateCategories(corporateParam));
+    @PostMapping("addGroup")
+    public ResponseEntity<CorporatePersonnelGroupDto> addCorporateGroup(@RequestBody CorporatePersonnelGroupParam param) {
+        return ResponseEntity.ok(corporateService.addGroup(param));
     }
 
     @Override
-    @PostMapping("addCategory")
-    public ResponseEntity<CorporatePersonnelCategoryDto> addCorporateCategory(CorporatePersonnelCategoryParam param) {
-        return ResponseEntity.ok(corporateService.addCategory(param));
-    }
-
-    @Override
-    @PutMapping("deleteCategory")
-    public ResponseEntity<CorporatePersonnelCategoryDto> deleteCorporateCategory(CorporatePersonnelCategoryParam param) {
-        return ResponseEntity.ok(corporateService.deleteCategory(param));
+    @PutMapping("deleteGroup")
+    public ResponseEntity<CorporatePersonnelGroupDto> deleteCorporateGroup(@RequestBody CorporatePersonnelGroupParam param) {
+        return ResponseEntity.ok(corporateService.deleteGroup(param));
     }
 
 }

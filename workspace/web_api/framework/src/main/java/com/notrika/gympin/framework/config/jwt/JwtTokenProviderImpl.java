@@ -1,12 +1,12 @@
 package com.notrika.gympin.framework.config.jwt;
 
-import com.notrika.gympin.common.exception.Error;
-import com.notrika.gympin.common.exception.ExceptionBase;
-import com.notrika.gympin.common.user.dto.RefreshTokenDto;
-import com.notrika.gympin.common.user.enums.TokenType;
-import com.notrika.gympin.common.user.service.JwtTokenProvider;
+import com.notrika.gympin.common.util.exception.Error;
+import com.notrika.gympin.common.util.exception.ExceptionBase;
+import com.notrika.gympin.common.user.user.dto.RefreshTokenDto;
+import com.notrika.gympin.common.user.user.enums.TokenType;
+import com.notrika.gympin.common.user.user.service.JwtTokenProvider;
 import com.notrika.gympin.domain.user.UserServiceImpl;
-import com.notrika.gympin.persistence.dao.repository.UserTokenRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserTokenRepository;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserTokenEntity;
 import io.jsonwebtoken.Claims;

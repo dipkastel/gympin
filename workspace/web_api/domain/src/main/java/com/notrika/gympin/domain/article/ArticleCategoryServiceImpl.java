@@ -1,12 +1,12 @@
 package com.notrika.gympin.domain.article;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.article.dto.ArticleCategoryDto;
 import com.notrika.gympin.common.article.param.ArticleCategoryParam;
 import com.notrika.gympin.common.article.service.ArticleCategoryService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.ArticleConvertor;
-import com.notrika.gympin.persistence.dao.repository.ArticleCategoryRepository;
+import com.notrika.gympin.persistence.dao.repository.article.ArticleCategoryRepository;
 import com.notrika.gympin.persistence.entity.article.ArticleCategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -1,10 +1,9 @@
 package com.notrika.gympin.common.article.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common._base.param.BaseParam;
+import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.article.enums.ArticleStatus;
 import com.notrika.gympin.common.article.enums.ArticleType;
-import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -36,7 +35,7 @@ public class ArticleParam extends BaseParam<ArticleParam> {
     private ArticleType articleType;
 
     @JsonProperty("Categories")
-    private List<ArticleCategoryParam> Categories;
+    private List<ArticleCategoryParam> categories;
 
 
 

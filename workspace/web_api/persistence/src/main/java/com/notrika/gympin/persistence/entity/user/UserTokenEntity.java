@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.user;
 
-import com.notrika.gympin.common.user.enums.TokenStatus;
+import com.notrika.gympin.common.user.user.enums.TokenStatus;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +27,7 @@ public class UserTokenEntity extends BaseEntity<UserTokenEntity> {
     private TokenStatus tokenStatus = TokenStatus.ACTIVE;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "TokenUserId")
     private UserEntity user;
 
     @Column(updatable = false)

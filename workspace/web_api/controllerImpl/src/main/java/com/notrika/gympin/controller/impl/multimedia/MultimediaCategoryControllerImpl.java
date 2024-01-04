@@ -1,7 +1,7 @@
 package com.notrika.gympin.controller.impl.multimedia;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
-import com.notrika.gympin.common._base.param.BasePagedParam;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.multimedia.api.MultimediaCategoryController;
 import com.notrika.gympin.common.multimedia.dto.MultimediaCategoryDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaCategoryParam;
@@ -25,20 +25,17 @@ public class MultimediaCategoryControllerImpl implements MultimediaCategoryContr
     private MultimediaCategoryService multimediaCategoryService;
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
-    public ResponseEntity<MultimediaCategoryDto> add(@RequestBody MultimediaCategoryParam param) {
+    public ResponseEntity<MultimediaCategoryDto> add( MultimediaCategoryParam param) {
         return new ResponseEntity<>(multimediaCategoryService.add(param), HttpStatus.OK);
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
-    public ResponseEntity<MultimediaCategoryDto> update(@RequestBody MultimediaCategoryParam param) {
+    public ResponseEntity<MultimediaCategoryDto> update( MultimediaCategoryParam param) {
         return new ResponseEntity<>(multimediaCategoryService.update(param), HttpStatus.OK);
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET', 'CONTENT', 'MANAGER', 'COACH', 'ATHLETE', 'USER')")
-    public ResponseEntity<MultimediaCategoryDto> delete(@RequestBody MultimediaCategoryParam param) {
+    public ResponseEntity<MultimediaCategoryDto> delete( MultimediaCategoryParam param) {
         return new ResponseEntity<>(multimediaCategoryService.delete(param), HttpStatus.OK);
     }
 

@@ -13,12 +13,16 @@ import "leaflet/dist/leaflet.css";
 import {user_query} from "../../../network/api/user.api";
 import {Form, Modal} from "react-bootstrap";
 import {Avatar, Button, Chip, TextField} from "@mui/material";
-import {account_registerUser} from "../../../network/api/auth.api";
+import {account_registerByInviteCode} from "../../../network/api/auth.api";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {useSelector} from "react-redux";
+import {getUserFixedName} from "../../../helper";
+import {genders} from "../../../helper/enums/genders";
 
 const UserManagement = () => {
     const error = useContext(ErrorContext);
+    const user = useSelector(state => state.auth.user);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [userList, setUserList] = useState([]);
@@ -40,6 +44,7 @@ const UserManagement = () => {
             }
         }).then((data) => {
             setUserList(data.data.Data);
+            console.log(data.data.Data);
         })
             .catch(e => {
                 try {
@@ -51,9 +56,12 @@ const UserManagement = () => {
     }, [page, rowsPerPage, searchString]);
 
     function RenderModalAdd() {
-        function addPlace(e) {
+        function addUser(e) {
             e.preventDefault()
-            account_registerUser({PhoneNumber: e.target.formPhoneNumber.value})
+            account_registerByInviteCode({
+                PhoneNumber: e.target.formPhoneNumber.value,
+                invitedBy: "GLL1" + user.Id + "LL"
+            })
                 .then((data) => {
                     error.showError({message: "عملیات موفق",});
                     history.push({
@@ -72,7 +80,7 @@ const UserManagement = () => {
         return (
             <>
                 <Modal show={openModalAdd} onHide={() => SetOpenModalAdd(false)}>
-                    <Form noValidate autoComplete="off" onSubmit={(e) => addPlace(e)}>
+                    <Form noValidate autoComplete="off" onSubmit={(e) => addUser(e)}>
                         <Modal.Header closeButton>
                             <Modal.Title>{"افزودن کاربر "}</Modal.Title>
                         </Modal.Header>
@@ -154,10 +162,12 @@ const UserManagement = () => {
                                 <TableRow>
                                     <TableCell align="right" padding="normal" sortDirection={false}>Id</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}/>
-                                    <TableCell align="right" padding="normal" sortDirection={false}>نام
-                                        کاربری</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>نام کاربری</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>جنسیت</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>تلفن</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>تاریخ تولد</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>دسترسی</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>کد ملی</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>گروه</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
                                 </TableRow>
@@ -172,14 +182,19 @@ const UserManagement = () => {
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">
-                                                <Avatar alt="userImage" src={(row.Avatar)?(row.Avatar.Url||""):""}  sx={{width:40,height:40}} /></TableCell>
-                                            <TableCell align="right">{row.Username}</TableCell>
+                                                <Avatar alt="userImage" src={(row.Avatar) ? (row.Avatar.Url || "") : ""}
+                                                        sx={{width: 40, height: 40}}/></TableCell>
+                                            <TableCell align="right">{row.FullName?getUserFixedName(row):<Chip label={row.Username} color={"error"}/>}</TableCell>
+                                            <TableCell align="right">{row.Gender?genders[row.Gender]:<Chip label={"ثبت نشده"} color={"error"}/>}</TableCell>
                                             <TableCell align="right">{row.PhoneNumber}</TableCell>
+                                            <TableCell align="right">{row.Birthday?new Date(row.Birthday).toLocaleDateString('fa-IR', {month: 'long', day: 'numeric'}):<Chip label={"ثبت نشده"} color={"error"}/>}</TableCell>
                                             <TableCell align="right">{row.UserRole.Role}</TableCell>
+                                            <TableCell align="right">{row.NationalCode?row.NationalCode:<Chip label={"ثبت نشده"} color={"error"}/>}</TableCell>
                                             <TableCell align="right">{row.UserGroup}</TableCell>
                                             <TableCell align="right">
 
-                                                <Chip label={row.UserStatus} color={(row.UserStatus.startsWith("ENABLED"))?"success":"error"} />
+                                                <Chip label={row.UserStatus}
+                                                      color={(row.UserStatus.startsWith("ENABLED")) ? "success" : "error"}/>
                                             </TableCell>
                                         </TableRow>
                                     );

@@ -1,13 +1,15 @@
 package com.notrika.gympin.domain.place;
 
-import com.notrika.gympin.common._base.query.BaseQuery;
 import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
 import com.notrika.gympin.common.place.about.param.PlaceAboutParam;
 import com.notrika.gympin.common.place.about.service.PlaceAboutService;
+import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.util._base.param.BaseParam;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
-import com.notrika.gympin.persistence.dao.repository.PlaceAboutRepository;
-import com.notrika.gympin.persistence.dao.repository.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceAboutRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import lombok.NonNull;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,7 +64,7 @@ public class PlaceAboutServiceImpl extends AbstractBaseService<PlaceAboutParam, 
     @Override
     public PlaceAboutDto delete(@NonNull PlaceAboutParam Param) {
         PlaceAboutEntity init = getEntityById(Param.getId());
-        return  PlaceConvertor.AboutToDto(placeAboutRepository.deleteById2(init));
+        return PlaceConvertor.AboutToDto(placeAboutRepository.deleteById2(init));
     }
 
     @Override
@@ -119,5 +122,15 @@ public class PlaceAboutServiceImpl extends AbstractBaseService<PlaceAboutParam, 
     @Override
     public List<PlaceAboutDto> getByPlaceId(Long id) {
         return placeAboutRepository.findByPlaceId(id).stream().map(PlaceConvertor::AboutToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PlaceAboutDto> getAllAboutByPlaces(List<PlaceParam> params) {
+        List<PlaceAboutEntity> placeAboutes = new ArrayList<>();
+        for (Long id : params.stream().map(BaseParam::getId).collect(Collectors.toList())) {
+            if (placeAboutes.stream().noneMatch(pa-> pa.getPlace().getId().equals(id)))
+                placeAboutes.addAll(placeAboutRepository.findByPlaceId(id));
+        }
+        return placeAboutes.stream().map(PlaceConvertor::AboutToDto).collect(Collectors.toList());
     }
 }

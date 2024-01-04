@@ -12,35 +12,42 @@ import {
     Pagination
 } from "@mui/material";
 import {ControlPoint, RemoveCircleOutline} from '@mui/icons-material';
-import {transaction_query} from "../../network/api/transaction.api";
+import {transaction_query, transactionUser_query} from "../../network/api/transaction.api";
 import {toPriceWithComma} from "../../helper/utils";
 import {TransactionTypes} from "../../helper/enums/TransactionTypes";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+import RemoveDoneIcon from '@mui/icons-material/RemoveDone';
+import {useSelector} from "react-redux";
 
 const _transactions = ({place}) => {
 
     const error = useContext(ErrorContext);
+    const currentUser = useSelector(({auth}) => auth.user);
     const [transactions,SetTransactions] = useState([])
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(() => {
-        getPlaceTransactions()
+        getUserTransactions()
     }, [page]);
 
     if(!place)
         return (<></>);
+    if(!currentUser)
+        return (<></>);
 
-    function getPlaceTransactions() {
+    function getUserTransactions() {
 
-        if(!place) return;
-        transaction_query({
+        if(!currentUser?.FinanceUser?.Id) return;
+
+        transactionUser_query({
             queryType: "FILTER",
-            TransactionType:"PLACE_TICKET_SETTLEMENT",
-            PlaceId:place.Id,
+            FinanceUserId:currentUser.FinanceUser.Id,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             SetTransactions(data.data.Data)
+            console.log(data.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -60,11 +67,15 @@ const _transactions = ({place}) => {
                             <ListItem disablePadding key={Num} sx={{direction:"rtl",textAlign:"right"}}>
                                 <ListItemText >
                                     <ListItemText primary={toPriceWithComma(item.Amount)+" تومان"} secondary={TransactionTypes[item.TransactionType]}/>
-                                    <ListItemText secondary={"مانده اعتبار : "+ item.Balance}/>
-                                    <ListItemText secondary={"سریال : "+ item.Serial}/>
+                                    <ListItemText secondary={"اعتبار قبل از تراکنش : "+ toPriceWithComma(item.LatestBalance)}/>
+                                    <ListItemText secondary={"سریال : "+ item.Serial.Serial}/>
                                 </ListItemText>
                                     <ListItemIcon sx={{minWidth:"auto"}} >
                                         {(item.Amount>0)?<ControlPoint color={"success"}/>:<RemoveCircleOutline color={"error"}/>}
+                                    </ListItemIcon>
+                                    <ListItemIcon sx={{minWidth:"auto"}} >
+                                        {(item.TransactionStatus=="COMPLETE")&&<DoneAllIcon color={"success"}/>}
+                                        {(item.TransactionStatus=="CANCEL")&&<RemoveDoneIcon color={"error"}/>}
                                     </ListItemIcon>
                             </ListItem>
                             <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>

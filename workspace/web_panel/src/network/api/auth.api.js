@@ -12,6 +12,9 @@ export function account_sendSms(userdata) {
 export function account_registerUser(userdata) {
   return axios.post(AuthApi.register, userdata);
 }
+export function account_registerByInviteCode(userdata) {
+  return axios.post(AuthApi.registerByInviteCode, userdata);
+}
 
 export function refreshToken(refreshToken) {
   return axios.post(AuthApi.REFRESH_TOKEN, {RefreshToken:refreshToken});
