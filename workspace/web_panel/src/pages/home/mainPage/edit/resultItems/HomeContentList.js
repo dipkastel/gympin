@@ -20,7 +20,7 @@ const HomeContentList = (props) => {
     return (
         <>
             <Slick {...settings}>
-                {props.item.Items && props.item.Items.map((item, index) => (
+                {props?.item?.Items && props?.item?.Items?.map((item, index) => (
                     <div key={index}>
                         <Link href={"/" + item.Destination} underline="none" color="inherit" fontWeight="800">
                             <Card sx={{margin: 1}} elevation={3}>
@@ -28,7 +28,7 @@ const HomeContentList = (props) => {
                                 <CardMedia
                                     component="img"
                                     height="194"
-                                    image={item.multimedia.Url}
+                                    image={item?.multimedia?.Url}
                                     alt={item.Title}
                                 />
 
@@ -46,7 +46,7 @@ const HomeContentList = (props) => {
                     </div>
                 ))}
             </Slick>
-            {!props.item.Items && <h5>لطفا به این لیست آیتم مطلب اضافه کنید</h5>}
+            {!props?.item?.Items && <h5>لطفا به این لیست آیتم مطلب اضافه کنید</h5>}
         </>
     );
 };

@@ -20,7 +20,7 @@ const HomeUserList = (props) => {
     return (
         <>
             <Slick {...settings}>
-                {props.item.Items&&props.item.Items.map((item, index) => (
+                {props?.item?.Items&&props?.item?.Items?.map((item, index) => (
                     <div key={index} >
                         <Link href={"/users/singleuser?id=1"} underline="none">
                             <Card sx={{
@@ -28,18 +28,18 @@ const HomeUserList = (props) => {
                                 marginY:1
 
                             }} elevation={3}>
-                                <Image  height={"100%"} width={"100%"}  src={item.multimedia?.Url}/>
+                                <Image  height={"100%"} width={"100%"}  src={item?.multimedia?.Url}/>
                                 <Typography width={"100%"} variant="overline"noWrap={true} textAlign={"center"} fontSize={"0.5em"} component="div" sx={{
                                     marginY:0.1
                                 }}>
-                                    {item.Title}
+                                    {item?.Title}
                                 </Typography>
                             </Card>
                         </Link>
                     </div>
                 ))}
             </Slick>
-            {!props.item.Items&&<h5>لطفا آیتم کاربر به این لیست اضافه کنید</h5>}
+            {!props?.item?.Items&&<h5>لطفا آیتم کاربر به این لیست اضافه کنید</h5>}
         </>
     );
 };

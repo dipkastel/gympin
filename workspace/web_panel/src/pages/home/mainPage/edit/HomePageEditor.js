@@ -35,7 +35,6 @@ const HomePageEditor = ({homeitems, setRenderId, renderId}) => {
     const [itemToEdit, setItemToEdit] = useState(null);
     const [elements, setElements] = useState(null);
     const [destinations, setDestinations] = useState(null);
-
     useEffect(() => {
         getTypes();
         getDestinations();

@@ -9,7 +9,7 @@ const HomeClickableBanner =(props) => {
         <div>
                 <Link href={"/"+props.item.Destination} underline="none" color="inherit" fontWeight="800">
                     <Box>
-                        <Image width={"100%"}  src={props.item.multimedia.Url}/>
+                        <Image width={"100%"}  src={props?.item?.multimedia?.Url}/>
                     </Box>
                 </Link>
         </div>

@@ -15,7 +15,7 @@
 
 # USER
     INSERT INTO finance_user(id,total_deposit) VALUES (1,0);
-    INSERT INTO USER (id,phone_number,username,user_role,user_group,user_status,finance_user_id) VALUES (1,'09126540027','ADMINISTRATOR','SUPER_ADMIN','ADMINISTRATION','ENABLED',1);
+    INSERT INTO user (id,phone_number,username,user_role,user_group,user_status,finance_user_id) VALUES (1,'09126540027','ADMINISTRATOR','SUPER_ADMIN','ADMINISTRATION','ENABLED',1);
 
     INSERT INTO user_activation_code (id,phone_number,code,sender_id,user_id,is_deleted,expired_date) VALUES (1,'09126540027','$2a$10$5Va1z26qaCFwom2IAxbgYOavTPP4Q0DS8g17k0iOn8R1w0vII5wnq','0',1,0,CURRENT_TIMESTAMP());
 

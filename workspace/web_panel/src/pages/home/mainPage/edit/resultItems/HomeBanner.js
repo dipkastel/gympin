@@ -8,7 +8,7 @@ const HomeBanner =(props) => {
 
         <div>
                 <Box>
-                    <Image width={"100%"}  src={props.item.multimedia.Url}/>
+                    <Image width={"100%"}  src={props?.item?.multimedia?.Url}/>
                 </Box>
         </div>
     );

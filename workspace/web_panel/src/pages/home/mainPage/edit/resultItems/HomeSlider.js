@@ -21,16 +21,16 @@ const HomeSlider = (props) => {
 
     return (
             <Slick {...settings}>
-                {props.item.Items&&props.item.Items.map((singleItem, index) => (
+                {props?.item?.Items&&props?.item?.Items?.map((singleItem, index) => (
                     <div className={"slider-item"} key={index} >
-                        <Link href={singleItem.Data} underline="none" color="inherit" fontWeight="800">
+                        <Link href={singleItem?.Data} underline="none" color="inherit" fontWeight="800">
                             <Box>
-                                <Image  height={"50%"} width={"100%"}  src={singleItem.multimedia.Url}/>
+                                <Image  height={"50%"} width={"100%"}  src={singleItem?.multimedia?.Url}/>
                             </Box>
                         </Link>
                     </div>
                 ))}
-                {!props.item.Items&&
+                {!props?.item?.Items&&
                     <h5>لطفا به اسلایدر اسلاید اضافه نمایید.</h5>
                 }
             </Slick>

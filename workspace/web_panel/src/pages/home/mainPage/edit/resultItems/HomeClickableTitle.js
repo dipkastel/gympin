@@ -10,7 +10,7 @@ const HomeClickableTitle = (prop) => {
             color:"#ffffff"
         }}>
             <Row>
-                <Link href={"/"+prop.item.Destination} underline="none" color="inherit" fontWeight="800">
+                <Link href={"/"+prop?.item?.Destination} underline="none" color="inherit" fontWeight="800">
                     <Col className={"p-1 pb-2"} >
                         {data.Title}
                     </Col>
