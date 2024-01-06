@@ -27,7 +27,7 @@ export default function ApplicationRoutes() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
 
-                <Route path="/places" element={<Places/>}/>
+                <Route path="/places" element={isAuthorized?<Places/>: <AuthRoutes/>}/>
                 <Route path="/place/:placeId" element={<Place/>}/>
 
                 <Route path="/profile/survey" element={isAuthorized?<Survey/>: <AuthRoutes/>}/>
