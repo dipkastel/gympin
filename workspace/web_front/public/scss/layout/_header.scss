@@ -3,7 +3,7 @@
     &__top {
         background: $grey;
         padding: 0px 105px;
-        @include respond(laptop) { 
+        @include respond(laptop) {
             padding: 0px 40px;
         }
         @media (max-width: 1300px) {
@@ -63,10 +63,10 @@
             }
         }
     }
-    
+
     &__bottom {
         padding: 0px 105px;
-        @include respond(laptop) { 
+        @include respond(laptop) {
             padding: 0px 40px;
         }
         @media (max-width: 1300px) {

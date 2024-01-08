@@ -6,7 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import {Button, Chip, Collapse, Paper, TableCell} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
-import {placeOption_add, placeOption_delete, placeOption_getAll} from "../../../../../network/api/placeOptions.api";
+import {placeOption_getAll} from "../../../../../network/api/placeOptions.api";
 import {
     optionOfPlace_add,
     optionOfPlace_delete,
@@ -15,7 +15,6 @@ import {
 import {Form, Modal} from "react-bootstrap";
 import Select from "react-select";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {ExpandMore} from "@mui/icons-material";
 
 const OptionOfPlace = ({place}) => {
     const error = useContext(ErrorContext);
@@ -30,7 +29,7 @@ const OptionOfPlace = ({place}) => {
 
   function getAllOptions(){
 
-      placeOption_getAll()
+      placeOption_getAll({size:100})
           .then(data=>{
               SetAllOptions(data.data.Data);
           }).catch(e => {

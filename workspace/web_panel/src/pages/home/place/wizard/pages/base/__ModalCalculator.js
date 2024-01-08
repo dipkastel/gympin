@@ -28,7 +28,7 @@ const __ModalCalculator = ({inPlace,setInPlace,openModalCalculator,setOpenModalC
         getAllOptions();
     }, []);
     function getAllOptions(){
-        placeOption_getAll().then(data => {
+        placeOption_getAll({size:100}).then(data => {
             setAllOptions(data.data.Data)
         }).catch(e => {
             try {

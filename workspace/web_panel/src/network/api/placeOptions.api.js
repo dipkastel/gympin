@@ -7,8 +7,8 @@ export function placeOption_add(data) {
 export function placeOption_delete(data) {
   return axios.put(PlaceOptionApi.delete,  data );
 }
-export function placeOption_getAll() {
-  return axios.get(PlaceOptionApi.getAll);
+export function placeOption_getAll(data) {
+  return axios.get(PlaceOptionApi.getAll,{params:data});
 }
 
 export function placeOption_query(data) {

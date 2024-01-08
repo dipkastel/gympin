@@ -9913,14 +9913,13 @@ h6, .h6 {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between; }
   @media (max-width: 1199px) {
     .navarea {
       flex-wrap: nowrap; } }
   @media (max-width: 991px) {
     .navarea {
-      display: block;
       flex-wrap: nowrap; } }
   .navarea .mean-container a.meanmenu-reveal {
     margin-top: -49px;

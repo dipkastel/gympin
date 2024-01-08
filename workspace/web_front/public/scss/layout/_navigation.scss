@@ -1,13 +1,12 @@
 /* Navigation css */
 .navarea {
     @include d-flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     @include respond(lg) {
         flex-wrap: nowrap;
     }
     @include respond(md) {
-        display: block;
         flex-wrap: nowrap;
     }
     .mean-container {
@@ -37,7 +36,7 @@
 
 .mainmenu {
     padding-left: 83px;
-    @media (max-width: 1530px) { 
+    @media (max-width: 1530px) {
         padding-left: 50px;
     }
     @media (max-width: 1295px) {
@@ -120,7 +119,7 @@
         }
     }
     &__2 {
-        @media (max-width: 1690px) { 
+        @media (max-width: 1690px) {
             padding-left: 60px;
         }
         @media (max-width: 1380px) {
@@ -132,7 +131,7 @@
         ul {
             li {
                 a {
-                    @media (max-width: 1690px) { 
+                    @media (max-width: 1690px) {
                         padding: 32px 20px;
                     }
                     @media (max-width: 1380px) {
