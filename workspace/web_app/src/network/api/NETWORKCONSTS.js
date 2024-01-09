@@ -1,9 +1,9 @@
 import {PlaceAbout_getAllByPlaces} from "./placeAbout.api";
 
 export let AuthApi = {
-    // BASEURL: "http://localhost:8080/api/",
+    BASEURL: "http://localhost:8080/api/",
     // BASEURL: "http://192.168.0.117:8080/api/",
-     BASEURL: "https://api.gympin.ir/",
+    //  BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {

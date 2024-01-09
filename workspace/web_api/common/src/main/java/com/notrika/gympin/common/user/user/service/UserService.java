@@ -1,14 +1,14 @@
 package com.notrika.gympin.common.user.user.service;
 
-import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
-import com.notrika.gympin.common.finance.transaction.param.FinanceUserParam;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
-import com.notrika.gympin.common.user.user.param.*;
-import com.notrika.gympin.common.util._base.query.BaseQuery;
-import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
+import com.notrika.gympin.common.user.user.param.UserAvatarParam;
+import com.notrika.gympin.common.user.user.param.UserParam;
+import com.notrika.gympin.common.user.user.param.UserRoleUpdateParam;
+import com.notrika.gympin.common.user.user.param.UserStatusParam;
 import com.notrika.gympin.common.user.user.query.UserQuery;
+import com.notrika.gympin.common.util._base.base.BaseService;
 
 import java.util.List;
 
@@ -18,13 +18,9 @@ public interface UserService extends BaseService<UserParam, UserDto, UserQuery> 
 
     UserDto getUserByUsername(UserParam userParam);
 
-    UserDto getUserDtoByAnyKey(UserParam userParam);
-
     List<UserRoleInfoDto> getAllRules();
 
     UserDto UpdateUserRole(UserRoleUpdateParam userParam);
-
-    Long getCount(BaseQuery<?> filter);
 
     UserDto updateUserAvatar(UserAvatarParam userParam);
 
@@ -33,6 +29,7 @@ public interface UserService extends BaseService<UserParam, UserDto, UserQuery> 
     UserDto getMyInfo();
 
     UserCreditDto getCreditsByUser(UserParam userParam);
+
     UserCreditDto getMyCredits();
 
 }

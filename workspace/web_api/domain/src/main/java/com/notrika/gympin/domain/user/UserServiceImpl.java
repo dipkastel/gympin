@@ -67,9 +67,6 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Autowired
     private FollowServiceImpl followService;
 
-    @Autowired
-    private FinanceIncreaseUserDepositRepository financeIncreaseUserDepositRepository;
-
 
 
     //base
@@ -191,11 +188,6 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         return userRepository.findById(id).stream().findFirst().get();
     }
 
-
-    public List<UserEntity> getOwnersPlace(PlaceEntity place) {
-        return userRepository.getOwnersPlace(place);
-    }
-
     public UserEntity getByPhoneNumberAndUsernameAndEmail(String phoneNumber, String username, String email) {
         return userRepository.findByPhoneNumberAndUsernameAndEmail(phoneNumber, username, email);
     }
@@ -230,11 +222,6 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     }
 
     @Override
-    public UserDto getUserDtoByAnyKey(@NonNull UserParam userParam) {
-        return UserConvertor.toDtoComplete(getUserByAnyKey(userParam));
-    }
-
-    @Override
     public UserDto UpdateUserRole(UserRoleUpdateParam userRoleUpdateParam) {
         UserEntity user = getEntityById(userRoleUpdateParam.getUserId());
         user.setUserRole(userRoleUpdateParam.getRole());
@@ -245,40 +232,6 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     public List<UserRoleInfoDto> getAllRules() {
         return Arrays.stream(UserRole.values()).map(UserRoleConvertor::ToUserRoleInfoDto).collect(Collectors.toList());
     }
-
-    @Override
-    public Long getCount(BaseQuery<?> filter) {
-        return userRepository.findFilterdCount(filter);
-    }
-
-    public UserEntity getUserByAnyKey(@NonNull UserParam userParam) {
-        userParam = GeneralHelper.requireNonNull(userParam, "userParam");
-        String phoneNumber = userParam.getPhoneNumber();
-        String username = userParam.getUsername();
-        String email = userParam.getEmail();
-        return getUserByAnyKey(phoneNumber, username, email);
-    }
-
-    public UserEntity getUserByAnyKey(String phoneNumber, String username, String email) {
-        UserEntity user = null;
-        if (StringUtils.hasText(phoneNumber) && StringUtils.hasText(username) && StringUtils.hasText(email)) {
-            user = this.getByPhoneNumberAndUsernameAndEmail(phoneNumber, username, email);
-        } else if (StringUtils.hasText(phoneNumber) && StringUtils.hasText(username)) {
-            user = this.getByPhoneNumberAndUsername(phoneNumber, username);
-        } else if (StringUtils.hasText(phoneNumber) && StringUtils.hasText(email)) {
-            user = this.getByPhoneNumberAndEmail(phoneNumber, email);
-        } else if (StringUtils.hasText(username) && StringUtils.hasText(email)) {
-            user = this.getByUsernameAndEmail(username, email);
-        } else if (StringUtils.hasText(phoneNumber)) {
-            user = this.getByPhoneNumber(phoneNumber);
-        } else if (StringUtils.hasText(username)) {
-            user = this.getByUsername(username);
-        } else if (StringUtils.hasText(email)) {
-            user = this.getByEmail(email);
-        }
-        return user;
-    }
-
     //status
 
     @Override
