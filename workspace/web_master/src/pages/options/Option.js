@@ -21,7 +21,7 @@ const Option = () => {
     const [itemToProgress,SetItemToProgress] = useState(null);
 
     useEffect(() => {
-        placeOption_getAll().then(result => {
+        placeOption_getAll({size:100}).then(result => {
             SetOptions(result.data.Data)
         }).catch(e => {
             try {

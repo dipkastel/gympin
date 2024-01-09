@@ -12,6 +12,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import '../public/css/bootstrap.rtl.css'
 import '../public/fonts/iransansweb/style.css'
+import Footer from "../layouts/Footer";
 
 function MyApp({ Component, pageProps }) {
   const [activePreLoader, setActivePreLoader] = useState(true);
@@ -53,6 +54,14 @@ function MyApp({ Component, pageProps }) {
       setActivePreLoader(false);
     }, 3000);
   }, [activePreLoader]);
+
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || [];
+    gtag('js', new Date());
+    gtag('config', 'G-KP10SXZPY7');
+    console.log(window.dataLayer);
+  }, []);
+  function gtag(){dataLayer.push(arguments);}
   return (
     <Fragment>
       <Head>
@@ -64,14 +73,14 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
         <link rel="icon" href="images/logo/favicon.ico" />
         <script src="https://www.google.com/recaptcha/api.js"></script>
-
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-KP10SXZPY7"></script>
       </Head>
       {activePreLoader && <Preloader />}
       <GoogleReCaptchaProvider reCaptchaKey="6LdJ3t8lAAAAACj5ztepkxe1UhNFavRqVCFYYViE" >
         <Component {...pageProps} />
       </GoogleReCaptchaProvider>
-
     </Fragment>
+
   )
 }
 
