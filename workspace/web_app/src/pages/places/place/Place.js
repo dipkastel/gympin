@@ -32,9 +32,9 @@ const Place = () => {
             {place.Multimedias && <div className={"col-sm-12 col-md-6 p-0"}>
                 <_PlaceImages place={place}/>
             </div>}
-            <div className={"col-sm-12 col-md-6 p-0"}>
+            {place && <div className={"col-sm-12 col-md-6 p-0"}>
                 <_TabsPlace place={place}/>
-            </div>
+            </div>}
         </div>
     );
 };

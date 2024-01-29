@@ -31,6 +31,7 @@
         @include respond(lg) {
             @include flexWidth(19%);
         }
+        margin: 8px;
     }
 }
 
@@ -50,13 +51,14 @@
     ul {
         @include d-flex;
         flex-direction: row-reverse;
+        margin-bottom: 0;
         li {
             position: relative;
             a {
                 font-weight: 500;
                 color: $primary-color;
                 display: block;
-                padding: 32px 15px;
+                padding: 15px;
                 @include respond(laptop) {
                     padding: 32px 20px;
                 }

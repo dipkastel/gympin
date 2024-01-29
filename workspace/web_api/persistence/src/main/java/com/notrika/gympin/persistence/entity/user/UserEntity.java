@@ -2,12 +2,10 @@ package com.notrika.gympin.persistence.entity.user;
 
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.user.user.enums.UserGroup;
-import com.notrika.gympin.common.user.user.enums.UserRole;
 import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseUserDepositEntity;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.settlement.FinanceSettlementUserDepositEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
@@ -23,7 +21,7 @@ import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryRequstEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
-import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
 import com.notrika.gympin.persistence.entity.user.activationCode.UserActivationCodeEntity;
 import com.notrika.gympin.persistence.entity.user.relation.UserFollowEntity;
 import lombok.Getter;
@@ -80,9 +78,19 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @Enumerated(EnumType.STRING)
     private UserGroup userGroup;
 
-    @Column(name = "userRole", nullable = false, columnDefinition = "varchar(60) default 'USER'")
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+//    @Column(name = "userRole", nullable = false, columnDefinition = "varchar(60) default 'USER'")
+//    @Enumerated(EnumType.STRING)
+//    private UserRole userRoles;
+//
+//    @ElementCollection(targetClass = UserRole.class)
+//    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "userId"))
+//    @Enumerated(EnumType.STRING)
+//    private List<UserRole> userRole;
+
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<UserRolesEntity> userRoles;
 
     @Column(name = "invitedBy")
     private String invitedBy;
@@ -122,11 +130,11 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @ToString.Exclude
     private Set<UserTokenEntity> userTokens;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "executorUser",fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<ManageServiceExecutionEntity> serviceExecutions;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<MultimediaEntity> multimediaSet;
 
@@ -182,16 +190,17 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @ToString.Exclude
     private List<PurchasedBaseEntity> userPurchased;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<PlaceCommentEntity> placeComments;
 
 
-    @OneToMany( fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<PlaceRateEntity> placeRates;
 
-    @ManyToMany(mappedBy = "owner",fetch = FetchType.LAZY)
+
+    @ManyToMany(mappedBy = "coaches",fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<HallEntity> halls;
+    private List<TicketCourseEntity> ticketsCoach;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @ToString.Exclude

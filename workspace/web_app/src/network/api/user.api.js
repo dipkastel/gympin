@@ -25,3 +25,7 @@ export function user_checkUsernameAvailable(username) {
 export function User_getMyCredits() {
     return axios.get(Api_url.user.getMyCredits);
 }
+
+export function User_query(data) {
+    return axios.post(Api_url.user.query, data);
+}

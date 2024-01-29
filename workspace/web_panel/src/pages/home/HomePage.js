@@ -22,7 +22,7 @@ import Support from "./support/Support";
 import SupportDetails from "./support/SupportDetails";
 import CorporateDetailsManagement from "./corporate/baseData/CorporateDetailsManagement";
 import CorporatePersonnelDetailsManagement from "./corporate/persoanel/CorporatePersonnelDetailsManagement";
-import SubscribeDataManagement from "./purchased/subscribes/baseData/SubscribeDataManagement";
+import SubscribeDataManagement from "./purchasedItems/subscribes/baseData/SubscribeDataManagement";
 import TransactionsAllManagement from "./finance/all/TransactionsAllManagement";
 import PlacePersonnelManagement from "./place/personnel/PlacePersonnelManagement";
 import ArticlesManagement from "./articles/ArticlesManagement";
@@ -34,8 +34,10 @@ import PlaceWizard from "./place/wizard/PlaceWizard";
 import SportsManagement from "./sport/SportsManagement";
 import InvoiceDetailManagement from "./invoice/invoiceDetails/InvoiceDetailManagement";
 import InvoiceManagement from "./invoice/InvoiceManagement";
-import SellsManagement from "./sells/SellsManagement";
+import SellsManagement from "./purchased/SellsManagement";
 import TransactionManagement from "./finance/TransactionManagement";
+import TicketCourseDataManagement from "./place/tickets/ticketCourse/TicketCourseDataManagement";
+import CourseDataManagement from "./purchasedItems/courses/baseData/CourseDataManagement";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -45,7 +47,6 @@ export default function HomePage() {
         {/*place*/}
         <Route path="/place/data/:placeId" component={PlaceDataManagement} />
         <Route path="/place/hall/:hallId" component={HallDataManagement} />
-        <Route path="/place/ticketSubscribe/:ticketSubscribeId" component={TicketSubscribeDataManagement} />
         <Route path="/place/personnel/:personnelId" component={PlacePersonnelManagement} />
         <Route path="/place/placeOptionManagement" component={placeOptionsManagement} />
         <Route path="/place/placeOnMap" component={PlacesMap} />
@@ -74,7 +75,11 @@ export default function HomePage() {
         {/*  sells */}
         <Route path="/sells/" component={SellsManagement} />
         {/*subscribes*/}
+        <Route path="/place/ticketSubscribe/:ticketSubscribeId" component={TicketSubscribeDataManagement} />
         <Route path="/subscribe/data/:subscribeId" component={SubscribeDataManagement} />
+        {/*course*/}
+        <Route path="/place/ticketCourse/:ticketCourseId" component={TicketCourseDataManagement} />
+        <Route path="/course/data/:courseId" component={CourseDataManagement} />
         {/*finance*/}
         <Route path="/FinanceTransactions" component={TransactionManagement} />
         {/* invoice */}

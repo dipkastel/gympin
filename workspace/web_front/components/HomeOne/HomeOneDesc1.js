@@ -21,29 +21,11 @@ const HomeOneDesc1 = () => {
                                 </div>
                                 <div className="service-item__content service-item__content--2">
                                     <h4 className="service-item__title">کاهش استرس و اضطراب</h4>
-                                    <p>ورزش به عنوان یک روش کارآمد برای
+                                    <p className={"text-justify"}>ورزش به عنوان یک روش کارآمد برای
                                         کاهش استرس و اضطراب شناخته می شود.
-                                        کارمندان تحت فشارهای مختلف در محیط
-                                        کاری قرار می گیرند و ورزش می تواند به آنها
-                                        کمک کند تا با این فشارها بهتر کنار بیایند و
+                                        کارمندان در محیط‌های کاری تحت فشارهای مختلف  قرار می گیرند و ورزش می تواند به آنها
+                                        کمک کند تا با این فشارها را بهتر مدیریت کنند و
                                         احساس آرامش بیشتری داشته باشند.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-6 col-lg-6 mt-50">
-                            <div className="service-item service-item__2 d-flex">
-                                <div className="service-item__icon service-item__icon--noborder service-item__icon--2">
-                                    <img src="/images/icons/s-2.png" alt="" />
-                                </div>
-                                <div className="service-item__content service-item__content--2">
-                                    <h4 className="service-item__title">افزایش سلامت کارمندان</h4>
-                                    <p>کارمندانی که ورزش می کنند، سلامتی بهتری
-                                        دارند. این به معنای کاهش تعداد مراجعات
-                                        به پزشک و تعطیلی های ناشی از بیماری ها
-                                        ً با انرژی
-                                        است. کارمندان سالمتر معمولا
-                                        بیشتری به محیط کار می آیند و عملکرد
-                                        بهتری دارند.</p>
                                 </div>
                             </div>
                         </div>
@@ -54,13 +36,23 @@ const HomeOneDesc1 = () => {
                                 </div>
                                 <div className="service-item__content service-item__content--2">
                                     <h4 className="service-item__title">افزایش وفاداری کارمندان</h4>
-                                    <p>ارائه فرصت های ورزشی و سلامت به
-                                        کارمندان به افزایش رضایت و وفاداری آنها
-                                        نسبت به سازمان کمک می کند. کارمندان که
-                                        احساس می کنند سازمان به سلامتی و رفاه
-                                        آنها توجه می کند، با تمایل بیشتری به
-                                        سازمان ، وظیفه شان را انجام دهند.</p>
+                                    <p className={"text-justify"}>ارائه فرصت های ورزشی و سلامت به
+                                        کارمندان، موجب افزایش رضایت و وفاداری آنها
+                                        نسبت به سازمان می‌شود. وقتی کارمندان
+                                        احساس می کنند، سلامتی و رفاه
+                                        آنها مورد توجه سازمان است، با تمایل بیشتری به وظایف‌شان عمل میکنند.</p>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="col-xl-6 col-lg-6 mt-50">
+                            <div className="service-item service-item__2 d-flex">
+                                <div className="service-item__icon service-item__icon--noborder service-item__icon--2">
+                                    <img src="/images/icons/s-2.png" alt="" />
+                                </div>
+                                <div className="service-item__content service-item__content--2">
+                                    <h4 className="service-item__title">افزایش سلامت کارمندان</h4>
+                                    <p className={"text-justify"}>کارمندانی که ورزش می کنند، سلامتی بیشتری دارند؛ این به معنای کاهش دفعات مراجعه به پزشک و مرخصی های پزشکی  است. کارمندان سالمتر عملکرد بهتری دارند و میانگین بازدهی سازمان را ارتقاء می‌بخشند.
+                                    </p> </div>
                             </div>
                         </div>
                         <div className="col-xl-6 col-lg-6 mt-50">
@@ -69,15 +61,9 @@ const HomeOneDesc1 = () => {
                                     <img src="/images/icons/s-4.png" alt="" />
                                 </div>
                                 <div className="service-item__content service-item__content--2">
-                                    <h4 className="service-item__title">سازمان به عنوان یک خانواده</h4>
-                                    <p>تشویق کارمندان به ورزش کردن و مراقبت
-                                        از سلامت آنها می تواند حس خانوادگی در
-                                        سازمان ایجاد کند. این که کارمندان به عنوان
-                                        یک خانواده بزرگ تر از هم مراقبت می کنند
-                                        ً به بهبود کیفیت زندگی کمک می
-                                        مشترکا
-                                        کنند، می تواند اثرات مثبتی بر محیط کار
-                                        داشته باشد.</p>
+                                    <h4 className="service-item__title">افزایش روحیه همکاری </h4>
+                                    <p className={"text-justify"}>اشتراک کارمندان یک سازمان در استفاده از یک برنامه‌ی به خصوص باعث افزایش روحیه همبستگی و کاهش ناهماهنگی و تنش در سازمان می‌شود.</p>
+
                                 </div>
                             </div>
                         </div>

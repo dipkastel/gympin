@@ -18,6 +18,9 @@ import EditProfile from "../pages/profile/editProfile/EditProfile";
 import Checkout from "../pages/checkout/Checkout";
 import Invoices from "../pages/invoices/invoices";
 import UserBasket from "../pages/basket/UserBasket";
+import Coaches from "../pages/coaches/Coaches";
+import Coach from "../pages/coaches/coach/Coach";
+import SingleCourse from "../pages/tickets/singleCourse/SingleCourse";
 
 export default function ApplicationRoutes() {
     const  isAuthorized  = useSelector( ({auth:{user}})=>  user?user.Id!=null:false );
@@ -30,14 +33,18 @@ export default function ApplicationRoutes() {
                 <Route path="/places" element={isAuthorized?<Places/>: <AuthRoutes/>}/>
                 <Route path="/place/:placeId" element={<Place/>}/>
 
+                <Route path="/coaches" element={isAuthorized?<Coaches/>: <AuthRoutes/>}/>
+                <Route path="/coach/:coachId" element={<Coach/>}/>
+
                 <Route path="/profile/survey" element={isAuthorized?<Survey/>: <AuthRoutes/>}/>
                 <Route path="/profile/invitefriends" element={isAuthorized?<InviteFriends/>: <AuthRoutes/>}/>
                 <Route path="/profile/edit" element={isAuthorized?<EditProfile/>: <AuthRoutes/>}/>
                 <Route path="/profile" element={isAuthorized?<Profile/>: <AuthRoutes/>}/>
 
-                {/*purchasedSubscribe*/}
-                <Route path="/tickets/singleSubscribe/:subscribeId" element={isAuthorized?<SingleSubscribe/>: <AuthRoutes/>}/>
+                {/*tickets*/}
                 <Route path="/tickets" element={isAuthorized?<Purchased/>: <AuthRoutes/>}/>
+                <Route path="/tickets/singleSubscribe/:subscribeId" element={isAuthorized?<SingleSubscribe/>: <AuthRoutes/>}/>
+                <Route path="/tickets/singleCourse/:courseId" element={isAuthorized?<SingleCourse/>: <AuthRoutes/>}/>
 
                 <Route path="/wallet" element={isAuthorized?<Wallet/>: <AuthRoutes/>}/>
                 <Route path="/checkout/:formData"  element={isAuthorized?<Checkout/>: <AuthRoutes/>}/>

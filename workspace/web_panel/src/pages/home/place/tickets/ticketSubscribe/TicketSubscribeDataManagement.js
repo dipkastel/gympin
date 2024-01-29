@@ -3,14 +3,14 @@ import {useHistory, useParams} from "react-router-dom";
 import Notice from "../../../../partials/content/Notice";
 import {TicketSubscribes_getById, TicketSubscribes_update} from "../../../../../network/api/ticketSubscribes.api";
 import TicketSubscribeBase from "./Base/TicketSubscribeBase";
-import TicketSubscribeActivityTimes from "./TicketSubscribeActivityTimes/TicketSubscribeActivityTimes";
+import TicketSubscribeActivityTimes from "./TicketActivityTimes/TicketSubscribeActivityTimes";
 import {Button} from "@mui/material";
 import TicketSubscribeSport from "./ticketSubscribeSports/TicketSubscribeSport";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import _TicketSubscribeHistoryChart from "./HistoryChart/_TicketSubscribeHistoryChart";
-import _changeStatus from "./changeStatus/_ChangeStatus";
+import _ChangeTicketSubscribeStatus from "./changeStatus/_ChangeTicketSubscribeStatus";
 
-const PlaceDataManagement = () => {
+const TicketSubscribeDataManagement = () => {
     const error = useContext(ErrorContext);
     let {ticketSubscribeId} = useParams();
     let history = useHistory();
@@ -59,7 +59,7 @@ const PlaceDataManagement = () => {
             </Notice>
             {ticketSubscribe && <div className="row">
                 <div className="col-md-6">
-                    {ticketSubscribe&&<_changeStatus ticketSubscribe={ticketSubscribe} updateTicketSubscribe={updateTicketSubscribe}/>}
+                    {ticketSubscribe&&<_ChangeTicketSubscribeStatus ticketSubscribe={ticketSubscribe} updateTicketSubscribe={updateTicketSubscribe}/>}
                     {ticketSubscribe&&<TicketSubscribeBase ticketSubscribe={ticketSubscribe} updateTicketSubscribe={updateTicketSubscribe}/>}
                 </div>
                 <div className="col-md-6">
@@ -72,4 +72,4 @@ const PlaceDataManagement = () => {
     );
 };
 
-export default PlaceDataManagement;
+export default TicketSubscribeDataManagement;

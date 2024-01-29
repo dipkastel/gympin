@@ -67,10 +67,10 @@ export default function HomeOneHero() {
                     ))}
 
                 </Swiper>
-                <div className="owl-nav">
-                    <div className="custom-prev owl-prev"><i className="fal fa-angle-left"></i></div>
-                    <div className="custom-next owl-next"><i className="fal fa-angle-right"></i></div>
-                </div>
+                {/*<div className="owl-nav">*/}
+                {/*    <div className="custom-prev owl-prev"><i className="fal fa-angle-left"></i></div>*/}
+                {/*    <div className="custom-next owl-next"><i className="fal fa-angle-right"></i></div>*/}
+                {/*</div>*/}
 
             </section>
             {/* <!-- hero end --> */}

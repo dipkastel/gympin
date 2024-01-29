@@ -48,7 +48,7 @@ export default function _HallEntered({selectSubscribe,updatePage}) {
         return (
             <div>
                 <Dialog fullWidth open={openModalEnteredList} onClose={() => SetOpenModalEnteredList(false)}>
-                    <DialogTitle>لیست کاربران حاظر در مجموعه</DialogTitle>
+                    <DialogTitle>لیست کاربران حاضر در مجموعه</DialogTitle>
                     <DialogContent sx={{p:1}}>
                         <List sx={{width: '100%', bgcolor: 'background.paper'}}>
                             {users.map((item, Index) => (

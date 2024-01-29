@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Dialog, DialogTitle, IconButton, Typography} from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 
-const _ticketInfo = ({subscribe}) => {
+const _ticketInfo = ({ticket}) => {
     const [openModalInfo, setOpenModalInfo] = useState(false)
 
 
@@ -13,8 +13,8 @@ const _ticketInfo = ({subscribe}) => {
                 fullWidth
                 open={openModalInfo} onClose={() => setOpenModalInfo(false)}>
                 <DialogTitle bgcolor={"#888888"} color={"white"} sx={{p:1,mb:1,borderBottom:"solid 2px #e7333e"}}>اطلاعات اضافی</DialogTitle>
-                <Typography variant={"h1"} sx={{m:2}}>
-                    {subscribe.Description}
+                <Typography variant={"subtitle2"} sx={{m:2}}>
+                    {ticket.Description}
                 </Typography>
             </Dialog>
         </>)

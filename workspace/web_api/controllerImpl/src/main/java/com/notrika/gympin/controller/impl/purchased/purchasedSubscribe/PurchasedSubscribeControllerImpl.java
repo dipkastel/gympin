@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.purchased.purchasedSubscribe;
 
+import com.notrika.gympin.common.purchased.purchased.param.UserPlacePurchasedParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.api.PurchasedSubscribeController;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeDto;
@@ -73,7 +74,7 @@ public class PurchasedSubscribeControllerImpl implements PurchasedSubscribeContr
 
     @Override
     @PostMapping("/getUserSubscribesByPlace")
-    public ResponseEntity<List<PurchasedSubscribeDto>> getUserSubscribesByPlace(@RequestBody UserPurchasedSubscribesParam param) throws Exception {
+    public ResponseEntity<List<PurchasedSubscribeDto>> getUserSubscribesByPlace(@RequestBody UserPlacePurchasedParam param) throws Exception {
         return ResponseEntity.ok(purchasedSubscribeService.getUserSubscribesByPlace(param));
     }
 

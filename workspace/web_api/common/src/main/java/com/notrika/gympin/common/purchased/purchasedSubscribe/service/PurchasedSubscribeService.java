@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.purchased.purchasedSubscribe.service;
 
+import com.notrika.gympin.common.purchased.purchased.param.UserPlacePurchasedParam;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeDto;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeScannedDto;
@@ -16,7 +17,7 @@ public interface PurchasedSubscribeService extends BaseService<PurchasedSubscrib
 
     //tickets
     List<PurchasedSubscribeDto> getUserEnteredSubscribe(Long placeId);
-    List<PurchasedSubscribeDto> getUserSubscribesByPlace(UserPurchasedSubscribesParam param);
+    List<PurchasedSubscribeDto> getUserSubscribesByPlace(UserPlacePurchasedParam param);
     List<PurchasedSubscribeDto> getActiveSubscribesOfPlace(Long placeId);
     List<PurchasedSubscribeDto> getByUser(UserParam userParam);
 

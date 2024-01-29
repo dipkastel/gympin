@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import {Form} from "react-bootstrap";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {ticketSubscribeActiveTimes_delete} from "../../../../network/api/gatesTiming.api";
+import {ticketActiveTimes_delete} from "../../../../network/api/gatesTiming.api";
 
 const _SubscribeDelete = ({ticketSubscribe, getSubscribeData}) => {
     const error = useContext(ErrorContext);
@@ -24,7 +24,7 @@ const _SubscribeDelete = ({ticketSubscribe, getSubscribeData}) => {
     function ModalDelete() {
         function deleteSelectedItem(e) {
             e.preventDefault()
-            ticketSubscribeActiveTimes_delete({Id: deleteItem.Id}).then(result => {
+            ticketActiveTimes_delete({Id: deleteItem.Id}).then(result => {
                 setDeleteItem(null);
             }).catch(e => {
                 try {

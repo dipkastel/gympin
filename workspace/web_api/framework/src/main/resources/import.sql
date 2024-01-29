@@ -1,17 +1,16 @@
 # RULE
 
-    INSERT INTO user_role (role) VALUES ('USER');
-    INSERT INTO user_role (role) VALUES ('ATHLETE');
-    INSERT INTO user_role (role) VALUES ('COACH');
-    INSERT INTO user_role (role) VALUES ('MANAGER');
-    INSERT INTO user_role (role) VALUES ('CONTENT');
-    INSERT INTO user_role (role) VALUES ('PLACE_MANAGER');
-    INSERT INTO user_role (role) VALUES ('MARKET');
-    INSERT INTO user_role (role) VALUES ('ADMIN');
-    INSERT INTO user_role (role) VALUES ('SUPER_ADMIN');
-    INSERT INTO user_role (role) VALUES ('PLACE_MANAGER');
-    INSERT INTO user_role (role) VALUES ('PLACE_PERSONNEL');
-    INSERT INTO user_role (role) VALUES ('CORPORATE_MANAGER');
+    INSERT INTO user_role (id,role) VALUES (1,'CONTENT');
+    INSERT INTO user_role (id,role) VALUES (2,'MARKET');
+    INSERT INTO user_role (id,role) VALUES (3,'MANAGER');
+    INSERT INTO user_role (id,role) VALUES (4,'ADMIN');
+    INSERT INTO user_role (id,role) VALUES (5,'SUPER_ADMIN');
+    INSERT INTO user_role (id,role) VALUES (6,'COACH');
+    INSERT INTO user_role (id,role) VALUES (7,'PLACE_MANAGER');
+    INSERT INTO user_role (id,role) VALUES (8,'PLACE_PERSONNEL');
+    INSERT INTO user_role (id,role) VALUES (9,'USER');
+    INSERT INTO user_role (id,role) VALUES (10,'CORPORATE_MANAGER');
+
 
 # USER
     INSERT INTO finance_user(id,total_deposit) VALUES (1,0);

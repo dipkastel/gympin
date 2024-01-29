@@ -4,6 +4,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import GrainIcon from '@mui/icons-material/Grain';
+import GroupsIcon from '@mui/icons-material/Groups';
 import {Link} from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 
@@ -20,11 +21,18 @@ export default function NBottomNavigation(){
         },
         {
             value:"places",
-            lable:"مجموعه ها",
+            lable:"مجموعه‌ها",
             firstDirection:"/places",
             icon:<GrainIcon/>,
             otherRouts:["places","place"]
         },
+        // {
+        //     value:"coaches",
+        //     lable:"مربیان",
+        //     firstDirection:"/coaches",
+        //     icon:<GroupsIcon/>,
+        //     otherRouts:["coaches","coach"]
+        // },
         {
             value:"tickets",
             lable:"خرید ها",

@@ -1,4 +1,5 @@
 import {PlaceAbout_getAllByPlaces} from "./placeAbout.api";
+import {User_couchQuery} from "./user.api";
 
 export let AuthApi = {
     BASEURL: "http://localhost:8080/api/",
@@ -76,7 +77,14 @@ export let Api_url = {
         getByPlace:"v1/TicketSubscribe/getByPlace",
         getActiveTimesByTicketSubscribe:"v1/TicketSubscribe/getActiveTimesByTicketSubscribe"
     },
-
+    TicketCourses:{
+        getById:"v1/TicketCourse/getById",
+        getByPlace:"v1/TicketCourse/getByPlace",
+        getActiveTimesByTicketCourse:"v1/TicketCourse/getActiveTimesByTicketCourse"
+    },
+    PlacePersonel:{
+        PersonnelByPlace: "v1/placePersonnel/PersonnelByPlace",
+    },
     sport:{
         GET_ALL:"v1/sport/getAll",
         query:"v1/sport/query"
@@ -89,6 +97,15 @@ export let Api_url = {
         checkout:"v1/purchasedSubscribe/checkout",
         exitRequest:"v1/purchasedSubscribe/exitRequest",
         enterRequest:"v1/purchasedSubscribe/enterRequest"
+    },
+    purchasedCourse:{
+        ADD:"v1/purchasedCourse/add",
+        GET_BY_USER:"v1/purchasedCourse/getByUser",
+        getById:"v1/purchasedCourse/getById",
+        DELETE:"v1/purchasedCourse/delete",
+        checkout:"v1/purchasedCourse/checkout",
+        exitRequest:"v1/purchasedCourse/exitRequest",
+        enterRequest:"v1/purchasedCourse/enterRequest"
     },
     purchased:{
         query:"v1/purchased/query",
@@ -106,5 +123,6 @@ export let Api_url = {
         UPDATE_AVATAR: "v1/user/updateUserAvatar",
         checkUsernameAvailable: "v1/user/checkUsernameAvailable",
         getMyCredits: "v1/user/getMyCredits",
+        query: "v1/user/query",
     }
 };

@@ -15,7 +15,7 @@ import {CloseOutlined, ExpandLess, ExpandMore} from "@mui/icons-material";
 import ___wizardFormAddHall from "./___wizardFormAddHall";
 import ___wizardFormAddActiveTimesToHall from "./___wizardFormAddActiveTimesToHall";
 import {halls_delete, halls_getByPlaceId} from "../../../../../../../network/api/hall.api";
-import {ticketSubscribeActiveTimes_getByPlace} from "../../../../../../../network/api/ticketSubscribeActiveTimes.api";
+import {ticketActiveTimes_getByPlace} from "../../../../../../../network/api/ticketActiveTimes.api";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
 import {useParams} from "react-router-dom";
 import {dayOfWeekEnum} from "../../../../../../../helper/enums/dayOfWeekEnum";
@@ -60,7 +60,7 @@ const __wizardModalSelectHallActiveTimes = ({ticketSubscribe,openModalAddHall,se
 
     function getTimingByPlace() {
 
-        ticketSubscribeActiveTimes_getByPlace({Id: ticketSubscribe.Place.Id}).then(data => {
+        ticketActiveTimes_getByPlace({Id: ticketSubscribe.Place.Id}).then(data => {
             setPlaceHallActiveTimes(data.data.Data);
             getHallsOfPlace();
         }).catch(e => {
@@ -74,7 +74,7 @@ const __wizardModalSelectHallActiveTimes = ({ticketSubscribe,openModalAddHall,se
 
     function addActiveTimesToTicketSubscribe(e) {
         e.preventDefault()
-        var postData = {TicketSubscribe: {Id: ticketSubscribe.Id}}
+        var postData = {Ticket: {Id: ticketSubscribe.Id}}
         var ActiveTimes = [];
         Object.keys(selectedTimes).map(item=>{
             if(selectedTimes[item])

@@ -1,13 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {user_getUserRoles, user_updateUserRoles} from "../../../../../network/api/user.api";
 import {Form} from "react-bootstrap";
 import Select from "react-select";
 import {InvoiceStatus} from "../../../../../helper/enums/InvoiceStatus";
 import {invoice_changeStatus} from "../../../../../network/api/invoice.api";
 
-const InvoiceDetailStatusData = ({invoice,updatePage}) => {
+const InvoiceDetailStatusData = ({invoice, updatePage}) => {
     const error = useContext(ErrorContext);
 
     function changeUserAccess(data) {

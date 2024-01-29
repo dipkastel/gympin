@@ -19,7 +19,7 @@ import {TimePicker} from "@mui/x-date-pickers";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import {dayOfWeekEnum} from "../../../helper/enums/dayOfWeekEnum";
-import {ticketSubscribeActiveTimes_addAll, ticketSubscribeActiveTimes_delete, ticketSubscribeActiveTimes_getByHall} from "../../../network/api/gatesTiming.api";
+import {ticketActiveTimes_addAll, ticketActiveTimes_delete, ticketActiveTimes_getByHall} from "../../../network/api/gatesTiming.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {any} from "prop-types";
 
@@ -42,7 +42,7 @@ const _HallSchedule = ({hall}) => {
     }, [openModalAdd]);
 
     function getGateTimingOfGate() {
-        ticketSubscribeActiveTimes_getByHall({Id: hall.Id}).then(data => {
+        ticketActiveTimes_getByHall({Id: hall.Id}).then(data => {
             setGateTimings(data.data.Data);
         }).catch(e => {
             try {
@@ -56,7 +56,7 @@ const _HallSchedule = ({hall}) => {
     function ModalDelete() {
         function deleteSelectedItem(e) {
             e.preventDefault()
-            ticketSubscribeActiveTimes_delete({Id:deleteItem.Id}).then(result=>{
+            ticketActiveTimes_delete({Id:deleteItem.Id}).then(result=>{
                 setDeleteItem(null);
                 getGateTimingOfGate()
             }).catch(e => {
@@ -117,7 +117,7 @@ const _HallSchedule = ({hall}) => {
                 }
             )
             console.log(postData);
-            ticketSubscribeActiveTimes_addAll(postData)
+            ticketActiveTimes_addAll(postData)
                 .then(data => {
                     setOpenModalAdd(false)
                     getGateTimingOfGate()

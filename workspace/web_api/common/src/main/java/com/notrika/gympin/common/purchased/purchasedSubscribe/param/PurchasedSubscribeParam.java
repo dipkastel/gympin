@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.purchased.purchasedSubscribe.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.PurchasedStatus;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
@@ -22,7 +22,7 @@ import java.util.Date;
 public class PurchasedSubscribeParam extends BaseParam<PurchasedSubscribeParam> {
 
     @JsonProperty("Status")
-    private PurchasedStatus status;
+    private SubscribePurchasedStatus status;
 
     @JsonProperty("TicketSubscribe")
     private TicketSubscribeParam ticketSubscribe;

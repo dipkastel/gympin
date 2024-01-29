@@ -2,10 +2,8 @@ package com.notrika.gympin.persistence.entity.place.hall;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.sport.SportEntity;
-import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeHallActiveTime;
+import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryRequstEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,12 +28,6 @@ public class HallEntity extends BaseEntityWithCreateUpdate<HallEntity> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "openingTime")
-    private Time openingTime;
-
-    @Column(name = "closingTime")
-    private Time closingTime;
-
     @Column(name = "trafficManagement")
     private Boolean trafficManagement;
 
@@ -47,26 +38,17 @@ public class HallEntity extends BaseEntityWithCreateUpdate<HallEntity> {
     @JoinColumn(name = "hallPlaceId")
     private PlaceEntity place;
 
-    @ManyToOne
-    @JoinColumn(name = "sportId")
-    private SportEntity sport;
-
     @OneToMany(mappedBy = "hall")
     @ToString.Exclude
     private List<PurchasedSubscribeEntryRequstEntity> enterHall;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hall")
     @ToString.Exclude
-    private List<TicketSubscribeHallActiveTime> actions;
+    private List<TicketHallActiveTimeEntity> actions;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hall",cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<HallTrafficEntity> hallTraffic;
-
-    @ManyToMany
-    @JoinTable(name = "placeHallOwner", joinColumns = @JoinColumn(name = "hallId"), inverseJoinColumns = @JoinColumn(name = "hallOwnerUserId"))
-    @ToString.Exclude
-    private List<UserEntity> owner;
 
 
     @Override

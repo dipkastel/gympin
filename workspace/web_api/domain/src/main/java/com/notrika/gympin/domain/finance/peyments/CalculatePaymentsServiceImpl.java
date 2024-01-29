@@ -11,6 +11,7 @@ import com.notrika.gympin.persistence.entity.finance.income.FinanceIncomeTransac
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
+import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -380,6 +381,71 @@ public class CalculatePaymentsServiceImpl {
                     .isChecked(false)
                     .latestBalance(financeDiscountTransactionRepository.gympinTotalDiscount() == null ? BigDecimal.ZERO : financeDiscountTransactionRepository.gympinTotalDiscount())
                     .serial(subscribeEntity.getSerial())
+                    .build());
+        }
+
+        //to beneficiary
+        beneficiaryFinance.setTotalDeposit(beneficiaryFinance.getTotalDeposit().add(beneficiaryShare));
+        financeUserRepository.update(beneficiaryFinance);
+    }
+
+    public void PayToPlace(PurchasedCourseEntity courseEntity) {
+
+        PlacePersonnelEntity beneficiary = courseEntity.getTicketCourse().getBeneficiary();
+        FinanceUserEntity beneficiaryFinance = beneficiary.getUser().getFinanceUser();
+        Double commissionFee = beneficiary.getCommissionFee();
+
+        BigDecimal commission = null;
+        BigDecimal discount = null;
+        BigDecimal beneficiaryShare = null;
+
+        if (courseEntity.getCustomer().getInvitedBy() != null && courseEntity.getCustomer().getInvitedBy().startsWith("P") && courseEntity.getCustomer().getInvitedBy().equals("P" + GeneralHelper.getInviteCode(courseEntity.getPlace().getId(), 1))) {
+            commission = BigDecimal.ZERO;
+            beneficiaryShare = courseEntity.getPlacePrice();
+        } else if (courseEntity.getDiscount() == null) {
+            commission = courseEntity.getPlacePrice().multiply(BigDecimal.valueOf(commissionFee / 100));
+            beneficiaryShare = courseEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (commissionFee / 100)));
+        } else {
+            commission = courseEntity.getPlacePrice().multiply(BigDecimal.valueOf(((Double) commissionFee - (float) courseEntity.getDiscount()) / 100));
+            discount = courseEntity.getPlacePrice().multiply(BigDecimal.valueOf((float) courseEntity.getDiscount() / 100));
+            beneficiaryShare = courseEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (commissionFee / 100)));
+        }
+
+        //place personel
+        financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
+                .amount(beneficiaryShare)
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .transactionType(TransactionBaseType.BENEFICIARY)
+                .place(courseEntity.getPlace())
+                .purchased(courseEntity)
+                .isChecked(false)
+                .latestBalance(beneficiaryFinance.getTotalDeposit())
+                .financeUser(beneficiaryFinance)
+                .serial(courseEntity.getSerial())
+                .build());
+
+        //income
+        financeIncomeTransactionRepository.add(FinanceIncomeTransactionEntity.builder()
+                .amount(commission)
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .transactionType(TransactionBaseType.INCOME)
+                .isChecked(false)
+                .purchased(courseEntity)
+                .latestBalance(financeIncomeTransactionRepository.gympinTotalIncome() == null ? BigDecimal.ZERO : financeIncomeTransactionRepository.gympinTotalIncome())
+                .serial(courseEntity.getSerial())
+                .build());
+
+
+        //discount
+        if (discount != null && discount.compareTo(BigDecimal.ZERO) > 0) {
+            financeDiscountTransactionRepository.add(FinanceDiscountTransactionEntity.builder()
+                    .amount(discount)
+                    .transactionStatus(TransactionStatus.COMPLETE)
+                    .transactionType(TransactionBaseType.DISCOUNT)
+                    .purchased(courseEntity)
+                    .isChecked(false)
+                    .latestBalance(financeDiscountTransactionRepository.gympinTotalDiscount() == null ? BigDecimal.ZERO : financeDiscountTransactionRepository.gympinTotalDiscount())
+                    .serial(courseEntity.getSerial())
                     .build());
         }
 

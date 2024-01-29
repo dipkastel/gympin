@@ -2,6 +2,7 @@ package com.notrika.gympin.common.settings.note.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
+import com.notrika.gympin.common.purchased.purchased.param.PurchasedParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
@@ -33,8 +34,8 @@ public class NoteParam extends BaseParam<NoteParam> {
     @JsonProperty("User")
     private UserParam user;
 
-    @JsonProperty("Subscribe")
-    private PurchasedSubscribeParam subscribe;
+    @JsonProperty("Purchased")
+    private PurchasedParam purchased;
 
     @JsonProperty("Text")
     private String text;

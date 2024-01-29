@@ -69,7 +69,7 @@ public class PlaceControllerImpl implements PlaceController {
 
 
     @Override
-    @GetMapping("/get-sports-of-place")
+    @GetMapping("/getSportsOfPlace")
     public ResponseEntity<List<SportDto>> getSportsOfPlace(PlaceDto place) {
         return ResponseEntity.ok(placeService.getSportsOfPlace(place));
     }

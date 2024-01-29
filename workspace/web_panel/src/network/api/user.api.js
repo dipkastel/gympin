@@ -36,14 +36,6 @@ export function user_UpdateUserStatus(data) {
     return axios.put(UserApi.updateUserStatus, data);
 }
 
-//user_rule
-export function user_getUserRoles() {
-    return axios.get(UserApi.getUserRoles);
-}
-export function user_updateUserRoles(data) {
-    return axios.put(UserApi.updateUserRole, data);
-}
-
 //avatar
 export function user_UpdateUserAvatar(data) {
     return axios.put(UserApi.updateUserAvatar, data);

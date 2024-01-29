@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Slick from "react-slick";
 import {Box, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
-import _PlaceMap from "./_PlaceMap";
+import _PlaceMap from "./info/_PlaceMap";
 
 const _PlaceImages = ({place}) => {
     const [showDetails,setShowDetails] = useState(true);

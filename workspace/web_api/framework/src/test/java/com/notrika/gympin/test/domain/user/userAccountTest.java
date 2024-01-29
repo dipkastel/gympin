@@ -5,7 +5,7 @@ import com.notrika.gympin.common.user.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.dto.UserInviteCodesDto;
 import com.notrika.gympin.common.user.user.dto.UserRegisterDto;
-import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.enums.UsernameType;
 import com.notrika.gympin.common.user.user.param.*;
 import com.notrika.gympin.common.util.ApplicationEnum;
@@ -146,7 +146,7 @@ public class userAccountTest extends BaseTest {
                 .invitedBy(userInviteCodes.getFirstInviteCode().getCode())
                 .phoneNumber("09194711540")
                 .fullName("ali ashrafi")
-                .userRole(UserRoleParam.builder().role(UserRole.USER).build())
+                .userRole(RoleEnum.USER)
                 .build();
 
 

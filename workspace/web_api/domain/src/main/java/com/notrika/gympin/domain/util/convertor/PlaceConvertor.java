@@ -117,6 +117,7 @@ public final class PlaceConvertor {
                 .userDto(UserConvertor.toDtoComplete(entity.getUser()))
                 .userRole(entity.getUserRole())
                 .isBeneficiary(entity.getIsBeneficiary())
+                .isPublic(entity.getIsPublic())
                 .commissionFee(entity.getCommissionFee())
                 .build();
     }

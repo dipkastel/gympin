@@ -21,7 +21,7 @@ import {Location_query} from "../../network/api/location.api";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
 
-export const defaultFilters = [
+export const defaultPlaceFilters = [
     {
         type: "Sports",
         name: "ورزش",
@@ -49,7 +49,7 @@ export const genders = [{
     value: "MALE"
 }];
 
-export const sortItems = [{
+export const sortPlaceItems = [{
     Id:0,
     Name: "جدید ترین",
     Value: "id",
@@ -90,11 +90,11 @@ const _PlacesList = () => {
 
 
     const [isLoading, setIsLoading] = useState(false);
-    const [sortBy, SetSortBy] = useState(sortItems[0])
+    const [sortBy, SetSortBy] = useState(sortPlaceItems[0])
     const [openModal, setOpenModal] = useState(false)
     const [sports, SetSports] = useState([])
     const [region, SetRegions] = useState([])
-    const [filters, SetFilters] = useState([...defaultFilters,{
+    const [filters, SetFilters] = useState([...defaultPlaceFilters,{
             type: "gender",
             name: "جنسیت",
             value: currentUser?currentUser?.Gender:null,
@@ -204,7 +204,7 @@ const _PlacesList = () => {
 
     function changeSort(e) {
         SetPlaces(null);
-        SetSortBy(sortItems.find(f=>f.Id==e))
+        SetSortBy(sortPlaceItems.find(f=>f.Id==e))
     }
 
     const handleScroll = () => {
@@ -240,7 +240,7 @@ const _PlacesList = () => {
                         variant={"outlined"}
                         onChange={(e) => changeSort(e.target.value)}
                     >
-                        {sortItems.map(item => (
+                        {sortPlaceItems.map(item => (
                             <MenuItem key={item.Id} value={item.Id}>{item.Name}</MenuItem>
                         ))}
                     </Select>

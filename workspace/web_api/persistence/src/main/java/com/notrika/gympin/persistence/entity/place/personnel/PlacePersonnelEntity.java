@@ -41,6 +41,9 @@ public class PlacePersonnelEntity extends BaseEntity<PlacePersonnelEntity> {
     @Column(name = "isBeneficiary", nullable = false, columnDefinition = "boolean default false")
     private Boolean isBeneficiary;
 
+    @Column(name = "isPublic", nullable = false, columnDefinition = "boolean default false")
+    private Boolean isPublic;
+
     @Column(name = "commissionFee")
     private Double commissionFee;
 

@@ -10,7 +10,7 @@ import java.util.List;
 public interface ManageNoteRepository extends BaseRepository<ManageNoteEntity, Long> {
 
     List<ManageNoteEntity> findAllByUserIdAndDeletedIsFalse(Long userId);
-    List<ManageNoteEntity> findAllBySubscribeIdAndDeletedIsFalse(Long subscribeId);
+    List<ManageNoteEntity> findAllByPurchasedIdAndDeletedIsFalse(Long subscribeId);
     List<ManageNoteEntity> findAllByPlaceIdAndDeletedIsFalse(Long PlaceId);
     List<ManageNoteEntity> findAllByCorporateIdAndDeletedIsFalse(Long CorporateId);
     List<ManageNoteEntity> findAllByInvoiceIdAndDeletedIsFalse(Long invoiceId);

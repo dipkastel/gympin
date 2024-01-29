@@ -2,7 +2,7 @@ package com.notrika.gympin.common.user.user.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.util._base.param.BaseParam;
-import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 public class UserRegisterParam extends BaseParam<UserRegisterParam> {
 
     @JsonProperty("UserRole")
-    private UserRoleParam userRole;
+    private RoleEnum userRole;
 
     @JsonProperty("FullName")
     private String fullName;
@@ -25,11 +25,5 @@ public class UserRegisterParam extends BaseParam<UserRegisterParam> {
 
     @JsonProperty("InvitedBy")
     private String invitedBy;
-
-    public UserRegisterParam() {
-        UserRoleParam userRoleParam = new UserRoleParam();
-        userRoleParam.setRole(UserRole.USER);
-        userRole=UserRoleParam.builder().role(UserRole.USER).build();
-    }
 
 }

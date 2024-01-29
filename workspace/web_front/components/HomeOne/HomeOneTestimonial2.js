@@ -23,14 +23,14 @@ export default function HomeOneTestimonial2() {
                                                 <img src="/images/logo/android-chrome-192x192bw.png" alt="" />
                                             </div>
                                             <div className="testimonial__2--content testimonial__2--content--2 rtl">
-                                                <p>جیم پین یک کسب و کار برای ارتباط بین شرکت ها و مراکز
-                                                    ورزشی است . جیم پین به طور خاص ، به منظور
+                                                <p className={"text-justify"}>جیم پین یک پلتفرم نوین برای ارتباط بین شرکت ها و مراکز
+                                                    ورزشی است که به طور خاص، به منظور
                                                     مدیریت خدمات ورزشی و سلامت کارکنان در سازمان ها و شرکت
                                                     ها طراحی شده است.
-                                                </p><p>
+                                                </p><p className={"text-justify"}>
                                                     ما در جیم پین به فروش خدمات و
                                                     رزرو مراکز ورزشی به صورت آنلاین برای پرسنل شرکت ها و
-                                                    سازمان ها اهتمام داریم.
+                                                    سازمان ها می‌پردازیم.
                                                 </p>
                                             </div>
                                         </div>

@@ -51,7 +51,7 @@ public class ManageLocationEntity extends BaseEntity<ManageLocationEntity> {
     @Setter
     private ManageLocationEntity parent;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "parent")
+    @OneToMany(mappedBy = "parent",fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Setter
     private List<ManageLocationEntity> childes;

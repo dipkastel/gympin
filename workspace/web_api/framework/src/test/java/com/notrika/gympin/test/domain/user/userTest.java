@@ -1,11 +1,10 @@
 package com.notrika.gympin.test.domain.user;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.user.user.dto.UserCreditDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
 import com.notrika.gympin.common.user.user.enums.Gender;
-import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.param.UserRoleUpdateParam;
@@ -152,7 +151,7 @@ public class userTest extends BaseTest {
     public void updateUserRole() throws Exception {
         UserRoleUpdateParam param = UserRoleUpdateParam.builder()
                 .userId(1l)
-                .role(UserRole.SUPER_ADMIN)
+                .role(RoleEnum.SUPER_ADMIN)
                 .build();
 
         ResponseModel<UserDto> result = TestPut(

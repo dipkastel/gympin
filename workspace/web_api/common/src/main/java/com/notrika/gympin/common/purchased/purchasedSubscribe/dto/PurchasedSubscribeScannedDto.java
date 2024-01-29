@@ -2,12 +2,10 @@ package com.notrika.gympin.common.purchased.purchasedSubscribe.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
-import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.ScanResult;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.PurchasedStatus;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.PurchasedSubscribeUserPlaceStatus;
 import com.notrika.gympin.common.user.user.dto.UserDto;
+import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,10 +23,7 @@ import java.util.Date;
 public class PurchasedSubscribeScannedDto extends BaseDtoWithCreateUpdate<PurchasedSubscribeScannedDto> {
 
     @JsonProperty("Status")
-    private PurchasedStatus status;
-
-    @JsonProperty("ScanResult")
-    private ScanResult scanResult;
+    private SubscribePurchasedStatus status;
 
     @JsonProperty("TicketSubscribe")
     private TicketSubscribeDto ticketSubscribe;
@@ -63,9 +58,6 @@ public class PurchasedSubscribeScannedDto extends BaseDtoWithCreateUpdate<Purcha
 
     @JsonProperty("ExpireDate")
     private Date expireDate;
-
-    @JsonProperty("UserPlaceStatus")
-    private PurchasedSubscribeUserPlaceStatus userPlaceStatus;
 
     @JsonProperty("Entry")
     private PurchasedSubscribeEntryDto subscribeEntry;

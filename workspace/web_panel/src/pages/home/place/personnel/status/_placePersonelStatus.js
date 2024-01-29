@@ -24,7 +24,7 @@ const _placePersonelStatus = ({personel,getPerson}) => {
         return [
             {label:"مدیر مرکز",value:"PLACE_OWNER"},
             {label:"پرسنل مرکز",value:"PLACE_PERSONNEL"},
-            {label:"مربی",value:"Place_COACH"},
+            {label:"مربی",value:"PLACE_COACH"},
         ]
     }
 

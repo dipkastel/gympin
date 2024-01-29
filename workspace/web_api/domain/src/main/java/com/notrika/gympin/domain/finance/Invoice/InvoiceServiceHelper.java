@@ -9,15 +9,16 @@ import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.PurchasedStatus;
+import com.notrika.gympin.common.purchased.purchasedCourse.enums.CoursePurchasedStatus;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.note.enums.NoteType;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsService;
-import com.notrika.gympin.common.util.exception.subscribe.SubscribePayByOthersException;
-import com.notrika.gympin.common.util.exception.subscribe.SubscribePriceTotalConflictException;
+import com.notrika.gympin.common.util.exception.purchased.PayByOthersException;
+import com.notrika.gympin.common.util.exception.purchased.PriceTotalConflictException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
@@ -27,8 +28,10 @@ import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserReposito
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
+import com.notrika.gympin.persistence.dao.repository.purchased.course.PurchasedCourseRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
+import com.notrika.gympin.persistence.dao.repository.ticket.course.TicketCourseRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
@@ -39,8 +42,10 @@ import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
+import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +53,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,7 +84,14 @@ public class InvoiceServiceHelper {
     TicketSubscribeRepository ticketSubscribeRepository;
 
     @Autowired
+    TicketCourseRepository ticketCourseRepository;
+
+    @Autowired
     PurchasedSubscribeRepository purchasedSubscribeRepository;
+
+    @Autowired
+    PurchasedCourseRepository purchasedCourseRepository;
+
     @Autowired
     InvoiceRepository invoiceRepository;
 
@@ -89,7 +103,6 @@ public class InvoiceServiceHelper {
 
     @Autowired
     InvoiceBuyableRepository invoiceBuyableRepository;
-
 
 
     @Transactional
@@ -112,7 +125,7 @@ public class InvoiceServiceHelper {
             }
         }
         if (subscribeRemainderPrice.compareTo(BigDecimal.ZERO) != 0)
-            throw new SubscribePriceTotalConflictException();
+            throw new PriceTotalConflictException();
         //change subscribe status and serial
         createPurchasedItems(invoice);
         return invoice;
@@ -122,7 +135,7 @@ public class InvoiceServiceHelper {
         CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(checkoutParam.getPersonnelId());
         FinanceCorporateEntity corporateFinanceEntity = personnelEntity.getCorporate().getFinanceCorporate();
         if (invoice.getUser().getId() != personnelEntity.getUser().getId())
-            throw new SubscribePayByOthersException();
+            throw new PayByOthersException();
 
 
         //update personel credit
@@ -187,31 +200,70 @@ public class InvoiceServiceHelper {
     }
 
     private void createPurchasedItems(InvoiceEntity invoice) throws Exception {
-        for (InvoiceBuyableEntity invoiceBuyable : invoice.getInvoiceBuyables().stream().filter(b->!b.isDeleted()).collect(Collectors.toList())) {
+        List<InvoiceBuyableEntity> smsList = new ArrayList<>();
+        for (InvoiceBuyableEntity invoiceBuyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
             switch (invoiceBuyable.getBuyableType()) {
                 case SUBSCRIBE:
                     for (int i = 0; i < invoiceBuyable.getCount(); i++) {
                         addSubscribe(invoice, invoiceBuyable);
+                        smsList.add(invoiceBuyable);
                     }
                     break;
                 case COURSE:
-                    throw new Exception("create selld Item is not implemented");
+                    for (int i = 0; i < invoiceBuyable.getCount(); i++) {
+                        addCourse(invoice, invoiceBuyable);
+                        smsList.add(invoiceBuyable);
+                    }
+                    break;
                 case PRODUCT:
-                    throw new Exception("create selld Item is not implemented");
+                    throw new Exception("آیتم برای خرید آماده نیست");
                 case FOOD:
-                    throw new Exception("create selld Item is not implemented");
+                    throw new Exception("آیتم برای خرید آماده نیست");
                 case SERVICE:
-                    throw new Exception("create selld Item is not implemented");
+                    throw new Exception("آیتم برای خرید آماده نیست");
                 case DIET:
-                    throw new Exception("create selld Item is not implemented");
+                    throw new Exception("آیتم برای خرید آماده نیست");
                 case WORKOUT:
-                    throw new Exception("create selld Item is not implemented");
+                    throw new Exception("آیتم برای خرید آماده نیست");
             }
             //send sms
             sendSms(invoice.getUser(), invoiceBuyable);
         }
         invoice.setStatus(InvoiceStatus.COMPLETED);
         invoiceRepository.update(invoice);
+    }
+
+    private void addCourse(InvoiceEntity invoice, InvoiceBuyableEntity invoiceBuyable) {
+        TicketCourseEntity ticketCourse = ticketCourseRepository.getById(invoiceBuyable.getBuyable().getId());
+        PurchasedCourseEntity courseEntity = PurchasedCourseEntity.builder()
+                .name(ticketCourse.getName())
+                .description(ticketCourse.getDescription())
+                .discount(ticketCourse.getDiscount())
+                .gender(ticketCourse.getGender())
+                .sellPrice(invoiceBuyable.getPlacePrice())
+                .placePrice(invoiceBuyable.getPlacePrice())
+                .place(invoiceBuyable.getPlace())
+                .customer(invoice.getUser())
+                .serial(invoice.getSerial())
+                .purchasedType(PurchasedType.COURSE)
+                .status(CoursePurchasedStatus.READY_TO_ACTIVE)
+                .ticketCourse(ticketCourse)
+                .entryTotalCount(ticketCourse.getEntryTotalCount())
+                .courseStatus(ticketCourse.getCourseStatus())
+                .targetOfCourse(ticketCourse.getTargetOfCourse())
+                .classCapacity(ticketCourse.getClassCapacity())
+                .ageLimit(ticketCourse.getAgeLimit())
+                .coaches(ticketCourse.getCoaches().stream().map(c->UserEntity.builder().id(c.getId()).build()).collect(Collectors.toList()))
+                .entryTotalCount(ticketCourse.getEntryTotalCount())
+                .courseCapacity(ticketCourse.getCourseCapacity())
+                .courseLevel(ticketCourse.getCourseLevel())
+                .startDate(ticketCourse.getStartDate())
+                .endDate(ticketCourse.getEndDate())
+                .startSellingDate(ticketCourse.getStartSellingDate())
+                .endSellingDate(ticketCourse.getEndSellingDate())
+                .build();
+        purchasedCourseRepository.add(courseEntity);
+
     }
 
     private void addSubscribe(InvoiceEntity invoice, InvoiceBuyableEntity invoiceBuyable) {
@@ -232,7 +284,7 @@ public class InvoiceServiceHelper {
                 .customer(invoice.getUser())
                 .serial(invoice.getSerial())
                 .purchasedType(PurchasedType.SUBSCRIBE)
-                .status(PurchasedStatus.READY_TO_ACTIVE)
+                .status(SubscribePurchasedStatus.READY_TO_ACTIVE)
                 .ticketSubscribe(ticketSubscribe)
                 .entryTotalCount(ticketSubscribe.getEntryTotalCount())
                 .ticketSubscribeExpireDate(calender.getTime())
@@ -254,7 +306,7 @@ public class InvoiceServiceHelper {
     }
 
     @Transactional
-    public void addNote(InvoiceEntity invoice,String note){
+    public void addNote(InvoiceEntity invoice, String note) {
         noteRepository.add(ManageNoteEntity.builder()
                 .invoice(invoice)
                 .type(NoteType.NOTE)
@@ -264,15 +316,15 @@ public class InvoiceServiceHelper {
     }
 
     @Transactional
-    public void updateInvoicePrice(InvoiceEntity invoice, BuyableEntity buyable){
-        var buyables =  invoiceBuyableRepository.findAllByInvoiceIdAndDeletedIsFalse(invoice.getId());
-        BigDecimal priceToPay ;
-        if(buyables!=null){
+    public void updateInvoicePrice(InvoiceEntity invoice, BuyableEntity buyable) {
+        var buyables = invoiceBuyableRepository.findAllByInvoiceIdAndDeletedIsFalse(invoice.getId());
+        BigDecimal priceToPay;
+        if (buyables != null) {
             priceToPay = buyables.stream()
-                    .filter(b->!b.isDeleted())
-                    .map(p->p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
-                    .reduce(BigDecimal.ZERO,BigDecimal::add);
-        }else{
+                    .filter(b -> !b.isDeleted())
+                    .map(p -> p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        } else {
             priceToPay = buyable.getPrice();
         }
         invoice.setPriceToPay(priceToPay);
@@ -281,13 +333,13 @@ public class InvoiceServiceHelper {
     }
 
     @Transactional
-    public void updateInvoicePrice(InvoiceEntity invoice){
-        var buyables =  invoice.getInvoiceBuyables();
+    public void updateInvoicePrice(InvoiceEntity invoice) {
+        var buyables = invoice.getInvoiceBuyables();
         BigDecimal priceToPay = BigDecimal.ZERO;
         priceToPay = buyables.stream()
-                .filter(b->!b.isDeleted())
-                .map(p->p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
-                .reduce(BigDecimal.ZERO,BigDecimal::add);
+                .filter(b -> !b.isDeleted())
+                .map(p -> p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         invoice.setPriceToPay(priceToPay);
         invoice.setTotalPrice(priceToPay);
         invoiceRepository.update(invoice);
@@ -316,16 +368,16 @@ public class InvoiceServiceHelper {
     @Transactional
     public InvoiceEntity getUserBasket(InvoiceParam invoiceParam) {
 
-        if(invoiceParam.getId()!=null){
+        if (invoiceParam.getId() != null) {
             return invoiceRepository.getById(invoiceParam.getId());
-        }else{
+        } else {
             //invoice number not Known
-           var currentUser = getcurrentUser();
-           var userDraftInvoices = invoiceRepository.findByUserIdAndStatusAndDeletedIsFalse(currentUser.getId(), InvoiceStatus.DRAFT);
+            var currentUser = getcurrentUser();
+            var userDraftInvoices = invoiceRepository.findByUserIdAndStatusAndDeletedIsFalse(currentUser.getId(), InvoiceStatus.DRAFT);
             //get last User Draft Invoice as basket
             if (userDraftInvoices.size() > 0)
-                return userDraftInvoices.get(userDraftInvoices.size()-1);
-            else{
+                return userDraftInvoices.get(userDraftInvoices.size() - 1);
+            else {
                 //add new invoice
                 return invoiceRepository.add(InvoiceEntity.builder()
                         .status(InvoiceStatus.DRAFT)
@@ -346,6 +398,6 @@ public class InvoiceServiceHelper {
         GympinContext context = GympinContextHolder.getContext();
         if (context == null)
             throw new UnknownUserException();
-         return  (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+        return (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
     }
 }

@@ -12,9 +12,9 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import {
-    ticketSubscribeActiveTimes_addAll, ticketSubscribeActiveTimes_delete,
-    ticketSubscribeActiveTimes_getByHall,
-} from "../../../../../network/api/ticketSubscribeActiveTimes.api";
+    ticketActiveTimes_addAll, ticketActiveTimes_delete,
+    ticketActiveTimes_getByHall,
+} from "../../../../../network/api/ticketActiveTimes.api";
 import {dayOfWeekEnum} from "../../../../../helper/enums/dayOfWeekEnum";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
@@ -33,7 +33,7 @@ const ActivityTimes = ({hall}) => {
     }, []);
 
     function getActivityTimesOfHall() {
-        ticketSubscribeActiveTimes_getByHall({Id: hall.Id}).then(data => {
+        ticketActiveTimes_getByHall({Id: hall.Id}).then(data => {
             SetActivityTimes(data.data.Data);
         }).catch(e => {
                     try {
@@ -51,6 +51,10 @@ const ActivityTimes = ({hall}) => {
 
         function addItems(e) {
             e.preventDefault()
+            if(!(addValues["Name"])){
+                error.showError({message: "نام فعالیت اجباری است",});
+                return;
+            }
             if(!(addValues["OpeningTime"])){
                 error.showError({message: "زمان شروع فعالیت اجباری است",});
                 return;
@@ -70,6 +74,7 @@ const ActivityTimes = ({hall}) => {
             Object.keys(addDays).map(key =>                {
                     if(addDays[key]){
                         postData.push({
+                            "Name":addValues["Name"],
                             "ClosingTime":new Date(addValues["ClosingTime"]).toTimeString().substring(0,8),
                             "OpeningTime":new Date(addValues["OpeningTime"]).toTimeString().substring(0,8),
                             "Hall":{Id:hall.Id},
@@ -78,7 +83,7 @@ const ActivityTimes = ({hall}) => {
                     }
                 }
             )
-            ticketSubscribeActiveTimes_addAll(postData)
+            ticketActiveTimes_addAll(postData)
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
                     getActivityTimesOfHall()
@@ -110,6 +115,19 @@ const ActivityTimes = ({hall}) => {
                             <Modal.Title>{"افزودن زمان بندی "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
+
+                            <TextField
+                                id="standard-full-width"
+                                label="نام"
+                                placeholder="نام فعالیت"
+                                value={addValues.Name}
+                                onChange={(e)=>setFormValues("Name",e.target.value)}
+                                fullWidth
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <TimePicker
                                         className={"ltr fullwidth mt-3"}
@@ -173,7 +191,7 @@ const ActivityTimes = ({hall}) => {
 
         function DeleteItem(e) {
             e.preventDefault()
-            ticketSubscribeActiveTimes_delete({Id: itemToDelete.Id})
+            ticketActiveTimes_delete({Id: itemToDelete.Id})
                 .then(data => {
                     setItemToDelete(null)
                     getActivityTimesOfHall()

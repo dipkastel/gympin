@@ -129,7 +129,7 @@ const _SingleSubscribeEntryList = ({subscribe, renewSubscribe}) => {
                                         >
                                             <Typography variant={"body2"}> ورود</Typography>←
                                             <Typography
-                                                variant={"caption"}>{new Date(item.EnterDate).toLocaleDateString('fa-IR', {
+                                                variant={"caption"}>{new Date(item?.EnterDate).toLocaleDateString('fa-IR', {
                                                 year: 'numeric',
                                                 month: 'long',
                                                 day: 'numeric',

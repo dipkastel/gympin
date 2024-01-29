@@ -15,7 +15,7 @@ const __placeListItem = ({item}) => {
                       justifyContent="center"
                       alignItems="center">
                     <Grid item  sx={{padding: 0,display:"flex",flexDirection:"column-reverse",alignItems:"center"}}>
-                        <Image src={item.Multimedias[0] ? (item.Multimedias[0].Url+"&width=400") : "https://api.gympin.ir/resource/image?Id=11"} width={"100%"}
+                        <Image src={item?.Multimedias?.[0] ? (item.Multimedias?.[0]?.Url+"&width=400") : "https://api.gympin.ir/resource/image?Id=11"} width={"100%"}
                                rounded={3}/>
                         {/*<Box sx={{width:"160px",marginTop:1,height:"30px",opacity:"0.6",backgroundColor:"black",position:"absolute",borderRadius:"15px 15px 0 0"}}>*/}
 

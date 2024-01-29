@@ -34,6 +34,10 @@ import java.util.Objects;
 public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
 
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "buyablePlaceId")
+    private PlaceEntity place;
+
     @Column(name = "name")
     private String name;
 
@@ -59,19 +63,13 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @Column(name = "placePrice")
     private BigDecimal placePrice;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "buyablePlaceId")
-    private PlaceEntity place;
-
-
     @Column(name = "buyableType", nullable = false)
     @Enumerated(EnumType.STRING)
     private BuyableType buyableType;
 
-
     @OneToMany(mappedBy = "buyable")
     @ToString.Exclude
-    private List<BuyableDiscountHistoryEntity> subscribeDiscountHistory;
+    private List<BuyableDiscountHistoryEntity> discountHistory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prerequisiteId")
@@ -79,7 +77,7 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @Setter
     private BuyableEntity prerequisite;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "prerequisite")
+    @OneToMany(mappedBy = "prerequisite",fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Setter
     private List<BuyableEntity> prerequisites;

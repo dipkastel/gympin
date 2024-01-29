@@ -2,6 +2,7 @@ package com.notrika.gympin.persistence.entity.sport.placeSport;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import lombok.Getter;
@@ -35,6 +36,10 @@ public class PlaceSportEntity extends BaseEntityWithCreateUpdate<PlaceSportEntit
     @ManyToMany(mappedBy = "ticketSubscribeSport")
     @ToString.Exclude
     private List<TicketSubscribeEntity> ticketSubscribes;
+
+    @ManyToMany(mappedBy = "ticketCourseSport")
+    @ToString.Exclude
+    private List<TicketCourseEntity> ticketCourse;
 
     @Override
     public boolean equals(Object o) {

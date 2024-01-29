@@ -28,7 +28,7 @@ public final class PurchasedSubscribeConvertor {
                 .entryTotalCount(entity.getEntryTotalCount())
                 .ticketSubscribeExpireDate(entity.getTicketSubscribeExpireDate())
                 .expireDate(entity.getExpireDate())
-                .entryList(PurchasedSubscribeConvertor.toDto(entity.getEntryList()))
+                .entryList(toDto(entity.getEntryList()))
                 .build();
         return dto;
     }

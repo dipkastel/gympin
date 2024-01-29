@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.user.user.dto;
 
-import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
 
-    private List<UserRole> userRoleList;
+    private List<RoleEnum> userRoleList;
     private String password;
     private String username;
     private boolean accountNonExpired;
@@ -20,7 +20,7 @@ public class UserDetailsImpl implements UserDetails {
     private boolean credentialsNonExpired;
     private boolean enabled;
 
-    public UserDetailsImpl(List<UserRole> userRoleList, String password, String username, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired,
+    public UserDetailsImpl(List<RoleEnum> userRoleList, String password, String username, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired,
                            boolean enabled) {
         this.userRoleList = userRoleList;
         this.password = password;

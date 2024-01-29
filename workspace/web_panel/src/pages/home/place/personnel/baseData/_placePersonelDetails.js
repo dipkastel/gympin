@@ -31,12 +31,12 @@ const _placePersonelDetails = ({personel}) => {
                         justifyContent={"space-around"}
                         alignItems="center">
                         <div>
-                            <p>{("نام و نام خانوادگی : "+personel.User.FullName)}</p>
-                            <p>{("نام کاربری : "+personel.User.Username)}</p>
-                            <p>{("تلفن : "+personel.User.PhoneNumber)}</p>
+                            <p>{("نام و نام خانوادگی : "+(personel?.User?.FullName||"ثبت نشده"))}</p>
+                            <p>{("نام کاربری : "+personel?.User?.Username)}</p>
+                            <p>{("تلفن : "+personel?.User?.PhoneNumber)}</p>
                         </div>
 
-                        <Avatar  alt="userImage" src={(personel.User.Avatar)?(personel.User.Avatar.Url||""):""}  sx={{width:130,height:130}} />
+                        <Avatar  alt="userImage" src={(personel?.User?.Avatar||"")}  sx={{width:130,height:130}} />
                     </Grid>
                 </PortletBody>
             </Portlet>

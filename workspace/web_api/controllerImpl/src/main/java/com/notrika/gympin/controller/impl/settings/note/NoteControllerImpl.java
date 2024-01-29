@@ -64,8 +64,8 @@ public class NoteControllerImpl implements NoteController {
             return ResponseEntity.ok(noteService.getByPlace(noteParam.getPlace()));
         if (noteParam.getUser() != null)
             return ResponseEntity.ok(noteService.getByUser(noteParam.getUser()));
-        if (noteParam.getSubscribe() != null)
-            return ResponseEntity.ok(noteService.getBySubscribe(noteParam.getSubscribe()));
+        if (noteParam.getPurchased() != null)
+            return ResponseEntity.ok(noteService.getByPurchased(noteParam.getPurchased()));
         if (noteParam.getCorporate() != null)
             return ResponseEntity.ok(noteService.getByCorporate(noteParam.getCorporate()));
         if (noteParam.getInvoice() != null)

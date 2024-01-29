@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.place.hall;
 
 import com.notrika.gympin.common.place.hall.dto.HallDto;
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.ActiveTimesDto;
+import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.place.hall.filter.HallFilter;
 import com.notrika.gympin.common.place.hall.param.HallParam;
 import com.notrika.gympin.common.place.hall.service.HallService;
@@ -116,12 +116,9 @@ public class HallServiceImpl extends AbstractBaseService<HallParam, HallDto, Hal
 
     @Override
     public List<HallDto> getHallsBySport(SportParam sport) {
-        return hallRepository.findAllBySportAndDeletedIsFalse(SportEntity.builder().id(sport.getId()).build()).stream().map(HallConvertor::convertToDto).collect(Collectors.toList());
+        return hallRepository.findAllByPlace_PlaceSport_SportAndDeletedIsFalse(SportEntity.builder().id(sport.getId()).build()).stream().map(HallConvertor::convertToDto).collect(Collectors.toList());
     }
 
 
-    public List<HallEntity> getHallsByOwner(UserEntity owner) {
-        return hallRepository.findAllByOwnerAndDeletedIsFalse(owner);
-    }
 
 }

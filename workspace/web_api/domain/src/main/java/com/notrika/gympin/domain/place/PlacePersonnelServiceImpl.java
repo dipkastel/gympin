@@ -13,9 +13,8 @@ import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsService;
-import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.param.UserRegisterParam;
-import com.notrika.gympin.common.user.user.param.UserRoleParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.util.exception.general.SendSmsException;
@@ -80,7 +79,17 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         PlaceEntity place = placeRepository.getById(placePersonnelParam.getPlace().getId());
 
         if (user == null) {
-            user = accountService.addUser(UserRegisterParam.builder().invitedBy("P" + GeneralHelper.getInviteCode(place.getId(), 1)).phoneNumber(placePersonnelParam.getPhoneNumber()).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
+//            var userRole = null;
+//            if(placePersonnelParam.getUserRole()==PlacePersonnelRole.PLACE_OWNER||placePersonnelParam.getUserRole()==PlacePersonnelRole.PLACE_PERSONNEL||placePersonnelParam.getUserRole()==PlacePersonnelRole.Place_COACH){
+//
+//            }
+            RoleEnum role = placePersonnelParam.getUserRole() == PlacePersonnelRole.PLACE_COACH ? RoleEnum.COACH : place.getPlaceOwners().size() > 0 ? RoleEnum.PLACE_PERSONNEL : RoleEnum.PLACE_MANAGER;
+            user = accountService.addUser(UserRegisterParam.
+                    builder().
+                    invitedBy("P" + GeneralHelper.getInviteCode(place.getId(), 1)).
+                    phoneNumber(placePersonnelParam.getPhoneNumber()).
+                    userRole(role)
+                    .build());
         } else {
             //check for duplication
             UserEntity finalUser = user;
@@ -91,8 +100,9 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         PlacePersonnelEntity placePersonnelEntity = PlacePersonnelEntity.builder()
                 .place(place)
                 .user(user)
-                .userRole(place.getPlaceOwners().size() > 0 ? PlacePersonnelRole.PLACE_PERSONNEL : PlacePersonnelRole.PLACE_OWNER)
+                .userRole(placePersonnelParam.getUserRole() == PlacePersonnelRole.PLACE_COACH ? PlacePersonnelRole.PLACE_COACH : place.getPlaceOwners().size() > 0 ? (placePersonnelParam.getUserRole() != null ? placePersonnelParam.getUserRole() : PlacePersonnelRole.PLACE_PERSONNEL) : PlacePersonnelRole.PLACE_OWNER)
                 .isBeneficiary(false)
+                .isPublic(false)
                 .commissionFee(0.0)
                 .build();
         placePersonnelRepository.add(placePersonnelEntity);
@@ -195,7 +205,13 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     @Override
     public List<PlacePersonnelDto> getPlaceBeneficiaries(Long placeId) {
         try {
-            return placeRepository.getById(placeId).getPlaceOwners().stream().filter(PlacePersonnelEntity::getIsBeneficiary).map(PlaceConvertor::personnelToDto).collect(Collectors.toList());
+            return placeRepository
+                    .getById(placeId)
+                    .getPlaceOwners()
+                    .stream()
+                    .filter(PlacePersonnelEntity::getIsBeneficiary)
+                    .map(PlaceConvertor::personnelToDto)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             return null;
         }

@@ -6,7 +6,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import _TabPlaceBuyable from "./_TabPlaceBuyable";
-import _TabPlaceAbout from "./_TabPlaceAbout";
+import _TabPlaceAbout from "./info/_TabPlaceAbout";
 import BadgeIcon from '@mui/icons-material/Badge';
 import InfoIcon from '@mui/icons-material/Info';
 

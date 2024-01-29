@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.settings.schedules;
 
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
-import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeDiscountHistoryRepository;
+import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketDiscountHistoryRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
@@ -23,7 +23,7 @@ public class scheduleDiscounts {
     @Autowired
     private TicketSubscribeRepository ticketSubscribeRepository;
     @Autowired
-    private TicketSubscribeDiscountHistoryRepository ticketSubscribeDiscountHistoryRepository;
+    private TicketDiscountHistoryRepository ticketSubscribeDiscountHistoryRepository;
 
 
     @Transactional

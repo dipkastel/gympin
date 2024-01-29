@@ -20,10 +20,11 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
 
 const _PersonnelList = ({personnelList, renewList}) => {
-
+    console.log(personnelList);
     const error = useContext(ErrorContext);
     const navigate = useNavigate()
     const [personnelToDelete,SetPersonnelToDelete]= useState(null)
+    const [inPersonnelList,setInPersonnelList]= useState(personnelList.filter(o=>o.UserRole.startsWith("PLACE_OWNER")||o.UserRole.startsWith("PLACE_PERSONNEL")))
 
     function renderModalDelete(){
         const deleteItem = (e)=>{
@@ -59,7 +60,7 @@ const _PersonnelList = ({personnelList, renewList}) => {
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent sx={{margin: 0, paddingTop: 0}}>
                     <List>
-                        {personnelList && personnelList.map(item => (
+                        {inPersonnelList && inPersonnelList.map(item => (
                             <div key={"person-" + item.Id}>
                                 <Grid container direction={"row"} justifyContent="space-between" sx={{marginY: 1}}>
                                     <ListItemButton alignItems="flex-start" onClick={()=>item.UserRole=="PLACE_OWNER"?"#":navigate("/management/personnelAccess", {state:{user:item.User}})} >
@@ -69,7 +70,7 @@ const _PersonnelList = ({personnelList, renewList}) => {
                                         </ListItemAvatar>
                                         <ListItemText
                                             className="text-start"
-                                            primary={(item.User?.FullName||"نام ثبت نشده")}
+                                            primary={(item.User?.FullName||item.User?.PhoneNumber||"کاربر پروفایل را تکمیل نکرده")}
                                             secondary={item.User?.Username}
                                         />
                                     </ListItemButton>

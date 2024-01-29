@@ -6,10 +6,9 @@ import {Plans_getByPlace} from "../../../network/api/ticketSubscribe.api";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
-import {purchasedSubscribe_add} from "../../../network/api/purchasedSubscribe.api";
-import _PlaceSubscribeListItem from "./_PlaceSubscribeListItem";
 import {ticketBuyable_query} from "../../../network/api/buyable.api";
-import _placeSubscribes from "./_placeSubscribes";
+import _placeSubscribes from "./ticketSubscribe/_placeSubscribes";
+import _placeCourses from "./ticketCourse/_placeCourses";
 
 const _TabPlaceBuyable = ({place}) => {
     const navigate = useNavigate()
@@ -115,6 +114,7 @@ const _TabPlaceBuyable = ({place}) => {
     return (
             <List className={"nopadding"} disablePadding>
                 {place.Id&&<_placeSubscribes place={place} />}
+                {place.Id&&<_placeCourses place={place} />}
             </List>
     );
 };

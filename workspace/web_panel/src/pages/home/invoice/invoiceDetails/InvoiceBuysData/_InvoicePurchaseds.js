@@ -6,9 +6,17 @@ import {useHistory} from "react-router-dom";
 
 const _InvoicePurchaseds = ({PurchasedBases}) => {
     const history = useHistory();
+
+    function goToPurchased(row) {
+        switch(row.PurchasedType){
+            case "SUBSCRIBE":return  history.push({pathname: "/subscribe/data/" + row.Id});
+            case "COURSE":return  history.push({pathname: "/course/data/" + row.Id});
+        }
+    }
+
     return (
         <>
-            {PurchasedBases &&<Portlet>
+            {PurchasedBases && <Portlet>
                 <PortletHeader title="بلیط های خریداری شده"/>
                 <PortletBody>
                     <Table className={"table"}>
@@ -23,9 +31,7 @@ const _InvoicePurchaseds = ({PurchasedBases}) => {
                         <TableBody>
 
                             {PurchasedBases.map((row, number) => (
-                                <TableRow key={"purchased-"+number} hover onClick={(event) => {
-                                    history.push({pathname: "/subscribe/data/" + row.Id});
-                                }}>
+                                <TableRow key={"purchased-" + number} hover onClick={(event) => goToPurchased(row)}>
                                     <TableCell align="right">{row.Id}</TableCell>
                                     <TableCell align="right">{BuyableType[row.PurchasedType]}</TableCell>
                                     <TableCell align="right">{row.Name}</TableCell>

@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.purchased.purchasedSubscribe.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.PurchasedStatus;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,7 +35,7 @@ public class PurchasedSubscribeQuery extends BaseQuery<PurchasedSubscribeQuery> 
 
 
     @JsonProperty("Status")
-    private PurchasedStatus is_status;
+    private SubscribePurchasedStatus is_status;
 
     @JsonProperty("TicketSubscribeId")
     private Long is_ticketSubscribeæid;

@@ -4,6 +4,7 @@ import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.common.settings.note.enums.NoteType;
@@ -54,8 +55,8 @@ public class ManageNoteEntity extends BaseEntityWithCreateUpdate<ManageNoteEntit
     private InvoiceEntity invoice;
 
     @ManyToOne
-    @JoinColumn(name = "subscribeId")
-    private PurchasedSubscribeEntity subscribe;
+    @JoinColumn(name = "purchasedId")
+    private PurchasedBaseEntity purchased;
 
     @Override
     public boolean equals(Object o) {

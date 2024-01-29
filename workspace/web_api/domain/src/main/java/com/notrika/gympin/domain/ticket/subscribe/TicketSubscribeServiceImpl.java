@@ -3,29 +3,29 @@ package com.notrika.gympin.domain.ticket.subscribe;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.ActiveTimesDto;
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDiscountHistoryDto;
+import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
+import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
-import com.notrika.gympin.common.ticket.ticketSubscribe.param.ActiveTimesParam;
-import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeActiveTimesParam;
+import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
+import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeSportParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.query.TicketSubscribeQuery;
 import com.notrika.gympin.common.ticket.ticketSubscribe.service.TicketSubscribeService;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
-import com.notrika.gympin.common.util.exception.ticketSubscribe.*;
+import com.notrika.gympin.common.util.exception.ticket.*;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.HallConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceSportConvertor;
 import com.notrika.gympin.domain.util.convertor.TicketSubscribeConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.sport.PlaceSportRepository;
-import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeHallActiveTimesRepository;
+import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketHallActiveTimesRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
-import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeHallActiveTime;
+import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     @Autowired
     private TicketSubscribeRepository ticketSubscribeRepository;
     @Autowired
-    private TicketSubscribeHallActiveTimesRepository ticketSubscribeHallActiveTimesRepository;
+    private TicketHallActiveTimesRepository ticketSubscribeHallActiveTimesRepository;
     @Autowired
     private PlaceSportRepository placeSportRepository;
 
@@ -187,9 +187,9 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     }
 
     @Override
-    public List<TicketSubscribeDiscountHistoryDto> getTicketSubscribeDiscountHistory(Long ticketSubscribeId) {
+    public List<TicketDiscountHistoryDto> getTicketSubscribeDiscountHistory(Long ticketSubscribeId) {
         TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(ticketSubscribeId);
-        return ticketSubscribe.getSubscribeDiscountHistory().stream().skip(Math.max(0, ticketSubscribe.getSubscribeDiscountHistory().size() - 30)).map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
+        return ticketSubscribe.getDiscountHistory().stream().skip(Math.max(0, ticketSubscribe.getDiscountHistory().size() - 30)).map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -197,46 +197,46 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
         TicketSubscribeEntity ticketSubscribeEntity = getEntityById(ticketSubscribeParam.getId());
         if (ticketSubscribeParam.getEnable()) {
             if (ticketSubscribeEntity.getName() == null) {
-                throw new TicketSubscribeNameCannotBeNull();
+                throw new TicketNameCannotBeNull();
             }
             if (ticketSubscribeEntity.getPrice() == null) {
-                throw new TicketSubscribePriceCannotBeNull();
+                throw new TicketPriceCannotBeNull();
             }
             if (ticketSubscribeEntity.getBeneficiary() == null) {
-                throw new TicketSubscribeHasNotOwner();
+                throw new TicketHasNotOwner();
             }
             if (ticketSubscribeEntity.getGender() == null) {
-                throw new TicketSubscribeGenderCannotBeNull();
+                throw new TicketGenderCannotBeNull();
             }
             if (ticketSubscribeEntity.getValuePrice() == null) {
-                throw new TicketSubscribePriceCannotBeNull();
+                throw new TicketPriceCannotBeNull();
             }
             if (ticketSubscribeEntity.getPlacePrice() == null) {
-                throw new TicketSubscribePriceCannotBeNull();
+                throw new TicketPriceCannotBeNull();
             }
             if (ticketSubscribeEntity.getEntryTotalCount() == null || ticketSubscribeEntity.getEntryTotalCount() == 0) {
-                throw new TicketSubscribeEntryCountCanNotBeNullOrZiro();
+                throw new TicketEntryCountCanNotBeNullOrZiro();
             }
             if (ticketSubscribeEntity.getDiscount() == null) {
-                throw new TicketSubscribeDiscountCannotBeNull();
+                throw new TicketDiscountCannotBeNull();
             }
             if (ticketSubscribeEntity.getExpireDuration() == null) {
-                throw new TicketSubscribeExpireDurationCannotBeNull();
+                throw new TicketExpireDurationCannotBeNull();
             }
             if (ticketSubscribeEntity.getSubscribeCapacity() == null || ticketSubscribeEntity.getSubscribeCapacity() < 1) {
-                throw new TicketSubscribeCapacityCannotBeNullorZiro();
+                throw new TicketCapacityCannotBeNullorZiro();
             }
             if (ticketSubscribeEntity.getTicketSubscribeSport() == null) {
-                throw new TicketSubscribeSportCannotBeNull();
+                throw new TicketSportCannotBeNull();
             }
             if (ticketSubscribeEntity.getTicketSubscribeSport().size() < 1) {
-                throw new TicketSubscribeSportCannotBeNull();
+                throw new TicketSportCannotBeNull();
             }
             if (ticketSubscribeEntity.getActiveTimes() == null) {
-                throw new TicketSubscribeHallsCannotBeNull();
+                throw new TicketHallsCannotBeNull();
             }
             if (ticketSubscribeEntity.getActiveTimes().size() < 1) {
-                throw new TicketSubscribeHallsCannotBeNull();
+                throw new TicketHallsCannotBeNull();
             }
         }
         ticketSubscribeEntity.setEnable(ticketSubscribeParam.getEnable());
@@ -250,9 +250,9 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     }
 
     @Override
-    public TicketSubscribeDto addSubscribeActiveTimes(TicketSubscribeActiveTimesParam param) {
-       var ticketSubscribe = ticketSubscribeRepository.getById(param.getTicketSubscribe().getId());
-       List<TicketSubscribeHallActiveTime> activeTimes = ticketSubscribe.getActiveTimes();
+    public TicketSubscribeDto addSubscribeActiveTimes(TicketActiveTimesParam param) {
+       var ticketSubscribe = ticketSubscribeRepository.getById(param.getTicket().getId());
+       List<TicketHallActiveTimeEntity> activeTimes = ticketSubscribe.getActiveTimes();
        for(ActiveTimesParam activeTime:param.getActiveTime()){
            if (ticketSubscribe.getActiveTimes().stream().anyMatch(s -> s.getId().equals(activeTime.getId())))
                throw new DuplicateEntryAddExeption();
@@ -264,9 +264,9 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     }
 
     @Override
-    public TicketSubscribeDto deleteSubscribeActiveTimes(TicketSubscribeActiveTimesParam param) {
-        TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(param.getTicketSubscribe().getId());
-        List<TicketSubscribeHallActiveTime> activeTimes = ticketSubscribe.getActiveTimes();
+    public TicketSubscribeDto deleteSubscribeActiveTimes(TicketActiveTimesParam param) {
+        TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(param.getTicket().getId());
+        List<TicketHallActiveTimeEntity> activeTimes = ticketSubscribe.getActiveTimes();
         var activeTimesRemoveIds = param.getActiveTime().stream().map(BaseParam::getId).collect(Collectors.toList());
         var afterfilter = activeTimes.stream().filter(a -> !activeTimesRemoveIds.contains(a.getId())).collect(Collectors.toList());
         ticketSubscribe.setActiveTimes(afterfilter);

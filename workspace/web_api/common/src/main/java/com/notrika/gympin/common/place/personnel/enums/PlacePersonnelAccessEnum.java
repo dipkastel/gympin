@@ -26,6 +26,7 @@ public enum PlacePersonnelAccessEnum {
     ManagementPersonnel,
     ManagementAbout,
     ManagementOptions,
+    ManagementSports,
     ManagementSettingsQr,
     Sells,
     SellsCourse,

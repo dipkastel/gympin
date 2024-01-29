@@ -1,9 +1,6 @@
 import axios from "axios";
 import {Api_url} from "./NETWORKCONSTS";
 
-export function purchasedSubscribe_add(data) {
-    return axios.post(Api_url.purchasedSubscribe.ADD,  data);
-}
 export function purchasedSubscribe_getById(data) {
     return axios.get(Api_url.purchasedSubscribe.getById, {params: data});
 }

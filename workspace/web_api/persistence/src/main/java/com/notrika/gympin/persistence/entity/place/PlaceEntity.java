@@ -109,10 +109,10 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @ToString.Exclude
     private List<ManageNoteEntity> notes;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "place",fetch = FetchType.LAZY)
     private List<PlaceCommentEntity> placeComments;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "place",fetch = FetchType.LAZY)
     private List<PlaceRateEntity> placeRates;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)

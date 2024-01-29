@@ -182,7 +182,7 @@ const PlacePersonnel = ({place}) => {
                                         onClick={() => history.push("/users/details/" + row.User.Id)}
                                         alt={row.User.Username} src={row.User.Avatar ? row.User.Avatar.Url : ""}
                                         sx={{width: 20, height: 20}}/></TableCell>
-                                    <TableCell align="right">{row.User.FullName||""}-{row.User.Username}</TableCell>
+                                    <TableCell align="right">{row?.User?.Username+(row?.User?.FullName?("-"+row?.User?.FullName):"")}</TableCell>
                                     <TableCell align="right">{PlacePersonnelRole[row.UserRole]}</TableCell>
                                     <TableCell align="right">
                                         {(row.IsBeneficiary)&&

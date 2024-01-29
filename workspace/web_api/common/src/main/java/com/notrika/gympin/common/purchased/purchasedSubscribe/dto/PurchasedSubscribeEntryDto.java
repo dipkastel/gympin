@@ -2,7 +2,7 @@ package com.notrika.gympin.common.purchased.purchasedSubscribe.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
-import com.notrika.gympin.common.place.hallEnter.enums.SubscribeEntryStatus;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

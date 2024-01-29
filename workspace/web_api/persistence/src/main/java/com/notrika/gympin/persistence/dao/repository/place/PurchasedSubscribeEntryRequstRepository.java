@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.dao.repository.place;
 
-import com.notrika.gympin.common.place.hallEnter.enums.SubscribeEntryStatus;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryRequstEntity;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;

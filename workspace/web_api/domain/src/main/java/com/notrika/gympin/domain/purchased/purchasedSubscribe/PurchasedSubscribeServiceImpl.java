@@ -1,13 +1,13 @@
 package com.notrika.gympin.domain.purchased.purchasedSubscribe;
 
-import com.notrika.gympin.common.place.hallEnter.enums.SubscribeEntryStatus;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeDto;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeScannedDto;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.PurchasedStatus;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.param.EntryMessageParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.param.IncreaseExpireParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.param.PurchasedSubscribeParam;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.param.UserPurchasedSubscribesParam;
+import com.notrika.gympin.common.purchased.purchased.param.UserPlacePurchasedParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.query.PurchasedSubscribeQuery;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.service.PurchasedSubscribeService;
 import com.notrika.gympin.common.settings.context.GympinContext;
@@ -16,7 +16,7 @@ import com.notrika.gympin.common.settings.sms.service.SmsService;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util.GeneralUtil;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
-import com.notrika.gympin.common.util.exception.subscribe.*;
+import com.notrika.gympin.common.util.exception.purchased.*;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
@@ -48,7 +48,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.notrika.gympin.common.purchased.purchasedSubscribe.enums.PurchasedStatus.*;
+import static com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus.*;
 
 @Service
 public class PurchasedSubscribeServiceImpl extends AbstractBaseService<PurchasedSubscribeParam, PurchasedSubscribeDto, PurchasedSubscribeQuery, PurchasedSubscribeEntity> implements PurchasedSubscribeService {
@@ -94,7 +94,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
 
         if (!GeneralUtil.isGenderCompatible(ticketSubscribe.getGender(), user.getGender()))
-            throw new SubscribeGenderIsNotCompatible();
+            throw new GenderIsNotCompatible();
         entity.setStatus(READY_TO_ACTIVE);
         entity.setTicketSubscribe(ticketSubscribe);
         entity.setCustomer(user);
@@ -196,15 +196,15 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 //            throw new UnknownUserException();
 //        UserEntity userEntity = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
 //
-////        if (subscribeEntity.getStatus() == PurchasedStatus.PAYMENT_WAIT) {
-////            throw new SubscribeNotPayedException();
+////        if (subscribeEntity.getStatus() == SubscribePurchasedStatus.PAYMENT_WAIT) {
+////            throw new NotPayedException();
 ////        } else
-//        if (subscribeEntity.getStatus() == PurchasedStatus.READY_TO_ACTIVE) {
+//        if (subscribeEntity.getStatus() == SubscribePurchasedStatus.READY_TO_ACTIVE) {
 //            if (!userEntity.getPlacePersonnel().stream().map(p -> p.getPlace().getId()).anyMatch(p -> p.equals(subscribeEntity.getTicketSubscribe().getPlace().getId())))
-//                throw new SubscribeOwnedByOtherPlaceException();
+//                throw new OwnedByOtherPlaceException();
 //            //check for user registerd in place before
 //            List<PurchasedSubscribeEntity> userPlaceSubscribes = purchasedSubscribeRepository.getUserPlaceSubscribe(subscribeEntity.getCustomer().getId(), subscribeEntity.getTicketSubscribe().getPlace().getId());
-//            if (userPlaceSubscribes.stream().anyMatch(p -> (p.getStatus() == PurchasedStatus.ACTIVE) || (p.getStatus() == PurchasedStatus.COMPLETE) || (p.getStatus() == EXPIRE))) {
+//            if (userPlaceSubscribes.stream().anyMatch(p -> (p.getStatus() == SubscribePurchasedStatus.ACTIVE) || (p.getStatus() == SubscribePurchasedStatus.COMPLETE) || (p.getStatus() == EXPIRE))) {
 //                //user Has subscribe From this place Before
 //                purchasedSubscribeScannedDto.setUserPlaceStatus(PurchasedSubscribeUserPlaceStatus.REGISTER_BEFORE);
 //            } else {
@@ -212,27 +212,25 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 //                purchasedSubscribeScannedDto.setUserPlaceStatus(PurchasedSubscribeUserPlaceStatus.NEW_USER);
 //            }
 //            //activate user
-//            subscribeEntity.setStatus(PurchasedStatus.ACTIVE);
+//            subscribeEntity.setStatus(SubscribePurchasedStatus.ACTIVE);
 //            purchasedSubscribeRepository.update(subscribeEntity);
-//            purchasedSubscribeScannedDto.setScanResult(ScanResult.REGISTERED);
 //        } else if (subscribeEntity.getStatus() == EXPIRE) {
-//            throw new SubscribeExpiredException();
-//        } else if (subscribeEntity.getStatus() == PurchasedStatus.COMPLETE) {
-//            throw new SubscribeUsageLimitException();
-//        } else if (subscribeEntity.getStatus() == PurchasedStatus.CANCEL) {
-//            throw new SubscribeCanceledException();
-//        } else if (subscribeEntity.getStatus() == PurchasedStatus.PROCESSING) {
-//            throw new SubscribeIsInProcessException();
-//        } else if (subscribeEntity.getStatus() == PurchasedStatus.ACTIVE) {
+//            throw new PurchasedExpiredException();
+//        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.COMPLETE) {
+//            throw new UsageLimitException();
+//        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.CANCEL) {
+//            throw new PurchasedCanceledException();
+//        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.PROCESSING) {
+//            throw new IsInProcessException();
+//        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.ACTIVE) {
 //            //requeset check
 //            if (subscribeEntity.getEntryList().stream().anyMatch(t -> t.getSubscribeEntryStatus() == SubscribeEntryStatus.REQUESTED)) {
 //                throw new UserRequestEnterException();
 //            }
 //            //canuserScan this subscribe?
 //            if (!userEntity.getPlacePersonnel().stream().map(p -> p.getPlace().getId()).anyMatch(p -> p.equals(subscribeEntity.getTicketSubscribe().getPlace().getId())))
-//                throw new SubscribeOwnedByOtherPlaceException();
+//                throw new OwnedByOtherPlaceException();
 //            //user Enter
-//            purchasedSubscribeScannedDto.setScanResult(ScanResult.ACCEPTED);
 //            //avoid duplicate enery
 //            if (subscribeEntity.getEntryList().size() > 0) {
 //                var lastEnter = subscribeEntity.getEntryList().get(subscribeEntity.getEntryList().size() - 1);
@@ -244,7 +242,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 //                calculatePaymetsService.PayToPlace(subscribeEntity);
 //            }
 //            if (subscribeEntity.getEntryTotalCount() <= subscribeEntity.getEntryList().stream().filter(en -> en.getSubscribeEntryStatus() == SubscribeEntryStatus.ACCEPTED).count()) {
-//                throw new SubscribeUsageLimitException();
+//                throw new UsageLimitException();
 //            }
 //            PurchasedSubscribeEntryEntity psubscribeEntryEntity = PurchasedSubscribeEntryEntity.builder()
 //                    .subscribeEntryStatus(SubscribeEntryStatus.ACCEPTED)
@@ -268,7 +266,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
     }
 
     @Override
-    public List<PurchasedSubscribeDto> getUserSubscribesByPlace(UserPurchasedSubscribesParam param) {
+    public List<PurchasedSubscribeDto> getUserSubscribesByPlace(UserPlacePurchasedParam param) {
         List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.getUserPlaceSubscribe(param.getUserId(), param.getPlaceId()).stream().map(purchasedSubscribeHelper::checkForExpire).filter(f -> READY_TO_ACTIVE != f.getStatus()).collect(Collectors.toList());
         return convertToDtos(subscribeEntities);
     }
@@ -343,27 +341,27 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
         //checks
         if (subscribeEntity.getStatus() == EXPIRE) {
-            throw new SubscribeExpiredException();
-        } else if (subscribeEntity.getStatus() == PurchasedStatus.COMPLETE) {
-            throw new SubscribeUsageLimitException();
-        } else if (subscribeEntity.getStatus() == PurchasedStatus.CANCEL) {
-            throw new SubscribeCanceledException();
-        } else if (subscribeEntity.getStatus() == PurchasedStatus.PROCESSING) {
-            throw new SubscribeIsInProcessException();
+            throw new PurchasedExpiredException();
+        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.COMPLETE) {
+            throw new UsageLimitException();
+        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.CANCEL) {
+            throw new PurchasedCanceledException();
+        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.PROCESSING) {
+            throw new IsInProcessException();
         }
 
-        if (subscribeEntity.getStatus() == PurchasedStatus.READY_TO_ACTIVE) {
+        if (subscribeEntity.getStatus() == SubscribePurchasedStatus.READY_TO_ACTIVE) {
 
             //peyToPlace
             calculatePaymetsService.PayToPlace(subscribeEntity);
 
 
             //enterUser
-            subscribeEntity.setStatus(PurchasedStatus.ACTIVE);
+            subscribeEntity.setStatus(SubscribePurchasedStatus.ACTIVE);
             purchasedSubscribeRepository.update(subscribeEntity);
             purchasedSubscribeHelper.enterUser(subscribeEntity, userEntity);
 
-        } else if (subscribeEntity.getStatus() == PurchasedStatus.ACTIVE) {
+        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.ACTIVE) {
             //requeset check
             if (subscribeEntity.getEntryList().stream().anyMatch(t -> t.getSubscribeEntryStatus() == SubscribeEntryStatus.REQUESTED)) {
                 throw new UserRequestEnterException();
@@ -374,7 +372,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
             }
             //subscribe limit
             if (subscribeEntity.getEntryTotalCount() <= subscribeEntity.getEntryList().stream().filter(en -> en.getSubscribeEntryStatus() == SubscribeEntryStatus.ACCEPTED).count()) {
-                throw new SubscribeUsageLimitException();
+                throw new UsageLimitException();
             }
             //enter User
             purchasedSubscribeHelper.enterUser(subscribeEntity, userEntity);
@@ -400,7 +398,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
         //check subscribe Limit
         if (subscribeEntity.getEntryTotalCount() <= subscribeEntity.getEntryList().stream().filter(en -> en.getSubscribeEntryStatus() == SubscribeEntryStatus.ACCEPTED).count()) {
-            throw new SubscribeUsageLimitException();
+            throw new UsageLimitException();
         }
 
         entry.setSubscribeEntryStatus(SubscribeEntryStatus.ACCEPTED);
@@ -417,7 +415,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         UserEntity userEntity = userRepository.getById(param.getUser().getId());
 
         if (psubscribeEntity.getStatus() != ACTIVE) {
-            throw new SubscribeIsNotActiveException();
+            throw new IsNotActiveException();
         }
 
         var userSubscribes = purchasedSubscribeRepository.findAllByCustomerIdAndDeletedFalse(userEntity.getId());
@@ -430,10 +428,10 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
                 throw new EntryAlreadyExistException();
             }
         } else {
-            throw new SubscribeFirstEntryRequestException();
+            throw new FirstEntryRequestException();
         }
         if (psubscribeEntity.getEntryTotalCount() <= psubscribeEntity.getEntryList().stream().filter(en -> en.getSubscribeEntryStatus() == SubscribeEntryStatus.ACCEPTED).count()) {
-            throw new SubscribeUsageLimitException();
+            throw new UsageLimitException();
         }
         PurchasedSubscribeEntryEntity psubscribeEntryEntity = PurchasedSubscribeEntryEntity.builder().subscribeEntryStatus(SubscribeEntryStatus.REQUESTED).enterDate(new Date()).purchasedSubscribe(psubscribeEntity).build();
         purchasedSubscribeEntryRepository.add(psubscribeEntryEntity);

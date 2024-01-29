@@ -8,29 +8,22 @@ import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
 import com.notrika.gympin.common.finance.invoice.query.InvoiceQuery;
 import com.notrika.gympin.common.finance.invoice.service.InvoiceService;
-import com.notrika.gympin.common.settings.context.GympinContext;
-import com.notrika.gympin.common.settings.context.GympinContextHolder;
-import com.notrika.gympin.common.settings.note.enums.NoteType;
 import com.notrika.gympin.common.util.GeneralUtil;
-import com.notrika.gympin.common.util.exception.subscribe.SubscribeGenderIsNotCompatible;
-import com.notrika.gympin.common.util.exception.subscribe.SubscribeIsAlreadyPayedException;
-import com.notrika.gympin.common.util.exception.subscribe.SubscribePriceConflictException;
-import com.notrika.gympin.common.util.exception.subscribe.SubscribePriceTotalConflictException;
-import com.notrika.gympin.common.util.exception.user.UnknownUserException;
+import com.notrika.gympin.common.util.exception.purchased.GenderIsNotCompatible;
+import com.notrika.gympin.common.util.exception.purchased.IsAlreadyPayedException;
+import com.notrika.gympin.common.util.exception.purchased.PriceConflictException;
+import com.notrika.gympin.common.util.exception.purchased.PriceTotalConflictException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.InvoiceConvertor;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
-import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
-import com.notrika.gympin.persistence.dao.repository.ticket.BuyableRepository;
+import com.notrika.gympin.persistence.dao.repository.ticket.common.BuyableRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
-import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -214,15 +207,15 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         InvoiceEntity invoice = invoiceRepository.getById(param.getInvoice().getId());
 
         if (invoice.getStatus() != InvoiceStatus.PROCESSING)
-            throw new SubscribeIsAlreadyPayedException();
+            throw new IsAlreadyPayedException();
         if (invoice.getPriceToPay().compareTo(param.getPrice()) != 0)
-            throw new SubscribePriceConflictException();
+            throw new PriceConflictException();
         for(InvoiceBuyableEntity buyable:invoice.getInvoiceBuyables().stream().filter(b->!b.isDeleted()).collect(Collectors.toList())){
             if (!GeneralUtil.isGenderCompatible(buyable.getGender(), invoice.getUser().getGender()))
-                throw new SubscribeGenderIsNotCompatible();
+                throw new GenderIsNotCompatible();
         }
         if (invoice.getPriceToPay().compareTo(param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
-            throw new SubscribePriceTotalConflictException();
+            throw new PriceTotalConflictException();
 
         InvoiceEntity result = invoiceServiceHelper.calculateCheckout(invoice,param);
 

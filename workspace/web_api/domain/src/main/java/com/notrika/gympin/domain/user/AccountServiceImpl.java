@@ -13,7 +13,7 @@ import com.notrika.gympin.common.support.service.SupportService;
 import com.notrika.gympin.common.user.user.dto.*;
 import com.notrika.gympin.common.user.user.enums.TokenType;
 import com.notrika.gympin.common.user.user.enums.UserGroup;
-import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.common.user.user.param.*;
 import com.notrika.gympin.common.user.user.service.AccountService;
@@ -28,7 +28,7 @@ import com.notrika.gympin.common.util.exception.activation.code.ActivationCodeNo
 import com.notrika.gympin.common.util.exception.activation.code.InviteCodeNotValid;
 import com.notrika.gympin.common.util.exception.general.SendSmsException;
 import com.notrika.gympin.common.util.exception.general.UserNotAllowedException;
-import com.notrika.gympin.common.util.exception.subscribe.EntryAlreadyExistException;
+import com.notrika.gympin.common.util.exception.purchased.EntryAlreadyExistException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
@@ -39,6 +39,7 @@ import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;
+import com.notrika.gympin.persistence.entity.user.UserRolesEntity;
 import com.notrika.gympin.persistence.entity.user.activationCode.UserActivationCodeEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,8 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -125,6 +128,7 @@ public class AccountServiceImpl implements AccountService {
         if (!GeneralHelper.checkInviteCode(userRegisterParam.getInvitedBy(), userRepository))
             throw new InviteCodeNotValid();
         try {
+            userRegisterParam.setUserRole(RoleEnum.USER);
             UserEntity insertedUser = addUser(userRegisterParam);
             return UserConvertor.toRegisterDto(insertedUser);
         } catch (DataIntegrityViolationException e) {
@@ -139,7 +143,20 @@ public class AccountServiceImpl implements AccountService {
         UserEntity user = new UserEntity();
         user.setUsername("USER_" + new Date().getTime());
         user.setPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
-        user.setUserRole(userRegisterParam.getUserRole().getRole());
+
+
+        if(userRegisterParam.getUserRole()==null)
+            userRegisterParam.setUserRole(RoleEnum.USER);
+
+        Set<UserRolesEntity> userRoles = new java.util.HashSet<>(Set.of(
+                UserRolesEntity.builder().role(RoleEnum.USER).build()
+        ));
+        if(userRegisterParam.getUserRole()!= RoleEnum.USER)
+            userRoles.add(UserRolesEntity.builder().role(userRegisterParam.getUserRole()).build());
+        user.setUserRoles(userRoles);
+
+
+
         if (userRegisterParam.getFullName() != null)
             user.setFullName(userRegisterParam.getFullName());
         if (userRegisterParam.getInvitedBy() != null)
@@ -207,22 +224,16 @@ public class AccountServiceImpl implements AccountService {
         if (application == null) return false;
         switch (application) {
             case ANDROID:
-                return user.getUserRole() == UserRole.USER;
+                return true;
             case IOS:
-                return user.getUserRole() == UserRole.USER;
+                return true;
             case WEBPANEL:
-                return user.getUserRole() == UserRole.ADMIN
-                        || user.getUserRole() == UserRole.SUPER_ADMIN
-                        || user.getUserRole() == UserRole.CONTENT
-                        || user.getUserRole() == UserRole.MANAGER
-                        || user.getUserRole() == UserRole.MARKET;
+                return user.getUserRoles().stream().map(UserRolesEntity::getRole).anyMatch(p-> p == RoleEnum.ADMIN
+                        || p == RoleEnum.SUPER_ADMIN
+                        || p == RoleEnum.MANAGER
+                        || p == RoleEnum.MARKET);
             case WEBAPP:
-                return user.getUserRole() == UserRole.USER
-                        || user.getUserRole() == UserRole.ADMIN
-                        || user.getUserRole() == UserRole.SUPER_ADMIN
-                        || user.getUserRole() == UserRole.CONTENT
-                        || user.getUserRole() == UserRole.MANAGER
-                        || user.getUserRole() == UserRole.MARKET;
+                return true;
             case WEBMASTER:
                 return user.getPlacePersonnel().size() > 0;
             case WEBCORPORATE:
@@ -255,8 +266,7 @@ public class AccountServiceImpl implements AccountService {
             //            throw new ExceptionBase();
         }
         setUserContext(user);
-        ArrayList<UserRole> roles = new ArrayList<>();
-        roles.add(user.getUserRole());
+        ArrayList<RoleEnum> roles = user.getUserRoles().stream().map(UserRolesEntity::getRole).collect(Collectors.toCollection(ArrayList::new));
         UserDetailsImpl userDetails = new UserDetailsImpl(roles, password, phoneNumber, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
         log.info("User loaded: {}", userDetails);
         return userDetails;

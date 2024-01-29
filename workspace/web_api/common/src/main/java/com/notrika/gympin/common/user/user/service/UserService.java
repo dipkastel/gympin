@@ -5,7 +5,6 @@ import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
 import com.notrika.gympin.common.user.user.param.UserAvatarParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
-import com.notrika.gympin.common.user.user.param.UserRoleUpdateParam;
 import com.notrika.gympin.common.user.user.param.UserStatusParam;
 import com.notrika.gympin.common.user.user.query.UserQuery;
 import com.notrika.gympin.common.util._base.base.BaseService;
@@ -18,9 +17,7 @@ public interface UserService extends BaseService<UserParam, UserDto, UserQuery> 
 
     UserDto getUserByUsername(UserParam userParam);
 
-    List<UserRoleInfoDto> getAllRules();
-
-    UserDto UpdateUserRole(UserRoleUpdateParam userParam);
+    List<UserRoleInfoDto> getAllRoles();
 
     UserDto updateUserAvatar(UserAvatarParam userParam);
 

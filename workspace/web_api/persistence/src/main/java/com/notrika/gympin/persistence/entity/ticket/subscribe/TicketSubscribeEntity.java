@@ -3,6 +3,7 @@ package com.notrika.gympin.persistence.entity.ticket.subscribe;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -39,7 +40,7 @@ public class TicketSubscribeEntity extends BuyableEntity<TicketSubscribeEntity> 
     @ManyToMany
     @JoinTable(name = "ticketSubsctibeAction", joinColumns = @JoinColumn(name = "ticketSubscribeId"), inverseJoinColumns = @JoinColumn(name = "hallActionId"))
     @ToString.Exclude
-    private List<TicketSubscribeHallActiveTime> ActiveTimes;
+    private List<TicketHallActiveTimeEntity> activeTimes;
 
 
     @ManyToMany

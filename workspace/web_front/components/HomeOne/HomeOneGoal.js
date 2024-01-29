@@ -9,9 +9,10 @@ const HomeOneGoal = () => {
                         <div className="col-xl-12">
                             <div className="details-content details-content__project rtl">
                                 <h2 className="details-content__title mb-20">اهـداف ما</h2>
-                                <p>ما در جیم پین به ارائه خدمات، معرفی و رزرو مراکز ورزشی به صورت آنلاین برای پرسنل
-                                    شرکت ها و سازمان ها اهتمام داریم. هدف ما ایجاد فضایی راحت و مطمئن برای
-                                    پیداکردن و انجام فعالیت های ورزشی است.</p>
+                                <p>ما در جیم پین به معرفی مراکز ورزشی، ارائه‌ خدمات و رزرو سالن ها به صورت آنلاین برای پرسنل
+                                    شرکت ها و سازمان ها می پردازیم.
+                                    هدف ما ایجاد فضایی راحت و مطمئن برای
+                                    دسترسی کاربران به مراکز ورزشی است.</p>
                                 <div className="row mt-none-30">
                                     <div className="col-xl-3 col-lg-6 col-md-6 mt-30">
                                         <div className="wp-box">
@@ -20,7 +21,7 @@ const HomeOneGoal = () => {
                                             </div>
                                             <div className="wp-box__content">
                                                 <h4 className="wp-box__title wp-box__title--2">ترویج سلامت و ورزش</h4>
-                                                <p>ایجاد امکانات و بستری برای تشویق افراد به ورزش و ترغیب به سبک زندگی سالم .</p>
+                                                <p className={"text-justify"}>ایجاد بستری مناسب برای تشویق افراد به ورزش و ترغیب آنها به زندگی سالم .</p>
                                             </div>
                                         </div>
                                     </div>
@@ -31,7 +32,7 @@ const HomeOneGoal = () => {
                                             </div>
                                             <div className="wp-box__content">
                                                 <h4 className="wp-box__title wp-box__title--2">تسهیل دسترسی به مراکز ورزشی</h4>
-                                                <p>فراهم کردن راهی ساده برای دسترسی به مراکز ورزشی برای پرسنل سازمان ها و شرکت ها .</p>
+                                                <p className={"text-justify"}>فراهم کردن راهی ساده برای دسترسی به انبوهی از مراکز ورزشی .</p>
                                             </div>
                                         </div>
                                     </div>
@@ -42,7 +43,7 @@ const HomeOneGoal = () => {
                                             </div>
                                             <div className="wp-box__content">
                                                 <h4 className="wp-box__title wp-box__title--2">توسعه فناوری و ابزارهای مدیریتی</h4>
-                                                <p>توسعه ابزارهای مدیریتی به وسیله فناوری به منظور بهبود مدیریت منابع انسانی و ارتقاء تجربه کاربری .</p>
+                                                <p className={"text-justify"}>توسعه ابزارهای مدیریتی به منظور بهبود مدیریت منابع انسانی و ارتقاء تجربه کاربری .</p>
                                             </div>
                                         </div>
                                     </div>
@@ -52,8 +53,8 @@ const HomeOneGoal = () => {
                                                 <img src="/images/icons/w-p-4.png" alt=""/>
                                             </div>
                                             <div className="wp-box__content">
-                                                <h4 className="wp-box__title wp-box__title--2">Sکاهش هزینه های مرتبط با امور رفاهی</h4>
-                                                <p>کاهش هزینه های مرتبط با خدمات ورزشی ، برای سازمان ها و شرکت ها.</p>
+                                                <h4 className="wp-box__title wp-box__title--2">کاهش هزینه های امور رفاهی سازمان ها</h4>
+                                                <p className={"text-justify"}>کاهش هزینه های مرتبط با خدمات ورزشی ، برای سازمان ها و شرکت ها.</p>
                                             </div>
                                         </div>
                                     </div>

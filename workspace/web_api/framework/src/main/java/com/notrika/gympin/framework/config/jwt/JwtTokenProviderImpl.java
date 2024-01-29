@@ -74,7 +74,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
         String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining());
 
         String tokenString =
-                Jwts.builder().setSubject(auth.getName()).claim("roles", authorities).claim("GympinRole", admin/*.getBaseUser()*/.getUserRole()).setExpiration(new Date(System.currentTimeMillis() + adminjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+                Jwts.builder().setSubject(auth.getName()).claim("roles", authorities).claim("GympinRole", admin.getUserRoles()).setExpiration(new Date(System.currentTimeMillis() + adminjwtExpirationInMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
         UserTokenEntity userToken = new UserTokenEntity();
         //        userToken.setUser(admin.getBaseUser());
         userToken.setToken(tokenString);

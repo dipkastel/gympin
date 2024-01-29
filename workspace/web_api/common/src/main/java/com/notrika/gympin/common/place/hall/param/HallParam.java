@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.place.hall.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.ticket.ticketSubscribe.param.ActiveTimesParam;
+import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.sport.sport.param.SportParam;

@@ -8,12 +8,13 @@ import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.place.placeSport.param.PlaceSportParam;
 import com.notrika.gympin.common.sport.sport.param.SportParam;
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.ActiveTimesDto;
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDiscountHistoryDto;
+import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;
+import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
+import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
-import com.notrika.gympin.common.ticket.ticketSubscribe.enums.DayOfWeek;
-import com.notrika.gympin.common.ticket.ticketSubscribe.param.ActiveTimesParam;
-import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeActiveTimesParam;
+import com.notrika.gympin.common.ticket.common.enums.DayOfWeek;
+import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
+import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeSportParam;
 import com.notrika.gympin.common.user.user.enums.Gender;
@@ -348,10 +349,10 @@ public class ticketSubscribeTest extends BaseTest {
 
     @Test
     @Order(13)
-    public void addSubscribeActiveTime() throws Exception{
+    public void addTicketActiveTime() throws Exception{
         if (activeTime1 == null) throw new Exception("is not exist");
-        final TicketSubscribeActiveTimesParam param = TicketSubscribeActiveTimesParam.builder()
-                .ticketSubscribe(TicketSubscribeParam.builder().id(ticket.getId()).build())
+        final TicketActiveTimesParam param = TicketActiveTimesParam.builder()
+                .ticket(TicketBuyableParam.builder().id(ticket.getId()).build())
                 .activeTime(List.of(ActiveTimesParam.builder().id(activeTime1.getId()).build()))
                 .build();
 
@@ -374,11 +375,11 @@ public class ticketSubscribeTest extends BaseTest {
         final Map<String, Object> param = new TreeMap<>();
         param.put("ticketSubscribeId", ticket.getId());
 
-        ResponseModel<List<TicketSubscribeDiscountHistoryDto>> result = TestGet(
+        ResponseModel<List<TicketDiscountHistoryDto>> result = TestGet(
                 "/api/v1/TicketSubscribe/getTicketSubscribeDiscountHistory",
                 param,
                 true,
-                new TypeReference<ResponseModel<List<TicketSubscribeDiscountHistoryDto>>>() {
+                new TypeReference<ResponseModel<List<TicketDiscountHistoryDto>>>() {
                 });
 
         Assertions.assertEquals(result.isSuccess(), true);

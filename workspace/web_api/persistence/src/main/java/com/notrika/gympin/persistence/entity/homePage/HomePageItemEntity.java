@@ -58,7 +58,7 @@ public class HomePageItemEntity extends BaseEntity<HomePageItemEntity> {
     @Setter
     private HomePageItemEntity parent;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "parent")
+    @OneToMany(mappedBy = "parent",fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Setter
     private Set<HomePageItemEntity> items;

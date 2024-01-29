@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import _QRcode from "./_QRcode";
+import _QRcode from "../commonPartials/_QRcode";
 import {useParams} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import _SubscribeDetail from "./_SubscribeDetail";
 import {purchasedSubscribe_getById} from "../../../network/api/purchasedSubscribe.api";
-import _EnterList from "./_EnterList";
-import _UsageProgress from "./_UsageProgress";
-import _PhoneLessEnter from "./_PhoneLessEnter";
+import _SubscribeEnterList from "./_SubscribeEnterList";
+import _UsageProgress from "../commonPartials/_UsageProgress";
+import _SubscribePhoneLessEnter from "./_SubscribePhoneLessEnter";
 
 const SingleSubscribe = () => {
     const {subscribeId} = useParams();
@@ -35,10 +35,10 @@ const SingleSubscribe = () => {
     return (
         <>
             {subscribe && <_SubscribeDetail subscribe={subscribe}/>}
-            {subscribe && <_UsageProgress setUserCanEnter={setUserCanEnter} subscribe={subscribe}/>}
-            {subscribe && <_QRcode subscribe={subscribe}/>}
-            {subscribe && userCanEnter && <_PhoneLessEnter subscribe={subscribe} getSubscribe={getSubscribe}/>}
-            {subscribe && <_EnterList subscribe={subscribe} getSubscribe={getSubscribe} setUserCanEnter={setUserCanEnter}/>}
+            {subscribe && <_UsageProgress setUserCanEnter={setUserCanEnter} ticket={subscribe}/>}
+            {subscribe && <_QRcode ticket={subscribe} type={"SUBSCRIBE"} userCanEnter={userCanEnter}/>}
+            {subscribe && userCanEnter && <_SubscribePhoneLessEnter subscribe={subscribe} getSubscribe={getSubscribe}/>}
+            {subscribe && <_SubscribeEnterList subscribe={subscribe} getSubscribe={getSubscribe} setUserCanEnter={setUserCanEnter}/>}
         </>
     );
 };

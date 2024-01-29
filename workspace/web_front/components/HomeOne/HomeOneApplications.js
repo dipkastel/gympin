@@ -18,7 +18,7 @@ const HomeOneApplications = () => {
                             <a className="service-item service-item__2 d-flex" href={"https://corporate.gympin.ir"}>
                                 <div className="service-item__content service-item__content--2">
                                     <h4 className="service-item__title">اپلیکیشن سازمان ها</h4>
-                                    <p>این اپلیکیشن ویژه به سازمان ها مزایایی از
+                                    <p  className={"text-justify"}>این اپلیکیشن ویژه به سازمان ها مزایایی از
                                         جمله بهبود مدیریت پرسنل، مدیریت مالی
                                         بهتر و شفاف تر، امکان تشویق کارمندان،
                                         کاهش هزینه های اداری، و بهبود بهره وری
@@ -34,7 +34,7 @@ const HomeOneApplications = () => {
                             <a className="service-item service-item__2 d-flex" href={"https://web.gympin.ir"}>
                                 <div className="service-item__content service-item__content--2">
                                     <h4 className="service-item__title">اپلیکیشن کاربران</h4>
-                                    <p>اپلیکیشن کاربران جیم پین یک ابزار کارآمد و
+                                    <p  className={"text-justify"}>اپلیکیشن کاربران جیم پین یک ابزار کارآمد و
                                         چندمنظوره است که امکان دسترسی به مراکز
                                         ورزشی و خدمات مختلف را از طریق یک رابط
                                         کاربری آسان و متمرکز فراهم می کند. این

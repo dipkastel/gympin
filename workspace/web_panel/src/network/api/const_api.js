@@ -1,3 +1,4 @@
+import {user_addUserRole} from "./user.api";
 
 export let AuthApi = {
     // BASEURL: "https://api.gympin.ir/",
@@ -74,18 +75,17 @@ export let HallsApi = {
     getById: "v1/hall/getById",
     update: "v1/hall/update",
     getByPlaceId: "v1/hall/getHallsByPlace",
-    getBySportId: "v1/hall/getHallsBySport",
 };
 
-export let ticketSubscribeActiveTimesApi = {
-    add: "v1/ticketSubscribeActiveTimes/add",
-    addAll: "v1/ticketSubscribeActiveTimes/addAll",
-    delete: "v1/ticketSubscribeActiveTimes/delete",
-    getAll: "v1/ticketSubscribeActiveTimes/getAll",
-    getById: "v1/ticketSubscribeActiveTimes/getById",
-    update: "v1/ticketSubscribeActiveTimes/update",
-    getByHall: "v1/ticketSubscribeActiveTimes/getByHall",
-    getByPlace: "v1/ticketSubscribeActiveTimes/getByPlace",
+export let ticketActiveTimesApi = {
+    add: "v1/ticketActiveTimes/add",
+    addAll: "v1/ticketActiveTimes/addAll",
+    delete: "v1/ticketActiveTimes/delete",
+    getAll: "v1/ticketActiveTimes/getAll",
+    getById: "v1/ticketActiveTimes/getById",
+    update: "v1/ticketActiveTimes/update",
+    getByHall: "v1/ticketActiveTimes/getByHall",
+    getByPlace: "v1/ticketActiveTimes/getByPlace",
 };
 
 export let HallTrafficApi = {
@@ -207,8 +207,28 @@ export let TicketSubscribesApi = {
     addSubscribeActiveTimes: "v1/TicketSubscribe/addSubscribeActiveTimes",
     getActiveTimesByTicketSubscribe: "v1/TicketSubscribe/getActiveTimesByTicketSubscribe",
     deleteSubscribeActiveTimes: "v1/TicketSubscribe/deleteSubscribeActiveTimes",
-
 };
+export let TicketCoursesApi = {
+    add: "v1/TicketCourse/add",
+    delete: "v1/TicketCourse/delete",
+    getAll: "v1/TicketCourse/getAll",
+    getById: "v1/TicketCourse/getById",
+    getSports: "v1/TicketCourse/getSports",
+    addSport: "v1/TicketCourse/addSport",
+    deleteSport: "v1/TicketCourse/deleteSport",
+    getCoaches: "v1/TicketCourse/getCoaches",
+    addCoach: "v1/TicketCourse/addCoach",
+    deleteCoach: "v1/TicketCourse/deleteCoach",
+    update: "v1/TicketCourse/update",
+    changeTicketCourseStatus: "v1/TicketCourse/changeTicketCourseStatus",
+    query: "v1/TicketCourse/query",
+    getByPlaceId: "v1/TicketCourse/getByPlace",
+    countFilter: "v1/TicketCourse/count-filter",
+    addCourseActiveTimes: "v1/TicketCourse/addCourseActiveTimes",
+    getActiveTimesByTicketCourse: "v1/TicketCourse/getActiveTimesByTicketCourse",
+    deleteCourseActiveTimes: "v1/TicketCourse/deleteCourseActiveTimes",
+};
+
 export let PurchasedApi = {
     add: "v1/Purchased/add",
     delete: "v1/Purchased/delete",
@@ -314,6 +334,20 @@ export let purchasedSubscribeApi = {
     acceptEnterRequested: "v1/purchasedSubscribe/acceptEnterRequested",
 
 };
+export let purchasedCourseApi = {
+    add: "v1/purchasedCourse/add",
+    query: "v1/purchasedCourse/query",
+    update: "v1/purchasedCourse/update",
+    delete: "v1/purchasedCourse/delete",
+    getAll: "v1/purchasedCourse/getall",
+    getById: "v1/purchasedCourse/getById",
+    updateStatus: "v1/purchasedCourse/updateStatus",
+    enterRequest: "v1/purchasedCourse/enterRequest",
+    exitUserOfPlace: "v1/purchasedCourse/exitUserOfPlace",
+    addEnterToCourse: "v1/purchasedCourse/addEnterToCourse",
+    acceptEnterRequested: "v1/purchasedCourse/acceptEnterRequested",
+
+};
 export let IncreaseUserDepositApi = {
     add: "v1/increaseUserDeposit/add",
     delete: "v1/increaseUserDeposit/delete",
@@ -412,8 +446,12 @@ export let UserApi = {
     updateUserStatus: "v1/user/updateUserStatus",
     updateUserAvatar: "v1/user/updateUserAvatar",
     getFinanceUser: "v1/user/getFinanceUser",
-    getUserRoles: "v1/user/getUserRoles",
-    updateUserRole: "v1/user/updateUserRole"
+
+};
+export let userRolesApi = {
+    getAllRoles: "v1/userRoles/getAllRoles",
+    add: "v1/userRoles/add",
+    delete: "v1/userRoles/delete"
 
 };
 export let UserCreditApi = {};

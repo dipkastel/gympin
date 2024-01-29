@@ -3,7 +3,6 @@ package com.notrika.gympin.domain.util.convertor;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.dto.UserRegisterDto;
-import com.notrika.gympin.common.user.user.enums.UserRole;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -27,11 +26,7 @@ public final class UserConvertor {
         dto.setEmail(user.getEmail());
         dto.setUserGroup(user.getUserGroup());
         dto.setFinanceUser(toFinanceDto(user.getFinanceUser()));
-        if (user.getUserRole() == null) {
-            dto.setUserRole(UserRoleConvertor.ToUserRoleDto(UserRole.USER));
-        } else {
-            dto.setUserRole(UserRoleConvertor.ToUserRoleDto(user.getUserRole()));
-        }
+        dto.setUserRole(UserRoleConvertor.ToUserRoleDto(user).getRole());
         dto.setUserStatus(user.getUserStatus());
         dto.setBio(user.getBio());
         MultimediaEntity userMultimedias = user.getUserAvatar();
@@ -90,6 +85,7 @@ public final class UserConvertor {
     public static List<UserDto> toDto(List<UserEntity> users) {
         return users.stream().map(UserConvertor::toDtoComplete).collect(Collectors.toList());
     }
+
     public static List<FinanceUserDto> toFinanceDto(List<FinanceUserEntity> finance) {
         return finance.stream().map(UserConvertor::toFinanceDto).collect(Collectors.toList());
     }
@@ -116,4 +112,19 @@ public final class UserConvertor {
         return dto;
     }
 
+    public static UserDto toCoachDto(UserEntity user) {
+        if (user == null) return null;
+        UserDto dto = new UserDto();
+        dto.setId(user.getId());
+        dto.setFullName(user.getFullName());
+        dto.setUsername(user.getUsername());
+        dto.setGender(user.getGender());
+        dto.setBirthday(user.getBirthday());
+        dto.setUserGroup(user.getUserGroup());
+        dto.setUserStatus(user.getUserStatus());
+        dto.setBio(user.getBio());
+        MultimediaEntity userMultimedias = user.getUserAvatar();
+        dto.setAvatar(MultimediaConvertor.toDto(userMultimedias));
+        return dto;
+    }
 }

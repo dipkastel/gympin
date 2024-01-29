@@ -14,8 +14,6 @@ public interface HallRepository extends BaseRepository<HallEntity, Long> {
 
     List<HallEntity> findAllByPlaceAndDeletedIsFalse(PlaceEntity place);
 
-    List<HallEntity> findAllBySportAndDeletedIsFalse(SportEntity sport);
-
-    List<HallEntity> findAllByOwnerAndDeletedIsFalse(UserEntity owner);
+    List<HallEntity> findAllByPlace_PlaceSport_SportAndDeletedIsFalse(SportEntity sport);
 
 }

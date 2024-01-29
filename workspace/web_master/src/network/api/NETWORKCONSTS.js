@@ -81,11 +81,11 @@ export let Api_url = {
         ADD:"v1/hallTraffic/add",
         GET_BY_HALL:"v1/hallTraffic/getByHall",
     },
-    ticketSubscribeActiveTimes:{
-        ADD_ALL:"v1/ticketSubscribeActiveTimes/addAll",
-        GET_BY_HALL:"v1/ticketSubscribeActiveTimes/getByHall",
-        GET_BY_PLACE:"v1/ticketSubscribeActiveTimes/getByPlace",
-        DELETE:"v1/ticketSubscribeActiveTimes/Delete",
+    ticketActiveTimes:{
+        ADD_ALL:"v1/ticketActiveTimes/addAll",
+        GET_BY_HALL:"v1/ticketActiveTimes/getByHall",
+        GET_BY_PLACE:"v1/ticketActiveTimes/getByPlace",
+        DELETE:"v1/ticketActiveTimes/Delete",
     },
     TicketSubscribe:{
         add: "v1/TicketSubscribe/add",
@@ -122,6 +122,9 @@ export let Api_url = {
         getAll: "v1/placeSport/getAll",
         update: "v1/placeSport/update",
         getSportsByPlace: "v1/placeSport/getSportsByPlace"
+    },
+    Sport:{
+        getAll: "v1/sport/getAll",
     },
     Purchased:{
         add: "v1/Purchased/add",

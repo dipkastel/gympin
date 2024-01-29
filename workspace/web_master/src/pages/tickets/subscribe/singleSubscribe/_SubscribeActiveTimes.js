@@ -19,9 +19,9 @@ import {
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
-    ticketSubscribeActiveTimes_addAll,
-    ticketSubscribeActiveTimes_delete,
-    ticketSubscribeActiveTimes_getByPlace
+    ticketActiveTimes_addAll,
+    ticketActiveTimes_delete,
+    ticketActiveTimes_getByPlace
 } from "../../../../network/api/gatesTiming.api";
 import {dayOfWeekEnum} from "../../../../helper/enums/dayOfWeekEnum";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
@@ -56,7 +56,7 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
     }
 
     function getGateTimings() {
-        ticketSubscribeActiveTimes_getByPlace({Id: place.Id}).then(data => {
+        ticketActiveTimes_getByPlace({Id: place.Id}).then(data => {
             SetPlaceActiveTimes(data.data.Data);
         }).catch(e => {
             try {
@@ -84,7 +84,7 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
             for (var index in listToAdd) {
                 postData.push({Subscribe: {Id: ticketSubscribe.Id}, HallActiveTimes: {Id: listToAdd[index]}})
             }
-            ticketSubscribeActiveTimes_addAll(postData).then(result => {
+            ticketActiveTimes_addAll(postData).then(result => {
                 setOpenModalAdd(false);
                 getSubscribeAvtiveTimes()
             }).catch(e => {
@@ -143,7 +143,7 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
     function ModalDeleteActiveTimes() {
         function onDeleteItem(e) {
             e.preventDefault()
-            ticketSubscribeActiveTimes_delete({id: deleteItem.Id}).then(result => {
+            ticketActiveTimes_delete({id: deleteItem.Id}).then(result => {
                 setDeleteItem(null)
                 getSubscribeAvtiveTimes()
             }).catch(e => {

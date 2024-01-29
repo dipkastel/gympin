@@ -28,6 +28,7 @@ const Purchased = () => {
     useEffect(() => {
         getUserSubscribes()
     }, []);
+
     function getUserSubscribes(){
         setLoading(true);
         purchased_query({
@@ -35,6 +36,7 @@ const Purchased = () => {
             UserId:user.Id,
             paging:{Page:0,Size:50}
         }).then(result=>{
+            console.log(result.data.Data.content);
             setSubscribes(result.data.Data.content);
         }).catch(e => {
             try {
@@ -73,7 +75,12 @@ const Purchased = () => {
     function goToDetail(item) {
         console.log(item);
         switch (item.PurchasedType){
-            case "SUBSCRIBE":navigate("/tickets/singleSubscribe/"+item.Id, {replace: false});
+            case "SUBSCRIBE":
+                navigate("/tickets/singleSubscribe/"+item.Id, {replace: false});
+                break;
+            case "COURSE":
+                navigate("/tickets/singleCourse/"+item.Id, {replace: false});
+                break;
         }
     }
 
@@ -108,7 +115,7 @@ const Purchased = () => {
                                 <Grid item>
                                     <Typography sx={{paddingY:1}} variant={"subtitle1"}>{item.Name}</Typography>
                                 </Grid>
-                                <Chip label={getStatus(item.Status).Name} sx={{mb:1}} size={"small"} variant={"filled"} color={getStatus(item.Status).Color} />
+                                <Chip label={getStatus(item.PurchasedStatus).Name} sx={{mb:1}} size={"small"} variant={"filled"} color={getStatus(item.PurchasedStatus).Color} />
                             </Grid>
 
                         </CardContent>

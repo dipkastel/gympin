@@ -35,6 +35,7 @@ import Halls from "../pages/halls/Halls";
 import TicketsManagement from "../pages/tickets/TicketsManagement";
 import SubscribesList from "../pages/tickets/subscribe/SubscribesList";
 import PurchasedSubscribe from "../pages/purchased/subscribe/PurchasedSubscribe";
+import Sports from "../pages/sports/Sports";
 
 export default function ApplicationRoutes() {
 
@@ -64,6 +65,7 @@ export default function ApplicationRoutes() {
                 <Route path="/management/halls" element={<Halls/>}/>
                 <Route path="/management/about" element={<About/>}/>
                 <Route path="/management/facilities" element={<Option/>}/>
+                <Route path="/management/sports" element={<Sports/>}/>
                 <Route path="/management/stall" element={<ManageStall/>}/>
                 <Route path="/management/personnel" element={<Personnel/>}/>
                 <Route path="/management/personnelAccess" element={<PersonnelAccess/>}/>

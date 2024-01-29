@@ -1,13 +1,11 @@
 package com.notrika.gympin.common.user.user.api;
 
-import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
-import com.notrika.gympin.common.finance.transaction.param.FinanceUserParam;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
 import com.notrika.gympin.common.user.user.param.*;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.user.user.dto.UserDto;
-import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
 import com.notrika.gympin.common.user.user.query.UserQuery;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,11 +21,6 @@ public interface UserController extends BaseController<UserParam, UserDto, UserQ
     //avatar
     ResponseEntity<UserDto> updateUserAvatar(@RequestBody UserAvatarParam userParam);
 
-    //roles
-    ResponseEntity<List<UserRoleInfoDto>> getUserRoles();
-
-    ResponseEntity<UserDto> updateUserRole(UserRoleUpdateParam userParam);
-
     ResponseEntity<UserDto> getUserByUsername(UserParam userParam);
 
     ResponseEntity<Boolean> checkUsernameAvailable(String username);
@@ -36,7 +29,6 @@ public interface UserController extends BaseController<UserParam, UserDto, UserQ
 
     ResponseEntity<UserCreditDto> getUserCredits(UserParam param);
     ResponseEntity<UserCreditDto> getMyCredits();
-
 
 
 

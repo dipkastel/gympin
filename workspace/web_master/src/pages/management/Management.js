@@ -9,6 +9,8 @@ export default function Management() {
         <>
             {getAccessOf(personnelAccessEnumT.ManagementTickets) &&
             <_ListItem title="فروشی ها" destination="/management/tickets"/>}
+            {getAccessOf(personnelAccessEnumT.ManagementSports) &&
+            <_ListItem title="ورزش ها" destination="/management/sports"/>}
             {getAccessOf(personnelAccessEnumT.ManagementHalls) &&
             <_ListItem title="سالن ها" destination="/management/Halls"/>}
             {getAccessOf(personnelAccessEnumT.ManagementImages) &&

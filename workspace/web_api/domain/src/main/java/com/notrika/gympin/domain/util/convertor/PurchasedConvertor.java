@@ -1,13 +1,9 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
 import com.notrika.gympin.common.purchased.purchased.dto.PurchasedDto;
-import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
-import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
+import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 
 public final class PurchasedConvertor {
 
@@ -27,7 +23,12 @@ public final class PurchasedConvertor {
         dto.setSerial(SerialConvertor.ToDto(entity.getSerial()));
         dto.setGender(entity.getGender());
         dto.setDescription(entity.getDescription());
-        dto.setStatus(entity.getStatus());
+        try{
+          dto.setPurchasedStatus(((PurchasedCourseEntity)entity).getStatus().toString());
+        }catch (Exception e){}
+        try{
+          dto.setPurchasedStatus(((PurchasedSubscribeEntity)entity).getStatus().toString());
+        }catch (Exception e){}
         return dto;
     }
 

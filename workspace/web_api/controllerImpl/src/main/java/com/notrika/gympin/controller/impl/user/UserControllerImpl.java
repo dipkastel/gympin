@@ -1,13 +1,10 @@
 package com.notrika.gympin.controller.impl.user;
 
-import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
-import com.notrika.gympin.common.finance.transaction.param.FinanceUserParam;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
 import com.notrika.gympin.common.user.user.param.*;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.user.user.api.UserController;
 import com.notrika.gympin.common.user.user.dto.UserDto;
-import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
 import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.common.user.user.query.UserQuery;
 import com.notrika.gympin.common.user.user.service.UserService;
@@ -90,19 +87,6 @@ public class UserControllerImpl implements UserController {
     @PutMapping("/updateUserAvatar")
     public ResponseEntity<UserDto> updateUserAvatar(UserAvatarParam userParam) {
         return ResponseEntity.ok(userService.updateUserAvatar(userParam));
-    }
-
-    //roles
-    @Override
-    @GetMapping("/getUserRoles")
-    public ResponseEntity<List<UserRoleInfoDto>> getUserRoles() {
-        return ResponseEntity.ok(userService.getAllRules());
-    }
-
-    @Override
-    @PutMapping("/updateUserRole")
-    public ResponseEntity<UserDto> updateUserRole(@RequestBody UserRoleUpdateParam userParam) {
-        return ResponseEntity.ok(userService.UpdateUserRole(userParam));
     }
 
     @Override

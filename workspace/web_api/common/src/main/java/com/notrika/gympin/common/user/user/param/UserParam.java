@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.user.user.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import lombok.*;
@@ -16,7 +17,7 @@ import java.util.Date;
 public class UserParam extends BaseParam<UserParam> {
 
     @Builder.Default
-    private UserRoleParam role;
+    private RoleEnum role;
 
     @JsonProperty("Username")
     private String username;

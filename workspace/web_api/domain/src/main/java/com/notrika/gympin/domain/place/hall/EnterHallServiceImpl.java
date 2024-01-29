@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.place.hall;
 
 import com.notrika.gympin.common.place.hallEnter.dto.EnterHallRequestDto;
-import com.notrika.gympin.common.place.hallEnter.enums.SubscribeEntryStatus;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
 import com.notrika.gympin.common.place.hallEnter.param.EnterHallConfirmParam;
 import com.notrika.gympin.common.place.hallEnter.param.EnterHallRequestParam;
 import com.notrika.gympin.common.settings.context.GympinContext;
@@ -12,7 +12,7 @@ import com.notrika.gympin.domain.util.convertor.HallConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.PurchasedSubscribeEntryRequstRepository;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryRequstEntity;
-//import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeHallActiveTime;
+//import com.notrika.gympin.persistence.entity.ticket.common.TicketSubscribeHallActiveTime;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

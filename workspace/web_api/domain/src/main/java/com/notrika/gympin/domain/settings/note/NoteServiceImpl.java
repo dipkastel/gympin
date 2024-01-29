@@ -3,6 +3,7 @@ package com.notrika.gympin.domain.settings.note;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.purchased.purchased.param.PurchasedParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.param.PurchasedSubscribeParam;
 import com.notrika.gympin.common.settings.note.dto.NoteDto;
 import com.notrika.gympin.common.settings.note.param.NoteParam;
@@ -14,6 +15,7 @@ import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.finance.Invoice.InvoiceServiceImpl;
 import com.notrika.gympin.domain.util.convertor.NoteConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.purchased.PurchasedRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
@@ -42,7 +44,7 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Bas
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private PurchasedSubscribeRepository purchasedSubscribeRepository;
+    private PurchasedRepository purchasedRepository;
 
     @Override
     public NoteDto add(@NonNull NoteParam noteParam) {
@@ -53,8 +55,8 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Bas
             entity.setCorporate(corporateService.getEntityById(noteParam.getCorporate().getId()));
         if (noteParam.getUser() != null)
             entity.setUser(userRepository.getById(noteParam.getUser().getId()));
-        if (noteParam.getSubscribe() != null)
-            entity.setSubscribe(purchasedSubscribeRepository.getById(noteParam.getSubscribe().getId()));
+        if (noteParam.getPurchased() != null)
+            entity.setPurchased(purchasedRepository.getById(noteParam.getPurchased().getId()));
         if (noteParam.getInvoice() != null)
             entity.setInvoice(invoiceService.getEntityById(noteParam.getInvoice().getId()));
         entity.setText(noteParam.getText());
@@ -142,7 +144,7 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Bas
     }
 
     @Override
-    public List<NoteDto> getBySubscribe(PurchasedSubscribeParam purchasedSubscribeParam) {
-        return convertToDtos(manageNoteRepository.findAllBySubscribeIdAndDeletedIsFalse(purchasedSubscribeParam.getId()));
+    public List<NoteDto> getByPurchased(PurchasedParam param) {
+        return convertToDtos(manageNoteRepository.findAllByPurchasedIdAndDeletedIsFalse(param.getId()));
     }
 }

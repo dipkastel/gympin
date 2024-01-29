@@ -1,7 +1,11 @@
 package com.notrika.gympin.persistence.entity.ticket.course;
 
-import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntityEntity;
+import com.notrika.gympin.common.ticket.ticketCourse.enums.CourseStatus;
+import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
+import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,6 +27,36 @@ import java.util.Objects;
 @Table(name = "ticketCourse")
 public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
 
+    @ManyToMany
+    @JoinTable(name = "ticketCourseAction", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "hallActionId"))
+    @ToString.Exclude
+    private List<TicketHallActiveTimeEntity> activeTimes;
+
+    @Column(name = "courseStatus")
+    @Enumerated(EnumType.STRING)
+    private CourseStatus courseStatus;
+
+    @Column(name = "targetOfCourse")
+    private String targetOfCourse;
+
+    @Column(name = "classCapacity")
+    private Short classCapacity;
+
+    @Column(name = "ageLimit")
+    private String ageLimit;
+
+    @ManyToMany
+    @JoinTable(name = "ticketCourseCouches", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
+    private List<UserEntity> coaches;
+
+    @Column(name = "entryTotalCount")
+    private Short entryTotalCount;
+
+    @Column(name = "courseCapacity")
+    private Integer courseCapacity;
+
+    @Column(name = "courseLevel")
+    private String courseLevel;
 
     @Column(name = "startDate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,17 +74,15 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endSellingDate;
 
-    @Column(name = "courseCapacity")
-    private Integer courseCapacity;
-
     @OneToMany(mappedBy = "ticketCourse")
     @ToString.Exclude
-    private List<PurchasedCourseEntityEntity> purchasedCourse;
+    private List<PurchasedCourseEntity> purchasedCourse;
 
-    @OneToMany(mappedBy = "ticketCourse")
+
+    @ManyToMany
+    @JoinTable(name = "ticketCourseSport", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "placeSportId"))
     @ToString.Exclude
-    private List<TicketCourseSessionsEntity> ticketCourseSessions;
-
+    private List<PlaceSportEntity> ticketCourseSport;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

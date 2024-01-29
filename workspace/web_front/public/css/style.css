@@ -9933,11 +9933,13 @@ h6, .h6 {
       border-left: 1px solid rgba(255, 255, 255, 0.5) !important;
       height: 37px;
       line-height: 37px; }
-  @media (max-width: 1199px) {
-    .navarea .site-logo {
-      flex: 0 0 19%;
-      -ms-flex: 0 0 19%;
-      max-width: 19%; } }
+  .navarea .site-logo {
+    margin: 8px; }
+    @media (max-width: 1199px) {
+      .navarea .site-logo {
+        flex: 0 0 19%;
+        -ms-flex: 0 0 19%;
+        max-width: 19%; } }
 
 .mainmenu {
   padding-left: 83px; }
@@ -9959,14 +9961,15 @@ h6, .h6 {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    flex-direction: row-reverse; }
+    flex-direction: row-reverse;
+    margin-bottom: 0; }
     .mainmenu ul li {
       position: relative; }
       .mainmenu ul li a {
         font-weight: 500;
         color: #0C2957;
         display: block;
-        padding: 32px 15px; }
+        padding: 15px; }
         @media only screen and (min-width: 1200px) and (max-width: 1500px) {
           .mainmenu ul li a {
             padding: 32px 20px; } }
@@ -10529,19 +10532,22 @@ input.form-control-sm {
   right: 0;
   top: 0;
   z-index: 1;
-  height: 100%; }
+  width: 100%;
+  height: 100%;
+  min-height: 700px; }
   @media only screen and (min-width: 1200px) and (max-width: 1500px) {
     .hero__image {
-      width: 65%; } }
+      width: 100%; } }
   @media (max-width: 1199px) {
     .hero__image {
-      width: 65%; } }
+      width: 100%; } }
   @media (max-width: 450px) {
     .hero__image {
       display: none !important; } }
   .hero__image img {
-    width: auto;
-    object-fit: cover; }
+    width: 100%;
+    object-fit: cover;
+    filter: blur(2px); }
 
 .hero .site-btn {
   margin-top: 63px;

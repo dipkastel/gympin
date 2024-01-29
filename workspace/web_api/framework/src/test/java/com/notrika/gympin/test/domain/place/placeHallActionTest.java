@@ -1,10 +1,10 @@
 package com.notrika.gympin.test.domain.place;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.ticket.ticketSubscribe.param.ActiveTimesParam;
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.ActiveTimesDto;
+import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
+import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.place.hall.dto.HallDto;
-import com.notrika.gympin.common.ticket.ticketSubscribe.enums.DayOfWeek;
+import com.notrika.gympin.common.ticket.common.enums.DayOfWeek;
 import com.notrika.gympin.common.place.hall.param.HallParam;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.place.place.param.PlaceParam;

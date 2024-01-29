@@ -11,7 +11,7 @@ import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsService;
 import com.notrika.gympin.common.user.user.enums.Gender;
-import com.notrika.gympin.common.user.user.enums.UserRole;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.param.UserRegisterParam;
 import com.notrika.gympin.common.user.user.param.UserRoleParam;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
@@ -62,7 +62,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
         UserEntity user = userRepository.findByPhoneNumber(Param.getPhoneNumber());
         CorporateEntity corporate = corporateService.getEntityById(Param.getCorporate().getId());
         if (user == null) {
-            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(Param.getPhoneNumber()).invitedBy("C" + GeneralHelper.getInviteCode(corporate.getId(), 1)).userRole(UserRoleParam.builder().role(UserRole.USER).build()).build());
+            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(Param.getPhoneNumber()).invitedBy("C" + GeneralHelper.getInviteCode(corporate.getId(), 1)).userRole(RoleEnum.USER).build());
         } else {
             //check for duplication
             UserEntity finalUser = user;
@@ -108,7 +108,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
                                     user = accountService.addUser(UserRegisterParam.builder()
                                             .phoneNumber(columns[1])
                                             .invitedBy("C" + GeneralHelper.getInviteCode(Param.getCorporateId(), 1))
-                                            .userRole(UserRoleParam.builder().role(UserRole.USER).build())
+                                            .userRole(RoleEnum.USER)
                                             .build());
                                     if (!columns[0].isEmpty())
                                         user.setFullName(columns[0]);

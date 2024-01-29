@@ -97,7 +97,7 @@ public class placePersonnelsTest extends BaseTest {
         final PlacePersonnelParam param = PlacePersonnelParam.builder()
                 .id(placePersonnelId)
                 .place(PlaceParam.builder().id(placeId).build())
-                .userRole(PlacePersonnelRole.Place_COACH)
+                .userRole(PlacePersonnelRole.PLACE_COACH)
                 .build();
 
         ResponseModel<PlacePersonnelDto> result = TestPut(

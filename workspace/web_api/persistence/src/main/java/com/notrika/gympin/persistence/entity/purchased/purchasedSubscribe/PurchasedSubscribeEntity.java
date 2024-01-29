@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe;
 
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import lombok.Getter;
@@ -23,6 +24,10 @@ import java.util.Objects;
 @Table(name = "purchasedSubscribe")
 public class PurchasedSubscribeEntity extends PurchasedBaseEntity<PurchasedSubscribeEntity> {
 
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private SubscribePurchasedStatus status;
 
     @ManyToOne
     @JoinColumn(name = "ticketSubscribeId")

@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe;
 
-import com.notrika.gympin.common.place.hallEnter.enums.SubscribeEntryStatus;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;

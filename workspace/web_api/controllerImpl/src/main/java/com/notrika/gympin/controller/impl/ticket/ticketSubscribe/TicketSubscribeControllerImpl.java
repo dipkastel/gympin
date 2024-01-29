@@ -1,12 +1,12 @@
 package com.notrika.gympin.controller.impl.ticket.ticketSubscribe;
 
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.ActiveTimesDto;
-import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeActiveTimesParam;
+import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
+import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.api.TicketSubscribeController;
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDiscountHistoryDto;
+import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeSportParam;
@@ -83,7 +83,7 @@ public class TicketSubscribeControllerImpl implements TicketSubscribeController 
 
     @Override
     @GetMapping("/getTicketSubscribeDiscountHistory")
-    public ResponseEntity<List<TicketSubscribeDiscountHistoryDto>> getTicketSubscribeDiscountHistory(Long ticketSubscribeId) {
+    public ResponseEntity<List<TicketDiscountHistoryDto>> getTicketSubscribeDiscountHistory(Long ticketSubscribeId) {
         return ResponseEntity.ok(ticketSubscribeService.getTicketSubscribeDiscountHistory(ticketSubscribeId));
     }
     @Override
@@ -100,13 +100,13 @@ public class TicketSubscribeControllerImpl implements TicketSubscribeController 
 
     @Override
     @PostMapping("/addSubscribeActiveTimes")
-    public ResponseEntity<TicketSubscribeDto> addSubscribeActiveTimes(@RequestBody TicketSubscribeActiveTimesParam ticketSubscribeActiveTimesParam) {
+    public ResponseEntity<TicketSubscribeDto> addSubscribeActiveTimes(@RequestBody TicketActiveTimesParam ticketSubscribeActiveTimesParam) {
         return ResponseEntity.ok(ticketSubscribeService.addSubscribeActiveTimes(ticketSubscribeActiveTimesParam));
     }
 
     @Override
     @PutMapping("/deleteSubscribeActiveTimes")
-    public ResponseEntity<TicketSubscribeDto> deleteSubscribeActiveTimes(@RequestBody TicketSubscribeActiveTimesParam ticketSubscribeActiveTimesParam) {
+    public ResponseEntity<TicketSubscribeDto> deleteSubscribeActiveTimes(@RequestBody TicketActiveTimesParam ticketSubscribeActiveTimesParam) {
         return ResponseEntity.ok(ticketSubscribeService.deleteSubscribeActiveTimes(ticketSubscribeActiveTimesParam));
     }
 

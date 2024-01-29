@@ -2,7 +2,7 @@ package com.notrika.gympin.common.purchased.purchasedSubscribe.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.PurchasedStatus;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
@@ -24,7 +24,7 @@ import java.util.List;
 public class PurchasedSubscribeDto extends BaseDtoWithCreateUpdate<PurchasedSubscribeDto> {
 
     @JsonProperty("Status")
-    private PurchasedStatus status;
+    private SubscribePurchasedStatus status;
 
     @JsonProperty("TicketSubscribe")
     private TicketSubscribeDto ticketSubscribe;

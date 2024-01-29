@@ -1,15 +1,14 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.ticket.ticketSubscribe.param.ActiveTimesParam;
+import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.place.hall.dto.HallDto;
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.ActiveTimesDto;
+import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.place.hall.dto.HallTrafficDto;
 import com.notrika.gympin.common.place.hall.param.HallParam;
 import com.notrika.gympin.domain.place.PlaceServiceImpl;
-import com.notrika.gympin.domain.sport.SportServiceImpl;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
-import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeHallActiveTime;
+import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import com.notrika.gympin.persistence.entity.place.hall.HallTrafficEntity;
 
 import java.util.ArrayList;
@@ -24,11 +23,9 @@ public final class HallConvertor {
         hallEntity.setTrafficManagement(hallParam.getTrafficManagement());
         hallEntity.setDeleted(false);
         hallEntity.setPlace(GympinContext.getBean(PlaceServiceImpl.class).getEntityById(hallParam.getPlace().getId()));
+
         try{
-            hallEntity.setSport(GympinContext.getBean(SportServiceImpl.class).getEntityById(hallParam.getSport().getId()));
-        }catch (Exception e){}
-        try{
-            List<TicketSubscribeHallActiveTime> actionEntities=new ArrayList<>();
+            List<TicketHallActiveTimeEntity> actionEntities=new ArrayList<>();
             hallEntity.setActions(actionEntities);
             for (ActiveTimesParam action: hallParam.getAction()) {
                 actionEntities.add(convertToActionEntity(action, hallEntity));
@@ -45,15 +42,13 @@ public final class HallConvertor {
         hallDto.setEnable(entity.getEnable());
         hallDto.setTrafficManagement(entity.getTrafficManagement());
         hallDto.setPlace(PlaceConvertor.toDto(entity.getPlace()));
-        try {
-            hallDto.setSport(SportConvertor.toDto(entity.getSport()));
-        }catch (Exception e){}
         return hallDto;
     }
 
-    public static ActiveTimesDto convertToActionDto(TicketSubscribeHallActiveTime entity) {
+    public static ActiveTimesDto convertToActionDto(TicketHallActiveTimeEntity entity) {
         ActiveTimesDto activeTimesDto = new ActiveTimesDto();
         activeTimesDto.setId(entity.getId());
+        activeTimesDto.setName(entity.getName());
         activeTimesDto.setHall(convertToDto(entity.getHall()));
         activeTimesDto.setDayOfWeek(entity.getDayOfWeek());
         activeTimesDto.setOpeningTime(entity.getOpeningTime());
@@ -61,10 +56,11 @@ public final class HallConvertor {
         return activeTimesDto;
     }
 
-    public static TicketSubscribeHallActiveTime convertToActionEntity(ActiveTimesParam activeTimesParam, HallEntity hall){
-        TicketSubscribeHallActiveTime ticketSubscribeHallActiveTime =new TicketSubscribeHallActiveTime();
+    public static TicketHallActiveTimeEntity convertToActionEntity(ActiveTimesParam activeTimesParam, HallEntity hall){
+        TicketHallActiveTimeEntity ticketSubscribeHallActiveTime =new TicketHallActiveTimeEntity();
         ticketSubscribeHallActiveTime.setId(activeTimesParam.getId());
         ticketSubscribeHallActiveTime.setHall(hall);
+        ticketSubscribeHallActiveTime.setName(activeTimesParam.getName());
         ticketSubscribeHallActiveTime.setDayOfWeek(activeTimesParam.getDayOfWeek());
         ticketSubscribeHallActiveTime.setOpeningTime(activeTimesParam.getOpeningTime());
         ticketSubscribeHallActiveTime.setClosingTime(activeTimesParam.getClosingTime());

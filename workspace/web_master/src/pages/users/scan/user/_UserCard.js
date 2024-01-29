@@ -11,7 +11,7 @@ const _UserCard = ({subscribe}) => {
     function getLastEnterDate() {
         if (!inSubscribe) return ""
         if (!inSubscribe.EntryList) return ""
-        var lastDate = inSubscribe.EntryList[inSubscribe.EntryList.length - 1].EnterDate;
+        var lastDate = inSubscribe?.EntryList[inSubscribe?.EntryList.length - 1]?.EnterDate;
         if (lastDate)
             return `آخرین ورود : ${new Date(lastDate).toLocaleDateString('fa-IR', {
                 year: 'numeric',

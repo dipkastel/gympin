@@ -25,7 +25,12 @@ const _AddPersonnel = ({renewList}) => {
 
     function ModalAddPerson() {
         function addPersonnel(e){
-            placePersonnel_add({Place:{Id:place.Id},PhoneNumber:e.target.PhoneNumber.value}).then(result=>{
+            e.preventDefault();
+            placePersonnel_add({
+                Place:{Id:place.Id},
+                PhoneNumber:e.target.PhoneNumber.value,
+                UserRole:"PLACE_PERSONNEL"
+            }).then(result=>{
                 renewList();
                 setOpenModalAddPersonnel(false);
             }).catch(e => {

@@ -32,6 +32,9 @@ public class PlacePersonnelDto extends BaseDto<PlacePersonnelDto> {
     @JsonProperty("IsBeneficiary")
     private Boolean isBeneficiary;
 
+    @JsonProperty("IsPublic")
+    private Boolean isPublic;
+
     @JsonProperty("CommissionFee")
     private Double commissionFee;
 

@@ -17,7 +17,7 @@ const Notes = ({source}) => {
 
 
     function getData() {
-        if((source.subscribe&&source.subscribe.Id)||
+        if((source.Purchased&&source.Purchased.Id)||
             (source.Corporate&&source.Corporate.Id)||
             (source.User&&source.User.Id)||
             (source.Invoice&&source.Invoice.Id)||

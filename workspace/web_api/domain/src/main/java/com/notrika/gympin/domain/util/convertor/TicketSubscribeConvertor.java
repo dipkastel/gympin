@@ -1,11 +1,11 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDiscountHistoryDto;
+import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 //import com.notrika.gympin.common.ticket.subscribe.dto.TicketSubscribeActionDto;
 import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
-//import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeHallActiveTime;
+//import com.notrika.gympin.persistence.entity.ticket.common.TicketSubscribeHallActiveTime;
 
 public class TicketSubscribeConvertor {
 
@@ -27,8 +27,8 @@ public class TicketSubscribeConvertor {
         return dto;
     }
 
-    public static TicketSubscribeDiscountHistoryDto toDto(BuyableDiscountHistoryEntity entity) {
-        TicketSubscribeDiscountHistoryDto dto = new TicketSubscribeDiscountHistoryDto();
+    public static TicketDiscountHistoryDto toDto(BuyableDiscountHistoryEntity entity) {
+        TicketDiscountHistoryDto dto = new TicketDiscountHistoryDto();
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setAfterPrice(entity.getAfterPrice());

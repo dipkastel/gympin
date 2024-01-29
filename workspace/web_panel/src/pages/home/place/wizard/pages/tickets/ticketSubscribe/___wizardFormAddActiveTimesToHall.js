@@ -6,7 +6,7 @@ import {TimePicker} from "@mui/x-date-pickers/TimePicker";
 import {dayOfWeekEnum} from "../../../../../../../helper/enums/dayOfWeekEnum";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
 import {useParams} from "react-router-dom";
-import {ticketSubscribeActiveTimes_addAll} from "../../../../../../../network/api/ticketSubscribeActiveTimes.api";
+import {ticketActiveTimes_addAll} from "../../../../../../../network/api/ticketActiveTimes.api";
 
 const ___wizardFormAddActiveTimesToHall = ({hall, getTimingByPlace, setOpenCollapsableAddTiming}) => {
 
@@ -48,7 +48,7 @@ const ___wizardFormAddActiveTimesToHall = ({hall, getTimingByPlace, setOpenColla
             error.showError({message: "حد اقل یکی از روزهای هفته باید انتخاب شود",});
             return;
         }
-        ticketSubscribeActiveTimes_addAll(postData)
+        ticketActiveTimes_addAll(postData)
             .then(data => {
                 error.showError({message: "عملیات موفق",});
                 getTimingByPlace();

@@ -7,6 +7,8 @@ import {useSelector} from "react-redux";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import AccessDenied from "../../components/AccessDenied";
+import _AddCoach from "./_AddCoach";
+import _CoachList from "./_CoachList";
 
 const Personnel = () => {
     const error = useContext(ErrorContext);
@@ -37,6 +39,8 @@ const Personnel = () => {
         <>
             {personnelList&&<_AddPersonnel renewList={getPersonnelList}/>}
             {personnelList&&<_PersonnelList personnelList={personnelList} renewList={getPersonnelList}/>}
+            {personnelList&&<_AddCoach renewList={getPersonnelList}/>}
+            {personnelList&&<_CoachList personnelList={personnelList} renewList={getPersonnelList}/>}
         </>
     );
 };

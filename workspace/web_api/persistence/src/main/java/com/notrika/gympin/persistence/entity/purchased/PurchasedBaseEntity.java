@@ -1,7 +1,6 @@
 package com.notrika.gympin.persistence.entity.purchased;
 
 import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.PurchasedStatus;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
@@ -61,9 +60,6 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @JoinColumn(name = "customerUserId")
     private UserEntity customer;
 
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private PurchasedStatus status;
 
     @Column(name = "purchasedType", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -79,7 +75,7 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
     private String voucher;
 
 
-    @OneToMany(mappedBy = "subscribe")
+    @OneToMany(mappedBy = "purchased")
     @ToString.Exclude
     private List<ManageNoteEntity> notes;
 

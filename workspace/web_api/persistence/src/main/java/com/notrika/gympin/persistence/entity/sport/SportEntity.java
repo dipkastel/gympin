@@ -44,9 +44,6 @@ public class SportEntity extends BaseEntity<SportEntity> {
     @ToString.Exclude
     private List<SportMultimediaEntity> sportMultimedias;
 
-    @OneToMany(mappedBy = "sport")
-    @ToString.Exclude
-    private List<HallEntity> halls;
 
     @Override
     public boolean equals(Object o) {
