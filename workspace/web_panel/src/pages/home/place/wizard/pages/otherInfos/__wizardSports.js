@@ -8,7 +8,7 @@ import {
     placeSport_getSportsByPlace
 } from "../../../../../../network/api/placeSport.api";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
-import {sport_getAllSport} from "../../../../../../network/api/sport.api";
+import {sport_getAllSport, sport_query} from "../../../../../../network/api/sport.api";
 
 const __wizardSports = ({setAllowNextSport}) => {
     const error = useContext(ErrorContext);
@@ -39,9 +39,12 @@ const __wizardSports = ({setAllowNextSport}) => {
     }
 
     function getAllSports() {
-        sport_getAllSport()
+        sport_query({
+            queryType: "FILTER",
+            paging: {Page: 0, Size: 150, Desc: true}
+        })
             .then((data) => {
-                setSports(data.data.Data)
+                setSports(data.data.Data.content)
             }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

@@ -106,6 +106,25 @@ export let Api_url = {
         deleteSubscribeActiveTimes: "v1/TicketSubscribe/deleteSubscribeActiveTimes",
 
     },
+    TicketCourse:{
+        add: "v1/TicketCourse/add",
+        delete: "v1/TicketCourse/delete",
+        getAll: "v1/TicketCourse/getAll",
+        getTicketCourseDiscountHistory: "v1/TicketCourse/getTicketCourseDiscountHistory",
+        getById: "v1/TicketCourse/getById",
+        getSports: "v1/TicketCourse/getSports",
+        addSport: "v1/TicketCourse/addSport",
+        deleteSport: "v1/TicketCourse/deleteSport",
+        update: "v1/TicketCourse/update",
+        ChangeTicketCourseStatus: "v1/TicketCourse/ChangeTicketCourseStatus",
+        query: "v1/TicketCourse/query",
+        getByPlaceId: "v1/TicketCourse/getByPlace",
+        countFilter: "v1/TicketCourse/count-filter",
+        addCourseActiveTimes: "v1/TicketCourse/addCourseActiveTimes",
+        getActiveTimesByTicketCourse: "v1/TicketCourse/getActiveTimesByTicketCourse",
+        deleteCourseActiveTimes: "v1/TicketCourse/deleteCourseActiveTimes",
+
+    },
     support:{
         ADD:"v1/support/add",
         ADD_MESSAGE:"v1/support/addMessage",

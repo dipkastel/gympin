@@ -11,7 +11,7 @@ import _SubscribeActive from "./_SubscribeActive";
 import _SubscribeDelete from "./_SubscribeDelete";
 import _SubscribeSports from "./_SubscribeSports";
 
-const Subscribe = () => {
+const SingleTicketSubscribe = () => {
     const error = useContext(ErrorContext);
     const {subscribeId} = useParams()
     const [ticketSubscribe, setTicketSubscribe] = useState([]);
@@ -45,4 +45,4 @@ const Subscribe = () => {
     );
 };
 
-export default Subscribe;
+export default SingleTicketSubscribe;

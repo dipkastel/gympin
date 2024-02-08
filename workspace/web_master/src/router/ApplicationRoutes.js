@@ -16,7 +16,7 @@ import ManageStall from "../pages/ManageStall/ManageStall";
 import Profile from "../pages/profile/Profile";
 import Stall from "../pages/stall/Stall";
 import Personnel from "../pages/personnel/Personnel";
-import Subscribe from "../pages/tickets/subscribe/singleSubscribe/Subscribe";
+import SingleTicketSubscribe from "../pages/tickets/subscribe/singleSubscribe/SingleTicketSubscribe";
 import Images from "../pages/images/Images";
 import SingleSubscribe from "../pages/purchased/subscribe/single/SingleSubscribe";
 import Support from "../pages/support/Support";
@@ -36,6 +36,8 @@ import TicketsManagement from "../pages/tickets/TicketsManagement";
 import SubscribesList from "../pages/tickets/subscribe/SubscribesList";
 import PurchasedSubscribe from "../pages/purchased/subscribe/PurchasedSubscribe";
 import Sports from "../pages/sports/Sports";
+import CoursesList from "../pages/tickets/course/CoursesList";
+import SingleTicketCourse from "../pages/tickets/course/singleCourse/SingleTicketCourse";
 
 export default function ApplicationRoutes() {
 
@@ -80,11 +82,16 @@ export default function ApplicationRoutes() {
                 <Route path="/management/editProfile" element={<EditProfile/>}/>
                 <Route path="/management" element={<Management/>}/>
 
-
+                {/*tickets*/}
                 <Route path="/management/tickets" element={<TicketsManagement/>}/>
-                <Route path="/ticket/subscribes" element={<SubscribesList/>}/>
-                <Route path="/ticket/Subscribe/:subscribeId" element={<Subscribe/>}/>
 
+                <Route path="/ticket/subscribes" element={<SubscribesList/>}/>
+                <Route path="/ticket/SingleTicketSubscribe/:subscribeId" element={<SingleTicketSubscribe/>}/>
+
+                <Route path="/ticket/courses" element={<CoursesList/>}/>
+                <Route path="/ticket/course/:courseId" element={<SingleTicketCourse/>}/>
+
+                {/*purchased*/}
                 <Route path="/purchased/subscribes" element={<PurchasedSubscribe/>}/>
 
                 <Route path="/finance/demand" element={<DemandPayment/>}/>

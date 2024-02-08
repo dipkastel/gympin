@@ -21,9 +21,9 @@ var ticketTypes = [
         Id:2,
         Name: "کلاس ها",
         Type: "courses",
-        Icon: <GroupsIcon sx={{fontSize:87}} color={"action"} />,
+        Icon: <GroupsIcon sx={{fontSize:87}}  color={"secondary"}  />,
         Destination:"/ticket/courses",
-        Status:"Soon"
+        Status:"Active"
     },
     {
         Id:3,
