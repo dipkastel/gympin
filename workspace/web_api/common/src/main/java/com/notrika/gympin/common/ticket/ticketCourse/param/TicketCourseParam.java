@@ -50,6 +50,9 @@ public class TicketCourseParam extends BaseParam<TicketCourseParam> {
     @JsonProperty("TargetOfCourse")
     private String targetOfCourse;
 
+    @JsonProperty("AutoRenew")
+    private Boolean autoRenew;
+
     @JsonProperty("ClassCapacity")
     private Short classCapasity;
 

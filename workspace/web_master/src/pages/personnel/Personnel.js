@@ -39,8 +39,8 @@ const Personnel = () => {
         <>
             {personnelList&&<_AddPersonnel renewList={getPersonnelList}/>}
             {personnelList&&<_PersonnelList personnelList={personnelList} renewList={getPersonnelList}/>}
-            {personnelList&&<_AddCoach renewList={getPersonnelList}/>}
-            {personnelList&&<_CoachList personnelList={personnelList} renewList={getPersonnelList}/>}
+            {/*{personnelList&&<_AddCoach renewList={getPersonnelList}/>}*/}
+            {/*{personnelList&&<_CoachList personnelList={personnelList} renewList={getPersonnelList}/>}*/}
         </>
     );
 };

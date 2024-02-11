@@ -1,2 +1,3 @@
 
-workspace/web_api/logs/
+workspace/web_api/logs/*.log
+**/*.log

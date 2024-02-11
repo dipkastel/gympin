@@ -1,4 +1,5 @@
 export const personnelRoles = {
-    PLACE_OWNER:"مدیر مجموعه",
-    PLACE_PERSONNEL:"پرسنل مجموعه"
+    PLACE_OWNER:"مدیر",
+    PLACE_PERSONNEL:"پرسنل",
+    PLACE_COACH:"مربی"
 }

@@ -5,7 +5,7 @@ import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsService;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRole;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.support.dto.SupportDto;
 import com.notrika.gympin.common.support.enums.SupportMessageStatus;
@@ -101,7 +101,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         supportMessageRepository.saveAll(support.getSupportMessages());
         try {
             if (param.isAnswer()) {
-                UserEntity user = (tme.getSupport().getUser()!=null)?tme.getSupport().getUser():tme.getSupport().getPlace().getPlaceOwners().stream().filter(po->po.getUserRole()== PlacePersonnelRole.PLACE_OWNER).findFirst().get().getUser();
+                UserEntity user = (tme.getSupport().getUser()!=null)?tme.getSupport().getUser():tme.getSupport().getPlace().getPlaceOwners().stream().filter(po->po.getPlacePersonnelRoles().stream().anyMatch(ppp->ppp.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER)).findFirst().get().getUser();
                 smsService.sendSupportAnswered(SmsDto.builder()
                         .smsType(SmsTypes.SUPPORT_ANSWERED)
                         .userNumber(user.getPhoneNumber())

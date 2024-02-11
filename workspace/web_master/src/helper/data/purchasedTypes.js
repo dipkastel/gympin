@@ -8,6 +8,7 @@ import FastfoodIcon from "@mui/icons-material/Fastfood";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import SettingsIcon from '@mui/icons-material/Settings';
 import React from "react";
+import {personnelAccessEnumT} from "../enums/personnelAccessEnum";
 
 var purchasedTypes = [
     {
@@ -16,6 +17,7 @@ var purchasedTypes = [
         Type: "subscribe",
         Icon: <CardMembershipIcon sx={{fontSize:87}} color={"info"} />,
         Destination:"/purchased/subscribes",
+        Access:personnelAccessEnumT.SellsSubscribes,
         Status:"Active"
     },
     {
@@ -24,6 +26,7 @@ var purchasedTypes = [
         Type: "courses",
         Icon: <GroupsIcon sx={{fontSize:87}} color={"action"} />,
         Destination:"/purchased/courses",
+        Access:personnelAccessEnumT.SellsCourse,
         Status:"Soon"
     },
     {
@@ -32,6 +35,7 @@ var purchasedTypes = [
         Type: "reserves",
         Icon: <StadiumIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/purchased/reserves",
+        Access:personnelAccessEnumT.SellsReserve,
         Status:"Soon"
     },
     {
@@ -40,6 +44,7 @@ var purchasedTypes = [
         Type: "services",
         Icon: <VolunteerActivismIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/purchased/services",
+        Access:personnelAccessEnumT.SellsService,
         Status:"Soon"
     },
     {
@@ -48,6 +53,7 @@ var purchasedTypes = [
         Type: "workout",
         Icon: <FitnessCenterIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/purchased/workout",
+        Access:personnelAccessEnumT.SellsWorkout,
         Status:"Soon"
     },
     {
@@ -56,6 +62,7 @@ var purchasedTypes = [
         Type: "diet",
         Icon: <MonitorWeightIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/purchased/diet",
+        Access:personnelAccessEnumT.SellsDiet,
         Status:"Soon"
     },
     {
@@ -64,6 +71,7 @@ var purchasedTypes = [
         Type: "food",
         Icon: <FastfoodIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/purchased/food",
+        Access:personnelAccessEnumT.SellsFood,
         Status:"Soon"
     },
     {
@@ -72,6 +80,7 @@ var purchasedTypes = [
         Type: "products",
         Icon: <ShoppingBasketIcon sx={{fontSize:87}} color={"action"}/>,
         Destination:"/purchased/products",
+        Access:personnelAccessEnumT.SellsProduct,
         Status:"Soon"
     },
     {

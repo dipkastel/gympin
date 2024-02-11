@@ -1,8 +1,8 @@
 package com.notrika.gympin.common.place.personnel.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class PlacePersonnelDto extends BaseDto<PlacePersonnelDto> {
     private UserDto userDto;
 
     @JsonProperty("UserRole")
-    private PlacePersonnelRole userRole;
+    private List<PlacePersonnelRoleEnum> userRole;
 
     @JsonProperty("IsBeneficiary")
     private Boolean isBeneficiary;

@@ -1,7 +1,7 @@
 package com.notrika.gympin.test.domain.place;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRole;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
@@ -74,7 +74,7 @@ public class placePersonnelsTest extends BaseTest {
         final PlacePersonnelParam param = PlacePersonnelParam.builder()
                 .PhoneNumber("09194711540")
                 .place(PlaceParam.builder().id(placeId).build())
-                .userRole(PlacePersonnelRole.PLACE_PERSONNEL)
+                .userRole(PlacePersonnelRoleEnum.PLACE_PERSONNEL)
                 .build();
 
         ResponseModel<PlacePersonnelDto> result = TestPost(
@@ -97,7 +97,7 @@ public class placePersonnelsTest extends BaseTest {
         final PlacePersonnelParam param = PlacePersonnelParam.builder()
                 .id(placePersonnelId)
                 .place(PlaceParam.builder().id(placeId).build())
-                .userRole(PlacePersonnelRole.PLACE_COACH)
+                .userRole(PlacePersonnelRoleEnum.PLACE_COACH)
                 .build();
 
         ResponseModel<PlacePersonnelDto> result = TestPut(

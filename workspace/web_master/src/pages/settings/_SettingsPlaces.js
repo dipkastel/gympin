@@ -5,15 +5,15 @@ import {
     Button,
     Card,
     CardContent,
-    CardHeader,
+    CardHeader, Chip,
     CircularProgress,
     Divider,
     FormControl,
     FormControlLabel,
     Grid,
-    List,
+    List, ListItemText,
     Radio,
-    RadioGroup
+    RadioGroup, Typography
 } from "@mui/material";
 import {connect, useDispatch, useSelector} from "react-redux";
 import {Places_getPlacesByUserId} from "../../network/api/place.api";
@@ -22,6 +22,8 @@ import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {useNavigate} from "react-router-dom";
 import {accessActions} from "../../helper/redux/actions/AccessActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import {placePersonnel_ByUser} from "../../network/api/placePersonnel.api";
+import {personnelRoles} from "../../helper/enums/personnelRoles";
 
 const _SettingsPlaces = (props) => {
     const error = useContext(ErrorContext);
@@ -30,11 +32,12 @@ const _SettingsPlaces = (props) => {
     const access = useSelector(({access}) => access.access);
     const dispatch = useDispatch();
     const [selectedPlace, SetSelectedPlace] = useState(useSelector(({place}) => place.place))
-    const [places, SetPlaces] = useState([]);
+    const [placePersonnel, SetPlacePersonnel] = useState([]);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
-        Places_getPlacesByUserId(user.Id).then(result => {
-            SetPlaces(result.data.Data)
+        placePersonnel_ByUser({Id:user.Id}).then(result => {
+            console.log(result.data.Data)
+            SetPlacePersonnel(result.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -48,7 +51,7 @@ const _SettingsPlaces = (props) => {
     }, []);
 
     function selectedPlaceChanged(event) {
-        const place = places.find(r => r.Id == event.target.value);
+        const place = placePersonnel.find(r => r.Place.Id == event.target.value).Place;
         if (place) {
             SetSelectedPlace(place);
             props.SetPlace(place);
@@ -82,20 +85,22 @@ const _SettingsPlaces = (props) => {
                                 value={(selectedPlace) ? selectedPlace.Id : 9999}
                                 onChange={(event) => selectedPlaceChanged(event)}
                             >
-                                {places.map((item, number) => (
+                                {placePersonnel.map((item, number) => (
                                     <div key={number}>
                                         <Grid
                                             container
                                             justifyContent={"space-between"}
                                             sx={{padding: 1}}
                                         >
+                                            <ListItemText
+                                                primary={<FormControlLabel value={item.Place.Id} control={<Radio/>} label={item.Place.Name}/>}
+                                                secondary={<>{item.UserRole.map(role=>(<Chip size={"small"} label={personnelRoles[role]} />))}</>}
+                                                />
 
-                                            <FormControlLabel value={item.Id} control={<Radio/>} label={item.Name}/>
                                             <Button size={"small"} variant={"outlined"}
-                                                    href={"/management/place?id=" + item.Id}>
+                                                    href={"/management/place?id=" + item.Place.Id}>
                                                 ویرایش
                                             </Button>
-
                                         </Grid>
                                         <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
                                     </div>

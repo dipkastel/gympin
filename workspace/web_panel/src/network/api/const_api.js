@@ -291,6 +291,8 @@ export let PlacePersonelApi = {
     getUserPlaceBuyableAccess: "v1/placePersonnel/getUserPlaceBuyableAccess",
     updatePersonnelCommissionFee: "v1/placePersonnel/updatePersonnelCommissionFee",
     updatePersonnelBuyableAccess: "v1/placePersonnel/updatePersonnelBuyableAccess",
+    addRole: "v1/placePersonnel/addRole",
+    deleteRole: "v1/placePersonnel/deleteRole",
     getById: "v1/placePersonnel/getById"
 };
 export let ReportSettings = {

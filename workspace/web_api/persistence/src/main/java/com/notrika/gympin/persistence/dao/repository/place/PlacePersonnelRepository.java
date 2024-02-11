@@ -12,7 +12,7 @@ import java.util.List;
 public interface PlacePersonnelRepository extends BaseRepository<PlacePersonnelEntity, Long> {
 
         List<PlacePersonnelEntity> getAllByPlaceAndDeletedFalse(PlaceEntity place);
-        List<PlacePersonnelEntity> findAllByUser(UserEntity user);
+        List<PlacePersonnelEntity> findAllByUserIdAndDeletedIsFalse(Long userId);
         PlacePersonnelEntity findByUserIdAndPlaceIdAndDeletedFalse(Long userId,Long placeId);
 
 }

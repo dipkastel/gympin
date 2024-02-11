@@ -58,6 +58,9 @@ public class TicketCourseDto extends BaseDto<TicketCourseDto> {
     @JsonProperty("TargetOfCourse")
     private String targetOfCourse;
 
+    @JsonProperty("AutoRenew")
+    private Boolean autoRenew;
+
     @JsonProperty("ClassCapacity")
     private Short classCapacity;
 

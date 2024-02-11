@@ -49,10 +49,13 @@ export let Api_url = {
         getAll: "v1/placePersonnel/getAll",
         update: "v1/placePersonnel/update",
         PersonnelByPlace:"v1/placePersonnel/PersonnelByPlace",
+        PersonnelByUser:"v1/placePersonnel/PersonnelByUser",
         updatePersonnelAccess:"v1/placePersonnel/updatePersonnelAccess",
         getUserPlaceAccess:"v1/placePersonnel/getUserPlaceAccess",
         updatePersonnelHallAccess:"v1/placePersonnel/updatePersonnelHallAccess",
-        getUserPlaceHallAccess:"v1/placePersonnel/getUserPlaceHallAccess"
+        getUserPlaceHallAccess:"v1/placePersonnel/getUserPlaceHallAccess",
+        addRole:"v1/placePersonnel/addRole",
+        deleteRole:"v1/placePersonnel/deleteRole"
     },
     optionOfPlace:{
         ADD: "v1/OptionOfPlace/add",
@@ -115,6 +118,9 @@ export let Api_url = {
         getSports: "v1/TicketCourse/getSports",
         addSport: "v1/TicketCourse/addSport",
         deleteSport: "v1/TicketCourse/deleteSport",
+        getCoaches: "v1/TicketCourse/getCoaches",
+        addCoach: "v1/TicketCourse/addCoach",
+        deleteCoach: "v1/TicketCourse/deleteCoach",
         update: "v1/TicketCourse/update",
         ChangeTicketCourseStatus: "v1/TicketCourse/ChangeTicketCourseStatus",
         query: "v1/TicketCourse/query",

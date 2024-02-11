@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {
     Avatar, Button,
     Card,
-    CardContent, Dialog, DialogActions, DialogContent, DialogTitle,
+    CardContent, Chip, Dialog, DialogActions, DialogContent, DialogTitle,
     Divider,
     Grid,
     IconButton,
@@ -15,7 +15,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {personnelRoles} from "../../helper/enums/personnelRoles";
 import {PlacesQr_delete} from "../../network/api/placeQr.api";
 import {Form} from "react-bootstrap";
-import {placePersonnel_delete} from "../../network/api/placePersonnel.api";
+import {
+    placePersonnel_addRole,
+    placePersonnel_delete,
+    placePersonnel_deleteRole
+} from "../../network/api/placePersonnel.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
 
@@ -24,7 +28,7 @@ const _PersonnelList = ({personnelList, renewList}) => {
     const error = useContext(ErrorContext);
     const navigate = useNavigate()
     const [personnelToDelete,SetPersonnelToDelete]= useState(null)
-    const [inPersonnelList,setInPersonnelList]= useState(personnelList.filter(o=>o.UserRole.startsWith("PLACE_OWNER")||o.UserRole.startsWith("PLACE_PERSONNEL")))
+    const [inPersonnelList,setInPersonnelList]= useState(personnelList)
 
     function renderModalDelete(){
         const deleteItem = (e)=>{
@@ -55,6 +59,35 @@ const _PersonnelList = ({personnelList, renewList}) => {
             </div>
         );
     }
+
+    function deleteRole(role, personnel) {
+        console.log("delete",role,personnel);
+        placePersonnel_deleteRole({...personnel,UserRole:role}).then(result=>{
+            renewList()
+            error.showError({message: "عملیات موفق",});
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
+    }
+
+    function addRole(role, personnel) {
+        console.log("add",role,personnel);
+        placePersonnel_addRole({...personnel,UserRole:role}).then(result=>{
+            renewList()
+            error.showError({message: "عملیات موفق",});
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
+    }
+
     return (
         <>
             <Card elevation={3} sx={{margin: 1}}>
@@ -63,7 +96,7 @@ const _PersonnelList = ({personnelList, renewList}) => {
                         {inPersonnelList && inPersonnelList.map(item => (
                             <div key={"person-" + item.Id}>
                                 <Grid container direction={"row"} justifyContent="space-between" sx={{marginY: 1}}>
-                                    <ListItemButton alignItems="flex-start" onClick={()=>item.UserRole=="PLACE_OWNER"?"#":navigate("/management/personnelAccess", {state:{user:item.User}})} >
+                                    <ListItemButton alignItems="flex-start" onClick={()=>item.UserRole.includes("PLACE_OWNER")?"#":navigate("/management/personnelAccess", {state:{user:item.User}})} >
                                         <ListItemAvatar>
                                             <Avatar sx={{width: 40, height: 40}}
                                                     src={item.User.Avatar ? (item.User.Avatar.Url || "") : ""}/>
@@ -74,14 +107,20 @@ const _PersonnelList = ({personnelList, renewList}) => {
                                             secondary={item.User?.Username}
                                         />
                                     </ListItemButton>
+                                    <IconButton onClick={(e)=>item.UserRole.includes("PLACE_OWNER")?{}:SetPersonnelToDelete(item)}>
+                                        {item.UserRole.includes("PLACE_OWNER")?<></>:<DeleteIcon color={"error"}  />}
+                                    </IconButton>
 
-                                    <ListItemText
-                                        className="text-end"
-                                        primary={(<IconButton onClick={(e)=>item.UserRole=="PLACE_OWNER"?{}:SetPersonnelToDelete(item)}>
-                                            {item.UserRole=="PLACE_OWNER"?<></>:<DeleteIcon color={"error"}  />}
-                                        </IconButton>)}
-                                        secondary={personnelRoles[item.UserRole]}
-                                    />
+                                </Grid>
+                                <Grid container direction={"row"} justifyContent={"center"} sx={{marginY: 1}}>
+                                    {Object.keys(personnelRoles).map(role=>(
+                                        <Chip onClick={(e)=>item.UserRole.includes(role)?deleteRole(role,item):addRole(role,item)}
+                                            label={personnelRoles[role]}
+                                              sx={{mx:1}}
+                                              size={"medium"}
+                                              color={item.UserRole.includes(role)?"success":"default"}
+                                        />
+                                    ))}
 
                                 </Grid>
                                 <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>

@@ -1,8 +1,8 @@
 package com.notrika.gympin.common.place.personnel.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.util._base.param.BaseParam;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRole;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,7 +24,7 @@ public class PlacePersonnelParam extends BaseParam<PlacePersonnelParam> {
     private String PhoneNumber;
 
     @JsonProperty("UserRole")
-    private PlacePersonnelRole userRole;
+    private PlacePersonnelRoleEnum userRole;
 
     @JsonProperty("CommissionFee")
     private Double commissionFee;

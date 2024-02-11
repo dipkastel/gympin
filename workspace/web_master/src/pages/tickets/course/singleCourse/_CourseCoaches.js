@@ -1,10 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Card, CardContent, CardHeader, Chip} from "@mui/material";
 import {
-    TicketCourses_addSport, TicketCourses_deleteSport
+    TicketCourses_addCoach, TicketCourses_deleteCoach, TicketCourses_getCoaches
 } from "../../../../network/api/ticketCourse.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
+import {placePersonnel_ByPlace, placePersonnel_getAccess} from "../../../../network/api/placePersonnel.api";
 
 const _CourseCoaches = ({ticketCourse}) => {
     const error = useContext(ErrorContext);
@@ -12,7 +13,7 @@ const _CourseCoaches = ({ticketCourse}) => {
 
     const [itemToProgress,SetItemToProgress] = useState(null);
     const [ticketCourseCoaches, SetTicketCourseCoaches] = useState([])
-    const [sportsPlace, SetCoachesPlace] = useState([])
+    const [placeCoaches, SetPlaceCoaches] = useState([])
 
     useEffect(() => {
         if(ticketCourse.Id)
@@ -20,36 +21,37 @@ const _CourseCoaches = ({ticketCourse}) => {
     }, [ticketCourse]);
 
     function getPlaceCoaches() {
-        // placeSport_getCoachesByPlace({Id: place.Id}).then(data => {
-        //     SetCoachesPlace(data.data.Data);
-        //     getTicketCourseCoaches();
-        // }).catch(e => {
-        //     try {
-        //         error.showError({message: e.response.data.Message,});
-        //     } catch (f) {
-        //         error.showError({message: "خطا نا مشخص",});
-        //     }
-        // });
+        placePersonnel_ByPlace({Id: place.Id}).then(data => {
+            console.log("SetPlaceCoaches",data.data.Data.filter(pp=>pp.UserRole=="PLACE_COACH"))
+             SetPlaceCoaches(data.data.Data.filter(pp=>pp.UserRole=="PLACE_COACH"));
+            getTicketCourseCoaches();
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
     function getTicketCourseCoaches() {
-        // TicketCourses_getTicketCoursesCoaches({ticketId: ticketCourse.Id}).then(data => {
-        //     SetTicketCourseCoaches(data.data.Data);
-        //     SetItemToProgress(null);
-        // }).catch(e => {
-        //     try {
-        //         error.showError({message: e.response.data.Message,});
-        //     } catch (f) {
-        //         error.showError({message: "خطا نا مشخص",});
-        //     }
-        // });
+        TicketCourses_getCoaches({ticketId: ticketCourse.Id}).then(data => {
+            console.log("SetTicketCourseCoaches",data.data.Data);
+            SetTicketCourseCoaches(data.data.Data);
+            SetItemToProgress(null);
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
-    function addPlaceSport(e,item){
+    function addPlaceCoach(e,item){
 
         if(!!itemToProgress)return;
         SetItemToProgress(item.Id);
-        console.log({TicketCourse: {Id: ticketCourse.Id}, PlaceSport: {Id:item.Id}})
-        TicketCourses_addSport({TicketCourse: {Id: ticketCourse.Id}, PlaceSport: [{Id:item.Id}]})
+        TicketCourses_addCoach({TicketCourse: {Id: ticketCourse.Id}, PlaceCoach: {Id:item.User.Id}})
             .then(data => {
                 getTicketCourseCoaches()
             }).catch(e => {
@@ -60,12 +62,12 @@ const _CourseCoaches = ({ticketCourse}) => {
             }
         });
     }
-    function deletePlaceSport(e,item){
+    function deletePlaceCoach(e,item){
 
         if(!!itemToProgress)return;
         SetItemToProgress(item.Id);
 
-        TicketCourses_deleteSport({TicketCourse:{Id: ticketCourse.Id},PlaceSport:[{Id:item.Id}]})
+        TicketCourses_deleteCoach({TicketCourse:{Id: ticketCourse.Id},PlaceCoach:{Id:item.Id}})
             .then(data => {
                 getTicketCourseCoaches()
             }).catch(e => {
@@ -88,15 +90,15 @@ const _CourseCoaches = ({ticketCourse}) => {
 
                     <div className={"container"}>
                         <div className={"row"}>
-                            {ticketCourseCoaches.map(sport=>sport.Id==itemToProgress?(
-                                <Chip label={"لطفا صبر کنید"}  key={"placeOption"+sport.Id} sx={{m:1,width:"inherit"}} color={"warning"} />
+                            {ticketCourseCoaches.map(coach=>coach.Id==itemToProgress?(
+                                <Chip label={"لطفا صبر کنید"}  key={"placeOption"+coach.Id} sx={{m:1,width:"inherit"}} color={"warning"} />
                             ):(
-                                <Chip label={sport.sport.Name}  key={"placeOption"+sport.Id} sx={{m:1,width:"inherit"}} color={"success"} onClick={(e)=>deletePlaceSport(e,sport)} />
+                                <Chip label={coach.FullName||coach.Username||"ثبت نشده"}  key={"placeOption"+coach.Id} sx={{m:1,width:"inherit"}} color={"success"} onClick={(e)=>deletePlaceCoach(e,coach)} />
                             ))}
-                            {sportsPlace.filter(sp=>!ticketCourseCoaches.map(tss=>tss.Id).includes(sp.Id)).map(sport=>sport.Id==itemToProgress?(
-                                <Chip label={"لطفا صبر کنید"}  key={"placeOption"+sport.Id} sx={{m:1,width:"inherit"}} color={"warning"} />
+                            {placeCoaches.filter(sp=>!ticketCourseCoaches.map(uc=>uc.Id).includes(sp.User.Id)).map(coach=>coach.Id==itemToProgress?(
+                                <Chip label={"لطفا صبر کنید"}  key={"placeOption"+coach.Id} sx={{m:1,width:"inherit"}} color={"warning"} />
                             ):(
-                                <Chip label={sport.sport.Name} key={"option"+sport.Id} sx={{m:1,width:"inherit"}} onClick={(e)=>{addPlaceSport(e,sport)}} />
+                                <Chip label={coach.User.FullName||coach.User.Username||"ثبت نشده"} key={"option"+coach.Id} sx={{m:1,width:"inherit"}} onClick={(e)=>{addPlaceCoach(e,coach)}} />
                             ))}
                         </div>
                     </div>

@@ -43,3 +43,15 @@ export function TicketCourses_addSport(data) {
 export function TicketCourses_deleteSport(data) {
     return axios.put(Api_url.TicketCourse.deleteSport, data);
 }
+
+export function TicketCourses_getCoaches(data) {
+    return axios.get(Api_url.TicketCourse.getCoaches, {params: data});
+}
+
+export function TicketCourses_addCoach(data) {
+    return axios.post(Api_url.TicketCourse.addCoach, data);
+}
+
+export function TicketCourses_deleteCoach(data) {
+    return axios.put(Api_url.TicketCourse.deleteCoach, data);
+}

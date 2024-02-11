@@ -18,6 +18,12 @@ export function placePersonnel_ByPlace(data) {
 }
 
 
+
+export function placePersonnel_ByUser(data) {
+    return axios.get(Api_url.placePersonnel.PersonnelByUser, {params: data});
+}
+
+
 export function placePersonnel_getAccess(data) {
     return axios.get(Api_url.placePersonnel.getUserPlaceAccess, {params: data});
 }
@@ -33,4 +39,12 @@ export function placePersonnel_getGateAccess(data) {
 
 export function placePersonnel_updatePersonnelGateAccess(data) {
     return axios.post(Api_url.placePersonnel.updatePersonnelHallAccess,  data);
+}
+
+export function placePersonnel_addRole(data) {
+    return axios.post(Api_url.placePersonnel.addRole,  data);
+}
+
+export function placePersonnel_deleteRole(data) {
+    return axios.post(Api_url.placePersonnel.deleteRole,  data);
 }

@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.purchased.purchasedCourse;
 
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRole;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.purchased.purchasedCourse.enums.CourseEntryStatus;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
@@ -40,7 +40,7 @@ public class PurchasedCourseServiceHelper {
         var userHallAccess = userRequester.getPlacePersonnel().stream().filter(p -> p.getPlace().getId() == placeId).findFirst().get();
         var halls = purchesedCourse.getTicketCourse().getActiveTimes().stream().map(TicketHallActiveTimeEntity::getHall).collect(Collectors.toSet());
         for (var hall : halls) {
-            if (userHallAccess.getUserRole() == PlacePersonnelRole.PLACE_OWNER) return true;
+            if (userHallAccess.getPlacePersonnelRoles().stream().anyMatch(pp->pp.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER)) return true;
             if (userHallAccess.getPlacePersonnelBuyableAccess().size() < 1) return false;
             var hallAccess = userHallAccess.getPlacePersonnelBuyableAccess().stream().filter(c -> Objects.equals(c.getBuyable().getId(), hall.getId())).findFirst().get();
             if (!hallAccess.getAccess())

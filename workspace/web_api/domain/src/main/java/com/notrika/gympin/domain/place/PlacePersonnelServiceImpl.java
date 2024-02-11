@@ -1,10 +1,11 @@
 package com.notrika.gympin.domain.place;
 
+import com.notrika.gympin.common.place.personnel.api.PlacePersonnelController;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRole;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelBuyableAccessParam;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
@@ -14,25 +15,25 @@ import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsService;
 import com.notrika.gympin.common.user.user.enums.RoleEnum;
+import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.param.UserRegisterParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.util.exception.general.SendSmsException;
+import com.notrika.gympin.common.util.exception.purchased.EntryAlreadyExistException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
 import com.notrika.gympin.domain.util.convertor.BuyableConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
-import com.notrika.gympin.persistence.dao.repository.place.PlacePersonnelAccessRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlacePersonnelHallAccessRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlacePersonnelRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.place.*;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
@@ -46,6 +47,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,6 +61,9 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Autowired
     PlacePersonnelHallAccessRepository placePersonnelHallAccessRepository;
+
+    @Autowired
+    PlacePersonnelRoleRepository placePersonnelRoleRepository;
 
     @Autowired
     private PlaceRepository placeRepository;
@@ -79,11 +84,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         PlaceEntity place = placeRepository.getById(placePersonnelParam.getPlace().getId());
 
         if (user == null) {
-//            var userRole = null;
-//            if(placePersonnelParam.getUserRole()==PlacePersonnelRole.PLACE_OWNER||placePersonnelParam.getUserRole()==PlacePersonnelRole.PLACE_PERSONNEL||placePersonnelParam.getUserRole()==PlacePersonnelRole.Place_COACH){
-//
-//            }
-            RoleEnum role = placePersonnelParam.getUserRole() == PlacePersonnelRole.PLACE_COACH ? RoleEnum.COACH : place.getPlaceOwners().size() > 0 ? RoleEnum.PLACE_PERSONNEL : RoleEnum.PLACE_MANAGER;
+            RoleEnum role = placePersonnelParam.getUserRole() == PlacePersonnelRoleEnum.PLACE_COACH ? RoleEnum.COACH : place.getPlaceOwners().size() > 0 ? RoleEnum.PLACE_PERSONNEL : RoleEnum.PLACE_MANAGER;
             user = accountService.addUser(UserRegisterParam.
                     builder().
                     invitedBy("P" + GeneralHelper.getInviteCode(place.getId(), 1)).
@@ -96,11 +97,11 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             if (place.getPlaceOwners().stream().anyMatch(p -> Objects.equals(p.getUser().getId(), finalUser.getId())))
                 throw new DuplicateEntryAddExeption();
         }
-
+        var placePersonnelRole = placePersonnelParam.getUserRole() == PlacePersonnelRoleEnum.PLACE_COACH ? PlacePersonnelRoleEnum.PLACE_COACH : place.getPlaceOwners().size() > 0 ? (placePersonnelParam.getUserRole() != null ? placePersonnelParam.getUserRole() : PlacePersonnelRoleEnum.PLACE_PERSONNEL) : PlacePersonnelRoleEnum.PLACE_OWNER;
         PlacePersonnelEntity placePersonnelEntity = PlacePersonnelEntity.builder()
                 .place(place)
                 .user(user)
-                .userRole(placePersonnelParam.getUserRole() == PlacePersonnelRole.PLACE_COACH ? PlacePersonnelRole.PLACE_COACH : place.getPlaceOwners().size() > 0 ? (placePersonnelParam.getUserRole() != null ? placePersonnelParam.getUserRole() : PlacePersonnelRole.PLACE_PERSONNEL) : PlacePersonnelRole.PLACE_OWNER)
+                .placePersonnelRoles(Set.of(PlacePersonnelRoleEntity.builder().role(placePersonnelRole).build()))
                 .isBeneficiary(false)
                 .isPublic(false)
                 .commissionFee(0.0)
@@ -117,10 +118,27 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Override
     public PlacePersonnelDto update(@NonNull PlacePersonnelParam placePersonnelParam) {
-        PlacePersonnelEntity entity = getEntityById(placePersonnelParam.getId());
-        entity.setUserRole(placePersonnelParam.getUserRole());
-        placePersonnelRepository.update(entity);
-        return PlaceConvertor.personnelToDto(entity);
+        return null;
+    }
+
+    @Override
+    public PlacePersonnelDto addPlacePersonnelRole(@NonNull PlacePersonnelParam placePersonnelParam) {
+        PlacePersonnelEntity placePersonnel = placePersonnelRepository.getById(placePersonnelParam.getId());
+        if(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr->ppr.getRole()==placePersonnelParam.getUserRole()&&!ppr.isDeleted()))
+            throw new DuplicateEntryAddExeption();
+        placePersonnelRoleRepository.add(PlacePersonnelRoleEntity.builder().role(placePersonnelParam.getUserRole()).placePersonnel(placePersonnel).build());
+        return PlaceConvertor.personnelToDto(placePersonnelRepository.getById(placePersonnelParam.getId()));
+    }
+
+    @Override
+    public PlacePersonnelDto deletePlacePersonnelRole(@NonNull PlacePersonnelParam placePersonnelParam) {
+        PlacePersonnelEntity placePersonnel = placePersonnelRepository.getById(placePersonnelParam.getId());
+        try{
+            var placepersonnelRole=placePersonnel.getPlacePersonnelRoles().stream().filter(pp->pp.getRole()==placePersonnelParam.getUserRole()&&!pp.isDeleted()).findFirst().orElse(null);
+            if(placepersonnelRole!=null)
+                placePersonnelRoleRepository.deleteById2(placepersonnelRole);
+        }catch (Exception e){}
+        return PlaceConvertor.personnelToDto(placePersonnelRepository.getById(placePersonnelParam.getId()));
     }
 
     @Override
@@ -139,6 +157,12 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         PlaceEntity place = placeRepository.getById(placeParam.getId());
 
         return convertToDtos(placePersonnelRepository.getAllByPlaceAndDeletedFalse(place));
+    }
+
+    @Override
+    public List<PlacePersonnelDto> getPersonnelByUser(UserParam userParam) {
+        List<PlacePersonnelEntity> placePersonnel = placePersonnelRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId());
+        return convertToDtos(placePersonnel);
     }
 
     @Override
@@ -180,20 +204,21 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             resultItem.setPlacePersonelId(placePersonnel.getId());
             var hasAccess = false;
             try {
-                var currentAccessItem = currentAccess.stream().filter(a -> a.getSection().equals(section)).findFirst();
-                if (currentAccessItem.isEmpty()) {
+                var currentAccessItem = currentAccess.stream().filter(a -> a.getSection().equals(section)).findFirst().orElse(null);
+                if (currentAccessItem==null) {
+                    var access = placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr->(ppr.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER&&!ppr.isDeleted())) || hasAccess;
                     toAdd.add(
                             PlacePersonnelAccessEntity.builder()
-                                    .access(placePersonnel.getUserRole() == PlacePersonnelRole.PLACE_OWNER || hasAccess)
+                                    .access(access)
                                     .placePerson(placePersonnel)
                                     .section(section)
                                     .build()
                     );
                 }
-                hasAccess = currentAccessItem.get().getAccess();
+                hasAccess = currentAccessItem.getAccess();
             } catch (Exception e) {
             }
-            resultItem.setAccess(placePersonnel.getUserRole() == PlacePersonnelRole.PLACE_OWNER || hasAccess);
+            resultItem.setAccess(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr->(ppr.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER&&!ppr.isDeleted())) || hasAccess);
             result.add(resultItem);
         }
         if (toAdd.size() > 0) {
@@ -254,7 +279,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
                 if (currentAccessItem.isEmpty()) {
                     toAdd.add(
                             PlacePersonelBuyableAccessEntity.builder()
-                                    .access(placePersonnel.getUserRole() == PlacePersonnelRole.PLACE_OWNER || hasAccess)
+                                    .access(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr->(ppr.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER&&!ppr.isDeleted())) || hasAccess)
                                     .placePerson(placePersonnel)
                                     .buyable(placeBuyable)
                                     .build()
@@ -263,7 +288,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
                 hasAccess = currentAccessItem.get().getAccess();
             } catch (Exception e) {
             }
-            resultItem.setAccess(placePersonnel.getUserRole() == PlacePersonnelRole.PLACE_OWNER || hasAccess);
+            resultItem.setAccess(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr->(ppr.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER&&!ppr.isDeleted())) || hasAccess);
             result.add(resultItem);
         }
 

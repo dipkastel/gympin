@@ -7,6 +7,7 @@ import MonitorWeightIcon from "@mui/icons-material/MonitorWeight";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import React from "react";
+import {personnelAccessEnumT} from "../enums/personnelAccessEnum";
 
 var ticketTypes = [
     {
@@ -15,6 +16,7 @@ var ticketTypes = [
         Type: "subscribe",
         Icon: <CardMembershipIcon sx={{fontSize:87}} color={"secondary"} />,
         Destination:"/ticket/subscribes",
+        Access:personnelAccessEnumT.ManagementTicketSubscribes,
         Status:"Active"
     },
     {
@@ -23,6 +25,7 @@ var ticketTypes = [
         Type: "courses",
         Icon: <GroupsIcon sx={{fontSize:87}}  color={"secondary"}  />,
         Destination:"/ticket/courses",
+        Access:personnelAccessEnumT.ManagementTicketCourse,
         Status:"Active"
     },
     {
@@ -31,6 +34,7 @@ var ticketTypes = [
         Type: "reserves",
         Icon: <StadiumIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/ticket/reserves",
+        Access:personnelAccessEnumT.ManagementTicketReserve,
         Status:"Soon"
     },
     {
@@ -39,6 +43,7 @@ var ticketTypes = [
         Type: "services",
         Icon: <VolunteerActivismIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/ticket/services",
+        Access:personnelAccessEnumT.ManagementTicketService,
         Status:"Soon"
     },
     {
@@ -47,6 +52,7 @@ var ticketTypes = [
         Type: "workout",
         Icon: <FitnessCenterIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/ticket/workout",
+        Access:personnelAccessEnumT.ManagementTicketWorkout,
         Status:"Soon"
     },
     {
@@ -55,6 +61,7 @@ var ticketTypes = [
         Type: "diet",
         Icon: <MonitorWeightIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/ticket/diet",
+        Access:personnelAccessEnumT.ManagementTicketDiet,
         Status:"Soon"
     },
     {
@@ -63,6 +70,7 @@ var ticketTypes = [
         Type: "food",
         Icon: <FastfoodIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/ticket/food",
+        Access:personnelAccessEnumT.ManagementTicketFood,
         Status:"Soon"
     },
     {
@@ -71,6 +79,7 @@ var ticketTypes = [
         Type: "products",
         Icon: <ShoppingBasketIcon sx={{fontSize:87}} color={"action"}/>,
         Destination:"/ticket/products",
+        Access:personnelAccessEnumT.ManagementTicketProduct,
         Status:"Soon"
     }
 ]

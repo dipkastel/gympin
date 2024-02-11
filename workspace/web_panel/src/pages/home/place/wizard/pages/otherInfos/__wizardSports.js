@@ -41,7 +41,7 @@ const __wizardSports = ({setAllowNextSport}) => {
     function getAllSports() {
         sport_query({
             queryType: "FILTER",
-            paging: {Page: 0, Size: 150, Desc: true}
+            paging: {Page: 0, Size: 150,orderBy:"Name", Desc: false}
         })
             .then((data) => {
                 setSports(data.data.Data.content)

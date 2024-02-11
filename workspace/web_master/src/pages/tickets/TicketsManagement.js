@@ -2,6 +2,7 @@ import React from 'react';
 import {Card, CardContent, Grid, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import ticketTypes from "../../helper/data/ticketTypes";
+import getAccessOf from "../../helper/accessManager";
 
 
 const TicketsManagement = () => {
@@ -11,7 +12,7 @@ const TicketsManagement = () => {
         <Grid container alignContent={"space-around"} justifyContent={"space-around"} direction={"row"}>
             {ticketTypes.map(item=>(
 
-                <Grid key={item.Id} item xs={4}>
+                <Grid hidden={!getAccessOf(item.Access)} key={item.Id} item xs={4}>
                     <Card onClick={(e)=>item.Status=="Active"?navigate(item.Destination, {replace: true}):{}}  sx={{m:1}} elevation={3}>
                         <CardContent className={"row"}>
                             <div className={"col-sm-12 col-md-6"}>

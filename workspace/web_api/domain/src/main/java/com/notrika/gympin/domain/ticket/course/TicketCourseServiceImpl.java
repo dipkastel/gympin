@@ -74,6 +74,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
                 .buyableType(BuyableType.COURSE)
                 .courseStatus(param.getStatus())
                 .targetOfCourse(param.getTargetOfCourse())
+                .autoRenew(param.getAutoRenew())
                 .classCapacity(param.getClassCapasity())
                 .ageLimit(param.getAgeLimit())
                 .entryTotalCount(param.getEntryTotalCount())
@@ -104,6 +105,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
         ticketCourseEntity.setBuyableType(BuyableType.COURSE);
         ticketCourseEntity.setCourseStatus(ticketCourseParam.getStatus());
         ticketCourseEntity.setTargetOfCourse(ticketCourseParam.getTargetOfCourse());
+        ticketCourseEntity.setAutoRenew(ticketCourseParam.getAutoRenew());
         ticketCourseEntity.setClassCapacity(ticketCourseParam.getClassCapasity());
         ticketCourseEntity.setAgeLimit(ticketCourseParam.getAgeLimit());
         ticketCourseEntity.setEntryTotalCount(ticketCourseParam.getEntryTotalCount());

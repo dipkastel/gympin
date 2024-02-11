@@ -46,3 +46,11 @@ export function placePersonnel_getPlaceBeneficiaries(data) {
 export function placePersonnel_updatePersonnelBuyableAccess(data) {
   return axios.post(PlacePersonelApi.updatePersonnelBuyableAccess,  data);
 }
+
+export function placePersonnel_addRole(data) {
+  return axios.post(PlacePersonelApi.addRole,  data);
+}
+
+export function placePersonnel_deleteRole(data) {
+  return axios.post(PlacePersonelApi.deleteRole,  data);
+}

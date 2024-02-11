@@ -11,6 +11,7 @@ import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import org.springframework.data.domain.Page;
@@ -115,7 +116,7 @@ public final class PlaceConvertor {
                 .isDeleted(entity.isDeleted())
                 .placeDto(toDto(entity.getPlace()))
                 .userDto(UserConvertor.toDtoComplete(entity.getUser()))
-                .userRole(entity.getUserRole())
+                .userRole(entity.getPlacePersonnelRoles().stream().filter(pp->!pp.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()))
                 .isBeneficiary(entity.getIsBeneficiary())
                 .isPublic(entity.getIsPublic())
                 .commissionFee(entity.getCommissionFee())

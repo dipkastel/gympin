@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.place.personnel.api;
 
+import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
@@ -18,6 +19,8 @@ public interface PlacePersonnelController extends BaseController<PlacePersonnelP
 
     ResponseEntity<List<PlacePersonnelDto>> getPersonnelByPlace(PlaceParam placeParam);
 
+    ResponseEntity<List<PlacePersonnelDto>> getPersonnelByUser(UserParam placeParam);
+
     ResponseEntity<List<PlacePersonnelAccessDto>> getUserPlaceAccess(Long placeId,Long userId);
 
     ResponseEntity<List<PlacePersonnelBuyableAccessDto>> getUserPlaceBuyableAccess(Long placeId, Long userId);
@@ -29,4 +32,8 @@ public interface PlacePersonnelController extends BaseController<PlacePersonnelP
     ResponseEntity<List<PlacePersonnelDto>> getPlaceBeneficiaries(Long placeId);
 
     ResponseEntity<List<PlacePersonnelBuyableAccessDto>> updatePersonnelBuyableAccess(List<PlacePersonnelBuyableAccessParam> param);
+
+    ResponseEntity<PlacePersonnelDto> addRole(PlacePersonnelParam param);
+
+    ResponseEntity<PlacePersonnelDto> deleteRole(PlacePersonnelParam param);
 }

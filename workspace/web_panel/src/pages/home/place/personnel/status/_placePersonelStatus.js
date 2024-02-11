@@ -1,14 +1,25 @@
 import React, {useContext} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {Form} from "react-bootstrap";
-import Select from "react-select";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {placePersonnel_update} from "../../../../../network/api/placePersonnel.api";
+import {
+    placePersonnel_addRole,
+    placePersonnel_deleteRole
+} from "../../../../../network/api/placePersonnel.api";
+import {Chip} from "@mui/material";
 
 const _placePersonelStatus = ({personel,getPerson}) => {
     const error = useContext(ErrorContext);
-    function updateUserRole(e){
-        placePersonnel_update({...personel,UserRole:e.value}).then(result=>{
+    function getRoleOptions(){
+        return [
+            {label:"مدیر مرکز",value:"PLACE_OWNER"},
+            {label:"پرسنل مرکز",value:"PLACE_PERSONNEL"},
+            {label:"مربی",value:"PLACE_COACH"},
+        ]
+    }
+
+
+    function deleteUserRole(role) {
+        placePersonnel_deleteRole({...personel,UserRole:role.value}).then(result=>{
             getPerson();
             error.showError({message: "عملیات موفق",});
         }).catch(e => {
@@ -19,13 +30,17 @@ const _placePersonelStatus = ({personel,getPerson}) => {
             }
         });
     }
-
-    function getRoleOptions(){
-        return [
-            {label:"مدیر مرکز",value:"PLACE_OWNER"},
-            {label:"پرسنل مرکز",value:"PLACE_PERSONNEL"},
-            {label:"مربی",value:"PLACE_COACH"},
-        ]
+    function addUserRole(role) {
+        placePersonnel_addRole({...personel,UserRole:role.value}).then(result=>{
+            getPerson();
+            error.showError({message: "عملیات موفق",});
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
 
@@ -38,14 +53,17 @@ const _placePersonelStatus = ({personel,getPerson}) => {
 
                 <PortletBody>
 
-                    <Form.Group>
-                        <Select
-                            className={"dropdown"}
-                            options={getRoleOptions()}
-                            value={getRoleOptions().filter(p=>p.value===personel.UserRole)}
-                            onChange={e => updateUserRole(e)}
-                        />
-                    </Form.Group>
+
+                    <div className={"row"}>
+                        {getRoleOptions().map(role => (
+                            <Chip sx={{p: 1, m: 1}} key={"role" + role.value}
+                                  color={personel.UserRole.includes(role.value) ? "success" : "default"}
+                                  size={"medium"}
+                                  label={role.label}
+                                   onClick={(e) => personel.UserRole.includes(role.value)?deleteUserRole(role):addUserRole(role)}
+                            />
+                        ))}
+                    </div>
                 </PortletBody>
             </Portlet>
         </>

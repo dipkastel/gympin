@@ -1,6 +1,5 @@
 package com.notrika.gympin.persistence.entity.place.personnel;
 
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRole;
 import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
@@ -16,6 +15,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,9 +34,10 @@ public class PlacePersonnelEntity extends BaseEntity<PlacePersonnelEntity> {
     @JoinColumn(name = "personnelUserId")
     private UserEntity user;
 
-    @Column(name = "role")
-    @Enumerated(EnumType.STRING)
-    private PlacePersonnelRole userRole;
+
+    @OneToMany(mappedBy = "placePersonnel", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<PlacePersonnelRoleEntity> placePersonnelRoles;
 
     @Column(name = "isBeneficiary", nullable = false, columnDefinition = "boolean default false")
     private Boolean isBeneficiary;
