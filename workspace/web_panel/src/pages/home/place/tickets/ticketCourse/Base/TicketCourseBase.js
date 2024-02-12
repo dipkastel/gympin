@@ -164,7 +164,7 @@ function TicketCourseBase({ticketCourse, updateTicketCourse}) {
                         />
                         <TextField
                             id="standard-full-width"
-                            label="ضرفیت کلاس"
+                            label="ظرفیت کلاس"
                             placeholder="تعداد نفرات (حدود)"
                             value={inTicketCourse.ClassCapacity}
                             type={"number"}

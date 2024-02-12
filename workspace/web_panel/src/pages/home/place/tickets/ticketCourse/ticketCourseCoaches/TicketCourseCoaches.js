@@ -42,7 +42,7 @@ const TicketCourseCoaches = ({ticketCourse}) => {
     function getPlacePersonnel() {
         placePersonnel_ByPlace({Id: ticketCourse.Place.Id}).then(data => {
             SetPlacePersonnel(data.data.Data);
-            console.log(data.data.Data);
+            console.log("personnel",data.data.Data);
             getTicketCourseCoaches();
         }).catch(e => {
                     try {
@@ -81,7 +81,7 @@ const TicketCourseCoaches = ({ticketCourse}) => {
 
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">مربیان این مجموعه</FormLabel>
-                                {placePersonnel.filter(pp=>pp.UserRole=="PLACE_COACH").map(item=>(
+                                {placePersonnel.filter(pp=>pp.UserRole.includes("PLACE_COACH")).map(item=>(
                                     <Button variant={"contained"} sx={{m:1}} key={item.Id} onClick={(e)=>addCoach(e,item)}>{getUserFixedName(item.User)}</Button>
                                 ))}
                             </FormControl>

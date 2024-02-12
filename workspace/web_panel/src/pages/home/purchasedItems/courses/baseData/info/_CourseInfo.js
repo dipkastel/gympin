@@ -53,7 +53,7 @@ const _CourseInfo = ({course}) => {
                 </div>
                 <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="p"/>
                 <div className={"row"}>
-                    <div className={"col-4"}><Typography variant={"h6"} component="p">{"ضرفیت کلاس : "}</Typography></div>
+                    <div className={"col-4"}><Typography variant={"h6"} component="p">{"ظرفیت کلاس : "}</Typography></div>
                     <div className={"col-8"}><Typography variant={"h6"} component="p">{course.EntryTotalCount}</Typography></div>
                 </div>
                 <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="p"/>
