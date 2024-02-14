@@ -79,6 +79,7 @@ const ScanPage = ({selectedSubscribe}) => {
              SetCodeResult(result.data.Data);
         }).catch(e => {
             try {
+                SetScannedCode(null)
                 error.showError({message: e.response.data.Message});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});

@@ -51,7 +51,7 @@ public class Error {
         UNKNOWN_USER(1102),
         LOW_DEPOSIT_EXCEPTION(1103),
         USER_HAS_OPEN_SETTLEMENT_REQUEST(1104),
-        //subscribe
+        //purchased
         PURCHASED_NOT_FOUND(1301),
         PURCHASED_EXPIRED(1302),
         NOT_PAYED(1303),
@@ -68,6 +68,7 @@ public class Error {
         PRICE_TOTAL_CONFLICT(1313),
         PAY_BY_OTHERS(1314),
         FIRST_ENTRY_REQUEST_EXCEPTION(1315),
+        QR_CODE_NOT_EXIST(1316),
         //multimedia
         MULTIMEDIA_NOT_FOUND_EXCEPTION(1401),
         INVALID_FILE_NAME(1402),

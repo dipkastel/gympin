@@ -8,6 +8,7 @@ import com.notrika.gympin.common.settings.base.enums.settingsType;
 import com.notrika.gympin.common.settings.base.param.*;
 import com.notrika.gympin.common.settings.base.service.ApplicationConfigService;
 import com.notrika.gympin.common.settings.base.service.SettingsService;
+import com.notrika.gympin.common.util.exception.purchased.QrCodeNotExistException;
 import com.notrika.gympin.domain.util.convertor.QrCodeConvertor;
 import com.notrika.gympin.persistence.dao.repository.qrCode.QrCodeRepository;
 import com.notrika.gympin.persistence.entity.qrCode.QrCodeEntity;
@@ -54,11 +55,11 @@ public class QrCodeServiceImpl implements QrCodeService {
     private QrCodeDto retrieveCode(String code) throws Exception{
         List<QrCodeEntity> codes = qrCodeRepository.findAllByCodeIs(code);
         if(codes==null)
-            throw new Exception("qr code Not Exist");
+            throw new QrCodeNotExistException();
         if(codes.size()<1)
-            throw new Exception("qr code Not Exist");
+            throw new QrCodeNotExistException();
         if(codes.size()>1)
-            throw new Exception("qr code is duplicated please call administrator");
+            throw new Exception("مشکلی پیش آمده با جیم پین تماس بگیرید");
         return QrCodeConvertor.toDto(codes.get(0));
     }
 

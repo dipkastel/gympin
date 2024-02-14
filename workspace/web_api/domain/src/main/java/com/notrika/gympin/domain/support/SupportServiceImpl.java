@@ -110,7 +110,6 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
                 );
             }
         } catch (Exception e) {
-            throw new Exception(e);
         }
         return SupportConvertor.toDto(supportMessageRepository.add(tme).getSupport());
     }
