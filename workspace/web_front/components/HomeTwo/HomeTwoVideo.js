@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useRef, useState} from 'react'
 import VideoPopUp from '../Plugins/VideoPopup'
 import {GoogleReCaptcha, useGoogleReCaptcha} from 'react-google-recaptcha-v3';
 import getBaseUrl from "../../pages/api/network";
@@ -6,6 +6,8 @@ import getBaseUrl from "../../pages/api/network";
 export default function HomeTwoVideo() {
     const { executeRecaptcha } = useGoogleReCaptcha();
     const [loading,setLoading] = useState(false)
+    const video = useRef(null)
+    const videoPlaceHolder = useRef(null)
 
     const handleReCaptchaVerify= useCallback(async (e) => {
         if (!executeRecaptcha) {
@@ -64,6 +66,14 @@ export default function HomeTwoVideo() {
                 alert("خطا")
             })
     }
+
+    function playVideo(e) {
+        console.log(video);
+         video.current.removeAttribute("hidden");
+        videoPlaceHolder.current.setAttribute("hidden",true);
+        video.current.play();
+    }
+
     return (
         <>
             {/* <!-- video area start --> */}
@@ -72,7 +82,11 @@ export default function HomeTwoVideo() {
                     <div className="container-fluid">
                         <div className="row no-gutters">
                             <div className="col-xl-8 ">
-                                <div className="video__bg bg_img"
+                                <video autoPlay ref={video} height={"100%"} width={"100%"} hidden={true} type="video/mp4" controls >
+                                    <source src="/videos/gympin-c-5.mp4" type="video/mp4"/>
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div ref={videoPlaceHolder} className="video__bg bg_img"
                                      style={{"background": "url(/images/bg/quotebg-1.jpeg)"}} data-overlay="dark"
                                      data-opacity="34">
                                     <div className="video-container-wrap">
@@ -80,7 +94,7 @@ export default function HomeTwoVideo() {
                                            data-rel="lightcase:myCollection" data-animation="fadeInLeft"
                                            data-delay=".1s"
                                            className="video-link pointer">
-                                            <div className="video-play-wrap">
+                                            <div className="video-play-wrap" onClick={e=>playVideo(e)}>
                                                 <div className="video-mark">
                                                     <div className="wave-pulse wave-pulse-1"></div>
                                                     <div className="wave-pulse wave-pulse-2"></div>
