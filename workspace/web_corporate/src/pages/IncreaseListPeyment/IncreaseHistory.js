@@ -18,6 +18,7 @@ const IncreaseHistory = () => {
     const [transactions, SetTransactions] = useState([])
 
     useEffect(() => {
+        document.title = 'تاریخچه افزایش اعتبار';
         transaction_increaseQuery({
             queryType: "FILTER",
             CorporateId: corporate.Id,

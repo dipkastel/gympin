@@ -5,6 +5,10 @@ import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 
 const Settings = () => {
+    useEffect(() => {
+        document.title = 'تنظیمات';
+    }, []);
+
 
     return (
         <>

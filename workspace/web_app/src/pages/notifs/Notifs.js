@@ -8,6 +8,7 @@ const Notifs = (props) => {
     const error = useContext(ErrorContext);
     const [notifs,SetNotifs] = useState([]);
     useEffect(() => {
+        document.title = 'پیام ها';
         notificationGetByUser().then(result=>{
             SetNotifs(result.data.Data);
         }).catch(e => {

@@ -1,12 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import _ListItem from "./_ListItem";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
+import _PlaceActivity from "./_PlaceActivity";
 
 
 export default function Management() {
+    useEffect(() => {
+        document.title = 'مدیریت';
+    }, []);
+
     return (
         <>
+            {getAccessOf(personnelAccessEnumT.ManagementStatus)&&<_PlaceActivity ShowIfActive={false}/>}
             {getAccessOf(personnelAccessEnumT.ManagementTickets) &&
             <_ListItem title="فروشی ها" destination="/management/tickets"/>}
             {getAccessOf(personnelAccessEnumT.ManagementSports) &&

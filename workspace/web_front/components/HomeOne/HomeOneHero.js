@@ -52,9 +52,7 @@ export default function HomeOneHero() {
                                                 <p className="text-shadow" data-animation="fadeInUp" data-delay=".5s" data-duration=".7s">{item.desc}</p>
                                                 <a data-animation="fadeInUp" data-delay=".7s" data-duration=".9s" href={item.destination}
                                                     className="site-btn"><span className="icon"><i className="far fa-arrow-left"></i></span>{item.btnTitle}</a>
-                                                <div className="shape">
-                                                    <img src="/images/shape/hero-shape.png" alt="" />
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

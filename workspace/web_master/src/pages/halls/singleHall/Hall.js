@@ -39,6 +39,7 @@ const Hall = () => {
     const [hall, SetHall] = useState({})
 
     useEffect(() => {
+        document.title = 'مدیریت سالن';
         getHall()
     }, []);
 

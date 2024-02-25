@@ -14,6 +14,7 @@ const Wallet = () => {
     const currentUser = useSelector(state => state.auth.user);
     const [userCredit, setUserCredit] = useState([])
     useEffect(() => {
+        document.title = 'کیف پول';
         getUserCredit();
     }, [currentUser]);
 

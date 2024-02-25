@@ -8,6 +8,7 @@ import {sagaActions} from "../../helper/redux/actions/SagaActions";
 const Profile = (props) => {
     const user = useSelector(state => state.auth.user)
     useEffect(() => {
+        document.title = 'پروفایل من';
         props.RequestUser()
     }, []);
 

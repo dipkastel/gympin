@@ -44,6 +44,7 @@ const Users = () => {
     const [groups,setGroups] = useState(null)
 
     useEffect(() => {
+        document.title = 'پرسنل';
         if (!corporate) return;
         getPersonnelGroup();
     }, []);

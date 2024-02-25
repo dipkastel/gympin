@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {login, requestRegisterPlace} from "../../network/api/account.api";
 import {Button, Card, CardActions, CardContent, CardHeader, Grid, Link, TextField} from "@mui/material";
 import {Formik} from "formik";
@@ -11,6 +11,11 @@ import {useNavigate} from "react-router-dom";
 function Register(props) {
     const navigate = useNavigate();
     const error = useContext(ErrorContext);
+
+    useEffect(() => {
+        document.title = 'درخواست عضویت';
+    }, []);
+
 
     return (
         <Grid

@@ -13,6 +13,7 @@ const Checkout = (params) => {
     const [counter, SetCounter] = useState(null);
     const [transActionTitle, SetTransactionTitle] = useState("لطفا صبر کنید");
     useEffect(() => {
+        document.title = 'پرداخت';
         var incounter = 15;
         const interval = setInterval(() => {
             if (incounter <= 0)

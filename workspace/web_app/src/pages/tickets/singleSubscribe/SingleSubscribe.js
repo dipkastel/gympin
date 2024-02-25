@@ -15,6 +15,7 @@ const SingleSubscribe = () => {
     const error = useContext(ErrorContext);
 
     useEffect(() => {
+        document.title = 'بلیط - عضویت';
         getSubscribe();
     }, []);
 
@@ -36,8 +37,11 @@ const SingleSubscribe = () => {
         <>
             {subscribe && <_SubscribeDetail subscribe={subscribe}/>}
             {subscribe && <_UsageProgress setUserCanEnter={setUserCanEnter} ticket={subscribe}/>}
-            {subscribe && <_QRcode ticket={subscribe} type={"SUBSCRIBE"} userCanEnter={userCanEnter}/>}
-            {subscribe && userCanEnter && <_SubscribePhoneLessEnter subscribe={subscribe} getSubscribe={getSubscribe}/>}
+            {subscribe &&
+            subscribe.status == "ACTIVE"&&<_QRcode ticket={subscribe} type={"SUBSCRIBE"} userCanEnter={userCanEnter}/>
+            }
+            {subscribe && userCanEnter &&
+            subscribe.status == "ACTIVE"&&<_SubscribePhoneLessEnter subscribe={subscribe} getSubscribe={getSubscribe}/>}
             {subscribe && <_SubscribeEnterList subscribe={subscribe} getSubscribe={getSubscribe} setUserCanEnter={setUserCanEnter}/>}
         </>
     );

@@ -84,6 +84,9 @@ export let Api_url = {
         ADD:"v1/hallTraffic/add",
         GET_BY_HALL:"v1/hallTraffic/getByHall",
     },
+    Location:{
+        query:"v1/location/query",
+    },
     ticketActiveTimes:{
         ADD_ALL:"v1/ticketActiveTimes/addAll",
         GET_BY_HALL:"v1/ticketActiveTimes/getByHall",

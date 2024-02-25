@@ -19,6 +19,7 @@ const UserBasket = () => {
     const [userCanPay,setUserCanPay] = useState(false);
 
     function updatePage() {
+        document.title = 'سبد خرید';
         if(currentUser)
             store.dispatch(sagaActions.RequestUserInvoices(currentUser));
     }

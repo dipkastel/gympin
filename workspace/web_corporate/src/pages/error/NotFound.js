@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 export function  NotFound(){
+    useEffect(() => {
+        document.title = 'صفحه یافت نشد';
+    }, []);
+
     return (
         <div>
-            <h1>404</h1>
+            <h1>صفحه مورد نظر یافت نشد</h1>
         </div>
     );
 }

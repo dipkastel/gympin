@@ -8,6 +8,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import StallAwaitingEntry from "./StallAwaitingEntry";
 import StallDeliverd from "./StallDeliverd";
+import {useEffect} from "react";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -46,6 +47,11 @@ export default function Stall() {
     const theme = useTheme();
     theme.direction = 'rtl';
     const [value, setValue] = React.useState(0);
+
+    useEffect(() => {
+        document.title = 'مدیریت بوفه';
+    }, []);
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);

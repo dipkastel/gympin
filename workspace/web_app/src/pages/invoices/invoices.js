@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from "react-redux";
 import {
     Box,
@@ -17,7 +17,11 @@ import {toPriceWithComma} from "../../helper/utils";
 
 const Invoices = () => {
     const userBasket = useSelector(state => state.invoice.invoices);
-    console.log(userBasket);
+
+    useEffect(() => {
+        document.title = 'فاکتور ها';
+    }, []);
+
     return userBasket?(
         <>
             {userBasket.map(invoice=>(
@@ -61,7 +65,7 @@ const Invoices = () => {
 
     ):(
         <div>
-            asdasd
+
         </div>
     );
 };

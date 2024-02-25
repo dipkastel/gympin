@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Card, CardContent, Grid, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import ticketTypes from "../../helper/data/ticketTypes";
@@ -8,6 +8,10 @@ import getAccessOf from "../../helper/accessManager";
 const TicketsManagement = () => {
 
     const navigate = useNavigate();
+    useEffect(() => {
+        document.title = 'مدیریت بلیط ها';
+    }, []);
+
     return (
         <Grid container alignContent={"space-around"} justifyContent={"space-around"} direction={"row"}>
             {ticketTypes.map(item=>(

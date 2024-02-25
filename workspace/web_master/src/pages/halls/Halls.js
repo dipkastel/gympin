@@ -11,15 +11,16 @@ import _AddHall from "./_AddHall";
 const Halls = () => {
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
-    const [hallsList,SetHallsList] = useState(null);
+    const [hallsList, SetHallsList] = useState(null);
 
     useEffect(() => {
+        document.title = 'مدیریت سالن ها';
         getHallList();
     }, []);
 
     function getHallList() {
         SetHallsList(null);
-        Halls_getByPlace({Id:place.Id}).then(result=>{
+        Halls_getByPlace({Id: place.Id}).then(result => {
             SetHallsList(result.data.Data);
         }).catch(e => {
             try {
@@ -30,13 +31,13 @@ const Halls = () => {
         })
     }
 
-    if(!getAccessOf(personnelAccessEnumT.ManagementHalls))
+    if (!getAccessOf(personnelAccessEnumT.ManagementHalls))
         return <AccessDenied/>;
 
     return (
         <>
-            {hallsList&&<_AddHall renewList={getHallList}/>}
-            {hallsList&&<_HallList hallList={hallsList} renewList={getHallList}/>}
+            {hallsList && <_AddHall renewList={getHallList}/>}
+            {hallsList && <_HallList hallList={hallsList} renewList={getHallList}/>}
         </>
     );
 };

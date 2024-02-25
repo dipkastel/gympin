@@ -25,6 +25,7 @@ const Sport = () => {
     const [itemToProgress,SetItemToProgress] = useState(null);
 
     useEffect(() => {
+        document.title = 'مدیریت ورزش ها';
         sport_getAll({size:100}).then(result => {
             SetSports(result.data.Data)
             console.log("sports",result.data.Data)

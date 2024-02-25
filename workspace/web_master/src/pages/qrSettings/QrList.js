@@ -12,6 +12,7 @@ const QrList = () => {
     const error = useContext(ErrorContext);
     const [qrList, setQrList] = useState([])
     useEffect(() => {
+        document.title = 'لیست qr ها';
         if (!location.state.size) {
             error.showError({message: "تعداد آیتم ها پیدا نشد",});
         }

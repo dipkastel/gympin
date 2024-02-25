@@ -34,6 +34,7 @@ const Support = () => {
     const place = useSelector(({place}) => place.place)
 
     useEffect(() => {
+        document.title = 'پشتیبانی';
         getAllSupport();
     }, []);
     function getAllSupport(){

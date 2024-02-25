@@ -15,6 +15,7 @@ const SingleCourse = () => {
     const error = useContext(ErrorContext);
 
     useEffect(() => {
+        document.title = 'بلیط کلاس';
         getCourse();
     }, []);
 
@@ -33,11 +34,12 @@ const SingleCourse = () => {
 
     return (
         <>
-            {console.log("googooogooo",!!course,!!userCanEnter)}
             {course && <_CourseDetail course={course}/>}
             {course && <_UsageProgress setUserCanEnter={setUserCanEnter} ticket={course}/>}
-            {course && <_QRcode ticket={course} userCanEnter={userCanEnter} type={"COURSE"}/>}
-            {course && userCanEnter && <_CoursePhoneLessEnter course={course} getCourse={getCourse}/>}
+            {course &&
+            course.status == "ACTIVE"&&<_QRcode ticket={course} userCanEnter={userCanEnter} type={"COURSE"}/>}
+            {course && userCanEnter &&
+            course.status == "ACTIVE"&&<_CoursePhoneLessEnter course={course} getCourse={getCourse}/>}
             {course && <_CourseEnterList course={course} getCourse={getCourse} setUserCanEnter={setUserCanEnter}/>}
         </>
     );

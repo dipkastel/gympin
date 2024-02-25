@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Card, CardContent, Grid, Rating, Typography} from "@mui/material";
 
 const data = [{
@@ -20,6 +20,11 @@ const data = [{
 }]
 
 const Survey = () => {
+
+    useEffect(() => {
+        document.title = 'نظرسنجی';
+    }, []);
+
     return (
         <div>
             {data.map(item=>(

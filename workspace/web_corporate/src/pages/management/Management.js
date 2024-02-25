@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import _ListItem from "../../components/_ListItem";
 import {connect} from "react-redux";
 import {authActions} from "../../helper/redux/actions/AuthActions";
@@ -11,6 +11,10 @@ import _IncomeSport from "../report/_IncomeSport";
 
 
 function Management(props) {
+    useEffect(() => {
+        document.title = 'مدیریت';
+    }, []);
+
     return (
         <>
             <_ListItem title="مشخصات سازمان" destination="/management/details"/>

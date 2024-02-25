@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     Button,
     Card,
@@ -28,6 +28,11 @@ function Login(props) {
     const [loadingButtonStyle, setLoadingButtonStyle] = useState({
         paddingRight: "2.5rem",
     });
+
+    useEffect(() => {
+        document.title = 'ورود';
+    }, []);
+
 
     const enableLoading = () => {
         setLoading(true);

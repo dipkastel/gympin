@@ -27,6 +27,7 @@ const CoursesList = () => {
     const [coursesList, setCoursesList] = useState([]);
 
     useEffect(() => {
+        document.title = 'مدیریت کلاس ها';
         getPlaceCourses();
     }, []);
 

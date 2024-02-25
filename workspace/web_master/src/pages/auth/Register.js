@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {Button, Card, CardActions, CardContent, CardHeader, Grid, Link, TextField} from "@mui/material";
 import {Formik} from "formik";
 import {requestRegisterPlace} from "../../network/api/account.api";
@@ -8,7 +8,11 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 
 export default function Register(props) {
     const error = useContext(ErrorContext);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    useEffect(() => {
+        document.title = 'ثبت نام';
+    }, []);
+
     return (
         <Grid
             container

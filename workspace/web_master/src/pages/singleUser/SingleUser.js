@@ -18,6 +18,7 @@ const SingleUser = (props) => {
 
 
     useEffect(() => {
+        document.title = 'مدیریت کاربر';
         user_getById(searchParams.get("id")).then(result=>{
             setUser(result.data.Data);
         }).catch(e => {

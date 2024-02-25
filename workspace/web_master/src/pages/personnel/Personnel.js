@@ -16,6 +16,7 @@ const Personnel = () => {
     const [personnelList,SetPersonnelList] = useState(null);
 
     useEffect(() => {
+        document.title = 'مدیریت پرسنل';
         getPersonnelList();
     }, []);
 

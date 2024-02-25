@@ -16,6 +16,7 @@ const About = () => {
     const [openDialogAdd, SetOpenDialogAdd] = useState(false)
     const place = useSelector(({place}) => place.place)
     useEffect(() => {
+        document.title = 'مدیریت قوانین و درباره';
         getPlaceAbouts();
     }, []);
 

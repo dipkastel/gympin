@@ -41,6 +41,7 @@ const Images = () => {
     const cropperRef = useRef(null);
 
     useEffect(() => {
+        document.title = 'مدیریت تصاویر';
         getImageList();
         getratio()
     }, []);

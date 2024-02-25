@@ -40,6 +40,7 @@ const SingleUser = (props) => {
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [openModalDeleteUser, setOpenModalDeleteUser] = useState(false);
     useEffect(() => {
+        document.title = 'مشخصات کاربر';
         getPerson();
         getCorporateCategories();
     }, [PersonnelId]);

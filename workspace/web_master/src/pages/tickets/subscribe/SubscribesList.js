@@ -32,6 +32,7 @@ const SubscribesList = () => {
     const [subscribesList, setSubscribesList] = useState([]);
 
     useEffect(() => {
+        document.title = 'مدیریت عضویت ها';
         getPlaceSubscribes();
     }, []);
 

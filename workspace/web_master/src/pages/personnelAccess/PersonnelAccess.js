@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useLocation} from "react-router-dom";
 import {Card, CardHeader} from "@mui/material";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
@@ -10,6 +10,10 @@ import AccessDenied from "../../components/AccessDenied";
 const PersonnelAccess = () => {
     const location = useLocation();
     const {user} = location.state;
+    useEffect(() => {
+        document.title = 'مدیریت دسترسی ها';
+    }, []);
+
 
     if(!getAccessOf(personnelAccessEnumT.ManagementPersonnel))
         return <AccessDenied/>;

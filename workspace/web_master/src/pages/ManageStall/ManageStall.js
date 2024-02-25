@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
     Button,
     Card, CardContent, CardHeader,
@@ -13,6 +13,12 @@ import _StallPrice from "./_ManageStallPrice";
 
 const ManageStall = () => {
     const [open, setOpen] = React.useState(false);
+
+    useEffect(() => {
+        document.title = 'مدیریت بوفه';
+        }, []);
+
+
 
     function renderAddButton() {
         return (

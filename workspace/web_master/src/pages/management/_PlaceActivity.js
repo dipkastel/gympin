@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {
+    Alert,
     Button,
     Card,
     CardHeader,
@@ -8,27 +9,26 @@ import {
     DialogContent,
     DialogTitle,
     Switch,
-    TextField
+    TextField, Typography
 } from "@mui/material";
 import {connect, useSelector} from "react-redux";
 import {place_changeStatus} from "../../network/api/place.api";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
-import {PlaceAbout_add} from "../../network/api/placeAbout.api";
 import {Form} from "react-bootstrap";
 
-const _ListItem = (props) => {
+const _PlaceActivity = (props) => {
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
-    const [openModalDeactive,setOpenModalDeactive] = useState(false);
+    const [openModalDeactive, setOpenModalDeactive] = useState(false);
 
-    function changePlaceStatus(e) {
-        if(!place)return;
+    function changePlaceStatus(status) {
+        if (!place) return;
         place_changeStatus({
-            Id:place.Id,
-            Status:e.target.checked?"ACTIVE":"INACTIVE"
-        }).then(result=>{
-            if(!place) return;
+            Id: place.Id,
+            Status: status
+        }).then(result => {
+            if (!place) return;
             props.RequestPlace(place.Id)
         }).catch(e => {
             try {
@@ -39,20 +39,24 @@ const _ListItem = (props) => {
         })
     }
 
-    if(!place)
+    if (!place)
         return (<></>);
+
+    if(!props.ShowIfActive&&place.Status == "ACTIVE")
+        return (<></>);
+
 
     function renderModalDeactiveReson() {
 
         function acceptDeactive(e) {
             e.preventDefault()
             console.log(e.target.title.value);
-             if(e.target.title.value) {
-                 changePlaceStatus({target: {checked: false}});
-                 setOpenModalDeactive(false)
-             }else{
-                 error.showError({message: "دلیل غیر فعال سازی الزامی است",});
-             }
+            if (e.target.title.value) {
+                changePlaceStatus("INACTIVE");
+                setOpenModalDeactive(false)
+            } else {
+                error.showError({message: "دلیل غیر فعال سازی الزامی است",});
+            }
         }
 
         return (
@@ -81,23 +85,41 @@ const _ListItem = (props) => {
         )
     }
 
+    function setShow(b) {
+
+    }
+
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}} >
+            {place.Status == "ACTIVE" ? <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     component={"a"}
-                    sx={{textDecoration:"none",color:"#000000"}}
+                    sx={{textDecoration: "none", color: "#000000"}}
                     href={props.destination}
                     title={"وضعیت مرکز"}
                     action={(<>
                         فعال
-                        <Switch onChange={(e)=>(e.target.checked)?changePlaceStatus(e):setOpenModalDeactive(true)} checked={place.Status=="ACTIVE"} />
+                        <Switch onChange={(e) => setOpenModalDeactive(true)}
+                                checked={place.Status == "ACTIVE"}/>
                     </>)}/>
-            </Card>
+            </Card> : <Alert
+                sx={{m:1,direction:"rtl"}}
+                severity={"error"}
+                action={<Button color={"error"} size="small" variant={"contained"} onClick={e=>changePlaceStatus("ACTIVE")}>
+                    فعالسازی
+                </Button>}
+            >
+                <Typography variant={"subtitle1"}>
+                    مرکز شما غیر فعال است .
+                </Typography>
+                <Typography variant={"subtitle2"}>
+                    لطفا برای مشاهده مرکز توسط کاربران نسبت به فعالسازی اقدام نمایید.
+                </Typography>
+            </Alert>}
             {renderModalDeactiveReson()}
         </>
     );
 };
 
 
-export default connect(null, sagaActions)(_ListItem)
+export default connect(null, sagaActions)(_PlaceActivity)

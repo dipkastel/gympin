@@ -12,6 +12,7 @@ const Place = () => {
     const [place, setPlace] = useState({});
 
     useEffect(() => {
+        document.title = 'مرکز';
         getPlace();
     }, [placeId]);
 

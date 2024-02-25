@@ -34,7 +34,9 @@ const _SettingsPlaces = (props) => {
     const [selectedPlace, SetSelectedPlace] = useState(useSelector(({place}) => place.place))
     const [placePersonnel, SetPlacePersonnel] = useState([]);
     const [loading, setLoading] = useState(false);
+
     useEffect(() => {
+
         placePersonnel_ByUser({Id:user.Id}).then(result => {
             console.log(result.data.Data)
             SetPlacePersonnel(result.data.Data)
@@ -65,7 +67,8 @@ const _SettingsPlaces = (props) => {
     function forceRefresh(time){
         setLoading(true);
         setTimeout(function () {
-            navigate(0);
+            // navigate(0);
+            navigate('/management/', {replace: false});
         }, time*1000);
     }
 

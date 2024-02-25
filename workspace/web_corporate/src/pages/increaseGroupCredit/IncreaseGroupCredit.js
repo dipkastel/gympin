@@ -32,6 +32,7 @@ const IncreaseGroupCredit = () => {
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
 
     useEffect(() => {
+        document.title = 'افزایش اعتبار گروهی';
         if (openModalConfirm) {
             if (credit < minCredit) {
                 error.showError({message: "حداقل اعتبار قابل افزایش " + toPriceWithComma(minCredit) + " تومان می باشد"})

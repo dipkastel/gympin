@@ -17,6 +17,7 @@ const SingleTicketCourse = () => {
     const {courseId} = useParams()
     const [ticketCourse, setTicketCourse] = useState([]);
     useEffect(() => {
+        document.title = 'مدیریت کلاس';
         getCourseData();
     }, []);
     function getCourseData(){

@@ -35,6 +35,7 @@ const EditCorporate = (props) => {
         SetInCorporate(corporate);
     }, [corporate]);
     useEffect(() => {
+        document.title = 'ویرایش مرکز';
         props.RequestCorporate(corporate);
         getratio();
     }, []);

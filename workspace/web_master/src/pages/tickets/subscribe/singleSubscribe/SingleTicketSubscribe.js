@@ -16,6 +16,7 @@ const SingleTicketSubscribe = () => {
     const {subscribeId} = useParams()
     const [ticketSubscribe, setTicketSubscribe] = useState([]);
     useEffect(() => {
+        document.title = 'مدیریت عضویت';
         getSubscribeData();
     }, []);
     function getSubscribeData(){

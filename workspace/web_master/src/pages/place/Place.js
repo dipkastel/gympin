@@ -13,6 +13,7 @@ const Place = (props) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [place, setPlace] = useState();
     useEffect(() => {
+        document.title = 'مدیریت مرکز';
         place_getById(searchParams.get("id")).then(result=>{
             setPlace(result.data.Data)
         }).catch(e => {
@@ -39,7 +40,7 @@ const Place = (props) => {
     return (
         <div>
 
-            {getAccessOf(personnelAccessEnumT.ManagementStatus)&&<_PlaceActivity/>}
+            {getAccessOf(personnelAccessEnumT.ManagementStatus)&&<_PlaceActivity ShowIfActive={true}/>}
             {place&&<_PlaceInfo place={place} SubmitForm={(e)=>submitEdit(e)}/>}
             {place&&<_PlaceLocation place={place} SubmitForm={(e)=>submitEdit(e)}/>}
         </div>

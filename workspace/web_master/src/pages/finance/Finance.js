@@ -25,6 +25,7 @@ function Finance(props){
     }, []);
 
     useEffect(() => {
+        document.title = 'مالی';
         SetPlace(currentPlace);
     }, [currentPlace]);
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Avatar, Button, Card, CardContent, CardHeader, Grid, Typography} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
 
@@ -22,6 +22,11 @@ const Profile = (props) => {
     const [fatherName, SetFatherName] = useState(false)
     const [birthLocation, SetBirthLocation] = useState(false)
     const [phoneNumber, SetPhoneNumber] = useState(false)
+
+    useEffect(() => {
+        document.title = 'پروفایل من';
+    }, []);
+
 
     return (
         <Card elevation={3} sx={{margin: 1}}>

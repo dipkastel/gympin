@@ -15,6 +15,7 @@ const SingleSubscribe = () => {
     const [subscribe, SetSubscribe] = useState(null);
 
     useEffect(() => {
+        document.title = 'مدیریت عضویت';
         getSubscribe();
     }, [searchParam]);
 

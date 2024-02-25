@@ -34,6 +34,7 @@ const Groups = () => {
     const [itemToDelete,setItemToDelete] = useState(null)
 
     useEffect(() => {
+        document.title = 'گروه ها';
         getCorporateGroups();
     }, []);
     function getCorporateGroups(){

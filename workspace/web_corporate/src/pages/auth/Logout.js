@@ -5,6 +5,7 @@ import {sagaActions} from "../../helper/redux/actions/SagaActions";
 
 
 function Logout(props) {
+    document.title = 'خروج';
     props.RequestLogout();
     return ""
 }

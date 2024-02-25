@@ -9,12 +9,16 @@ import _TabPlaceBuyable from "./_TabPlaceBuyable";
 import _TabPlaceAbout from "./info/_TabPlaceAbout";
 import BadgeIcon from '@mui/icons-material/Badge';
 import InfoIcon from '@mui/icons-material/Info';
+import {useEffect} from "react";
 
 
 const _TabsPlace = ({place}) => {
     const theme = useTheme();
     const [selectedTab, setSelectedTab] = React.useState(0);
 
+    useEffect(() => {
+        document.title = 'مرکز ورزشی '+place?.Name;
+    }, []);
     return (
         <Box sx={{bgcolor: 'background.paper',zIndex:1005,position:"relative"}}>
             <AppBar position="static">

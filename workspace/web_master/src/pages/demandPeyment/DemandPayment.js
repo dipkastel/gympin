@@ -28,6 +28,7 @@ const DemandPayment = () => {
     const [rowsPerPage, setRowsPerPage] = useState(100);
 
     useEffect(() => {
+        document.title = 'درخواست های تسویه';
         getSettelmentRequests()
     }, [page]);
 

@@ -26,6 +26,7 @@ function Home(props) {
     const currentUser = useSelector(state => state.auth.user);
     const homePageId = getHomeId(serverSettings);
     useEffect(() => {
+        document.title = 'خانه';
         if(currentUser){
                 console.log("get my info");
                 props.RequestUser();

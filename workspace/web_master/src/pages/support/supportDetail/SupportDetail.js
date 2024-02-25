@@ -12,6 +12,7 @@ const SupportDetail = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = 'جزئیات پشتیبانی';
         getSupportDetail()
     }, []);
     function getSupportDetail(){

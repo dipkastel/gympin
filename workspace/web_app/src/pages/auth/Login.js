@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useParams, useSearchParams} from "react-router-dom";
 import {
     Button,
@@ -30,6 +30,12 @@ function Login(props) {
     const [mobileNumber, setMobileNumber] = useState(searchParams.get("u")?searchParams.get("u"):"");
     const [userInviteCode,SetUserInviteCode] = useState(searchParams.get("p"));
     const [fullName,setFullName] = useState("");
+
+    useEffect(() => {
+        document.title = 'ورود';
+    }, []);
+
+
 
     function sendMessage(e,phoneNumber) {
         e.preventDefault()

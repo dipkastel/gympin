@@ -21,6 +21,7 @@ const Option = () => {
     const [itemToProgress,SetItemToProgress] = useState(null);
 
     useEffect(() => {
+        document.title = 'مدیریت امکانات';
         placeOption_getAll({size:100}).then(result => {
             SetOptions(result.data.Data)
         }).catch(e => {

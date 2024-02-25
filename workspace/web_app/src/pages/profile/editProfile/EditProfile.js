@@ -34,6 +34,7 @@ const EditProfile = (props) => {
     const [usernameAvalableError, setUsernameAvalableError] = useState();
 
     useEffect(() => {
+        document.title = 'ویرایش پروفایل';
         props.RequestUser()
         if (!compareObjs(currentUser, user))
             window.location = window.location

@@ -26,6 +26,7 @@ const Purchased = () => {
     const  [loading,setLoading]  = useState( true);
     const  [subscribes,setSubscribes]  = useState( null);
     useEffect(() => {
+        document.title = 'بلیط ها';
         getUserSubscribes()
     }, []);
 

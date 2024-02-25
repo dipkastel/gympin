@@ -25,6 +25,7 @@ const EditProfile = (props) => {
     const [ratio, setRatio] = useState(null)
 
     useEffect(() => {
+        document.title = 'ویرایش پروفایل';
         SetImageUrl(currentUser.Avatar ? currentUser.Avatar.Url : "")
     }, [currentUser]);
 
