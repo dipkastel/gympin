@@ -26,12 +26,17 @@ export default function Header() {
                         <div className="row">
                             <div className="col-xl-12 col-lg-12">
                                 <div className="navarea">
-                                    <Link href="/"><a className="site-logo">
-                                        <img src="/images/logo/logo.png" alt="LOGO" />
-                                    </a></Link>
+                                    <a className={"telephone"} href={"tel:02177162192"}>
+                                        (۰۲۱)۷۷۱۶۲۱۹۲
+                                    </a>
                                     <div className="mainmenu d-none d-lg-block">
                                         <nav id="mobile-menu">
                                             <ul>
+                                                <li>
+                                                    <Link href="/"><a className="site-logo">
+                                                        <img src="/images/logo/logo.png" alt="LOGO" />
+                                                    </a></Link>
+                                                </li>
                                                 <li ><Link href="/"><a>صفحه اصلی</a></Link></li>
                                                 <li ><Link href="/blog"><a>مطالب و مقالات</a></Link></li>
                                                 <li><Link href="/corporate"><a>شرکت ها</a></Link></li>
