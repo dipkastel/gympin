@@ -94,7 +94,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         } else {
             //check for duplication
             UserEntity finalUser = user;
-            if (place.getPlaceOwners().stream().anyMatch(p -> Objects.equals(p.getUser().getId(), finalUser.getId())))
+            if (place.getPlaceOwners().stream().anyMatch(p -> !p.isDeleted()&& Objects.equals(p.getUser().getId(), finalUser.getId())))
                 throw new DuplicateEntryAddExeption();
         }
         var placePersonnelRole = placePersonnelParam.getUserRole() == PlacePersonnelRoleEnum.PLACE_COACH ? PlacePersonnelRoleEnum.PLACE_COACH : place.getPlaceOwners().size() > 0 ? (placePersonnelParam.getUserRole() != null ? placePersonnelParam.getUserRole() : PlacePersonnelRoleEnum.PLACE_PERSONNEL) : PlacePersonnelRoleEnum.PLACE_OWNER;
@@ -109,7 +109,8 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         placePersonnelRepository.add(placePersonnelEntity);
 
         try {
-            smsService.sendJoinedToPlaceSms(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE, place.getName()));
+            var role = placePersonnelRole.getName();
+            smsService.sendJoinedToPlaceSms(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE, place.getName(),placePersonnelRole.getName()));
         } catch (Exception e) {
             throw new SendSmsException();
         }

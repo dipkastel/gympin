@@ -11,7 +11,8 @@ export default function HomeOneHero() {
     const team = [
         {
             title: ["ورزش بیشتر", "شادابی بیشتر"],
-            desc: "پلتفرم خدمات ورزشی ویژه سازمان ها",
+            desc: "پلتفرم" +
+                " خدمات ورزشی ویژه سازمان ها",
             src: "/images/banner/front-banner5.jpg",
             destination:"https://corporate.gympin.ir/auth/register",
             btnTitle:"ثبت رایگان"

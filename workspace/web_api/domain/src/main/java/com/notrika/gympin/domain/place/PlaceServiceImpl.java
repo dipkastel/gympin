@@ -140,9 +140,9 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
             if (place.getName() == null) {
                 throw new PlaceNameCanNotBeNull();
             }
-            if (place.getPlaceOwners().size() < 1) {
-                throw new PlaceOwnersCanNotBeEmpty();
-            }
+//            if (place.getPlaceOwners().size() < 1) {
+//                throw new PlaceOwnersCanNotBeEmpty();
+//            }
             if (place.getLatitude() == 0) {
                 throw new PlaceLocationMustSelectOnMap();
             }

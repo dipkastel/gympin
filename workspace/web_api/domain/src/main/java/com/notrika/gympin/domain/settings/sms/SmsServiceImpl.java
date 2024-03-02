@@ -96,7 +96,12 @@ public class SmsServiceImpl implements SmsService {
             if(FixNumber.getValue().equals(stopSendingCharacter)) return true;
             smsDto.setUserNumber(FixNumber.getValue());
         }
-        String url = Consts.FARAZ_SMS_FIXPART +"&pid=" + Consts.FARAZ_SMS_PATTERN_JOINTOPLACE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText1(), StandardCharsets.UTF_8);
+        String url = Consts.FARAZ_SMS_FIXPART +
+                "&pid=" + Consts.FARAZ_SMS_PATTERN_JOINTOPLACE +
+                "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER +
+                "&tnum=" + smsDto.getUserNumber() +
+                "&p1"+"=place" + "&v1=" + URLEncoder.encode( smsDto.getText1(), StandardCharsets.UTF_8)+
+                "&p2"+"=role" + "&v2=" + URLEncoder.encode( smsDto.getText2(), StandardCharsets.UTF_8);
         URL url2 = new URL(url);
         URLConnection con = url2.openConnection();
         InputStream in = con.getInputStream();

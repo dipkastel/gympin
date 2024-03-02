@@ -26,7 +26,7 @@ const _TotalCredits = (props) => {
                         <Typography width={"100%"} variant={"h6"} noWrap={true} textAlign={"left"} component="div" sx={{
                             marginY: 0.1
                         }}>
-                            {toPriceWithComma(corporate.FinanceCorporate.TotalCredits) + " تومان"}
+                            {toPriceWithComma(corporate?.FinanceCorporate?.TotalCredits||0) + " تومان"}
                         </Typography>
                     </Stack>
                 </CardContent>

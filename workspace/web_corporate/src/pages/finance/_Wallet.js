@@ -331,7 +331,7 @@ const _Wallet = () => {
                         spacing={0}
                     >
                         <Typography variant="h6">
-                            {toPriceWithComma(corporate.FinanceCorporate.TotalDeposit) + " تومان"}
+                            {toPriceWithComma(corporate?.FinanceCorporate?.TotalDeposit||0) + " تومان"}
                         </Typography>
                         <Button variant={"contained"} onClick={() => setOpenModalAdd(true)}>افزایش شارژ مجموعه</Button>
                     </Stack>
