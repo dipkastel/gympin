@@ -150,7 +150,7 @@ const _PlacesList = () => {
             LocationId:filters.find(f=>f.type==="location").value,
             Gender:filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null,
             Option:null,
-            paging: {Page: page, Size: 3,Desc:sortBy.Desc,OrderBy:sortBy.Value}
+            paging: {Page: page, Size: 20,Desc:sortBy.Desc,OrderBy:sortBy.Value}
         }).then(result => {
             setIsLoading(false)
             setLoadedPage(page);
@@ -252,7 +252,7 @@ const _PlacesList = () => {
                 <DialogTitle>فیلترها</DialogTitle>
                 <DialogContent className={"w-100"}>
 
-                    شما میتوانید با محدود کردن لسیت مراکز به سادگی مرکز مورد نظر خود را بیابید
+                    شما میتوانید با محدود کردن لیست مراکز به سادگی مرکز مورد نظر خود را بیابید
 
 
                     <FormControl

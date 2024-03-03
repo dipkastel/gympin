@@ -62,7 +62,6 @@ const TicketSubscribeActivityTimes = ({ticketSubscribe}) => {
             e.preventDefault()
             var postData = {Ticket: {Id: ticketSubscribe.Id}};
             var ActiveTimes = [];
-
             Object.keys(activityTimesToAdd).map(item=>{
                 if(activityTimesToAdd[item])
                     ActiveTimes.push({Id:activityTimesToAdd[item]})
@@ -145,7 +144,7 @@ const TicketSubscribeActivityTimes = ({ticketSubscribe}) => {
 
         function DeleteItem(e) {
             e.preventDefault()
-            TicketSubscribes_deleteSubscribeActiveTimes({TicketSubscribe:{Id:ticketSubscribe.Id},activeTime:[{Id: itemToDelete.Id}]})
+            TicketSubscribes_deleteSubscribeActiveTimes({Ticket:{Id:ticketSubscribe.Id},ActiveTime:[{Id: itemToDelete.Id}]})
                 .then(data => {
                     setItemToDelete(null)
                     getActiveTimesByTicketSubscribe()
