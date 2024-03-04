@@ -10,11 +10,12 @@ import "../helper/style.css"
 import {useState} from "react";
 import GympinPagesProvider from "../components/GympinPagesProvider";
 import ReactGA from "react-ga4";
-import TagManager from "react-gtm-module/dist/TagManager";
+import TagManager from "react-gtm-module";
 
 const { PUBLIC_URL } = process.env;
-const gaTrackingId = "G-H7EHLB79L3";
-const tagManagerArgs = "GTM-MBLL254T";
+// const gaTrackingId = "G-H7EHLB79L3";
+const gaTrackingId = "GTM-MBLL254T";
+const tagManagerArgs = {gtmId:"GTM-MBLL254T"};
 TagManager.initialize(tagManagerArgs);
 ReactGA.initialize(gaTrackingId);
 
