@@ -12,11 +12,13 @@ export default function NNavigaion(){
     const location = useLocation();
     useEffect(() => {
         console.log("ga data",currentUser.Username,place.Name)
-        if(currentUser&&place){
-            ReactGA.gtag("set", "user_properties", {
-                account_UserName: currentUser.Username,
-                account_PlaceName: place.Name,
-            });
+        if(currentUser&&place&&currentUser.Username&&place.Name){
+            try{
+                ReactGA.gtag("set", "user_properties", {
+                    account_UserName: currentUser.Username,
+                    account_PlaceName: place.Name,
+                });
+            }catch (e){}
         }
         if(!place&&!window.location.toString().includes("/management/settings")){
             navigate('/management/settings', {replace: true});
