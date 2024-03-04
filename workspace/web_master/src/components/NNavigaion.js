@@ -11,7 +11,6 @@ export default function NNavigaion(){
     const currentUser = useSelector(({auth}) => auth.user);
     const location = useLocation();
     useEffect(() => {
-        console.log("ga data",currentUser.Username,place.Name)
         if(currentUser&&place&&currentUser.Username&&place.Name){
             try{
                 ReactGA.gtag("set", "user_properties", {
