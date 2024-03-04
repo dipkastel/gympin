@@ -10,10 +10,14 @@ import "../helper/style.css"
 import {useState} from "react";
 import GympinPagesProvider from "../components/GympinPagesProvider";
 import ReactGA from "react-ga4";
+import TagManager from 'react-gtm-module'
 
 const { PUBLIC_URL } = process.env;
 const gaTrackingId = "G-H7EHLB79L3";
+const tagManagerArgs = "GTM-MBLL254T";
 ReactGA.initialize(gaTrackingId);
+TagManager.initialize(tagManagerArgs);
+
 function App() {
     const [showSplash,SetShowSplash] = useState(true)
     // const [connectionStatus, SetConnectionStatus] = useState(navigator.onLine);
