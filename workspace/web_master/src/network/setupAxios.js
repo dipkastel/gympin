@@ -9,7 +9,7 @@ export function setupAxios(axios, store) {
         (config) => {
             const {auth: { token }} = store.getState();
             if (token) {
-                console.log("Bearer " + token);
+                // console.log("Bearer " + token);
                 config.headers.Authorization = "Bearer " + token;
             }
             config.baseURL = AuthApi.BASEURL;

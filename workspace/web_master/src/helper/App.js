@@ -9,8 +9,11 @@ import "bootstrap/dist/css/bootstrap.rtl.min.css"
 import "../helper/style.css"
 import {useState} from "react";
 import GympinPagesProvider from "../components/GympinPagesProvider";
+import ReactGA from "react-ga4";
 
 const { PUBLIC_URL } = process.env;
+const gaTrackingId = "G-H7EHLB79L3";
+ReactGA.initialize(gaTrackingId);
 function App() {
     const [showSplash,SetShowSplash] = useState(true)
     // const [connectionStatus, SetConnectionStatus] = useState(navigator.onLine);
