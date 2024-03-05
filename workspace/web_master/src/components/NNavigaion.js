@@ -13,10 +13,11 @@ export default function NNavigaion(){
     useEffect(() => {
         if(currentUser&&place&&currentUser.Username&&place.Name){
             try{
-                var nnn = currentUser.Username;
-                var fff = place.Name;
-                let params = {nnn,fff};
-                ReactGA.gtag('event',"user_place_use",params);
+                ReactGA.gtag( {
+                    action: "user_place_use",
+                    Username:currentUser.Username,
+                    Placename:place.Name
+                });
             }catch (e){}
         }
         if(!place&&!window.location.toString().includes("/management/settings")){
