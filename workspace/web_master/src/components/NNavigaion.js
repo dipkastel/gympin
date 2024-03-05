@@ -13,8 +13,7 @@ export default function NNavigaion(){
     useEffect(() => {
         if(currentUser&&place&&currentUser.Username&&place.Name){
             try{
-                ReactGA.gtag( {
-                    action: "user_place_use",
+                ReactGA.gtag( "event","user_place_use",{
                     Username:currentUser.Username,
                     Placename:place.Name
                 });
