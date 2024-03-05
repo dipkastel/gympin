@@ -13,14 +13,7 @@ import ReactGA from "react-ga4";
 // import TagManager from "react-gtm-module";
 
 const { PUBLIC_URL } = process.env;
-const gaTrackingId = [
-    {
-        trackingId:"GTM-MBLL254T",
-    },
-    {
-        trackingId: "G-H7EHLB79L3",
-    },
-];
+const gaTrackingId = "G-H7EHLB79L3";
 // const tagManagerArgs = {gtmId:"GTM-MBLL254T"};
 // TagManager.initialize(tagManagerArgs);
 ReactGA.initialize(gaTrackingId);
