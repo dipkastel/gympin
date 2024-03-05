@@ -14,8 +14,10 @@ export default function NNavigaion(){
         if(currentUser&&place&&currentUser.Username&&place.Name){
             try{
                 ReactGA.event({
-                    category: "user_place_use",
-                    action: currentUser.Username+"  -  "+place.Name,
+                    action: "user_place_use",
+                    category: "user count",
+                    userName: currentUser.Username,
+                    placeName:place.Name,
                     label: window.location.pathname,
                     value: document.title
                 });
