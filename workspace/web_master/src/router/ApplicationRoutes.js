@@ -86,7 +86,7 @@ export default function ApplicationRoutes() {
                 <Route path="/management/tickets" element={<TicketsManagement/>}/>
 
                 <Route path="/ticket/subscribes" element={<SubscribesList/>}/>
-                <Route path="/ticket/SingleTicketSubscribe/:subscribeId" element={<SingleTicketSubscribe/>}/>
+                <Route path="/ticket/Subscribe/:subscribeId" element={<SingleTicketSubscribe/>}/>
 
                 <Route path="/ticket/courses" element={<CoursesList/>}/>
                 <Route path="/ticket/course/:courseId" element={<SingleTicketCourse/>}/>
