@@ -13,9 +13,11 @@ export default function NNavigaion(){
     useEffect(() => {
         if(currentUser&&place&&currentUser.Username&&place.Name){
             try{
-                ReactGA.gtag("set", "user_properties", {
-                    account_UserName: currentUser.Username,
-                    account_PlaceName: place.Name,
+                ReactGA.event({
+                    category: "user_place_use",
+                    action: currentUser.Username+"  -  "+place.Name,
+                    label: window.location.pathname,
+                    value: document.title
                 });
             }catch (e){}
         }
