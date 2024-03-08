@@ -16,7 +16,7 @@ const stepsStatusEnum = {empty:"empty",completed:"completed",skipped:"skipped"}
 
 const PlaceWizard = () => {
 
-    const [allowGoNext, setAllowGoNext] = React.useState(false);
+    const [allowGoNext, setAllowGoNext] = React.useState(true);
     const [activeStep, setActiveStep] = React.useState(0);
     const [stepStatus, setStepStatus] = React.useState([]);
 
@@ -111,7 +111,7 @@ const PlaceWizard = () => {
                                         رد کردن
                                     </Button>
                                 )}
-                                <Button disabled={!allowGoNext} variant={"contained"} onClick={handleNext}>
+                                <Button variant={"contained"} onClick={handleNext}>
                                     {activeStep === steps.length - 1 ? 'ثبت نهایی' : 'بعدی'}
                                 </Button>
                             </Box>

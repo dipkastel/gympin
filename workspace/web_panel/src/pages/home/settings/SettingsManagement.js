@@ -5,7 +5,7 @@ import _SettingGeneral from "./General/_SettingGeneral";
 import _SettingFinance from "./Finance/_SettingFinance";
 import _SettingSms from "./sms/_SettingSms";
 import _SettingNotification from "./Notification/_SettingNotification";
-import _SettingPocket from "./Pocket/_SettingPocket";
+import _SettingPersonal from "./Personal/_SettingPersonal";
 
 
 const SettingsManagement = () => {
@@ -38,7 +38,7 @@ const SettingsManagement = () => {
             {selectedTab == "FINANCE" && <_SettingFinance />}
             {selectedTab == "SMS" && <_SettingSms />}
             {selectedTab == "NOTIFICATION" && <_SettingNotification />}
-            {selectedTab == "POCKET" && <_SettingPocket />}
+            {selectedTab == "POCKET" && <_SettingPersonal />}
         </>
     );
 };
