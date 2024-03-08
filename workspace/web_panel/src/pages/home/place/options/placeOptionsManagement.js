@@ -21,12 +21,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import {Form, Modal} from "react-bootstrap";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import {getRppPlaceOptionManagement, SetRppPlaceOptionManagement} from "../../../../helper/pocket/pocket";
 
 const PlaceOptions = () => {
     const error = useContext(ErrorContext);
     const [placeOptions, SetPlaceOptions] = useState([])
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(50);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppPlaceOptionManagement());
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [itemToEdit, setItemToEdit] = useState(null);
@@ -303,6 +304,7 @@ const PlaceOptions = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppPlaceOptionManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

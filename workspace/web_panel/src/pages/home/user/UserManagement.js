@@ -19,12 +19,13 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 import {getUserFixedName} from "../../../helper";
 import {genders} from "../../../helper/enums/genders";
+import {getRppUserManagement, SetRppUserManagement} from "../../../helper/pocket/pocket";
 
 const UserManagement = () => {
     const error = useContext(ErrorContext);
     const user = useSelector(state => state.auth.user);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppUserManagement());
     const [userList, setUserList] = useState([]);
     const [searchString, setSearchString] = useState("");
     const [openModalAdd, SetOpenModalAdd] = useState(false);
@@ -213,6 +214,7 @@ const UserManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppUserManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

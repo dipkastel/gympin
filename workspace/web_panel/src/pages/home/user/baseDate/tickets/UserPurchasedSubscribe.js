@@ -12,12 +12,13 @@ import TablePagination from "@mui/material/TablePagination";
 import {purchasedSubscribe_query} from "../../../../../network/api/purchasedSubscribes.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
+import {getRppUserPurchasedSubscribe, SetRppUserPurchasedSubscribe} from "../../../../../helper/pocket/pocket";
 
 const PurchasedSubscribeManagement = ({currentUser}) => {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppUserPurchasedSubscribe());
     const [purchasedSubscribe, SetPurchasedSubscribe] = useState({});
 
     useEffect(() => {
@@ -119,6 +120,7 @@ const PurchasedSubscribeManagement = ({currentUser}) => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppUserPurchasedSubscribe(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

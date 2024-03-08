@@ -23,11 +23,12 @@ import {
     IncreaseCorporateDeposit_query
 } from "../../../../../network/api/increaseCorporateDeposit.api";
 import {BookmarkBorder, ExpandMore, Receipt, ReceiptLong} from "@mui/icons-material";
+import {getRppCorporateIncreaseDeposit, SetRppCorporateIncreaseDeposit} from "../../../../../helper/pocket/pocket";
 
 function CorporateIncreaseDeposit({currentCorporate, updatePage}) {
     const error = useContext(ErrorContext);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(14);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppCorporateIncreaseDeposit());
     const [corporateIncreaseDepositInvoice, SetCorporateIncreaseDepositInvoice] = useState({});
     const [transactionToSettle, setTransactionToSettle] = useState(null);
     const [acceptTransaction, setAcceptTransaction] = useState(null);
@@ -347,7 +348,7 @@ function CorporateIncreaseDeposit({currentCorporate, updatePage}) {
 
                 <PortletFooter>
                     {(corporateIncreaseDepositInvoice.totalElements > 0) && <TablePagination
-                        rowsPerPageOptions={[14, 28, 50, 100]}
+                        rowsPerPageOptions={[15, 25, 50, 100]}
                         component="div"
                         sx={{direction: "rtl"}}
                         count={corporateIncreaseDepositInvoice.totalElements|| 0}
@@ -360,6 +361,7 @@ function CorporateIncreaseDeposit({currentCorporate, updatePage}) {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppCorporateIncreaseDeposit(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

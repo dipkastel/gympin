@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
-import Notice from "../../../partials/content/Notice";
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Button} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import {Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
@@ -10,17 +8,15 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
-import {transactionAll_query} from "../../../../network/api/transactionsAll.api";
 import {getUserFixedName, toPriceWithComma} from "../../../../helper";
-import {TransactionCorporateTypes} from "../../../../helper/enums/TransactionCorporateTypes";
 import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
-import {TransactionBaseTypes} from "../../../../helper/enums/TransactionBaseTypes";
 import {transactionUser_query} from "../../../../network/api/transactionsUser.api";
+import {getRppTransactionUserManagement, SetRppTransactionUserManagement} from "../../../../helper/pocket/pocket";
 
 const TransactionsUserManagement = () => {
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(15);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppTransactionUserManagement());
     const [transactions, SetTransactions] = useState({});
 
 
@@ -112,6 +108,7 @@ const TransactionsUserManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppTransactionUserManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

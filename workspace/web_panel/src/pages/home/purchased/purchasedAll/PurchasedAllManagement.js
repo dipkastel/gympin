@@ -14,12 +14,13 @@ import TablePagination from "@mui/material/TablePagination";
 import {Purchased_query} from "../../../../network/api/purchased.api";
 import {BuyableType} from "../../../../helper/enums/BuyableType";
 import {genders} from "../../../../helper/enums/genders";
+import {getRppPurchasedAllManagement, SetRppPurchasedAllManagement} from "../../../../helper/pocket/pocket";
 
 const PurchasedAllManagement = () => {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppPurchasedAllManagement());
     const [purchased, SetPurchased] = useState([]);
 
     useEffect(() => {
@@ -112,6 +113,7 @@ const PurchasedAllManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppPurchasedAllManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

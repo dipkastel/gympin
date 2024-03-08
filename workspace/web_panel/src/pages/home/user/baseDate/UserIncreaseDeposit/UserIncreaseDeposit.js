@@ -22,11 +22,12 @@ import {
     IncreaseUserDeposit_confirmIncreaseRequest,
     IncreaseUserDeposit_query
 } from "../../../../../network/api/increaseUserDeposit.api";
+import {getRppUserIncreaseDeposit, SetRppUserIncreaseDeposit} from "../../../../../helper/pocket/pocket";
 
 function UserIncreaseDeposit({currentUser, updatePage}) {
     const error = useContext(ErrorContext);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppUserIncreaseDeposit());
     const [userIncreaseDepositInvoice, SetUserIncreaseDepositInvoice] = useState({});
     const [transactionToSettle, setTransactionToSettle] = useState(null);
     const [acceptTransaction, setAcceptTransaction] = useState(null);
@@ -344,6 +345,7 @@ function UserIncreaseDeposit({currentUser, updatePage}) {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppUserIncreaseDeposit(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

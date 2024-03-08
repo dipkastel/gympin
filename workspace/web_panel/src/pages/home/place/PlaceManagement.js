@@ -13,13 +13,14 @@ import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {useHistory} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {getRppPlaceManagement, SetRppPlaceManagement} from "../../../helper/pocket/pocket";
 
 
 const PlaceManagement = () => {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppPlaceManagement());
     const [searchString, setSearchString] = useState("");
     const [places, SetPlaces] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
@@ -251,6 +252,7 @@ const PlaceManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppPlaceManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

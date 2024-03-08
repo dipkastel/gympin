@@ -11,6 +11,7 @@ import TableBody from "@mui/material/TableBody";
 import {Form, Modal} from "react-bootstrap";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import TablePagination from "@mui/material/TablePagination";
+import {getRppMainPageList, SetRppMainPageList} from "../../../helper/pocket/pocket";
 
 const MainPageList = () => {
     const error = useContext(ErrorContext);
@@ -19,7 +20,7 @@ const MainPageList = () => {
     const [openModalAdd, SetOpenModalAdd] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppMainPageList());
     const history = useHistory();
 
 
@@ -223,6 +224,7 @@ const MainPageList = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppMainPageList(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

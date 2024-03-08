@@ -15,12 +15,13 @@ import TableHead from "@mui/material/TableHead";
 import {Support_getAll, Support_query} from "../../../network/api/support.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {Chip} from "@mui/material";
+import {getRppSupport, SetRppSupport} from "../../../helper/pocket/pocket";
 
 
 const Support = () => {
     const error = useContext(ErrorContext);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(25);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppSupport());
     const [itemCount, setItemCount] = useState(0);
     const [SupportList, setSupportList] = useState([]);
     const history = useHistory();
@@ -130,6 +131,7 @@ const Support = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppSupport(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />

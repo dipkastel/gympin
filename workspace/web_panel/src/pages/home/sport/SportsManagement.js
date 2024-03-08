@@ -13,12 +13,13 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {sport_addSport, sport_deleteSport, sport_query} from "../../../network/api/sport.api";
+import {getRppSportsManagement, SetRppSportsManagement} from "../../../helper/pocket/pocket";
 
 const SportsManagement = () => {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppSportsManagement());
     const [sports, SetSports] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
@@ -246,6 +247,7 @@ const SportsManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppSportsManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

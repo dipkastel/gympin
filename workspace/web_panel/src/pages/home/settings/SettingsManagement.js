@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import Notice from "../../partials/content/Notice";
 import {Paper, Tab, Tabs} from "@mui/material";
-import TransactionAllTab from "../finance/TransactionTabs/TransactionAllTab";
-import TransactionUserTab from "../finance/TransactionTabs/TransactionUserTab";
-import TransactionCorporateTab from "../finance/TransactionTabs/TransactionCorporateTab";
-import TransactionPlaceTab from "../finance/TransactionTabs/TransactionPlaceTab";
-import TransactionIncomeTab from "../finance/TransactionTabs/TransactionIncomeTab";
 import _SettingGeneral from "./General/_SettingGeneral";
 import _SettingFinance from "./Finance/_SettingFinance";
+import _SettingSms from "./sms/_SettingSms";
+import _SettingNotification from "./Notification/_SettingNotification";
+import _SettingPocket from "./Pocket/_SettingPocket";
 
 
 const SettingsManagement = () => {
@@ -31,10 +29,16 @@ const SettingsManagement = () => {
                 >
                     <Tab label="عمومی" value={"GENERAL"}/>
                     <Tab label="مالی" value={"FINANCE"}/>
+                    <Tab label="پیامک" value={"SMS"}/>
+                    <Tab label="نوتیفیکیشن" value={"NOTIFICATION"}/>
+                    <Tab label="شخصی" value={"POCKET"}/>
                 </Tabs>
             </Paper>
             {selectedTab == "GENERAL" && <_SettingGeneral />}
             {selectedTab == "FINANCE" && <_SettingFinance />}
+            {selectedTab == "SMS" && <_SettingSms />}
+            {selectedTab == "NOTIFICATION" && <_SettingNotification />}
+            {selectedTab == "POCKET" && <_SettingPocket />}
         </>
     );
 };

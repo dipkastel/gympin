@@ -14,13 +14,14 @@ import TablePagination from "@mui/material/TablePagination";
 import {useHistory} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {toPriceWithComma} from "../../../helper";
+import {getRppCorporateManagement, SetRppCorporateManagement} from "../../../helper/pocket/pocket";
 
 
 const CorporateManagement = () => {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppCorporateManagement());
     const [searchString, setSearchString] = useState("");
     const [corporates, SetCorporates] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
@@ -190,6 +191,7 @@ const CorporateManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppCorporateManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

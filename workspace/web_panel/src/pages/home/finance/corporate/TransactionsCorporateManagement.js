@@ -12,11 +12,15 @@ import {getUserFixedName, toPriceWithComma} from "../../../../helper";
 import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
 import {transactionCorporate_query} from "../../../../network/api/transactionsCorporate.api";
 import {TransactionCorporateTypes} from "../../../../helper/enums/TransactionCorporateTypes";
+import {
+    getRppTransactionCorporateManagement,
+    SetRppTransactionCorporateManagement
+} from "../../../../helper/pocket/pocket";
 
 const TransactionsCorporateManagement = () => {
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(15);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppTransactionCorporateManagement());
     const [transactions, SetTransactions] = useState({});
 
 
@@ -125,6 +129,7 @@ const TransactionsCorporateManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppTransactionCorporateManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

@@ -14,13 +14,14 @@ import TablePagination from "@mui/material/TablePagination";
 import {Location_add, Location_addCity, Location_getById, Location_query} from "../../../network/api/location.api";
 import {Place_addPlace} from "../../../network/api/place.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {getRppLocationManagement, SetRppLocationManagement} from "../../../helper/pocket/pocket";
 
 export default function LocationManagement() {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const {parentId} = useParams();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppLocationManagement());
     const [searchString, setSearchString] = useState("");
     const [location, SetLocation] = useState([]);
     const [parent, SetParent] = useState([]);
@@ -223,6 +224,7 @@ export default function LocationManagement() {
                     onPageChange={(event, newPage) => setPage(newPage)}
                     onRowsPerPageChange={(event) => {
                         setRowsPerPage(parseInt(event.target.value, 10));
+                        SetRppLocationManagement(parseInt(event.target.value, 10));
                         setPage(0);
                     }}
                 />}

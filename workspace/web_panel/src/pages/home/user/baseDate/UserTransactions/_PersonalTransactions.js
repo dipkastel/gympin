@@ -15,10 +15,11 @@ import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import {SupervisorAccount} from "@mui/icons-material";
 import TablePagination from "@mui/material/TablePagination";
 import {transactionUser_query} from "../../../../../network/api/transactionsUser.api";
+import {getRppPersonalTransaction, SetRppPersonalTransaction} from "../../../../../helper/pocket/pocket";
 
 const _PersonalTransactions = ({ currentUser ,updatePage}) => {
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppPersonalTransaction());
     const [transactions, SetTransactions] = useState({});
     useEffect(() => {
         getTransactions()
@@ -105,6 +106,7 @@ const _PersonalTransactions = ({ currentUser ,updatePage}) => {
                     onPageChange={(event, newPage) => setPage(newPage)}
                     onRowsPerPageChange={(event) => {
                         setRowsPerPage(parseInt(event.target.value, 10));
+                        SetRppPersonalTransaction(parseInt(event.target.value, 10));
                         setPage(0);
                     }}
                 />}

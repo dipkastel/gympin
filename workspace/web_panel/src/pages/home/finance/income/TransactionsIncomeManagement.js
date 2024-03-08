@@ -14,11 +14,12 @@ import {transactionCorporate_query} from "../../../../network/api/transactionsCo
 import {TransactionCorporateTypes} from "../../../../helper/enums/TransactionCorporateTypes";
 import {transactionIncome_query} from "../../../../network/api/transactionsIncome.api";
 import {TransactionBaseTypes} from "../../../../helper/enums/TransactionBaseTypes";
+import {getRppTransactionIncomeManagement, SetRppTransactionIncomeManagement} from "../../../../helper/pocket/pocket";
 
 const TransactionsIncomeManagement = () => {
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(15);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppTransactionIncomeManagement());
     const [transactions, SetTransactions] = useState({});
 
 
@@ -119,6 +120,7 @@ const TransactionsIncomeManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppTransactionIncomeManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

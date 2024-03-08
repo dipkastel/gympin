@@ -12,12 +12,13 @@ import {transactionAll_query} from "../../../../network/api/transactionsAll.api"
 import {getUserFixedName, toPriceWithComma} from "../../../../helper";
 import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
 import {TransactionBaseTypes} from "../../../../helper/enums/TransactionBaseTypes";
+import {getRppTransactionAllManagement, SetRppTransactionAllManagement} from "../../../../helper/pocket/pocket";
 
 
 const TransactionsAllManagement = () => {
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(15);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppTransactionAllManagement());
     const [transactions, SetTransactions] = useState({});
 
 
@@ -105,6 +106,7 @@ const TransactionsAllManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppTransactionAllManagement(parseInt(event.target.value, 10))
                             setPage(0);
                         }}
                     />}

@@ -16,6 +16,7 @@ import {
     invoice_changeInvoiceBuyableCount,
     invoice_deleteBuyable
 } from "../../../../../network/api/invoice.api";
+import {getRppInvoiceDetailBuyables, SetRppInvoiceDetailBuyables} from "../../../../../helper/pocket/pocket";
 
 const InvoiceDetailBuyables = ({invoice, updatePage}) => {
     const error = useContext(ErrorContext);
@@ -25,7 +26,7 @@ const InvoiceDetailBuyables = ({invoice, updatePage}) => {
 
 
     const [searchedPage, setSearchedPage] = useState(0);
-    const [rowsSearchedPerPage, setRowsSearchedPerPage] = useState(20);
+    const [rowsSearchedPerPage, setRowsSearchedPerPage] = useState(getRppInvoiceDetailBuyables());
     const [searchedBuyable, SetSearchedBuyable] = useState(null);
     const [searchText, SetSearchText] = useState(null);
 
@@ -173,6 +174,7 @@ const InvoiceDetailBuyables = ({invoice, updatePage}) => {
                                 onPageChange={(event, newPage) => setSearchedPage(newPage)}
                                 onRowsPerPageChange={(event) => {
                                     setRowsSearchedPerPage(parseInt(event.target.value, 10));
+                                    SetRppInvoiceDetailBuyables(parseInt(event.target.value, 10));
                                     setSearchedPage(0);
                                 }}
                             />}

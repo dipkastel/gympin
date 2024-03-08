@@ -20,10 +20,11 @@ import {TransactionCorporateTypes} from "../../../../../helper/enums/Transaction
 import AddIcon from "@mui/icons-material/Add";
 import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {ArticleStatus} from "../../../../../helper/enums/ArticleStatus";
+import {getRppCorporateTransactions, SetRppCorporateTransactions} from "../../../../../helper/pocket/pocket";
 
 function CorporateTransactions({currentCorporate, updatePage}) {
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(15);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppCorporateTransactions());
     const [transactions, SetTransactions] = useState({});
     const [transactionType, SetTransactionType] = useState("DEPOSIT");
 
@@ -131,6 +132,7 @@ function CorporateTransactions({currentCorporate, updatePage}) {
                     onPageChange={(event, newPage) => setPage(newPage)}
                     onRowsPerPageChange={(event) => {
                         setRowsPerPage(parseInt(event.target.value, 10));
+                        SetRppCorporateTransactions(parseInt(event.target.value, 10));
                         setPage(0);
                     }}
                 />}

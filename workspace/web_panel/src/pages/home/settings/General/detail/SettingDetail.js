@@ -1,5 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
+import {
+    Portlet,
+    PortletBody,
+    PortletFooter,
+    PortletHeader,
+    PortletHeaderToolbar
+} from "../../../../partials/content/Portlet";
 import {Delete, ExpandLess, ExpandMore} from "@mui/icons-material"
 import {Form} from "react-bootstrap";
 import {Button, Collapse, Grid, IconButton, TextField, Typography} from "@mui/material";
@@ -11,7 +17,6 @@ import AddIcon from "@mui/icons-material/Add";
 const SettingDetail = ({setting, refreshData}) => {
     const error = useContext(ErrorContext);
     const [inSetting, SetInSetting] = useState({});
-    const [expanded, setExpanded] = useState(false);
     useEffect(() => {
         SetInSetting(setting)
     }, [setting.Id]);
@@ -59,95 +64,92 @@ const SettingDetail = ({setting, refreshData}) => {
     return (
         <>
             {inSetting &&
-            <Form
-                noValidate
-                autoComplete="off"
-                onSubmit={(e) => updateSetting(e)}>
-                <Portlet>
-                    <PortletHeader
+            <Portlet>
+                <Form
+                    noValidate
+                    autoComplete="off"
+                    onSubmit={(e) => updateSetting(e)}>
+                <PortletHeader
 
-                        title={<>
-                            <Typography variant={"subtitle1"} onClick={() => setExpanded(!expanded)}>{setting.Description}</Typography>
-                            <Typography variant={"caption"} onClick={() => setExpanded(!expanded)}>
-                                {setting.Key}
-                            </Typography>
-                        </>}
-                        toolbar={<PortletHeaderToolbar>
+                    title={<>
+                        <Typography variant={"subtitle1"} >{setting.Description}</Typography>
+                        <Typography variant={"caption"}>
+                            {setting.Key}
+                        </Typography>
+                    </>}
+                    toolbar={<PortletHeaderToolbar>
 
-                            <Typography variant={"caption"}>
-                                {SettingTypes[inSetting.Type]}
-                            </Typography>
-                            {(setting.Value == null) &&
-                            <button
-                                type="button"
-                                className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                onClick={(e) => deleteItem()}
-                            >
-                                <Delete color={"error"}/>
-                            </button>}
+                        <Typography variant={"caption"}>
+                            {SettingTypes[setting.Type]}
+                        </Typography>
 
-                            <IconButton aria-label="down"
-                                        onClick={() => setExpanded(!expanded)}>
-                                {expanded ? <ExpandLess/> : <ExpandMore/>}
-                            </IconButton>
-                        </PortletHeaderToolbar>
-                        }
+                    </PortletHeaderToolbar>
+                    }
 
-                    />
+                />
 
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-
-                        <PortletBody className={"p-2"}>
-                            <Grid container alignItems={"center"} justifyContent={"space-between"} direction={"row"}>
-                                <Grid paddingX={1} alignItems={"center"} md={6}>
+                <PortletBody className={"p-2"}>
+                        <Grid container alignItems={"center"} justifyContent={"space-between"} direction={"row"}>
+                            <Grid paddingX={1} alignItems={"center"} md={6}>
+                                <TextField
+                                    label="مقدار"
+                                    name="Value"
+                                    className="textField"
+                                    value={inSetting["Value"] || ""}
+                                    type="Text"
+                                    onChange={(e) => SetInSetting({...inSetting, Value: e.target.value})}
+                                    margin="normal"
+                                    variant="outlined"
+                                />
+                            </Grid>
+                            <Grid paddingX={1} alignItems={"center"} md={5}>
+                                {(inSetting["Data"]) ?
                                     <TextField
-                                        label="مقدار"
-                                        name="Value"
+                                        label="مقدار اضافه"
+                                        name="Data"
                                         className="textField"
-                                        value={inSetting["Value"] || ""}
+                                        value={inSetting["Data"] || ""}
                                         type="Text"
-                                        onChange={(e) => SetInSetting({...inSetting, Value: e.target.value})}
+                                        onChange={(e) => SetInSetting({...inSetting, Data: e.target.value})}
                                         margin="normal"
                                         variant="outlined"
-                                    />
-                                </Grid>
-                                <Grid paddingX={1} alignItems={"center"} md={5}>
-                                    {(inSetting["Data"]) ?
-                                        <TextField
-                                            label="مقدار اضافه"
-                                            name="Data"
-                                            className="textField"
-                                            value={inSetting["Data"] || ""}
-                                            type="Text"
-                                            onChange={(e) => SetInSetting({...inSetting, Data: e.target.value})}
-                                            margin="normal"
-                                            variant="outlined"
-                                        /> : <IconButton
-                                            color={"primary"}
-                                            variant={"contained"}
-                                            aria-label="مقدار اضافی"
-                                            onClick={() => {
-                                                SetInSetting({...inSetting, Data: " "})
-                                            }}
-                                        >
-                                            <AddIcon/>
-                                        </IconButton>}
-                                </Grid>
-                                <Grid paddingX={1} md={1}>
-                                    <Button
-                                        type={"submit"}
+                                    /> : <IconButton
+                                        color={"primary"}
                                         variant={"contained"}
-                                        size={"large"}
+                                        aria-label="مقدار اضافی"
+                                        onClick={() => {
+                                            SetInSetting({...inSetting, Data: " "})
+                                        }}
                                     >
-                                        ثبت
-                                    </Button>
-                                </Grid>
+                                        <AddIcon/>
+                                    </IconButton>}
                             </Grid>
+                        </Grid>
 
-                        </PortletBody>
-                    </Collapse>
-                </Portlet>
+                </PortletBody>
+                <PortletFooter>
+                    <Grid paddingX={1} md={6}>
+                        <Button
+                            type={"submit"}
+                            variant={"contained"}
+                            size={"large"}
+                            className={"col-6"}
+                        >
+                            ثبت
+                        </Button>
+                        {(setting.Value == null) &&
+                        <button
+                            type="button"
+                            className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
+                            onClick={(e) => deleteItem()}
+                            className={"col-6"}
+                        >
+                            <Delete color={"error"}/>
+                        </button>}
+                    </Grid>
+                </PortletFooter>
             </Form>
+            </Portlet>
             }
         </>
     );

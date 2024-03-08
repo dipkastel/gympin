@@ -16,6 +16,7 @@ import {useHistory} from "react-router-dom";
 import {toPriceWithComma} from "../../../../../helper";
 import AddIcon from "@mui/icons-material/Add";
 import {InvoiceStatus} from "../../../../../helper/enums/InvoiceStatus";
+import {getRppUserInvoice, SetRppUserInvoice} from "../../../../../helper/pocket/pocket";
 
 const UserInvoices = ({currentUser}) => {
 
@@ -23,7 +24,7 @@ const UserInvoices = ({currentUser}) => {
     const history = useHistory();
     const [invoices, SetInvoices] = useState({});
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(50);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppUserInvoice());
     const [itemToDelete, setItemToDelete] = useState(null);
     const [openModalAdd, setOpenModalAdd] = useState(null);
 
@@ -201,6 +202,7 @@ const UserInvoices = ({currentUser}) => {
                             onPageChange={(event, newPage) => setPage(newPage)}
                             onRowsPerPageChange={(event) => {
                                 setRowsPerPage(parseInt(event.target.value, 10));
+                                SetRppUserInvoice(parseInt(event.target.value, 10));
                                 setPage(0);
                             }}
                         />}

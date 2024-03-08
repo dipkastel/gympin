@@ -21,11 +21,12 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
+import {getRppSettlementsRequest, SetRppSettlementsRequest} from "../../../../../helper/pocket/pocket";
 
 const SettlementRequest = ({currentUser, updatePage}) => {
     const error = useContext(ErrorContext);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppSettlementsRequest());
     const [userSettlementDepositInvoice, SetUserSettlementDepositInvoice] = useState({});
     const [transactionToSettle, setTransactionToSettle] = useState(null);
     const [acceptTransaction, setAcceptTransaction] = useState(null);
@@ -330,6 +331,7 @@ const SettlementRequest = ({currentUser, updatePage}) => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppSettlementsRequest(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

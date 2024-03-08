@@ -12,6 +12,7 @@ import {useHistory} from "react-router-dom";
 import {BuyableType} from "../../../../../helper/enums/BuyableType";
 import {Purchased_query} from "../../../../../network/api/purchased.api";
 import TablePagination from "@mui/material/TablePagination";
+import {getRppPlaceSells, SetRppPlaceSells} from "../../../../../helper/pocket/pocket";
 
 const PlaceSells = ({place}) => {
 
@@ -22,7 +23,7 @@ const PlaceSells = ({place}) => {
 
 
     const [page, setPage] = useState(0);
-    const [perPage, setPerPage] = useState(20);
+    const [perPage, setPerPage] = useState(getRppPlaceSells());
     const [searchText, SetSearchText] = useState(null);
 
 
@@ -104,6 +105,7 @@ const PlaceSells = ({place}) => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setPerPage(parseInt(event.target.value, 10));
+                            SetRppPlaceSells(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

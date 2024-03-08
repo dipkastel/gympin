@@ -15,12 +15,13 @@ import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {invoice_query} from "../../../network/api/invoice.api";
 import {InvoiceStatus} from "../../../helper/enums/InvoiceStatus";
+import {getRppInvoiceManagement, SetRppInvoiceManagement} from "../../../helper/pocket/pocket";
 
 const InvoiceManagement = () => {
     const error = useContext(ErrorContext);
     const user = useSelector(state => state.auth.user);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppInvoiceManagement());
     const [userList, setUserList] = useState([]);
     const [searchString, setSearchString] = useState("");
     const [openModalAdd, SetOpenModalAdd] = useState(false);
@@ -176,6 +177,7 @@ const InvoiceManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppInvoiceManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

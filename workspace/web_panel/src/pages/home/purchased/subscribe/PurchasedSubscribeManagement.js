@@ -13,12 +13,13 @@ import {getUserFixedName, toPriceWithComma} from "../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
 import {purchasedSubscribe_query} from "../../../../network/api/purchasedSubscribes.api";
 import {PurchasedSubscribeStatus} from "../../../../helper/enums/PurchasedSubscribeStatus";
+import {getRppPurchasedSubscribeManagement, SetRppPurchasedSubscribeManagement} from "../../../../helper/pocket/pocket";
 
 const PurchasedSubscribeManagement = () => {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppPurchasedSubscribeManagement());
     const [purchasedSubscribe, SetPurchasedSubscribe] = useState({});
 
     useEffect(() => {
@@ -142,6 +143,7 @@ const PurchasedSubscribeManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppPurchasedSubscribeManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

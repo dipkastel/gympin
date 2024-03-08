@@ -11,6 +11,7 @@ import {place_getBuyableByPlace} from "../../../../../network/api/place.api";
 import {placePersonnel_ByPlace} from "../../../../../network/api/placePersonnel.api";
 import Select from "react-select";
 import { buyable_setTicketBeneficiary} from "../../../../../network/api/buyable.api";
+import {getUserFixedName} from "../../../../../helper";
 
 const PlaceBeneficiaries = ({place}) => {
     const error = useContext(ErrorContext);
@@ -83,8 +84,8 @@ const PlaceBeneficiaries = ({place}) => {
                                     <TableCell align="left">
                                         <Select
                                             className={"dropdown"}
-                                            options={beneficiaries.map(g=>{return {label:g.User.FullName,value:g.Id}})}
-                                            value={{label:row.Beneficiary?.User.FullName,value:row.Beneficiary?.Id}}
+                                            options={beneficiaries.map(g=>{return {label:getUserFixedName(g.User),value:g.Id}})}
+                                            value={{label:getUserFixedName(row.Beneficiary?.User),value:row.Beneficiary?.Id}}
                                             onChange={e => updateTicketBeneFiciaries(row,e)}
                                         />
                                     </TableCell>

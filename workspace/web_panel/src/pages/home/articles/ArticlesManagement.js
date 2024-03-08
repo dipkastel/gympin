@@ -15,12 +15,13 @@ import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {Form, Image, Modal} from "react-bootstrap";
 import {ArticleStatus} from "../../../helper/enums/ArticleStatus";
+import {getRppArticlesManagement, SetRppArticlesManagement} from "../../../helper/pocket/pocket";
 
 const ArticlesManagement = () => {
 
     const error = useContext(ErrorContext);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppArticlesManagement());
     const [articleList, setArticleList] = useState([]);
     const [searchString, setSearchString] = useState(null);
     const [itemToDelete, setItemToDelete] = useState(null);
@@ -267,6 +268,7 @@ const ArticlesManagement = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppArticlesManagement(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}
