@@ -19,7 +19,7 @@ public final class SerialConvertor {
         dto.setCorporateTransactions(entity.getCorporateTransactions().stream().map(TransactionConvertor::toDto).collect(Collectors.toList()));
         dto.setPersonnelPays(entity.getPersonnelPays().stream().map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
         dto.setIncomeTransactions(entity.getIncomeTransactions().stream().map(TransactionConvertor::toDto).collect(Collectors.toList()));
-        dto.setIncreases(entity.getIncreases().stream().map(IncreaseConvertor::ToDto).collect(Collectors.toList()));
+        dto.setIncreases(entity.getUserIncreases().stream().map(IncreaseConvertor::ToDto).collect(Collectors.toList()));
         dto.setDiscountTransactions(entity.getDiscount().stream().map(TransactionConvertor::toDto).collect(Collectors.toList()));
         dto.setInvoices(entity.getInvoices().stream().map(InvoiceConvertor::toDto).collect(Collectors.toList()));
         dto.setPurchasedBases(entity.getPurchasedBases().stream().map(PurchasedConvertor::ToDto).collect(Collectors.toList()));

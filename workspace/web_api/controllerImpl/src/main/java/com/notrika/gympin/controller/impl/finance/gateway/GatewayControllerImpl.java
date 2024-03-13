@@ -78,7 +78,7 @@ public class GatewayControllerImpl implements GatewayController {
     @Override
     @PostMapping(path = "/PersianCallbackMethod",consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     @IgnoreWrapAspect
-    public String PersianCallbackMethod(HttpServletRequest request, Model model, PersianGatewayCallbackParam param, String ref) {
+    public String PersianCallbackMethod(HttpServletRequest request, Model model, PersianGatewayCallbackParam param, String ref) throws Exception {
        return gatewayBankService.callback(request,model,param,ref);
     }
 

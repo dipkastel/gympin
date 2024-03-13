@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface GatewayController extends BaseController<GatewaysParam, GatewaysDto, GatewayQuery> {
 
-    String PersianCallbackMethod(HttpServletRequest request, Model model, PersianGatewayCallbackParam param, String ref);
+    String PersianCallbackMethod(HttpServletRequest request, Model model, PersianGatewayCallbackParam param, String ref) throws Exception;
     ResponseEntity<GatewaysDto> updateImage(GatewaysParam param) throws Exception;
 //    ResponseEntity<List<GatewaysDto>> getPaymentGateways(GatewaysParam param);
 

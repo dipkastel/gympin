@@ -13,5 +13,5 @@ public interface GatewayBankService {
     ClientSaleResponseData salePaymentRequest(ClientSaleRequestData param);
     ClientConfirmResponseData confirmPaymentRequest(ClientConfirmRequestData param);
 
-    String callback(HttpServletRequest request, Model model, PersianGatewayCallbackParam param, String ref);
+    String callback(HttpServletRequest request, Model model, PersianGatewayCallbackParam param, String ref) throws Exception;
 }

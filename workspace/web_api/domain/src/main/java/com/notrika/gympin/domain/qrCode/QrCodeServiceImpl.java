@@ -3,11 +3,6 @@ package com.notrika.gympin.domain.qrCode;
 import com.notrika.gympin.common.qrCodes.dto.QrCodeDto;
 import com.notrika.gympin.common.qrCodes.param.QrCodeParam;
 import com.notrika.gympin.common.qrCodes.service.QrCodeService;
-import com.notrika.gympin.common.settings.base.dto.*;
-import com.notrika.gympin.common.settings.base.enums.settingsType;
-import com.notrika.gympin.common.settings.base.param.*;
-import com.notrika.gympin.common.settings.base.service.ApplicationConfigService;
-import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.util.exception.purchased.QrCodeNotExistException;
 import com.notrika.gympin.domain.util.convertor.QrCodeConvertor;
 import com.notrika.gympin.persistence.dao.repository.qrCode.QrCodeRepository;
@@ -17,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 

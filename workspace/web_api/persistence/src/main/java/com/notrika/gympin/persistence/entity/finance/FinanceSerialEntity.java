@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.finance;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseCorporateDepositEntity;
 import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseUserDepositEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.CorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateTransactionEntity;
@@ -46,7 +47,11 @@ public class FinanceSerialEntity extends BaseEntityWithCreateUpdate<FinanceSeria
 
     @OneToMany(mappedBy = "serial",fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<FinanceIncreaseUserDepositEntity> increases;
+    private List<FinanceIncreaseUserDepositEntity> userIncreases;
+
+    @OneToMany(mappedBy = "serial",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<FinanceIncreaseCorporateDepositEntity> corporateIncreases;
 
     @OneToMany(mappedBy = "serial",fetch = FetchType.LAZY)
     @ToString.Exclude

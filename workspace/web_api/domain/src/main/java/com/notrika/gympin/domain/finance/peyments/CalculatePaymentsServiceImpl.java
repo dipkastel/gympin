@@ -1,11 +1,22 @@
 package com.notrika.gympin.domain.finance.peyments;
 
 
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
+import com.notrika.gympin.common.finance.IncreaseUserDeposit.enums.DepositStatus;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
+import com.notrika.gympin.common.settings.sms.dto.SmsDto;
+import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
+import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.util.exception.transactions.TransactionAlreadyChecked;
+import com.notrika.gympin.common.util.exception.transactions.TransactionNotFound;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.finance.*;
 import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeRepository;
+import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
+import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseCorporateDepositEntity;
+import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseUserDepositEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.income.FinanceDiscountTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.income.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
@@ -13,11 +24,14 @@ import com.notrika.gympin.persistence.entity.finance.user.FinanceUserTransaction
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CalculatePaymentsServiceImpl {
@@ -32,94 +46,125 @@ public class CalculatePaymentsServiceImpl {
     @Autowired
     FinanceUserTransactionRepository financeUserTransactionRepository;
     @Autowired
+    FinanceCorporateTransactionRepository financeCorporateTransactionRepository;
+    @Autowired
+    FinanceIncreaseCorporateDepositRepository financeIncreaseCorporateDepositRepository;
+    @Autowired
+    FinanceIncreaseUserDepositRepository financeIncreaseUserDepositRepository;
+    @Autowired
     FinanceUserRepository financeUserRepository;
+    @Autowired
+    FinanceCorporateRepository financeCorporateRepository;
+    @Autowired
+    FinanceSerialRepository financeSerialRepository;
+    @Autowired
+    SmsService smsService;
 
 
     @Transactional
     public void CalculatePayment(Long transactionId, Boolean TransactionResult, String description, String additionalDescription) throws Exception {
-//        TransactionEntity transactionRequest = null;
-//        FinanceIncomeTransactionEntity incomeTransactionRequest = null;
-//        FinanceUserTransactionEntity userTransactionRequest = null;
-//        FinancePlaceTransactionEntity placeTransactionRequest = null;
-//        FinanceCorporateTransactionEntity corporateTransactionRequest = null;
-//        try {
-//            transactionRequest = transactionRepository.getById(transactionId);
-//        } catch (Exception e) {
-//        }
-//        if (transactionRequest == null)
-//            throw new TransactionNotFound();
-//
-//        List<TransactionEntity> transactionsByThisSerial = transactionRepository.findAllBySerialAndDeletedFalse(transactionRequest.getSerial());
-//        if (transactionsByThisSerial.size() > 1) {
-//            throw new TransactionAlreadyChecked();
-//        }
-//
-//
-//        TransactionEntity transaction = new TransactionEntity();
-//        transaction.setAmount(transactionRequest.getAmount());
-//
-//        transaction.setTransactionStatus((TransactionResult) ? TransactionStatus.PAYMENT_COMPLETE : TransactionStatus.PAYMENT_REJECTED);
-//        transaction.setIsChecked(transactionRequest.getIsChecked());
-//        transaction.setBankPend(transactionRequest.getBankPend());
-//        transaction.setSerial(transactionRequest.getSerial());
-//        transaction.setDescription(description + additionalDescription);
-//
-//        if (transactionRequest.getUser() != null) {
-//            UserEntity userEntity = transactionRequest.getUser();
-//            transaction.setTransactionType(TransactionType.CHARGE_USER);
-//            transaction.setUser(userEntity);
-//            if (TransactionResult) {
-//                userEntity.setBalance(userEntity.getBalance().add(transactionRequest.getAmount()));
-//                userRepository.update(userEntity);
-//            }
-//            transaction.setBalance(userEntity.getBalance());
-//            try {
-//                smsService.sendUserTransactionComplete(
-//                        SmsDto.builder()
-//                                .smsType(SmsTypes.USER_CHARGE)
-//                                .userNumber(userEntity.getPhoneNumber())
-//                                .text1(transactionRequest.getAmount().toString())
-//                                .build()
-//                );
-//            } catch (Exception e) {
-//            }
-//        } else if (transactionRequest.getPlace() != null) {
-//            PlaceEntity placeEntity = transactionRequest.getPlace();
-//            transaction.setTransactionType(TransactionType.CHARGE_PLACE);
-//            transaction.setPlace(placeEntity);
-//            if (TransactionResult) {
-//                placeEntity.setBalance(placeEntity.getBalance().add(transactionRequest.getAmount()));
-//                placeRepository.update(placeEntity);
-//            }
-//            transaction.setBalance(placeEntity.getBalance());
-//        } else if (transactionRequest.getCorporate() != null) {
-//            CorporateEntity corporateEntity = transactionRequest.getCorporate();
-//            transaction.setTransactionType(TransactionType.CHARGE_CORPORATE);
-//            transaction.setCorporate(corporateEntity);
-//            if (TransactionResult) {
-//                //todo fix this shit
-////                corporateEntity.setFinanceCorporate(corporateEntity.getFinanceCorporate().getTotalDeposit().add(transactionRequest.getAmount()));
-//                corporateService.update(corporateEntity);
-//            }
-//            transaction.setBalance(corporateEntity.getFinanceCorporate().getTotalDeposit());
-//            try {
-//                List<UserEntity> corporateAdmins = corporateEntity.getPersonnel().stream().filter(p -> p.getRole() == CorporatePersonnelRoleEnum.ADMIN).map(p -> p.getUser()).collect(Collectors.toList());
-//                for (UserEntity corporateAdmin : corporateAdmins) {
-//                    SmsService.sendCorporateTransactionComplete(
-//                            SmsDto.builder()
-//                                    .smsType(SmsTypes.CORPORATE_CHARGE)
-//                                    .userNumber(corporateAdmin.getPhoneNumber())
-//                                    .text1(transactionRequest.getAmount().toString())
-//                                    .build()
-//                    );
-//                }
-//            } catch (Exception e) {
-//            }
-//
-//        } else {
-//            throw new unknownPaymentBuyer();
-//        }
-//        transactionRepository.add(transaction);
+        FinanceSerialEntity transactionSerial = null;
+        try {
+            transactionSerial = financeSerialRepository.getById(transactionId);
+        } catch (Exception e) {
+        }
+        if (transactionSerial == null)
+            throw new TransactionNotFound();
+
+        if (transactionSerial.getCorporateIncreases().size() > 0) {
+            //corporate increase request
+            for (FinanceIncreaseCorporateDepositEntity request : transactionSerial.getCorporateIncreases()) {
+                var corporateFinance = request.getCorporate().getFinanceCorporate();
+                if (request.getDepositStatus() != DepositStatus.BANK_PENDING) {
+                    throw new TransactionAlreadyChecked();
+                }
+                if (TransactionResult) {
+
+                    financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
+                            .serial(transactionSerial)
+                            .isChecked(false)
+                            .latestBalance(corporateFinance.getTotalDeposit())
+                            .transactionStatus(TransactionStatus.COMPLETE)
+                            .transactionType(TransactionBaseType.USER)
+                            .amount(request.getAmount())
+                            .financeCorporate(corporateFinance)
+                            .description(description + " " + additionalDescription)
+                            .build()
+                    );
+
+                    var newDeposit = corporateFinance.getTotalDeposit().add(request.getAmount());
+                    corporateFinance.setTotalDeposit(newDeposit);
+                    financeCorporateRepository.update(corporateFinance);
+                    // todo send increase sms
+                    try {
+                        List<UserEntity> corporateAdmins = request.getCorporate().getPersonnel().stream().filter(p -> p.getRole() == CorporatePersonnelRoleEnum.ADMIN).map(p -> p.getUser()).collect(Collectors.toList());
+                        for (UserEntity corporateAdmin : corporateAdmins) {
+                            smsService.sendCorporateTransactionComplete(
+                                    SmsDto.builder()
+                                            .smsType(SmsTypes.CORPORATE_CHARGE)
+                                            .userNumber(corporateAdmin.getPhoneNumber())
+                                            .text1(request.getAmount().toString())
+                                            .build()
+                            );
+                        }
+                    } catch (Exception e) {
+                    }
+
+                } else {
+                    request.setDepositStatus(DepositStatus.REJECTED);
+                    request.setDescription(description);
+                    if (!additionalDescription.isEmpty()) {
+                        request.setDescription(request.getDescription() + " - " + additionalDescription);
+                    }
+                    financeIncreaseCorporateDepositRepository.update(request);
+                }
+            }
+
+        } else if (transactionSerial.getUserIncreases().size() > 0) {
+            //user increase request
+            for (FinanceIncreaseUserDepositEntity request : transactionSerial.getUserIncreases()) {
+                var userFinance = request.getUser().getFinanceUser();
+                if (request.getDepositStatus() != DepositStatus.BANK_PENDING) {
+                    throw new TransactionAlreadyChecked();
+                }
+                if (TransactionResult) {
+                    //transaction
+                    financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
+                            .serial(transactionSerial)
+                            .isChecked(false)
+                            .latestBalance(userFinance.getTotalDeposit())
+                            .transactionStatus(TransactionStatus.COMPLETE)
+                            .transactionType(TransactionBaseType.USER)
+                            .amount(request.getAmount())
+                            .financeUser(userFinance)
+                            .description(description + " " + additionalDescription)
+                            .build()
+                    );
+                    //user balance
+                    var newDeposit = userFinance.getTotalDeposit().add(request.getAmount());
+                    userFinance.setTotalDeposit(newDeposit);
+                    financeUserRepository.update(userFinance);
+                    //Todo send increase sms
+                    try {
+                        smsService.sendUserTransactionComplete(
+                                SmsDto.builder()
+                                        .smsType(SmsTypes.USER_CHARGE)
+                                        .userNumber(request.getUser().getPhoneNumber())
+                                        .text1(request.getAmount().toString())
+                                        .build()
+                        );
+                    } catch (Exception e) {
+                    }
+                } else {
+                    request.setDepositStatus(DepositStatus.REJECTED);
+                    request.setDescription(description);
+                    if (!additionalDescription.isEmpty()) {
+                        request.setDescription(request.getDescription() + " - " + additionalDescription);
+                    }
+                    financeIncreaseUserDepositRepository.update(request);
+                }
+            }
+        }
     }
 //
 //
