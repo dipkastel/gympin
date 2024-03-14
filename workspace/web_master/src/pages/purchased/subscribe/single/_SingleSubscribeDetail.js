@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, CardContent, CardHeader, TextField} from "@mui/material";
+import {SubscribeStatusEnum} from "../../../../helper/enums/SubscribeStatusEnum";
 
 const _SingleSubscribeDetail = ({subscribe}) => {
     return (
@@ -8,6 +9,19 @@ const _SingleSubscribeDetail = ({subscribe}) => {
                 title={"جزئیات عضویت"}
             />
             <CardContent>
+                <TextField
+                    id="outlined-adornment-password"
+                    className="w-100"
+                    variant="outlined"
+                    margin="normal"
+                    name="name"
+                    type="text"
+                    label={"وضعیت بلیط"}
+                    defaultValue={SubscribeStatusEnum[subscribe.Status]}
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                />
                 <TextField
                     id="outlined-adornment-password"
                     className="w-100"

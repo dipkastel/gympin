@@ -40,7 +40,7 @@ const _userSubscribes = ({user}) => {
                 <List sx={{width: '100%', bgcolor: 'background.paper'}}>
                     {userPlaceSubscribes.map((item, num) => (
                         <div key={"userSubscribes-" + num}>
-                            <Link href={"/users/SingleTicketSubscribe?id=" + item.Id}
+                            <Link href={"/users/SingleSubscribe?id=" + item.Id}
                                   sx={{textDecoration: "none", color: "#666666"}}>
 
                                 <Grid
