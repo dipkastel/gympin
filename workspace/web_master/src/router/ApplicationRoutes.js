@@ -38,6 +38,7 @@ import PurchasedSubscribe from "../pages/purchased/subscribe/PurchasedSubscribe"
 import Sports from "../pages/sports/Sports";
 import CoursesList from "../pages/tickets/course/CoursesList";
 import SingleTicketCourse from "../pages/tickets/course/singleCourse/SingleTicketCourse";
+import Coach from "../pages/coach/coach";
 
 export default function ApplicationRoutes() {
 
@@ -80,6 +81,7 @@ export default function ApplicationRoutes() {
                 <Route path="/management/qrList" element={<QrList/>}/>
                 <Route path="/management/profile" element={<Profile/>}/>
                 <Route path="/management/editProfile" element={<EditProfile/>}/>
+                <Route path="/management/coach" element={<Coach/>}/>
                 <Route path="/management" element={<Management/>}/>
 
                 {/*tickets*/}

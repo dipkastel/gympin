@@ -97,10 +97,17 @@ const _PlacesList = () => {
     const [filters, SetFilters] = useState([...defaultPlaceFilters,{
             type: "gender",
             name: "جنسیت",
-            value: currentUser?currentUser?.Gender:null,
+            value: null,
             selectedName: currentUser?genders.find(i=>i.value===currentUser?.Gender)?.Name:null
         }]
     )
+    // const [filters, SetFilters] = useState([...defaultPlaceFilters,{
+    //         type: "gender",
+    //         name: "جنسیت",
+    //         value: currentUser?currentUser?.Gender:null,
+    //         selectedName: currentUser?genders.find(i=>i.value===currentUser?.Gender)?.Name:null
+    //     }]
+    // )
 
     useEffect(() => {
         sports_query({

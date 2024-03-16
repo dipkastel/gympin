@@ -3,9 +3,12 @@ import _ListItem from "./_ListItem";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import _PlaceActivity from "./_PlaceActivity";
+import {useSelector} from "react-redux";
 
 
 export default function Management() {
+    const currentUser = useSelector(({auth}) => auth.user);
+
     useEffect(() => {
         document.title = 'مدیریت';
     }, []);
@@ -13,12 +16,15 @@ export default function Management() {
     return (
         <>
             {getAccessOf(personnelAccessEnumT.ManagementStatus)&&<_PlaceActivity ShowIfActive={false}/>}
+
             {getAccessOf(personnelAccessEnumT.ManagementTickets) &&
             <_ListItem title="فروشی ها" destination="/management/tickets"/>}
             {getAccessOf(personnelAccessEnumT.ManagementSports) &&
             <_ListItem title="ورزش ها" destination="/management/sports"/>}
             {getAccessOf(personnelAccessEnumT.ManagementHalls) &&
             <_ListItem title="سالن ها" destination="/management/Halls"/>}
+            {currentUser.UserRole.includes("COACH")&&
+            <_ListItem title="بخش مربی" destination="/management/coach"/>}
             {getAccessOf(personnelAccessEnumT.ManagementImages) &&
             <_ListItem title="تصاویر" destination="/management/images"/>}
             {getAccessOf(personnelAccessEnumT.ManagementPersonnel) &&

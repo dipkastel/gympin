@@ -67,10 +67,6 @@ public class PurchasedSubscribeServiceHelper {
                     subscribe.setStatus(COMPLETE);
                     purchasedSubscribeRepository.update(subscribe);
                 }
-                if (subscribe.getExpireDate().before(new Date())) {
-                    subscribe.setStatus(EXPIRE);
-                    purchasedSubscribeRepository.update(subscribe);
-                }
                 for (var entry : subscribe.getEntryList()) {
                     if (entry.getExitDate() == null && entry.getSubscribeEntryStatus() == SubscribeEntryStatus.ACCEPTED) {
                         Calendar c = Calendar.getInstance();

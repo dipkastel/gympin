@@ -13,8 +13,6 @@ import java.util.List;
 public interface PurchasedSubscribeService extends BaseService<PurchasedSubscribeParam, PurchasedSubscribeDto, PurchasedSubscribeQuery> {
 
 
-    PurchasedSubscribeScannedDto scannedSubscribe(PurchasedSubscribeParam param) throws Exception;
-
     //tickets
     List<PurchasedSubscribeDto> getUserEnteredSubscribe(Long placeId);
     List<PurchasedSubscribeDto> getUserSubscribesByPlace(UserPlacePurchasedParam param);
