@@ -17,11 +17,11 @@ const _DashNotes = () => {
     const history = useHistory();
     const [note, setNotes] = useState({});
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(() => {
         getNotes()
-    }, []);
+    }, [page,rowsPerPage]);
 
     function getNotes() {
         note_query({
