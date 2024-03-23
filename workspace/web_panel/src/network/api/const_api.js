@@ -147,6 +147,7 @@ export let TicketBuyableApi = {
 export let MultimediaApi = {
     add: "v1/multimedia/add",
     getAllImages: "v1/multimedia/getAllImages",
+    getAllFiles: "v1/multimedia/getAllFiles",
     delete: "v1/multimedia/delete",
     query: "v1/multimedia/query"
 };
@@ -164,6 +165,7 @@ export let NoteApi = {
     getById: "v1/note/getById",
     getByParam: "v1/note/getByParam",
     update: "v1/note/update",
+    query: "v1/note/query",
 };
 export let optionOfPlaceApi = {
     add: "v1/OptionOfPlace/add",
@@ -453,7 +455,8 @@ export let UserApi = {
 export let userRolesApi = {
     getAllRoles: "v1/userRoles/getAllRoles",
     add: "v1/userRoles/add",
-    delete: "v1/userRoles/delete"
+    delete: "v1/userRoles/delete",
+    query: "v1/userRoles/query"
 
 };
 export let UserCreditApi = {};

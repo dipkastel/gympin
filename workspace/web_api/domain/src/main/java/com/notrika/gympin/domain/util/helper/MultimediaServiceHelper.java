@@ -1,11 +1,12 @@
 package com.notrika.gympin.domain.util.helper;
 
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
+import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
+import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.multimedia.*;
-import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
-import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.domain.multimedia.MultimediaCategoryServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
@@ -14,6 +15,7 @@ import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -29,7 +31,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -39,7 +43,7 @@ public final class MultimediaServiceHelper {
     @Value("${multimedia.dir}")
     private String dir;
 
-    private String[] supportImageTypes = new String[]{"image/jpeg","image/webp","image/gif","image/png"};
+    private String[] supportImageTypes = new String[]{"image/jpeg", "image/webp", "image/gif", "image/png"};
     private String[] supportVideoTypes = new String[]{"audio/mpeg"};
     private String[] supportAudioTypes = new String[]{"video/mpeg"};
 
@@ -62,6 +66,9 @@ public final class MultimediaServiceHelper {
 
     @Autowired
     private MultimediaRepository multimediaRepository;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
 
     public MultimediaServiceHelper() {
@@ -91,12 +98,16 @@ public final class MultimediaServiceHelper {
         }
     }
 
-    public MultimediaEntity saveFile(MultimediaStoreParam multimediaStoreParam)  {
-        switch (multimediaStoreParam.getMediaType()){
-            case IMAGE: return saveImage(multimediaStoreParam);
-            case VIDEO: return saveVideo(multimediaStoreParam);
-            case AUDIO: return saveAudio(multimediaStoreParam);
-            default: throw new MediaTypeNotFound();
+    public MultimediaEntity saveFile(MultimediaStoreParam multimediaStoreParam) {
+        switch (multimediaStoreParam.getMediaType()) {
+            case IMAGE:
+                return saveImage(multimediaStoreParam);
+            case VIDEO:
+                return saveVideo(multimediaStoreParam);
+            case AUDIO:
+                return saveAudio(multimediaStoreParam);
+            default:
+                throw new MediaTypeNotFound();
         }
     }
 
@@ -117,7 +128,7 @@ public final class MultimediaServiceHelper {
         if (fileName.contains("..")) {
             throw new InvalidFileNameException();
         }
-        if (Arrays.stream(supportImageTypes).noneMatch(c->c.equals(multipartFile.getContentType()))) {
+        if (Arrays.stream(supportImageTypes).noneMatch(c -> c.equals(multipartFile.getContentType()))) {
             throw new UnsupportedImageType();
         }
         multimedia.setFileName(fileName);
@@ -139,7 +150,7 @@ public final class MultimediaServiceHelper {
         //save and get address
         Path targetLocation = null;
         try {
-            targetLocation = saveInStorage(getPathToStoreOrginal(multimediaStoreParam), multipartFile.getInputStream(), fileName,multimedia.getDocumentFormat());
+            targetLocation = saveInStorage(getPathToStoreOrginal(multimediaStoreParam), multipartFile.getInputStream(), fileName, multimedia.getDocumentFormat());
         } catch (IOException e) {
             throw new ImageSaveError();
         }
@@ -213,7 +224,7 @@ public final class MultimediaServiceHelper {
                 resource = new UrlResource(imagePath.toUri());
                 return new FileInputStream(resource.getFile());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ImageSaveError();
         }
     }
@@ -253,10 +264,10 @@ public final class MultimediaServiceHelper {
 
             Integer baseW = Integer.parseInt(entity.getSize().split("X")[0]);
             Integer baseH = Integer.parseInt(entity.getSize().split("X")[1]);
-            if (multimediaParam.getWidth() == null&&multimediaParam.getHeight() != null) {
+            if (multimediaParam.getWidth() == null && multimediaParam.getHeight() != null) {
                 multimediaParam.setWidth((multimediaParam.getHeight() * baseW) / baseH);
             }
-            if (multimediaParam.getHeight() == null&&multimediaParam.getWidth() != null) {
+            if (multimediaParam.getHeight() == null && multimediaParam.getWidth() != null) {
                 multimediaParam.setHeight((multimediaParam.getWidth() * baseH) / baseW);
             }
         } catch (Exception e) {
@@ -280,14 +291,36 @@ public final class MultimediaServiceHelper {
 
     }
 
-    public Path saveInStorage(Path path, InputStream fileStream, String fileName,String fileType) throws IOException {
+    public Path saveInStorage(Path path, InputStream fileStream, String fileName, String fileType) throws IOException {
         String extension = fileName.split("\\.")[fileName.split("\\.").length - 1];
-        if(extension.isEmpty()||extension.equals("blob")){
-            extension=fileType.split("/")[1];
+        if (extension.isEmpty() || extension.equals("blob")) {
+            extension = fileType.split("/")[1];
         }
-        Path targetLocation = path.resolve(System.currentTimeMillis() + "." +extension);
+        Path targetLocation = path.resolve(System.currentTimeMillis() + "." + extension);
         Files.copy(fileStream, targetLocation, StandardCopyOption.REPLACE_EXISTING);
         return targetLocation;
+    }
+
+
+    public List<MultimediaDto> getAllFiles() {
+        File folder = new File(dir);
+        return getFiles(folder);
+    }
+
+    private List<MultimediaDto> getFiles(File folder) {
+        List<MultimediaDto> result = new ArrayList<>();
+        File[] files = folder.listFiles();
+        if(files!=null){
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    result.addAll(getFiles(file));
+                }
+                if (file.isFile()) {
+                    result.add(MultimediaDto.builder().url(file.getAbsolutePath()).build());
+                }
+            }
+        }
+        return result;
     }
 
 

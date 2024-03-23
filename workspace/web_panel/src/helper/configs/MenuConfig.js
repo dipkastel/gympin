@@ -48,6 +48,13 @@ export default {
         page: "users",
       },
       {
+        title: "manage coaches",
+        root: true,
+        icon: "flaticon-profile-1",
+        translate: "MENU.MANAGE_COACH",
+        page: "coach",
+      },
+      {
         title: "manage corporates",
         root: true,
         icon: "flaticon-tool",

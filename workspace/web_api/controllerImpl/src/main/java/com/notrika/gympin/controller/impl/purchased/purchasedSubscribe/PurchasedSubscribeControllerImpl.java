@@ -61,12 +61,6 @@ public class PurchasedSubscribeControllerImpl implements PurchasedSubscribeContr
     }
 
     @Override
-    @GetMapping("/scannedSubscribe")
-    public ResponseEntity<PurchasedSubscribeScannedDto> scannedSubscribe(PurchasedSubscribeParam param) throws Exception {
-        return ResponseEntity.ok(purchasedSubscribeService.scannedSubscribe(param));
-    }
-
-    @Override
     @PostMapping("/acceptEnterRequested")
     public ResponseEntity<Boolean> acceptEnterRequested(@RequestBody PurchasedSubscribeParam param) throws Exception {
         return ResponseEntity.ok(purchasedSubscribeService.acceptEnterRequested(param));

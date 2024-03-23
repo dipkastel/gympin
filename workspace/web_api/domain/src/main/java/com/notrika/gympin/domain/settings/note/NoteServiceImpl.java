@@ -6,7 +6,9 @@ import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.purchased.purchased.param.PurchasedParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.param.PurchasedSubscribeParam;
 import com.notrika.gympin.common.settings.note.dto.NoteDto;
+import com.notrika.gympin.common.settings.note.dto.SimpleNoteDto;
 import com.notrika.gympin.common.settings.note.param.NoteParam;
+import com.notrika.gympin.common.settings.note.query.NoteQuery;
 import com.notrika.gympin.common.settings.note.service.NoteService;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
@@ -31,7 +33,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, BaseQuery<?>, ManageNoteEntity> implements NoteService {
+public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, NoteQuery, ManageNoteEntity> implements NoteService {
 
     @Autowired
     private ManageNoteRepository manageNoteRepository;
@@ -124,27 +126,27 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Bas
     }
 
     @Override
-    public List<NoteDto> getByPlace(PlaceParam placeParam) {
-        return convertToDtos(manageNoteRepository.findAllByPlaceIdAndDeletedIsFalse(placeParam.getId()));
+    public List<SimpleNoteDto> getByPlace(PlaceParam placeParam) {
+        return NoteConvertor.convertToSimpleDtos(manageNoteRepository.findAllByPlaceIdAndDeletedIsFalse(placeParam.getId()));
     }
 
     @Override
-    public List<NoteDto> getByCorporate(CorporateParam corporateParam) {
-        return convertToDtos(manageNoteRepository.findAllByCorporateIdAndDeletedIsFalse(corporateParam.getId()));
+    public List<SimpleNoteDto> getByCorporate(CorporateParam corporateParam) {
+        return NoteConvertor.convertToSimpleDtos(manageNoteRepository.findAllByCorporateIdAndDeletedIsFalse(corporateParam.getId()));
     }
 
     @Override
-    public List<NoteDto> getByInvoice(InvoiceParam corporateParam) {
-        return convertToDtos(manageNoteRepository.findAllByInvoiceIdAndDeletedIsFalse(corporateParam.getId()));
+    public List<SimpleNoteDto> getByInvoice(InvoiceParam corporateParam) {
+        return NoteConvertor.convertToSimpleDtos(manageNoteRepository.findAllByInvoiceIdAndDeletedIsFalse(corporateParam.getId()));
     }
 
     @Override
-    public List<NoteDto> getByUser(UserParam userParam) {
-        return convertToDtos(manageNoteRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId()));
+    public List<SimpleNoteDto> getByUser(UserParam userParam) {
+        return NoteConvertor.convertToSimpleDtos(manageNoteRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId()));
     }
 
     @Override
-    public List<NoteDto> getByPurchased(PurchasedParam param) {
-        return convertToDtos(manageNoteRepository.findAllByPurchasedIdAndDeletedIsFalse(param.getId()));
+    public List<SimpleNoteDto> getByPurchased(PurchasedParam param) {
+        return NoteConvertor.convertToSimpleDtos(manageNoteRepository.findAllByPurchasedIdAndDeletedIsFalse(param.getId()));
     }
 }

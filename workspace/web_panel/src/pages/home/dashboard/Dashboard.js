@@ -1,11 +1,23 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Row} from "react-bootstrap";
-import {Button, Card, CardContent, CardHeader, Grid,} from "@mui/material";
+import {Row, Table} from "react-bootstrap";
+import {Button, Card, CardContent, CardHeader, Grid, IconButton,} from "@mui/material";
 import {sport_query} from "../../../network/api/sport.api";
 import {user_query} from "../../../network/api/user.api";
 import {Place_query} from "../../../network/api/place.api";
 import {Location_query} from "../../../network/api/location.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
+import AddIcon from "@mui/icons-material/Add";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
+import TablePagination from "@mui/material/TablePagination";
+import {SetRppSportsManagement} from "../../../helper/pocket/pocket";
+import _DashItem from "./_DashItem";
+import _DashNotes from "./_DashNotes";
+import _DashSupport from "./_DashSupport";
 
 export default function Dashboard() {
     const error = useContext(ErrorContext);
@@ -77,93 +89,26 @@ export default function Dashboard() {
             <div className="container-fluid">
                 <Row>
                     <Grid container spacing={3}>
-                        <Grid item xs={4}>
-                            <Card>
-                                <CardHeader title={"شهر های فعال"} color={"primary"}/>
-                                <CardContent className={"kt-space-between"}>
-                                    {cityCount} شهر فعال
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        href="/locations"
-                                        sx={{marginRight: "auto"}}
-                                        size="large"
-                                    >
-                                        مدیریت
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                        <Grid item xs={6}>
+                            <_DashNotes />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <_DashSupport />
                         </Grid>
                         <Grid item xs={4}>
-                            <Card>
-                                <CardHeader title={"محله های فعال"} color={"primary"}/>
-                                <CardContent className={"kt-space-between"}>
-                                    {regionCount} محله فعال
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        href="/locations"
-                                        sx={{marginRight: "auto"}}
-                                        size="large"
-                                    >
-                                        مدیریت
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                            <_DashItem title={"شهر های فعال"} itemText={cityCount+" شهر فعال"} buttonText={"مدیریت"} href={"/locations/2"}/>
                         </Grid>
                         <Grid item xs={4}>
-                            <Card>
-                                <CardHeader title={"ورزش های فعال"} color={"primary"}/>
-                                <CardContent className={"kt-space-between"}>
-                                    {sportCount} ورزش فعال
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        href="/sports"
-                                        sx={{marginRight: "auto"}}
-                                        size="large"
-                                    >
-                                        مدیریت
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                            <_DashItem title={"محله های فعال"} itemText={regionCount+" محله فعال"} buttonText={"مدیریت"} href={"/locations/3"}/>
                         </Grid>
                         <Grid item xs={4}>
-                            <Card>
-                                <CardHeader title={"مجموعه های فعال"} color={"primary"}/>
-
-                                <CardContent className={"kt-space-between"}>
-                                    {placeCount} مجموعه فعال
-
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        href="/places"
-                                        sx={{marginRight: "auto"}}
-                                        size="large"
-                                    >
-                                        مدیریت
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                            <_DashItem title={"ورزش های فعال"} itemText={sportCount+" ورزش فعال"} buttonText={"مدیریت"} href={"/sports"}/>
                         </Grid>
                         <Grid item xs={4}>
-                            <Card>
-                                <CardHeader title={"کاربر فعال"} color={"primary"}/>
-                                <CardContent className={"kt-space-between"}>
-                                    {userCount} کاربر فعال
-
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        href="/users"
-                                        sx={{marginRight: "auto"}}
-                                        size="large"
-                                    >
-                                        مدیریت
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                            <_DashItem title={"مجموعه های فعال"} itemText={placeCount+" مجموعه فعال"} buttonText={"مدیریت"} href={"/places"}/>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <_DashItem title={"کاربر فعال"} itemText={userCount+" کاربر فعال"} buttonText={"مدیریت"} href={"/users"}/>
                         </Grid>
                     </Grid>
                 </Row>

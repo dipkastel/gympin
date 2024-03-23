@@ -21,7 +21,7 @@ export function userRoles_delete(data) {
 // export function userRoles_getById(data) {
 //     return axios.get(userRolesApi.getById, {params: data});
 // }
-//
-// export function userRoles_query(data) {
-//     return axios.post(userRolesApi.query, data);
-// }
+
+export function userRoles_query(data) {
+    return axios.post(userRolesApi.query, data);
+}

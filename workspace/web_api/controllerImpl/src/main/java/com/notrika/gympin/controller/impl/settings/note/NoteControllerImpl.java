@@ -1,5 +1,7 @@
 package com.notrika.gympin.controller.impl.settings.note;
 
+import com.notrika.gympin.common.settings.note.dto.SimpleNoteDto;
+import com.notrika.gympin.common.settings.note.query.NoteQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.settings.note.api.NoteController;
@@ -53,13 +55,13 @@ public class NoteControllerImpl implements NoteController {
     }
 
     @Override
-    public ResponseEntity<Page<NoteDto>> query(BaseQuery<?> filter) {
-        return null;
+    public ResponseEntity<Page<NoteDto>> query(NoteQuery filter) {
+        return ResponseEntity.ok(noteService.query(filter));
     }
 
     @Override
     @PostMapping("getByParam")
-    public ResponseEntity<List<NoteDto>> getByParam(NoteParam noteParam) {
+    public ResponseEntity<List<SimpleNoteDto>> getByParam(NoteParam noteParam) {
         if (noteParam.getPlace() != null)
             return ResponseEntity.ok(noteService.getByPlace(noteParam.getPlace()));
         if (noteParam.getUser() != null)

@@ -121,7 +121,7 @@ const IncreaseGroupCredit = () => {
             </Card>}
             {groups && <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
-                    title={"اعتبار به همه پرسنل"}
+                    title={"اعتبار به هر یک از پرسنل"}
                 />
                 <CardContent>
 
@@ -148,7 +148,7 @@ const IncreaseGroupCredit = () => {
             {groups && groups.map(group => (
                 <Card key={group.Id} elevation={3} sx={{margin: 1}}>
                     <CardHeader
-                        title={"اعتبار به گروه " + group.Name}
+                        title={"اعتبار به هر یک از گروه " + group.Name}
                     />
                     <CardContent>
                         <Form onSubmit={(e) => openModalConfirmForm(e, group)}>

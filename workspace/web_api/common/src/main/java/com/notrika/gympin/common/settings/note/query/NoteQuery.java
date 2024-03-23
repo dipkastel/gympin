@@ -1,9 +1,9 @@
-package com.notrika.gympin.common.place.place.query;
+package com.notrika.gympin.common.settings.note.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.settings.location.enums.LocationType;
+import com.notrika.gympin.common.settings.note.enums.NoteType;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
-import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
-import com.notrika.gympin.common.user.user.enums.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -32,25 +32,13 @@ import lombok.experimental.SuperBuilder;
     private Long min_id
     private Long max_id
     */
-public class PlaceQuery extends BaseQuery<PlaceQuery> {
+public class NoteQuery extends BaseQuery<NoteQuery> {
 
-    @JsonProperty("Name")
-    private String like_name;
+    @JsonProperty("Type")
+    private NoteType is_type;
 
-    @JsonProperty("Status")
-    private PlaceStatusEnum is_status;
-
-    @JsonProperty("Sports")
-    private Long is_placeSportæsportæid;
-
-    @JsonProperty("Option")
-    private Long is_optionsOfPlacesæplaceOptionæid;
-
-    @JsonProperty("LocationId")
-    private Long is_locationæid;
-
-    @JsonProperty("Gender")
-    private Gender is_buyablesægender;
+    @JsonProperty("IsToDo")
+    private Boolean is_isToDo;
 
 
 }

@@ -71,6 +71,11 @@ public class MultimediaServiceImpl extends AbstractBaseService<MultimediaStorePa
         return multimediaRepository.findAllByMediaTypeAndDeletedFalseOrderByIdDesc(mediaType,pageable).stream().map(MultimediaConvertor::toDto).collect(Collectors.toList());
     }
 
+    @Override
+    public List<MultimediaDto> getAllFiles(BasePagedParam pageable, MediaType mediaType) {
+        return helper.getAllFiles().stream().skip((pageable.getPage()-1)*pageable.getSize()).limit(pageable.getSize()).collect(Collectors.toList());
+    }
+
 
     @Override
     public List<MultimediaEntity> getAll(Pageable pageable) {

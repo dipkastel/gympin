@@ -15,8 +15,6 @@ import java.util.List;
 public interface PurchasedSubscribeController extends BaseController<PurchasedSubscribeParam, PurchasedSubscribeDto, PurchasedSubscribeQuery> {
 
 
-    ResponseEntity<PurchasedSubscribeScannedDto> scannedSubscribe(PurchasedSubscribeParam param) throws Exception;
-
     //tickets
     ResponseEntity<List<PurchasedSubscribeDto>> getUserEnteredSubscribe(Long placeId);
     ResponseEntity<List<PurchasedSubscribeDto>> getUserSubscribesByPlace(UserPlacePurchasedParam param) throws Exception;

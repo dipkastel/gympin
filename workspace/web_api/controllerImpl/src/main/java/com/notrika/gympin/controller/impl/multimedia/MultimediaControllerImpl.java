@@ -78,5 +78,11 @@ public class MultimediaControllerImpl implements MultimediaController {
         return ResponseEntity.ok(multimediaService.getAll(pagingParam,MediaType.AUDIO));
     }
 
+    @Override
+    @RequestMapping(path = "/getAllFiles", method = GET)
+    public ResponseEntity<List<MultimediaDto>> getAllFiles(HttpServletResponse response, BasePagedParam pagingParam) throws Exception {
+        return ResponseEntity.ok(multimediaService.getAllFiles(pagingParam,MediaType.FILE));
+    }
+
 
 }

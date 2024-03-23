@@ -82,7 +82,7 @@ export default function HomeTwoVideo() {
                     <div className="container-fluid">
                         <div className="row no-gutters">
                             <div className="col-xl-8 ">
-                                <video autoPlay ref={video} height={"100%"} width={"100%"} hidden={true} type="video/mp4" controls >
+                                <video  ref={video} height={"100%"} width={"100%"} hidden={true} type="video/mp4" controls >
                                     <source src="/videos/gympin-c-5.mp4" type="video/mp4"/>
                                     Your browser does not support the video tag.
                                 </video>

@@ -23,7 +23,6 @@ import SupportDetails from "./support/SupportDetails";
 import CorporateDetailsManagement from "./corporate/baseData/CorporateDetailsManagement";
 import CorporatePersonnelDetailsManagement from "./corporate/persoanel/CorporatePersonnelDetailsManagement";
 import SubscribeDataManagement from "./purchasedItems/subscribes/baseData/SubscribeDataManagement";
-import TransactionsAllManagement from "./finance/all/TransactionsAllManagement";
 import PlacePersonnelManagement from "./place/personnel/PlacePersonnelManagement";
 import ArticlesManagement from "./articles/ArticlesManagement";
 import SingleArticle from "./articles/SingleArticle/SingleArticle";
@@ -38,6 +37,8 @@ import SellsManagement from "./purchased/SellsManagement";
 import TransactionManagement from "./finance/TransactionManagement";
 import TicketCourseDataManagement from "./place/tickets/ticketCourse/TicketCourseDataManagement";
 import CourseDataManagement from "./purchasedItems/courses/baseData/CourseDataManagement";
+import CoachManagement from "./coach/CoachManagement";
+import CoachDetailsManagement from "./coach/baseData/CoachDetailsManagement";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -65,6 +66,9 @@ export default function HomePage() {
         {/*user*/}
         <Route path="/users/details/:userId" component={UserDetailsManagement} />
         <Route path="/users" component={UserManagement} />
+        {/*coach*/}
+        <Route path="/coach/details/:userId" component={CoachDetailsManagement} />
+        <Route path="/coach" component={CoachManagement} />
         {/*support*/}
         <Route path="/support/details/:supportId" component={SupportDetails} />
         <Route path="/support" component={Support} />

@@ -16,6 +16,10 @@ export function media_getAllImages(data) {
   return axios.get(MultimediaApi.getAllImages, { params: data });
 }
 
+export function media_getAllFiles(data) {
+  return axios.get(MultimediaApi.getAllFiles, { params: data });
+}
+
 export function media_delete(data) {
   return axios.put(MultimediaApi.delete,  data );
 }

@@ -21,4 +21,6 @@ public interface MultimediaController extends BaseController<MultimediaStorePara
 
     ResponseEntity<List<MultimediaDto>> getAllAudio(HttpServletResponse response,BasePagedParam pagingParam) throws Exception;
 
+    ResponseEntity<List<MultimediaDto>> getAllFiles(HttpServletResponse response,BasePagedParam pagingParam) throws Exception;
+
 }

@@ -10,6 +10,7 @@ import AudioManager from "./Audio/AudioManager";
 import "./AddMedia.css"
 import {FilterAlt} from "@mui/icons-material";
 import {defaultFilterImages} from "./Image/_ImageFilter";
+import AllFilesManager from "./AllFiles/AllFilesManager";
 
 
 
@@ -54,6 +55,7 @@ const MediaManagement = () => {
                                 <Tab label="Images" value="IMAGE"/>
                                 <Tab label="Videos" value="VIDEO"/>
                                 <Tab label="Audios" value="AUDIO"/>
+                                <Tab label="AllFiles" value="ALLFILES"/>
                             </TabList>
                         }
                         toolbar={
@@ -79,6 +81,9 @@ const MediaManagement = () => {
                                     <TabPanel sx={{padding: 0}} value="AUDIO">
 
                                     </TabPanel>
+                                    <TabPanel sx={{padding: 0}} value="ALLFILES">
+
+                                    </TabPanel>
                                 </div>
                             </PortletHeaderToolbar>
                         }
@@ -95,6 +100,9 @@ const MediaManagement = () => {
                                 </TabPanel>
                                 <TabPanel sx={{padding: 0}} value="AUDIO">
                                     <AudioManager/>
+                                </TabPanel>
+                                <TabPanel sx={{padding: 0}} value="ALLFILES">
+                                    <AllFilesManager/>
                                 </TabPanel>
                             </div>
                         </div>

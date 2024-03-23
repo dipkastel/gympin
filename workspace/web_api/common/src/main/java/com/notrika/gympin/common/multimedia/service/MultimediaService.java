@@ -17,6 +17,8 @@ public interface MultimediaService extends BaseService<MultimediaStoreParam, Mul
 
     List<MultimediaDto> getAll(BasePagedParam pageable, MediaType mediaType);
 
+    List<MultimediaDto> getAllFiles(BasePagedParam pageable, MediaType mediaType);
+
 
     boolean delete(Long id);
 
