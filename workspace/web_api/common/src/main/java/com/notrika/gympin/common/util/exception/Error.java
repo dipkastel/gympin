@@ -124,7 +124,8 @@ public class Error {
         DUPLICATE_ENTRY_ADD_EXEPTION(4005),
         NOT_FOUND_EXEPTION(4006),
         SEND_SMS_EXCEPTION(4007),
-        USER_NOT_ALLOWED(4008)
+        USER_NOT_ALLOWED(4008),
+        SMS_SERVICE_IS_DISABLED(4009)
 
         ;
         private final int value;

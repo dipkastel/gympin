@@ -10,9 +10,8 @@ import com.notrika.gympin.common.purchased.purchasedCourse.query.PurchasedCourse
 import com.notrika.gympin.common.purchased.purchasedCourse.service.PurchasedCourseService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
-import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.param.UserParam;
-import com.notrika.gympin.common.util.GeneralUtil;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.purchased.*;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
@@ -29,7 +28,6 @@ import com.notrika.gympin.persistence.dao.repository.ticket.course.TicketCourseR
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntryEntity;
-import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +63,7 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
     @Autowired
     CorporatePersonnelCreditRepository corporatePersonnelCreditRepository;
     @Autowired
-    SmsService smsService;
+    SmsInService smsService;
     @Autowired
     CalculatePaymentsServiceImpl calculatePaymetsService;
 
@@ -97,7 +95,7 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
 
     @Override
     public PurchasedCourseDto getById(long id) {
-        return PurchasedCourseConvertor.toDto(purchasedCourseRepository.getById(id));
+        return PurchasedCourseConvertor.toDto(getEntityById(id));
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.settings.base.dto.SettingDto;
 import com.notrika.gympin.common.settings.base.service.SettingsService;
-import com.notrika.gympin.domain.settings.sms.SmsServiceImpl;
+import com.notrika.gympin.domain.settings.sms.SmsInServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
@@ -23,7 +23,7 @@ public class scheduleCorporateSms {
     @Autowired
     private CorporateRepository corporateRepository;
     @Autowired
-    private SmsServiceImpl smsService;
+    private SmsInServiceImpl smsService;
     @Autowired
     private SettingsService settingsService;
 

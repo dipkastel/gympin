@@ -23,6 +23,7 @@ const _SettingGeneral = () => {
     function getAllDatas() {
         settings_getAll().then(result => {
             SetSettings(result.data.Data);
+            console.log(result.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -137,7 +138,7 @@ const _SettingGeneral = () => {
             </Paper>
             <div className="container-fluid">
                 <Row>
-                {settings.filter(f=>!f.Key.includes("SMS")).filter(f => filter ? f.Type === filter : true).map((setting, index) => (
+                {settings.filter(f=>f.Type!="SMS").filter(f => filter ? f.Type === filter : true).map((setting, index) => (
                     <div className={"col-6"} key={setting.Key}>
                             <SettingDetail key={index} setting={setting} refreshData={() => getAllDatas()}/>
                     </div>

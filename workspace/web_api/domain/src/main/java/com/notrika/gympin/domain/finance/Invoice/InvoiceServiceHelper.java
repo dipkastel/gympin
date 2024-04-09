@@ -16,7 +16,7 @@ import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.note.enums.NoteType;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
-import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.util.exception.purchased.PayByOthersException;
 import com.notrika.gympin.common.util.exception.purchased.PriceTotalConflictException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
@@ -96,7 +96,7 @@ public class InvoiceServiceHelper {
     InvoiceRepository invoiceRepository;
 
     @Autowired
-    SmsService smsService;
+    SmsInService smsService;
 
     @Autowired
     ManageNoteRepository noteRepository;

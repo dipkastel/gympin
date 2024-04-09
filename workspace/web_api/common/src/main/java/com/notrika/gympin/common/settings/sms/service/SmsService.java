@@ -1,17 +1,21 @@
 package com.notrika.gympin.common.settings.sms.service;
 
+import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
+import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.purchased.purchased.param.PurchasedParam;
+import com.notrika.gympin.common.settings.note.dto.NoteDto;
+import com.notrika.gympin.common.settings.note.dto.SimpleNoteDto;
+import com.notrika.gympin.common.settings.note.param.NoteParam;
+import com.notrika.gympin.common.settings.note.query.NoteQuery;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
+import com.notrika.gympin.common.settings.sms.param.SmsParam;
+import com.notrika.gympin.common.settings.sms.query.SmsQuery;
+import com.notrika.gympin.common.user.user.param.UserParam;
+import com.notrika.gympin.common.util._base.base.BaseService;
 
-public interface SmsService {
+import java.util.List;
 
-    boolean sendVerificationSms(Long userId, SmsDto smsDto) throws Exception;
-    boolean sendJoinedToPlaceSms(SmsDto smsDto) throws Exception;
-    boolean sendJoinedToCorporateSms(SmsDto smsDto) throws Exception;
-    boolean sendRegisterCompleted(SmsDto smsDto) throws Exception;
-    boolean sendLowBudgetToCorporate(SmsDto smsDto) throws Exception;
-    boolean sendUserTransactionComplete(SmsDto smsDto) throws Exception;
-    boolean sendCorporateTransactionComplete(SmsDto smsDto) throws Exception;
-    boolean sendYouBuySubscribe(SmsDto smsDto) throws Exception;
-    boolean sendSupportAnswered(SmsDto smsDto) throws Exception;
-
+public interface SmsService extends BaseService<SmsParam, SmsDto, SmsQuery> {
+    boolean changeSmsStatus(SmsParam smsParam) throws Exception;
 }

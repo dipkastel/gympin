@@ -310,6 +310,15 @@ export let SportApi = {
     query: "v1/sport/query",
     countFilter: "v1/sport/count-filter",
 };
+export let SmsApi = {
+    add: "v1/sms/add",
+    delete: "v1/sms/delete",
+    getAll: "v1/sms/getAll",
+    getById: "v1/sms/getById",
+    update: "v1/sms/update",
+    changeSmsStatus: "v1/sms/changeSmsStatus",
+    query: "v1/sms/query",
+};
 export let SettingsApi = {
     add: "v1/Settings/add",
     delete: "v1/Settings/delete",

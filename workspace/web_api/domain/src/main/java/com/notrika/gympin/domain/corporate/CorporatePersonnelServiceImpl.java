@@ -9,11 +9,10 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.query.CorporatePer
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelService;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
-import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.param.UserRegisterParam;
-import com.notrika.gympin.common.user.user.param.UserRoleParam;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.util.exception.general.SendSmsException;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -54,7 +53,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private SmsService smsService;
+    private SmsInService smsService;
 
     @Override
     public CorporatePersonnelDto add(@NonNull CorporatePersonnelParam Param) {

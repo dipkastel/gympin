@@ -18,7 +18,7 @@ const __SettingSmsConfigs = () => {
 
     function getSettings() {
         settings_getAll().then(result => {
-            SetSettings(result.data.Data);
+            SetSettings(result.data.Data.filter(f=>f.Type == "SMS"));
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -29,10 +29,13 @@ const __SettingSmsConfigs = () => {
 
     }
     return (<>
-                    {settings.filter(f=>f.Key.includes("SMS")).map((setting, index) => (
-                        <SettingDetail key={index} setting={setting} refreshData={() => getSettings()}/>
-                    ))}
-
+            <div className={"row"}>
+                {settings.map((setting, index) => (
+                    <div className={"col-6"} key={index}>
+                        <SettingDetail  setting={setting} refreshData={() => getSettings()}/>
+                    </div>
+                ))}
+            </div>
         </>
     );
 };

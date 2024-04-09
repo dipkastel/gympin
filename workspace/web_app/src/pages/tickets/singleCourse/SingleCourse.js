@@ -37,9 +37,9 @@ const SingleCourse = () => {
             {course && <_CourseDetail course={course}/>}
             {course && <_UsageProgress setUserCanEnter={setUserCanEnter} ticket={course}/>}
             {course &&
-            course.status == "ACTIVE"&&<_QRcode ticket={course} userCanEnter={userCanEnter} type={"COURSE"}/>}
+            (course.Status == "ACTIVE"||course.Status == "READY_TO_ACTIVE")&&<_QRcode ticket={course} userCanEnter={userCanEnter} type={"COURSE"}/>}
             {course && userCanEnter &&
-            course.status == "ACTIVE"&&<_CoursePhoneLessEnter course={course} getCourse={getCourse}/>}
+            course.Status == "ACTIVE"&&<_CoursePhoneLessEnter course={course} getCourse={getCourse}/>}
             {course && <_CourseEnterList course={course} getCourse={getCourse} setUserCanEnter={setUserCanEnter}/>}
         </>
     );

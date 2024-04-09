@@ -20,6 +20,9 @@ public class gympinScheduleService {
     @Autowired
     schedulePeymentCheck schedulePeymentCheck;
 
+    @Autowired
+    scheduleSms scheduleSms;
+
     @Scheduled(cron = "0 0 2 * * ?")
     public void setDiscounts(){
         scheduleDiscounts.UpdateAutoTicketSubscribeDiscount();
@@ -44,5 +47,9 @@ public class gympinScheduleService {
     public void setPeymentChecks(){
         schedulePeymentCheck.checkPendingPayments();
 
+    }
+    @Scheduled(cron = "*/10 * * * * ?")
+    public void sendSms(){
+        scheduleSms.sendSms();
     }
 }

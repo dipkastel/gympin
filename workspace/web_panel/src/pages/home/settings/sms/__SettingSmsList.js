@@ -1,48 +1,33 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {
-    Portlet,
-    PortletBody,
-    PortletFooter,
-    PortletHeader,
-    PortletHeaderToolbar
-} from "../../../partials/content/Portlet";
-import AddIcon from "@mui/icons-material/Add";
-import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {settings_getAll} from "../../../../network/api/settings.api";
-import SettingDetail from "../General/detail/SettingDetail";
-import {Form} from "react-bootstrap";
-import {Button, Grid, IconButton, TextField, Typography} from "@mui/material";
-import {SettingTypes} from "../../../../helper/enums/settingsTypeEnum";
-import {Delete} from "@mui/icons-material";
+import React, { useEffect, useState} from 'react';
+import __SmsSentList from "./engin/__SmsSentList";
+import __SmsPendingList from "./engin/__SmsPendingList";
+import __SmsFailedList from "./engin/__SmsFailedList";
+import __SmsCanceledList from "./engin/__SmsCanceledList";
 
 const __SettingSmsConfigs = () => {
 
-    const error = useContext(ErrorContext);
-    const [smsList, SetSmsList] = useState([])
-
+    const [updatePageP, SetUpdatePageP] = useState(false);
     useEffect(() => {
-        getSmsList();
-    }, []);
-    
+        if (updatePageP)
+            SetUpdatePageP(false)
+    }, [updatePageP]);
 
-    function getSmsList() {
-
-
+    function updatePage() {
+        SetUpdatePageP(true)
     }
-    return (<>
-            <Portlet>
-                    <PortletHeader
-                        title={<>
-                            <Typography variant={"subtitle1"} >لیست پیام ها</Typography>
-                        </>}
-                    />
 
-                    <PortletBody className={"p-2"}>
-                    </PortletBody>
-                    <PortletFooter>
-                        <></>
-                    </PortletFooter>
-            </Portlet>
+    return (<>
+            {!updatePageP&&<div className={"row"}>
+                <div className={"col-6"}>
+                    <__SmsPendingList updatePage={updatePage}/>
+                    <__SmsFailedList updatePage={updatePage}/>
+                    <__SmsCanceledList updatePage={updatePage}/>
+                </div>
+                <div className={"col-6"}>
+                    <__SmsSentList updatePage={updatePage}/>
+                </div>
+            </div>
+            }
 
         </>
     );

@@ -5,7 +5,7 @@ import com.notrika.gympin.common.finance.transaction.dto.UserTransactionDto;
 import com.notrika.gympin.common.finance.transaction.param.UserTransactionParam;
 import com.notrika.gympin.common.finance.transaction.query.UserTransactionQuery;
 import com.notrika.gympin.common.finance.transaction.service.UserTransactionService;
-import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
@@ -42,7 +42,7 @@ public class TransactionUserServiceImpl extends AbstractBaseService<UserTransact
     @Autowired
     FinanceUserRepository financeUserRepository;
     @Autowired
-    SmsService smsService;
+    SmsInService smsService;
 
 
     @Override

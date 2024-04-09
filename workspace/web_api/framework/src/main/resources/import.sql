@@ -1,16 +1,3 @@
-# RULE
-
-    INSERT INTO user_role (id,role) VALUES (1,'CONTENT');
-    INSERT INTO user_role (id,role) VALUES (2,'MARKET');
-    INSERT INTO user_role (id,role) VALUES (3,'MANAGER');
-    INSERT INTO user_role (id,role) VALUES (4,'ADMIN');
-    INSERT INTO user_role (id,role) VALUES (5,'SUPER_ADMIN');
-    INSERT INTO user_role (id,role) VALUES (6,'COACH');
-    INSERT INTO user_role (id,role) VALUES (7,'PLACE_MANAGER');
-    INSERT INTO user_role (id,role) VALUES (8,'PLACE_PERSONNEL');
-    INSERT INTO user_role (id,role) VALUES (9,'USER');
-    INSERT INTO user_role (id,role) VALUES (10,'CORPORATE_MANAGER');
-
 
 # USER
     INSERT INTO finance_user(id,total_deposit) VALUES (1,0);
@@ -450,7 +437,23 @@ INSERT INTO sport(id, launch_status, name ) VALUES ( 57,'LAUNCHED','یوگا');
     INSERT INTO manage_settings(id,setting_description,setting_key,setting_type,setting_value) values (3,'صفحه اصلی انتخاب شده برای اپلیکیشن PWA','WEB_APP_HOMEPAGE_ID','WEB_APP','1');
     INSERT INTO manage_settings(id,setting_description,setting_key,setting_type,setting_value) values (4,'صفحه اصلی انتخاب شده برای اپلیکیشن PWA-Places','WEB_MASTER_HOMEPAGE_ID','WEB_MASTER','1');
     INSERT INTO manage_settings(id,setting_description,setting_key,setting_type,setting_value) values (5,'صفحه اصلی انتخاب شده برای اپلیکیشن PWA-Corporates','WEB_CORPORATE_HOMEPAGE_ID','WEB_CORPORATE','1');
-    INSERT INTO manage_settings(id,setting_description,setting_key,setting_type,setting_value) values (6,'شماره ثابت ارسال پیامک برای تست','SMS_FIX_NUMBER','GENERAL','-----');
+    INSERT INTO manage_settings(id,setting_description,setting_key,setting_type,setting_value) values (6,'شماره ثابت ارسال پیامک برای تست','SMS_FIX_NUMBER','SMS','-----');
+    INSERT INTO manage_settings(id,setting_description,setting_key,setting_type,setting_value) values (7,'بخش ثابت آدرس ارسال پیامک - فراز sms','FARAZ_SMS_URL','SMS','http://ippanel.com:8080/?apikey=9AUtgEP1cotNUnXqvd6WWvo5wXQwJxHzoF8IHASegKI=');
+    INSERT INTO manage_settings(id,setting_description,setting_key,setting_type,setting_value) values (8,'شماره مورد استفاده - فراز sms','FARAZ_SMS_SENDER_NUMBER','SMS','3000505');
+    INSERT INTO manage_settings(id,setting_description,setting_key,setting_type,setting_value) values (9,'فعالسازی پیامک','SMS_ACTIVE','SMS','false');
+    INSERT INTO manage_settings(id,setting_description,setting_key,setting_type,setting_value) values (10,'سرویس دهنده پیامک','SMS_PROVIDER','SMS','FARAZ');
+
+# sms patterns
+
+    INSERT INTO manage_sms_pattern(id,name,pattern_key,pattern_code,template,provider_setting_id) values (1,'پترن کد ورود - فراز sms','FARAZ_SMS_PATTERN_SENDCODE','nlvhqg68mg','%code% کد تایید شما gympin.ir',10);
+    INSERT INTO manage_sms_pattern(id,name,pattern_key,pattern_code,template,provider_setting_id) values (2,'پترن درخواست عضویت - فراز sms','FARAZ_SMS_PATTERN_JOINREQUEST','4m6dd8bc1k26dxf','درخواست شما برای ثبت مرکز ورزشی %place% در جیم پین دریافت شد. به زودی همکاران ما با شما تماس خواهند گرفت.',10);
+    INSERT INTO manage_sms_pattern(id,name,pattern_key,pattern_code,template,provider_setting_id) values (3,'پترن عضویت پرسنل مجموعه - فراز sms','FARAZ_SMS_PATTERN_JOINTOPLACE','75tum3ve8b1lxhq','شماره شما به عنوان %role% مرکز ورزشی %place% در اپلیکیشن جیم پین ثبت شده است. اکنون می توانید از امکانات اپلیکیشن مراکز جیم پین استفاده کنید https://place.gympin.ir',10);
+    INSERT INTO manage_sms_pattern(id,name,pattern_key,pattern_code,template,provider_setting_id) values (4,'پترن عضویت در سازمان - فراز sms','FARAZ_SMS_PATTERN_JOINTOCORPORATE','ipn2tr1uoz9dn49','شماره شما به عنوان پرسنل  %corporate% در اپلیکیشن جیم پین ثبت شده است. اکنون می توانید از امکانات اپلیکیشن جیم پین استفاده کنید https://gympin.ir',10);
+    INSERT INTO manage_sms_pattern(id,name,pattern_key,pattern_code,template,provider_setting_id) values (5,'پترن کم بود شارژ سازمان - فراز sms','FARAZ_SMS_PATTERN_LOWBUDGET_CORPORATE','ch6j8p5ziy29ats','مدیر %corporate% گرامی شارژ شما در اپلیکیشن جیم پین رو به اتمام است برای جلوگیری از عدم دسترسی کاربران به اعتبارهای اهدایی ، نسبت به افزایش شارژ خود اقدام نمایید. corporate.gympin.ir/finance',10);
+    INSERT INTO manage_sms_pattern(id,name,pattern_key,pattern_code,template,provider_setting_id) values (6,'پترن شارژ موفق کاربر - فراز sms','FARAZ_SMS_PATTERN_USER_CHARGE','ffdn7qlz485gpt2','پرداخت با موفقیت انجام شد. اعتبار شما به مبلغ %amount% تومان در اپلیکیشن جیم پین افزایش یافت. web.gympin.ir/wallet',10);
+    INSERT INTO manage_sms_pattern(id,name,pattern_key,pattern_code,template,provider_setting_id) values (7,'پترن شارژ موفق سازمان - فراز sms','FARAZ_SMS_PATTERN_CORPORATE_CHARGE','k0pyzc0atwmqiy8','پرداخت با موفقیت انجام شد. اعتبار سازمان شما به مبلغ %amount% تومان در اپلیکیشن جیم پین افزایش یافت. corporate.gympin.ir/finance',10);
+    INSERT INTO manage_sms_pattern(id,name,pattern_key,pattern_code,template,provider_setting_id) values (8,'پترن خرید عضویت - فراز sms','FARAZ_SMS_PATTERN_USER_BUY_SUBSCRIBE','zn9ewsfhggm48od','عضویت %subscribe-name% از مجموعه %place-name% در اپلیکیشن جیم پین توسط شما خریداری شد. مشاهده خرید ها : web.gympin.ir/subscribes',10);
+    INSERT INTO manage_sms_pattern(id,name,pattern_key,pattern_code,template,provider_setting_id) values (9,'پترن کد ورود - فراز sms','FARAZ_SMS_PATTERN_SUPPORT_ANSWERED','rgmw67l84zc28y3','تیکت شما با شماره %support-id% در اپلیکیشن جیم پین پاسخ داده شد. با تشکر.',10);
 
 # article category
 

@@ -7,7 +7,7 @@ import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
-import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.util.exception.transactions.TransactionAlreadyChecked;
 import com.notrika.gympin.common.util.exception.transactions.TransactionNotFound;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
@@ -58,7 +58,7 @@ public class CalculatePaymentsServiceImpl {
     @Autowired
     FinanceSerialRepository financeSerialRepository;
     @Autowired
-    SmsService smsService;
+    SmsInService smsService;
 
 
     @Transactional

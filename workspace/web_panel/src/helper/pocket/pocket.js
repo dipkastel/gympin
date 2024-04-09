@@ -241,6 +241,16 @@ export function SetRppUserPurchasedSubscribe(number){
     return getValue(rpp_userPurchasedSubscribe);
 }
 
+const rpp_smsList = "rpp_smsList";
+
+export function getRppSmsList(){
+    return getValue(rpp_smsList)||25;
+}
+export function SetRppSmsList(number){
+    setValue(rpp_smsList,number);
+    return getValue(rpp_smsList);
+}
+
 
 function getValue(key) {
     return  localStorage.getItem(key);

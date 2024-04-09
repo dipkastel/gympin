@@ -5,7 +5,7 @@ import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
-import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.support.enums.SupportMessageStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
@@ -74,7 +74,7 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private JwtTokenProvider tokenProvider;
     @Autowired
-    private SmsService smsService;
+    private SmsInService smsService;
     @Autowired
     private UserActivationCodeRepository userActivationCodeRepository;
     @Autowired

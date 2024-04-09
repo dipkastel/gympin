@@ -1,26 +1,40 @@
 package com.notrika.gympin.common.settings.sms.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.settings.sms.enums.SmsStatus;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
+import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalTime;
+import java.util.Date;
+
 @Data
 @ToString
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SmsDto extends BaseDto<SmsDto> {
+public class SmsDto extends BaseDtoWithCreateUpdate<SmsDto> {
 
     @JsonProperty("UserNumber")
     private String userNumber;
 
+    @JsonProperty("SentBodyCode")
+    private String sentBodyCode;
+
     @JsonProperty("SmsType")
     private SmsTypes smsType;
+
+    @JsonProperty("SmsStatus")
+    private SmsStatus smsStatus;
+
+    @JsonProperty("SmsSendTime")
+    private Date smsSendTime;
 
     @JsonProperty("Text1")
     private String text1;
@@ -33,6 +47,9 @@ public class SmsDto extends BaseDto<SmsDto> {
 
     @JsonProperty("Text4")
     private String text4;
+
+    @JsonProperty("Pattern")
+    private PatternDto pattern;
 
     public SmsDto(String userNumber, SmsTypes smsType, String text1) {
         this.userNumber = userNumber;

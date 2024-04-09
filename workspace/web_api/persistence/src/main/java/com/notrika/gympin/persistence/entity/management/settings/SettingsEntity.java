@@ -2,6 +2,8 @@ package com.notrika.gympin.persistence.entity.management.settings;
 
 import com.notrika.gympin.common.settings.base.enums.settingsType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.management.sms.ManageSmsEntity;
+import com.notrika.gympin.persistence.entity.management.sms.ManageSmsPatternEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -37,6 +40,11 @@ public class SettingsEntity extends BaseEntityWithCreateUpdate<SettingsEntity> {
     @Column(name = "settingType")
     @Enumerated(EnumType.STRING)
     private settingsType type;
+
+
+    @OneToMany(mappedBy = "provider",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<ManageSmsPatternEntity> smsPatterns;
 
     @Override
     public boolean equals(Object o) {

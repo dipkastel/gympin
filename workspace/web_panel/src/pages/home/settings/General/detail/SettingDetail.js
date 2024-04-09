@@ -108,6 +108,7 @@ const SettingDetail = ({setting, refreshData}) => {
                                         label="مقدار اضافه"
                                         name="Data"
                                         className="textField"
+                                        multiline
                                         value={inSetting["Data"] || ""}
                                         type="Text"
                                         onChange={(e) => SetInSetting({...inSetting, Data: e.target.value})}

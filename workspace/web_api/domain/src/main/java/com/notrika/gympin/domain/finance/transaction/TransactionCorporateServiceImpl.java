@@ -4,7 +4,7 @@ import com.notrika.gympin.common.finance.transaction.dto.CorporateTransactionDto
 import com.notrika.gympin.common.finance.transaction.param.CorporateTransactionParam;
 import com.notrika.gympin.common.finance.transaction.query.CorporateTransactionQuery;
 import com.notrika.gympin.common.finance.transaction.service.CorporateTransactionService;
-import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
@@ -39,7 +39,7 @@ public class TransactionCorporateServiceImpl extends AbstractBaseService<Corpora
     @Autowired
     CorporateServiceImpl corporateService;
     @Autowired
-    SmsService smsService;
+    SmsInService smsService;
 
 
     @Override

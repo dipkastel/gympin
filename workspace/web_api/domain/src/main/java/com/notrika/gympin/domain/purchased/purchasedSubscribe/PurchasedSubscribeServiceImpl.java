@@ -12,7 +12,7 @@ import com.notrika.gympin.common.purchased.purchasedSubscribe.query.PurchasedSub
 import com.notrika.gympin.common.purchased.purchasedSubscribe.service.PurchasedSubscribeService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
-import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util.GeneralUtil;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
@@ -72,7 +72,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
     @Autowired
     CorporatePersonnelCreditRepository corporatePersonnelCreditRepository;
     @Autowired
-    SmsService smsService;
+    SmsInService smsService;
     @Autowired
     CalculatePaymentsServiceImpl calculatePaymetsService;
 
@@ -140,7 +140,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
     @Override
     public PurchasedSubscribeDto getById(long id) {
-        return PurchasedSubscribeConvertor.toDto(purchasedSubscribeRepository.getById(id));
+        return PurchasedSubscribeConvertor.toDto(getEntityById(id));
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
-import com.notrika.gympin.common.settings.sms.service.SmsService;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.support.dto.SupportDto;
@@ -55,7 +55,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     CorporateRepository corporateRepository;
 
     @Autowired
-    SmsService smsService;
+    SmsInService smsService;
 
 
     @Override
