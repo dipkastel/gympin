@@ -59,9 +59,9 @@ public class SmsInServiceImpl implements SmsInService {
             throw new SmsServiceIsDisabled();
 
         if(sendToFixNumber()){
-            updateUserLoginCode(smsDto.getText1(), userId, "not send");
             smsDto.setUserNumber(getFixNumber().getValue());
         }
+        updateUserLoginCode(smsDto.getText1(), userId, "not send");
         insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_SENDCODE",SmsTypes.CODE_TO_VERIFICATION);
         return true;
     }
