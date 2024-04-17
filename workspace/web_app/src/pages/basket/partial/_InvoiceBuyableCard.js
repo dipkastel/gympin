@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {Card, CardContent, CardHeader, Grid, IconButton, Typography} from "@mui/material";
-import {ArrowDownward, ArrowUpward, Delete} from "@mui/icons-material";
+import {Add, ArrowDownward, ArrowUpward, Delete, HdrPlus, PlusOneOutlined, Remove} from "@mui/icons-material";
 import {toPriceWithComma} from "../../../helper/utils";
 import {
     invoice_addBuyable,
@@ -73,13 +73,13 @@ const _InvoiceBuyableCard = ({buyable, updatePage}) => {
                                 تعداد :
                             </Typography>
                             {buyable.Count>1&&<IconButton size={"small"} onClick={(e)=>updateCount(buyable.Count-1)}>
-                                <ArrowDownward/>
+                                <Remove color={"error"}/>
                             </IconButton>}
                             <Typography variant={"subtitle1"}>
                                 {buyable.Count}
                             </Typography>
                             <IconButton size={"small"} onClick={(e)=>updateCount(buyable.Count+1)}>
-                                <ArrowUpward/>
+                                <Add color={"success"}/>
                             </IconButton>
                         </Grid>
                     </Grid>

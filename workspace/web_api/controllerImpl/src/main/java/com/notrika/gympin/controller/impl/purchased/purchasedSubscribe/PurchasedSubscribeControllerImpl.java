@@ -109,6 +109,13 @@ public class PurchasedSubscribeControllerImpl implements PurchasedSubscribeContr
         return ResponseEntity.ok(purchasedSubscribeService.getActiveSubscribesOfPlace(placeId));
     }
 
+
+    @Override
+    @GetMapping("/getPlaceSubscribes")
+    public ResponseEntity<List<PurchasedSubscribeDto>> getPlaceSubscribes(Long placeId) {
+        return ResponseEntity.ok(purchasedSubscribeService.getPlaceSubscribes(placeId));
+    }
+
     @Override
     @PostMapping("/enterRequest")
     public ResponseEntity<Boolean> enterRequest(@RequestBody PurchasedSubscribeParam param) throws Exception {

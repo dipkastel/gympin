@@ -1,20 +1,24 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Avatar, Divider, Link, List, ListItemAvatar, ListItemButton, ListItemText} from "@mui/material";
-import {purchasedSubscribe_getActiveSubscribes} from "../../../../network/api/subscribe.api";
+import {Avatar, Chip, Divider, Link, List, ListItemAvatar, ListItemButton, ListItemText} from "@mui/material";
+import {
+    purchasedSubscribe_getPlaceSubscribes
+} from "../../../../network/api/subscribe.api";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import purchasedTypes from "../../../../helper/data/purchasedTypes";
+import {SubscribeStatusEnum} from "../../../../helper/enums/SubscribeStatusEnum";
 
 export default function _ActiveSubscribes() {
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
-    const [activeSubscribes, setActiveSubscribes] = useState([])
+    const [PlaceSubscribes, setPlaceSubscribes] = useState([])
     useEffect(() => {
         getActiveSubscribes();
     }, []);
 
     function getActiveSubscribes() {
-        purchasedSubscribe_getActiveSubscribes({placeId: place.Id}).then(result => {
-            setActiveSubscribes(result.data.Data);
+        purchasedSubscribe_getPlaceSubscribes({placeId: place.Id}).then(result => {
+            setPlaceSubscribes(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -26,7 +30,7 @@ export default function _ActiveSubscribes() {
 
     return (
         <List sx={{width: '100%', direction: "rtl", bgcolor: 'background.paper'}}>
-            {activeSubscribes.map((item, Index) => (
+            {PlaceSubscribes.map((item, Index) => (
                 <div key={Index}>
 
 
@@ -42,6 +46,7 @@ export default function _ActiveSubscribes() {
                             <ListItemText primary={`${item?.User?.FullName || ""} (${item?.User?.Username})`}/>
                             <ListItemText secondary={`${item?.Name || ""}`}/>
                         </Link>
+                        <Chip color={(item.Status != "ACTIVE") ? "primary" : "green"} label={SubscribeStatusEnum[item?.Status]} />
                     </ListItemButton>
                     <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
                 </div>))}

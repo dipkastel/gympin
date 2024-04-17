@@ -17,6 +17,7 @@ public interface PurchasedSubscribeService extends BaseService<PurchasedSubscrib
     List<PurchasedSubscribeDto> getUserEnteredSubscribe(Long placeId);
     List<PurchasedSubscribeDto> getUserSubscribesByPlace(UserPlacePurchasedParam param);
     List<PurchasedSubscribeDto> getActiveSubscribesOfPlace(Long placeId);
+    List<PurchasedSubscribeDto> getPlaceSubscribes(Long placeId);
     List<PurchasedSubscribeDto> getByUser(UserParam userParam);
 
     //ticketAction

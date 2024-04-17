@@ -19,6 +19,7 @@ public interface PurchasedSubscribeController extends BaseController<PurchasedSu
     ResponseEntity<List<PurchasedSubscribeDto>> getUserEnteredSubscribe(Long placeId);
     ResponseEntity<List<PurchasedSubscribeDto>> getUserSubscribesByPlace(UserPlacePurchasedParam param) throws Exception;
     ResponseEntity<List<PurchasedSubscribeDto>> getActiveSubscribesOfPlace(Long placeId);
+    ResponseEntity<List<PurchasedSubscribeDto>> getPlaceSubscribes(Long placeId);
     ResponseEntity<List<PurchasedSubscribeDto>> getByUser(UserParam userParam);
 
     //ticketAction

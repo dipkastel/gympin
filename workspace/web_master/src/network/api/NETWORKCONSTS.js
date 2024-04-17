@@ -173,6 +173,7 @@ export let Api_url = {
         acceptEnterRequested:"v1/purchasedSubscribe/acceptEnterRequested",
         getUserEntered:"v1/purchasedSubscribe/getUserEntered",
         getActiveSubscribes:"v1/purchasedSubscribe/getActiveSubscribes",
+        getPlaceSubscribes:"v1/purchasedSubscribe/getPlaceSubscribes",
         getUserSubscribesByPlace:"v1/purchasedSubscribe/getUserSubscribesByPlace",
         addEntryMessage:"v1/purchasedSubscribe/addEntryMessage",
         deleteEntryMessage:"v1/purchasedSubscribe/deleteEntryMessage",

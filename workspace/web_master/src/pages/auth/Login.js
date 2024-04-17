@@ -126,7 +126,7 @@ function Login(props) {
                                             disableLoading();
                                             setSubmitting(false);
                                             setStatus(
-                                                "اطلاعات وارد شده معتبر نبست"
+                                                "اطلاعات وارد شده معتبر نیست"
                                             );
                                         });
                                 }, 1000);

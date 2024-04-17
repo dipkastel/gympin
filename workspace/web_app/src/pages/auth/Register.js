@@ -68,7 +68,7 @@ export default function Register(props) {
                                         .catch((ex) => {
                                             setSubmitting(false);
                                             setStatus(
-                                                "اطلاعات وارد شده معتبر نبست"
+                                                "اطلاعات وارد شده معتبر نیست"
                                             );
                                         });
                                 }, 1000);

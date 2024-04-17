@@ -203,6 +203,13 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         return convertToDtos(subscribeEntities);
     }
 
+
+    @Override
+    public List<PurchasedSubscribeDto> getPlaceSubscribes(Long placeId) {
+        List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.getPlaceSubscribes(placeId).stream().map(purchasedSubscribeHelper::checkForExpire).filter(t -> purchasedSubscribeHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
+        return convertToDtos(subscribeEntities);
+    }
+
     @Override
     public List<PurchasedSubscribeDto> getByUser(UserParam userParam) {
         return convertToDtos(purchasedSubscribeRepository.findAllByCustomerIdAndDeletedFalse(userParam.getId()));

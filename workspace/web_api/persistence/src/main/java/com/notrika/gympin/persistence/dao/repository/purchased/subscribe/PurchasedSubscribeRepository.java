@@ -25,4 +25,7 @@ public interface PurchasedSubscribeRepository extends BaseRepository<PurchasedSu
     @Query("SELECT T FROM PurchasedSubscribeEntity T WHERE T.ticketSubscribe.place.id = :#{#placeId} AND T.status LIKE 'ACTIVE' ")
     List<PurchasedSubscribeEntity> getActiveSubscribeOfPlace(Long placeId);
 
+    @Query("SELECT T FROM PurchasedSubscribeEntity T WHERE T.ticketSubscribe.place.id = :#{#placeId} AND T.status NOT LIKE 'READY_TO_ACTIVE' ")
+    List<PurchasedSubscribeEntity> getPlaceSubscribes(Long placeId);
+
 }

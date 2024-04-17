@@ -77,6 +77,7 @@ public class scheduleSms {
             String body = IOUtils.toString(in, encoding);
             return Integer.parseInt(body);
         }catch (Exception e){
+            faildToSend(entity,"خطا در ارسال از فراز");
             throw new SendSmsException();
         }
     }

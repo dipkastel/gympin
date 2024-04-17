@@ -32,7 +32,7 @@ const HomeOneGoal = () => {
                                             </div>
                                             <div className="wp-box__content">
                                                 <h4 className="wp-box__title wp-box__title--2">تسهیل دسترسی به مراکز ورزشی</h4>
-                                                <p className={"text-justify"}>فراهم کردن راهی ساده برای دسترسی به انبوهی از مراکز ورزشی .</p>
+                                                <p className={"text-justify"}>فراهم کردن راهی ساده برای دسترسی به مراکز ورزشی متعدد و متنوع .</p>
                                             </div>
                                         </div>
                                     </div>

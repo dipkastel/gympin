@@ -30,6 +30,10 @@ export function purchasedSubscribe_getActiveSubscribes(data) {
     return axios.get(Api_url.purchasedSubscribe.getActiveSubscribes, {params: data});
 }
 
+export function purchasedSubscribe_getPlaceSubscribes(data) {
+    return axios.get(Api_url.purchasedSubscribe.getPlaceSubscribes, {params: data});
+}
+
 export function purchasedSubscribe_getUserPlaceSubscribe(data) {
     return axios.post(Api_url.purchasedSubscribe.getUserSubscribesByPlace,  data);
 }
