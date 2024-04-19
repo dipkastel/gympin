@@ -108,7 +108,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
         try {
             var role = placePersonnelRole.getName();
-            smsService.sendJoinedToPlaceSms(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE, place.getName(),placePersonnelRole.getName()));
+            smsService.sendJoinedToPlaceSms(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE,placePersonnelRole.getName(), place.getName()));
         } catch (Exception e) {
             throw new SendSmsException();
         }
