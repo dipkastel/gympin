@@ -12,6 +12,6 @@ export  function PlacesQr_add(placeQr){
 
 
 export  function PlacesQr_delete(placeQr){
-    return axios.put(Api_url.placeQR.DELETE,null,{params:placeQr})
+    return axios.put(Api_url.placeQR.DELETE,placeQr)
 }
 

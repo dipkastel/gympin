@@ -6,7 +6,7 @@ export function placePersonnel_add(data) {
 }
 
 export function placePersonnel_delete(data) {
-    return axios.put(Api_url.placePersonnel.delete, null, {params: data});
+    return axios.put(Api_url.placePersonnel.delete,  data);
 }
 
 export function placePersonnel_update(data) {
@@ -32,13 +32,12 @@ export function placePersonnel_updatePersonnelAccess(data) {
     return axios.post(Api_url.placePersonnel.updatePersonnelAccess,  data);
 }
 
-
-export function placePersonnel_getGateAccess(data) {
-    return axios.get(Api_url.placePersonnel.getUserPlaceHallAccess, {params: data});
+export function placePersonnel_updatePersonnelBuyableAccess(data) {
+    return axios.post(Api_url.placePersonnel.updatePersonnelBuyableAccess,  data);
 }
 
-export function placePersonnel_updatePersonnelGateAccess(data) {
-    return axios.post(Api_url.placePersonnel.updatePersonnelHallAccess,  data);
+export function placePersonnel_getUserPlaceBuyableAccess(data) {
+    return axios.get(Api_url.placePersonnel.getUserPlaceBuyableAccess,  {params: data});
 }
 
 export function placePersonnel_addRole(data) {

@@ -96,7 +96,7 @@ const _PersonnelList = ({personnelList, renewList}) => {
                         {inPersonnelList && inPersonnelList.map(item => (
                             <div key={"person-" + item.Id}>
                                 <Grid container direction={"row"} justifyContent="space-between" sx={{marginY: 1}}>
-                                    <ListItemButton alignItems="flex-start" onClick={()=>item.UserRole.includes("PLACE_OWNER")?"#":navigate("/management/personnelAccess", {state:{user:item.User}})} >
+                                    <ListItemButton alignItems="flex-start" onClick={()=>item.UserRole.includes("PLACE_OWNER")?"#":navigate("/management/personnelAccess", {state:{placePersonnel:item}})} >
                                         <ListItemAvatar>
                                             <Avatar sx={{width: 40, height: 40}}
                                                     src={item.User.Avatar ? (item.User.Avatar.Url || "") : ""}/>

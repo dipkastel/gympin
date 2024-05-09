@@ -20,7 +20,7 @@ export  function TicketCourses_add(data){
 
 
 export  function TicketCourses_delete(data){
-    return axios.put(Api_url.TicketCourse.delete,null,{params:data})
+    return axios.put(Api_url.TicketCourse.delete,data)
 }
 
 

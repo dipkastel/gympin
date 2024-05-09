@@ -1,5 +1,6 @@
 import {subscribe_addEntryMessage, subscribe_deleteEntryMessage} from "./subscribe.api";
 import {Halls_getById} from "./halls.api";
+import {placePersonnel_updatePersonnelBuyableAccess} from "./placePersonnel.api";
 
 export let AuthApi = {
     BASEURL: "http://localhost:8080/api/",
@@ -52,8 +53,8 @@ export let Api_url = {
         PersonnelByUser:"v1/placePersonnel/PersonnelByUser",
         updatePersonnelAccess:"v1/placePersonnel/updatePersonnelAccess",
         getUserPlaceAccess:"v1/placePersonnel/getUserPlaceAccess",
-        updatePersonnelHallAccess:"v1/placePersonnel/updatePersonnelHallAccess",
-        getUserPlaceHallAccess:"v1/placePersonnel/getUserPlaceHallAccess",
+        updatePersonnelBuyableAccess:"v1/placePersonnel/updatePersonnelBuyableAccess",
+        getUserPlaceBuyableAccess:"v1/placePersonnel/getUserPlaceBuyableAccess",
         addRole:"v1/placePersonnel/addRole",
         deleteRole:"v1/placePersonnel/deleteRole"
     },

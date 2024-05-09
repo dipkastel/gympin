@@ -12,7 +12,7 @@ export  function PlaceAbout_add(data){
 
 
 export  function PlaceAbout_delete(data){
-    return axios.put(Api_url.placeAbout.DELETE,null,{params:data})
+    return axios.put(Api_url.placeAbout.DELETE,data)
 }
 
 

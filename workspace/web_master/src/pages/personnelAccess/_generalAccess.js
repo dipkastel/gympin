@@ -19,6 +19,7 @@ const _generalAccess = ({user}) => {
     function getAccess() {
 
         placePersonnel_getAccess({placeId: place.Id, userId: user.Id}).then(result => {
+            console.log(result)
             SetUserAccess(result.data.Data);
         }).catch(e => {
             try {
@@ -53,7 +54,6 @@ const _generalAccess = ({user}) => {
                                 <FormControlLabel
                                     sx={{mr:0}} control={
                                     <Switch
-                                        id={item.Section}
                                         checked={item.Access}
                                         onChange={(e) => changeAccess(item, e)}
 

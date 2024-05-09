@@ -299,6 +299,84 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     }
 
     @Override
+    public List<PlacePersonnelBuyableAccessDto> getUserPlaceBuyableAccess(Long placeId, Long userId) {
+        PlaceEntity place = placeRepository.getById(placeId);
+        PlacePersonnelEntity placePersonnel = placePersonnelRepository.findByUserIdAndPlaceIdAndDeletedFalse(userId, placeId);
+        if (placePersonnel == null)
+            throw new UnknownUserException();
+        List<PlacePersonelBuyableAccessEntity> currentAccess = placePersonnel.getPlacePersonnelBuyableAccess();
+        List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
+        List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
+
+        for (BuyableEntity placeBuyable : place.getBuyables()) {
+            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
+            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
+            resultItem.setPlacePersonelId(placePersonnel.getId());
+            var hasAccess = false;
+            try {
+                var currentAccessItem = currentAccess.stream().filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
+                if (currentAccessItem.isEmpty()) {
+                    toAdd.add(
+                            PlacePersonelBuyableAccessEntity.builder()
+                                    .access(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr->(ppr.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER&&!ppr.isDeleted())) || hasAccess)
+                                    .placePerson(placePersonnel)
+                                    .buyable(placeBuyable)
+                                    .build()
+                    );
+                }
+                hasAccess = currentAccessItem.get().getAccess();
+            } catch (Exception e) {
+            }
+            resultItem.setAccess(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr->(ppr.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER&&!ppr.isDeleted())) || hasAccess);
+            result.add(resultItem);
+        }
+
+        if (toAdd.size() > 0) {
+            placePersonnelHallAccessRepository.addAll(toAdd);
+        }
+        return result;
+
+    }
+    @Override
+    public List<PlacePersonnelBuyableAccessDto> getPersonnelBuyableAccess(Long personelId) {
+        PlacePersonnelEntity personnel = placePersonnelRepository.getById(personelId);
+        if (personnel == null)
+            throw new UnknownUserException();
+        List<PlacePersonelBuyableAccessEntity> currentAccess = personnel.getPlacePersonnelBuyableAccess();
+        List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
+        List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
+
+        for (BuyableEntity placeBuyable : personnel.getPlace().getBuyables()) {
+            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
+            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
+            resultItem.setPlacePersonelId(personnel.getId());
+            var hasAccess = false;
+            try {
+                var currentAccessItem = currentAccess.stream().filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
+                if (currentAccessItem.isEmpty()) {
+                    toAdd.add(
+                            PlacePersonelBuyableAccessEntity.builder()
+                                    .access(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr->(ppr.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER&&!ppr.isDeleted())) || hasAccess)
+                                    .placePerson(personnel)
+                                    .buyable(placeBuyable)
+                                    .build()
+                    );
+                }
+                hasAccess = currentAccessItem.get().getAccess();
+            } catch (Exception e) {
+            }
+            resultItem.setAccess(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr->(ppr.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER&&!ppr.isDeleted())) || hasAccess);
+            result.add(resultItem);
+        }
+
+        if (toAdd.size() > 0) {
+            placePersonnelHallAccessRepository.addAll(toAdd);
+        }
+        return result;
+
+    }
+
+    @Override
     public PlacePersonnelEntity add(PlacePersonnelEntity entity) {
         return placePersonnelRepository.add(entity);
     }

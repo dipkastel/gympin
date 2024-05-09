@@ -57,10 +57,15 @@ export default function Register(props) {
                                 return errors;
                             }}
                             onSubmit={(values, {setStatus, setSubmitting}) => {
-                                requestRegisterPlace({
+                                console.log({
                                     PhoneNumber: values.phoneNumber,
                                     fullName: values.username,
                                     placeName: values.Name
+                                })
+                                requestRegisterPlace({
+                                    PhoneNumber: values.phoneNumber,
+                                    fullName: values.username,
+                                    Text: values.Name
                                 }).then(result => {
                                     if (result.data.Data) {
                                         alert("درخواست شما ثبت شد به زودی با شما تماس خواهیم گرفت")

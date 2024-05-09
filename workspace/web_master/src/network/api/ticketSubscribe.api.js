@@ -20,7 +20,7 @@ export  function TicketSubscribes_add(data){
 
 
 export  function TicketSubscribes_delete(data){
-    return axios.put(Api_url.TicketSubscribe.delete,null,{params:data})
+    return axios.put(Api_url.TicketSubscribe.delete,data)
 }
 
 

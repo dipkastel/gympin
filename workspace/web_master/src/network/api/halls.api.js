@@ -12,7 +12,7 @@ export  function Halls_add(data){
     return axios.post(Api_url.Halls.ADD,data)
 }
 export  function Halls_delete(data){
-    return axios.put(Api_url.Halls.DELETE,null,{params:data})
+    return axios.put(Api_url.Halls.DELETE,data)
 }
 export  function Halls_update(data){
     return axios.put(Api_url.Halls.UPDATE,data)

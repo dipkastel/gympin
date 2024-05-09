@@ -29,6 +29,10 @@ public interface PlacePersonnelService extends BaseService<PlacePersonnelParam, 
 
     List<PlacePersonnelBuyableAccessDto> getUserPlaceHallAccess(Long placeId, Long userId);
 
+    List<PlacePersonnelBuyableAccessDto> getUserPlaceBuyableAccess(Long placeId, Long userId);
+
+    List<PlacePersonnelBuyableAccessDto> getPersonnelBuyableAccess(Long userId);
+
     PlacePersonnelDto updatePersonnelCommissionFee(PlacePersonnelParam param);
 
 

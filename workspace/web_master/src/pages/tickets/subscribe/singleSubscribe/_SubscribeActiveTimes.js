@@ -141,6 +141,7 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
     }
 
     function ModalDeleteActiveTimes() {
+        console.log(deleteItem);
         function onDeleteItem(e) {
             e.preventDefault()
             ticketActiveTimes_delete({id: deleteItem.Id}).then(result => {
@@ -161,12 +162,12 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
                 <Dialog open={deleteItem} onClose={() => setDeleteItem(null)}>
                     <DialogTitle>حذف زمان</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            آیا حذف زمان {deleteItem["hall-timing"].Name + " از " +
-                        deleteItem["hall-timing"]["Opening-time"].substring(0, 5)
+                        <DialogContentText>{
+                            "آیا حذف زمان "+deleteItem.Name + " از " +
+                        deleteItem.OpeningTime.substring(0, 5)
                         + " تا " +
-                        deleteItem["hall-timing"]["Closing-time"].substring(0, 5)
-                        } را تایید میکنید؟
+                        deleteItem.ClosingTime.substring(0, 5)+
+                        " را تایید میکنید؟"}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

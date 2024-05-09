@@ -80,7 +80,7 @@ public class PlacePersonnelControllerImpl implements PlacePersonnelController {
     @Override
     @GetMapping("getUserPlaceBuyableAccess")
     public ResponseEntity<List<PlacePersonnelBuyableAccessDto>> getUserPlaceBuyableAccess(Long placeId, Long userId) {
-        return new ResponseEntity<>(placePersonnelService.getUserPlaceHallAccess(placeId, userId), HttpStatus.OK);
+        return new ResponseEntity<>(placePersonnelService.getUserPlaceBuyableAccess(placeId, userId), HttpStatus.OK);
     }
 
     @Override

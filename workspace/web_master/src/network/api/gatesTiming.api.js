@@ -13,5 +13,5 @@ export  function ticketActiveTimes_addAll(timings){
 }
 
 export  function ticketActiveTimes_delete(timing){
-    return axios.put(Api_url.ticketActiveTimes.DELETE,null,{params:timing})
+    return axios.put(Api_url.ticketActiveTimes.DELETE,timing)
 }

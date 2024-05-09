@@ -50,6 +50,12 @@ export function removeStorage(key) {
     return true;
 }
 
+export function getUserFixedName(user) {
+    if(!user) return "";
+    return (user.FullName || "") + " " + " ( " + (user.Username || "") + " ) ";
+}
+
+
 export function getStorage(key) {
     const now = Date.now(); //epoch time, lets deal only with integer
     // set expiration for storage

@@ -1,7 +1,6 @@
 package com.notrika.gympin.persistence.entity.place.personnel;
 
 import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "placePersonelHallAccess")
+@Table(name = "placePersonelBuyableAccess")
 public class PlacePersonelBuyableAccessEntity extends BaseEntity<PlacePersonelBuyableAccessEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -27,7 +26,7 @@ public class PlacePersonelBuyableAccessEntity extends BaseEntity<PlacePersonelBu
     private PlacePersonnelEntity placePerson;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "hallId")
+    @JoinColumn(name = "buyableId")
     private BuyableEntity buyable;
 
     @Column(name = "access")
@@ -45,4 +44,5 @@ public class PlacePersonelBuyableAccessEntity extends BaseEntity<PlacePersonelBu
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }
