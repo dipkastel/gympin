@@ -133,7 +133,7 @@ export default function _ScannerCore({onFind, scannWork}) {
     // }, [loading]);
 
     useEffect(() => {
-        console.log(scannWork);
+
         (scannWork) ? InVideo.pause() : InVideo.play();
     }, [scannWork]);
 

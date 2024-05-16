@@ -6,7 +6,7 @@ import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
-import com.notrika.gympin.common.support.enums.SupportMessageStatus;
+import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
 import com.notrika.gympin.common.support.service.SupportService;
@@ -298,7 +298,7 @@ public class AccountServiceImpl implements AccountService {
         supportService.add(SupportParam.builder()
                 .title(title)
                 .supportMessages(SupportMessageParam.builder()
-                        .status(SupportMessageStatus.AWAITING_EXPERT)
+                        .status(SupportStatus.AWAITING_EXPERT)
                         .isAnswer(false)
                         .messages(message)
                         .build())
@@ -321,7 +321,7 @@ public class AccountServiceImpl implements AccountService {
         supportService.add(SupportParam.builder()
                 .title(title)
                 .supportMessages(SupportMessageParam.builder()
-                        .status(SupportMessageStatus.AWAITING_EXPERT)
+                        .status(SupportStatus.AWAITING_EXPERT)
                         .isAnswer(false)
                         .messages(message)
                         .build())
@@ -337,7 +337,7 @@ public class AccountServiceImpl implements AccountService {
         supportService.add(SupportParam.builder()
                 .title(title)
                 .supportMessages(SupportMessageParam.builder()
-                        .status(SupportMessageStatus.AWAITING_EXPERT)
+                        .status(SupportStatus.AWAITING_EXPERT)
                         .isAnswer(false)
                         .messages(message)
                         .build())
@@ -353,7 +353,7 @@ public class AccountServiceImpl implements AccountService {
         supportService.add(SupportParam.builder()
                 .title(title)
                 .supportMessages(SupportMessageParam.builder()
-                        .status(SupportMessageStatus.AWAITING_EXPERT)
+                        .status(SupportStatus.AWAITING_EXPERT)
                         .isAnswer(false)
                         .messages(message)
                         .build())

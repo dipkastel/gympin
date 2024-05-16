@@ -18,10 +18,7 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.finance.gateways.GatewayServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.IncreaseConvertor;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceApplicationGatewayRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceIncreaseUserDepositRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.*;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseCorporateDepositEntity;
@@ -56,6 +53,8 @@ public class FinanceIncreaseUserDepositServiceImpl extends AbstractBaseService<F
     @Autowired
     private FinanceUserTransactionRepository financeUserTransactionRepository;
     @Autowired
+    private FinanceUserRepository financeUserRepository;
+    @Autowired
     private FinanceApplicationGatewayRepository financeApplicationGatewayRepository;
     @Autowired
     private GatewayServiceImpl gatewayService;
@@ -87,7 +86,9 @@ public class FinanceIncreaseUserDepositServiceImpl extends AbstractBaseService<F
             var newDeposit = userFinance.getTotalDeposit().add(increase.getAmount());
             userFinance.setTotalDeposit(newDeposit);
             increase.getUser().setFinanceUser(userFinance);
+            financeUserRepository.update(userFinance);
         }
+
         financeUserTransactionRepository.add(userTransaction);
         financeIncreaseUserDepositRepository.update(increase);
         return IncreaseConvertor.ToDto(increase);

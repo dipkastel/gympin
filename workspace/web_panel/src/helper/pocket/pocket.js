@@ -1,3 +1,4 @@
+import _UserActivity from "../../pages/home/user/baseDate/activity/_UserActivity";
 
 const rpp_support = "rpp_support";
 
@@ -7,6 +8,26 @@ export function getRppSupport(){
 export function SetRppSupport(number){
     setValue(rpp_support,number);
     return getValue(rpp_support);
+}
+
+const rpp_dashSupport = "rpp_dashSupport";
+
+export function getRppDashSupport(){
+    return getValue(rpp_dashSupport)||5;
+}
+export function SetRppDashSupport(number){
+    setValue(rpp_dashSupport,number);
+    return getValue(rpp_dashSupport);
+}
+
+const rpp_dashNote = "rpp_dashNote";
+
+export function getRppDashNote(){
+    return getValue(rpp_dashNote)||5;
+}
+export function SetRppDashNote(number){
+    setValue(rpp_dashNote,number);
+    return getValue(rpp_dashNote);
 }
 
 const rpp_transactionAllManagement = "rpp_transactionAllManagement";
@@ -230,6 +251,25 @@ export function getRppSettlementsRequest(){
 export function SetRppSettlementsRequest(number){
     setValue(rpp_settlementsRequest,number);
     return getValue(rpp_settlementsRequest);
+}
+const rpp_SettingActivities = "rpp_SettingActivities";
+
+export function getRppSettingActivities(){
+    return getValue(rpp_SettingActivities)||25;
+}
+export function SetRppSettingActivities(number){
+    setValue(rpp_SettingActivities,number);
+    return getValue(rpp_SettingActivities);
+}
+
+const rpp_UserActivity = "rpp_UserActivity";
+
+export function getRppUserActivity(){
+    return getValue(rpp_UserActivity)||25;
+}
+export function SetRppUserActivity(number){
+    setValue(rpp_UserActivity,number);
+    return getValue(rpp_UserActivity);
 }
 const rpp_userPurchasedSubscribe = "rpp_userPurchasedSubscribe";
 

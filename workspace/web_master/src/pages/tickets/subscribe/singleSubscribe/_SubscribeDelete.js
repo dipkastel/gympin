@@ -14,18 +14,22 @@ import {
 import {Form} from "react-bootstrap";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {ticketActiveTimes_delete} from "../../../../network/api/gatesTiming.api";
+import {TicketSubscribes_delete} from "../../../../network/api/ticketSubscribe.api";
+import {useNavigate} from "react-router-dom";
 
 const _SubscribeDelete = ({ticketSubscribe, getSubscribeData}) => {
     const error = useContext(ErrorContext);
     const [deleteItem, setDeleteItem] = useState(null)
 
+    const navigate = useNavigate()
 
 
     function ModalDelete() {
         function deleteSelectedItem(e) {
             e.preventDefault()
-            ticketActiveTimes_delete({Id: deleteItem.Id}).then(result => {
+            TicketSubscribes_delete({Id: ticketSubscribe.Id}).then(result => {
                 setDeleteItem(null);
+                navigate('/ticket/subscribes', {replace: true})
             }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message});
@@ -37,13 +41,14 @@ const _SubscribeDelete = ({ticketSubscribe, getSubscribeData}) => {
 
         return (
             <Dialog open={!!deleteItem} onClose={(e) => setDeleteItem(null)}>
-                <DialogTitle>حذف زمان</DialogTitle>
+                <DialogTitle>حذف بلیط</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         {'حذف ' + deleteItem?.Name}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
+                    <Button onClick={(e)=>setDeleteItem(null)}>لغو</Button>
                     <Button onClick={(e) => deleteSelectedItem(e)}>تایید</Button>
                 </DialogActions>
             </Dialog>

@@ -161,10 +161,10 @@ public class ApiAspect {
 
         ManageServiceExecutionEntity serviceExecution = new ManageServiceExecutionEntity();
         serviceExecution.setService(method.toGenericString());
-        serviceExecution.setParamClass(joinPoint.getArgs()[0].getClass());
+//        serviceExecution.setParamClass(joinPoint.getArgs()[0].getClass());
         serviceExecution.setParam(paramJson);
         serviceExecution.setDto(dtoJson);
-        serviceExecution.setDtoClass(dtoClass);
+//        serviceExecution.setDtoClass(dtoClass);
         serviceExecution.setExecutorUser(user);
         manageServiceExecutionRepository.add(serviceExecution);
 

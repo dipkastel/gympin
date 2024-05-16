@@ -42,6 +42,9 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
     @JsonProperty("AutoDiscount")
     private Boolean autoDiscount;
 
+    @JsonProperty("HasBeneficiary")
+    private Boolean hasBeneficiary;
+
     @JsonProperty("Genders")
     private Set<Gender> genders;
 

@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.support.service;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.support.query.SupportQuery;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-public interface SupportService extends BaseService<SupportParam, SupportDto, BaseQuery<?>> {
+public interface SupportService extends BaseService<SupportParam, SupportDto, SupportQuery> {
 
     SupportDto addMessageToSupport(@RequestBody SupportMessageParam param) throws Exception;
     List<SupportDto> getByUser(UserParam param);

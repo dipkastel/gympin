@@ -14,6 +14,8 @@ import TablePagination from "@mui/material/TablePagination";
 import {useHistory} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {getRppPlaceManagement, SetRppPlaceManagement} from "../../../helper/pocket/pocket";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import DangerousIcon from '@mui/icons-material/Dangerous';
 
 
 const PlaceManagement = () => {
@@ -215,6 +217,7 @@ const PlaceManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>Id</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>نام مجموعه</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>آدرس</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>ذینفع</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -229,6 +232,7 @@ const PlaceManagement = () => {
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">{row.Name||"ثبت نشده"}</TableCell>
                                             <TableCell align="right">{row.Location?(row.Location.Name+" "+(row.Address||"")):"ثبت نشده"}</TableCell>
+                                            <TableCell align="right">{row.HasBeneficiary?(<CheckBoxIcon color={"success"} />):(<DangerousIcon color={"error"}/>)}</TableCell>
                                             <TableCell align="right">
                                                 <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
                                             </TableCell>

@@ -1,6 +1,7 @@
 package com.notrika.gympin.controller.impl.support;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.support.query.SupportQuery;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
@@ -74,7 +75,7 @@ public class SupportControllerImpl implements SupportController {
     }
 
     @Override
-    public ResponseEntity<Page<SupportDto>> query(BaseQuery<?> filter) {
+    public ResponseEntity<Page<SupportDto>> query(SupportQuery filter) {
         return new ResponseEntity<>(supportService.query(filter),HttpStatus.OK);
     }
 

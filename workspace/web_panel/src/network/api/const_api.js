@@ -2,8 +2,8 @@ import {user_addUserRole} from "./user.api";
 
 export let AuthApi = {
     // BASEURL: "https://api.gympin.ir/",
-    BASEURL : "http://localhost:8080/api/",
-    // BASEURL: "http://192.168.0.117:8080/api/",
+    // BASEURL : "http://localhost:8080/api/",
+    BASEURL: "http://192.168.0.117:8080/api/",
     LOGIN_URL: "v1/account/login",
     SEND_SMS_URL: "v1/account/sendsms",
     register: "v1/account/register",
@@ -174,6 +174,10 @@ export let optionOfPlaceApi = {
     update: "v1/OptionOfPlace/update",
     getByPlaceId: "v1/OptionOfPlace/getByPlaceId",
 
+};
+export let ServiceApi = {
+    query: "v1/service/query",
+    deleteCorruptedItems: "v1/service/deleteCorruptedItems",
 };
 export let PlaceApi = {
     getAllPlace: "v1/place/getAll",

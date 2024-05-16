@@ -117,6 +117,7 @@ const _IncreaseCredit = () => {
                 window.location.href = result.data.Data;
             else{
                 SetTransactionRefrence("");
+                SetTransactionDescription("");
                 SetAmountToPay(null);
                 error.showError({message: "درخواست شما با موفقیت ثبت شد برای پیگیری به تاریخچه مراجعه نمایید.",duration:5000});
 

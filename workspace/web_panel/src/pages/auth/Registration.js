@@ -11,6 +11,7 @@ function Registration(props) {
 
   return (
     <div className="kt-login__body">
+
       <div className="kt-login__form">
         <div className="kt-login__title">
           <h3>

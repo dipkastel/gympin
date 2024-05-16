@@ -1,4 +1,5 @@
 import {AuthApi, MultimediaApi} from "../../network/api/const_api";
+import {Support_query} from "../../network/api/support.api";
 
 export function getImageUrlByName(name, Height = 0, Width = 0) {
   var url = AuthApi.BASEURL+MultimediaApi.getByName+"?fileName=" + name;
@@ -18,6 +19,19 @@ export function getUserFixedName(user) {
   if(!user) return "";
   return (user.FullName || "") + " " + " ( " + (user.Username || "") + " ) ";
 }
+
+//
+// export async function getSupportCount() {
+//   Support_query({
+//     queryType: "FILTER",
+//     Status:"AWAITING_EXPERT",
+//     paging: {Page: 0, Size: 200, Desc: true}
+//   })
+//       .then((data) => {
+//         return data.data.Data.length;
+//       })
+//   return 0
+// }
 
 
 export function toPriceWithComma(price){

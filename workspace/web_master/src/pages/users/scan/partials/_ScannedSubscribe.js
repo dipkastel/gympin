@@ -68,6 +68,9 @@ const _ScannedSubscribe = ({codeResult, SetScannedCode,selectSubscribe}) => {
         SetScannedCode(null);
     }
 
+    function isUserInPlace(){
+        return  !!purchasedSubscribe?.EntryList?.slice(-1)?.[0]?.EnterDate&&!purchasedSubscribe?.EntryList?.slice(-1)?.[0]?.ExitDate;
+    }
     return (
         <>
 
@@ -113,11 +116,11 @@ const _ScannedSubscribe = ({codeResult, SetScannedCode,selectSubscribe}) => {
                                       secondary={purchasedSubscribe?.Serial?.Serial}/>
                         <ListItemText primaryTypographyProps={{variant: "body2"}}
                                       secondaryTypographyProps={{variant: "body2"}} display={"contents"}
-                                      secondary={`جلسه ${purchasedSubscribe.EntryList.length} از ${purchasedSubscribe.EntryTotalCount}`}
+                                      secondary={`جلسه ${isUserInPlace()?purchasedSubscribe?.EntryList?.length:purchasedSubscribe?.EntryList?.length+1} از ${purchasedSubscribe?.EntryTotalCount}`}
                         />
                         {purchasedSubscribe?.EntryList?.slice(-1)?.[0]?.EntryMessageList?.map((item, number) => (
                             <Typography sx={{width: "100%"}} key={"message-" + number}
-                                        variant="body2">{item.Message}</Typography>
+                                        variant="body2">{item?.Message}</Typography>
                         ))}
                     </DialogContent>
 
@@ -131,12 +134,12 @@ const _ScannedSubscribe = ({codeResult, SetScannedCode,selectSubscribe}) => {
                                 variant={"contained"}
                                 fullWidth
                                 sx={{mb: 1}}
-                                hidden={purchasedSubscribe?.EntryList?.slice(-1)?.[0]?.EnterDate&&!purchasedSubscribe?.EntryList?.slice(-1)?.[0]?.ExitDate}
+                                hidden={isUserInPlace()}
                                 onClick={() => setUserEnter()}>ثبت ورود</Button>
                             <Button
                                 variant={"contained"}
                                 fullWidth
-                                hidden={!(purchasedSubscribe?.EntryList?.slice(-1)?.[0]?.EnterDate&&!purchasedSubscribe?.EntryList?.slice(-1)?.[0]?.ExitDate)}
+                                hidden={!isUserInPlace()}
                                 onClick={() => {selectThisSubscribe()
                                 }}>انتخاب کاربر</Button>
 

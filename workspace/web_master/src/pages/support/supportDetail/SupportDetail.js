@@ -109,10 +109,6 @@ const SupportDetail = () => {
                                     hour: "2-digit",
                                     minute: "2-digit"
                                 })}</Typography>
-
-                            {item.Status !== "COMPLETE"&&<Chip size="small"
-                                  color={item.Status === "COMPLETE" ? "success" : "warning"}
-                                  label={getSupportPersianStatus(item.Status)}/>}
                         </Alert>
                 ))}
 

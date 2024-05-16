@@ -23,6 +23,7 @@ import {
     IncreaseUserDeposit_query
 } from "../../../../../network/api/increaseUserDeposit.api";
 import {getRppUserIncreaseDeposit, SetRppUserIncreaseDeposit} from "../../../../../helper/pocket/pocket";
+import {GatewayType} from "../../../../../helper/enums/GatewayType";
 
 function UserIncreaseDeposit({currentUser, updatePage}) {
     const error = useContext(ErrorContext);
@@ -93,9 +94,11 @@ function UserIncreaseDeposit({currentUser, updatePage}) {
                             <Modal.Title>{"تایید یا رد درخواست افزایش اعتبار"}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-
-                            <p>{transactionToSettle && transactionToSettle.Description}</p>
+                            {console.log(transactionToSettle)}
                             <p>{transactionToSettle && toPriceWithComma(transactionToSettle.Amount)} تومان</p>
+                            <p>{transactionToSettle?.GatewayType && "نوع تراکنش :  "+ GatewayType[transactionToSettle.GatewayType]}</p>
+                            <p>{transactionToSettle?.Refrence && transactionToSettle.Refrence}</p>
+                            <p>{transactionToSettle && transactionToSettle.Description}</p>
                             <Form.Group controlId="formCorporateName">
                                 {(acceptTransaction != null) && (acceptTransaction ?
                                         (<>

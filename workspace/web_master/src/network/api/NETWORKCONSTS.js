@@ -3,8 +3,8 @@ import {Halls_getById} from "./halls.api";
 import {placePersonnel_updatePersonnelBuyableAccess} from "./placePersonnel.api";
 
 export let AuthApi = {
-    BASEURL: "http://localhost:8080/api/",
-    // BASEURL: "http://192.168.0.117:8080/api/",
+    // BASEURL: "http://localhost:8080/api/",
+    BASEURL: "http://192.168.0.117:8080/api/",
     // BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {

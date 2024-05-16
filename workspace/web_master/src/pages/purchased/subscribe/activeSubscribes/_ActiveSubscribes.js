@@ -1,11 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Avatar, Chip, Divider, Link, List, ListItemAvatar, ListItemButton, ListItemText} from "@mui/material";
-import {
-    purchasedSubscribe_getPlaceSubscribes
-} from "../../../../network/api/subscribe.api";
+import {purchasedSubscribe_getPlaceSubscribes} from "../../../../network/api/subscribe.api";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import purchasedTypes from "../../../../helper/data/purchasedTypes";
 import {SubscribeStatusEnum} from "../../../../helper/enums/SubscribeStatusEnum";
 
 export default function _ActiveSubscribes() {
@@ -28,6 +25,19 @@ export default function _ActiveSubscribes() {
         })
     }
 
+    const getColor=(status)=> {
+        switch (status) {
+            case "PAYMENT_WAIT" : return "error";
+            case "READY_TO_ACTIVE" :return "warning";
+            case "PROCESSING" :return "warning";
+            case "ACTIVE":return "success";
+            case "EXPIRE":return "error";
+            case "COMPLETE":return "secondary";
+            case "CANCEL":return "primary";
+            default:return "primary";
+        }
+
+    }
     return (
         <List sx={{width: '100%', direction: "rtl", bgcolor: 'background.paper'}}>
             {PlaceSubscribes.map((item, Index) => (
@@ -46,7 +56,9 @@ export default function _ActiveSubscribes() {
                             <ListItemText primary={`${item?.User?.FullName || ""} (${item?.User?.Username})`}/>
                             <ListItemText secondary={`${item?.Name || ""}`}/>
                         </Link>
-                        <Chip color={(item.Status != "ACTIVE") ? "primary" : "green"} label={SubscribeStatusEnum[item?.Status]} />
+                        {console.log(item.Status)}
+                        <Chip color={getColor(item.Status)}
+                              label={SubscribeStatusEnum[item?.Status]}/>
                     </ListItemButton>
                     <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
                 </div>))}

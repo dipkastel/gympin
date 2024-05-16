@@ -17,6 +17,7 @@ public final class SupportConvertor {
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setUpdatedDate(entity.getUpdatedDate());
+        dto.setStatus(entity.getSupportStatus());
         if(entity.getPlace()!=null)
             dto.setPlace(PlaceConvertor.toDto(entity.getPlace()));
         if(entity.getUser()!=null)
@@ -31,7 +32,6 @@ public final class SupportConvertor {
     }
     public static SupportMessageDto toMessagesDto(SupportMessagesEntity entity) {
         SupportMessageDto dto = new SupportMessageDto();
-        dto.setStatus(entity.getSupportMessageStatus());
         dto.setMessage(entity.getSupportMessage());
         dto.setAnswer(entity.isAnswer());
         dto.setId(entity.getId());

@@ -1,5 +1,7 @@
 package com.notrika.gympin.persistence.dao;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.notrika.gympin.common.util._base.query.QueryCriteria;
 import com.notrika.gympin.common.util._base.query.Query;
 import com.notrika.gympin.common.settings.context.GympinContext;
@@ -9,6 +11,11 @@ import com.notrika.gympin.persistence.entity.BaseEntity;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreate;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
+import nonapi.io.github.classgraph.json.JSONSerializer;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.provider.PersistenceProvider;
@@ -17,6 +24,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -94,7 +102,7 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
             GympinContext context = GympinContextHolder.getContext();
             if (context != null) {
                 UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-                if (user != null&&!(entity instanceof UserEntity&&Objects.equals(user.getId(), entity.getId()))) {
+                if (user != null&&!(entity instanceof UserEntity&&Objects.equals(user.getId(), entity.getId()))&&containUserCheck(entity)) {
                     ((BaseEntityWithCreateUpdate) entity).setUpdaterUser(user);
                 }else {
                     ((BaseEntityWithCreateUpdate) entity).setUpdaterUser(null);
@@ -104,13 +112,37 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
         }
     }
 
+    public static com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+
+    public static String asJsonString(final Object obj) {
+        try {
+            objectMapper.registerModule(new JSR310Module());
+            objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,false);
+            final String jsonContent = objectMapper.writeValueAsString(obj);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private <S extends T> boolean containUserCheck(S entity) {
+        //Todo write better method for it
+        try {
+            String Json = asJsonString(entity);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
     public <S extends T> void SetUserAndDatesCreate(S entity){
         if (entity instanceof BaseEntityWithCreate) {
             GympinContext context = GympinContextHolder.getContext();
             if (context != null) {
                 UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-                if (user != null) {
+                if (user != null&&!(entity instanceof UserEntity&&Objects.equals(user.getId(), entity.getId()))&&containUserCheck(entity)) {
                     ((BaseEntityWithCreate) entity).setCreatorUser(user);
+                }else {
+                    ((BaseEntityWithCreate) entity).setCreatorUser(null);
                 }
             }
             ((BaseEntityWithCreate) entity).setCreatedDate(new Date());

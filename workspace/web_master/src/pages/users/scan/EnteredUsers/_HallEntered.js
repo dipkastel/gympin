@@ -53,7 +53,6 @@ export default function _HallEntered({selectSubscribe,updatePage}) {
                         <List sx={{width: '100%', bgcolor: 'background.paper'}}>
                             {users.map((item, Index) => (
                                 <div key={Index}>
-                                    {console.log(item)}
                                     <ListItemButton sx={{direction: "rtl", textAlign: "right", justifyContent: "space-between"}}>
                                         <ListItemAvatar sx={{margin: 0}}>
                                             <Avatar

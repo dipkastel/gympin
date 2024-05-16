@@ -9,7 +9,6 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
     Divider,
     Grid,
@@ -20,11 +19,11 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {shallowEqual, useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import {Support_add, Support_getAll} from "../../network/api/support.api";
-import {getSupportPersianStatus} from "../../helper/utils";
 import {Form} from "react-bootstrap";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import {SupportStatus} from "../../helper/enums/SupportStatus";
 
 const Support = () => {
     const error = useContext(ErrorContext);
@@ -59,7 +58,7 @@ const Support = () => {
             e.target.Title.setAttribute("disabled",true);
             Support_add({Title:e.target.Title.value,
                 Message:{
-                    Status:"NEW",
+                    Status:"AWAITING_EXPERT",
                     Message:e.target.Message.value
                 },
                 PlaceId:place.Id
@@ -133,7 +132,6 @@ const Support = () => {
                     title={"لیست تیکت ها"}
                 />
                 <CardContent>
-
                     <List sx={{width: '100%', bgcolor: 'background.paper'}}>
                         {support.map(item => (
                             <ListItem key={item.Id} alignItems="flex-start">
@@ -157,8 +155,8 @@ const Support = () => {
                                             })}/>
                                         <Grid>
                                             <Chip size="small"
-                                                  color={item.Messages[item.Messages.length - 1].Status === "COMPLETE" ? "success" : "warning"}
-                                                  label={getSupportPersianStatus(item.Messages[item.Messages.length - 1].Status)}/>
+                                                  color={item.Status === "COMPLETE" ? "success" : "warning"}
+                                                  label={SupportStatus[item.Status]}/>
                                         </Grid>
 
 

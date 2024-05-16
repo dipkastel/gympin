@@ -1,4 +1,6 @@
 // eslint-disable-next-line import/no-anonymous-default-export
+import {getSupportCount} from "../utils/utils";
+
 export default {
   header: {
     self: {},
@@ -23,6 +25,7 @@ export default {
         page: "support",
         translate: "MENU.SUPPORT",
         bullet: "dot",
+        // badge:{value:getSupportCount(),type:"kt-badge--danger"}
       },
       {
         title: "Report",

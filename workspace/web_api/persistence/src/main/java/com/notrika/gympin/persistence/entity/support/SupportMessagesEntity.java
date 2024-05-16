@@ -1,6 +1,5 @@
 package com.notrika.gympin.persistence.entity.support;
 
-import com.notrika.gympin.common.support.enums.SupportMessageStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
@@ -29,10 +28,6 @@ public class SupportMessagesEntity extends BaseEntityWithCreateUpdate<SupportMes
     @ManyToOne
     @JoinColumn(name = "supportUserId")
     private UserEntity user;
-
-    @Column(name = "supportMessageStatus")
-    @Enumerated(EnumType.STRING)
-    private SupportMessageStatus supportMessageStatus;
 
     @Column(name = "supportMessage")
     private String supportMessage;

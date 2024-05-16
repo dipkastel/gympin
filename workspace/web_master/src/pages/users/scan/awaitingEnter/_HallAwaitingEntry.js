@@ -55,7 +55,6 @@ export default function _HallAwaitingEntry({selectSubscribe,updatePage}) {
                                         <ListItemButton key={"await-List-"+Index} sx={{direction: "rtl", textAlign: "right", justifyContent: "space-between"}}>
                                             <ListItemAvatar sx={{margin: 0}}>
 
-                                                {console.log(item)}
                                                 <Avatar
                                                     sx={{width: 50, height: 50}}
                                                     alt="Remy Sharp"

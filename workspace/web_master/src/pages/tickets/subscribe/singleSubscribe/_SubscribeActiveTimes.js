@@ -25,7 +25,11 @@ import {
 } from "../../../../network/api/gatesTiming.api";
 import {dayOfWeekEnum} from "../../../../helper/enums/dayOfWeekEnum";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {TicketSubscribes_getActiveTimesByTicketSubscribe} from "../../../../network/api/ticketSubscribe.api";
+import {
+    TicketSubscribes_addSubscribeActiveTimes,
+    TicketSubscribes_deleteSubscribeActiveTimes,
+    TicketSubscribes_getActiveTimesByTicketSubscribe
+} from "../../../../network/api/ticketSubscribe.api";
 import {useSelector} from "react-redux";
 
 
@@ -80,11 +84,13 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
 
         function submitAddItems(e) {
             e.preventDefault()
+
+
             var postData = [];
             for (var index in listToAdd) {
-                postData.push({Subscribe: {Id: ticketSubscribe.Id}, HallActiveTimes: {Id: listToAdd[index]}})
+                postData.push({Id: listToAdd[index]})
             }
-            ticketActiveTimes_addAll(postData).then(result => {
+            TicketSubscribes_addSubscribeActiveTimes({Ticket: {Id: ticketSubscribe.Id},ActiveTime:postData}).then(result => {
                 setOpenModalAdd(false);
                 getSubscribeAvtiveTimes()
             }).catch(e => {
@@ -144,7 +150,7 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
         console.log(deleteItem);
         function onDeleteItem(e) {
             e.preventDefault()
-            ticketActiveTimes_delete({id: deleteItem.Id}).then(result => {
+            TicketSubscribes_deleteSubscribeActiveTimes({Ticket:{Id:ticketSubscribe.Id},ActiveTime:[{Id: deleteItem.Id}]}).then(result => {
                 setDeleteItem(null)
                 getSubscribeAvtiveTimes()
             }).catch(e => {

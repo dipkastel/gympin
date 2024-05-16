@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.support;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.support.query.SupportQuery;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
@@ -8,7 +9,7 @@ import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.support.dto.SupportDto;
-import com.notrika.gympin.common.support.enums.SupportMessageStatus;
+import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
 import com.notrika.gympin.common.support.service.SupportService;
@@ -37,7 +38,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SupportServiceImpl extends AbstractBaseService<SupportParam, SupportDto, BaseQuery<?>, SupportEntity> implements SupportService {
+public class SupportServiceImpl extends AbstractBaseService<SupportParam, SupportDto, SupportQuery, SupportEntity> implements SupportService {
 
     @Autowired
     SupportRepository supportRepository;
@@ -62,7 +63,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     @Transactional
     public SupportDto add(@NonNull SupportParam supportParam) {
         SupportEntity supportEntity = new SupportEntity();
-        supportEntity.setTitle(supportParam.getTitle());
+        supportEntity.setTitle(supportParam.getTitle());;
         if (supportParam.getPlaceId() != null) {
             PlaceEntity place = placeRepository.getById(supportParam.getPlaceId());
             supportEntity.setPlace(place);
@@ -78,9 +79,10 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
             supportEntity.setCorporate(corporate);
         }
 
+        supportEntity.setSupportStatus(SupportStatus.AWAITING_EXPERT);
+
         SupportMessagesEntity supportMessagesEntity = new SupportMessagesEntity();
         supportMessagesEntity.setSupportMessage(supportParam.getSupportMessages().getMessages());
-        supportMessagesEntity.setSupportMessageStatus(supportParam.getSupportMessages().getStatus());
         supportEntity.setSupportMessages(List.of(supportMessagesEntity));
         supportRepository.add(supportEntity);
         supportMessagesEntity.setSupport(supportEntity);
@@ -91,17 +93,16 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     public SupportDto addMessageToSupport(@NonNull SupportMessageParam param) throws Exception {
         SupportMessagesEntity tme = new SupportMessagesEntity();
         tme.setSupportMessage(param.getMessages());
-        tme.setSupportMessageStatus(param.getStatus());
+
         tme.setAnswer(param.isAnswer());
         SupportEntity support = supportRepository.getById(param.getSupportId());
+        support.setSupportStatus(param.getStatus());
+        supportRepository.update(support);
         tme.setSupport(support);
-        for (SupportMessagesEntity t : support.getSupportMessages()) {
-            t.setSupportMessageStatus(SupportMessageStatus.COMPLETE);
-        }
         supportMessageRepository.saveAll(support.getSupportMessages());
         try {
             if (param.isAnswer()) {
-                UserEntity user = (tme.getSupport().getUser()!=null)?tme.getSupport().getUser():tme.getSupport().getPlace().getPlaceOwners().stream().filter(po->po.getPlacePersonnelRoles().stream().anyMatch(ppp->ppp.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER)).findFirst().get().getUser();
+                UserEntity user = (tme.getSupport().getUser()!=null)?tme.getSupport().getUser():tme.getSupport().getPlace().getPlaceOwners().stream().filter(po->po.getPlacePersonnelRoles().stream().anyMatch(ppp->ppp.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER)&&!po.isDeleted()).findFirst().get().getUser();
                 smsService.sendSupportAnswered(SmsDto.builder()
                         .smsType(SmsTypes.SUPPORT_ANSWERED)
                         .userNumber(user.getPhoneNumber())

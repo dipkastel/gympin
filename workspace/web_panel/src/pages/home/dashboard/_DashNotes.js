@@ -11,13 +11,14 @@ import {note_query} from "../../../network/api/note.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import {getUserFixedName} from "../../../helper";
+import {getRppDashNote, SetRppDashNote} from "../../../helper/pocket/pocket";
 
 const _DashNotes = () => {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [note, setNotes] = useState({});
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppDashNote());
 
     useEffect(() => {
         getNotes()
@@ -115,6 +116,7 @@ const _DashNotes = () => {
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
                             setRowsPerPage(parseInt(event.target.value, 10));
+                            SetRppDashNote(parseInt(event.target.value, 10));
                             setPage(0);
                         }}
                     />}

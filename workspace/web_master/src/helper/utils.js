@@ -106,17 +106,6 @@ export function setStorage(key, value, expires) {
     return true;
 }
 
-export function getSupportPersianStatus(text){
-   var messages = {
-       NEW:"جدید",
-       PROCESSING:"در حال انجام",
-       AWAITING_USER:"در انتظار پاسخ",
-       AWAITING_EXPERT:"در انتظار کارشناس",
-       COMPLETE:"تکمیل شده",
-       CANCEL:"لغو شده"}
-
-    return messages[text];
-}
 
 //maximum id 999999999
 //TODO ino ye check bokon fek konam ridam

@@ -6,7 +6,7 @@ import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.support.dto.SupportDto;
-import com.notrika.gympin.common.support.enums.SupportMessageStatus;
+import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
@@ -137,7 +137,7 @@ public class SupportTest extends BaseTest {
         final SupportMessageParam param =  SupportMessageParam.builder()
                 .messages("پیام درخواست 22!!")
                 .isAnswer(true)
-                .status(SupportMessageStatus.COMPLETE)
+                .status(SupportStatus.COMPLETE)
                 .supportId(support2Id)
                 .build();
 

@@ -23,22 +23,42 @@ const _UserCard = ({subscribe}) => {
         return "";
     }
 
+    function isUserInPlace() {
+        try {
+            return !!inSubscribe?.EntryList?.slice(-1)?.[0]?.EnterDate && !inSubscribe?.EntryList?.slice(-1)?.[0]?.ExitDate;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function getMessage() {
+        try {
+            var messages = inSubscribe?.EntryList?.slice(-1)?.[0]?.EntryMessageList;
+            if (messages != null)
+                return messages
+            else
+                return []
+        } catch (e) {
+            return []
+        }
+    }
+
     return (<>
             {inSubscribe && <Card elevation={3} sx={{margin: 1}}>
 
                 <CardHeader
-                    title={inSubscribe.User?.FullName||inSubscribe.User?.Username}
-                    action={<CloseOutlined onClick={(e)=>setInSubscribe(null)}/>}
-                    sx={{p:2}}
+                    title={inSubscribe.User?.FullName || inSubscribe.User?.Username}
+                    action={<CloseOutlined onClick={(e) => setInSubscribe(null)}/>}
+                    sx={{p: 2}}
                 />
-                <CardContent sx={{pt:0}}>
+                <CardContent sx={{pt: 0}}>
                     <Grid wrap="nowrap" container>
                         <Grid item>
                             <Avatar sx={{width: "100px", height: "100px"}} alt="Remy Sharp"
                                     src={inSubscribe?.User?.Avatar?.Url}/>
 
                         </Grid>
-                        <Grid item sx={{m:1}}>
+                        <Grid item sx={{m: 1}}>
                             <ListItemText primaryTypographyProps={{variant: "body2"}}
                                           secondaryTypographyProps={{variant: "body2"}} display={"contents"}
                                           primary={inSubscribe?.Name}
@@ -51,12 +71,13 @@ const _UserCard = ({subscribe}) => {
                                           })}`}/>
                             <ListItemText primaryTypographyProps={{variant: "body2"}}
                                           secondaryTypographyProps={{variant: "body2"}} display={"contents"}
-                                          primary={`جلسه ${inSubscribe.EntryList.length} از ${inSubscribe.EntryTotalCount}`}
+                                          primary={`جلسه ${isUserInPlace() ? (inSubscribe?.EntryList?.length) : (inSubscribe?.EntryList?.length + 1)} از ${inSubscribe.EntryTotalCount}`}
                                           secondary={getLastEnterDate()}/>
-                            {console.log(inSubscribe?.EntryList?.slice(-1)?.[0].EntryMessageList)}
 
-                            {inSubscribe?.EntryList?.slice(-1)?.[0]?.EntryMessageList?.map((item, number) => (
-                                    <Typography sx={{width:"100%"}} key={"message-"+number} variant="body2">{item.Message}</Typography>
+
+                            {getMessage().map((item, number) => (
+                                <Typography sx={{width: "100%"}} key={"message-" + number}
+                                            variant="body2">{item.Message}</Typography>
                             ))}
                         </Grid>
                     </Grid>

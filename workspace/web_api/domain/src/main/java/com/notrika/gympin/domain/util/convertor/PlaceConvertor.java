@@ -69,6 +69,7 @@ public final class PlaceConvertor {
         placeDto.setLongitude(entity.getLongitude());
         placeDto.setAddress(entity.getAddress());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
+        placeDto.setHasBeneficiary(entity.getPlaceOwners().stream().filter(PlacePersonnelEntity::getIsBeneficiary).findFirst().map(p->true).orElse(false));
         placeDto.setStatus(entity.getStatus());
         if(entity.getBuyables().size()>0){
             try {

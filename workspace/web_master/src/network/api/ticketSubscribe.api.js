@@ -14,6 +14,14 @@ export  function TicketSubscribes_getActiveTimesByTicketSubscribe(place){
     return axios.get(Api_url.TicketSubscribe.getActiveTimesByTicketSubscribe,{params:place})
 }
 
+export function TicketSubscribes_addSubscribeActiveTimes(data) {
+    return axios.post(Api_url.TicketSubscribe.addSubscribeActiveTimes, data);
+}
+
+export function TicketSubscribes_deleteSubscribeActiveTimes(data) {
+    return axios.put(Api_url.TicketSubscribe.deleteSubscribeActiveTimes, data);
+}
+
 export  function TicketSubscribes_add(data){
     return axios.post(Api_url.TicketSubscribe.add,data)
 }

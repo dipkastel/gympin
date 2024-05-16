@@ -9,7 +9,7 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 const Notes = ({source}) => {
     const error = useContext(ErrorContext);
     const [selectedTab, setSelectedTab] = useState("NOTE")
-    const [notes, setNotes] = useState([])
+    const [notes, setNotes] = useState(null)
 
     useEffect(() => {
         getData();
@@ -23,7 +23,7 @@ const Notes = ({source}) => {
             (source.Invoice&&source.Invoice.Id)||
             (source.Place&&source.Place.Id)){
             note_getByParam(source).then(result => {
-                setNotes(result.data.Data)
+                setNotes(result.data.Data);
             }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message,});
@@ -91,7 +91,7 @@ const Notes = ({source}) => {
 
     return (
         <>
-            {notes.some(n => n.Type === "NOTE") && <Portlet>
+            {notes&&notes.some(n => n.Type === "NOTE") && <Portlet>
                 <PortletHeader
                     title="یادداشت جیم پین"
                 />
@@ -122,7 +122,7 @@ const Notes = ({source}) => {
                 </PortletBody>
             </Portlet>}
 
-            {notes.some(n => n.Type === "CONTACT") && <Portlet>
+            {notes&&notes.some(n => n.Type === "CONTACT") && <Portlet>
                 <PortletHeader
                     title="دفترچه تلفن"
                 />

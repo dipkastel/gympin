@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.support;
 
+import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
@@ -28,6 +29,10 @@ public class SupportEntity extends BaseEntityWithCreateUpdate<SupportEntity> {
     @ToString.Exclude
     private List<SupportMessagesEntity> supportMessages;
 
+    @Column(name = "supportStatus")
+    @Enumerated(EnumType.STRING)
+    private SupportStatus supportStatus;
+
     @Column(name = "title")
     private String title;
 
@@ -42,6 +47,7 @@ public class SupportEntity extends BaseEntityWithCreateUpdate<SupportEntity> {
     @ManyToOne
     @JoinColumn(name = "CorporateId")
     private CorporateEntity corporate;
+
 
     @Override
     public boolean equals(Object o) {

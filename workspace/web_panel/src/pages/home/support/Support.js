@@ -29,7 +29,7 @@ const Support = () => {
 
     useEffect(() => {
         Support_query({
-            queryType: "SEARCH",
+            queryType: "FILTER",
             paging: {Page: page, Size: rowsPerPage,Desc:true}
         })
             .then((data) => {
@@ -103,8 +103,8 @@ const Support = () => {
                                             <TableCell align="right">
 
                                                 <Chip
-                                                    label={row.Messages[row.Messages.length-1].Status}
-                                                    color={(row.Messages[row.Messages.length-1].Status.startsWith("AWAITING"))?"error":"success"} />
+                                                    label={row?.Status}
+                                                    color={(row?.Status?.startsWith("AWAITING"))?"error":"success"} />
                                                 </TableCell>
                                         </TableRow>
                                     );

@@ -6,7 +6,6 @@ import com.notrika.gympin.common.purchased.purchased.param.PurchasedParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.param.PurchasedSubscribeParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.settings.note.enums.NoteType;
 import lombok.Data;
