@@ -101,7 +101,7 @@ const SupportDetail = () => {
                 {supportDetail&&supportDetail.Messages.reverse().map(item=>(
                         <Alert key={item.id} variant={item.IsAnswer?"info":"warning"} className={"m-2"}>
                             <Typography variant={"body2"}>{item.Message}</Typography>
-                               -<Typography variant={"caption"} component={"span"}>{item.CreatorUser.Username}</Typography>-
+                            {item?.CreatorUser&&"-"+<Typography variant={"caption"} component={"span"}>{item?.CreatorUser?.Username}</Typography>+"-"}
                                 <Typography variant={"caption"} component={"p"}>{new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
                                     year: 'numeric',
                                     month: 'long',
