@@ -9,6 +9,8 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {setWizardComplete} from "../../../helper/pocket";
 import {user_getById, user_GetUserSettings, user_SetUserSettings} from "../../../network/api/user.api";
+import {Figure} from "react-bootstrap";
+import {toAbsoluteUrl} from "../../../helper/utils";
 
 const WPageFinish = ({onNext}) => {
     const error = useContext(ErrorContext);
@@ -41,7 +43,7 @@ const WPageFinish = ({onNext}) => {
         });
     }, []);
 
-    function finishIntro() {
+    function finishWizard() {
 
         user_SetUserSettings({Id:wizard?.Id,Value:true,Key:"USER_WIZARD_COMPLETE",User:{Id:user.Id}}).then(result=>{
             error.showError({message: "ثبت موفق",});
@@ -57,24 +59,31 @@ const WPageFinish = ({onNext}) => {
     }
     return (
         <div>
-            <Typography sx={{p:2}} variant={"subtitle1"}>
-                ممنون از این که تا اینجا اومدید
-            </Typography>
+            <Grid sx={{p:2}} container direction={"column"} alignItems={"center"} justifyContent={"center"}>
+                <Typography variant={"h5"}>
+                    ممنون از این که تا اینجا اومدید
+                </Typography>
+            </Grid>
             <Typography sx={{p:2}} variant={"subtitle1"}>
                 <Alert severity="success" sx={{px:1}}>
                     {"ما اطلاعات لازم برای مجموعه "+selectedPlace.Name+" رو دریافت کردیم."}</Alert>
             </Typography>
+            <Figure.Image
+                width={"100%"}
+                alt="finish intro"
+                src={toAbsoluteUrl("/assets/images/finish.png")}
+            />
             {(userPlaceCount>1)&&<>
                 <Typography sx={{p:2}} variant={"subtitle1"}>
                     <Button onClick={(e)=>onNext(1)} fullWidth variant={"contained"} color={"primary"} >بریم مجموعه بعدی</Button>
                 </Typography>
                 <Grid sx={{p:2}}>
-                    <Button onClick={(e)=>finishIntro()} fullWidth variant={"contained"} color={"success"} >همه مجموعه ها وارد شدن</Button>
+                    <Button onClick={(e)=>finishWizard()} fullWidth variant={"contained"} color={"success"} >همه مجموعه ها وارد شدن</Button>
                 </Grid>
             </>}
             {(userPlaceCount<2)&&<>
                 <Grid sx={{p:2}}>
-                    <Button onClick={(e)=>finishIntro()} fullWidth variant={"contained"} color={"success"} >اتمام فرایند دریافت</Button>
+                    <Button onClick={(e)=>finishWizard()} fullWidth variant={"contained"} color={"success"} >اتمام فرایند دریافت</Button>
                 </Grid>
             </>}
         </div>

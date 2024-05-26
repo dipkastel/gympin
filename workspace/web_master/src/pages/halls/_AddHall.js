@@ -26,9 +26,15 @@ const _AddHall = ({renewList}) => {
 
     function ModalAddHall() {
         function addPersonnel(e){
+            e.preventDefault();
+            if(!e.target.hallName.value){
+                error.showError({message: "نام سالن اجباری است",});
+                return;
+            }
+
+            setOpenModalAdd(false);
             Halls_add({Place:{Id:place.Id},Name:e.target.hallName.value}).then(result=>{
                 renewList();
-                setOpenModalAdd(false);
             }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message,});
