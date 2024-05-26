@@ -4,6 +4,7 @@ import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import _PlaceActivity from "./_PlaceActivity";
 import {useSelector} from "react-redux";
+import placeData from "./PlaceData";
 
 
 export default function Management() {
@@ -19,20 +20,9 @@ export default function Management() {
 
             {getAccessOf(personnelAccessEnumT.ManagementTickets) &&
             <_ListItem title="فروشی ها" destination="/management/tickets"/>}
-            {getAccessOf(personnelAccessEnumT.ManagementSports) &&
-            <_ListItem title="ورزش ها" destination="/management/sports"/>}
-            {getAccessOf(personnelAccessEnumT.ManagementHalls) &&
-            <_ListItem title="سالن ها" destination="/management/Halls"/>}
-            {currentUser.UserRole.includes("COACH")&&
-            <_ListItem title="بخش مربی" destination="/management/coach"/>}
-            {getAccessOf(personnelAccessEnumT.ManagementImages) &&
-            <_ListItem title="تصاویر" destination="/management/images"/>}
-            {getAccessOf(personnelAccessEnumT.ManagementPersonnel) &&
-            <_ListItem title="پرسنل مجموعه" destination="/management/personnel"/>}
-            {getAccessOf(personnelAccessEnumT.ManagementAbout) &&
-            <_ListItem title="درباره مرکز" destination="/management/about"/>}
-            {getAccessOf(personnelAccessEnumT.ManagementOptions) &&
-            <_ListItem title="امکانات مرکز" destination="/management/facilities"/>}
+            {/*{currentUser.UserRole.includes("COACH")&&*/}
+            {/*<_ListItem title="بخش مربی" destination="/management/coach"/>}*/}
+            <_ListItem title="اطلاعات مجموعه" destination="/management/placeData"/>
             <_ListItem title="پروفایل من" destination="/management/editprofile"/>
             <_ListItem title="پشتیبانی" destination="/management/support"/>
             <_ListItem title="تنظیمات" destination="/management/settings"/>

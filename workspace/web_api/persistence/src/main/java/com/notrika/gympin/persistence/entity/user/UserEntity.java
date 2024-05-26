@@ -12,6 +12,7 @@ import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.notification.ManageNotificationEntity;
 import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionEntity;
+import com.notrika.gympin.persistence.entity.management.settings.UserSettingsEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.comment.PlaceCommentEntity;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
@@ -137,6 +138,10 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<MultimediaEntity> multimediaSet;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<UserSettingsEntity> settings;
 
     @OneToMany(mappedBy = "requesterUser",fetch = FetchType.LAZY)
     @ToString.Exclude

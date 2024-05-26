@@ -1,5 +1,4 @@
 export default function clickHandler(item, navigator) {
-    console.log(item);
     if (!item.Destination) return;
     switch (item.Destination.Name) {
         case "PLACES": {
@@ -18,7 +17,6 @@ export default function clickHandler(item, navigator) {
         }
             break;
         case "INNERBROWSER": {
-            console.log(item)
             if (item.Data)
                 window.open(item.Data, '_self');
         }

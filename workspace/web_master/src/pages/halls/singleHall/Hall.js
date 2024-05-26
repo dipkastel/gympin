@@ -27,24 +27,27 @@ import getAccessOf from "../../../helper/accessManager";
 import {personnelAccessEnumT} from "../../../helper/enums/personnelAccessEnum";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import AccessDenied from "../../../components/AccessDenied";
+import {getWizardComplete} from "../../../helper/pocket";
 
 TimePicker.propTypes = {
     renderInput: PropTypes.func,
     label: PropTypes.string
 };
-const Hall = () => {
+const Hall = ({hallParamId,introCanGoNext}) => {
 
     const error = useContext(ErrorContext);
     const {hallId} = useParams()
     const [hall, SetHall] = useState({})
 
+    const introMode = !getWizardComplete()
+
     useEffect(() => {
         document.title = 'مدیریت سالن';
         getHall()
-    }, []);
+    }, [hallParamId,hallId]);
 
     function getHall() {
-        Halls_getById({id: hallId}).then(result => {
+        Halls_getById({id: introMode?hallParamId:hallId}).then(result => {
             SetHall(result.data.Data)
         }).catch(e => {
             try {
@@ -61,8 +64,8 @@ const Hall = () => {
 
     return (
         <>
-            <_BaseHallData hall={hall} getHall={getHall}/>
-            <_HallSchedule hall={hall}/>
+            {!introMode&&<_BaseHallData hall={hall} getHall={getHall}/>}
+            <_HallSchedule hall={hall} introCanGoNext={introCanGoNext} />
         </>
 
     );

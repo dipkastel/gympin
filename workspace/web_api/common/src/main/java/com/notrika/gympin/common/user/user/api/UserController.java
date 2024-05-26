@@ -1,5 +1,7 @@
 package com.notrika.gympin.common.user.user.api;
 
+import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
+import com.notrika.gympin.common.settings.userSettings.param.UserSettingParam;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
 import com.notrika.gympin.common.user.user.param.*;
 import com.notrika.gympin.common.util._base.base.BaseController;
@@ -15,6 +17,9 @@ public interface UserController extends BaseController<UserParam, UserDto, UserQ
 
     //stattus
     ResponseEntity<List<String>> getUserStatuses();
+
+    ResponseEntity<List<UserSettingDto>> getUserSettings(UserSettingParam userSettingParam);
+    ResponseEntity<UserSettingDto> SetUserSettings(@RequestBody UserSettingParam userSettingParam);
 
     ResponseEntity<UserDto> updateUserStatus(@RequestBody UserStatusParam userParam);
 

@@ -56,7 +56,6 @@ export default function _ActiveSubscribes() {
                             <ListItemText primary={`${item?.User?.FullName || ""} (${item?.User?.Username})`}/>
                             <ListItemText secondary={`${item?.Name || ""}`}/>
                         </Link>
-                        {console.log(item.Status)}
                         <Chip color={getColor(item.Status)}
                               label={SubscribeStatusEnum[item?.Status]}/>
                     </ListItemButton>

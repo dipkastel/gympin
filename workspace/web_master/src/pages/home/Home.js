@@ -31,7 +31,6 @@ function Home(props) {
         }
         HomePage_getHome({id:homePageId}).then(result=>{
             setData(result.data.Data);
-            console.log("home",result)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});

@@ -27,6 +27,11 @@ const EditProfile = (props) => {
     useEffect(() => {
         document.title = 'ویرایش پروفایل';
         SetImageUrl(currentUser.Avatar ? currentUser.Avatar.Url : "")
+        try{
+            if(currentUser?.NationalCode)
+                try{props.introCanGoNext(true)}catch (e) {}
+
+        }catch (e){}
     }, [currentUser]);
 
     useEffect(() => {
@@ -76,7 +81,6 @@ const EditProfile = (props) => {
                                 UserId: currentUser.Id,
                                 MultimediaId: data.data.Data.Id
                             }).then(result => {
-                                console.log("result",result)
                                 SetImageUrl(result.data.Data.Avatar ? (result.data.Data.Avatar.Url + "&width=200") : "")
                                 error.showError({message: "با موفقیت ثبت شد",});
                                 props.RequestUser(user)

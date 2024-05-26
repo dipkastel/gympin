@@ -1,34 +1,29 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Card, CardHeader, Chip} from "@mui/material";
-import {placeOption_getAll} from "../../network/api/placeOptions.api";
-import {optionOfPlace_add, optionOfPlace_delete, optionOfPlace_getByPlaceId} from "../../network/api/optionOfPlace.api";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import AccessDenied from "../../components/AccessDenied";
-import {
-    placeSport_add,
-    placeSport_delete,
-    placeSport_getAll,
-    placeSport_getSportsByPlace
-} from "../../network/api/placeSport.api";
+import {placeSport_add, placeSport_delete, placeSport_getSportsByPlace} from "../../network/api/placeSport.api";
 import {sport_getAll} from "../../network/api/sport.api";
+import {getWizardComplete} from "../../helper/pocket";
 
-const Sport = () => {
+const Sport = ({introCanGoNext}) => {
     const error = useContext(ErrorContext);
 
     const place = useSelector(({place}) => place.place)
 
     const [sports, SetSports] = useState([])
     const [placeSports, SetPlaceSports] = useState([])
-    const [itemToProgress,SetItemToProgress] = useState(null);
+    const [itemToProgress, SetItemToProgress] = useState(null);
+
+    const introMode = !getWizardComplete()
 
     useEffect(() => {
         document.title = 'مدیریت ورزش ها';
-        sport_getAll({size:100}).then(result => {
+        sport_getAll({size: 100}).then(result => {
             SetSports(result.data.Data)
-            console.log("sports",result.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -41,13 +36,15 @@ const Sport = () => {
         getPlaceSports()
     }, []);
 
-    if(!getAccessOf(personnelAccessEnumT.ManagementSports))
+    if (!getAccessOf(personnelAccessEnumT.ManagementSports))
         return <AccessDenied/>;
 
-    function getPlaceSports(){
+    function getPlaceSports() {
         placeSport_getSportsByPlace({id: place.Id}).then(result => {
             SetPlaceSports(result.data.Data)
             SetItemToProgress(null);
+            try{introCanGoNext(result.data.Data.length > 0)}catch (e) {}
+
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -58,8 +55,8 @@ const Sport = () => {
     }
 
 
-    function addPlaceSports(e,sport) {
-        if(!!itemToProgress)return;
+    function addPlaceSports(e, sport) {
+        if (!!itemToProgress) return;
         SetItemToProgress(sport.Id);
         placeSport_add({
             Place: {
@@ -68,7 +65,7 @@ const Sport = () => {
             sport: {
                 Id: sport.Id
             }
-        }).then(result=>{
+        }).then(result => {
             getPlaceSports()
         }).catch(e => {
             try {
@@ -81,10 +78,10 @@ const Sport = () => {
     }
 
 
-    function DeletePlaceSport(e,sport) {
-        if(!!itemToProgress)return;
+    function DeletePlaceSport(e, sport) {
+        if (!!itemToProgress) return;
         SetItemToProgress(sport.Id);
-        placeSport_delete({Id: sport.Id}).then(result=>{
+        placeSport_delete({Id: sport.Id}).then(result => {
             getPlaceSports()
         }).catch(e => {
             try {
@@ -95,29 +92,36 @@ const Sport = () => {
             }
         })
     }
-
 
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            {!introMode && <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     title={"مدیریت ورزش ها"}/>
             </Card>
+            }
 
             <div className={"container"}>
-            <div className={"row"}>
-                {placeSports.map(placeSport=>placeSport?.Id==itemToProgress?(
-                    <Chip label={"لطفا صبر کنید"}  key={"placeSport"+placeSport?.Id} sx={{m:1,width:"inherit"}} color={"warning"} />
-                ):(
-                    <Chip label={placeSport?.sport?.Name}  key={"placeOption"+placeSport?.Id} sx={{m:1,width:"inherit"}} color={"success"} onClick={(e)=>DeletePlaceSport(e,placeSport)} />
-                ))}
-                {sports.filter(sport=>!placeSports.map(ps=>ps.sport.Id).includes(sport.Id)).map(sport=>sport.Id==itemToProgress?(
-                    <Chip label={"لطفا صبر کنید"}  key={"placeSports"+sport.Id} sx={{m:1,width:"inherit"}} color={"warning"} />
-                ):(
-                    <Chip label={sport.Name} key={"option"+sport.Id} sx={{m:1,width:"inherit"}} onClick={(e)=>{addPlaceSports(e,sport)}} />
-                ))}
-            </div>
+                <div className={"row"}>
+                    {placeSports.map(placeSport => placeSport?.Id == itemToProgress ? (
+                        <Chip label={"لطفا صبر کنید"} key={"placeSport" + placeSport?.Id} sx={{m: 1, width: "inherit"}}
+                              color={"warning"}/>
+                    ) : (
+                        <Chip label={placeSport?.sport?.Name} key={"placeOption" + placeSport?.Id}
+                              sx={{m: 1, width: "inherit"}} color={"success"}
+                              onClick={(e) => DeletePlaceSport(e, placeSport)}/>
+                    ))}
+                    {sports.filter(sport => !placeSports.map(ps => ps.sport.Id).includes(sport.Id)).map(sport => sport.Id == itemToProgress ? (
+                        <Chip label={"لطفا صبر کنید"} key={"placeSports" + sport.Id} sx={{m: 1, width: "inherit"}}
+                              color={"warning"}/>
+                    ) : (
+                        <Chip label={sport.Name} key={"option" + sport.Id} sx={{m: 1, width: "inherit"}}
+                              onClick={(e) => {
+                                  addPlaceSports(e, sport)
+                              }}/>
+                    ))}
+                </div>
             </div>
 
         </>

@@ -22,7 +22,6 @@ const _CourseCoaches = ({ticketCourse}) => {
 
     function getPlaceCoaches() {
         placePersonnel_ByPlace({Id: place.Id}).then(data => {
-            console.log("SetPlaceCoaches",data.data.Data.filter(pp=>pp.UserRole=="PLACE_COACH"))
              SetPlaceCoaches(data.data.Data.filter(pp=>pp.UserRole=="PLACE_COACH"));
             getTicketCourseCoaches();
         }).catch(e => {
@@ -35,7 +34,6 @@ const _CourseCoaches = ({ticketCourse}) => {
     }
     function getTicketCourseCoaches() {
         TicketCourses_getCoaches({ticketId: ticketCourse.Id}).then(data => {
-            console.log("SetTicketCourseCoaches",data.data.Data);
             SetTicketCourseCoaches(data.data.Data);
             SetItemToProgress(null);
         }).catch(e => {

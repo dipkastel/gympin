@@ -459,6 +459,8 @@ export let UserApi = {
     update: "v1/user/update",
     countFilter: "v1/user/count-filter",
     getStatuses: "v1/user/getUserStatuses",
+    getUserSettings: "v1/user/getUserSettings",
+    setUserSettings: "v1/user/setUserSettings",
     getUserCredits: "v1/user/getUserCredits",
     updateUserStatus: "v1/user/updateUserStatus",
     updateUserAvatar: "v1/user/updateUserAvatar",

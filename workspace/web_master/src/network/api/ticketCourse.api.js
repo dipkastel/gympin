@@ -14,6 +14,10 @@ export  function TicketCourses_getActiveTimesByTicketCourse(place){
     return axios.get(Api_url.TicketCourse.getActiveTimesByTicketCourse,{params:place})
 }
 
+export function TicketCourses_addCourseActiveTimes(data) {
+    return axios.post(Api_url.TicketCourse.addCourseActiveTimes, data);
+}
+
 export  function TicketCourses_add(data){
     return axios.post(Api_url.TicketCourse.add,data)
 }

@@ -30,7 +30,7 @@ import 'react-advanced-cropper/dist/style.css';
 import {resizeCanvas} from "../../helper/utils";
 import AccessDenied from "../../components/AccessDenied";
 
-const Images = () => {
+const Images = ({introCanGoNext}) => {
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
     const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -62,7 +62,9 @@ const Images = () => {
 
     function getImageList(){
         place_getMultimedias(place.Id).then(result=>{
-            SetImageList(result.data.Data)
+            SetImageList(result.data.Data);
+            try{introCanGoNext(result.data.Data.length>0);}catch (e) {}
+
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -100,6 +102,9 @@ const Images = () => {
             formData.append("Title", e.target.title.value);
             formData.append("Description", e.target.description.value);
             //
+            setOpenModalAdd(false);
+
+            error.showError({message: "لطفا صبر کنید...",});
             media_AddImage(formData)
                 .then(data => {
                     place_AddMultimedia({
@@ -107,9 +112,8 @@ const Images = () => {
                         Multimedia:{Id:data.data.Data.Id}
                     }).then(result => {
                         getImageList();
-                        setOpenModalAdd(false);
                         SetImage(null);
-
+                        error.showError({message: "ثبت موفق",});
                     }).catch(e => {
                         try {
                             error.showError({message: e.response.data.Message,});
@@ -270,6 +274,15 @@ const Images = () => {
                     action={<Button variant={"contained"} title={"btn_add"} onClick={() => setOpenModalAdd(true)}>افزودن
                         تصویر</Button>}/>
             </Card>
+
+            <Grid sx={{p:2}}>
+                <Typography variant={"subtitle1"}>
+                    لطفا بهترین تصاویر مجموعه خود را در این قسمت بارگذاری کنید
+                </Typography>
+                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                    آخرین تصویر برای نمایش در لیست ها استفاده میگردد.
+                </Typography>
+            </Grid>
 
             <Box sx={{margin: 1}}>
                 <ImageList

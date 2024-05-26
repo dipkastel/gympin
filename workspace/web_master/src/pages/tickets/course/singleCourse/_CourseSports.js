@@ -50,7 +50,6 @@ const _CourseSport = ({ticketCourse}) => {
 
         if(!!itemToProgress)return;
         SetItemToProgress(item.Id);
-        console.log({TicketCourse: {Id: ticketCourse.Id}, PlaceSport: {Id:item.Id}})
         TicketCourses_addSport({TicketCourse: {Id: ticketCourse.Id}, PlaceSport: [{Id:item.Id}]})
             .then(data => {
                 getTicketCourseSports()

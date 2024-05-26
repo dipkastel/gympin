@@ -41,7 +41,6 @@ const _Wallet = ({place,user,onRequestComplete}) => {
         if(!place) return;
         function request(e) {
             e.preventDefault()
-            console.log("minPrice",toPriceWithoutComma(e.target.requestAmount.value)<minPrice,toPriceWithoutComma(e.target.requestAmount.value),minPrice)
             if(toPriceWithoutComma(e.target.requestAmount.value)<minPrice){
                 error.showError({message: "مبلغ درخواست تسویه باید بیش از "+toPriceWithComma(minPrice)+" تومان باشد",});
                 return;

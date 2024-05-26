@@ -1,5 +1,8 @@
 package com.notrika.gympin.controller.impl.user;
 
+import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
+import com.notrika.gympin.common.settings.userSettings.param.UserSettingParam;
+import com.notrika.gympin.common.settings.userSettings.service.userSettingsService;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
 import com.notrika.gympin.common.user.user.param.*;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
@@ -24,6 +27,9 @@ public class UserControllerImpl implements UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private userSettingsService userSettingsService;
 
     @Override
     public ResponseEntity<UserDto> add(UserParam userParam) {
@@ -74,6 +80,24 @@ public class UserControllerImpl implements UserController {
     @GetMapping("/getUserStatuses")
     public ResponseEntity<List<String>> getUserStatuses() {
         return ResponseEntity.ok(Arrays.stream(UserStatus.values()).map(Enum::toString).collect(Collectors.toList()));
+    }
+
+    @Override
+    @GetMapping("/getUserSettings")
+    public ResponseEntity<List<UserSettingDto>> getUserSettings(UserSettingParam userSettingParam) {
+        return ResponseEntity.ok(userSettingsService.getUserSettings(userSettingParam.getId()));
+    }
+
+    @Override
+    @PostMapping("/setUserSettings")
+    public ResponseEntity<UserSettingDto> SetUserSettings(UserSettingParam userSettingParam) {
+        UserSettingDto userSettingDto;
+        if(userSettingParam.getId()!=null){
+           userSettingDto = userSettingsService.update(userSettingParam);
+        }else{
+           userSettingDto = userSettingsService.add(userSettingParam);
+        }
+        return ResponseEntity.ok(userSettingDto);
     }
 
     @Override

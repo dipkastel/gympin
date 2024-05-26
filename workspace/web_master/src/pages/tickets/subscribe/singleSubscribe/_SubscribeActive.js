@@ -1,12 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, CardHeader, Switch} from "@mui/material";
+import {Card, CardHeader, Switch, Typography} from "@mui/material";
 import {Form} from "react-bootstrap";
 import {TicketSubscribes_ChangeTicketSubscribesStatus} from "../../../../network/api/ticketSubscribe.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import {getWizardComplete} from "../../../../helper/pocket";
 
 const _SubscribeActive = ({ticketSubscribe, getSubscribeData}) => {
     const error = useContext(ErrorContext);
     const [inSubscribe, setInSubscribe] = useState(ticketSubscribe)
+    const introMode=!getWizardComplete()
 
     useEffect(() => {
         setInSubscribe(ticketSubscribe);
@@ -30,6 +32,12 @@ const _SubscribeActive = ({ticketSubscribe, getSubscribeData}) => {
         <>
             <Form onSubmit={(e) => updateStatus(e)}>
                 <Card elevation={3} sx={{margin: 1}}>
+
+                    {introMode&&
+                    <Typography sx={{p:1}} color={"#a2a2a2"} variant={"subtitle2"}>
+                        بلیط هایی که فعال نباشد برای کاربر قابل خرید نخواهد بود.
+                    </Typography>}
+
                     <CardHeader
                         title={inSubscribe.Enable ? "غیر فعالسازی" : "فعالسازی"}
                         action={(

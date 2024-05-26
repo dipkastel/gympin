@@ -33,7 +33,6 @@ const _SettingActivities = () => {
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             setService(data.data.Data)
-            console.log(data.data.Data.content[0])
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

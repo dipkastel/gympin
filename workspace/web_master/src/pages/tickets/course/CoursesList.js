@@ -18,13 +18,17 @@ import {ToggleOff, ToggleOn} from "@mui/icons-material";
 import {genders} from "../../../helper/enums/genders";
 import {toPriceWithComma} from "../../../helper/utils";
 import {CourseStatusEnum} from "../../../helper/enums/CourseStatusEnum";
+import {getWizardComplete} from "../../../helper/pocket";
 
-const CoursesList = () => {
+const CoursesList = ({OnChangeList}) => {
 
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [coursesList, setCoursesList] = useState([]);
+    const introMode = !getWizardComplete()
+
+
 
     useEffect(() => {
         document.title = 'مدیریت کلاس ها';
@@ -34,8 +38,8 @@ const CoursesList = () => {
     function getPlaceCourses() {
         if (!place) return;
         TicketCourses_getByPlace({Id: place.Id}).then(result => {
+            OnChangeList(result.data.Data);
             setCoursesList(result.data.Data);
-            console.log(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -115,12 +119,12 @@ const CoursesList = () => {
 
                     <CardActionArea href={"/ticket/course/" + item.Id}>
                         <CardHeader
-                            sx={{paddingBottom: 0}}
+                            sx={(!introMode)&&{paddingBottom: 0}}
                             title={item.Name}
-                            action={(item.Enable) ? <ToggleOn color={"success"}/> : <ToggleOff color={"error"}/>}
+                            action={(!introMode)?(item.Enable) ? <ToggleOn color={"success"}/> : <ToggleOff color={"error"}/>:<></>}
                         />
 
-                        <CardContent className={"row"} sx={{margin: 0}}>
+                        {!introMode&&<CardContent className={"row"} sx={{margin: 0}}>
                             <Typography className={"col-6"} variant={"subtitle2"} color={item.Gender ? "black" : "red"}
                                         alignItems="flex-start">
                                 {"جنسیت : " + (item.Gender ? genders[item.Gender] : "نامشخص")}
@@ -174,7 +178,7 @@ const CoursesList = () => {
                                          alignItems="flex-start">
                                 {"توضیح : " + (item.Description || "نامشخص")}
                             </Typography>}
-                        </CardContent>
+                        </CardContent>}
                     </CardActionArea>
                 </Card>
             ))}

@@ -1,5 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {
+    Button,
+    Card,
+    CardContent,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Typography
+} from "@mui/material";
 import {Form} from "react-bootstrap";
 import {genders} from "../../../../helper/enums/genders";
 import {TicketCourses_update} from "../../../../network/api/ticketCourse.api";
@@ -10,14 +20,16 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import AdapterJalaali from "@date-io/jalaali";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {format} from "date-fns";
+import {getWizardComplete} from "../../../../helper/pocket";
 
 const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
     const error = useContext(ErrorContext);
     const [inCourse, setInCourse] = useState(ticketCourse)
 
+    const introMode=!getWizardComplete()
+
     useEffect(() => {
         setInCourse(ticketCourse);
-        console.log(ticketCourse)
     }, [ticketCourse]);
 
     function updateCourse(e) {
@@ -40,12 +52,15 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                 <Card elevation={3} sx={{margin: 1}}>
                     <CardContent sx={{margin: 0}}>
 
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>پس از تکمیل فرم دکمه ثبت را بزنید سپس قسمت های دیگر را تکمیل کنید
+                        </Typography>}
                         <TextField
                             name={"Name"}
                             value={inCourse.Name || ""}
                             onChange={(e) => setInCourse({...inCourse, Name: e.target.value})}
                             margin="dense"
-                            label="نام عضویت"
+                            label="نام کلاس"
                             type="text"
                             fullWidth
                             variant="outlined"
@@ -83,27 +98,47 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                                 ))}
                             </Select>
                         </FormControl>
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            قیمت ها به تومان می باشد
+                        </Typography>}
                         <TextField
                             name={"Price"}
                             value={toPriceWithComma(inCourse.PlacePrice)}
                             onChange={(e) => setInCourse({...inCourse, PlacePrice: toPriceWithoutComma(e.target.value)})}
                             margin="dense"
-                            label="قیمت عضویت"
+                            label="قیمت کلاس"
                             type="text"
                             fullWidth
                             variant="outlined"
                         />
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            ارزش عضویت مبلغی است که مرکز برای فروش همین بلیط از طرق دیگر دریافت می کند.
+                        </Typography>}
                         <TextField
                             name={"ValuePrice"}
                             value={toPriceWithComma(inCourse.ValuePrice)}
                             onChange={(e) => setInCourse({...inCourse, ValuePrice: toPriceWithoutComma(e.target.value)})}
                             margin="dense"
-                            label="ارزش عضویت"
+                            label="ارزش کلاس"
                             type="text"
                             fullWidth
                             variant="outlined"
                         />
 
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            محدوده سنی به صورت نوشته برای اطلاع کاربر وارد میشود. اگر کلاس مورد نظر محدوده سنی ندارد این فیلد را خالی بگذارید.
+                        </Typography>}
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            مثال :
+                        </Typography>}
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            8 تا 16 سال
+                        </Typography>}
                         <TextField
                             name={"AgeLimit"}
                             value={inCourse.AgeLimit || ""}
@@ -114,6 +149,11 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                             fullWidth
                             variant="outlined"
                         />
+
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            سطح کلاس برای اطلاع کاربر وارد میشود. اگر کلاس مورد نظر دارای سطح بندی نمی باشد این فیلد را خالی بگذارید.
+                        </Typography>}
                         <TextField
                             name={"CourseLevel"}
                             value={inCourse.CourseLevel || ""}
@@ -124,6 +164,11 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                             fullWidth
                             variant="outlined"
                         />
+
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            تعداد ورود، تعداد دفعاتی است که کاربر میتواند از این بلیط استفاده کند . (برای 8 جلسه بدنسازی در ماه 8 در نظر گرفته شود- برای ورودی ها 1 در نظر گرفته شود)
+                        </Typography>}
                         <TextField
                             name={"EntryTotalCount"}
                             value={inCourse.EntryTotalCount || ""}
@@ -134,6 +179,11 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                             fullWidth
                             variant="outlined"
                         />
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            اگر کلاس مورد نظر دارای تعداد شاگرد مشخصی نمی باشد این فیلد را خالی بگذارید.
+                            برای کلاس های خصوصی این عدد 1 در نظر گرفته شود.
+                        </Typography>}
                         <TextField
                             name={"ClassCapacity"}
                             value={inCourse.ClassCapacity || ""}
@@ -144,6 +194,11 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                             fullWidth
                             variant="outlined"
                         />
+
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            تعداد بلیط قابل فروش با هر فروش بلیط یک عدد کم می شود
+                        </Typography>}
                         <TextField
                             name={"CourseCapacity"}
                             value={inCourse.CourseCapacity || ""}
@@ -154,8 +209,10 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                             fullWidth
                             variant="outlined"
                         />
-
-
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            تاریخ شروع و پایان کلاس برای کلاس هایی است که فقط یک بار برگزار می شود در غیر این صورت هر دو فیلد را خالی بگذارید
+                        </Typography>}
 
                         <LocalizationProvider
                             dateAdapter={AdapterJalaali} adapterLocale={"fa-IR"}>
@@ -164,7 +221,7 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                                 onChange={(e) => setInCourse({...inCourse, StartDate: format(Date.parse(e), "yyyy-MM-dd")})}
                                 toolbarFormat={"jYYYY/jMM/jDD"}
                                 inputFormat={"jYYYY/jMM/jDD"}
-                                value={Date.parse(inCourse.StartDate) || ""}
+                                value={Date.parse(inCourse.StartDate) || null}
                                 renderInput={(params) =>
                                     <TextField
                                         {...params}
@@ -181,7 +238,7 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                                 onChange={(e) => setInCourse({...inCourse, EndDate: format(Date.parse(e), "yyyy-MM-dd")})}
                                 toolbarFormat={"jYYYY/jMM/jDD"}
                                 inputFormat={"jYYYY/jMM/jDD"}
-                                value={Date.parse(inCourse.EndDate) || ""}
+                                value={Date.parse(inCourse.EndDate) || null}
                                 renderInput={(params) =>
                                     <TextField
                                         {...params}
@@ -194,6 +251,11 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                                 }
                             />
                         </LocalizationProvider>
+
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            در صورت ارائه مدرک یا داشتن دستاورد قابل توجه برای شاگردان فیلد زیر را پر نمایید در غیر این صورت این فیلد را خالی بگذارید.
+                        </Typography>}
 
                         <TextField
                             name={"TargetOfCourse"}
@@ -208,12 +270,30 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                             multiline
                             variant="outlined"
                         />
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            در صورتی که برای بلیط توضیحاتی وجود دارد در این قسمت یادداشت شود در غیر این صورت این فیلد را خالی بگذارید
+                        </Typography>}
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            مثال :
+                        </Typography>}
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>در هنگام اولین خرید یک شیکر و یک حوله ورزشی هدیه خواهید گرفت.
+                        </Typography>}
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            یا
+                        </Typography>}
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>قبل از خرید هماهنگی ساعت استفاده با مجموعه انجام شود.
+                        </Typography>}
                         <TextField
                             name={"Description"}
                             value={inCourse.Description || ""}
                             onChange={(e) => setInCourse({...inCourse, Description: e.target.value})}
                             margin="dense"
-                            label="توضیح مخصوص این عضویت"
+                            label="توضیح مخصوص این کلاس"
                             type="text"
                             aria-multiline={"true"}
                             minRows={3}

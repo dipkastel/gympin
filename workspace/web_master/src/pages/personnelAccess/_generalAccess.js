@@ -19,7 +19,6 @@ const _generalAccess = ({user}) => {
     function getAccess() {
 
         placePersonnel_getAccess({placeId: place.Id, userId: user.Id}).then(result => {
-            console.log(result)
             SetUserAccess(result.data.Data);
         }).catch(e => {
             try {
@@ -33,7 +32,6 @@ const _generalAccess = ({user}) => {
     function changeAccess(item, e) {
         item.Access = e.target.checked;
         placePersonnel_updatePersonnelAccess([item]).then(result => {
-            console.log(result)
             getAccess();
         }).catch(e => {
             try {

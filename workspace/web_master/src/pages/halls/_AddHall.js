@@ -11,7 +11,7 @@ import {
     FormControlLabel,
     FormGroup,
     Switch,
-    TextField
+    TextField, Typography
 } from "@mui/material";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../components/GympinPagesProvider";
@@ -46,6 +46,20 @@ const _AddHall = ({renewList}) => {
                         <DialogContentText>
                             برای افزودن سالن جدید نام سالن را وارد کنید
                         </DialogContentText>
+
+                        <Typography sx={{width:"100%"}} color={"#a2a2a2"} variant={"subtitle2"}>
+                            برای نام سالن ها از پیشوند هایی مانند سالن ، اتاق و... استفاده نشود و فقط نامی که برای سالن در نظر گرفته شده درج گردد.
+                        </Typography>
+                        <Typography sx={{width:"100%"}} color={"#a2a2a2"} variant={"subtitle2"}>
+                            مثال :
+                            <s>زمین خالی شماره 1</s>
+                            ← خاکی شماره 1
+                        </Typography>
+                        <Typography sx={{width:"100%"}} color={"#a2a2a2"} variant={"subtitle2"}>
+                            مثال :
+                            <s>سالن بدنسازی</s>
+                             ← بدنسازی
+                        </Typography>
                         <TextField
                             autoFocus
                             margin="dense"

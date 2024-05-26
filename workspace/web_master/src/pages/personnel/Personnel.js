@@ -7,13 +7,14 @@ import {useSelector} from "react-redux";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import AccessDenied from "../../components/AccessDenied";
-import _AddCoach from "./_AddCoach";
-import _CoachList from "./_CoachList";
+import {Grid, Typography} from "@mui/material";
+import {getWizardComplete} from "../../helper/pocket";
 
 const Personnel = () => {
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
-    const [personnelList,SetPersonnelList] = useState(null);
+    const [personnelList, SetPersonnelList] = useState(null);
+    const introMode = !getWizardComplete()
 
     useEffect(() => {
         document.title = 'مدیریت پرسنل';
@@ -22,7 +23,7 @@ const Personnel = () => {
 
     function getPersonnelList() {
         SetPersonnelList(null);
-        placePersonnel_ByPlace({Id:place.Id}).then(result=>{
+        placePersonnel_ByPlace({Id: place.Id}).then(result => {
             SetPersonnelList(result.data.Data);
         }).catch(e => {
             try {
@@ -33,13 +34,24 @@ const Personnel = () => {
         })
     }
 
-    if(!getAccessOf(personnelAccessEnumT.ManagementPersonnel))
+    if (!getAccessOf(personnelAccessEnumT.ManagementPersonnel))
         return <AccessDenied/>;
 
     return (
         <>
-            {personnelList&&<_AddPersonnel renewList={getPersonnelList}/>}
-            {personnelList&&<_PersonnelList personnelList={personnelList} renewList={getPersonnelList}/>}
+            {personnelList && <_AddPersonnel renewList={getPersonnelList}/>}
+            {introMode && <Grid sx={{p: 2}}>
+                <Typography variant={"subtitle1"}>
+                    لطفا پرسنل مرکز را در این قسمت وارد نمایید.
+                </Typography>
+                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                    پس از تکمیل فرم میتوانید از قسمت تنظیمات ← پرسنل ، دسترسی های لازم برای پرسنل را بدهید.
+                </Typography>
+                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                    پرسنلی که دسترسی به آنها داده نشده باشد امکان استفاده از هیچ بخشی از اپلیکیشن را ندارد.
+                </Typography>
+            </Grid>}
+            {personnelList && <_PersonnelList personnelList={personnelList} renewList={getPersonnelList}/>}
             {/*{personnelList&&<_AddCoach renewList={getPersonnelList}/>}*/}
             {/*{personnelList&&<_CoachList personnelList={personnelList} renewList={getPersonnelList}/>}*/}
         </>

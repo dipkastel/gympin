@@ -202,9 +202,10 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
             if (ticketSubscribeEntity.getPrice() == null) {
                 throw new TicketPriceCannotBeNull();
             }
-            if (ticketSubscribeEntity.getBeneficiary() == null) {
-                throw new TicketHasNotOwner();
-            }
+            // commented because of wizard
+//            if (ticketSubscribeEntity.getBeneficiary() == null) {
+//                throw new TicketHasNotOwner();
+//            }
             if (ticketSubscribeEntity.getGender() == null) {
                 throw new TicketGenderCannotBeNull();
             }

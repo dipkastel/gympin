@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.settings.base.param;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,4 +14,7 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 public class WebAppSplashParam extends BaseParam<WebAppSplashParam> {
+
+    @JsonProperty("UserId")
+    private Long userId;
 }

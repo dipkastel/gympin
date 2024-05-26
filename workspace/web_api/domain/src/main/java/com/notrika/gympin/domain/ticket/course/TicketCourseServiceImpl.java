@@ -253,9 +253,10 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
             if (ticketCourseEntity.getPrice() == null) {
                 throw new TicketPriceCannotBeNull();
             }
-            if (ticketCourseEntity.getBeneficiary() == null) {
-                throw new TicketHasNotOwner();
-            }
+            //this is commented because of wizard
+//            if (ticketCourseEntity.getBeneficiary() == null) {
+//                throw new TicketHasNotOwner();
+//            }
             if (ticketCourseEntity.getGender() == null) {
                 throw new TicketGenderCannotBeNull();
             }
@@ -285,6 +286,9 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
             }
             if (ticketCourseEntity.getActiveTimes().size() < 1) {
                 throw new TicketHallsCannotBeNull();
+            }
+            if (ticketCourseEntity.getCoaches().size() < 1) {
+                throw new TicketCouchesCannotBeNull();
             }
         }
         ticketCourseEntity.setEnable(ticketCourseParam.getEnable());

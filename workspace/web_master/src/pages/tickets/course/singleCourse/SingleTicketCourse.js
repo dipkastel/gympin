@@ -11,19 +11,22 @@ import _CourseActiveTimes from "./_CourseActiveTimes";
 import _CourseSports from "./_CourseSports";
 import _CourseDelete from "./_CourseDelete";
 import _CourseCoaches from "./_CourseCoaches";
+import {getWizardComplete} from "../../../../helper/pocket";
 
-const SingleTicketCourse = () => {
+const SingleTicketCourse = ({subId,introCanGoNext}) => {
     const error = useContext(ErrorContext);
     const {courseId} = useParams()
     const [ticketCourse, setTicketCourse] = useState([]);
+    const introMode=!getWizardComplete()
     useEffect(() => {
         document.title = 'مدیریت کلاس';
         getCourseData();
-    }, []);
+    }, [subId,courseId]);
     function getCourseData(){
-        TicketCourses_getById({id:courseId}).then(result=>{
-            console.log(result.data.Data)
+        TicketCourses_getById({id:introMode?subId:courseId}).then(result=>{
             setTicketCourse(result.data.Data);
+            try{introCanGoNext(result.data.Data.Enable);}catch (e) {}
+
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -38,12 +41,13 @@ const SingleTicketCourse = () => {
 
     return (
         <>
-            <_CourseActive ticketCourse={ticketCourse} getCourseData={getCourseData}/>
+            {!introMode&&<_CourseActive ticketCourse={ticketCourse} getCourseData={getCourseData}/>}
             <_CourseBaseData ticketCourse={ticketCourse} getCourseData={getCourseData}/>
             <_CourseActiveTimes ticketCourse={ticketCourse} />
             <_CourseCoaches ticketCourse={ticketCourse} />
             <_CourseSports ticketCourse={ticketCourse} />
-            <_CourseDelete ticketCourse={ticketCourse} getCourseData={getCourseData}/>
+            {introMode&&<_CourseActive ticketCourse={ticketCourse} getCourseData={getCourseData}/>}
+            {!introMode&&<_CourseDelete ticketCourse={ticketCourse} getCourseData={getCourseData}/>}
         </>
 
     );

@@ -24,7 +24,6 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
 
 const _PersonnelList = ({personnelList, renewList}) => {
-    console.log(personnelList);
     const error = useContext(ErrorContext);
     const navigate = useNavigate()
     const [personnelToDelete,SetPersonnelToDelete]= useState(null)
@@ -61,7 +60,6 @@ const _PersonnelList = ({personnelList, renewList}) => {
     }
 
     function deleteRole(role, personnel) {
-        console.log("delete",role,personnel);
         placePersonnel_deleteRole({...personnel,UserRole:role}).then(result=>{
             renewList()
             error.showError({message: "عملیات موفق",});
@@ -75,7 +73,6 @@ const _PersonnelList = ({personnelList, renewList}) => {
     }
 
     function addRole(role, personnel) {
-        console.log("add",role,personnel);
         placePersonnel_addRole({...personnel,UserRole:role}).then(result=>{
             renewList()
             error.showError({message: "عملیات موفق",});

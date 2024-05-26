@@ -11,6 +11,7 @@ import {accessActions} from "../actions/AccessActions";
 import {select} from "@redux-saga/core/effects";
 import {settingActions} from "../actions/SettingsActions";
 import {configs_getWebMasterSplash} from "../../../network/api/configs.api";
+import {setWizardComplete} from "../../pocket";
 
 
 export const getUser = (state)=> state.auth.user;
@@ -83,8 +84,9 @@ export function* saga() {
 
         const result = yield call(
             () => new Promise((resolve) => {
-                configs_getWebMasterSplash(action.payload.user.Id).then((_result) => {
+                configs_getWebMasterSplash({UserId:action.payload.user.Id}).then((_result) => {
                     resolve(_result.data.Data);
+                    setWizardComplete(_result.data.Data?.UserSettings.filter(s=>s.Key=="USER_WIZARD_COMPLETE")?.[0]?.Value?.toLowerCase?.()=="true")
                 }).catch(e => {
                     console.log(e)
                 });

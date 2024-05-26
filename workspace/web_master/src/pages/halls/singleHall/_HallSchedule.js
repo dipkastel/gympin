@@ -16,7 +16,7 @@ import {
     ListItemIcon,
     ListItemText,
     TextField,
-    ToggleButton
+    ToggleButton, Typography
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {TimePicker} from "@mui/x-date-pickers";
@@ -29,15 +29,17 @@ import {
     ticketActiveTimes_getByHall
 } from "../../../network/api/gatesTiming.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {getWizardComplete} from "../../../helper/pocket";
 
 
-const _HallSchedule = ({hall}) => {
+const _HallSchedule = ({hall,introCanGoNext}) => {
     const error = useContext(ErrorContext);
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [deleteItem, setDeleteItem] = useState(null);
     const [gateTimigs, setGateTimings] = useState([]);
     const [addValues, setAddValues] = useState([])
     const [addDays, setAddDays] = useState([]);
+    const introMode = !getWizardComplete()
 
 
     useEffect(() => {
@@ -51,6 +53,9 @@ const _HallSchedule = ({hall}) => {
     function getGateTimingOfGate() {
         ticketActiveTimes_getByHall({Id: hall.Id}).then(data => {
             setGateTimings(data.data.Data);
+            try{
+                introCanGoNext(data.data.Data.length>0)
+            }catch (e){}
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -124,7 +129,6 @@ const _HallSchedule = ({hall}) => {
                     })
                 }
             )
-            console.log(postData);
             ticketActiveTimes_addAll(postData)
                 .then(data => {
                     setOpenModalAdd(false)
@@ -155,7 +159,7 @@ const _HallSchedule = ({hall}) => {
             <div>
                 <Dialog open={openModalAdd} onClose={() => setOpenModalAdd(false)}>
                     <form onSubmit={(e) => addItems(e)}>
-                        <DialogTitle>افزودن زمان فعالیت سالن</DialogTitle>
+                        <DialogTitle>افزودن زمان و فعالیت به سالن</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
 
@@ -164,6 +168,19 @@ const _HallSchedule = ({hall}) => {
                                     name="position"
                                     row>
 
+                                    <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                                        نام فعالیت برای تفکیک ساعت عا استفاده می شود و دلخواه است.
+                                        مثال :
+                                    </Typography>
+                                    <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                                        پیلاتس خانم فراهانی
+                                    </Typography>
+                                    <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                                        اسکیت عمومی
+                                    </Typography>
+                                    <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                                       بدنسازی آقایان
+                                    </Typography>
                                     <TextField
                                         name={"Name"}
                                         value={addValues.Name || ""}
@@ -176,6 +193,7 @@ const _HallSchedule = ({hall}) => {
                                     />
                                 </FormGroup>
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
+
                                     <TimePicker
                                         className={"ltr datePicker mt-3"}
                                         label="از ساعت"
@@ -185,6 +203,9 @@ const _HallSchedule = ({hall}) => {
                                         // onChange={(e)=>setFormValues("Opening-time",new Date(e).getHours() + ":"+new Date(e).getMinutes())}
                                         renderInput={(params) => <TextField {...params} />}
                                     />
+                                    <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                                        00:00 همان 24:00 است
+                                    </Typography>
                                     <TimePicker
                                         className={"ltr datePicker mt-4"}
                                         label="تا ساعت"
@@ -197,6 +218,10 @@ const _HallSchedule = ({hall}) => {
                                 </LocalizationProvider>
 
                                 <FormControl component="fieldset" className={"mt-3"}>
+
+                                    <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                                        امکان چند انتخابی وجود دارد ↓
+                                    </Typography>
                                     <FormGroup
                                         aria-label="position"
                                         name="position"
@@ -243,12 +268,23 @@ const _HallSchedule = ({hall}) => {
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     sx={{paddingBottom: 0}}
-                    title={"زمان بندی ها"}
+                    title={"زمان بندی های سالن "+hall.Name}
                     action={<Button variant={"outlined"} onClick={(e) => {
                         setOpenModalAdd(true)
-                    }}>افزودن زمان بندی</Button>}
+                    }}>افزودن</Button>}
                 />
                 <CardContent sx={{margin: 0}}>
+                    {introMode&&
+                    <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                        {"فعالیت هایی که در سالن "+hall.Name+" انجام میشود را به همراه زمان بندی آنها وارد نمایید."}
+                    </Typography>}
+                    {introMode&&
+                    <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>نکته : گاهی فعالیت ها دارای زمان نامشخص هستند مانند کلاس های خصوصی که باید هماهنگ شود یا فعالیت هایی که زمان آنها به ورود کاربر بستگی دارد مانند بدنسازی عمومی در این موارد ساعت کلی فعالیت مجموعه را وارد می نماییم ( مثلا از 07:00 تا 23:00 ) و در صورت نیاز بعدا در توضیحات بلیط می نویسیم که حتما قبل از خرید برای ساعات رزرو هماهنگی انجام شود.
+                    </Typography>}
+                    {introMode&&
+                    <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                        این زمان بندی ها برای ساخت بلیط استفاده می شود پس اگر مجموعه دارای دو بخش آقایان و بانوان است زمان بندی آنها به صورت جداگانه وارد شود (مثلا : بدنسازی آقایان و بدنسازی بانوان)
+                    </Typography>}
                     <List dense={false}>
                         {gateTimigs && gateTimigs.map((p, number) =>
                             <ListItem sx={{direction: "rtl"}} key={number}>

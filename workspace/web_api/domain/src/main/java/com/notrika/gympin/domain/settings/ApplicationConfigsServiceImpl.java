@@ -5,6 +5,9 @@ import com.notrika.gympin.common.settings.base.enums.settingsType;
 import com.notrika.gympin.common.settings.base.param.*;
 import com.notrika.gympin.common.settings.base.service.ApplicationConfigService;
 import com.notrika.gympin.common.settings.base.service.SettingsService;
+import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
+import com.notrika.gympin.domain.settings.userSettings.UserSettingsServiceImpl;
+import com.notrika.gympin.persistence.dao.repository.settings.ManageUserSettingsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
 
     @Autowired
     SettingsService settingsService;
+    @Autowired
+    UserSettingsServiceImpl userSettingsService;
 
     @Override
     public AndroidSplashDto AndroidSplash(AndroidSplashParam splashParam) {
@@ -27,6 +32,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         settingDtoList.addAll(settingsService.getByType(settingsType.APPLICATION));
         settingDtoList.addAll(settingsService.getByType(settingsType.GENERAL));
         result.setSettings(settingDtoList);
+        List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
+        result.setUserSettings(userSettings);
         return result;
     }
 
@@ -38,6 +45,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         settingDtoList.addAll(settingsService.getByType(settingsType.APPLICATION));
         settingDtoList.addAll(settingsService.getByType(settingsType.GENERAL));
         result.setSettings(settingDtoList);
+        List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
+        result.setUserSettings(userSettings);
         return result;
     }
 
@@ -49,6 +58,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         settingDtoList.addAll(settingsService.getByType(settingsType.APPLICATION));
         settingDtoList.addAll(settingsService.getByType(settingsType.GENERAL));
         result.setSettings(settingDtoList);
+        List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
+        result.setUserSettings(userSettings);
         return result;
     }
 
@@ -60,6 +71,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         settingDtoList.addAll(settingsService.getByType(settingsType.APPLICATION));
         settingDtoList.addAll(settingsService.getByType(settingsType.GENERAL));
         result.setSettings(settingDtoList);
+        List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
+        result.setUserSettings(userSettings);
         return result;
     }
 
@@ -71,6 +84,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         settingDtoList.addAll(settingsService.getByType(settingsType.APPLICATION));
         settingDtoList.addAll(settingsService.getByType(settingsType.GENERAL));
         result.setSettings(settingDtoList);
+        List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
+        result.setUserSettings(userSettings);
         return result;
     }
 
@@ -82,6 +97,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         settingDtoList.addAll(settingsService.getByType(settingsType.APPLICATION));
         settingDtoList.addAll(settingsService.getByType(settingsType.GENERAL));
         result.setSettings(settingDtoList);
+        List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
+        result.setUserSettings(userSettings);
         return result;
     }
 }

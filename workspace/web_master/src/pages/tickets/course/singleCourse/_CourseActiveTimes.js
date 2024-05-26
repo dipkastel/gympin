@@ -25,7 +25,10 @@ import {
 } from "../../../../network/api/gatesTiming.api";
 import {dayOfWeekEnum} from "../../../../helper/enums/dayOfWeekEnum";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {TicketCourses_getActiveTimesByTicketCourse} from "../../../../network/api/ticketCourse.api";
+import {
+    TicketCourses_addCourseActiveTimes,
+    TicketCourses_getActiveTimesByTicketCourse
+} from "../../../../network/api/ticketCourse.api";
 import {useSelector} from "react-redux";
 
 
@@ -82,12 +85,13 @@ const _CourseActiveTimes = ({ticketCourse}) => {
             e.preventDefault()
             var postData = [];
             for (var index in listToAdd) {
-                postData.push({Course: {Id: ticketCourse.Id}, HallActiveTimes: {Id: listToAdd[index]}})
+                postData.push({Id: listToAdd[index]})
             }
-            ticketActiveTimes_addAll(postData).then(result => {
+            TicketCourses_addCourseActiveTimes({Ticket: {Id: ticketCourse.Id},ActiveTime:postData}).then(result => {
                 setOpenModalAdd(false);
                 getCourseAvtiveTimes()
             }).catch(e => {
+                setOpenModalAdd(false);
                 try {
                     error.showError({message: e.response.data.Message,});
                 } catch (f) {
@@ -104,7 +108,6 @@ const _CourseActiveTimes = ({ticketCourse}) => {
                         <List dense={false}>
                             {placeActiveTimes && placeActiveTimes.map((pat, number) => (
                                     <div key={number}>
-                                        {console.log(pat)}
                                         <ListItem
                                             sx={{direction: "rtl", width: "100%"}}
                                         >
@@ -115,7 +118,7 @@ const _CourseActiveTimes = ({ticketCourse}) => {
                                                 label={(<ListItemText
                                                     sx={{width: "100%"}}
                                                     className="text-start"
-                                                    primary={pat.Hall?.Name + " ( " + dayOfWeekEnum[pat.DayOfWeek] + " ) "}
+                                                    primary={pat.Hall?.Name +" ← "+pat.Name + " ( " + dayOfWeekEnum[pat.DayOfWeek] + " ) "}
                                                     secondary={"از " +
                                                     pat.OpeningTime.substring(0, 5)
                                                     + " تا " +
@@ -194,7 +197,7 @@ const _CourseActiveTimes = ({ticketCourse}) => {
                             <ListItem sx={{direction: "rtl"}} key={"ch-" + number}>
                                 <ListItemText
                                     className="text-start"
-                                    primary={p.Hall.Name + " ( " + dayOfWeekEnum[p.DayOfWeek] + " ) "}
+                                    primary={p.Hall.Name + " ← "+p.Name +" ( " + dayOfWeekEnum[p.DayOfWeek] + " ) "}
                                     secondary={"از " +
                                     p.OpeningTime.substring(0, 5)
                                     + " تا " +

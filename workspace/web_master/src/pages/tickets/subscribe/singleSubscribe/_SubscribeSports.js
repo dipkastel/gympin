@@ -34,7 +34,6 @@ const _SubscribeSport = ({ticketSubscribe}) => {
         });
     }
     function getTicketSubscribeSports() {
-        console.log("{ticketSubscribeId: ticketSubscribe.Id}",{ticketSubscribeId: ticketSubscribe.Id})
         TicketSubscribes_getTicketSubscribesSports({ticketSubscribeId: ticketSubscribe.Id}).then(data => {
             SetTicketSubscribeSports(data.data.Data);
             SetItemToProgress(null);
@@ -51,7 +50,6 @@ const _SubscribeSport = ({ticketSubscribe}) => {
 
         if(!!itemToProgress)return;
         SetItemToProgress(item.Id);
-        console.log({TicketSubscribe: {Id: ticketSubscribe.Id}, PlaceSport: {Id:item.Id}})
         TicketSubscribes_addSport({TicketSubscribe: {Id: ticketSubscribe.Id}, PlaceSport: [{Id:item.Id}]})
             .then(data => {
                 getTicketSubscribeSports()

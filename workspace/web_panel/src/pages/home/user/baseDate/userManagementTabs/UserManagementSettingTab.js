@@ -1,6 +1,7 @@
 import React from 'react';
 import UserAccess from "../Access/UserAccess";
 import Userstatus from "../Status/UserStatus";
+import UserWizard from "../userWizard/UserWizard";
 
 const UserManagementSettingTab = ({currentUser}) => {
     return (
@@ -8,10 +9,11 @@ const UserManagementSettingTab = ({currentUser}) => {
             {currentUser && <div className="row">
 
                 <div className="col-md-6">
-                    {currentUser && <UserAccess currentUser={currentUser}/>}
+                    {currentUser && <UserWizard currentUser={currentUser}/>}
+                    {currentUser && <Userstatus currentUser={currentUser}/>}
                 </div>
                 <div className="col-md-6">
-                    {currentUser && <Userstatus currentUser={currentUser}/>}
+                    {currentUser && <UserAccess currentUser={currentUser}/>}
                 </div>
 
 

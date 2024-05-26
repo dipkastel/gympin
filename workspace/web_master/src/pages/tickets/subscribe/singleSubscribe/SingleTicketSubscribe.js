@@ -10,18 +10,21 @@ import AccessDenied from "../../../../components/AccessDenied";
 import _SubscribeActive from "./_SubscribeActive";
 import _SubscribeDelete from "./_SubscribeDelete";
 import _SubscribeSports from "./_SubscribeSports";
+import {getWizardComplete} from "../../../../helper/pocket";
 
-const SingleTicketSubscribe = () => {
+const SingleTicketSubscribe = ({subId,introCanGoNext}) => {
     const error = useContext(ErrorContext);
     const {subscribeId} = useParams()
     const [ticketSubscribe, setTicketSubscribe] = useState([]);
+    const introMode=!getWizardComplete()
     useEffect(() => {
         document.title = 'مدیریت عضویت';
         getSubscribeData();
-    }, []);
+    }, [subId,subscribeId]);
     function getSubscribeData(){
-        TicketSubscribes_getById({id:subscribeId}).then(result=>{
+        TicketSubscribes_getById({id:introMode?subId:subscribeId}).then(result=>{
             setTicketSubscribe(result.data.Data);
+            try{introCanGoNext(result.data.Data.Enable);}catch (e) {}
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -36,11 +39,12 @@ const SingleTicketSubscribe = () => {
 
     return (
         <>
-            <_SubscribeActive ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>
+            {!introMode&&<_SubscribeActive ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>}
             <_SubscribeBaseData ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>
             <_SubscribeActiveTimes ticketSubscribe={ticketSubscribe} />
             <_SubscribeSports ticketSubscribe={ticketSubscribe} />
-            <_SubscribeDelete ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>
+            {introMode&&<_SubscribeActive ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>}
+            {!introMode&&<_SubscribeDelete ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>}
         </>
 
     );

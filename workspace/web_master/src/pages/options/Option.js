@@ -1,8 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Card, CardHeader, Chip} from "@mui/material";
-import Select from "react-select";
-import _OptionItem from "./_OptionItem";
-import {Form, Modal} from "react-bootstrap";
+import { Card, CardHeader, Chip} from "@mui/material";
 import {placeOption_getAll} from "../../network/api/placeOptions.api";
 import {optionOfPlace_add, optionOfPlace_delete, optionOfPlace_getByPlaceId} from "../../network/api/optionOfPlace.api";
 import {useSelector} from "react-redux";
@@ -10,8 +7,9 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import AccessDenied from "../../components/AccessDenied";
+import {getWizardComplete} from "../../helper/pocket";
 
-const Option = () => {
+const Option = ({introCanGoNext}) => {
     const error = useContext(ErrorContext);
 
     const place = useSelector(({place}) => place.place)
@@ -19,6 +17,7 @@ const Option = () => {
     const [options, SetOptions] = useState([])
     const [placeOptions, SetPlaceOption] = useState([])
     const [itemToProgress,SetItemToProgress] = useState(null);
+    const introMode=!getWizardComplete()
 
     useEffect(() => {
         document.title = 'مدیریت امکانات';
@@ -43,6 +42,8 @@ const Option = () => {
         optionOfPlace_getByPlaceId({id: place.Id}).then(result => {
             SetPlaceOption(result.data.Data)
             SetItemToProgress(null);
+            try{ introCanGoNext(result.data.Data.length>0)}catch (e) {}
+
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -93,10 +94,10 @@ const Option = () => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            {!introMode&&<Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     title={"مدیریت امکانات"}/>
-            </Card>
+            </Card>}
 
             <div className={"container"}>
             <div className={"row"}>

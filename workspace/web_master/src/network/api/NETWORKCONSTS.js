@@ -24,6 +24,8 @@ export let Api_url = {
         GET_BY_ID: "v1/user/getById",
         UPDATE_USER: "v1/user/update",
         UPDATE_AVATAR: "v1/user/updateUserAvatar",
+        setUserSettings: "v1/user/setUserSettings",
+        getUserSettings: "v1/user/getUserSettings",
     },
     multimedia:{
         add:"v1/multimedia/add",

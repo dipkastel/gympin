@@ -50,7 +50,6 @@ const _PlaceActivity = (props) => {
 
         function acceptDeactive(e) {
             e.preventDefault()
-            console.log(e.target.title.value);
             if (e.target.title.value) {
                 changePlaceStatus("INACTIVE");
                 setOpenModalDeactive(false)

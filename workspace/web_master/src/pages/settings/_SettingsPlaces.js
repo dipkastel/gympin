@@ -13,10 +13,9 @@ import {
     Grid,
     List, ListItemText,
     Radio,
-    RadioGroup, Typography
+    RadioGroup
 } from "@mui/material";
 import {connect, useDispatch, useSelector} from "react-redux";
-import {Places_getPlacesByUserId} from "../../network/api/place.api";
 import {placeActions} from "../../helper/redux/actions/PlaceActions";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {useNavigate} from "react-router-dom";
@@ -24,6 +23,7 @@ import {accessActions} from "../../helper/redux/actions/AccessActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {placePersonnel_ByUser} from "../../network/api/placePersonnel.api";
 import {personnelRoles} from "../../helper/enums/personnelRoles";
+import {getWizardComplete} from "../../helper/pocket";
 
 const _SettingsPlaces = (props) => {
     const error = useContext(ErrorContext);
@@ -34,11 +34,11 @@ const _SettingsPlaces = (props) => {
     const [selectedPlace, SetSelectedPlace] = useState(useSelector(({place}) => place.place))
     const [placePersonnel, SetPlacePersonnel] = useState([]);
     const [loading, setLoading] = useState(false);
+    const introMode=!getWizardComplete()
 
     useEffect(() => {
 
         placePersonnel_ByUser({Id:user.Id}).then(result => {
-            console.log(result.data.Data)
             SetPlacePersonnel(result.data.Data)
         }).catch(e => {
             try {
@@ -72,6 +72,10 @@ const _SettingsPlaces = (props) => {
         }, time*1000);
     }
 
+    function getPlacePersonel() {
+        return introMode?placePersonnel.filter(p=>p.UserRole.includes("PLACE_OWNER")):placePersonnel
+    }
+
     return (<>
             {!loading && <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
@@ -88,7 +92,7 @@ const _SettingsPlaces = (props) => {
                                 value={(selectedPlace) ? selectedPlace.Id : 9999}
                                 onChange={(event) => selectedPlaceChanged(event)}
                             >
-                                {placePersonnel.map((item, number) => (
+                                {getPlacePersonel().map((item, number) => (
                                     <div key={number}>
                                         <Grid
                                             container
@@ -100,10 +104,10 @@ const _SettingsPlaces = (props) => {
                                                 secondary={<>{item.UserRole.map(role=>(<Chip size={"small"} label={personnelRoles[role]} />))}</>}
                                                 />
 
-                                            <Button size={"small"} variant={"outlined"}
+                                            {!introMode&&<Button size={"small"} variant={"outlined"}
                                                     href={"/management/place?id=" + item.Place.Id}>
                                                 ویرایش
-                                            </Button>
+                                            </Button>}
                                         </Grid>
                                         <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
                                     </div>

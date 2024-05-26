@@ -23,13 +23,16 @@ import {genders} from "../../../helper/enums/genders";
 import {ToggleOff, ToggleOn} from "@mui/icons-material";
 import {Form} from "react-bootstrap";
 import {toPriceWithComma} from "../../../helper/utils";
+import {getWizardComplete} from "../../../helper/pocket";
 
-const SubscribesList = () => {
+const SubscribesList = ({OnChangeList}) => {
 
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [subscribesList, setSubscribesList] = useState([]);
+    const introMode = !getWizardComplete()
+
 
     useEffect(() => {
         document.title = 'مدیریت عضویت ها';
@@ -39,8 +42,8 @@ const SubscribesList = () => {
     function getPlaceSubscribes() {
         if (!place) return;
         TicketSubscribes_getByPlace({Id: place.Id}).then(result => {
+            OnChangeList(result.data.Data);
             setSubscribesList(result.data.Data);
-            console.log(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -120,12 +123,12 @@ const SubscribesList = () => {
 
                     <CardActionArea href={"/ticket/subscribe/" + item.Id}>
                         <CardHeader
-                            sx={{paddingBottom: 0}}
+                            sx={(!introMode)&&{paddingBottom: 0}}
                             title={item.Name}
-                            action={(item.Enable) ? <ToggleOn color={"success"}/> : <ToggleOff color={"error"}/>}
+                            action={(!introMode)?(item.Enable) ? <ToggleOn color={"success"}/> : <ToggleOff color={"error"}/>:<></>}
                         />
 
-                        <CardContent className={"row"} sx={{margin: 0}}>
+                        {!introMode&&<CardContent className={"row"} sx={{margin: 0}}>
                             <Typography className={"col-6"} variant={"subtitle2"} color={item.Gender ? "black" : "red"}
                                         alignItems="flex-start">
                                 {"جنسیت : " + (item.Gender ? genders[item.Gender] : "نامشخص")}
@@ -146,7 +149,7 @@ const SubscribesList = () => {
                                         color={item.SubscribeCapacity ? "black" : "red"} alignItems="flex-start">
                                 {"قابل فروش : " + (item.SubscribeCapacity ? item.SubscribeCapacity : "نامشخص")}
                             </Typography>
-                        </CardContent>
+                        </CardContent>}
                     </CardActionArea>
                 </Card>
             ))}

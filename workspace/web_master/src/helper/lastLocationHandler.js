@@ -1,4 +1,5 @@
 import * as utils from "./utils";
+import {getStorage, removeStorage, setStorage} from "./storedData/useStorage";
 
 const localStorageLastLocationKey = "gympin-lastLocation";
 
@@ -17,14 +18,14 @@ function acceptLocation(lastLocation) {
 }
 
 export function saveLastLocation(lastLocation) {
-    const localStorateLocations = utils.getStorage(localStorageLastLocationKey);
+    const localStorateLocations = getStorage(localStorageLastLocationKey);
     let _useLocations = localStorateLocations
         ? JSON.parse(localStorateLocations)
         : [];
 
     if (acceptLocation(lastLocation)) {
         _useLocations.push(lastLocation.pathname);
-        utils.setStorage(
+        setStorage(
             localStorageLastLocationKey,
             JSON.stringify(_useLocations),
             120
@@ -33,11 +34,11 @@ export function saveLastLocation(lastLocation) {
 }
 
 export function forgotLastLocation() {
-    utils.removeStorage(localStorageLastLocationKey);
+    removeStorage(localStorageLastLocationKey);
 }
 
 export function getLastLocation() {
-    const localStorateLocations = utils.getStorage(localStorageLastLocationKey);
+    const localStorateLocations = getStorage(localStorageLastLocationKey);
     if (!localStorateLocations) {
         return "/";
     }

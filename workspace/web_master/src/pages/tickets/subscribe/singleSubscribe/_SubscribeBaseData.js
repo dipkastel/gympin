@@ -1,18 +1,29 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {
+    Button,
+    Card,
+    CardContent,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Typography
+} from "@mui/material";
 import {Form} from "react-bootstrap";
 import {genders} from "../../../../helper/enums/genders";
 import {TicketSubscribes_update} from "../../../../network/api/ticketSubscribe.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../helper/utils";
+import {getWizardComplete} from "../../../../helper/pocket";
 
 const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
     const error = useContext(ErrorContext);
     const [inSubscribe, setInSubscribe] = useState(ticketSubscribe)
+    const introMode=!getWizardComplete()
 
     useEffect(() => {
         setInSubscribe(ticketSubscribe);
-        console.log(ticketSubscribe)
     }, [ticketSubscribe]);
 
     function updateSubscribe(e) {
@@ -35,6 +46,9 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                 <Card elevation={3} sx={{margin: 1}}>
                     <CardContent sx={{margin: 0}}>
 
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>پس از تکمیل فرم دکمه ثبت را بزنید سپس قسمت های دیگر را تکمیل کنید
+                        </Typography>}
                         <TextField
                             name={"Name"}
                             value={inSubscribe.Name || ""}
@@ -62,6 +76,10 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                                 ))}
                             </Select>
                         </FormControl>
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            قیمت ها به تومان می باشد
+                        </Typography>}
                         <TextField
                             name={"Price"}
                             value={toPriceWithComma(inSubscribe.PlacePrice)}
@@ -72,6 +90,10 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                             fullWidth
                             variant="outlined"
                         />
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            ارزش عضویت مبلغی است که مرکز برای فروش همین بلیط از طرق دیگر دریافت می کند.
+                        </Typography>}
                         <TextField
                             name={"ValuePrice"}
                             value={toPriceWithComma(inSubscribe.ValuePrice)}
@@ -83,6 +105,10 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                             variant="outlined"
                         />
 
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            تعداد ورود، تعداد دفعاتی است که کاربر میتواند از این بلیط استفاده کند . (برای 8 جلسه بدنسازی در ماه 8 در نظر گرفته شود- برای ورودی ها 1 در نظر گرفته شود)
+                        </Typography>}
                         <TextField
                             name={"EntryTotalCount"}
                             value={inSubscribe.EntryTotalCount || ""}
@@ -93,6 +119,10 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                             fullWidth
                             variant="outlined"
                         />
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            تعداد بلیط قابل فروش با هر فروش بلیط یک عدد کم می شود
+                        </Typography>}
                         <TextField
                             name={"SubscribeCapacity"}
                             value={inSubscribe.SubscribeCapacity || ""}
@@ -104,6 +134,10 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                             variant="outlined"
                         />
 
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            تعداد روز برای یک ماه 30 و برای 3 ماه 90 در نظر گرفته می شود
+                        </Typography>}
                         <TextField
                             name={"ExpireDuration"}
                             value={inSubscribe.ExpireDuration || ""}
@@ -114,6 +148,25 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                             fullWidth
                             variant="outlined"
                         />
+
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            در صورتی که برای بلیط توضیحاتی وجود دارد در این قسمت یادداشت شود در غیر این صورت این فیلد را خالی بگذارید
+                        </Typography>}
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            مثال :
+                        </Typography>}
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>در هنگام اولین خرید یک شیکر و یک حوله ورزشی هدیه خواهید گرفت.
+                        </Typography>}
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                            یا
+                        </Typography>}
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>قبل از خرید هماهنگی ساعت استفاده با مجموعه انجام شود.
+                        </Typography>}
                         <TextField
                             name={"Description"}
                             value={inSubscribe.Description || ""}

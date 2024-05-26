@@ -40,7 +40,6 @@ const DemandPayment = () => {
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             SetTransactions(data.data.Data)
-            console.log(data.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

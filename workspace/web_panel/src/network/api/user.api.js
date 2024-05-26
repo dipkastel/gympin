@@ -32,6 +32,13 @@ export function user_GetCount(data) {
 export function user_GetStatuses() {
     return axios.get(UserApi.getStatuses);
 }
+//settings
+export function user_GetUserSettings(data) {
+    return axios.get(UserApi.getUserSettings,{params:data});
+}
+export function user_SetUserSettings(data) {
+    return axios.post(UserApi.setUserSettings, data);
+}
 export function user_UpdateUserStatus(data) {
     return axios.put(UserApi.updateUserStatus, data);
 }

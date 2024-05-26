@@ -25,7 +25,6 @@ const _HallList = ({hallList, renewList}) => {
     const error = useContext(ErrorContext);
     const navigate = useNavigate()
     const [hallToDelete,SetHallToDelete]= useState(null)
-    console.log(hallList);
     function renderModalDelete(){
         const deleteItem = (e)=>{
             e.preventDefault()

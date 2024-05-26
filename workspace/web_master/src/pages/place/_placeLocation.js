@@ -36,7 +36,6 @@ const _PlaceLocation = ({place,SubmitForm}) => {
             ParentId: 3,
             paging: {Page: 0 , Size: 400, Desc: false}
         }).then((data) => {
-            console.log(data.data.Data);
             setLocations(data.data.Data.content)
         }).catch(e => {
             try {

@@ -34,7 +34,6 @@ const _hallAccess = ({user}) => {
     function changeAccess(item, e) {
         item.Access = e.target.checked;
         placePersonnel_updatePersonnelGateAccess([item]).then(result => {
-            console.log(result)
             getAccess();
         }).catch(e => {
             try {

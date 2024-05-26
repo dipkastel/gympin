@@ -15,7 +15,6 @@ const UserAccess = ({currentUser}) => {
     useEffect(() => {
         getUser();
         userRoles_getAllRoles().then(data => {
-            console.log(data.data.Data)
             SetRules(data.data.Data)
         }).catch(e => {
             try {
@@ -29,7 +28,6 @@ const UserAccess = ({currentUser}) => {
     function getUser() {
         user_getById({id: currentUser.Id})
             .then((data) => {
-                console.log(data.data.Data)
                 SetUserRoles(data.data.Data.UserRole);
             })
             .catch(e => {

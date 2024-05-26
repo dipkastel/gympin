@@ -38,7 +38,6 @@ const CoachManagement = () => {
             }
         }).then((data) => {
             setUserList(data.data.Data);
-            console.log(data.data.Data);
         })
             .catch(e => {
                 try {

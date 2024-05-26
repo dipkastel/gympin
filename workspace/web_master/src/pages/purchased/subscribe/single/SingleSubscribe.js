@@ -8,6 +8,7 @@ import _SingleSubscribeActions from "./_SingleSubscribeActions";
 import getAccessOf from "../../../../helper/accessManager";
 import {personnelAccessEnumT} from "../../../../helper/enums/personnelAccessEnum";
 import AccessDenied from "../../../../components/AccessDenied";
+import {getWizardComplete} from "../../../../helper/pocket";
 
 const SingleSubscribe = () => {
     const error = useContext(ErrorContext);

@@ -94,6 +94,7 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
                 setOpenModalAdd(false);
                 getSubscribeAvtiveTimes()
             }).catch(e => {
+                setOpenModalAdd(false);
                 try {
                     error.showError({message: e.response.data.Message,});
                 } catch (f) {
@@ -110,7 +111,6 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
                         <List dense={false}>
                             {placeActiveTimes && placeActiveTimes.map((pat, number) => (
                                     <div key={number}>
-                                        {console.log(pat)}
                                         <ListItem
                                             sx={{direction: "rtl", width: "100%"}}
                                         >
@@ -121,7 +121,7 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
                                                 label={(<ListItemText
                                                     sx={{width: "100%"}}
                                                     className="text-start"
-                                                    primary={pat.Hall?.Name + " ( " + dayOfWeekEnum[pat.DayOfWeek] + " ) "}
+                                                    primary={pat.Hall?.Name +" ← "+pat.Name + " ( " + dayOfWeekEnum[pat.DayOfWeek] + " ) "}
                                                     secondary={"از " +
                                                     pat.OpeningTime.substring(0, 5)
                                                     + " تا " +
@@ -147,7 +147,6 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
     }
 
     function ModalDeleteActiveTimes() {
-        console.log(deleteItem);
         function onDeleteItem(e) {
             e.preventDefault()
             TicketSubscribes_deleteSubscribeActiveTimes({Ticket:{Id:ticketSubscribe.Id},ActiveTime:[{Id: deleteItem.Id}]}).then(result => {
@@ -190,7 +189,7 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     sx={{paddingBottom: 0}}
-                    title={"سالن های قابل استفاده"}
+                    title={"فعالیت های عضویت"}
                     action={<Button onClick={() => setOpenModalAdd(true)}>افزودن</Button>}
                 />
 
@@ -201,7 +200,7 @@ const _SubscribeActiveTimes = ({ticketSubscribe}) => {
                             <ListItem sx={{direction: "rtl"}} key={"ch-" + number}>
                                 <ListItemText
                                     className="text-start"
-                                    primary={p.Hall.Name + " ( " + dayOfWeekEnum[p.DayOfWeek] + " ) "}
+                                    primary={p.Hall.Name+" ← "+p.Name + " ( " + dayOfWeekEnum[p.DayOfWeek] + " ) "}
                                     secondary={"از " +
                                     p.OpeningTime.substring(0, 5)
                                     + " تا " +
