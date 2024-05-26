@@ -22,7 +22,7 @@ const _CourseCoaches = ({ticketCourse}) => {
 
     function getPlaceCoaches() {
         placePersonnel_ByPlace({Id: place.Id}).then(data => {
-             SetPlaceCoaches(data.data.Data.filter(pp=>pp.UserRole=="PLACE_COACH"));
+             SetPlaceCoaches(data.data.Data?.filter(pp=>pp?.UserRole?.includes("PLACE_COACH")));
             getTicketCourseCoaches();
         }).catch(e => {
             try {
