@@ -48,7 +48,8 @@ const _PlaceLocation = ({place,SubmitForm}) => {
 
 
 
-    function Submit() {
+    function Submit(e) {
+        e.preventDefault();
         SubmitForm({
             ...place,
             Address:address,
@@ -84,7 +85,7 @@ const _PlaceLocation = ({place,SubmitForm}) => {
             />
             <CardContent sx={{overflow:"hidden"}}>
 
-                <_PlaceMap place={place} latlng={larlngChanged}/>
+                <_PlaceMap place={place} location={larlngChanged}/>
 
                 <FormControl variant="standard"
                              sx={{mt:2}}
@@ -116,7 +117,7 @@ const _PlaceLocation = ({place,SubmitForm}) => {
                     label={"آدرس"}
                     multiline
                 />
-                <Button variant={"outlined"} sx={{width:"100%"}} onClick={()=>Submit()}>ثبت</Button>
+                <Button variant={"outlined"} sx={{width:"100%"}} onClick={(e)=>Submit(e)}>ثبت</Button>
             </CardContent>
         </Card>
     );

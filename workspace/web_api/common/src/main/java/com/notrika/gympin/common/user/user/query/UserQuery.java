@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.user.user.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.*;
@@ -45,6 +46,9 @@ public class UserQuery extends BaseQuery<UserQuery> {
 
     @JsonProperty("Role")
     private RoleEnum is_userRolesærole;
+
+    @JsonProperty("PlaceRole")
+    private PlacePersonnelRoleEnum is_placePersonnelæplacePersonnelRolesærole;
 
     @JsonProperty("Sport")
     private Long is_sportæid;

@@ -86,7 +86,7 @@ export function* saga() {
             () => new Promise((resolve) => {
                 configs_getWebMasterSplash({UserId:action.payload.user.Id}).then((_result) => {
                     resolve(_result.data.Data);
-                    setWizardComplete(_result.data.Data?.UserSettings.filter(s=>s.Key=="USER_WIZARD_COMPLETE")?.[0]?.Value?.toLowerCase?.()=="true")
+                    setWizardComplete(!_result.data.Data?.UserSettings.filter(s=>s.Key=="USER_WIZARD_COMPLETE")?.[0]?.Value?.toLowerCase?.()=="false")
                 }).catch(e => {
                     console.log(e)
                 });

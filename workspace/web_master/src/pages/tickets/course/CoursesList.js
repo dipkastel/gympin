@@ -38,8 +38,9 @@ const CoursesList = ({OnChangeList}) => {
     function getPlaceCourses() {
         if (!place) return;
         TicketCourses_getByPlace({Id: place.Id}).then(result => {
-            OnChangeList(result.data.Data);
             setCoursesList(result.data.Data);
+            if(introMode)
+                OnChangeList(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -147,32 +148,32 @@ const CoursesList = ({OnChangeList}) => {
                             </Typography>
                             <Typography className={"col-6"} variant={"subtitle2"}
                                         color={item.Status ? "black" : "red"} alignItems="flex-start">
-                                {"چگونگی : " + (item.Status ? CourseStatusEnum[item.Status] : "نامشخص")}
+                                {"نوع : " + (item.Status ? CourseStatusEnum[item.Status] : "نامشخص")}
                             </Typography>
-                            <Typography className={"col-12"} variant={"subtitle2"}
+                            {item.StartDate&&<Typography className={"col-12"} variant={"subtitle2"}
                                         color={item.StartDate ? "black" : "red"} alignItems="flex-start">
                                 {"شروع کلاس : " + (item.StartDate ? new Date(item.StartDate).toLocaleDateString('fa-IR', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric'
                                 }): "نامشخص")}
-                            </Typography>
-                            <Typography className={"col-12"} variant={"subtitle2"}
+                            </Typography>}
+                            {item.EndDate&& <Typography className={"col-12"} variant={"subtitle2"}
                                         color={item.EndDate ? "black" : "red"} alignItems="flex-start">
                                 {"پایان کلاس : " + (item.EndDate ? new Date(item.EndDate).toLocaleDateString('fa-IR', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric'
                                 }): "نامشخص")}
-                            </Typography>
-                            <Typography className={"col-12"} variant={"subtitle2"} color={item.AgeLimit ? "black" : "red"}
+                            </Typography>}
+                            {item.AgeLimit&&<Typography className={"col-12"} variant={"subtitle2"} color={item.AgeLimit ? "black" : "red"}
                                         alignItems="flex-start">
                                 {"محدوده سنی : " + (item.AgeLimit|| "نامشخص")}
-                            </Typography>
-                            <Typography className={"col-12"} variant={"subtitle2"} color={item.CourseLevel ? "black" : "red"}
+                            </Typography>}
+                            {item.CourseLevel&&<Typography className={"col-12"} variant={"subtitle2"} color={item.CourseLevel ? "black" : "red"}
                                         alignItems="flex-start">
                                 {"سطح کلاس : " + (item.CourseLevel|| "نامشخص")}
-                            </Typography>
+                            </Typography>}
                             {item.Description&&<Typography className={"col-12"} variant={"subtitle2"}
                                          color={"black"}
                                          alignItems="flex-start">

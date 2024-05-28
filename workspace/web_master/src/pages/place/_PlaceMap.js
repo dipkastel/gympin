@@ -18,7 +18,7 @@ function MapFunctions({setPosition,location}) {
 }
 
 const _PlaceMap = ({place,location}) => {
-    const [position,setPosition]=useState([place.Latitude, place.Longitude])
+    const [position,setPosition]=useState([place.Latitude||35.6997238, place.Longitude||51.3379945])
     const iconSize = {x:63,y:72}
     const iconPerson = new L.Icon({
         iconUrl: '/assets/images/location.png',

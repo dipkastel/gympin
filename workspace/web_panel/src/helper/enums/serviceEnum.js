@@ -72,6 +72,11 @@ export const serviceEnum = {
     "public org.springframework.http.ResponseEntity<java.lang.Boolean> com.notrika.gympin.controller.impl.purchased.purchasedCourse.PurchasedCourseControllerImpl.enterRequest(com.notrika.gympin.common.purchased.purchasedCourse.param.PurchasedCourseParam) throws java.lang.Exception": "ثبت درخواست ورود",
     "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto> com.notrika.gympin.controller.impl.place.PlacePersonnelControllerImpl.deleteRole(com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam)": "خذف نقش پرسنل مجموعه",
     "public org.springframework.http.ResponseEntity<java.lang.Boolean> com.notrika.gympin.controller.impl.user.AccountControllerImpl.RequestRegisterAdvice(com.notrika.gympin.common.user.user.param.RequestRegisterParam)": "درخواست ثبت نام مجموعه",
-
+    "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.place.place.dto.PlaceDto> com.notrika.gympin.controller.impl.place.PlaceControllerImpl.addMultimedia(com.notrika.gympin.common.place.place.param.PlaceMultimediaParam)": "افزودن تصویر",
+    "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto> com.notrika.gympin.controller.impl.user.UserControllerImpl.SetUserSettings(com.notrika.gympin.common.settings.userSettings.param.UserSettingParam)": "تغییر تنظیمات کاربر",
+    "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.user.user.dto.UserDto> com.notrika.gympin.controller.impl.user.UserControllerImpl.updateUserStatus(com.notrika.gympin.common.user.user.param.UserStatusParam)": "تغییر وضعیت کاربر",
+    " ": "",
+    "  ": "",
+    "   ": "",
 
 }

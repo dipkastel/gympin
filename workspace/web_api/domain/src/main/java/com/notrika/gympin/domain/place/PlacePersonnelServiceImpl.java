@@ -136,13 +136,21 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             var placepersonnelRole=placePersonnel.getPlacePersonnelRoles().stream().filter(pp->pp.getRole()==placePersonnelParam.getUserRole()&&!pp.isDeleted()).findFirst().orElse(null);
             if(placepersonnelRole!=null)
                 placePersonnelRoleRepository.deleteById2(placepersonnelRole);
-        }catch (Exception e){}
+        }catch (Exception e){
+
+        }
         return PlaceConvertor.personnelToDto(placePersonnelRepository.getById(placePersonnelParam.getId()));
     }
 
     @Override
     public PlacePersonnelDto delete(@NonNull PlacePersonnelParam placePersonnelParam) {
         PlacePersonnelEntity entity = getEntityById(placePersonnelParam.getId());
+        try{
+            //delete roles
+            for (PlacePersonnelRoleEntity ppre:entity.getPlacePersonnelRoles().stream().filter(r->!r.isDeleted()).collect(Collectors.toList())) {
+                deletePlacePersonnelRole(PlacePersonnelParam.builder().id(placePersonnelParam.getId()).userRole(ppre.getRole()).build());
+            }
+        }catch (Exception e){}
         return PlaceConvertor.personnelToDto(placePersonnelRepository.deleteById2(entity));
     }
 

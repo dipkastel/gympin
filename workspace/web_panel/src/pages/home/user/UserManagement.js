@@ -12,7 +12,7 @@ import AddIcon from "@mui/icons-material/Add";
 import "leaflet/dist/leaflet.css";
 import {user_query} from "../../../network/api/user.api";
 import {Form, Modal} from "react-bootstrap";
-import {Avatar, Button, Chip, TextField} from "@mui/material";
+import {Avatar, Button, Chip, Paper, Tab, Tabs, TextField} from "@mui/material";
 import {account_registerByInviteCode} from "../../../network/api/auth.api";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
@@ -27,23 +27,13 @@ const UserManagement = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppUserManagement());
     const [userList, setUserList] = useState([]);
-    const [searchString, setSearchString] = useState("");
+    const [searchString, setSearchString] = useState(null);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
+    const [selectedTab, setSelectedTab] = useState("ALL");
     const history = useHistory();
 
     useEffect(() => {
-        user_query({
-            queryType: "SEARCH",
-            Username: searchString,
-            FullName: searchString,
-            PhoneNumber: searchString,
-            Email: searchString,
-            paging: {
-                Page: page,
-                Size: rowsPerPage,
-                Desc: true
-            }
-        }).then((data) => {
+        user_query(getSearchQuery()).then((data) => {
             setUserList(data.data.Data);
         })
             .catch(e => {
@@ -53,8 +43,101 @@ const UserManagement = () => {
                     error.showError({message: "خطا نا مشخص",});
                 }
             });
-    }, [page, rowsPerPage, searchString]);
+    }, [page, rowsPerPage, searchString,selectedTab]);
 
+
+    function getSearchQuery() {
+        switch (selectedTab){
+            case "ALL" :return {
+                queryType: "SEARCH",
+                Username: searchString,
+                FullName: searchString,
+                PhoneNumber: searchString,
+                Email: searchString,
+                paging: {
+                    Page: page,
+                    Size: rowsPerPage,
+                    Desc: true
+                }
+            }
+            case "PLACE_OWNER" :return {
+                queryType: "SEARCH",
+                Username: searchString,
+                FullName: searchString,
+                PhoneNumber: searchString,
+                Email: searchString,
+                PlaceRole:"PLACE_OWNER",
+                paging: {
+                    Page: page,
+                    Size: rowsPerPage,
+                    Desc: true
+                }
+            }
+            case "PLACE_PERSONNEL" :return {
+                queryType: "SEARCH",
+                Username: searchString,
+                FullName: searchString,
+                PhoneNumber: searchString,
+                Email: searchString,
+                PlaceRole:"PLACE_PERSONNEL",
+                paging: {
+                    Page: page,
+                    Size: rowsPerPage,
+                    Desc: true
+                }
+            }
+            case "PLACE_COACH" :return {
+                queryType: "SEARCH",
+                Username: searchString,
+                FullName: searchString,
+                PhoneNumber: searchString,
+                Email: searchString,
+                PlaceRole:"PLACE_COACH",
+                paging: {
+                    Page: page,
+                    Size: rowsPerPage,
+                    Desc: true
+                }
+            }
+            case "CORPORATE_MANAGER" :return {
+                queryType: "SEARCH",
+                Username: searchString,
+                FullName: searchString,
+                PhoneNumber: searchString,
+                Email: searchString,
+                paging: {
+                    Page: page,
+                    Size: rowsPerPage,
+                    Desc: true
+                }
+            }
+            case "CORPORATE_PERSONNEL" :return {
+                queryType: "SEARCH",
+                Username: searchString,
+                FullName: searchString,
+                PhoneNumber: searchString,
+                Email: searchString,
+                paging: {
+                    Page: page,
+                    Size: rowsPerPage,
+                    Desc: true
+                }
+            }
+            case "DELETED" :return {
+                queryType: "SEARCH",
+                Username: searchString,
+                FullName: searchString,
+                PhoneNumber: searchString,
+                Email: searchString,
+                deleted: true,
+                paging: {
+                    Page: page,
+                    Size: rowsPerPage,
+                    Desc: true
+                }
+            }
+        }
+    }
     function RenderModalAdd() {
         function addUser(e) {
             e.preventDefault()
@@ -118,7 +201,24 @@ const UserManagement = () => {
     return (
         <>
             <Notice icon="flaticon-warning kt-font-primary">مدیریت کاربران</Notice>
-
+            <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
+                <Tabs
+                    value={selectedTab}
+                    onChange={(e, n) => setSelectedTab(n)}
+                    indicatorColor="primary"
+                    textColor="inherit"
+                    variant={"standard"}
+                    aria-label="full width tabs example"
+                >
+                    <Tab label="همه" value={"ALL"}/>
+                    <Tab label="مدیر مجموعه" value={"PLACE_OWNER"}/>
+                    <Tab label="پرسنل مجموعه" value={"PLACE_PERSONNEL"}/>
+                    <Tab label="مربیان مجموعه" value={"PLACE_COACH"}/>
+                    <Tab label="مدیر شرکت" value={"CORPORATE_MANAGER"}/>
+                    <Tab label="پرسنل شرکت" value={"CORPORATE_PERSONNEL"}/>
+                    <Tab label="حذف شده" value={"DELETED"}/>
+                </Tabs>
+            </Paper>
             <Portlet>
                 <PortletHeader
                     title="کاربران"
@@ -131,9 +231,9 @@ const UserManagement = () => {
                                 variant="outlined"
                                 margin="normal"
                                 type="text"
-                                value={searchString}
+                                value={searchString||""}
                                 onChange={(event) => {
-                                    setSearchString(event.target.value);
+                                    setSearchString(event.target.value||null);
                                     setPage(0);
                                 }}
                                 label={"جستجو"}

@@ -58,9 +58,13 @@ public class BaseEntity<T> implements Specification<T> {
             if(value instanceof List){
                 for(Object item : (List) value){
                     addQuery(key,builder,predicate,root,operation,queries,item);
+                    if(!Objects.equals(key, "deleted"))
+                        addQuery("deleted",builder,predicate,root,operation,queries,false);
                 }
             }else{
                 addQuery(key,builder,predicate,root,operation,queries,value);
+                if(!Objects.equals(key, "deleted"))
+                    addQuery("deleted",builder,predicate,root,operation,queries,false);
             }
             criteriaQuery.distinct(true);
         }

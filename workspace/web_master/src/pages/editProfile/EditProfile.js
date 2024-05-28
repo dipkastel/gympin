@@ -1,5 +1,16 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {Avatar, Button, Card, Dialog, DialogActions, DialogContent, Grid, Input, TextField} from "@mui/material";
+import {
+    Avatar,
+    Button,
+    Card,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    FormControl, FormHelperText,
+    Grid,
+    Input, InputLabel, MenuItem, OutlinedInput, Select,
+    TextField
+} from "@mui/material";
 import {connect, useSelector} from "react-redux";
 import {media_AddImage, media_getCatById} from "../../network/api/multimedia.api";
 import {Formik} from "formik";
@@ -185,6 +196,7 @@ const EditProfile = (props) => {
                             Birthday: user.Birthday ? user.Birthday : "",
                             Email: user.Email,
                             FullName: user.FullName,
+                            Gender: user.Gender,
                             NationalCode: user.NationalCode,
                             PhoneNumber: user.PhoneNumber,
                             Username: user.Username,
@@ -194,6 +206,7 @@ const EditProfile = (props) => {
                             user_updateMe(values).then(result => {
                                 setUser(result.data.Data);
                                 props.RequestUser(values)
+                                error.showError({message: "با موفقیت ثبت شد",});
                             }).catch(e => {
                                 try {
                                     error.showError({message: e.response.data.Message,});
@@ -253,6 +266,21 @@ const EditProfile = (props) => {
                                         label={"نام و نام خانوادگی"}
                                     />
 
+                                    <FormControl sx={{mt:2}} variant={"outlined"} fullWidth >
+                                        <InputLabel id="demo-simple-select-label">جنسیت * </InputLabel>
+                                        <Select
+                                            className="w-100"
+                                            name="Gender"
+                                            onChange={e => {
+                                                setFieldValue("Gender", e.target.value)
+                                            }}
+                                            value={values.Gender||""}
+                                            input={<OutlinedInput label="جنسیت * " />}
+                                        >
+                                            <MenuItem value={"FEMALE"} >خانم</MenuItem>
+                                            <MenuItem value={"MALE"}>آقا</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                     <LocalizationProvider
                                         dateAdapter={AdapterJalaali} adapterLocale={"fa-IR"}>
                                         <DatePicker

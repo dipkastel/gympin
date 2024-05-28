@@ -30,7 +30,6 @@ const UserWizard = ({currentUser}) => {
     }, []);
 
     function changeUserWizard(checked){
-        console.log("wizard",!checked);
         user_SetUserSettings({Id:wizard?.Id,Value:!checked,Key:"USER_WIZARD_COMPLETE",User:{Id:currentUser.Id}}).then(result=>{
             SetWizard(result.data.Data);
             error.showError({message: "ثبت موفق",});
