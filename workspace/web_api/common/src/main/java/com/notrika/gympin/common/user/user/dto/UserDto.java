@@ -85,4 +85,7 @@ public class UserDto extends BaseDtoWithCreate<UserDto> /*implements UserDetails
     @JsonProperty("FinanceUser")
     private FinanceUserDto financeUser;
 
+    @JsonProperty("Wizard")
+    private Boolean wizard;
+
 }

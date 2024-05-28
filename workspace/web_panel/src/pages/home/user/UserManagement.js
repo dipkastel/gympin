@@ -9,10 +9,11 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import AddIcon from "@mui/icons-material/Add";
+import GavelIcon from '@mui/icons-material/Gavel';
 import "leaflet/dist/leaflet.css";
 import {user_query} from "../../../network/api/user.api";
 import {Form, Modal} from "react-bootstrap";
-import {Avatar, Button, Chip, Paper, Tab, Tabs, TextField} from "@mui/material";
+import {Avatar, Button, Chip, Paper, Tab, Tabs, TextField, Tooltip} from "@mui/material";
 import {account_registerByInviteCode} from "../../../network/api/auth.api";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
@@ -20,6 +21,9 @@ import {useSelector} from "react-redux";
 import {getUserFixedName} from "../../../helper";
 import {genders} from "../../../helper/enums/genders";
 import {getRppUserManagement, SetRppUserManagement} from "../../../helper/pocket/pocket";
+import SportsIcon from "@mui/icons-material/Sports";
+import AutoGraphIcon from '@mui/icons-material/AutoGraph';
+import {CreditScore} from "@mui/icons-material";
 
 const UserManagement = () => {
     const error = useContext(ErrorContext);
@@ -266,7 +270,7 @@ const UserManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>جنسیت</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>تلفن</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>تاریخ تولد</TableCell>
-                                    <TableCell align="right" padding="normal" sortDirection={false}>دسترسی</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>اطلاعات</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>کد ملی</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>گروه</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
@@ -279,6 +283,8 @@ const UserManagement = () => {
                                         <TableRow hover onClick={(event) => {
                                             history.push({pathname: "/users/details/" + row.Id});
                                         }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+
+                                            {console.log(row)}
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">
@@ -288,7 +294,19 @@ const UserManagement = () => {
                                             <TableCell align="right">{row.Gender?genders[row.Gender]:<Chip label={"ثبت نشده"} color={"error"}/>}</TableCell>
                                             <TableCell align="right">{row.PhoneNumber}</TableCell>
                                             <TableCell align="right">{row.Birthday?new Date(row.Birthday).toLocaleDateString('fa-IR', {month: 'long', day: 'numeric'}):<Chip label={"ثبت نشده"} color={"error"}/>}</TableCell>
-                                            <TableCell align="right">{row.UserRole.Role}</TableCell>
+                                            <TableCell align="right">
+
+                                                <Tooltip title={row.UserRole.Role?row.UserRole.Role:"بدون نقش"}>
+                                                    <GavelIcon color={row.UserRole.Role?"success":"error"} />
+                                                </Tooltip>
+                                                <Tooltip title={row.NationalCode?row.NationalCode:"بدون کد ملی"}>
+                                                    <CreditScore color={row.NationalCode?"success":"error"} />
+                                                </Tooltip>
+                                                <Tooltip title={"ویزارد"}>
+                                                    <AutoGraphIcon color={row.Wizard==null?"disabled":(row.Wizard==true)?"success":"error"} />
+                                                </Tooltip>
+
+                                            </TableCell>
                                             <TableCell align="right">{row.NationalCode?row.NationalCode:<Chip label={"ثبت نشده"} color={"error"}/>}</TableCell>
                                             <TableCell align="right">{row.UserGroup}</TableCell>
                                             <TableCell align="right">

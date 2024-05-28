@@ -3,7 +3,7 @@ import Notice from "../../partials/content/Notice";
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal, Table} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar,} from "../../partials/content/Portlet";
-import {Button, Card, CardContent, CardHeader, Chip, Grid, TextField} from "@mui/material";
+import {Button, Card, CardContent, CardHeader, Chip, Grid, TextField, Tooltip} from "@mui/material";
 import {Place_addPlace, Place_query} from "../../../network/api/place.api";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
@@ -16,6 +16,10 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {getRppPlaceManagement, SetRppPlaceManagement} from "../../../helper/pocket/pocket";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DangerousIcon from '@mui/icons-material/Dangerous';
+import PaidIcon from '@mui/icons-material/Paid';
+import ImageIcon from '@mui/icons-material/Image';
+import SportsIcon from '@mui/icons-material/Sports';
+import {ReceiptLong} from "@mui/icons-material";
 
 
 const PlaceManagement = () => {
@@ -217,7 +221,7 @@ const PlaceManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>Id</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>نام مجموعه</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>آدرس</TableCell>
-                                    <TableCell align="right" padding="normal" sortDirection={false}>ذینفع</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>اطلاعات</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -232,7 +236,17 @@ const PlaceManagement = () => {
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">{row.Name||"ثبت نشده"}</TableCell>
                                             <TableCell align="right">{row.Location?(row.Location.Name+" "+(row.Address||"")):"ثبت نشده"}</TableCell>
-                                            <TableCell align="right">{row.HasBeneficiary?(<CheckBoxIcon color={"success"} />):(<DangerousIcon color={"error"}/>)}</TableCell>
+                                            <TableCell align="right">
+                                                <Tooltip title={"ذینفع"}>
+                                                    <PaidIcon color={row.HasBeneficiary?"default":(row.HasBeneficiary==="true"?"success":"error")} />
+                                                </Tooltip>
+                                                <Tooltip title={"تصاوبر"}>
+                                                    <ImageIcon color={row.Multimedias?.[0]?"success":"error"} />
+                                                </Tooltip>
+                                                <Tooltip title={"ورزش ها"}>
+                                                    <SportsIcon color={row.Sports?.[0]?"success":"error"} />
+                                                </Tooltip>
+                                            </TableCell>
                                             <TableCell align="right">
                                                 <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
                                             </TableCell>

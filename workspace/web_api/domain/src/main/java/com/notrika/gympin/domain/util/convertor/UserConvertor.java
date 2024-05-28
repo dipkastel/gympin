@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
+import com.notrika.gympin.common.settings.userSettings.enums.UserSettingTypesEnum;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.dto.UserRegisterDto;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
@@ -26,12 +27,22 @@ public final class UserConvertor {
         dto.setEmail(user.getEmail());
         dto.setUserGroup(user.getUserGroup());
         dto.setFinanceUser(toFinanceDto(user.getFinanceUser()));
+        dto.setWizard(getWizard(user));
         dto.setUserRole(UserRoleConvertor.ToUserRoleDto(user).getRole());
         dto.setUserStatus(user.getUserStatus());
         dto.setBio(user.getBio());
         MultimediaEntity userMultimedias = user.getUserAvatar();
         dto.setAvatar(MultimediaConvertor.toDto(userMultimedias));
         return dto;
+    }
+
+    private static Boolean getWizard(UserEntity user) {
+        try {
+           var settings = user.getSettings().stream().filter(r->r.getKey().equals(UserSettingTypesEnum.USER_WIZARD_COMPLETE)).findFirst();
+           return (settings.get().getValue().equals("true"));
+        }catch (Exception e){
+            return null;
+        }
     }
 
     public static UserDto toDtoBrief(UserEntity user) {
