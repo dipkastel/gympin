@@ -122,7 +122,7 @@ const SubscribesList = ({OnChangeList}) => {
             {subscribesList && subscribesList.map((item, number) => (
                 <Card elevation={3} sx={{margin: 1}} key={"place-" + number}>
 
-                    <CardActionArea href={"/ticket/subscribe/" + item.Id}>
+                    <CardActionArea href={introMode?(""):("/ticket/subscribe/" + item.Id)}>
                         <CardHeader
                             sx={(!introMode)&&{paddingBottom: 0}}
                             title={item.Name}

@@ -8,6 +8,24 @@ import CoursesList from "../../tickets/course/CoursesList";
 
 const WPageTickets = ({onNext,ticketSubscribeChanges,ticketCourseChanges}) => {
 
+    const [introCanGoNext,setIntroCanGoNext] = useState(false);
+    const [courses,setCourses] = useState(null);
+    const [subscribes,setSubscribes] = useState(null);
+    useEffect(() => {
+        var ticketCount = (subscribes?.length||0)+(courses?.length||0)
+        setIntroCanGoNext(ticketCount>0)
+    }, [courses,subscribes]);
+
+    function schanges(data){
+        setSubscribes(data);
+        ticketSubscribeChanges(data);
+    }
+
+    function cchanges(data){
+        setCourses(data);
+        ticketCourseChanges(data);
+    }
+
     return (
         <div>
             <Grid container sx={{p:1}}>
@@ -34,10 +52,10 @@ const WPageTickets = ({onNext,ticketSubscribeChanges,ticketCourseChanges}) => {
                     کیک بوکسینگ
                 </Typography>
             </Grid>
-            <SubscribesList OnChangeList={ticketSubscribeChanges} />
-            <CoursesList OnChangeList={ticketCourseChanges} />
+            <SubscribesList OnChangeList={schanges} />
+            <CoursesList OnChangeList={cchanges} />
             <Grid sx={{p:2}}>
-                <Button onClick={(e)=>onNext()} fullWidth variant={"contained"} color={"primary"} >بعدی</Button>
+                <Button onClick={(e)=>onNext()} disabled={!introCanGoNext} fullWidth variant={"contained"} color={"primary"} >بعدی</Button>
             </Grid>
         </div>
     );

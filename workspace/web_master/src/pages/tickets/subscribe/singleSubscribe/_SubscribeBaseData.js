@@ -28,6 +28,18 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
 
     function updateSubscribe(e) {
         e.preventDefault();
+        if(inSubscribe?.PlacePrice<10000){
+            error.showError({message: "قیمت بلیط اشتباه است",});
+            return;
+        }
+        if(inSubscribe?.ValuePrice<10000){
+            error.showError({message: "ارزش بلیط اشتباه است",});
+            return;
+        }
+        if(inSubscribe?.ExpireDuration<3){
+            error.showError({message: "حداقل انقضا از تاریخ خرید باید 3 روز باشد",});
+            return;
+        }
         TicketSubscribes_update(inSubscribe).then(result => {
             getSubscribeData();
             error.showError({message: "با موفقیت ثبت شد",});

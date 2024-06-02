@@ -34,6 +34,18 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
 
     function updateCourse(e) {
         e.preventDefault();
+        if(inCourse?.PlacePrice<10000){
+            error.showError({message: "قیمت بلیط اشتباه است",});
+            return;
+        }
+        if(inCourse?.ValuePrice<10000){
+            error.showError({message: "ارزش بلیط اشتباه است",});
+            return;
+        }
+        if(inCourse?.ExpireDuration<3){
+            error.showError({message: "حداقل انقضا از تاریخ خرید باید 3 روز باشد",});
+            return;
+        }
         TicketCourses_update(inCourse).then(result => {
             getCourseData();
             error.showError({message: "با موفقیت ثبت شد",});
