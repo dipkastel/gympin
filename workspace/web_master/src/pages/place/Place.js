@@ -14,6 +14,9 @@ const Place = (props) => {
     const [place, setPlace] = useState();
     useEffect(() => {
         document.title = 'مدیریت مرکز';
+        getPlace();
+    }, []);
+    function getPlace(){
         place_getById(searchParams.get("id")).then(result=>{
             setPlace(result.data.Data)
         }).catch(e => {
@@ -23,10 +26,11 @@ const Place = (props) => {
                 error.showError({message: "خطا نا مشخص",});
             }
         })
-    }, []);
+    }
     function submitEdit(data){
         Place_update(data).then(result=>{
-            window.location = window.location
+            getPlace();
+            error.showError({message: "با موفقیت ثبت شد.",});
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

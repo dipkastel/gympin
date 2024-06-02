@@ -42,8 +42,9 @@ const SubscribesList = ({OnChangeList}) => {
     function getPlaceSubscribes() {
         if (!place) return;
         TicketSubscribes_getByPlace({Id: place.Id}).then(result => {
-            OnChangeList(result.data.Data);
             setSubscribesList(result.data.Data);
+            if(introMode)
+                OnChangeList(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
