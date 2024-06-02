@@ -59,6 +59,10 @@ const SubscribesList = ({OnChangeList}) => {
 
         function addGate(e) {
             e.preventDefault()
+            if (e.target.Name?.value?.length>35){
+                error.showError({message: "عنوان طولانی است",});
+                return;
+            }
             TicketSubscribes_add({
                 Name: e.target.Name.value,
                 place: {Id: place.Id}

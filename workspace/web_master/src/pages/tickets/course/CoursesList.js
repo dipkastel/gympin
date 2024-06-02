@@ -53,8 +53,12 @@ const CoursesList = ({OnChangeList}) => {
 
     function ModalAddCourse() {
 
-        function addGate(e) {
+        function addCourse(e) {
             e.preventDefault()
+            if (e.target.Name?.value?.length>35){
+                error.showError({message: "عنوان طولانی است",});
+                return;
+            }
             TicketCourses_add({
                 Name: e.target.Name.value,
                 place: {Id: place.Id}
@@ -73,7 +77,7 @@ const CoursesList = ({OnChangeList}) => {
         return (
             <div>
                 <Dialog open={openModalAdd} onClose={() => setOpenModalAdd(false)}>
-                    <Form onSubmit={addGate}>
+                    <Form onSubmit={addCourse}>
                         <DialogTitle>افزودن کلاس جدید</DialogTitle>
                         <DialogContent>
                             <Typography variant={"caption"}>
