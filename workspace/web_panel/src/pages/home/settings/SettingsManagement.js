@@ -7,6 +7,7 @@ import _SettingSms from "./sms/_SettingSms";
 import _SettingNotification from "./Notification/_SettingNotification";
 import _SettingPersonal from "./Personal/_SettingPersonal";
 import _SettingActivities from "./Activities/_SettingActivities";
+import _PhoneBook from "./phoneBook/_PhoneBook";
 
 
 const SettingsManagement = () => {
@@ -30,6 +31,7 @@ const SettingsManagement = () => {
                 >
                     <Tab label="عمومی" value={"GENERAL"}/>
                     <Tab label="مالی" value={"FINANCE"}/>
+                    <Tab label="دفترچه تلفن" value={"PHONEBOOK"}/>
                     <Tab label="پیامک" value={"SMS"}/>
                     <Tab label="نوتیفیکیشن" value={"NOTIFICATION"}/>
                     <Tab label="فعالیت ها" value={"ACTIVITIES"}/>
@@ -39,6 +41,7 @@ const SettingsManagement = () => {
             {selectedTab == "GENERAL" && <_SettingGeneral />}
             {selectedTab == "FINANCE" && <_SettingFinance />}
             {selectedTab == "SMS" && <_SettingSms />}
+            {selectedTab == "PHONEBOOK" && <_PhoneBook />}
             {selectedTab == "NOTIFICATION" && <_SettingNotification />}
             {selectedTab == "ACTIVITIES" && <_SettingActivities />}
             {selectedTab == "POCKET" && <_SettingPersonal />}

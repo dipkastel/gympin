@@ -40,5 +40,13 @@ public class NoteQuery extends BaseQuery<NoteQuery> {
     @JsonProperty("IsToDo")
     private Boolean is_isToDo;
 
+    @JsonProperty("Text")
+    private String like_text;
+
+    @JsonProperty("Place")
+    private String like_placeæname;
+
+
+
 
 }

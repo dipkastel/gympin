@@ -30,6 +30,16 @@ export function SetRppDashNote(number){
     return getValue(rpp_dashNote);
 }
 
+const rpp_phoneBook = "rpp_phoneBook";
+
+export function getRppPhoneBook(){
+    return getValue(rpp_phoneBook)||10;
+}
+export function SetRppPhoneBook(number){
+    setValue(rpp_phoneBook,number);
+    return getValue(rpp_phoneBook);
+}
+
 const rpp_transactionAllManagement = "rpp_transactionAllManagement";
 export function getRppTransactionAllManagement(){
     return getValue(rpp_transactionAllManagement)||15;
