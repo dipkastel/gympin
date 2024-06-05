@@ -4,7 +4,7 @@ import __SmsPendingList from "./engin/__SmsPendingList";
 import __SmsFailedList from "./engin/__SmsFailedList";
 import __SmsCanceledList from "./engin/__SmsCanceledList";
 
-const __SettingSmsConfigs = () => {
+const __SettingSmsConfigs = ({smsSent}) => {
 
     const [updatePageP, SetUpdatePageP] = useState(false);
     useEffect(() => {
@@ -24,7 +24,7 @@ const __SettingSmsConfigs = () => {
                     <__SmsCanceledList updatePage={updatePage}/>
                 </div>
                 <div className={"col-6"}>
-                    <__SmsSentList updatePage={updatePage}/>
+                    <__SmsSentList updatePage={updatePage} smsSent={smsSent}/>
                 </div>
             </div>
             }

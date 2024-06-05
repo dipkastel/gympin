@@ -39,4 +39,8 @@ public class SmsQuery extends BaseQuery<SmsQuery> {
     private SmsStatus is_smsStatus;
 
 
+    @JsonProperty("PhoneNumber")
+    private String like_userNumber;
+
+
 }

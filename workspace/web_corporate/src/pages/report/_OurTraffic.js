@@ -6,7 +6,7 @@ export default function _OurTraffic() {
     var data = [];
     for (var i = 1; i < 27; i++) {
         var current = {
-            entery: Math.floor(Math.random() * (20+i)+i)*10000,
+            entery: Math.floor(Math.random() * (1+i/2)+i/3)*1,
             date: new Date().setDate(new Date().getDate() - (30-i))
         }
         data.push(current);
@@ -14,7 +14,7 @@ export default function _OurTraffic() {
     return (
         <Card elevation={3} sx={{margin: 1}}>
             <CardHeader
-            title="مجموع ورزش پرسنل"
+            title="مجموع تعداد بلیط فروخته شده"
             sx={{
             }}
             />

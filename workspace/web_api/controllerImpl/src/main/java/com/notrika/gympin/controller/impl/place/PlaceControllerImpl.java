@@ -40,7 +40,6 @@ public class PlaceControllerImpl implements PlaceController {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN','MANAGER')")
     public ResponseEntity<PlaceDto> update( PlaceParam placeParam) {
         return new ResponseEntity<>(placeService.update(placeParam), HttpStatus.OK);
     }

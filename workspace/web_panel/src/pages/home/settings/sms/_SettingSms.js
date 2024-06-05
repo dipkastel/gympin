@@ -3,6 +3,7 @@ import __SettingSmsConfigs from "./__SettingSmsConfigs";
 import __SettingSmsList from "./__SettingSmsList";
 import {Paper, Tab, Tabs} from "@mui/material";
 import __SettingSmsManual from "./__SettingSmsManual";
+import __SettingSmsPattern from "./__SettingSmsPattern";
 
 const _SettingSms = () => {
 
@@ -32,12 +33,14 @@ const _SettingSms = () => {
                     <Tab label="موتور پیامک" value={"Auto"}/>
                     <Tab label="ارسال دستی" value={"Manual"}/>
                     <Tab label="پیشرفته" value={"Advance"}/>
+                    <Tab label="پترن ها" value={"Patterns"}/>
                 </Tabs>
             </Paper>
             {!updatePageP && <div>
                 {selectedTab == "Auto" && <__SettingSmsList updatePage={updatePage}/>}
-                {selectedTab == "Manual" && <__SettingSmsManual updatePage={updatePage}/>}
+                {selectedTab == "Manual" && <__SettingSmsManual updatePage={updatePage} smsSent={()=>setSelectedTab("Auto")}/>}
                 {selectedTab == "Advance" && <__SettingSmsConfigs updatePage={updatePage}/>}
+                {selectedTab == "Patterns" && <__SettingSmsPattern updatePage={updatePage}/>}
             </div>}
         </>
     );

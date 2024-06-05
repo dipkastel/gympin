@@ -39,6 +39,9 @@ public class ManageSmsPatternEntity extends BaseEntityWithCreateUpdate<ManageSms
     @Column(name = "Template", nullable = false)
     private String template;
 
+    @Column(name = "SmsType", nullable = false)
+    private SmsTypes smsTypes;
+
     @Column(name = "DelayInMin", nullable = false)
     private Integer delayInMin;
 

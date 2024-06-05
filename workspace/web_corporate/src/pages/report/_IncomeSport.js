@@ -26,7 +26,7 @@ const _IncomeSport = () => {
     return (
         <Card elevation={3} sx={{margin:1}}>
             <CardHeader
-                title={"درآمد"}
+                title={"گستره بلیط در ورزش"}
             />
             <CardContent>
                 <ResponsiveContainer width="100%" aspect={1}>

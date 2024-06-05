@@ -4,10 +4,10 @@ import {Card, CardContent, CardHeader} from "@mui/material";
 
 export default function _OurTraffic() {
     var data = [];
-    for (var i = 1; i < 27; i++) {
+    for (var i = 1; i < 24; i++) {
         var current = {
-            entery: Math.floor(Math.random() * 10+3),
-            date: new Date().setDate(new Date().getDate() - (30-i))
+            entery: (i>6)?(i>18)?Math.floor(Math.random() * 2+8):Math.floor(Math.random() * 4+3):0,
+            date: new Date().setHours( i,0,0 )
         }
         data.push(current);
     }
@@ -19,15 +19,15 @@ export default function _OurTraffic() {
             }}
             />
             <CardContent>
-                <ResponsiveContainer width="100%" aspect={3}>
+                <ResponsiveContainer width="103%" aspect={3}>
                     <LineChart
                         data={data}
                     >
                         <XAxis dataKey={(item) => {
-                            return new Date(item.date).toLocaleDateString('fa-IR', {month: 'long', day: 'numeric'})
+                            return new Date(item.date).toLocaleTimeString('fa-IR', { hour: 'numeric', minute: 'numeric'})
                         }}/>
                         <YAxis/>
-                        <Line type="monotone" dataKey="entery" stroke="#f00fff" activeDot={{r: 8}}/>
+                        <Line type="step" dataKey="entery" fill={"#f00fff"} stroke="#f00fff" activeDot={{r: 8}}/>
                     </LineChart>
                 </ResponsiveContainer>
             </CardContent>

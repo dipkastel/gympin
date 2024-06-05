@@ -6,7 +6,7 @@ export default function _Income() {
     var data = [];
     for (var i = 1; i < 27; i++) {
         var current = {
-            entery: Math.floor(Math.random() * 160000+80000),
+            entery: Math.floor(Math.random() * 1900+380),
             date: new Date().setDate(new Date().getDate() - (30-i))
         }
         data.push(current);
@@ -14,7 +14,7 @@ export default function _Income() {
     return (
         <Card elevation={3} sx={{margin: 1}}>
             <CardHeader
-            title="درآمد"
+            title="استفاده از اعتبار"
             sx={{
             }}
             />
@@ -26,8 +26,8 @@ export default function _Income() {
                         <XAxis dataKey={(item) => {
                             return new Date(item.date).toLocaleDateString('fa-IR', {month: 'long', day: 'numeric'})
                         }}/>
-                        <YAxis/>
-                        <Line type="monotone" dataKey="entery" stroke="#088008" activeDot={{r: 8}}/>
+                        <YAxis />
+                        <Line type="monotone" dataKey="entery" stroke="#088008" activeDot={{r: 90}}/>
                     </LineChart>
                 </ResponsiveContainer>
             </CardContent>

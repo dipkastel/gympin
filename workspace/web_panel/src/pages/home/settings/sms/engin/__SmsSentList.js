@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {getRppSmsList, SetRppSmsList} from "../../../../../helper/pocket/pocket";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {sms_ChangeStatus, sms_query} from "../../../../../network/api/sms.api";
-import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {Button, Typography} from "@mui/material";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
+import {Button, TextField, Typography} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import {Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
@@ -20,16 +20,18 @@ const __SmsSentList = ({updatePage}) => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppSmsList());
+    const [searchString, setSearchString] = useState(null);
 
     useEffect(() => {
         getSmsSentList();
-    }, []);
+    }, [page,rowsPerPage,searchString]);
 
 
     function getSmsSentList() {
         sms_query({
-            queryType: "SEARCH",
+            queryType: "FILTER",
             SmsStatus:"SENT",
+            PhoneNumber:searchString,
             paging: {Page: page, Size: rowsPerPage,Desc:true}
         }).then((data) => {
             SetSmsSentList(data.data.Data)
@@ -53,6 +55,25 @@ const __SmsSentList = ({updatePage}) => {
                     title={<>
                         <Typography variant={"subtitle1"}>لیست پیام های ارسال شده</Typography>
                     </>}
+
+                    toolbar={
+                        <PortletHeaderToolbar>
+                            <TextField
+                                fullWidth
+                                id="outlined-adornment-password"
+                                className="w-100"
+                                variant="outlined"
+                                margin="normal"
+                                type="text"
+                                value={searchString}
+                                onChange={(event) => {
+                                    setSearchString(event.target.value);
+                                    setPage(0);
+                                }}
+                                label={"جستجو"}
+                            />
+                        </PortletHeaderToolbar>
+                    }
                 />
 
                 <PortletBody className={"p-2"}>

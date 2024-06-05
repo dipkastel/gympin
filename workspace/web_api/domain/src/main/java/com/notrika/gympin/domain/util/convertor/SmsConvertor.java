@@ -35,6 +35,7 @@ public class SmsConvertor {
                 .template(entity.getTemplate())
                 .name(entity.getName())
                 .patternCode(entity.getPatternCode())
+                .smsType(entity.getSmsTypes())
                 .provider(entity.getProvider().getValue())
                 .build();
     }

@@ -90,7 +90,7 @@ const SettingDetail = ({setting, refreshData}) => {
 
                 <PortletBody className={"p-2"}>
                         <Grid container alignItems={"center"} justifyContent={"space-between"} direction={"row"}>
-                            <Grid paddingX={1} alignItems={"center"} md={6}>
+                            <Grid item paddingX={1} alignItems={"center"} md={6}>
                                 <TextField
                                     label="مقدار"
                                     name="Value"
@@ -102,7 +102,7 @@ const SettingDetail = ({setting, refreshData}) => {
                                     variant="outlined"
                                 />
                             </Grid>
-                            <Grid paddingX={1} alignItems={"center"} md={5}>
+                            <Grid item paddingX={1} alignItems={"center"} md={5}>
                                 {(inSetting["Data"]) ?
                                     <TextField
                                         label="مقدار اضافه"
@@ -129,7 +129,7 @@ const SettingDetail = ({setting, refreshData}) => {
 
                 </PortletBody>
                 <PortletFooter>
-                    <Grid paddingX={1} md={6}>
+                    <Grid item paddingX={1} md={6}>
                         <Button
                             type={"submit"}
                             variant={"contained"}

@@ -1,4 +1,5 @@
 import {user_addUserRole} from "./user.api";
+import {sms_updatePattern} from "./sms.api";
 
 export let AuthApi = {
     // BASEURL: "https://api.gympin.ir/",
@@ -319,6 +320,9 @@ export let SmsApi = {
     delete: "v1/sms/delete",
     getAll: "v1/sms/getAll",
     getById: "v1/sms/getById",
+    getAllPatterns: "v1/sms/getAllPatterns",
+    updatePattern: "v1/sms/updatePattern",
+    addPattern: "v1/sms/addPattern",
     update: "v1/sms/update",
     changeSmsStatus: "v1/sms/changeSmsStatus",
     query: "v1/sms/query",

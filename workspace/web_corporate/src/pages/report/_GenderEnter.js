@@ -22,7 +22,7 @@ const _GenderEnter = () => {
     return (
         <Card elevation={3} sx={{margin:1}}>
             <CardHeader
-                title={"ورود"}
+                title={"جنسیت پرسنل استفاده کننده"}
             />
             <CardContent>
                 <ResponsiveContainer width="100%" aspect={1}>
@@ -33,7 +33,7 @@ const _GenderEnter = () => {
                             cy="50%"
                             labelLine={false}
                             label={renderCustomizedLabel}
-                            outerRadius={60}
+                            outerRadius={130}
                             fill="#8884d8"
                             dataKey="value">
                             {data01.map((entry, index) => (

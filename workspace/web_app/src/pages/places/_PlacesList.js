@@ -150,6 +150,7 @@ const _PlacesList = () => {
 
     function getData(page){
         setIsLoading(true);
+        console.log("page",page)
         Place_query({
             queryType: "FILTER",
             Status:"Active",
@@ -216,6 +217,7 @@ const _PlacesList = () => {
 
     const handleScroll = () => {
        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) {
+           console.log("not yet")
             return;
         }
          setLoadedPage(loadedPage+1);
