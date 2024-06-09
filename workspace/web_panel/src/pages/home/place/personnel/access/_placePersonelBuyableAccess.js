@@ -29,7 +29,11 @@ const _placePersonelBuyableAccess = ({personel}) => {
 
     function changeAccess(item, e) {
         item.Access = e.target.checked;
-        placePersonnel_updatePersonnelBuyableAccess([item]).then(result=>{
+        placePersonnel_updatePersonnelBuyableAccess([
+            {PlacePersonelId:item.PlacePersonelId,
+                Buyable:{Id:item.Buyable.Id},
+                Access:e.target.checked}
+        ]).then(result=>{
             getAccess();
             error.showError({message: "عملیات موفق",});
         }).catch(e => {

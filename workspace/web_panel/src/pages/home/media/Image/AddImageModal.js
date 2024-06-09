@@ -89,7 +89,7 @@ const AddImageModal = ({setOpenAddImage, done: uploadComplete}) => {
                 {
                     isDragActive ?
                         <p className={"drag-div"}>Drop</p> : (
-                            <div className={"drag-div"}>
+                            <div className={"drag-div  drop-img-box"}>
                                 <p>Drag and drop some image here</p>
                                 <p>...or...</p>
                                 <p><Button variant={"contained"} color={"primary"}>select image</Button></p>

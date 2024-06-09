@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
 import {
-    Alert,
     Button,
     Card,
     CardActions,
@@ -15,6 +14,8 @@ import {Formik} from "formik";
 import {requestRegisterPlace} from "../../network/api/account.api";
 import {useNavigate} from "react-router-dom";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import {toAbsoluteUrl} from "../../helper/utils";
+import {Alert} from "react-bootstrap";
 
 
 export default function Register(props) {
@@ -47,10 +48,25 @@ export default function Register(props) {
                                 backgroundColor: "primary.main",
                                 color: "#fff"
                             }}
-                            title="ثبت مجموعه"
+                            title="فرم درخواست ثبت مجموعه ورزشی"
                         />
                         <CardContent>
 
+
+                            <video autoPlay={true} height={"100%"} width={"100%"} type="video/mp4" controls >
+                                <source src={toAbsoluteUrl("/assets/videos/gympin-place-1.mp4")} type="video/mp4"/>
+                                Your browser does not support the video tag.
+                            </video>
+
+                            <Alert variant={"info"} className={"m-2"}>
+                                <Typography variant={"h6"} sx={{pt:4, px:3,textAlign:"center"}} >
+                                    کارکنان سازمان‌های طرف قرارداد ما، می باید از خدمات مجموعه های ورزشی-تفریحی معرفی شده در فهرست جیم پین استفاده کنند.
+                                </Typography>
+
+                                <Typography variant={"body1"} sx={{pb:3,px:3,textAlign:"center"}} >
+                                    برای قرارگرفتن در لیست مجموعه های جیم پین فرم زیر را تکمیل نمایید.
+                                </Typography>
+                            </Alert>
                             <Formik
                                 initialValues={{
                                     username: "",

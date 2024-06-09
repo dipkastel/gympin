@@ -36,17 +36,13 @@ public class PurchasedSubscribeServiceHelper {
         GympinContext context = GympinContextHolder.getContext();
         if (context == null)
             throw new UnknownUserException();
-        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-        var userHallAccess = userRequester.getPlacePersonnel().stream().filter(p -> p.getPlace().getId() == placeId).findFirst().get();
-        var halls = purchesedSubscribe.getTicketSubscribe().getActiveTimes().stream().map(TicketHallActiveTimeEntity::getHall).collect(Collectors.toSet());
-        for (var hall : halls) {
-            if (userHallAccess.getPlacePersonnelRoles().stream().anyMatch(pp->pp.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER)) return true;
-            if (userHallAccess.getPlacePersonnelBuyableAccess().size() < 1) return false;
-            var hallAccess = userHallAccess.getPlacePersonnelBuyableAccess().stream().filter(c -> Objects.equals(c.getBuyable().getId(), hall.getId())).findFirst().get();
-            if (!hallAccess.getAccess())
-                return false;
-        }
-        return true;
+        try{
+            UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+            var personnel = userRequester.getPlacePersonnel().stream().filter(p -> (p.getPlace().getId() == placeId)&&!p.isDeleted()).findFirst().get();
+            var access = personnel.getPlacePersonnelBuyableAccess();
+            return access.stream().filter(o-> o.getBuyable().getId().equals(purchesedSubscribe.getTicketSubscribe().getId())).findFirst().get().getAccess();
+        }catch (Exception e){return false;}
+
     }
 
     public PurchasedSubscribeEntity checkForExpire(PurchasedSubscribeEntity subscribe) {

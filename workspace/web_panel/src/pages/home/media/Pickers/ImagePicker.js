@@ -13,7 +13,7 @@ import {
     Paper,
     Typography
 } from "@mui/material";
-import {ArrowForward, Category, FilterAlt, WarningSharp} from '@mui/icons-material';
+import {ArrowForward, FilterAlt, WarningSharp} from '@mui/icons-material';
 import {media_addImage, media_query} from "../../../../network/api/media.api";
 import AddIcon from "@mui/icons-material/Add";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
@@ -65,26 +65,26 @@ const ImagePicker = ({setClose, onSelect, options}) => {
 
     useEffect(() => {
         var cErrors = [];
-        addItem.map(file=>{
-            var category =  categories.filter(c=>c.Id==file.category)[0];
+        addItem.map(file => {
+            var category = categories.filter(c => c.Id == file.category)[0];
 
             var fr = new FileReader;
-            fr.onload = function() { // file is loaded
+            fr.onload = function () { // file is loaded
                 var img = new Image;
-                img.onload = function() {
+                img.onload = function () {
                     var errors = [];
-                    if(img.width<category.MINW)
+                    if (img.width < category.MINW)
                         errors.push("عرض تصویر کوچک است")
-                    if(img.height<category.MINH)
+                    if (img.height < category.MINH)
                         errors.push("طول تصویر کوچک است")
-                    if(img.width>category.MAXW)
+                    if (img.width > category.MAXW)
                         errors.push("عرض تصویر بزرگ است")
-                    if(img.height>category.MAXH)
+                    if (img.height > category.MAXH)
                         errors.push("طول تصویر بزرگ است")
-                    if(img.height/img.width!=category.ARH/category.ARW)
+                    if (img.height / img.width != category.ARH / category.ARW)
                         errors.push("نسبت ابعاد رعایت نشده")
 
-                    cErrors.push({name:file.image.path,errors:errors})
+                    cErrors.push({name: file.image.path, errors: errors})
 
                 };
 
@@ -257,12 +257,12 @@ const ImagePicker = ({setClose, onSelect, options}) => {
                                     return {label: data.Name, value: data.Id}
                                 })}
                             />
-                            {CompatibleErrors.filter(ce=>ce.name==file.name)[0]?.errors?.map(err => (
-                                 <div className={"row m-1"}>
-                                     <WarningSharp color={"error"}/>
-                                     <Typography variant={"body2"} color={"red"}>{err}
-                                     </Typography>
-                                 </div>))}
+                            {CompatibleErrors.filter(ce => ce.name == file.name)[0]?.errors?.map(err => (
+                                <div className={"row m-1"}>
+                                    <WarningSharp color={"error"}/>
+                                    <Typography variant={"body2"} color={"red"}>{err}
+                                    </Typography>
+                                </div>))}
                         </Form.Group>
                         <Form.Group className={"col-md-3"}>
                             <Form.Control

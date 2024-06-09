@@ -1,16 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Badge, Card, CardContent, Grid, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import purchasedTypes from "../../../helper/data/purchasedTypes";
 import getAccessOf from "../../../helper/accessManager";
+import {useSelector} from "react-redux";
+import {purchased_query} from "../../../network/api/purchased.api";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 
 const SellsOfPlace = ({selectedSubscribe}) => {
+
     const navigate = useNavigate();
+    const error = useContext(ErrorContext);
+    const place = useSelector(({place}) => place.place)
     const [purchasedBase,setPurchasedBase] = useState([]);
 
     useEffect(() => {
-
+        purchased_query({
+                queryType: "FILTER",
+                PlaceId: place.Id,
+                paging: {Page: 0, Size: 100, Desc: true}
+            }).then((data) => {
+                setPurchasedBase(data.data.Data.content.reduce(function(rv, x) {
+                    (rv[x["PurchasedType"].toLowerCase()] = rv[x["PurchasedType"].toLowerCase()] || []).push(x);
+                    return rv;
+                }, {}))
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
     }, []);
 
 
@@ -23,7 +44,7 @@ const SellsOfPlace = ({selectedSubscribe}) => {
                         <Card onClick={(e)=>item.Status=="Active"?navigate(item.Destination, {replace: true}):{}}  sx={{m:1}} elevation={3}>
                             <CardContent className={"row"}>
                                 <div className={"col-sm-12 col-md-6"}>
-                                    <Badge badgeContent={0} color="primary">
+                                    <Badge badgeContent={purchasedBase[item?.Type?.toLowerCase()]?.length} color="primary">
                                         {item.Icon}
                                     </Badge>
                                 </div>

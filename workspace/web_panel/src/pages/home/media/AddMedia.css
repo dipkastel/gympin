@@ -23,6 +23,10 @@
   object-fit: contain;
 }
 
+.drop-img-box{
+  max-height: 300px;
+}
+
 .delete-image-Upload{
   position: absolute !important;
 }
