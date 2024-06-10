@@ -109,7 +109,7 @@ const _invoiceAgreements = ({userBasket, setAcceptAgreements}) => {
                     <Grid item xs={12}>
                         <FormControlLabel sx={{m: 0}} onChange={(e) => changeCheckedItem(0, e)}
                                           control={<Switch checked={checkedItem?.includes(0)}/>}
-                                          label={"قوانین و مقررات جیمپین را می پذیرم"}/>
+                                          label={"قوانین و مقررات جیم پین را می پذیرم"}/>
                     </Grid>
                     <Grid item xs={3}>
                         <Button size={"small"} target={"_blank"} href={"https://gympin.ir/term-and-conditions"}
