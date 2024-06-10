@@ -90,6 +90,7 @@ const _PlacesList = () => {
 
 
     const [isLoading, setIsLoading] = useState(false);
+    const [endOfList, setEndOfList] = useState(false);
     const [sortBy, SetSortBy] = useState(sortPlaceItems[0])
     const [openModal, setOpenModal] = useState(false)
     const [sports, SetSports] = useState([])
@@ -150,7 +151,6 @@ const _PlacesList = () => {
 
     function getData(page){
         setIsLoading(true);
-        console.log("page",page)
         Place_query({
             queryType: "FILTER",
             Status:"Active",
@@ -165,7 +165,7 @@ const _PlacesList = () => {
             var content = places?places.content:[];
             content.push(...result.data.Data.content);
             SetPlaces({...result.data.Data,content:content});
-            // SetPlaces(result.data.Data);
+            setEndOfList(result.data.Data.last);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -216,8 +216,7 @@ const _PlacesList = () => {
     }
 
     const handleScroll = () => {
-       if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) {
-           console.log("not yet")
+       if (window.innerHeight + document.documentElement.scrollTop+40 < document.documentElement.offsetHeight || isLoading||endOfList) {
             return;
         }
          setLoadedPage(loadedPage+1);

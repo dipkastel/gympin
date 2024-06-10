@@ -43,7 +43,7 @@ public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
     @Column(name = "fullName")
     private String fullName;
 
-    @Column(unique = true, name = "phoneNumber", nullable = false)
+    @Column(name = "phoneNumber", nullable = false)
     private String phoneNumber;
 
     @Column(name = "gender")
