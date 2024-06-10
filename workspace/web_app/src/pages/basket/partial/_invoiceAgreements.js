@@ -9,6 +9,8 @@ const _invoiceAgreements = ({userBasket, setAcceptAgreements}) => {
     const error = useContext(ErrorContext);
     const [acceptableTerm, setAcceptableTerm] = useState([]);
     const [checkedItem, setCheckedItem] = useState([]);
+    const [loading, setLoading] = useState(true)
+
 
     useEffect(() => {
         getAbouts();
@@ -21,6 +23,7 @@ const _invoiceAgreements = ({userBasket, setAcceptAgreements}) => {
     function getAbouts() {
         PlaceAbout_getAllAboutByPlaces(userBasket?.InvoiceBuyables?.map(b => ({Id: b.Place.Id}))).then(result => {
             setAcceptableTerm(result.data.Data.filter(ap => ap.Acceptable));
+            setLoading(false);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -40,7 +43,7 @@ const _invoiceAgreements = ({userBasket, setAcceptAgreements}) => {
 
     function checkForAcceptAll() {
         var result = true;
-        if (!acceptableTerm[0]) {
+        if (loading) {
             result = false;
         }
         if (!checkedItem.includes(0)) {
