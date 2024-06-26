@@ -3,6 +3,10 @@ package com.notrika.gympin.common.ticket.ticketSubscribe.service;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
+import com.notrika.gympin.common.ticket.ticketCourse.dto.TicketCourseDto;
+import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseCoachParam;
+import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeCoachParam;
+import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
@@ -16,12 +20,20 @@ import java.util.List;
 public interface TicketSubscribeService extends BaseService<TicketSubscribeParam, TicketSubscribeDto, TicketSubscribeQuery> {
 
     List<TicketSubscribeDto> getTicketSubscribeByPlace(PlaceParam place);
-    List<PlaceSportDto> getSports(Long ticketSubscribeId);
-    TicketSubscribeDto addSport(TicketSubscribeSportParam ticketSubscribeSportParam);
-    TicketSubscribeDto deleteSport(TicketSubscribeSportParam ticketSubscribeSportParam);
     List<TicketDiscountHistoryDto> getTicketSubscribeDiscountHistory(Long ticketSubscribeId);
     TicketSubscribeDto ChangeTicketSubscribeStatus(TicketSubscribeParam ticketSubscribeParam);
 
+    //sport
+    List<PlaceSportDto> getSports(Long ticketSubscribeId);
+    TicketSubscribeDto addSport(TicketSubscribeSportParam ticketSubscribeSportParam);
+    TicketSubscribeDto deleteSport(TicketSubscribeSportParam ticketSubscribeSportParam);
+
+    //coach
+    List<UserDto> getCoaches(Long ticketId);
+    TicketSubscribeDto addCoach(TicketSubscribeCoachParam param);
+    TicketSubscribeDto deleteCoach(TicketSubscribeCoachParam param);
+
+    //activeTime
     List<ActiveTimesDto> getTicketSubscribeActiveTimesByTicketSubscribe(Long ticketSubscribeId);
     TicketSubscribeDto addSubscribeActiveTimes(TicketActiveTimesParam ticketSubscribeActiveTimesParam);
     TicketSubscribeDto deleteSubscribeActiveTimes(TicketActiveTimesParam ticketSubscribeActiveTimesParam);

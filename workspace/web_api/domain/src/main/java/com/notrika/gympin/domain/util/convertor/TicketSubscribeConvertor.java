@@ -5,6 +5,8 @@ import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 //import com.notrika.gympin.common.ticket.subscribe.dto.TicketSubscribeActionDto;
 import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
+
+import java.util.stream.Collectors;
 //import com.notrika.gympin.persistence.entity.ticket.common.TicketSubscribeHallActiveTime;
 
 public class TicketSubscribeConvertor {
@@ -24,6 +26,8 @@ public class TicketSubscribeConvertor {
         dto.setEntryTotalCount(entity.getEntryTotalCount());
         dto.setExpireDuration(entity.getExpireDuration());
         dto.setSubscribeCapacity(entity.getSubscribeCapacity());
+        if(entity.getCoaches()!=null)
+            dto.setCoaches(entity.getCoaches().stream().map(UserConvertor::toCoachDto).collect(Collectors.toList()));
         return dto;
     }
 

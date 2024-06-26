@@ -290,6 +290,12 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
             if (ticketCourseEntity.getCoaches().size() < 1) {
                 throw new TicketCouchesCannotBeNull();
             }
+            if (ticketCourseEntity.getStartDate()==null) {
+                throw new TicketStartDateCannotBeNull();
+            }
+            if (ticketCourseEntity.getEndDate()==null) {
+                throw new TicketEndDateCannotBeNull();
+            }
         }
         ticketCourseEntity.setEnable(ticketCourseParam.getEnable());
         ticketCourseRepository.update(ticketCourseEntity);

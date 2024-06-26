@@ -5,28 +5,34 @@ import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
+import com.notrika.gympin.common.ticket.ticketCourse.dto.TicketCourseDto;
+import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseCoachParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
 import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
+import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeCoachParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeSportParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.query.TicketSubscribeQuery;
 import com.notrika.gympin.common.ticket.ticketSubscribe.service.TicketSubscribeService;
+import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
+import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.ticket.*;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.util.convertor.HallConvertor;
-import com.notrika.gympin.domain.util.convertor.PlaceSportConvertor;
-import com.notrika.gympin.domain.util.convertor.TicketSubscribeConvertor;
+import com.notrika.gympin.domain.util.convertor.*;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.sport.PlaceSportRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketHallActiveTimesRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
+import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
+import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,7 +54,8 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     private TicketHallActiveTimesRepository ticketSubscribeHallActiveTimesRepository;
     @Autowired
     private PlaceSportRepository placeSportRepository;
-
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private PlaceRepository placeRepository;
 
@@ -184,6 +191,39 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
         ticketSubscribe.setTicketSubscribeSport(afterfilter);
         ticketSubscribeRepository.update(ticketSubscribe);
         return TicketSubscribeConvertor.toDto(ticketSubscribe);
+    }
+
+
+    @Override
+    public List<UserDto> getCoaches(Long ticketId) {
+        TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(ticketId);
+        return ticketSubscribe.getCoaches().stream().map(UserConvertor::toCoachDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public TicketSubscribeDto addCoach(TicketSubscribeCoachParam param) {
+        TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(param.getTicketSubscribe().getId());
+        List<UserEntity> ticketSubscribeCoaches = ticketSubscribe.getCoaches();
+        if (ticketSubscribe.getCoaches().stream().anyMatch(s -> s.getId().equals(param.getPlaceCoach().getId())))
+            throw new DuplicateEntryAddExeption();
+        UserEntity placeCoach = userRepository.getById(param.getPlaceCoach().getId());
+        ticketSubscribeCoaches.add(placeCoach);
+        ticketSubscribe.setCoaches(ticketSubscribeCoaches);
+        var Subscribe = ticketSubscribeRepository.update(ticketSubscribe);
+        return TicketSubscribeConvertor.toDto(Subscribe);
+    }
+
+    @Override
+    public TicketSubscribeDto deleteCoach(TicketSubscribeCoachParam param) {
+        TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(param.getTicketSubscribe().getId());
+        List<UserEntity> ticketSubscribeCoaches = ticketSubscribe.getCoaches();
+        if (!ticketSubscribe.getCoaches().stream().anyMatch(s -> s.getId().equals(param.getPlaceCoach().getId())))
+            throw new NotFoundException();
+        UserEntity placeCoach = userRepository.getById(param.getPlaceCoach().getId());
+        ticketSubscribeCoaches.remove(placeCoach);
+        ticketSubscribe.setCoaches(ticketSubscribeCoaches);
+        var Subscribe = ticketSubscribeRepository.update(ticketSubscribe);
+        return TicketSubscribeConvertor.toDto(Subscribe);
     }
 
     @Override

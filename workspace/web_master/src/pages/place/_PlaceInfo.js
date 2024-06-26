@@ -3,12 +3,14 @@ import {Button, Card, CardContent, CardHeader, TextField} from "@mui/material";
 
 const _PlaceInfo = ({place,SubmitForm}) => {
     const [name,setName]=useState(place.Name)
+    const [tell,setTell]=useState(place.Tell)
 
 
     function Submit() {
         SubmitForm({
             ...place,
-            Name:name
+            Name:name,
+            Tell:tell
         })
     }
 
@@ -29,6 +31,19 @@ const _PlaceInfo = ({place,SubmitForm}) => {
                     value={name}
                     onChange={e=>setName(e.target.value)}
                     label={"نام مجموعه"}
+                    multiline
+                />
+                <TextField
+                    id="outlined-message"
+                    className="w-100"
+                    aria-multiline
+                    variant="outlined"
+                    margin="normal"
+                    name="message"
+                    type="text"
+                    value={tell}
+                    onChange={e=>setTell(e.target.value)}
+                    label={"تلفن مجموعه"}
                     multiline
                 />
                 <Button variant={"outlined"} sx={{width:"100%"}} onClick={()=>Submit()}>ثبت</Button>

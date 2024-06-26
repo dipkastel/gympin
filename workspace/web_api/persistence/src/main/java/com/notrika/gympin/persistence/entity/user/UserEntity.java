@@ -23,6 +23,7 @@ import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.Purcha
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryRequstEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
+import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.activationCode.UserActivationCodeEntity;
 import com.notrika.gympin.persistence.entity.user.relation.UserFollowEntity;
 import lombok.Getter;
@@ -205,7 +206,11 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
 
     @ManyToMany(mappedBy = "coaches",fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<TicketCourseEntity> ticketsCoach;
+    private List<TicketCourseEntity> ticketsCourseCoach;
+
+    @ManyToMany(mappedBy = "coaches",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<TicketSubscribeEntity> ticketsSubscribeCoach;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @ToString.Exclude

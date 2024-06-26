@@ -75,6 +75,7 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         initPlace.setLatitude(placeParam.getLatitude());
         initPlace.setLongitude(placeParam.getLongitude());
         initPlace.setAddress(placeParam.getAddress());
+        initPlace.setTell(placeParam.getTell());
         initPlace.setAutoDiscount(placeParam.getAutoDiscount());
         if (placeParam.getLocation() != null && placeParam.getLocation().getId() != null && placeParam.getLocation().getId() > 0) {
             ManageLocationEntity location = manageLocationRepository.getById(placeParam.getLocation().getId());

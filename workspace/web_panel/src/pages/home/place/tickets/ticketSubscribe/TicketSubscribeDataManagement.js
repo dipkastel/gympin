@@ -9,6 +9,8 @@ import TicketSubscribeSport from "./ticketSubscribeSports/TicketSubscribeSport";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import _TicketSubscribeHistoryChart from "./HistoryChart/_TicketSubscribeHistoryChart";
 import _ChangeTicketSubscribeStatus from "./changeStatus/_ChangeTicketSubscribeStatus";
+import TicketCourseCoaches from "../ticketCourse/ticketCourseCoaches/TicketCourseCoaches";
+import TicketSubscribeCoaches from "./ticketSubscribeCoaches/TicketSubscribeCoaches";
 
 const TicketSubscribeDataManagement = () => {
     const error = useContext(ErrorContext);
@@ -65,6 +67,7 @@ const TicketSubscribeDataManagement = () => {
                 <div className="col-md-6">
                     {ticketSubscribe&&<TicketSubscribeActivityTimes ticketSubscribe={ticketSubscribe} />}
                     {ticketSubscribe&&<TicketSubscribeSport ticketSubscribe={ticketSubscribe} />}
+                    {ticketSubscribe&&<TicketSubscribeCoaches ticketSubscribe={ticketSubscribe} />}
                     {ticketSubscribe&&<_TicketSubscribeHistoryChart ticketSubscribe={ticketSubscribe} />}
                 </div>
             </div>}

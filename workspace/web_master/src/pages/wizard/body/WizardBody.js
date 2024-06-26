@@ -37,6 +37,8 @@ import {useSelector} from "react-redux";
 import store from "../../../helper/redux/store";
 import {sagaActions} from "../../../helper/redux/actions/SagaActions";
 import WPageProfile from "../pages/WPageProfile";
+import WPageBases from "../pages/WPageBases";
+import {OtherHouses} from "@mui/icons-material";
 
 const WizardBody = () => {
     const [level, setLevel] = useState(getWizardLevel());
@@ -64,6 +66,7 @@ const WizardBody = () => {
             icon: <LocationCityIcon/>,
             page: <WPageSelectPlace onNext={onNext}/>
         })
+        stepsList.push({id: id++, title: 'اطلاعات پایه', icon: <OtherHouses/>, page: <WPageBases onNext={onNext}/>})
         stepsList.push({
             id: id++,
             title: 'پروفایل',

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {TicketSubscribesApi} from "./const_api";
+import {TicketCoursesApi, TicketSubscribesApi} from "./const_api";
 
 export function TicketSubscribes_add(data) {
     return axios.post(TicketSubscribesApi.add, data);
@@ -48,6 +48,20 @@ export function TicketSubscribes_deleteSport(data) {
 export function TicketSubscribes_query(data) {
     return axios.post(TicketSubscribesApi.query, data);
 }
+
+
+export function TicketSubscribes_getTicketSubscribeCoaches(data) {
+    return axios.get(TicketSubscribesApi.getCoaches, {params: data});
+}
+
+export function TicketSubscribes_addCoach(data) {
+    return axios.post(TicketSubscribesApi.addCoach, data);
+}
+
+export function TicketSubscribes_deleteCoach(data) {
+    return axios.put(TicketSubscribesApi.deleteCoach, data);
+}
+
 
 export function TicketSubscribes_addSubscribeActiveTimes(data) {
     return axios.post(TicketSubscribesApi.addSubscribeActiveTimes, data);

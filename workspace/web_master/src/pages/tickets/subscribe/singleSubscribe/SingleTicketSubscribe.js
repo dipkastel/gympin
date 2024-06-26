@@ -11,6 +11,8 @@ import _SubscribeActive from "./_SubscribeActive";
 import _SubscribeDelete from "./_SubscribeDelete";
 import _SubscribeSports from "./_SubscribeSports";
 import {getWizardComplete} from "../../../../helper/pocket";
+import _CourseCoaches from "../../course/singleCourse/_CourseCoaches";
+import _SubscribeCoaches from "./_SubscribeCoaches";
 
 const SingleTicketSubscribe = ({subId,introCanGoNext}) => {
     const error = useContext(ErrorContext);
@@ -43,6 +45,7 @@ const SingleTicketSubscribe = ({subId,introCanGoNext}) => {
             <_SubscribeBaseData ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>
             <_SubscribeActiveTimes ticketSubscribe={ticketSubscribe} />
             <_SubscribeSports ticketSubscribe={ticketSubscribe} />
+            <_SubscribeCoaches ticketSubscribe={ticketSubscribe} />
             {introMode&&<_SubscribeActive ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>}
             {!introMode&&<_SubscribeDelete ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>}
         </>

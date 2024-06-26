@@ -170,8 +170,8 @@ const UserInvoices = ({currentUser}) => {
                             {invoices.content && invoices.content.map((row, index) => (
                                 <TableRow hover role={"checkbox"} tabIndex={-1} key={"Buyable" + row.Id.toString()}>
                                     <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{row.Id}</TableCell>
-                                    <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{row.CreatorUser.Username}</TableCell>
-                                    <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{row.InvoiceBuyables.reduce((a, b) => a + b.Count, 0)}</TableCell>
+                                    <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{row.CreatorUser?.Username}</TableCell>
+                                    <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{row.InvoiceBuyables?.reduce((a, b) => a + b.Count, 0)}</TableCell>
                                     <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{toPriceWithComma(row.TotalPrice)}</TableCell>
                                     <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{InvoiceStatus[row.Status]}</TableCell>
                                     <TableCell align="left">

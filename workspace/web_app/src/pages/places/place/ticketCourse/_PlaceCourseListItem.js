@@ -48,7 +48,7 @@ const _PlaceCourseListItem = ({course, number, addToBasket}) => {
                             </>}
                             action={
                                 <>
-                                    {course.Coaches && <_ticketCoach Course={course}/>}
+                                    {course?.Coaches?.length>0 && <_ticketCoach ticket={course}/>}
                                     {course.Description && <_ticketInfo ticket={course}/>}
                                     {course && <_ticketCourseActiveTimes Course={course}/>}
 

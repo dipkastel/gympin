@@ -18,28 +18,21 @@ import java.util.List;
 public interface TicketCourseController extends BaseController<TicketCourseParam, TicketCourseDto, TicketCourseQuery> {
 
     ResponseEntity<List<TicketCourseDto>> getTicketCourseByPlace(PlaceParam place);
-
     ResponseEntity<TicketCourseDto> changeTicketCourseStatus(TicketCourseParam ticketCourseParam);
 
     //activeTimes
     ResponseEntity<List<ActiveTimesDto>> getActiveTimesByTicketCourse(Long ticketCourseId);
-
     ResponseEntity<TicketCourseDto> addCourseActiveTimes(TicketActiveTimesParam ticketActiveTimesParam);
-
     ResponseEntity<TicketCourseDto> deleteCourseActiveTimes(TicketActiveTimesParam ticketActiveTimesParam);
 
     //sports
     ResponseEntity<List<PlaceSportDto>> getSports(Long ticketCourseId);
-
     ResponseEntity<TicketCourseDto> addSport(TicketCourseSportParam ticketCourseSportParam);
-
     ResponseEntity<TicketCourseDto> deleteSport(TicketCourseSportParam ticketCourseSportParam);
 
     //coach
     ResponseEntity<List<UserDto>> getCoaches(Long ticketId);
-
     ResponseEntity<TicketCourseDto> addCoach(TicketCourseCoachParam ticketCourseSportParam);
-
     ResponseEntity<TicketCourseDto> deleteCoach(TicketCourseCoachParam ticketCourseSportParam);
 
 }

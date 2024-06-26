@@ -51,3 +51,15 @@ export function TicketSubscribes_addSport(data) {
 export function TicketSubscribes_deleteSport(data) {
     return axios.put(Api_url.TicketSubscribe.deleteSport, data);
 }
+
+export function TicketSubscribes_getCoaches(data) {
+    return axios.get(Api_url.TicketSubscribe.getCoaches, {params: data});
+}
+
+export function TicketSubscribes_addCoach(data) {
+    return axios.post(Api_url.TicketSubscribe.addCoach, data);
+}
+
+export function TicketSubscribes_deleteCoach(data) {
+    return axios.put(Api_url.TicketSubscribe.deleteCoach, data);
+}

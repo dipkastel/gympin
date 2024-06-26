@@ -283,6 +283,7 @@ public class InvoiceServiceHelper {
                 .place(invoiceBuyable.getPlace())
                 .customer(invoice.getUser())
                 .serial(invoice.getSerial())
+                .coaches(ticketSubscribe.getCoaches().stream().map(c->UserEntity.builder().id(c.getId()).build()).collect(Collectors.toList()))
                 .purchasedType(PurchasedType.SUBSCRIBE)
                 .status(SubscribePurchasedStatus.READY_TO_ACTIVE)
                 .ticketSubscribe(ticketSubscribe)

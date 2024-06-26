@@ -36,11 +36,14 @@ const WPageTickets = ({onNext,ticketSubscribeChanges,ticketCourseChanges}) => {
                     فروشی ها مواردی هستند که برای فروش به کاربر ساخته میشود که میتواند عضویت یا کلاس باشد.
                 </Typography>
                 <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
-                    تفاوت عضویت و کلاس در این است که برای کلاس باید مربی یا مربیان کلاس از کسانی که در قسمت پرسنل وارد شده‌اند، انتخاب شود.
+                    تفاوت عضویت و کلاس در این است که برای کلاس باید زمان شروع و پایان مشخص، در نظر گرفته شود تا روند آموزشی کلاس طی شود اگر کلاسی داریم که پایان آنها به مدت مشخص از زمان ثبت نام میباشد مانند کلاس یوگا یک ماهه آن را به صورت عضویت وارد میکنیم.
+                </Typography>
+                <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                کلاس مانند کلاس های درسی در هرجلسه موضوعی تدریس میشود و هر مرحله نیازمند شرکت در جلسات قبلی است مانند کلاس های آموزش داوری و..
                 </Typography>
                 <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
                     در این بخش تنها نام یا عنوان فروشی وارد میشود و مشخصات کاملتر در مرحله های بعدی تکمیل میشود.
-                    مثال :
+                    مثال عضویت :
                 </Typography>
                 <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
                     پیلاتس 10 جلسه
@@ -51,6 +54,16 @@ const WPageTickets = ({onNext,ticketSubscribeChanges,ticketCourseChanges}) => {
                 <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
                     کیک بوکسینگ
                 </Typography>
+                <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                    مثال کلاس :
+                </Typography>
+                <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                    داوری کشتی
+                </Typography>
+                <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
+                    مربیگری فوتبال
+                </Typography>
+
             </Grid>
             <SubscribesList OnChangeList={schanges} />
             <CoursesList OnChangeList={cchanges} />

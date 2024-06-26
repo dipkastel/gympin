@@ -42,6 +42,9 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
     @Column(name = "autoRenew",columnDefinition = "boolean default false")
     private Boolean autoRenew;
 
+    @Column(name = "dayBeforeRenew",columnDefinition = "smallint(6) default 3")
+    private Short dayBeforeRenew;
+
     @Column(name = "classCapacity")
     private Short classCapacity;
 

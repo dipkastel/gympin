@@ -55,6 +55,9 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Column(name = "balance", nullable = false, columnDefinition = "decimal(19,2) default 0")
     private BigDecimal balance;
 
+    @Column(name = "Tell")
+    private String tell;
+
     @Column(name = "address")
     private String address;
 

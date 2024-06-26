@@ -12,6 +12,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -30,6 +31,9 @@ public class CorporatePersonnelCreditEntity extends BaseEntityWithCreateUpdate<C
     @Column(name = "creditAmount")
     private BigDecimal creditAmount;
 
+    @Column(name = "expireDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date ExpireDate;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "serialId")

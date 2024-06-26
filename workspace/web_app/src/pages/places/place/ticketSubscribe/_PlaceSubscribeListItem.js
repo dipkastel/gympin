@@ -4,11 +4,12 @@ import {toPriceWithComma} from "../../../../helper/utils";
 import {genders} from "../../../../helper/enums/genders";
 import _ticketInfo from "../partial/_ticketInfo";
 import _ticketSubscribeActiveTimes from "./_ticketSubscribeActiveTimes";
+import _ticketCoach from "../info/_ticketCoach";
 
 
 const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe}) => {
     return (
-        <div >
+        <div>
             <ListItem disablePadding>
                 <ListItemButton disabled={!subscribe.Enable}>
                     <Card sx={{width: "100%"}} elevation={6}>
@@ -23,40 +24,43 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe}) => {
                             </Typography></>}
                             action={
                                 <>
-                                {subscribe.Description&&<_ticketInfo ticket={subscribe} />}
-                                {subscribe&&<_ticketSubscribeActiveTimes subscribe={subscribe} />}
+                                    {subscribe?.Coaches?.length>0 && <_ticketCoach ticket={subscribe}/>}
+                                    {subscribe.Description && <_ticketInfo ticket={subscribe}/>}
+                                    {subscribe && <_ticketSubscribeActiveTimes subscribe={subscribe}/>}
 
 
                                 </>
                             }
                         />
-                        <CardContent sx={{direction:"rtl",pt:0}}>
+                        <CardContent sx={{direction: "rtl", pt: 0}}>
 
-                            <Grid sx={{mb:1}} container justifyContent={"space-between"} direction={"row"} alignItems={"center"}>
+                            <Grid sx={{mb: 1}} container justifyContent={"space-between"} direction={"row"}
+                                  alignItems={"center"}>
                                 <Grid item>
 
                                     <Grid container justifyContent={"center"} direction={"column"} alignItems={"start"}>
-                                        <Grid item sx={{m:0,p:0}}>
-                                            <Typography  component={"span"}
-                                                         color={"darkgreen"}
-                                                         variant={"h5"}>{subscribe.EntryTotalCount}</Typography>
+                                        <Grid item sx={{m: 0, p: 0}}>
+                                            <Typography component={"span"}
+                                                        color={"darkgreen"}
+                                                        variant={"h5"}>{subscribe.EntryTotalCount}</Typography>
                                             <Typography component={"span"} variant={"body1"}>{" جلسه"}</Typography>
                                         </Grid>
-                                        <Grid item sx={{mt:"-8px",p:0}}>
-                                            <Typography component={"span"} variant={"body1"}>{genders[subscribe.Gender]}</Typography>
+                                        <Grid item sx={{mt: "-8px", p: 0}}>
+                                            <Typography component={"span"}
+                                                        variant={"body1"}>{genders[subscribe.Gender]}</Typography>
                                         </Grid>
                                     </Grid>
 
                                 </Grid>
                                 <Grid item>
                                     <Grid container justifyContent={"center"} direction={"column"} alignItems={"end"}>
-                                        <Grid item sx={{m:0,p:0}}>
-                                            <Typography  component={"span"}
+                                        <Grid item sx={{m: 0, p: 0}}>
+                                            <Typography component={"span"}
                                                         color={"darkgreen"}
                                                         variant={"h5"}>{toPriceWithComma(subscribe.Price)}</Typography>
                                             <Typography component={"span"} variant={"body1"}>{" تومان"}</Typography>
                                         </Grid>
-                                        <Grid item sx={{mt:"-8px",p:0}}>
+                                        <Grid item sx={{mt: "-8px", p: 0}}>
                                             {(subscribe.Price < subscribe.ValuePrice) && <>
                                                 <Typography component={"span"}
                                                             sx={{textAlign: "start", textDecoration: "line-through"}}
@@ -70,7 +74,8 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe}) => {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Button variant={"contained"} color={"primary"} onClick={()=>addToSubscribe(subscribe)} sx={{textAlign:"center"}} fullWidth >
+                            <Button variant={"contained"} color={"primary"} onClick={() => addToSubscribe(subscribe)}
+                                    sx={{textAlign: "center"}} fullWidth>
                                 <Typography variant={"h6"}>{" افزودن به سبد خرید"}</Typography>
                             </Button>
                         </CardContent>

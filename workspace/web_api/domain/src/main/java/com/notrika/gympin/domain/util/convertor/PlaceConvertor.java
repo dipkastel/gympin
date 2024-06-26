@@ -41,6 +41,7 @@ public final class PlaceConvertor {
         placeDto.setName(entity.getName());
         placeDto.setLatitude(entity.getLatitude());
         placeDto.setLongitude(entity.getLongitude());
+        placeDto.setTell(entity.getTell());
         placeDto.setAddress(entity.getAddress());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setStatus(entity.getStatus());

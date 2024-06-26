@@ -3,6 +3,10 @@ package com.notrika.gympin.controller.impl.ticket.ticketSubscribe;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
+import com.notrika.gympin.common.ticket.ticketCourse.dto.TicketCourseDto;
+import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseCoachParam;
+import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeCoachParam;
+import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.api.TicketSubscribeController;
@@ -81,6 +85,24 @@ public class TicketSubscribeControllerImpl implements TicketSubscribeController 
         return ResponseEntity.ok(ticketSubscribeService.deleteSport(ticketSubscribeSportParam));
     }
 
+
+    @Override
+    @GetMapping("/getCoaches")
+    public ResponseEntity<List<UserDto>> getCoaches(Long ticketId) {
+        return ResponseEntity.ok(ticketSubscribeService.getCoaches(ticketId));
+    }
+
+    @Override
+    @PostMapping("/addCoach")
+    public ResponseEntity<TicketSubscribeDto> addCoach(@RequestBody TicketSubscribeCoachParam param) {
+        return ResponseEntity.ok(ticketSubscribeService.addCoach(param));
+    }
+
+    @Override
+    @PutMapping("/deleteCoach")
+    public ResponseEntity<TicketSubscribeDto> deleteCoach(@RequestBody TicketSubscribeCoachParam param) {
+        return ResponseEntity.ok(ticketSubscribeService.deleteCoach(param));
+    }
     @Override
     @GetMapping("/getTicketSubscribeDiscountHistory")
     public ResponseEntity<List<TicketDiscountHistoryDto>> getTicketSubscribeDiscountHistory(Long ticketSubscribeId) {

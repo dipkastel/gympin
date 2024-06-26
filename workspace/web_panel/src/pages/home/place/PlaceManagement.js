@@ -88,7 +88,7 @@ const PlaceManagement = () => {
                                     placeholder="نام مکان (مجموعه ورزشی)"
                                 />
                                 <Form.Text className="text-muted">
-                                    از نوشتن هاشیه ها (مجموعه ورزشی ، باشگاه ، استادیوم) خودداری
+                                    از نوشتن حاشیه ها (مجموعه ورزشی ، باشگاه ، استادیوم) خودداری
                                     کنید
                                 </Form.Text>
                             </Form.Group>

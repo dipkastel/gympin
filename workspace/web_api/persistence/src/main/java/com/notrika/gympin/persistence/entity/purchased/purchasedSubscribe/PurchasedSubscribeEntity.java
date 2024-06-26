@@ -3,6 +3,7 @@ package com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,10 @@ public class PurchasedSubscribeEntity extends PurchasedBaseEntity<PurchasedSubsc
     @ManyToOne
     @JoinColumn(name = "ticketSubscribeId")
     private TicketSubscribeEntity ticketSubscribe;
+
+    @ManyToMany
+    @JoinTable(name = "PurchasedSubscribeCouches", joinColumns = @JoinColumn(name = "ticketSubscribeId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
+    private List<UserEntity> coaches;
 
     @Column(name = "entryTotalCount", nullable = false)
     private Short entryTotalCount;

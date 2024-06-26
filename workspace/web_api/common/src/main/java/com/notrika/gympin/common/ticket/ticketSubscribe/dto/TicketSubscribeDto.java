@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketSubscribe.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.user.user.enums.Gender;
@@ -11,6 +12,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -42,6 +44,9 @@ public class TicketSubscribeDto extends BaseDto<TicketSubscribeDto> {
 
     @JsonProperty("Description")
     private String description;
+
+    @JsonProperty("Coaches")
+    private List<UserDto> coaches;
 
     @JsonProperty(value = "Place")
     private PlaceDto place;
