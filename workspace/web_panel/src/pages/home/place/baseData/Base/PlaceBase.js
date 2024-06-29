@@ -74,6 +74,22 @@ function PlaceBase({place, updatePlace}) {
                         />
                     </Form.Group>
                     <Form.Group>
+
+                        <TextField
+                            id="standard-full-width"
+                            label="تلفن"
+                            style={{margin: 8}}
+                            placeholder="تلفن"
+                            value={inPlace.Tell}
+                            onChange={(e) => setFormValues("Tell", e.target.value)}
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                    </Form.Group>
+                    <Form.Group>
                         <PlaceMap place={inPlace} setFormValues={setFormValues}/>
                     </Form.Group>
                     <Form.Group>

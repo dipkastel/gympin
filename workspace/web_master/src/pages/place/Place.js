@@ -23,7 +23,7 @@ const Place = ({hallListChange,introCanGoNext}) => {
     }, []);
 
     useEffect(() => {
-        if((!!place?.Latitude)&&(!!place?.Longitude)&&(!!place?.Address)&&(!!place?.Location))
+        if(introMode&&(!!place?.Latitude)&&(!!place?.Longitude)&&(!!place?.Address)&&(!!place?.Location))
              introCanGoNext(true);
     }, [place]);
 
