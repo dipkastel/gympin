@@ -76,6 +76,14 @@ const _SettingsPlaces = (props) => {
         return introMode?placePersonnel.filter(p=>p.UserRole.includes("PLACE_OWNER")):placePersonnel
     }
 
+    function IsOwner(item) {
+        if(item?.UserRole?.includes("PLACE_OWNER")){
+            props.setUserHasIntro(true);
+            return true;
+        }
+        return false;
+    }
+
     return (<>
             {!loading && <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
@@ -104,7 +112,7 @@ const _SettingsPlaces = (props) => {
                                                 secondary={<>{item.UserRole.map(role=>(<Chip size={"small"} label={personnelRoles[role]} />))}</>}
                                                 />
 
-                                            {!introMode&&<Button size={"small"} variant={"outlined"}
+                                            {!introMode&&IsOwner(item)&&<Button size={"small"} variant={"outlined"}
                                                     href={"/management/place?id=" + item.Place.Id}>
                                                 ویرایش
                                             </Button>}

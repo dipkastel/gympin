@@ -3,7 +3,7 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 import {
     ticketSubscribe_add,
-    TicketSubscribes_add,
+    TicketSubscribes_add, TicketSubscribes_delete,
     TicketSubscribes_getByPlace
 } from "../../../network/api/ticketSubscribe.api";
 import {
@@ -14,16 +14,19 @@ import {
     CardHeader,
     Dialog,
     DialogActions,
-    DialogContent,
+    DialogContent, DialogContentText,
     DialogTitle,
     TextField,
     Typography
 } from "@mui/material";
 import {genders} from "../../../helper/enums/genders";
-import {ToggleOff, ToggleOn} from "@mui/icons-material";
+import {DeleteForever, ToggleOff, ToggleOn} from "@mui/icons-material";
 import {Form} from "react-bootstrap";
 import {toPriceWithComma} from "../../../helper/utils";
 import {getWizardComplete} from "../../../helper/pocket";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {ticketActiveTimes_delete} from "../../../network/api/gatesTiming.api";
+import {dayOfWeekEnum} from "../../../helper/enums/dayOfWeekEnum";
 
 const SubscribesList = ({OnChangeList}) => {
 
@@ -31,6 +34,7 @@ const SubscribesList = ({OnChangeList}) => {
     const place = useSelector(({place}) => place.place)
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [subscribesList, setSubscribesList] = useState([]);
+    const [deleteItem, setDeleteItem] = useState(null);
     const introMode = !getWizardComplete()
 
 
@@ -54,6 +58,39 @@ const SubscribesList = ({OnChangeList}) => {
         })
     }
 
+
+    function ModalDelete() {
+        function deleteSelectedItem(e) {
+            e.preventDefault()
+            setDeleteItem(null);
+            TicketSubscribes_delete({Id: deleteItem.Id}).then(result => {
+                getPlaceSubscribes();
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            })
+        }
+
+        return (deleteItem) ? (
+            <div>
+                <Dialog open={!!deleteItem} onClose={() => setDeleteItem(null)}>
+                    <DialogTitle>حذف</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            {"آیا حذف " + deleteItem.Name +" را تایید می کنید؟"}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setDeleteItem(null)}>لغو</Button>
+                        <Button onClick={(e) => deleteSelectedItem(e)}>تایید</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        ) : (<></>)
+    }
 
     function ModalAddSubscribe() {
 
@@ -130,7 +167,9 @@ const SubscribesList = ({OnChangeList}) => {
                         <CardHeader
                             sx={(!introMode)&&{paddingBottom: 0}}
                             title={item.Name}
-                            action={(!introMode)?(item.Enable) ? <ToggleOn color={"success"}/> : <ToggleOff color={"error"}/>:<></>}
+                            action={(!introMode)?(item.Enable) ? <ToggleOn color={"success"}/> : <ToggleOff color={"error"}/>:<>
+                                <DeleteIcon onClick={(e) => setDeleteItem(item)} color={"primary"}/>
+                            </>}
                         />
 
                         {!introMode&&<CardContent className={"row"} sx={{margin: 0}}>
@@ -159,6 +198,7 @@ const SubscribesList = ({OnChangeList}) => {
                 </Card>
             ))}
             {ModalAddSubscribe()}
+            {ModalDelete()}
         </>
     );
 };

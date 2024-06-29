@@ -8,6 +8,7 @@ const _ListItem = (props) => {
                 component={"a"}
                 sx={{textDecoration:"none",color:"#000000"}}
                 href={props.destination}
+                onClick={props.onClick}
                 title={props.title}
                 action={""}/>
         </Card>

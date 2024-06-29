@@ -203,6 +203,11 @@ const EditProfile = (props) => {
 
                         }}
                         onSubmit={(values, {setStatus, setSubmitting}) => {
+                            if(values?.Bio?.length>220){
+                                error.showError({message: "درباره من طولانی است.",});
+                                return;
+                            }
+
                             user_updateMe(values).then(result => {
                                 setUser(result.data.Data);
                                 props.RequestUser(values)
@@ -339,7 +344,7 @@ const EditProfile = (props) => {
                                         type="text"
                                         value={values.Bio || ""}
                                         onChange={handleChange}
-                                        label={"درباره من"}
+                                        label={"درباره من ("+(220-values?.Bio?.length||0)+")"}
                                     />
                                     <Button className="mt-4" variant={"contained"} fullWidth
                                             onClick={handleSubmit}>ثبت</Button>

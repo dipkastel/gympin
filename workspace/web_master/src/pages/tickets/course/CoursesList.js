@@ -7,18 +7,20 @@ import {
     CardHeader,
     Dialog,
     DialogActions,
-    DialogContent,
+    DialogContent, DialogContentText,
     DialogTitle,
     TextField,
     Typography
 } from "@mui/material";
 import {Form} from "react-bootstrap";
-import {TicketCourses_add, TicketCourses_getByPlace} from "../../../network/api/ticketCourse.api";
+import {TicketCourses_add, TicketCourses_delete, TicketCourses_getByPlace} from "../../../network/api/ticketCourse.api";
 import {ToggleOff, ToggleOn} from "@mui/icons-material";
 import {genders} from "../../../helper/enums/genders";
 import {toPriceWithComma} from "../../../helper/utils";
 import {CourseStatusEnum} from "../../../helper/enums/CourseStatusEnum";
 import {getWizardComplete} from "../../../helper/pocket";
+import {TicketSubscribes_delete} from "../../../network/api/ticketSubscribe.api";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const CoursesList = ({OnChangeList}) => {
 
@@ -26,6 +28,7 @@ const CoursesList = ({OnChangeList}) => {
     const place = useSelector(({place}) => place.place)
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [coursesList, setCoursesList] = useState([]);
+    const [deleteItem, setDeleteItem] = useState(null);
     const introMode = !getWizardComplete()
 
 
@@ -34,6 +37,39 @@ const CoursesList = ({OnChangeList}) => {
         document.title = 'مدیریت کلاس ها';
         getPlaceCourses();
     }, []);
+
+    function ModalDelete() {
+        function deleteSelectedItem(e) {
+            e.preventDefault()
+            setDeleteItem(null);
+            TicketCourses_delete({Id: deleteItem.Id}).then(result => {
+                getPlaceCourses();
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            })
+        }
+
+        return (deleteItem) ? (
+            <div>
+                <Dialog open={!!deleteItem} onClose={() => setDeleteItem(null)}>
+                    <DialogTitle>حذف</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            {"آیا حذف " + deleteItem.Name +" را تایید می کنید؟"}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setDeleteItem(null)}>لغو</Button>
+                        <Button onClick={(e) => deleteSelectedItem(e)}>تایید</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        ) : (<></>)
+    }
 
     function getPlaceCourses() {
         if (!place) return;
@@ -126,7 +162,9 @@ const CoursesList = ({OnChangeList}) => {
                         <CardHeader
                             sx={(!introMode)&&{paddingBottom: 0}}
                             title={item.Name}
-                            action={(!introMode)?(item.Enable) ? <ToggleOn color={"success"}/> : <ToggleOff color={"error"}/>:<></>}
+                            action={(!introMode)?(item.Enable) ? <ToggleOn color={"success"}/> : <ToggleOff color={"error"}/>:<>
+                                <DeleteIcon onClick={(e) => setDeleteItem(item)} color={"primary"}/>
+                            </>}
                         />
 
                         {!introMode&&<CardContent className={"row"} sx={{margin: 0}}>
@@ -188,6 +226,7 @@ const CoursesList = ({OnChangeList}) => {
                 </Card>
             ))}
             {ModalAddCourse()}
+            {ModalDelete()}
         </>
     );
 };
