@@ -82,6 +82,7 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok(Arrays.stream(UserStatus.values()).map(Enum::toString).collect(Collectors.toList()));
     }
 
+
     @Override
     @GetMapping("/getUserSettings")
     public ResponseEntity<List<UserSettingDto>> getUserSettings(UserSettingParam userSettingParam) {
