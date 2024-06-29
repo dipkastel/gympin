@@ -96,7 +96,7 @@ export default function UserBasics({currentUser}) {
                     />
 
                     <TextField
-                        label={"درباره من "+(250-values.Bio.length)}
+                        label={"درباره من "+(250-(values.Bio?.length||0))}
                         multiline
                         rows="4"
                         defaultValue={values.Bio || ""}
