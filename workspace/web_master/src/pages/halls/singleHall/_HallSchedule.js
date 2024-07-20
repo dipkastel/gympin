@@ -3,14 +3,14 @@ import {
     Button,
     Card,
     CardContent,
-    CardHeader,
+    CardHeader, CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
     FormControl,
-    FormGroup,
+    FormGroup, Grid,
     List,
     ListItem,
     ListItemIcon,
@@ -107,6 +107,10 @@ const _HallSchedule = ({hall,introCanGoNext}) => {
         function addItems(e) {
             e.preventDefault()
             var postData = [];
+            if (!addValues.Name) {
+                error.showError({message: "نام فعالیت اجباری است.",});
+                return;
+            }
             if (!addValues.ClosingTime) {
                 error.showError({message: "زمان بسته شدن تایین شود.",});
                 return;
@@ -169,7 +173,7 @@ const _HallSchedule = ({hall,introCanGoNext}) => {
                                     row>
 
                                     <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
-                                        نام فعالیت برای تفکیک ساعت عا استفاده می شود و دلخواه است.
+                                        نام فعالیت برای تفکیک ساعت‌ها استفاده می شود.
                                         مثال :
                                     </Typography>
                                     <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
@@ -265,7 +269,7 @@ const _HallSchedule = ({hall,introCanGoNext}) => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            {hall.Name&&<Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     sx={{paddingBottom: 0}}
                     title={"زمان بندی های سالن "+hall.Name}
@@ -285,8 +289,11 @@ const _HallSchedule = ({hall,introCanGoNext}) => {
                     <Typography  sx={{width:"100%"}}  color={"#a2a2a2"} variant={"subtitle2"}>
                         این زمان بندی ها برای ساخت بلیط استفاده می شود پس اگر مجموعه دارای دو بخش آقایان و بانوان است زمان بندی آنها به صورت جداگانه وارد شود (مثلا : بدنسازی آقایان و بدنسازی بانوان)
                     </Typography>}
-                    <List dense={false}>
-                        {gateTimigs && gateTimigs.map((p, number) =>
+                    {gateTimigs.length<1 &&<Grid sx={{width:"100%"}} container justifyContent={"center"} alignContent={"center"}>
+                        <CircularProgress/>
+                    </Grid>}
+                    {gateTimigs &&<List dense={false}>
+                        {gateTimigs.map((p, number) =>
                             <ListItem sx={{direction: "rtl"}} key={number}>
                                 <ListItemText
                                     className="text-start"
@@ -302,9 +309,15 @@ const _HallSchedule = ({hall,introCanGoNext}) => {
                                 </ListItemIcon>
                             </ListItem>,
                         )}
-                    </List>
+                    </List>}
                 </CardContent>
             </Card>
+            }
+
+            {!hall.Name&&
+                <Grid sx={{width:"100%"}} container justifyContent={"center"} alignContent={"center"}>
+                    <CircularProgress/>
+                </Grid>}
             {ModalDelete()}
             {ModalAdd()}
         </>

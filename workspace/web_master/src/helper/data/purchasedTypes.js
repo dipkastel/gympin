@@ -23,7 +23,7 @@ var purchasedTypes = [
     {
         Id:2,
         Name: "کلاس ها",
-        Type: "courses",
+        Type: "course",
         Icon: <GroupsIcon sx={{fontSize:87}} color={"action"} />,
         Destination:"/purchased/courses",
         Access:personnelAccessEnumT.SellsCourse,
@@ -32,7 +32,7 @@ var purchasedTypes = [
     {
         Id:3,
         Name: "رزرو ها",
-        Type: "reserves",
+        Type: "reserve",
         Icon: <StadiumIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/purchased/reserves",
         Access:personnelAccessEnumT.SellsReserve,
@@ -41,7 +41,7 @@ var purchasedTypes = [
     {
         Id:4,
         Name: "خدمات",
-        Type: "services",
+        Type: "service",
         Icon: <VolunteerActivismIcon  sx={{fontSize:87}} color={"action"}/>,
         Destination:"/purchased/services",
         Access:personnelAccessEnumT.SellsService,
@@ -77,7 +77,7 @@ var purchasedTypes = [
     {
         Id:8,
         Name: "محصولات",
-        Type: "products",
+        Type: "product",
         Icon: <ShoppingBasketIcon sx={{fontSize:87}} color={"action"}/>,
         Destination:"/purchased/products",
         Access:personnelAccessEnumT.SellsProduct,
@@ -86,7 +86,7 @@ var purchasedTypes = [
     {
         Id:9,
         Name: "تنظیمات",
-        Type: "sellSettings",
+        Type: "sellSetting",
         Icon: <SettingsIcon sx={{fontSize:87}} color={"action"}/>,
         Destination:"/purchased/settings",
         Status:"Soon"

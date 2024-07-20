@@ -39,6 +39,7 @@ import {sagaActions} from "../../../helper/redux/actions/SagaActions";
 import WPageProfile from "../pages/WPageProfile";
 import WPageBases from "../pages/WPageBases";
 import {OtherHouses} from "@mui/icons-material";
+import WPageActivation from "../pages/WPageActivation";
 
 const WizardBody = () => {
     const [level, setLevel] = useState(getWizardLevel());
@@ -120,7 +121,8 @@ const WizardBody = () => {
                     page: <WPageCourses onNext={onNext} ParamId={ctickets[ticketNumber].Id}/>
                 })
             }
-        stepsList.push({id: id++, title: 'فعالسازی', icon: <ToggleOffIcon/>, page: <WPageFinish onNext={onNext}/>})
+        stepsList.push({id: id++, title: 'فعالسازی', icon: <ToggleOffIcon/>, page: <WPageActivation onNext={onNext}/>})
+        stepsList.push({id: id++, title: 'پایان', icon: <ToggleOffIcon/>, page: <WPageFinish onNext={onNext}/>})
         setSteps(stepsList)
     }, [halls, stickets, ctickets, level]);
 

@@ -20,7 +20,6 @@ export default function getAccessOf(section){
             return true;
         }
     }
-    if(!access.find(a=>a.Section==section))
-        console.log("access section not found - >",section)
+
      return access.find(a=>a.Section==section)?.Access;
 }

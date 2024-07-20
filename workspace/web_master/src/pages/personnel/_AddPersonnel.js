@@ -17,6 +17,7 @@ import {useSelector} from "react-redux";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {placePersonnel_add} from "../../network/api/placePersonnel.api";
 import {Form} from "react-bootstrap";
+import {fixMobile, fixPersianNumbers} from "../../helper/utils";
 
 const _AddPersonnel = ({renewList}) => {
     const error = useContext(ErrorContext);
@@ -24,6 +25,7 @@ const _AddPersonnel = ({renewList}) => {
     const [openModalAddPersonnel, setOpenModalAddPersonnel] = useState(false);
 
     function ModalAddPerson() {
+        const error = null;
         function addPersonnel(e){
             e.preventDefault();
             placePersonnel_add({
@@ -41,6 +43,13 @@ const _AddPersonnel = ({renewList}) => {
                 }
             })
         }
+
+        function phoneNumberFixer(e) {
+
+            e.target.value = fixMobile(e.target.value);
+            return e;
+        }
+
         return (
             <div>
                 <Dialog open={openModalAddPersonnel} onClose={()=>setOpenModalAddPersonnel(false)}>
@@ -55,7 +64,9 @@ const _AddPersonnel = ({renewList}) => {
                             margin="dense"
                             name="PhoneNumber"
                             label="شماره موبایل"
-                            type="number"
+                            type="text"
+                            inputProps={{ inputMode: 'numeric' }}
+                            onChange={e=>phoneNumberFixer(e)}
                             fullWidth
                             variant="standard"
                         />

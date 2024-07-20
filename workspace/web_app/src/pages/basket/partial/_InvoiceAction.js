@@ -67,7 +67,7 @@ const _InvoiceAction = ({userBasket,userCanPay,invoiceCredits}) => {
             <DialogTitle>{"آیا از خرید عضویت اطمینان دارید"}</DialogTitle>
             <DialogContent className={"w-100"}>
                 <Typography variant={"subtitle2"}>
-                    توجه داشته باشید در حال حاظر امکان لغو یا بازپرداخت بلیط های خریداری شده وجود ندارد!
+                    توجه داشته باشید امکان لغو یا بازپرداخت بلیط های خریداری شده وجود ندارد!
                 </Typography>
                 {userBasket&&<_invoiceAgreements userBasket={userBasket} setAcceptAgreements={setAcceptAgreements}/>}
             </DialogContent>

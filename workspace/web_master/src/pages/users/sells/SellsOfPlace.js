@@ -16,12 +16,17 @@ const SellsOfPlace = ({selectedSubscribe}) => {
     const [purchasedBase,setPurchasedBase] = useState([]);
 
     useEffect(() => {
+        console.log(purchasedBase);
+    },[purchasedBase]);
+
+    useEffect(() => {
         purchased_query({
                 queryType: "FILTER",
                 PlaceId: place.Id,
                 paging: {Page: 0, Size: 100, Desc: true}
             }).then((data) => {
-                setPurchasedBase(data.data.Data.content.reduce(function(rv, x) {
+                console.log(data.data.Data);
+                setPurchasedBase(data.data.Data.content.filter(p=>p.Status!="READY_TO_ACTIVE").reduce(function(rv, x) {
                     (rv[x["PurchasedType"].toLowerCase()] = rv[x["PurchasedType"].toLowerCase()] || []).push(x);
                     return rv;
                 }, {}))

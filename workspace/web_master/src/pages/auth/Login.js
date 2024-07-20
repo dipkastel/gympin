@@ -14,7 +14,7 @@ import {
     Typography
 } from "@mui/material";
 import {Formik} from "formik";
-import {checkMobileValid} from "../../helper/utils";
+import {checkMobileValid, fixPersianNumbers} from "../../helper/utils";
 import {Spinner} from "react-bootstrap";
 import SendToMobileIcon from '@mui/icons-material/SendToMobile';
 import {login, sendSms} from "../../network/api/account.api";
@@ -64,6 +64,13 @@ function Login(props) {
         }
     }
 
+
+    function phoneNumberFixer(e) {
+        if(e.target.value.length>11)
+            return ;
+        e.target.value =fixPersianNumbers(e.target.value);
+        return e;
+    }
 
     return (
         <Grid
@@ -163,10 +170,11 @@ function Login(props) {
                                             variant="outlined"
                                             margin="normal"
                                             name="username"
-                                            type="number"
+                                            type="text"
+                                            inputProps={{ inputMode: 'numeric' }}
                                             label={"شماره همراه"}
                                             onBlur={handleBlur}
-                                            onChange={handleChange}
+                                            onChange={e=>handleChange(phoneNumberFixer(e))}
                                             value={values.username}
                                             disabled={resend>0}
                                             helperText={touched.username && errors.username}

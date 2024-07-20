@@ -100,12 +100,12 @@ const SubscribesList = ({OnChangeList}) => {
                 error.showError({message: "عنوان طولانی است",});
                 return;
             }
+            setOpenModalAdd(false);
             TicketSubscribes_add({
                 Name: e.target.Name.value,
                 place: {Id: place.Id}
             }).then(result => {
                 getPlaceSubscribes();
-                setOpenModalAdd(false)
             }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message,});

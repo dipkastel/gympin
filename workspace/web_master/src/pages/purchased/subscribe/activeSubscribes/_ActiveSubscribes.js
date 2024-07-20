@@ -1,9 +1,21 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Avatar, Chip, Divider, Link, List, ListItemAvatar, ListItemButton, ListItemText} from "@mui/material";
+import {
+    Avatar,
+    Chip,
+    Divider,
+    Grid,
+    Link,
+    List,
+    ListItemAvatar,
+    ListItemButton,
+    ListItemText,
+    Typography
+} from "@mui/material";
 import {purchasedSubscribe_getPlaceSubscribes} from "../../../../network/api/subscribe.api";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {SubscribeStatusEnum} from "../../../../helper/enums/SubscribeStatusEnum";
+import {Image} from "react-bootstrap";
 
 export default function _ActiveSubscribes() {
     const error = useContext(ErrorContext);
@@ -15,6 +27,7 @@ export default function _ActiveSubscribes() {
 
     function getActiveSubscribes() {
         purchasedSubscribe_getPlaceSubscribes({placeId: place.Id}).then(result => {
+            console.log(result.data.Data);
             setPlaceSubscribes(result.data.Data);
         }).catch(e => {
             try {
@@ -38,7 +51,7 @@ export default function _ActiveSubscribes() {
         }
 
     }
-    return (
+    return (PlaceSubscribes.length>0)?(
         <List sx={{width: '100%', direction: "rtl", bgcolor: 'background.paper'}}>
             {PlaceSubscribes.map((item, Index) => (
                 <div key={Index}>
@@ -62,5 +75,19 @@ export default function _ActiveSubscribes() {
                     <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
                 </div>))}
         </List>
-    );
+    ):(<>
+        <Grid
+            container
+            sx={{width:"100%",height:"80vh"}}
+            direction={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+        >
+            <Image src={"https://api.gympin.ir/resource/image?Id=100"}  width={"40%"}/>
+            <Typography variant={"body"} sx={{m:2}} >
+                بلیت یافت نشد
+            </Typography>
+
+        </Grid>
+    </>);
 }

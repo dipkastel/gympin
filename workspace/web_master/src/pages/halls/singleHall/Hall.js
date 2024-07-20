@@ -64,7 +64,7 @@ const Hall = ({hallParamId,introCanGoNext}) => {
 
     return (
         <>
-            {!introMode&&<_BaseHallData hall={hall} getHall={getHall}/>}
+            {hall&&!introMode&&<_BaseHallData hall={hall} getHall={getHall}/>}
             <_HallSchedule hall={hall} introCanGoNext={introCanGoNext} />
         </>
 

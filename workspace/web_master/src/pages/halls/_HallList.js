@@ -57,7 +57,7 @@ const _HallList = ({hallList, renewList}) => {
     return (
         <>
             {hallList && hallList.map((item,number) => (
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{margin: 1}} key={"hl1-"+number}>
                 <CardContent sx={{margin: 0, paddingY: "5px !important"}}>
                     <List>
                             <div key={"person-" + item.Id}>

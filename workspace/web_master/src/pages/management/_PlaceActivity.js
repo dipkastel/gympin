@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Alert,
     Button,
@@ -16,11 +16,21 @@ import {place_changeStatus} from "../../network/api/place.api";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {Form} from "react-bootstrap";
+import {getWizardComplete} from "../../helper/pocket";
 
 const _PlaceActivity = (props) => {
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
     const [openModalDeactive, setOpenModalDeactive] = useState(false);
+    const introMode = !getWizardComplete()
+
+    useEffect(() => {
+        console.log("place -- > ",place.Status);
+        if(place&&introMode)
+            props.setIntroCanGoNext(place.Status== "ACTIVE");
+    }, [place]);
+
+
 
     function changePlaceStatus(status) {
         if (!place) return;

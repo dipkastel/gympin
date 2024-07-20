@@ -101,7 +101,7 @@ const _SettingsPlaces = (props) => {
                                 onChange={(event) => selectedPlaceChanged(event)}
                             >
                                 {getPlacePersonel().map((item, number) => (
-                                    <div key={number}>
+                                    <div key={"---"+number}>
                                         <Grid
                                             container
                                             justifyContent={"space-between"}
@@ -109,7 +109,8 @@ const _SettingsPlaces = (props) => {
                                         >
                                             <ListItemText
                                                 primary={<FormControlLabel value={item.Place.Id} control={<Radio/>} label={item.Place.Name}/>}
-                                                secondary={<>{item.UserRole.map(role=>(<Chip size={"small"} label={personnelRoles[role]} />))}</>}
+                                                secondary={<>{item.UserRole.map(role=>(<Chip size={"small"} key={role} label={personnelRoles[role]} />))}</>}
+                                               secondaryTypographyProps={{component:"div"}}
                                                 />
 
                                             {!introMode&&IsOwner(item)&&<Button size={"small"} variant={"outlined"}

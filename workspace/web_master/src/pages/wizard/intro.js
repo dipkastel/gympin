@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Grid, Typography} from "@mui/material";
+import {Button, CircularProgress, Grid, Typography} from "@mui/material";
 import {getWizardComplete, getWizardLevel, setWizardComplete, setWizardLevel} from "../../helper/pocket";
 import {useNavigate} from "react-router-dom";
 import store from "../../helper/redux/store";
@@ -22,6 +22,7 @@ const Intro = () => {
 
     const user = useSelector(({auth}) => auth.user);
     const [wizard,setWizard] = useState([]);
+    const [loading,setLoading] = useState(true);
 
 
 
@@ -58,6 +59,8 @@ const Intro = () => {
     function getWizardId() {
         user_GetUserSettings({Id:user.Id}).then(data=>{
             setWizard(data.data.Data?.filter(s=>s.Key=="USER_WIZARD_COMPLETE")?.[0]);
+
+            setLoading(false);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -70,6 +73,7 @@ const Intro = () => {
         user_SetUserSettings({Id:wizard?.Id,Value:true,Key:"USER_WIZARD_COMPLETE",User:{Id:user.Id}}).then(result=>{
             setWizardComplete(true);
             setWizardLevel(0);
+            setLoading(false);
             setTimeout(function () {
                 window.location = "/"
                 navigate('/home', {replace: false});
@@ -88,37 +92,44 @@ const Intro = () => {
         navigate('/intro/wizard', {replace: true});
     }
     return (
-        <Grid sx={{p:2}} container direction={"column"} alignItems={"center"} justifyContent={"center"}>
-            <Grid sx={{mt:5}}>
-                <Typography variant={"h5"}>
-                    درود
-                </Typography>
-            </Grid>
-            <Grid  sx={{mb:8,mt:4}}>
+        <>
+            {!loading&&<Grid sx={{p:2}} container direction={"column"} alignItems={"center"} justifyContent={"center"}>
+                <Grid sx={{mt:5}}>
+                    <Typography variant={"h5"}>
+                        درود
+                    </Typography>
+                </Grid>
+                <Grid  sx={{mb:8,mt:4}}>
 
-                <Typography variant={"body1"}>
-                    اینجا قراره فقط برای یک بار، با هم مشخصات مرکز شما رو تکمیل کنیم، تا کاربر های جیم پین، اطلاعات شما رو، درست و کامل ببینند.
-                </Typography>
-                <Figure.Image
-                    width={"100%"}
-                    alt="start intro"
-                    src={toAbsoluteUrl("/assets/images/start.jpg")}
-                />
-                <Typography variant={"subtitle1"}>
-                    لطفا برسی کنید که تا پایان مسیر دریافت اطلاعات به، اینترنت متصل باشید.
-                </Typography>
-                <Typography variant={"subtitle1"}>
-                    وی پی ان و پروکسی ممکنه سرعتتون رو کم کنه، پس لطفا اگر روشن هست، خاموشش کنید.
-                </Typography>
-                <Typography variant={"subtitle1"}>
-                     نگران نباشید! سعی شده اطلاعات وارد شده در هر مرحله، ذخیره بشه پس اگر فرصت کافی نداشتید و تا قسمتی پیش رفتید، میتونید بعدا ادامش بدید.
-                </Typography>
-                <Typography variant={"subtitle1"}>
-                    ما سعی کردیم برای هر بخش توضیح کاملی بنویسیم، اما اگر سوالی داشتید با شماره 02177162192 تماس بگیرید.
-                </Typography>
-            </Grid>
+                    <Typography variant={"body1"}>
+                        اینجا قراره فقط برای یک بار، با هم مشخصات مرکز شما رو تکمیل کنیم، تا کاربر های جیم پین، اطلاعات شما رو، درست و کامل ببینند.
+                    </Typography>
+                    <Figure.Image
+                        width={"100%"}
+                        alt="start intro"
+                        src={toAbsoluteUrl("/assets/images/start.jpg")}
+                    />
+                    <Typography variant={"subtitle1"}>
+                        لطفا برسی کنید که تا پایان مسیر دریافت اطلاعات به، اینترنت متصل باشید.
+                    </Typography>
+                    <Typography variant={"subtitle1"}>
+                        وی پی ان و پروکسی ممکنه سرعتتون رو کم کنه، پس لطفا اگر روشن هست، خاموشش کنید.
+                    </Typography>
+                    <Typography variant={"subtitle1"}>
+                        نگران نباشید! سعی شده اطلاعات وارد شده در هر مرحله، ذخیره بشه پس اگر فرصت کافی نداشتید و تا قسمتی پیش رفتید، میتونید بعدا ادامش بدید.
+                    </Typography>
+                    <Typography variant={"subtitle1"}>
+                        ما سعی کردیم برای هر بخش توضیح کاملی بنویسیم، اما اگر سوالی داشتید با شماره 02177162192 تماس بگیرید.
+                    </Typography>
+                </Grid>
                 <Button variant={"contained"} fullWidth onClick={()=>finishIntro()} >بزن بریم</Button>
-        </Grid>
+            </Grid>}
+            {loading&&<Grid sx={{width:"100vw",height:"100vh"}} container justifyContent={"center"} alignContent={"center"}>
+                <CircularProgress/>
+            </Grid>
+            }
+        </>
+
     );
 };
 
