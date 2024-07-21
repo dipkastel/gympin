@@ -37,8 +37,8 @@ const Wallet = () => {
                 <Grid container direction={"column"} justifyContent={"center"} alignItems={"center"}>
 
                     <Typography
-                        sx={{display: "inline", m: 3}}
-                        variant={"h3"}
+                        sx={{display: "inline", m: 1}}
+                        variant={"subtitle"}
                         color={"white"}
 
                     >
@@ -56,7 +56,7 @@ const Wallet = () => {
                         <Grid sx={{mb: 1}} key={number}><Typography
                             sx={{display: "inline"}}
                             component="p"
-                            variant="subtitle2"
+                            variant={"caption"}
                             color="text.primary"
                         >
                             {item.CreditType == "SPONSOR" && creditTypes[item.CreditType] + " (" + item.Corporate.Name + ") "}

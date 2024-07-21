@@ -136,8 +136,8 @@ const _InvoiceHowToPay = ({userBasket,setUserCanPay,invoiceCredits,SetInvoiceCre
                     ))}
                     {userCredits.TotalCredit < userBasket.TotalPrice &&
                     <Alert severity="error" onClick={(e)=>navigate("/wallet")}>
-                        <AlertTitle>مجموع اعتبار کاربر کمتر از پرداخت بلیط میباشد!</AlertTitle>
-                        برای افزایش اعتبار <strong> اینجا </strong> کلیک کنید .
+                        <AlertTitle>مجموع اعتبار شما کمتر از پرداخت بلیط میباشد!</AlertTitle>
+                        برای افزایش اعتبار شخصی <strong> اینجا </strong> کلیک کنید .
                     </Alert>}
                 </CardContent>}
             </Card>

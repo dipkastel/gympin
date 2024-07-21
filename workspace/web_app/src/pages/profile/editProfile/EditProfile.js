@@ -47,6 +47,7 @@ const EditProfile = (props) => {
             if (!currentUser.Birthday) can=false;
             if (!checkNationalCode(currentUser.NationalCode)) can=false;
             if(!!usernameAvalableError) can=false;
+            if(currentUser?.Bio?.length>220) can=false;
             setCanSubmit(can);
     }, [currentUser,usernameAvalableError]);
 
@@ -64,6 +65,7 @@ const EditProfile = (props) => {
 
     function submitForm(el) {
         el.preventDefault();
+
         user_updateMe(currentUser).then(result => {
             props.RequestUser()
             setUser(result.data.Data);
@@ -110,7 +112,7 @@ const EditProfile = (props) => {
 
 
     function getValidation(name, value) {
-            switch (name) {
+        switch (name) {
                 case "FullName": {
                     if (!value) {
                         return  "نام و نام خانوادگی الزامی است";
@@ -143,7 +145,10 @@ const EditProfile = (props) => {
                     return ;
                 }
                 case "Bio": {
-                    return ;
+                    if(value.length>220){
+                        return "درباره من طولانی است.";
+                    }
+                    break;
                 }
             }
 
