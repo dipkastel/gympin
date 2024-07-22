@@ -68,7 +68,6 @@ function MyApp({ Component, pageProps }) {
         <title>جیم پین</title>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-        <meta name="enamad" content="735379"/>
         <meta name="description" content="printing service template" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
         <link rel="icon" href="images/logo/favicon.ico" />
@@ -80,6 +79,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </GoogleReCaptchaProvider>
     </Fragment>
+
 
 
   )
