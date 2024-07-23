@@ -52,7 +52,7 @@ const Profile = (props) => {
                 </CardContent>
             </Card>
             <_ListItem title="خرید های قبلی" destination="/invoices"/>
-            <_ListItem title="دعوت از دوستان" destination="/profile/invitefriends"/>
+            {/*<_ListItem title="دعوت از دوستان" destination="/profile/invitefriends"/>*/}
             <_ListItem title="سوالات متداول" destination="https://gympin.ir/faq/"/>
             {/*<_ListItem title="امتیاز و بازخورد" destination="/profile/survey"/>*/}
             <_ListItem title="شرایط و قوانین" destination="https://gympin.ir/term-and-conditions/"/>

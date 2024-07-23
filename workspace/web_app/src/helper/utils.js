@@ -53,7 +53,21 @@ export function compareObjs(obj1,obj2){
     return JSON.stringify(obj1)===JSON.stringify(obj2);
 }
 
+export function fixPersianNumbers(number) {
+    var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
+    var arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+
+    if (typeof number === 'string') {
+        console.log("number",number);
+        for (var i = 0; i < 10; i++) {
+            number = number.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+        }
+    }
+    return number;
+}
+
 export function toPriceWithComma(price){
+    price = fixPersianNumbers(price);
     if(!price) return "0";
     if(price.length>1&&price.startsWith("0")) price = price.substring(1,price.length);
     return (price+"")
@@ -61,16 +75,31 @@ export function toPriceWithComma(price){
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 export function toPriceWithoutComma(price){
+    price = fixPersianNumbers(price);
     if(!price) return "";
     return (price+"").replace(/\D/g, "");
 }
 
 export function fixMobile(mobileNumber) {
+    if(!mobileNumber) return 0;
+    mobileNumber = fixPersianNumbers(mobileNumber);
     switch (mobileNumber.toString()[0]) {
-        case "0" : return  mobileNumber.toString()
-        case "+": return mobileNumber.replace("+98","0")
-        case "9": return "0"+mobileNumber
+        case "0" : mobileNumber =   mobileNumber.toString()
+            break;
+        case "+": mobileNumber =  mobileNumber.replace("+98","0")
+            break;
+        case "9":
+            mobileNumber =  "0" + mobileNumber
+            break;
+        default:
+            mobileNumber =  "0" ;
+            break;
     }
+    mobileNumber=mobileNumber.replaceAll(/\D/g,"");
+    if(mobileNumber.length>11){
+        mobileNumber=mobileNumber.substring(0,11);
+    }
+    return mobileNumber;
 }
 export function removeStorage(key) {
     try {

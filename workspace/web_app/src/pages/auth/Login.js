@@ -224,7 +224,8 @@ function Login(props) {
                                                 variant="outlined"
                                                 margin="normal"
                                                 name="username"
-                                                type="number"
+                                                type="text"
+                                                inputProps={{ inputMode: 'numeric' }}
                                                 label={"شماره همراه"}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}

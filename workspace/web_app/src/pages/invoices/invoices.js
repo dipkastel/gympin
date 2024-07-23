@@ -26,7 +26,7 @@ const Invoices = () => {
         <>
             {userBasket.map(invoice=>(
                 <Card elevation={3} sx={{margin: 1}} key={invoice.Id}>
-                    <CardHeader sx={{backgroundColor:"#969696",color:"white"}} title={<Typography  variant={"body1"}>{new Date(invoice.CreatedDate).toLocaleDateString('fa-IR', {
+                    <CardHeader sx={{backgroundColor:invoice?.Status=="COMPLETED"?"#488a6f":"#814646",color:"white"}} title={<Typography  variant={"body1"}>{new Date(invoice.CreatedDate).toLocaleDateString('fa-IR', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
@@ -37,7 +37,7 @@ const Invoices = () => {
                     />
                     <CardContent>
                         <Typography sx={{padding:0.5}} variant={"body1"}>{"شماره فاکتور : "+invoice?.Id}</Typography>
-                        <Typography sx={{padding:0.5}} variant={"body2"}>{"مبلغ : "+invoice?.PriceToPay}</Typography>
+                        <Typography sx={{padding:0.5}} variant={"body2"}>{"مبلغ : "+toPriceWithComma(invoice?.PriceToPay)+" تومان"}</Typography>
                         <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0,width:"100%"}} component="div"/>
 
                         <Typography sx={{padding:1}}  variant={"body1"}>{"خرید ها : "}</Typography>
@@ -46,8 +46,8 @@ const Invoices = () => {
 
                             <ListItemText
                                 key={buyable.Id}
-                                primary={buyable.Name}
-                                secondary={toPriceWithComma(buyable.UnitPrice)+"  "+buyable.Count +"عدد"}
+                                primary={buyable.Name+" از مجموعه "+buyable?.Place?.Name}
+                                secondary={toPriceWithComma(buyable.UnitPrice)+" تومان برای "+buyable.Count +" عدد"}
                                 primaryTypographyProps={{variant: "body1"}}
                                 secondaryTypographyProps={{variant: "body2"}}
                             />

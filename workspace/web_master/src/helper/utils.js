@@ -17,6 +17,7 @@ export function compareObjs(obj1, obj2) {
 }
 
 export function fixMobile(mobileNumber) {
+    if(!mobileNumber) return 0;
     mobileNumber = fixPersianNumbers(mobileNumber);
     mobileNumber=mobileNumber.replaceAll(/\D/g,"");
     if(mobileNumber.length>11){
