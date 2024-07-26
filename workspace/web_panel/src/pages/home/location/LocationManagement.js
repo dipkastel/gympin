@@ -195,6 +195,7 @@ export default function LocationManagement() {
                             <TableRow>
                                 <TableCell align="right" padding="normal" sortDirection={false}>Id</TableCell>
                                 <TableCell align="right" padding="normal" sortDirection={false}>نام</TableCell>
+                                <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -204,6 +205,9 @@ export default function LocationManagement() {
                                 }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                     <TableCell component="th" scope="row" padding="normal" align="right">{row.Id}</TableCell>
                                     <TableCell component="th" align="right">{row.Name}</TableCell>
+                                    <TableCell component="th" align="left"><Button variant={"contained"} size={"small"}
+                                                                                    color={"primary"}
+                                                                                    href={"/location/" + row.Id}>مشخصات</Button></TableCell>
                                 </TableRow>
                             ))
                             }

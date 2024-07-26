@@ -159,9 +159,9 @@ const Users = () => {
                     value={selectedTab}
                     onChange={(e, n) => setSelectedTab(n)}
                     aria-label="usersTab"
-                    variant="fullWidth"
+                    variant={"scrollable"}
                 >
-                    <Tab label="همه" id={"group-tab-0"} aria-controls={"group-tabpanel-0"}/>
+                    <Tab label="همه" id={"group-tab-0"}  aria-controls={"group-tabpanel-0"}/>
                     {groups&&groups.map(group=>(
                         <Tab key={"g-"+group.Id} label={group.Name} id={"group-tab-"+group.Id} aria-controls={"group-tabpanel-"+group.Id}/>
                     ))}

@@ -39,6 +39,7 @@ import TicketCourseDataManagement from "./place/tickets/ticketCourse/TicketCours
 import CourseDataManagement from "./purchasedItems/courses/baseData/CourseDataManagement";
 import CoachManagement from "./coach/CoachManagement";
 import CoachDetailsManagement from "./coach/baseData/CoachDetailsManagement";
+import LocationDetail from "./location/LocationDetail/LocationDetail";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -90,8 +91,13 @@ export default function HomePage() {
         <Route path="/invoice/detail/:invoiceId" component={InvoiceDetailManagement} />
         <Route path="/invoices" component={InvoiceManagement} />
 
+
+        {/* location */}
         <Route path="/locations/:parentId" component={LocationManagement} />
         <Route path="/locations" component={LocationManagement} />
+        <Route path="/location/:locationId" component={LocationDetail} />
+
+
         <Route path="/sports" component={SportsManagement} />
         <Route path="/media" component={MediaManagement} />
         <Route path="/events" component={EventManagement} />
