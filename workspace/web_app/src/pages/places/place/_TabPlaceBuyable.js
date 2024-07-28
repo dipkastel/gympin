@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Alert, AlertTitle, List,} from "@mui/material";
+import {Alert, AlertTitle, Button, List,} from "@mui/material";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
@@ -108,10 +108,18 @@ const _TabPlaceBuyable = ({place}) => {
     }
 
 
+    function getfixedPlaceNumber() {
+        return place?.Tell;
+    }
+
+    function showCallSudjest() {
+        return place?.CallUs&&place?.Tell;
+    }
+
     return (<>
-        {place.CallUs&&<Alert severity="error" href={"tel:0912545252"} component={"a"}>
+        {showCallSudjest()&&<Alert sx={{textDecoration:"none"}} severity="warning" href={"tel:"+getfixedPlaceNumber()} component={"a"}>
                 <AlertTitle>قبل از خرید بلیط شرایط استفاده را با مرکز از طریق تماس هماهنگ نمایید.</AlertTitle>
-                برای تماس با مرکز <strong> اینجا </strong> کلیک کنید .
+            <Button variant={"contained"} color={"warning"}>تماس با مرکز</Button>
             </Alert>}
             <List className={"nopadding"} disablePadding>
                 {place.Id && <_placeSubscribes place={place}/>}
