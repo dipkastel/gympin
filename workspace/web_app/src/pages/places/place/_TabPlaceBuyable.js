@@ -118,7 +118,7 @@ const _TabPlaceBuyable = ({place}) => {
 
     return (<>
         {showCallSudjest()&&<Alert sx={{textDecoration:"none"}} severity="warning" href={"tel:"+getfixedPlaceNumber()} component={"a"}>
-                <AlertTitle>قبل از خرید بلیط شرایط استفاده را با مرکز از طریق تماس هماهنگ نمایید.</AlertTitle>
+                <AlertTitle>قبل از خرید بلیط، شرایط استفاده را هماهنگ نمایید.</AlertTitle>
             <Button variant={"contained"} color={"warning"}>تماس با مرکز</Button>
             </Alert>}
             <List className={"nopadding"} disablePadding>
