@@ -21,11 +21,15 @@ const _SettingsCorporate = (props) => {
     const [selectedCorporate, SetSelectedCorporate] = useState(useSelector(({corporate}) => corporate.corporate))
     const [personCorporates, SetPersonCorporates] = useState([]);
     useEffect(() => {
+        getUserCorporates();
+    }, []);
+
+    function getUserCorporates() {
         corporatePersonnel_corporateOwnedByUserId({id: user.Id}).then(result => {
             SetPersonCorporates(result.data.Data)
             if (result.data.Data.length == 1) {
-                SetSelectedCorporate(result.data.Data[0]);
-                props.SetCorporate(result.data.Data[0]);
+                SetSelectedCorporate(result.data.Data[0]?.Corporate);
+                props.SetCorporate(result.data.Data[0]?.Corporate);
             }
         }).catch(e => {
             try {
@@ -34,8 +38,7 @@ const _SettingsCorporate = (props) => {
                 error.showError({message: "خطا نا مشخص",});
             }
         });
-    }, []);
-
+    }
     function selectedPlaceChanged(event) {
         const corporate = personCorporates.find(r => r.Corporate.Id == event.target.value).Corporate;
         if (corporate) {
