@@ -58,6 +58,9 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Column(name = "Tell")
     private String tell;
 
+    @Column(name = "CallUs", nullable = false, columnDefinition = "bit default 0")
+    private boolean callUs;
+
     @Column(name = "address")
     private String address;
 

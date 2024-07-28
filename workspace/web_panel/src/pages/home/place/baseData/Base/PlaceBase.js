@@ -89,6 +89,14 @@ function PlaceBase({place, updatePlace}) {
                             }}
                         />
                     </Form.Group>
+                        <Form.Group>
+                            <FormControlLabel
+                                control={<Switch
+                                    defaultChecked={inPlace.CallUs}
+                                    onChange={(e)=>setFormValues("CallUs",e.target.checked)} />}
+                                label="تماس قبل از خرید"
+                            />
+                        </Form.Group>
                     <Form.Group>
                         <PlaceMap place={inPlace} setFormValues={setFormValues}/>
                     </Form.Group>

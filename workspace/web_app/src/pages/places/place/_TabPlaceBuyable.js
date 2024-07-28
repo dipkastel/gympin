@@ -1,8 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-    List,
-} from "@mui/material";
-import {Plans_getByPlace} from "../../../network/api/ticketSubscribe.api";
+import {Alert, AlertTitle, List,} from "@mui/material";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
@@ -24,9 +21,9 @@ const _TabPlaceBuyable = ({place}) => {
     function getPlans() {
         ticketBuyable_query({
             queryType: "FILTER",
-            Place:place.Id,
-            paging:{Page:0,Size:50}
-        }).then(result =>{
+            Place: place.Id,
+            paging: {Page: 0, Size: 50}
+        }).then(result => {
             setBuyables(result.data.Data);
         }).catch(e => {
             try {
@@ -38,12 +35,12 @@ const _TabPlaceBuyable = ({place}) => {
     }
 
     function addToSubscribes(item) {
-        if(!currentUser){
+        if (!currentUser) {
             error.showError({
                 clickable: true,
                 message: 'برای خرید ابتدا باید وارد شوید',
                 buttonTitle: 'پروفایل',
-                duration:6000,
+                duration: 6000,
                 onClick: () => {
                     navigate("/profile/edit", {replace: false});
                 }
@@ -55,7 +52,7 @@ const _TabPlaceBuyable = ({place}) => {
                 clickable: true,
                 message: 'تکمیل نام و نام خانوادگی',
                 buttonTitle: 'پروفایل',
-                duration:6000,
+                duration: 6000,
                 onClick: () => {
                     navigate("/profile/edit", {replace: false});
                 }
@@ -67,7 +64,7 @@ const _TabPlaceBuyable = ({place}) => {
                 clickable: true,
                 message: 'تکمیل تاریخ تولد',
                 buttonTitle: 'پروفایل',
-                duration:6000,
+                duration: 6000,
                 onClick: () => {
                     navigate("/profile/edit", {replace: false});
                 }
@@ -90,7 +87,7 @@ const _TabPlaceBuyable = ({place}) => {
                 clickable: true,
                 message: 'تکمیل جنسیت',
                 buttonTitle: 'پروفایل',
-                duration:6000,
+                duration: 6000,
                 onClick: () => {
                     navigate("/profile/edit", {replace: false});
                 }
@@ -111,11 +108,17 @@ const _TabPlaceBuyable = ({place}) => {
     }
 
 
-    return (
+    return (<>
+        {place.CallUs&&<Alert severity="error" href={"tel:0912545252"} component={"a"}>
+                <AlertTitle>قبل از خرید بلیط شرایط استفاده را با مرکز از طریق تماس هماهنگ نمایید.</AlertTitle>
+                برای تماس با مرکز <strong> اینجا </strong> کلیک کنید .
+            </Alert>}
             <List className={"nopadding"} disablePadding>
-                {place.Id&&<_placeSubscribes place={place} />}
-                {place.Id&&<_placeCourses place={place} />}
+                {place.Id && <_placeSubscribes place={place}/>}
+                {place.Id && <_placeCourses place={place}/>}
             </List>
+
+        </>
     );
 };
 

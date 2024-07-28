@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
-import {Button, Card, CardContent, CardHeader, TextField} from "@mui/material";
+import {Button, Card, CardContent, CardHeader, FormControlLabel, Switch, TextField} from "@mui/material";
 
 const _PlaceInfo = ({place,SubmitForm}) => {
     const [name,setName]=useState(place.Name)
     const [tell,setTell]=useState(place.Tell)
+    const [callUs,setCallUs]=useState(place.CallUs)
 
 
     function Submit() {
         SubmitForm({
             ...place,
             Name:name,
-            Tell:tell
+            Tell:tell,
+            CallUs:callUs
         })
     }
 
@@ -45,6 +47,13 @@ const _PlaceInfo = ({place,SubmitForm}) => {
                     onChange={e=>setTell(e.target.value)}
                     label={"تلفن مجموعه"}
                     multiline
+                />
+
+                <FormControlLabel
+                    checked={callUs}
+                    onChange={e=>setCallUs(e.target.checked)}
+                    control={<Switch />}
+                    label={"پیشنهاد شود قبل از خرید تماس بگیرند."}
                 />
                 <Button variant={"outlined"} sx={{width:"100%"}} onClick={()=>Submit()}>ثبت</Button>
             </CardContent>
