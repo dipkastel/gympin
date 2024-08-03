@@ -14,6 +14,9 @@ export let Api_url = {
         REFRESH_TOKEN:"v1/account/refreshToken",
         REQUEST_REGISTER_PLACE:"v1/account/requestRegisterPlace"
     },
+    TicketBuyable:{
+        query:"v1/TicketBuyable/query"
+    },
     configs:{
         WebMasterSplash:"v1/configs/MasterSplash"
     },

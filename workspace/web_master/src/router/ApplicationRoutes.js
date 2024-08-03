@@ -43,6 +43,7 @@ import Coach from "../pages/coach/coach";
 import WizardBody from "../pages/wizard/body/WizardBody";
 import {getWizardComplete, setWizardComplete} from "../helper/pocket";
 import PlaceData from "../pages/management/PlaceData";
+import PlacePreview from "../pages/preview/PlacePreview";
 
 export default function ApplicationRoutes() {
 
@@ -104,6 +105,7 @@ export default function ApplicationRoutes() {
                     <Route path="/management/editProfile" element={<EditProfile/>}/>
                     <Route path="/management/coach" element={<Coach/>}/>
                     <Route path="/management/placeData" element={<PlaceData/>}/>
+                    <Route path="/management/placePreview" element={<PlacePreview/>}/>
                     <Route path="/management" element={<Management/>}/>
 
                     {/*tickets*/}

@@ -26,6 +26,7 @@ const PlaceData = () => {
             <_ListItem title="درباره مرکز" destination="/management/about"/>}
             {getAccessOf(personnelAccessEnumT.ManagementOptions) &&
             <_ListItem title="امکانات مرکز" destination="/management/facilities"/>}
+            <_ListItem  title="کاربران مجموعه را چطور می بینند؟" destination="/management/placePreview" bgColor={"#c9eac9"}/>
 
         </>
     );

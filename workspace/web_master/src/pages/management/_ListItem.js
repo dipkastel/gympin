@@ -6,7 +6,7 @@ const _ListItem = (props) => {
         <Card elevation={3} sx={{margin: 1}} >
             <CardHeader
                 component={"a"}
-                sx={{textDecoration:"none",color:"#000000"}}
+                sx={{textDecoration:"none",color:"#000000",bgcolor:props.bgColor}}
                 href={props.destination}
                 onClick={props.onClick}
                 title={props.title}
