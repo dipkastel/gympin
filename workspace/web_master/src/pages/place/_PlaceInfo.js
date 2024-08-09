@@ -4,6 +4,7 @@ import {Button, Card, CardContent, CardHeader, FormControlLabel, Switch, TextFie
 const _PlaceInfo = ({place,SubmitForm}) => {
     const [name,setName]=useState(place.Name)
     const [tell,setTell]=useState(place.Tell)
+    const [ActiveTimes,setActiveTimes]=useState(place.ActiveTimes)
     const [callUs,setCallUs]=useState(place.CallUs)
 
 
@@ -55,7 +56,22 @@ const _PlaceInfo = ({place,SubmitForm}) => {
                     control={<Switch />}
                     label={"پیشنهاد شود قبل از خرید تماس بگیرند."}
                 />
-                <Button variant={"outlined"} sx={{width:"100%"}} onClick={()=>Submit()}>ثبت</Button>
+
+                <TextField
+                    id="outlined-message"
+                    className="w-100"
+                    aria-multiline
+                    variant="outlined"
+                    margin="normal"
+                    name="message"
+                    type="text"
+                    value={ActiveTimes}
+                    onChange={e=>setActiveTimes(e.target.value)}
+                    label={"ساعات فعالیت مجموعه"}
+                    multiline={true}
+                    minRows={3}
+                />
+                <Button variant={"contained"} sx={{width:"100%"}} onClick={()=>Submit()}>ثبت</Button>
             </CardContent>
         </Card>
     );

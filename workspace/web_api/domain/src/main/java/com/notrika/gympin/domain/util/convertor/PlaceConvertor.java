@@ -44,6 +44,7 @@ public final class PlaceConvertor {
         placeDto.setTell(entity.getTell());
         placeDto.setCallUs(entity.isCallUs());
         placeDto.setAddress(entity.getAddress());
+        placeDto.setActiveTimes(entity.getActiveTimes());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setStatus(entity.getStatus());
         placeDto.setBalance(entity.getBalance());

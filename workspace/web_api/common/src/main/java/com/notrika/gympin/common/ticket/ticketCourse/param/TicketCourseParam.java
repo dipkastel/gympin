@@ -59,6 +59,9 @@ public class TicketCourseParam extends BaseParam<TicketCourseParam> {
     @JsonProperty("AgeLimit")
     private String ageLimit;
 
+    @JsonProperty("Timing")
+    private String timing;
+
     @JsonProperty("EntryTotalCount")
     private Short entryTotalCount;
 

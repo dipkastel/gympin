@@ -55,6 +55,21 @@ function TicketCourseBase({ticketCourse, updateTicketCourse}) {
                             />
                         </Form.Group>
 
+                        <TextField
+                            id="standard-full-width"
+                            label="زمان"
+                            value={inTicketCourse.Timing || ""}
+                            type={"Text"}
+                            multiline
+                            minRows={3}
+                            onChange={(e) => setFormValues("Timing", e.target.value)}
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+
                         <Form.Group className={"w-100"} controlId="formAddGender">
                             <Form.Label>نوع کلاس</Form.Label>
                             <Select

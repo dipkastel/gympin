@@ -1,21 +1,18 @@
 package com.notrika.gympin.domain.corporate;
 
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
+import com.notrika.gympin.common.corporate.corporate.enums.CorporateContractTypeEnum;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
-import com.notrika.gympin.common.corporate.corporate.param.CorporateLogoParam;
-import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.corporate.corporate.param.*;
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
 import com.notrika.gympin.common.corporate.corporate.service.CorporateService;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelGroupDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelGroupParam;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
-import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
 import com.notrika.gympin.common.finance.transaction.param.FinanceCorporateParam;
-import com.notrika.gympin.common.finance.transaction.param.FinanceUserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
-import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
@@ -26,7 +23,6 @@ import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEn
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -62,6 +58,7 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
                 .address(corporateParam.getAddress())
                 .status(CorporateStatusEnum.INACTIVE)
                 .stepsPay(false)
+                .contractType(CorporateContractTypeEnum.LONG_TIME)
                 .build());
 
         financeCorporateRepository.add(FinanceCorporateEntity.builder()
@@ -92,6 +89,26 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
     public CorporateDto updateStepPayment(@NonNull CorporateParam corporateParam) {
         CorporateEntity entity = corporateRepository.getById(corporateParam.getId());
         entity.setStepsPay(corporateParam.getStepPeyment());
+        return CorporateConvertor.toDto(corporateRepository.update(entity));
+    }
+
+    @Override
+    public CorporateDto updateContractType(@NonNull CorporateContractTypeParam param) {
+        CorporateEntity entity = corporateRepository.getById(param.getId());
+        entity.setContractType(param.getContractType());
+        return CorporateConvertor.toDto(corporateRepository.update(entity));
+    }
+    @Override
+    public CorporateDto updateContractDate(@NonNull CorporateContractDateParam param) {
+        CorporateEntity entity = corporateRepository.getById(param.getId());
+        entity.setContractDate(param.getContractDate());
+        return CorporateConvertor.toDto(corporateRepository.update(entity));
+    }
+
+    @Override
+    public CorporateDto updateDed(@NonNull CorporateDedParam param) {
+        CorporateEntity entity = corporateRepository.getById(param.getId());
+        entity.setDed(param.getDefaultExpireDuration());
         return CorporateConvertor.toDto(corporateRepository.update(entity));
     }
 

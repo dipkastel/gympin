@@ -97,6 +97,18 @@ function PlaceBase({place, updatePlace}) {
                                 label="تماس قبل از خرید"
                             />
                         </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>ساعات فعالیت مجموعه</Form.Label>
+                        <textarea
+                            className="form-control"
+                            id="exampleTextarea"
+                            rows="4"
+                            name="formActiveTimes"
+                            value={inPlace.ActiveTimes?inPlace.ActiveTimes:""}
+                            onChange={(e) => setFormValues("ActiveTimes", e.target.value)}
+                        />
+                    </Form.Group>
                     <Form.Group>
                         <PlaceMap place={inPlace} setFormValues={setFormValues}/>
                     </Form.Group>

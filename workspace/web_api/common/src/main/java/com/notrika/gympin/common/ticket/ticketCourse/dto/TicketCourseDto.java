@@ -67,6 +67,9 @@ public class TicketCourseDto extends BaseDto<TicketCourseDto> {
     @JsonProperty("AgeLimit")
     private String ageLimit;
 
+    @JsonProperty("Timing")
+    private String timing;
+
     @JsonProperty("Coaches")
     private List<UserDto> coaches;
 

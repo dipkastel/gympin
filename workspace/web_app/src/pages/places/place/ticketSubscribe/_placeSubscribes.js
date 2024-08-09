@@ -152,7 +152,6 @@ const _placeSubscribes = ({place}) => {
                     </Collapse></>}
             </div>
         );
-    }
-;
+    };
 
 export default _placeSubscribes;

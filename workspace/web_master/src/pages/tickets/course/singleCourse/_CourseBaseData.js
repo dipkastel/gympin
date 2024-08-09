@@ -94,6 +94,26 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                                 ))}
                             </Select>
                         </FormControl>
+
+
+
+                        {introMode&&
+                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>توضیح در مورد زمان و مکان برگزاری کلاس
+                        </Typography>}
+                        <TextField
+                            name={"Timing"}
+                            value={inCourse.Timing || ""}
+                            onChange={(e) => setInCourse({...inCourse, Timing: e.target.value})}
+                            margin="dense"
+                            label="زمان و مکان"
+                            type="text"
+                            aria-multiline={"true"}
+                            minRows={3}
+                            fullWidth
+                            multiline
+                            variant="outlined"
+                        />
+
                         <FormControl variant="standard" sx={{my:1}}
                                      fullWidth>
                             <InputLabel id="demo-simple-select-standard-label">نوع کلاس</InputLabel>

@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.corporate;
 
+import com.notrika.gympin.common.corporate.corporate.param.*;
 import com.notrika.gympin.common.finance.transaction.dto.CorporateTransactionDto;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
 import com.notrika.gympin.common.finance.transaction.param.CorporateTransactionParam;
@@ -10,8 +11,6 @@ import com.notrika.gympin.common.corporate.corporate.api.CorporateController;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelGroupDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelGroupParam;
-import com.notrika.gympin.common.corporate.corporate.param.CorporateLogoParam;
-import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
 import com.notrika.gympin.common.corporate.corporate.service.CorporateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -68,6 +66,26 @@ public class CorporateControllerImpl implements CorporateController {
     @PutMapping("updateStatus")
     public ResponseEntity<CorporateDto> updateStatus(CorporateParam param) {
         return ResponseEntity.ok(corporateService.updateStatus(param));
+    }
+
+    @Override
+    @PutMapping("updateContractType")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<CorporateDto> updateContractType(CorporateContractTypeParam param) {
+        return ResponseEntity.ok(corporateService.updateContractType(param));
+    }
+
+    @Override
+    @PutMapping("updateContractDate")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<CorporateDto> updateContractDate(CorporateContractDateParam param) {
+        return ResponseEntity.ok(corporateService.updateContractDate(param));
+    }
+    @Override
+    @PutMapping("updateDefaultExpireDuration")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<CorporateDto> updateDefaultExpireDuration(CorporateDedParam param) {
+        return ResponseEntity.ok(corporateService.updateDed(param));
     }
 
     @Override

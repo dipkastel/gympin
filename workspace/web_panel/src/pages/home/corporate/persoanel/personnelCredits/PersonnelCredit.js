@@ -140,8 +140,8 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                                         minute: "2-digit"
                                     })}</TableCell>
                                     <TableCell align="right">
-                                        <Tooltip title={row.CreatorUser.Username || ""} placement="left">
-                                            <span>{(row.CreatorUser.FullName || row.CreatorUser.Username)}</span>
+                                        <Tooltip title={row?.CreatorUser?.Username || ""} placement="left">
+                                            <span>{(row?.CreatorUser?.FullName || row?.CreatorUser?.Username)}</span>
                                         </Tooltip>
                                     </TableCell>
                                 </TableRow>

@@ -47,6 +47,9 @@ public class PurchasedCourseEntity extends PurchasedBaseEntity<PurchasedCourseEn
     @Column(name = "ageLimit")
     private String ageLimit;
 
+    @Column(name = "Timing",columnDefinition = "varchar(800)")
+    private String timing;
+
     @ManyToMany
     @JoinTable(name = "PurchasedCourseCouches", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
     private List<UserEntity> coaches;

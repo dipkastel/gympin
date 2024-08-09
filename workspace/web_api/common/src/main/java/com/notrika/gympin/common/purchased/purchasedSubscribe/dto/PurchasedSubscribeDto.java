@@ -35,6 +35,9 @@ public class PurchasedSubscribeDto extends BaseDtoWithCreateUpdate<PurchasedSubs
     @JsonProperty("Name")
     private String name;
 
+    @JsonProperty("Timing")
+    private String timing;
+
     @JsonProperty("Serial")
     private SerialDto serial;
 

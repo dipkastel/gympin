@@ -2,7 +2,8 @@ import React from 'react';
 import CorporateStatus from "../Status/CorporateStatus";
 import DeleteCorporate from "../Delete/DeleteCorporate";
 import CorporatePersonnel from "../Personnel/CorporatePersonnel";
-import CorporateStepPayment from "../stepPeyment/CorporateStepPayment";
+import CorporateContract from "../Contract/CorporateContract";
+import CorporateContractExpire from "../ContractExpire/CorporateContractExpire";
 
 const CorporateManagementSettingTab = ({currentCorporate,updatePage}) => {
     return (
@@ -14,7 +15,8 @@ const CorporateManagementSettingTab = ({currentCorporate,updatePage}) => {
                     <DeleteCorporate currentCorporate={currentCorporate}/>
                 </div>
                 <div className="col-md-6">
-                    <CorporateStepPayment currentCorporate={currentCorporate} UpdatePage={updatePage}/>
+                    <CorporateContractExpire currentCorporate={currentCorporate} UpdatePage={updatePage}/>
+                    <CorporateContract currentCorporate={currentCorporate} UpdatePage={updatePage}/>
                 </div>
 
             </div>}

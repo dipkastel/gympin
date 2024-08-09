@@ -5,8 +5,6 @@ import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
-import com.notrika.gympin.common.ticket.ticketCourse.dto.TicketCourseDto;
-import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseCoachParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
 import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
@@ -30,7 +28,6 @@ import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
-import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
@@ -72,6 +69,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
                 .enable(false)
                 .buyableType(BuyableType.SUBSCRIBE)
                 .entryTotalCount(ticketSubscribeParam.getEntryTotalCount())
+                .timing(ticketSubscribeParam.getTiming())
                 .gender(ticketSubscribeParam.getGender())
                 .description(ticketSubscribeParam.getDescription())
                 .expireDuration(ticketSubscribeParam.getExpireDuration())
@@ -93,6 +91,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
         ticketSubscribeEntity.setPlacePrice(ticketSubscribeParam.getPlacePrice());
         ticketSubscribeEntity.setDiscount((short) 0);
         ticketSubscribeEntity.setBuyableType(BuyableType.SUBSCRIBE);
+        ticketSubscribeEntity.setTiming(ticketSubscribeParam.getTiming());
         ticketSubscribeEntity.setEntryTotalCount(ticketSubscribeParam.getEntryTotalCount());
         ticketSubscribeEntity.setGender(ticketSubscribeParam.getGender());
         ticketSubscribeEntity.setDescription(ticketSubscribeParam.getDescription());

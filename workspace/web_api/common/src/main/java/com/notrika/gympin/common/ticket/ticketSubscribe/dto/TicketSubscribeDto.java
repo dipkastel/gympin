@@ -45,6 +45,9 @@ public class TicketSubscribeDto extends BaseDto<TicketSubscribeDto> {
     @JsonProperty("Description")
     private String description;
 
+    @JsonProperty("Timing")
+    private String Timing;
+
     @JsonProperty("Coaches")
     private List<UserDto> coaches;
 

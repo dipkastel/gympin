@@ -37,6 +37,9 @@ public class TicketSubscribeParam extends BaseParam<TicketSubscribeParam> {
     @JsonProperty("Description")
     private String description;
 
+    @JsonProperty("Timing")
+    private String timing;
+
     @JsonProperty(value = "Place", required = true)
     private PlaceParam place;
 

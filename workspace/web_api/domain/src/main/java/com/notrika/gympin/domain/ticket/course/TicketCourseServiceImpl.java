@@ -77,6 +77,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
                 .autoRenew(param.getAutoRenew())
                 .classCapacity(param.getClassCapasity())
                 .ageLimit(param.getAgeLimit())
+                .timing(param.getTiming())
                 .entryTotalCount(param.getEntryTotalCount())
                 .courseCapacity(param.getCourseCapacity())
                 .courseLevel(param.getCourseLevel())
@@ -96,7 +97,6 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
             throw new UncomfortableValueExeption();
         TicketCourseEntity ticketCourseEntity = getEntityById(ticketCourseParam.getId());
         ticketCourseEntity.setName(ticketCourseParam.getName());
-        ticketCourseEntity.setEnable(false);
         ticketCourseEntity.setDiscount((short) 0);
         ticketCourseEntity.setGender(ticketCourseParam.getGender());
         ticketCourseEntity.setPrice(ticketCourseParam.getPlacePrice());
@@ -108,6 +108,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
         ticketCourseEntity.setAutoRenew(ticketCourseParam.getAutoRenew());
         ticketCourseEntity.setClassCapacity(ticketCourseParam.getClassCapasity());
         ticketCourseEntity.setAgeLimit(ticketCourseParam.getAgeLimit());
+        ticketCourseEntity.setTiming(ticketCourseParam.getTiming());
         ticketCourseEntity.setEntryTotalCount(ticketCourseParam.getEntryTotalCount());
         ticketCourseEntity.setCourseCapacity(ticketCourseParam.getCourseCapacity());
         ticketCourseEntity.setCourseLevel(ticketCourseParam.getCourseLevel());

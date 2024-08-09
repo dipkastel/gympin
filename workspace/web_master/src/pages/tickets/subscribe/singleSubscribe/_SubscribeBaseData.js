@@ -88,6 +88,20 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                                 ))}
                             </Select>
                         </FormControl>
+
+                        <TextField
+                            name={"timing"}
+                            value={inSubscribe.Timing || ""}
+                            onChange={(e) => setInSubscribe({...inSubscribe, Timing: e.target.value})}
+                            margin="dense"
+                            label="زمان فعالیت"
+                            type="text"
+                            aria-multiline={"true"}
+                            minRows={3}
+                            fullWidth
+                            multiline
+                            variant="outlined"
+                        />
                         {introMode&&
                         <Typography color={"#a2a2a2"} variant={"subtitle2"}>
                             قیمت ها به تومان می باشد
@@ -97,7 +111,7 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                             value={toPriceWithComma(inSubscribe.PlacePrice)}
                             onChange={(e) => setInSubscribe({...inSubscribe, PlacePrice: toPriceWithoutComma(e.target.value)})}
                             margin="dense"
-                            label="قیمت عضویت"
+                            label="قیمت عضویت (تومان)"
                             type="text"
                             fullWidth
                             variant="outlined"
@@ -111,7 +125,7 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                             value={toPriceWithComma(inSubscribe.ValuePrice)}
                             onChange={(e) => setInSubscribe({...inSubscribe, ValuePrice: toPriceWithoutComma(e.target.value)})}
                             margin="dense"
-                            label="ارزش عضویت"
+                            label="ارزش عضویت (تومان)"
                             type="text"
                             fullWidth
                             variant="outlined"
@@ -131,6 +145,7 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                             fullWidth
                             variant="outlined"
                         />
+
                         {introMode&&
                         <Typography color={"#a2a2a2"} variant={"subtitle2"}>
                             تعداد بلیط قابل فروش با هر فروش بلیط یک عدد کم می شود

@@ -9,6 +9,7 @@ import com.notrika.gympin.persistence.entity.finance.corporate.CorporatePersonne
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
 
+import java.util.Calendar;
 import java.util.stream.Collectors;
 
 public final class CorporateConvertor {
@@ -23,8 +24,17 @@ public final class CorporateConvertor {
         if (entity.getFinanceCorporate() != null)
             dto.setFinanceCorporate(TransactionConvertor.toSimpleDto(entity.getFinanceCorporate()));
         dto.setStatus(entity.getStatus());
+        dto.setContractType(entity.getContractType());
         dto.setStepPeyment(entity.getStepsPay());
         dto.setLogo(MultimediaConvertor.toDto(entity.getLogo()));
+        dto.setDefaultExpireDuration(entity.getDed());
+        try{
+            dto.setContractDate(entity.getContractDate());
+            Calendar expireDate = Calendar.getInstance();
+            expireDate.setTime(entity.getContractDate());
+            expireDate.add(Calendar.YEAR, 1);
+            dto.setContractExpireDate(expireDate.getTime());
+        }catch (Exception e){}
         return dto;
     }
 

@@ -64,6 +64,9 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "activeTimes", columnDefinition = "varchar(800)")
+    private String activeTimes;
+
     @Column(name = "inviteCode")
     private String inviteCode;
 

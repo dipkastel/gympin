@@ -30,6 +30,9 @@ public class PurchasedSubscribeEntity extends PurchasedBaseEntity<PurchasedSubsc
     @Enumerated(EnumType.STRING)
     private SubscribePurchasedStatus status;
 
+    @Column(name = "Timing",columnDefinition = "varchar(800)")
+    private String timing;
+
     @ManyToOne
     @JoinColumn(name = "ticketSubscribeId")
     private TicketSubscribeEntity ticketSubscribe;

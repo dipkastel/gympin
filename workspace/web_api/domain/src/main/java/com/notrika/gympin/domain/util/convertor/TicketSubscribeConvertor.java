@@ -26,6 +26,7 @@ public class TicketSubscribeConvertor {
         dto.setEntryTotalCount(entity.getEntryTotalCount());
         dto.setExpireDuration(entity.getExpireDuration());
         dto.setSubscribeCapacity(entity.getSubscribeCapacity());
+        dto.setTiming(entity.getTiming());
         if(entity.getCoaches()!=null)
             dto.setCoaches(entity.getCoaches().stream().map(UserConvertor::toCoachDto).collect(Collectors.toList()));
         return dto;

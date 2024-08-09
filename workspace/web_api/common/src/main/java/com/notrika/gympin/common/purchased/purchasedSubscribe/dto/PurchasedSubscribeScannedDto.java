@@ -47,6 +47,9 @@ public class PurchasedSubscribeScannedDto extends BaseDtoWithCreateUpdate<Purcha
     @JsonProperty("Description")
     private String description;
 
+    @JsonProperty("Timing")
+    private String timing;
+
     @JsonProperty("EntryTotalCount")
     private Short entryTotalCount;
 

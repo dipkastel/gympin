@@ -25,8 +25,8 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe}) => {
                             action={
                                 <>
                                     {subscribe?.Coaches?.length>0 && <_ticketCoach ticket={subscribe}/>}
-                                    {subscribe.Description && <_ticketInfo ticket={subscribe}/>}
-                                    {subscribe && <_ticketSubscribeActiveTimes subscribe={subscribe}/>}
+                                    {subscribe?.Description && <_ticketInfo ticket={subscribe}/>}
+                                    {subscribe?.Timing && <_ticketSubscribeActiveTimes subscribe={subscribe}/>}
 
 
                                 </>

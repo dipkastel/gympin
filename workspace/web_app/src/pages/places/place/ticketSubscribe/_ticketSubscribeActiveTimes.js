@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Dialog, DialogTitle, Divider, IconButton, Typography} from "@mui/material";
+import {Dialog, DialogContent, DialogTitle, Divider, IconButton, Typography} from "@mui/material";
 import BallotIcon from '@mui/icons-material/Ballot';
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {ticketSubscribe_getActiveTimesByTicketSubscribe} from "../../../../network/api/ticketSubscribe.api";
@@ -10,18 +10,18 @@ const _ticketSubscribeActiveTimes = ({subscribe}) => {
     const [openModalTimes, setOpenModalTimes] = useState(false)
     const [subscribeTimes, SetSubscribeTimes] = useState([]);
 
-    useEffect(() => {
-        if (!openModalTimes) return;
-        ticketSubscribe_getActiveTimesByTicketSubscribe({ticketSubscribeId: subscribe.Id}).then(result => {
-            SetSubscribeTimes(result.data.Data);
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
-    }, [openModalTimes])
+    // useEffect(() => {
+    //     if (!openModalTimes) return;
+    //     ticketSubscribe_getActiveTimesByTicketSubscribe({ticketSubscribeId: subscribe.Id}).then(result => {
+    //         SetSubscribeTimes(result.data.Data);
+    //     }).catch(e => {
+    //         try {
+    //             error.showError({message: e.response.data.Message});
+    //         } catch (f) {
+    //             error.showError({message: "خطا نا مشخص",});
+    //         }
+    //     });
+    // }, [openModalTimes])
 
 
     function renderModalHallTime() {
@@ -32,18 +32,21 @@ const _ticketSubscribeActiveTimes = ({subscribe}) => {
                 open={openModalTimes} onClose={() => setOpenModalTimes(false)}>
                 <DialogTitle bgcolor={"#888888"} color={"white"} sx={{p: 1, mb: 1, borderBottom: "solid 2px #e7333e"}}>زمان
                     ها و سالن های قابل استفاده</DialogTitle>
-                {subscribeTimes.map(item => (
-                    <div key={"ph-" + item.Id}>
-                        <Typography component={"span"} color={"darkgray"} sx={{pr: 1}}
-                                    variant={"body1"}>{"سالن " + item?.Hall?.Name + " " + dayOfWeekEnum[item.DayOfWeek] + " از " + item.OpeningTime.substring(0, 5) + " تا " + item.ClosingTime.substring(0, 5)}</Typography>
-                        <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>
-                        {/*{subscribeTimes[gateName].map((Time,ite2)=>(*/}
-                        {/*    <Chip size={"small"}  key={Time.Id} sx={{padding:0,margin:0.5,fontSize:8}} label={dayOfWeekEnum[Time["gate-timing"]["Day-of-week"]]+" "+Time["gate-timing"]["Opening-time"].substring(0,5)+" تا "+*/}
-                        {/*    Time["gate-timing"]["Closing-time"].substring(0,5)+" "} />*/}
-                        {/*))}*/}
+                <DialogContent>
+                    <Typography variant={"h5"} >{subscribe.Timing}</Typography>
+                </DialogContent>
+                {/*{subscribeTimes.map(item => (*/}
+                {/*    <div key={"ph-" + item.Id}>*/}
+                {/*        <Typography component={"span"} color={"darkgray"} sx={{pr: 1}}*/}
+                {/*                    variant={"body1"}>{"سالن " + item?.Hall?.Name + " " + dayOfWeekEnum[item.DayOfWeek] + " از " + item.OpeningTime.substring(0, 5) + " تا " + item.ClosingTime.substring(0, 5)}</Typography>*/}
+                {/*        <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>*/}
+                {/*        /!*{subscribeTimes[gateName].map((Time,ite2)=>(*!/*/}
+                {/*        /!*    <Chip size={"small"}  key={Time.Id} sx={{padding:0,margin:0.5,fontSize:8}} label={dayOfWeekEnum[Time["gate-timing"]["Day-of-week"]]+" "+Time["gate-timing"]["Opening-time"].substring(0,5)+" تا "+*!/*/}
+                {/*        /!*    Time["gate-timing"]["Closing-time"].substring(0,5)+" "} />*!/*/}
+                {/*        /!*))}*!/*/}
 
-                    </div>
-                ))}
+                {/*    </div>*/}
+                {/*))}*/}
             </Dialog>
         </>)
     }

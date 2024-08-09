@@ -25,6 +25,7 @@ public class TicketCourseConvertor {
         dto.setAutoRenew(entity.getAutoRenew());
         dto.setClassCapacity(entity.getClassCapacity());
         dto.setAgeLimit(entity.getAgeLimit());
+        dto.setTiming(entity.getTiming());
         dto.setCourseCapacity(entity.getCourseCapacity());
         dto.setCourseLevel(entity.getCourseLevel());
         dto.setStartDate(entity.getStartDate());

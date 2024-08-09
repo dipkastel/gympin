@@ -51,6 +51,9 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
     @Column(name = "ageLimit")
     private String ageLimit;
 
+    @Column(name = "Timing",columnDefinition = "varchar(800)")
+    private String timing;
+
     @ManyToMany
     @JoinTable(name = "ticketCourseCouches", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
     private List<UserEntity> coaches;

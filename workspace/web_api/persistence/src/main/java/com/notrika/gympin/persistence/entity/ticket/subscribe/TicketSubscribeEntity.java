@@ -34,6 +34,9 @@ public class TicketSubscribeEntity extends BuyableEntity<TicketSubscribeEntity> 
     @Column(name = "subscribeCapacity")
     private Integer subscribeCapacity;
 
+    @Column(name = "Timing",columnDefinition = "varchar(800)")
+    private String timing;
+
     @OneToMany(mappedBy = "ticketSubscribe")
     @ToString.Exclude
     private List<PurchasedSubscribeEntity> purchasedSubscribes;

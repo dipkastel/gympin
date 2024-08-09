@@ -49,6 +49,8 @@ export let CorporateApi = {
     query: "v1/corporate/query",
     update: "v1/corporate/update",
     updateStatus: "v1/corporate/updateStatus",
+    updateContractType: "v1/corporate/updateContractType",
+    updateContractDate: "v1/corporate/updateContractDate",
     updateStepPayment: "v1/corporate/updateStepPayment",
     getFinanceCorporate: "v1/corporate/getFinanceCorporate",
     getCorporateGroups: "v1/corporate/getCorporateGroups",

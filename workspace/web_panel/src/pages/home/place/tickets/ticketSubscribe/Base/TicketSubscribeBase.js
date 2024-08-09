@@ -55,6 +55,22 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
 
                     <TextField
                         id="standard-full-width"
+                        label="زمان"
+                        value={inTicketSubscribe.Timing || ""}
+                        type={"Text"}
+                        multiline
+                        minRows={3}
+                        onChange={(e) => setFormValues("Timing", e.target.value)}
+                        fullWidth
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+
+
+                    <TextField
+                        id="standard-full-width"
                         label="پرداختی کاربر به تومان"
                         placeholder="پرداختی کاربر به تومان"
                         value={toPriceWithComma(inTicketSubscribe.Price)}

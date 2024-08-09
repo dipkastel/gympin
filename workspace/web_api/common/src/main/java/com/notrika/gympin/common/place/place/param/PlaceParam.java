@@ -29,6 +29,9 @@ public class PlaceParam extends BaseParam<PlaceParam> {
     @JsonProperty("Address")
     private String address;
 
+    @JsonProperty("ActiveTimes")
+    private String ActiveTimes;
+
     @JsonProperty("Tell")
     private String tell;
 

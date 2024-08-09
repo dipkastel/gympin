@@ -116,8 +116,9 @@ const _PlaceLocation = ({place,SubmitForm}) => {
                     onChange={e=>setAddress(e.target.value)}
                     label={"آدرس"}
                     multiline
+                    minRows={3}
                 />
-                <Button variant={"outlined"} sx={{width:"100%"}} onClick={(e)=>Submit(e)}>ثبت</Button>
+                <Button variant={"contained"} sx={{width:"100%"}} onClick={(e)=>Submit(e)}>ثبت</Button>
             </CardContent>
         </Card>
     );

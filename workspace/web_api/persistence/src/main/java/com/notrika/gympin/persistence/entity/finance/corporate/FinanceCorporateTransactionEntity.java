@@ -28,21 +28,22 @@ import java.util.Objects;
 public class FinanceCorporateTransactionEntity extends BaseTransactionEntity<FinanceCorporateTransactionEntity> {
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "serialId")
-    private FinanceSerialEntity serial;
-
-    @ManyToOne
-    @JoinColumn(name = "financeCorporateId")
-    private FinanceCorporateEntity financeCorporate;
-
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private TransactionCorporateType transactionCorporateType;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "serialId")
+    private FinanceSerialEntity serial;
+
+
     @ManyToOne
     @JoinColumn(name = "personnelId")
     private CorporatePersonnelEntity corporatePersonnel;
+
+    @ManyToOne
+    @JoinColumn(name = "financeCorporateId")
+    private FinanceCorporateEntity financeCorporate;
 
 
     @Override

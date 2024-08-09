@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.corporate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.common.corporate.corporate.enums.CorporateContractTypeEnum;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseCorporateDepositEntity;
@@ -19,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +42,17 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
 
     @Column(name = "address")
     private String address;
+
+    //defaultExpireDuration
+    @Column(name = "ded",columnDefinition = "smallint(6) default 90")
+    private Short ded;
+
+    @Column(name = "contractDate")
+    private Date contractDate;
+
+    @Column(name = "ContractType",columnDefinition = "varchar(255) default 'LONG_TIME'")
+    @Enumerated(EnumType.STRING)
+    private CorporateContractTypeEnum contractType;
 
     @Column(name = "stepsPay",columnDefinition = "Boolean default 0")
     private Boolean stepsPay;

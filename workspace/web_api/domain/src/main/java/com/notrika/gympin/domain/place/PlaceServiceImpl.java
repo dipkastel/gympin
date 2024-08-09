@@ -27,7 +27,6 @@ import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -75,6 +74,7 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         initPlace.setLatitude(placeParam.getLatitude());
         initPlace.setLongitude(placeParam.getLongitude());
         initPlace.setAddress(placeParam.getAddress());
+        initPlace.setActiveTimes(placeParam.getActiveTimes());
         initPlace.setTell(placeParam.getTell());
         initPlace.setCallUs(placeParam.getCallUs());
         initPlace.setAutoDiscount(placeParam.getAutoDiscount());
@@ -161,9 +161,9 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
 //            if (place.getCommissionFee() > 100 || place.getCommissionFee() < 0) {
 //                throw new PlaceCommissionIsNotCorrect();
 //            }
-            if (place.getHalls().size() < 1) {
-                throw new PlaceHALLMustBeAdded();
-            }
+//            if (place.getHalls().size() < 1) {
+//                throw new PlaceHALLMustBeAdded();
+//            }
             if (place.getBuyables().size() < 1) {
                 throw new PlaceTicketSubscribesCanNotBeEmpty();
             }

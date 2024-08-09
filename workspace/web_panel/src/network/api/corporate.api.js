@@ -28,6 +28,12 @@ export function corporate_update(data) {
 export function corporate_updateStatus(data) {
     return axios.put(CorporateApi.updateStatus, data);
 }
+export function corporate_updateContractDate(data) {
+    return axios.put(CorporateApi.updateContractDate, data);
+}
+export function corporate_updateContractType(data) {
+    return axios.put(CorporateApi.updateContractType, data);
+}
 export function corporate_updateStepPayment(data) {
     return axios.put(CorporateApi.updateStepPayment, data);
 }

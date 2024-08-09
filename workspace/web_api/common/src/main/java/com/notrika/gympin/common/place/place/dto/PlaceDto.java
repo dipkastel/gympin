@@ -45,6 +45,9 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
     @JsonProperty("Address")
     private String address;
 
+    @JsonProperty("ActiveTimes")
+    private String ActiveTimes;
+
     @JsonProperty("AutoDiscount")
     private Boolean autoDiscount;
 
