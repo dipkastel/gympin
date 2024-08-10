@@ -43,7 +43,7 @@ const SingleTicketSubscribe = ({subId,introCanGoNext}) => {
         <>
             {!introMode&&<_SubscribeActive ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>}
             <_SubscribeBaseData ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>
-            <_SubscribeActiveTimes ticketSubscribe={ticketSubscribe} />
+            {/*<_SubscribeActiveTimes ticketSubscribe={ticketSubscribe} />*/}
             <_SubscribeSports ticketSubscribe={ticketSubscribe} />
             <_SubscribeCoaches ticketSubscribe={ticketSubscribe} />
             {introMode&&<_SubscribeActive ticketSubscribe={ticketSubscribe} getSubscribeData={getSubscribeData}/>}

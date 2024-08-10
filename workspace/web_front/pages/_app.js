@@ -79,9 +79,6 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </GoogleReCaptchaProvider>
     </Fragment>
-
-
-
   )
 }
 

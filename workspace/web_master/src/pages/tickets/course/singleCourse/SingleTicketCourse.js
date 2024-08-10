@@ -43,7 +43,7 @@ const SingleTicketCourse = ({subId,introCanGoNext}) => {
         <>
             {!introMode&&<_CourseActive ticketCourse={ticketCourse} getCourseData={getCourseData}/>}
             <_CourseBaseData ticketCourse={ticketCourse} getCourseData={getCourseData}/>
-            <_CourseActiveTimes ticketCourse={ticketCourse} />
+            {/*<_CourseActiveTimes ticketCourse={ticketCourse} />*/}
             <_CourseCoaches ticketCourse={ticketCourse} />
             <_CourseSports ticketCourse={ticketCourse} />
             {introMode&&<_CourseActive ticketCourse={ticketCourse} getCourseData={getCourseData}/>}

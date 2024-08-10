@@ -80,22 +80,22 @@ const WizardBody = () => {
         stepsList.push({id: id++, title: 'تصاویر', icon: <CameraAltIcon/>, page: <WPageImages onNext={onNext}/>})
         stepsList.push({id: id++, title: 'پرسنل', icon: <PeopleIcon/>, page: <WPagePersonel onNext={onNext}/>})
         stepsList.push({id: id++, title: 'قوانین', icon: <GavelIcon/>, page: <WPageAbout onNext={onNext}/>})
-        stepsList.push({
-            id: id++,
-            title: 'سالن ها',
-            icon: <GiteIcon/>,
-            page: <WPageHalls onNext={onNext} hallListChange={hallListChange}/>
-        })
+        // stepsList.push({
+        //     id: id++,
+        //     title: 'سالن ها',
+        //     icon: <GiteIcon/>,
+        //     page: <WPageHalls onNext={onNext} hallListChange={hallListChange}/>
+        // })
 
-        if (halls)
-            for (var hallNumber in halls) {
-                stepsList.push({
-                    id: id++,
-                    title: 'سالن ' + halls[hallNumber].Name,
-                    icon: <GiteIcon/>,
-                    page: <WPageHallTimes onNext={onNext} hallParamId={halls[hallNumber].Id}/>
-                })
-            }
+        // if (halls)
+        //     for (var hallNumber in halls) {
+        //         stepsList.push({
+        //             id: id++,
+        //             title: 'سالن ' + halls[hallNumber].Name,
+        //             icon: <GiteIcon/>,
+        //             page: <WPageHallTimes onNext={onNext} hallParamId={halls[hallNumber].Id}/>
+        //         })
+        //     }
         stepsList.push({
             id: id++,
             title: 'فروشی ها',
