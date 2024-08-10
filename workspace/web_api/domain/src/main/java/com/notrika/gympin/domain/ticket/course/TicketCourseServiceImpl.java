@@ -282,12 +282,12 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
             if (ticketCourseEntity.getTicketCourseSport().size() < 1) {
                 throw new TicketSportCannotBeNull();
             }
-            if (ticketCourseEntity.getActiveTimes() == null) {
-                throw new TicketHallsCannotBeNull();
-            }
-            if (ticketCourseEntity.getActiveTimes().size() < 1) {
-                throw new TicketHallsCannotBeNull();
-            }
+//            if (ticketCourseEntity.getActiveTimes() == null) {
+//                throw new TicketHallsCannotBeNull();
+//            }
+//            if (ticketCourseEntity.getActiveTimes().size() < 1) {
+//                throw new TicketHallsCannotBeNull();
+//            }
             if (ticketCourseEntity.getCoaches().size() < 1) {
                 throw new TicketCouchesCannotBeNull();
             }

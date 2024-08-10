@@ -272,12 +272,12 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
             if (ticketSubscribeEntity.getTicketSubscribeSport().size() < 1) {
                 throw new TicketSportCannotBeNull();
             }
-            if (ticketSubscribeEntity.getActiveTimes() == null) {
-                throw new TicketHallsCannotBeNull();
-            }
-            if (ticketSubscribeEntity.getActiveTimes().size() < 1) {
-                throw new TicketHallsCannotBeNull();
-            }
+//            if (ticketSubscribeEntity.getActiveTimes() == null) {
+//                throw new TicketHallsCannotBeNull();
+//            }
+//            if (ticketSubscribeEntity.getActiveTimes().size() < 1) {
+//                throw new TicketHallsCannotBeNull();
+//            }
         }
         ticketSubscribeEntity.setEnable(ticketSubscribeParam.getEnable());
         ticketSubscribeRepository.update(ticketSubscribeEntity);
