@@ -228,12 +228,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private String getJwt(LoginParam loginParam, String phoneNumber, TokenType tokenType) {
-        var auth1 = new UsernamePasswordAuthenticationToken(phoneNumber, loginParam.getPassword());
-        if(!auth1.isAuthenticated())
+        try{
+            var auth1 = new UsernamePasswordAuthenticationToken(phoneNumber, loginParam.getPassword());
+            Authentication authentication = authenticationManager.authenticate(auth1);
+            if(!authentication.isAuthenticated())
+                throw new BadUserCredentialsException();
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return tokenProvider.generateJwtToken(authentication, tokenType);
+        }catch (Exception e){
             throw new BadUserCredentialsException();
-        Authentication authentication = authenticationManager.authenticate(auth1);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return tokenProvider.generateJwtToken(authentication, tokenType);
+        }
     }
 
     private boolean CheckUserAccess(UserEntity user, ApplicationEnum application) {
