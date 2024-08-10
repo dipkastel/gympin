@@ -29,7 +29,10 @@ import com.notrika.gympin.common.util.exception.activation.code.InviteCodeNotVal
 import com.notrika.gympin.common.util.exception.general.SendSmsException;
 import com.notrika.gympin.common.util.exception.general.UserNotAllowedException;
 import com.notrika.gympin.common.util.exception.purchased.EntryAlreadyExistException;
+import com.notrika.gympin.common.util.exception.user.BadUserCredentialsException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
+import com.notrika.gympin.common.util.exception.user.UserLockedException;
+import com.notrika.gympin.common.util.exception.user.UserSuspendedException;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
@@ -46,6 +49,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -176,6 +180,15 @@ public class AccountServiceImpl implements AccountService {
             throw new ExceptionBase(HttpStatus.NOT_FOUND, Error.ErrorType.USER_NOT_FOUND);
         }
         UserEntity user = getUser(loginParam);
+
+        if (user==null)
+            throw new UnknownUserException();
+        if (user.isDeleted())
+            throw new UnknownUserException();
+        if(user.getUserStatus()== UserStatus.LOCKED)
+            throw new UserLockedException();
+        if(user.getUserStatus()== UserStatus.SUSPENDED)
+            throw new UserSuspendedException();
         UserActivationCodeEntity activationCode = user.getActivationCode();
         if (activationCode == null) {
             throw new ActivationCodeNotFoundException();
@@ -215,7 +228,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private String getJwt(LoginParam loginParam, String phoneNumber, TokenType tokenType) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(phoneNumber, loginParam.getPassword()));
+        var auth1 = new UsernamePasswordAuthenticationToken(phoneNumber, loginParam.getPassword());
+        if(!auth1.isAuthenticated())
+            throw new BadUserCredentialsException();
+        Authentication authentication = authenticationManager.authenticate(auth1);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return tokenProvider.generateJwtToken(authentication, tokenType);
     }
@@ -250,6 +266,14 @@ public class AccountServiceImpl implements AccountService {
         if (user == null) {
             throw new UsernameNotFoundException(phoneNumber);
         }
+
+        if (user.isDeleted())
+            throw new UnknownUserException();
+        if(user.getUserStatus()== UserStatus.LOCKED)
+            throw new UserLockedException();
+        if(user.getUserStatus()== UserStatus.SUSPENDED)
+            throw new UserSuspendedException();
+
         boolean accountNonExpired = !user.isDeleted();
         boolean accountNonLocked = !(user.getUserStatus() == UserStatus.LOCKED);
         boolean credentialsNonExpired = true;

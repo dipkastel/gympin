@@ -1,10 +1,14 @@
 package com.notrika.gympin.framework.config.jwt;
 
+import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.common.util.exception.Error;
 import com.notrika.gympin.common.util.exception.ExceptionBase;
 import com.notrika.gympin.common.user.user.dto.RefreshTokenDto;
 import com.notrika.gympin.common.user.user.enums.TokenType;
 import com.notrika.gympin.common.user.user.service.JwtTokenProvider;
+import com.notrika.gympin.common.util.exception.user.UnknownUserException;
+import com.notrika.gympin.common.util.exception.user.UserLockedException;
+import com.notrika.gympin.common.util.exception.user.UserSuspendedException;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.user.UserTokenRepository;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -20,6 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -140,9 +145,14 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     public RefreshTokenDto refreshToken(String refreshToken) {
         String phoneNumber = getUserNameFromJwtToken(refreshToken);
         UserEntity user = userService.getByPhoneNumber(phoneNumber);
-        if (user.isDeleted()) {
-            throw new ExceptionBase(HttpStatus.INTERNAL_SERVER_ERROR, Error.ErrorType.USER_NOT_FOUND);
-        }
+        if (user.isDeleted())
+            throw new UnknownUserException();
+        if(user.getUserStatus()== UserStatus.LOCKED)
+            throw new UserLockedException();
+        if(user.getUserStatus()== UserStatus.SUSPENDED)
+            throw new UserSuspendedException();
+
+        //TODO check user status and handel suspend locked and other
         RefreshTokenDto refreshTokenDto = new RefreshTokenDto();
         refreshTokenDto.setToken(getjwt(userjwtExpirationInMs, phoneNumber));
         refreshTokenDto.setRefreshToken(getjwt(refreshTokenJwtExpirationInMs, phoneNumber));

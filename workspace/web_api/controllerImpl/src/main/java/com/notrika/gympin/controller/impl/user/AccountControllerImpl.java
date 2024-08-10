@@ -79,4 +79,5 @@ public class AccountControllerImpl implements AccountController {
     public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenParam refreshToken) {
         return new ResponseEntity<>(accountService.refreshToken(refreshToken), HttpStatus.OK);
     }
+
 }

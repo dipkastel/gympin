@@ -8,6 +8,7 @@ import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateT
 import com.notrika.gympin.persistence.entity.finance.income.FinanceDiscountTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.income.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.place.PlacePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
@@ -63,7 +64,11 @@ public class FinanceSerialEntity extends BaseEntityWithCreateUpdate<FinanceSeria
 
     @OneToMany(mappedBy = "serial",fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<CorporatePersonnelCreditEntity> personnelPays;
+    private List<CorporatePersonnelCreditEntity> corporatePersonnelCredits;
+
+    @OneToMany(mappedBy = "serial",fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<PlacePersonnelCreditEntity> placePersonnelCredits;
 
     @OneToMany(mappedBy = "serial",fetch = FetchType.LAZY)
     @ToString.Exclude

@@ -7,7 +7,6 @@ import {
     CardHeader,
     Grid,
     Hidden,
-    IconButton,
     InputAdornment,
     Link,
     TextField,
@@ -16,7 +15,6 @@ import {
 import {Formik} from "formik";
 import {checkMobileValid, fixPersianNumbers} from "../../helper/utils";
 import {Spinner} from "react-bootstrap";
-import SendToMobileIcon from '@mui/icons-material/SendToMobile';
 import {login, sendSms} from "../../network/api/account.api";
 import {connect} from "react-redux";
 import {authActions} from "../../helper/redux/actions/authActions";
@@ -25,6 +23,7 @@ function Login(props) {
 
     const [loading, setLoading] = useState(false);
     const [resend, setResend] = useState(-3);
+    const [status, setStatus] = useState(null);
     const [loadingButtonStyle, setLoadingButtonStyle] = useState({
         paddingRight: "2.5rem",
     });
@@ -48,8 +47,11 @@ function Login(props) {
         if (checkMobileValid(value.username)) {
             var count = 120;
             setResend(count);
-            sendSms({"phoneNumber":value.username,
-                Application:"WEBMASTER"})
+            setStatus(null);
+            sendSms({
+                "phoneNumber": value.username,
+                Application: "WEBMASTER"
+            })
                 .then((data) => {
                     let interval = setInterval(() => {
                         if (count > 0) {
@@ -57,18 +59,25 @@ function Login(props) {
                             setResend(count);
                         } else clearInterval(interval);
                     }, 1000);
-                }).catch((err)=>{
+                }).catch((err) => {
                 setResend(-3);
-                alert("خطا در برقراری ارتباط با سرور و یا شما اجازه دسترسی به این بخش را ندارید")
+                try {
+                    if (err.code == "ERR_NETWORK")
+                        setStatus("شبکه در دسترس نیست");
+                    else
+                        setStatus(err.response.data.Message || "خطا نامشخص");
+                } catch (f) {
+                    setStatus("اطلاعات وارد شده معتبر نیست");
+                }
             })
         }
     }
 
 
     function phoneNumberFixer(e) {
-        if(e.target.value.length>11)
-            return ;
-        e.target.value =fixPersianNumbers(e.target.value);
+        if (e.target.value.length > 11)
+            return;
+        e.target.value = fixPersianNumbers(e.target.value);
         return e;
     }
 
@@ -81,15 +90,15 @@ function Login(props) {
             justifyContent="center"
             style={{minHeight: '100vh'}}
         >
-            <Grid item >
+            <Grid item>
                 <Card elevation={5} sx={{
-                    borderRadius:3,
+                    borderRadius: 3,
 
                 }}>
                     <CardHeader
                         sx={{
-                            backgroundColor:"primary.main",
-                            color:"white"
+                            backgroundColor: "primary.main",
+                            color: "white"
                         }}
                         title="ورود"
                     />
@@ -115,33 +124,38 @@ function Login(props) {
 
                                 return errors;
                             }}
-                            onSubmit={(values, {setStatus, setSubmitting}) => {
+                            onSubmit={(values, {setSubmitting}) => {
                                 enableLoading();
                                 setTimeout(() => {
                                     login({
                                         username: values.username,
                                         password: values.password,
-                                        Application:"WEBMASTER"
+                                        Application: "WEBMASTER"
                                     })
                                         .then((data) => {
                                             disableLoading();
-                                             props.SetUser(data.data.Data);
-                                             props.SetToken(data.data.Data.Token);
-                                             props.SetRefreshToken(data.data.Data.RefreshToken);
+                                            props.SetUser(data.data.Data);
+                                            props.SetToken(data.data.Data.Token);
+                                            props.SetRefreshToken(data.data.Data.RefreshToken);
                                         })
                                         .catch((ex) => {
                                             disableLoading();
                                             setSubmitting(false);
-                                            setStatus(
-                                                "اطلاعات وارد شده معتبر نیست"
-                                            );
+                                            console.log(ex.code);
+                                            if (ex.code == "ERR_NETWORK")
+                                                setStatus("شبکه در دسترس نیست");
+                                            else
+                                                try {
+                                                    setStatus(ex.response.data.Message || "اطلاعات وارد شده معتبر نیست");
+                                                } catch (f) {
+                                                    setStatus("اطلاعات وارد شده معتبر نیست");
+                                                }
                                         });
                                 }, 1000);
                             }}
                         >
                             {({
                                   values,
-                                  status,
                                   errors,
                                   touched,
                                   handleChange,
@@ -171,44 +185,44 @@ function Login(props) {
                                             margin="normal"
                                             name="username"
                                             type="text"
-                                            inputProps={{ inputMode: 'numeric' }}
+                                            inputProps={{inputMode: 'numeric'}}
                                             label={"شماره همراه"}
                                             onBlur={handleBlur}
-                                            onChange={e=>handleChange(phoneNumberFixer(e))}
+                                            onChange={e => handleChange(phoneNumberFixer(e))}
                                             value={values.username}
-                                            disabled={resend>0}
+                                            disabled={resend > 0}
                                             helperText={touched.username && errors.username}
                                             error={Boolean(touched.username && errors.username)}
                                             InputProps={{
                                                 startAdornment: (
                                                     <InputAdornment position="start">
-                                                            {(checkMobileValid(values.username)) && (
-                                                                (resend > 0)&&(
-                                                                    <div>
-                                                                        <Spinner animation="border" size="sm"/>
-                                                                        <Typography variant="caption" display="block"
-                                                                                    gutterBottom>
-                                                                            {resend}
-                                                                        </Typography>
-                                                                    </div>
-                                                                )
+                                                        {(checkMobileValid(values.username)) && (
+                                                            (resend > 0) && (
+                                                                <div>
+                                                                    <Spinner animation="border" size="sm"/>
+                                                                    <Typography variant="caption" display="block"
+                                                                                gutterBottom>
+                                                                        {resend}
+                                                                    </Typography>
+                                                                </div>
                                                             )
-                                                            }
+                                                        )
+                                                        }
                                                     </InputAdornment>
                                                 ),
                                             }}
                                         />
                                     </div>
 
-                                    <div >
-                                            {(checkMobileValid(values.username)) && (
-                                                !(resend > 0)&&
-                                                    <Button
-                                                        disabled={resend > 0}
-                                                        variant={"contained"}
-                                                        onClick={(e) => sendMessage(e, values)}>ارسال کد</Button>
-                                            )
-                                            }
+                                    <div>
+                                        {(checkMobileValid(values.username)) && (
+                                            !(resend > 0) &&
+                                            <Button
+                                                disabled={resend > 0}
+                                                variant={"contained"}
+                                                onClick={(e) => sendMessage(e, values)}>ارسال کد</Button>
+                                        )
+                                        }
 
                                     </div>
 
@@ -240,7 +254,7 @@ function Login(props) {
                     </CardContent>
                     <CardActions>
                         <Grid rowSpacing={1}>
-                            <Link variant="caption"  href="/auth/register">مرکز را ثبت نام کنید</Link>
+                            <Link variant="caption" href="/auth/register">مرکز را ثبت نام کنید</Link>
                         </Grid>
                     </CardActions>
                 </Card>
@@ -249,4 +263,5 @@ function Login(props) {
         </Grid>
     );
 }
+
 export default connect(null, authActions)(Login)
