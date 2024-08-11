@@ -24,6 +24,7 @@ public class TicketSubscribeConvertor {
         dto.setGender(entity.getGender());
         dto.setDescription(entity.getDescription());
         dto.setEntryTotalCount(entity.getEntryTotalCount());
+        dto.setSubscribeStatus(entity.getSubscribeStatus());
         dto.setExpireDuration(entity.getExpireDuration());
         dto.setSubscribeCapacity(entity.getSubscribeCapacity());
         dto.setTiming(entity.getTiming());

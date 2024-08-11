@@ -74,14 +74,28 @@ public class TicketCourseParam extends BaseParam<TicketCourseParam> {
     @JsonProperty( "StartDate")
     private Date startDate;
 
-    @JsonProperty( "EndDate")
-    private Date EndDate;
+    @JsonProperty("DayBeforeRenew")
+    private Short dayBeforeRenew;
 
-    @JsonProperty( "StartSellingDate")
-    private Date startSellingDate;
+    @JsonProperty("ExpireDuration")
+    private Short expireDuration;
 
-    @JsonProperty( "EndSellingDate")
-    private Date EndSellingDate;
+    @JsonProperty("DayBeforeStartSell")
+    private Short dayBeforeStartSell;
+
+    @JsonProperty("DayAfterStartSell")
+    private Short DayAfterStartSell;
+
+
+//
+//    @JsonProperty( "EndDate")
+//    private Date EndDate;
+//
+//    @JsonProperty( "StartSellingDate")
+//    private Date startSellingDate;
+//
+//    @JsonProperty( "EndSellingDate")
+//    private Date EndSellingDate;
 
 
 }

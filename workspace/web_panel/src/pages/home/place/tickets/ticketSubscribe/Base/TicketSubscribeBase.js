@@ -5,6 +5,7 @@ import {Form} from "react-bootstrap";
 import Select from "react-select";
 import {genders} from "../../../../../../helper/enums/genders";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../../helper";
+import {classStatus} from "../../../../../../helper/enums/ClassStatus";
 
 function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
 
@@ -53,6 +54,18 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
                         />
                     </Form.Group>
 
+                    <Form.Group className={"w-100"} controlId="SubscribeStatus">
+                        <Form.Label>نوع کلاس</Form.Label>
+                        <Select
+                            className={"dropdown"}
+                            name="SubscribeStatus"
+                            options={Object.keys(classStatus).map(g => {
+                                return {label: classStatus[g], value: g}
+                            })}
+                            value={{label: classStatus[inTicketSubscribe["SubscribeStatus"]], value: inTicketSubscribe["SubscribeStatus"]}}
+                            onChange={(e) => setFormValues("SubscribeStatus", e.value)}
+                        />
+                    </Form.Group>
                     <TextField
                         id="standard-full-width"
                         label="زمان"

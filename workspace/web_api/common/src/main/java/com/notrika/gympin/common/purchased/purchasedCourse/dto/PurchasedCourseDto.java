@@ -75,14 +75,28 @@ public class PurchasedCourseDto extends BaseDtoWithCreateUpdate<PurchasedCourseD
     @JsonProperty("StartDate")
     private Date startDate;
 
-    @JsonProperty("EndDate")
-    private Date endDate;
+    @JsonProperty("DayBeforeRenew")
+    private Short dayBeforeRenew;
 
-    @JsonProperty("StartSellingDate")
-    private Date startSellingDate;
+    @JsonProperty("ExpireDuration")
+    private Short expireDuration;
 
-    @JsonProperty("EndSellingDate")
-    private Date endSellingDate;
+    @JsonProperty("DayBeforeStartSell")
+    private Short dayBeforeStartSell;
+
+    @JsonProperty("EndSellAfterDays")
+    private Short endSellAfterDays;
+
+
+//
+//    @JsonProperty("EndDate")
+//    private Date endDate;
+//
+//    @JsonProperty("StartSellingDate")
+//    private Date startSellingDate;
+//
+//    @JsonProperty("EndSellingDate")
+//    private Date endSellingDate;
 
 
 }

@@ -31,9 +31,7 @@ public final class PurchasedCourseConvertor {
                 .courseCapacity(entity.getCourseCapacity())
                 .courseLevel(entity.getCourseLevel())
                 .startDate(entity.getStartDate())
-                .endDate(entity.getEndDate())
-                .startSellingDate(entity.getStartSellingDate())
-                .endSellingDate(entity.getEndSellingDate())
+                .expireDuration(entity.getExpireDuration())
                 .build();
         return dto;
     }

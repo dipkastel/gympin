@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketSubscribe.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.user.user.enums.Gender;
@@ -24,6 +25,9 @@ public class TicketSubscribeParam extends BaseParam<TicketSubscribeParam> {
 
     @JsonProperty("ValuePrice")
     private BigDecimal valuePrice;
+
+    @JsonProperty("SubscribeStatus")
+    private SubscribeStatus subscribeStatus;
 
     @JsonProperty("PlacePrice")
     private BigDecimal placePrice;

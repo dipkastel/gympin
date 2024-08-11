@@ -259,9 +259,7 @@ public class InvoiceServiceHelper {
                 .courseCapacity(ticketCourse.getCourseCapacity())
                 .courseLevel(ticketCourse.getCourseLevel())
                 .startDate(ticketCourse.getStartDate())
-                .endDate(ticketCourse.getEndDate())
-                .startSellingDate(ticketCourse.getStartSellingDate())
-                .endSellingDate(ticketCourse.getEndSellingDate())
+                .expireDuration(ticketCourse.getExpireDuration())
                 .build();
         purchasedCourseRepository.add(courseEntity);
 
@@ -290,6 +288,7 @@ public class InvoiceServiceHelper {
                 .ticketSubscribe(ticketSubscribe)
                 .timing(ticketSubscribe.getTiming())
                 .entryTotalCount(ticketSubscribe.getEntryTotalCount())
+                .subscribeStatus(ticketSubscribe.getSubscribeStatus())
                 .ticketSubscribeExpireDate(calender.getTime())
                 .expireDate(calender.getTime())
                 .build());

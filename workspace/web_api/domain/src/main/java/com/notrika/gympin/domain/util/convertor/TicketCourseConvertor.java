@@ -29,9 +29,10 @@ public class TicketCourseConvertor {
         dto.setCourseCapacity(entity.getCourseCapacity());
         dto.setCourseLevel(entity.getCourseLevel());
         dto.setStartDate(entity.getStartDate());
-        dto.setEndDate(entity.getEndDate());
-        dto.setStartSellingDate(entity.getStartSellingDate());
-        dto.setEndSellingDate(entity.getEndSellingDate());
+        dto.setExpireDuration(entity.getExpireDuration());
+        dto.setDayBeforeRenew(entity.getDayBeforeRenew());
+        dto.setDayBeforeStartSell(entity.getDayBeforeStartSell());
+        dto.setDayAfterStartSell(entity.getDayAfterStartSell());
         if(entity.getCoaches()!=null)
             dto.setCoaches(entity.getCoaches().stream().map(UserConvertor::toCoachDto).collect(Collectors.toList()));
 

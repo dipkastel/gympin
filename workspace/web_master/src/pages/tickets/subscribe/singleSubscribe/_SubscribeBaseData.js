@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
+    Accordion, AccordionActions, AccordionDetails, AccordionSummary,
     Button,
     Card,
     CardContent,
@@ -16,10 +17,13 @@ import {TicketSubscribes_update} from "../../../../network/api/ticketSubscribe.a
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../helper/utils";
 import {getWizardComplete} from "../../../../helper/pocket";
+import {CourseStatusEnum} from "../../../../helper/enums/CourseStatusEnum";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
     const error = useContext(ErrorContext);
     const [inSubscribe, setInSubscribe] = useState(ticketSubscribe)
+    const [showAdvance, setShowAdvance] = useState(false)
     const introMode=!getWizardComplete()
 
     useEffect(() => {
@@ -89,6 +93,22 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                             </Select>
                         </FormControl>
 
+                        <FormControl variant="standard" sx={{my:1}}
+                                     fullWidth>
+                            <InputLabel id="demo-simple-select-standard-label">نوع کلاس</InputLabel>
+                            <Select
+                                value={inSubscribe.SubscribeStatus || ""}
+                                onChange={(e) => setInSubscribe({...inSubscribe, SubscribeStatus: e.target.value})}
+                                label="نوع کلاس"
+                                variant={"outlined"}
+                                fullWidth
+                            >
+                                <MenuItem>انتخاب کنید</MenuItem>
+                                {Object.keys(CourseStatusEnum).map(g => (
+                                    <MenuItem key={g} value={g}>{CourseStatusEnum[g]}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
                         <TextField
                             name={"timing"}
                             value={inSubscribe.Timing || ""}
@@ -207,6 +227,7 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                             multiline
                             variant="outlined"
                         />
+
 
                         <FormControl fullWidth>
                             <Button variant={"contained"} type={"submit"}>ثبت</Button>

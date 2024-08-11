@@ -104,6 +104,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         entity.setDiscount(ticketSubscribe.getDiscount());
         entity.setDescription(ticketSubscribe.getDescription());
         entity.setEntryTotalCount(ticketSubscribe.getEntryTotalCount());
+        entity.setSubscribeStatus(ticketSubscribe.getSubscribeStatus());
         entity.setTiming(ticketSubscribe.getTiming());
         Date currentDate = new Date();
         Calendar c = Calendar.getInstance();

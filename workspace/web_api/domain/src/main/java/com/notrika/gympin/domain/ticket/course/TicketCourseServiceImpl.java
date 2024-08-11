@@ -82,9 +82,10 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
                 .courseCapacity(param.getCourseCapacity())
                 .courseLevel(param.getCourseLevel())
                 .startDate(param.getStartDate())
-                .endDate(param.getEndDate())
-                .startSellingDate(param.getStartSellingDate())
-                .endSellingDate(param.getEndSellingDate())
+                .expireDuration(param.getExpireDuration())
+                .dayBeforeRenew(param.getDayBeforeRenew())
+                .dayBeforeStartSell(param.getDayBeforeStartSell())
+                .dayAfterStartSell(param.getDayAfterStartSell())
                 .build();
 
         ticketCourseEntity = this.add(ticketCourseEntity);
@@ -113,9 +114,10 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
         ticketCourseEntity.setCourseCapacity(ticketCourseParam.getCourseCapacity());
         ticketCourseEntity.setCourseLevel(ticketCourseParam.getCourseLevel());
         ticketCourseEntity.setStartDate(ticketCourseParam.getStartDate());
-        ticketCourseEntity.setEndDate(ticketCourseParam.getEndDate());
-        ticketCourseEntity.setStartSellingDate(ticketCourseParam.getStartSellingDate());
-        ticketCourseEntity.setEndSellingDate(ticketCourseParam.getEndSellingDate());
+        ticketCourseEntity.setExpireDuration(ticketCourseParam.getExpireDuration());
+        ticketCourseEntity.setDayBeforeRenew(ticketCourseParam.getDayBeforeRenew());
+        ticketCourseEntity.setDayBeforeStartSell(ticketCourseParam.getDayBeforeStartSell());
+        ticketCourseEntity.setDayAfterStartSell(ticketCourseParam.getDayAfterStartSell());
         ticketCourseEntity.setDescription(ticketCourseParam.getDescription());
         return TicketCourseConvertor.toDto(ticketCourseRepository.update(ticketCourseEntity));
     }
@@ -294,7 +296,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
             if (ticketCourseEntity.getStartDate()==null) {
                 throw new TicketStartDateCannotBeNull();
             }
-            if (ticketCourseEntity.getEndDate()==null) {
+            if (ticketCourseEntity.getExpireDuration()==null) {
                 throw new TicketEndDateCannotBeNull();
             }
         }

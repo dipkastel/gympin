@@ -27,10 +27,6 @@ import java.util.Objects;
 @Table(name = "ticketCourse")
 public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
 
-    @ManyToMany
-    @JoinTable(name = "ticketCourseAction", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "hallActionId"))
-    @ToString.Exclude
-    private List<TicketHallActiveTimeEntity> activeTimes;
 
     @Column(name = "courseStatus")
     @Enumerated(EnumType.STRING)
@@ -38,12 +34,6 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
 
     @Column(name = "targetOfCourse")
     private String targetOfCourse;
-
-    @Column(name = "autoRenew",columnDefinition = "boolean default false")
-    private Boolean autoRenew;
-
-    @Column(name = "dayBeforeRenew",columnDefinition = "smallint(6) default 3")
-    private Short dayBeforeRenew;
 
     @Column(name = "classCapacity")
     private Short classCapacity;
@@ -53,10 +43,6 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
 
     @Column(name = "Timing",columnDefinition = "varchar(800)")
     private String timing;
-
-    @ManyToMany
-    @JoinTable(name = "ticketCourseCouches", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
-    private List<UserEntity> coaches;
 
     @Column(name = "entryTotalCount")
     private Short entryTotalCount;
@@ -71,22 +57,45 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
-    @Column(name = "endDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endDate;
+    @Column(name = "autoRenew",columnDefinition = "boolean default false")
+    private Boolean autoRenew;
 
-    @Column(name = "startSellingDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startSellingDate;
+    @Column(name = "dayBeforeRenew",columnDefinition = "smallint(6) default 3")
+    private Short dayBeforeRenew;
 
-    @Column(name = "endSellingDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endSellingDate;
+    @Column(name = "expireDuration")
+    private Short expireDuration;
+
+    @Column(name = "dayBeforeStartSell")
+    private Short dayBeforeStartSell;
+
+    @Column(name = "dayAfterStartSell")
+    private Short dayAfterStartSell;
+
+//    @Column(name = "endDate")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date endDate;
+
+//    @Column(name = "startSellingDate")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date startSellingDate;
+
+//    @Column(name = "endSellingDate")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date endSellingDate;
 
     @OneToMany(mappedBy = "ticketCourse")
     @ToString.Exclude
     private List<PurchasedCourseEntity> purchasedCourse;
 
+    @ManyToMany
+    @JoinTable(name = "ticketCourseAction", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "hallActionId"))
+    @ToString.Exclude
+    private List<TicketHallActiveTimeEntity> activeTimes;
+
+    @ManyToMany
+    @JoinTable(name = "ticketCourseCouches", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
+    private List<UserEntity> coaches;
 
     @ManyToMany
     @JoinTable(name = "ticketCourseSport", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "placeSportId"))

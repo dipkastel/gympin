@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe;
 
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
+import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -29,6 +30,10 @@ public class PurchasedSubscribeEntity extends PurchasedBaseEntity<PurchasedSubsc
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private SubscribePurchasedStatus status;
+
+    @Column(name = "subscribeStatus")
+    @Enumerated(EnumType.STRING)
+    private SubscribeStatus subscribeStatus;
 
     @Column(name = "Timing",columnDefinition = "varchar(800)")
     private String timing;

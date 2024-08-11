@@ -1,5 +1,7 @@
 package com.notrika.gympin.persistence.entity.ticket.subscribe;
 
+import com.notrika.gympin.common.ticket.ticketCourse.enums.CourseStatus;
+import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
@@ -24,6 +26,11 @@ import java.util.Objects;
 @Entity
 @Table(name = "ticketSubscribe")
 public class TicketSubscribeEntity extends BuyableEntity<TicketSubscribeEntity> {
+
+
+    @Column(name = "subscribeStatus")
+    @Enumerated(EnumType.STRING)
+    private SubscribeStatus subscribeStatus;
 
     @Column(name = "entryTotalCount")
     private Short entryTotalCount;

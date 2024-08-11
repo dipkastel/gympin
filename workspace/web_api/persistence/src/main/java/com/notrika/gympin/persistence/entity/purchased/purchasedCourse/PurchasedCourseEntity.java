@@ -50,10 +50,6 @@ public class PurchasedCourseEntity extends PurchasedBaseEntity<PurchasedCourseEn
     @Column(name = "Timing",columnDefinition = "varchar(800)")
     private String timing;
 
-    @ManyToMany
-    @JoinTable(name = "PurchasedCourseCouches", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
-    private List<UserEntity> coaches;
-
     @Column(name = "entryTotalCount")
     private Short entryTotalCount;
 
@@ -67,22 +63,31 @@ public class PurchasedCourseEntity extends PurchasedBaseEntity<PurchasedCourseEn
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
-    @Column(name = "endDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endDate;
+    @Column(name = "expireDuration")
+    private Short expireDuration;
 
-    @Column(name = "startSellingDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startSellingDate;
-
-    @Column(name = "endSellingDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endSellingDate;
+//
+//    @Column(name = "endDate")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date endDate;
+//
+//    @Column(name = "startSellingDate")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date startSellingDate;
+//
+//    @Column(name = "endSellingDate")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date endSellingDate;
 
 
     @OneToMany(mappedBy = "purchasedCourse")
     @ToString.Exclude
     private List<PurchasedCourseEntryEntity> entryList;
+
+
+    @ManyToMany
+    @JoinTable(name = "PurchasedCourseCouches", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
+    private List<UserEntity> coaches;
 
 
     @Override

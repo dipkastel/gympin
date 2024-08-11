@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
+    Accordion, AccordionActions, AccordionDetails, AccordionSummary,
     Button,
     Card,
     CardContent,
-    FormControl,
+    FormControl, FormControlLabel,
     InputLabel,
     MenuItem,
-    Select,
+    Select, Switch,
     TextField,
     Typography
 } from "@mui/material";
@@ -21,6 +22,7 @@ import AdapterJalaali from "@date-io/jalaali";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {format} from "date-fns";
 import {getWizardComplete} from "../../../../helper/pocket";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
     const error = useContext(ErrorContext);
@@ -46,6 +48,18 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
             error.showError({message: "حداقل انقضا از تاریخ خرید باید 3 روز باشد",});
             return;
         }
+        if(inCourse?.ExpireDuration>179){
+            error.showError({message: "حداکثر انقضا از تاریخ خرید باید 180 روز باشد",});
+            return;
+        }
+        if(inCourse?.DayBeforeStartSell>inCourse?.ExpireDuration){
+            error.showError({message: "تعداد روز 'فعال بودن بلیط قبل از شروع کلاس' نمیتواند بزرگتر از 'انقضا پس از تاریخ خرید' باشد",});
+            return;
+        }
+        if(inCourse?.DayAfterStartSell>inCourse?.ExpireDuration){
+            error.showError({message: "تعداد روز 'فعال بودن بلیط پس از شروع کلاس' نمیتواند بزرگتر از 'انقضا پس از تاریخ خرید' باشد",});
+            return;
+        }
         TicketCourses_update(inCourse).then(result => {
             getCourseData();
             error.showError({message: "با موفقیت ثبت شد",});
@@ -58,6 +72,15 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
         })
     }
 
+    function changeExpireDuration(e) {
+        if(e.target.value<3)
+            error.showError({message: "تعداد روز باید بیش از 3 باشد",});
+        if(e.target.value>179)
+            error.showError({message: "تعداد روز باید کمتر از 180 باشد",});
+
+        setInCourse({...inCourse, ExpireDuration: e.target.value, DayBeforeStartSell: e.target.value-1, DayAfterStartSell: e.target.value-1})
+
+    }
     return (
         <>
             <Form onSubmit={(e) => updateCourse(e)}>
@@ -161,44 +184,6 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
 
                         {introMode&&
                         <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                            محدوده سنی به صورت نوشته برای اطلاع کاربر وارد میشود. اگر کلاس مورد نظر محدوده سنی ندارد این فیلد را خالی بگذارید.
-                        </Typography>}
-                        {introMode&&
-                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                            مثال :
-                        </Typography>}
-                        {introMode&&
-                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                            8 تا 16 سال
-                        </Typography>}
-                        <TextField
-                            name={"AgeLimit"}
-                            value={inCourse.AgeLimit || ""}
-                            onChange={(e) => setInCourse({...inCourse, AgeLimit: e.target.value})}
-                            margin="dense"
-                            label="محدوده سنی"
-                            type="text"
-                            fullWidth
-                            variant="outlined"
-                        />
-
-                        {introMode&&
-                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                            سطح کلاس برای اطلاع کاربر وارد میشود. اگر کلاس مورد نظر دارای سطح بندی نمی باشد این فیلد را خالی بگذارید.
-                        </Typography>}
-                        <TextField
-                            name={"CourseLevel"}
-                            value={inCourse.CourseLevel || ""}
-                            onChange={(e) => setInCourse({...inCourse, CourseLevel: e.target.value})}
-                            margin="dense"
-                            label="سطح کلاس"
-                            type="text"
-                            fullWidth
-                            variant="outlined"
-                        />
-
-                        {introMode&&
-                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
                             تعداد ورود، تعداد دفعاتی است که کاربر میتواند از این بلیط استفاده کند . (برای 8 جلسه بدنسازی در ماه 8 در نظر گرفته شود- برای ورودی ها 1 در نظر گرفته شود)
                         </Typography>}
                         <TextField
@@ -243,7 +228,7 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                         />
                         {introMode&&
                         <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                            تاریخ شروع و پایان کلاس برای کلاس هایی است که فقط یک بار برگزار می شود در غیر این صورت هر دو فیلد را خالی بگذارید
+                            تاریخ شروع و مدت اعتبار بلیط (تعداد روز از تاریخ خرید تا انقضا) الزامی است.
                         </Typography>}
 
                         <LocalizationProvider
@@ -265,61 +250,45 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                                     />
                                 }
                             />
-                            <DatePicker
-                                variant="outlined"
-                                onChange={(e) => setInCourse({...inCourse, EndDate: format(Date.parse(e), "yyyy-MM-dd")})}
-                                toolbarFormat={"jYYYY/jMM/jDD"}
-                                inputFormat={"jYYYY/jMM/jDD"}
-                                value={Date.parse(inCourse.EndDate) || null}
-                                renderInput={(params) =>
-                                    <TextField
-                                        {...params}
-                                        fullWidth
-                                        className="w-100"
-                                        variant="outlined"
-                                        margin="normal"
-                                        label={"تاریخ پایان کلاس"}
-                                    />
-                                }
-                            />
                         </LocalizationProvider>
 
                         {introMode&&
                         <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                            در صورت ارائه مدرک یا داشتن دستاورد قابل توجه برای شاگردان فیلد زیر را پر نمایید در غیر این صورت این فیلد را خالی بگذارید.
+                            تعداد روز برای یک ماه 30 و برای 3 ماه 90 در نظر گرفته می شود
                         </Typography>}
-
                         <TextField
-                            name={"TargetOfCourse"}
-                            value={inCourse.TargetOfCourse || ""}
-                            onChange={(e) => setInCourse({...inCourse, TargetOfCourse: e.target.value})}
+                            name={"ExpireDuration"}
+                            value={inCourse.ExpireDuration || ""}
+                            onChange={(e) => changeExpireDuration(e)}
                             margin="dense"
-                            label="دستاورد شاگردان در پایان کلاس"
-                            type="text"
-                            aria-multiline={"true"}
-                            minRows={3}
+                            label="تعداد روز از تاریخ خرید تا انقضا"
+                            type="number"
                             fullWidth
-                            multiline
                             variant="outlined"
                         />
-                        {introMode&&
-                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                            در صورتی که برای بلیط توضیحاتی وجود دارد در این قسمت یادداشت شود در غیر این صورت این فیلد را خالی بگذارید
-                        </Typography>}
-                        {introMode&&
-                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                            مثال :
-                        </Typography>}
-                        {introMode&&
-                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>در هنگام اولین خرید یک شیکر و یک حوله ورزشی هدیه خواهید گرفت.
-                        </Typography>}
-                        {introMode&&
-                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                            یا
-                        </Typography>}
-                        {introMode&&
-                        <Typography color={"#a2a2a2"} variant={"subtitle2"}>قبل از خرید هماهنگی ساعت استفاده با مجموعه انجام شود.
-                        </Typography>}
+
+
+                        <FormControlLabel
+                            name={"Renew"}
+                            checked={inCourse.AutoRenew}
+                            onChange={(e) => setInCourse({...inCourse, AutoRenew: e.target.checked})}
+                            control={<Switch defaultChecked/>} label="تمدید کلاس پس از پایان دوره"/>
+                        {introMode&&<>
+                            <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                                در صورتی که برای بلیط توضیحاتی وجود دارد در این قسمت یادداشت شود در غیر این صورت این فیلد را خالی بگذارید
+                            </Typography>
+                            <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                                مثال :
+                            </Typography>
+                            <Typography color={"#a2a2a2"} variant={"subtitle2"}>در هنگام اولین خرید یک شیکر و یک حوله ورزشی هدیه خواهید گرفت.
+                            </Typography>
+
+                            <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                                یا
+                            </Typography>
+                            <Typography color={"#a2a2a2"} variant={"subtitle2"}>قبل از خرید هماهنگی ساعت استفاده با مجموعه انجام شود.
+                            </Typography>
+                        </>}
                         <TextField
                             name={"Description"}
                             value={inCourse.Description || ""}
@@ -334,6 +303,106 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
                             variant="outlined"
                         />
 
+                        <Accordion>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1-content"
+                                id="panel1-header"
+                            >
+                                پیشرفته
+                            </AccordionSummary>
+                            <AccordionDetails>
+
+                                {introMode&&
+                                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                                    در صورت ارائه مدرک یا داشتن دستاورد قابل توجه برای شاگردان فیلد زیر را پر نمایید در غیر این صورت این فیلد را خالی بگذارید.
+                                </Typography>}
+
+                                <TextField
+                                    name={"TargetOfCourse"}
+                                    value={inCourse.TargetOfCourse || ""}
+                                    onChange={(e) => setInCourse({...inCourse, TargetOfCourse: e.target.value})}
+                                    margin="dense"
+                                    label="دستاورد شاگردان در پایان کلاس"
+                                    type="text"
+                                    aria-multiline={"true"}
+                                    minRows={3}
+                                    fullWidth
+                                    multiline
+                                    variant="outlined"
+                                />
+
+                                {introMode&&
+                                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                                    محدوده سنی به صورت نوشته برای اطلاع کاربر وارد میشود. اگر کلاس مورد نظر محدوده سنی ندارد این فیلد را خالی بگذارید.
+                                </Typography>}
+                                {introMode&&
+                                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                                    مثال :
+                                </Typography>}
+                                {introMode&&
+                                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                                    8 تا 16 سال
+                                </Typography>}
+                                <TextField
+                                    name={"AgeLimit"}
+                                    value={inCourse.AgeLimit || ""}
+                                    onChange={(e) => setInCourse({...inCourse, AgeLimit: e.target.value})}
+                                    margin="dense"
+                                    label="محدوده سنی"
+                                    type="text"
+                                    fullWidth
+                                    variant="outlined"
+                                />
+
+                                {introMode&&
+                                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                                    سطح کلاس برای اطلاع کاربر وارد میشود. اگر کلاس مورد نظر دارای سطح بندی نمی باشد این فیلد را خالی بگذارید.
+                                </Typography>}
+                                <TextField
+                                    name={"CourseLevel"}
+                                    value={inCourse.CourseLevel || ""}
+                                    onChange={(e) => setInCourse({...inCourse, CourseLevel: e.target.value})}
+                                    margin="dense"
+                                    label="سطح کلاس"
+                                    type="text"
+                                    fullWidth
+                                    variant="outlined"
+                                />
+
+
+                                {inCourse.AutoRenew&&introMode&&
+                                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                                    چند روز قبل از شروع کلاس امکان خرید بلیط وجود داشته باشد ؟
+                                </Typography>}
+                                {inCourse.AutoRenew&&<TextField
+                                    name={"DayBeforeStartSell"}
+                                    value={inCourse.DayBeforeStartSell || ""}
+                                    onChange={(e) => setInCourse({...inCourse, DayBeforeStartSell: e.target.value})}
+                                    margin="dense"
+                                    label="تعداد روز فعال بودن بلیط قبل از شروع کلاس"
+                                    type="number"
+                                    fullWidth
+                                    variant="outlined"
+                                />}
+                                {inCourse.AutoRenew&&introMode&&
+                                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
+                                    بلیط تا چند روز پس از شروع کلاس قابل خرید باشد ؟
+                                </Typography>}
+                                {inCourse.AutoRenew&&<TextField
+                                    name={"DayAfterStartSell"}
+                                    value={inCourse.DayAfterStartSell || ""}
+                                    onChange={(e) => setInCourse({...inCourse, DayAfterStartSell: e.target.value})}
+                                    margin="dense"
+                                    label="تعداد روز فعال بودن بلیط پس از شروع کلاس"
+                                    type="number"
+                                    fullWidth
+                                    variant="outlined"
+                                />}
+
+
+                            </AccordionDetails>
+                        </Accordion>
                         <FormControl fullWidth>
                             <Button variant={"contained"} type={"submit"}>ثبت</Button>
                         </FormControl>

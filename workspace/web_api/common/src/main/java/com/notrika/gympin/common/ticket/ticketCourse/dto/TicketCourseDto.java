@@ -85,14 +85,20 @@ public class TicketCourseDto extends BaseDto<TicketCourseDto> {
     @JsonProperty( "StartDate")
     private Date startDate;
 
-    @JsonProperty( "EndDate")
-    private Date EndDate;
+    @JsonProperty("DayBeforeRenew")
+    private Short dayBeforeRenew;
 
-    @JsonProperty( "StartSellingDate")
-    private Date startSellingDate;
+    @JsonProperty("ExpireDuration")
+    private Short expireDuration;
 
-    @JsonProperty( "EndSellingDate")
-    private Date EndSellingDate;
+    @JsonProperty("DayBeforeStartSell")
+    private Short dayBeforeStartSell;
+
+    @JsonProperty("DayAfterStartSell")
+    private Short dayAfterStartSell;
+
+
+
 
     @JsonProperty( "ActiveTimes")
     private List<ActiveTimesDto> activeTimes;

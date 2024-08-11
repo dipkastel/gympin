@@ -59,7 +59,10 @@ public class PurchasedCourseServiceHelper {
             }
             case ACTIVE:
             case READY_TO_ACTIVE: {
-                if (course.getEndDate().before(new Date())) {
+                Calendar expDate = Calendar.getInstance();
+                expDate.setTime(course.getStartDate());
+                expDate.add(Calendar.DAY_OF_MONTH, course.getExpireDuration());
+                if (expDate.before((new Date()))) {
                     course.setStatus(EXPIRE);
                     purchasedCourseRepository.update(course);
                 }
@@ -67,10 +70,7 @@ public class PurchasedCourseServiceHelper {
                     course.setStatus(COMPLETE);
                     purchasedCourseRepository.update(course);
                 }
-                if (course.getEndDate().before(new Date())) {
-                    course.setStatus(EXPIRE);
-                    purchasedCourseRepository.update(course);
-                }
+
                 for (var entry : course.getEntryList()) {
                     if (entry.getExitDate() == null && entry.getCourseEntryStatus() == CourseEntryStatus.ACCEPTED) {
                         Calendar c = Calendar.getInstance();

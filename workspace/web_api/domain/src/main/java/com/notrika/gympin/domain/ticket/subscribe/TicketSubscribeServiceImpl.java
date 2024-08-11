@@ -69,6 +69,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
                 .enable(false)
                 .buyableType(BuyableType.SUBSCRIBE)
                 .entryTotalCount(ticketSubscribeParam.getEntryTotalCount())
+                .subscribeStatus(ticketSubscribeParam.getSubscribeStatus())
                 .timing(ticketSubscribeParam.getTiming())
                 .gender(ticketSubscribeParam.getGender())
                 .description(ticketSubscribeParam.getDescription())
@@ -93,6 +94,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
         ticketSubscribeEntity.setBuyableType(BuyableType.SUBSCRIBE);
         ticketSubscribeEntity.setTiming(ticketSubscribeParam.getTiming());
         ticketSubscribeEntity.setEntryTotalCount(ticketSubscribeParam.getEntryTotalCount());
+        ticketSubscribeEntity.setSubscribeStatus(ticketSubscribeParam.getSubscribeStatus());
         ticketSubscribeEntity.setGender(ticketSubscribeParam.getGender());
         ticketSubscribeEntity.setDescription(ticketSubscribeParam.getDescription());
         ticketSubscribeEntity.setExpireDuration(ticketSubscribeParam.getExpireDuration());

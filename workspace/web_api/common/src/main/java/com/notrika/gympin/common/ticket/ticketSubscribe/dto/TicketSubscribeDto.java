@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketSubscribe.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
@@ -23,6 +24,9 @@ public class TicketSubscribeDto extends BaseDto<TicketSubscribeDto> {
 
     @JsonProperty("Name")
     private String name;
+
+    @JsonProperty("SubscribeStatus")
+    private SubscribeStatus subscribeStatus;
 
     @JsonProperty("Price")
     private BigDecimal price;

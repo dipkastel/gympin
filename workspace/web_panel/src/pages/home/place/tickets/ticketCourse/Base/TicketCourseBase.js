@@ -213,15 +213,47 @@ function TicketCourseBase({ticketCourse, updateTicketCourse}) {
                                 onChange={(e) => setFormValues("StartDate", e)}
                                 renderInput={(params) => <TextField fullWidth {...params} />}
                             />
-                            <DatePicker
-                                className={"ltr mt-4 mb-2 col-6"}
-                                label="تاریخ پایان"
-                                value={inTicketCourse.EndDate}
-                                onChange={(e) => setFormValues("EndDate", e)}
-                                renderInput={(params) => <TextField fullWidth {...params} />}
-                            />
                         </LocalizationProvider>
 
+                        <TextField
+                            id="standard-full-width"
+                            label="انقضا پس از (روز)"
+                            placeholder="تعداد روز قابل استفاده"
+                            value={inTicketCourse.ExpireDuration}
+                            type={"number"}
+                            onChange={(e) => setFormValues("ExpireDuration", e.target.value)}
+                            className={"ltr mt-4 mb-2 col-6"}
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <TextField
+                            id="standard-full-width"
+                            label="زمان ساخت بلیط"
+                            placeholder="تعداد روز قبل از شروع کلاس"
+                            value={inTicketCourse.DayBeforeStartSell}
+                            type={"number"}
+                            onChange={(e) => setFormValues("DayBeforeStartSell", e.target.value)}
+                            className={"ltr mt-4 mb-2 col-6"}
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <TextField
+                            id="standard-full-width"
+                            label="اتمام فروش"
+                            placeholder="تعداد روز پس از شروع کلاس"
+                            value={inTicketCourse.DayAfterStartSell}
+                            type={"number"}
+                            onChange={(e) => setFormValues("DayAfterStartSell", e.target.value)}
+                            className={"ltr mt-4 mb-2 col-6"}
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
                         <TextField
                             id="standard-full-width"
                             label="دستاورد شاگردان در پایان کلاس"
