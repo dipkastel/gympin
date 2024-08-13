@@ -37,7 +37,7 @@ public class FinanceCorporateEntity extends BaseEntityWithCreateUpdate<FinanceCo
     @JoinColumn(name = "corporateId", referencedColumnName = "id")
     @ToString.Exclude
     private CorporateEntity corporate;
-
+ 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

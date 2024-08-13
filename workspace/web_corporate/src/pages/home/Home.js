@@ -21,16 +21,15 @@ import {CircularProgress, Grid} from "@mui/material";
 function Home(props) {
     const error = useContext(ErrorContext);
     const [data, setData] = useState(null);
-    const [serverSettings] = useState(useSelector(({settings})=>settings));
+    const [serverSettings] = useState(useSelector(settings=>settings));
     const currentUser = useSelector(state => state.auth.user);
-    const homePageId = getHomeId(serverSettings);
 
     useEffect(() => {
         document.title = 'خانه';
         if(currentUser){
             props.RequestServerSettings(currentUser);
         }
-        HomePage_getHome({id:homePageId})
+        HomePage_getHome({id:getHomeId(serverSettings)})
             .then(result => {
                 setData(result.data.Data)
             }).catch(e => {
@@ -40,7 +39,7 @@ function Home(props) {
                 error.showError({message: "خطا نا مشخص",});
             }
         })
-    }, [])
+    }, [serverSettings])
     var classe = "col-sm-12 col-md-10 col-lg-7 col-xl-5 col-xxl-4";
     return (
         <div className={"home-center"}>

@@ -18,6 +18,7 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {CircularProgress, Grid} from "@mui/material";
 
+
 function Home(props) {
     const error = useContext(ErrorContext);
     const [data, setData] = useState(null);

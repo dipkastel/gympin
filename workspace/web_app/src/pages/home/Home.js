@@ -24,7 +24,7 @@ function Home(props) {
     const [data, setData] = useState(null);
     const [serverSettings] = useState(useSelector(settings=>settings));
     const currentUser = useSelector(state => state.auth.user);
-    const homePageId = getHomeId(serverSettings);
+
     useEffect(() => {
         document.title = 'خانه';
         if(currentUser){
@@ -32,7 +32,7 @@ function Home(props) {
                 props.RequestUser();
         }
 
-        getHomePage({id:homePageId}).then(result=>{
+        getHomePage({id:getHomeId(serverSettings)}).then(result=>{
             setData(result.data.Data);
         }).catch(e => {
             try {
@@ -42,7 +42,7 @@ function Home(props) {
             }
         });
 
-    }, [])
+    }, [serverSettings])
 
     useEffect(() => {
 

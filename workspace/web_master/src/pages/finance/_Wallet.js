@@ -93,7 +93,7 @@ const _Wallet = ({place,user,onRequestComplete}) => {
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent
                 >
-                    موجودی :
+                    {" مجموع کیف پول :"}
                     <Stack
                         justifyContent="space-between"
                         alignItems="flex-start"
@@ -105,6 +105,12 @@ const _Wallet = ({place,user,onRequestComplete}) => {
                         </Typography>
                         {getAccessOf(personnelAccessEnumT.FinanceAction)&&<Button variant={"contained"} onClick={()=>setOpenModalRequest(true)}>درخواست تسویه</Button>}
                     </Stack>
+                    {/*<Typography variant={"body2"}>*/}
+                    {/*    مجموع کیف پول :*/}
+                    {/*</Typography>*/}
+                    {/*<Typography variant="body2">*/}
+                    {/*    {`${toPriceWithComma(user.FinanceUser.TotalDeposit)} تومان`}*/}
+                    {/*</Typography>*/}
                     <Typography variant="caption"
                                 component={"a"}
                                 href={"/finance/demand"}

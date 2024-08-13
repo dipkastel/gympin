@@ -12,6 +12,7 @@ import UserManagementUserBuys from "./userManagementTabs/UserManagementUserBuys"
 import UserManagementFinanceTab from "./userManagementTabs/UserManagementFinanceTab";
 import UserManagementSettingTab from "./userManagementTabs/UserManagementSettingTab";
 import _UserActivity from "./activity/_UserActivity";
+import UserManagementAdvanceTab from "./userManagementTabs/UserManagementAdvanceTab";
 
 const UserDetailManagement = () => {
     const error = useContext(ErrorContext);
@@ -61,6 +62,7 @@ const UserDetailManagement = () => {
                             <Tab label="مالی" value={"FINANCE"}/>
                             <Tab label="تنظیمات" value={"SETTING"}/>
                             <Tab label="فعالیت ها" value={"ACTIVITY"}/>
+                            <Tab label="پیشرفته" value={"ADVANCE"}/>
                         </Tabs>
                     </Paper>
                     {selectedTab === "USER" && <UserManagementUserTab currentUser={currentUser}/>}
@@ -69,6 +71,7 @@ const UserDetailManagement = () => {
                     {selectedTab === "FINANCE" && <UserManagementFinanceTab currentUser={currentUser}/>}
                     {selectedTab === "SETTING" && <UserManagementSettingTab currentUser={currentUser}/>}
                     {selectedTab === "ACTIVITY" && <_UserActivity currentUser={currentUser}/>}
+                    {selectedTab === "ADVANCE" && <UserManagementAdvanceTab currentUser={currentUser}/>}
                 </div>}
                 <div className="col-md-2">
                     {currentUser && <Notes source={{User: {Id: currentUser.Id}}}/>}

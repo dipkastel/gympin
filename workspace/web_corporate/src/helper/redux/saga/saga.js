@@ -41,7 +41,7 @@ export function* saga() {
 
         const result = yield call(
             () => new Promise((resolve) => {
-                configs_getCorporateSplash(action.payload.user.Id).then((_result) => {
+                configs_getCorporateSplash({UserId:action.payload.user.Id}).then((_result) => {
                     resolve(_result.data.Data);
                 }).catch(e => {
                     console.log(e)

@@ -35,6 +35,11 @@ public class UserSettingsServiceImpl extends AbstractBaseService<UserSettingPara
     @Override
     public UserSettingDto add(@NonNull UserSettingParam settingParam) {
         UserEntity user = userService.getEntityById(settingParam.getUser().getId());
+        var LastUserSetting = userSettingsRepository.findAllByDeletedIsFalseAndUserIdAndKey(settingParam.getUser().getId(),settingParam.getKey());
+        if(LastUserSetting.size()>0){
+            settingParam.setId(LastUserSetting.get(0).getId());
+           return update(settingParam);
+        }
         UserSettingsEntity result = add(UserSettingsEntity.builder()
                 .user(user)
                 .key(settingParam.getKey())
