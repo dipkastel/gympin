@@ -2,12 +2,13 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import {user_GetUserSettings, user_SetUserSettings} from "../../../../../network/api/user.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {Button, Divider, FormControl, FormGroup, FormLabel, Grid, TextField} from "@mui/material";
+import {Button, Divider, FormControl, FormGroup, FormLabel, Grid, IconButton, TextField} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {UserSettingKeys} from "../../../../../helper/enums/UserSettingKeys";
 import {Form, Modal} from "react-bootstrap";
 import {ArticleCategory_add} from "../../../../../network/api/articleCategories.api";
 import Select from "react-select";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const UserAdvanceSettings = ({currentUser}) => {
     const error = useContext(ErrorContext);
@@ -107,6 +108,27 @@ const UserAdvanceSettings = ({currentUser}) => {
     }
 
 
+    function deleteItem(item) {
+
+        SetSettings([]);
+        user_SetUserSettings({
+            Id: item.Id,
+            Value: null,
+            Data: null,
+            Key: item.Key,
+            User: {Id: currentUser.Id}
+        }).then(result => {
+            getUserSettings();
+            error.showError({message: "ثبت موفق",});
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+                getUserSettings();
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }
 
     return (
         <>
@@ -129,9 +151,18 @@ const UserAdvanceSettings = ({currentUser}) => {
                     {settings && settings.map(item => (
                         <div key={item.Id}>
                             <Form noValidate autoComplete="off" onSubmit={(e) => submitSettingsForm(e)}>
-                                <FormGroup>
-                                    <FormLabel component="legend">{UserSettingKeys[item.Key]}</FormLabel>
-                                </FormGroup>
+                                <Grid container alignItems={"center"} justifyContent={"space-between"}>
+
+
+                                    <FormGroup>
+                                        <FormLabel component="legend">{UserSettingKeys[item.Key]}</FormLabel>
+
+                                    </FormGroup>
+
+                                    <IconButton aria-label="delete" color={"error"} onClick={() => deleteItem(item)}>
+                                        <DeleteIcon/>
+                                    </IconButton>
+                                </Grid>
                                 <Grid container alignItems={"center"}>
                                     <Grid item className={"col-md-5"}>
                                         <FormControl fullWidth>

@@ -1,13 +1,16 @@
-import React, {useEffect} from "react";
+import React, {useContext, useEffect} from "react";
 import {Container, Navbar} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import ReactGA from "react-ga4";
+import {ErrorContext} from "./GympinPagesProvider";
 
 
 export default function NNavigaion(){
     const navigate = useNavigate();
     const place = useSelector(({place}) => place.place)
+    const error = useContext(ErrorContext);
+
     const currentUser = useSelector(({auth}) => auth.user);
     const location = useLocation();
     useEffect(() => {
@@ -21,7 +24,7 @@ export default function NNavigaion(){
         }
         if(!place&&!window.location.toString().includes("/management/settings")){
             navigate('/management/settings', {replace: true});
-            alert("برای ادامه مجموعه خود را انتخاب کنید");
+            error.showError({message: "مجموعه خود را انتخاب کنید",});
         }
     }, [location]);
 

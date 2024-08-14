@@ -25,7 +25,6 @@ const _PlaceActivity = (props) => {
     const introMode = !getWizardComplete()
 
     useEffect(() => {
-        console.log("place -- > ",place.Status);
         if(place&&introMode)
             props.setIntroCanGoNext(place.Status== "ACTIVE");
     }, [place]);

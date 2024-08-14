@@ -6,12 +6,17 @@ import {sagaActions} from "../helper/redux/actions/SagaActions";
 
 
 export function setupAxios(axios, store) {
+    var loading = false;
     axios.interceptors.request.use(
         (config) => {
+            if(loading&&config.url!="v1/account/refreshToken") {
+                // console.log("block expired request");
+                return null;
+            }
             const {auth: { token }} = store.getState();
 
             if (token) {
-                console.log("url : "+axios.getUri(config),"Bearer " + token);
+                // console.log("url : "+axios.getUri(config),"Bearer " + token);
                 config.headers.Authorization = "Bearer " + token;
             }
             config.baseURL = AuthApi.BASEURL;
@@ -41,12 +46,16 @@ export function setupAxios(axios, store) {
 
 
     function reToken(callBack) {
-        console.log("retolen")
+        loading = true;
+        // console.log("retolen")
         const rToken = store.getState().auth.refreshToken
         refreshToken(rToken).then(result=>{
             store.dispatch(authActions.SetToken(result.data.Data.Token))
             store.dispatch(authActions.SetRefreshToken(result.data.Data.RefreshToken))
-            callBack(result);
+            setTimeout(function() {
+                callBack(result);
+                loading = false;
+            }, 3*1000);
         }).catch(e=> {
             store.dispatch(sagaActions.RequestLogout());
         })
