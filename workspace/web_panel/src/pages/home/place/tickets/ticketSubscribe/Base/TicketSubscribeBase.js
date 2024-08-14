@@ -55,7 +55,7 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
                     </Form.Group>
 
                     <Form.Group className={"w-100"} controlId="SubscribeStatus">
-                        <Form.Label>نوع کلاس</Form.Label>
+                        <Form.Label>نوع عضویت</Form.Label>
                         <Select
                             className={"dropdown"}
                             name="SubscribeStatus"

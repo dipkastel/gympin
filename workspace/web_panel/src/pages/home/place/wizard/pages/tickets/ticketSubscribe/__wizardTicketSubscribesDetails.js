@@ -8,6 +8,7 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import adapterJalali from "@date-io/date-fns-jalali";
 import {DatePicker} from "@mui/x-date-pickers";
 import {CheckBox, ExpandLess, ExpandMore, QuestionMark} from "@mui/icons-material";
+import {classStatus} from "../../../../../../../helper/enums/ClassStatus";
 
 const __wizardTicketSubscribesDetails = ({ticketSubscribe,updateTicketSubscribe}) => {
 
@@ -70,6 +71,39 @@ const __wizardTicketSubscribesDetails = ({ticketSubscribe,updateTicketSubscribe}
             <Collapse in={openCollapsableDetails} timeout="auto" unmountOnExit>
 
                 <div className={"row"}>
+
+                    <div className={"col-md-12"}>
+
+                        <TextField
+                            id="standard-full-width"
+                            label="نام عضویت"
+                            placeholder="نام عضویت"
+                            value={inTicketSubscribe.Name}
+                            onChange={(e) => setFormValues("Name", e.target.value)}
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+
+                    </div>
+
+                    <div className={"col-md-12"}>
+                        <Form.Group className={"w-100"} controlId="SubscribeStatus">
+                            <Form.Label>نوع عضویت</Form.Label>
+                            <Select
+                                className={"dropdown"}
+                                name="SubscribeStatus"
+                                options={Object.keys(classStatus).map(g => {
+                                    return {label: classStatus[g], value: g}
+                                })}
+                                value={{label: classStatus[inTicketSubscribe["SubscribeStatus"]], value: inTicketSubscribe["SubscribeStatus"]}}
+                                onChange={(e) => setFormValues("SubscribeStatus", e.value)}
+                            />
+                        </Form.Group>
+                    </div>
+
                     <div className={"col-md-6"}>
                         <TextField
                             id="standard-full-width"
@@ -175,6 +209,22 @@ const __wizardTicketSubscribesDetails = ({ticketSubscribe,updateTicketSubscribe}
                         shrink: true,
                     }}
                 />
+
+                <TextField
+                    id="standard-full-width"
+                    label="زمان"
+                    value={inTicketSubscribe.Timing || ""}
+                    type={"Text"}
+                    multiline
+                    minRows={3}
+                    onChange={(e) => setFormValues("Timing", e.target.value)}
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
+
 
 
                 <FormGroup sx={{mt: 3}}>
