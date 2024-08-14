@@ -181,6 +181,7 @@ export let optionOfPlaceApi = {
 export let ServiceApi = {
     query: "v1/service/query",
     deleteCorruptedItems: "v1/service/deleteCorruptedItems",
+    getUsersActive: "v1/service/getUsersActive",
 };
 export let PlaceApi = {
     getAllPlace: "v1/place/getAll",

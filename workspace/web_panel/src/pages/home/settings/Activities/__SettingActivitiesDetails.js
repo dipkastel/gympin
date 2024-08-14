@@ -14,7 +14,7 @@ import SystemSecurityUpdateWarningIcon from '@mui/icons-material/SystemSecurityU
 import {useHistory} from "react-router-dom";
 import {getUserFixedName} from "../../../../helper";
 
-const _SettingActivities = () => {
+const __SettingActivitiesDetails = () => {
 
     const history = useHistory();
     const error = useContext(ErrorContext);
@@ -144,4 +144,4 @@ const _SettingActivities = () => {
     );
 };
 
-export default _SettingActivities;
+export default __SettingActivitiesDetails;

@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.settings.service;
 
 import com.notrika.gympin.common.settings.service.dto.ServiceDto;
+import com.notrika.gympin.common.settings.service.param.ServiceByDateParam;
 import com.notrika.gympin.common.settings.service.param.ServiceParam;
 import com.notrika.gympin.common.settings.service.query.ServiceQuery;
 import com.notrika.gympin.common.settings.service.service.ServiceService;
@@ -88,6 +89,11 @@ public class ServiceServiceImpl extends AbstractBaseService<ServiceParam, Servic
 //            }
 //        }
         return true;
+    }
+
+    @Override
+    public List<ServiceDto> getUsersActive(ServiceByDateParam param) {
+        return convertToDtos(manageServiceExecutionRepository.getUsersActive(param.fromDate,param.toDate));
     }
 
     @Override

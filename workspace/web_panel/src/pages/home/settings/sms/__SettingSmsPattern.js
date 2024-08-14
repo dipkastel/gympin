@@ -8,13 +8,8 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {SmsTypes} from "../../../../helper/enums/SmsTypes";
-import TablePagination from "@mui/material/TablePagination";
-import {getRppSmsList, SetRppSmsList} from "../../../../helper/pocket/pocket";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {sms_AddPattern, sms_getAllPatterns, sms_updatePattern} from "../../../../network/api/sms.api";
-import {placeQrMessages_update} from "../../../../network/api/placeQrMessages.api";
-import {ArticleStatus} from "../../../../helper/enums/ArticleStatus";
-import {TransactionCorporateTypes} from "../../../../helper/enums/TransactionCorporateTypes";
 import AddIcon from "@mui/icons-material/Add";
 
 const __SettingSmsPattern = ({updatePage}) => {

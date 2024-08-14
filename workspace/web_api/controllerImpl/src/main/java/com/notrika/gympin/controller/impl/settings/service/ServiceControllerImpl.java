@@ -2,6 +2,7 @@ package com.notrika.gympin.controller.impl.settings.service;
 
 import com.notrika.gympin.common.settings.service.api.ServiceController;
 import com.notrika.gympin.common.settings.service.dto.ServiceDto;
+import com.notrika.gympin.common.settings.service.param.ServiceByDateParam;
 import com.notrika.gympin.common.settings.service.param.ServiceParam;
 import com.notrika.gympin.common.settings.service.query.ServiceQuery;
 import com.notrika.gympin.common.settings.service.service.ServiceService;
@@ -65,5 +66,12 @@ public class ServiceControllerImpl implements ServiceController {
     @PostMapping("/deleteCorruptedItems")
     public ResponseEntity<Boolean> deleteCorruptedItems() {
         return ResponseEntity.ok(serviceService.deleteCorruptedItems());
+    }
+
+    @Override
+    @PostMapping("/getUsersActive")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<List<ServiceDto>> getUsersActive(ServiceByDateParam param) {
+        return ResponseEntity.ok(serviceService.getUsersActive(param));
     }
 }

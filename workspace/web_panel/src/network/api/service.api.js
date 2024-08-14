@@ -8,3 +8,8 @@ export function service_query(data) {
 export function service_deleteCorruptedItems(data) {
     return axios.post(ServiceApi.deleteCorruptedItems, data);
 }
+
+
+export function service_GetActiveUsers(data) {
+    return axios.post(ServiceApi.getUsersActive, data);
+}
