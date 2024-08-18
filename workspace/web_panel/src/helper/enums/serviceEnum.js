@@ -75,8 +75,9 @@ export const serviceEnum = {
     "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.place.place.dto.PlaceDto> com.notrika.gympin.controller.impl.place.PlaceControllerImpl.addMultimedia(com.notrika.gympin.common.place.place.param.PlaceMultimediaParam)": "افزودن تصویر",
     "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto> com.notrika.gympin.controller.impl.user.UserControllerImpl.SetUserSettings(com.notrika.gympin.common.settings.userSettings.param.UserSettingParam)": "تغییر تنظیمات کاربر",
     "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.user.user.dto.UserDto> com.notrika.gympin.controller.impl.user.UserControllerImpl.updateUserStatus(com.notrika.gympin.common.user.user.param.UserStatusParam)": "تغییر وضعیت کاربر",
-    " ": "",
-    "  ": "",
-    "   ": "",
-
+    "public org.springframework.http.ResponseEntity<java.util.List<com.notrika.gympin.common.settings.service.dto.ServiceDto>> com.notrika.gympin.controller.impl.settings.service.ServiceControllerImpl.getUsersActive(com.notrika.gympin.common.settings.service.param.ServiceByDateParam)": "مشاهده کاربران فعال",
+    "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto> com.notrika.gympin.controller.impl.ticket.ticketSubscribe.TicketSubscribeControllerImpl.deleteCoach(com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeCoachParam)": "حذف مربی از عضویت",
+    "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto> com.notrika.gympin.controller.impl.ticket.ticketSubscribe.TicketSubscribeControllerImpl.addCoach(com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeCoachParam)": "افزودن مربی به عضویت",
+    "public org.springframework.http.ResponseEntity<java.lang.Boolean> com.notrika.gympin.controller.impl.user.AccountControllerImpl.RequestRegisterCorporate(com.notrika.gympin.common.user.user.param.RequestRegisterParam)": "درخواست عضویت سازمان",
+    "public org.springframework.http.ResponseEntity<java.lang.Boolean> com.notrika.gympin.controller.impl.user.AccountControllerImpl.RequestPublicMessage(com.notrika.gympin.common.user.user.param.RequestRegisterParam)":"پیام عمومی به جیم پین",
 }

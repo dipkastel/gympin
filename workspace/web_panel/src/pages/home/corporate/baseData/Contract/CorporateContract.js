@@ -10,20 +10,6 @@ const CorporateContract = ({currentCorporate, UpdatePage}) => {
     const error = useContext(ErrorContext);
 
 
-    function changeStepPayment(data) {
-        corporate_updateStepPayment({Id: currentCorporate.Id, StepPeyment: data}).then(response => {
-            error.showError({message: "عملیات موفق",});
-            UpdatePage();
-
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
-    }
-
 
     function changeCorporateContractType(data) {
         corporate_updateContractType({Id: currentCorporate.Id, ContractType: data}).then(response => {
@@ -40,8 +26,9 @@ const CorporateContract = ({currentCorporate, UpdatePage}) => {
 
     function getContractOptions() {
         return [
-            {value: "LONG_TIME", label: "تا پایان قرارداد"},
-            {value: "EXPIRING", label: "دارای تاریخ انقضا"}
+            {value: "ALPHA", label: "آلفا"},
+            {value: "PRO", label: "پرو"},
+            {value: "NEO", label: "نئو"}
         ]
     }
 
@@ -51,7 +38,6 @@ const CorporateContract = ({currentCorporate, UpdatePage}) => {
                 <PortletHeader title="پلن (طرح قرارداد)"/>
                 <PortletBody>
                     <Form.Group>
-                        <FormLabel component="legend">اعتبار پرسنل : </FormLabel>
                         <Select
                             className={"dropdown"}
                             options={getContractOptions()}
@@ -62,7 +48,7 @@ const CorporateContract = ({currentCorporate, UpdatePage}) => {
                             onChange={e => changeCorporateContractType(e.value)}
                         />
                     </Form.Group>
-                    {(currentCorporate.ContractType=="EXPIRING")&&
+                    {(currentCorporate.ContractType=="PRO"||currentCorporate.ContractType=="NEO")&&
                         <Form.Group className={"m-0"}>
                             <FormLabel sx={{m:0}} component="legend">مدت پیشنهادی برای انقضای اعتبار :</FormLabel>
                             <Grid container sx={{flexGrow: 1, mb: 2}}
@@ -84,15 +70,6 @@ const CorporateContract = ({currentCorporate, UpdatePage}) => {
                         </Form.Group>
                     }
 
-                    <Form.Group>
-                        <FormLabel component="legend">پرداخت پلکانی :</FormLabel>
-                        <FormControlLabel
-                            control={<Switch
-                                defaultChecked={currentCorporate.StepPeyment}
-                                onChange={(e) => changeStepPayment(e.target.checked)}/>}
-                            label="فعال"
-                        />
-                    </Form.Group>
 
                 </PortletBody>
             </Portlet>
