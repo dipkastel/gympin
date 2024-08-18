@@ -5,7 +5,7 @@ import {
     CardActions,
     CardContent,
     CardHeader,
-    CircularProgress,
+    CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
     Grid,
     Link,
     TextField, Typography
@@ -23,14 +23,31 @@ export default function Register(props) {
     const error = useContext(ErrorContext);
     const navigate = useNavigate();
     const [formStatus,setFormStatus]=useState(pageStates.CL);
+    const [showVideo,setShowVideo]=useState(false);
 
     useEffect(() => {
         document.title = 'ثبت نام';
     }, []);
 
+    function renderModalVideo() {
+        return (
+
+            <div>
+                <Dialog open={showVideo} onClose={()=>setShowVideo(false)}>
+                    <DialogContent>
+                        <video autoPlay={true} height={"100%"} width={"100%"} type="video/mp4" controls >
+                            <source src={toAbsoluteUrl("/assets/videos/gympin-place-1.mp4")} type="video/mp4"/>
+                            Your browser does not support the video tag.
+                        </video>
+                    </DialogContent>
+                </Dialog>
+            </div>
+        )
+    }
+
     function clearForm(){
         return (
-            <Grid
+            <><Grid
                 container
                 spacing={0}
                 direction="column"
@@ -48,23 +65,17 @@ export default function Register(props) {
                                 backgroundColor: "primary.main",
                                 color: "#fff"
                             }}
-                            title="فرم درخواست ثبت مجموعه ورزشی"
+                            title="فرم تماس مراکز"
                         />
                         <CardContent>
 
 
-                            <video autoPlay={true} height={"100%"} width={"100%"} type="video/mp4" controls >
-                                <source src={toAbsoluteUrl("/assets/videos/gympin-place-1.mp4")} type="video/mp4"/>
-                                Your browser does not support the video tag.
-                            </video>
-
-                            <Alert variant={"info"} className={"m-2"}>
-                                <Typography variant={"h6"} sx={{pt:4, px:3,textAlign:"center"}} >
-                                    کارکنان سازمان‌های طرف قرارداد ما، می باید از خدمات مجموعه های ورزشی-تفریحی معرفی شده در فهرست جیم پین استفاده کنند.
+                            <Alert variant={"info"} className={"m-2"} onClick={()=>setShowVideo(true)}>
+                                <Typography variant={"body1"} sx={{pb:1,px:1,textAlign:"center"}} >
+                                    برای مشاوره رایگان و افزایش فروش از طریق قرارگرفتن در لیست مجموعه های جیم پین فرم زیر را تکمیل نمایید.
                                 </Typography>
-
-                                <Typography variant={"body1"} sx={{pb:3,px:3,textAlign:"center"}} >
-                                    برای قرارگرفتن در لیست مجموعه های جیم پین فرم زیر را تکمیل نمایید.
+                                <Typography variant={"body2"} sx={{pb:0,px:0,textAlign:"left"}} >
+                                     مشاهده ویدئو
                                 </Typography>
                             </Alert>
                             <Formik
@@ -91,12 +102,13 @@ export default function Register(props) {
                                     setFormStatus(pageStates.LO);
                                     requestRegisterPlace({
                                         PhoneNumber: values.phoneNumber,
-                                        fullName: values.username,
+                                        FullName: values.username,
                                         Text: values.Name
                                     }).then(result => {
                                         if (result.data.Data) {
                                             setFormStatus(pageStates.TX);
                                         }else {
+                                            console.log(result.data.Data);
                                             setFormStatus(pageStates.CL);
                                         }
                                     }).catch(e => {
@@ -193,7 +205,10 @@ export default function Register(props) {
                         </CardActions>
                     </Card>
                 </Grid>
-            </Grid>)
+            </Grid>
+                {renderModalVideo()}
+            </>
+            )
     }
     function loading(){
         return (
