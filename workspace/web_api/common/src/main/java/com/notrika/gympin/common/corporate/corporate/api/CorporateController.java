@@ -18,7 +18,6 @@ import java.util.List;
 public interface CorporateController extends BaseController<CorporateParam, CorporateDto, CorporateQuery> {
 
     ResponseEntity<CorporateDto> updateStatus(@RequestBody CorporateParam param);
-    ResponseEntity<CorporateDto> updateStepPayment(@RequestBody CorporateParam param);
     ResponseEntity<CorporateDto> updateLogo(@RequestBody CorporateLogoParam param);
     ResponseEntity<CorporateDto> updateContractType(@RequestBody CorporateContractTypeParam param);
     ResponseEntity<CorporateDto> updateContractDate(@RequestBody CorporateContractDateParam param);

@@ -89,13 +89,6 @@ public class CorporateControllerImpl implements CorporateController {
     }
 
     @Override
-    @PutMapping("updateStepPayment")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
-    public ResponseEntity<CorporateDto> updateStepPayment(CorporateParam param) {
-        return ResponseEntity.ok(corporateService.updateStepPayment(param));
-    }
-
-    @Override
     @PutMapping("updateLogo")
     public ResponseEntity<CorporateDto> updateLogo(CorporateLogoParam param) {
         return ResponseEntity.ok(corporateService.updateLogo(param));

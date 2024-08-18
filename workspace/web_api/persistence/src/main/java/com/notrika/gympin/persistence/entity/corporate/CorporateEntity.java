@@ -50,12 +50,9 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     @Column(name = "contractDate")
     private Date contractDate;
 
-    @Column(name = "ContractType",columnDefinition = "varchar(255) default 'LONG_TIME'")
+    @Column(name = "ContractType",columnDefinition = "varchar(255) default 'ALPHA'")
     @Enumerated(EnumType.STRING)
     private CorporateContractTypeEnum contractType;
-
-    @Column(name = "stepsPay",columnDefinition = "Boolean default 0")
-    private Boolean stepsPay;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "locationId")

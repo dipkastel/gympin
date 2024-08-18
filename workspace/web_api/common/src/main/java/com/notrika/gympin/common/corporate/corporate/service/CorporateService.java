@@ -15,7 +15,6 @@ import java.util.List;
 public interface CorporateService extends BaseService<CorporateParam, CorporateDto, CorporateQuery> {
 
     CorporateDto updateStatus(CorporateParam userParam);
-    CorporateDto updateStepPayment(CorporateParam userParam);
     CorporateDto updateLogo(CorporateLogoParam param);
     CorporateDto updateContractType(CorporateContractTypeParam param);
     CorporateDto updateContractDate(@NonNull CorporateContractDateParam param);

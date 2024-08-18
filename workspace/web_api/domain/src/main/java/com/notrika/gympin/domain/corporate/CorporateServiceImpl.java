@@ -57,8 +57,7 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
                 .name(corporateParam.getName())
                 .address(corporateParam.getAddress())
                 .status(CorporateStatusEnum.INACTIVE)
-                .stepsPay(false)
-                .contractType(CorporateContractTypeEnum.LONG_TIME)
+                .contractType(CorporateContractTypeEnum.ALPHA)
                 .build());
 
         financeCorporateRepository.add(FinanceCorporateEntity.builder()
@@ -82,13 +81,6 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
     public CorporateDto updateStatus(@NonNull CorporateParam corporateParam) {
         CorporateEntity entity = corporateRepository.getById(corporateParam.getId());
         entity.setStatus(corporateParam.getStatus());
-        return CorporateConvertor.toDto(corporateRepository.update(entity));
-    }
-
-    @Override
-    public CorporateDto updateStepPayment(@NonNull CorporateParam corporateParam) {
-        CorporateEntity entity = corporateRepository.getById(corporateParam.getId());
-        entity.setStepsPay(corporateParam.getStepPeyment());
         return CorporateConvertor.toDto(corporateRepository.update(entity));
     }
 

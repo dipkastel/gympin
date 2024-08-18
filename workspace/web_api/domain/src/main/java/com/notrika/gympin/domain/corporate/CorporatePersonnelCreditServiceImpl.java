@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.corporate;
 
+import com.notrika.gympin.common.corporate.corporate.enums.CorporateContractTypeEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelCreditService;
@@ -59,7 +60,9 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     public CorporatePersonnelCreditDto add(@NonNull CorporatePersonnelCreditParam param) {
         //get personel
         CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(param.getPersonnel().getId());
-        if (!personnelEntity.getCorporate().getStepsPay() && personnelEntity.getCorporate().getPersonnel().stream().map(p -> p.getCredits().stream().map(cpc -> cpc.getCreditAmount()).reduce(BigDecimal.ZERO, (f, q) -> f.add(q))).reduce(BigDecimal.ZERO, (p, q) -> p.add(q)).add(param.getCreditAmount()).compareTo(personnelEntity.getCorporate().getFinanceCorporate().getTotalDeposit()) > 0)
+        //TODO FIX THIS
+        if (personnelEntity.getCorporate().getContractType()== CorporateContractTypeEnum.NEO &&
+                personnelEntity.getCorporate().getPersonnel().stream().map(p -> p.getCredits().stream().map(cpc -> cpc.getCreditAmount()).reduce(BigDecimal.ZERO, (f, q) -> f.add(q))).reduce(BigDecimal.ZERO, (p, q) -> p.add(q)).add(param.getCreditAmount()).compareTo(personnelEntity.getCorporate().getFinanceCorporate().getTotalDeposit()) > 0)
             throw new LowCreditException();
 
         var serial = financeSerialRepository.add(FinanceSerialEntity.builder().serial(java.util.UUID.randomUUID().toString()).build());
@@ -124,8 +127,8 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         }
 
         BigDecimal totalAddAmount = param.getCreditAmount().multiply(BigDecimal.valueOf(getPersonnelsForProcess.size()));
-
-        if (!corporate.getStepsPay() && corporate.getFinanceCorporate().getTotalCredits().add(totalAddAmount).compareTo(corporate.getFinanceCorporate().getTotalDeposit()) > 0)
+        //TODO FIX THIS
+        if (corporate.getContractType()==CorporateContractTypeEnum.NEO && corporate.getFinanceCorporate().getTotalCredits().add(totalAddAmount).compareTo(corporate.getFinanceCorporate().getTotalDeposit()) > 0)
             throw new LowCreditException();
 
 

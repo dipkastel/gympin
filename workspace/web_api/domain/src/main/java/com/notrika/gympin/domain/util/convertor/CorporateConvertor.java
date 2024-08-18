@@ -25,7 +25,6 @@ public final class CorporateConvertor {
             dto.setFinanceCorporate(TransactionConvertor.toSimpleDto(entity.getFinanceCorporate()));
         dto.setStatus(entity.getStatus());
         dto.setContractType(entity.getContractType());
-        dto.setStepPeyment(entity.getStepsPay());
         dto.setLogo(MultimediaConvertor.toDto(entity.getLogo()));
         dto.setDefaultExpireDuration(entity.getDed());
         try{
