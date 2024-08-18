@@ -33,8 +33,7 @@ export function setupAxios(axios, store) {
             return response;
         },
         async function (error) {
-            if (error.response.status === 401) {
-                console.log("expire");
+            if (error?.response?.status === 401) {
                 reToken(result=>{
                     window.location = window.location;
                 })

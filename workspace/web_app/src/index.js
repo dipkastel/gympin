@@ -8,6 +8,7 @@ import axios from "axios";
 import store, {persistor} from "./helper/redux/store";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
+import GNotification from "./helper/notification";
 
 
 setupAxios(axios, store);

@@ -2,7 +2,6 @@ import React from "react";
 import {Navigate, Route, Routes} from "react-router-dom";
 import Login from "../pages/auth/Login";
 import LogoutPage from "../pages/auth/Logout";
-import Register from "../pages/auth/Register";
 import {useSelector} from "react-redux";
 
 export default function AuthRoutes() {
