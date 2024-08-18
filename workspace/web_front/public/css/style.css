@@ -13178,7 +13178,8 @@ input.form-control-sm {
 .quote-wrapper {
   background: #FFB400;
   text-align: center;
-  padding: 80px; }
+  padding: 80px;
+  min-height: 500px;}
   @media (max-width: 1610px) {
     .quote-wrapper {
       padding: 80px 48px; } }
