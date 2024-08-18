@@ -8,7 +8,7 @@ export let Api_url = {
     Account: {
         LOGIN_URL: "v1/account/login",
         SEND_SMS_URL: "v1/account/sendsms",
-        REQUEST_REGISTER_PLACE:"v1/account/requestRegisterCorporate",
+        requestRegisterCorporate:"v1/account/requestRegisterCorporate",
         REFRESH_TOKEN:"v1/account/refreshToken"
     },
     configs:{

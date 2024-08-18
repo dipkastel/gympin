@@ -10,7 +10,7 @@ export function sendSms(userdata) {
 }
 
 export function requestRegisterPlace(data) {
-    return axios.post(Api_url.Account.REQUEST_REGISTER_PLACE, data);
+    return axios.post(Api_url.Account.requestRegisterCorporate, data);
 }
 
 export function refreshToken(refreshToken) {
