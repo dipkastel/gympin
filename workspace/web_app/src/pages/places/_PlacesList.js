@@ -166,6 +166,7 @@ const _PlacesList = () => {
             content.push(...result.data.Data.content);
             SetPlaces({...result.data.Data,content:content});
             setEndOfList(result.data.Data.last);
+            itsStart = false;
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -215,11 +216,14 @@ const _PlacesList = () => {
         SetSortBy(sortPlaceItems.find(f=>f.Id==e))
     }
 
+    var itsStart = false;
     const handleScroll = () => {
-       if (window.innerHeight + document.documentElement.scrollTop+40 < document.documentElement.offsetHeight || isLoading||endOfList) {
+       if (window.innerHeight + document.documentElement.scrollTop+40 < document.documentElement.offsetHeight || isLoading||endOfList||itsStart) {
             return;
         }
+       itsStart = true;
          setLoadedPage(loadedPage+1);
+
          getData(loadedPage+1);
     };
 
