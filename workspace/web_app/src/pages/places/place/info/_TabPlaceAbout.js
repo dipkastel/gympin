@@ -7,6 +7,7 @@ import _PlaceSingleAbout from "./_PlaceSingleAbout";
 import _PlaceFacilities from "./_PlaceFacilities";
 import {placePersonnel_ByPlace} from "../../../../network/api/placePersonnel.api";
 import _PlaceCoaches from "./_PlaceCoaches";
+import _PlaceSports from "./_PlaceSports";
 
 const _TabPlaceAbout = ({place}) => {
     const error = useContext(ErrorContext);
@@ -49,6 +50,7 @@ const _TabPlaceAbout = ({place}) => {
             {personnel&&<_PlaceCoaches place={place} personnel={personnel}/>}
             {place.Address&&<_PlaceAddress place={place} />}
             {place.Latitude&&place.Longitude&&<_PlaceMap place={place} />}
+            <_PlaceSports place={place}/>
             <_PlaceFacilities place={place}/>
             {abouts.map((item,number) => (
                     <_PlaceSingleAbout key={"a"+number} about={item} number={number}/>
