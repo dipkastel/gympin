@@ -12,7 +12,11 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
     const [inTicketSubscribe, SetInTicketSubscribe] = useState(ticketSubscribe)
 
     function setFormValues(lable, value) {
-        SetInTicketSubscribe({...inTicketSubscribe, [lable]: value})
+        console.log(lable)
+        if(lable==="PlacePrice")
+            SetInTicketSubscribe({...inTicketSubscribe, [lable]: value,Price:value})
+        else
+            SetInTicketSubscribe({...inTicketSubscribe, [lable]: value})
     }
 
     function submitForm() {
@@ -88,6 +92,7 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
                         placeholder="پرداختی کاربر به تومان"
                         value={toPriceWithComma(inTicketSubscribe.Price)}
                         type={"text"}
+                        disabled={true}
                         onChange={(e) => setFormValues("Price", toPriceWithoutComma(e.target.value))}
                         fullWidth
                         margin="normal"
@@ -101,7 +106,7 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
                         label="قیمت مرکز به تومان"
                         placeholder="قیمت مرکز به تومان"
                         value={toPriceWithComma(inTicketSubscribe.PlacePrice)}
-                        onChange={(e) => setFormValues("PlacePrice", toPriceWithoutComma(e.target.value))}
+                        onChange={(e) => {setFormValues("PlacePrice", toPriceWithoutComma(e.target.value));}}
                         type={"text"}
                         fullWidth
                         margin="normal"
@@ -132,6 +137,7 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
                         onChange={(e) => setFormValues("Discount", e.target.value)}
                         type={"text"}
                         fullWidth
+                        disabled={true}
                         margin="normal"
                         InputLabelProps={{
                             shrink: true,
