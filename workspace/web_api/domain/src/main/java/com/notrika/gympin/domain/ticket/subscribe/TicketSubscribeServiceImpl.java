@@ -83,6 +83,10 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
 
     @Override
     public TicketSubscribeDto update(@NonNull TicketSubscribeParam ticketSubscribeParam) {
+        if(ticketSubscribeParam.getValuePrice()==null)
+            throw new TicketPriceCannotBeNull();
+        if(ticketSubscribeParam.getPlacePrice()==null)
+            throw new TicketPriceCannotBeNull();
         if (ticketSubscribeParam.getValuePrice().compareTo(ticketSubscribeParam.getPlacePrice()) < 0)
             throw new UncomfortableValueExeption();
         TicketSubscribeEntity ticketSubscribeEntity = getEntityById(ticketSubscribeParam.getId());
