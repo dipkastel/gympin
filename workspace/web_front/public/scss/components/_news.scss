@@ -122,7 +122,7 @@
         .icon {
             &__hover{
                 display: none;
-            } 
+            }
         }
     }
     &:hover {
@@ -291,18 +291,16 @@
                 padding: 30px 25px;
             }
             .cat {
-                background: $theme-color;
-                padding: 5px 27px;
-                font-size: 14px;
+                padding: 5px ;
+                font-size: 8px;
                 display: inline-block;
-                margin-bottom: 22px;
                 span {
-                    color: $white;
+                    color: $pera-color;
                     font-family: $defaultfont;
                 }
             }
             .title {
-                font-size: 32px;
+                font-size: 24px;
                 line-height: 42px;
                 @include respond(xs) {
                     font-size: 18px;
@@ -354,7 +352,7 @@
                 align-items: center;
                 font-weight: 500;
                 img {
-                    margin-right: 15px;
+                    margin-left: 5px;
 	                border-radius: 50%;
                 }
             }
@@ -1064,15 +1062,15 @@
         }
         &.children {
             margin-left: 100px;
-            @include respond(xs) { 
+            @include respond(xs) {
                 margin-left: 0px;
             }
-            @include respond(sm) { 
+            @include respond(sm) {
                 margin-left: 50px;
             }
         }
     }
-    
+
     .avatar-name {
         margin-bottom: 15px;
         overflow: hidden;

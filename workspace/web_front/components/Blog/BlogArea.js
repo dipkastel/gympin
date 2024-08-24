@@ -50,58 +50,60 @@ export default function BlogArea({blogs, selectedPage, setSelectedPage}) {
         <>
             {/* <!-- news area start --> */}
             <div className="blog__area blog__area--2 pt-125 pb-125">
-                <div className="container">
+                <div className="container-fluid">
                     <div className="row">
-                        <div className="col-xl-8 col-lg-12">
+                        <div className="col-xl-12 col-lg-12">
+                            <div className="row">
                             {/*repeat*/}
                             {blogs.content && blogs.content.map(item => (
-                                <article key={item.Id} className="blog__box blog__box--3 blog__box--image mb-40">
+                                <article key={item.Id} className={"blog__box blog__box--3 blog__box--image mb-40 col-md-6 col-xxl-4"}>
                                     <div className="thumb">
                                         <a href={"/blog-details/?id=" + item.Id + "&slug=" + createSlug(item.Title)}>
                                             <img src={item.ArticleImage?item.ArticleImage.Url:""} alt={item.Title}/>
                                         </a>
                                     </div>
                                     <div className="content pt-50">
+                                        <h3 className="title">
+                                            <a href={"/blog-details/?id=" + item.Id + "&slug=" + createSlug(item.Title)}>{item.Title}</a>
+                                        </h3>
                                         {item.Categories.map(cats => (
                                             <div key={"cat-" + cats.Id} className="cat mr-1 ml-1">
                                                 <span>{cats.Name}</span>
                                             </div>
                                         ))}
-                                        <h3 className="title">
-                                            <a href={"/blog-details/?id=" + item.Id + "&slug=" + createSlug(item.Title)}>{item.Title}</a>
-                                        </h3>
-                                        <div className="meta mt-20 mb-20">
-                                            <span><i className="far fa-eye"></i> {Math.round(Math.random() * 500)} نمایش </span>
-                                            <span><a href="#0"><i
-                                                className="far fa-comments"></i> {Math.round(Math.random() * 10)} نظر</a></span>
-                                            <span><a href="#0"><i
-                                                className="far fa-calendar-alt"></i> {new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
-                                                year: 'numeric',
-                                                month: 'long',
-                                            })}</a></span>
-                                        </div>
+                                        {/*<div className="meta mt-20 mb-20">*/}
+                                        {/*    <span><i className="far fa-eye"/> {Math.round(Math.random() * 500)} نمایش </span>*/}
+                                        {/*    <span><a href="#0"><i className="far fa-comments"/> {Math.round(Math.random() * 10)} نظر</a></span>*/}
+                                        {/*    <span><a href="#0"><i className="far fa-calendar-alt"/> {new Date(item.CreatedDate).toLocaleDateString('fa-IR', {*/}
+                                        {/*        year: 'numeric',*/}
+                                        {/*        month: 'long',*/}
+                                        {/*    })}</a></span>*/}
+                                        {/*</div>*/}
                                         <div className="post-text mb-35">
                                             <div dangerouslySetInnerHTML={{__html: item.Summary}}/>
                                         </div>
-                                        <div className="post-bottom mt-30">
-                                            <div className="authore ">
-                                                <img
-                                                    src={item.CreatorUser.Avatar ? (item.CreatorUser.Avatar.Url) : "/images/news/news-list-authore.png"}
-                                                    alt=""/>
-                                                <span>{item.CreatorUser.Username}</span>
-                                            </div>
+                                        <div className="post-bottom mt-30 ">
                                             <a href={"/blog-details/?id=" + item.Id + "&slug=" + createSlug(item.Title)}
                                                className="inline-btn"><span className="icon"><i
-                                                className="fal fa-arrow-left"></i></span> ادامه مطلب</a>
+                                                className="fal fa-arrow-left"/></span> ادامه مطلب</a>
+                                            <div className="authore">
+                                                <span>{item.CreatorUser.Username}</span>
+                                                <img
+
+                                                    src={item.CreatorUser.Avatar ? (item.CreatorUser.Avatar.Url) : "/images/news/news-list-authore.png"}
+                                                    alt=""/>
+                                            </div>
                                         </div>
                                     </div>
                                 </article>
                             ))}
                             {/*-repeat*/}
                             {renderPagination()}
+
+                    </div>
                         </div>
                         {/*<BlogSidebar/>*/}
-                    </div>
+                </div>
                 </div>
             </div>
             {/* <!-- news area end -->    */}

@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react'
+import BlogSidebar from "../../layouts/BlogSidebar";
+import BlogItemSidebar from "../../layouts/BlogItemSidebar";
 
 export default function BlogDetailsArea({blogpost}) {
     console.log("blogpost",blogpost)
@@ -6,12 +8,12 @@ export default function BlogDetailsArea({blogpost}) {
     return (
         <>
             {/* <!-- news area start --> */}
-            <div className="blog__area blog__area--2 pt-125 pb-125">
-                <div className="container">
+            <div className="blog__area blog__area--2 pt-45 pb-125">
+                <div className="container-fluid">
                     <div className="row">
-                        <div className="col-xl-8 col-lg-12">
+                        <div className="col-xl-9 col-lg-12">
                             <article className="blog__box blog__box--3 blog__box--details">
-                                <div className="content pt-20">
+                                <div className="content pt-0">
 
                                     {blogpost.Categories.map(cats => (
                                         <div key={"cat-" + cats.Id} className="cat mr-1 ml-1">
@@ -265,7 +267,7 @@ export default function BlogDetailsArea({blogpost}) {
                                 {/*</div>*/}
                             </article>
                         </div>
-                        {/*<BlogSidebar/>*/}
+                        <BlogItemSidebar blogpost={blogpost}/>
                     </div>
                 </div>
             </div>

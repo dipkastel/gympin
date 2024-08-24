@@ -1,10 +1,10 @@
 /*service details css*/
 .sidebar {
-    padding: 35px 35px;
+    padding: 20px 10px;
     &__title {
         @include d-flex;
-        font-size: 22px;
-        margin-bottom: 15px;
+        font-size: 18px;
+        margin-bottom: 8px;
         justify-content: space-between;
         &--white {
             color: $white;
