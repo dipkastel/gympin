@@ -93,7 +93,7 @@ const _DashTicketBeneficiary = () => {
         <QuickStatsIcon
             onClick={()=>{setShowModal(ticket.length > 0)}}
             title="بلیط معلق"
-            text={ticket.length > 0 ? "شما " + ticket.length + " بلیط بی صاحب دارید" : "زینفع برای تمامی بلیط ها مشخص شده"}
+            text={ticket.length > 0 ? "شما " + ticket.length + " بلیط بی صاحب دارید" : "ذینفع برای تمامی بلیط ها مشخص شده"}
             icon={<ConfirmationNumber sx={{fontSize: 40, color: ticket.length > 0 ? "#d00d48" : "#0c5049"}}
                            color={"#AA5598"}/>}
         />
