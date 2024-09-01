@@ -32,8 +32,8 @@ const _BaseProcessDatas = ({serial}) => {
                         alignItems="center">
                         <Avatar alt="userImage" src={(serial?.CreatorUser?.Avatar)?(serial?.CreatorUser.Avatar.Url||""):""}  sx={{width:90,height:90,ml:1}} />
                         <div>
-                            <p>{("نام و نام خانوادگی : "+serial?.CreatorUser.FullName)}</p>
-                            <p>{("نام کاربری : "+serial?.CreatorUser.Username)}</p>
+                            <p>{("نام و نام خانوادگی : "+serial?.CreatorUser?.FullName)}</p>
+                            <p>{("نام کاربری : "+serial?.CreatorUser?.Username)}</p>
                         </div>
                     </Grid>
                     <Typography variant={"h6"}>{" نوع فرایند : "+ProcessTypeEnum[serial?.ProcessType]}</Typography>
