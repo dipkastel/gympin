@@ -40,17 +40,14 @@ public class UserTransactionDto extends BaseDtoWithCreateUpdate<UserTransactionD
     @JsonProperty("Description")
     private String description;
 
-    @JsonProperty("FinanceUser")
-    private FinanceUserDto financeUser;
-
-    @JsonProperty("User")
-    private UserDto user;
-
     @JsonProperty("Place")
     private PlaceDto place;
 
     @JsonProperty("Purchased")
     private PurchasedDto purchased;
+
+    @JsonProperty("FinanceUser")
+    private FinanceUserDto financeUser;
 
 
 }

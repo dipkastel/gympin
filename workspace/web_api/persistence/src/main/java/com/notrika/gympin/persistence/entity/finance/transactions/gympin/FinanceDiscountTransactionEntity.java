@@ -1,0 +1,45 @@
+package com.notrika.gympin.persistence.entity.finance.transactions.gympin;
+
+import com.notrika.gympin.persistence.entity.finance.BaseTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
+import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
+import java.util.Objects;
+
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@SuperBuilder
+@Entity
+@Table(name = "financeDiscountTransaction")
+public class FinanceDiscountTransactionEntity extends BaseTransactionEntity<FinanceDiscountTransactionEntity> {
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "serialId")
+    private FinanceSerialEntity serial;
+
+    @ManyToOne
+    @JoinColumn(name = "purchasedId")
+    private PurchasedBaseEntity purchased;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        FinanceDiscountTransactionEntity that = (FinanceDiscountTransactionEntity) o;
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+}

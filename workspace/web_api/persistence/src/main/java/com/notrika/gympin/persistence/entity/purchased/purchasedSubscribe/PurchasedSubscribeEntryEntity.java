@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -45,7 +46,8 @@ public class PurchasedSubscribeEntryEntity extends BaseEntityWithCreateUpdate<Pu
     private SubscribeEntryStatus subscribeEntryStatus;
 
     @OneToMany(mappedBy = "subscribeEntry", cascade = CascadeType.ALL)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PurchasedSubscribeMessageEntity> messages;
     @Override
     public boolean equals(Object o) {

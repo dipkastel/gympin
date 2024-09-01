@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.management.settings;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.settings.base.enums.settingsType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.management.sms.ManageSmsEntity;
@@ -43,7 +44,8 @@ public class SettingsEntity extends BaseEntityWithCreateUpdate<SettingsEntity> {
 
 
     @OneToMany(mappedBy = "provider",fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<ManageSmsPatternEntity> smsPatterns;
 
     @Override

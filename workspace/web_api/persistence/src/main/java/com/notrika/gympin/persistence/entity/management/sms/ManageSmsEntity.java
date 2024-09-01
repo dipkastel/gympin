@@ -57,7 +57,8 @@ public class ManageSmsEntity extends BaseEntityWithCreateUpdate<ManageSmsEntity>
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PatternId")
-    @JsonIgnore
+   @JsonIgnore
+@ToString.Exclude
     private ManageSmsPatternEntity pattern;
 
 

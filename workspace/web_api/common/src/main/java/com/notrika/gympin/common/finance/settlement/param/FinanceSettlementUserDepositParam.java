@@ -15,8 +15,8 @@ import java.math.BigDecimal;
 @ToString
 public class FinanceSettlementUserDepositParam extends BaseParam<FinanceSettlementUserDepositParam> {
 
-        @JsonProperty("UserId")
-        Long userID;
+        @JsonProperty("UserFinanceId")
+        Long userFinanceID;
 
         @JsonProperty("Amount")
         BigDecimal amount;

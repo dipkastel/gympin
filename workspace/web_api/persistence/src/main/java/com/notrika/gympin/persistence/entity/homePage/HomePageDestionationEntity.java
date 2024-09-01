@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.homePage;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "homePageDestinations")
-public class HomePageDestionationEntity extends BaseEntity<HomePageDestionationEntity> {
+public class HomePageDestionationEntity extends BaseEntityWithCreateUpdate<HomePageDestionationEntity> {
 
 
     @Column(name = "name")

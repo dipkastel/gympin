@@ -73,7 +73,6 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
                 .corporate(corporate)
                 .user(user)
                 .role(CorporatePersonnelRoleEnum.PERSONEL)
-                .creditBalance(BigDecimal.ZERO)
                 .build();
         corporatePersonnelRepository.add(corporatePersonnelEntity);
 
@@ -155,7 +154,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
             } catch (Exception e) {
             }
         }
-        return convertToDtos(corporatePersonnelRepository.findByCorporateAndDeletedIsFalse(corporateService.getEntityById(Param.getCorporateId())));
+        return convertToDtos(corporatePersonnelRepository.findByCorporateIdAndDeletedIsFalse(Param.getCorporateId()));
     }
 
     @Override
@@ -223,8 +222,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public List<CorporatePersonnelDto> getPersonnelByCorporate(CorporateParam corporateParam) {
-        CorporateEntity corporate = corporateService.getEntityById(corporateParam.getId());
-        return corporatePersonnelRepository.findByCorporateAndDeletedIsFalse(corporate).stream().map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
+        return corporatePersonnelRepository.findByCorporateIdAndDeletedIsFalse(corporateParam.getId()).stream().map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
     }
 
     @Override

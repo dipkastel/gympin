@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.sport.option;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,8 @@ public class SportOptionEntity extends BaseEntityWithCreateUpdate<SportOptionEnt
     private String name;
 
     @OneToMany(mappedBy = "sportOption")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<sportOptionOfSportEntity> optionsOfSports;
 
     @Override

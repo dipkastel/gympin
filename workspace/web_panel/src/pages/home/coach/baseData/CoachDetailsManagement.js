@@ -4,10 +4,6 @@ import {useParams} from "react-router-dom";
 import Notice from "../../../partials/content/Notice";
 import {Paper, Tab, Tabs} from "@mui/material";
 import UserManagementUserTab from "../../user/baseDate/userManagementTabs/UserManagementUserTab";
-import UserManagementRelationsTab from "../../user/baseDate/userManagementTabs/UserManagementRelationsTab";
-import UserManagementUserBuys from "../../user/baseDate/userManagementTabs/UserManagementUserBuys";
-import UserManagementFinanceTab from "../../user/baseDate/userManagementTabs/UserManagementFinanceTab";
-import UserManagementSettingTab from "../../user/baseDate/userManagementTabs/UserManagementSettingTab";
 import Notes from "../../../partials/content/notes/Notes";
 import {user_getById} from "../../../../network/api/user.api";
 

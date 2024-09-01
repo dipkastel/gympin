@@ -33,9 +33,6 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
     @JsonProperty("Longitude")
     private double longitude;
 
-    @JsonProperty("Balance")
-    private BigDecimal balance;
-
     @JsonProperty("Tell")
     private String tell;
 

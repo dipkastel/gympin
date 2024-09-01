@@ -9,7 +9,7 @@ import {
     FormGroup,
     Input,
     InputLabel,
-    Switch
+    Switch, TextField
 } from "@mui/material";
 import {PlaceAbout_delete, PlaceAbout_update} from "../../network/api/placeAbout.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
@@ -71,18 +71,22 @@ const _AboutItem = ({placeAbout, onChange}) => {
 
                 <CardHeader
                     sx={{paddingBottom: 0}}
-                    title={placeAbout.Name}
+                    title={placeAbout.Name+(acceptable?" را خوانده و تایید میکنم.":"")}
                     action={<Button variant={"outlined"} title={"btn_add"} onClick={() => setItemToDelete(placeAbout)}>حذف</Button>}
                 />
                 <CardContent sx={{margin: 0}}>
                     <FormGroup>
                         <FormControl sx={{margin: 1}}>
-                            <InputLabel htmlFor="my-input">توضیح</InputLabel>
-                            <Input
-                                multiline={true}
-                                aria-describedby="my-helper-text"
+                            <TextField
+                                type="number"
+                                margin="normal"
+                                label={"توضیح"}
+                                multiline
+                                minRows={3}
+                                className="kt-width-full"
                                 onChange={(e)=>SetAboutText(e.target.value)}
-                                value={aboutText}/>
+                                value={aboutText}
+                            />
                         </FormControl>
                         <FormControlLabel
                             checked={acceptable}

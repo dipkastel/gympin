@@ -28,7 +28,7 @@ const _PersonalTransactions = ({ currentUser ,updatePage}) => {
     function getTransactions() {
         transactionUser_query({
             queryType: "FILTER",
-            FinanceUserId:currentUser.FinanceUser.Id,
+            FinanceUserId:currentUser?.FinanceUser?.Id,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             SetTransactions(data.data.Data)

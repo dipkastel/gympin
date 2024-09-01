@@ -5,7 +5,10 @@ import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;
 import com.notrika.gympin.common.ticket.buyable.query.TicketBuyableQuery;
 import com.notrika.gympin.common.util._base.base.BaseService;
 
+import java.util.List;
+
 public interface TicketBuyableService extends BaseService<TicketBuyableParam, TicketBuyableDto, TicketBuyableQuery> {
 
     TicketBuyableDto setTicketBeneficiary(TicketBuyableParam param);
+    List<TicketBuyableDto> getWanderers();
 }

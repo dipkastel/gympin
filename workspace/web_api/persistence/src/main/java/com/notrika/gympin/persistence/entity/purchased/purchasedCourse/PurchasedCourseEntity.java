@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.purchased.purchasedCourse;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.purchased.purchasedCourse.enums.CoursePurchasedStatus;
 import com.notrika.gympin.common.ticket.ticketCourse.enums.CourseStatus;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
@@ -81,7 +82,8 @@ public class PurchasedCourseEntity extends PurchasedBaseEntity<PurchasedCourseEn
 
 
     @OneToMany(mappedBy = "purchasedCourse")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PurchasedCourseEntryEntity> entryList;
 
 

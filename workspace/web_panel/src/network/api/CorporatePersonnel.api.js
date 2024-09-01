@@ -7,6 +7,12 @@ export function corporatePersonnel_add(data) {
 export function corporatePersonnel_addPersonnelCredit(data) {
   return axios.post(CorporatePersonnelApi.addPersonnelCredit, data);
 }
+export function corporatePersonnel_decreaseCredit(data) {
+  return axios.post(CorporatePersonnelApi.decreaseCredit, data);
+}
+export function corporatePersonnel_manualExpireCredit(data) {
+  return axios.post(CorporatePersonnelApi.manualExpireCredit, data);
+}
 export function corporatePersonnel_addList(data) {
   return axios.post(CorporatePersonnelApi.addList, data,{
     headers: {

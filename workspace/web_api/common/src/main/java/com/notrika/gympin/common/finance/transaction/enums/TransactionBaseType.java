@@ -7,7 +7,7 @@ public enum TransactionBaseType {
     INCOME,
     PERSONNEL,
     BENEFICIARY,
-    DISCOUNT
-    ;
-
+    DISCOUNT,
+    CREDIT,
+    INTERNAL_TRANSFER
 }

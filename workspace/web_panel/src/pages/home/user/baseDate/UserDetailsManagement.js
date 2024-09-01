@@ -9,10 +9,10 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import UserManagementUserTab from "./userManagementTabs/UserManagementUserTab";
 import UserManagementRelationsTab from "./userManagementTabs/UserManagementRelationsTab";
 import UserManagementUserBuys from "./userManagementTabs/UserManagementUserBuys";
-import UserManagementFinanceTab from "./userManagementTabs/UserManagementFinanceTab";
 import UserManagementSettingTab from "./userManagementTabs/UserManagementSettingTab";
 import _UserActivity from "./activity/_UserActivity";
 import UserManagementAdvanceTab from "./userManagementTabs/UserManagementAdvanceTab";
+import UserFinanceManagement from "./finance/UserFinanceManagement";
 
 const UserDetailManagement = () => {
     const error = useContext(ErrorContext);
@@ -68,7 +68,7 @@ const UserDetailManagement = () => {
                     {selectedTab === "USER" && <UserManagementUserTab currentUser={currentUser}/>}
                     {selectedTab === "RELATIONS" && <UserManagementRelationsTab currentUser={currentUser}/>}
                     {selectedTab === "BUYS" && <UserManagementUserBuys currentUser={currentUser}/>}
-                    {selectedTab === "FINANCE" && <UserManagementFinanceTab currentUser={currentUser}/>}
+                    {selectedTab === "FINANCE" && <UserFinanceManagement currentUser={currentUser}/>}
                     {selectedTab === "SETTING" && <UserManagementSettingTab currentUser={currentUser}/>}
                     {selectedTab === "ACTIVITY" && <_UserActivity currentUser={currentUser}/>}
                     {selectedTab === "ADVANCE" && <UserManagementAdvanceTab currentUser={currentUser}/>}

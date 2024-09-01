@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateContractTypeEnum;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseCorporateDepositEntity;
-import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseUserDepositEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
-import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
-import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
+import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -44,48 +43,56 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     private String address;
 
     //defaultExpireDuration
-    @Column(name = "ded",columnDefinition = "smallint(6) default 90")
+    @Column(name = "ded", columnDefinition = "smallint(6) default 90")
     private Short ded;
 
     @Column(name = "contractDate")
     private Date contractDate;
 
-    @Column(name = "ContractType",columnDefinition = "varchar(255) default 'ALPHA'")
+    @Column(name = "ContractType", columnDefinition = "varchar(255) default 'ALPHA'")
     @Enumerated(EnumType.STRING)
     private CorporateContractTypeEnum contractType;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "locationId")
     @JsonIgnore
+    @ToString.Exclude
     private ManageLocationEntity location;
 
     @OneToOne
+    @JsonIgnore
     @ToString.Exclude
     private MultimediaEntity logo;
 
-    @OneToMany(mappedBy = "corporate",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "corporate", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<ManageNoteEntity> notes;
 
-    @OneToMany(mappedBy = "corporate",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "corporate", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<CorporatePersonnelEntity> personnel;
 
-    @OneToMany(mappedBy = "corporate",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "corporate", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<CorporatePersonnelGroupEntity> category;
 
-    @OneToOne(mappedBy = "corporate",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "corporate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private FinanceCorporateEntity financeCorporate;
 
-    @OneToMany(mappedBy = "corporate",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "corporate", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<SupportEntity> support;
 
-    @OneToMany(mappedBy = "corporate",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "corporate", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
-    private List<FinanceIncreaseCorporateDepositEntity> corporateIncreases;
+    private List<FinanceIncreaseCorporateDepositRequestEntity> corporateIncreases;
 
     @Override
     public boolean equals(Object o) {

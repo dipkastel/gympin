@@ -22,7 +22,8 @@ public class FollowParam extends BaseParam<UserParam> {
     @JsonProperty("Requested-User")
     private UserParam requestedUser;
 
-    @JsonIgnore
+   @JsonIgnore
+@ToString.Exclude
     private FollowingStatus status;
 
 }

@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.article;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.article.enums.ArticleStatus;
 import com.notrika.gympin.common.article.enums.ArticleType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
@@ -28,26 +29,28 @@ public class ArticleEntity extends BaseEntityWithCreateUpdate<ArticleEntity> {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "fullText",columnDefinition = "longtext")
+    @Column(name = "fullText", columnDefinition = "longtext")
     private String text;
 
-    @Column(name = "summary",columnDefinition = "longtext")
+    @Column(name = "summary", columnDefinition = "longtext")
     private String summary;
 
-    @Column(name = "articleStatus",columnDefinition = "varchar(255) default 'DRAFT' ")
+    @Column(name = "articleStatus", columnDefinition = "varchar(255) default 'DRAFT' ")
     @Enumerated(EnumType.STRING)
     private ArticleStatus articleStatus;
 
-    @Column(name = "articleType",columnDefinition = "varchar(255) default 'SIMPLE' ")
+    @Column(name = "articleType", columnDefinition = "varchar(255) default 'SIMPLE' ")
     @Enumerated(EnumType.STRING)
     private ArticleType articleType;
 
     @OneToOne
+    @JsonIgnore
     @ToString.Exclude
     private MultimediaEntity articleImage;
 
     @ManyToMany
     @JoinTable(name = "ArticleCategories", joinColumns = @JoinColumn(name = "categoryId"), inverseJoinColumns = @JoinColumn(name = "ArticleId"))
+    @JsonIgnore
     @ToString.Exclude
     private List<ArticleCategoryEntity> categories;
 

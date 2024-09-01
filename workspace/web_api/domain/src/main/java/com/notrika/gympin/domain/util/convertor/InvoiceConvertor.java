@@ -2,8 +2,8 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.finance.invoice.dto.InvoiceBuyableDto;
 import com.notrika.gympin.common.finance.invoice.dto.InvoiceDto;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 
 import java.util.stream.Collectors;
 

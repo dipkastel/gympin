@@ -1,8 +1,8 @@
 package com.notrika.gympin.persistence.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.user.user.enums.RoleEnum;
-import com.notrika.gympin.common.user.user.enums.UserGroup;
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,8 +20,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "userRoles")
-public class UserRolesEntity extends BaseEntity<UserRolesEntity> {
-
+public class UserRolesEntity extends BaseEntityWithCreateUpdate<UserRolesEntity> {
 
 
     @Column(name = "userRole", nullable = false)
@@ -29,6 +28,8 @@ public class UserRolesEntity extends BaseEntity<UserRolesEntity> {
     private RoleEnum role;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private UserEntity user;
 
 

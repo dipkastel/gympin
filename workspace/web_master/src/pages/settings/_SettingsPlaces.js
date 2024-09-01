@@ -25,7 +25,7 @@ import {placePersonnel_ByUser} from "../../network/api/placePersonnel.api";
 import {personnelRoles} from "../../helper/enums/personnelRoles";
 import {getWizardComplete} from "../../helper/pocket";
 
-const _SettingsPlaces = (props) => {
+const _SettingsPlaces = ({setUserHasIntro}) => {
     const error = useContext(ErrorContext);
     const navigate = useNavigate();
     const user = useSelector(({auth}) => auth.user);
@@ -56,7 +56,7 @@ const _SettingsPlaces = (props) => {
         const place = placePersonnel.find(r => r.Place.Id == event.target.value).Place;
         if (place) {
             SetSelectedPlace(place);
-            props.SetPlace(place);
+            dispatch(placeActions.SetPlace(place));
             dispatch(accessActions.SetAccess(null));
             dispatch(sagaActions.RequestPlace(place.Id));
             forceRefresh(5);
@@ -78,7 +78,9 @@ const _SettingsPlaces = (props) => {
 
     function IsOwner(item) {
         if(item?.UserRole?.includes("PLACE_OWNER")){
-            props.setUserHasIntro(true);
+            setTimeout(()=>{
+                setUserHasIntro(true);
+            },1000)
             return true;
         }
         return false;
@@ -113,7 +115,7 @@ const _SettingsPlaces = (props) => {
                                                secondaryTypographyProps={{component:"div"}}
                                                 />
 
-                                            {!introMode&&IsOwner(item)&&<Button size={"small"} variant={"outlined"}
+                                            {user&&!introMode&&IsOwner(item)&&<Button size={"small"} variant={"outlined"}
                                                     href={"/management/place?id=" + item.Place.Id}>
                                                 ویرایش
                                             </Button>}
@@ -152,4 +154,4 @@ const _SettingsPlaces = (props) => {
     );
 };
 
-export default connect(null, placeActions)(_SettingsPlaces)
+export default _SettingsPlaces;

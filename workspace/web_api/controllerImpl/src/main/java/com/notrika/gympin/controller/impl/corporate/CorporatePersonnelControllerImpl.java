@@ -102,6 +102,18 @@ public class CorporatePersonnelControllerImpl implements CorporatePersonnelContr
     }
 
     @Override
+    @PostMapping("decreaseCredit")
+    public ResponseEntity<CorporatePersonnelCreditDto> decreaseUserCredit(CorporatePersonnelCreditParam param) {
+        return ResponseEntity.ok(corporatePersonnelCreditService.decreasePersonnelCredit(param));
+    }
+
+    @Override
+    @PostMapping("manualExpireCredit")
+    public ResponseEntity<CorporatePersonnelCreditDto> manualExpireUserCredit(CorporatePersonnelCreditParam param) {
+        return ResponseEntity.ok(corporatePersonnelCreditService.ExpirePersonnelCredit(param));
+    }
+
+    @Override
     @PostMapping("addCreditToAll")
     public ResponseEntity<List<CorporatePersonnelCreditDto>> addToAllPersonnelCredit(CorporatePersonnelCreditParam param) {
         return ResponseEntity.ok(corporatePersonnelCreditService.addToAll(param));
@@ -112,5 +124,7 @@ public class CorporatePersonnelControllerImpl implements CorporatePersonnelContr
     public ResponseEntity<BigDecimal> getTotalUserCredits(CorporatePersonnelCreditParam param) {
         return ResponseEntity.ok(corporatePersonnelCreditService.getTotalUserCredits(param));
     }
+
+
 
 }

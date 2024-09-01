@@ -1,14 +1,17 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
 import Select from "react-select";
-import {corporate_updateContractType, corporate_updateStepPayment,} from "../../../../../network/api/corporate.api";
+import {
+    corporate_updateContractType,
+    corporate_updateDefaultExpireDuratione,
+} from "../../../../../network/api/corporate.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {Button, FormControlLabel, FormLabel, Grid, Switch, TextField} from "@mui/material";
+import {Button, FormLabel, Grid, TextField} from "@mui/material";
 
 const CorporateContract = ({currentCorporate, UpdatePage}) => {
     const error = useContext(ErrorContext);
-
+    const [DefaultExpireDuration,setDefaultExpireDuration]=useState(currentCorporate.DefaultExpireDuration)
 
 
     function changeCorporateContractType(data) {
@@ -30,6 +33,19 @@ const CorporateContract = ({currentCorporate, UpdatePage}) => {
             {value: "PRO", label: "پرو"},
             {value: "NEO", label: "نئو"}
         ]
+    }
+
+    function UpdateDefaltExpireDuration(e) {
+        e.preventDefault()
+        corporate_updateDefaultExpireDuratione({Id:currentCorporate.Id,DefaultExpireDuration:DefaultExpireDuration}).then(result => {
+            UpdatePage();
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     return (
@@ -59,13 +75,14 @@ const CorporateContract = ({currentCorporate, UpdatePage}) => {
                                     label="تعداد روز"
                                     className="textField col-md-10"
                                     type={"number"}
-                                    value={currentCorporate.DefaultExpireDuration || 0}
+                                    value={DefaultExpireDuration || 0}
                                     margin="normal"
                                     size={"small"}
                                     variant="outlined"
+                                    onChange={e => setDefaultExpireDuration(e.target.value)}
                                 />
                                 <Button className={"col-md-2"} size={"large"} variant={"contained"}
-                                        color={"primary"}>ثبت</Button>
+                                        color={"primary"} onClick={(e)=>UpdateDefaltExpireDuration(e)}>ثبت</Button>
                             </Grid>
                         </Form.Group>
                     }

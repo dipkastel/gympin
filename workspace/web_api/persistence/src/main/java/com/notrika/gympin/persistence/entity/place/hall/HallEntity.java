@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.place.hall;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
@@ -39,15 +40,18 @@ public class HallEntity extends BaseEntityWithCreateUpdate<HallEntity> {
     private PlaceEntity place;
 
     @OneToMany(mappedBy = "hall")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PurchasedSubscribeEntryRequstEntity> enterHall;
 
     @OneToMany(mappedBy = "hall")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<TicketHallActiveTimeEntity> actions;
 
     @OneToMany(mappedBy = "hall",cascade = CascadeType.ALL)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<HallTrafficEntity> hallTraffic;
 
 

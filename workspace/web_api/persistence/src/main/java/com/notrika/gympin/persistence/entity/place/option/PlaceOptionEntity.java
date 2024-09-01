@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.place.option;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,8 @@ public class PlaceOptionEntity extends BaseEntityWithCreateUpdate<PlaceOptionEnt
     private Short weight;
 
     @OneToMany(mappedBy = "placeOption")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PlaceOptionOfPlaceEntity> optionsOfPlaces;
 
     @Override

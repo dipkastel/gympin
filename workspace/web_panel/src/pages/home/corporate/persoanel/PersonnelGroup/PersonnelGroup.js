@@ -46,18 +46,12 @@ const PersonnelGroup = ({personnel,updatePage}) => {
                 <PortletHeader
                     title={"گروه"}
                 />
-
-                <PortletBody>
-
-                    <Form.Group>
-                        <Select
-                            className={"dropdown"}
-                            options={groups.map(g=>{return {label:g.Name,value:g.Id}})}
-                            value={{label:personnel.PersonnelGroup?.Name,value:personnel.PersonnelGroup?.Id}}
-                            onChange={e => updatePersonnelGroup(e)}
-                        />
-                    </Form.Group>
-                </PortletBody>
+                <Select
+                    className={"dropdown"}
+                    options={groups.map(g=>{return {label:g.Name,value:g.Id}})}
+                    value={{label:personnel.PersonnelGroup?.Name,value:personnel.PersonnelGroup?.Id}}
+                    onChange={e => updatePersonnelGroup(e)}
+                />
             </Portlet>}
         </>
     );

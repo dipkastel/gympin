@@ -1,7 +1,8 @@
 package com.notrika.gympin.persistence.entity.sport;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.sport.sport.enums.LaunchStatus;
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.sport.option.sportOptionOfSportEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
@@ -23,7 +24,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "sport")
-public class SportEntity extends BaseEntity<SportEntity> {
+public class SportEntity extends BaseEntityWithCreateUpdate<SportEntity> {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -33,15 +34,18 @@ public class SportEntity extends BaseEntity<SportEntity> {
     private LaunchStatus launchStatus;
 
     @OneToMany(mappedBy = "sport")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<sportOptionOfSportEntity> optionsOfSports;
 
     @OneToMany(mappedBy = "sport")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PlaceSportEntity> placeSports;
 
     @OneToMany(mappedBy = "sport", cascade = CascadeType.ALL)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<SportMultimediaEntity> sportMultimedias;
 
 

@@ -47,11 +47,13 @@ public class ManageSmsPatternEntity extends BaseEntityWithCreateUpdate<ManageSms
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ProviderSettingId")
-    @JsonIgnore
+   @JsonIgnore
+@ToString.Exclude
     private SettingsEntity provider;
 
     @OneToMany(mappedBy = "pattern",fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<ManageSmsEntity> smsList;
 
 

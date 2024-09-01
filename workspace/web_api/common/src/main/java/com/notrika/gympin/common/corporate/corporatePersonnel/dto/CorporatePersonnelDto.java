@@ -32,12 +32,12 @@ public class CorporatePersonnelDto extends BaseDto<CorporatePersonnelDto> {
     @JsonProperty("PersonnelGroup")
     private CorporatePersonnelGroupDto personnelGroup;
 
-    @JsonProperty("CreditBalance")
-    private BigDecimal creditBalance;
-
     @JsonProperty("CreditList")
     private List<CorporatePersonnelCreditDto> creditList;
 
     @JsonProperty("Corporate")
     private CorporateDto corporate;
+
+    @JsonProperty("TotalCredit")
+    private BigDecimal totalCredit;
 }

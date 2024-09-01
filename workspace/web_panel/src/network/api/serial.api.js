@@ -10,3 +10,9 @@ export function serial_query(data) {
 export function serial_getBySerial(data) {
     return axios.get(SerialApi.getBySerial,{ params: data });
 }
+
+
+
+export function serial_getById(data) {
+    return axios.get(SerialApi.getById,{ params: data });
+}

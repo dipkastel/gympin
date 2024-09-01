@@ -56,7 +56,6 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         PlaceEntity initPlace = PlaceEntity.builder()
                 .name(placeParam.getName())
                 .status(PlaceStatusEnum.INACTIVE)
-                .balance(BigDecimal.ZERO)
                 .build();
         return PlaceConvertor.toDto(placeRepository.add(initPlace));
     }
@@ -251,7 +250,7 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     @Override
     public List<TicketBuyableDto> getBuyableByPlace(PlaceParam param) {
         PlaceEntity place = placeRepository.getById(param.getId());
-        return place.getBuyables().stream().map(BuyableConvertor::ToDto).collect(Collectors.toList());
+        return place.getBuyables().stream().filter(b->!b.isDeleted()).map(BuyableConvertor::ToDto).collect(Collectors.toList());
     }
 
 

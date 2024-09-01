@@ -1,6 +1,5 @@
 package com.notrika.gympin.domain.finance.serial;
 
-import com.notrika.gympin.common.finance.serial.dto.CompleteSerialDto;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.finance.serial.param.SerialParam;
 import com.notrika.gympin.common.finance.serial.query.SerialQuery;
@@ -44,7 +43,7 @@ public class SerialServiceImpl extends AbstractBaseService<SerialParam, SerialDt
 
     @Override
     public SerialDto getById(long id) {
-        return null;
+        return SerialConvertor.ToCompleteDto(financeSerialRepository.getById(id));
     }
 
     @Override
@@ -88,7 +87,7 @@ public class SerialServiceImpl extends AbstractBaseService<SerialParam, SerialDt
     }
 
     @Override
-    public CompleteSerialDto getBySerial(String serial) {
+    public SerialDto getBySerial(String serial) {
         return SerialConvertor.ToCompleteDto(financeSerialRepository.findBySerialAndDeletedIsFalse(serial));
     }
 }

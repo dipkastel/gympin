@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.support;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
@@ -26,7 +27,8 @@ import java.util.Objects;
 public class SupportEntity extends BaseEntityWithCreateUpdate<SupportEntity> {
 
     @OneToMany(mappedBy = "support")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<SupportMessagesEntity> supportMessages;
 
     @Column(name = "supportStatus")

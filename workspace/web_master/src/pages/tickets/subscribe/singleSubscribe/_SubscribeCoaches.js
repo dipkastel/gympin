@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, CardContent, CardHeader, Chip} from "@mui/material";
+import {Card, CardContent, CardHeader, Chip, Typography} from "@mui/material";
 import {
     TicketSubscribes_addCoach,
     TicketSubscribes_deleteCoach,
@@ -90,6 +90,10 @@ const _SubscribeCoaches = ({ticketSubscribe}) => {
 
                     <div className={"container"}>
                         <div className={"row"}>
+                            {(ticketSubscribeCoaches.length<1)&&
+                            <Typography  sx={{width:"100%"}}  color={"#d01c1c"} variant={"subtitle2"}>
+                               شما در بخش پرسنل کسی را با عنوان مربی وارد نکرده اید!
+                            </Typography>}
                             {ticketSubscribeCoaches.map(coach=>coach.Id==itemToProgress?(
                                 <Chip label={"لطفا صبر کنید"}  key={"placeOption"+coach.Id} sx={{m:1,width:"inherit"}} color={"warning"} />
                             ):(

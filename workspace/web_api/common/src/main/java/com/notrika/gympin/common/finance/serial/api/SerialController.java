@@ -1,6 +1,5 @@
 package com.notrika.gympin.common.finance.serial.api;
 
-import com.notrika.gympin.common.finance.serial.dto.CompleteSerialDto;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.finance.serial.param.SerialParam;
 import com.notrika.gympin.common.finance.serial.query.SerialQuery;
@@ -13,5 +12,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface SerialController extends BaseController<SerialParam, SerialDto, SerialQuery> {
 
-    ResponseEntity<CompleteSerialDto> getBySerial(String serial);
+    ResponseEntity<SerialDto> getBySerial(String serial);
 }

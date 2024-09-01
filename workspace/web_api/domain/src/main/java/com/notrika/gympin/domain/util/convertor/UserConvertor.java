@@ -26,7 +26,6 @@ public final class UserConvertor {
         dto.setNationalCode(user.getNationalCode());
         dto.setEmail(user.getEmail());
         dto.setUserGroup(user.getUserGroup());
-        dto.setFinanceUser(toFinanceDto(user.getFinanceUser()));
         dto.setWizard(getWizard(user));
         dto.setUserRole(UserRoleConvertor.ToUserRoleDto(user).getRole());
         dto.setUserStatus(user.getUserStatus());
@@ -63,7 +62,6 @@ public final class UserConvertor {
         dto.setFullName(user.getFullName());
         dto.setUsername(user.getUsername());
         dto.setAvatar(MultimediaConvertor.toDto(user.getUserAvatar()));
-        dto.setFinanceUser(toFinanceDto(user.getFinanceUser()));
         return dto;
     }
 
@@ -74,7 +72,6 @@ public final class UserConvertor {
         dto.setFullName(user.getFullName());
         dto.setUsername(user.getUsername());
         dto.setAvatar(MultimediaConvertor.toDto(user.getUserAvatar()));
-        dto.setFinanceUser(toFinanceDto(user.getFinanceUser()));
         return dto;
     }
 
@@ -95,18 +92,6 @@ public final class UserConvertor {
 
     public static List<UserDto> toDto(List<UserEntity> users) {
         return users.stream().map(UserConvertor::toDtoComplete).collect(Collectors.toList());
-    }
-
-    public static List<FinanceUserDto> toFinanceDto(List<FinanceUserEntity> finance) {
-        return finance.stream().map(UserConvertor::toFinanceDto).collect(Collectors.toList());
-    }
-
-    public static FinanceUserDto toFinanceDto(FinanceUserEntity finance) {
-        if (finance == null) return null;
-        FinanceUserDto dto = new FinanceUserDto();
-        dto.setId(finance.getId());
-        dto.setTotalDeposit(finance.getTotalDeposit());
-        return dto;
     }
 
     public static Page<UserDto> toDto(Page<UserEntity> users) {

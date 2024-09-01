@@ -21,6 +21,7 @@ public class BaseQuery<T> {
     private BasePagedParam paging;
 
     @JsonIgnore
+    @ToString.Exclude
     private T childFilter;
 
     @JsonProperty("deleted")

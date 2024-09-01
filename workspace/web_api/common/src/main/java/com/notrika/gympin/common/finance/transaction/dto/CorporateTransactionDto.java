@@ -46,10 +46,5 @@ public class CorporateTransactionDto extends BaseDtoWithCreateUpdate<CorporateTr
     @JsonProperty("CorporateFinance")
     private FinanceCorporateDto financeCorporate;
 
-    @JsonProperty("CorporatePersonnel")
-    private CorporatePersonnelDto corporatePersonnel;
-
-
-
 
 }

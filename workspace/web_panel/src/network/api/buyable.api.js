@@ -13,3 +13,8 @@ export function buyable_setTicketBeneficiary(data) {
 export function buyable_getById(data) {
   return axios.get(TicketBuyableApi.getById, {params: data});
 }
+
+
+export function buyable_getWanderers() {
+  return axios.get(TicketBuyableApi.getWanderers);
+}

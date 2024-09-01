@@ -1,7 +1,7 @@
 package com.notrika.gympin.persistence.entity.user;
 
 import com.notrika.gympin.common.user.user.enums.TokenStatus;
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,7 +21,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "userToken")
-public class UserTokenEntity extends BaseEntity<UserTokenEntity> {
+public class UserTokenEntity extends BaseEntityWithCreateUpdate<UserTokenEntity> {
 
     @Enumerated(EnumType.STRING)
     private TokenStatus tokenStatus = TokenStatus.ACTIVE;

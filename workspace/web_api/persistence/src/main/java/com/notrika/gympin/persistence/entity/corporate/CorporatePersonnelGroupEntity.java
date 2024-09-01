@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.corporate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +27,13 @@ public class CorporatePersonnelGroupEntity extends BaseEntityWithCreateUpdate<Co
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "corporateId")
+    @JsonIgnore
+    @ToString.Exclude
     private CorporateEntity corporate;
 
     @OneToMany(mappedBy = "personnelGroup",fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<CorporatePersonnelEntity> personels;
 
     @Override

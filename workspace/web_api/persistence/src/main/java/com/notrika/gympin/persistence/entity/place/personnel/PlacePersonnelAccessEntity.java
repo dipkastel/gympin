@@ -1,7 +1,7 @@
 package com.notrika.gympin.persistence.entity.place.personnel;
 
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,7 +19,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "placePersonelAccess")
-public class PlacePersonnelAccessEntity extends BaseEntity<PlacePersonnelAccessEntity> {
+public class PlacePersonnelAccessEntity extends BaseEntityWithCreateUpdate<PlacePersonnelAccessEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "placePersonelId")

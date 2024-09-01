@@ -3,7 +3,7 @@ package com.notrika.gympin.persistence.entity.qrCode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.qrCodes.enums.QrCodeType;
 import com.notrika.gympin.common.sport.sport.enums.LaunchStatus;
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.sport.SportMultimediaEntity;
 import com.notrika.gympin.persistence.entity.sport.option.sportOptionOfSportEntity;
@@ -26,7 +26,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "qrCode")
-public class QrCodeEntity extends BaseEntity<QrCodeEntity> {
+public class QrCodeEntity extends BaseEntityWithCreateUpdate<QrCodeEntity> {
 
     @Column(name = "code", nullable = false)
     private String code;

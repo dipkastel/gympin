@@ -1,21 +1,20 @@
 package com.notrika.gympin.persistence.entity.ticket;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
-import org.hibernate.mapping.Any;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -68,7 +67,8 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
     private BuyableType buyableType;
 
     @OneToMany(mappedBy = "buyable")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<BuyableDiscountHistoryEntity> discountHistory;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -83,7 +83,8 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
     private List<BuyableEntity> prerequisites;
 
     @OneToMany(mappedBy = "buyable")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PlacePersonelBuyableAccessEntity> placePersonnelBuyableAccess;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -91,7 +92,8 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
     private PlacePersonnelEntity beneficiary;
 
     @OneToMany(mappedBy = "buyable", fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<InvoiceBuyableEntity> inInvoices;
 
     @Override

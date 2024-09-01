@@ -2,7 +2,7 @@ package com.notrika.gympin.persistence.entity.homePage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.home.enums.HomePageElementsEnum;
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,7 +21,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "homePageType")
-public class HomePageTypeEntity extends BaseEntity<HomePageTypeEntity> {
+public class HomePageTypeEntity extends BaseEntityWithCreateUpdate<HomePageTypeEntity> {
 
     @JsonProperty("name")
     private String name;

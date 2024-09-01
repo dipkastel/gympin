@@ -2,7 +2,7 @@ package com.notrika.gympin.persistence.entity.homePage;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import java.util.Set;
 @SuperBuilder
 @Entity
 @Table(name = "homePageItem")
-public class HomePageItemEntity extends BaseEntity<HomePageItemEntity> {
+public class HomePageItemEntity extends BaseEntityWithCreateUpdate<HomePageItemEntity> {
 
 
     @Column(name = "title")
@@ -39,6 +39,7 @@ public class HomePageItemEntity extends BaseEntity<HomePageItemEntity> {
 
     @ManyToOne
     @JoinTable(name = "HomeItemDestination", joinColumns = @JoinColumn(name = "homeItemId"), inverseJoinColumns = @JoinColumn(name = "destinationId"))
+    @JsonIgnore
     @ToString.Exclude
     private HomePageDestionationEntity destination;
 
@@ -48,6 +49,7 @@ public class HomePageItemEntity extends BaseEntity<HomePageItemEntity> {
 
     @ManyToOne
     @JoinTable(name = "HomeImage", joinColumns = @JoinColumn(name = "homeItemId"), inverseJoinColumns = @JoinColumn(name = "multimediaId"))
+    @JsonIgnore
     @ToString.Exclude
     private MultimediaEntity multimedia;
 
@@ -56,11 +58,13 @@ public class HomePageItemEntity extends BaseEntity<HomePageItemEntity> {
     @JoinColumn(name = "parentId")
     @Getter
     @Setter
+    @ToString.Exclude
     private HomePageItemEntity parent;
 
-    @OneToMany(mappedBy = "parent",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Setter
+    @ToString.Exclude
     private Set<HomePageItemEntity> items;
 
     @JsonIgnore

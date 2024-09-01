@@ -6,8 +6,8 @@ import com.notrika.gympin.common.finance.transaction.query.IncomeTransactionQuer
 import com.notrika.gympin.common.finance.transaction.service.IncomeTransactionService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceIncomeTransactionRepository;
-import com.notrika.gympin.persistence.entity.finance.income.FinanceIncomeTransactionEntity;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceIncomeTransactionRepository;
+import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

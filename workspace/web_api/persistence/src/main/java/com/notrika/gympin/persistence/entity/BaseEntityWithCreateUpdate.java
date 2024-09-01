@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,8 @@ public class BaseEntityWithCreateUpdate<T> extends BaseEntityWithCreate<T> {
     //        @Column(name = "updaterUser")
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinColumn(name = "updaterUserId")
+    @ToString.Exclude
+    @JsonIgnore
     private UserEntity updaterUser;
 
     @Override

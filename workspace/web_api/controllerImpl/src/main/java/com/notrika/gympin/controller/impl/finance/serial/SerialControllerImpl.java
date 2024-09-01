@@ -1,7 +1,6 @@
 package com.notrika.gympin.controller.impl.finance.serial;
 
 import com.notrika.gympin.common.finance.serial.api.SerialController;
-import com.notrika.gympin.common.finance.serial.dto.CompleteSerialDto;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.finance.serial.param.SerialParam;
 import com.notrika.gympin.common.finance.serial.query.SerialQuery;
@@ -50,7 +49,7 @@ public class SerialControllerImpl implements SerialController {
 
     @Override
     @GetMapping("getBySerial")
-    public ResponseEntity<CompleteSerialDto> getBySerial(String serial) {
+    public ResponseEntity<SerialDto> getBySerial(String serial) {
         return ResponseEntity.ok(serialService.getBySerial(serial));
     }
 

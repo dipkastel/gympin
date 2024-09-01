@@ -1,6 +1,8 @@
 package com.notrika.gympin.common.finance.transaction.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.user.user.dto.UserDto;
+import com.notrika.gympin.common.user.user.enums.UserFinanceType;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +22,12 @@ public class FinanceUserDto extends BaseDtoWithCreateUpdate<FinanceUserDto> {
 
     @JsonProperty("TotalDeposit")
     private BigDecimal totalDeposit;
+
+    @JsonProperty("FinanceType")
+    private UserFinanceType userFinanceType;
+
+    @JsonProperty("User")
+    private UserDto user;
 
 
 }

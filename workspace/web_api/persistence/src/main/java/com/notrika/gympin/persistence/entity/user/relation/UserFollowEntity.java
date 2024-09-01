@@ -1,7 +1,8 @@
 package com.notrika.gympin.persistence.entity.user.relation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.user.relation.enums.FollowingStatus;
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +22,17 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "userFollow")
-public class UserFollowEntity extends BaseEntity<UserFollowEntity> {
+public class UserFollowEntity extends BaseEntityWithCreateUpdate<UserFollowEntity> {
 
     @ManyToOne
     @JoinColumn(name = "requesterUserId")
+    @JsonIgnore
     @ToString.Exclude
     private UserEntity requesterUser;
 
     @ManyToOne
     @JoinColumn(name = "requestedUserId")
+    @JsonIgnore
     @ToString.Exclude
     private UserEntity requestedUser;
 
@@ -37,8 +40,9 @@ public class UserFollowEntity extends BaseEntity<UserFollowEntity> {
     @Enumerated(EnumType.STRING)
     private FollowingStatus status;
 
-    @OneToMany(mappedBy = "follow",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "follow", fetch = FetchType.LAZY)
     @Column(name = "changeFollowStatus")
+    @JsonIgnore
     @ToString.Exclude
     private List<UserFollowChangeStatusEntity> followChangeStatus;
 

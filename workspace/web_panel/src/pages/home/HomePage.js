@@ -40,6 +40,8 @@ import CourseDataManagement from "./purchasedItems/courses/baseData/CourseDataMa
 import CoachManagement from "./coach/CoachManagement";
 import CoachDetailsManagement from "./coach/baseData/CoachDetailsManagement";
 import LocationDetail from "./location/LocationDetail/LocationDetail";
+import ProcessManagement from "./process/ProcessManagement";
+import ProcessSerialDetail from "./process/detail/ProcessSerialDetail";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -87,6 +89,9 @@ export default function HomePage() {
         <Route path="/course/data/:courseId" component={CourseDataManagement} />
         {/*finance*/}
         <Route path="/FinanceTransactions" component={TransactionManagement} />
+        {/*process*/}
+        <Route path="/Process/detail/:serialId" component={ProcessSerialDetail} />
+        <Route path="/Process" component={ProcessManagement} />
         {/* invoice */}
         <Route path="/invoice/detail/:invoiceId" component={InvoiceDetailManagement} />
         <Route path="/invoices" component={InvoiceManagement} />

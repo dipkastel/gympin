@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.sport;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "sportMultimedia")
-public class SportMultimediaEntity extends BaseEntity<SportMultimediaEntity> {
+public class SportMultimediaEntity extends BaseEntityWithCreateUpdate<SportMultimediaEntity> {
 
     @ManyToOne
     @JoinColumn(name = "sportId")

@@ -6,7 +6,7 @@ import com.notrika.gympin.common.finance.suggest.query.SuggestQuery;
 import com.notrika.gympin.common.finance.suggest.service.SuggestService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.SuggestConvertor;
-import com.notrika.gympin.persistence.dao.repository.finance.FinancePaymentSuggestRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.gateway.FinancePaymentSuggestRepository;
 import com.notrika.gympin.persistence.entity.finance.gateway.FinancePaymentSuggestEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,10 +5,11 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePerso
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelGroupDto;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.finance.corporate.CorporatePersonnelCreditEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.stream.Collectors;
 
@@ -51,10 +52,12 @@ public final class CorporateConvertor {
         dto.setCorporate(toDto(entity.getCorporate()));
         dto.setRole(entity.getRole());
         dto.setUser(UserConvertor.toDtoSimple(entity.getUser()));
-        dto.setCreditBalance(entity.getCreditBalance());
         dto.setPersonnelGroup(toDto(entity.getPersonnelGroup()));
         if (entity.getCredits() != null)
             dto.setCreditList(entity.getCredits().stream().map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
+        try{
+            dto.setTotalCredit(entity.getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
+        }catch (Exception e){}
         return dto;
     }
 
@@ -64,7 +67,9 @@ public final class CorporateConvertor {
         dto.setId(entity.getId());
         dto.setRole(entity.getRole());
         dto.setUser(UserConvertor.toDtoSimple(entity.getUser()));
-        dto.setCreditBalance(entity.getCreditBalance());
+        try{
+            dto.setTotalCredit(entity.getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
+        }catch (Exception e){}
         return dto;
     }
 
@@ -76,19 +81,22 @@ public final class CorporateConvertor {
         dto.setRole(entity.getRole());
         dto.setPersonnelGroup(toDto(entity.getPersonnelGroup()));
         dto.setUser(UserConvertor.toDtoLessDetails(entity.getUser()));
-        dto.setCreditBalance(entity.getCreditBalance());
         dto.setPersonnelGroup(toDto(entity.getPersonnelGroup()));
+        try{
+            dto.setTotalCredit(entity.getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
+        }catch (Exception e){}
         if (entity.getCredits() != null)
             dto.setCreditList(entity.getCredits().stream().map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
         return dto;
     }
 
-    public static CorporatePersonnelCreditDto toCreditDto(CorporatePersonnelCreditEntity entity) {
+    public static CorporatePersonnelCreditDto toCreditDto(FinanceCorporatePersonnelCreditEntity entity) {
         if(entity==null) return null;
         CorporatePersonnelCreditDto dto = CorporatePersonnelCreditDto.builder()
                 .id(entity.getId())
                 .creditAmount(entity.getCreditAmount())
                 .personnel(CorporateConvertor.toSimplePersonnelDto(entity.getCorporatePersonnel()))
+                .expireDate(entity.getExpireDate())
                 .createdDate(entity.getCreatedDate())
                 .creatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()))
                 .build();

@@ -47,20 +47,15 @@ const PersonnelRole = ({personnelId}) => {
 
             {personnel&& <Portlet>
                 <PortletHeader
-                    title={"مدیریت دسترسی"}
+                    title={"دسترسی"}
                 />
 
-                <PortletBody>
-
-                    <Form.Group>
-                        <Select
-                            className={"dropdown"}
-                            options={getRoleOptions()}
-                            value={getRoleOptions().filter(p=>p.value===personnel.Role)}
-                            onChange={e => updateUserRole(e)}
-                        />
-                    </Form.Group>
-                </PortletBody>
+                <Select
+                    className={"dropdown"}
+                    options={getRoleOptions()}
+                    value={getRoleOptions().filter(p=>p.value===personnel.Role)}
+                    onChange={e => updateUserRole(e)}
+                />
             </Portlet>}
         </>
     );

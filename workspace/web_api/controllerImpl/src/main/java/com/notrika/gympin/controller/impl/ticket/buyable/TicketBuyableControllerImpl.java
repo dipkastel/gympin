@@ -57,4 +57,11 @@ public class TicketBuyableControllerImpl implements TicketBuyableController {
     public ResponseEntity<TicketBuyableDto> setTicketBeneficiary(@RequestBody TicketBuyableParam param) {
         return ResponseEntity.ok(ticketBuyableService.setTicketBeneficiary(param));
     }
+
+
+    @Override
+    @GetMapping("getWanderers")
+    public ResponseEntity<List<TicketBuyableDto>> getWanderers() {
+        return ResponseEntity.ok(ticketBuyableService.getWanderers());
+    }
 }

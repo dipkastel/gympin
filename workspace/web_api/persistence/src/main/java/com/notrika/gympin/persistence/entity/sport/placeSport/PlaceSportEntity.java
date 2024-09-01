@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.sport.placeSport;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
@@ -34,11 +35,13 @@ public class PlaceSportEntity extends BaseEntityWithCreateUpdate<PlaceSportEntit
     private SportEntity sport;
 
     @ManyToMany(mappedBy = "ticketSubscribeSport")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<TicketSubscribeEntity> ticketSubscribes;
 
     @ManyToMany(mappedBy = "ticketCourseSport")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<TicketCourseEntity> ticketCourse;
 
     @Override

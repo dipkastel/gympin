@@ -34,6 +34,9 @@ export function corporate_updateContractDate(data) {
 export function corporate_updateContractType(data) {
     return axios.put(CorporateApi.updateContractType, data);
 }
+export function corporate_updateDefaultExpireDuratione(data) {
+    return axios.put(CorporateApi.updateDefaultExpireDuration, data);
+}
 export function corporate_updateStepPayment(data) {
     return axios.put(CorporateApi.updateStepPayment, data);
 }

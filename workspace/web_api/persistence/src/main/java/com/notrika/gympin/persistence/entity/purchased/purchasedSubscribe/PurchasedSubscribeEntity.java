@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
@@ -56,7 +57,8 @@ public class PurchasedSubscribeEntity extends PurchasedBaseEntity<PurchasedSubsc
     private Date expireDate;
 
     @OneToMany(mappedBy = "purchasedSubscribe")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PurchasedSubscribeEntryEntity> entryList;
 
 

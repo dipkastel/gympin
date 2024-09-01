@@ -1,5 +1,5 @@
 package com.notrika.gympin.common.user.user.enums;
 
 public enum CreditType {
-    SPONSOR,PERSONAL
+    SPONSOR,PERSONAL,INCOME,NON_WITHDRAWABLE
 }

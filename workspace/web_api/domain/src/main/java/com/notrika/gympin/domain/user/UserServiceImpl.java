@@ -1,15 +1,13 @@
 package com.notrika.gympin.domain.user;
 
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
-import com.notrika.gympin.common.user.user.enums.CreditType;
-import com.notrika.gympin.common.user.user.enums.UserGroup;
-import com.notrika.gympin.common.user.user.enums.RoleEnum;
-import com.notrika.gympin.common.user.user.enums.UserStatus;
+import com.notrika.gympin.common.user.user.enums.*;
 import com.notrika.gympin.common.user.user.param.UserAvatarParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.param.UserStatusParam;
@@ -19,14 +17,15 @@ import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.relation.FollowServiceImpl;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
-import com.notrika.gympin.domain.util.convertor.PagingConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.convertor.UserRoleConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;
@@ -63,6 +62,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     CorporatePersonnelRepository corporatePersonnelRepository;
 
     @Autowired
+    FinanceCorporatePersonnelCreditRepository financeCorporatePersonnelCreditRepository;
+
+    @Autowired
     private MultimediaRepository multimediaRepository;
 
     @Autowired
@@ -81,7 +83,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setNationalCode(userParam.getNationalCode());
         initUser.setGender(userParam.getGender());
         initUser.setEmail(userParam.getEmail());
-        initUser.setUserRoles(Set.of(UserRolesEntity.builder().role((userParam.getRole()==null)?RoleEnum.USER:userParam.getRole()).build()));
+        initUser.setUserRoles(Set.of(UserRolesEntity.builder().role((userParam.getRole() == null) ? RoleEnum.USER : userParam.getRole()).build()));
         initUser.setUserGroup(UserGroup.CLIENT);
         initUser.setUserStatus(UserStatus.ENABLED);
         initUser.setBio(userParam.getBio());
@@ -222,7 +224,6 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     }
 
 
-
     @Override
     public List<UserRoleInfoDto> getAllRoles() {
         return Arrays.stream(RoleEnum.values()).map(UserRoleConvertor::ToUserRoleInfoDto).collect(Collectors.toList());
@@ -256,31 +257,43 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     public UserCreditDto getCreditsByUser(UserParam userParam) {
         UserCreditDto result = new UserCreditDto();
         List<UserCreditDetailDto> detalsList = new ArrayList<>();
-
+        var userCredit = financeCorporatePersonnelCreditRepository.getUserTotalCredit(userParam.getId());
 //        corporate credits
-        List<CorporatePersonnelEntity> personnelEntity = corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(userParam.getId());
-        for (CorporatePersonnelEntity personnel : personnelEntity) {
+        List<CorporatePersonnelEntity> corportePersonnels = corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(userParam.getId());
+
+        for (CorporatePersonnelEntity personnel : corportePersonnels) {
+            var sumCredits = BigDecimal.ZERO;
+            for (FinanceCorporatePersonnelCreditEntity credit : personnel.getCredits()) {
+                if (credit.getStatus() == CorporatePersonnelCreditStatusEnum.ACTIVE) {
+                    sumCredits.add(credit.getCreditAmount());
+                }
+            }
             UserCreditDetailDto detail = new UserCreditDetailDto();
-            detail.setCreditAmount(personnel.getCreditBalance());
             detail.setPersonnelId(personnel.getId());
             detail.setCreditType(CreditType.SPONSOR);
-            if (personnel.getCorporate().getFinanceCorporate().getTotalDeposit().compareTo(personnel.getCreditBalance()) > 0) {
-                detail.setCreditPayableAmount(personnel.getCreditBalance());
-            } else {
-                detail.setCreditPayableAmount(personnel.getCorporate().getFinanceCorporate().getTotalDeposit());
-            }
+            detail.setContractType(personnel.getCorporate().getContractType());
+            detail.setCreditAmount(sumCredits);
+            detail.setCreditPayableAmount(sumCredits);
             detail.setCorporate(CorporateConvertor.toDto(personnel.getCorporate()));
             detalsList.add(detail);
         }
 
-//        user personal credit
+//        user wallets
         UserEntity user = userRepository.getById(userParam.getId());
-        UserCreditDetailDto detail = new UserCreditDetailDto();
-        BigDecimal userDebit = user.getFinanceUser().getTotalDeposit();
-        detail.setCreditAmount(userDebit);
-        detail.setCreditType(CreditType.PERSONAL);
-        detail.setCreditPayableAmount(userDebit);
-        detalsList.add(detail);
+        List<UserCreditDetailDto> wallets = user.getFinanceUser().stream().map(wallet -> {
+            UserCreditDetailDto detail = new UserCreditDetailDto();
+            BigDecimal userDebit = wallet.getTotalDeposit();
+            detail.setCreditAmount(userDebit);
+            if (wallet.getUserFinanceType() == UserFinanceType.INCOME_WALLET)
+                detail.setCreditType(CreditType.INCOME);
+            if (wallet.getUserFinanceType() == UserFinanceType.PERSONAL_WALLET)
+                detail.setCreditType(CreditType.PERSONAL);
+            if (wallet.getUserFinanceType() == UserFinanceType.NON_WITHDRAWABLE_WALLET)
+                detail.setCreditType(CreditType.NON_WITHDRAWABLE);
+            detail.setCreditPayableAmount(userDebit);
+            return detail;
+        }).collect(Collectors.toList());
+        detalsList.addAll(wallets);
 
 
         result.setCreditDetail(detalsList);
@@ -291,38 +304,12 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Override
     public UserCreditDto getMyCredits() {
         UserCreditDto result = new UserCreditDto();
-        List<UserCreditDetailDto> detalsList = new ArrayList<>();
 
         GympinContext context = GympinContextHolder.getContext();
         if (context == null)
             throw new UnknownUserException();
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-//        corporate credits
-        List<CorporatePersonnelEntity> personnelEntity = corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(userRequester.getId());
-        for (CorporatePersonnelEntity personnel : personnelEntity) {
-            UserCreditDetailDto detail = new UserCreditDetailDto();
-            detail.setCreditAmount(personnel.getCreditBalance());
-            detail.setPersonnelId(personnel.getId());
-            detail.setCreditType(CreditType.SPONSOR);
-            if (personnel.getCorporate().getFinanceCorporate().getTotalDeposit().compareTo(personnel.getCreditBalance()) > 0) {
-                detail.setCreditPayableAmount(personnel.getCreditBalance());
-            } else {
-                detail.setCreditPayableAmount(personnel.getCorporate().getFinanceCorporate().getTotalDeposit());
-            }
-            detail.setCorporate(CorporateConvertor.toDto(personnel.getCorporate()));
-            detalsList.add(detail);
-        }
-
-//        user personal credit
-        UserEntity user = userRepository.getById(userRequester.getId());
-        UserCreditDetailDto detail = new UserCreditDetailDto();
-        BigDecimal userDebit = user.getFinanceUser().getTotalDeposit();
-        detail.setCreditAmount(userDebit);
-        detail.setCreditType(CreditType.PERSONAL);
-        detail.setCreditPayableAmount(userDebit);
-        detalsList.add(detail);
-
-
+        List<UserCreditDetailDto> detalsList = new ArrayList<>(getCreditsByUser(UserParam.builder().id(userRequester.getId()).build()).getCreditDetail());
         result.setCreditDetail(detalsList);
         result.setTotalCredit(detalsList.stream().map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
         return result;

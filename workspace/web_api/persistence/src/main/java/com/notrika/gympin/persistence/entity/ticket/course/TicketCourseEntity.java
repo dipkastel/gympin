@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.ticket.course;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.ticketCourse.enums.CourseStatus;
 import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
@@ -85,21 +86,26 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
 //    private Date endSellingDate;
 
     @OneToMany(mappedBy = "ticketCourse")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PurchasedCourseEntity> purchasedCourse;
 
     @ManyToMany
     @JoinTable(name = "ticketCourseAction", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "hallActionId"))
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<TicketHallActiveTimeEntity> activeTimes;
 
     @ManyToMany
     @JoinTable(name = "ticketCourseCouches", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
+   @JsonIgnore
+@ToString.Exclude
     private List<UserEntity> coaches;
 
     @ManyToMany
     @JoinTable(name = "ticketCourseSport", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "placeSportId"))
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PlaceSportEntity> ticketCourseSport;
     @Override
     public boolean equals(Object o) {

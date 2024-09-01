@@ -1,7 +1,7 @@
 package com.notrika.gympin.persistence.entity.multimedia;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.user.UserMultimediaEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,7 +20,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "multimediaCategory")
-public class MultimediaCategoryEntity extends BaseEntity<MultimediaCategoryEntity> {
+public class MultimediaCategoryEntity extends BaseEntityWithCreateUpdate<MultimediaCategoryEntity> {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
@@ -44,7 +44,8 @@ public class MultimediaCategoryEntity extends BaseEntity<MultimediaCategoryEntit
 
 
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<MultimediaEntity> multimediaList;
 
     @Override

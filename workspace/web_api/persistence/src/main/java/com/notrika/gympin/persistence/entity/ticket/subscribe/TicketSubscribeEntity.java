@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.ticket.subscribe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.ticketCourse.enums.CourseStatus;
 import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
@@ -45,21 +46,26 @@ public class TicketSubscribeEntity extends BuyableEntity<TicketSubscribeEntity> 
     private String timing;
 
     @OneToMany(mappedBy = "ticketSubscribe")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PurchasedSubscribeEntity> purchasedSubscribes;
 
     @ManyToMany
     @JoinTable(name = "ticketSubsctibeAction", joinColumns = @JoinColumn(name = "ticketSubscribeId"), inverseJoinColumns = @JoinColumn(name = "hallActionId"))
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<TicketHallActiveTimeEntity> activeTimes;
 
     @ManyToMany
     @JoinTable(name = "ticketSubsctibeSport", joinColumns = @JoinColumn(name = "ticketSubscribeId"), inverseJoinColumns = @JoinColumn(name = "placeSportId"))
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PlaceSportEntity> ticketSubscribeSport;
 
     @ManyToMany
     @JoinTable(name = "ticketSubscribeCouches", joinColumns = @JoinColumn(name = "ticketSubscribeId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
+   @JsonIgnore
+@ToString.Exclude
     private List<UserEntity> coaches;
 
 

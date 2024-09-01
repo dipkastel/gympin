@@ -76,6 +76,11 @@ public class TicketBuyableServiceImpl extends AbstractBaseService<TicketBuyableP
     }
 
     @Override
+    public List<TicketBuyableDto> getWanderers() {
+        return convertToDtos(buyableRepository.findAllByBeneficiaryNullAndDeletedFalse());
+    }
+
+    @Override
     public Page<BuyableEntity> findAll(Specification<BuyableEntity> specification, Pageable pageable) {
         return buyableRepository.findAll(specification, pageable);
     }

@@ -1,9 +1,11 @@
 package com.notrika.gympin.persistence.entity.place;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
-import com.notrika.gympin.persistence.entity.finance.user.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
@@ -26,7 +28,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,9 +53,6 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Enumerated(EnumType.STRING)
     private PlaceStatusEnum status;
 
-    @Column(name = "balance", nullable = false, columnDefinition = "decimal(19,2) default 0")
-    private BigDecimal balance;
-
     @Column(name = "Tell")
     private String tell;
 
@@ -75,65 +73,82 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "locationId")
+    @JsonIgnore
     @ToString.Exclude
     private ManageLocationEntity location;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<PlaceOptionOfPlaceEntity> optionsOfPlaces;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<SupportEntity> support;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<PlaceAboutEntity> aboutPlaces;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<PlaceQrMessageEntity> qrMessages;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<PlacePersonnelEntity> placeOwners;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<PlaceSportEntity> placeSport;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<HallEntity> halls;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<BuyableEntity> buyables;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<InvoiceBuyableEntity> invoiceBuyables;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<ManageNoteEntity> notes;
 
-    @OneToMany(mappedBy = "place",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     private List<PlaceCommentEntity> placeComments;
 
-    @OneToMany(mappedBy = "place",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     private List<PlaceRateEntity> placeRates;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     private List<PurchasedBaseEntity> purchased;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<FinanceUserTransactionEntity> userTransactions;
 
+    @OneToMany(mappedBy = "place" , fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<FinanceUserEntity> financeUsers;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "placeImage", joinColumns = @JoinColumn(name = "multimediaPlaceId"), inverseJoinColumns = @JoinColumn(name = "multimediaId"))
+    @JsonIgnore
     @ToString.Exclude
     private List<MultimediaEntity> multimedias;
 

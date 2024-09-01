@@ -2,8 +2,6 @@ package com.notrika.gympin.domain.finance.gateways;
 
 
 import com.notrika.gympin.common.finance.gateway.service.GeneralGatewayService;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceApplicationGatewayRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

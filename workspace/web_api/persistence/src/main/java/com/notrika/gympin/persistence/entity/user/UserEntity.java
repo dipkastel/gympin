@@ -1,13 +1,14 @@
 package com.notrika.gympin.persistence.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.user.user.enums.UserGroup;
 import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
-import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseUserDepositEntity;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
-import com.notrika.gympin.persistence.entity.finance.settlement.FinanceSettlementUserDepositEntity;
+import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncreaseUserDepositRequestEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceSettlementUserDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.notification.ManageNotificationEntity;
@@ -15,7 +16,6 @@ import com.notrika.gympin.persistence.entity.management.service.ManageServiceExe
 import com.notrika.gympin.persistence.entity.management.settings.UserSettingsEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.comment.PlaceCommentEntity;
-import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.rating.PlaceRateEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
@@ -80,17 +80,8 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @Enumerated(EnumType.STRING)
     private UserGroup userGroup;
 
-//    @Column(name = "userRole", nullable = false, columnDefinition = "varchar(60) default 'USER'")
-//    @Enumerated(EnumType.STRING)
-//    private UserRole userRoles;
-//
-//    @ElementCollection(targetClass = UserRole.class)
-//    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "userId"))
-//    @Enumerated(EnumType.STRING)
-//    private List<UserRole> userRole;
-
-
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private Set<UserRolesEntity> userRoles;
 
@@ -108,111 +99,134 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     private Float rate;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<UserPasswordEntity> password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private Set<PlacePersonnelEntity> placePersonnel;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private Set<SupportEntity> support;
 
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "finance_user_id", referencedColumnName = "id")
-    private FinanceUserEntity financeUser;
+    @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<FinanceUserEntity> financeUser;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private UserActivationCodeEntity activationCode;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @Where(clause = "token_status='ACTIVE'")
+    @JsonIgnore
     @ToString.Exclude
     private Set<UserTokenEntity> userTokens;
 
-    @OneToMany(mappedBy = "executorUser",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "executorUser", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private Set<ManageServiceExecutionEntity> serviceExecutions;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private Set<MultimediaEntity> multimediaSet;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private Set<UserSettingsEntity> settings;
 
-    @OneToMany(mappedBy = "requesterUser",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "requesterUser", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<UserFollowEntity> followings;
 
-    @OneToMany(mappedBy = "requestedUser",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "requestedUser", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<UserFollowEntity> followers;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<UserMultimediaEntity> userMultimedias;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<ManageNotificationEntity> notifs;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<ManageNoteEntity> notes;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private MultimediaEntity userAvatar;
 
 
-    @OneToMany(mappedBy = "requester",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "requester", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<PurchasedSubscribeEntryRequstEntity> enterHallAthlete;
 
-
-    @OneToMany(mappedBy = "acceptedBy",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "acceptedBy", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<PurchasedSubscribeEntryEntity> entranceAcceptes;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<CorporatePersonnelEntity> corporatesPersonel;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
-    private List<FinanceIncreaseUserDepositEntity> userIncreases;
+    private List<FinanceIncreaseUserDepositRequestEntity> userIncreases;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private List<FinanceSettlementUserDepositEntity> userSettlements;
 
-    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<PurchasedBaseEntity> userPurchased;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<PlaceCommentEntity> placeComments;
 
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<PlaceRateEntity> placeRates;
 
 
-    @ManyToMany(mappedBy = "coaches",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "coaches", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<TicketCourseEntity> ticketsCourseCoach;
 
-    @ManyToMany(mappedBy = "coaches",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "coaches", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<TicketSubscribeEntity> ticketsSubscribeCoach;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<InvoiceEntity> invoices;
 

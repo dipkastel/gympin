@@ -37,7 +37,5 @@ public class TicketBuyableQuery extends BaseQuery<TicketBuyableQuery> {
 
     @JsonProperty("Place")
     private Long is_placeæid;
-
-
-
+    
 }

@@ -66,6 +66,13 @@ export default {
       },
       { section: "مالی" },
       {
+        title: "manage process",
+        root: true,
+        icon: "flaticon2-document",
+        translate: "MENU.MANAGE_PROCESS",
+        page: "process",
+      },
+      {
         title: "manage invoices",
         root: true,
         icon: "flaticon2-document",

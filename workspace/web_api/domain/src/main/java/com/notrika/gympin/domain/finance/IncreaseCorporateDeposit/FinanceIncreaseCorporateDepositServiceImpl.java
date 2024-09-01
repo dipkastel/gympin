@@ -6,8 +6,7 @@ import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.param.RequestI
 import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.query.FinanceIncreaseCorporateDepositQuery;
 import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.service.FinanceIncreaseCorporateDepositService;
 import com.notrika.gympin.common.finance.IncreaseUserDeposit.enums.DepositStatus;
-import com.notrika.gympin.common.finance.gateway.param.GatewayApplicationParam;
-import com.notrika.gympin.common.finance.gateway.service.GatewayService;
+import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.transaction.enums.GatewayType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
@@ -17,18 +16,16 @@ import com.notrika.gympin.common.util.exception.transactions.*;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.finance.gateways.GatewayServiceImpl;
-import com.notrika.gympin.domain.finance.peyments.CalculatePaymentsServiceImpl;
 import com.notrika.gympin.domain.util.convertor.IncreaseConvertor;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceApplicationGatewayRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceIncreaseCorporateDepositRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.gateway.FinanceApplicationGatewayRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.request.FinanceIncreaseCorporateDepositRequestRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
-import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseCorporateDepositEntity;
-import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.gateway.FinanceApplicationGatewayEntity;
-import com.notrika.gympin.persistence.entity.finance.gateway.FinanceGatewayEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,10 +39,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseService<FinanceIncreaseCorporateDepositParam, FinanceIncreaseCorporateDepositDto, FinanceIncreaseCorporateDepositQuery, FinanceIncreaseCorporateDepositEntity> implements FinanceIncreaseCorporateDepositService {
+public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseService<FinanceIncreaseCorporateDepositParam, FinanceIncreaseCorporateDepositDto, FinanceIncreaseCorporateDepositQuery, FinanceIncreaseCorporateDepositRequestEntity> implements FinanceIncreaseCorporateDepositService {
 
     @Autowired
-    private FinanceIncreaseCorporateDepositRepository financeIncreaseCorporateDepositRepository;
+    private FinanceIncreaseCorporateDepositRequestRepository financeIncreaseCorporateDepositRepository;
 
     @Autowired
     private CorporateServiceImpl corporateService;
@@ -62,9 +59,12 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
 
     @Override
     public FinanceIncreaseCorporateDepositDto add(@NonNull FinanceIncreaseCorporateDepositParam param) {
-        FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder().serial(java.util.UUID.randomUUID().toString()).build());
+        FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder()
+                .serial(java.util.UUID.randomUUID().toString())
+                .processTypeEnum(ProcessTypeEnum.CASH_IN_ACCOUNT_CHARGE_CORPORATE)
+                .build());
         CorporateEntity corporate = corporateService.getEntityById(param.getCorporateID());
-        var increaseCorporateDeposit = add(FinanceIncreaseCorporateDepositEntity.builder()
+        var increaseCorporateDeposit = add(FinanceIncreaseCorporateDepositRequestEntity.builder()
                 .corporate(corporate)
                 .amount(param.getAmount())
                 .serial(serial)
@@ -90,42 +90,42 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
     }
 
     @Override
-    public FinanceIncreaseCorporateDepositEntity add(FinanceIncreaseCorporateDepositEntity entity) {
+    public FinanceIncreaseCorporateDepositRequestEntity add(FinanceIncreaseCorporateDepositRequestEntity entity) {
         return financeIncreaseCorporateDepositRepository.add(entity);
     }
 
     @Override
-    public FinanceIncreaseCorporateDepositEntity update(FinanceIncreaseCorporateDepositEntity entity) {
+    public FinanceIncreaseCorporateDepositRequestEntity update(FinanceIncreaseCorporateDepositRequestEntity entity) {
         return financeIncreaseCorporateDepositRepository.update(entity);
     }
 
     @Override
-    public FinanceIncreaseCorporateDepositEntity delete(FinanceIncreaseCorporateDepositEntity entity) {
+    public FinanceIncreaseCorporateDepositRequestEntity delete(FinanceIncreaseCorporateDepositRequestEntity entity) {
         return null;
     }
 
     @Override
-    public FinanceIncreaseCorporateDepositEntity getEntityById(long id) {
+    public FinanceIncreaseCorporateDepositRequestEntity getEntityById(long id) {
         return financeIncreaseCorporateDepositRepository.getById(id);
     }
 
     @Override
-    public List<FinanceIncreaseCorporateDepositEntity> getAll(Pageable pageable) {
+    public List<FinanceIncreaseCorporateDepositRequestEntity> getAll(Pageable pageable) {
         return financeIncreaseCorporateDepositRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public Page<FinanceIncreaseCorporateDepositEntity> findAll(Specification<FinanceIncreaseCorporateDepositEntity> specification, Pageable pageable) {
+    public Page<FinanceIncreaseCorporateDepositRequestEntity> findAll(Specification<FinanceIncreaseCorporateDepositRequestEntity> specification, Pageable pageable) {
         return financeIncreaseCorporateDepositRepository.findAll(specification, pageable);
     }
 
     @Override
-    public List<FinanceIncreaseCorporateDepositDto> convertToDtos(List<FinanceIncreaseCorporateDepositEntity> entities) {
+    public List<FinanceIncreaseCorporateDepositDto> convertToDtos(List<FinanceIncreaseCorporateDepositRequestEntity> entities) {
         return entities.stream().map(IncreaseConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override
-    public Page<FinanceIncreaseCorporateDepositDto> convertToDtos(Page<FinanceIncreaseCorporateDepositEntity> entities) {
+    public Page<FinanceIncreaseCorporateDepositDto> convertToDtos(Page<FinanceIncreaseCorporateDepositRequestEntity> entities) {
         return entities.map(IncreaseConvertor::ToDto);
     }
 
@@ -139,7 +139,7 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
     @Override
     @Transactional
     public FinanceIncreaseCorporateDepositDto confirmIncreaseRequest(FinanceIncreaseCorporateDepositParam param) {
-        FinanceIncreaseCorporateDepositEntity increase = financeIncreaseCorporateDepositRepository.getById(param.getId());
+        FinanceIncreaseCorporateDepositRequestEntity increase = financeIncreaseCorporateDepositRepository.getById(param.getId());
         increase.setDepositStatus(param.getAccept()? DepositStatus.CONFIRMED:DepositStatus.REJECTED);
         var financeCorporate = increase.getCorporate().getFinanceCorporate();
         FinanceCorporateTransactionEntity corporateTransaction = FinanceCorporateTransactionEntity.builder()
@@ -183,11 +183,14 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
 
 
 
-        FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder().serial(java.util.UUID.randomUUID().toString()).build());
+        FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder()
+                .serial(java.util.UUID.randomUUID().toString())
+                .processTypeEnum(ProcessTypeEnum.CASH_IN_ACCOUNT_CHARGE_CORPORATE)
+                .build());
         CorporateEntity corporate = corporateService.getEntityById(param.getCorporateId());
         FinanceApplicationGatewayEntity applicationGateway = financeApplicationGatewayRepository.getById(param.getGatewayApplication().getId());
 
-        var request =new FinanceIncreaseCorporateDepositEntity();
+        var request =new FinanceIncreaseCorporateDepositRequestEntity();
         request.setCorporate(corporate);
         request.setAmount(param.getAmount());
         request.setSerial(serial);

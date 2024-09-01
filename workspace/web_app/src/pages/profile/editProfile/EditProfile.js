@@ -145,7 +145,7 @@ const EditProfile = (props) => {
                     return ;
                 }
                 case "Bio": {
-                    if(value.length>220){
+                    if(value?.length>220){
                         return "درباره من طولانی است.";
                     }
                     break;

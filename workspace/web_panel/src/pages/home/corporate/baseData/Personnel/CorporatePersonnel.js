@@ -294,7 +294,7 @@ const CorporatePersonnel = ({currentCorporate}) => {
                                                 <AdminPanelSettingsIcon color={"error"}/>}
                                         </Tooltip></>}</TableCell>
                                     <TableCell align="right">{row.PersonnelGroup?.Name || "بدون گروه"}</TableCell>
-                                    <TableCell align="right">{toPriceWithComma(row.CreditBalance)}</TableCell>
+                                    <TableCell align="right">{toPriceWithComma(row.TotalCredit)}</TableCell>
                                     <TableCell align="left"><Button variant={"contained"} size={"small"}
                                                                     color={"primary"}
                                                                     href={"/corporate/personnel/" + row.Id}>مشخصات</Button><Button

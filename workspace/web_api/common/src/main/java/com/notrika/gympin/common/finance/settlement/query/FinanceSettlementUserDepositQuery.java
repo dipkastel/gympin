@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.finance.settlement.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.finance.settlement.enums.SettlementStatus;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,9 +38,12 @@ public class FinanceSettlementUserDepositQuery extends BaseQuery<FinanceSettleme
     private Long is_useræid;
 
     @JsonProperty("SettlementStatus")
-    private String is_settlementStatus;
+    private SettlementStatus is_settlementStatus;
 
     @JsonProperty("Serial")
     private String like_serialæserial;
+
+
+
 
 }

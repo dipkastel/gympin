@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.ticket.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.common.enums.DayOfWeek;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 //import com.notrika.gympin.persistence.entity.ticket.common.TicketSubscribeHallActiveTime;
@@ -44,11 +45,13 @@ public class TicketHallActiveTimeEntity extends BaseEntityWithCreateUpdate<Ticke
     private LocalTime closingTime;
 
     @ManyToMany(mappedBy = "activeTimes")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<TicketSubscribeEntity> ticketSubscribes;
 
     @ManyToMany(mappedBy = "activeTimes")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<TicketCourseEntity> ticketCourses;
 
     @Override

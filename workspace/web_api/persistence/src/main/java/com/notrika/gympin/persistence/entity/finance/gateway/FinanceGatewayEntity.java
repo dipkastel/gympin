@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.finance.gateway;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.finance.transaction.enums.GatewayType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
@@ -25,14 +26,16 @@ public class FinanceGatewayEntity extends BaseEntityWithCreateUpdate<FinanceGate
 
 
     @OneToMany(mappedBy = "gateway", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<FinanceApplicationGatewayEntity> applicationGateway;
 
     @Column(name = "name")
     private String name;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private MultimediaEntity gatewayImage;
 
     @Column(name = "gatewayType")

@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface BuyableRepository extends BaseRepository<BuyableEntity, Long> {
 
+    List<BuyableEntity> findAllByBeneficiaryNullAndDeletedFalse();
 
 }

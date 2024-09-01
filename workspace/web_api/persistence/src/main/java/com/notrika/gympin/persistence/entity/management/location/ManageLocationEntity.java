@@ -1,8 +1,9 @@
 package com.notrika.gympin.persistence.entity.management.location;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.settings.location.enums.LocationType;
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "manageLocation")
-public class ManageLocationEntity extends BaseEntity<ManageLocationEntity> {
+public class ManageLocationEntity extends BaseEntityWithCreateUpdate<ManageLocationEntity> {
 
     @Column(name = "name")
     private String name;
@@ -42,7 +43,8 @@ public class ManageLocationEntity extends BaseEntity<ManageLocationEntity> {
     private LocationType locationType;
 
     @OneToMany(mappedBy = "location",fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PlaceEntity> places;
 
     @ManyToOne(fetch = FetchType.LAZY)

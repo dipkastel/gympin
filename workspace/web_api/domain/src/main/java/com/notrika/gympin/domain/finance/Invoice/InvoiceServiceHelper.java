@@ -5,6 +5,7 @@ import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
 import com.notrika.gympin.common.finance.invoice.param.CheckoutDetailParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
+import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
@@ -20,12 +21,13 @@ import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.util.exception.purchased.PayByOthersException;
 import com.notrika.gympin.common.util.exception.purchased.PriceTotalConflictException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
+import com.notrika.gympin.domain.finance.helper.FinanceHelper;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceUserTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.course.PurchasedCourseRepository;
@@ -36,11 +38,11 @@ import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubs
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
-import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateTransactionEntity;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
-import com.notrika.gympin.persistence.entity.finance.user.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
@@ -104,6 +106,9 @@ public class InvoiceServiceHelper {
     @Autowired
     InvoiceBuyableRepository invoiceBuyableRepository;
 
+    @Autowired
+    FinanceHelper financeHelper;
+
 
     @Transactional
     public InvoiceEntity calculateCheckout(InvoiceEntity invoice, InvoiceCheckoutParam param) throws Exception {
@@ -132,6 +137,7 @@ public class InvoiceServiceHelper {
     }
 
     private void payBySponsor(InvoiceEntity invoice, CheckoutDetailParam checkoutParam) {
+        //TODO fix this
         CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(checkoutParam.getPersonnelId());
         FinanceCorporateEntity corporateFinanceEntity = personnelEntity.getCorporate().getFinanceCorporate();
         if (invoice.getUser().getId() != personnelEntity.getUser().getId())
@@ -140,15 +146,12 @@ public class InvoiceServiceHelper {
 
         //update personel credit
         //update personel balance
-        personnelEntity.setCreditBalance(personnelEntity.getCreditBalance().subtract(checkoutParam.getAmount()));
-        corporatePersonnelRepository.update(personnelEntity);
 
 
         //update corporate credit
         financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
                 .serial(invoice.getSerial())
                 .transactionCorporateType(TransactionCorporateType.CREDIT)
-                .corporatePersonnel(personnelEntity)
                 .latestBalance(corporateFinanceEntity.getTotalCredits())
                 .financeCorporate(corporateFinanceEntity)
                 .isChecked(false)
@@ -162,7 +165,6 @@ public class InvoiceServiceHelper {
         financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
                 .serial(invoice.getSerial())
                 .transactionCorporateType(TransactionCorporateType.DEPOSIT)
-                .corporatePersonnel(personnelEntity)
                 .latestBalance(corporateFinanceEntity.getTotalDeposit())
                 .financeCorporate(corporateFinanceEntity)
                 .isChecked(false)
@@ -178,7 +180,7 @@ public class InvoiceServiceHelper {
 
     private void payByPersonal(InvoiceEntity invoice, CheckoutDetailParam checkoutParam) {
 
-        FinanceUserEntity financeUserEntity = invoice.getUser().getFinanceUser();
+        FinanceUserEntity financeUserEntity = financeHelper.getUserPersonalWallet(invoice.getUser());
 
         financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
                 .serial(invoice.getSerial())
@@ -381,11 +383,15 @@ public class InvoiceServiceHelper {
                 return userDraftInvoices.get(userDraftInvoices.size() - 1);
             else {
                 //add new invoice
+                var serial = FinanceSerialEntity.builder()
+                        .serial(java.util.UUID.randomUUID().toString())
+                        .processTypeEnum(ProcessTypeEnum.TRA_CHECKOUT_BASKET)
+                        .build();
                 return invoiceRepository.add(InvoiceEntity.builder()
                         .status(InvoiceStatus.DRAFT)
                         .fullName(currentUser.getFullName())
                         .user(currentUser)
-                        .serial(FinanceSerialEntity.builder().serial(java.util.UUID.randomUUID().toString()).build())
+                        .serial(serial)
                         .phoneNumber(currentUser.getPhoneNumber())
                         .gender(currentUser.getGender())
                         .nationalCode(currentUser.getNationalCode())

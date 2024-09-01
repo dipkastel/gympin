@@ -3,11 +3,15 @@ package com.notrika.gympin.domain.util.convertor;
 import com.notrika.gympin.common.finance.transaction.dto.*;
 import com.notrika.gympin.persistence.entity.finance.BaseTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
-import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateTransactionEntity;
-import com.notrika.gympin.persistence.entity.finance.income.FinanceDiscountTransactionEntity;
-import com.notrika.gympin.persistence.entity.finance.income.FinanceIncomeTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceDiscountTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
-import com.notrika.gympin.persistence.entity.finance.user.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
+
+import java.math.BigDecimal;
 
 public final class TransactionConvertor {
 
@@ -19,7 +23,6 @@ public final class TransactionConvertor {
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setCreatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()));
         dto.setFinanceCorporate(toDto(entity.getFinanceCorporate()));
-        dto.setCorporatePersonnel(CorporateConvertor.toSecurePersonnelDto(entity.getCorporatePersonnel()));
         dto.setDescription(entity.getDescription());
         dto.setAmount(entity.getAmount());
         dto.setLatestBalance(entity.getLatestBalance());
@@ -35,16 +38,34 @@ public final class TransactionConvertor {
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setCreatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()));
-        dto.setFinanceUser(toDto(entity.getFinanceUser()));
-        dto.setUser(UserConvertor.toDtoSimple(entity.getFinanceUser().getUser()));
         dto.setDescription(entity.getDescription());
         dto.setPlace(PlaceConvertor.toSimpleDto(entity.getPlace()));
         dto.setPurchased(PurchasedConvertor.ToDto(entity.getPurchased()));
+        dto.setFinanceUser(FinanceUserConvertor.toFinanceDto(entity.getFinanceUser()));
         dto.setAmount(entity.getAmount());
         dto.setLatestBalance(entity.getLatestBalance());
         dto.setTransactionStatus(entity.getTransactionStatus());
         dto.setIsChecked(entity.getIsChecked());
         dto.setSerial(SerialConvertor.ToDto(entity.getSerial()));
+        return dto;
+    }
+    public static PersonnelCreditTransactionDto toDto(FinanceCorporatePersonnelCreditTransactionEntity entity) {
+        if(entity==null) return null;
+        PersonnelCreditTransactionDto dto = new PersonnelCreditTransactionDto();
+        dto.setId(entity.getId());
+        dto.setCreatedDate(entity.getCreatedDate());
+        dto.setCreatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()));
+        dto.setDescription(entity.getDescription());
+        dto.setAmount(entity.getAmount());
+        dto.setLatestBalance(entity.getLatestBalance());
+        dto.setTransactionStatus(entity.getTransactionStatus());
+        dto.setIsChecked(entity.getIsChecked());
+        dto.setSerial(SerialConvertor.ToDto(entity.getSerial()));
+        dto.setPersonnelCredit(CorporateConvertor.toCreditDto(entity.getPersonnelCredit()));
+        try {
+            dto.setCurrentTotalCredit(entity.getPersonnelCredit().getCorporatePersonnel().getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
+        }catch (Exception e){}
+
         return dto;
     }
     public static TransactionAllDto toDto(BaseTransactionEntity entity) {

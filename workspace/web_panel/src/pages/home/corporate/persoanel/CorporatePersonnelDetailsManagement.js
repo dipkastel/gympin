@@ -1,37 +1,31 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Notice from "../../../partials/content/Notice";
 import {useHistory, useParams} from "react-router-dom";
-import {
-    corporatePersonnel_ByCorporate,
-    corporatePersonnel_getById
-} from "../../../../network/api/CorporatePersonnel.api";
+import {corporatePersonnel_getById} from "../../../../network/api/CorporatePersonnel.api";
 import PersonnelCredit from "./personnelCredits/PersonnelCredit";
-import {Avatar, Button, Grid, TableCell, Tooltip} from "@mui/material";
+import {Avatar, Button, Grid} from "@mui/material";
 import PersonnelRole from "./PersonnelRole/PersonnelRole";
 import {toPriceWithComma} from "../../../../helper";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import AddIcon from "@mui/icons-material/Add";
-import {Table} from "react-bootstrap";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableBody from "@mui/material/TableBody";
+import {Portlet, PortletBody} from "../../../partials/content/Portlet";
 import PersonnelGroup from "./PersonnelGroup/PersonnelGroup";
+
 const CorporatePersonnelDetailsManagement = () => {
     const error = useContext(ErrorContext);
     let history = useHistory();
     const {personnelId} = useParams();
-    const [corporatePersonnel,SetCorporatePersonnel] = useState(null);
-    function getPerson(){
-        corporatePersonnel_getById({id:personnelId}).then(result=>{
+    const [corporatePersonnel, SetCorporatePersonnel] = useState(null);
+
+    function getPerson() {
+        corporatePersonnel_getById({id: personnelId}).then(result => {
             SetCorporatePersonnel(result.data.Data)
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     const [updatePageP, SetUpdatePageP] = useState(false);
@@ -45,9 +39,10 @@ const CorporatePersonnelDetailsManagement = () => {
     function updatePage() {
         SetUpdatePageP(true)
     }
+
     return (
         <>
-            {corporatePersonnel&&corporatePersonnel.User&&<Notice icon="flaticon-warning kt-font-primary">
+            {corporatePersonnel && corporatePersonnel.User && <Notice icon="flaticon-warning kt-font-primary">
                 <Grid
                     container
                     direction="row"
@@ -56,17 +51,15 @@ const CorporatePersonnelDetailsManagement = () => {
                     <p>{"مدیریت پرسنل "}</p>
                     <div>
                         <Button variant={"contained"} color={"warning"}
-                                 onClick={()=>{history.push("/corporate/details/"+corporatePersonnel.Corporate.Id)}}
+                                onClick={() => {
+                                    history.push("/corporate/details/" + corporatePersonnel.Corporate.Id)
+                                }}
                         >{corporatePersonnel.Corporate.Name}</Button>
                     </div>
 
                 </Grid>
             </Notice>}
-            {!updatePageP&&corporatePersonnel && <div className="row">
-                <div className="col-md-6">
-                    <PersonnelCredit corporatePersonnel={corporatePersonnel} getPerson={getPerson}/>
-                    <PersonnelRole personnelId={personnelId} />
-                </div>
+            {!updatePageP && corporatePersonnel && <div className="row">
                 <div className="col-md-6">
                     <Portlet>
                         <PortletBody>
@@ -76,18 +69,26 @@ const CorporatePersonnelDetailsManagement = () => {
                                 justifyContent={"space-between"}
                                 alignItems="center">
                                 <div>
-                                    <p>{("نام و نام خانوادگی : "+corporatePersonnel.User.FullName)}</p>
-                                    <p>{("نام کاربری : "+corporatePersonnel.User.Username)}</p>
-                                    <p>{("تلفن : "+corporatePersonnel.User.PhoneNumber)}</p>
-                                    <p>{("اعتبار : "+toPriceWithComma(corporatePersonnel.CreditBalance))}</p>
+                                    <p>{("نام و نام خانوادگی : " + corporatePersonnel?.User?.FullName)}</p>
+                                    <p>{("نام کاربری : " + corporatePersonnel?.User?.Username)}</p>
+                                    <p>{("تلفن : " + corporatePersonnel?.User?.PhoneNumber)}</p>
+                                    <p>{("اعتبار : " + toPriceWithComma(corporatePersonnel?.TotalCredit))}</p>
                                 </div>
 
-                                <Avatar alt="userImage" src={(corporatePersonnel.User.Avatar)?(corporatePersonnel.User.Avatar.Url||""):""}  sx={{width:170,height:170}} />
+                                <Avatar alt="userImage"
+                                        src={(corporatePersonnel?.User?.Avatar) ? (corporatePersonnel?.User?.Avatar?.Url || "") : ""}
+                                        sx={{width: 170, height: 170}}/>
                             </Grid>
                         </PortletBody>
                     </Portlet>
 
-                    <PersonnelGroup personnel={corporatePersonnel} updatePage={updatePage} />
+                </div>
+                <div className="col-md-6">
+                    <PersonnelRole personnelId={personnelId}/>
+                    <PersonnelGroup personnel={corporatePersonnel} updatePage={updatePage}/>
+                </div>
+                <div className="col-md-12">
+                    <PersonnelCredit corporatePersonnel={corporatePersonnel} getPerson={getPerson}/>
                 </div>
             </div>}
         </>

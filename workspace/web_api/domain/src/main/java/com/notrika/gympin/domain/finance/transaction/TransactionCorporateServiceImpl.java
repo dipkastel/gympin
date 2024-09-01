@@ -8,11 +8,13 @@ import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
-import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateTransactionEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +38,8 @@ public class TransactionCorporateServiceImpl extends AbstractBaseService<Corpora
     FinanceCorporateTransactionRepository corporatetransactionRepository;
     @Autowired
     CorporateRepository corporateRepository;
+    @Autowired
+    CorporatePersonnelRepository corporatePersonnelRepository;
     @Autowired
     CorporateServiceImpl corporateService;
     @Autowired
@@ -66,7 +70,7 @@ public class TransactionCorporateServiceImpl extends AbstractBaseService<Corpora
     public List<CorporateTransactionDto> getByCorporate(Long corporateId) {
         List<CorporateTransactionDto> resultList = new ArrayList<>();
         try {
-            resultList.addAll(convertToDtos(corporateRepository.findById(corporateId).get().getFinanceCorporate().getCorporateFinance()));
+            resultList.addAll(convertToDtos(corporateRepository.findById(corporateId).get().getFinanceCorporate().getCorporateFinanceTransactions()));
         } catch (Exception e) {
         }
         return resultList;
@@ -77,7 +81,8 @@ public class TransactionCorporateServiceImpl extends AbstractBaseService<Corpora
 
         List<CorporateTransactionDto> resultList = new ArrayList<>();
         try {
-            resultList.addAll(convertToDtos(corporatetransactionRepository.findAllByCorporatePersonnelIdAndDeletedIsFalse(personnelId)));
+            CorporatePersonnelEntity cp =  corporatePersonnelRepository.getById(personnelId);
+            resultList.addAll(convertToDtos(cp.getCorporate().getFinanceCorporate().getCorporateFinanceTransactions()));
         } catch (Exception e) {
         }
         return resultList;

@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.multimedia;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.article.ArticleEntity;
@@ -31,6 +32,7 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
 
     @ManyToOne(cascade = CascadeType.MERGE, optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "mediaUserId")
+    @JsonIgnore
     @ToString.Exclude
     private UserEntity user;
 
@@ -55,19 +57,23 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "multimedia",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "multimedia", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<SportMultimediaEntity> sportMultimedias;
 
-    @OneToMany(mappedBy = "multimedia",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "multimedia", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<UserMultimediaEntity> userMultimedias;
 
-    @ManyToMany(mappedBy = "multimedias",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "multimedias", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<PlaceEntity> places;
 
-    @OneToMany(mappedBy = "multimedia",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "multimedia", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<HomePageItemEntity> homeMultimedia;
 
@@ -75,13 +81,17 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @JoinColumn(name = "categoryId")
     private MultimediaCategoryEntity category;
 
-    @OneToMany(mappedBy = "userAvatar",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userAvatar", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<UserEntity> AvatarForUser;
 
-    @OneToOne(mappedBy = "gatewayImage",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "gatewayImage", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private FinanceGatewayEntity gateway;
 
-    @OneToOne(mappedBy = "articleImage",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "articleImage", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private ArticleEntity article;
 
     @Override

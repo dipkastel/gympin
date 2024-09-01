@@ -23,10 +23,10 @@ var ticketTypes = [
         Id:2,
         Name: "کلاس ها",
         Type: "courses",
-        Icon: <GroupsIcon sx={{fontSize:87}}  color={"secondary"}  />,
+        Icon: <GroupsIcon sx={{fontSize:87}}  color={"action"}  />,
         Destination:"/ticket/courses",
         Access:personnelAccessEnumT.ManagementTicketCourse,
-        Status:"Active"
+        Status:"Soon"
     },
     {
         Id:3,

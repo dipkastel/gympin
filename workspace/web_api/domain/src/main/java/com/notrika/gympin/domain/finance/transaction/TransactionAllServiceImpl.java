@@ -6,7 +6,7 @@ import com.notrika.gympin.common.finance.transaction.query.TransactionAllQuery;
 import com.notrika.gympin.common.finance.transaction.service.TransactionAllService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceTransactionBaseRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceTransactionBaseRepository;
 import com.notrika.gympin.persistence.entity.finance.BaseTransactionEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -28,7 +28,7 @@ const PlacesMap = () => {
     const getPlaces = (page) => {
         Place_query({
             queryType: "SEARCH",
-            paging: {Page: page, Size: 100, Desc: true}
+            paging: {Page: page, Size: 300, Desc: true}
         }).then((data) => {
             addMarkers(data.data.Data.content);
         }).catch(e => {

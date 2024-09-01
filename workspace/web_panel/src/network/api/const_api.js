@@ -50,6 +50,7 @@ export let CorporateApi = {
     update: "v1/corporate/update",
     updateStatus: "v1/corporate/updateStatus",
     updateContractType: "v1/corporate/updateContractType",
+    updateDefaultExpireDuration: "v1/corporate/updateDefaultExpireDuration",
     updateContractDate: "v1/corporate/updateContractDate",
     updateStepPayment: "v1/corporate/updateStepPayment",
     getFinanceCorporate: "v1/corporate/getFinanceCorporate",
@@ -70,6 +71,8 @@ export let CorporatePersonnelApi = {
     getTotalUserCredits: "v1/corporatePersonnel/getTotalUserCredits",
     PersonnelByCorporate: "v1/corporatePersonnel/PersonnelByCorporate",
     addPersonnelCredit: "v1/corporatePersonnel/addPersonnelCredit",
+    decreaseCredit: "v1/corporatePersonnel/decreaseCredit",
+    manualExpireCredit: "v1/corporatePersonnel/manualExpireCredit",
 };
 export let HallsApi = {
     add: "v1/hall/add",
@@ -144,6 +147,7 @@ export let LocationApi = {
 };
 export let TicketBuyableApi = {
     query: "v1/TicketBuyable/query",
+    getWanderers: "v1/TicketBuyable/getWanderers",
     setTicketBeneficiary: "v1/TicketBuyable/setTicketBeneficiary",
     getById: "v1/TicketBuyable/getById"
 };
@@ -409,6 +413,7 @@ export let IncreaseCorporateDepositApi = {
 export let SerialApi = {
     query: "v1/serial/query",
     getBySerial: "v1/serial/getBySerial",
+    getById: "v1/serial/getById",
 };
 
 export let SuggestApi = {

@@ -24,6 +24,8 @@ public interface CorporatePersonnelController extends BaseController<CorporatePe
     ResponseEntity<List<CorporatePersonnelDto>> getCorporateByUser(UserParam userParam);
     ResponseEntity<List<CorporatePersonnelDto>> getCorporateOwnedByUser(UserParam userParam);
     ResponseEntity<CorporatePersonnelCreditDto> addPersonnelCredit(@RequestBody CorporatePersonnelCreditParam param);
+    ResponseEntity<CorporatePersonnelCreditDto> decreaseUserCredit(@RequestBody CorporatePersonnelCreditParam param);
+    ResponseEntity<CorporatePersonnelCreditDto> manualExpireUserCredit(@RequestBody CorporatePersonnelCreditParam param);
     ResponseEntity<List<CorporatePersonnelCreditDto>> addToAllPersonnelCredit(@RequestBody CorporatePersonnelCreditParam param);
     ResponseEntity<BigDecimal> getTotalUserCredits(CorporatePersonnelCreditParam param);
 

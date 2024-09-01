@@ -1,7 +1,7 @@
 package com.notrika.gympin.persistence.entity.user.relation;
 
 import com.notrika.gympin.common.user.relation.enums.FollowingStatus;
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,7 +20,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "userChangeFollowStatus")
-public class UserFollowChangeStatusEntity extends BaseEntity<UserFollowChangeStatusEntity> {
+public class UserFollowChangeStatusEntity extends BaseEntityWithCreateUpdate<UserFollowChangeStatusEntity> {
 
     @ManyToOne
     @JoinColumn(name = "followId")

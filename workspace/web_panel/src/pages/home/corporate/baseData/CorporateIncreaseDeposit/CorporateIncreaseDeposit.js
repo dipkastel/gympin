@@ -307,7 +307,6 @@ function CorporateIncreaseDeposit({currentCorporate, updatePage}) {
                                 {corporateIncreaseDepositInvoice.content && corporateIncreaseDepositInvoice.content.map((row, index) => {
                                     return (
                                         <TableRow key={row.Serial.Serial}>
-                                            {console.log(row)}
                                             <TableCell align="right" component="th" scope="row">{row.Id}</TableCell>
                                             <TableCell
                                                 align="right">{new Date(row.CreatedDate).toLocaleDateString('fa-IR', {

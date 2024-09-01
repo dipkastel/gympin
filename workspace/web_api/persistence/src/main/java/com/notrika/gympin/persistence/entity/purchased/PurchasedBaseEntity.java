@@ -1,12 +1,13 @@
 package com.notrika.gympin.persistence.entity.purchased;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
-import com.notrika.gympin.persistence.entity.finance.income.FinanceDiscountTransactionEntity;
-import com.notrika.gympin.persistence.entity.finance.income.FinanceIncomeTransactionEntity;
-import com.notrika.gympin.persistence.entity.finance.user.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceDiscountTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -76,19 +77,23 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
 
 
     @OneToMany(mappedBy = "purchased")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<ManageNoteEntity> notes;
 
     @OneToMany(mappedBy = "purchased")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<FinanceIncomeTransactionEntity> incomeTransactions;
 
     @OneToMany(mappedBy = "purchased")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<FinanceUserTransactionEntity> userTransactions;
 
     @OneToMany(mappedBy = "purchased")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<FinanceDiscountTransactionEntity> discountTransactions;
 
 

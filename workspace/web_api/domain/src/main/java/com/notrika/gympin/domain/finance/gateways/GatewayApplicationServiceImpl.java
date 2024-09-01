@@ -2,18 +2,13 @@ package com.notrika.gympin.domain.finance.gateways;
 
 
 import com.notrika.gympin.common.finance.gateway.dto.GatewayApplicationDto;
-import com.notrika.gympin.common.finance.gateway.dto.GatewaysDto;
-import com.notrika.gympin.common.finance.gateway.param.GatewayApplicationParam;
 import com.notrika.gympin.common.finance.gateway.param.GatewayApplicationParam;
 import com.notrika.gympin.common.finance.gateway.query.GatewayApplicationQuery;
-import com.notrika.gympin.common.finance.gateway.query.GatewayQuery;
 import com.notrika.gympin.common.finance.gateway.service.GatewayApplicationService;
-import com.notrika.gympin.common.finance.gateway.service.GatewayService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.GatewayConvertor;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceApplicationGatewayRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceGatewayRepository;
-import com.notrika.gympin.persistence.entity.finance.gateway.FinanceApplicationGatewayEntity;
+import com.notrika.gympin.persistence.dao.repository.finance.gateway.FinanceApplicationGatewayRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.gateway.FinanceGatewayRepository;
 import com.notrika.gympin.persistence.entity.finance.gateway.FinanceApplicationGatewayEntity;
 import com.notrika.gympin.persistence.entity.finance.gateway.FinanceGatewayEntity;
 import lombok.NonNull;

@@ -122,6 +122,7 @@ public class Error {
         PLACE_IS_DELETED(1711),
         //corporate
         LOW_CREDIT_EXCEPTION(1801),
+        CREDIT_CANNOT_BE_NEGATIVE_EXCEPTION(1802),
         //general
         BAD_REQUEST_RUN_TIME_MESSAGE(4000),
         EXCEPTION(4001),

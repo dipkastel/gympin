@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.finance.IncreaseCorporateDeposit.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.finance.IncreaseUserDeposit.enums.DepositStatus;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,5 +39,9 @@ public class FinanceIncreaseCorporateDepositQuery extends BaseQuery<FinanceIncre
 
     @JsonProperty("Serial")
     private String like_serialæserial;
+
+
+    @JsonProperty("DepositStatus")
+    private DepositStatus is_depositStatus;
 
 }

@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.place.personnel;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "placePersonelBuyableAccess")
-public class PlacePersonelBuyableAccessEntity extends BaseEntity<PlacePersonelBuyableAccessEntity> {
+public class PlacePersonelBuyableAccessEntity extends BaseEntityWithCreateUpdate<PlacePersonelBuyableAccessEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "placePersonelId")

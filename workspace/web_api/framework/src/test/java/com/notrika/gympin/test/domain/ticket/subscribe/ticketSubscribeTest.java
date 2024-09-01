@@ -391,7 +391,6 @@ public class ticketSubscribeTest extends BaseTest {
     @Test
     @Order(15)
     public void changeTicketSubscribeStatus() throws Exception {
-        //TODO tarif zinaf ghabl az change status
 //        if (ticket == null) throw new Exception("is not exist");
 //        final TicketSubscribeParam param = TicketSubscribeParam.builder()
 //                .id(ticket.getId())

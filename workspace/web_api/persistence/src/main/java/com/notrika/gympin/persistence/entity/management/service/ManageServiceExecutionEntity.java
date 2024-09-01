@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.management.service;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "manageServiceExecution")
-public class ManageServiceExecutionEntity extends BaseEntity<ManageServiceExecutionEntity> {
+public class ManageServiceExecutionEntity extends BaseEntityWithCreateUpdate<ManageServiceExecutionEntity> {
 
     @Column(name = "service", nullable = false)
     @Lob

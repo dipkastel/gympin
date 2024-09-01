@@ -284,7 +284,6 @@ const UserManagement = () => {
                                             history.push({pathname: "/users/details/" + row.Id});
                                         }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
 
-                                            {console.log(row)}
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">

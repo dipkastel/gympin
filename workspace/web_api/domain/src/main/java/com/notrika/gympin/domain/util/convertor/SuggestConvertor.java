@@ -1,6 +1,5 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.finance.serial.dto.CompleteSerialDto;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.finance.suggest.dto.SuggestDto;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;

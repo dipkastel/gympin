@@ -47,7 +47,6 @@ public final class PlaceConvertor {
         placeDto.setActiveTimes(entity.getActiveTimes());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setStatus(entity.getStatus());
-        placeDto.setBalance(entity.getBalance());
         if (entity.getPlaceSport() != null)
             placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p->!p.isDeleted()).map(PlaceSportEntity::getSport).collect(Collectors.toList())));
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));

@@ -43,7 +43,6 @@ const TransactionsCorporateManagement = () => {
 
 
     function getCorporate(row) {
-        console.log(row);
        var corporateName ;
        if(row.CorporatePersonnel)
            corporateName = row.CorporatePersonnel.Corporate.Name

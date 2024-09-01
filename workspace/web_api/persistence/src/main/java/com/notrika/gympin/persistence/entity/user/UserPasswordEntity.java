@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.user;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "userPassword")
-public class UserPasswordEntity extends BaseEntity<UserPasswordEntity> {
+public class UserPasswordEntity extends BaseEntityWithCreateUpdate<UserPasswordEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "passwordUserId")

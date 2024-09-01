@@ -1,5 +1,6 @@
 import {AuthApi, MultimediaApi} from "../../network/api/const_api";
 import {Support_query} from "../../network/api/support.api";
+import {CorporateContractType} from "../enums/CorporateContractType";
 
 export function getImageUrlByName(name, Height = 0, Width = 0) {
   var url = AuthApi.BASEURL+MultimediaApi.getByName+"?fileName=" + name;
@@ -18,6 +19,10 @@ export function getImageUrlById(id, Height = 0, Width = 0) {
 export function getUserFixedName(user) {
   if(!user) return "";
   return (user.FullName || "") + " " + " ( " + (user.Username || "") + " ) ";
+}
+export function getCorporateFixedName(corporate) {
+  if(!corporate) return "";
+  return (corporate.Name || "") + " " + " ( " + (CorporateContractType[corporate.ContractType] || "") + " ) ";
 }
 
 //

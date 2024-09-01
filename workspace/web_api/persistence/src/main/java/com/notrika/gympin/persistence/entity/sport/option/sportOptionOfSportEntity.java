@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.sport.option;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "sportOptionOfSport")
-public class sportOptionOfSportEntity extends BaseEntity<sportOptionOfSportEntity> {
+public class sportOptionOfSportEntity extends BaseEntityWithCreateUpdate<sportOptionOfSportEntity> {
 
     @ManyToOne
     @JoinColumn(name = "sportId")

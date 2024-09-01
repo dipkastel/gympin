@@ -8,6 +8,7 @@ import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
 import com.notrika.gympin.common.finance.invoice.query.InvoiceQuery;
 import com.notrika.gympin.common.finance.invoice.service.InvoiceService;
+import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.util.GeneralUtil;
 import com.notrika.gympin.common.util.exception.purchased.GenderIsNotCompatible;
 import com.notrika.gympin.common.util.exception.purchased.IsAlreadyPayedException;
@@ -21,8 +22,8 @@ import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.BuyableRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,10 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     @Override
     public InvoiceDto add(@NonNull InvoiceParam invoiceParam) {
         var user = userRepository.getById(invoiceParam.getUser().getId());
+        var serrial = FinanceSerialEntity.builder()
+                .serial(java.util.UUID.randomUUID().toString())
+                .processTypeEnum(ProcessTypeEnum.TRA_CHECKOUT_BASKET)
+                .build();
         var userDraftInvoices = invoiceRepository.findByUserIdAndStatusAndDeletedIsFalse(invoiceParam.getUser().getId(), InvoiceStatus.DRAFT);
         for (InvoiceEntity invoice : userDraftInvoices) {
             invoice.setStatus(InvoiceStatus.CANCELLED);
@@ -71,7 +76,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
                 .status(InvoiceStatus.DRAFT)
                 .fullName(user.getFullName())
                 .user(user)
-                .serial(FinanceSerialEntity.builder().serial(java.util.UUID.randomUUID().toString()).build())
+                .serial(serrial)
                 .phoneNumber(user.getPhoneNumber())
                 .gender(user.getGender())
                 .nationalCode(user.getNationalCode())

@@ -2,12 +2,12 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.dto.FinanceIncreaseCorporateDepositDto;
 import com.notrika.gympin.common.finance.IncreaseUserDeposit.dto.FinanceIncreaseUserDepositDto;
-import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseCorporateDepositEntity;
-import com.notrika.gympin.persistence.entity.finance.Increase.FinanceIncreaseUserDepositEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
+import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncreaseUserDepositRequestEntity;
 
 public final class IncreaseConvertor {
 
-    public static FinanceIncreaseUserDepositDto ToDto(FinanceIncreaseUserDepositEntity entity) {
+    public static FinanceIncreaseUserDepositDto ToDto(FinanceIncreaseUserDepositRequestEntity entity) {
         if (entity == null) return null;
         FinanceIncreaseUserDepositDto dto = new FinanceIncreaseUserDepositDto();
         dto.setId(entity.getId());
@@ -28,7 +28,7 @@ public final class IncreaseConvertor {
         return dto;
     }
 
-    public static FinanceIncreaseCorporateDepositDto ToDto(FinanceIncreaseCorporateDepositEntity entity) {
+    public static FinanceIncreaseCorporateDepositDto ToDto(FinanceIncreaseCorporateDepositRequestEntity entity) {
         if (entity == null) return null;
         FinanceIncreaseCorporateDepositDto dto = new FinanceIncreaseCorporateDepositDto();
         dto.setId(entity.getId());

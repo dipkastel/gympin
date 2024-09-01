@@ -30,7 +30,7 @@ const _PersonnelTransactions = ({ currentUser ,updatePage}) => {
         transactionCorporate_query({
             queryType: "FILTER",
             Type:"CREDIT",
-            CorporatePersonnelUserId:currentUser.Id,
+            CorporatePersonnelUserId:currentUser?.Id,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             SetTransactions(data.data.Data)

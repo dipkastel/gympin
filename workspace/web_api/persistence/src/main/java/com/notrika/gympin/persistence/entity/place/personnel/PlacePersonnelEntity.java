@@ -1,7 +1,8 @@
 package com.notrika.gympin.persistence.entity.place.personnel;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -24,7 +25,7 @@ import java.util.Set;
 @SuperBuilder
 @Entity
 @Table(name = "placePersonel")
-public class PlacePersonnelEntity extends BaseEntity<PlacePersonnelEntity> {
+public class PlacePersonnelEntity extends BaseEntityWithCreateUpdate<PlacePersonnelEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personnelPlaceId")
@@ -36,7 +37,8 @@ public class PlacePersonnelEntity extends BaseEntity<PlacePersonnelEntity> {
 
 
     @OneToMany(mappedBy = "placePersonnel", fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private Set<PlacePersonnelRoleEntity> placePersonnelRoles;
 
     @Column(name = "isBeneficiary", nullable = false, columnDefinition = "boolean default false")
@@ -49,20 +51,24 @@ public class PlacePersonnelEntity extends BaseEntity<PlacePersonnelEntity> {
     private Double commissionFee;
 
     @OneToMany(mappedBy = "placePerson")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PlacePersonnelAccessEntity> placePersonnelAccess;
 
     @OneToMany(mappedBy = "placePerson")
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<PlacePersonelBuyableAccessEntity> placePersonnelBuyableAccess;
 
 
     @OneToMany(mappedBy = "beneficiary",fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<BuyableEntity> buyables;
 
     @OneToMany(mappedBy = "beneficiary",fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<InvoiceBuyableEntity> invoiceBuyable;
 
 

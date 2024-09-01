@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.finance.settlement;
 
+import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.settlement.enums.SettlementStatus;
 import com.notrika.gympin.common.finance.settlement.query.FinanceSettlementUserDepositQuery;
 import com.notrika.gympin.common.finance.settlement.service.FinanceSettlementUserDepositService;
@@ -7,18 +8,20 @@ import com.notrika.gympin.common.finance.settlement.dto.FinanceSettlementUserDep
 import com.notrika.gympin.common.finance.settlement.param.FinanceSettlementUserDepositParam;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
-import com.notrika.gympin.common.util.exception.corporate.LowCreditException;
 import com.notrika.gympin.common.util.exception.user.LowDepositException;
 import com.notrika.gympin.common.util.exception.user.UserHasOpenSettlementRequest;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.finance.helper.FinanceHelper;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.SettlementConvertor;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceSettlementUserDepositRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.request.FinanceSettlementUserDepositRequestRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceUserTransactionRepository;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
-import com.notrika.gympin.persistence.entity.finance.settlement.FinanceSettlementUserDepositEntity;
-import com.notrika.gympin.persistence.entity.finance.user.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
+import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceSettlementUserDepositRequestEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,69 +36,78 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService<FinanceSettlementUserDepositParam, FinanceSettlementUserDepositDto, FinanceSettlementUserDepositQuery, FinanceSettlementUserDepositEntity> implements FinanceSettlementUserDepositService {
+public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService<FinanceSettlementUserDepositParam, FinanceSettlementUserDepositDto, FinanceSettlementUserDepositQuery, FinanceSettlementUserDepositRequestEntity> implements FinanceSettlementUserDepositService {
 
     @Autowired
-    private FinanceSettlementUserDepositRepository financeSettlementUserDepositRepository;
+    private FinanceSettlementUserDepositRequestRepository financeSettlementUserDepositRepository;
 
     @Autowired
     private UserServiceImpl userService;
 
     @Autowired
     private FinanceSerialRepository financeSerialRepository;
+    @Autowired
+    private FinanceUserRepository financeUserRepository;
 
     @Autowired
     private FinanceUserTransactionRepository financeUserTransactionRepository;
 
+    @Autowired
+    FinanceHelper financeHelper;
+
 
     @Override
     public List<FinanceSettlementUserDepositDto> getSettlementUserDeposits(Long userId) {
-        UserEntity user = userService.getEntityById(userId);
-        List<FinanceSettlementUserDepositDto> UserSettlements = user.getUserSettlements().stream().map(SettlementConvertor::ToDto).collect(Collectors.toList());
-        return UserSettlements;
+        List<FinanceSettlementUserDepositRequestEntity> settelmentRequests = financeSettlementUserDepositRepository.getAllUserRequest(userId);
+        return convertToDtos(settelmentRequests);
     }
 
     @Override
     @Transactional
     public FinanceSettlementUserDepositDto confirmSettlementRequest(FinanceSettlementUserDepositParam param) {
-        FinanceSettlementUserDepositEntity Settlement = financeSettlementUserDepositRepository.getById(param.getId());
-        Settlement.setSettlementStatus(param.getAccept() ? SettlementStatus.CONFIRMED : SettlementStatus.REJECTED);
-        var userFinance = Settlement.getUser().getFinanceUser();
-        FinanceUserTransactionEntity userTransaction = FinanceUserTransactionEntity.builder()
-                .serial(Settlement.getSerial())
-                .amount(Settlement.getAmount())
-                .description(param.getDescription())
-                .latestBalance(userFinance.getTotalDeposit())
-                .financeUser(userFinance)
-                .transactionStatus(param.getAccept() ? TransactionStatus.COMPLETE : TransactionStatus.CANCEL)
-                .transactionType(TransactionBaseType.USER)
-                .isChecked(false)
-                .build();
-        if (param.getAccept()) {
-            if(userFinance.getTotalDeposit().add(Settlement.getAmount()).compareTo(BigDecimal.ZERO)<0)
-                throw new LowDepositException();
-            var newDeposit = userFinance.getTotalDeposit().add(Settlement.getAmount());
-            userFinance.setTotalDeposit(newDeposit);
-            Settlement.getUser().setFinanceUser(userFinance);
-        }
-        financeUserTransactionRepository.add(userTransaction);
-        financeSettlementUserDepositRepository.update(Settlement);
-        return SettlementConvertor.ToDto(Settlement);
+        return null;
+//        FinanceSettlementUserDepositRequestEntity Settlement = financeSettlementUserDepositRepository.getById(param.getId());
+//        Settlement.setSettlementStatus(param.getAccept() ? SettlementStatus.CONFIRMED : SettlementStatus.REJECTED);
+//        var userFinance = financeUserRepository.findByUserIdAndDeletedFalse(Settlement.getUser());
+//        FinanceUserTransactionEntity userTransaction = FinanceUserTransactionEntity.builder()
+//                .serial(Settlement.getSerial())
+//                .amount(Settlement.getAmount())
+//                .description(param.getDescription())
+//                .latestBalance(userFinance.getTotalDeposit())
+//                .financeUser(userFinance)
+//                .transactionStatus(param.getAccept() ? TransactionStatus.COMPLETE : TransactionStatus.CANCEL)
+//                .transactionType(TransactionBaseType.USER)
+//                .isChecked(false)
+//                .build();
+//        if (param.getAccept()) {
+//            if(userFinance.getTotalDeposit().add(Settlement.getAmount()).compareTo(BigDecimal.ZERO)<0)
+//                throw new LowDepositException();
+//            var newDeposit = userFinance.getTotalDeposit().add(Settlement.getAmount());
+//            userFinance.setTotalDeposit(newDeposit);
+//            financeUserRepository.update(userFinance);
+//        }
+//        financeUserTransactionRepository.add(userTransaction);
+//        financeSettlementUserDepositRepository.update(Settlement);
+//        return SettlementConvertor.ToDto(Settlement);
     }
 
     @Override
     @Transactional
     public FinanceSettlementUserDepositDto add(@NonNull FinanceSettlementUserDepositParam param) {
-        FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder().serial(java.util.UUID.randomUUID().toString()).build());
-        UserEntity user = userService.getEntityById(param.getUserID());
-        if(user.getFinanceUser().getTotalDeposit().compareTo(param.getAmount())<0)
+        //TODO seprate chachouts by wallet on serial
+        FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder()
+                .serial(java.util.UUID.randomUUID().toString())
+                .processTypeEnum(ProcessTypeEnum.CASH_OUT_PLACE)
+                .build());
+        FinanceUserEntity financeUser = financeUserRepository.getById(param.getUserFinanceID());
+        if(financeUserRepository.getById(param.getUserFinanceID()).getTotalDeposit().compareTo(param.getAmount())<0)
             throw new LowDepositException();
 
-        if(user.getUserSettlements().stream().anyMatch(settle->settle.getSettlementStatus()==SettlementStatus.REQUESTED))
+        if(financeUser.getUserSettlements().stream().anyMatch(settle->settle.getSettlementStatus()==SettlementStatus.REQUESTED))
             throw new UserHasOpenSettlementRequest();
 
-        var settlementUserDeposit = add(FinanceSettlementUserDepositEntity.builder()
-                .user(user)
+        var settlementUserDeposit = add(FinanceSettlementUserDepositRequestEntity.builder()
+                .financeUser(financeUser)
                 .amount(param.getAmount().negate())
                 .serial(serial)
                 .settlementStatus(SettlementStatus.REQUESTED)
@@ -119,42 +131,42 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
     }
 
     @Override
-    public FinanceSettlementUserDepositEntity add(FinanceSettlementUserDepositEntity entity) {
+    public FinanceSettlementUserDepositRequestEntity add(FinanceSettlementUserDepositRequestEntity entity) {
         return financeSettlementUserDepositRepository.add(entity);
     }
 
     @Override
-    public FinanceSettlementUserDepositEntity update(FinanceSettlementUserDepositEntity entity) {
+    public FinanceSettlementUserDepositRequestEntity update(FinanceSettlementUserDepositRequestEntity entity) {
         return financeSettlementUserDepositRepository.update(entity);
     }
 
     @Override
-    public FinanceSettlementUserDepositEntity delete(FinanceSettlementUserDepositEntity entity) {
+    public FinanceSettlementUserDepositRequestEntity delete(FinanceSettlementUserDepositRequestEntity entity) {
         return null;
     }
 
     @Override
-    public FinanceSettlementUserDepositEntity getEntityById(long id) {
+    public FinanceSettlementUserDepositRequestEntity getEntityById(long id) {
         return financeSettlementUserDepositRepository.getById(id);
     }
 
     @Override
-    public List<FinanceSettlementUserDepositEntity> getAll(Pageable pageable) {
+    public List<FinanceSettlementUserDepositRequestEntity> getAll(Pageable pageable) {
         return financeSettlementUserDepositRepository.findAllUndeleted(pageable);
     }
 
     @Override
-    public Page<FinanceSettlementUserDepositEntity> findAll(Specification<FinanceSettlementUserDepositEntity> specification, Pageable pageable) {
+    public Page<FinanceSettlementUserDepositRequestEntity> findAll(Specification<FinanceSettlementUserDepositRequestEntity> specification, Pageable pageable) {
         return financeSettlementUserDepositRepository.findAll(specification, pageable);
     }
 
     @Override
-    public List<FinanceSettlementUserDepositDto> convertToDtos(List<FinanceSettlementUserDepositEntity> entities) {
+    public List<FinanceSettlementUserDepositDto> convertToDtos(List<FinanceSettlementUserDepositRequestEntity> entities) {
         return entities.stream().map(SettlementConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override
-    public Page<FinanceSettlementUserDepositDto> convertToDtos(Page<FinanceSettlementUserDepositEntity> entities) {
+    public Page<FinanceSettlementUserDepositDto> convertToDtos(Page<FinanceSettlementUserDepositRequestEntity> entities) {
         return entities.map(SettlementConvertor::ToDto);
     }
 }

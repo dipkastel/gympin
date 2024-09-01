@@ -11,9 +11,9 @@ import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
 import com.notrika.gympin.common.support.service.SupportService;
 import com.notrika.gympin.common.user.user.dto.*;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.enums.TokenType;
 import com.notrika.gympin.common.user.user.enums.UserGroup;
-import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.common.user.user.param.*;
 import com.notrika.gympin.common.user.user.service.AccountService;
@@ -35,11 +35,9 @@ import com.notrika.gympin.common.util.exception.user.UserLockedException;
 import com.notrika.gympin.common.util.exception.user.UserSuspendedException;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
-import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserActivationCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
-import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;
 import com.notrika.gympin.persistence.entity.user.UserRolesEntity;
@@ -49,7 +47,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,7 +56,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
@@ -85,8 +81,6 @@ public class AccountServiceImpl implements AccountService {
     private UserPasswordRepository userPasswordRepository;
     @Autowired
     private SupportService supportService;
-    @Autowired
-    private FinanceUserRepository financeUserRepository;
 
 
     @Override
@@ -110,19 +104,6 @@ public class AccountServiceImpl implements AccountService {
             throw new SendSmsException();
         }
     }
-
-//    @Override
-//    public UserRegisterDto register(UserRegisterParam userRegisterParam) throws ExceptionBase {
-//        log.info("Going to register user...\n");
-//        try {
-//            UserEntity insertedUser = addUser(userRegisterParam);
-//            return UserConvertor.toRegisterDto(insertedUser);
-//        } catch (DataIntegrityViolationException e) {
-//            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.REGISTER_USER_EXIST);
-//        } catch (Exception e) {
-//            throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.EXCEPTION);
-//        }
-//    }
 
     @Override
     public UserRegisterDto registerByInviteCode(UserRegisterParam userRegisterParam) {
@@ -149,16 +130,15 @@ public class AccountServiceImpl implements AccountService {
         user.setPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
 
 
-        if(userRegisterParam.getUserRole()==null)
+        if (userRegisterParam.getUserRole() == null)
             userRegisterParam.setUserRole(RoleEnum.USER);
 
         Set<UserRolesEntity> userRoles = new java.util.HashSet<>(Set.of(
                 UserRolesEntity.builder().role(RoleEnum.USER).build()
         ));
-        if(userRegisterParam.getUserRole()!= RoleEnum.USER)
+        if (userRegisterParam.getUserRole() != RoleEnum.USER)
             userRoles.add(UserRolesEntity.builder().role(userRegisterParam.getUserRole()).build());
         user.setUserRoles(userRoles);
-
 
 
         if (userRegisterParam.getFullName() != null)
@@ -167,8 +147,6 @@ public class AccountServiceImpl implements AccountService {
             user.setInvitedBy(userRegisterParam.getInvitedBy());
         user.setUserGroup(UserGroup.CLIENT);
         user.setUserStatus(UserStatus.ENABLED);
-        FinanceUserEntity financeUser = financeUserRepository.add(FinanceUserEntity.builder().totalDeposit(BigDecimal.ZERO).build());
-        user.setFinanceUser(financeUser);
         return userService.add(user);
     }
 
@@ -181,13 +159,13 @@ public class AccountServiceImpl implements AccountService {
         }
         UserEntity user = getUser(loginParam);
 
-        if (user==null)
+        if (user == null)
             throw new UnknownUserException();
         if (user.isDeleted())
             throw new UnknownUserException();
-        if(user.getUserStatus()== UserStatus.LOCKED)
+        if (user.getUserStatus() == UserStatus.LOCKED)
             throw new UserLockedException();
-        if(user.getUserStatus()== UserStatus.SUSPENDED)
+        if (user.getUserStatus() == UserStatus.SUSPENDED)
             throw new UserSuspendedException();
         UserActivationCodeEntity activationCode = user.getActivationCode();
         if (activationCode == null) {
@@ -228,14 +206,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private String getJwt(LoginParam loginParam, String phoneNumber, TokenType tokenType) {
-        try{
+        try {
             var auth1 = new UsernamePasswordAuthenticationToken(phoneNumber, loginParam.getPassword());
             Authentication authentication = authenticationManager.authenticate(auth1);
-            if(!authentication.isAuthenticated())
+            if (!authentication.isAuthenticated())
                 throw new BadUserCredentialsException();
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return tokenProvider.generateJwtToken(authentication, tokenType);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new BadUserCredentialsException();
         }
     }
@@ -248,7 +226,7 @@ public class AccountServiceImpl implements AccountService {
             case IOS:
                 return true;
             case WEBPANEL:
-                return user.getUserRoles().stream().map(UserRolesEntity::getRole).anyMatch(p-> p == RoleEnum.ADMIN
+                return user.getUserRoles().stream().map(UserRolesEntity::getRole).anyMatch(p -> p == RoleEnum.ADMIN
                         || p == RoleEnum.SUPER_ADMIN
                         || p == RoleEnum.MANAGER
                         || p == RoleEnum.MARKET);
@@ -273,9 +251,9 @@ public class AccountServiceImpl implements AccountService {
 
         if (user.isDeleted())
             throw new UnknownUserException();
-        if(user.getUserStatus()== UserStatus.LOCKED)
+        if (user.getUserStatus() == UserStatus.LOCKED)
             throw new UserLockedException();
-        if(user.getUserStatus()== UserStatus.SUSPENDED)
+        if (user.getUserStatus() == UserStatus.SUSPENDED)
             throw new UserSuspendedException();
 
         boolean accountNonExpired = !user.isDeleted();
@@ -331,12 +309,6 @@ public class AccountServiceImpl implements AccountService {
                         .messages(message)
                         .build())
                 .build());
-
-//        try {
-//            smsService.sendRegisterCompleted(new SmsDto(param.getPhoneNumber(), SmsTypes.JOINED_TO_PLACE,param.getPlaceName()));
-//        } catch (Exception e) {
-//            throw new SendSmsException();
-//        }
         return true;
 
     }

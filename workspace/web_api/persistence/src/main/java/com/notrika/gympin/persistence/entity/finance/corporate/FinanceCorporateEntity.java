@@ -1,7 +1,9 @@
 package com.notrika.gympin.persistence.entity.finance.corporate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -29,15 +31,17 @@ public class FinanceCorporateEntity extends BaseEntityWithCreateUpdate<FinanceCo
     @Column(name = "totalCredits", nullable = false, columnDefinition = "decimal(19,2) default 0")
     private BigDecimal totalCredits;
 
-    @OneToMany(mappedBy = "financeCorporate",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "financeCorporate", fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
-    private List<FinanceCorporateTransactionEntity> corporateFinance;
+    private List<FinanceCorporateTransactionEntity> corporateFinanceTransactions;
 
     @OneToOne
     @JoinColumn(name = "corporateId", referencedColumnName = "id")
+    @JsonIgnore
     @ToString.Exclude
     private CorporateEntity corporate;
- 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

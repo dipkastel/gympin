@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.article;
 
-import com.notrika.gympin.persistence.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,14 +20,15 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "articleCategory")
-public class ArticleCategoryEntity extends BaseEntity<ArticleCategoryEntity> {
+public class ArticleCategoryEntity extends BaseEntityWithCreateUpdate<ArticleCategoryEntity> {
 
     @Column(name = "name", nullable = false)
     private String name;
 
 
     @ManyToMany(mappedBy = "categories",fetch = FetchType.LAZY)
-    @ToString.Exclude
+   @JsonIgnore
+@ToString.Exclude
     private List<ArticleEntity> articleList;
 
 
