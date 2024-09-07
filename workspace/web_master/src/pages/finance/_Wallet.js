@@ -101,9 +101,9 @@ const _Wallet = ({place,user,onRequestComplete}) => {
                         spacing={0}
                     >
                         <Typography variant="h6">
-                            {`${toPriceWithComma(user.FinanceUser.TotalDeposit)} تومان`}
+                            {`${toPriceWithComma(user?.FinanceUser?.TotalDeposit)} تومان`}
                         </Typography>
-                        {getAccessOf(personnelAccessEnumT.FinanceAction)&&<Button variant={"contained"} onClick={()=>setOpenModalRequest(true)}>درخواست تسویه</Button>}
+                        {getAccessOf(personnelAccessEnumT?.FinanceAction)&&<Button variant={"contained"} onClick={()=>setOpenModalRequest(true)}>درخواست تسویه</Button>}
                     </Stack>
                     {/*<Typography variant={"body2"}>*/}
                     {/*    مجموع کیف پول :*/}
