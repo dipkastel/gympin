@@ -2,8 +2,7 @@ export const ProcessTypeEnum = {
 
     CASH_IN_ACCOUNT_CHARGE_CORPORATE:"شارژ شرکت",
     CASH_IN_ACCOUNT_CHARGE_USER:"شارژ شخصی کاربر",
-    CASH_OUT_GYMPIN:"خروج وجه جیم پین",
-    CASH_OUT_INCOME:"خروج وجه درآمد",
+    CASH_OUT_GYMPIN:"خروج وجه خصوصی",
     CASH_OUT_CORPORATE:"خروج وجه شرکت",
     CASH_OUT_PERSONAL:"خروج وجه شخص",
     TRA_INCREASE_PERSONNEL_CREDIT_SINGLE:"افزایش اعتبار تکی",
@@ -16,5 +15,6 @@ export const ProcessTypeEnum = {
     TRA_PAY_TO_PLACE:"محاسبه و پرداخت بلیط",
     TRA_USER_WALLETS:"انتقال مبلغ کیف پول",
     TRA_REFUND_TICKET:"عودت بلیط",
-    NOT_DEFINE:"تعریف نشده"
+    NOT_DEFINE:"تعریف نشده",
+
 }

@@ -14,8 +14,6 @@ export default function HomePageDetail() {
     useEffect(() => {
         homepage_getHome({id:ItemId}).then(result=>{
             setHomeItems(result.data.Data)
-
-            console.log(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

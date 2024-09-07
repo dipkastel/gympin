@@ -43,7 +43,6 @@ const PlaceSells = ({place}) => {
             }
         }).then((result) => {
             setBuyables(result.data.Data)
-            console.log(result.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

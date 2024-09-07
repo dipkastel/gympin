@@ -21,6 +21,7 @@ import UserBasket from "../pages/basket/UserBasket";
 import Coaches from "../pages/coaches/Coaches";
 import Coach from "../pages/coaches/coach/Coach";
 import SingleCourse from "../pages/tickets/singleCourse/SingleCourse";
+import Settings from "../pages/settings/Settings";
 
 export default function ApplicationRoutes() {
     const  isAuthorized  = useSelector( ({auth:{user}})=>  user?user.Id!=null:false );
@@ -52,6 +53,8 @@ export default function ApplicationRoutes() {
                 <Route path="/notifs" element={isAuthorized?<Notifs/>: <AuthRoutes/>}/>
 
                 <Route path="/invoices" element={isAuthorized?<Invoices/>: <AuthRoutes/>}/>
+
+                <Route path="/settings" element={isAuthorized?<Settings/>: <AuthRoutes/>}/>
 
                 <Route path="/basket" element={isAuthorized?<UserBasket/>: <AuthRoutes/>}/>
 

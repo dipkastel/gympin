@@ -43,7 +43,6 @@ const __SettingSmsPattern = ({updatePage}) => {
     function renderModalEdit() {
         function UpdatePattern(e) {
             e.preventDefault()
-            console.log(itemToEdit)
             sms_updatePattern(itemToEdit)
                 .then(data => {
                     error.showError({message: "عملیات موفق",});

@@ -29,7 +29,6 @@ const _DashTicketBeneficiary = () => {
     useEffect(() => {
         buyable_getWanderers()
             .then((data) => {
-                console.log("br",data.data.Data);
                 setTicket(data.data.Data);
             })
             .catch(e => {

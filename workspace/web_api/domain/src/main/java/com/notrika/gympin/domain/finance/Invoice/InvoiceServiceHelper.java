@@ -1,8 +1,9 @@
 package com.notrika.gympin.domain.finance.Invoice;
 
 
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
+import com.notrika.gympin.common.finance.invoice.dto.UserHowToPayDto;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
-import com.notrika.gympin.common.finance.invoice.param.CheckoutDetailParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
@@ -10,7 +11,6 @@ import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
-import com.notrika.gympin.common.purchased.purchasedCourse.enums.CoursePurchasedStatus;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
@@ -18,15 +18,25 @@ import com.notrika.gympin.common.settings.note.enums.NoteType;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
-import com.notrika.gympin.common.util.exception.purchased.PayByOthersException;
+import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
+import com.notrika.gympin.common.user.user.dto.UserCreditDto;
+import com.notrika.gympin.common.user.user.enums.UserFinanceType;
+import com.notrika.gympin.common.user.user.service.UserService;
+import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
+import com.notrika.gympin.common.util.exception.general.NotFoundException;
+import com.notrika.gympin.common.util.exception.purchased.CreditExpireException;
+import com.notrika.gympin.common.util.exception.purchased.CreditIsNotActiveException;
 import com.notrika.gympin.common.util.exception.purchased.PriceTotalConflictException;
+import com.notrika.gympin.common.util.exception.purchased.WalletNotExistException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.finance.helper.FinanceHelper;
-import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporatePersonnelCreditTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceUserTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
@@ -35,19 +45,18 @@ import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.Purchas
 import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.course.TicketCourseRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
-import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
-import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
-import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
-import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
-import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,72 +67,77 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class InvoiceServiceHelper {
 
     @Autowired
-    CorporatePersonnelRepository corporatePersonnelRepository;
-
+    FinanceCorporatePersonnelCreditTransactionRepository financeCorporatePersonnelCreditTransactionRepository;
     @Autowired
-    CorporatePersonnelCreditRepository corporatePersonnelCreditRepository;
-
+    CorporatePersonnelCreditRepository financeCorporatePersonnelCreditRepository;
     @Autowired
     FinanceCorporateTransactionRepository financeCorporateTransactionRepository;
-
     @Autowired
     FinanceUserTransactionRepository financeUserTransactionRepository;
-
-    @Autowired
-    FinanceCorporateRepository financeCorporateRepository;
-
-    @Autowired
-    FinanceUserRepository financeUserRepository;
-
-    @Autowired
-    TicketSubscribeRepository ticketSubscribeRepository;
-
-    @Autowired
-    TicketCourseRepository ticketCourseRepository;
-
     @Autowired
     PurchasedSubscribeRepository purchasedSubscribeRepository;
-
+    @Autowired
+    CorporatePersonnelRepository corporatePersonnelRepository;
+    @Autowired
+    FinanceCorporateRepository financeCorporateRepository;
+    @Autowired
+    TicketSubscribeRepository ticketSubscribeRepository;
     @Autowired
     PurchasedCourseRepository purchasedCourseRepository;
-
-    @Autowired
-    InvoiceRepository invoiceRepository;
-
-    @Autowired
-    SmsInService smsService;
-
-    @Autowired
-    ManageNoteRepository noteRepository;
-
     @Autowired
     InvoiceBuyableRepository invoiceBuyableRepository;
-
+    @Autowired
+    FinanceSerialRepository financeSerialRepository;
+    @Autowired
+    TicketCourseRepository ticketCourseRepository;
+    @Autowired
+    FinanceUserRepository financeUserRepository;
+    @Autowired
+    ManageNoteRepository noteRepository;
+    @Autowired
+    InvoiceRepository invoiceRepository;
     @Autowired
     FinanceHelper financeHelper;
+    @Autowired
+    SmsInService smsService;
+    @Autowired
+    UserService userService;
 
 
     @Transactional
-    public InvoiceEntity calculateCheckout(InvoiceEntity invoice, InvoiceCheckoutParam param) throws Exception {
+    public InvoiceEntity calculateCheckout(InvoiceEntity invoice, UserHowToPayDto howToPay, UserEntity user) throws Exception {
         BigDecimal subscribeRemainderPrice = invoice.getPriceToPay();
         //subtract money
-        for (CheckoutDetailParam checkoutParam : param.getCheckout().stream().sorted((a, b) -> (int) (a.getPriority() - b.getPriority())).collect(Collectors.toList())) {
-            if (checkoutParam.getAmount().compareTo(BigDecimal.ZERO) != 0) {
-                subscribeRemainderPrice = subscribeRemainderPrice.subtract(checkoutParam.getAmount());
-                switch (checkoutParam.getCreditType()) {
+
+        for (var credit : howToPay.getCreditDetail()) {
+            if (credit.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0 && credit.getCreditAmount().compareTo(BigDecimal.ZERO) > 0) {
+                subscribeRemainderPrice = subscribeRemainderPrice.subtract(credit.getCreditPayableAmount());
+                switch (credit.getCreditType()) {
                     case SPONSOR: {
-                        payBySponsor(invoice, checkoutParam);
+                        FinanceCorporatePersonnelCreditEntity wallet = financeCorporatePersonnelCreditRepository.getById(credit.getId());
+                        if (wallet == null)
+                            throw new WalletNotExistException();
+                        payBySponsor(invoice, credit, wallet);
                         break;
                     }
                     case PERSONAL: {
-                        payByPersonal(invoice, checkoutParam);
+                        FinanceUserEntity wallet = financeUserRepository.findByUserIdAndDeletedFalse(user.getId()).stream().filter(c -> c.getUserFinanceType() == UserFinanceType.PERSONAL_WALLET).findFirst().orElse(null);
+                        if (wallet == null)
+                            throw new WalletNotExistException();
+                        payByPersonal(invoice, credit, wallet);
+                        break;
+                    }
+                    case NON_WITHDRAWABLE: {
+                        FinanceUserEntity wallet = financeUserRepository.findByUserIdAndDeletedFalse(user.getId()).stream().filter(c -> c.getUserFinanceType() == UserFinanceType.NON_WITHDRAWABLE_WALLET).findFirst().orElse(null);
+                        if (wallet == null)
+                            throw new WalletNotExistException();
+                        payByNonWithdrawable(invoice, credit, wallet);
                         break;
                     }
                 }
@@ -131,92 +145,135 @@ public class InvoiceServiceHelper {
         }
         if (subscribeRemainderPrice.compareTo(BigDecimal.ZERO) != 0)
             throw new PriceTotalConflictException();
-        //change subscribe status and serial
-        createPurchasedItems(invoice);
         return invoice;
     }
 
-    private void payBySponsor(InvoiceEntity invoice, CheckoutDetailParam checkoutParam) {
-        //TODO fix this
-        CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(checkoutParam.getPersonnelId());
-        FinanceCorporateEntity corporateFinanceEntity = personnelEntity.getCorporate().getFinanceCorporate();
-        if (invoice.getUser().getId() != personnelEntity.getUser().getId())
-            throw new PayByOthersException();
+    private void payBySponsor(InvoiceEntity invoice, UserCreditDetailDto credit, FinanceCorporatePersonnelCreditEntity wallet) {
+        //init
+        BigDecimal lastWalletCredit = wallet.getCreditAmount();
+        BigDecimal afterCredit = lastWalletCredit.subtract(credit.getCreditPayableAmount());
+        //check
+        if (wallet.getExpireDate().before(new Date()))
+            throw new CreditExpireException();
+        if (wallet.getStatus() != CorporatePersonnelCreditStatusEnum.ACTIVE)
+            throw new CreditIsNotActiveException();
+        if (lastWalletCredit.compareTo(BigDecimal.ZERO) < 0)
+            throw new CreditCannotBeNegativeException();
+        if (afterCredit.compareTo(BigDecimal.ZERO) < 0)
+            throw new CreditCannotBeNegativeException();
+        //update personnel credit
+        wallet.setCreditAmount(afterCredit);
+        financeCorporatePersonnelCreditRepository.update(wallet);
+        //add personel credit transaction
 
-
-        //update personel credit
-        //update personel balance
-
-
-        //update corporate credit
-        financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
+        financeCorporatePersonnelCreditTransactionRepository.add(FinanceCorporatePersonnelCreditTransactionEntity.builder()
                 .serial(invoice.getSerial())
-                .transactionCorporateType(TransactionCorporateType.CREDIT)
-                .latestBalance(corporateFinanceEntity.getTotalCredits())
-                .financeCorporate(corporateFinanceEntity)
-                .isChecked(false)
-                .amount(checkoutParam.getAmount().negate())
                 .transactionStatus(TransactionStatus.COMPLETE)
-                .transactionType(TransactionBaseType.CORPORATE)
+                .latestBalance(lastWalletCredit)
+                .personnelCredit(wallet)
+                .isChecked(false)
+                .transactionType(TransactionBaseType.CREDIT_PURCHASE)
+                .amount(credit.getCreditPayableAmount().negate())
                 .build());
-        corporateFinanceEntity.setTotalCredits(corporateFinanceEntity.getTotalCredits().subtract(checkoutParam.getAmount()));
-
         //update corporate deposit
+        FinanceCorporateEntity financeCorporate = null;
+        try {
+            financeCorporate = wallet.getCorporatePersonnel().getCorporate().getFinanceCorporate();
+        } catch (Exception e) {
+        }
+
+        if (financeCorporate == null)
+            throw new NotFoundException();
+        BigDecimal lastCorporateDeposit = financeCorporate.getTotalDeposit();
+        BigDecimal afterCorporateDeposit = lastCorporateDeposit.subtract(credit.getCreditPayableAmount());
+        financeCorporate.setTotalDeposit(afterCorporateDeposit);
+        //update corporate total credit
+        BigDecimal lastCorporateTotalCredit = financeCorporate.getTotalCredits();
+        BigDecimal afterCorporateCredit = lastCorporateTotalCredit.subtract(credit.getCreditPayableAmount());
+        financeCorporate.setTotalCredits(afterCorporateCredit);
+        financeCorporateRepository.update(financeCorporate);
+        //add transaction corporate deposit
         financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
                 .serial(invoice.getSerial())
-                .transactionCorporateType(TransactionCorporateType.DEPOSIT)
-                .latestBalance(corporateFinanceEntity.getTotalDeposit())
-                .financeCorporate(corporateFinanceEntity)
-                .isChecked(false)
-                .amount(checkoutParam.getAmount().negate())
                 .transactionStatus(TransactionStatus.COMPLETE)
-                .transactionType(TransactionBaseType.CORPORATE)
+                .latestBalance(lastCorporateDeposit)
+                .transactionCorporateType(TransactionCorporateType.DEPOSIT)
+                .financeCorporate(financeCorporate)
+                .isChecked(false)
+                .transactionType(TransactionBaseType.CORPORATE_PERSONNEL_DEPOSIT_PURCHASE)
+                .amount(credit.getCreditPayableAmount().negate())
                 .build());
-        corporateFinanceEntity.setTotalDeposit(corporateFinanceEntity.getTotalDeposit().subtract(checkoutParam.getAmount()));
 
-
-        financeCorporateRepository.update(corporateFinanceEntity);
+        //add transaction total credit
+        financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
+                .serial(invoice.getSerial())
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .latestBalance(lastCorporateTotalCredit)
+                .transactionCorporateType(TransactionCorporateType.CREDIT)
+                .financeCorporate(financeCorporate)
+                .isChecked(false)
+                .transactionType(TransactionBaseType.CORPORATE_PERSONNEL_CREDIT_PURCHASE)
+                .amount(credit.getCreditPayableAmount().negate())
+                .build());
     }
 
-    private void payByPersonal(InvoiceEntity invoice, CheckoutDetailParam checkoutParam) {
+    private void payByPersonal(InvoiceEntity invoice, UserCreditDetailDto credit, FinanceUserEntity wallet) {
 
-        FinanceUserEntity financeUserEntity = financeHelper.getUserPersonalWallet(invoice.getUser());
-
+        //chenge wallet amount
+        BigDecimal lastBalance = wallet.getTotalDeposit();
+        BigDecimal afterBalance = lastBalance.subtract(credit.getCreditPayableAmount());
+        if (lastBalance.compareTo(BigDecimal.ZERO) < 0)
+            throw new CreditCannotBeNegativeException();
+        if (afterBalance.compareTo(BigDecimal.ZERO) < 0)
+            throw new CreditCannotBeNegativeException();
+        wallet.setTotalDeposit(afterBalance);
+        financeUserRepository.update(wallet);
+        //add user wallet transaction
         financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
                 .serial(invoice.getSerial())
                 .transactionStatus(TransactionStatus.COMPLETE)
-                .latestBalance(financeUserEntity.getTotalDeposit())
-                .financeUser(financeUserEntity)
+                .latestBalance(lastBalance)
+                .financeUser(wallet)
                 .isChecked(false)
-                .transactionType(TransactionBaseType.USER)
-                .amount(checkoutParam.getAmount().negate())
+                .transactionType(TransactionBaseType.USER_PERSONAL_PURCHASE)
+                .amount(credit.getCreditPayableAmount().negate())
                 .build());
 
 
-        financeUserEntity.setTotalDeposit(financeUserEntity.getTotalDeposit().subtract(checkoutParam.getAmount()));
-        financeUserRepository.update(financeUserEntity);
-
-        GympinContext context = GympinContextHolder.getContext();
-        context.getEntry().put(GympinContext.USER_KEY, financeUserEntity.getUser());
-
     }
 
-    private void createPurchasedItems(InvoiceEntity invoice) throws Exception {
-        List<InvoiceBuyableEntity> smsList = new ArrayList<>();
+    private void payByNonWithdrawable(InvoiceEntity invoice, UserCreditDetailDto credit, FinanceUserEntity wallet) {
+        //chenge wallet amount
+        BigDecimal lastBalance = wallet.getTotalDeposit();
+        BigDecimal afterBalance = lastBalance.subtract(credit.getCreditPayableAmount());
+        if (lastBalance.compareTo(BigDecimal.ZERO) < 0)
+            throw new CreditCannotBeNegativeException();
+        if (afterBalance.compareTo(BigDecimal.ZERO) < 0)
+            throw new CreditCannotBeNegativeException();
+        wallet.setTotalDeposit(afterBalance);
+        financeUserRepository.update(wallet);
+        //add user wallet transaction
+        financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
+                .serial(invoice.getSerial())
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .latestBalance(lastBalance)
+                .financeUser(wallet)
+                .isChecked(false)
+                .transactionType(TransactionBaseType.USER_NON_WITHDRAWABLE_PURCHASE)
+                .amount(credit.getCreditPayableAmount().negate())
+                .build());
+    }
+
+    public InvoiceEntity createPurchasedItems(InvoiceEntity invoice) throws Exception {
         for (InvoiceBuyableEntity invoiceBuyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
             switch (invoiceBuyable.getBuyableType()) {
                 case SUBSCRIBE:
                     for (int i = 0; i < invoiceBuyable.getCount(); i++) {
                         addSubscribe(invoice, invoiceBuyable);
-                        smsList.add(invoiceBuyable);
                     }
                     break;
                 case COURSE:
-                    for (int i = 0; i < invoiceBuyable.getCount(); i++) {
-                        addCourse(invoice, invoiceBuyable);
-                        smsList.add(invoiceBuyable);
-                    }
-                    break;
+                    throw new Exception("آیتم برای خرید آماده نیست");
                 case PRODUCT:
                     throw new Exception("آیتم برای خرید آماده نیست");
                 case FOOD:
@@ -228,44 +285,12 @@ public class InvoiceServiceHelper {
                 case WORKOUT:
                     throw new Exception("آیتم برای خرید آماده نیست");
             }
-            //send sms
-            sendSms(invoice.getUser(), invoiceBuyable);
         }
         invoice.setStatus(InvoiceStatus.COMPLETED);
         invoiceRepository.update(invoice);
+        return invoice;
     }
 
-    private void addCourse(InvoiceEntity invoice, InvoiceBuyableEntity invoiceBuyable) {
-        TicketCourseEntity ticketCourse = ticketCourseRepository.getById(invoiceBuyable.getBuyable().getId());
-        PurchasedCourseEntity courseEntity = PurchasedCourseEntity.builder()
-                .name(ticketCourse.getName())
-                .description(ticketCourse.getDescription())
-                .discount(ticketCourse.getDiscount())
-                .gender(ticketCourse.getGender())
-                .sellPrice(invoiceBuyable.getPlacePrice())
-                .placePrice(invoiceBuyable.getPlacePrice())
-                .place(invoiceBuyable.getPlace())
-                .customer(invoice.getUser())
-                .serial(invoice.getSerial())
-                .purchasedType(PurchasedType.COURSE)
-                .status(CoursePurchasedStatus.READY_TO_ACTIVE)
-                .ticketCourse(ticketCourse)
-                .entryTotalCount(ticketCourse.getEntryTotalCount())
-                .courseStatus(ticketCourse.getCourseStatus())
-                .targetOfCourse(ticketCourse.getTargetOfCourse())
-                .classCapacity(ticketCourse.getClassCapacity())
-                .timing(ticketCourse.getTiming())
-                .ageLimit(ticketCourse.getAgeLimit())
-                .coaches(ticketCourse.getCoaches().stream().map(c->UserEntity.builder().id(c.getId()).build()).collect(Collectors.toList()))
-                .entryTotalCount(ticketCourse.getEntryTotalCount())
-                .courseCapacity(ticketCourse.getCourseCapacity())
-                .courseLevel(ticketCourse.getCourseLevel())
-                .startDate(ticketCourse.getStartDate())
-                .expireDuration(ticketCourse.getExpireDuration())
-                .build();
-        purchasedCourseRepository.add(courseEntity);
-
-    }
 
     private void addSubscribe(InvoiceEntity invoice, InvoiceBuyableEntity invoiceBuyable) {
         TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(invoiceBuyable.getBuyable().getId());
@@ -284,7 +309,7 @@ public class InvoiceServiceHelper {
                 .place(invoiceBuyable.getPlace())
                 .customer(invoice.getUser())
                 .serial(invoice.getSerial())
-                .coaches(ticketSubscribe.getCoaches().stream().map(c->UserEntity.builder().id(c.getId()).build()).collect(Collectors.toList()))
+                .coaches(ticketSubscribe.getCoaches().stream().map(c -> UserEntity.builder().id(c.getId()).build()).collect(Collectors.toList()))
                 .purchasedType(PurchasedType.SUBSCRIBE)
                 .status(SubscribePurchasedStatus.READY_TO_ACTIVE)
                 .ticketSubscribe(ticketSubscribe)
@@ -294,19 +319,6 @@ public class InvoiceServiceHelper {
                 .ticketSubscribeExpireDate(calender.getTime())
                 .expireDate(calender.getTime())
                 .build());
-    }
-
-    private void sendSms(UserEntity user, InvoiceBuyableEntity invoiceBuyable) {
-        try {
-            smsService.sendYouBuySubscribe(SmsDto.builder()
-                    .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
-                    .userNumber(user.getPhoneNumber())
-                    .text1(invoiceBuyable.getName())
-                    .text2(invoiceBuyable.getPlace().getName())
-                    .build()
-            );
-        } catch (Exception e) {
-        }
     }
 
     @Transactional
@@ -383,10 +395,10 @@ public class InvoiceServiceHelper {
                 return userDraftInvoices.get(userDraftInvoices.size() - 1);
             else {
                 //add new invoice
-                var serial = FinanceSerialEntity.builder()
+                var serial = financeSerialRepository.add(FinanceSerialEntity.builder()
                         .serial(java.util.UUID.randomUUID().toString())
                         .processTypeEnum(ProcessTypeEnum.TRA_CHECKOUT_BASKET)
-                        .build();
+                        .build());
                 return invoiceRepository.add(InvoiceEntity.builder()
                         .status(InvoiceStatus.DRAFT)
                         .fullName(currentUser.getFullName())
@@ -408,4 +420,127 @@ public class InvoiceServiceHelper {
             throw new UnknownUserException();
         return (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
     }
+
+    public void CancellAllDrafts(Long userId) {
+        var userDraftInvoices = invoiceRepository.findByUserIdAndStatusAndDeletedIsFalse(userId, InvoiceStatus.DRAFT);
+        for (InvoiceEntity invoice : userDraftInvoices) {
+            invoice.setStatus(InvoiceStatus.CANCELLED);
+        }
+        if (userDraftInvoices.size() > 0)
+            invoiceRepository.updateAll(userDraftInvoices);
+    }
+
+    public InvoiceEntity AddNewInvoice(UserEntity user, FinanceSerialEntity serial) {
+        var invoice = InvoiceEntity.builder()
+                .status(InvoiceStatus.DRAFT)
+                .fullName(user.getFullName())
+                .user(user)
+                .serial(serial)
+                .phoneNumber(user.getPhoneNumber())
+                .gender(user.getGender())
+                .nationalCode(user.getNationalCode())
+                .totalPrice(BigDecimal.ZERO)
+                .priceToPay(BigDecimal.ZERO)
+                .build();
+        return invoiceRepository.add(invoice);
+    }
+
+    public void sendSms(InvoiceEntity invoice) {
+        //TODO sms To Place for preparation
+        if (invoice.getInvoiceBuyables().size() == 1) {
+            try {
+                smsService.sendYouBuySubscribe(SmsDto.builder()
+                        .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
+                        .userNumber(invoice.getUser().getPhoneNumber())
+                        .text1(invoice.getInvoiceBuyables().get(0).getName())
+                        .text2(invoice.getInvoiceBuyables().get(0).getPlace().getName())
+                        .build()
+                );
+            } catch (Exception e) {
+            }
+        } else {
+            //TODO add sms for list of buys
+        }
+
+    }
+
+    public UserHowToPayDto getSimpleHowToPay(InvoiceEntity invoice) {
+        UserCreditDto userCredits = userService.getMyCredits();
+        UserHowToPayDto result = new UserHowToPayDto();
+        var creditList = userCredits.getCreditDetail().stream().filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
+        if (invoice.getPriceToPay().compareTo(userCredits.getTotalCredit()) > 0)
+            return UserHowToPayDto.builder()
+                    .creditDetail(creditList)
+                    .creditCovrage(false)
+                    .totalCredit(userCredits.getTotalCredit()).build();
+
+        result.setCreditDetail(new ArrayList<>());
+        BigDecimal totalToPay = invoice.getPriceToPay();
+        for (var credit : creditList) {
+            if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) > 0) {
+                totalToPay = totalToPay.subtract(credit.getCreditPayableAmount());
+                result.getCreditDetail().add(credit);
+            } else if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) < 0) {
+                credit.setCreditPayableAmount(totalToPay);
+                result.getCreditDetail().add(credit);
+                result.setCreditCovrage(true);
+                totalToPay = BigDecimal.ZERO;
+            }
+        }
+        return result;
+    }
+
+    public UserHowToPayDto getModerateHowToPay(InvoiceEntity invoice, InvoiceCheckoutParam param) {
+//        UserCreditDto userCredits = userService.getMyCredits();
+//        UserHowToPayDto result = new UserHowToPayDto();
+//        var creditList = userCredits.getCreditDetail().stream().filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
+//        if (invoice.getPriceToPay().compareTo(userCredits.getTotalCredit()) > 0)
+//            return UserHowToPayDto.builder()
+//                    .creditDetail(creditList)
+//                    .creditCovrage(false)
+//                    .totalCredit(userCredits.getTotalCredit()).build();
+//
+//        result.setCreditDetail(new ArrayList<>());
+//        BigDecimal totalToPay = invoice.getPriceToPay();
+//        for (var credit : creditList) {
+//            if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) > 0) {
+//                totalToPay = totalToPay.subtract(credit.getCreditPayableAmount());
+//                result.getCreditDetail().add(credit);
+//            } else if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) < 0) {
+//                credit.setCreditPayableAmount(totalToPay);
+//                result.getCreditDetail().add(credit);
+//                result.setCreditCovrage(true);
+//                totalToPay = BigDecimal.ZERO;
+//            }
+//        }
+        return null;
+    }
+
+    public UserHowToPayDto getAdvancedHowToPay(InvoiceEntity invoice,InvoiceCheckoutParam param) {
+//        InvoiceEntity invoice = invoiceRepository.getById(param.getInvoice().getId());
+//        UserCreditDto userCredits = userService.getMyCredits();
+//        UserHowToPayDto result = new UserHowToPayDto();
+//        var creditList = userCredits.getCreditDetail().stream().filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
+//        if (invoice.getPriceToPay().compareTo(userCredits.getTotalCredit()) > 0)
+//            return UserHowToPayDto.builder()
+//                    .creditDetail(creditList)
+//                    .creditCovrage(false)
+//                    .totalCredit(userCredits.getTotalCredit()).build();
+//
+//        result.setCreditDetail(new ArrayList<>());
+//        BigDecimal totalToPay = invoice.getPriceToPay();
+//        for (var credit : creditList) {
+//            if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) > 0) {
+//                totalToPay = totalToPay.subtract(credit.getCreditPayableAmount());
+//                result.getCreditDetail().add(credit);
+//            } else if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) < 0) {
+//                credit.setCreditPayableAmount(totalToPay);
+//                result.getCreditDetail().add(credit);
+//                result.setCreditCovrage(true);
+//                totalToPay = BigDecimal.ZERO;
+//            }
+//        }
+        return null;
+    }
+
 }

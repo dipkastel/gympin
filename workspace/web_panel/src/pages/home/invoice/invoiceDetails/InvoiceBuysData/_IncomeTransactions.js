@@ -5,7 +5,6 @@ import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 
 const _IncomeTransactions = ({transactions}) => {
-    console.log(transactions)
     return (
         <>
             {transactions &&<Portlet>

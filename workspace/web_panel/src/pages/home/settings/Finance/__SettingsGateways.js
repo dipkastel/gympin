@@ -201,19 +201,6 @@ const __SettingsGateways = () => {
         function EditItem(e) {
             e.preventDefault()
             setItemToEdit(null);
-            console.log({
-                Id:itemToEdit.Id,
-                Name:e.target.name.value,
-                GatewayType:e.target.type.value,
-                Description:e.target.description.value,
-                Password:e.target.password.value,
-                Token:e.target.token.value,
-                Serial:e.target.serial.value,
-                Data1:e.target.data1.value,
-                Data2:e.target.data2.value,
-                Data3:e.target.data3.value,
-
-            })
             Gateway_update({
                 Id:itemToEdit.Id,
                 Name:e.target.name.value,

@@ -57,7 +57,7 @@ const Profile = (props) => {
             {/*<_ListItem title="امتیاز و بازخورد" destination="/profile/survey"/>*/}
             <_ListItem title="شرایط و قوانین" destination="https://gympin.ir/term-and-conditions/"/>
             <_ListItem title="تماس با ما" destination="https://gympin.ir/contact/"/>
-            <_ListItem title="خروج" destination="/auth/logout"/>
+            <_ListItem title="تنظیمات" destination="/settings"/>
 
         </>
     );

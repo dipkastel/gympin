@@ -43,7 +43,6 @@ const CorporatePersonnel = ({currentCorporate}) => {
             CorporateId: currentCorporate.Id,
             paging: {Page: page, Size: (rowsPerPage), Desc: true}
         }).then(data => {
-            console.log(data)
             SetCorporatePersonnels(data.data.Data);
         }).catch(e => {
             try {

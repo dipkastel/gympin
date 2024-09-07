@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import Notice from "../../partials/content/Notice";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
-import {Avatar, Chip, Grid, TextField, Typography} from "@mui/material";
+import {Avatar, Chip, Grid, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -28,12 +28,16 @@ const ProcessManagement = () => {
     const [processList, setProcessList] = useState([]);
     const [searchString, setSearchString] = useState("");
     const [openModalAdd, SetOpenModalAdd] = useState(false);
+    const [selectedTab, setSelectedTab] = useState(null);
     const history = useHistory();
 
     useEffect(() => {
+         var invoiceStatus = (selectedTab==="TRA_CHECKOUT_BASKET")?"COMPLETED":null
         serial_query({
-            queryType: "SEARCH",
+            queryType: "FILTER",
             Serial: searchString,
+            InvoiceStatus:invoiceStatus,
+            ProcessType:selectedTab,
             paging: {
                 Page: page,
                 Size: rowsPerPage,
@@ -49,7 +53,7 @@ const ProcessManagement = () => {
                     error.showError({message: "خطا نا مشخص",});
                 }
             });
-    }, [page, rowsPerPage, searchString]);
+    }, [page, rowsPerPage, searchString,selectedTab]);
 
     function getStatusCollor(row) {
         switch (row.Status) {
@@ -76,6 +80,23 @@ const ProcessManagement = () => {
         <>
             <Notice icon="flaticon-warning kt-font-primary">مدیریت فرآیند ها</Notice>
 
+            <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
+                <Tabs
+                    value={selectedTab}
+                    onChange={(e, n) => setSelectedTab(n)}
+                    indicatorColor="primary"
+                    textColor="inherit"
+                    variant={"scrollable"}
+                    aria-label="full width tabs example"
+                >
+                    <Tab label="همه" value={null}/>
+                    {Object.keys(ProcessTypeEnum).map(item=>(
+                            <Tab key={item} label={ProcessTypeEnum[item]} value={item}/>
+                        )
+                    )}
+                </Tabs>
+            </Paper>
+
             <Portlet>
                 <PortletHeader
                     title="فرآیند ها"
@@ -95,18 +116,9 @@ const ProcessManagement = () => {
                                 }}
                                 label={"جستجو"}
                             />
-                            <button
-                                type="button"
-                                className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                onClick={(e) => SetOpenModalAdd(true)}
-                            >
-                                <AddIcon/>
-                            </button>
                         </PortletHeaderToolbar>
                     }
-
                 />
-
                 <PortletBody>
                     <TableContainer>
                         <Table
@@ -114,7 +126,6 @@ const ProcessManagement = () => {
                             aria-labelledby="tableTitle"
                             size="medium"
                         >
-
                             <TableHead>
                                 <TableRow>
                                     <TableCell align="right" padding="normal" sortDirection={false}>Id</TableCell>
@@ -122,6 +133,7 @@ const ProcessManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>زمان</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>سریال</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>توسط</TableCell>
+                                    <TableCell align="left" padding="normal" sortDirection={false}>وضعیت</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>

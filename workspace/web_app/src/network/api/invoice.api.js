@@ -7,6 +7,16 @@ export function invoice_add(data) {
 export function invoice_query(data) {
     return axios.post(Api_url.invoice.query, data);
 }
+export function invoice_getHowToPay(data) {
+    return axios.post(Api_url.invoice.getHowToPay, data);
+}
+
+export function invoice_getById(invoiceId) {
+    return axios.get(Api_url.invoice.getById,{params:{id:invoiceId}});
+}
+export function invoice_getBasketByUserId(invoiceId) {
+    return axios.get(Api_url.invoice.getBasketByUserId,{params:{id:invoiceId}});
+}
 export function invoice_addBuyable(data) {
     return axios.post(Api_url.invoice.addBuyable, data);
 }

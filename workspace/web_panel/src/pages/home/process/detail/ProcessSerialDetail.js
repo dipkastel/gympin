@@ -10,6 +10,8 @@ import _UserTransactions from "./partials/_UserTransactions";
 import _PersonnelCreditTransactions from "./partials/_PersonnelCreditTransactions";
 import _CorporateIncreaseRequest from "./partials/_CorporateIncreaseRequest";
 import _UserIncreaseRequest from "./partials/_UserIncreaseRequest";
+import _Invoice from "./partials/_Invoice";
+import _PurchasedBases from "./partials/_PurchasedBases";
 
 const ProcessSerialDetail = () => {
 
@@ -19,7 +21,6 @@ const ProcessSerialDetail = () => {
 
     useEffect(() => {
         serial_getById({id: serialId}).then((result) => {
-            // console.log("serial : ", result.data.Data);
             setSerial(result.data.Data);
         }).catch(e => {
             try {
@@ -43,6 +44,8 @@ const ProcessSerialDetail = () => {
             <Grid container alignItems={"unset"} spacing={3} direction={"row"}>
                 <Grid md={6} item>
                     <_BaseProcessDatas serial={serial}/>
+                    <_Invoice serialInvoice={serial?.Invoices} />
+                    <_PurchasedBases purchasedBases={serial?.PurchasedBases} />
                 </Grid>
                 <Grid md={6} item>
                     <_CorporateIncreaseRequest CorporateIncreaseRequest={serial?.CorporateIncreaseRequest}/>

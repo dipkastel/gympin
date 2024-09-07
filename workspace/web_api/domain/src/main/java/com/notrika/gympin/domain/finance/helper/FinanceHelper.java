@@ -84,7 +84,7 @@ public class FinanceHelper {
         return result;
     }
 
-    public List<FinanceUserEntity> getAllUserIncomeWallet(UserEntity user) {
+    public List<FinanceUserEntity> getAllUserIncomeWallets(UserEntity user) {
         List<FinanceUserEntity> result = user.getFinanceUser().stream().filter(w->w.getUserFinanceType()== UserFinanceType.INCOME_WALLET).collect(Collectors.toList());
         return result;
     }

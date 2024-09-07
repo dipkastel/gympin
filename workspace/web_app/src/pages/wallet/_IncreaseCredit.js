@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Box, Button, Card, Divider, Grid, TextField, ToggleButton, Typography} from "@mui/material";
+import {Box, Button, Card, CardHeader, Divider, Grid, TextField, ToggleButton, Typography} from "@mui/material";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
-import {transactions_setPaymentRequest} from "../../network/api/transactions.api";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {Image} from "react-bootstrap";
@@ -21,9 +20,9 @@ const _IncreaseCredit = () => {
     const [chequeDate, setChequeDate] = useState(null);
     const [paymentGatewaysApplication, setPaymentGatewaysApplication] = useState(null);
     const [selectedGateway, setSelectedGatewayApplication] = useState(null);
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [suggests, setSuggests] = useState(null);
-    const [commentToggle,setCommentToggle] = useState(false);
+    const [commentToggle, setCommentToggle] = useState(false);
     const [transactionDescription, SetTransactionDescription] = useState(null);
 
     useEffect(() => {
@@ -42,7 +41,7 @@ const _IncreaseCredit = () => {
                 setSelectedGatewayApplication(result.data.Data.content.filter(g => g.IsDefault == true)[0])
             } catch (e) {
             }
-            console.log("resultgateway",result)
+            console.log("resultgateway", result)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -88,6 +87,7 @@ const _IncreaseCredit = () => {
         }
 
     }
+
     function submitPayment(e) {
         e.preventDefault()
         if (!amountToPay || parseInt(amountToPay) < 10000) {
@@ -104,22 +104,25 @@ const _IncreaseCredit = () => {
         // }
         setLoading(true);
         increaseUserDeposit_requestIncreaseUserDeposits({
-            GatewayApplication: {Id:selectedGateway?.Id},
+            GatewayApplication: {Id: selectedGateway?.Id},
             TransactionReference: transactionReference,
-            Application:"WEBAPP",
+            Application: "WEBAPP",
             ChequeDate: chequeDate,
             TransactionType: "CHARGE_CORPORATE",
-            Description:transactionDescription,
+            Description: transactionDescription,
             Amount: amountToPay,
             UserId: currentUser.Id
         }).then(result => {
-            if(result.data.Data.startsWith("http"))
+            if (result.data.Data.startsWith("http"))
                 window.location.href = result.data.Data;
-            else{
+            else {
                 SetTransactionRefrence("");
                 SetTransactionDescription("");
                 SetAmountToPay(null);
-                error.showError({message: "درخواست شما با موفقیت ثبت شد برای پیگیری به تاریخچه مراجعه نمایید.",duration:5000});
+                error.showError({
+                    message: "درخواست شما با موفقیت ثبت شد برای پیگیری به تاریخچه مراجعه نمایید.",
+                    duration: 5000
+                });
 
             }
         }).catch(e => {
@@ -133,17 +136,18 @@ const _IncreaseCredit = () => {
 
 
     return (<>
-            {paymentGatewaysApplication&& <Card elevation={3} sx={{margin: 1}}>
-
-
-                <Typography
+            {paymentGatewaysApplication && <Card elevation={6} sx={{margin: 1}}>
+                <CardHeader title={<Typography
                     sx={{display: "inline", margin: 1}}
                     component="p"
                     variant="subtitle1"
                     color="text.primary"
                 >
                     افزایش اعتبار شخصی
-                </Typography>
+                </Typography>}>
+
+                </CardHeader>
+                <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>
                 <Grid
                     container
                     direction="column"
@@ -151,18 +155,24 @@ const _IncreaseCredit = () => {
                     alignItems="center"
                     sx={{padding: 1}}
                 >
-                    <Grid
-                        container
-                        direction="row"
-                        justifyContent="space-around"
-                        alignItems="center"
-                        sx={{padding: 1}}
-                    >
-                        {suggests&&suggests.map(suggest=>(
-                            <Button key={"suggest-"+suggest.Id} sx={{m: 2}} onClick={() => SetAmountToPay(suggest.Amount)} color={"info"} variant={"contained"}>{toPriceWithComma(suggest.Amount)+" تومان "}</Button>
-                        ))}
-                    </Grid>
-                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>
+                    {((amountToPay||0)<1)&& <>
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="space-around"
+                            alignItems="center"
+                            sx={{padding: 1}}
+                        >
+                            {suggests && suggests.map(suggest => (
+                                <Button key={"suggest-" + suggest.Id} sx={{m: 2}}
+                                        onClick={() => SetAmountToPay(suggest.Amount)} color={"info"}
+                                        variant={"contained"}>{toPriceWithComma(suggest.Amount) + " تومان "}</Button>
+                            ))}
+                        </Grid>
+                        <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>
+
+
+                    </>}
 
                     <Typography sx={{width: "100%", textAlign: "start", pt: 3, pr: 3}} variant={"subtitle1"}>
                         نوع پرداخت
@@ -178,7 +188,7 @@ const _IncreaseCredit = () => {
                         xs={12}
                     >
 
-                        {paymentGatewaysApplication.content&&paymentGatewaysApplication.content.map(item => (
+                        {paymentGatewaysApplication.content && paymentGatewaysApplication.content.map(item => (
 
                             <Grid
                                 key={item.Id}
@@ -214,18 +224,18 @@ const _IncreaseCredit = () => {
                             variant="outlined"
                             margin="normal"
                             name="code"
-                            sx={{flex:"auto"}}
+                            sx={{flex: "auto"}}
                             value={toPriceWithComma(amountToPay || 0)}
                             type="text"
                             onChange={e => SetAmountToPay(toPriceWithoutComma(e.target.value))}
                             label={"مبلغ دلخواه به تومان"}
                         />
                         <ToggleButton
-                            sx={{margin:"9px 9px 0px 0px"}}
+                            sx={{margin: "9px 9px 0px 0px"}}
                             value="comment"
-                            onClick={(e)=>setCommentToggle(!commentToggle)}
+                            onClick={(e) => setCommentToggle(!commentToggle)}
                         >
-                            <InsertComment />
+                            <InsertComment/>
                         </ToggleButton>
                         <TextField
                             hidden={!commentToggle}

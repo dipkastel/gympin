@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.util._base.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

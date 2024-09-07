@@ -30,7 +30,7 @@ public class ManageReportSettingsEntity extends BaseEntityWithCreateUpdate<Manag
     @Column(name = "reportSettingDescription")
     private String description;
 
-    @Column(name = "updateAuto",columnDefinition = "boolean default true")
+    @Column(name = "updateAuto",columnDefinition = "tinyint(1) default 0")
     private Boolean updateAuto;
 
     @Override

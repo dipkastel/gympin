@@ -9,3 +9,12 @@ export function getHomeId(settings) {
         return 2
     }
 }
+export function getCheckoutType(settings){
+    try{
+        var userSetting = settings?.settings?.server?.UserSettings?.find(s => s.Key === "USER_CHECKOUT_TYPE")?.Value
+        if(userSetting&&userSetting!="") return userSetting;
+        var publicSettings = settings?.settings?.server?.Settings?.find(s => s.Key === "WEB_APP_CHECKOUT_TYPE")?.Value;
+        if(publicSettings&&publicSettings!="") return publicSettings;
+    }catch (e) {
+    }
+}

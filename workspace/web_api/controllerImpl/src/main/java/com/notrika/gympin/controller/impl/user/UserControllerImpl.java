@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.user;
 
+import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
 import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
 import com.notrika.gympin.common.settings.userSettings.param.UserSettingParam;
 import com.notrika.gympin.common.settings.userSettings.service.userSettingsService;
@@ -67,7 +68,7 @@ public class UserControllerImpl implements UserController {
     @GetMapping("/getUserCredits")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<UserCreditDto> getUserCredits(UserParam param) {
-        return ResponseEntity.ok(userService.getCreditsByUser(param));
+        return ResponseEntity.ok(userService.getAllCreditsByUser(param));
     }
     @Override
     @GetMapping("/getMyCredits")

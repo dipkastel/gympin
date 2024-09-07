@@ -3,8 +3,8 @@ package com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
-import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
+import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -36,15 +36,19 @@ public class PurchasedSubscribeEntity extends PurchasedBaseEntity<PurchasedSubsc
     @Enumerated(EnumType.STRING)
     private SubscribeStatus subscribeStatus;
 
-    @Column(name = "Timing",columnDefinition = "varchar(800)")
+    @Column(name = "Timing", columnDefinition = "varchar(800)")
     private String timing;
 
     @ManyToOne
     @JoinColumn(name = "ticketSubscribeId")
+    @JsonIgnore
+    @ToString.Exclude
     private TicketSubscribeEntity ticketSubscribe;
 
     @ManyToMany
     @JoinTable(name = "PurchasedSubscribeCouches", joinColumns = @JoinColumn(name = "ticketSubscribeId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
+    @JsonIgnore
+    @ToString.Exclude
     private List<UserEntity> coaches;
 
     @Column(name = "entryTotalCount", nullable = false)
@@ -57,8 +61,8 @@ public class PurchasedSubscribeEntity extends PurchasedBaseEntity<PurchasedSubsc
     private Date expireDate;
 
     @OneToMany(mappedBy = "purchasedSubscribe")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<PurchasedSubscribeEntryEntity> entryList;
 
 

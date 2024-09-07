@@ -10,9 +10,7 @@ const FinanceCorporate = ({currentCorporate}) => {
     const error = useContext(ErrorContext);
     const [totalCredit, SetTotalCredit] = useState(0);
     useEffect(() => {
-        console.log(currentCorporate.Id)
         corporate_getFinanceCorporate({id: currentCorporate.Id}).then(result => {
-            console.log(result)
             SetTotalCredit(result.data.Data);
 
         }).catch(e => {

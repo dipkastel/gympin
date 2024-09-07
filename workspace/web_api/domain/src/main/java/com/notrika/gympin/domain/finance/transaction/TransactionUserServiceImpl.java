@@ -14,6 +14,7 @@ import com.notrika.gympin.persistence.dao.repository.finance.transaction.Finance
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -70,7 +71,9 @@ public class TransactionUserServiceImpl extends AbstractBaseService<UserTransact
     public List<UserTransactionDto> getByUser(Long userId) {
         List<UserTransactionDto> resultList = new ArrayList<>();
         try {
-            resultList.addAll(convertToDtos(financeUserRepository.findByUserIdAndDeletedFalse(userId).getTransactionsUser()));
+            List<FinanceUserEntity> wallets =financeUserRepository.findByUserIdAndDeletedFalse(userId);
+            for(var wallet:wallets)
+                resultList.addAll(convertToDtos(wallet.getTransactionsUser()));
         } catch (Exception e) {
         }
         return resultList;

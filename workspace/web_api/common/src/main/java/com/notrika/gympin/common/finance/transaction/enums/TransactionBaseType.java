@@ -2,7 +2,12 @@ package com.notrika.gympin.common.finance.transaction.enums;
 
 public enum TransactionBaseType {
     CORPORATE,
+    CORPORATE_PERSONNEL_DEPOSIT_PURCHASE,
+    CORPORATE_PERSONNEL_CREDIT_PURCHASE,
     USER,
+    USER_PERSONAL_PURCHASE,
+    USER_NON_WITHDRAWABLE_PURCHASE,
+    CREDIT_PURCHASE,
     PLACE,
     INCOME,
     PERSONNEL,

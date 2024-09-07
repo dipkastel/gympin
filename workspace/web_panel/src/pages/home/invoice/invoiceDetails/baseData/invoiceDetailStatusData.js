@@ -11,7 +11,7 @@ const InvoiceDetailStatusData = ({invoice, updatePage}) => {
 
     function changeUserAccess(data) {
         invoice_changeStatus({Id: invoice.Id, Status: data}).then(response => {
-            updatePage();
+                updatePage();
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

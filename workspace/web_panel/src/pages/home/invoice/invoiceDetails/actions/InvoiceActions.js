@@ -59,7 +59,7 @@ const InvoiceActions = ({invoice, updatePage}) => {
             }
             newCredit.push({
                 Periority: credit.Periority,
-                Source: credit.CreditType == "PERSONAL" ? creditTypes[credit.CreditType] : credit.Corporate.Name,
+                Source: credit.CreditType == "PERSONAL" ? creditTypes[credit.CreditType] : credit?.Corporate?.Name,
                 Credit: credit,
                 CreditAmount: credit.CreditAmount,
                 CreditPayableAmount: credit.CreditPayableAmount,

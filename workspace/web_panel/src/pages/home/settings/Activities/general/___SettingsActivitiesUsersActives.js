@@ -30,7 +30,6 @@ const ___SettingsActivitiesUsersActives = () => {
             ToDate: new Date(),
             FromDate: new Date().setDate(new Date().getDate()-1)
         }).then((data) => {
-            console.log(data.data.Data);
             SetService(data.data.Data);
         }).catch(e => {
             try {

@@ -1,75 +1,86 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 import _InvoiceBuyableCard from "./partial/_InvoiceBuyableCard";
-import _InvoiceVocher from "./partial/_InvoiceVocher";
-import store from "../../helper/redux/store";
-import {sagaActions} from "../../helper/redux/actions/SagaActions";
-import _InvoiceHowToPay from "./partial/_InvoiceHowToPay";
-import _InvoiceTotalPrice from "./partial/_InvoiceTotalPrice";
+import _InvoiceHowToPayModirate from "./partial/_InvoiceHowToPayModirate";
 import _InvoiceTitle from "./partial/_InvoiceTitle";
 import _InvoiceAction from "./partial/_InvoiceAction";
-import {CircularProgress, Grid, Typography} from "@mui/material";
-import {Image} from "react-bootstrap";
-import {toAbsoluteUrl} from "../../helper/utils";
+import {CircularProgress, Grid} from "@mui/material";
+import {getCheckoutType} from "../../helper/serverSettingsHelper";
+import _InvoiceEmptyBasket from "./partial/_InvoiceEmptyBasket";
+import _InvoiceHowToPaySimple from "./partial/_InvoiceHowToPaySimple";
+import _InvoiceHowToPayAdvanced from "./partial/_InvoiceHowToPayAdvanced";
+import {invoice_getBasketByUserId} from "../../network/api/invoice.api";
+import {ErrorContext} from "../../components/GympinPagesProvider";
+import {invoiceActions} from "../../helper/redux/actions/InvoiceActions";
+import store from "../../helper/redux/store";
 
 const UserBasket = () => {
-    const userBasket = useSelector(state => state.invoice.userBasket);
+    const error = useContext(ErrorContext);
+    const [CurrentBasket, SetCurrentBasket] = useState(null);
     const currentUser = useSelector(state => state.auth.user);
     const [invoiceCredits, SetInvoiceCredits] = useState(null)
-    const [userCanPay,setUserCanPay] = useState(false);
+    const [userCanPay, setUserCanPay] = useState(false);
+
+    const [serverSettings] = useState(useSelector(settings => settings));
+    const [currentCheckoutType] = useState(getCheckoutType(serverSettings)||"SIMPLE")
+
+
+    useEffect(() => {
+        updatePage();
+    }, []);
+
 
     function updatePage() {
         document.title = 'سبد خرید';
-        if(currentUser)
-            store.dispatch(sagaActions.RequestUserInvoices(currentUser));
+        SetCurrentBasket(null);
+        invoice_getBasketByUserId(currentUser.Id).then(result => {
+            SetCurrentBasket(result.data.Data);
+            store.dispatch(invoiceActions.SetUserBasket(result.data.Data));
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
     }
 
-    if(!userBasket)
+    if (!CurrentBasket)
         return (<>
             <Grid
                 container
-                sx={{width:"100%",height:"80vh"}}
+                sx={{width: "100%", height: "80vh"}}
                 direction={"column"}
                 justifyContent={"center"}
                 alignItems={"center"}
             >
-                <CircularProgress />
+                <CircularProgress/>
 
             </Grid>
         </>);
-    return (userBasket?.InvoiceBuyables?.length||0>0)? (
+    return (CurrentBasket?.InvoiceBuyables?.length || 0 > 0) ? (
         <>
-            {userBasket&&<_InvoiceTitle />}
-            {userBasket?.InvoiceBuyables?.map((item, number) => (
-                <_InvoiceBuyableCard key={"buyable"+item.Id} buyable={item} updatePage={updatePage}/>
+            <_InvoiceTitle/>
+            {CurrentBasket?.InvoiceBuyables?.map((item, number) => (
+                <_InvoiceBuyableCard key={"buyable" + item.Id} buyable={item} updatePage={updatePage}/>
             ))}
-
-            {userBasket&&<_InvoiceVocher />}
-            {userBasket&&<_InvoiceTotalPrice totalPrice={userBasket.PriceToPay}/> }
-            {userBasket&&<_InvoiceHowToPay userBasket={userBasket} setUserCanPay={setUserCanPay} invoiceCredits={invoiceCredits} SetInvoiceCredits={SetInvoiceCredits}/>}
-            {userBasket&&<_InvoiceAction userBasket={userBasket} userCanPay={userCanPay} invoiceCredits={invoiceCredits} />}
-
-
-
-
-
-
+            {/*<_InvoiceVocher />}*/}
+            {currentCheckoutType === "SIMPLE" &&
+            <_InvoiceHowToPaySimple userBasket={CurrentBasket} setUserCanPay={setUserCanPay}
+                                    invoiceCredits={invoiceCredits}
+                                    SetInvoiceCredits={SetInvoiceCredits}/>}
+            {currentCheckoutType === "MODERATE" &&
+            <_InvoiceHowToPayModirate userBasket={CurrentBasket} setUserCanPay={setUserCanPay}
+                                      invoiceCredits={invoiceCredits}
+                                      SetInvoiceCredits={SetInvoiceCredits}/>}
+            {currentCheckoutType === "ADVANCED" &&
+            <_InvoiceHowToPayAdvanced userBasket={CurrentBasket} setUserCanPay={setUserCanPay}
+                                      invoiceCredits={invoiceCredits}
+                                      SetInvoiceCredits={SetInvoiceCredits}/>}
+            <_InvoiceAction userBasket={CurrentBasket} userCanPay={userCanPay} invoiceCredits={invoiceCredits}
+                            checkoutType={currentCheckoutType}/>
         </>
-    ):(<>
-        <Grid
-            container
-            sx={{width:"100%",height:"80vh"}}
-            direction={"column"}
-            justifyContent={"center"}
-            alignItems={"center"}
-        >
-            <Image src={toAbsoluteUrl("/assets/images/shoping-basket.png")}  width={"40%"}/>
-            <Typography variant={"body"} sx={{m:2}} >
-                سبد خرید شما خالی است
-            </Typography>
-
-        </Grid>
-    </>);
+    ) : (<_InvoiceEmptyBasket/>);
 };
 
 export default UserBasket;

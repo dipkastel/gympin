@@ -10,7 +10,6 @@ const UserWalletsTab = ({currentUser, updatePage}) => {
     const [userCredits, SetUserCredits] = useState([])
     useEffect(() => {
         User_getUserCredits({Id: currentUser.Id}).then(result => {
-            console.log(result);
             SetUserCredits(result.data.Data);
         }).catch(e => {
             try {

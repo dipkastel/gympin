@@ -12,7 +12,6 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
     const [inTicketSubscribe, SetInTicketSubscribe] = useState(ticketSubscribe)
 
     function setFormValues(lable, value) {
-        console.log(lable)
         if(lable==="PlacePrice")
             SetInTicketSubscribe({...inTicketSubscribe, [lable]: value,Price:value})
         else

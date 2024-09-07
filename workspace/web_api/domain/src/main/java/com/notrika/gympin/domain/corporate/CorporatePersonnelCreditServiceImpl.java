@@ -6,6 +6,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePer
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelCreditService;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.util.exception.corporate.CorporateContractIsNotComplete;
 import com.notrika.gympin.common.util.exception.corporate.LowCreditException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
@@ -65,8 +66,11 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
                 .build());
 
         //checks
+        if (!helper.checkContractContract(personnelEntity.getCorporate()))
+            throw new CorporateContractIsNotComplete();
         if (helper.checkLowBudjetByContract(personnelEntity.getCorporate(), param.getCreditAmount()))
             throw new LowCreditException();
+
 
         //add finance corporate personnel credit
         FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnelEntity, param, serial);

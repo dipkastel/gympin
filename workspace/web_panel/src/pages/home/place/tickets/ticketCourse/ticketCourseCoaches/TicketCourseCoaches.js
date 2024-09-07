@@ -42,7 +42,6 @@ const TicketCourseCoaches = ({ticketCourse}) => {
     function getPlacePersonnel() {
         placePersonnel_ByPlace({Id: ticketCourse.Place.Id}).then(data => {
             SetPlacePersonnel(data.data.Data);
-            console.log("personnel",data.data.Data);
             getTicketCourseCoaches();
         }).catch(e => {
                     try {

@@ -52,7 +52,6 @@ const __SettingsApplicationGateways = () => {
             paging: {Page: 0, Size: 50, Desc: true}
         }).then((result) => {
             setGatewayApplication(result.data.Data);
-            console.log(result.data.Data);
         }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message,});
@@ -67,11 +66,6 @@ const __SettingsApplicationGateways = () => {
         function addApplicationGateway(e) {
             e.preventDefault()
             setOpenModalAdd(false);
-            console.log({
-                Application: e.target.application.value,
-                Gateway: {Id:e.target.gateway.value},
-                IsDefault: e.target.default.checked
-            })
             GatewayApplication_add({
                 Application: e.target.application.value,
                 Gateway: {Id:e.target.gateway.value},

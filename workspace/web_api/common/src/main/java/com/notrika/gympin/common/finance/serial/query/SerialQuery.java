@@ -1,6 +1,8 @@
 package com.notrika.gympin.common.finance.serial.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
+import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.Data;
@@ -35,5 +37,11 @@ public class SerialQuery extends BaseQuery<SerialQuery> {
 
     @JsonProperty("Serial")
     private String like_serial;
+
+    @JsonProperty("ProcessType")
+    private ProcessTypeEnum is_processTypeEnum;
+
+    @JsonProperty("InvoiceStatus")
+    private InvoiceStatus is_invoicesæstatus;
 
 }

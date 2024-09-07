@@ -42,11 +42,6 @@ export default function CorporatePersonnelCreditAction({currentCorporate, pUpdat
     function renderModalConfirm() {
         function addCreditToPersonel(e) {
             e.preventDefault()
-            console.log({
-                CorporateId: currentCorporate.Id,
-                CreditAmount: toPriceWithoutComma(values),
-                GroupId: (selectedGroup == "All") ? null : selectedGroup
-            });
             corporatePersonnel_addCreditToAll({
                 CorporateId: currentCorporate.Id,
                 CreditAmount: toPriceWithoutComma(values),

@@ -36,7 +36,6 @@ const TransactionsIncomeManagement = () => {
                 Desc: true
             }
         }).then((result) => {
-            console.log(result.data.Data)
             SetTransactions(result.data.Data)
         });
     }

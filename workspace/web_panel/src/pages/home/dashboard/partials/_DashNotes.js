@@ -35,7 +35,6 @@ const _DashNotes = () => {
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then(result => {
             setNotes(result.data.Data);
-            console.log(result.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

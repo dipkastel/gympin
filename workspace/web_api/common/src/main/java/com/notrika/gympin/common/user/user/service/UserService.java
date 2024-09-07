@@ -25,8 +25,9 @@ public interface UserService extends BaseService<UserParam, UserDto, UserQuery> 
 
     UserDto getMyInfo();
 
-    UserCreditDto getCreditsByUser(UserParam userParam);
+    UserCreditDto getAllCreditsByUser(UserParam userParam);
 
     UserCreditDto getMyCredits();
+
 
 }

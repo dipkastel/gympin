@@ -1,5 +1,7 @@
 export const creditTypes = {
     PERSONAL:"اعتبار شخصی",
-    SPONSOR:"اعتبار اشتراکی"
+    SPONSOR:"شرکت",
+    INCOME:"درآمد",
+    NON_WITHDRAWABLE:"جیم پین"
 
 }

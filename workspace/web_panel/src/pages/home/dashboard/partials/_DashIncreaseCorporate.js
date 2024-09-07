@@ -36,7 +36,6 @@ const _DashIncreaseCorporate = () => {
             DepositStatus:"REQUESTED",
             paging: {Page: page, Size: (rowsPerPage), orderBy: "Serial", Desc: true}
         }).then((result) => {
-            console.log(result.data.Data)
             setRequests(result.data.Data)
         }).catch(e => {
                 try {

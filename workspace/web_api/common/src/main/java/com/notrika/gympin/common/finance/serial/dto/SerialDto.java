@@ -35,7 +35,7 @@ public class SerialDto extends BaseDtoWithCreateUpdate<SerialDto> {
     @JsonProperty("CorporateTransactions")
     private List<CorporateTransactionDto> corporateTransactions;
     @JsonProperty("PersonnelCreditTransactions")
-    private List<PersonnelCreditTransactionDto> personnelCreditTransactions;
+    private List<TransactionPersonnelCreditDto> personnelCreditTransactions;
     @JsonProperty("IncomeTransactions")
     private List<IncomeTransactionDto> incomeTransactions;
     @JsonProperty("DiscountTransactions")

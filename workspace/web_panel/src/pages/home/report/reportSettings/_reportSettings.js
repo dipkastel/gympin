@@ -1,6 +1,6 @@
 import React, {useContext, useEffect,useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {reportSettings_getAll} from "../../../../network/api/reportSettings.api";
+import {reportSettings_getAll, reportSettings_update} from "../../../../network/api/reportSettings.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {List, ListItem, ListItemText, Switch} from "@mui/material";
 
@@ -9,6 +9,10 @@ const _reportSettings = () => {
     const [reportSettings,SetReportSettings] = useState([]);
 
     useEffect(() => {
+        getReport();
+    }, []);
+
+    function getReport() {
         reportSettings_getAll({}).then(response=>{
             SetReportSettings(response.data.Data)
         }).catch(e => {
@@ -18,7 +22,33 @@ const _reportSettings = () => {
                 error.showError({message: "خطا نا مشخص",});
             }
         });
-    }, []);
+    }
+    function updateAutoUpdate(e,row) {
+        console.log({
+            UpdateAuto:!!e.target.value,
+            Key:row.Key,
+            Value:row.Value,
+            Description:row.Description
+        })
+        reportSettings_update({
+            Id:row.Id,
+            UpdateAuto:e.target.checked,
+            Key:row.Key,
+            Value:row.Value,
+            Description:row.Description
+        }).then(result=>{
+            console.log("ok ok ok ")
+            getReport();
+        }).catch(e => {
+            console.log(e);
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+        console.log(!!e.target.value);
+    }
 
     return (
         <>
@@ -38,8 +68,8 @@ const _reportSettings = () => {
 
                                 <Switch
                                     edge="end"
-                                    // onChange={handleToggle('wifi')}
-                                    checked={item.UpdateAuto}
+                                    onChange={e=>updateAutoUpdate(e,item)}
+                                    checked={item?.UpdateAuto}
                                     inputProps={{
                                         'aria-labelledby': 'switch-list-label-wifi',
                                     }}

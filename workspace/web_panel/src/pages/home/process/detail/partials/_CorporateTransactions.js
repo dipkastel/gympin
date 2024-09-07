@@ -35,28 +35,29 @@ const _CorporateTransactions = ({corporateTransaction}) => {
         </span>);
     }
 
+
     function getCurrentAmount(tr) {
         if (tr.TransactionType === "CREDIT") {
             return <>{"اعتبار فعلی پرسنل : " + toPriceWithComma(tr?.CorporateFinance?.TotalCredits)}
 
-                {tr?.Description&&
+                {tr?.Description &&
                 <Tooltip title={tr?.Description} placement="top">
-                    <Description sx={{color:"#f44fd3"}} />
+                    <Description sx={{color: "#f44fd3"}}/>
                 </Tooltip>}
-                {tr?.SerialDescription&&
+                {tr?.SerialDescription &&
                 <Tooltip title={tr?.SerialDescription} placement="top">
-                    <Description sx={{color:"#267272"}} />
+                    <Description sx={{color: "#267272"}}/>
                 </Tooltip>}
             </>
         } else if (tr.TransactionType === "DEPOSIT") {
             return <>{"شارژ فعلی سازمان : " + toPriceWithComma(tr?.CorporateFinance?.TotalDeposit)}
-                {tr?.Description&&
+                {tr?.Description &&
                 <Tooltip title={tr?.Description} placement="top">
-                    <Description sx={{color:"#f44fd3"}} />
+                    <Description sx={{color: "#f44fd3"}}/>
                 </Tooltip>}
-                {tr?.SerialDescription&&
+                {tr?.SerialDescription &&
                 <Tooltip title={tr?.SerialDescription} placement="top">
-                    <Description sx={{color:"#267272"}} />
+                    <Description sx={{color: "#267272"}}/>
                 </Tooltip>}</>
         }
         return "";
@@ -67,16 +68,18 @@ const _CorporateTransactions = ({corporateTransaction}) => {
     }
 
     return (
-        <div className="kt-portlet ">
-            <div className="kt-portlet__head">
-                <div className="kt-portlet__head-label">
-                    <h3 className="kt-portlet__head-title">تراکنش‌های شرکت</h3>
+        <>
+            {corporateTransaction.filter(tr => tr.TransactionType == "DEPOSIT").length > 0 &&
+            <div className="kt-portlet ">
+                <div className="kt-portlet__head">
+                    <div className="kt-portlet__head-label">
+                        <h3 className="kt-portlet__head-title">تراکنش‌های شارژ شرکت</h3>
+                    </div>
                 </div>
-            </div>
-            <div className="kt-portlet__body">
-                <div className="kt-widget4">
-                    {corporateTransaction.map((tr, num) => (
-                        <div key={num} className="kt-widget4__item">
+                <div className="kt-portlet__body">
+                    <div className="kt-widget4">
+                        {corporateTransaction.filter(tr => tr.TransactionType == "DEPOSIT").map((tr, num) => (
+                            <div key={num} className="kt-widget4__item">
                         <span className="kt-widget4__icon">
                                     {(tr?.TransactionStatus !== "COMPLETE") && (
                                         <Tooltip title={TransactionStatus[tr?.TransactionStatus]} placement="top">
@@ -95,27 +98,80 @@ const _CorporateTransactions = ({corporateTransaction}) => {
                             </Tooltip>
                             }
                         </span>
-                            <ListItemText
-                                primary={getCorporate(tr?.CorporateFinance?.Corporate)}
-                                secondary={getCalc(tr)}
-                                sx={{textAlign: "right"}}/>
-                            <ListItemText
-                                primary={getCurrentAmount(tr)}
-                                secondary={"انجام شده در : "+new Date(tr?.CreatedDate).toLocaleDateString('fa-IR', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                    hour: "2-digit",
-                                    minute: "2-digit"
-                                })}
-                                sx={{textAlign: "right"}}/>
-                            <span
-                                className={"kt-widget4__number " + getColorClassByAmount(tr?.Amount)}>{toPriceWithComma(tr?.Amount) + " تومان"}</span>
-                        </div>
-                    ))}
+                                <ListItemText
+                                    primary={getCorporate(tr?.CorporateFinance?.Corporate)}
+                                    secondary={getCalc(tr)}
+                                    sx={{textAlign: "right"}}/>
+                                <ListItemText
+                                    primary={getCurrentAmount(tr)}
+                                    secondary={"انجام شده در : " + new Date(tr?.CreatedDate).toLocaleDateString('fa-IR', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: "2-digit",
+                                        minute: "2-digit"
+                                    })}
+                                    sx={{textAlign: "right"}}/>
+                                <span
+                                    className={"kt-widget4__number " + getColorClassByAmount(tr?.Amount)}>{toPriceWithComma(tr?.Amount) + " تومان"}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
+            }
+            {corporateTransaction.filter(tr => tr.TransactionType == "CREDIT").length > 0 &&
+            <div className="kt-portlet ">
+                <div className="kt-portlet__head">
+                    <div className="kt-portlet__head-label">
+                        <h3 className="kt-portlet__head-title">تراکنش‌های اعتبار شرکت</h3>
+                    </div>
+                </div>
+                <div className="kt-portlet__body">
+                    <div className="kt-widget4">
+                        {corporateTransaction.filter(tr => tr.TransactionType == "CREDIT").map((tr, num) => (
+                            <div key={num} className="kt-widget4__item">
+                        <span className="kt-widget4__icon">
+                                    {(tr?.TransactionStatus !== "COMPLETE") && (
+                                        <Tooltip title={TransactionStatus[tr?.TransactionStatus]} placement="top">
+                                            <NotInterested className={getColorClassByTrStatus(tr.TransactionStatus)}
+                                                           sx={{fontSize: 15}}/>
+                                        </Tooltip>)}
+                            {(tr?.TransactionType == "CREDIT") &&
+                            <Tooltip title={"اعتبار"} placement="top">
+                                <AttachMoney className={getColorClassByAmount(tr?.Amount)} sx={{fontSize: 25}}/>
+                            </Tooltip>
+                            }
+                            {(tr?.TransactionType == "DEPOSIT") &&
+                            <Tooltip title={"شارژ"} placement="top">
+                                <AccountBalanceWallet className={getColorClassByAmount(tr?.Amount)}
+                                                      sx={{fontSize: 25}}/>
+                            </Tooltip>
+                            }
+                        </span>
+                                <ListItemText
+                                    primary={getCorporate(tr?.CorporateFinance?.Corporate)}
+                                    secondary={getCalc(tr)}
+                                    sx={{textAlign: "right"}}/>
+                                <ListItemText
+                                    primary={getCurrentAmount(tr)}
+                                    secondary={"انجام شده در : " + new Date(tr?.CreatedDate).toLocaleDateString('fa-IR', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: "2-digit",
+                                        minute: "2-digit"
+                                    })}
+                                    sx={{textAlign: "right"}}/>
+                                <span
+                                    className={"kt-widget4__number " + getColorClassByAmount(tr?.Amount)}>{toPriceWithComma(tr?.Amount) + " تومان"}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            }
+        </>
     );
 };
 

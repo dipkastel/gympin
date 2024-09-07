@@ -18,7 +18,6 @@ const __SettingSmsManual = ({smsSent}) => {
 
     function getAllPatterns() {
         sms_getAllPatterns().then(result => {
-            console.log(result.data.Data.map(r=>r.PatternKey));
             setPatterns(result.data.Data);
 
         }).catch(e => {

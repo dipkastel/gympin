@@ -94,7 +94,6 @@ function UserIncreaseDeposit({currentUser, updatePage}) {
                             <Modal.Title>{"تایید یا رد درخواست افزایش اعتبار"}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            {console.log(transactionToSettle)}
                             <p>{transactionToSettle && toPriceWithComma(transactionToSettle.Amount)} تومان</p>
                             <p>{transactionToSettle?.GatewayType && "نوع تراکنش :  "+ GatewayType[transactionToSettle.GatewayType]}</p>
                             <p>{transactionToSettle?.Refrence && transactionToSettle.Refrence}</p>

@@ -35,6 +35,8 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "buyablePlaceId")
+    @JsonIgnore
+    @ToString.Exclude
     private PlaceEntity place;
 
     @Column(name = "name")
@@ -43,10 +45,10 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "enable",nullable = false)
+    @Column(name = "enable", nullable = false)
     private Boolean enable;
 
-    @Column(name = "discount", nullable = false,columnDefinition = "smallint default 0")
+    @Column(name = "discount", nullable = false, columnDefinition = "smallint default 0")
     private Short discount;
 
     @Column(name = "gender")
@@ -67,33 +69,39 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
     private BuyableType buyableType;
 
     @OneToMany(mappedBy = "buyable")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<BuyableDiscountHistoryEntity> discountHistory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prerequisiteId")
     @Getter
     @Setter
+    @JsonIgnore
+    @ToString.Exclude
     private BuyableEntity prerequisite;
 
-    @OneToMany(mappedBy = "prerequisite",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "prerequisite", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Setter
+    @JsonIgnore
+    @ToString.Exclude
     private List<BuyableEntity> prerequisites;
 
     @OneToMany(mappedBy = "buyable")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<PlacePersonelBuyableAccessEntity> placePersonnelBuyableAccess;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "beneficiary")
+    @JsonIgnore
+    @ToString.Exclude
     private PlacePersonnelEntity beneficiary;
 
     @OneToMany(mappedBy = "buyable", fetch = FetchType.LAZY)
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<InvoiceBuyableEntity> inInvoices;
 
     @Override

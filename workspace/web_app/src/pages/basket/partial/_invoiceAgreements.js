@@ -1,6 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {PlaceAbout_getAllAboutByPlaces} from "../../../network/api/placeAbout.api";
-import {Button, Dialog, DialogContent, FormControlLabel, FormGroup, Grid, Switch} from "@mui/material";
+import {
+    Button,
+    CircularProgress,
+    Dialog,
+    DialogContent,
+    FormControlLabel,
+    FormGroup,
+    Grid,
+    Switch
+} from "@mui/material";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 
@@ -73,6 +82,7 @@ const _invoiceAgreements = ({userBasket, setAcceptAgreements}) => {
 
     return (
         <div>
+            {loading &&<CircularProgress/>}
             {checkedItem &&
             <FormGroup>
                 {acceptableTerm && acceptableTerm.map((item, Number) => (<div key={Number}>

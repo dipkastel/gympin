@@ -1,14 +1,12 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
-import com.notrika.gympin.common.settings.userSettings.enums.UserSettingTypesEnum;
-import com.notrika.gympin.common.user.user.dto.UserDto;
-import com.notrika.gympin.common.user.user.dto.UserRegisterDto;
+import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
+import com.notrika.gympin.common.user.user.enums.CreditType;
+import com.notrika.gympin.common.user.user.enums.UserFinanceType;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
-import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
-import org.springframework.data.domain.Page;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,4 +27,17 @@ public final class FinanceUserConvertor {
         return dto;
     }
 
+    public static UserCreditDetailDto toDto(FinanceUserEntity userPersonalWallet) {
+        UserCreditDetailDto detail = new UserCreditDetailDto();
+        BigDecimal userDebit = userPersonalWallet.getTotalDeposit();
+        detail.setCreditAmount(userDebit);
+        if (userPersonalWallet.getUserFinanceType() == UserFinanceType.INCOME_WALLET)
+            detail.setCreditType(CreditType.INCOME);
+        if (userPersonalWallet.getUserFinanceType() == UserFinanceType.PERSONAL_WALLET)
+            detail.setCreditType(CreditType.PERSONAL);
+        if (userPersonalWallet.getUserFinanceType() == UserFinanceType.NON_WITHDRAWABLE_WALLET)
+            detail.setCreditType(CreditType.NON_WITHDRAWABLE);
+        detail.setCreditPayableAmount(userDebit);
+        return detail;
+    }
 }

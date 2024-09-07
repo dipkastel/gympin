@@ -49,9 +49,9 @@ public final class TransactionConvertor {
         dto.setSerial(SerialConvertor.ToDto(entity.getSerial()));
         return dto;
     }
-    public static PersonnelCreditTransactionDto toDto(FinanceCorporatePersonnelCreditTransactionEntity entity) {
+    public static TransactionPersonnelCreditDto toDto(FinanceCorporatePersonnelCreditTransactionEntity entity) {
         if(entity==null) return null;
-        PersonnelCreditTransactionDto dto = new PersonnelCreditTransactionDto();
+        TransactionPersonnelCreditDto dto = new TransactionPersonnelCreditDto();
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setCreatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()));
@@ -62,7 +62,10 @@ public final class TransactionConvertor {
         dto.setIsChecked(entity.getIsChecked());
         dto.setSerial(SerialConvertor.ToDto(entity.getSerial()));
         dto.setPersonnelCredit(CorporateConvertor.toCreditDto(entity.getPersonnelCredit()));
-        try {
+        try{
+            dto.setCorporateName(entity.getPersonnelCredit().getCorporatePersonnel().getCorporate().getName());
+        }catch (Exception e){}
+         try {
             dto.setCurrentTotalCredit(entity.getPersonnelCredit().getCorporatePersonnel().getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
         }catch (Exception e){}
 

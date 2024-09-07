@@ -35,7 +35,6 @@ const TransactionsPlaceManagement = () => {
             }
         }).then((result) => {
             SetTransactions(result.data.Data)
-            console.log(result.data.Data);
         });
     }
 

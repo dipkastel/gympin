@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.finance.invoice.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.finance.invoice.enums.UserCheckoutTypes;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.param.PurchasedSubscribeParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import lombok.Data;
@@ -24,6 +25,9 @@ public class InvoiceCheckoutParam extends BaseParam<InvoiceCheckoutParam> {
 
     @JsonProperty("Price")
     private BigDecimal price;
+
+    @JsonProperty("CheckoutType")
+    private UserCheckoutTypes checkoutType;
 
     @JsonProperty("Checkout")
     private List<CheckoutDetailParam> checkout;

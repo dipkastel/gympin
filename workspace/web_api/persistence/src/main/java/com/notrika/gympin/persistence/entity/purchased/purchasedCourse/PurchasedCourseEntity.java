@@ -33,6 +33,8 @@ public class PurchasedCourseEntity extends PurchasedBaseEntity<PurchasedCourseEn
 
     @ManyToOne
     @JoinColumn(name = "ticketCourseId")
+    @JsonIgnore
+    @ToString.Exclude
     private TicketCourseEntity ticketCourse;
 
     @Column(name = "courseStatus")
@@ -48,7 +50,7 @@ public class PurchasedCourseEntity extends PurchasedBaseEntity<PurchasedCourseEn
     @Column(name = "ageLimit")
     private String ageLimit;
 
-    @Column(name = "Timing",columnDefinition = "varchar(800)")
+    @Column(name = "Timing", columnDefinition = "varchar(800)")
     private String timing;
 
     @Column(name = "entryTotalCount")
@@ -82,13 +84,15 @@ public class PurchasedCourseEntity extends PurchasedBaseEntity<PurchasedCourseEn
 
 
     @OneToMany(mappedBy = "purchasedCourse")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<PurchasedCourseEntryEntity> entryList;
 
 
     @ManyToMany
     @JoinTable(name = "PurchasedCourseCouches", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
+    @JsonIgnore
+    @ToString.Exclude
     private List<UserEntity> coaches;
 
 

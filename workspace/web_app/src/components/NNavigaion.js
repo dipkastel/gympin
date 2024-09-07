@@ -20,7 +20,7 @@ const NNavigaion = (props) => {
     }, []);
 
     useEffect(() => {
-        if(currentUser?.Id)
+        if(currentUser?.Id&&window?.location?.pathname!=="/basket")
             props.RequestUserInvoices(currentUser);
     }, [currentUser]);
 

@@ -86,7 +86,8 @@ const Purchased = () => {
     }
 
     function goToDetail(item) {
-        console.log(item);
+        if(item.PurchasedStatus==="EXPIRE"||item.PurchasedStatus==="COMPLETE")
+            return ;
         switch (item.PurchasedType) {
             case "SUBSCRIBE":
                 navigate("/tickets/singleSubscribe/" + item.Id, {replace: false});

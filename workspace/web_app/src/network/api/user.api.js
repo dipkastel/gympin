@@ -18,6 +18,10 @@ export function user_updateAvatar(avatar) {
     return axios.put(Api_url.user.UPDATE_AVATAR,avatar);
 }
 
+export function user_SetUserSettings(data) {
+    return axios.post(Api_url.user.setUserSettings, data);
+}
+
 export function user_checkUsernameAvailable(username) {
     return axios.get(Api_url.user.checkUsernameAvailable,{params:{username:username}});
 }

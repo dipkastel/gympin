@@ -65,7 +65,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
         } else {
             //check for duplication
             UserEntity finalUser = user;
-            if (corporate.getPersonnel().stream().anyMatch(p -> Objects.equals(p.getUser().getId(), finalUser.getId())))
+            if (corporate.getPersonnel().stream().anyMatch(p -> Objects.equals(p.getUser().getId(), finalUser.getId())&&!p.isDeleted()))
                 throw new DuplicateEntryAddExeption();
         }
 

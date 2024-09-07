@@ -23,7 +23,6 @@ const _SettingGeneral = () => {
     function getAllDatas() {
         settings_getAll().then(result => {
             SetSettings(result.data.Data);
-            console.log(result.data.Data)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

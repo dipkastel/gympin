@@ -5,9 +5,9 @@ import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceDiscountTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
-import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -55,10 +55,14 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
 
     @ManyToOne
     @JoinColumn(name = "PlaceId")
+    @JsonIgnore
+    @ToString.Exclude
     private PlaceEntity place;
 
     @ManyToOne
     @JoinColumn(name = "customerUserId")
+    @JsonIgnore
+    @ToString.Exclude
     private UserEntity customer;
 
 
@@ -69,6 +73,8 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "serialId")
+    @JsonIgnore
+    @ToString.Exclude
     private FinanceSerialEntity serial;
 
 
@@ -77,25 +83,24 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
 
 
     @OneToMany(mappedBy = "purchased")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<ManageNoteEntity> notes;
 
     @OneToMany(mappedBy = "purchased")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<FinanceIncomeTransactionEntity> incomeTransactions;
 
     @OneToMany(mappedBy = "purchased")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<FinanceUserTransactionEntity> userTransactions;
 
     @OneToMany(mappedBy = "purchased")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<FinanceDiscountTransactionEntity> discountTransactions;
-
 
 
     @Override

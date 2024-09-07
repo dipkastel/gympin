@@ -28,7 +28,6 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
     const [creditToDecrease, setCreditToDecrease] = useState(null)
     useEffect(() => {
         getTransactions();
-        console.log("sss", corporatePersonnel.Corporate)
     }, []);
 
     function getTransactions() {
@@ -279,6 +278,7 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                                 <TableCell align="right">اعتبار</TableCell>
                                 <TableCell align="right">تاریخ ثبت</TableCell>
                                 <TableCell align="right">انقضا</TableCell>
+                                <TableCell align="right">وضعیت</TableCell>
                                 <TableCell align="right">اعتبار توسط</TableCell>
                                 <TableCell align="right"></TableCell>
                             </TableRow>
@@ -302,6 +302,9 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                                         hour: "2-digit",
                                         minute: "2-digit"
                                     })}</TableCell>
+                                    <TableCell align="right">
+                                        {row?.Status}
+                                    </TableCell>
                                     <TableCell align="right">
                                         <Tooltip title={row?.CreatorUser?.Username || ""} placement="left">
                                             <span>{(row?.CreatorUser?.FullName || row?.CreatorUser?.Username)}</span>

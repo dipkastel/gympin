@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.corporate.corporatePersonnel.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,8 @@ public class CorporatePersonnelCreditDto extends BaseDtoWithCreateUpdate<Corpora
     @JsonProperty("ExpireDate")
     private Date expireDate;
 
+    @JsonProperty("Status")
+    private CorporatePersonnelCreditStatusEnum status;
 
 
 }

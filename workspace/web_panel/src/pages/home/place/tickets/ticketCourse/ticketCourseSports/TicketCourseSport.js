@@ -58,7 +58,6 @@ const TicketCourseSport = ({ticketCourse}) => {
             for(var index in PlaceSportsToAdd){
                 PlaceSportList.push( {Id:PlaceSportsToAdd[index]})
             }
-            console.log("set",{TicketCourse: {Id: ticketCourse.Id}, PlaceSport: PlaceSportList});
             TicketCourses_addSport({TicketCourse: {Id: ticketCourse.Id}, PlaceSport: PlaceSportList})
                 .then(data => {
                     setOpenModalAdd(false)

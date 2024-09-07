@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.finance.user.invoice;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
@@ -51,10 +52,14 @@ public class InvoiceBuyableEntity extends BaseEntityWithCreateUpdate<InvoiceBuya
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "buyablePlaceId")
+    @JsonIgnore
+    @ToString.Exclude
     private PlaceEntity place;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "beneficiary")
+    @JsonIgnore
+    @ToString.Exclude
     private PlacePersonnelEntity beneficiary;
 
     @Column(name = "unitPrice")
@@ -65,10 +70,14 @@ public class InvoiceBuyableEntity extends BaseEntityWithCreateUpdate<InvoiceBuya
 
     @ManyToOne
     @JoinColumn(name = "invoiceId")
+    @JsonIgnore
+    @ToString.Exclude
     private InvoiceEntity invoice;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "buyableId")
+    @JsonIgnore
+    @ToString.Exclude
     private BuyableEntity buyable;
 
 

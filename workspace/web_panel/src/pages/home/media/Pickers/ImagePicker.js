@@ -180,7 +180,6 @@ const ImagePicker = ({setClose, onSelect, options}) => {
         var lastHtml = e.target.innerHTML;
 
         e.target.innerHTML = getUploadHtmlHelper("progress")
-        console.log(formData);
         media_addImage(formData)
             .then(data => {
                 error.showError({message: "عملیات موفق",});

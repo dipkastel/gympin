@@ -10,7 +10,7 @@ const _InvoiceVocher = () => {
 
 
     return (
-        <Card elevation={3} sx={{m: 1}}>
+        <Card elevation={3}  sx={{m: 1,borderRadius:3}}>
             <CardContent sx={{m: 0, p: "8px !important"}}>
                 <Grid container direction={"row"} justifyContent={"space-between"} alignItems={"center"} onClick={(e)=>setExpand(!expand)}>
                     <Typography variant={"h5"} color={"#888888"} >
@@ -26,7 +26,7 @@ const _InvoiceVocher = () => {
                             <TextField
                                 label="کد تخفیف"
                                 fullWidth
-                                size={"medium"}
+                                size={"small"}
                                 sx={{direction:"rtl"}}
                                 placeholder={"code"}
                                 variant={"outlined"}

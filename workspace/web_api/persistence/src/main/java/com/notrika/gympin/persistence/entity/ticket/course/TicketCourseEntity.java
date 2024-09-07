@@ -42,7 +42,7 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
     @Column(name = "ageLimit")
     private String ageLimit;
 
-    @Column(name = "Timing",columnDefinition = "varchar(800)")
+    @Column(name = "Timing", columnDefinition = "varchar(800)")
     private String timing;
 
     @Column(name = "entryTotalCount")
@@ -58,10 +58,10 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
-    @Column(name = "autoRenew",columnDefinition = "boolean default false")
+    @Column(name = "autoRenew", columnDefinition = "boolean default false")
     private Boolean autoRenew;
 
-    @Column(name = "dayBeforeRenew",columnDefinition = "smallint(6) default 3")
+    @Column(name = "dayBeforeRenew", columnDefinition = "smallint(6) default 3")
     private Short dayBeforeRenew;
 
     @Column(name = "expireDuration")
@@ -86,27 +86,28 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
 //    private Date endSellingDate;
 
     @OneToMany(mappedBy = "ticketCourse")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<PurchasedCourseEntity> purchasedCourse;
 
     @ManyToMany
     @JoinTable(name = "ticketCourseAction", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "hallActionId"))
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<TicketHallActiveTimeEntity> activeTimes;
 
     @ManyToMany
     @JoinTable(name = "ticketCourseCouches", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "couchUserId"))
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<UserEntity> coaches;
 
     @ManyToMany
     @JoinTable(name = "ticketCourseSport", joinColumns = @JoinColumn(name = "ticketCourseId"), inverseJoinColumns = @JoinColumn(name = "placeSportId"))
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<PlaceSportEntity> ticketCourseSport;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -13,6 +13,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @SuperBuilder
@@ -38,6 +39,9 @@ public class UserCreditDetailDto extends BaseDto<UserCreditDetailDto> {
 
     @JsonProperty("CreditAmount")
     private BigDecimal creditAmount;
+
+    @JsonProperty("ExpireDate")
+    private Date expireDate;
 
     @JsonProperty("CreditPayableAmount")
     private BigDecimal creditPayableAmount;

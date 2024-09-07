@@ -2,9 +2,8 @@ import React from 'react';
 import {LinearProgress, ListItemText, Tooltip} from "@mui/material";
 import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
 import {AccountBalanceWallet, AttachMoney, NotInterested} from "@mui/icons-material";
-import {getCorporateFixedName, getUserFixedName, toPriceWithComma} from "../../../../../helper";
+import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {UserFinanceTypesEnum} from "../../../../../helper/enums/UserFinanceTypesEnum";
 
 const _PersonnelCreditTransactions = ({personelCreditTransaction}) => {
 
@@ -20,8 +19,6 @@ const _PersonnelCreditTransactions = ({personelCreditTransaction}) => {
     if (personelCreditTransaction.length < 1)
         return (<></>);
 
-    console.log(personelCreditTransaction);
-
 
 
     function getColorClassByAmount(Amount) {
@@ -34,7 +31,7 @@ const _PersonnelCreditTransactions = ({personelCreditTransaction}) => {
 
     function getCurrentAmount(tr) {
         return (<>
-            {"اعتبار کلی کاربر از سازمان : "+toPriceWithComma(tr?.CurrentTotalCredit)}
+            {"سازمان "+tr.CorporateName+" - اعتبار فعلی : "+toPriceWithComma(tr?.CurrentTotalCredit)}
         </>);
     }
 
@@ -52,7 +49,8 @@ const _PersonnelCreditTransactions = ({personelCreditTransaction}) => {
                 </div>
                 <div className="kt-portlet__body">
                     <div className="kt-widget4">
-                        {personelCreditTransaction.map((tr, num) => (<div key={num} className="kt-widget4__item">
+                        {personelCreditTransaction.map((tr, num) => (
+                            <div key={num} className="kt-widget4__item">
                         <span className="kt-widget4__icon">
                                     {(tr?.TransactionStatus !== "COMPLETE") && (
                                         <Tooltip title={TransactionStatus[tr?.TransactionStatus]} placement="top">

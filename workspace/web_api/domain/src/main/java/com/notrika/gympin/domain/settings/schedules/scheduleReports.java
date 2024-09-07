@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Service
 public class scheduleReports {
@@ -31,6 +32,13 @@ public class scheduleReports {
     public static final String PRICE_OF_MAX_TICKET_PRICE = "PRICE_OF_MAX_TICKET_SUBSCRIBE_PRICE";
 
 
+    public static final String LAST_TIME_SMS_CHECK = "LAST_TIME_SMS_CHECK";
+    public static final String LAST_TIME_CREDITS_CHECK = "LAST_TIME_CREDITS_CHECK";
+    public static final String LAST_TIME_PAYMENT_CHECK = "LAST_TIME_PAYMENT_CHECK";
+    public static final String LAST_TIME_CORPORATE_CHARGE_CHECK = "LAST_TIME_CORPORATE_CHARGE_CHECK";
+    public static final String LAST_TIME_DISCOUNT_CHECK = "LAST_TIME_DISCOUNT_CHECK";
+
+
     @Autowired
     public scheduleReports(ManageReportSettingRepository manageReportSettingRepository, DataSource dataSource) {
         this.manageReportSettingRepository = manageReportSettingRepository;
@@ -50,6 +58,12 @@ public class scheduleReports {
         createKeyIfNotExist(NAME_OF_MAX_TICKET_PRICE,"نام بلیطی که بیشترین قیمت را دارد");
         createKeyIfNotExist(PLACE_NAME_OF_MAX_TICKET_PRICE,"نام مجموعه بلیطی که بیشترین قیمت را دارد");
         createKeyIfNotExist(PRICE_OF_MAX_TICKET_PRICE,"قیمت بلیطی که بیشترین قیمت را دارد");
+
+        createKeyIfNotExist(LAST_TIME_SMS_CHECK,"آخرین زمانی که پیامک چک شد");
+        createKeyIfNotExist(LAST_TIME_CREDITS_CHECK,"آخرین زمانی که اعتبار ها چک شد");
+        createKeyIfNotExist(LAST_TIME_PAYMENT_CHECK,"آخرین زمانی که پرداخت های بانکی چک شد");
+        createKeyIfNotExist(LAST_TIME_CORPORATE_CHARGE_CHECK,"آخرین زمانی که شارژ شرکت ها چک شد");
+        createKeyIfNotExist(LAST_TIME_DISCOUNT_CHECK,"آخرین زمانی که شارژ شرکت ها چک شد");
     }
 
 
@@ -57,6 +71,38 @@ public class scheduleReports {
 
     private DataSource dataSource;
 
+    public void updateLastTimeSmsCheck(){
+        ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_SMS_CHECK);
+        if(!entity.getUpdateAuto())return;
+        entity.setValue((new Date()).toString());
+        manageReportSettingRepository.save(entity);
+    }
+
+    public void updateLastTimeCreditCheck(){
+        ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_CREDITS_CHECK);
+        if(!entity.getUpdateAuto())return;
+        entity.setValue((new Date()).toString());
+        manageReportSettingRepository.save(entity);
+    }
+    public void updateLastTimePaymentCheck(){
+        ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_PAYMENT_CHECK);
+        if(!entity.getUpdateAuto())return;
+        entity.setValue((new Date()).toString());
+        manageReportSettingRepository.save(entity);
+    }
+
+    public void updateLastTimeCorporateChargeCheck(){
+        ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_CORPORATE_CHARGE_CHECK);
+        if(!entity.getUpdateAuto())return;
+        entity.setValue((new Date()).toString());
+        manageReportSettingRepository.save(entity);
+    }
+    public void updateLastTimeDiscountCheck(){
+        ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_DISCOUNT_CHECK);
+        if(!entity.getUpdateAuto())return;
+        entity.setValue((new Date()).toString());
+        manageReportSettingRepository.save(entity);
+    }
 
     public void updateMaxSellByPlace() {
         queryLong("SELECT P.place_id FROM subscribe T LEFT JOIN ticket_subscribe P ON T.ticket_subscribe_id = P.id Left JOIN place C on P.place_id = C.Id where C.Status = \"ACTIVE\" GROUP BY P.place_id order by Count(*) DESC limit 1",ID_OF_MAX_SELL_PLACE);
@@ -124,4 +170,6 @@ public class scheduleReports {
         entity.setValue(jdbcTemplate.queryForObject(query, BigDecimal.class).toString());
         manageReportSettingRepository.save(entity);
     }
+
+
 }

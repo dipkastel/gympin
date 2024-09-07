@@ -25,7 +25,6 @@ const _CourseEntryList = ({course, updatePage}) => {
     const [itemToExit, setItemToExit] = useState(null)
     useEffect(() => {
         setEntryList(course?.EntryList)
-        console.log("Course",course)
     }, [course]);
 
     function renderModalAdd() {

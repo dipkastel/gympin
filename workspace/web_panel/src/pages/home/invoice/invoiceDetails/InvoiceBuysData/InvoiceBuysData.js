@@ -19,7 +19,6 @@ const InvoiceBuysData = ({invoice, updatePage}) => {
     useEffect(() => {
         serial_getBySerial({serial: invoice.Serial.Serial}).then((result) => {
             setSerial(result.data.Data);
-            console.log(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -32,13 +31,13 @@ const InvoiceBuysData = ({invoice, updatePage}) => {
     return (
         <>
             <div className={"col-md-6"}>
-                <_InvoicePurchaseds PurchasedBases={serial.PurchasedBases}/>
-                <_IncomeTransactions transactions={serial.IncomeTransactions}/>
-                <_DiscountTransaction transactions={serial.DiscountTransactions}/>
+                <_InvoicePurchaseds PurchasedBases={serial?.PurchasedBases}/>
+                <_IncomeTransactions transactions={serial?.IncomeTransactions}/>
+                <_DiscountTransaction transactions={serial?.DiscountTransactions}/>
             </div>
             <div className={"col-md-6"}>
-                <_CorporateTransactions transactions={serial.CorporateTransactions}/>
-                <_UserTransactions transactions={serial.UserTransactions}/>
+                <_CorporateTransactions transactions={serial?.CorporateTransactions}/>
+                <_UserTransactions transactions={serial?.UserTransactions}/>
             </div>
         </>
 

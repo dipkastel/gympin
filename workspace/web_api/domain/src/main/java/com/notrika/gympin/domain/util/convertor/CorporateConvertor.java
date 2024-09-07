@@ -4,10 +4,12 @@ import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelGroupDto;
+import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -98,8 +100,10 @@ public final class CorporateConvertor {
                 .personnel(CorporateConvertor.toSimplePersonnelDto(entity.getCorporatePersonnel()))
                 .expireDate(entity.getExpireDate())
                 .createdDate(entity.getCreatedDate())
+                .status(entity.getStatus())
                 .creatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()))
                 .build();
         return dto;
     }
+
 }

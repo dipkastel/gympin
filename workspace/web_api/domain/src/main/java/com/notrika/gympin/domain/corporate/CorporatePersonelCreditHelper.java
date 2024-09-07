@@ -203,4 +203,12 @@ public class CorporatePersonelCreditHelper {
                 .serial(serial)
                 .build());
     }
+
+    public boolean checkContractContract(CorporateEntity corporate) {
+        if (corporate.getContractDate()==null)
+                return false;
+        if (corporate.getContractType()==null)
+                return false;
+        else return true;
+    }
 }

@@ -28,7 +28,6 @@ const SubscribeDataManagement = () => {
     function getTransactionsBySerial() {
         serial_getBySerial({serial: subscribe.Serial.Serial}).then((result) => {
             SetTransactions(result.data.Data);
-            console.log("result", result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
