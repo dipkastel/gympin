@@ -6,7 +6,7 @@ const _WhatIsGympin = () => {
     const [show,setShow] = useState(false);
     return (
         <div>
-            <Button variant={"contained"} sx={{mt:3,py:1.5,px:5,backgroundColor:"#e7333e",borderRadius:8}} color={"error"} endIcon={
+            <Button variant={"contained"} sx={{mt:3,py:1.5,px:5,backgroundColor:"#e7333e",borderRadius:8}} color={"error"} startIcon={
                 <Chip variant={"filled"} size={"medium"} sx={{bgcolor:"#FFFFFF",color:"#e7333e"}} label={
                   show?<ExpandLess sx={{mt:1.5,fontSize:"2rem" }} />:<ExpandMore sx={{mt:1.5,fontSize:"2rem" }} />
                 } />
@@ -21,7 +21,7 @@ const _WhatIsGympin = () => {
                         <Typography sx={{mx:2,direction:"rtl",textAlign:"justify",lineHeight:"1.5em"}} variant={"subtitle1"}>
                             جیم پین یک پلتفرم نوین برای ارتباط بین شرکت ها و مراکز ورزشی است که به طور خاص، به منظور مدیریت خدمات ورزشی و سلامت کارکنان در سازمان ها و شرکت ها طراحی شده است.
                         </Typography>
-                        <Button variant={"contained" } href={"https://gympin.ir/"} className={"btn-red1"} sx={{mx:0.5,my:3,py:1.5,borderRadius:8}} endIcon={
+                        <Button variant={"contained" } href={"https://gympin.ir/"} className={"btn-red1"} sx={{mx:0.5,my:3,py:1.5,borderRadius:8}} startIcon={
                             <Chip variant={"filled"} size={"medium"} sx={{bgcolor:"#FFFFFF",color:"#e7333e"}} label={
                                 <ChevronRight sx={{mt:1.5,fontSize:"2rem" }} />
                             } />
