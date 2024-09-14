@@ -16,7 +16,7 @@
     max-width: 350px;
     max-height: 350px;
     position: absolute;
-    top: -320px;
+    top: -60vw;
     left: 5vw;
     border-radius: 100%;
     background: #e7333e;
@@ -55,6 +55,8 @@
     .wave {
         width: 370px;
         height: 370px;
+        top: -340px;
+        left: 5vw;
     }
 
     .wave-box{
