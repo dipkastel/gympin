@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+@media(min-width: 600px) {
+  .myContainer {
+    left: Calc(50% - 300px);
+    position: absolute;
+    max-width: 600px;
+  }
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.btn-red1{
+  background: rgb(245,33,0);
+  background: linear-gradient(45deg, rgba(245,33,0,1) 0%,rgba(245,33,0,1) 40%, rgba(255,133,55,1) 100%);
+  box-shadow: 0px 15px 30px -10px #ff0000 !important;
+}
+.btn-red2{
+  background: rgb(245,33,0);
+  background: linear-gradient(130deg, rgba(245,33,0,1) 0%, rgba(255,133,55,1) 100%);
+  box-shadow: 0px 15px 30px -10px #ff0000 !important;
+}
+.btn-red3{
+  background: rgb(245,33,0);
+  background: linear-gradient(130deg, rgb(228, 51, 60) 0%, rgb(196, 47, 44) 100%);
+  box-shadow: 0px 15px 30px -10px #ff0000 !important;
+}
+.btn-red4{
+  background: rgb(245,33,0);
+  background: linear-gradient(130deg, rgb(251, 251, 251) 0%, rgb(251, 251, 251) 100%);
+  border: solid 3px #e7333e !important;
+  box-shadow: 0px 15px 30px -10px #ff0000 !important;
+}
+
+.btn-green{
+  background: rgb(31,179,118);
+  background: linear-gradient(142deg, rgba(31,179,118,1) 0%, rgba(55,255,69,1) 100%);
+  box-shadow: 0px 15px 30px -10px #58b476 !important;
+}
+
+.btn-blue{
+  background: rgb(26,70,120);
+  background: linear-gradient(142deg, rgba(26,70,120,1) 0%, rgba(11,212,255,1) 100%);
+  box-shadow: 0px 15px 30px -10px #225383 !important;
+}
+.btn-purple{
+  background: rgb(79,92,188);
+  background: linear-gradient(142deg, rgba(79,92,188,1) 0%, rgba(49,12,169,1) 100%);
+  box-shadow: 0px 15px 30px -10px #505fbd !important;
+}
+.inCardImage{
+  width: 100%;
+}
+.footer{
+  background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(231, 51, 62) 100%);
+}

@@ -4,6 +4,7 @@ package com.notrika.gympin.domain.finance.Invoice;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.finance.invoice.dto.UserHowToPayDto;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
+import com.notrika.gympin.common.finance.invoice.param.CheckoutDetailParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
@@ -21,17 +22,15 @@ import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
 import com.notrika.gympin.common.user.user.enums.UserFinanceType;
+import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
-import com.notrika.gympin.common.util.exception.purchased.CreditExpireException;
-import com.notrika.gympin.common.util.exception.purchased.CreditIsNotActiveException;
-import com.notrika.gympin.common.util.exception.purchased.PriceTotalConflictException;
-import com.notrika.gympin.common.util.exception.purchased.WalletNotExistException;
+import com.notrika.gympin.common.util.exception.purchased.*;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.finance.helper.FinanceHelper;
-import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
@@ -67,6 +66,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -264,6 +264,8 @@ public class InvoiceServiceHelper {
                 .build());
     }
 
+
+    @Transactional
     public InvoiceEntity createPurchasedItems(InvoiceEntity invoice) throws Exception {
         for (InvoiceBuyableEntity invoiceBuyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
             switch (invoiceBuyable.getBuyableType()) {
@@ -291,6 +293,27 @@ public class InvoiceServiceHelper {
         return invoice;
     }
 
+    public boolean checkBuyableCanPurchase(List<InvoiceBuyableEntity> buyables) throws Exception{
+        for(InvoiceBuyableEntity buyable:buyables){
+            switch (buyable.getBuyableType()) {
+                case SUBSCRIBE:
+                    break;
+                case COURSE:
+                    throw new Exception("آیتم برای خرید آماده نیست");
+                case PRODUCT:
+                    throw new Exception("آیتم برای خرید آماده نیست");
+                case FOOD:
+                    throw new Exception("آیتم برای خرید آماده نیست");
+                case SERVICE:
+                    throw new Exception("آیتم برای خرید آماده نیست");
+                case DIET:
+                    throw new Exception("آیتم برای خرید آماده نیست");
+                case WORKOUT:
+                    throw new Exception("آیتم برای خرید آماده نیست");
+            }
+        }
+        return true;
+    }
 
     private void addSubscribe(InvoiceEntity invoice, InvoiceBuyableEntity invoiceBuyable) {
         TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(invoiceBuyable.getBuyable().getId());
@@ -465,6 +488,7 @@ public class InvoiceServiceHelper {
     }
 
     public UserHowToPayDto getSimpleHowToPay(InvoiceEntity invoice) {
+        //only by user
         UserCreditDto userCredits = userService.getMyCredits();
         UserHowToPayDto result = new UserHowToPayDto();
         var creditList = userCredits.getCreditDetail().stream().filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
@@ -516,31 +540,31 @@ public class InvoiceServiceHelper {
         return null;
     }
 
-    public UserHowToPayDto getAdvancedHowToPay(InvoiceEntity invoice,InvoiceCheckoutParam param) {
-//        InvoiceEntity invoice = invoiceRepository.getById(param.getInvoice().getId());
-//        UserCreditDto userCredits = userService.getMyCredits();
-//        UserHowToPayDto result = new UserHowToPayDto();
-//        var creditList = userCredits.getCreditDetail().stream().filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
-//        if (invoice.getPriceToPay().compareTo(userCredits.getTotalCredit()) > 0)
-//            return UserHowToPayDto.builder()
-//                    .creditDetail(creditList)
-//                    .creditCovrage(false)
-//                    .totalCredit(userCredits.getTotalCredit()).build();
-//
-//        result.setCreditDetail(new ArrayList<>());
-//        BigDecimal totalToPay = invoice.getPriceToPay();
-//        for (var credit : creditList) {
-//            if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) > 0) {
-//                totalToPay = totalToPay.subtract(credit.getCreditPayableAmount());
-//                result.getCreditDetail().add(credit);
-//            } else if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) < 0) {
-//                credit.setCreditPayableAmount(totalToPay);
-//                result.getCreditDetail().add(credit);
-//                result.setCreditCovrage(true);
-//                totalToPay = BigDecimal.ZERO;
-//            }
-//        }
-        return null;
+    public UserHowToPayDto getAdvancedHowToPay(InvoiceEntity invoice, InvoiceCheckoutParam param) {
+        UserCreditDto userCredits = userService.getAllCreditsByUser(UserParam.builder().id(invoice.getUser().getId()).build());
+        var creditList = userCredits.getCreditDetail().stream().filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
+        if (userCredits.getTotalCredit().compareTo(invoice.getPriceToPay()) < 0)
+            throw new TatalUserCreditIsNotEnough();
+        if (param.getPrice().compareTo(invoice.getPriceToPay()) != 0)
+            throw new PricesIsNotCompatible();
+        if (param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add).compareTo(invoice.getPriceToPay()) != 0)
+            throw new PricesIsNotCompatible();
+
+        UserHowToPayDto result = UserHowToPayDto.builder()
+                .creditCovrage(true)
+                .totalCredit(invoice.getPriceToPay()).build();
+
+        var credits = new ArrayList<UserCreditDetailDto>();
+
+        for (CheckoutDetailParam checkout : param.getCheckout()) {
+            var credit = creditList.stream().filter(cr -> cr.getId().equals(checkout.getId())).findFirst().orElse(null);
+            if (credit == null)
+                throw new PricesIsNotCompatible();
+            credit.setCreditPayableAmount(checkout.getAmount());
+            credits.add(credit);
+        }
+        result.setCreditDetail(credits);
+        return result;
     }
 
 }

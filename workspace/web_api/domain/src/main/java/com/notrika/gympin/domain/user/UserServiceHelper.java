@@ -52,6 +52,7 @@ public class UserServiceHelper {
                 //add credit To List
                 UserCreditDetailDto detail = new UserCreditDetailDto();
                 detail.setId(credit.getId());
+                detail.setCreditStatus(credit.getStatus());
                 detail.setPersonnelId(personnel.getId());
                 detail.setCreditType(CreditType.SPONSOR);
                 detail.setContractType(personnel.getCorporate().getContractType());

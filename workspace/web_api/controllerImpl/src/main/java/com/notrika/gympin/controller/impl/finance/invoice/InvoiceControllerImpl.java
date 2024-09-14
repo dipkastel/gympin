@@ -90,7 +90,7 @@ public class InvoiceControllerImpl implements InvoiceController {
     @PostMapping("moderateCheckout")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<InvoiceDto> moderateCheckout(@RequestBody InvoiceCheckoutParam param) throws Exception {
-        return ResponseEntity.ok(invoiceService.simpleCheckout(param));
+        return ResponseEntity.ok(invoiceService.moderateCheckout(param));
     }
 
 
@@ -99,7 +99,7 @@ public class InvoiceControllerImpl implements InvoiceController {
     @PostMapping("advancedCheckout")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<InvoiceDto> advancedCheckout(@RequestBody InvoiceCheckoutParam param) throws Exception {
-        return ResponseEntity.ok(invoiceService.simpleCheckout(param));
+        return ResponseEntity.ok(invoiceService.advancedCheckout(param));
     }
 
 

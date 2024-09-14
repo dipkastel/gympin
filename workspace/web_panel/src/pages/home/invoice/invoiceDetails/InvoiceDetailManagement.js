@@ -45,7 +45,11 @@ const InvoiceDetailManagement = () => {
 
     return (
         <div>
-            <Notice icon="flaticon-warning kt-font-primary">{'مدیریت فاکتور شماره ' + invoiceId}</Notice>
+            <Notice icon="flaticon-warning kt-font-primary">
+                {'مدیریت فاکتور شماره ' + invoiceId}
+                <br />
+                {'سریال : '+invoice?.Serial?.Serial}
+            </Notice>
             {!updatePageP && invoice && <div className={"row"}>
                 <div className={"col-md-10"}>
                     <div className={"row"}>

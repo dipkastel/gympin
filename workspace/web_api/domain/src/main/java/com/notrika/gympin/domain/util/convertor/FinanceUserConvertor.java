@@ -31,6 +31,7 @@ public final class FinanceUserConvertor {
         UserCreditDetailDto detail = new UserCreditDetailDto();
         BigDecimal userDebit = userPersonalWallet.getTotalDeposit();
         detail.setCreditAmount(userDebit);
+        detail.setId(userPersonalWallet.getId());
         if (userPersonalWallet.getUserFinanceType() == UserFinanceType.INCOME_WALLET)
             detail.setCreditType(CreditType.INCOME);
         if (userPersonalWallet.getUserFinanceType() == UserFinanceType.PERSONAL_WALLET)

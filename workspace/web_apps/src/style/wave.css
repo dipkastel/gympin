@@ -1,0 +1,65 @@
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    z-index: -10;
+}
+
+.wave {
+    width: 65vw;
+    height: 65vw;
+    max-width: 350px;
+    max-height: 350px;
+    position: absolute;
+    top: -320px;
+    left: 5vw;
+    border-radius: 100%;
+    background: #e7333e;
+    animation: wave 15s infinite linear;
+}
+
+
+.wave-logo {
+    margin-top: 20px;
+    width: 50%;
+    pointer-events: none;
+}
+.wave-box{
+    width: 100%;
+    max-height: 250px;
+    height: 40vw;
+}
+@keyframes wave {
+    from {
+        transform: rotate(0deg) perspective(200px) translateZ(100px);
+        border-radius: 75% 40% 50% 60% / 45% 75% 38% 50% ;
+    }
+    50%{
+        transform: rotate(360deg) perspective(200px) translateZ(105px);
+        border-radius: 60% 50% 68% 50% / 50% 58% 49% 73% ;
+    }
+    to {
+        transform: rotate(720deg) perspective(200px) translateZ(100px);
+        border-radius: 75% 40% 50% 60%  / 45% 75% 38% 50%;
+    }
+}
+
+
+@media(min-width: 600px) {
+
+    .wave {
+        width: 370px;
+        height: 370px;
+    }
+
+    .wave-box{
+        width: 100%;
+        max-width: 600px;
+        height: 40vw;
+    }
+}

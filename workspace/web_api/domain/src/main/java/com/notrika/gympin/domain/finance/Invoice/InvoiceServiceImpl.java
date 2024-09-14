@@ -228,6 +228,8 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
             throw new PriceConflictException();
         if(!howToPay.getCreditCovrage())
             throw new RequestOverCreditLimit();
+        helper.checkBuyableCanPurchase(invoice.getInvoiceBuyables());
+
         for (InvoiceBuyableEntity buyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
             if (!GeneralUtil.isGenderCompatible(buyable.getGender(), invoice.getUser().getGender()))
                 throw new GenderIsNotCompatible();
@@ -260,6 +262,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
             throw new PriceConflictException();
         if(!howToPay.getCreditCovrage())
             throw new RequestOverCreditLimit();
+        helper.checkBuyableCanPurchase(invoice.getInvoiceBuyables());
         for (InvoiceBuyableEntity buyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
             if (!GeneralUtil.isGenderCompatible(buyable.getGender(), invoice.getUser().getGender()))
                 throw new GenderIsNotCompatible();
@@ -292,6 +295,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
             throw new PriceConflictException();
         if(!howToPay.getCreditCovrage())
             throw new RequestOverCreditLimit();
+        helper.checkBuyableCanPurchase(invoice.getInvoiceBuyables());
         for (InvoiceBuyableEntity buyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
             if (!GeneralUtil.isGenderCompatible(buyable.getGender(), invoice.getUser().getGender()))
                 throw new GenderIsNotCompatible();

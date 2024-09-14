@@ -25,6 +25,9 @@ export function invoice_query(data) {
 export function invoice_checkout(data) {
     return axios.post(InvoiceApi.checkout, data);
 }
+export function invoice_advancedCheckout(data) {
+    return axios.post(InvoiceApi.advancedCheckout, data);
+}
 
 export function invoice_changeStatus(data) {
     return axios.post(InvoiceApi.changeStatus, data);
