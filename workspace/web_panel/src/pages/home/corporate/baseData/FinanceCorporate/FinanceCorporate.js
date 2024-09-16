@@ -32,7 +32,7 @@ const FinanceCorporate = ({currentCorporate}) => {
                                 component="div" sx={{
                         marginY: 1
                     }}>
-                        {toPriceWithComma((totalCredit.TotalDeposit||0))+" تومان"}
+                        {toPriceWithComma((totalCredit?.TotalDeposit||0))+" تومان"}
                     </Typography>
                 </PortletBody>
             </Portlet>
@@ -43,7 +43,7 @@ const FinanceCorporate = ({currentCorporate}) => {
                                 component="div" sx={{
                         marginY: 1
                     }}>
-                        {toPriceWithComma((totalCredit.TotalCredits||0))+" تومان"}
+                        {toPriceWithComma((totalCredit?.TotalCredits||0))+" تومان"}
                     </Typography>
                 </PortletBody>
             </Portlet>

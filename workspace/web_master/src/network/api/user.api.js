@@ -17,6 +17,10 @@ export function user_SetUserSettings(data) {
     return axios.post(Api_url.user.setUserSettings, data);
 }
 
+export function user_getMyPlaceWallet(data) {
+    return axios.post(Api_url.user.getMyPlaceWallet, data);
+}
+
 export function user_GetUserSettings(data) {
     return axios.get(Api_url.user.getUserSettings,{params:data});
 }

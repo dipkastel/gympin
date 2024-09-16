@@ -42,8 +42,8 @@ export default function ContactGTA() {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 PhoneNumber: e.target.tel.value,
-                fullName: e.target.name.value,
-                placeName: e.target.message.value
+                FullName: e.target.name.value,
+                Text: e.target.message.value
             })
         };
         await fetch(getBaseUrl()+"/v1/account/requestPublicMessage", requestOptions)

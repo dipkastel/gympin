@@ -45,6 +45,9 @@ public class UserTransactionQuery extends BaseQuery<UserTransactionQuery> {
     @JsonProperty("UserId")
     private Long is_financeUseræuseræid;
 
+    @JsonProperty("PlaceId")
+    private Long is_placeæid;
+
     @JsonProperty("Serial")
     private String like_serial;
 

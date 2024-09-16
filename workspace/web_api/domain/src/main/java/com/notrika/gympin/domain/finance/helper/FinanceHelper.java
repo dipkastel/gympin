@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,7 +90,7 @@ public class FinanceHelper {
         return result;
     }
     public FinanceUserEntity getUserIncomeWallet(UserEntity user, PlaceEntity place) {
-        FinanceUserEntity result = user.getFinanceUser().stream().filter(w->w.getUserFinanceType()== UserFinanceType.INCOME_WALLET).findFirst().orElse(null);
+        FinanceUserEntity result = user.getFinanceUser().stream().filter(w->w.getUserFinanceType()== UserFinanceType.INCOME_WALLET&& Objects.equals(w.getPlace().getId(), place.getId())).findFirst().orElse(null);
         if(result==null)
             result = financeUserRepository.add(FinanceUserEntity.builder().user(user).place(place).userFinanceType(UserFinanceType.INCOME_WALLET).totalDeposit(BigDecimal.ZERO).build());
         return result;

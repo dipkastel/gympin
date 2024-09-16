@@ -164,10 +164,10 @@ const CorporateManagement = () => {
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">
-                                                <Avatar alt="corporate Logo" src={(row.Logo)?(row.Logo.Url||""):""}  sx={{width:40,height:40}} /></TableCell>
+                                                <Avatar alt="corporate Logo" src={row?.Logo?.Url||""}  sx={{width:40,height:40}} /></TableCell>
                                             <TableCell align="right">{row.Name||"ثبت نشده"}</TableCell>
-                                            <TableCell align="right">{toPriceWithComma(row.FinanceCorporate.TotalDeposit)}</TableCell>
-                                            <TableCell align="right">{toPriceWithComma(row.FinanceCorporate.TotalCredits)}</TableCell>
+                                            <TableCell align="right">{toPriceWithComma(row?.FinanceCorporate?.TotalDeposit)}</TableCell>
+                                            <TableCell align="right">{toPriceWithComma(row?.FinanceCorporate?.TotalCredits)}</TableCell>
                                             <TableCell align="right">
                                                 <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
                                             </TableCell>

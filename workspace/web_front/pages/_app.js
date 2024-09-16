@@ -12,7 +12,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import '../public/css/bootstrap.rtl.css'
 import '../public/fonts/iransansweb/style.css'
-import Footer from "../layouts/Footer";
 
 function MyApp({ Component, pageProps }) {
   const [activePreLoader, setActivePreLoader] = useState(true);
