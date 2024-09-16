@@ -47,12 +47,14 @@ export default function Footer() {
                         <div className="col-xl-4 col-lg-6 mt-50">
                             <div className="footer-widget footer-widget__2">
                                 <div className="newslater ltr">
-                                    <a referrerPolicy="origin" target="_blank"
+                                    <a  width={"80px"} referrerPolicy="origin" target="_blank"
                                        href="https://trustseal.enamad.ir/?id=350330&amp;Code=8so7ze5fUKxlhyBfuiiT"><img
                                         referrerPolicy="origin"
                                         src="https://Trustseal.eNamad.ir/logo.aspx?id=350330&amp;Code=8so7ze5fUKxlhyBfuiiT"
                                         alt="" id="8so7ze5fUKxlhyBfuiiT"/></a>
-
+                                    <img width={"80px"} src={"/images/logo/mojavez2.jpg"}/>
+                                    <img width={"160px"} src={"/images/logo/mojavez3.jpg"}/>
+                                    <img width={"80px"} src={"/images/logo/mojavez4.jpg"}/>
                                     {/*<h4 className="newslater__title">عضویت در خبرنامه</h4>*/}
                                     {/*<div className="newslater__form">*/}
                                     {/*    <form action="index.html">*/}

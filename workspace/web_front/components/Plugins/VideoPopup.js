@@ -15,7 +15,7 @@ export default function VideoPopUp({setShow, src}) {
                                     onClick={() => setShow()}>×
                             </button>
                             {/*<iframe className="mfp-iframe" src={src} frameBorder="0" allowFullScreen=""></iframe>*/}
-                            <video autoPlay controls>
+                            <video autoPlay controls width={"100%"}>
                                 <source src={src} type="video/mp4"/>
                                 مرورگر شما این قابلیت را پشتیبانی نمی کند
                             </video>

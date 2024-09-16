@@ -48,8 +48,8 @@ export default function HomeOneHero() {
                                     <div className="row no-gutters">
                                         <div className="col-xl-6 col-lg-7">
                                             <div className="hero__content">
-                                                <h2 className="hero__title text-shadow"  data-animation="fadeIn" data-delay=".2s" data-duration=".5s">{item.title[0]} <br />
-                                                    {item.title[1]}</h2>
+                                                <h1 className="hero__title text-shadow"  data-animation="fadeIn" data-delay=".2s" data-duration=".5s">{item.title[0]} <br />
+                                                    {item.title[1]}</h1>
                                                 <p className="text-shadow" data-animation="fadeInUp" data-delay=".5s" data-duration=".7s">{item.desc}</p>
                                                 <a data-animation="fadeInUp" data-delay=".7s" data-duration=".9s" href={item.destination}
                                                     className="site-btn"><span className="icon"><i className="far fa-arrow-left"></i></span>{item.btnTitle}</a>
