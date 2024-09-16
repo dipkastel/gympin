@@ -7,7 +7,7 @@ const _sbFaq = () => {
     return (
         <>
             {/* <!-- faq section start --> */}
-            <section className="pt-0 pb-80">
+            <section className="pt-0 pb-80 rtl">
                 <div className="container">
                     <div className="row">
                         <div className="">
@@ -36,7 +36,7 @@ const _sbFaq = () => {
                         </div>
                     </div>
                     <div>
-                        <a href="/faq" className="site-btn site-btn__s2 mt-55"><span className="icon icon__black"><i
+                        <a href="/faq" className="site-btn site-btn__s2 mt-55 ltr"><span className="icon icon__black"><i
                             className="far fa-arrow-left"></i></span>سوالات دیگری دارید</a>
                     </div>
                 </div>

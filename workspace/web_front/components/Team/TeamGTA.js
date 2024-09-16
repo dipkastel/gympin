@@ -82,9 +82,14 @@ export default function TeamGTA() {
                                 <img src="/images/sp/sp-circle.jpg" alt=""/>
                             </div>
                         </div>
-                        <div className="col-xl-6 pl-70">
-                            <div className="section-header mb-50">
+                        <div className="col-xl-6 pl-70 rtl">
+                            <div className="section-header mb-50 ">
                                 <h2 className="section-title section-title__2">درخواست عضویت</h2>
+
+                                <p>
+                                    ثبت‌نام در جیم پین بسیار آسان است. تنها با چند کلیک، مرکز ورزشی شما می‌تواند به جامعه‌ی بزرگ جیم
+                                    پین بپیوندد.
+                                </p>
                             </div>
                             <div className="contact-form">
                                 <form action="#" method="POST" id="contact-form" onSubmit={submitForm}>
@@ -98,7 +103,7 @@ export default function TeamGTA() {
                                         <textarea name="Message" id="message"
                                                   placeholder="نام مجموعه و توضیحات بیشتر"></textarea>
                                     </div>
-                                    <button type="submit" className="site-btn site-btn__s2 mt-15"><span
+                                    <button type="submit" className="site-btn site-btn__s2 mt-15 ltr"><span
                                         className="icon icon__black"><i
                                         className="far fa-arrow-left"></i></span> ثبت
                                     </button>
