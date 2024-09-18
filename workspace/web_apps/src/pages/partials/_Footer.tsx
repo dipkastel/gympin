@@ -5,7 +5,7 @@ import {toAbsoluteUrl} from "../../utils/utils";
 const _Footer = () => {
     return (
         <div className={"footer"}>
-            <Image src={toAbsoluteUrl("/assets/images/footer.jpg")} className={"inCardImage"} />
+            <Image src={toAbsoluteUrl("/assets/images/footer2.png")} className={"inCardImage"} />
         </div>
     );
 };
