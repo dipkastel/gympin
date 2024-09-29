@@ -9,7 +9,7 @@ import _CoursePhoneLessEnter from "./_CoursePhoneLessEnter";
 import _CourseEnterList from "./_CourseEnterList";
 
 const SingleCourse = () => {
-    const {courseId} = useParams();
+    const {courseKey} = useParams();
     const [course, setCourse] = useState(null)
     const [userCanEnter, setUserCanEnter] = useState(null)
     const error = useContext(ErrorContext);
@@ -20,7 +20,7 @@ const SingleCourse = () => {
     }, []);
 
     function getCourse() {
-        purchasedCourse_getById({id: courseId}).then(result => {
+        purchasedCourse_getById({id: courseKey}).then(result => {
             setCourse(result.data.Data);
         }).catch(e => {
             try {

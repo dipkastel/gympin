@@ -47,11 +47,12 @@ export default function Footer() {
                         <div className="col-xl-4 col-lg-6 mt-50">
                             <div className="footer-widget footer-widget__2">
                                 <div className="newslater ltr">
-                                    <a  width={"80px"} referrerPolicy="origin" target="_blank"
-                                       href="https://trustseal.enamad.ir/?id=350330&amp;Code=8so7ze5fUKxlhyBfuiiT"><img
-                                        referrerPolicy="origin"
-                                        src="https://Trustseal.eNamad.ir/logo.aspx?id=350330&amp;Code=8so7ze5fUKxlhyBfuiiT"
-                                        alt="" id="8so7ze5fUKxlhyBfuiiT"/></a>
+                                    <a referrerPolicy='origin' target='_blank'
+                                       href='https://trustseal.enamad.ir/?id=530057&Code=fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'><img
+                                        width={"80px"}
+                                        referrerPolicy='origin'
+                                        src='https://trustseal.enamad.ir/logo.aspx?id=530057&Code=fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'
+                                        alt='' style='cursor:pointer' code='fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'/></a>
                                     <img width={"80px"} src={"/images/logo/mojavez2.jpg"}/>
                                     <img width={"160px"} src={"/images/logo/mojavez3.jpg"}/>
                                     <img width={"80px"} src={"/images/logo/mojavez4.jpg"}/>

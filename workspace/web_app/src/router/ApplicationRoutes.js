@@ -44,8 +44,8 @@ export default function ApplicationRoutes() {
 
                 {/*tickets*/}
                 <Route path="/tickets" element={isAuthorized?<Purchased/>: <AuthRoutes/>}/>
-                <Route path="/tickets/singleSubscribe/:subscribeId" element={isAuthorized?<SingleSubscribe/>: <AuthRoutes/>}/>
-                <Route path="/tickets/singleCourse/:courseId" element={isAuthorized?<SingleCourse/>: <AuthRoutes/>}/>
+                <Route path="/tickets/singleSubscribe/:subscribeKey" element={isAuthorized?<SingleSubscribe/>: <AuthRoutes/>}/>
+                <Route path="/tickets/singleCourse/:courseKey" element={isAuthorized?<SingleCourse/>: <AuthRoutes/>}/>
 
                 <Route path="/wallet" element={isAuthorized?<Wallet/>: <AuthRoutes/>}/>
                 <Route path="/checkout/:formData"  element={isAuthorized?<Checkout/>: <AuthRoutes/>}/>

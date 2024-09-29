@@ -10,7 +10,7 @@ const _PersonnelCreditTransactions = ({personelCreditTransaction}) => {
     if (!personelCreditTransaction)
         return (<>
             <Portlet>
-                <PortletHeader title={"تراکنش‌های شرکت"}/>
+                <PortletHeader title={"تراکنش‌های حساب اعتباری"}/>
                 <LinearProgress/>
                 <PortletBody>
                 </PortletBody>

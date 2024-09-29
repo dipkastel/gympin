@@ -34,8 +34,8 @@ import lombok.experimental.SuperBuilder;
 public class FinanceSettlementUserDepositQuery extends BaseQuery<FinanceSettlementUserDepositQuery> {
 
 
-    @JsonProperty("UserId")
-    private Long is_useræid;
+    @JsonProperty("FinanceUserId")
+    private Long is_financeUseræid;
 
     @JsonProperty("SettlementStatus")
     private SettlementStatus is_settlementStatus;

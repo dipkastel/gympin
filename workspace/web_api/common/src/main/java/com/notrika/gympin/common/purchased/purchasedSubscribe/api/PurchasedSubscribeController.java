@@ -8,6 +8,7 @@ import com.notrika.gympin.common.purchased.purchasedSubscribe.param.*;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.query.PurchasedSubscribeQuery;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -21,8 +22,10 @@ public interface PurchasedSubscribeController extends BaseController<PurchasedSu
     ResponseEntity<List<PurchasedSubscribeDto>> getActiveSubscribesOfPlace(Long placeId);
     ResponseEntity<List<PurchasedSubscribeDto>> getPlaceSubscribes(Long placeId);
     ResponseEntity<List<PurchasedSubscribeDto>> getByUser(UserParam userParam);
+    ResponseEntity<PurchasedSubscribeDto> getPurchasedByKey(String key);
 
-    //ticketAction
+
+        //ticketAction
     ResponseEntity<Boolean> increaseExpireDate(IncreaseExpireParam param) throws Exception;
     ResponseEntity<PurchasedSubscribeDto> updateStatus(PurchasedSubscribeParam param) throws Exception;
 

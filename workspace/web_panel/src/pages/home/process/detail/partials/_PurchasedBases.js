@@ -1,5 +1,5 @@
 import React from 'react';
-import {toPriceWithComma} from "../../../../../helper";
+import {getCorporateFixedName, getPlaceFixedName, getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {LinearProgress, ListItemText} from "@mui/material";
 import {InvoiceStatus} from "../../../../../helper/enums/InvoiceStatus";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
@@ -11,7 +11,7 @@ const _PurchasedBases = ({purchasedBases}) => {
         if (!purchasedBases)
             return (<>
                 <Portlet>
-                    <PortletHeader title={"فاکتور ها"}/>
+                    <PortletHeader title={"خرید ها"}/>
                     <LinearProgress/>
                     <PortletBody>
                     </PortletBody>
@@ -33,16 +33,14 @@ const _PurchasedBases = ({purchasedBases}) => {
                         <div className="kt-widget4">
                             {purchasedBases.map(item => (
                                         <div key={"ff" + item.Id} className={"kt-widget4__item"}>
-
                                             <ListItemText
-                                                primary={ item.Id +" - "+item?.Name}
-                                                secondary={BuyableType[item.PurchasedType]}
+                                                primary={ item.Id +" - "+item?.Name+" ( "+getPlaceFixedName(item?.Place)+" )"}
+                                                secondary={getUserFixedName(item?.Customer)}
                                                 sx={{textAlign: "right"}}/>
                                             <ListItemText
-                                                primary={PurchasedSubscribeStatus[item?.PurchasedStatus]}
+                                                primary={BuyableType[item.PurchasedType] +(item?.PurchasedStatus?"  - ":"") +(PurchasedSubscribeStatus[item?.PurchasedStatus]||"")}
                                                 secondary={toPriceWithComma(item?.SellPrice) + " تومان"}
                                                 sx={{textAlign: "left"}}/>
-
                                         </div>
 
                             ))}

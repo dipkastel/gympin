@@ -36,4 +36,13 @@ public class SupportQuery extends BaseQuery<SupportQuery> {
     @JsonProperty("Status")
     private SupportStatus is_supportStatus;
 
+    @JsonProperty("CorporateId")
+    private Long is_corporateæid;
+
+    @JsonProperty("PlaceId")
+    private Long is_placeæid;
+
+    @JsonProperty("UserId")
+    private Long is_useræid;
+
 }

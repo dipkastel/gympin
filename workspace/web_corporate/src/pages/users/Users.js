@@ -5,14 +5,15 @@ import {
     Avatar,
     Box,
     Button,
-    Card,
+    Card, Collapse,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
     Divider,
-    Grid, Icon, IconButton,
+    Grid,
+    IconButton,
     Link,
     List,
     ListItem,
@@ -38,9 +39,11 @@ const Users = () => {
     const corporate = useSelector(({corporate}) => corporate.corporate)
     const [personnel, setPersonnel] = useState([]);
     const [openModalAdd, setOpenModalAdd] = useState(false);
+    const [search, setSearch] = useState(false);
     const [selectedTab, setSelectedTab] = useState(0);
     const [selectedPage, setSelectedPage] = useState(1);
     const [groups, setGroups] = useState(null)
+    const [searchText, setSearchText] = useState(null)
 
     useEffect(() => {
         document.title = 'پرسنل';
@@ -51,7 +54,8 @@ const Users = () => {
     useEffect(() => {
         if (!groups) return;
         getPersonnel();
-    }, [selectedPage]);
+    }, [selectedPage,searchText,search]);
+
     useEffect(() => {
         if (!groups) return;
         setSelectedPage(1);
@@ -77,7 +81,8 @@ const Users = () => {
         corporatePersonnel_query({
             queryType: "FILTER",
             CorporateId: corporate.Id,
-            GroupId: selectedTab == 0 ? null : groups[selectedTab - 1].Id,
+            PhoneNumber: search?searchText:null,
+            GroupId: (search||selectedTab == 0) ? null : groups[selectedTab - 1].Id,
             paging: {Page: selectedPage - 1, Size: 10, Desc: true}
         }).then(result => {
             setPersonnel(result.data.Data);
@@ -156,20 +161,34 @@ const Users = () => {
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                 <Grid container alignItems={"center"} justifyContent={"space-between"}>
                     <Grid item>
-                        <Tabs
-                            value={selectedTab}
-                            onChange={(e, n) => setSelectedTab(n)}
-                            aria-label="usersTab"
-                            variant={"scrollable"}
-                        >
-                            <Tab label="همه" id={"group-tab-0"} aria-controls={"group-tabpanel-0"}/>
-                            {groups && groups.map(group => (
-                                <Tab key={"g-" + group.Id} label={group.Name} id={"group-tab-" + group.Id}
-                                     aria-controls={"group-tabpanel-" + group.Id}/>
-                            ))}
-                        </Tabs>
+                        <Collapse in={!search} >
+                            <Tabs
+                                value={selectedTab}
+                                onChange={(e, n) => setSelectedTab(n)}
+                                aria-label="usersTab"
+                                variant={"scrollable"}
+                            >
+                                <Tab label="همه" id={"group-tab-0"} aria-controls={"group-tabpanel-0"}/>
+                                {groups && groups.map(group => (
+                                    <Tab key={"g-" + group.Id} label={group.Name} id={"group-tab-" + group.Id}
+                                         aria-controls={"group-tabpanel-" + group.Id}/>
+                                ))}
+                            </Tabs>
+                        </Collapse>
+                        <Collapse in={search} >
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                label="جستجو با موبایل"
+                                value={searchText}
+                                onChange={e=>setSearchText(e.target.value)}
+                                fullWidth
+                                variant={"outlined"}
+                                sx={{mx:1}}
+                            />
+                        </Collapse>
                     </Grid>
-                    <Grid item><IconButton ><Search/></IconButton></Grid>
+                    <Grid item><IconButton onClick={e => setSearch(!search)}><Search/></IconButton></Grid>
                 </Grid>
             </Box>
 
@@ -240,13 +259,13 @@ const Users = () => {
                         </div>
                     </div>
                 ))}
-                {personnel.totalPages &&
+
+                {personnel?.totalPages>0 &&
                 <Grid container direction={"rows"} justifyContent={"center"} alignContent={"center"}>
                     <Pagination count={personnel.totalPages} boundaryCount={1} defaultPage={1} size={"medium"}
                                 page={selectedPage} onChange={(e, v) => onPageChange(e, v)}/>
                 </Grid>}
             </List>
-
             {renderModalAdd()}
         </>
     );

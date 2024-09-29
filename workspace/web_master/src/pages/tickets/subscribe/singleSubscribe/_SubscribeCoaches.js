@@ -90,7 +90,7 @@ const _SubscribeCoaches = ({ticketSubscribe}) => {
 
                     <div className={"container"}>
                         <div className={"row"}>
-                            {(ticketSubscribeCoaches.length<1)&&
+                            {(placeCoaches.length<1)&&
                             <Typography  sx={{width:"100%"}}  color={"#d01c1c"} variant={"subtitle2"}>
                                شما در بخش پرسنل کسی را با عنوان مربی وارد نکرده اید!
                             </Typography>}

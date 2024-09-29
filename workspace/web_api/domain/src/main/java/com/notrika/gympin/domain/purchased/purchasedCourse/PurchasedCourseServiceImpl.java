@@ -176,49 +176,49 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
 
     @Override
     public PurchasedCourseDto addEnterToCourse(PurchasedCourseParam param) {
-
-        PurchasedCourseEntity courseEntity = getEntityById(param.getId());
-        UserEntity userEntity = userRepository.getById(param.getUser().getId());
-
-        //checks
-        if (courseEntity.getStatus() == EXPIRE) {
-            throw new PurchasedExpiredException();
-        } else if (courseEntity.getStatus() == CoursePurchasedStatus.COMPLETE) {
-            throw new UsageLimitException();
-        } else if (courseEntity.getStatus() == CoursePurchasedStatus.CANCEL) {
-            throw new PurchasedCanceledException();
-        } else if (courseEntity.getStatus() == CoursePurchasedStatus.PROCESSING) {
-            throw new IsInProcessException();
-        }
-
-        if (courseEntity.getStatus() == CoursePurchasedStatus.READY_TO_ACTIVE) {
-
-            //peyToPlace
-            calculatePaymetsService.PayToPlace(courseEntity);
-
-
-            //enterUser
-            courseEntity.setStatus(CoursePurchasedStatus.ACTIVE);
-            purchasedCourseRepository.update(courseEntity);
-            purchasedCourseHelper.enterUser(courseEntity, userEntity);
-
-        } else if (courseEntity.getStatus() == CoursePurchasedStatus.ACTIVE) {
-            //requeset check
-            if (courseEntity.getEntryList().stream().anyMatch(t -> t.getCourseEntryStatus() == CourseEntryStatus.REQUESTED)) {
-                throw new UserRequestEnterException();
-            }
-            //avoid duplicate enery
-            if (courseEntity.getEntryList().get(courseEntity.getEntryList().size() - 1).getExitDate() == null) {
-                throw new EntryAlreadyExistException();
-            }
-            //course limit
-            if (courseEntity.getEntryTotalCount() <= courseEntity.getEntryList().stream().filter(en -> en.getCourseEntryStatus() == CourseEntryStatus.ACCEPTED).count()) {
-                throw new UsageLimitException();
-            }
-            //enter User
-            purchasedCourseHelper.enterUser(courseEntity, userEntity);
-        }
-        return PurchasedCourseConvertor.toDto(courseEntity);
+        return null;
+//        PurchasedCourseEntity courseEntity = getEntityById(param.getId());
+//        UserEntity userEntity = userRepository.getById(param.getUser().getId());
+//
+//        //checks
+//        if (courseEntity.getStatus() == EXPIRE) {
+//            throw new PurchasedExpiredException();
+//        } else if (courseEntity.getStatus() == CoursePurchasedStatus.COMPLETE) {
+//            throw new UsageLimitException();
+//        } else if (courseEntity.getStatus() == CoursePurchasedStatus.CANCEL) {
+//            throw new PurchasedCanceledException();
+//        } else if (courseEntity.getStatus() == CoursePurchasedStatus.PROCESSING) {
+//            throw new IsInProcessException();
+//        }
+//
+//        if (courseEntity.getStatus() == CoursePurchasedStatus.READY_TO_ACTIVE) {
+//
+//            //peyToPlace
+//            calculatePaymetsService.PayToPlace(courseEntity);
+//
+//
+//            //enterUser
+//            courseEntity.setStatus(CoursePurchasedStatus.ACTIVE);
+//            purchasedCourseRepository.update(courseEntity);
+//            purchasedCourseHelper.enterUser(courseEntity, userEntity);
+//
+//        } else if (courseEntity.getStatus() == CoursePurchasedStatus.ACTIVE) {
+//            //requeset check
+//            if (courseEntity.getEntryList().stream().anyMatch(t -> t.getCourseEntryStatus() == CourseEntryStatus.REQUESTED)) {
+//                throw new UserRequestEnterException();
+//            }
+//            //avoid duplicate enery
+//            if (courseEntity.getEntryList().get(courseEntity.getEntryList().size() - 1).getExitDate() == null) {
+//                throw new EntryAlreadyExistException();
+//            }
+//            //course limit
+//            if (courseEntity.getEntryTotalCount() <= courseEntity.getEntryList().stream().filter(en -> en.getCourseEntryStatus() == CourseEntryStatus.ACCEPTED).count()) {
+//                throw new UsageLimitException();
+//            }
+//            //enter User
+//            purchasedCourseHelper.enterUser(courseEntity, userEntity);
+//        }
+//        return PurchasedCourseConvertor.toDto(courseEntity);
 
     }
 

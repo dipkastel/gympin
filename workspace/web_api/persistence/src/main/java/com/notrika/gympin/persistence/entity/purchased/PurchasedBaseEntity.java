@@ -53,6 +53,11 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @Column(name = "placePrice")
     private BigDecimal placePrice;
 
+    @Column(name = "pKey",unique = true)
+    private String key;
+
+
+
     @ManyToOne
     @JoinColumn(name = "PlaceId")
     @JsonIgnore
@@ -65,17 +70,15 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @ToString.Exclude
     private UserEntity customer;
 
-
     @Column(name = "purchasedType", nullable = false)
     @Enumerated(EnumType.STRING)
     private PurchasedType purchasedType;
 
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "serialId")
+    @ManyToMany
+    @JoinTable(name = "financePurchasedSerial", joinColumns = @JoinColumn(name = "SerialId"), inverseJoinColumns = @JoinColumn(name = "PurchasedId"))
     @JsonIgnore
     @ToString.Exclude
-    private FinanceSerialEntity serial;
+    private List<FinanceSerialEntity> Serials;
 
 
     @Column(name = "voucher")

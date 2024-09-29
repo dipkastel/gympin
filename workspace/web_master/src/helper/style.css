@@ -29,4 +29,11 @@
 .ltr{
   direction: ltr;
 }
+.section-title{
+  color: #fff;
+  background-color: #e7333e;
+  width: fit-content;
+  padding: 10px 10px 10px 40px;
+  border-radius: 25px 0 0 25px;
+}
 /*# sourceMappingURL=style.css.map */

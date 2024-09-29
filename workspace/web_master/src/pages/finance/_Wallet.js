@@ -6,7 +6,6 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     Grid,
     Tab,
     Tabs,
@@ -99,15 +98,13 @@ const _Wallet = ({place, user, onRequestComplete}) => {
                     </AppBar>
                     <Form onSubmit={e => request(e)}>
                         <DialogContent>
-                            <DialogContentText>
-                                <Typography variant={"body2"}>
-                                    درخواست شما طی 24 ساعت کاری به بانک ارسال خواهد شد
-                                </Typography>
-                            </DialogContentText>
+                            <Typography variant={"body2"}>
+                                درخواست شما طی 24 ساعت کاری به بانک ارسال خواهد شد
+                            </Typography>
                             <TextField
                                 autoFocus
                                 name={"requestAmount"}
-                                sx={{mt:1}}
+                                sx={{mt: 1}}
                                 label="مبلغ درخواستی (تومان)"
                                 onChange={e => e.target.value = toPriceWithComma(e.target.value)}
                                 type="text"
@@ -120,7 +117,8 @@ const _Wallet = ({place, user, onRequestComplete}) => {
                                 باشد</Typography>}
                         </DialogContent>
                         <DialogActions>
-                            <Button disabled={getIncomeWalletAmount() < minPrice} variant={"outlined"} color={"success"}
+                            <Button disabled={getIncomeWalletAmount() < minPrice} variant={"contained"} color={"error"}
+                                    fullWidth
                                     type={"submit"}>ثبت</Button>
                         </DialogActions>
                     </Form>

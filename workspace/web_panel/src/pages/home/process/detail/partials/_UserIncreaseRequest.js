@@ -10,7 +10,7 @@ const _UserIncreaseRequest = ({UserIncreaseRequest}) => {
     if (!UserIncreaseRequest)
         return (<>
             <Portlet>
-                <PortletHeader title={"تراکنش‌های شرکت"}/>
+                <PortletHeader title={"درخواست افزایش شارژ"}/>
                 <LinearProgress/>
                 <PortletBody>
                 </PortletBody>

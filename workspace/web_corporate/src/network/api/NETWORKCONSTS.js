@@ -28,6 +28,7 @@ export let Api_url = {
         add: "v1/corporatePersonnel/add",
         corporateOwnedByUserId: "v1/corporatePersonnel/corporateOwnedByUserId",
         addPersonnelCredit: "v1/corporatePersonnel/addPersonnelCredit",
+        manualExpireCredit: "v1/corporatePersonnel/manualExpireCredit",
         addCreditToAll: "v1/corporatePersonnel/addCreditToAll",
         getTotalUserCredits: "v1/corporatePersonnel/getTotalUserCredits",
         delete: "v1/corporatePersonnel/delete",
@@ -81,6 +82,13 @@ export let Api_url = {
     suggest: {
         query: "v1/suggest/query",
     },
+    support:{
+        ADD:"v1/support/add",
+        ADD_MESSAGE:"v1/support/addMessage",
+        GET_BY_PLACE:"v1/support/getByPlace",
+        GET_BY_ID:"v1/support/getById",
+        query: "v1/support/query"
+    },
     user: {
         GET_BY_ID: "v1/user/getById",
         UPDATE_USER: "v1/user/update",
@@ -93,5 +101,8 @@ export let Api_url = {
         setPaymentRequest:"v1/transaction/setPaymentRequest",
         query:"v1/TransactionCorporate/query",
         increaseQuery: "v1/increaseCorporateDeposit/query",
+    },
+    TransactionPersonnelCredit:{
+        query:"v1/TransactionPersonnelCredit/query",
     }
 };

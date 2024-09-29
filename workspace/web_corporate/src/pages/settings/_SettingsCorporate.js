@@ -25,8 +25,10 @@ const _SettingsCorporate = (props) => {
     }, []);
 
     function getUserCorporates() {
+        console.log(user.Id);
         corporatePersonnel_corporateOwnedByUserId({id: user.Id}).then(result => {
             SetPersonCorporates(result.data.Data)
+            console.log(result.data.Data);
             if (result.data.Data.length == 1) {
                 SetSelectedCorporate(result.data.Data[0]?.Corporate);
                 props.SetCorporate(result.data.Data[0]?.Corporate);

@@ -60,7 +60,7 @@ export default function _HallEntered({selectSubscribe,updatePage}) {
                                                 alt="Remy Sharp"
                                                 src={item?.User?.Avatar?.Url}/>
                                         </ListItemAvatar>
-                                        <Link href={"/users/singleuser?id=" + item.User.Id}
+                                        <Link href={"/users/singleuser/" + item.User.Username}
                                               sx={{textDecoration: "none", color: "#666666"}}>
                                             <ListItemText primary={`${item.User.FullName || ""} (${item.User.Username})`}/>
                                             <ListItemText secondary={item.Name || ""}/>

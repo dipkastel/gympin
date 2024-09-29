@@ -45,6 +45,7 @@ public class PurchasedSubscribeControllerImpl implements PurchasedSubscribeContr
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<PurchasedSubscribeDto> getById(Long id) {
         return ResponseEntity.ok(purchasedSubscribeService.getById(id));
     }
@@ -82,6 +83,12 @@ public class PurchasedSubscribeControllerImpl implements PurchasedSubscribeContr
     @GetMapping("/getUserEntered")
     public ResponseEntity<List<PurchasedSubscribeDto>> getUserEnteredSubscribe(Long placeId) {
         return ResponseEntity.ok(purchasedSubscribeService.getUserEnteredSubscribe(placeId));
+    }
+
+    @Override
+    @GetMapping("/GetByKey")
+    public ResponseEntity<PurchasedSubscribeDto> getPurchasedByKey(String key) {
+        return ResponseEntity.ok(purchasedSubscribeService.getByKey(key));
     }
 
     @Override

@@ -181,6 +181,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         return userDto;
     }
 
+
     @Override
     public UserDto getMyInfo() {
 

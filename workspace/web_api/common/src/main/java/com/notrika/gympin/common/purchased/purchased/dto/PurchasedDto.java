@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
@@ -15,6 +14,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -25,6 +25,9 @@ public class PurchasedDto extends BaseDto<PurchasedDto> {
 
     @JsonProperty("Name")
     private String name;
+
+    @JsonProperty("Key")
+    private String Key;
 
     @JsonProperty("Description")
     private String description;
@@ -45,7 +48,7 @@ public class PurchasedDto extends BaseDto<PurchasedDto> {
     private PlaceDto place;
 
     @JsonProperty("Serial")
-    private SerialDto serial;
+    private List<SerialDto> serials;
 
     @JsonProperty("Customer")
     private UserDto customer;
@@ -55,8 +58,6 @@ public class PurchasedDto extends BaseDto<PurchasedDto> {
 
     @JsonProperty("PurchasedStatus")
     private String purchasedStatus;
-
-
 
 
 }

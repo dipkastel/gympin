@@ -132,7 +132,7 @@ const ScanPage = ({selectedSubscribe}) => {
     //                 <DialogActions>
     //                     <Button onClick={() => {
     //                         console.log(subscribe);
-    //                         navigate('/users/singleuser?id=' + subscribe.User.Id, {replace: true})
+    //                         navigate('/users/singleuser/' + subscribe.User.Id, {replace: true})
     //                     }}>اطلاعات کاربر</Button>
     //                     <Button onClick={() => {
     //                         SetOpenModalNewUser(false);
@@ -162,7 +162,7 @@ const ScanPage = ({selectedSubscribe}) => {
     //                 <DialogActions>
     //                     <Button onClick={() => {
     //                         console.log(subscribe);
-    //                         navigate('/users/singleuser?id=' + subscribe.User.Id, {replace: true})
+    //                         navigate('/users/singleuser/' + subscribe.User.Id, {replace: true})
     //                     }}>پروفایل کاربر</Button>
     //                     <Button onClick={() => {
     //                         SetOpenModalNewSubscribe(false);

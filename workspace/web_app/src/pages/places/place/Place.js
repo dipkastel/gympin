@@ -12,13 +12,13 @@ const Place = () => {
     const [place, setPlace] = useState({});
 
     useEffect(() => {
-        document.title = 'مرکز';
         getPlace();
     }, [placeId]);
 
     function getPlace() {
         place_getById(placeId).then(result => {
             setPlace(result.data.Data);
+            document.title = 'مرکز ورزشی '+result?.data?.Data?.Name+" - جیم پین پل ارتباطی مراکز ورزشی و سازمان ها";
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});

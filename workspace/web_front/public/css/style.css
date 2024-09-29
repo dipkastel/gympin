@@ -12853,15 +12853,6 @@ input.form-control-sm {
   overflow-x: hidden;
   position: relative;
   z-index: 1; }
-  .faq-area::after {
-    background: #F7F7F7;
-    width: 80%;
-    height: 100%;
-    content: "";
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: -1; }
     @media (max-width: 1199px) {
       .faq-area::after {
         width: 100%; } }

@@ -10,7 +10,7 @@ const _CorporateTransactions = ({corporateTransaction}) => {
     if (!corporateTransaction)
         return (<>
             <Portlet>
-                <PortletHeader title={"تراکنش‌های شرکت"}/>
+                <PortletHeader title={"تراکنش‌های شارژ شرکت"}/>
                 <LinearProgress/>
                 <PortletBody>
                 </PortletBody>

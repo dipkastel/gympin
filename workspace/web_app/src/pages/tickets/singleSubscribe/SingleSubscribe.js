@@ -3,13 +3,13 @@ import _QRcode from "../commonPartials/_QRcode";
 import {useParams} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import _SubscribeDetail from "./_SubscribeDetail";
-import {purchasedSubscribe_getById} from "../../../network/api/purchasedSubscribe.api";
+import {purchasedSubscribe_getById, purchasedSubscribe_getByKey} from "../../../network/api/purchasedSubscribe.api";
 import _SubscribeEnterList from "./_SubscribeEnterList";
 import _UsageProgress from "../commonPartials/_UsageProgress";
 import _SubscribePhoneLessEnter from "./_SubscribePhoneLessEnter";
 
 const SingleSubscribe = () => {
-    const {subscribeId} = useParams();
+    const {subscribeKey} = useParams();
     const [subscribe, setSubscribe] = useState(null)
     const [userCanEnter, setUserCanEnter] = useState(null)
     const error = useContext(ErrorContext);
@@ -20,7 +20,7 @@ const SingleSubscribe = () => {
     }, []);
 
     function getSubscribe() {
-        purchasedSubscribe_getById({id: subscribeId}).then(result => {
+        purchasedSubscribe_getByKey({key:subscribeKey}).then(result => {
             setSubscribe(result.data.Data);
         }).catch(e => {
             try {

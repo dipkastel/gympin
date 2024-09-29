@@ -63,10 +63,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -329,9 +326,10 @@ public class InvoiceServiceHelper {
                 .gender(ticketSubscribe.getGender())
                 .sellPrice(invoiceBuyable.getPlacePrice())
                 .placePrice(invoiceBuyable.getPlacePrice())
+                .key(GenerateNewKey())
                 .place(invoiceBuyable.getPlace())
                 .customer(invoice.getUser())
-                .serial(invoice.getSerial())
+                .Serials(List.of(invoice.getSerial()))
                 .coaches(ticketSubscribe.getCoaches().stream().map(c -> UserEntity.builder().id(c.getId()).build()).collect(Collectors.toList()))
                 .purchasedType(PurchasedType.SUBSCRIBE)
                 .status(SubscribePurchasedStatus.READY_TO_ACTIVE)
@@ -567,4 +565,18 @@ public class InvoiceServiceHelper {
         return result;
     }
 
+    private String GenerateNewKey(){
+        String alphabet = "1234567890abcdefghijlmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String code = "";
+        //generate code
+        for(int i=0;i<8;i++){
+            Random r = new Random();
+            code += alphabet.charAt(r.nextInt(alphabet.length()));
+        }
+        //check Code
+        var ticket = purchasedSubscribeRepository.findByKey(code);
+        if(ticket!=null)
+            code = GenerateNewKey();
+        return code;
+    }
 }

@@ -20,10 +20,10 @@ const _QRcode = ({ticket,userCanEnter,type}) => {
     function getCodeOfSubscribe() {
         if(lock)return;
         lock = true;
-
         qrCode_getCode({
             Type:type,
             ReferenceId:ticket.Id,
+            Description:ticket.Key,
         }).then(result => {
             lock =false;
             SetCode(result.data.Data)

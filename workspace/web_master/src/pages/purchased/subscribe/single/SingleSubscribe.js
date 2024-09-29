@@ -2,27 +2,27 @@ import React, {useContext, useEffect, useState} from 'react';
 import _SingleSubscribeDetail from "./_SingleSubscribeDetail";
 import _SingleSubscribeEntryList from "./_SingleSubscribeEntryList";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {useSearchParams} from "react-router-dom";
-import {purchasedSubscribe_getById} from "../../../../network/api/subscribe.api";
+import {useParams, useSearchParams} from "react-router-dom";
+import {purchasedSubscribe_getById, purchasedSubscribe_getByKey} from "../../../../network/api/subscribe.api";
 import _SingleSubscribeActions from "./_SingleSubscribeActions";
 import getAccessOf from "../../../../helper/accessManager";
 import {personnelAccessEnumT} from "../../../../helper/enums/personnelAccessEnum";
 import AccessDenied from "../../../../components/AccessDenied";
-import {getWizardComplete} from "../../../../helper/pocket";
 
 const SingleSubscribe = () => {
     const error = useContext(ErrorContext);
-    const [searchParam] = useSearchParams();
+    const {subscribeId} = useParams();
     const [subscribe, SetSubscribe] = useState(null);
 
     useEffect(() => {
         document.title = 'مدیریت عضویت';
+        console.log(subscribeId)
         getSubscribe();
-    }, [searchParam]);
+    }, [subscribeId]);
 
     function getSubscribe() {
         SetSubscribe(null);
-        purchasedSubscribe_getById({id: searchParam.get("id")}).then(result => {
+        purchasedSubscribe_getByKey({key:subscribeId}).then(result => {
             SetSubscribe(result.data.Data)
         }).catch(e => {
             try {
@@ -30,7 +30,7 @@ const SingleSubscribe = () => {
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
             }
-        })
+        });
     }
 
     if (!getAccessOf(personnelAccessEnumT.SubscribeDetail))

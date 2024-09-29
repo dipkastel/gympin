@@ -10,7 +10,7 @@ export default function StallDeliverd() {
                     <Avatar
                         sx={{width: 50, height: 50}} alt="Remy Sharp" src={toAbsoluteUrl("/assets/images/1.jpg")}/>
                 </ListItemAvatar>
-                <Link href={"/users/singleuser?id=2"} sx={{textDecoration: "none", color: "#666666"}}>
+                <Link href={"/users/singleuser/"+0} sx={{textDecoration: "none", color: "#666666"}}>
                     <Grid
                         container
                         direction="row"

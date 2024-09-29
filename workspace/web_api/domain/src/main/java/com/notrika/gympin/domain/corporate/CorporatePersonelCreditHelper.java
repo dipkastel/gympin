@@ -26,6 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,6 +66,12 @@ public class CorporatePersonelCreditHelper {
     }
 
     public FinanceCorporatePersonnelCreditEntity addCorporatePersonnelCredit(CorporatePersonnelEntity personnelEntity, @NonNull CorporatePersonnelCreditParam param, FinanceSerialEntity serial) {
+        if(personnelEntity.getCorporate().getContractType()==CorporateContractTypeEnum.ALPHA){
+            Calendar c = Calendar.getInstance();
+            c.setTime(personnelEntity.getCorporate().getContractDate());
+            c.add(Calendar.YEAR, 1);
+            param.setExpireDate(c.getTime());
+        }
         FinanceCorporatePersonnelCreditEntity result = financeCorporatePersonnelCreditRepository.add(FinanceCorporatePersonnelCreditEntity.builder()
                 .status(CorporatePersonnelCreditStatusEnum.ACTIVE)
                 .corporatePersonnel(personnelEntity)

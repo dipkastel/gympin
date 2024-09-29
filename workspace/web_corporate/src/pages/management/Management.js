@@ -18,14 +18,17 @@ function Management(props) {
     return (
         <>
             <_ListItem title="مشخصات سازمان" destination="/management/details"/>
+            {/*<_ListItem title="پیام ها" destination="/management/notifs"/>*/}
             <_ListItem title="گروه ها" destination="/management/categories"/>
+            <_ListItem title="پشتیبانی" destination="/management/support"/>
+            {/*<_ListItem title="گزارشات" destination="/management/report"/>*/}
             <_ListItem title="تنظیمات" destination="/management/settings"/>
-            <_GenderEnter/>
+            {/*<_GenderEnter/>*/}
             {/*<_GenderIncome/>*/}
-            <_Income/>
-            <_IncomeSport/>
-            <_OurTraffic/>
-            <_SportRadar/>
+            {/*<_Income/>*/}
+            {/*<_IncomeSport/>*/}
+            {/*<_OurTraffic/>*/}
+            {/*<_SportRadar/>*/}
         </>
     );
 };

@@ -37,7 +37,7 @@ const DemandPayment = () => {
 
         SettlementUserDeposit_query({
             queryType: "FILTER",
-            UserId: currentUser.Id,
+            FinanceUserId: 1084,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             SetTransactions(data.data.Data)

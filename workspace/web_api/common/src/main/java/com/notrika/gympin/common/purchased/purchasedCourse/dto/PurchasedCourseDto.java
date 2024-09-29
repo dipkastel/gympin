@@ -36,8 +36,11 @@ public class PurchasedCourseDto extends BaseDtoWithCreateUpdate<PurchasedCourseD
     @JsonProperty("Name")
     private String name;
 
+    @JsonProperty("Key")
+    private String key;
+
     @JsonProperty("Serial")
-    private SerialDto serial;
+    private List<SerialDto> serials;
 
     @JsonProperty("Price")
     private BigDecimal price;

@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -34,9 +35,11 @@ public class PurchasedSubscribeScannedDto extends BaseDtoWithCreateUpdate<Purcha
     @JsonProperty("Name")
     private String name;
 
+    @JsonProperty("Key")
+    private String key;
 
     @JsonProperty("Serial")
-    private SerialDto serial;
+    private List<SerialDto> serials;
 
     @JsonProperty("Price")
     private BigDecimal price;

@@ -14,5 +14,6 @@ public enum TransactionBaseType {
     BENEFICIARY,
     DISCOUNT,
     CREDIT,
+    EXPIRE_CREDIT_SYSTEM,
     INTERNAL_TRANSFER
 }

@@ -13,6 +13,7 @@ const _SubscribeDetail = ({subscribe}) => {
     const [openTiming, setOpenTiming] = useState(false)
     const  [openDescription,SetOpenDescription]  = useState(false);
     useEffect(() => {
+        console.log(subscribe)
         getTiming(subscribe);
     }, [subscribe]);
 
@@ -86,15 +87,15 @@ const _SubscribeDetail = ({subscribe}) => {
                             alignItems={"center"}
                         >
                             <Typography width={"100%"} sx={{paddingY: 0.5}} color={"gray"}
-                                        variant={"subtitle1"}>{"قابل استفاده در :"}</Typography>
-                            {timing && timing.map(item => (
-                                <Typography width={"100%"} key={item.Id} sx={{pr: 1, m: 1}} color={"gray"}
-                                            variant={"subtitle2"}>
-                                    {item.Hall.Name + " " + " " + dayOfWeekEnum[item.DayOfWeek] + " از " +
-                                    item?.OpeningTime.substring(0, 5) + " تا " +
-                                    item?.ClosingTime.substring(0, 5) + " "}
-                                </Typography>
-                            ))}
+                                        variant={"subtitle1"}>{subscribe.Timing}</Typography>
+                            {/*{timing && timing.map(item => (*/}
+                            {/*    <Typography width={"100%"} key={item.Id} sx={{pr: 1, m: 1}} color={"gray"}*/}
+                            {/*                variant={"subtitle2"}>*/}
+                            {/*        {item.Hall.Name + " " + " " + dayOfWeekEnum[item.DayOfWeek] + " از " +*/}
+                            {/*        item?.OpeningTime.substring(0, 5) + " تا " +*/}
+                            {/*        item?.ClosingTime.substring(0, 5) + " "}*/}
+                            {/*    </Typography>*/}
+                            {/*))}*/}
                         </Grid>
                     </Collapse>
 

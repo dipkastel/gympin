@@ -65,36 +65,40 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
     @Override
     @Transactional
     public FinanceSettlementUserDepositDto confirmSettlementRequest(FinanceSettlementUserDepositParam param) {
-        return null;
-//        FinanceSettlementUserDepositRequestEntity Settlement = financeSettlementUserDepositRepository.getById(param.getId());
-//        Settlement.setSettlementStatus(param.getAccept() ? SettlementStatus.CONFIRMED : SettlementStatus.REJECTED);
-//        var userFinance = financeUserRepository.findByUserIdAndDeletedFalse(Settlement.getUser());
-//        FinanceUserTransactionEntity userTransaction = FinanceUserTransactionEntity.builder()
-//                .serial(Settlement.getSerial())
-//                .amount(Settlement.getAmount())
-//                .description(param.getDescription())
-//                .latestBalance(userFinance.getTotalDeposit())
-//                .financeUser(userFinance)
-//                .transactionStatus(param.getAccept() ? TransactionStatus.COMPLETE : TransactionStatus.CANCEL)
-//                .transactionType(TransactionBaseType.USER)
-//                .isChecked(false)
-//                .build();
-//        if (param.getAccept()) {
-//            if(userFinance.getTotalDeposit().add(Settlement.getAmount()).compareTo(BigDecimal.ZERO)<0)
-//                throw new LowDepositException();
-//            var newDeposit = userFinance.getTotalDeposit().add(Settlement.getAmount());
-//            userFinance.setTotalDeposit(newDeposit);
-//            financeUserRepository.update(userFinance);
-//        }
-//        financeUserTransactionRepository.add(userTransaction);
-//        financeSettlementUserDepositRepository.update(Settlement);
-//        return SettlementConvertor.ToDto(Settlement);
+        //init
+        FinanceSettlementUserDepositRequestEntity SettlementRequest = financeSettlementUserDepositRepository.getById(param.getId());
+
+        SettlementRequest.setSettlementStatus(param.getAccept() ? SettlementStatus.CONFIRMED : SettlementStatus.REJECTED);
+        var userFinance = SettlementRequest.getFinanceUser();
+        BigDecimal lastDeposit = userFinance.getTotalDeposit();
+        //subtract from wallet
+        if (param.getAccept()) {
+            if(userFinance.getTotalDeposit().add(SettlementRequest.getAmount()).compareTo(BigDecimal.ZERO)<0)
+                throw new LowDepositException();
+            var newDeposit = userFinance.getTotalDeposit().add(SettlementRequest.getAmount());
+            userFinance.setTotalDeposit(newDeposit);
+            financeUserRepository.update(userFinance);
+        }
+        //wallet transaction
+        FinanceUserTransactionEntity userTransaction = FinanceUserTransactionEntity.builder()
+                .serial(SettlementRequest.getSerial())
+                .amount(param.getAccept() ? SettlementRequest.getAmount():BigDecimal.ZERO)
+                .description(param.getDescription())
+                .latestBalance(lastDeposit)
+                .financeUser(userFinance)
+                .transactionStatus(param.getAccept() ? TransactionStatus.COMPLETE : TransactionStatus.CANCEL)
+                .transactionType(TransactionBaseType.USER)
+                .isChecked(false)
+                .build();
+        financeUserTransactionRepository.add(userTransaction);
+        financeSettlementUserDepositRepository.update(SettlementRequest);
+        return SettlementConvertor.ToDto(SettlementRequest);
     }
 
     @Override
     @Transactional
     public FinanceSettlementUserDepositDto add(@NonNull FinanceSettlementUserDepositParam param) {
-        //TODO seprate chachouts by wallet on serial
+        //TODO seprate chackouts by wallet on serial
         FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder()
                 .serial(java.util.UUID.randomUUID().toString())
                 .processTypeEnum(ProcessTypeEnum.CASH_OUT_PLACE)

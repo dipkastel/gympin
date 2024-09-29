@@ -47,9 +47,11 @@ const PurchasedAllManagement = () => {
         switch (row.PurchasedType) {
             case "SUBSCRIBE":{
                 history.push({pathname: "subscribe/data/" + row.Id});
+                return;
             }
             case "COURSE":{
                 history.push({pathname: "course/data/" + row.Id});
+                return;
             }
         }
 

@@ -3,15 +3,27 @@ package com.notrika.gympin.domain.user;
 
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
+import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
+import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
+import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
+import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
 import com.notrika.gympin.common.user.user.enums.CreditType;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporatePersonnelCreditRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporatePersonnelCreditTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
+import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
+import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +40,19 @@ public class UserServiceHelper {
     FinanceSerialRepository financeSerialRepository;
 
     @Autowired
+    FinanceCorporateRepository financeCorporateRepository;
+
+    @Autowired
     CorporatePersonnelRepository corporatePersonnelRepository;
 
     @Autowired
+    FinanceCorporateTransactionRepository financeCorporateTransactionRepository;
+
+    @Autowired
     FinanceCorporatePersonnelCreditRepository financeCorporatePersonnelCreditRepository;
+
+    @Autowired
+    FinanceCorporatePersonnelCreditTransactionRepository financeCorporatePersonnelCreditTransactionRepository;
 
     public List<UserCreditDetailDto> getUserCreditsByCorporate(UserParam param) {
         List<CorporatePersonnelEntity> corportePersonnels = corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(param.getId());
@@ -77,7 +98,47 @@ public class UserServiceHelper {
     }
 
     private void ExpireCredit(FinanceCorporatePersonnelCreditEntity credit) {
+
+        CorporatePersonnelEntity corporatePersonnel = credit.getCorporatePersonnel();
+        CorporateEntity corporate = corporatePersonnel.getCorporate();
+        FinanceCorporateEntity financeCorporate =corporate.getFinanceCorporate();
+        BigDecimal lastPersonnelCreditBalance =credit.getCreditAmount();
+        FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder()
+                .serial(java.util.UUID.randomUUID().toString())
+                .processTypeEnum(ProcessTypeEnum.TRA_EXPIRE_PERSONNEL_CREDIT_SYSTEM)
+                .build());
+        //transaction personnel credit
+        financeCorporatePersonnelCreditTransactionRepository.add(FinanceCorporatePersonnelCreditTransactionEntity.builder()
+                .serial(serial)
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .latestBalance(lastPersonnelCreditBalance)
+                .personnelCredit(credit)
+                .isChecked(false)
+                .transactionType(TransactionBaseType.EXPIRE_CREDIT_SYSTEM)
+                .amount(lastPersonnelCreditBalance.negate())
+                .build());
+        //change personnel credit
         credit.setStatus(CorporatePersonnelCreditStatusEnum.EXPIRE);
+        credit.setCreditAmount(BigDecimal.ZERO);
         financeCorporatePersonnelCreditRepository.update(credit);
+        //transaction corporate total
+        financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
+                .serial(serial)
+                .amount(lastPersonnelCreditBalance.negate())
+                .description("انقضا سیستمی اعتبار کاربر")
+                .latestBalance(financeCorporate.getTotalCredits())
+                .financeCorporate(financeCorporate)
+                .transactionCorporateType(TransactionCorporateType.CREDIT)
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .transactionType(TransactionBaseType.EXPIRE_CREDIT_SYSTEM)
+                .isChecked(false)
+                .build());
+        //change corporateTotal
+        BigDecimal newTotal = financeCorporate.getTotalCredits().subtract(lastPersonnelCreditBalance);
+        financeCorporate.setTotalCredits(newTotal);
+        financeCorporateRepository.update(financeCorporate);
+
+
+
     }
 }

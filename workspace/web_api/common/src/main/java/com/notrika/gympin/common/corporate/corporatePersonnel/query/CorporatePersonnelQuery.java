@@ -39,5 +39,11 @@ public class CorporatePersonnelQuery extends BaseQuery<CorporatePersonnelQuery> 
     @JsonProperty("GroupId")
     private Long is_personnelGroupæid;
 
+    @JsonProperty("FullName")
+    private String like_useræfullName;
+
+    @JsonProperty("PhoneNumber")
+    private String like_useræphoneNumber;
+
 
 }

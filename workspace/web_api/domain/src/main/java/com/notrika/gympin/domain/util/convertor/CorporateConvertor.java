@@ -83,12 +83,11 @@ public final class CorporateConvertor {
         dto.setRole(entity.getRole());
         dto.setPersonnelGroup(toDto(entity.getPersonnelGroup()));
         dto.setUser(UserConvertor.toDtoLessDetails(entity.getUser()));
-        dto.setPersonnelGroup(toDto(entity.getPersonnelGroup()));
         try{
             dto.setTotalCredit(entity.getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
         }catch (Exception e){}
         if (entity.getCredits() != null)
-            dto.setCreditList(entity.getCredits().stream().map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
+            dto.setCreditList(entity.getCredits().stream().sorted((o1, o2)->o2.getId().compareTo(o1.getId())).map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
         return dto;
     }
 

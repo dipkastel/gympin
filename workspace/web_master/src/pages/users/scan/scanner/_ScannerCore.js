@@ -97,12 +97,10 @@ export default function _ScannerCore({onFind, scannWork}) {
 
                 convas.current.height = InVideo.videoHeight;
                 convas.current.width = InVideo.videoWidth;
-                canvasContext.drawImage(InVideo, 0, 0, convas.current.width, convas.current.height);
+                 canvasContext.drawImage(InVideo, 0, 0, convas.current.width, convas.current.height);
                 var imageData = canvasContext.getImageData(0, 0, convas.current.width, convas.current.height);
 
-                var code = jsQR(imageData.data, imageData.width, imageData.height, {
-                    inversionAttempts: 'dontInvert'
-                });
+                var code = jsQR(imageData.data, imageData.width, imageData.height, {inversionAttempts: 'dontInvert'});
                 if (code) {
                     onFind(code.data);
                 }

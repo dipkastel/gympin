@@ -13,6 +13,10 @@ public interface PurchasedSubscribeRepository extends BaseRepository<PurchasedSu
 
     List<PurchasedSubscribeEntity> findAllByCustomerIdAndDeletedFalse(Long userId);
 
+    PurchasedSubscribeEntity findByKey(String key);
+
+    List<PurchasedSubscribeEntity> findAllByPlaceIdAndDeletedFalse(Long id);
+
     @Query("SELECT T FROM PurchasedSubscribeEntity T WHERE T.customer.id = :#{#userId} AND T.ticketSubscribe.place.id = :#{#placeId} AND T.status NOT LIKE 'PAYMENT_WAIT' AND T.status NOT LIKE 'CANCEL'  ORDER BY T.id DESC ")
     List<PurchasedSubscribeEntity> getUserPlaceSubscribe(Long userId, Long placeId);
 

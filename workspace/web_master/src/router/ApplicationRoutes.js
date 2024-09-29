@@ -86,8 +86,6 @@ export default function ApplicationRoutes() {
             {inWizardComplete?(<>
                 <NNavigaion/>
                 <Routes>
-                    <Route path="/management/hall/:hallId" element={<Hall/>}/>
-                    <Route path="/management/halls" element={<Halls/>}/>
                     <Route path="/management/about" element={<About/>}/>
                     <Route path="/management/facilities" element={<Option/>}/>
                     <Route path="/management/sports" element={<Sports/>}/>
@@ -123,8 +121,8 @@ export default function ApplicationRoutes() {
                     <Route path="/finance/demand" element={<DemandPayment/>}/>
                     <Route path="/finance" element={<Finance/>}/>
 
-                    <Route path="/users/singleuser" element={<SingleUser/>}/>
-                    <Route path="/users/SingleSubscribe" element={<SingleSubscribe/>}/>
+                    <Route path="/users/singleuser/:userId" element={<SingleUser/>}/>
+                    <Route path="/users/SingleSubscribe/:subscribeId" element={<SingleSubscribe/>}/>
                     <Route path="/users" element={<Users/>}/>
                     {/*<Route path="/users/:section" element={<Users/>}/>*/}
 

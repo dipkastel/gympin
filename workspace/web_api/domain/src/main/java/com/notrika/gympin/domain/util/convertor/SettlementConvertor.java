@@ -16,7 +16,7 @@ public final class SettlementConvertor {
         dto.setAmount(entity.getAmount());
         dto.setSettlementStatus(entity.getSettlementStatus());
         try {
-            dto.setDescription(entity.getSerial().getUserTransactions().get(0).getDescription());
+//            dto.setDescription(entity.getSerial().getUserTransactions().get(0).getDescription());
         } catch (Exception e) {
         }
 

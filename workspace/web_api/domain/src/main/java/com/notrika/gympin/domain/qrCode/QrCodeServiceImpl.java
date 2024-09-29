@@ -36,6 +36,7 @@ public class QrCodeServiceImpl implements QrCodeService {
             if (!CheckExistItem.isEmpty()){
                 var itemToUpdate = CheckExistItem.get(0);
                 itemToUpdate.setCode(getNewCode());
+                itemToUpdate.setDescription(param.getDescription());
                 qrCodeRepository.update(itemToUpdate);
                 return QrCodeConvertor.toDto(itemToUpdate);
             }

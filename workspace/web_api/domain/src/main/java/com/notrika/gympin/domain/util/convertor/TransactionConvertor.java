@@ -6,10 +6,10 @@ import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateE
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceDiscountTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
-import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 
 import java.math.BigDecimal;
 
@@ -17,7 +17,7 @@ public final class TransactionConvertor {
 
 
     public static CorporateTransactionDto toDto(FinanceCorporateTransactionEntity entity) {
-        if(entity==null) return null;
+        if (entity == null) return null;
         CorporateTransactionDto dto = new CorporateTransactionDto();
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
@@ -32,8 +32,9 @@ public final class TransactionConvertor {
         dto.setSerial(SerialConvertor.ToDto(entity.getSerial()));
         return dto;
     }
+
     public static UserTransactionDto toDto(FinanceUserTransactionEntity entity) {
-        if(entity==null) return null;
+        if (entity == null) return null;
         UserTransactionDto dto = new UserTransactionDto();
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
@@ -49,8 +50,9 @@ public final class TransactionConvertor {
         dto.setSerial(SerialConvertor.ToDto(entity.getSerial()));
         return dto;
     }
+
     public static TransactionPersonnelCreditDto toDto(FinanceCorporatePersonnelCreditTransactionEntity entity) {
-        if(entity==null) return null;
+        if (entity == null) return null;
         TransactionPersonnelCreditDto dto = new TransactionPersonnelCreditDto();
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
@@ -62,17 +64,20 @@ public final class TransactionConvertor {
         dto.setIsChecked(entity.getIsChecked());
         dto.setSerial(SerialConvertor.ToDto(entity.getSerial()));
         dto.setPersonnelCredit(CorporateConvertor.toCreditDto(entity.getPersonnelCredit()));
-        try{
+        try {
             dto.setCorporateName(entity.getPersonnelCredit().getCorporatePersonnel().getCorporate().getName());
-        }catch (Exception e){}
-         try {
-            dto.setCurrentTotalCredit(entity.getPersonnelCredit().getCorporatePersonnel().getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
+        try {
+            dto.setCurrentTotalCredit(entity.getPersonnelCredit().getCorporatePersonnel().getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
+        } catch (Exception e) {
+        }
 
         return dto;
     }
+
     public static TransactionAllDto toDto(BaseTransactionEntity entity) {
-        if(entity==null) return null;
+        if (entity == null) return null;
         TransactionAllDto dto = new TransactionAllDto();
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
@@ -84,8 +89,9 @@ public final class TransactionConvertor {
         dto.setTransactionType(entity.getTransactionType());
         return dto;
     }
+
     public static FinanceCorporateDto toDto(FinanceCorporateEntity entity) {
-        if(entity==null) return null;
+        if (entity == null) return null;
         FinanceCorporateDto dto = new FinanceCorporateDto();
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
@@ -95,8 +101,9 @@ public final class TransactionConvertor {
         dto.setTotalCredits(entity.getTotalCredits());
         return dto;
     }
+
     public static FinanceCorporateDto toSimpleDto(FinanceCorporateEntity entity) {
-        if(entity==null) return null;
+        if (entity == null) return null;
         FinanceCorporateDto dto = new FinanceCorporateDto();
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
@@ -105,8 +112,9 @@ public final class TransactionConvertor {
         dto.setTotalCredits(entity.getTotalCredits());
         return dto;
     }
+
     private static FinanceUserDto toDto(FinanceUserEntity entity) {
-        if(entity==null) return null;
+        if (entity == null) return null;
         FinanceUserDto dto = new FinanceUserDto();
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
@@ -116,7 +124,7 @@ public final class TransactionConvertor {
     }
 
     public static IncomeTransactionDto toDto(FinanceIncomeTransactionEntity entity) {
-        if(entity==null) return null;
+        if (entity == null) return null;
         IncomeTransactionDto dto = IncomeTransactionDto.builder()
                 .id(entity.getId())
                 .createdDate(entity.getCreatedDate())
@@ -135,7 +143,7 @@ public final class TransactionConvertor {
 
 
     public static DiscountTransactionDto toDto(FinanceDiscountTransactionEntity entity) {
-        if(entity==null) return null;
+        if (entity == null) return null;
         DiscountTransactionDto dto = DiscountTransactionDto.builder()
                 .id(entity.getId())
                 .createdDate(entity.getCreatedDate())

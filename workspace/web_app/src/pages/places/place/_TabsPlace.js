@@ -16,9 +16,6 @@ const _TabsPlace = ({place}) => {
     const theme = useTheme();
     const [selectedTab, setSelectedTab] = React.useState(0);
 
-    useEffect(() => {
-        document.title = 'مرکز ورزشی '+place?.Name;
-    }, []);
     return (
         <Box sx={{bgcolor: 'background.paper',zIndex:1005,position:"relative"}}>
             <AppBar position="static">

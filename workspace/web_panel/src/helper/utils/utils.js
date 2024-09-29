@@ -20,6 +20,10 @@ export function getUserFixedName(user) {
   if(!user) return "";
   return (user.FullName || "") + " " + " ( " + (user.Username || "") + " ) ";
 }
+export function getPlaceFixedName(place) {
+  if(!place) return "";
+  return (place.Name || "") ;
+}
 export function getCorporateFixedName(corporate) {
   if(!corporate) return "";
   return (corporate.Name || "") + " " + " ( " + (CorporateContractType[corporate.ContractType] || "") + " ) ";

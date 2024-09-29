@@ -95,6 +95,7 @@ export let Api_url = {
         ADD:"v1/purchasedSubscribe/add",
         GET_BY_USER:"v1/purchasedSubscribe/getByUser",
         getById:"v1/purchasedSubscribe/getById",
+        getByKey:"v1/purchasedSubscribe/getByKey",
         DELETE:"v1/purchasedSubscribe/delete",
         checkout:"v1/purchasedSubscribe/checkout",
         exitRequest:"v1/purchasedSubscribe/exitRequest",

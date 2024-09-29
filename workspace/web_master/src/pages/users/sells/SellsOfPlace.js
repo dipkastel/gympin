@@ -25,7 +25,7 @@ const SellsOfPlace = ({selectedSubscribe}) => {
                 PlaceId: place.Id,
                 paging: {Page: 0, Size: 100, Desc: true}
             }).then((data) => {
-                console.log(data.data.Data);
+                console.log("dare miad",data.data.Data);
                 setPurchasedBase(data.data.Data.content.filter(p=>p.Status!="READY_TO_ACTIVE").reduce(function(rv, x) {
                     (rv[x["PurchasedType"].toLowerCase()] = rv[x["PurchasedType"].toLowerCase()] || []).push(x);
                     return rv;

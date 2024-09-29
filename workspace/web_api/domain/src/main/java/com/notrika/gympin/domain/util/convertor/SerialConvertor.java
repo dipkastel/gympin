@@ -23,6 +23,7 @@ public final class SerialConvertor {
         dto.setIncomeTransactions(entity.getIncomeTransactions().stream().map(TransactionConvertor::toDto).collect(Collectors.toList()));
         dto.setUserIncreaseRequest(entity.getUserIncreases().stream().map(IncreaseConvertor::ToDto).collect(Collectors.toList()));
         dto.setCorporateIncreaseRequest(entity.getCorporateIncreases().stream().map(IncreaseConvertor::ToDto).collect(Collectors.toList()));
+        dto.setSettlementRequests(entity.getSettlementRequests().stream().map(SettlementConvertor::ToDto).collect(Collectors.toList()));
         dto.setDiscountTransactions(entity.getDiscount().stream().map(TransactionConvertor::toDto).collect(Collectors.toList()));
         dto.setInvoices(entity.getInvoices().stream().map(InvoiceConvertor::toDto).collect(Collectors.toList()));
         dto.setPurchasedBases(entity.getPurchasedBases().stream().map(PurchasedConvertor::ToDto).collect(Collectors.toList()));
@@ -38,4 +39,6 @@ public final class SerialConvertor {
         dto.setProcessType(entity.getProcessTypeEnum());
         return dto;
     }
+
+
 }

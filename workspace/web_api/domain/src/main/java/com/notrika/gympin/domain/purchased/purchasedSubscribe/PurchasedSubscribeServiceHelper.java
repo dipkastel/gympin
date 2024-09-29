@@ -39,6 +39,8 @@ public class PurchasedSubscribeServiceHelper {
         try{
             UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
             var personnel = userRequester.getPlacePersonnel().stream().filter(p -> (p.getPlace().getId() == placeId)&&!p.isDeleted()).findFirst().get();
+            if(personnel.getPlacePersonnelRoles().stream().anyMatch(r->r.getRole().equals(PlacePersonnelRoleEnum.PLACE_OWNER)))
+                return true;
             var access = personnel.getPlacePersonnelBuyableAccess();
             return access.stream().filter(o-> o.getBuyable().getId().equals(purchesedSubscribe.getTicketSubscribe().getId())).findFirst().get().getAccess();
         }catch (Exception e){return false;}

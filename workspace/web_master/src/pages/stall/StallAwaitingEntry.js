@@ -41,7 +41,7 @@ export default function StallAwaitingEntry() {
                                 width="100%"
                                 paddingX={1}
                             >
-                                <Link href={"/users/singleuser?id="+item.userId} sx={{textDecoration:"none",color:"#666666"}}>
+                                <Link href={"/users/singleuser/"+item.userId} sx={{textDecoration:"none",color:"#666666"}}>
                                     <Typography
                                         sx={{display: 'inline'}}
                                         component="span"

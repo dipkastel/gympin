@@ -4,6 +4,9 @@ import {Api_url} from "./NETWORKCONSTS";
 export function purchasedSubscribe_getById(data) {
     return axios.get(Api_url.purchasedSubscribe.getById, {params: data});
 }
+export function purchasedSubscribe_getByKey(data) {
+    return axios.get(Api_url.purchasedSubscribe.getByKey, {params: data});
+}
 export function purchasedSubscribe_delete(data) {
     return axios.put(Api_url.purchasedSubscribe.DELETE,null ,{params: data});
 }

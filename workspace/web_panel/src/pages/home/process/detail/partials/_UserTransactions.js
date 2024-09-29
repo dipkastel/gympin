@@ -1,8 +1,8 @@
 import React from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {LinearProgress, ListItemText, Tooltip} from "@mui/material";
+import {LinearProgress, ListItemText, Tooltip, Typography} from "@mui/material";
 import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
-import {AccountBalanceWallet, AttachMoney, NotInterested} from "@mui/icons-material";
+import {AccountBalanceWallet, AttachMoney, Description, NotInterested} from "@mui/icons-material";
 import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {CorporateContractType} from "../../../../../helper/enums/CorporateContractType";
 import {UserFinanceTypesEnum} from "../../../../../helper/enums/UserFinanceTypesEnum";
@@ -11,7 +11,7 @@ const _UserTransactions = ({userTransactions}) => {
     if (!userTransactions)
         return (<>
             <Portlet>
-                <PortletHeader title={"تراکنش‌های شرکت"}/>
+                <PortletHeader title={"تراکنش‌های حساب کاربر"}/>
                 <LinearProgress/>
                 <PortletBody>
                 </PortletBody>
@@ -36,6 +36,11 @@ const _UserTransactions = ({userTransactions}) => {
         return (<>
             {UserFinanceTypesEnum[tr?.FinanceUser?.FinanceType]+" "}
             <>{"با مبلغ : " + toPriceWithComma(tr?.FinanceUser?.TotalDeposit)}</>
+
+            {tr?.Description&&
+            <Tooltip title={tr?.Description} placement="top">
+                <Description sx={{color:"#f44fd3"}} />
+            </Tooltip>}
         </>);
     }
 
@@ -54,6 +59,7 @@ const _UserTransactions = ({userTransactions}) => {
                 <div className="kt-portlet__body">
                     <div className="kt-widget4">
                         {userTransactions.map((tr, num) => (
+                            <div>
                             <div key={num} className="kt-widget4__item">
                         <span className="kt-widget4__icon">
                                     {(tr?.TransactionStatus !== "COMPLETE") && (
@@ -89,6 +95,11 @@ const _UserTransactions = ({userTransactions}) => {
                                     sx={{textAlign: "right"}}/>
                                 <span
                                     className={"kt-widget4__number " + getColorClassByAmount(tr?.Amount)}>{toPriceWithComma(tr?.Amount) + " تومان"}</span>
+
+                            </div>
+                                <Typography variant={"overline"} >
+                                    {"انجام شده توسط : " +getUserFixedName(tr?.CreatorUser)}
+                                </Typography>
                             </div>
                         ))}
                     </div>

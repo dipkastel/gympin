@@ -10,7 +10,7 @@ const _CorporateIncreaseRequest = ({CorporateIncreaseRequest}) => {
     if (!CorporateIncreaseRequest)
         return (<>
             <Portlet>
-                <PortletHeader title={"تراکنش‌های شرکت"}/>
+                <PortletHeader title={"درخواست افزایش شارژ"}/>
                 <LinearProgress/>
                 <PortletBody>
                 </PortletBody>

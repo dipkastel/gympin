@@ -57,6 +57,7 @@ const SettlementRequest = ({currentUser, updatePage}) => {
                 return;
             }
             closeModal()
+            console.log("transactionToSettle",transactionToSettle);
             SettlementUserDeposit_confirmSettlementRequest({
                 Id: transactionToSettle.Id,
                 Accept: acceptTransaction,

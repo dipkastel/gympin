@@ -1,21 +1,25 @@
 package com.notrika.gympin.domain.purchased.purchasedSubscribe;
 
-import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
+import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
+import com.notrika.gympin.common.purchased.purchased.param.UserPlacePurchasedParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeDto;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeScannedDto;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.param.EntryMessageParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.param.IncreaseExpireParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.param.PurchasedSubscribeParam;
-import com.notrika.gympin.common.purchased.purchased.param.UserPlacePurchasedParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.query.PurchasedSubscribeQuery;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.service.PurchasedSubscribeService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.param.UserParam;
-import com.notrika.gympin.common.util.GeneralUtil;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
+import com.notrika.gympin.common.util.exception.general.UserNotAllowedException;
 import com.notrika.gympin.common.util.exception.purchased.*;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -24,16 +28,19 @@ import com.notrika.gympin.domain.finance.peyments.CalculatePaymentsServiceImpl;
 import com.notrika.gympin.domain.util.convertor.PurchasedSubscribeConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeEntryMessageRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeEntryRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
+import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
+import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeMessageEntity;
-import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +53,7 @@ import javax.transaction.Transactional;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus.*;
@@ -54,74 +62,75 @@ import static com.notrika.gympin.common.purchased.purchasedSubscribe.enums.Subsc
 public class PurchasedSubscribeServiceImpl extends AbstractBaseService<PurchasedSubscribeParam, PurchasedSubscribeDto, PurchasedSubscribeQuery, PurchasedSubscribeEntity> implements PurchasedSubscribeService {
 
     @Autowired
+    SmsInService smsService;
+    @Autowired
     UserRepository userRepository;
-    @Autowired
-    TicketSubscribeRepository ticketSubscribeRepository;
-    @Autowired
-    PurchasedSubscribeRepository purchasedSubscribeRepository;
-    @Autowired
-    PurchasedSubscribeEntryMessageRepository purchasedSubscribeEntryMessageRepository;
-    @Autowired
-    PurchasedSubscribeEntryRepository purchasedSubscribeEntryRepository;
     @Autowired
     PlaceRepository placeRepository;
     @Autowired
+    CorporateServiceImpl corporateService;
+    @Autowired
+    FinanceSerialRepository financeSerialRepository;
+    @Autowired
+    TicketSubscribeRepository ticketSubscribeRepository;
+    @Autowired
+    CalculatePaymentsServiceImpl calculatePaymetsService;
+    @Autowired
+    PurchasedSubscribeServiceHelper purchasedSubscribeHelper;
+    @Autowired
     CorporatePersonnelRepository corporatePersonnelRepository;
     @Autowired
-    CorporateServiceImpl corporateService;
+    PurchasedSubscribeRepository purchasedSubscribeRepository;
+    @Autowired
+    PurchasedSubscribeEntryRepository purchasedSubscribeEntryRepository;
     @Autowired
     CorporatePersonnelCreditRepository corporatePersonnelCreditRepository;
     @Autowired
-    SmsInService smsService;
-    @Autowired
-    CalculatePaymentsServiceImpl calculatePaymetsService;
-
-    @Autowired
-    PurchasedSubscribeServiceHelper purchasedSubscribeHelper;
+    PurchasedSubscribeEntryMessageRepository purchasedSubscribeEntryMessageRepository;
 
     @Override
     @Transactional
     @Deprecated
     public PurchasedSubscribeDto add(@NonNull PurchasedSubscribeParam purchasedSubscribeParam) {
-        //TODO this cannot be exist
-        TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(purchasedSubscribeParam.getTicketSubscribe().getId());
-        UserEntity user = userRepository.getById(purchasedSubscribeParam.getUser().getId());
-        PurchasedSubscribeEntity entity = new PurchasedSubscribeEntity();
-
-        GympinContext context = GympinContextHolder.getContext();
-        if (context == null)
-            throw new UnknownUserException();
-        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-
-        if (!GeneralUtil.isGenderCompatible(ticketSubscribe.getGender(), user.getGender()))
-            throw new GenderIsNotCompatible();
-        entity.setStatus(READY_TO_ACTIVE);
-        entity.setTicketSubscribe(ticketSubscribe);
-        entity.setCustomer(user);
-        entity.setName(ticketSubscribe.getName());
-        entity.setSellPrice(ticketSubscribe.getPrice());
-        entity.setPlacePrice(ticketSubscribe.getPlacePrice());
-        entity.setDiscount(ticketSubscribe.getDiscount());
-        entity.setDescription(ticketSubscribe.getDescription());
-        entity.setEntryTotalCount(ticketSubscribe.getEntryTotalCount());
-        entity.setSubscribeStatus(ticketSubscribe.getSubscribeStatus());
-        entity.setTiming(ticketSubscribe.getTiming());
-        Date currentDate = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(currentDate);
-        c.add(Calendar.DATE, ticketSubscribe.getExpireDuration());
-        entity.setTicketSubscribeExpireDate(c.getTime());
-        entity.setExpireDate(c.getTime());
-
-        if (ticketSubscribe.getSubscribeCapacity() != null) {
-            var subscribeCount = ticketSubscribe.getSubscribeCapacity() - 1;
-            if (subscribeCount < 1) {
-                ticketSubscribe.setEnable(false);
-            }
-            ticketSubscribe.setSubscribeCapacity(subscribeCount);
-            ticketSubscribeRepository.update(ticketSubscribe);
-        }
-        return PurchasedSubscribeConvertor.toDto(purchasedSubscribeRepository.add(entity));
+        return null;
+//        TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(purchasedSubscribeParam.getTicketSubscribe().getId());
+//        UserEntity user = userRepository.getById(purchasedSubscribeParam.getUser().getId());
+//        PurchasedSubscribeEntity entity = new PurchasedSubscribeEntity();
+//
+//        GympinContext context = GympinContextHolder.getContext();
+//        if (context == null)
+//            throw new UnknownUserException();
+//        UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+//
+//        if (!GeneralUtil.isGenderCompatible(ticketSubscribe.getGender(), user.getGender()))
+//            throw new GenderIsNotCompatible();
+//        entity.setStatus(READY_TO_ACTIVE);
+//        entity.setTicketSubscribe(ticketSubscribe);
+//        entity.setCustomer(user);
+//        entity.setName(ticketSubscribe.getName());
+//        entity.setSellPrice(ticketSubscribe.getPrice());
+//        entity.setPlacePrice(ticketSubscribe.getPlacePrice());
+//        entity.setDiscount(ticketSubscribe.getDiscount());
+//        entity.setDescription(ticketSubscribe.getDescription());
+//        entity.setEntryTotalCount(ticketSubscribe.getEntryTotalCount());
+//        entity.setSubscribeStatus(ticketSubscribe.getSubscribeStatus());
+//        entity.setTiming(ticketSubscribe.getTiming());
+//        Date currentDate = new Date();
+//        Calendar c = Calendar.getInstance();
+//        c.setTime(currentDate);
+//        c.add(Calendar.DATE, ticketSubscribe.getExpireDuration());
+//        entity.setTicketSubscribeExpireDate(c.getTime());
+//        entity.setExpireDate(c.getTime());
+//
+//        if (ticketSubscribe.getSubscribeCapacity() != null) {
+//            var subscribeCount = ticketSubscribe.getSubscribeCapacity() - 1;
+//            if (subscribeCount < 1) {
+//                ticketSubscribe.setEnable(false);
+//            }
+//            ticketSubscribe.setSubscribeCapacity(subscribeCount);
+//            ticketSubscribeRepository.update(ticketSubscribe);
+//        }
+//        return PurchasedSubscribeConvertor.toDto(purchasedSubscribeRepository.add(entity));
     }
 
     @Override
@@ -132,12 +141,13 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
     @Override
     public PurchasedSubscribeDto delete(@NonNull PurchasedSubscribeParam purchasedSubscribeParam) {
-        PurchasedSubscribeEntity entity = purchasedSubscribeRepository.getById(purchasedSubscribeParam.getId());
-        if (entity.getTicketSubscribe().getSubscribeCapacity() != null) {
-            entity.getTicketSubscribe().setSubscribeCapacity(entity.getTicketSubscribe().getSubscribeCapacity() + 1);
-            ticketSubscribeRepository.update(entity.getTicketSubscribe());
-        }
-        return PurchasedSubscribeConvertor.toDto(purchasedSubscribeRepository.deleteById2(entity));
+        return null;
+//        PurchasedSubscribeEntity entity = purchasedSubscribeRepository.getById(purchasedSubscribeParam.getId());
+//        if (entity.getTicketSubscribe().getSubscribeCapacity() != null) {
+//            entity.getTicketSubscribe().setSubscribeCapacity(entity.getTicketSubscribe().getSubscribeCapacity() + 1);
+//            ticketSubscribeRepository.update(entity.getTicketSubscribe());
+//        }
+//        return PurchasedSubscribeConvertor.toDto(purchasedSubscribeRepository.deleteById2(entity));
     }
 
     @Override
@@ -147,17 +157,20 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
     @Override
     public PurchasedSubscribeEntity add(PurchasedSubscribeEntity entity) {
-        return purchasedSubscribeRepository.add(entity);
+        return null;
+//        return purchasedSubscribeRepository.add(entity);
     }
 
     @Override
     public PurchasedSubscribeEntity update(PurchasedSubscribeEntity entity) {
-        return purchasedSubscribeRepository.update(entity);
+        return null;
+//        return purchasedSubscribeRepository.update(entity);
     }
 
     @Override
     public PurchasedSubscribeEntity delete(PurchasedSubscribeEntity entity) {
-        return purchasedSubscribeRepository.deleteById2(entity);
+        return null;
+//        return purchasedSubscribeRepository.deleteById2(entity);
     }
 
     @Override
@@ -208,8 +221,14 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
     @Override
     public List<PurchasedSubscribeDto> getPlaceSubscribes(Long placeId) {
-        List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.getPlaceSubscribes(placeId).stream().map(purchasedSubscribeHelper::checkForExpire).filter(t -> purchasedSubscribeHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
-        return convertToDtos(subscribeEntities);
+        List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.findAllByPlaceIdAndDeletedFalse(placeId).stream().map(purchasedSubscribeHelper::checkForExpire).filter(t -> purchasedSubscribeHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
+        List<PurchasedSubscribeDto> result = convertToDtos(subscribeEntities);
+        result = result.stream().map(s -> {
+            if (s.getStatus() == READY_TO_ACTIVE)
+                return PurchasedSubscribeDto.builder().status(s.getStatus()).build();
+            return s;
+        }).collect(Collectors.toList());
+        return result;
     }
 
     @Override
@@ -217,8 +236,38 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         return convertToDtos(purchasedSubscribeRepository.findAllByCustomerIdAndDeletedFalse(userParam.getId()));
     }
 
+    @Override
+    public PurchasedSubscribeDto getByKey(String key) {
+        var ticket = purchasedSubscribeRepository.findByKey(key);
+        if (!checkUserAccessToTicket(ticket))
+            throw new UserNotAllowedException();
+        return PurchasedSubscribeConvertor.toDto(purchasedSubscribeHelper.checkForExpire(ticket));
+    }
+
+    private boolean checkUserAccessToTicket(PurchasedBaseEntity ticket) {
+        try {
+            GympinContext context = GympinContextHolder.getContext();
+            if (context == null)
+                throw new UnknownUserException();
+            UserEntity userEntity = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+            if (Objects.equals(userEntity.getId(), ticket.getCustomer().getId()))
+                return true;
+            PlacePersonnelEntity jointPlacePersonel = userEntity.getPlacePersonnel().stream().filter(pp -> pp.getPlace().getId() == ticket.getPlace().getId()).findFirst().orElse(null);
+            if (jointPlacePersonel == null)
+                throw new UserNotAllowedException();
+            if (jointPlacePersonel.getPlacePersonnelRoles().contains(PlacePersonnelRoleEnum.PLACE_OWNER))
+                return true;
+            if (ticket.getPurchasedType() == PurchasedType.SUBSCRIBE && jointPlacePersonel.getPlacePersonnelAccess().stream().filter(ppa -> ppa.getSection() == PlacePersonnelAccessEnum.SubscribeDetail).findFirst().get().getAccess())
+                return true;
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     //ticketAction
     @Override
+    @Transactional
     public Boolean increaseExpireDate(IncreaseExpireParam param) {
         PurchasedSubscribeEntity subscribeEntity = purchasedSubscribeRepository.getById(param.getSubscribeId());
         if (param.getIncreaseDayCount() > 0) {
@@ -226,16 +275,20 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
             c.setTime(subscribeEntity.getExpireDate());
             c.add(Calendar.DATE, param.getIncreaseDayCount());
             subscribeEntity.setExpireDate(c.getTime());
+            subscribeEntity.setStatus(ACTIVE);
         }
         if (param.getChangeDate() != null) {
             subscribeEntity.setExpireDate(param.getChangeDate());
+            subscribeEntity.setStatus(ACTIVE);
         }
         purchasedSubscribeRepository.update(subscribeEntity);
+        purchasedSubscribeHelper.checkForExpire(subscribeEntity);
         return true;
     }
 
     @Override
     public PurchasedSubscribeDto updateStatus(PurchasedSubscribeParam param) {
+        //TODO check usage for sqx
         PurchasedSubscribeEntity subscribeEntity = getEntityById(param.getId());
         subscribeEntity.setStatus(param.getStatus());
         purchasedSubscribeRepository.update(subscribeEntity);
@@ -287,12 +340,17 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
         if (subscribeEntity.getStatus() == SubscribePurchasedStatus.READY_TO_ACTIVE) {
 
+            var serial = financeSerialRepository.add(FinanceSerialEntity.builder()
+                    .serial(java.util.UUID.randomUUID().toString())
+                    .processTypeEnum(ProcessTypeEnum.TRA_USE_TICKET)
+                    .build());
             //peyToPlace
-            calculatePaymetsService.PayToPlace(subscribeEntity);
+            calculatePaymetsService.PayToPlace(subscribeEntity, serial);
 
 
             //enterUser
             subscribeEntity.setStatus(SubscribePurchasedStatus.ACTIVE);
+            subscribeEntity.getSerials().add(serial);
             purchasedSubscribeRepository.update(subscribeEntity);
             purchasedSubscribeHelper.enterUser(subscribeEntity, userEntity);
 
@@ -327,8 +385,8 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
     public Boolean acceptEnterRequested(PurchasedSubscribeParam param) throws Exception {
         PurchasedSubscribeEntity subscribeEntity = getEntityById(param.getId());
         UserEntity userEntity = userRepository.getById(param.getUser().getId());
-        PurchasedSubscribeEntryEntity entry = subscribeEntity.getEntryList().stream().filter(e->e.getSubscribeEntryStatus()==SubscribeEntryStatus.REQUESTED).findFirst().get();
-        if(entry==null)
+        PurchasedSubscribeEntryEntity entry = subscribeEntity.getEntryList().stream().filter(e -> e.getSubscribeEntryStatus() == SubscribeEntryStatus.REQUESTED).findFirst().get();
+        if (entry == null)
             throw new NotFoundException();
 
         //check subscribe Limit

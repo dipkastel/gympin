@@ -12,6 +12,8 @@ import SingleUser from "../pages/singleUser/SingleUser";
 import Settings from "../pages/settings/Settings";
 import Groups from "../pages/Groups/Groups";
 import IncreaseHistory from "../pages/IncreaseListPeyment/IncreaseHistory";
+import Support from "../pages/support/Support";
+import SupportDetail from "../pages/support/supportDetail/SupportDetail";
 
 export default function ApplicationRoutes() {
 
@@ -27,6 +29,9 @@ export default function ApplicationRoutes() {
 
                 <Route path="/finance/IncreaseHistory" element={<IncreaseHistory/>}/>
                 <Route path="/finance" element={<Finance/>}/>
+
+                <Route path="/management/support" element={<Support/>}/>
+                <Route path="/management/Support/detail/:supportId" element={<SupportDetail/>}/>
 
                 <Route path="/personnel/increasegroupcredit" element={<IncreaseGroupCredit/>}/>
                 <Route path="/personnel/detail/:PersonnelId" element={<SingleUser/>}/>

@@ -22,8 +22,6 @@ export function corporatePersonnel_update(data) {
 export function corporatePersonnel_ByCorporate(data) {
   return axios.get(Api_url.CorporatePersonnel.PersonnelByCorporate,{params: data});
 }
-
-
 export function corporatePersonnel_query(data) {
   return axios.post(Api_url.CorporatePersonnel.query,data);
 }
@@ -32,6 +30,9 @@ export function corporatePersonnel_getTotalUserCredits(data) {
 }
 export function corporatePersonnel_addPersonnelCredit(data) {
   return axios.post(Api_url.CorporatePersonnel.addPersonnelCredit, data);
+}
+export function corporatePersonnel_manualExpireCredit(data) {
+  return axios.post(Api_url.CorporatePersonnel.manualExpireCredit, data);
 }
 export function corporatePersonnel_addCreditToAll(data) {
   return axios.post(Api_url.CorporatePersonnel.addCreditToAll, data);

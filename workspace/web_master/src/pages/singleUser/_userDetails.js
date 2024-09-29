@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Avatar, Button, Card, CardContent, CardHeader, Grid, Typography} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper/utils";
 import {format} from "date-fns";
+import {TransactionStatus} from "../../helper/enums/TransactionStatus";
 
 const _userDetails = ({user}) => {
 
@@ -11,67 +12,39 @@ const _userDetails = ({user}) => {
     return (
 
         <Card elevation={3} sx={{margin: 1}}>
-            <CardHeader
-                title={user.Username}
-            />
             <CardContent>
-                <Avatar
-                    sx={{width: 120, height: 120}}
-                    alt="Remy Sharp"
-                    src={user.Avatar?.Url}/>
-                <Grid container direction="row" justifyContent={"space-around"} sx={{marginY: 2}}>
-                    نام :
-                    <Typography
-                        sx={{display: "inline"}}
-                        component="p"
-                        variant="h6"
-                        color="text.primary"
-                    >
-                        {user.FullName}
-                    </Typography>
-                </Grid>
-                <Grid container direction="row" justifyContent="space-around" sx={{marginY: 2}}>
-                    کدملی :
-                    <Typography
-                        sx={{display: "inline"}}
-                        className={!nationalCode && "blur"}
-                        component="p"
-                        variant="h6"
-                        color="text.primary"
-                        onClick={() => SetNationalCode(true)}
-                    >
-                        {user.NationalCode}
-                    </Typography>
-                </Grid>
-                <Grid container direction="row" justifyContent="space-around" sx={{marginY: 2}}>
-                    تاریخ تولد :
-                    <Typography
-                        sx={{display: "inline"}}
-                        className={!birthDay && "blur"}
-                        component="p"
-                        variant="h6"
-                        color="text.primary"
-                        onClick={() => SetBirthDay(true)}
-                    >
-                        {new Date(user.Birthday).toLocaleDateString('fa-IR', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })}
-                    </Typography>
-                </Grid>
-                <Grid container direction="row" justifyContent="space-around" sx={{marginY: 2}}>
-                    شماره همراه :
-                    <Typography
-                        sx={{display: "inline"}}
-                        className={!phoneNumber && "blur"}
-                        component="p"
-                        variant="h6"
-                        color="text.primary"
-                        onClick={() => SetPhoneNumber(true)}
-                    >
-                        {user.PhoneNumber}
-                    </Typography>
+
+                <Grid  container spacing={1} >
+
+                    <Grid item  xs={4}>
+                        <Avatar
+                            sx={{width: "100%",height:"auto",aspectRatio:"1"}}
+                            alt={user?.Username}
+                            src={user?.Avatar?.Url}/>
+                    </Grid>
+
+                    <Grid item  xs={8}>
+                        <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                            <Typography component={"p"} sx={{mt:1,mx:2,color:"#aaaaaa"}} variant={"caption"} >{"نام : "}</Typography>
+                            <Typography component={"p"} sx={{mt:1,mx:2}} variant={"caption"} >{user.FullName}</Typography>
+                        </Grid>
+                        <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                            <Typography component={"p"} sx={{mt:1,mx:2,color:"#aaaaaa"}} variant={"caption"} >{"کدملی : "}</Typography>
+                            <Typography component={"p"} className={!nationalCode && "blur"} onClick={() => SetNationalCode(true)} sx={{mt:1,mx:2}} variant={"caption"} >{user.NationalCode}</Typography>
+                        </Grid>
+                        <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                            <Typography component={"p"} sx={{mt:1,mx:2,color:"#aaaaaa"}} variant={"caption"} >{"تاریخ تولد : "}</Typography>
+                            <Typography component={"p"} className={!birthDay && "blur"} onClick={() => SetBirthDay(true)} sx={{mt:1,mx:2}} variant={"caption"} >{new Date(user.Birthday).toLocaleDateString('fa-IR', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}</Typography>
+                        </Grid>
+                        <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                            <Typography component={"p"} sx={{mt:1,mx:2,color:"#aaaaaa"}} variant={"caption"} >{"شماره همراه : "}</Typography>
+                            <Typography component={"p"} className={!phoneNumber && "blur"} onClick={() => SetPhoneNumber(true)} sx={{mt:1,mx:2}} variant={"caption"} >{user.PhoneNumber}</Typography>
+                        </Grid>
+                     </Grid>
                 </Grid>
 
             </CardContent>

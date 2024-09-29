@@ -16,17 +16,17 @@ const _TotalCredits = (props) => {
         <>
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent>
-                    مجموع اعتبار پرسنل :
+
                     <Stack
                         justifyContent="space-between"
                         alignItems="flex-start"
                         direction="row"
                         spacing={0}
                     >
-                        <Typography width={"100%"} variant={"h6"} noWrap={true} textAlign={"left"} component="div" sx={{
+                        <Typography width={"100%"} variant={"h6"} noWrap={true} textAlign={"right"} component="div" sx={{
                             marginY: 0.1
                         }}>
-                            {toPriceWithComma(corporate?.FinanceCorporate?.TotalCredits||0) + " تومان"}
+                            {" مجموع اعتبار پرسنل : "+toPriceWithComma(corporate?.FinanceCorporate?.TotalCredits||0) + " تومان"}
                         </Typography>
                     </Stack>
                 </CardContent>

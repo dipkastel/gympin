@@ -30,60 +30,65 @@ const _userSubscribes = ({user}) => {
 
 
     return (
+        <>
 
-        <Card elevation={3} sx={{margin: 1}}>
-            <CardHeader
-                title={"خرید های کاربر از این مرکز"}
-            />
-            <CardContent>
+            <div>
+                <div className={"section-title mt-3"}>
+                    خرید های کاربر
+                </div>
+            </div>
+                    <List sx={{width: '100%', bgcolor: 'background.paper'}}>
+                        {userPlaceSubscribes.map((item, num) => (
+                            <Card key={"userSubscribes-" + num} elevation={3} sx={{margin: 1}}>
+                                <CardContent>
 
-                <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-                    {userPlaceSubscribes.map((item, num) => (
-                        <div key={"userSubscribes-" + num}>
-                            <Link href={"/users/SingleSubscribe?id=" + item.Id}
-                                  sx={{textDecoration: "none", color: "#666666"}}>
+                                <div >
+                                <Link href={"/users/SingleSubscribe/" + item.Key}
+                                      sx={{textDecoration: "none", color: "#666666"}}>
 
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                >
-                                    <Grid item>
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justifyContent="space-between"
+                                        alignItems="center"
+                                    >
+                                        <Grid item>
+                                            {console.log(item)}
 
-                                        <Grid
-                                            container
-                                            direction="row"
-                                            justifyContent="flex-start"
-                                            alignItems="flex-start"
-                                        >
-                                            <Typography variant={"subtitle1"}> {item.Name}</Typography>
-                                            {/*<Typography variant={"subtitle1"} color={(item.Status=="ACTIVE")?"primary":"green"}>{item.Status}</Typography>*/}
+                                            <Grid
+                                                container
+                                                direction="row"
+                                                justifyContent="flex-start"
+                                                alignItems="flex-start"
+                                            >
+                                                <Typography variant={"subtitle1"}> {item.Name}</Typography>
+                                                {/*<Typography variant={"subtitle1"} color={(item.Status=="ACTIVE")?"primary":"green"}>{item.Status}</Typography>*/}
+                                            </Grid>
+                                            <Typography variant={"caption"} color={"gray"}>کد بلیت
+                                                : {item?.Key}</Typography>
                                         </Grid>
-                                        <Typography variant={"caption"} color={"gray"}>سریال
-                                            : {item?.Serial?.Serial}</Typography>
+
+                                        <Grid item justifyContent={"center"} alignContent={"center"}>
+
+                                            <Typography
+                                                variant={"body2"}>{"انقضا : "}{new Date(item.ExpireDate).toLocaleDateString('fa-IR', {
+                                                year: 'numeric',
+                                                month: 'numeric',
+                                                day: 'numeric',
+                                            })}</Typography>
+                                            <Typography variant={"body2"}
+                                                        color={(item.Status != "ACTIVE") ? "primary" : "green"}>{SubscribeStatusEnum[item.Status]}</Typography>
+                                        </Grid>
                                     </Grid>
+                                </Link>
+                            </div>
+                                </CardContent>
+                            </Card>
+                        ))}
 
-                                    <Grid item justifyContent={"center"} alignContent={"center"}>
+                    </List>
+        </>
 
-                                        <Typography
-                                            variant={"body2"}>{"انقضا : "}{new Date(item.ExpireDate).toLocaleDateString('fa-IR', {
-                                            year: 'numeric',
-                                            month: 'numeric',
-                                            day: 'numeric',
-                                        })}</Typography>
-                                        <Typography variant={"body2"}
-                                                    color={(item.Status != "ACTIVE") ? "primary" : "green"}>{SubscribeStatusEnum[item.Status]}</Typography>
-                                    </Grid>
-                                </Grid>
-                            </Link>
-                            <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
-                        </div>
-                    ))}
-
-                </List>
-            </CardContent>
-        </Card>
     );
 };
 

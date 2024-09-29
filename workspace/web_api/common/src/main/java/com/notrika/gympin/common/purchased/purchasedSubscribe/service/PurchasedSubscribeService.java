@@ -19,6 +19,7 @@ public interface PurchasedSubscribeService extends BaseService<PurchasedSubscrib
     List<PurchasedSubscribeDto> getActiveSubscribesOfPlace(Long placeId);
     List<PurchasedSubscribeDto> getPlaceSubscribes(Long placeId);
     List<PurchasedSubscribeDto> getByUser(UserParam userParam);
+    PurchasedSubscribeDto getByKey(String key);
 
     //ticketAction
     Boolean increaseExpireDate(IncreaseExpireParam param);

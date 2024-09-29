@@ -323,7 +323,7 @@ const _Wallet = () => {
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent
                 >
-                    مانده شارژ شما :
+
                     <Stack
                         justifyContent="space-between"
                         alignItems="flex-start"
@@ -331,9 +331,9 @@ const _Wallet = () => {
                         spacing={0}
                     >
                         <Typography variant="h6">
-                            {toPriceWithComma(corporate?.FinanceCorporate?.TotalDeposit||0) + " تومان"}
+                            {" شارژ : "+toPriceWithComma(corporate?.FinanceCorporate?.TotalDeposit||0) + " تومان"}
                         </Typography>
-                        <Button variant={"contained"} onClick={() => setOpenModalAdd(true)}>افزایش شارژ مجموعه</Button>
+                        <Button variant={"contained"} onClick={() => setOpenModalAdd(true)}>افزایش  </Button>
                     </Stack>
                     <Typography variant="caption"
                                 component={"a"}

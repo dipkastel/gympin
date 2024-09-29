@@ -75,7 +75,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         }
 
         if (supportParam.getCorporateId() != null) {
-            CorporateEntity corporate = corporateRepository.getById(supportParam.getUserId());
+            CorporateEntity corporate = corporateRepository.getById(supportParam.getCorporateId());
             supportEntity.setCorporate(corporate);
         }
 

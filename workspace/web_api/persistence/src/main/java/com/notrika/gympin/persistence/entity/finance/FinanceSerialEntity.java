@@ -2,17 +2,16 @@ package com.notrika.gympin.persistence.entity.finance;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
-import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
-import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
-import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceDiscountTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncreaseUserDepositRequestEntity;
-import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceSettlementUserDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -80,17 +79,20 @@ public class FinanceSerialEntity extends BaseEntityWithCreateUpdate<FinanceSeria
     @ToString.Exclude
     private List<FinanceIncreaseCorporateDepositRequestEntity> corporateIncreases;
 
+    @OneToMany(mappedBy = "serial", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<FinanceSettlementUserDepositRequestEntity> settlementRequests;
 
     @OneToMany(mappedBy = "serial", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<InvoiceEntity> invoices;
 
-    @OneToMany(mappedBy = "serial", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "Serials", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<PurchasedBaseEntity> purchasedBases;
-
 
     @Override
     public boolean equals(Object o) {

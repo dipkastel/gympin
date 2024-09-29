@@ -90,10 +90,10 @@ const Purchased = () => {
             return ;
         switch (item.PurchasedType) {
             case "SUBSCRIBE":
-                navigate("/tickets/singleSubscribe/" + item.Id, {replace: false});
+                navigate("/tickets/singleSubscribe/" + item.Key, {replace: false});
                 break;
             case "COURSE":
-                navigate("/tickets/singleCourse/" + item.Id, {replace: false});
+                navigate("/tickets/singleCourse/" + item.Key, {replace: false});
                 break;
         }
     }

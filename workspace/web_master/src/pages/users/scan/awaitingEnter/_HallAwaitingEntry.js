@@ -60,7 +60,7 @@ export default function _HallAwaitingEntry({selectSubscribe,updatePage}) {
                                                     alt="Remy Sharp"
                                                     src={item.User.Avatar ? (item.User.Avatar.Url || "") : ""}/>
                                             </ListItemAvatar>
-                                            <Link href={"/users/singleuser?id=" + item?.User?.Id}
+                                            <Link href={"/users/singleuser/" + item?.User?.Username}
                                                   sx={{textDecoration: "none", color: "#666666"}}>
                                                 <ListItemText primary={`${item?.User?.FullName || ""}`}
                                                               secondary={item.Name}

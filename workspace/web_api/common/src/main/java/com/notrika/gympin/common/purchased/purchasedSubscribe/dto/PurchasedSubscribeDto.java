@@ -39,7 +39,7 @@ public class PurchasedSubscribeDto extends BaseDtoWithCreateUpdate<PurchasedSubs
     private String timing;
 
     @JsonProperty("Serial")
-    private SerialDto serial;
+    private List<SerialDto> serial;
 
     @JsonProperty("Price")
     private BigDecimal price;
@@ -61,6 +61,9 @@ public class PurchasedSubscribeDto extends BaseDtoWithCreateUpdate<PurchasedSubs
 
     @JsonProperty("EntryList")
     private List<PurchasedSubscribeEntryDto> entryList;
+
+    @JsonProperty("Key")
+    private String key;
 
 
 }

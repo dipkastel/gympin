@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.finance.transaction.query;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,5 +31,8 @@ import lombok.experimental.SuperBuilder;
     private Long max_id
     */
 public class TransactionPersonnelCreditQuery extends BaseQuery<TransactionPersonnelCreditQuery> {
+
+    @JsonProperty("CreditId")
+    long is_personnelCreditæid;
 
 }

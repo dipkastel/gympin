@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.dto.FinanceInc
 import com.notrika.gympin.common.finance.IncreaseUserDeposit.dto.FinanceIncreaseUserDepositDto;
 import com.notrika.gympin.common.finance.invoice.dto.InvoiceDto;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
+import com.notrika.gympin.common.finance.settlement.dto.FinanceSettlementUserDepositDto;
 import com.notrika.gympin.common.finance.transaction.dto.*;
 import com.notrika.gympin.common.purchased.purchased.dto.PurchasedDto;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
@@ -44,6 +45,8 @@ public class SerialDto extends BaseDtoWithCreateUpdate<SerialDto> {
     private List<FinanceIncreaseUserDepositDto> userIncreaseRequest;
     @JsonProperty("CorporateIncreaseRequest")
     private List<FinanceIncreaseCorporateDepositDto> CorporateIncreaseRequest;
+    @JsonProperty("SettlementRequests")
+    private List<FinanceSettlementUserDepositDto> settlementRequests;
     @JsonProperty("Invoices")
     private List<InvoiceDto> invoices;
     @JsonProperty("PurchasedBases")

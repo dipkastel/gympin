@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import {
     purchasedSubscribe_addEnterToSubscribe,
-    purchasedSubscribe_getById
+    purchasedSubscribe_getById, purchasedSubscribe_getByKey
 } from "../../../../network/api/subscribe.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {SubscribeStatusEnum} from "../../../../helper/enums/SubscribeStatusEnum";
@@ -31,7 +31,8 @@ const _ScannedSubscribe = ({codeResult, SetScannedCode,selectSubscribe}) => {
 
 
     useEffect(() => {
-        purchasedSubscribe_getById({id: codeResult.ReferenceId}).then(result => {
+        console.log(codeResult);
+        purchasedSubscribe_getByKey({key:codeResult.Description}).then(result => {
             setLoading(false);
             setPurchasedSubscribe(result.data.Data);
         }).catch(e => {
@@ -87,7 +88,7 @@ const _ScannedSubscribe = ({codeResult, SetScannedCode,selectSubscribe}) => {
                     </DialogTitle>
                     <DialogContent sx={{m: 0, p: 1}} dividers>
                         <Grid onClick={() => {
-                            navigate('/users/singleuser?id=' + purchasedSubscribe.User.Id, {replace: true})
+                            navigate('/users/singleuser/' + purchasedSubscribe?.User?.Username, {replace: true})
                         }} wrap="nowrap" sx={{mb: 1, px: 2}} direction={"row"} container alignContent={"center"}
                               alignItems={"center"}
                               justifyContent={"start"}>
