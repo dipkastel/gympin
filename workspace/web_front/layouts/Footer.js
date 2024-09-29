@@ -50,9 +50,10 @@ export default function Footer() {
                                     <a referrerPolicy='origin' target='_blank'
                                        href='https://trustseal.enamad.ir/?id=530057&Code=fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'><img
                                         width={"80px"}
+                                        className={"pointer"}
                                         referrerPolicy='origin'
                                         src='https://trustseal.enamad.ir/logo.aspx?id=530057&Code=fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'
-                                        alt='' style='cursor:pointer' code='fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'/></a>
+                                        alt='نشان اینماد وبسایت جیم پین'  code='fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'/></a>
                                     <img width={"80px"} src={"/images/logo/mojavez2.jpg"}/>
                                     <img width={"160px"} src={"/images/logo/mojavez3.jpg"}/>
                                     <img width={"80px"} src={"/images/logo/mojavez4.jpg"}/>
