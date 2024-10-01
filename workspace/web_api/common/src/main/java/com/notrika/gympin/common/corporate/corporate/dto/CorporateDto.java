@@ -47,7 +47,7 @@ public class CorporateDto extends BaseDtoWithCreateUpdate<CorporateDto> {
     private Date contractExpireDate;
 
     @JsonProperty("DefaultExpireDuration")
-    private short defaultExpireDuration;
+    private Short defaultExpireDuration;
 
     @JsonProperty("Logo")
     private MultimediaDto logo;
