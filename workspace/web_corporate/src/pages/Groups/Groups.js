@@ -1,27 +1,24 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
-    Avatar, Box,
     Button,
     Card,
     CardContent,
     CardHeader,
-    Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider,
-    FormControl,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
     Grid,
-    Input,
-    TextField, Typography
+    TextField,
+    Typography
 } from "@mui/material";
-import {Form, Image} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import {useSelector} from "react-redux";
-import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import AdapterJalali from "@date-io/date-fns-jalali";
-import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import {corporatePersonnel_addCreditToAll} from "../../network/api/corporatePersonnel.api";
 import {
-    corporate_addCorporateGroups, corporate_deleteCorporateGroup,
-    corporate_getCorporateGroups,
-    corporate_Update
+    corporate_addCorporateGroups,
+    corporate_deleteCorporateGroup,
+    corporate_getCorporateGroups
 } from "../../network/api/corporate.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 
@@ -29,15 +26,16 @@ const Groups = () => {
 
     const error = useContext(ErrorContext);
     const corporate = useSelector(({corporate}) => corporate.corporate)
-    const [groups,setGroups] = useState([])
-    const [openModalAdd,setOpenModalAdd] = useState(false)
-    const [itemToDelete,setItemToDelete] = useState(null)
+    const [groups, setGroups] = useState([])
+    const [openModalAdd, setOpenModalAdd] = useState(false)
+    const [itemToDelete, setItemToDelete] = useState(null)
 
     useEffect(() => {
         document.title = 'گروه ها';
         getCorporateGroups();
     }, []);
-    function getCorporateGroups(){
+
+    function getCorporateGroups() {
         corporate_getCorporateGroups({Id: corporate.Id}).then(result => {
             setGroups(result.data.Data);
         }).catch(e => {
@@ -49,7 +47,7 @@ const Groups = () => {
         })
     }
 
-    function renderModalAdd(){
+    function renderModalAdd() {
         function addGroup(e) {
             e.preventDefault()
 
@@ -87,17 +85,19 @@ const Groups = () => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant={"contained"} color={"error"} onClick={() => setOpenModalAdd(false)}>لغو</Button>
+                        <Button variant={"contained"} color={"error"}
+                                onClick={() => setOpenModalAdd(false)}>لغو</Button>
                         <Button type={"submit"} variant={"contained"} color={"success"}>افزودن</Button>
 
                     </DialogActions>
                 </Form>
             </Dialog>)
     }
-    function renderModalDelete(){
+
+    function renderModalDelete() {
         function DeleteGroups(e) {
             e.preventDefault()
-            corporate_deleteCorporateGroup({ Id: itemToDelete.Id}).then(result => {
+            corporate_deleteCorporateGroup({Id: itemToDelete.Id}).then(result => {
                 getCorporateGroups();
             }).catch(e => {
                 try {
@@ -117,7 +117,7 @@ const Groups = () => {
                     <DialogContent>
                         <DialogContentText>
                             <Typography variant={"body2"}>
-                                {"آیا از حذف "+itemToDelete.Name+" اطمینان دارید؟"}
+                                {"آیا از حذف " + itemToDelete.Name + " اطمینان دارید؟"}
                             </Typography>
                         </DialogContentText>
                     </DialogContent>
@@ -128,31 +128,37 @@ const Groups = () => {
                 </Form>
             </Dialog>)
     }
+
     return (
         <div>
 
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     title="گروه های پرسنل"
-                    action={(<><Button variant={"contained"} onClick={()=>setOpenModalAdd(true)}  sx={{margin: 1}}>افزودن</Button></>)}/>
-                <CardContent>
-                    {groups.map(c=>(
-                        <Grid key={c.Id} sx={{m:1}} container direction={"row"} textAlign={"center"} justifyContent={"space-between"}>
+                    action={(<><Button variant={"contained"} onClick={() => setOpenModalAdd(true)}
+                                       sx={{margin: 1}}>افزودن</Button></>)}/>
 
-                            <Typography key={c.Id} variant={"body2"}>
+            </Card>
+
+            {groups.map(c => (
+                <Card key={c.Id} elevation={3} sx={{margin: 1,borderRadius:3}}>
+                    <CardContent sx={{p:"8px !important"}}>
+                        <Grid container direction={"row"} textAlign={"center"} alignItems={"center"}
+                              justifyContent={"space-between"}>
+
+                            <h6 >
                                 {c.Name}
-                            </Typography>
-                            <Button variant={"contained"} color={"error"} onClick={() => setItemToDelete(c)}>حذف</Button>
+                            </h6>
+                            <Button variant={"outlined"} color={"error"}
+                                    onClick={() => setItemToDelete(c)}>حذف</Button>
 
 
                         </Grid>
-
-                    ))}
-                </CardContent>
-
-            </Card>
+                    </CardContent>
+                </Card>
+            ))}
             {renderModalAdd()}
-            {itemToDelete&&renderModalDelete()}
+            {itemToDelete && renderModalDelete()}
         </div>
     );
 };

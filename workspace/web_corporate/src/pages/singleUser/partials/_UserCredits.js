@@ -24,6 +24,7 @@ const _UserCredits = ({corporatePersonnel,updatePage}) => {
 
     return (
         <>
+            {corporatePersonnel?.CreditList?.length>0&&
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     title={"تاریخچه اعتبارهای کاربر"}
@@ -38,6 +39,16 @@ const _UserCredits = ({corporatePersonnel,updatePage}) => {
                     </List>
                 </CardContent>
             </Card>
+
+            }
+            {!corporatePersonnel?.CreditList?.length>0&&
+            <Card elevation={3} sx={{margin: 1}}>
+                <CardContent>
+                    <Typography variant={"body2"} >اعتباری برای این کاربر یافت نشد</Typography>
+                </CardContent>
+            </Card>
+
+            }
         </>
     );
 };

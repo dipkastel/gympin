@@ -1,5 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, CardContent, FormControl, InputLabel, MenuItem, OutlinedInput, Select} from "@mui/material";
+import {
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    OutlinedInput,
+    Select
+} from "@mui/material";
 import {corporate_getCorporateGroups} from "../../../network/api/corporate.api";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
@@ -46,7 +56,7 @@ const _UserGroup = ({corporatePersonnel,updatePage}) => {
 
     return (
         <>
-            {groups&&
+            {groups.length>0&&
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent>
                     <FormControl fullWidth>
@@ -69,6 +79,14 @@ const _UserGroup = ({corporatePersonnel,updatePage}) => {
                         </Select>}
                     </FormControl>
                 </CardContent>
+            </Card>
+            }
+            {!(groups.length>0)&&
+            <Card elevation={3} sx={{margin: 1}}>
+                <CardHeader
+                    title={"گروهی برای کاربران تعریف نشده"}
+                    titleTypographyProps={{variant:"body2"}}
+                    action={ <Button variant={"contained"} color={"error"} href={"/management/categories"}>مدیریت گروه ها</Button> } />
             </Card>
             }
         </>

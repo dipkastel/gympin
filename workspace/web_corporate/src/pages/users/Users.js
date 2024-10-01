@@ -108,8 +108,7 @@ const Users = () => {
             corporatePersonnel_add({
                 Corporate: {Id: corporate.Id},
                 PhoneNumber: e.target.PhoneNumber.value
-            })
-                .then(result => {
+            }).then(result => {
                     setOpenModalAdd(false);
                     getPersonnel();
                 }).catch(e => {

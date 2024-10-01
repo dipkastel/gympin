@@ -33,6 +33,7 @@ const TransactionManagement = () => {
                     <Tab label="سازمان" value={"CORPORATE"}/>
                     <Tab label="مراکز" value={"PLACE"}/>
                     <Tab label="درامد" value={"INCOME"}/>
+
                 </Tabs>
             </Paper>
             {selectedTab == "ALL" && <TransactionAllTab />}

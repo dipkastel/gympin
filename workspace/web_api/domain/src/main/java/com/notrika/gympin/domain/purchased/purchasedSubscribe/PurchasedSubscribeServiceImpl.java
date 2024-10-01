@@ -255,7 +255,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
             PlacePersonnelEntity jointPlacePersonel = userEntity.getPlacePersonnel().stream().filter(pp -> pp.getPlace().getId() == ticket.getPlace().getId()).findFirst().orElse(null);
             if (jointPlacePersonel == null)
                 throw new UserNotAllowedException();
-            if (jointPlacePersonel.getPlacePersonnelRoles().contains(PlacePersonnelRoleEnum.PLACE_OWNER))
+            if (jointPlacePersonel.getPlacePersonnelRoles().stream().map(r->r.getRole()).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER))
                 return true;
             if (ticket.getPurchasedType() == PurchasedType.SUBSCRIBE && jointPlacePersonel.getPlacePersonnelAccess().stream().filter(ppa -> ppa.getSection() == PlacePersonnelAccessEnum.SubscribeDetail).findFirst().get().getAccess())
                 return true;

@@ -16,19 +16,19 @@ export const GympinTheme = createTheme({
         fontSize: 12,
         h1: {
             fontFamily: "IRANSans-web",
-            fontSize: "4rem",
+            fontSize: "2rem",
         },
         h2: {
             fontFamily: "IRANSans-web",
-            fontSize: "3.3rem",
+            fontSize: "1.8rem",
         },
         h3: {
             fontFamily: "IRANSans-web",
-            fontSize: "2.8rem",
+            fontSize: "1.55rem",
         },
         h4: {
             fontFamily: "IRANSans-web",
-            fontSize: "2rem",
+            fontSize: "1.4rem",
         },
         h5: {
             fontFamily: "IRANSans-web",
@@ -40,27 +40,27 @@ export const GympinTheme = createTheme({
         },
         subtitle1: {
             fontFamily: "IRANSans-web",
-            fontSize: "0.9rem",
+            fontSize: "0.95rem",
         },
         subtitle2: {
             fontFamily: "IRANSans-web",
-            fontSize: "0.8rem",
+            fontSize: "0.90rem",
         },
         body1: {
             fontFamily: "IRANSans-web",
-            fontSize: "0.9rem",
+            fontSize: "0.85rem",
         },
         body2: {
             fontFamily: "IRANSans-web",
-            fontSize: "0.8rem",
+            fontSize: "0.80rem",
         },
         caption: {
             fontFamily: "IRANSans-web",
-            fontSize: "0.7rem",
+            fontSize: "0.75rem",
         },
         overline: {
             fontFamily: "IRANSans-web",
-            fontSize: "0.65rem",
+            fontSize: "0.6rem",
         },
     }
 })

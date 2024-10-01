@@ -13,4 +13,6 @@ export const TransactionBaseTypes = {
     CREDIT_PURCHASE:"پرداخت از اعتبار",
     CREDIT:"اعتبار",
     INTERNAL_TRANSFER:"جابجایی در کیف پول ها"
+
+
 }
