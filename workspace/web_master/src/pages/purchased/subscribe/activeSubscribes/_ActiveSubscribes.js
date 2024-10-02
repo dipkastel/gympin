@@ -28,7 +28,6 @@ export default function _ActiveSubscribes() {
 
     function getActiveSubscribes() {
         purchasedSubscribe_getPlaceSubscribes({placeId: place.Id}).then(result => {
-            console.log(result.data.Data);
             setPlaceSubscribes(result.data.Data);
         }).catch(e => {
             try {

@@ -38,7 +38,7 @@ public class PurchasedSubscribeServiceHelper {
             throw new UnknownUserException();
         try{
             UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-            var personnel = userRequester.getPlacePersonnel().stream().filter(p -> (p.getPlace().getId() == placeId)&&!p.isDeleted()).findFirst().get();
+            var personnel = userRequester.getPlacePersonnel().stream().filter(p -> (p.getPlace().getId().equals(placeId))&&!p.isDeleted()).findFirst().get();
             if(personnel.getPlacePersonnelRoles().stream().anyMatch(r->r.getRole().equals(PlacePersonnelRoleEnum.PLACE_OWNER)))
                 return true;
             var access = personnel.getPlacePersonnelBuyableAccess();
@@ -66,7 +66,7 @@ public class PurchasedSubscribeServiceHelper {
                     purchasedSubscribeRepository.update(subscribe);
                 }
                 for (var entry : subscribe.getEntryList()) {
-                    if (entry.getExitDate() == null && entry.getSubscribeEntryStatus() == SubscribeEntryStatus.ACCEPTED) {
+                    if (entry.getExitDate() == null && entry.getSubscribeEntryStatus().equals(SubscribeEntryStatus.ACCEPTED)) {
                         Calendar c = Calendar.getInstance();
                         c.setTime(entry.getEnterDate());
                         c.add(Calendar.HOUR, 4);
@@ -75,7 +75,7 @@ public class PurchasedSubscribeServiceHelper {
                             purchasedSubscribeEntryRepository.update(entry);
                         }
                     }
-                    if (entry.getSubscribeEntryStatus() == SubscribeEntryStatus.REQUESTED) {
+                    if (entry.getSubscribeEntryStatus().equals(SubscribeEntryStatus.REQUESTED)) {
                         Calendar c = Calendar.getInstance();
                         c.setTime(entry.getCreatedDate());
                         c.add(Calendar.HOUR, 3);

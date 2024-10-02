@@ -39,7 +39,7 @@ public class BaseEntity<T> implements Specification<T> {
     @Override
     public Predicate toPredicate(Root<T> _root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder builder) {
         Predicate predicate =builder.conjunction();
-        Predicate queries = (query.getQueryType()== QueryTypesEnum.SEARCH)?builder.disjunction():builder.conjunction();
+        Predicate queries = (query.getQueryType().equals(QueryTypesEnum.SEARCH))?builder.disjunction():builder.conjunction();
         for (QueryCriteria criteria : query.getCriteriaList()) {
             QueryOperationsEnum operation = criteria.getOperation();
             String key = criteria.getKey();
