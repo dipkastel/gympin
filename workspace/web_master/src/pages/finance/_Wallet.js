@@ -18,7 +18,6 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import getAccessOf from "../../helper/accessManager";
 import {SettlementUserDeposit_add} from "../../network/api/settlement.api";
-import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {user_getMyPlaceWallet} from "../../network/api/user.api";
 import AppBar from "@mui/material/AppBar";
@@ -26,7 +25,6 @@ import AppBar from "@mui/material/AppBar";
 const _Wallet = ({place, user, onRequestComplete}) => {
     const navigate = useNavigate();
     const error = useContext(ErrorContext);
-    const currentUser = useSelector(({auth}) => auth.user);
     const [wallets, setWallets] = React.useState(false);
     const minPrice = 50000;
     const [openModalRequest, setOpenModalRequest] = React.useState(false);
@@ -44,6 +42,7 @@ const _Wallet = ({place, user, onRequestComplete}) => {
 
     function getUserWallet() {
         user_getMyPlaceWallet({Id: place?.Id}).then(result => {
+            console.log("wallet",result);
             setWallets(result.data.Data);
         }).catch(e => {
             try {
@@ -69,7 +68,7 @@ const _Wallet = ({place, user, onRequestComplete}) => {
                 Amount: toPriceWithoutComma(e.target.requestAmount.value),
                 UserFinanceId: wallets?.CreditDetails?.find(w => w.CreditType === "INCOME")?.Id
             }).then(result => {
-                navigate('/finance/demand', {replace: true});
+                navigate('/finance/demand/'+wallets?.CreditDetails?.find(w => w.CreditType === "INCOME")?.Id, {replace: true});
             }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message});
@@ -169,9 +168,10 @@ const _Wallet = ({place, user, onRequestComplete}) => {
                     {/*<Typography variant="body2">*/}
                     {/*    {`${toPriceWithComma(user.FinanceUser.TotalDeposit)} تومان`}*/}
                     {/*</Typography>*/}
+
                     <Typography variant="caption"
                                 component={"a"}
-                                href={"/finance/demand"}
+                                href={"/finance/demand/"+wallets?.CreditDetails?.find(w => w.CreditType === "INCOME")?.Id}
                                 sx={{textDecoration: "none", color: "#000000"}}>
                         مشاهده لیست درخواست ها
                     </Typography>

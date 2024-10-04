@@ -20,10 +20,13 @@ import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import DoDisturbAltIcon from '@mui/icons-material/DoDisturbAlt';
 import {SettlementUserDeposit_query} from "../../network/api/settlement.api";
 import {Image} from "react-bootstrap";
+import {user_getMyPlaceWallet} from "../../network/api/user.api";
+import {useParams} from "react-router-dom";
 
 const DemandPayment = () => {
     const error = useContext(ErrorContext);
-    const currentUser = useSelector(({auth}) => auth.user);
+
+    const {walletId} = useParams();
     const [transactions, SetTransactions] = useState([])
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(100);
@@ -33,11 +36,12 @@ const DemandPayment = () => {
         getSettelmentRequests()
     }, [page]);
 
+
     function getSettelmentRequests() {
 
         SettlementUserDeposit_query({
             queryType: "FILTER",
-            FinanceUserId: 1084,
+            FinanceUserId: walletId,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             SetTransactions(data.data.Data)
@@ -67,44 +71,50 @@ const DemandPayment = () => {
     }
     return (
         <>
-            {(transactions.length > 0)? <Card elevation={3} sx={{margin: 1}}>
-                <CardHeader title={"درخواست های تسویه"}/>
-                <CardContent>
-                    <List disablePadding>
-                        {transactions.content && transactions.content.map((row) => (
-                            <div key={"transaction-" + row.Id}>
-                                <ListItem disablePadding sx={{direction: "rtl", textAlign: "right"}}>
-                                    <ListItemText>
-                                        <ListItemText primary={toPriceWithComma(row.Amount) + " تومان"}
-                                                      secondary={TransactionTypes[row.TransactionType]}/>
-                                        {row.SettlementStatus == "CONFIRMED" &&
-                                        <Alert severity="success" sx={{px: 1}}><Typography variant={"caption"}
-                                                                                           sx={{px: 1}}>{row.Description}</Typography></Alert>}
-                                        {row.SettlementStatus == "REJECTED" &&
-                                        <Alert severity={"error"} sx={{px: 1}}><Typography variant={"caption"}
-                                                                                           sx={{px: 1}}>{row.Description}</Typography></Alert>}
-                                        <ListItemText
-                                            secondary={"تاریخ : " + new Date(row.CreatedDate).toLocaleDateString('fa-IR', {
-                                                year: 'numeric',
-                                                month: 'long',
-                                                day: 'numeric'
-                                            })}/>
-                                        <ListItemText secondary={"سریال : " + row.Serial.Serial}/>
-                                    </ListItemText>
-                                    <ListItemIcon sx={{minWidth: "auto"}}>
-                                        {row.SettlementStatus == "REQUESTED" && <HourglassEmptyIcon color={"error"}/>}
-                                    </ListItemIcon>
-                                </ListItem>
-                                <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
-                            </div>
-                        ))}
-                    </List>
-                </CardContent>
-                <CardActions>
-                    <Pagination variant="outlined" count={transactions.totalPages} onChange={(f, p) => setPage(p - 1)}
-                                color="primary"/>
-                </CardActions>
-            </Card> : Empty()}
+            {(transactions?.content?.length > 0)? <>
+
+                    <div>
+                        <div className={"section-title mt-3"}>
+                            درخواست های تسویه
+                        </div>
+                    </div>
+                         <List disablePadding>
+                             {transactions.content.map((row) => (
+
+                                     <Card  key={"transaction-" + row.Id} elevation={3} sx={{margin: 2,borderRadius:4 }}>
+                                     <CardContent sx={{p:"8px !important"}}>
+                                             <ListItem disablePadding sx={{direction: "rtl", textAlign: "right"}}>
+                                                 <ListItemText>
+                                                     <ListItemText primary={toPriceWithComma(row.Amount) + " تومان"}
+                                                                   secondary={TransactionTypes[row.TransactionType]}/>
+                                                     {row.SettlementStatus == "CONFIRMED" &&
+                                                     <Alert severity="success" sx={{px: 1}}><Typography variant={"caption"} sx={{px: 1}}>{row?.Description}</Typography></Alert>}
+                                                     {row.SettlementStatus == "REJECTED" &&
+                                                     <Alert severity={"error"} sx={{px: 1}}><Typography variant={"caption"} sx={{px: 1}}>{row?.Description}</Typography></Alert>}
+                                                     <ListItemText
+                                                         secondary={"تاریخ : " + new Date(row.CreatedDate).toLocaleDateString('fa-IR', {
+                                                             year: 'numeric',
+                                                             month: 'long',
+                                                             day: 'numeric'
+                                                         })}/>
+                                                     <ListItemText secondary={"سریال : " + row.Serial.Serial}/>
+                                                 </ListItemText>
+                                                 <ListItemIcon sx={{minWidth: "auto"}}>
+                                                     {row.SettlementStatus == "REQUESTED" && <HourglassEmptyIcon color={"error"}/>}
+                                                 </ListItemIcon>
+                                             </ListItem>
+                                     </CardContent>
+                                 </Card>
+                             ))}
+                         </List>
+                    <Grid sx={{p:2}} container direction={"column"} alignItems={"center"} justifyContent={"center"}>
+                        <Pagination variant="outlined" count={transactions.totalPages} onChange={(f, p) => setPage(p - 1)}
+                                    color="primary"/>
+                    </Grid>
+
+                </>
+
+                : Empty()}
         </>
     );
 };

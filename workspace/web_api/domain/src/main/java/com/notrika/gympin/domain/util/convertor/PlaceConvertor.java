@@ -44,6 +44,7 @@ public final class PlaceConvertor {
         placeDto.setTell(entity.getTell());
         placeDto.setCallUs(entity.isCallUs());
         placeDto.setAddress(entity.getAddress());
+        placeDto.setOrder(entity.getOrder());
         placeDto.setActiveTimes(entity.getActiveTimes());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setStatus(entity.getStatus());
@@ -58,6 +59,7 @@ public final class PlaceConvertor {
         PlaceDto placeDto = new PlaceDto();
         placeDto.setId(entity.getId());
         placeDto.setName(entity.getName());
+        placeDto.setOrder(entity.getOrder());
         placeDto.setAddress(entity.getAddress());
         placeDto.setStatus(entity.getStatus());
         return placeDto;
@@ -69,6 +71,7 @@ public final class PlaceConvertor {
         placeDto.setName(entity.getName());
         placeDto.setLatitude(entity.getLatitude());
         placeDto.setLongitude(entity.getLongitude());
+        placeDto.setOrder(entity.getOrder());
         placeDto.setAddress(entity.getAddress());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setHasBeneficiary(entity.getPlaceOwners().stream().filter(PlacePersonnelEntity::getIsBeneficiary).findFirst().map(p->true).orElse(false));

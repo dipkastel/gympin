@@ -51,31 +51,36 @@ export const genders = [{
 
 export const sortPlaceItems = [{
     Id:0,
+    Name: "مرتبط ترین",
+    Value: "order",
+    Desc:true,
+},{
+    Id:1,
     Name: "جدید ترین",
     Value: "id",
     Desc:true,
 },{
-    Id:1,
+    Id:2,
     Name: "قدیمی ترین",
     Value: "id",
     Desc:false,
 }, {
-    Id:2,
+    Id:3,
     Name: "آ-ی",
     Value: "name",
     Desc:false,
 }, {
-    Id:3,
+    Id:4,
     Name: "ی-آ",
     Value: "name",
     Desc:true,
 }, {
-    Id:4,
+    Id:5,
     Name: "منطقه (آ-ی)",
     Value: "location",
     Desc:false,
 }, {
-    Id:5,
+    Id:6,
     Name: "منطقه (ی-آ)",
     Value: "location",
     Desc:true,
@@ -128,7 +133,7 @@ const _PlacesList = () => {
             queryType: "FILTER",
             ParentId:3,
             HasPlace:0,
-            paging:{Page:0,Size:50}
+            paging:{Page:0,Size:100}
         }).then(result => {
             SetRegions(result.data.Data.content)
         }).catch(e => {
@@ -158,7 +163,7 @@ const _PlacesList = () => {
             LocationId:filters.find(f=>f.type==="location").value,
             Gender:filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null,
             Option:null,
-            paging: {Page: page, Size: 2,Desc:sortBy.Desc,OrderBy:sortBy.Value}
+            paging: {Page: page, Size: 20,Desc:sortBy.Desc,OrderBy:sortBy.Value}
         }).then(result => {
             setIsLoading(false)
             setLoadedPage(page);

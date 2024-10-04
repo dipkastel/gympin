@@ -27,4 +27,5 @@ public interface PlaceService extends BaseService<PlaceParam, PlaceDto, PlaceQue
     PlaceDto removeMultimedia(PlaceMultimediaParam param);
     InviteCode getPlaceInviteCode(PlaceParam param);
     List<TicketBuyableDto> getBuyableByPlace(PlaceParam param);
+    PlaceDto updateOrder(PlaceParam placeParam);
 }

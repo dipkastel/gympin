@@ -6,16 +6,41 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 
 const _QRcode = ({ticket,userCanEnter,type}) => {
 
+    let lock = false;
+    let respite = 2;
     const error = useContext(ErrorContext);
     const [code, SetCode] = useState(null);
-    let lock = false;
+    const [startTimer, setStartTimer] = useState(new Date());
+    const [timerText, setTimerText] = useState(null);
+
+    useEffect(() => {
+        if(!code) return ;
+        let changeTimer = setInterval(function () {
+            let distance =new Date().getTime()- startTimer.getTime() ;
+
+            console.log("start Time" ,new Date().getTime(), startTimer.getTime(),distance,Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) )
+            var minutes =respite-1-Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds =60-Math.floor((distance % (1000 * 60)) / 1000);
+            setTimerText(seconds+" : "+minutes);
+        }, 1000)
+        return () => {
+            clearInterval(changeTimer);
+        };
+    }, [code]);
+
 
     useEffect(() => {
         getCodeOfSubscribe();
-        setInterval(function () {
+        let changeQrInterval = setInterval(function () {
             getCodeOfSubscribe();
-        }, 2 * 60 * 1000)
+        }, respite * 60 * 1000)
+
+        return () => {
+            clearInterval(changeQrInterval);
+        };
     }, []);
+
+
 
     function getCodeOfSubscribe() {
         if(lock)return;
@@ -26,7 +51,8 @@ const _QRcode = ({ticket,userCanEnter,type}) => {
             Description:ticket.Key,
         }).then(result => {
             lock =false;
-            SetCode(result.data.Data)
+            setStartTimer(new Date());
+            SetCode(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -56,6 +82,7 @@ const _QRcode = ({ticket,userCanEnter,type}) => {
                         }
                     </Grid>
                 </CardContent>
+                {timerText}
             </Card>
         </>
     )

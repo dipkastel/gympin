@@ -66,24 +66,24 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
     @Transactional
     public FinanceSettlementUserDepositDto confirmSettlementRequest(FinanceSettlementUserDepositParam param) {
         //init
-        FinanceSettlementUserDepositRequestEntity SettlementRequest = financeSettlementUserDepositRepository.getById(param.getId());
+        FinanceSettlementUserDepositRequestEntity settlementRequest = financeSettlementUserDepositRepository.getById(param.getId());
 
-        SettlementRequest.setSettlementStatus(param.getAccept() ? SettlementStatus.CONFIRMED : SettlementStatus.REJECTED);
-        var userFinance = SettlementRequest.getFinanceUser();
+        settlementRequest.setSettlementStatus(param.getAccept() ? SettlementStatus.CONFIRMED : SettlementStatus.REJECTED);
+        settlementRequest.setDescription(param.getDescription());
+        var userFinance = settlementRequest.getFinanceUser();
         BigDecimal lastDeposit = userFinance.getTotalDeposit();
         //subtract from wallet
         if (param.getAccept()) {
-            if(userFinance.getTotalDeposit().add(SettlementRequest.getAmount()).compareTo(BigDecimal.ZERO)<0)
+            if(userFinance.getTotalDeposit().add(settlementRequest.getAmount()).compareTo(BigDecimal.ZERO)<0)
                 throw new LowDepositException();
-            var newDeposit = userFinance.getTotalDeposit().add(SettlementRequest.getAmount());
+            var newDeposit = userFinance.getTotalDeposit().add(settlementRequest.getAmount());
             userFinance.setTotalDeposit(newDeposit);
             financeUserRepository.update(userFinance);
         }
         //wallet transaction
         FinanceUserTransactionEntity userTransaction = FinanceUserTransactionEntity.builder()
-                .serial(SettlementRequest.getSerial())
-                .amount(param.getAccept() ? SettlementRequest.getAmount():BigDecimal.ZERO)
-                .description(param.getDescription())
+                .serial(settlementRequest.getSerial())
+                .amount(param.getAccept() ? settlementRequest.getAmount():BigDecimal.ZERO)
                 .latestBalance(lastDeposit)
                 .financeUser(userFinance)
                 .transactionStatus(param.getAccept() ? TransactionStatus.COMPLETE : TransactionStatus.CANCEL)
@@ -91,8 +91,8 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
                 .isChecked(false)
                 .build();
         financeUserTransactionRepository.add(userTransaction);
-        financeSettlementUserDepositRepository.update(SettlementRequest);
-        return SettlementConvertor.ToDto(SettlementRequest);
+        financeSettlementUserDepositRepository.update(settlementRequest);
+        return SettlementConvertor.ToDto(settlementRequest);
     }
 
     @Override

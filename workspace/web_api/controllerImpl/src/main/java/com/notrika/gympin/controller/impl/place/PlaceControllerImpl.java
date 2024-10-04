@@ -92,6 +92,13 @@ public class PlaceControllerImpl implements PlaceController {
     }
 
     @Override
+    @PostMapping("/updateOrder")
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN','MANAGER')")
+    public ResponseEntity<PlaceDto> updateOrder(PlaceParam param) {
+        return ResponseEntity.ok(placeService.updateOrder(param));
+    }
+
+    @Override
     @PutMapping("/deleteMultimedia")
     public ResponseEntity<PlaceDto> deleteMultimedia(PlaceMultimediaParam param) {
         return ResponseEntity.ok(placeService.removeMultimedia(param));

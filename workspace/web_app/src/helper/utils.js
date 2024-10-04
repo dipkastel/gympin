@@ -14,6 +14,19 @@ export function checkEmailValid(email) {
 export function checkUsername(username) {
     return !username.match("^(?=[0-9|A-Z|a-z|_|-]{3,20}$)(?!.*[_-]{2})[^_-].*[^_-]$");
 }
+
+export function fixTextToSlug(text) {
+    text = "اطلاعات کامل مجموعه ورزشی "+text + " به همراه آدرس قیمت شماره تماس امکانات"
+    return text
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-آ-ی]/g, '')
+        .replace(/\-\-+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+}
 export function checkNationalCode(code) {
     if (!code) {
         return false;

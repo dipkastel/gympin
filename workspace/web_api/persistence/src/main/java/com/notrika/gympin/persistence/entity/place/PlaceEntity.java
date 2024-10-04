@@ -56,6 +56,9 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Column(name = "Tell")
     private String tell;
 
+    @Column(name = "listOrder")
+    private Short order;
+
     @Column(name = "CallUs", nullable = false, columnDefinition = "bit default 0")
     private boolean callUs;
 

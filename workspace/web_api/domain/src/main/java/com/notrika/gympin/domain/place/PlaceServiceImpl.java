@@ -85,6 +85,15 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         return PlaceConvertor.toDto(place);
     }
 
+
+    @Override
+    public PlaceDto updateOrder(PlaceParam placeParam) {
+        PlaceEntity initPlace = getEntityById(placeParam.getId());
+        initPlace.setOrder(placeParam.getOrder());
+        PlaceEntity place = update(initPlace);
+        return PlaceConvertor.toDto(place);
+    }
+
     @Override
     public PlaceEntity update(PlaceEntity place) {
         return placeRepository.update(place);

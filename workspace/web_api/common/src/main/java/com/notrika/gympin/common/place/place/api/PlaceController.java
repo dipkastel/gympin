@@ -39,5 +39,6 @@ public interface PlaceController extends BaseController<PlaceParam, PlaceDto, Pl
 
     ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceParam placeParam);
 
+    ResponseEntity<PlaceDto> updateOrder(@RequestBody PlaceParam param);
 
 }

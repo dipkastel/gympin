@@ -252,7 +252,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
             UserEntity userEntity = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
             if (Objects.equals(userEntity.getId(), ticket.getCustomer().getId()))
                 return true;
-            PlacePersonnelEntity jointPlacePersonel = userEntity.getPlacePersonnel().stream().filter(pp -> pp.getPlace().getId().equals(ticket.getPlace().getId())).findFirst().orElse(null);
+            PlacePersonnelEntity jointPlacePersonel = userEntity.getPlacePersonnel().stream().filter(pp -> pp.getPlace().getId().equals(ticket.getPlace().getId())&&!pp.isDeleted()).findFirst().orElse(null);
             if (jointPlacePersonel == null)
                 throw new UserNotAllowedException();
             if (jointPlacePersonel.getPlacePersonnelRoles().stream().map(r->r.getRole()).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER))

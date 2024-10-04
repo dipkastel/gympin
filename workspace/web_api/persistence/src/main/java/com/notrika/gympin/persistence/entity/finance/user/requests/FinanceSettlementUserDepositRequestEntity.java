@@ -37,6 +37,9 @@ public class FinanceSettlementUserDepositRequestEntity extends BaseEntityWithCre
     @JoinColumn(name = "serialId")
     private FinanceSerialEntity serial;
 
+    @Column(name = "description", length = 250)
+    private String description;
+
     @ManyToOne
     @JsonIgnore
     @ToString.Exclude

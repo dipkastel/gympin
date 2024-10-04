@@ -3,11 +3,11 @@ import {Card, Divider, Grid, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 import {BoyRounded, ChildCare, GirlRounded, LocationOnOutlined, ManRounded, WomanRounded} from "@mui/icons-material";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import {toPriceWithComma} from "../../helper/utils";
+import {fixTextToSlug, toPriceWithComma} from "../../helper/utils";
 
 const __placeListItem = ({item}) => {
     return (
-        <Grid item component={"a"} href={"/place/" + item.Id} sx={{textDecoration: "none"}}
+        <Grid item component={"a"} href={"/place/" + item.Id+"-"+fixTextToSlug(item.Name)} sx={{textDecoration: "none"}}
               lg={3} md={4} sm={6} xs={12}>
             <Card elevation={8} sx={{margin: 2, padding: 0, borderRadius: 3}}>
                 <Grid container

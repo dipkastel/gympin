@@ -118,7 +118,7 @@ export default function ApplicationRoutes() {
                     {/*purchased*/}
                     <Route path="/purchased/subscribes" element={<PurchasedSubscribe/>}/>
 
-                    <Route path="/finance/demand" element={<DemandPayment/>}/>
+                    <Route path="/finance/demand/:walletId" element={<DemandPayment/>}/>
                     <Route path="/finance" element={<Finance/>}/>
 
                     <Route path="/users/singleuser/:userId" element={<SingleUser/>}/>
