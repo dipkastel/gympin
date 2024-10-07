@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.serial.param.SerialParam;
 import com.notrika.gympin.common.finance.serial.query.SerialQuery;
 import com.notrika.gympin.common.finance.serial.service.SerialService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -24,17 +25,17 @@ public class SerialControllerImpl implements SerialController {
 
     @Override
     public ResponseEntity<SerialDto> add(SerialParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<SerialDto> update(SerialParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<SerialDto> delete(SerialParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

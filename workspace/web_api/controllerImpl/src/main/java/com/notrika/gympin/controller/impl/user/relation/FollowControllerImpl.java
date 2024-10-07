@@ -8,6 +8,7 @@ import com.notrika.gympin.common.user.relation.param.FollowParam;
 import com.notrika.gympin.common.user.relation.service.FollowService;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.param.UserParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +62,7 @@ public class FollowControllerImpl implements FollowController {
 
     @Override
     public ResponseEntity<Page<FollowDto>> query(BaseQuery<?> filter) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
 }

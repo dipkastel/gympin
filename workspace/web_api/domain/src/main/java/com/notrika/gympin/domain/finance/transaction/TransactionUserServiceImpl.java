@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.transaction.param.UserTransactionParam;
 import com.notrika.gympin.common.finance.transaction.query.UserTransactionQuery;
 import com.notrika.gympin.common.finance.transaction.service.UserTransactionService;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
@@ -48,22 +49,22 @@ public class TransactionUserServiceImpl extends AbstractBaseService<UserTransact
 
     @Override
     public UserTransactionDto add(@NonNull UserTransactionParam transactionParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public UserTransactionDto update(@NonNull UserTransactionParam transactionParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public UserTransactionDto delete(@NonNull UserTransactionParam transactionParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public UserTransactionDto getById(long id) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
 
@@ -448,17 +449,17 @@ public class TransactionUserServiceImpl extends AbstractBaseService<UserTransact
 
     @Override
     public FinanceUserTransactionEntity add(FinanceUserTransactionEntity entity) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public FinanceUserTransactionEntity update(FinanceUserTransactionEntity entity) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public FinanceUserTransactionEntity delete(FinanceUserTransactionEntity entity) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

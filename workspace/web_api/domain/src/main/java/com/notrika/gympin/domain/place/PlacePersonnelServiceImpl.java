@@ -18,6 +18,7 @@ import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.param.UserRegisterParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import com.notrika.gympin.common.util.exception.general.SendSmsException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -117,7 +118,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Override
     public PlacePersonnelDto update(@NonNull PlacePersonnelParam placePersonnelParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
@@ -391,7 +392,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Override
     public PlacePersonnelEntity update(PlacePersonnelEntity entity) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
@@ -421,7 +422,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Override
     public Page<PlacePersonnelDto> convertToDtos(Page<PlacePersonnelEntity> entities) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
 

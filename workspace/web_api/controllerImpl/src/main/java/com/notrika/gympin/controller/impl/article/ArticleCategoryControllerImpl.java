@@ -6,6 +6,7 @@ import com.notrika.gympin.common.article.dto.ArticleCategoryDto;
 import com.notrika.gympin.common.article.param.ArticleCategoryParam;
 import com.notrika.gympin.common.article.service.ArticleCategoryService;
 import com.notrika.gympin.common.article.api.ArticleCategoryController;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -55,7 +56,7 @@ public class ArticleCategoryControllerImpl implements ArticleCategoryController 
 
     @Override
     public ResponseEntity<Page<ArticleCategoryDto>> query(BaseQuery<?> filter) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
 }

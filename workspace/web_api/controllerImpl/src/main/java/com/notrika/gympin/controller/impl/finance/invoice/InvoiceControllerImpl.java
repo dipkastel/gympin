@@ -10,6 +10,7 @@ import com.notrika.gympin.common.finance.invoice.query.InvoiceQuery;
 import com.notrika.gympin.common.finance.invoice.service.InvoiceService;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class InvoiceControllerImpl implements InvoiceController {
 
     @Override
     public ResponseEntity<InvoiceDto> update(InvoiceParam invoiceParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

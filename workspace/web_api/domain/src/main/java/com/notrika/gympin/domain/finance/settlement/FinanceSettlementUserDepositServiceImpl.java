@@ -8,6 +8,8 @@ import com.notrika.gympin.common.finance.settlement.dto.FinanceSettlementUserDep
 import com.notrika.gympin.common.finance.settlement.param.FinanceSettlementUserDepositParam;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
+import com.notrika.gympin.common.user.user.enums.UserFinanceType;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import com.notrika.gympin.common.util.exception.user.LowDepositException;
 import com.notrika.gympin.common.util.exception.user.UserHasOpenSettlementRequest;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -98,12 +100,21 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
     @Override
     @Transactional
     public FinanceSettlementUserDepositDto add(@NonNull FinanceSettlementUserDepositParam param) {
-        //TODO seprate chackouts by wallet on serial
+
+        FinanceUserEntity financeUser = financeUserRepository.getById(param.getUserFinanceID());
+
+        ProcessTypeEnum serialType = ProcessTypeEnum.NOT_DEFINE;
+        if(financeUser.getUserFinanceType()== UserFinanceType.NON_WITHDRAWABLE_WALLET)
+            serialType = ProcessTypeEnum.CASH_OUT_PERSONAL;
+        if(financeUser.getUserFinanceType()== UserFinanceType.PERSONAL_WALLET)
+            serialType = ProcessTypeEnum.CASH_OUT_PERSONAL;
+        if(financeUser.getUserFinanceType()== UserFinanceType.INCOME_WALLET)
+            serialType = ProcessTypeEnum.CASH_OUT_PLACE;
+
         FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder()
                 .serial(java.util.UUID.randomUUID().toString())
-                .processTypeEnum(ProcessTypeEnum.CASH_OUT_PLACE)
+                .processTypeEnum(serialType)
                 .build());
-        FinanceUserEntity financeUser = financeUserRepository.getById(param.getUserFinanceID());
         if(financeUserRepository.getById(param.getUserFinanceID()).getTotalDeposit().compareTo(param.getAmount())<0)
             throw new LowDepositException();
 
@@ -121,12 +132,12 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
 
     @Override
     public FinanceSettlementUserDepositDto update(@NonNull FinanceSettlementUserDepositParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public FinanceSettlementUserDepositDto delete(@NonNull FinanceSettlementUserDepositParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
@@ -146,7 +157,7 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
 
     @Override
     public FinanceSettlementUserDepositRequestEntity delete(FinanceSettlementUserDepositRequestEntity entity) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

@@ -14,6 +14,7 @@ export default function NNavigaion(){
     const currentUser = useSelector(({auth}) => auth.user);
     const location = useLocation();
     useEffect(() => {
+        console.log("loacation changed")
         if(currentUser&&place&&currentUser.Username&&place.Name){
             try{
                 ReactGA.gtag( "event","user_place_use",{

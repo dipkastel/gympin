@@ -1,25 +1,12 @@
 package com.notrika.gympin.domain.finance.transaction;
 
 import com.notrika.gympin.common.finance.transaction.dto.TransactionPersonnelCreditDto;
-import com.notrika.gympin.common.finance.transaction.dto.TransactionPersonnelCreditDto;
 import com.notrika.gympin.common.finance.transaction.param.TransactionPersonnelCreditParam;
-import com.notrika.gympin.common.finance.transaction.param.TransactionPersonnelCreditParam;
-import com.notrika.gympin.common.finance.transaction.query.CorporateTransactionQuery;
 import com.notrika.gympin.common.finance.transaction.query.TransactionPersonnelCreditQuery;
-import com.notrika.gympin.common.finance.transaction.service.CorporateTransactionService;
 import com.notrika.gympin.common.finance.transaction.service.TransactionPersonnelCreditService;
-import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
-import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
-import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporatePersonnelCreditTransactionRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
-import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
-import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
-import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -15,9 +15,21 @@ import {
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import adapterJalali from "@date-io/date-fns-jalali";
 import {DatePicker} from "@mui/x-date-pickers";
-import {ExpandLess, ExpandMore, GppBad, NotInterested, Stairs} from "@mui/icons-material";
+import {
+    ExpandLess,
+    ExpandMore,
+    FeaturedPlayList,
+    GppBad,
+    NotInterested,
+    Stairs,
+    SupervisorAccount
+} from "@mui/icons-material";
 import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
 import warning from "react-redux/lib/utils/warning";
+import {TransactionPersonnelCredit_query} from "../../../../../network/api/TransactionPersonnelCredit.api";
+import QrCodeIcon from "@mui/icons-material/QrCode";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 
 const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
     const error = useContext(ErrorContext);
@@ -26,11 +38,33 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
     const [credits, setCredits] = useState(null)
     const [creditToExpire, setCreditToExpire] = useState(null)
     const [creditToDecrease, setCreditToDecrease] = useState(null)
+    const [creditToTransactions, setCreditToTransactions] = useState(null)
+    const [creditTransactions, setCreditTransactions] = useState(null)
     useEffect(() => {
-        getTransactions();
+        getPersonnelCredits();
     }, []);
+    useEffect(() => {
+        if(creditToTransactions)
+            getCreditTransactions();
+    }, [creditToTransactions]);
 
-    function getTransactions() {
+    function getCreditTransactions() {
+
+        TransactionPersonnelCredit_query({
+            queryType: "FILTER",
+            CreditId:creditToTransactions.Id,
+            paging: {Page: 0, Size: 100, Desc: true}
+        }).then(result => {
+            setCreditTransactions(result.data.Data);
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }
+    function getPersonnelCredits() {
         setExpireDefaultDate();
         corporatePersonnel_getById({id: corporatePersonnel.Id}).then(result => {
             setCredits(result.data.Data.CreditList);
@@ -42,7 +76,6 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
             }
         });
     }
-
 
     function setExpireDefaultDate() {
 
@@ -66,7 +99,7 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                 CreditAmount: toPriceWithoutComma(e.target.creditToAdd.value)
             })
                 .then(result => {
-                    getTransactions();
+                    getPersonnelCredits();
                     getPerson();
                     error.showError({message: "با موفقیت انجام شد",});
                 }).catch(e => {
@@ -147,7 +180,7 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                 Id: creditToExpire.Id,
             })
                 .then(result => {
-                    getTransactions();
+                    getPersonnelCredits();
                     getPerson();
                     error.showError({message: "با موفقیت انجام شد",});
                 }).catch(e => {
@@ -200,7 +233,7 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                 CreditAmount: toPriceWithoutComma(e.target.DecreaseValue.value)
             })
                 .then(result => {
-                    getTransactions();
+                    getPersonnelCredits();
                     getPerson();
                     error.showError({message: "با موفقیت انجام شد",});
                 }).catch(e => {
@@ -251,12 +284,78 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
 
     }
 
+    function renderModalTransactions() {
+
+        return (
+            <>
+                <Modal show={!!creditToTransactions} onHide={() => setCreditToTransactions(null)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{"تراکنش های اعتبار"}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Table
+                                aria-labelledby="tableTitle"
+                                size="medium"
+                            >
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell align="right" padding="normal" sortDirection={false}>تاریخ</TableCell>
+                                        <TableCell align="right" padding="normal" sortDirection={false}>مبلغ</TableCell>
+                                        <TableCell align="right" padding="normal" sortDirection={false}>وضعیت تراکنش</TableCell>
+                                        <TableCell align="left" padding="normal" sortDirection={false}>جزئیات</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {creditTransactions?.content && creditTransactions?.content?.map((row, index) => (
+                                            <TableRow hover role="checkbox" sx={{backgroundColor:(row.Amount>0)?"#d3fcef":"#f5d2d2"}} key={row.Id.toString()}>
+                                                <TableCell component="th" padding="normal" align="right">
+                                                    {new Date(row?.CreatedDate).toLocaleDateString('fa-IR', {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                        hour: "2-digit",
+                                                        minute: "2-digit"
+                                                    })}
+                                                </TableCell>
+                                                <TableCell component="th" padding="normal" align="right">
+                                                    {toPriceWithComma(row.Amount)}
+                                                </TableCell>
+                                                <TableCell component="th" padding="normal" align="right">
+                                                    {TransactionStatus[row.TransactionStatus]}
+                                                </TableCell>
+                                                <TableCell component="th" padding="normal" align="left">
+
+                                                    {row.Serial&&<Tooltip title={row.Serial?.Serial} placement="top">
+                                                        <QrCodeIcon color={"success"}/>
+                                                    </Tooltip>}
+                                                    {row.Place&&<Tooltip title={row.Place?.Name} placement="top">
+                                                        <ApartmentIcon color={"success"}/>
+                                                    </Tooltip>}
+                                                    {row.Purchased&&<Tooltip title={row.Purchased?.Name} placement="top">
+                                                        <ConfirmationNumberIcon color={"success"}/>
+                                                    </Tooltip>}
+                                                    {row.CreatorUser&&<Tooltip title={getUserFixedName(row.CreatorUser)} placement="top">
+                                                        <SupervisorAccount color={"success"}/>
+                                                    </Tooltip>}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                </TableBody>
+                            </Table>
+                        </Modal.Body>
+                </Modal>
+
+            </>
+        );
+
+    }
+
     return (
         <>
 
             <Portlet>
                 <PortletHeader
-                    title={corporatePersonnel.Corporate && ("اعتبار های " + corporatePersonnel.Corporate.Name)}
+                    title={corporatePersonnel.Corporate && ("اعتبار های " + corporatePersonnel?.Corporate?.Name)}
                     toolbar={
                         <PortletHeaderToolbar>
                             <button
@@ -325,6 +424,13 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                                                 <GppBad />
                                             </IconButton>
                                         </Tooltip>}
+                                        <Tooltip title={"تراکنش ها"} placement="top">
+                                            <IconButton
+                                                color={"info"}
+                                                onClick={() => setCreditToTransactions(row)}>
+                                                <FeaturedPlayList />
+                                            </IconButton>
+                                        </Tooltip>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -335,6 +441,7 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
             {renderModalAdd()}
             {renderModalExpire()}
             {renderModalDecrease()}
+            {renderModalTransactions()}
         </>
     );
 };

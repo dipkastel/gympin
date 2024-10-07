@@ -9,7 +9,7 @@ import {
 import {Form, Modal, Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import {Button, Chip, TableCell, TextField, Typography} from "@mui/material";
+import {Alert, Button, Chip, TableCell, TextField, Typography} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
@@ -22,8 +22,9 @@ import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppSettlementsRequest, SetRppSettlementsRequest} from "../../../../../helper/pocket/pocket";
+import {creditTypes} from "../../../../../helper/enums/creditTypes";
 
-const SettlementRequest = ({currentUser, updatePage}) => {
+const SettlementRequest = ({currentUser,userFinance, updatePage}) => {
     const error = useContext(ErrorContext);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppSettlementsRequest());
@@ -39,9 +40,10 @@ const SettlementRequest = ({currentUser, updatePage}) => {
     }, [page, rowsPerPage]);
 
     function getInvoiceSettlementUserDeposit() {
+    console.log(userFinance);
         SettlementUserDeposit_query({
             queryType: "FILTER",
-            UserId: currentUser.Id,
+            FinanceUserId: userFinance.Id,
             paging: {Page: page, Size: (rowsPerPage), orderBy: "Serial", Desc: true}
         }).then((data) => {
             SetUserSettlementDepositInvoice(data.data.Data)
@@ -185,7 +187,7 @@ const SettlementRequest = ({currentUser, updatePage}) => {
             e.preventDefault()
             SettlementUserDeposit_add({
                 Amount: amountToPay,
-                UserId: currentUser.Id
+                UserFinanceId: userFinance.Id
             }).then(result => {
                 setOpenModalAdd(false)
                 getInvoiceSettlementUserDeposit()
@@ -203,7 +205,7 @@ const SettlementRequest = ({currentUser, updatePage}) => {
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
                     <form onSubmit={(e) => addOption(e)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>{"درخواست تسویه با کاربر "}</Modal.Title>
+                            <Modal.Title>{"درخواست تسویه "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
 
@@ -250,10 +252,16 @@ const SettlementRequest = ({currentUser, updatePage}) => {
         }
     }
 
+    if(userFinance.CreditType==="NON_WITHDRAWABLE") return <></>
+    if(userFinance.CreditType==="SPONSOR") return <></>
+    if(userFinance.CreditPayableAmount<1&&!userSettlementDepositInvoice.content) return <></>
     return (
         <>
             <Portlet>
-                <PortletHeader title="درخواست های تسویه حساب"
+                <PortletHeader title={"تسویه حساب "+creditTypes[userFinance.CreditType]+
+                (userFinance?.Corporate?(" ( "+userFinance?.Corporate?.Name+" ) "):"") +
+                (userFinance?.Place?(" ( "+userFinance?.Place?.Name+" ) "):"")
+                }
                                toolbar={
                                    <PortletHeaderToolbar>
                                        <button
@@ -268,8 +276,12 @@ const SettlementRequest = ({currentUser, updatePage}) => {
                 />
 
                 <PortletBody>
-
-                    <TableContainer>
+                    <Alert variant={"outlined"} >
+                        <Typography variant={"body1"}>
+                            { "مبلغ قابل تسویه برای این حساب : "+toPriceWithComma(userFinance.CreditPayableAmount)+" تومان"}
+                        </Typography>
+                    </Alert>
+                    <TableContainer hidden={userSettlementDepositInvoice?.content?.length<1}>
                         <Table
                             sx={{minWidth: 750}}
                             aria-labelledby="tableTitle"

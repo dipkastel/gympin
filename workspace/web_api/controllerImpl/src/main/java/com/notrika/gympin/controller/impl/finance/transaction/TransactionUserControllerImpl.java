@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.transaction.param.*;
 import com.notrika.gympin.common.finance.transaction.query.UserTransactionQuery;
 import com.notrika.gympin.common.finance.transaction.service.UserTransactionService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +23,17 @@ public class TransactionUserControllerImpl implements TransactionUserController 
 
     @Override
     public ResponseEntity<UserTransactionDto> add(UserTransactionParam transactionParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<UserTransactionDto> update(UserTransactionParam transactionParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<UserTransactionDto> delete(UserTransactionParam transactionParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

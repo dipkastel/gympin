@@ -11,6 +11,7 @@ import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
 import com.notrika.gympin.common.support.service.SupportService;
 import com.notrika.gympin.common.user.user.param.UserParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -56,12 +57,12 @@ public class SupportControllerImpl implements SupportController {
 
     @Override
     public ResponseEntity<SupportDto> update(SupportParam supportParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<SupportDto> delete(SupportParam supportParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

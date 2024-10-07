@@ -18,6 +18,7 @@ import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.param.UserParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.general.UserNotAllowedException;
 import com.notrika.gympin.common.util.exception.purchased.*;
@@ -92,7 +93,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
     @Transactional
     @Deprecated
     public PurchasedSubscribeDto add(@NonNull PurchasedSubscribeParam purchasedSubscribeParam) {
-        return null;
+        throw new FunctionNotAvalable();
 //        TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(purchasedSubscribeParam.getTicketSubscribe().getId());
 //        UserEntity user = userRepository.getById(purchasedSubscribeParam.getUser().getId());
 //        PurchasedSubscribeEntity entity = new PurchasedSubscribeEntity();
@@ -135,13 +136,13 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
     @Override
     public PurchasedSubscribeDto update(@NonNull PurchasedSubscribeParam purchasedSubscribeParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
 
     @Override
     public PurchasedSubscribeDto delete(@NonNull PurchasedSubscribeParam purchasedSubscribeParam) {
-        return null;
+        throw new FunctionNotAvalable();
 //        PurchasedSubscribeEntity entity = purchasedSubscribeRepository.getById(purchasedSubscribeParam.getId());
 //        if (entity.getTicketSubscribe().getSubscribeCapacity() != null) {
 //            entity.getTicketSubscribe().setSubscribeCapacity(entity.getTicketSubscribe().getSubscribeCapacity() + 1);
@@ -157,19 +158,19 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
     @Override
     public PurchasedSubscribeEntity add(PurchasedSubscribeEntity entity) {
-        return null;
+        throw new FunctionNotAvalable();
 //        return purchasedSubscribeRepository.add(entity);
     }
 
     @Override
     public PurchasedSubscribeEntity update(PurchasedSubscribeEntity entity) {
-        return null;
+        throw new FunctionNotAvalable();
 //        return purchasedSubscribeRepository.update(entity);
     }
 
     @Override
     public PurchasedSubscribeEntity delete(PurchasedSubscribeEntity entity) {
-        return null;
+        throw new FunctionNotAvalable();
 //        return purchasedSubscribeRepository.deleteById2(entity);
     }
 

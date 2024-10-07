@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.transaction.param.TransactionAllParam;
 import com.notrika.gympin.common.finance.transaction.query.TransactionAllQuery;
 import com.notrika.gympin.common.finance.transaction.service.TransactionAllService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +24,17 @@ public class TransactionAllControllerImpl implements TransactionAllController {
 
     @Override
     public ResponseEntity<TransactionAllDto> add(TransactionAllParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<TransactionAllDto> update(TransactionAllParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<TransactionAllDto> delete(TransactionAllParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

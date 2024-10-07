@@ -17,7 +17,7 @@ import TablePagination from "@mui/material/TablePagination";
 import {transactionUser_query} from "../../../../../network/api/transactionsUser.api";
 import {getRppPersonalTransaction, SetRppPersonalTransaction} from "../../../../../helper/pocket/pocket";
 
-const _PersonalTransactions = ({ currentUser ,updatePage}) => {
+const _PersonalTransactions = ({ currentUser ,userFinance,updatePage}) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppPersonalTransaction());
     const [transactions, SetTransactions] = useState({});
@@ -28,7 +28,8 @@ const _PersonalTransactions = ({ currentUser ,updatePage}) => {
     function getTransactions() {
         transactionUser_query({
             queryType: "FILTER",
-            FinanceUserId:currentUser?.FinanceUser?.Id,
+            FinanceUserId:userFinance?.Id,
+
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             SetTransactions(data.data.Data)

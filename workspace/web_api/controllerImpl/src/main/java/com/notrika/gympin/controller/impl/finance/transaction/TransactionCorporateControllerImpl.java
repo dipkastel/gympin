@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.transaction.param.CorporateTransactionP
 import com.notrika.gympin.common.finance.transaction.query.CorporateTransactionQuery;
 import com.notrika.gympin.common.finance.transaction.service.CorporateTransactionService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +24,17 @@ public class TransactionCorporateControllerImpl implements TransactionCorporateC
 
     @Override
     public ResponseEntity<CorporateTransactionDto> add(CorporateTransactionParam transactionParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<CorporateTransactionDto> update(CorporateTransactionParam transactionParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<CorporateTransactionDto> delete(CorporateTransactionParam transactionParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -116,7 +117,7 @@ public class PlacePersonnelControllerImpl implements PlacePersonnelController {
 
     @Override
     public ResponseEntity<Page<PlacePersonnelDto>> query(BaseQuery<?> param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
 

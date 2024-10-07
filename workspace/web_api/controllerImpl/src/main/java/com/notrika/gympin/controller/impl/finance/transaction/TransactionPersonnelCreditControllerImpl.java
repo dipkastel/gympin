@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.transaction.param.TransactionPersonnelC
 import com.notrika.gympin.common.finance.transaction.query.TransactionPersonnelCreditQuery;
 import com.notrika.gympin.common.finance.transaction.service.TransactionPersonnelCreditService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +24,17 @@ public class TransactionPersonnelCreditControllerImpl implements TransactionPers
 
     @Override
     public ResponseEntity<TransactionPersonnelCreditDto> add(TransactionPersonnelCreditParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<TransactionPersonnelCreditDto> update(TransactionPersonnelCreditParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<TransactionPersonnelCreditDto> delete(TransactionPersonnelCreditParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

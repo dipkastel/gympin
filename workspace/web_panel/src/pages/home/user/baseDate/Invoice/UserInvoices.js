@@ -162,6 +162,7 @@ const UserInvoices = ({currentUser}) => {
                                 <TableCell align="right">تعداد آیتم</TableCell>
                                 <TableCell align="right">قیمت</TableCell>
                                 <TableCell align="right">وضعیت</TableCell>
+                                <TableCell align="right">تاریخ</TableCell>
                                 <TableCell align="left">action</TableCell>
                             </TableRow>
                         </TableHead>
@@ -174,6 +175,13 @@ const UserInvoices = ({currentUser}) => {
                                     <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{row.InvoiceBuyables?.reduce((a, b) => a + b.Count, 0)}</TableCell>
                                     <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{toPriceWithComma(row.TotalPrice)}</TableCell>
                                     <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{InvoiceStatus[row.Status]}</TableCell>
+                                    <TableCell onClick={(event) => {history.push({pathname: "/invoice/detail/" + row.Id})}} align="right">{new Date(row.CreatedDate).toLocaleDateString('fa-IR', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                            hour: "2-digit",
+                                            minute: "2-digit"
+                                        })}</TableCell>
                                     <TableCell align="left">
                                         <button
                                             type="button"

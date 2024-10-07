@@ -13,6 +13,7 @@ import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.common.user.user.query.UserQuery;
 import com.notrika.gympin.common.user.user.service.UserService;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class UserControllerImpl implements UserController {
     @Override
     public ResponseEntity<UserDto> add(UserParam userParam) {
 //        return ResponseEntity.ok(userService.add(userParam));
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

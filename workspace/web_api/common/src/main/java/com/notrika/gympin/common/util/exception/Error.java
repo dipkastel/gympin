@@ -143,7 +143,8 @@ public class Error {
         NOT_FOUND_EXEPTION(4006),
         SEND_SMS_EXCEPTION(4007),
         USER_NOT_ALLOWED(4008),
-        SMS_SERVICE_IS_DISABLED(4009)
+        SMS_SERVICE_IS_DISABLED(4009),
+        FUNCTION_NOT_AVALABLE(4010)
 
         ;
         private final int value;

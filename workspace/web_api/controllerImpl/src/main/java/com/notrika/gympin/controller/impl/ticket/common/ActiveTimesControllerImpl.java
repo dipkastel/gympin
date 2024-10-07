@@ -8,6 +8,7 @@ import com.notrika.gympin.common.ticket.common.api.ActiveTimesController;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.place.hall.param.HallParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -50,7 +51,7 @@ public class ActiveTimesControllerImpl implements ActiveTimesController {
 
     @Override
     public ResponseEntity<Page<ActiveTimesDto>> query(BaseQuery<?> filter) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
 

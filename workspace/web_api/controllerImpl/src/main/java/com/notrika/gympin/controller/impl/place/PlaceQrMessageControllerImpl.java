@@ -7,6 +7,7 @@ import com.notrika.gympin.common.place.qrMessage.api.PlaceQrMessageController;
 import com.notrika.gympin.common.place.qrMessage.dto.PlaceQrMessageDto;
 import com.notrika.gympin.common.place.qrMessage.param.PlaceQrMessageParam;
 import com.notrika.gympin.common.place.qrMessage.service.PlaceQrMessageService;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,7 @@ public class PlaceQrMessageControllerImpl implements PlaceQrMessageController {
 
     @Override
     public ResponseEntity<Page<PlaceQrMessageDto>> query(BaseQuery<?> filter) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

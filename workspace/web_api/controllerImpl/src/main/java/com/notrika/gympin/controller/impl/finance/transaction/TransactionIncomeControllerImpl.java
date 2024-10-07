@@ -11,6 +11,7 @@ import com.notrika.gympin.common.finance.transaction.query.UserTransactionQuery;
 import com.notrika.gympin.common.finance.transaction.service.IncomeTransactionService;
 import com.notrika.gympin.common.finance.transaction.service.UserTransactionService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -28,17 +29,17 @@ public class TransactionIncomeControllerImpl implements TransactionIncomeControl
 
     @Override
     public ResponseEntity<IncomeTransactionDto> add(IncomeTransactionParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<IncomeTransactionDto> update(IncomeTransactionParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public ResponseEntity<IncomeTransactionDto> delete(IncomeTransactionParam param) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

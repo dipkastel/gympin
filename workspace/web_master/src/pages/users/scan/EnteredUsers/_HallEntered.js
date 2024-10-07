@@ -28,6 +28,8 @@ export default function _HallEntered({selectSubscribe,updatePage}) {
     }, []);
 
     function getEnterdUser() {
+        if (!place)
+            return (<></>);
         purchasedSubscribe_getUserEntered({placeId: place.Id}).then(result => {
             SetUsers(result.data.Data);
         }).catch(e => {

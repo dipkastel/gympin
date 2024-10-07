@@ -47,10 +47,6 @@ export function user_UpdateUserStatus(data) {
 export function user_UpdateUserAvatar(data) {
     return axios.put(UserApi.updateUserAvatar, data);
 }
-
-export function user_getFinanceUser(data) {
-    return axios.get(UserApi.getFinanceUser,{ params: data });
-}
 //userCredit
 export function User_getUserCredits(data) {
     return axios.get(UserApi.getUserCredits,{params:data});

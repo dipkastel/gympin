@@ -192,7 +192,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         UserDto userDto = UserConvertor.toDtoComplete(userRequester);
         userDto.setFollowersCount(followService.getFollowersCount(userRequester));
         userDto.setFollowingsCount(followService.getFollowingsCount(userRequester));
-        userDto.setBalance(getAllCreditsByUser(UserParam.builder().id(userRequester.getId()).build()).getTotalCredit());
+        userDto.setBalance(getPurchaseableCreditsByUser(UserParam.builder().id(userRequester.getId()).build()).getTotalCredit());
         return userDto;
     }
 

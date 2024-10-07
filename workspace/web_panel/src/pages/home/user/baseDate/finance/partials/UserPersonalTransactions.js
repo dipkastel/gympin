@@ -4,35 +4,24 @@ import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {TransactionCorporateTypes} from "../../../../../../helper/enums/TransactionCorporateTypes";
 import _PersonalTransactions from "../../UserTransactions/_PersonalTransactions";
 import _PersonnelTransactions from "../../UserTransactions/_PersonnelTransactions";
+import {creditTypes} from "../../../../../../helper/enums/creditTypes";
 
-const UserPersonalTransactions = ({currentUser,updatePage}) => {
+const UserPersonalTransactions = ({currentUser,userFinance,updatePage}) => {
 
-    const [transactionType, SetTransactionType] = useState("DEPOSIT");
+
+
+    if(!(userFinance.CreditType==="PERSONAL"||userFinance.CreditType==="INCOME"||userFinance.CreditType==="NON_WITHDRAWABLE"))
+        return <></>
     return (
         <div>
             <Portlet>
-                <PortletHeader
-                    title="تراکنش های شخصی کاربر"
-                    toolbar={
-                        <PortletHeaderToolbar>
 
-                            <FormControl fullWidth>
-                                <InputLabel id="status-select-label">نوع تراکنش</InputLabel>
-                                <Select
-                                    label="نوع تراکنش"
-                                    size={"small"}
-                                    value={transactionType}
-                                    onChange={e => SetTransactionType(e.target.value)}
-                                >
-                                    {Object.keys(TransactionCorporateTypes).map((item, number) => (
-                                        <MenuItem key={number} value={item}>{TransactionCorporateTypes[item]}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </PortletHeaderToolbar>}
+                <PortletHeader title={"تراکنش های "+creditTypes[userFinance.CreditType]+
+                (userFinance?.Corporate?(" ( "+userFinance?.Corporate?.Name+" ) "):"") +
+                (userFinance?.Place?(" ( "+userFinance?.Place?.Name+" ) "):"")
+                }
                 />
-                {transactionType=="DEPOSIT"&&<_PersonalTransactions currentUser={currentUser} updatePage={updatePage} />}
-                {transactionType=="CREDIT"&&<_PersonnelTransactions currentUser={currentUser} updatePage={updatePage} />}
+                <_PersonalTransactions currentUser={currentUser} userFinance={userFinance} updatePage={updatePage} />
             </Portlet>
         </div>
     );

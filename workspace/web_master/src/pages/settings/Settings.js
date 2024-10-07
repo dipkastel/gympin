@@ -28,6 +28,8 @@ const Settings = () => {
 
 
     function getWizardId() {
+        if (!user)
+            return (<></>);
         user_GetUserSettings({Id:user.Id}).then(data=>{
             setWizard(data.data.Data?.filter(s=>s.Key=="USER_WIZARD_COMPLETE")?.[0]);
         }).catch(e => {

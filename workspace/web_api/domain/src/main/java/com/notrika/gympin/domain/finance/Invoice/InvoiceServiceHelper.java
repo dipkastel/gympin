@@ -25,6 +25,7 @@ import com.notrika.gympin.common.user.user.enums.UserFinanceType;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.purchased.*;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
@@ -160,6 +161,10 @@ public class InvoiceServiceHelper {
             throw new CreditCannotBeNegativeException();
         //update personnel credit
         wallet.setCreditAmount(afterCredit);
+        if(afterCredit.compareTo(BigDecimal.ZERO)==0){
+            //TODO check THIS
+            wallet.setStatus(CorporatePersonnelCreditStatusEnum.COMPLETE);
+        }
         financeCorporatePersonnelCreditRepository.update(wallet);
         //add personel credit transaction
 
@@ -513,29 +518,7 @@ public class InvoiceServiceHelper {
     }
 
     public UserHowToPayDto getModerateHowToPay(InvoiceEntity invoice, InvoiceCheckoutParam param) {
-//        UserCreditDto userCredits = userService.getMyCredits();
-//        UserHowToPayDto result = new UserHowToPayDto();
-//        var creditList = userCredits.getCreditDetail().stream().filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
-//        if (invoice.getPriceToPay().compareTo(userCredits.getTotalCredit()) > 0)
-//            return UserHowToPayDto.builder()
-//                    .creditDetail(creditList)
-//                    .creditCovrage(false)
-//                    .totalCredit(userCredits.getTotalCredit()).build();
-//
-//        result.setCreditDetail(new ArrayList<>());
-//        BigDecimal totalToPay = invoice.getPriceToPay();
-//        for (var credit : creditList) {
-//            if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) > 0) {
-//                totalToPay = totalToPay.subtract(credit.getCreditPayableAmount());
-//                result.getCreditDetail().add(credit);
-//            } else if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) < 0) {
-//                credit.setCreditPayableAmount(totalToPay);
-//                result.getCreditDetail().add(credit);
-//                result.setCreditCovrage(true);
-//                totalToPay = BigDecimal.ZERO;
-//            }
-//        }
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     public UserHowToPayDto getAdvancedHowToPay(InvoiceEntity invoice, InvoiceCheckoutParam param) {

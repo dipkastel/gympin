@@ -22,6 +22,8 @@ const _transactions = ({place}) => {
         return (<></>);
 
     function getUserTransactions() {
+        if (!place || !currentUser)
+            return (<></>);
         SetTransactions(null);
         transactionUser_query({
             queryType: "FILTER",

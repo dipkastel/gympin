@@ -462,6 +462,11 @@ export let TransactionCorporateApi = {
     setPaymentRequest: "v1/TransactionCorporate/setPaymentRequest",
 };
 
+
+export let TransactionPersonnelCredit = {
+    query: "v1/TransactionPersonnelCredit/query",
+};
+
 export let TransactionIncomeApi = {
     query: "v1/TransactionIncome/query",
 };

@@ -7,6 +7,7 @@ import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
 import com.notrika.gympin.common.place.about.param.PlaceAboutParam;
 import com.notrika.gympin.common.place.about.service.PlaceAboutService;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,7 @@ public class PlaceAboutControllerImpl implements PlaceAboutController {
 
     @Override
     public ResponseEntity<Page<PlaceAboutDto>> query(BaseQuery<?> filter) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override

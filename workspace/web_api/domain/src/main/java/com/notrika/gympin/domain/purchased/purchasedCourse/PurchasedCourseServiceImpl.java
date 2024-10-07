@@ -12,6 +12,7 @@ import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.param.UserParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.purchased.*;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
@@ -74,12 +75,12 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
     @Transactional
     @Deprecated
     public PurchasedCourseDto add(@NonNull PurchasedCourseParam purchasedCourseParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
     @Override
     public PurchasedCourseDto update(@NonNull PurchasedCourseParam purchasedCourseParam) {
-        return null;
+        throw new FunctionNotAvalable();
     }
 
 
@@ -176,7 +177,7 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
 
     @Override
     public PurchasedCourseDto addEnterToCourse(PurchasedCourseParam param) {
-        return null;
+        throw new FunctionNotAvalable();
 //        PurchasedCourseEntity courseEntity = getEntityById(param.getId());
 //        UserEntity userEntity = userRepository.getById(param.getUser().getId());
 //

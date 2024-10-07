@@ -34,9 +34,12 @@ const UserCredit = ({currentUser,userCredits}) => {
                                         {/*<TableCell align="right"><Avatar onClick={()=>history.push("/corporate/details/"+row.Id)}  alt={row.Name} src={row.Multimedias?row.Multimedias[0].Url:""}  sx={{width:20,height:20}} /></TableCell>*/}
                                         <TableCell
                                             onClick={() => row.CreditType == "SPONSOR" ? history.push("/corporate/details/" + row.Corporate.Id) : ""}
-                                            align="right">{row.CreditType != "SPONSOR"&&creditTypes[row.CreditType]}
+                                            align="right">{!(row.CreditType == "SPONSOR"||row.CreditType == "INCOME")&&creditTypes[row.CreditType]}
                                             {row.CreditType == "SPONSOR" &&
                                                 CorporateContractType[row.ContractType]+ " ( " + row.Corporate.Name +" )"
+                                            }
+                                            {row.CreditType == "INCOME" &&
+                                                creditTypes[row.CreditType]+ " ( " + row?.Place?.Name +" )"
                                             }
                                         </TableCell>
                                         <TableCell align="right">{toPriceWithComma(row.CreditAmount)}</TableCell>
