@@ -3,14 +3,16 @@ import _ChangePlaceStatus from "../status/_ChangePlaceStatus";
 import PlaceInviteCode from "../Invite/PlaceInviteCode";
 import DeletePlace from "../Delete/DeletePlace";
 import PlaceQrMessages from "../QrMessages/PlaceQrMessages";
+import PlaceOrder from "../order/PlaceOrder";
 
-const PlaceManagementSettingTab = ({place,updatePlace}) => {
+const PlaceManagementSettingTab = ({place, updatePlace}) => {
     return (
         <>
             {place && <div className="row">
 
                 <div className="col-md-6">
                     {place && <_ChangePlaceStatus place={place} updatePlace={updatePlace}/>}
+                    {place && <PlaceOrder place={place} updatePlace={updatePlace}/>}
                     {place && <DeletePlace place={place}/>}
 
                 </div>

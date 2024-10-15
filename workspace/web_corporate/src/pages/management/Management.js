@@ -1,26 +1,59 @@
-import React, {useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import _ListItem from "../../components/_ListItem";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {authActions} from "../../helper/redux/actions/AuthActions";
-import _OurTraffic from "../report/_OurTraffic";
-import _SportRadar from "../report/_SportRadar";
-import _GenderEnter from "../report/_GenderEnter";
-import _GenderIncome from "../report/_GenderIncome";
-import _Income from "../report/_Income";
-import _IncomeSport from "../report/_IncomeSport";
+import {Support_getCorporateSupportCount, Support_query} from "../../network/api/support.api";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
 
 function Management(props) {
+
+    const error = useContext(ErrorContext);
+    const [badgeCount,setBadgeCount] = useState(0);
+    const corporate = useSelector(({corporate}) => corporate.corporate);
+
     useEffect(() => {
         document.title = 'مدیریت';
+        getSupportCount();
     }, []);
+
+    function getSupportCount() {
+
+        Support_getCorporateSupportCount({
+            Id: corporate.Id
+        }).then(result => {
+            setBadgeCount(result.data.Data);
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
+
+
+    }
+
+    function goToReports(){
+        switch(corporate.Status){
+            case "DEMO":
+                error.showError({message: "این بخش برای DEMO فعال نیست",});
+                break;
+            default:
+                error.showError({message: "داده مورد نیاز برای این بخش وجود ندارد",});
+                break;
+        }
+        // if(corporate.)
+    }
 
     return (
         <>
             <_ListItem title="مشخصات سازمان" destination="/management/details"/>
             {/*<_ListItem title="پیام ها" destination="/management/notifs"/>*/}
             <_ListItem title="گروه ها" destination="/management/categories"/>
-            <_ListItem title="پشتیبانی" destination="/management/support"/>
+            <_ListItem title="پروفایل من" destination="/profile"/>
+            <_ListItem title="گزارشات" onClick={goToReports}/>
+            <_ListItem title="پشتیبانی" badgeCount={badgeCount} destination="/management/support"/>
             {/*<_ListItem title="گزارشات" destination="/management/report"/>*/}
             <_ListItem title="تنظیمات" destination="/management/settings"/>
             {/*<_GenderEnter/>*/}

@@ -8,6 +8,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import {QuestionMark} from "@mui/icons-material";
+import {Image} from "react-bootstrap";
 
 const IncreaseHistory = () => {
     const error = useContext(ErrorContext);
@@ -44,55 +45,70 @@ const IncreaseHistory = () => {
 
     return (
         <>
-            {transactions.content && transactions.content.map((row, index) => {
+            {transactions?.content && transactions.content.map((row, index) => {
                 return (
                     <div key={"tr-" + row.Serial}>
-                        <Card elevation={3} sx={{margin: 1}}>
+                        <Card elevation={3} sx={{margin: 1,borderRadius:3}}>
                             <CardContent sx={{pb: "0!important"}}>
-                                <Grid container justifyContent={"space-between"} alignItems={"center"}>
-
+                                <Grid container justifyContent={"space-between"} alignItems={"start"} >
                                     <Typography variant={"subtitle1"}>
-                                        {toPriceWithComma(row.Amount) + " تومان"}
+                                        {console.log(row)}
+                                        {row.Description}
+                                        {row.DepositStatus  == "CONFIRMED" &&<>
+                                            تکمیل شده
+                                            <CheckCircleIcon color={"success"}/>
+                                        </>}
+                                        {row.DepositStatus  == "REJECTED" &&<>
+                                            رد شده
+                                            <RemoveCircleIcon color={"error"}/>
+                                        </>}
+                                        {row.DepositStatus  == "REQUESTED" &&<>
+                                            در انتظار بررسی
+                                            <HourglassBottomIcon color={"warning"}/>
+                                        </>}
                                     </Typography>
 
-                                    <Typography variant={"caption"}>
-                                        {new Date(row.CreatedDate).toLocaleDateString('fa-IR', {
+                                    <ListItemText
+                                        primaryTypographyProps={{variant:"caption",textAlign:"left"}}
+                                        secondaryTypographyProps={{variant:"overline",textAlign:"left"}}
+                                       primary={new Date(row.CreatedDate).toLocaleDateString('fa-IR', {
                                             year: 'numeric',
                                             month: 'long',
                                             day: 'numeric',
                                             hour: "2-digit",
                                             minute: "2-digit"
                                         })}
-                                    </Typography>
+                                       secondary={row.Serial.Serial.split("-")[0]}
+                                    />
 
                                 </Grid>
                                 <ListItemText
-                                    primary={row ? (
-                                        <Typography variant={"subtitle1"}>
-                                            {row.Description}
-                                            {row.DepositStatus  == "CONFIRMED" &&<CheckCircleIcon color={"success"}/>}
-                                            {row.DepositStatus  == "REJECTED" &&<RemoveCircleIcon color={"error"}/>}
-                                            {row.DepositStatus  == "REQUESTED" &&<>
-                                                در انتظار بررسی
-                                                <HourglassBottomIcon color={"warning"}/>
-                                            </>}
-                                        </Typography>
-                                    ) : (
-                                        <Typography variant={"subtitle2"}>
-                                            <QuestionMark color={"warning"}/>
-                                            در انتظار بررسی
-                                        </Typography>
-                                    )}
-                                    secondary={row && (
-                                        <Typography variant={"caption"}>
-                                            {row.CreatorUser&&('درخواست شده توسط : ' + getUserFixedName(row.CreatorUser))}
-                                        </Typography>)}
+                                    primary={toPriceWithComma(row.Amount) + " تومان" }
+                                    secondaryTypographyProps={{variant:"overline"}}
+                                    secondary={row?.CreatorUser&&('توسط : ' + getUserFixedName(row.CreatorUser))}
                                 />
                             </CardContent>
                         </Card>
                     </div>
                 );
             })}
+            {transactions?.content?.length<1&&<>
+
+                <Grid
+                    container
+                    sx={{width:"100%",height:"80vh"}}
+                    direction={"column"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                >
+                    <Image src={"https://api.gympin.ir/resource/image?Id=100"}  width={"40%"}/>
+                    <Typography variant={"body"} sx={{m:2}} >
+                        تراکنشی یافت نشد
+                    </Typography>
+
+                </Grid>
+
+            </>}
 
         </>
 

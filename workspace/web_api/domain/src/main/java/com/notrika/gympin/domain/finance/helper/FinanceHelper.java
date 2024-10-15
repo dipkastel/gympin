@@ -1,10 +1,14 @@
 package com.notrika.gympin.domain.finance.helper;
 
 
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
+import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
+import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.enums.UserFinanceType;
+import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
@@ -19,6 +23,9 @@ import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.Purchas
 import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.course.TicketCourseRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
+import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -101,6 +108,25 @@ public class FinanceHelper {
         if(result==null)
             result = financeUserRepository.add(FinanceUserEntity.builder().user(user).userFinanceType(UserFinanceType.PERSONAL_WALLET).totalDeposit(BigDecimal.ZERO).build());
         return result;
+    }
+
+    public FinanceUserEntity increaseNonWithdrawableWallet(FinanceUserEntity wallet, BigDecimal amount, FinanceSerialEntity serial,String description){
+        BigDecimal beforeDecrease = wallet.getTotalDeposit();
+        BigDecimal NewAmount = beforeDecrease.add(amount);
+        wallet.setTotalDeposit(NewAmount);
+        financeUserRepository.update(wallet);
+        //add finance corporate personnel credit transaction
+        financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
+                .serial(serial)
+                .amount(amount)
+                .description(description)
+                .latestBalance(beforeDecrease)
+                .financeUser(wallet)
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .transactionType(TransactionBaseType.USER)
+                .isChecked(false)
+                .build());
+        return wallet;
     }
 
     public UserEntity getcurrentUser() {

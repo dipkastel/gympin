@@ -56,6 +56,18 @@ public class SupportControllerImpl implements SupportController {
     }
 
     @Override
+    @GetMapping("/getCorporateSupportCount")
+    public ResponseEntity<Long> getCorporateSupportCount(CorporateParam param) {
+        return new ResponseEntity<Long>(supportService.getCorporateSupportCount(param),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/setMessagesRead")
+    public ResponseEntity<Boolean> setMessagesRead(Long id) {
+        return new ResponseEntity<Boolean>(supportService.setMessagesReadById(id),HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<SupportDto> update(SupportParam supportParam) {
         throw new FunctionNotAvalable();
     }

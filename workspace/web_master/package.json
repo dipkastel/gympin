@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "@date-io/jalaali": "^2.14.0",
+    "@mui/x-date-pickers": "^5.0.4",
+    "@types/leaflet": "^1.8.0",
+    "date-fns-jalali": "^2.29.3-0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.8.4",
@@ -70,9 +73,6 @@
     ]
   },
   "devDependencies": {
-    "@mui/x-date-pickers": "^5.0.4",
-    "@types/leaflet": "^1.8.0",
-    "date-fns-jalali": "^2.29.3-0",
     "sass": "^1.54.0"
   }
 }

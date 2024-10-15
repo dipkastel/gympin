@@ -5,7 +5,7 @@ export function corporatePersonnel_add(data) {
   return axios.post(Api_url.CorporatePersonnel.add, data);
 }
 export function corporatePersonnel_delete(data) {
-  return axios.put(Api_url.CorporatePersonnel.delete, null,{ params: data });
+  return axios.put(Api_url.CorporatePersonnel.delete, data );
 }
 export function corporatePersonnel_getAll() {
   return axios.get(Api_url.CorporatePersonnel.getAll);

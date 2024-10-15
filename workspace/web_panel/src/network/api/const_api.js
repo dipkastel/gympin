@@ -195,6 +195,7 @@ export let PlaceApi = {
     CHANGE_STATUS: "v1/place/changeStatus",
     deletePlace: "v1/place/delete",
     updatePlace: "v1/place/update",
+    updateOrder: "v1/place/updateOrder",
     countFilter: "v1/place/count-filter",
     getMultimedias: "v1/place/getMultimedias",
     addMultimedia: "v1/place/addMultimedia",

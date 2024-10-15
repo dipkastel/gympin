@@ -18,7 +18,7 @@ export default function NBottomNavigation(){
         },
         {
             value:"users",
-            lable:"کاربران",
+            lable:"پرسنل",
             firstDirection:"/personnel",
             icon:<GroupIcon/>,
             otherRouts:["users","personnel"]

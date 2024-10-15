@@ -114,7 +114,7 @@ public class UserServiceHelper {
                 .latestBalance(lastPersonnelCreditBalance)
                 .personnelCredit(credit)
                 .isChecked(false)
-                .transactionType(TransactionBaseType.EXPIRE_CREDIT_SYSTEM)
+                .transactionType(TransactionBaseType.CORPORATE_PERSONNEL)
                 .amount(lastPersonnelCreditBalance.negate())
                 .build());
         //change personnel credit
@@ -130,7 +130,7 @@ public class UserServiceHelper {
                 .financeCorporate(financeCorporate)
                 .transactionCorporateType(TransactionCorporateType.CREDIT)
                 .transactionStatus(TransactionStatus.COMPLETE)
-                .transactionType(TransactionBaseType.EXPIRE_CREDIT_SYSTEM)
+                .transactionType(TransactionBaseType.CORPORATE)
                 .isChecked(false)
                 .build());
         //change corporateTotal

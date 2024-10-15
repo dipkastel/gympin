@@ -306,6 +306,7 @@ public class AccountServiceImpl implements AccountService {
                 .supportMessages(SupportMessageParam.builder()
                         .status(SupportStatus.AWAITING_EXPERT)
                         .isAnswer(false)
+                        .isRead(true)
                         .messages(message)
                         .build())
                 .build());
@@ -323,6 +324,7 @@ public class AccountServiceImpl implements AccountService {
                 .supportMessages(SupportMessageParam.builder()
                         .status(SupportStatus.AWAITING_EXPERT)
                         .isAnswer(false)
+                        .isRead(true)
                         .messages(message)
                         .build())
                 .build());
@@ -339,6 +341,7 @@ public class AccountServiceImpl implements AccountService {
                 .supportMessages(SupportMessageParam.builder()
                         .status(SupportStatus.AWAITING_EXPERT)
                         .isAnswer(false)
+                        .isRead(true)
                         .messages(message)
                         .build())
                 .build());
@@ -355,6 +358,7 @@ public class AccountServiceImpl implements AccountService {
                 .supportMessages(SupportMessageParam.builder()
                         .status(SupportStatus.AWAITING_EXPERT)
                         .isAnswer(false)
+                        .isRead(true)
                         .messages(message)
                         .build())
                 .build());

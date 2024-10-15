@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 public interface FinanceUserTransactionRepository extends BaseRepository<FinanceUserTransactionEntity, Long> {
 
-    @Query("SELECT SUM (b.amount) FROM FinanceUserTransactionEntity b where b.transactionType = 'BENEFICIARY' ")
+    @Query("SELECT SUM (b.amount) FROM FinanceUserTransactionEntity b where b.transactionType = 'USER' ")
     BigDecimal getPayableBENEFIT();
 
 }

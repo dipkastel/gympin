@@ -28,6 +28,9 @@ public class SupportMessageParam extends BaseParam<SupportMessageParam> {
     @JsonProperty("IsAnswer")
     private boolean isAnswer;
 
+    @JsonProperty("IsRead")
+    private boolean isRead;
+
 
 
 }

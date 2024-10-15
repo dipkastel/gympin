@@ -44,6 +44,7 @@ const SupportDetails = () => {
             "SupportId":support.Id,
             "Status":isLastMessage?"COMPLETE":"AWAITING_USER",
             "Message":answer,
+            "IsRead":false,
             "IsAnswer":true
         }).then(result => {
             error.showError({message: "عملیات موفق",});
@@ -129,6 +130,8 @@ const SupportDetails = () => {
                                 item.IsAnswer ?
                                     ( <Row><Alert key={item.Id} variant={"info"} className={"m-2  d-block"}>
                                         <Typography variant={"h6"} component={"p"}>{item.Message}</Typography>
+
+                                        {console.log(item)}
                                         <Typography
                                             variant={"caption"}  component={"p"}>{getUserFixedName(item.CreatorUser)+" - "+new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
                                             year: 'numeric',
@@ -141,6 +144,8 @@ const SupportDetails = () => {
                                     :
                                     ( <Row className={"ltr"}><Alert key={item.Id} variant={"warning"} className={"m-2 d-block "}>
                                             <Typography variant={"h6"} component={"p"}>{item.Message}</Typography>
+
+                                        {console.log(item)}
                                             <Typography
                                                 variant={"caption"}  component={"p"}>{getUserFixedName(item.CreatorUser)+" - "+new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
                                                     year: 'numeric',

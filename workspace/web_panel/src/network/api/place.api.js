@@ -35,6 +35,11 @@ export function Place_updatePlace(place) {
     return axios.put(PlaceApi.updatePlace, place);
 }
 
+
+export function Place_updateOrder(place) {
+    return axios.post(PlaceApi.updateOrder, place);
+}
+
 export function Place_GetCount(data) {
     return axios.get(PlaceApi.countFilter, data);
 }

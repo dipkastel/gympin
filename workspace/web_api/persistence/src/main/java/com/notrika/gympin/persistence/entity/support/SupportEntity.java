@@ -27,8 +27,8 @@ import java.util.Objects;
 public class SupportEntity extends BaseEntityWithCreateUpdate<SupportEntity> {
 
     @OneToMany(mappedBy = "support")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<SupportMessagesEntity> supportMessages;
 
     @Column(name = "supportStatus")

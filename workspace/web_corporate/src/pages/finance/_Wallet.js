@@ -4,29 +4,29 @@ import {
     Box,
     Button,
     Card,
-    CardContent, CircularProgress,
+    CardContent,
+    CircularProgress,
     Dialog,
     DialogContent,
     DialogTitle,
     Divider,
-    Grid, IconButton,
+    Grid,
     Stack,
-    TextField, ToggleButton,
+    TextField,
+    ToggleButton,
     Typography
 } from "@mui/material";
 import {useSelector} from "react-redux";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {Image} from "react-bootstrap";
-import {transactions_setPaymentRequest} from "../../network/api/transactions.api";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import AdapterJalali from "@date-io/date-fns-jalali";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import {gateways_getPaymentGateways} from "../../network/api/gateway.api";
 import {suggest_query} from "../../network/api/suggest.api";
 import {gatewayApplication_query} from "../../network/api/gatewayApplication.api";
 import {increaseCorporateDeposit_requestIncreaseCorporateDeposits} from "../../network/api/increaseCorporateDeposit.api";
 import {InsertComment} from "@mui/icons-material";
+import AdapterJalaali from '@date-io/jalaali';
 
 const _Wallet = () => {
     const error = useContext(ErrorContext);
@@ -41,8 +41,8 @@ const _Wallet = () => {
     const [chequeDate, setChequeDate] = useState(null);
     const [paymentGatewaysApplication, setPaymentGatewaysApplication] = useState({});
     const [selectedGateway, setSelectedGatewayApplication] = useState(null);
-    const [loading,setLoading] = useState(false);
-    const [commentToggle,setCommentToggle] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [commentToggle, setCommentToggle] = useState(false);
 
     useEffect(() => {
         getPaymentGateways();
@@ -55,12 +55,11 @@ const _Wallet = () => {
             Application: "WEBCORPORATE",
             paging: {Page: 0, Size: 300, orderBy: "Id", Desc: false}
         }).then(result => {
-            setPaymentGatewaysApplication(result.data.Data);
-            try {
-                setSelectedGatewayApplication(result.data.Data.content.filter(g => g.IsDefault == true)[0])
-            } catch (e) {
-            }
-            console.log("resultgateway",result)
+                setPaymentGatewaysApplication(result.data.Data);
+                try {
+                    setSelectedGatewayApplication(result.data.Data.content.filter(g => g.IsDefault == true)[0])
+                } catch (e) {
+                }
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -97,14 +96,20 @@ const _Wallet = () => {
             return;
         }
 
+        if(corporate?.Status=="DEMO"){
+            error.showError({message: "برای وضعیت DEMO امکان شارژ وجود ندارد",});
+            return;
+        }
+
+
         setLoading(true);
         increaseCorporateDeposit_requestIncreaseCorporateDeposits({
-            GatewayApplication: {Id:selectedGateway?.Id},
+            GatewayApplication: {Id: selectedGateway?.Id},
             TransactionReference: transactionReference,
-            Application:"WEBCORPORATE",
+            Application: "WEBCORPORATE",
             ChequeDate: chequeDate,
             TransactionType: "CHARGE_CORPORATE",
-            Description:transactionDescription,
+            Description: transactionDescription,
             Amount: amountToPay,
             CorporateId: corporate.Id
         }).then(result => {
@@ -131,7 +136,6 @@ const _Wallet = () => {
     }
 
 
-
     function getlabelOfRefrence() {
         if (!selectedGateway)
             return "نوع تراکنش انتخاب نشده";
@@ -151,24 +155,34 @@ const _Wallet = () => {
         }
 
     }
+
     function closeModal() {
-        if(!loading){
+        if (!loading) {
             setOpenModalAdd(false);
             setCommentToggle(false);
+        }
+    }
+
+    function changeGateway(item){
+
+        if(corporate?.Status==="DEMO"){
+            error.showError({message: "این عملکرد در حالت DEMO فعال نیست",});
+        }else{
+            setSelectedGatewayApplication(item);
         }
     }
 
     function ModalDemandPayment() {
         return (
             <div>
-                <Dialog open={openModalAdd} onClose={() => closeModal() }>
+                <Dialog open={openModalAdd} onClose={() => closeModal()}>
                     <DialogTitle>افزایش شارژ</DialogTitle>
                     <DialogContent>
                         <Backdrop
-                            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                            sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
                             open={loading}
                         >
-                            <CircularProgress color="inherit" />
+                            <CircularProgress color="inherit"/>
                         </Backdrop>
                         <Grid
                             container
@@ -179,8 +193,8 @@ const _Wallet = () => {
                         >
                             <div className={"row"}>
                                 {suggests && suggests.map((item, number) => (
-                                    <div key={number} className={"col-6 p-2 text-center"} >
-                                        <Button  onClick={() => SetAmountToPay(item.Amount)}
+                                    <div key={number} className={"col-6 p-2 text-center"}>
+                                        <Button onClick={() => SetAmountToPay(item.Amount)}
                                                 color={"info"}
                                                 variant={"contained"}>{toPriceWithComma(item.Amount) + ' تومان'}</Button>
                                     </div>
@@ -200,13 +214,13 @@ const _Wallet = () => {
                                 sx={{padding: 1}}
                             >
 
-                                {paymentGatewaysApplication.content&&paymentGatewaysApplication.content.map(item => (
+                                {paymentGatewaysApplication.content && paymentGatewaysApplication.content.map(item => (
 
                                     <Grid
                                         key={item.Id}
                                         xs={3}
                                         item
-                                        onClick={() => setSelectedGatewayApplication(item)}
+                                        onClick={() =>changeGateway(item)}
                                     >
                                         <Box
                                             sx={{border: (item.Gateway.Id == selectedGateway.Gateway.Id) ? "2px solid #37aa60" : "1px solid #ddd"}}>
@@ -237,18 +251,18 @@ const _Wallet = () => {
                                     variant="outlined"
                                     margin="normal"
                                     name="code"
-                                    sx={{flex:"auto"}}
+                                    sx={{flex: "auto"}}
                                     value={toPriceWithComma(amountToPay || 0)}
                                     type="text"
                                     onChange={e => SetAmountToPay(toPriceWithoutComma(e.target.value))}
                                     label={"مبلغ دلخواه به تومان"}
                                 />
                                 <ToggleButton
-                                    sx={{margin:"9px 9px 0px 0px"}}
+                                    sx={{margin: "9px 9px 0px 0px"}}
                                     value="comment"
-                                    onClick={(e)=>setCommentToggle(!commentToggle)}
+                                    onClick={(e) => setCommentToggle(!commentToggle)}
                                 >
-                                    <InsertComment />
+                                    <InsertComment/>
                                 </ToggleButton>
                                 <TextField
                                     hidden={!commentToggle}
@@ -278,7 +292,7 @@ const _Wallet = () => {
 
 
                                 <LocalizationProvider
-                                    dateAdapter={AdapterJalali}>
+                                    dateAdapter={AdapterJalaali}>
                                     <DatePicker
                                         variant="outlined"
                                         mask="____/__/__"
@@ -331,9 +345,9 @@ const _Wallet = () => {
                         spacing={0}
                     >
                         <Typography variant="h6">
-                            {" شارژ : "+toPriceWithComma(corporate?.FinanceCorporate?.TotalDeposit||0) + " تومان"}
+                            {" شارژ : " + toPriceWithComma(corporate?.FinanceCorporate?.TotalDeposit || 0) + " تومان"}
                         </Typography>
-                        <Button variant={"contained"} onClick={() => setOpenModalAdd(true)}>افزایش  </Button>
+                        <Button variant={"contained"} onClick={() => setOpenModalAdd(true)}>افزایش </Button>
                     </Stack>
                     <Typography variant="caption"
                                 component={"a"}

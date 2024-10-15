@@ -14,6 +14,7 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +47,8 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
     private CorporatePersonnelGroupRepository corporatePersonnelGroupRepository;
     @Autowired
     private MultimediaRepository multimediaRepository;
+    @Autowired
+    private CorporatePersonnelRepository corporatePersonnelRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -128,7 +132,13 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
     @Override
     public CorporatePersonnelGroupDto deleteGroup(CorporatePersonnelGroupParam Param) {
         var category = corporatePersonnelGroupRepository.getById(Param.getId());
-
+        List<CorporatePersonnelEntity> personnels = new ArrayList<>();
+        for(CorporatePersonnelEntity personnel : category.getPersonels()){
+            personnel.setPersonnelGroup(null);
+            personnels.add(personnel);
+        }
+        corporatePersonnelRepository.updateAll(personnels);
+        category = corporatePersonnelGroupRepository.getById(Param.getId());
         return CorporateConvertor.toDto(corporatePersonnelGroupRepository.deleteById2(category));
     }
 
@@ -195,6 +205,7 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         //TODO fix this shit
         if(entity.getStatus().equals(CorporateStatusEnum.INACTIVE)) return entity.getStatus();
         if(entity.getStatus().equals(CorporateStatusEnum.PREREGISTER)) return entity.getStatus();
+        if(entity.getStatus().equals(CorporateStatusEnum.DEMO)) return entity.getStatus();
         if(entity.getPersonnel().size()<1){
             //corporate has not any personel
             return CorporateStatusEnum.ACTIVE;

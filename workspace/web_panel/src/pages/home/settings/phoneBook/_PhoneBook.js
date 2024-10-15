@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import {TextField, Typography} from "@mui/material";
+import {Button, FormGroup, TextField, Typography} from "@mui/material";
 import {note_query} from "../../../../network/api/note.api";
 import {getRppDashNote, getRppPhoneBook, SetRppDashNote, SetRppPhoneBook} from "../../../../helper/pocket/pocket";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
@@ -20,6 +20,7 @@ const _PhoneBook = () => {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [phoneBook,setPhoneBook] = useState(null);
+    const [itemToDelete,setItemToDelete] = useState(null);
     const [searchStringName,setSearchStringName] = useState("");
     const [searchStringPlace,setSearchStringPlace] = useState("");
     const [page, setPage] = useState(0);
@@ -124,6 +125,7 @@ const _PhoneBook = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>منبع</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>ایجاد
                                         کننده</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>عملیات</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -136,6 +138,8 @@ const _PhoneBook = () => {
                                                    align="right">{getSourceName(row)}</TableCell>
                                         <TableCell component="th" scope="row" padding="normal"
                                                    align="right">{getUserFixedName(row.CreatorUser)}</TableCell>
+                                        <TableCell component="th" scope="row" padding="normal"
+                                                   align="right"><FormGroup><Button onClick={()=>setItemToDelete(row)} color={"error"} variant={"contained"}>حذف</Button> </FormGroup></TableCell>
 
                                     </TableRow>
                                 ))}
@@ -163,6 +167,7 @@ const _PhoneBook = () => {
 
                 </PortletBody>
             </Portlet>
+            {/*{RenderModalDelete()}*/}
         </>
     );
 };

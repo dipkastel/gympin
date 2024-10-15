@@ -11,6 +11,12 @@ const Settings = () => {
     return (
         <>
             <_SettingsCorporate/>
+
+            <div>
+                <div className={"section-title mb-2"}>
+                   بیشتر
+                </div>
+            </div>
             <_ListItem title="خروج" destination="/auth/logout"/>
         </>
     );

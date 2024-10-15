@@ -35,6 +35,9 @@ public class SupportMessagesEntity extends BaseEntityWithCreateUpdate<SupportMes
     @Column(nullable = false,name = "isAnswer")
     private boolean isAnswer;
 
+    @Column(nullable = false,name = "isRead")
+    private Boolean isRead;
+
 
 
     @Override

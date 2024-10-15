@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
+    Alert,
     Button,
     Card,
     CardContent,
@@ -8,7 +9,7 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle,
+    DialogTitle, Tab, Tabs,
     TextField,
     Typography
 } from "@mui/material";
@@ -30,6 +31,7 @@ const IncreaseGroupCredit = () => {
     const [groups, setGroups] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
+    const [selectedTab, setSelectedTab] = useState(0);
 
     useEffect(() => {
         document.title = 'افزایش اعتبار گروهی';
@@ -87,7 +89,7 @@ const IncreaseGroupCredit = () => {
                         <DialogContentText>
                             {selectedGroup?
                                 "افزایش اعتبار برای کاربران گروه "+selectedGroup.Name+" و هر یک به مبلغ " + toPriceWithComma(credit) + " تومان را تایید میکنم":
-                            "افزایش اعتبار برای همه کاربران و هر یک به مبلغ " + toPriceWithComma(credit) + " تومان را تایید میکنم"}
+                            "افزایش اعتبار برای همه کاربران و هر یک به مبلغ " + toPriceWithComma(credit) + " تومان را تایید میکنم. این اعتبار بدون توجه به گروه بندی، به همه کاربران داده خواهد شد."}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -109,18 +111,26 @@ const IncreaseGroupCredit = () => {
 
     return (
         <>
-            {groups && <Card elevation={3} sx={{margin: 1}}>
-                <CardContent>
-                        <Typography variant={"subtitle1"}>
-                            اعتباری که به هر یک از پرسنل اضافه میشود را وارد نمایید.
-                        </Typography>
-                        <Typography variant={"body2"}>
-                            توجه داشته باشید اعتبار افزوده شده به پرسنل قابل بازگشت نمی باشد
-                        </Typography>
-                </CardContent>
-            </Card>}
-            {groups && <Card elevation={3} sx={{margin: 1}}>
+            {groups &&
+            <Alert sx={{m:1}} severity={"warning"}  variant={"outlined"} >
+                اعتباری که به هر یک از پرسنل اضافه میشود را وارد نمایید.
+            </Alert>}
+
+            {groups &&<Tabs
+                value={selectedTab}
+                onChange={(e, n) => setSelectedTab(n)}
+                aria-label="usersTab"
+                variant={"scrollable"}
+            >
+                <Tab label="همه" id={"group-tab-0"} aria-controls={"group-tabpanel-0"}/>
+                {groups && groups.map(group => (
+                    <Tab key={"g-" + group.Id} label={group.Name} id={"group-tab-" + group.Id}
+                         aria-controls={"group-tabpanel-" + group.Id}/>
+                ))}
+            </Tabs>}
+            {groups && <Card hidden={selectedTab!==0} elevation={3} sx={{margin: 1}}>
                 <CardHeader
+                    titleTypographyProps={{variant:"body2"}}
                     title={"اعتبار به هر یک از پرسنل"}
                 />
                 <CardContent>
@@ -130,7 +140,7 @@ const IncreaseGroupCredit = () => {
                             autoFocus
                             margin="dense"
                             name="credit"
-                            label="مقدار اعتبار"
+                            label="مقدار اعتبار (تومان)"
                             type="text"
                             onChange={(e) => {
                                 e.target.value = toPriceWithComma(e.target.value)
@@ -145,17 +155,18 @@ const IncreaseGroupCredit = () => {
                     </Form>
                 </CardContent>
             </Card>}
-            {groups && groups.map(group => (
-                <Card key={group.Id} elevation={3} sx={{margin: 1}}>
+            {selectedTab!=0&&groups && groups.map(group => (
+                <Card hidden={group.Id!==groups[selectedTab-1].Id} key={group.Id} elevation={3} sx={{margin: 1}}>
                     <CardHeader
-                        title={"اعتبار به هر یک از گروه " + group.Name}
+                        titleTypographyProps={{variant:"body2"}}
+                        title={"اعتبار به هر یک از پرسنل گروه " + group.Name}
                     />
                     <CardContent>
                         <Form onSubmit={(e) => openModalConfirmForm(e, group)}>
                             <TextField
                                 margin="dense"
                                 name="credit"
-                                label="مقدار اعتبار"
+                                label="مقدار اعتبار (تومان)"
                                 type="text"
                                 onChange={(e) => {
                                     e.target.value = toPriceWithComma(e.target.value)

@@ -38,4 +38,7 @@ public class SupportDto extends BaseDtoWithCreateUpdate<SupportDto> {
     @JsonProperty("CorporateId")
     private Long corporateId;
 
+    @JsonProperty("UnreadCount")
+    private Long unreadCount;
+
 }

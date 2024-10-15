@@ -83,6 +83,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
         SupportMessagesEntity supportMessagesEntity = new SupportMessagesEntity();
         supportMessagesEntity.setSupportMessage(supportParam.getSupportMessages().getMessages());
+        supportMessagesEntity.setIsRead(supportParam.getSupportMessages().isRead());
         supportEntity.setSupportMessages(List.of(supportMessagesEntity));
         supportRepository.add(supportEntity);
         supportMessagesEntity.setSupport(supportEntity);
@@ -95,6 +96,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         tme.setSupportMessage(param.getMessages());
 
         tme.setAnswer(param.isAnswer());
+        tme.setIsRead(param.isRead());
         SupportEntity support = supportRepository.getById(param.getSupportId());
         support.setSupportStatus(param.getStatus());
         supportRepository.update(support);
@@ -131,6 +133,21 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     public List<SupportDto> getByCorporate(CorporateParam param) {
         CorporateEntity corporate = corporateRepository.getById(param.getId());
         return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndCorporate(corporate));
+    }
+
+    @Override
+    public Long getCorporateSupportCount(CorporateParam param) {
+        CorporateEntity corporate = corporateRepository.getById(param.getId());
+        return supportRepository.findAllByDeletedIsFalseAndCorporate(corporate).stream().map(c->c.getSupportMessages().stream().anyMatch(sm->!sm.getIsRead())).filter(d->d.booleanValue()).count();
+    }
+
+
+    @Override
+    public Boolean setMessagesReadById(Long id) {
+        SupportEntity support = supportRepository.getById(id);
+        support.getSupportMessages().stream().peek(sm-> sm.setIsRead(true)).collect(Collectors.toList());
+        supportRepository.update(support);
+        return true;
     }
 
     @Override

@@ -14,6 +14,7 @@ import Groups from "../pages/Groups/Groups";
 import IncreaseHistory from "../pages/IncreaseListPeyment/IncreaseHistory";
 import Support from "../pages/support/Support";
 import SupportDetail from "../pages/support/supportDetail/SupportDetail";
+import EditProfile from "../pages/editProfile/EditProfile";
 
 export default function ApplicationRoutes() {
 
@@ -36,6 +37,7 @@ export default function ApplicationRoutes() {
                 <Route path="/personnel/increasegroupcredit" element={<IncreaseGroupCredit/>}/>
                 <Route path="/personnel/detail/:PersonnelId" element={<SingleUser/>}/>
                 <Route path="/personnel" element={<Users/>}/>
+                <Route path="/profile" element={<EditProfile/>}/>
 
             </Routes>
             <NBottomNavigation/>

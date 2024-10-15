@@ -174,7 +174,7 @@ public class InvoiceServiceHelper {
                 .latestBalance(lastWalletCredit)
                 .personnelCredit(wallet)
                 .isChecked(false)
-                .transactionType(TransactionBaseType.CREDIT_PURCHASE)
+                .transactionType(TransactionBaseType.CORPORATE_PERSONNEL)
                 .amount(credit.getCreditPayableAmount().negate())
                 .build());
         //update corporate deposit
@@ -202,7 +202,7 @@ public class InvoiceServiceHelper {
                 .transactionCorporateType(TransactionCorporateType.DEPOSIT)
                 .financeCorporate(financeCorporate)
                 .isChecked(false)
-                .transactionType(TransactionBaseType.CORPORATE_PERSONNEL_DEPOSIT_PURCHASE)
+                .transactionType(TransactionBaseType.CORPORATE)
                 .amount(credit.getCreditPayableAmount().negate())
                 .build());
 
@@ -214,7 +214,7 @@ public class InvoiceServiceHelper {
                 .transactionCorporateType(TransactionCorporateType.CREDIT)
                 .financeCorporate(financeCorporate)
                 .isChecked(false)
-                .transactionType(TransactionBaseType.CORPORATE_PERSONNEL_CREDIT_PURCHASE)
+                .transactionType(TransactionBaseType.CORPORATE)
                 .amount(credit.getCreditPayableAmount().negate())
                 .build());
     }
@@ -237,7 +237,7 @@ public class InvoiceServiceHelper {
                 .latestBalance(lastBalance)
                 .financeUser(wallet)
                 .isChecked(false)
-                .transactionType(TransactionBaseType.USER_PERSONAL_PURCHASE)
+                .transactionType(TransactionBaseType.USER)
                 .amount(credit.getCreditPayableAmount().negate())
                 .build());
 
@@ -261,7 +261,7 @@ public class InvoiceServiceHelper {
                 .latestBalance(lastBalance)
                 .financeUser(wallet)
                 .isChecked(false)
-                .transactionType(TransactionBaseType.USER_NON_WITHDRAWABLE_PURCHASE)
+                .transactionType(TransactionBaseType.USER)
                 .amount(credit.getCreditPayableAmount().negate())
                 .build());
     }

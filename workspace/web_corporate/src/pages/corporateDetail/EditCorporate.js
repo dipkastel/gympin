@@ -35,7 +35,7 @@ const EditCorporate = (props) => {
         SetInCorporate(corporate);
     }, [corporate]);
     useEffect(() => {
-        document.title = 'ویرایش مرکز';
+        document.title = 'ویرایش مشخصات سازمان';
         props.RequestCorporate(corporate);
         getratio();
     }, []);
@@ -58,6 +58,7 @@ const EditCorporate = (props) => {
         e.preventDefault()
         corporate_Update({Id: corporate.Id, Name: inCorporate.Name, Address: inCorporate.Address}).then(result => {
             props.RequestCorporate(corporate);
+            error.showError({message: "ثبت موفق",});
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

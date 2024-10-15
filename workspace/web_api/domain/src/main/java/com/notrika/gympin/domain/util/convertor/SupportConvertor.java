@@ -18,6 +18,7 @@ public final class SupportConvertor {
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setUpdatedDate(entity.getUpdatedDate());
         dto.setStatus(entity.getSupportStatus());
+        dto.setUnreadCount(entity.getSupportMessages().stream().filter(sm->!sm.getIsRead()).count());
         if(entity.getPlace()!=null)
             dto.setPlace(PlaceConvertor.toDto(entity.getPlace()));
         if(entity.getUser()!=null)
@@ -31,10 +32,12 @@ public final class SupportConvertor {
         return entities.stream().map(SupportConvertor::toDto).collect(Collectors.toList());
     }
     public static SupportMessageDto toMessagesDto(SupportMessagesEntity entity) {
+        if(entity==null)return null;
         SupportMessageDto dto = new SupportMessageDto();
         dto.setMessage(entity.getSupportMessage());
         dto.setAnswer(entity.isAnswer());
         dto.setId(entity.getId());
+        dto.setRead(entity.getIsRead());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setUpdatedDate(entity.getUpdatedDate());
         dto.setCreatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()));
@@ -43,6 +46,7 @@ public final class SupportConvertor {
 
 
     public static List<SupportMessageDto> toMessagesDto(List<SupportMessagesEntity> entities) {
+        if(entities==null)return null;
         return entities.stream().map(SupportConvertor::toMessagesDto).collect(Collectors.toList());
     }
 }

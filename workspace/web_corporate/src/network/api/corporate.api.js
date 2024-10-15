@@ -22,7 +22,7 @@ export  function corporate_Update(data){
 }
 
 export  function corporate_deleteCorporateGroup(data){
-    return axios.put(Api_url.corporate.deleteCategory, null,{ params: data });
+    return axios.put(Api_url.corporate.deleteCategory,data);
 }
 
 export  function corporate_addCorporateGroups(data){

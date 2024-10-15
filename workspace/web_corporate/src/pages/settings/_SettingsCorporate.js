@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
     Card,
-    CardContent,
-    CardHeader,
+    Chip,
     Divider,
     FormControl,
     FormControlLabel,
+    Grid,
     List,
+    ListItemText,
     Radio,
     RadioGroup
 } from "@mui/material";
@@ -14,6 +15,8 @@ import {connect, useSelector} from "react-redux";
 import {corporateActions} from "../../helper/redux/actions/CorporateActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {corporatePersonnel_corporateOwnedByUserId} from "../../network/api/corporatePersonnel.api";
+import {CorporateContractType} from "../../helper/enums/CorporateContractType";
+import {toPriceWithComma} from "../../helper/utils";
 
 const _SettingsCorporate = (props) => {
     const error = useContext(ErrorContext);
@@ -25,7 +28,6 @@ const _SettingsCorporate = (props) => {
     }, []);
 
     function getUserCorporates() {
-        console.log(user.Id);
         corporatePersonnel_corporateOwnedByUserId({id: user.Id}).then(result => {
             SetPersonCorporates(result.data.Data)
             console.log(result.data.Data);
@@ -41,6 +43,7 @@ const _SettingsCorporate = (props) => {
             }
         });
     }
+
     function selectedPlaceChanged(event) {
         const corporate = personCorporates.find(r => r.Corporate.Id == event.target.value).Corporate;
         if (corporate) {
@@ -50,35 +53,44 @@ const _SettingsCorporate = (props) => {
     }
 
     return (
-        <Card elevation={3} sx={{margin: 1}}>
-            <CardHeader
-                title={"مجموعه های من"}
-                sx={{pb: 0}}
-            />
-            <CardContent sx={{paddingBottom: 0}}>
-                <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-                    <FormControl
-                        style={{width: "100%"}}>
-                        <RadioGroup
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            defaultValue="female"
-                            name="radio-buttons-group"
-                            value={(selectedCorporate) ? selectedCorporate.Id : 9999}
-                            onChange={(event) => selectedPlaceChanged(event)}
-                        >
-                            {personCorporates.map((item, number) => (
-                                <div key={number}>
-                                    <FormControlLabel value={item.Corporate.Id} control={<Radio/>} label={item.Corporate.Name}/>
-                                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
-                                </div>
-                            ))}
-                        </RadioGroup>
-                    </FormControl>
+        <>
+
+            <div>
+                <div className={"section-title mt-3"}>
+                    سازمان های من
+                </div>
+            </div>
+            <List sx={{width: '100%', bgcolor: 'background.paper'}}>
+                <FormControl
+                    style={{width: "100%"}}>
+                    <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        defaultValue="female"
+                        name="radio-buttons-group"
+                        value={(selectedCorporate) ? selectedCorporate.Id : 9999}
+                        onChange={(event) => selectedPlaceChanged(event)}
+                    >
+                        {personCorporates.map((item, number) => (
+                            <div key={number}>
+                                <Card elevation={3} sx={{margin: 1}}>
+                                    <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                                        <FormControlLabel value={item.Corporate.Id} control={<Radio/>}
+                                                          label={<ListItemText
+                                                              primary={item.Corporate.Name+" ( "+CorporateContractType[item?.Corporate?.ContractType]+" )"}
+                                                              secondary={item?.Corporate?.FinanceCorporate?.TotalDeposit>0&&toPriceWithComma(item?.Corporate?.FinanceCorporate?.TotalDeposit)}
+                                                          />}/>
+                                        <Chip variant={"filled"} color={"success"} size={"small"} label={item?.Corporate?.Status} sx={{mx:1}}/>
+                                    </Grid>
+                                </Card>
+                            </div>
+                        ))}
+                    </RadioGroup>
+                </FormControl>
 
 
-                </List>
-            </CardContent>
-        </Card>
+            </List>
+        </>
+
     );
 };
 

@@ -19,5 +19,7 @@ public interface SupportService extends BaseService<SupportParam, SupportDto, Su
     List<SupportDto> getByUser(UserParam param);
     List<SupportDto> getByPlace(PlaceParam param);
     List<SupportDto> getByCorporate(CorporateParam param);
+    Long getCorporateSupportCount(CorporateParam param);
+    Boolean setMessagesReadById(Long id);
 
 }

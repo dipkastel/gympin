@@ -19,4 +19,6 @@ public interface SupportController extends BaseController<SupportParam, SupportD
     ResponseEntity<List<SupportDto>> getByUser(UserParam param);
     ResponseEntity<List<SupportDto>> getByPlace(PlaceParam param);
     ResponseEntity<List<SupportDto>> getByCorporate(CorporateParam param);
+    ResponseEntity<Long> getCorporateSupportCount(CorporateParam param);
+    ResponseEntity<Boolean> setMessagesRead(Long id);
 }

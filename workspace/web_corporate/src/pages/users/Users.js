@@ -25,7 +25,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {checkMobileValid, toPriceWithComma} from "../../helper/utils";
+import {checkMobileValid, fixMobile, toPriceWithComma} from "../../helper/utils";
 import {corporatePersonnel_add, corporatePersonnel_query} from "../../network/api/corporatePersonnel.api";
 import {useSelector} from "react-redux";
 import {Form} from "react-bootstrap";
@@ -39,6 +39,7 @@ const Users = () => {
     const corporate = useSelector(({corporate}) => corporate.corporate)
     const [personnel, setPersonnel] = useState([]);
     const [openModalAdd, setOpenModalAdd] = useState(false);
+    const [addPhoneNumber, setAddPhoneNumber] = useState(null);
     const [search, setSearch] = useState(false);
     const [selectedTab, setSelectedTab] = useState(0);
     const [selectedPage, setSelectedPage] = useState(1);
@@ -120,13 +121,20 @@ const Users = () => {
             });
         }
 
+        function changePhoneNumber(e) {
+            if(e.target.value.length<12)
+                setAddPhoneNumber(fixMobile(e.target.value));
+            else
+                setAddPhoneNumber(e.target.value.substring(0,11))
+        }
+
         return (
             <Dialog open={openModalAdd} onClose={() => setOpenModalAdd(false)}>
                 <Form onSubmit={(e) => addPersonnel(e)}>
                     <DialogTitle>افزودن پرسنل</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            برای افزودن فرد جدید شماره موبایل را وارد کنید
+                            برای افزودن فرد جدید شماره همراه را وارد کنید
                         </DialogContentText>
                         <TextField
                             autoFocus
@@ -134,6 +142,8 @@ const Users = () => {
                             name={"PhoneNumber"}
                             label="موبایل"
                             type="number"
+                            value={addPhoneNumber}
+                            onChange={e=>changePhoneNumber(e)}
                             fullWidth
                             variant="standard"
                         />

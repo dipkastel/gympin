@@ -1,7 +1,7 @@
 import React from 'react';
-import {Card, CardHeader, Typography} from "@mui/material";
+import {Badge, Card, CardHeader, Chip, Typography} from "@mui/material";
 
-const _ListItem = ({destination,title,onClick}) => {
+const _ListItem = ({destination,title,onClick,badgeCount}) => {
     return (
         <Card elevation={3} sx={{margin: 1}} >
             <CardHeader
@@ -14,7 +14,7 @@ const _ListItem = ({destination,title,onClick}) => {
                 }}>
                     {title}
                 </Typography>}
-                action={""}/>
+                action={badgeCount?<Chip label={badgeCount} size={"small"} sx={{fontSize:15,pt:"4px"}} color={"error"} />:""}/>
         </Card>
     );
 };

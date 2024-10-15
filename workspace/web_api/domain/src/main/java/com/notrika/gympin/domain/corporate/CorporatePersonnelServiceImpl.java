@@ -2,11 +2,13 @@ package com.notrika.gympin.domain.corporate;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelFileParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.query.CorporatePersonnelQuery;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelService;
+import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
@@ -15,16 +17,23 @@ import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.param.UserRegisterParam;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.util.exception.general.SendSmsException;
+import com.notrika.gympin.common.util.exception.user.LowDepositException;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.finance.helper.FinanceHelper;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
+import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +42,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -43,17 +53,23 @@ import java.util.stream.Collectors;
 public class CorporatePersonnelServiceImpl extends AbstractBaseService<CorporatePersonnelParam, CorporatePersonnelDto, CorporatePersonnelQuery, CorporatePersonnelEntity> implements CorporatePersonnelService {
 
     @Autowired
-    private CorporatePersonnelRepository corporatePersonnelRepository;
+    private SmsInService smsService;
     @Autowired
-    private CorporatePersonnelGroupRepository corporatePersonnelGroupRepository;
-    @Autowired
-    private CorporateServiceImpl corporateService;
-    @Autowired
-    private AccountServiceImpl accountService;
+    private FinanceHelper financeHelper;
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private SmsInService smsService;
+    private AccountServiceImpl accountService;
+    @Autowired
+    private CorporateServiceImpl corporateService;
+    @Autowired
+    private FinanceSerialRepository financeSerialRepository;
+    @Autowired
+    private CorporatePersonnelRepository corporatePersonnelRepository;
+    @Autowired
+    private CorporatePersonelFinanceHelper corporatePersonelFinanceHelper;
+    @Autowired
+    private CorporatePersonnelGroupRepository corporatePersonnelGroupRepository;
 
     @Override
     public CorporatePersonnelDto add(@NonNull CorporatePersonnelParam Param) {
@@ -170,9 +186,39 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
     }
 
     @Override
+    @Transactional
     public CorporatePersonnelDto delete(@NonNull CorporatePersonnelParam corporateParam) {
-        CorporatePersonnelEntity entity = corporatePersonnelRepository.getById(corporateParam.getId());
-        return CorporateConvertor.toPersonnelDto(corporatePersonnelRepository.deleteById2(entity));
+        //init
+
+        CorporatePersonnelEntity personnel = corporatePersonnelRepository.getById(corporateParam.getId());
+        CorporateEntity corporate = personnel.getCorporate();
+        FinanceCorporateEntity financeCorporate = corporate.getFinanceCorporate();
+        var serial =FinanceSerialEntity.builder()
+                .serial(java.util.UUID.randomUUID().toString())
+                .processTypeEnum(ProcessTypeEnum.TRA_REMOVE_CORPORATE_PERSONNEL)
+                .build();
+        //calc total ammount
+        List<FinanceCorporatePersonnelCreditEntity> credits =personnel.getCredits().stream().filter(pc->pc.getStatus() == CorporatePersonnelCreditStatusEnum.ACTIVE).collect(Collectors.toList());
+        BigDecimal totalAmount = credits.stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add);
+        //check corporate has deposit
+        if(financeCorporate.getTotalDeposit().compareTo(totalAmount)<0){
+            throw new LowDepositException();
+        }
+        financeSerialRepository.add(serial);
+        //subtranct totaldeposit
+        corporatePersonelFinanceHelper.decreaseCorporateTotalDeposit(financeCorporate,totalAmount,serial,null);
+
+        //subtranct totalcredit
+        corporatePersonelFinanceHelper.decreaseCorporateTotalCredit(financeCorporate,totalAmount,serial,null);
+
+        //transfer to non withdrawable and decrease credit
+        FinanceUserEntity wallet = financeHelper.getUserNonWithdrawableWallet(personnel.getUser());
+        for(FinanceCorporatePersonnelCreditEntity cpe:credits){
+            BigDecimal amountBefore = cpe.getCreditAmount();
+            corporatePersonelFinanceHelper.decreaseCorporatePersonnelCredit(cpe,cpe.getCreditAmount(),serial);
+            wallet = financeHelper.increaseNonWithdrawableWallet(wallet,amountBefore,serial,"بابت اعتبار با شماره : "+cpe.getId());
+        }
+        return CorporateConvertor.toPersonnelDto(corporatePersonnelRepository.deleteById2(personnel));
     }
 
     @Override

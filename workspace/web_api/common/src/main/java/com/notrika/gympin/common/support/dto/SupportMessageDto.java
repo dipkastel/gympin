@@ -22,4 +22,7 @@ public class SupportMessageDto extends BaseDtoWithCreateUpdate<SupportMessageDto
     @JsonProperty("IsAnswer")
     private boolean isAnswer;
 
+    @JsonProperty("Read")
+    private boolean read;
+
 }

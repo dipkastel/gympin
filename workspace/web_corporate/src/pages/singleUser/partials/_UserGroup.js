@@ -20,7 +20,7 @@ const _UserGroup = ({corporatePersonnel,updatePage}) => {
 
     const error = useContext(ErrorContext);
     const corporate = useSelector(({corporate}) => corporate.corporate)
-    const [groups, setGroups] = useState([])
+    const [groups, setGroups] = useState(null)
     const [selctedGroups, setSelectedGroups] = useState(0)
 
     useEffect(() => {
@@ -56,7 +56,7 @@ const _UserGroup = ({corporatePersonnel,updatePage}) => {
 
     return (
         <>
-            {groups.length>0&&
+            {groups?.length>0&&
             <Card elevation={3} sx={{margin: 1}}>
                 <CardContent>
                     <FormControl fullWidth>
@@ -81,7 +81,7 @@ const _UserGroup = ({corporatePersonnel,updatePage}) => {
                 </CardContent>
             </Card>
             }
-            {!(groups.length>0)&&
+            {groups&&!(groups?.length>0)&&
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
                     title={"گروهی برای کاربران تعریف نشده"}

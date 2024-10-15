@@ -50,6 +50,10 @@ const Groups = () => {
     function renderModalAdd() {
         function addGroup(e) {
             e.preventDefault()
+            if(corporate?.Status=="DEMO"&&groups.length>1){
+                error.showError({message: "بیش از 2 گروه برای DEMO امکان‌پذیر نیست",});
+                return;
+            }
 
             corporate_addCorporateGroups({Name: e.target.Name.value, CorporateId: corporate.Id}).then(result => {
                 getCorporateGroups();
@@ -137,22 +141,17 @@ const Groups = () => {
                     title="گروه های پرسنل"
                     action={(<><Button variant={"contained"} onClick={() => setOpenModalAdd(true)}
                                        sx={{margin: 1}}>افزودن</Button></>)}/>
-
             </Card>
-
             {groups.map(c => (
                 <Card key={c.Id} elevation={3} sx={{margin: 1,borderRadius:3}}>
                     <CardContent sx={{p:"8px !important"}}>
                         <Grid container direction={"row"} textAlign={"center"} alignItems={"center"}
                               justifyContent={"space-between"}>
-
                             <h6 >
                                 {c.Name}
                             </h6>
                             <Button variant={"outlined"} color={"error"}
                                     onClick={() => setItemToDelete(c)}>حذف</Button>
-
-
                         </Grid>
                     </CardContent>
                 </Card>
