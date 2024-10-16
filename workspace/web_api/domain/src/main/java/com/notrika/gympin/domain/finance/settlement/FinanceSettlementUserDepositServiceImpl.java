@@ -111,15 +111,17 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
         if(financeUser.getUserFinanceType()== UserFinanceType.INCOME_WALLET)
             serialType = ProcessTypeEnum.CASH_OUT_PLACE;
 
-        FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder()
+        FinanceSerialEntity serial = FinanceSerialEntity.builder()
                 .serial(java.util.UUID.randomUUID().toString())
                 .processTypeEnum(serialType)
-                .build());
+                .build();
         if(financeUserRepository.getById(param.getUserFinanceID()).getTotalDeposit().compareTo(param.getAmount())<0)
             throw new LowDepositException();
 
         if(financeUser.getUserSettlements().stream().anyMatch(settle->settle.getSettlementStatus()==SettlementStatus.REQUESTED))
             throw new UserHasOpenSettlementRequest();
+
+        financeSerialRepository.add(serial);
 
         var settlementUserDeposit = add(FinanceSettlementUserDepositRequestEntity.builder()
                 .financeUser(financeUser)

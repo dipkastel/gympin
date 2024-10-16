@@ -204,20 +204,23 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
         if(financeCorporate.getTotalDeposit().compareTo(totalAmount)<0){
             throw new LowDepositException();
         }
-        financeSerialRepository.add(serial);
-        //subtranct totaldeposit
-        corporatePersonelFinanceHelper.decreaseCorporateTotalDeposit(financeCorporate,totalAmount,serial,null);
+        if(totalAmount.compareTo(BigDecimal.ZERO)>0){
+            financeSerialRepository.add(serial);
+            //subtranct totaldeposit
+            corporatePersonelFinanceHelper.decreaseCorporateTotalDeposit(financeCorporate,totalAmount,serial,null);
 
-        //subtranct totalcredit
-        corporatePersonelFinanceHelper.decreaseCorporateTotalCredit(financeCorporate,totalAmount,serial,null);
+            //subtranct totalcredit
+            corporatePersonelFinanceHelper.decreaseCorporateTotalCredit(financeCorporate,totalAmount,serial,null);
 
-        //transfer to non withdrawable and decrease credit
-        FinanceUserEntity wallet = financeHelper.getUserNonWithdrawableWallet(personnel.getUser());
-        for(FinanceCorporatePersonnelCreditEntity cpe:credits){
-            BigDecimal amountBefore = cpe.getCreditAmount();
-            corporatePersonelFinanceHelper.decreaseCorporatePersonnelCredit(cpe,cpe.getCreditAmount(),serial);
-            wallet = financeHelper.increaseNonWithdrawableWallet(wallet,amountBefore,serial,"بابت اعتبار با شماره : "+cpe.getId());
+            //transfer to non withdrawable and decrease credit
+            FinanceUserEntity wallet = financeHelper.getUserNonWithdrawableWallet(personnel.getUser());
+            for(FinanceCorporatePersonnelCreditEntity cpe:credits){
+                BigDecimal amountBefore = cpe.getCreditAmount();
+                corporatePersonelFinanceHelper.decreaseCorporatePersonnelCredit(cpe,cpe.getCreditAmount(),serial);
+                wallet = financeHelper.increaseNonWithdrawableWallet(wallet,amountBefore,serial,"بابت اعتبار با شماره : "+cpe.getId());
+            }
         }
+
         return CorporateConvertor.toPersonnelDto(corporatePersonnelRepository.deleteById2(personnel));
     }
 

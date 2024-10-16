@@ -7,7 +7,9 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporateP
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.corporate.CorporateContractIsNotComplete;
+import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
 import com.notrika.gympin.common.util.exception.corporate.LowCreditException;
+import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
@@ -60,10 +62,10 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     public CorporatePersonnelCreditDto add(@NonNull CorporatePersonnelCreditParam param) {
         //inits
         CorporatePersonnelEntity personnelEntity = corporatePersonnelRepository.getById(param.getPersonnel().getId());
-        var serial = financeSerialRepository.add(FinanceSerialEntity.builder()
+        var serial = FinanceSerialEntity.builder()
                 .serial(java.util.UUID.randomUUID().toString())
                 .processTypeEnum(ProcessTypeEnum.TRA_INCREASE_PERSONNEL_CREDIT_SINGLE)
-                .build());
+                .build();
 
         //checks
         if (!helper.checkContractContract(personnelEntity.getCorporate()))
@@ -71,7 +73,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         if (helper.checkLowBudjetByContract(personnelEntity.getCorporate(), param.getCreditAmount()))
             throw new LowCreditException();
 
-
+        financeSerialRepository.add(serial);
         //add finance corporate personnel credit
         FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnelEntity, param, serial);
         //update corporate finance total credit
@@ -87,10 +89,11 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         //init
         CorporateEntity corporate = corporateService.getEntityById(param.getCorporateId());
         List<CorporatePersonnelEntity> personnelsToAddCredit = helper.getPeronelForAddCredits(param);
-        var serial = financeSerialRepository.add(FinanceSerialEntity.builder()
+
+        var serial = FinanceSerialEntity.builder()
                 .serial(java.util.UUID.randomUUID().toString())
                 .processTypeEnum(ProcessTypeEnum.TRA_INCREASE_PERSONNEL_CREDIT_MULTIPLE)
-                .build());
+                .build();
         BigDecimal totalAddAmount = param.getCreditAmount().multiply(BigDecimal.valueOf(personnelsToAddCredit.size()));
         //checks
 
@@ -98,7 +101,12 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
             throw new CorporateContractIsNotComplete();
         if (helper.checkLowBudjetByContract(corporate, totalAddAmount))
             throw new LowCreditException();
+        if (totalAddAmount.compareTo(BigDecimal.ZERO)<1)
+            throw new CreditCannotBeNegativeException();
+        if (personnelsToAddCredit.size()<1)
+            throw new NotFoundException();
 
+        financeSerialRepository.add(serial);
         //add finance corporate personnel credits
         List<FinanceCorporatePersonnelCreditEntity> credits = helper.addCorporatePersonnelCredits(personnelsToAddCredit, param, serial);
         //update corporate finance total credit

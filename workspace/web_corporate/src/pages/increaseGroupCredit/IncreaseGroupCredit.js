@@ -9,7 +9,9 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle, Tab, Tabs,
+    DialogTitle,
+    Tab,
+    Tabs,
     TextField,
     Typography
 } from "@mui/material";
@@ -46,6 +48,9 @@ const IncreaseGroupCredit = () => {
     useEffect(() => {
         getPersonnelGroup()
     }, []);
+    useEffect(() => {
+        console.log(selectedGroup);
+    }, [selectedGroup]);
 
     function getPersonnelGroup() {
 
@@ -69,8 +74,9 @@ const IncreaseGroupCredit = () => {
             corporatePersonnel_addCreditToAll({
                 CorporateId: corporate.Id,
                 CreditAmount: toPriceWithoutComma(credit),
-                GroupId:selectedGroup?.Id||null
+                GroupId: selectedGroup?.Id || null
             }).then(result => {
+                console.log("res: : : ",result)
                 navigate('/personnel', {replace: true});
             }).catch(ca => {
                 try {
@@ -84,12 +90,12 @@ const IncreaseGroupCredit = () => {
         return (
             <Dialog open={openModalConfirm} onClose={() => setOpenModalConfirm(false)}>
                 <Form onSubmit={(e) => addPersonnelCredit(e)}>
-                    <DialogTitle>{selectedGroup?('افزودن اعتبار برای کاربران گروه '+selectedGroup.Name):'افزودن اعتبار برای همه'}</DialogTitle>
+                    <DialogTitle>{selectedGroup ? ('افزودن اعتبار برای کاربران گروه ' + selectedGroup.Name) : 'افزودن اعتبار برای همه'}</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            {selectedGroup?
-                                "افزایش اعتبار برای کاربران گروه "+selectedGroup.Name+" و هر یک به مبلغ " + toPriceWithComma(credit) + " تومان را تایید میکنم":
-                            "افزایش اعتبار برای همه کاربران و هر یک به مبلغ " + toPriceWithComma(credit) + " تومان را تایید میکنم. این اعتبار بدون توجه به گروه بندی، به همه کاربران داده خواهد شد."}
+                            {selectedGroup ?
+                                "افزایش اعتبار برای کاربران گروه " + selectedGroup.Name + " و هر یک به مبلغ " + toPriceWithComma(credit) + " تومان را تایید میکنم" :
+                                "افزایش اعتبار برای همه کاربران و هر یک به مبلغ " + toPriceWithComma(credit) + " تومان را تایید میکنم. این اعتبار بدون توجه به گروه بندی، به همه کاربران داده خواهد شد."}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -112,11 +118,11 @@ const IncreaseGroupCredit = () => {
     return (
         <>
             {groups &&
-            <Alert sx={{m:1}} severity={"warning"}  variant={"outlined"} >
+            <Alert sx={{m: 1}} severity={"warning"} variant={"outlined"}>
                 اعتباری که به هر یک از پرسنل اضافه میشود را وارد نمایید.
             </Alert>}
 
-            {groups &&<Tabs
+            {groups && <Tabs
                 value={selectedTab}
                 onChange={(e, n) => setSelectedTab(n)}
                 aria-label="usersTab"
@@ -128,9 +134,9 @@ const IncreaseGroupCredit = () => {
                          aria-controls={"group-tabpanel-" + group.Id}/>
                 ))}
             </Tabs>}
-            {groups && <Card hidden={selectedTab!==0} elevation={3} sx={{margin: 1}}>
+            {groups && <Card hidden={selectedTab !== 0} elevation={3} sx={{margin: 1}}>
                 <CardHeader
-                    titleTypographyProps={{variant:"body2"}}
+                    titleTypographyProps={{variant: "body2"}}
                     title={"اعتبار به هر یک از پرسنل"}
                 />
                 <CardContent>
@@ -155,10 +161,10 @@ const IncreaseGroupCredit = () => {
                     </Form>
                 </CardContent>
             </Card>}
-            {selectedTab!=0&&groups && groups.map(group => (
-                <Card hidden={group.Id!==groups[selectedTab-1].Id} key={group.Id} elevation={3} sx={{margin: 1}}>
+            {selectedTab != 0 && groups && groups.map(group => (
+                <Card hidden={group.Id !== groups[selectedTab - 1].Id} key={group.Id} elevation={3} sx={{margin: 1}}>
                     <CardHeader
-                        titleTypographyProps={{variant:"body2"}}
+                        titleTypographyProps={{variant: "body2"}}
                         title={"اعتبار به هر یک از پرسنل گروه " + group.Name}
                     />
                     <CardContent>

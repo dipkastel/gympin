@@ -14,11 +14,13 @@ import {corporatePersonnel_delete} from "../../../network/api/corporatePersonnel
 import {Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {useSelector} from "react-redux";
 
 const _UserDelete = ({corporatePersonnel}) => {
 
     const navigate = useNavigate();
     const error = useContext(ErrorContext);
+    const corporate = useSelector(({corporate}) => corporate.corporate)
     const [openModalDeleteUser, setOpenModalDeleteUser] = useState(false);
 
 
@@ -27,6 +29,11 @@ const _UserDelete = ({corporatePersonnel}) => {
 
         function deleteUser(e) {
             e.preventDefault()
+
+            if (corporate.Status=="DEMO"){
+                error.showError({message: "حذف کاربر برای Demo فعال نیست",});
+                return;
+            }
             setOpenModalDeleteUser(false);
             corporatePersonnel_delete({Id: corporatePersonnel.Id})
                 .then(result => {

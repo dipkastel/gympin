@@ -100,8 +100,13 @@ const Users = () => {
 
     function renderModalAdd() {
 
+
         function addPersonnel(e) {
             e.preventDefault()
+            if (personnel?.content?.length>1&&corporate.Status=="DEMO"){
+                error.showError({message: "برای Demo بیش از 2 کاربر امکان پذیر نیست",});
+                return;
+            }
             if (!checkMobileValid(e.target.PhoneNumber.value)) {
                 error.showError({message: "شماره موبایل صحیح نیست",});
                 return;

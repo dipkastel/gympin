@@ -12,10 +12,10 @@ export const ProcessTypeEnum = {
     TRA_DECREASE_PERSONNEL_CREDIT_MULTIPLE:"کاهش اعتبار گروهی",
     TRA_EXPIRE_PERSONNEL_CREDIT_MANUAL:"انقضای اعتبار دستی",
     TRA_EXPIRE_PERSONNEL_CREDIT_SYSTEM:"انقضای اعتبار سیستمی",
+    TRA_REMOVE_CORPORATE_PERSONNEL:"حذف پرسنل از شرکت",
     TRA_CHECKOUT_BASKET:"پرداخت سبد خرید",
     TRA_USE_TICKET:"استفاده بلیط و پرداخت مرکز",
     TRA_USER_WALLETS:"انتقال مبلغ کیف پول",
     TRA_REFUND_TICKET:"عودت بلیط",
     NOT_DEFINE:"تعریف نشده",
-
 }
