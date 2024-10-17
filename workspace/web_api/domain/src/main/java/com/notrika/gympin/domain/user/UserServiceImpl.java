@@ -183,6 +183,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 
 
     @Override
+    @Transactional
     public UserDto getMyInfo() {
 
         GympinContext context = GympinContextHolder.getContext();
@@ -303,6 +304,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     }
 
     @Override
+    @Transactional
     public UserCreditDto getMyCredits() {
         GympinContext context = GympinContextHolder.getContext();
         if (context == null)

@@ -50,6 +50,10 @@ const Groups = () => {
     function renderModalAdd() {
         function addGroup(e) {
             e.preventDefault()
+            if(e.target.Name.value.length<1){
+                error.showError({message: "نام گروه وارد نشده",});
+                return;
+            }
             if(corporate?.Status=="DEMO"&&groups.length>1){
                 error.showError({message: "بیش از 2 گروه برای DEMO امکان‌پذیر نیست",});
                 return;

@@ -156,6 +156,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
 
     @Override
+    @Transactional
     public BigDecimal getTotalUserCredits(CorporatePersonnelCreditParam param) {
         return financeCorporateRepository.getById(param.getCorporateId()).getTotalCredits();
     }

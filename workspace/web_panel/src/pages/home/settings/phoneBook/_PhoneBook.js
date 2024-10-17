@@ -1,19 +1,24 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import {Button, FormGroup, TextField, Typography} from "@mui/material";
-import {note_query} from "../../../../network/api/note.api";
+import {Button, FormGroup, IconButton, TextField, Typography} from "@mui/material";
+import {note_delete, note_query, note_update} from "../../../../network/api/note.api";
 import {getRppDashNote, getRppPhoneBook, SetRppDashNote, SetRppPhoneBook} from "../../../../helper/pocket/pocket";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import TableContainer from "@mui/material/TableContainer";
-import {Table} from "react-bootstrap";
+import {Form, Modal, Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {getUserFixedName} from "../../../../helper";
+import {getUserFixedName, toPriceWithComma, toPriceWithoutComma} from "../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
 import AddIcon from "@mui/icons-material/Add";
+import {DeleteOutline, Edit, Source} from "@mui/icons-material";
+import {TicketSubscribes_delete} from "../../../../network/api/ticketSubscribes.api";
+import {Suggest_update} from "../../../../network/api/suggest.api";
+import Select from "react-select";
+import {ApplicationEnum} from "../../../../helper/enums/ApplicationEnum";
 
 const _PhoneBook = () => {
 
@@ -21,6 +26,7 @@ const _PhoneBook = () => {
     const history = useHistory();
     const [phoneBook,setPhoneBook] = useState(null);
     const [itemToDelete,setItemToDelete] = useState(null);
+    const [itemToEdit,setItemToEdit] = useState(null);
     const [searchStringName,setSearchStringName] = useState("");
     const [searchStringPlace,setSearchStringPlace] = useState("");
     const [page, setPage] = useState(0);
@@ -68,6 +74,119 @@ const _PhoneBook = () => {
             return "مرکز ◄ " + row.Place.Name;
         if (row.User)
             return "کاربر ◄ " + getUserFixedName(row.User);
+    }
+
+
+    function renderModalDelete() {
+
+        function DeleteItem(e) {
+            e.preventDefault()
+            note_delete({Id:itemToDelete.Id})
+                .then(data=>{
+                    setItemToDelete(null)
+                    getData();
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        }
+
+        return (
+            <>
+                <Modal show={itemToDelete} onHide={() => setItemToDelete(null)}>
+                    <form onSubmit={(e)=>DeleteItem(e)}>
+
+
+                        <Modal.Header closeButton>
+                            <Modal.Title>{"حذف تلفن"}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {itemToDelete&&"حذف "+itemToDelete.Text}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                className={"button_edit"}
+                                onClick={() => setItemToDelete(null)}
+                            >
+                                خیر
+                            </Button>
+                            <Button
+                                className={"button_danger"}
+                                type={"submit"}
+                            >
+                                حذف
+                            </Button>
+                        </Modal.Footer>
+                    </form>
+                </Modal>
+            </>
+        );
+    }
+    function renderModalEdit(){
+        if(!itemToEdit) return ;
+        function EditItem(e) {
+            e.preventDefault()
+            setItemToEdit(null);
+            console.log(e.target.Name.value+ " : " + e.target.Phone.value);
+            note_update({
+                Id:itemToEdit.Id,
+                Text:e.target.Name.value+ " : " + e.target.Phone.value
+            })
+                .then((result) => {
+                    getData();
+                })
+                .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
+        }
+
+        return (
+            <>
+                <Modal show={itemToEdit} onHide={() => setItemToEdit(null)}>
+                    <form onSubmit={(e) => EditItem(e)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{"ویرایش تلفن "}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <TextField
+                                label="نام"
+                                type={"text"}
+                                fullWidth
+                                name="Name"
+                                margin="normal"
+                                defaultValue={itemToEdit.Text.split(':')[0].trim()}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                            <TextField
+                                label="تلفن"
+                                type={"text"}
+                                name="Phone"
+                                defaultValue={itemToEdit.Text.split(':')[1].trim()}
+                                fullWidth
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button sx={{m: 1}} variant={"contained"} color={"secondary"} type={"submit"}>
+                                ویرایش
+                            </Button>
+                        </Modal.Footer>
+                    </form>
+                </Modal>
+            </>
+        );
     }
 
     return (
@@ -125,13 +244,14 @@ const _PhoneBook = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>منبع</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>ایجاد
                                         کننده</TableCell>
-                                    <TableCell align="right" padding="normal" sortDirection={false}>عملیات</TableCell>
+                                    <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {phoneBook?.content && phoneBook?.content?.map((row, index) => (
-                                    <TableRow hover onClick={(event) => history.push({pathname: getSourceUrl(row)})}
-                                              role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+
                                         <TableCell component="th" scope="row" padding="normal"
                                                    align="right">{row.Text}</TableCell>
                                         <TableCell component="th" scope="row" padding="normal"
@@ -139,7 +259,11 @@ const _PhoneBook = () => {
                                         <TableCell component="th" scope="row" padding="normal"
                                                    align="right">{getUserFixedName(row.CreatorUser)}</TableCell>
                                         <TableCell component="th" scope="row" padding="normal"
-                                                   align="right"><FormGroup><Button onClick={()=>setItemToDelete(row)} color={"error"} variant={"contained"}>حذف</Button> </FormGroup></TableCell>
+                                                   align="left">
+                                           <IconButton onClick={(event) => history.push({pathname: getSourceUrl(row)})} color={"secondary"} variant={"contained"}><Source /></IconButton>
+                                            <IconButton onClick={()=>setItemToEdit(row)} color={"info"} variant={"contained"}><Edit /></IconButton>
+                                            <IconButton onClick={()=>setItemToDelete(row)} color={"error"} variant={"contained"}><DeleteOutline /></IconButton>
+                                        </TableCell>
 
                                     </TableRow>
                                 ))}
@@ -167,7 +291,8 @@ const _PhoneBook = () => {
 
                 </PortletBody>
             </Portlet>
-            {/*{RenderModalDelete()}*/}
+            {renderModalDelete()}
+            {renderModalEdit()}
         </>
     );
 };

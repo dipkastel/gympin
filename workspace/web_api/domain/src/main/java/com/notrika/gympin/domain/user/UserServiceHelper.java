@@ -54,6 +54,7 @@ public class UserServiceHelper {
     @Autowired
     FinanceCorporatePersonnelCreditTransactionRepository financeCorporatePersonnelCreditTransactionRepository;
 
+
     public List<UserCreditDetailDto> getUserCreditsByCorporate(UserParam param) {
         List<CorporatePersonnelEntity> corportePersonnels = corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(param.getId());
         List<UserCreditDetailDto> result = new ArrayList<>();

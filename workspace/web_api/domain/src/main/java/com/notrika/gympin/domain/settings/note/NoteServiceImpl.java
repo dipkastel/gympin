@@ -70,7 +70,12 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Not
     @Override
     public NoteDto update(@NonNull NoteParam noteParam) {
         ManageNoteEntity entity = manageNoteRepository.getById(noteParam.getId());
-        entity.setIsToDo(noteParam.getIsToDo());
+        if(noteParam.getIsToDo()!=null){
+            entity.setIsToDo(noteParam.getIsToDo());
+        }
+        else if(noteParam.getText()!=null){
+            entity.setText(noteParam.getText());
+        }
         return NoteConvertor.toDto(manageNoteRepository.update(entity));
     }
 

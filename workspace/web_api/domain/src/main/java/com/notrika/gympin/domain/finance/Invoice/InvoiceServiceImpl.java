@@ -331,6 +331,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     }
 
     @Override
+    @Transactional
     public UserHowToPayDto getHowToPay(InvoiceCheckoutParam param) {
         InvoiceEntity invoice = invoiceRepository.getById(param.getInvoice().getId());
         return helper.getSimpleHowToPay(invoice);

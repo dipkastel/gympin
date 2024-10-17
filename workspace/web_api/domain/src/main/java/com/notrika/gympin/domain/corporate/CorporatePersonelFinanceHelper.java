@@ -110,7 +110,6 @@ public class CorporatePersonelFinanceHelper {
         return financeCorporate;
     }
 
-
     public List<CorporatePersonnelEntity> getPeronelForAddCredits(CorporatePersonnelCreditParam param) {
         if (param.getGroupId() != null) {
             return corporatePersonnelRepository.findByCorporateIdAndPersonnelGroupIdAndDeletedIsFalse(param.getCorporateId(), param.getGroupId());
@@ -140,7 +139,6 @@ public class CorporatePersonelFinanceHelper {
         financeCorporatePersonnelCreditTransactionRepository.addAll(tListToAdd);
         return result;
     }
-
 
     public String getTransactionDiscription(CorporatePersonnelCreditParam param, List<CorporatePersonnelEntity> personnelsToAddCredit, BigDecimal totalAddAmount) {
         if (param.getGroupId() != null) {
