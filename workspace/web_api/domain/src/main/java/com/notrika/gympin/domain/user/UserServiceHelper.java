@@ -65,7 +65,7 @@ public class UserServiceHelper {
             if (personnel.getCorporate().getStatus() != CorporateStatusEnum.ACTIVE)
                 canPay = false;
             var activeCredits = personnel.getCredits().stream().filter(c -> c.getStatus() == CorporatePersonnelCreditStatusEnum.ACTIVE).collect(Collectors.toList());
-            checkCreditExpiration(activeCredits);
+            activeCredits = checkCreditExpiration(activeCredits);
             var personelCorproateMaxCredit = activeCredits.stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
             if (personelCorproateMaxCredit.compareTo(personnel.getCorporate().getFinanceCorporate().getTotalDeposit()) > 0)
                 canPay = false;
@@ -89,9 +89,9 @@ public class UserServiceHelper {
     }
 
     private List<FinanceCorporatePersonnelCreditEntity> checkCreditExpiration(List<FinanceCorporatePersonnelCreditEntity> activeCredits) {
-        for (FinanceCorporatePersonnelCreditEntity credit : activeCredits) {
+        for (FinanceCorporatePersonnelCreditEntity credit : activeCredits.stream().filter(credit -> credit.getStatus().equals(CorporatePersonnelCreditStatusEnum.ACTIVE)).collect(Collectors.toList())) {
             if (credit.getExpireDate().before(new Date())) {
-                activeCredits.remove(credit);
+                activeCredits = activeCredits.stream().filter(f->!f.getId().equals(credit.getId())).collect(Collectors.toList());
                 ExpireCredit(credit);
             }
         }

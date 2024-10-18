@@ -8,8 +8,8 @@ import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.corporate.CorporateContractIsNotComplete;
 import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
-import com.notrika.gympin.common.util.exception.corporate.LowCreditException;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
+import com.notrika.gympin.common.util.exception.user.LowDepositException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
@@ -71,7 +71,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         if (!helper.checkContractContract(personnelEntity.getCorporate()))
             throw new CorporateContractIsNotComplete();
         if (helper.checkLowBudjetByContract(personnelEntity.getCorporate(), param.getCreditAmount()))
-            throw new LowCreditException();
+            throw new LowDepositException();
 
         financeSerialRepository.add(serial);
         //add finance corporate personnel credit
@@ -100,7 +100,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         if (!helper.checkContractContract(corporate))
             throw new CorporateContractIsNotComplete();
         if (helper.checkLowBudjetByContract(corporate, totalAddAmount))
-            throw new LowCreditException();
+            throw new LowDepositException();
         if (totalAddAmount.compareTo(BigDecimal.ZERO)<1)
             throw new CreditCannotBeNegativeException();
         if (personnelsToAddCredit.size()<1)

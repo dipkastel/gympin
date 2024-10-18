@@ -1,5 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
+import {
+    Portlet,
+    PortletBody,
+    PortletFooter,
+    PortletHeader,
+    PortletHeaderToolbar
+} from "../../../partials/content/Portlet";
 import Notice from "../../../partials/content/Notice";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -8,12 +14,16 @@ import "./map.css"
 import {Place_query} from "../../../../network/api/place.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
+import Select from "react-select";
+import {TextField, Toolbar} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 const PlacesMap = () => {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [leaflet, setLeaflet] = useState(null);
     const [markerLayer, setMarkerLayer] = useState(null);
+    const [placeStatus, setPlaceStatus] = useState(null);
 
     useEffect(() => {
         if (leaflet) return;
@@ -22,12 +32,14 @@ const PlacesMap = () => {
     }, []);
 
     useEffect(() => {
+        markerLayer?.clearLayers()
         getPlaces(0);
-    }, [markerLayer]);
+    }, [markerLayer,placeStatus]);
 
     const getPlaces = (page) => {
         Place_query({
-            queryType: "SEARCH",
+            queryType: "FILTER",
+            Status:placeStatus,
             paging: {Page: page, Size: 300, Desc: true}
         }).then((data) => {
             addMarkers(data.data.Data.content);
@@ -61,6 +73,15 @@ const PlacesMap = () => {
 
 
     };
+
+    function getStatusOptions() {
+        return [
+            {value: null, label: "همه"},
+            {value: "ACTIVE", label: "فعال"},
+            {value: "INACTIVE", label: "غیر فعال"},
+            {value: "PREREGISTER", label: "پیش ثبت نام"}
+        ]
+    }
 
     function addMarker(place) {
         // set custom SVG icon marker
@@ -106,6 +127,24 @@ const PlacesMap = () => {
             <Portlet>
                 <PortletHeader
                     title="مراکز"
+                    toolbar={
+                        <PortletHeaderToolbar>
+
+
+                            <Select
+                                    className={"dropdown w-100"}
+                                    menuPortalTarget={document.body}
+                                    styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                    value={
+                                        getStatusOptions().filter(option =>
+                                            option.value === placeStatus)
+                                    }
+                                    options={getStatusOptions()}
+                                    onChange={(e) => setPlaceStatus( e.value)}
+                                />
+                        </PortletHeaderToolbar>
+                        }
+
                 />
 
                 <PortletBody>
@@ -114,6 +153,8 @@ const PlacesMap = () => {
                         <div id="kt_leaflet_map" className={"map"}/>
                     </Form.Group>
                 </PortletBody>
+                <PortletFooter>
+                </PortletFooter>
             </Portlet>
         </>
     );
