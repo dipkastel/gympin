@@ -60,8 +60,6 @@ export default function _ActiveSubscribes() {
             <List sx={{width: '100%', direction: "rtl", bgcolor: 'background.paper'}}>
                 {PlaceSubscribes.filter(ps=>ps.Status!=="READY_TO_ACTIVE").map((item, Index) => (
                     <div key={Index}>
-
-
                         <ListItemButton sx={{direction: "rtl", textAlign: "right", justifyContent: "space-between"}}>
                             <ListItemAvatar sx={{margin: 0}}>
                                 <Avatar
@@ -69,7 +67,7 @@ export default function _ActiveSubscribes() {
                                     alt="Remy Sharp"
                                     src={item?.User?.Avatar?.Url}/>
                             </ListItemAvatar>
-                            <Link href={"/users/singleuser/" + item?.User?.Username}
+                            <Link href={"/users/SingleSubscribe/" + item?.Key}
                                   sx={{textDecoration: "none", color: "#666666", width: "100%"}}>
                                 <ListItemText primary={`${item?.User?.FullName || ""} (${item?.User?.Username})`}/>
                                 <ListItemText secondary={`${item?.Name || ""}`}/>

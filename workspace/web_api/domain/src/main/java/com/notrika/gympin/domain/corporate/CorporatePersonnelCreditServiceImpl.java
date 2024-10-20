@@ -5,6 +5,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePer
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelCreditService;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.corporate.CorporateContractIsNotComplete;
 import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
@@ -12,6 +13,7 @@ import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.user.LowDepositException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
+import com.notrika.gympin.domain.util.convertor.FinanceUserConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
@@ -23,6 +25,7 @@ import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -113,6 +116,34 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(corporate, totalAddAmount, serial, helper.getTransactionDiscription(param,personnelsToAddCredit,totalAddAmount));
 
         return convertToDtos(credits);
+    }
+
+    @Override
+    @Transactional
+    public List<FinanceUserDto> addNWToAll(@NonNull CorporatePersonnelCreditParam param) {
+        //init
+        CorporateEntity corporate = corporateService.getEntityById(param.getCorporateId());
+        List<CorporatePersonnelEntity> personnelsToAddCredit = helper.getPeronelForAddCredits(param);
+
+        var serial = FinanceSerialEntity.builder()
+                .serial(java.util.UUID.randomUUID().toString())
+                .processTypeEnum(ProcessTypeEnum.TRA_INCREASE_PERSONNEL_CREDIT_NW_MULTIPLE)
+                .build();
+        BigDecimal totalAddAmount = param.getCreditAmount().multiply(BigDecimal.valueOf(personnelsToAddCredit.size()));
+        //checks
+
+        if (!helper.checkContractContract(corporate))
+            throw new CorporateContractIsNotComplete();
+        if (totalAddAmount.compareTo(BigDecimal.ZERO)<1)
+            throw new CreditCannotBeNegativeException();
+        if (personnelsToAddCredit.size()<1)
+            throw new NotFoundException();
+
+        financeSerialRepository.add(serial);
+        //add finance corporate personnel credits
+        List<FinanceUserEntity> credits = helper.addNWToCorporatePersonnelCredits(personnelsToAddCredit, param, serial);
+
+        return FinanceUserConvertor.toFinanceDto(credits);
     }
 
     @Override

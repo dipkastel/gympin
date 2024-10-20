@@ -29,6 +29,13 @@ const _SubscribeEnterList = ({subscribe,getSubscribe,setUserCanEnter}) => {
 
     return (
     <>
+
+        {subscribe &&
+        <div>
+            <div className={"section-title mt-3 me-3"}>
+                <Typography variant={"body2"}>ورود ها</Typography>
+            </div>
+        </div>}
         {entryList.map((item,number)=>(
 
             <Card key={"entry"+number} elevation={3} sx={{margin:1}}>

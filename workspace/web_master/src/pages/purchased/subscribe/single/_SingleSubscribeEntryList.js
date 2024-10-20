@@ -3,7 +3,6 @@ import {
     Button,
     Card,
     CardContent,
-    CardHeader,
     Dialog,
     DialogActions,
     DialogContent,
@@ -17,7 +16,7 @@ import {
 import {Form} from "react-bootstrap";
 import {
     purchasedSubscribe_addEntryMessage,
-    purchasedSubscribe_exitRequest, purchasedSubscribe_exitUserOfPlace
+    purchasedSubscribe_exitUserOfPlace
 } from "../../../../network/api/subscribe.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
@@ -104,15 +103,14 @@ const _SingleSubscribeEntryList = ({subscribe, renewSubscribe}) => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
-                <CardHeader
-                    title={"ورودهای کاربر"}
-                />
-                <CardContent>
-
-                    <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-                        {subscribe.EntryList && subscribe.EntryList.sort((a, b) => b.Id - a.Id).map(item => (
-                            <div key={"entry-" + item.Id}>
+            <div>
+                <div className={"section-title mt-3 mb-1"}>ورودهای کاربر</div>
+            </div>
+            <List sx={{width: '100%', bgcolor: 'background.paper'}}>
+                {subscribe.EntryList && subscribe.EntryList.sort((a, b) => b.Id - a.Id).map(item => (
+                    <Card key={"entry-" + item.Id} elevation={3} sx={{margin: 1,borderRadius:3}}>
+                        <CardContent>
+                            <div>
                                 <Grid
                                     container
                                     direction="row"
@@ -183,13 +181,12 @@ const _SingleSubscribeEntryList = ({subscribe, renewSubscribe}) => {
                                                 onClick={(e) => SetEntryToAddMessage(item)}>ثبت یادداشت</Button>
                                     </Grid>
                                 </Grid>
-                                <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
                             </div>
-                        ))}
+                        </CardContent>
+                    </Card>
+                ))}
 
-                    </List>
-                </CardContent>
-            </Card>
+            </List>
             {renderModalExit()}
             {renderModalAddMessage()}
         </>

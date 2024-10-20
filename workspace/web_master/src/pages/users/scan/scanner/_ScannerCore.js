@@ -56,7 +56,7 @@ export default function _ScannerCore({onFind, scannWork}) {
             }
         }).then(function (stream) {
             InVideo.srcObject = stream;
-            InVideo.setAttribute('playsinline', true);
+             InVideo.setAttribute('playsinline', true);
             InVideo.play();
             setInVideo(InVideo);
             setCanvasContext(convas.current.getContext('2d',{willReadFrequently : true}))

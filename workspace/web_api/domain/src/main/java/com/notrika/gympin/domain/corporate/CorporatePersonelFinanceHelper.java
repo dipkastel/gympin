@@ -8,12 +8,15 @@ import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
+import com.notrika.gympin.domain.finance.helper.FinanceHelper;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporatePersonnelCreditTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceUserTransactionRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
@@ -21,11 +24,14 @@ import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateE
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,15 +41,21 @@ public class CorporatePersonelFinanceHelper {
 
 
     @Autowired
+    FinanceHelper financeHelper;
+    @Autowired
+    FinanceUserRepository financeUserRepository;
+    @Autowired
     FinanceCorporateRepository financeCorporateRepository;
     @Autowired
     CorporatePersonnelRepository corporatePersonnelRepository;
     @Autowired
-    FinanceCorporatePersonnelCreditRepository financeCorporatePersonnelCreditRepository;
+    FinanceUserTransactionRepository financeUserTransactionRepository;
+    @Autowired
+    CorporatePersonnelGroupRepository corporatePersonnelGroupRepository;
     @Autowired
     FinanceCorporateTransactionRepository financeCorporateTransactionRepository;
     @Autowired
-    CorporatePersonnelGroupRepository corporatePersonnelGroupRepository;
+    FinanceCorporatePersonnelCreditRepository financeCorporatePersonnelCreditRepository;
     @Autowired
     FinanceCorporatePersonnelCreditTransactionRepository financeCorporatePersonnelCreditTransactionRepository;
 
@@ -64,7 +76,7 @@ public class CorporatePersonelFinanceHelper {
     }
 
     public FinanceCorporatePersonnelCreditEntity addCorporatePersonnelCredit(CorporatePersonnelEntity personnelEntity, @NonNull CorporatePersonnelCreditParam param, FinanceSerialEntity serial) {
-        if(personnelEntity.getCorporate().getContractType()==CorporateContractTypeEnum.ALPHA){
+        if (personnelEntity.getCorporate().getContractType() == CorporateContractTypeEnum.ALPHA) {
             Calendar c = Calendar.getInstance();
             c.setTime(personnelEntity.getCorporate().getContractDate());
             c.add(Calendar.YEAR, 1);
@@ -139,6 +151,30 @@ public class CorporatePersonelFinanceHelper {
         financeCorporatePersonnelCreditTransactionRepository.addAll(tListToAdd);
         return result;
     }
+    public List<FinanceUserEntity> addNWToCorporatePersonnelCredits(List<CorporatePersonnelEntity> personnelsToAddCredit, CorporatePersonnelCreditParam param, FinanceSerialEntity serial) {
+        List<FinanceUserTransactionEntity> tListToAdd = new ArrayList<>();
+        List<FinanceUserEntity> listToUpdate = personnelsToAddCredit.stream().map(personel -> {
+            //add user none withdrawable credit;
+            FinanceUserEntity userNwWallet = financeHelper.getUserNonWithdrawableWallet(personel.getUser());
+            BigDecimal before = userNwWallet.getTotalDeposit();
+            userNwWallet.setTotalDeposit(before.add(param.getCreditAmount()));
+            //add transaction for none withdrawable credit
+            tListToAdd.add(FinanceUserTransactionEntity.builder()
+                    .serial(serial)
+                    .transactionStatus(TransactionStatus.COMPLETE)
+                    .latestBalance(before)
+                    .financeUser(userNwWallet)
+                    .isChecked(false)
+                    .transactionType(TransactionBaseType.USER)
+                    .amount(param.getCreditAmount())
+                    .build());
+            return userNwWallet;
+        }).collect(Collectors.toList());
+        List<FinanceUserEntity> result = financeUserRepository.updateAll(listToUpdate);
+        //add finance credit transaction
+        financeUserTransactionRepository.addAll(tListToAdd);
+        return result;
+    }
 
     public String getTransactionDiscription(CorporatePersonnelCreditParam param, List<CorporatePersonnelEntity> personnelsToAddCredit, BigDecimal totalAddAmount) {
         if (param.getGroupId() != null) {
@@ -152,10 +188,10 @@ public class CorporatePersonelFinanceHelper {
     public FinanceCorporatePersonnelCreditEntity decreaseCorporatePersonnelCredit(FinanceCorporatePersonnelCreditEntity credit, BigDecimal amount, FinanceSerialEntity serial) {
         BigDecimal beforeDecrease = credit.getCreditAmount();
         BigDecimal NewAmount = beforeDecrease.subtract(amount);
-        if (NewAmount.compareTo(BigDecimal.ZERO)<0 ) {
+        if (NewAmount.compareTo(BigDecimal.ZERO) < 0) {
             throw new CreditCannotBeNegativeException();
         }
-        if (NewAmount.compareTo(BigDecimal.ZERO)==0) {
+        if (NewAmount.compareTo(BigDecimal.ZERO) == 0) {
             credit.setStatus(CorporatePersonnelCreditStatusEnum.SUSPEND);
         }
         credit.setCreditAmount(NewAmount);
@@ -216,10 +252,10 @@ public class CorporatePersonelFinanceHelper {
     }
 
     public boolean checkContractContract(CorporateEntity corporate) {
-        if (corporate.getContractDate()==null)
-                return false;
-        if (corporate.getContractType()==null)
-                return false;
+        if (corporate.getContractDate() == null)
+            return false;
+        if (corporate.getContractType() == null)
+            return false;
         else return true;
     }
 }

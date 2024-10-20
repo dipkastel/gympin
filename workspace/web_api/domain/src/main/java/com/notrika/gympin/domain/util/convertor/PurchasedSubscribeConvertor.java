@@ -4,17 +4,29 @@ import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubsc
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeEntryDto;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeEntryMessageDto;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeScannedDto;
+import com.notrika.gympin.common.settings.base.dto.SettingDto;
+import com.notrika.gympin.common.settings.base.service.SettingsService;
+import com.notrika.gympin.domain.settings.SettingsServiceImpl;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeMessageEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public final class PurchasedSubscribeConvertor {
-
     public static PurchasedSubscribeDto toDto(PurchasedSubscribeEntity entity) {
         if(entity==null) return null;
+        Boolean useExpire = null;
+        Calendar c = Calendar.getInstance();
+        if(entity.getEntryList().size()<1){
+            c.setTime(entity.getCreatedDate());
+            c.add(Calendar.HOUR, getTicketUsageThreshold());
+            useExpire = (c.getTime().before(new Date()));
+        }
         PurchasedSubscribeDto dto = PurchasedSubscribeDto.builder()
                 .id(entity.getId())
                 .status(entity.getStatus())
@@ -31,8 +43,18 @@ public final class PurchasedSubscribeConvertor {
                 .ticketSubscribeExpireDate(entity.getTicketSubscribeExpireDate())
                 .expireDate(entity.getExpireDate())
                 .entryList(toDto(entity.getEntryList()))
+                .useExpire(useExpire)
+                .useExpireDate(c.getTime())
                 .build();
         return dto;
+    }
+
+    private static Integer getTicketUsageThreshold() {
+        try{
+            return Integer.parseInt(new SettingsServiceImpl().getByKey("TICKET_USAGE_THRESHOLD").getValue());
+        }catch (Exception e){
+            return 70;
+        }
     }
 
     private static List<PurchasedSubscribeEntryDto> toDto(List<PurchasedSubscribeEntryEntity> entryList) {

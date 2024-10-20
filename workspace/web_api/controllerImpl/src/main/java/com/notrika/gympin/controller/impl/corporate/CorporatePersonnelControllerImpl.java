@@ -3,6 +3,7 @@ package com.notrika.gympin.controller.impl.corporate;
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelFileParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.query.CorporatePersonnelQuery;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaStoreParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
@@ -117,6 +118,12 @@ public class CorporatePersonnelControllerImpl implements CorporatePersonnelContr
     @PostMapping("addCreditToAll")
     public ResponseEntity<List<CorporatePersonnelCreditDto>> addToAllPersonnelCredit(CorporatePersonnelCreditParam param) {
         return ResponseEntity.ok(corporatePersonnelCreditService.addToAll(param));
+    }
+    @Override
+    @PostMapping("addNWCreditToAll")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<List<FinanceUserDto>> addNWToAllPersonnelCredit(CorporatePersonnelCreditParam param) {
+        return ResponseEntity.ok(corporatePersonnelCreditService.addNWToAll(param));
     }
 
     @Override

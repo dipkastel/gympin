@@ -3,6 +3,7 @@ package com.notrika.gympin.common.corporate.corporatePersonnel.api;
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelFileParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.query.CorporatePersonnelQuery;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
@@ -27,6 +28,7 @@ public interface CorporatePersonnelController extends BaseController<CorporatePe
     ResponseEntity<CorporatePersonnelCreditDto> decreaseUserCredit(@RequestBody CorporatePersonnelCreditParam param);
     ResponseEntity<CorporatePersonnelCreditDto> manualExpireUserCredit(@RequestBody CorporatePersonnelCreditParam param);
     ResponseEntity<List<CorporatePersonnelCreditDto>> addToAllPersonnelCredit(@RequestBody CorporatePersonnelCreditParam param);
+    ResponseEntity<List<FinanceUserDto>> addNWToAllPersonnelCredit(@RequestBody CorporatePersonnelCreditParam param);
     ResponseEntity<BigDecimal> getTotalUserCredits(CorporatePersonnelCreditParam param);
 
 }

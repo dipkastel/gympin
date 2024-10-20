@@ -103,10 +103,11 @@ const _SingleSubscribeActions = ({subscribe, renewSubscribe}) => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
-                <CardHeader
-                    title={"عملیات ها"}
-                />
+
+            <div>
+                <div className={"section-title mb-1"}>عملیات ها</div>
+            </div>
+            <Card elevation={3} sx={{margin: 1,borderRadius:3}}>
                 <CardContent>
                     <Grid
                         container
@@ -115,21 +116,21 @@ const _SingleSubscribeActions = ({subscribe, renewSubscribe}) => {
                         alignItems="flex-start"
                         padding={1}
                     >
-
-                        ثبت ورود جدید :
-                        <Button size="small" variant={"outlined"} onClick={(e) => SetOpenModalAddEntry(true)}>ثبت
-                            ورود</Button>
+                        <Button  size={"large"} variant={"outlined"} fullWidth color={"info"} onClick={(e) => SetOpenModalAddEntry(true)}>ثبت ورود جدید برای کاربر</Button>
                     </Grid>
+                </CardContent>
+            </Card>
+            <Card elevation={3} sx={{margin: 1,borderRadius:3}}>
+                <CardContent>
                     <Grid
                         container
                         direction="row"
                         justifyContent="space-between"
-                        alignItems="flex-start"
+                        alignItems={"center"}
                         padding={1}
                     >
-                        افزایش تاریخ انقضا (فریز):
-                        <Button sx={{float: "left"}} size="small" variant={"outlined"}
-                                onClick={() => SetOpenModalFreeze(true)}>افزایش</Button>
+                        <Button size={"large"} variant={"outlined"} fullWidth color={"info"}
+                                onClick={() => SetOpenModalFreeze(true)}>افزایش تاریخ انقضا (فریز)</Button>
                     </Grid>
 
                 </CardContent>

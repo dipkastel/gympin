@@ -2,12 +2,13 @@ import React, {useContext, useEffect, useState} from 'react';
 import _SingleSubscribeDetail from "./_SingleSubscribeDetail";
 import _SingleSubscribeEntryList from "./_SingleSubscribeEntryList";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {useParams, useSearchParams} from "react-router-dom";
-import {purchasedSubscribe_getById, purchasedSubscribe_getByKey} from "../../../../network/api/subscribe.api";
+import {useParams} from "react-router-dom";
+import {purchasedSubscribe_getByKey} from "../../../../network/api/subscribe.api";
 import _SingleSubscribeActions from "./_SingleSubscribeActions";
 import getAccessOf from "../../../../helper/accessManager";
 import {personnelAccessEnumT} from "../../../../helper/enums/personnelAccessEnum";
 import AccessDenied from "../../../../components/AccessDenied";
+import _SingleSubscribeUser from "./_SingleSubscribeUser";
 
 const SingleSubscribe = () => {
     const error = useContext(ErrorContext);
@@ -22,7 +23,7 @@ const SingleSubscribe = () => {
 
     function getSubscribe() {
         SetSubscribe(null);
-        purchasedSubscribe_getByKey({key:subscribeId}).then(result => {
+        purchasedSubscribe_getByKey({key: subscribeId}).then(result => {
             SetSubscribe(result.data.Data)
         }).catch(e => {
             try {
@@ -38,6 +39,9 @@ const SingleSubscribe = () => {
 
     return (
         <>
+
+            {subscribe && <div><div className={"section-title mt-3 mb-3"}> جزئیات عضویت</div></div>}
+            {subscribe && <_SingleSubscribeUser subscribe={subscribe} renewSubscribe={getSubscribe}/>}
             {subscribe && <_SingleSubscribeDetail subscribe={subscribe} renewSubscribe={getSubscribe}/>}
             {subscribe && <_SingleSubscribeEntryList subscribe={subscribe} renewSubscribe={getSubscribe}/>}
             {(getAccessOf(personnelAccessEnumT.SubscribeDetailActions)) && subscribe &&

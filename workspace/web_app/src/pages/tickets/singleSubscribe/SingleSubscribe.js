@@ -1,12 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
-import _QRcode from "../commonPartials/_QRcode";
 import {useParams} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import _SubscribeDetail from "./_SubscribeDetail";
-import {purchasedSubscribe_getById, purchasedSubscribe_getByKey} from "../../../network/api/purchasedSubscribe.api";
-import _SubscribeEnterList from "./_SubscribeEnterList";
+import {purchasedSubscribe_getByKey} from "../../../network/api/purchasedSubscribe.api";
+import _TicketOwner from "../commonPartials/_TicketOwner";
+import {Alert, Typography} from "@mui/material";
+import _UseExpire from "../commonPartials/_UseExpire";
 import _UsageProgress from "../commonPartials/_UsageProgress";
+import _QRcode from "../commonPartials/_QRcode";
 import _SubscribePhoneLessEnter from "./_SubscribePhoneLessEnter";
+import _SubscribeEnterList from "./_SubscribeEnterList";
 
 const SingleSubscribe = () => {
     const {subscribeKey} = useParams();
@@ -20,8 +23,13 @@ const SingleSubscribe = () => {
     }, []);
 
     function getSubscribe() {
-        purchasedSubscribe_getByKey({key:subscribeKey}).then(result => {
+        purchasedSubscribe_getByKey({key: subscribeKey}).then(result => {
             setSubscribe(result.data.Data);
+            if(result.data.Data.UseExpire){
+                setUserCanEnter(false);
+            }else{
+                setUserCanEnter(true);
+            }
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -34,6 +42,15 @@ const SingleSubscribe = () => {
 
     return (
         <>
+            {subscribe &&
+            <div>
+                <div className={"section-title mt-3 me-3"}>
+                    <Typography variant={"body2"}>{subscribe.Name}</Typography>
+
+                </div>
+            </div>}
+            {subscribe && <_UseExpire subscribe={subscribe} getSubscribe={getSubscribe} setUserCanEnter={setUserCanEnter} />}
+            {subscribe && <_TicketOwner subscribe={subscribe}/>}
             {subscribe && <_SubscribeDetail subscribe={subscribe}/>}
             {subscribe && <_UsageProgress setUserCanEnter={setUserCanEnter} ticket={subscribe}/>}
             {subscribe &&

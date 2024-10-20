@@ -3,8 +3,10 @@ import {Card, CardContent, CircularProgress, Grid, Typography} from "@mui/materi
 import QRCode from "react-qr-code";
 import {qrCode_getCode} from "../../../network/api/qrCode.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {GympinTheme} from "../../../helper/GympinTheme";
+import {getStringOfTime} from "../../../helper/utils";
 
-const _QRcode = ({ticket,userCanEnter,type}) => {
+const _QRcode = ({ticket, userCanEnter, type}) => {
 
     let lock = false;
     let respite = 2;
@@ -14,14 +16,14 @@ const _QRcode = ({ticket,userCanEnter,type}) => {
     const [timerText, setTimerText] = useState(null);
 
     useEffect(() => {
-        if(!code) return ;
+        if (!code) return;
         let changeTimer = setInterval(function () {
-            let distance =new Date().getTime()- startTimer.getTime() ;
+            let distance = new Date().getTime() - startTimer.getTime();
 
-            console.log("start Time" ,new Date().getTime(), startTimer.getTime(),distance,Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) )
-            var minutes =respite-1-Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds =60-Math.floor((distance % (1000 * 60)) / 1000);
-            setTimerText(seconds+" : "+minutes);
+            console.log("start Time", new Date().getTime(), startTimer.getTime(), distance, Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)))
+            var minutes = respite - 1 - Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = 60 - Math.floor((distance % (1000 * 60)) / 1000);
+            setTimerText(getStringOfTime(seconds) + " : " + getStringOfTime(minutes));
         }, 1000)
         return () => {
             clearInterval(changeTimer);
@@ -41,16 +43,15 @@ const _QRcode = ({ticket,userCanEnter,type}) => {
     }, []);
 
 
-
     function getCodeOfSubscribe() {
-        if(lock)return;
+        if (lock) return;
         lock = true;
         qrCode_getCode({
-            Type:type,
-            ReferenceId:ticket.Id,
-            Description:ticket.Key,
+            Type: type,
+            ReferenceId: ticket.Id,
+            Description: ticket.Key,
         }).then(result => {
-            lock =false;
+            lock = false;
             setStartTimer(new Date());
             SetCode(result.data.Data);
         }).catch(e => {
@@ -63,26 +64,38 @@ const _QRcode = ({ticket,userCanEnter,type}) => {
     }
 
 
+    if (!userCanEnter) return (<></>);
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={10} sx={{margin: 3, borderRadius: 3}}>
+                <Grid
+                    sx={{backgroundColor: GympinTheme.palette.primary.main, color: "white"}}
+                    container
+                    direction={"column"}
+                    justifyContent="center"
+                    alignItems="center">
+                    {code?.QrCode ? <Typography variant={"h2"} sx={{margin: 1}}>{code.QrCode}</Typography> :
+                        <CircularProgress  sx={{p:1}} size={"3rem"} color={"inherit"}/>}
+                </Grid>
                 <CardContent>
                     <Grid
                         container
                         direction={"column"}
                         justifyContent="center"
                         alignItems="center">
-                        {code?.QrCode ?
-                            <>
-                                <QRCode className={"qrCode"} value={code.QrCode}/>
-                                <Typography variant={"h1"} sx={{margin: 1}}>{code.QrCode}</Typography>
-                            </> :
-                                <CircularProgress/>
-
-                        }
+                        {code?.QrCode ? <QRCode className={"qrCode"} value={code.QrCode}/> : <CircularProgress/>}
                     </Grid>
                 </CardContent>
-                {timerText}
+                <Grid
+                    sx={{backgroundColor: GympinTheme.palette.primary.main, color: "white"}}
+                    container
+                    direction={"column"}
+                    justifyContent="center"
+                    alignItems="center">
+
+                    {timerText ? <Typography sx={{p:1}} variant={"h2"}>{timerText}</Typography> : <CircularProgress sx={{p:1}} size={"3rem"} color={"inherit"}/>}
+
+                </Grid>
             </Card>
         </>
     )

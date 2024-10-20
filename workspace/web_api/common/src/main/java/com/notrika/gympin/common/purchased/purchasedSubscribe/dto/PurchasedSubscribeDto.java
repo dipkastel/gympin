@@ -65,5 +65,12 @@ public class PurchasedSubscribeDto extends BaseDtoWithCreateUpdate<PurchasedSubs
     @JsonProperty("Key")
     private String key;
 
+    @JsonProperty("UseExpire")
+    private Boolean useExpire;
+
+    @JsonProperty("UseExpireDate")
+    private Date useExpireDate;
+
+
 
 }
