@@ -55,7 +55,7 @@ const _SubscribeDetail = ({subscribe}) => {
                         </Grid>
                         <Grid container direction="row" justifyContent={"space-between"} alignItems={"center"}>
                             <Typography sx={{color: "#858585"}} variant={"body2"}>{"رهگیری پرداخت : "}</Typography>
-                            <Typography variant={"subtitle1"}>{subscribe?.Serial?.filter(ss=>ss.ProcessType==="TRA_CHECKOUT_BASKET")[0].Serial?.split('-')[0]}</Typography>
+                            <Typography variant={"subtitle1"}>{subscribe?.Serial?.filter(ss=>ss?.ProcessType==="TRA_CHECKOUT_BASKET")[0]?.Serial?.split('-')[0]}</Typography>
                         </Grid>
                         {subscribe.Description&&<Grid container direction="row" justifyContent={"space-between"} alignItems={"center"}>
                             <Typography sx={{color: "#858585"}} variant={"body2"}>{"توضیحات : "}</Typography>
