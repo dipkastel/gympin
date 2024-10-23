@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
+    Button,
     Card,
     CardContent,
     CardHeader,
@@ -135,13 +136,13 @@ const _WalletAmount = () => {
                 />
 
                 <Collapse in={!!isExpanded} timeout={"auto"} unmountOnExit>
-                    <CardContent>
+                    <CardContent >
                         <List>
                             {userCredit.CreditDetails && getCredits().map((item, number) => (
                                 <div  key={number} onClick={(e)=>{setSelectedCredit(item)}} ><_WalletType credit={item}/></div>
                             ))}
-
                         </List>
+                        <Button href={"/UserRequests"} variant={"outlined" } fullWidth color={"info"} >تاریخچه درخواست‌ها</Button>
 
                     </CardContent>
                 </Collapse>

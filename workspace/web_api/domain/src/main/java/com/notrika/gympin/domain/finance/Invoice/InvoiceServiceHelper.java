@@ -11,6 +11,7 @@ import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.settings.context.GympinContext;
@@ -55,6 +56,9 @@ import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
@@ -473,7 +477,9 @@ public class InvoiceServiceHelper {
 
     public void sendSms(InvoiceEntity invoice) {
         //TODO sms To Place for preparation
-        if (invoice.getInvoiceBuyables().size() == 1) {
+        if(invoice.getInvoiceBuyables().size()<1){
+            //no ticket sells
+        }else if (invoice.getInvoiceBuyables().size() == 1) {
             try {
                 smsService.sendYouBuySubscribe(SmsDto.builder()
                         .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
@@ -484,8 +490,58 @@ public class InvoiceServiceHelper {
                 );
             } catch (Exception e) {
             }
+
+            PlaceEntity place= invoice.getInvoiceBuyables().get(0).getPlace();
+            sendSellMessageToPlace(place,invoice.getInvoiceBuyables().get(0));
         } else {
-            //TODO add sms for list of buys
+            String ticketsName = "";
+            for(InvoiceBuyableEntity ticket : invoice.getInvoiceBuyables()){
+                ticketsName += ticket.getName()+" ";
+
+                sendSellMessageToPlace(ticket.getPlace(),ticket);
+            }
+            if(ticketsName.length()>36)
+                ticketsName = ticketsName.substring(0,36)+"...";
+            try {
+                smsService.sendYouBuyMultipleSubscribe(SmsDto.builder()
+                        .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
+                        .userNumber(invoice.getUser().getPhoneNumber())
+                        .text1(ticketsName)
+                        .build()
+                );
+            } catch (Exception e) {
+            }
+        }
+
+    }
+
+    private void sendSellMessageToPlace(PlaceEntity place, InvoiceBuyableEntity invoiceBuyables) {
+        if(place.getPurchased().size()<1){
+            try {
+                List<PlacePersonnelEntity> owners =place.getPlaceOwners().stream().filter(po->po.getPlacePersonnelRoles().stream().map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
+                for(PlacePersonnelEntity owner:owners){
+                    smsService.sendFirstTicketSell(SmsDto.builder()
+                            .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
+                            .userNumber(owner.getUser().getPhoneNumber())
+                            .text1(invoiceBuyables.getName())
+                            .build()
+                    );
+                }
+            } catch (Exception e) {
+            }
+        }else{
+            try {
+                List<PlacePersonnelEntity> owners =place.getPlaceOwners().stream().filter(po->po.getPlacePersonnelRoles().stream().map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
+                for(PlacePersonnelEntity owner:owners){
+                    smsService.sendOrdinaryTicketSell(SmsDto.builder()
+                            .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
+                            .userNumber(owner.getUser().getPhoneNumber())
+                            .text1(invoiceBuyables.getName())
+                            .build()
+                    );
+                }
+            } catch (Exception e) {
+            }
         }
 
     }

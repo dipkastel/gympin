@@ -2,13 +2,13 @@ import React, {useContext, useEffect, useState} from 'react';
 import Notice from "../../../partials/content/Notice";
 import {useHistory, useParams} from "react-router-dom";
 import {corporatePersonnel_getById} from "../../../../network/api/CorporatePersonnel.api";
-import PersonnelCredit from "./personnelCredits/PersonnelCredit";
+import _PersonnelCredit from "./_PersonnelCredit";
 import {Avatar, Button, Grid} from "@mui/material";
-import PersonnelRole from "./PersonnelRole/PersonnelRole";
+import _PersonnelRole from "./_PersonnelRole";
 import {toPriceWithComma} from "../../../../helper";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {Portlet, PortletBody} from "../../../partials/content/Portlet";
-import PersonnelGroup from "./PersonnelGroup/PersonnelGroup";
+import _PersonnelGroup from "./_PersonnelGroup";
 
 const CorporatePersonnelDetailsManagement = () => {
     const error = useContext(ErrorContext);
@@ -84,11 +84,11 @@ const CorporatePersonnelDetailsManagement = () => {
 
                 </div>
                 <div className="col-md-6">
-                    <PersonnelRole personnelId={personnelId}/>
-                    <PersonnelGroup personnel={corporatePersonnel} updatePage={updatePage}/>
+                    <_PersonnelRole personnelId={personnelId}/>
+                    <_PersonnelGroup personnel={corporatePersonnel} updatePage={updatePage}/>
                 </div>
                 <div className="col-md-12">
-                    <PersonnelCredit corporatePersonnel={corporatePersonnel} getPerson={getPerson}/>
+                    <_PersonnelCredit corporatePersonnel={corporatePersonnel} getPerson={getPerson}/>
                 </div>
             </div>}
         </>

@@ -22,6 +22,8 @@ import Coaches from "../pages/coaches/Coaches";
 import Coach from "../pages/coaches/coach/Coach";
 import SingleCourse from "../pages/tickets/singleCourse/SingleCourse";
 import Settings from "../pages/settings/Settings";
+import UserTransactions from "../pages/wallet/userTransactions/UserTransactions";
+import UserRequests from "../pages/wallet/userReqests/UserRequests";
 
 export default function ApplicationRoutes() {
     const  isAuthorized  = useSelector( ({auth:{user}})=>  user?user.Id!=null:false );
@@ -48,6 +50,8 @@ export default function ApplicationRoutes() {
                 <Route path="/tickets/singleCourse/:courseKey" element={isAuthorized?<SingleCourse/>: <AuthRoutes/>}/>
 
                 <Route path="/wallet" element={isAuthorized?<Wallet/>: <AuthRoutes/>}/>
+                {/*<Route path="/UserTransactions" element={isAuthorized?<UserTransactions/>: <AuthRoutes/>}/>*/}
+                <Route path="/UserRequests" element={isAuthorized?<UserRequests/>: <AuthRoutes/>}/>
                 <Route path="/checkout/:formData"  element={isAuthorized?<Checkout/>: <AuthRoutes/>}/>
 
                 <Route path="/notifs" element={isAuthorized?<Notifs/>: <AuthRoutes/>}/>

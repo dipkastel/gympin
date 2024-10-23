@@ -5,12 +5,9 @@ import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {corporate_getCorporateGroups} from "../../../../../network/api/corporate.api";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 import {Modal} from "react-bootstrap";
-import {
-    corporatePersonnel_addCreditToAll,
-    corporatePersonnel_addNWCreditToAll
-} from "../../../../../network/api/CorporatePersonnel.api";
+import {corporatePersonnel_addNWCreditToAll} from "../../../../../network/api/CorporatePersonnel.api";
 
-export default function CorporatePersonnelCreditAction({currentCorporate, pUpdatePage}) {
+export default function CorporatePersonnelNwCreditAction({currentCorporate, pUpdatePage}) {
     const error = useContext(ErrorContext);
     const [values, setValues] = useState(0);
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
@@ -47,12 +44,12 @@ export default function CorporatePersonnelCreditAction({currentCorporate, pUpdat
             e.preventDefault()
             setOpenModalConfirm(false);
             error.showError({message: "در حال انجام ...",});
-            corporatePersonnel_addCreditToAll({
+            corporatePersonnel_addNWCreditToAll({
                 CorporateId: currentCorporate.Id,
                 CreditAmount: toPriceWithoutComma(values),
                 GroupId: (selectedGroup == "All") ? null : selectedGroup
             }).then(result => {
-                error.showError({message: "افزایش اعتبار گروهی موفق",});
+                error.showError({message: "افزایش اعتبار جیم پین موفق",});
                 pUpdatePage();
             }).catch(ca => {
                 try {
@@ -68,10 +65,10 @@ export default function CorporatePersonnelCreditAction({currentCorporate, pUpdat
             <>
                 <Modal show={openModalConfirm} onHide={() => setOpenModalConfirm(false)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>{"افزودن اعتبار برای پرسنل "}</Modal.Title>
+                        <Modal.Title>{"افزودن اعتبار جیم پین برای پرسنل "}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {"افزودن " + toPriceWithComma(values) + " تومان برای هرکاربر از گروه " + getSelectedGroupName() + " در مرکز " + currentCorporate.Name}
+                        {"افزودن " + toPriceWithComma(values) + " تومان برای هرکاربر از گروه " + getSelectedGroupName() + " در مرکز " + currentCorporate.Name + ". این اعتبار غیر قابل برداشت می باشد."}
 
                     </Modal.Body>
                     <Modal.Footer>
@@ -92,12 +89,12 @@ export default function CorporatePersonnelCreditAction({currentCorporate, pUpdat
 
     return (
         <><Portlet>
-            <PortletHeader title="افزایش اعتبار پرسنل"/>
+            <PortletHeader title="افزایش اعتبار جیم پین پرسنل"/>
 
             <PortletBody>
 
                 <Typography color={"success"} variant={"body1"}>
-                    افزایش اعتبار برای پرسنل مرکز
+                    افزایش اعتبار جیم پین برای پرسنل مرکز
                 </Typography>
                 <br/>
                 <FormControl fullWidth>

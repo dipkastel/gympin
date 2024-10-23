@@ -41,7 +41,6 @@ const _IncreaseCredit = () => {
                 setSelectedGatewayApplication(result.data.Data.content.filter(g => g.IsDefault == true)[0])
             } catch (e) {
             }
-            console.log("resultgateway", result)
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -120,7 +119,7 @@ const _IncreaseCredit = () => {
                 SetTransactionDescription("");
                 SetAmountToPay(null);
                 error.showError({
-                    message: "درخواست شما با موفقیت ثبت شد برای پیگیری به تاریخچه مراجعه نمایید.",
+                    message: "درخواست شما با موفقیت ثبت شد برای پیگیری به تاریخچه درخواست‌ها مراجعه نمایید.",
                     duration: 5000
                 });
 
@@ -185,6 +184,7 @@ const _IncreaseCredit = () => {
                         sx={{padding: 1}}
                         md={6}
                         lg={4}
+                        item
                         xs={12}
                     >
 

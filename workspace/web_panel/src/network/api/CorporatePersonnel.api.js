@@ -49,3 +49,7 @@ export function corporate_query(data) {
 export function corporatePersonnel_addCreditToAll(data) {
   return axios.post(CorporatePersonnelApi.addCreditToAll, data);
 }
+
+export function corporatePersonnel_addNWCreditToAll(data) {
+  return axios.post(CorporatePersonnelApi.addNWCreditToAll, data);
+}

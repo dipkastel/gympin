@@ -12,7 +12,8 @@ const _SubscribeEnterList = ({subscribe,getSubscribe,setUserCanEnter}) => {
     }, [subscribe]);
 
     useEffect(() => {
-        setUserCanEnter(!entryList.some(entry=>entry.ExitDate==null))
+        if(entryList.some(entry=>entry?.ExitDate==null))
+            setUserCanEnter(false);
     }, [entryList]);
 
     function submitExit(item) {
@@ -30,7 +31,7 @@ const _SubscribeEnterList = ({subscribe,getSubscribe,setUserCanEnter}) => {
     return (
     <>
 
-        {subscribe &&
+        {entryList.length>0 &&
         <div>
             <div className={"section-title mt-3 me-3"}>
                 <Typography variant={"body2"}>ورود ها</Typography>

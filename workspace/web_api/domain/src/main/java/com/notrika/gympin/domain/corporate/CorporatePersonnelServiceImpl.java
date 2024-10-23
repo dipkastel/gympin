@@ -176,8 +176,21 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
     @Override
     public CorporatePersonnelDto update(@NonNull CorporatePersonnelParam corporatePersonnelParam) {
         CorporatePersonnelEntity entity = corporatePersonnelRepository.getById(corporatePersonnelParam.getId());
-        if (corporatePersonnelParam.getRole() != null)
+        if (corporatePersonnelParam.getRole() != null){
             entity.setRole(corporatePersonnelParam.getRole());
+            if(corporatePersonnelParam.getRole()==CorporatePersonnelRoleEnum.ADMIN){
+                try {
+                    smsService.sendAdminRoleInCorporate(SmsDto.builder()
+                            .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
+                            .userNumber(entity.getUser().getPhoneNumber())
+                            .text1(entity.getCorporate().getName())
+                            .build()
+                    );
+                } catch (Exception e) {
+                }
+            }
+        }
+
         if (corporatePersonnelParam.getPersonelGroup() != null) {
             CorporatePersonnelGroupEntity category = corporatePersonnelGroupRepository.getById(corporatePersonnelParam.getPersonelGroup().getId());
             entity.setPersonnelGroup(category);

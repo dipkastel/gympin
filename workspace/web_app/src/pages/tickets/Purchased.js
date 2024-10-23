@@ -34,7 +34,6 @@ const Purchased = () => {
             UserId: user.Id,
             paging: {Page: 0, Size: 50}
         }).then(result => {
-            console.log(result.data.Data.content);
             setSubscribes(result.data.Data.content);
         }).catch(e => {
             try {

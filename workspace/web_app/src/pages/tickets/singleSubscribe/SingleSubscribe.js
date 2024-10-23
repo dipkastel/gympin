@@ -14,7 +14,7 @@ import _SubscribeEnterList from "./_SubscribeEnterList";
 const SingleSubscribe = () => {
     const {subscribeKey} = useParams();
     const [subscribe, setSubscribe] = useState(null)
-    const [userCanEnter, setUserCanEnter] = useState(null)
+    const [userCanEnter, setUserCanEnter] = useState(true)
     const error = useContext(ErrorContext);
 
     useEffect(() => {
@@ -25,10 +25,9 @@ const SingleSubscribe = () => {
     function getSubscribe() {
         purchasedSubscribe_getByKey({key: subscribeKey}).then(result => {
             setSubscribe(result.data.Data);
+            console.log(result.data.Data);
             if(result.data.Data.UseExpire){
                 setUserCanEnter(false);
-            }else{
-                setUserCanEnter(true);
             }
         }).catch(e => {
             try {
@@ -49,7 +48,7 @@ const SingleSubscribe = () => {
 
                 </div>
             </div>}
-            {subscribe && <_UseExpire subscribe={subscribe} getSubscribe={getSubscribe} setUserCanEnter={setUserCanEnter} />}
+            {subscribe && <_UseExpire subscribe={subscribe} getSubscribe={getSubscribe}  />}
             {subscribe && <_TicketOwner subscribe={subscribe}/>}
             {subscribe && <_SubscribeDetail subscribe={subscribe}/>}
             {subscribe && <_UsageProgress setUserCanEnter={setUserCanEnter} ticket={subscribe}/>}

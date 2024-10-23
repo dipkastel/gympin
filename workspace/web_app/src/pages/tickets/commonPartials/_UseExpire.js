@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Chip, CircularProgress, Grid} from "@mui/material";
 import {getStringOfTime} from "../../../helper/utils";
 
-const _UseExpire = ({subscribe,getSubscribe,setUserCanEnter}) => {
-    const [startTimer, setStartTimer] = useState(new Date());
+const _UseExpire = ({subscribe,getSubscribe}) => {
     const [timerText, setTimerText] = useState(null);
 
 
@@ -15,7 +14,6 @@ const _UseExpire = ({subscribe,getSubscribe,setUserCanEnter}) => {
             if(distance<0){
                 getSubscribe();
                 clearInterval(changeTimer);
-                setUserCanEnter(false);
             }
             else{
                 var hour =Math.floor((distance ) / (1000 * 60 * 60));
@@ -24,7 +22,7 @@ const _UseExpire = ({subscribe,getSubscribe,setUserCanEnter}) => {
                 setTimerText(getStringOfTime(hour) +" : "+getStringOfTime(minutes)+" : "+getStringOfTime(seconds));
             }
         }, 1000)
-        setStartTimer(new Date());
+
         return () => {
             clearInterval(changeTimer);
         };

@@ -31,6 +31,10 @@ public final class CorporateConvertor {
         dto.setLogo(MultimediaConvertor.toDto(entity.getLogo()));
         dto.setDefaultExpireDuration(entity.getDed());
         try{
+            dto.setPersonnelCount(entity.getPersonnel().stream().filter(p->!p.isDeleted() ).count());
+
+        }catch (Exception e){}
+        try{
             dto.setContractDate(entity.getContractDate());
             Calendar expireDate = Calendar.getInstance();
             expireDate.setTime(entity.getContractDate());

@@ -9,6 +9,8 @@ import {Paper, Tab, Tabs} from "@mui/material";
 import CorporateManagementCorporateTab from "./CorporateManagementTabs/CorporateManagementCorporateTab";
 import CorporateManagementFinanceTab from "./CorporateManagementTabs/CorporateManagementFinanceTab";
 import CorporateManagementSettingTab from "./CorporateManagementTabs/CorporateManagementSettingTab";
+import CorporateManagementPersonnelTab from "./CorporateManagementTabs/CorporateManagementPersonnelTab";
+import CorporateManagementProcessTab from "./CorporateManagementTabs/CorporateManagementProcessTab";
 
 const CorporateDetailsManagement = () => {
     const error = useContext(ErrorContext);
@@ -49,12 +51,16 @@ const CorporateDetailsManagement = () => {
                             aria-label="full width tabs example"
                         >
                             <Tab label="سازمان" value={"CORPORATE"}/>
+                            <Tab label="پرسنل" value={"PERSONNEL"}/>
                             <Tab label="مالی" value={"FINANCE"}/>
+                            <Tab label="فرایند ها" value={"PROCESS"}/>
                             <Tab label="تنظیمات" value={"SETTING"}/>
                         </Tabs>
                     </Paper>
                     {selectedTab === "CORPORATE" && <CorporateManagementCorporateTab currentCorporate={currentCorporate}/>}
+                    {selectedTab === "PERSONNEL" && <CorporateManagementPersonnelTab currentCorporate={currentCorporate}/>}
                     {selectedTab === "FINANCE" && <CorporateManagementFinanceTab currentCorporate={currentCorporate}/>}
+                    {selectedTab === "PROCESS" && <CorporateManagementProcessTab currentCorporate={currentCorporate}/>}
                     {selectedTab === "SETTING" && <CorporateManagementSettingTab currentCorporate={currentCorporate} updatePage={getCorporateData}/>}
                 </div>
                 <div className="col-md-2">

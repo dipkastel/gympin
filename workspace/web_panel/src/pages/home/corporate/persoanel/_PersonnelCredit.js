@@ -1,17 +1,17 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import {Modal, Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import {Button, IconButton, Slider, TableCell, TextField, Tooltip, Typography} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
-import {getUserFixedName, toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
-import {ErrorContext} from "../../../../../components/GympinPagesProvider";
+import {getUserFixedName, toPriceWithComma, toPriceWithoutComma} from "../../../../helper";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {
     corporatePersonnel_addPersonnelCredit, corporatePersonnel_decreaseCredit,
     corporatePersonnel_getById, corporatePersonnel_manualExpireCredit
-} from "../../../../../network/api/CorporatePersonnel.api";
+} from "../../../../network/api/CorporatePersonnel.api";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import adapterJalali from "@date-io/date-fns-jalali";
 import {DatePicker} from "@mui/x-date-pickers";
@@ -24,14 +24,14 @@ import {
     Stairs,
     SupervisorAccount
 } from "@mui/icons-material";
-import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
+import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
 import warning from "react-redux/lib/utils/warning";
-import {TransactionPersonnelCredit_query} from "../../../../../network/api/TransactionPersonnelCredit.api";
+import {TransactionPersonnelCredit_query} from "../../../../network/api/TransactionPersonnelCredit.api";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 
-const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
+const _PersonnelCredit = ({corporatePersonnel, getPerson}) => {
     const error = useContext(ErrorContext);
     const [openModalAdd, setOpenModalAdd] = useState(false)
     const [expireDate, setExpireDate] = useState(null);
@@ -446,4 +446,4 @@ const PersonnelCredit = ({corporatePersonnel, getPerson}) => {
     );
 };
 
-export default PersonnelCredit;
+export default _PersonnelCredit;

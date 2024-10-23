@@ -52,5 +52,7 @@ public class CorporateDto extends BaseDtoWithCreateUpdate<CorporateDto> {
     @JsonProperty("Logo")
     private MultimediaDto logo;
 
+    @JsonProperty("PersonnelCount")
+    private Long personnelCount;
 
 }

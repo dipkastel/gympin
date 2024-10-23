@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
 import Select from "react-select";
-import {corporatePersonnel_getById, corporatePersonnel_update} from "../../../../../network/api/CorporatePersonnel.api";
-import {ErrorContext} from "../../../../../components/GympinPagesProvider";
+import {corporatePersonnel_getById, corporatePersonnel_update} from "../../../../network/api/CorporatePersonnel.api";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
-const PersonnelRole = ({personnelId}) => {
+const _PersonnelRole = ({personnelId}) => {
     const error = useContext(ErrorContext);
     const [personnel,SetPersonnel] = useState(null)
 
@@ -61,4 +61,4 @@ const PersonnelRole = ({personnelId}) => {
     );
 };
 
-export default PersonnelRole;
+export default _PersonnelRole;

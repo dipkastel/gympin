@@ -22,20 +22,19 @@ import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {ArticleStatus} from "../../../../../helper/enums/ArticleStatus";
 import {getRppCorporateTransactions, SetRppCorporateTransactions} from "../../../../../helper/pocket/pocket";
 
-function CorporateTransactions({currentCorporate, updatePage}) {
+function CorporateDepositTransactions({currentCorporate, updatePage}) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppCorporateTransactions());
     const [transactions, SetTransactions] = useState({});
-    const [transactionType, SetTransactionType] = useState("DEPOSIT");
 
     useEffect(() => {
         getTransactions()
-    }, [page, rowsPerPage,transactionType]);
+    }, [page, rowsPerPage]);
 
     function getTransactions() {
         transactionCorporate_query({
             queryType: "FILTER",
-            Type:transactionType,
+            Type:"DEPOSIT",
             FinanceCorporateId: currentCorporate.Id,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
@@ -47,25 +46,7 @@ function CorporateTransactions({currentCorporate, updatePage}) {
     return (
         <Portlet>
             <PortletHeader
-                title="تراکنش های سازمان"
-                toolbar={
-                    <PortletHeaderToolbar>
-
-                        <FormControl fullWidth>
-                            <InputLabel id="status-select-label">نوع تراکنش</InputLabel>
-                            <Select
-                                label="نوع تراکنش"
-                                size={"small"}
-                                value={transactionType}
-                                onChange={e => SetTransactionType(e.target.value)}
-                            >
-                                {Object.keys(TransactionCorporateTypes).map((item, number) => (
-                                    <MenuItem key={number} value={item}>{TransactionCorporateTypes[item]}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </PortletHeaderToolbar>
-                }
+                title="تراکنش های شارژ سازمان"
             />
 
             <PortletBody>
@@ -84,8 +65,6 @@ function CorporateTransactions({currentCorporate, updatePage}) {
                                     تراکنش</TableCell>
                                 <TableCell align="right" padding="normal" sortDirection={false}>وضعیت
                                     تراکنش</TableCell>
-                                <TableCell align="right" padding="normal" sortDirection={false}>نوع
-                                    تراکنش</TableCell>
                                 <TableCell align="right" padding="normal" sortDirection={false}>سریال ارتباطی تراکنش
                                     ها</TableCell>
                             </TableRow>
@@ -102,9 +81,6 @@ function CorporateTransactions({currentCorporate, updatePage}) {
                                         </TableCell>
                                         <TableCell component="th" padding="normal" align="right">
                                             {TransactionStatus[row.TransactionStatus]}
-                                        </TableCell>
-                                        <TableCell component="th" padding="normal" align="right">
-                                            {TransactionCorporateTypes[row.TransactionType]}
                                         </TableCell>
                                         <TableCell component="th" padding="normal" align="right">
                                             {row.Serial.Serial}
@@ -141,4 +117,4 @@ function CorporateTransactions({currentCorporate, updatePage}) {
     );
 }
 
-export default CorporateTransactions;
+export default CorporateDepositTransactions;

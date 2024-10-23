@@ -87,8 +87,6 @@ const _UserTransactions = ({user}) => {
     );
 };
 
-export default _UserTransactions;
-
 function TabPanel(props) {
     const {children, value, index} = props;
 
@@ -107,3 +105,6 @@ function TabPanel(props) {
         </div>
     );
 }
+
+export default _UserTransactions;
+

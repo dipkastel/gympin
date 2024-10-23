@@ -66,6 +66,7 @@ export let CorporatePersonnelApi = {
     addList: "v1/corporatePersonnel/addList",
     query: "v1/corporatePersonnel/query",
     addCreditToAll: "v1/corporatePersonnel/addCreditToAll",
+    addNWCreditToAll: "v1/corporatePersonnel/addNWCreditToAll",
     getByUser: "v1/corporatePersonnel/corporateByUserId",
     update: "v1/corporatePersonnel/update",
     getTotalUserCredits: "v1/corporatePersonnel/getTotalUserCredits",

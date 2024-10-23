@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
-import {Avatar, Button, Checkbox, FormControlLabel, TableCell, Tooltip} from "@mui/material";
+import {Avatar, Button, Checkbox, FormControlLabel, TableCell, TextField, Tooltip} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import Table from "@mui/material/Table";
@@ -29,18 +29,22 @@ const CorporatePersonnel = ({currentCorporate}) => {
     const [openModalAdd, setOpenModalAdd] = useState(false)
     const [openModalAddList, setOpenModalAddList] = useState(false)
     const [itemToDelete, setItemToDelete] = useState(null)
+    const [SearchName, setSearchName] = useState(null)
+    const [searchPhone, setSearchPhone] = useState(null)
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppCorporatePersonnel());
 
     useEffect(() => {
         getPersonnelsOfCorporate();
-    }, [page,rowsPerPage,currentCorporate]);
+    }, [page,rowsPerPage,currentCorporate,SearchName,searchPhone]);
 
     function getPersonnelsOfCorporate() {
         corporate_query({
             queryType: "FILTER",
             CorporateId: currentCorporate.Id,
+            FullName:SearchName,
+            PhoneNumber:searchPhone,
             paging: {Page: page, Size: (rowsPerPage), Desc: true}
         }).then(data => {
             SetCorporatePersonnels(data.data.Data);
@@ -241,6 +245,34 @@ const CorporatePersonnel = ({currentCorporate}) => {
                     title="پرسنل"
                     toolbar={
                         <PortletHeaderToolbar>
+                            <TextField
+                                fullWidth
+                                id="outlined-adornment-password"
+                                className="w-100"
+                                variant="outlined"
+                                margin="normal"
+                                type="text"
+                                value={SearchName||""}
+                                onChange={(event) => {
+                                    setSearchName(event.target.value||null);
+                                    setPage(0);
+                                }}
+                                label={"جستجو نام"}
+                            />
+                            <TextField
+                                fullWidth
+                                id="outlined-adornment-password"
+                                className="w-100"
+                                variant="outlined"
+                                margin="normal"
+                                type="text"
+                                value={searchPhone||""}
+                                onChange={(event) => {
+                                    setSearchPhone(event.target.value||null);
+                                    setPage(0);
+                                }}
+                                label={"جستجو شماره همراه"}
+                            />
                             <button
                                 type="button"
                                 className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
@@ -255,6 +287,7 @@ const CorporatePersonnel = ({currentCorporate}) => {
                             >
                                 <AddIcon/>
                             </button>
+
                         </PortletHeaderToolbar>
                     }
                 />

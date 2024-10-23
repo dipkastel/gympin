@@ -79,20 +79,6 @@ public class SmsInServiceImpl implements SmsInService {
         }
         insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_JOINTOPLACE",SmsTypes.JOINED_TO_PLACE);
         return true;
-//
-//        String url = Consts.FARAZ_SMS_FIXPART +
-//                "&pid=" + Consts.FARAZ_SMS_PATTERN_JOINTOPLACE +
-//                "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER +
-//                "&tnum=" + smsDto.getUserNumber() +
-//                "&p1" + "=place" + "&v1=" + URLEncoder.encode(smsDto.getText1(), StandardCharsets.UTF_8) +
-//                "&p2" + "=role" + "&v2=" + URLEncoder.encode(smsDto.getText2(), StandardCharsets.UTF_8);
-//        URL url2 = new URL(url);
-//        URLConnection con = url2.openConnection();
-//        InputStream in = con.getInputStream();
-//        String encoding = con.getContentEncoding();
-//        encoding = encoding == null ? "UTF-8" : encoding;
-//        String body = IOUtils.toString(in, encoding);
-//        return Integer.parseInt(body) > 0;
     }
 
     @Override
@@ -108,15 +94,6 @@ public class SmsInServiceImpl implements SmsInService {
         }
         insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_JOINTOCORPORATE",SmsTypes.JOINED_TO_CORPORATE);
         return true;
-
-//        String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTERN_JOINTOCORPORATE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1" + "=corporate" + "&v1=" + URLEncoder.encode(smsDto.getText1(), StandardCharsets.UTF_8);
-//        URL url2 = new URL(url);
-//        URLConnection con = url2.openConnection();
-//        InputStream in = con.getInputStream();
-//        String encoding = con.getContentEncoding();
-//        encoding = encoding == null ? "UTF-8" : encoding;
-//        String body = IOUtils.toString(in, encoding);
-//        return Integer.parseInt(body) > 0;
     }
 
     @Override
@@ -131,15 +108,6 @@ public class SmsInServiceImpl implements SmsInService {
         }
         insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_JOINREQUEST",SmsTypes.JOIN_PLACE_REQUEST);
         return true;
-
-//        String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTERN_JOINREQUEST + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1" + "=place" + "&v1=" + URLEncoder.encode(smsDto.getText1(), StandardCharsets.UTF_8);
-//        URL url2 = new URL(url);
-//        URLConnection con = url2.openConnection();
-//        InputStream in = con.getInputStream();
-//        String encoding = con.getContentEncoding();
-//        encoding = encoding == null ? "UTF-8" : encoding;
-//        String body = IOUtils.toString(in, encoding);
-//        return Integer.parseInt(body) > 0;
     }
 
     @Override
@@ -154,16 +122,6 @@ public class SmsInServiceImpl implements SmsInService {
         }
         insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_LOWBUDGET_CORPORATE",SmsTypes.CORPORATE_LOW_BUDGET);
         return true;
-//
-//
-//        String url = Consts.FARAZ_SMS_FIXPART + "&pid=" + Consts.FARAZ_SMS_PATTERN_LOWBUDGET_CORPORATE + "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER + "&tnum=" + smsDto.getUserNumber() + "&p1" + "=place" + "&v1=" + URLEncoder.encode(smsDto.getText1(), StandardCharsets.UTF_8);
-//        URL url2 = new URL(url);
-//        URLConnection con = url2.openConnection();
-//        InputStream in = con.getInputStream();
-//        String encoding = con.getContentEncoding();
-//        encoding = encoding == null ? "UTF-8" : encoding;
-//        String body = IOUtils.toString(in, encoding);
-//        return Integer.parseInt(body) > 0;
     }
 
     @Override
@@ -180,20 +138,6 @@ public class SmsInServiceImpl implements SmsInService {
         }
         insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_USER_CHARGE",SmsTypes.USER_CHARGE);
         return true;
-
-//        String url = Consts.FARAZ_SMS_FIXPART +
-//                "&pid=" + Consts.FARAZ_SMS_PATTERN_USER_CHARGE +
-//                "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER +
-//                "&tnum=" + smsDto.getUserNumber() +
-//                "&p1" + "=amount" +
-//                "&v1=" + URLEncoder.encode(smsDto.getText1(), StandardCharsets.UTF_8);
-//        URL url2 = new URL(url);
-//        URLConnection con = url2.openConnection();
-//        InputStream in = con.getInputStream();
-//        String encoding = con.getContentEncoding();
-//        encoding = encoding == null ? "UTF-8" : encoding;
-//        String body = IOUtils.toString(in, encoding);
-//        return Integer.parseInt(body) > 0;
     }
 
     @Override
@@ -209,21 +153,6 @@ public class SmsInServiceImpl implements SmsInService {
         }
         insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_CORPORATE_CHARGE",SmsTypes.CORPORATE_CHARGE);
         return true;
-
-//
-//        String url = Consts.FARAZ_SMS_FIXPART +
-//                "&pid=" + Consts.FARAZ_SMS_PATTERN_CORPORATE_CHARGE +
-//                "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER +
-//                "&tnum=" + smsDto.getUserNumber() +
-//                "&p1" + "=amount" +
-//                "&v1=" + URLEncoder.encode(smsDto.getText1(), StandardCharsets.UTF_8);
-//        URL url2 = new URL(url);
-//        URLConnection con = url2.openConnection();
-//        InputStream in = con.getInputStream();
-//        String encoding = con.getContentEncoding();
-//        encoding = encoding == null ? "UTF-8" : encoding;
-//        String body = IOUtils.toString(in, encoding);
-//        return Integer.parseInt(body) > 0;
     }
 
     @Override
@@ -239,22 +168,66 @@ public class SmsInServiceImpl implements SmsInService {
         }
         insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_USER_BUY_SUBSCRIBE",SmsTypes.USER_BUY_SUBSCRIBE);
         return true;
-//
-//        String url = Consts.FARAZ_SMS_FIXPART +
-//                "&pid=" + Consts.FARAZ_SMS_PATTERN_USER_BUY_SUBSCRIBE +
-//                "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER +
-//                "&tnum=" + smsDto.getUserNumber() +
-//                "&p1" + "=subscribe-name" +
-//                "&v1=" + URLEncoder.encode(smsDto.getText1(), StandardCharsets.UTF_8) +
-//                "&p2" + "=place-name" +
-//                "&v2=" + URLEncoder.encode(smsDto.getText2(), StandardCharsets.UTF_8);
-//        URL url2 = new URL(url);
-//        URLConnection con = url2.openConnection();
-//        InputStream in = con.getInputStream();
-//        String encoding = con.getContentEncoding();
-//        encoding = encoding == null ? "UTF-8" : encoding;
-//        String body = IOUtils.toString(in, encoding);
-//        return Integer.parseInt(body) > 0;
+    }
+
+    @Override
+    public boolean sendYouBuyMultipleSubscribe(SmsDto smsDto) throws Exception {
+        log.info("Going to sendYouBuySubscribe with params: {} ...\n", smsDto);
+
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_USER_BUY_MULTIPLE_SUBSCRIBE",SmsTypes.USER_BUY_SUBSCRIBE);
+        return true;
+    }
+
+    @Override
+    public boolean sendAdminRoleInCorporate(SmsDto smsDto) throws Exception {
+        log.info("Going to sendYouBuySubscribe with params: {} ...\n", smsDto);
+
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_ADMIN_TO_CORPORATE",SmsTypes.JOINED_TO_CORPORATE);
+        return true;
+    }
+
+    @Override
+    public boolean sendFirstTicketSell(SmsDto smsDto) throws Exception {
+        log.info("Going to sendYouBuySubscribe with params: {} ...\n", smsDto);
+
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_SELL_TICKET_1",SmsTypes.USER_BUY_SUBSCRIBE);
+        return true;
+    }
+
+    @Override
+    public boolean sendOrdinaryTicketSell(SmsDto smsDto) throws Exception {
+        log.info("Going to sendYouBuySubscribe with params: {} ...\n", smsDto);
+
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_SELL_TICKET_2",SmsTypes.USER_BUY_SUBSCRIBE);
+        return true;
     }
 
     @Override
@@ -270,20 +243,6 @@ public class SmsInServiceImpl implements SmsInService {
         }
         insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_SUPPORT_ANSWERED",SmsTypes.SUPPORT_ANSWERED);
         return true;
-//
-//        String url = Consts.FARAZ_SMS_FIXPART +
-//                "&pid=" + Consts.FARAZ_SMS_PATTERN_SUPPORT_ANSWERED +
-//                "&fnum=" + Consts.FARAZ_SMS_SENDER_NUMBER +
-//                "&tnum=" + smsDto.getUserNumber() +
-//                "&p1" + "=support-id" +
-//                "&v1=" + URLEncoder.encode(smsDto.getText1(), StandardCharsets.UTF_8);
-//        URL url2 = new URL(url);
-//        URLConnection con = url2.openConnection();
-//        InputStream in = con.getInputStream();
-//        String encoding = con.getContentEncoding();
-//        encoding = encoding == null ? "UTF-8" : encoding;
-//        String body = IOUtils.toString(in, encoding);
-//        return Integer.parseInt(body) > 0;
     }
 
 

@@ -8,26 +8,8 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 const _SubscribeDetail = ({subscribe}) => {
 
-    const error = useContext(ErrorContext);
-    const [timing, setTiming] = useState(null)
     const [openTiming, setOpenTiming] = useState(false)
     const [openDescription, SetOpenDescription] = useState(false);
-    useEffect(() => {
-        console.log(subscribe)
-        getTiming(subscribe);
-    }, [subscribe]);
-
-    function getTiming(subscribe) {
-        ticketSubscribe_getActiveTimesByTicketSubscribe({ticketSubscribeId: subscribe.TicketSubscribe.Id}).then(result => {
-            setTiming(result.data.Data);
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
-    }
 
     return (
         <div>
@@ -59,7 +41,7 @@ const _SubscribeDetail = ({subscribe}) => {
                         </Grid>
                         {subscribe.Description&&<Grid container direction="row" justifyContent={"space-between"} alignItems={"center"}>
                             <Typography sx={{color: "#858585"}} variant={"body2"}>{"توضیحات : "}</Typography>
-                            <IconButton aria-label="openDescription" color="info"
+                            <IconButton sx={{pt:1,pb:0}} aria-label="openDescription" color="info"
                                         onClick={() => SetOpenDescription(!openDescription)}>
                                 <HelpOutlineIcon/>
                             </IconButton>
@@ -74,7 +56,7 @@ const _SubscribeDetail = ({subscribe}) => {
                             <Grid>
                                 <Typography sx={{color: "#858585"}} variant={"body2"}>{"زمان استفاده : "}</Typography>
                             </Grid>
-                            <IconButton onClick={() => setOpenTiming(!openTiming)} color={"info"}>
+                            <IconButton sx={{pt:1,pb:0}} onClick={() => setOpenTiming(!openTiming)} color={"info"}>
                                 <HistoryToggleOffIcon/>
                             </IconButton>
                         </Grid>}

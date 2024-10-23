@@ -151,23 +151,27 @@ const CorporateManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>نام شرکت</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>شارژ شرکت</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>اعتبار پرسنل</TableCell>
-                                    <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>نوع قرارداد</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>تعداد پرسنل</TableCell>
+                                    <TableCell align="left" padding="normal" sortDirection={false}>وضعیت</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {corporates.content && corporates.content.map((row, index) => {
-                                    const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
                                         <TableRow hover onClick={(event) => {
                                             history.push({pathname: "corporate/details/" + row.Id});
                                         }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
-                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
+                                            <TableCell component="th" scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
+                                            {console.log(row)}
                                             <TableCell align="right">
                                                 <Avatar alt="corporate Logo" src={row?.Logo?.Url||""}  sx={{width:40,height:40}} /></TableCell>
                                             <TableCell align="right">{row.Name||"ثبت نشده"}</TableCell>
                                             <TableCell align="right">{toPriceWithComma(row?.FinanceCorporate?.TotalDeposit)}</TableCell>
                                             <TableCell align="right">{toPriceWithComma(row?.FinanceCorporate?.TotalCredits)}</TableCell>
+                                            <TableCell align="right">{row.ContractType}</TableCell>
+                                            <TableCell align="right">{row.PersonnelCount}</TableCell>
                                             <TableCell align="right">
                                                 <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
                                             </TableCell>

@@ -19,8 +19,6 @@ const _QRcode = ({ticket, userCanEnter, type}) => {
         if (!code) return;
         let changeTimer = setInterval(function () {
             let distance = new Date().getTime() - startTimer.getTime();
-
-            console.log("start Time", new Date().getTime(), startTimer.getTime(), distance, Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)))
             var minutes = respite - 1 - Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = 60 - Math.floor((distance % (1000 * 60)) / 1000);
             setTimerText(getStringOfTime(seconds) + " : " + getStringOfTime(minutes));
@@ -62,7 +60,6 @@ const _QRcode = ({ticket, userCanEnter, type}) => {
             }
         });
     }
-
 
     if (!userCanEnter) return (<></>);
     return (

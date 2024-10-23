@@ -47,6 +47,12 @@ function UserIncreaseDeposit({currentUser, updatePage}) {
             paging: {Page: page, Size: (rowsPerPage), orderBy: "Serial", Desc: true}
         }).then((data) => {
             SetUserIncreaseDepositInvoice(data.data.Data)
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
         });
     }
 

@@ -37,4 +37,6 @@ public class FinanceCorporateDto extends BaseDtoWithCreateUpdate<FinanceCorporat
     private CorporateDto corporate;
 
 
+
+
 }

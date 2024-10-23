@@ -47,7 +47,8 @@ export let Api_url = {
         deleteBuyable:"v1/invoice/deleteBuyable",
     },
     increaseUserDeposit:{
-        requestIncreaseUserDeposits:"v1/increaseUserDeposit/requestIncreaseUserDeposits"
+        requestIncreaseUserDeposits:"v1/increaseUserDeposit/requestIncreaseUserDeposits",
+        query: "v1/increaseUserDeposit/query",
     },
     location:{
         query:"v1/location/query"

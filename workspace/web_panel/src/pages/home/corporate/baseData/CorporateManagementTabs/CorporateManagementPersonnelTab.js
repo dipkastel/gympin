@@ -21,14 +21,17 @@ const CorporateManagementCorporateTab = ({currentCorporate}) => {
         <>
             {!updatePageP&&currentCorporate && <div className="row">
 
+                <div className="col-md-12">
+                    <CorporatePersonnel currentCorporate={currentCorporate} pUpdatePage={updatePage}/>
+                </div>
                 <div className="col-md-6">
-                    <CorporateBasics currentCorporate={currentCorporate} pUpdatePage={updatePage}/>
+                    <CorporatePersonnelCreditAction currentCorporate={currentCorporate} pUpdatePage={updatePage}/>
 
                 </div>
                 <div className="col-md-6">
-                    <PersonnelGroups corporate={currentCorporate} pUpdatePage={updatePage}/>
-                </div>
+                    <CorporatePersonnelNwCreditAction currentCorporate={currentCorporate} pUpdatePage={updatePage}/>
 
+                </div>
             </div>}
         </>
     );

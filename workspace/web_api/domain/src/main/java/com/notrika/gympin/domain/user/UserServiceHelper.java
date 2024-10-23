@@ -62,12 +62,13 @@ public class UserServiceHelper {
         Boolean canPay = true;
         for (CorporatePersonnelEntity personnel : corportePersonnels) {
             //Check corporate
-            if (personnel.getCorporate().getStatus() != CorporateStatusEnum.ACTIVE)
+            CorporateEntity corporate = personnel.getCorporate();
+            if (corporate.getStatus() != CorporateStatusEnum.ACTIVE)
                 canPay = false;
             var activeCredits = personnel.getCredits().stream().filter(c -> c.getStatus() == CorporatePersonnelCreditStatusEnum.ACTIVE).collect(Collectors.toList());
             activeCredits = checkCreditExpiration(activeCredits);
             var personelCorproateMaxCredit = activeCredits.stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
-            if (personelCorproateMaxCredit.compareTo(personnel.getCorporate().getFinanceCorporate().getTotalDeposit()) > 0)
+            if (personelCorproateMaxCredit.compareTo(corporate.getFinanceCorporate().getTotalDeposit()) > 0)
                 canPay = false;
             for (FinanceCorporatePersonnelCreditEntity credit : activeCredits) {
                 //check Credit
@@ -77,11 +78,11 @@ public class UserServiceHelper {
                 detail.setCreditStatus(credit.getStatus());
                 detail.setPersonnelId(personnel.getId());
                 detail.setCreditType(CreditType.SPONSOR);
-                detail.setContractType(personnel.getCorporate().getContractType());
+                detail.setContractType(corporate.getContractType());
                 detail.setCreditAmount(credit.getCreditAmount());
                 detail.setExpireDate(credit.getExpireDate());
                 detail.setCreditPayableAmount(canPay ? credit.getCreditAmount() : BigDecimal.ZERO);
-                detail.setCorporate(CorporateConvertor.toDto(personnel.getCorporate()));
+                detail.setCorporate(CorporateConvertor.toDto(corporate));
                 result.add(detail);
             }
         }
