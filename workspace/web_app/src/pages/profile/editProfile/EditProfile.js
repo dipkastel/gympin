@@ -52,6 +52,11 @@ const EditProfile = (props) => {
     }, [currentUser,usernameAvalableError]);
 
     useEffect(() => {
+
+        if(username?.length>30){
+            setUsernameAvalableError("نام کاربری طولانی است.");
+            return ;
+        }
         setUsernameAvalableError("درحال بررسی ....");
         setFieldValue("Username",username);
 
@@ -117,6 +122,9 @@ const EditProfile = (props) => {
                     if (!value) {
                         return  "نام و نام خانوادگی الزامی است";
                     }
+                    if(value?.length>50){
+                        return "نام و نام خانوادگی طولانی است.";
+                    }
                     break
                 }
                 case "Gender": {
@@ -142,6 +150,9 @@ const EditProfile = (props) => {
                     break
                 }
                 case "Email": {
+                    if(value?.length>50){
+                        return "ایمیل طولانی است.";
+                    }
                     return ;
                 }
                 case "Bio": {

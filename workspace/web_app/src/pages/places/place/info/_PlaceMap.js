@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Grid, Typography} from "@mui/material";
+import {Button, Card, Grid, Typography} from "@mui/material";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {Form} from "react-bootstrap";
@@ -89,6 +89,38 @@ const _PlaceMap = ({place}) => {
                     </Grid>
                 </Grid>
             </Card>
+
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Grid md={6}><Card elevation={3} sx={{margin: 1, padding: 1}}>
+                            <Button  rel="nofollow" href={"https://waze.com/ul?ll="+place.Latitude+","+place.Longitude+"&navigate=yes"} variant={"outlined"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
+                                <Typography variant={"h6"}>{"مسیریابی با ویز"}</Typography>
+                            </Button>
+                        </Card>
+                    </Grid>
+                    <Grid md={6}><Card elevation={3} sx={{margin: 1, padding: 1}}>
+                            <Button rel="nofollow"  href={"https://www.google.com/maps/dir/?api=1&destination="+place.Latitude+","+place.Longitude} variant={"outlined"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
+                                <Typography variant={"h6"}>{"مسیریابی با گوگل"}</Typography>
+                            </Button>
+                        </Card>
+                    </Grid>
+                    <Grid md={6}><Card elevation={3} sx={{margin: 1, padding: 1}}>
+                            <Button rel="nofollow" href={"https://balad.ir/location?latitude="+place.Latitude+"&longitude="+place.Longitude+"&zoom=16.5"} variant={"outlined"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
+                                <Typography variant={"h6"}>{"مسیریابی با بلد"}</Typography>
+                            </Button>
+                        </Card>
+                    </Grid>
+                    <Grid md={6}><Card elevation={3} sx={{margin: 1, padding: 1}}>
+                            <Button rel="nofollow" href={"https://neshan.org/maps/@"+place.Latitude+","+place.Longitude+",15.8z,0p/routing/car"} variant={"outlined"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
+                                <Typography variant={"h6"}>{"مسیریابی با نشان"}</Typography>
+                            </Button>
+                        </Card>
+                    </Grid>
+                </Grid>
         </div>
     );
 };

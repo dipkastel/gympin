@@ -4,7 +4,8 @@ import {
     Alert,
     Button,
     Card,
-    CardContent, CardHeader,
+    CardContent,
+    CardHeader,
     Chip,
     Dialog,
     DialogActions,
@@ -13,7 +14,6 @@ import {
     Grid,
     Link,
     List,
-    ListItemText,
     TextField,
     Typography
 } from "@mui/material";
@@ -55,11 +55,11 @@ const Support = () => {
     function renderModalAdd() {
         const addSupport = (e) => {
             e.preventDefault()
-            if(e.target.Title.value.length>30){
+            if (e.target.Title.value.length > 30) {
                 error.showError({message: "موضوع طولانی است",});
                 return;
             }
-            if(e.target.Message.value.length>250){
+            if (e.target.Message.value.length > 250) {
                 error.showError({message: "متن تیکت طولانی است",});
                 return;
             }
@@ -72,7 +72,7 @@ const Support = () => {
                 Message: {
                     Status: "AWAITING_EXPERT",
                     Message: e.target.Message.value,
-                    IsRead:"true"
+                    IsRead: "true"
                 },
                 CorporateId: corporate.Id
             }).then(result => {
@@ -124,81 +124,101 @@ const Support = () => {
 
     function getCollorByStatus(Status) {
         switch (Status) {
-            case "COMPLETE": return "#bddcd1";
-            case "CANCEL": return "#c2c2c2";
-            case "AWAITING_EXPERT": return "#bdcfdc";
-            case "AWAITING_USER": return "#cebddc";
-            case "PROCESSING": return "#bebddc";
+            case "COMPLETE":
+                return "#bddcd1";
+            case "CANCEL":
+                return "#c2c2c2";
+            case "AWAITING_EXPERT":
+                return "#bdcfdc";
+            case "AWAITING_USER":
+                return "#cebddc";
+            case "PROCESSING":
+                return "#bebddc";
         }
     }
 
     return (
         <>
 
-            <div>
-                <div className={"section-title mt-3"}>
-                    پشتیبانی
-                </div>
-            </div>
-            <Card elevation={3} sx={{margin: 1}} >
-                <CardContent>
-                    <Typography item variant={"subtitle1"} xs={8}>
-                        پیش از ایجاد تیکت جدید سوالات متداول را مطالعه کنید!
-                    </Typography>
-                    <Button fullWidth item xs={4} variant={"outlined"} size={"small"} href={"https://gympin.ir/faq"} >سوالات متداول</Button>
-                    <Alert className={"mt-2"} variant={"standard"} color={"info"} icon={false} >مشکلات ، پرسش ها و نظرات خود را برای ما ارسال کنید.همکاران ما در اسرع وقت پاسخگوی تیکت شما خواهند بود.</Alert>
-                    <Button className={"mt-2"} variant={"contained"} fullWidth onClick={() => setOpenModalAdd(true)}>ایجاد
-                        تیکت جدید</Button>
-                </CardContent>
-            </Card>
 
-            {support?.content && <>
-                <div>
-                    <div className={"section-title mt-4 mb-1"}>
-                        پیام های پشتیبانی
+            <div className={"container"}>
+                <div className={"row"}>
+                    <div className={"col-md-6  p-0"}>
+                        <div>
+                            <div className={"section-title mt-3"}>
+                                پشتیبانی
+                            </div>
+                        </div>
+                        <Card elevation={3} sx={{margin: 1}}>
+                            <CardContent>
+                                <Typography item variant={"subtitle1"} xs={8}>
+                                    پیش از ایجاد تیکت جدید سوالات متداول را مطالعه کنید!
+                                </Typography>
+                                <Button fullWidth item xs={4} variant={"outlined"} size={"small"} href={"https://gympin.ir/faq"}>سوالات
+                                    متداول</Button>
+                                <Alert className={"mt-2"} variant={"standard"} color={"info"} icon={false}>مشکلات ، پرسش ها و نظرات
+                                    خود را برای ما ارسال کنید.همکاران ما در اسرع وقت پاسخگوی تیکت شما خواهند بود.</Alert>
+                                <Button className={"mt-2"} variant={"contained"} fullWidth onClick={() => setOpenModalAdd(true)}>ایجاد
+                                    تیکت جدید</Button>
+                            </CardContent>
+                        </Card>
+
+                    </div>
+                    <div className={"col-md-6  p-0"}>
+
+
+                        {support?.content && <>
+                            <div>
+                                <div className={"section-title mt-4 mb-1"}>
+                                    پیام های پشتیبانی
+                                </div>
+                            </div>
+                            <List sx={{width: '100%', bgcolor: 'background.paper'}}>
+                                {support?.content.map(item => (
+                                    <div key={item.Id}>
+                                        <Link href={"/management/Support/detail/" + item.Id}
+                                              sx={{width: "100%", textDecoration: "none", color: "#666666"}}>
+                                            <Card elevation={3} sx={{marginX: 1, mt: 1, borderRadius: 3}}>
+                                                <CardHeader sx={{backgroundColor: getCollorByStatus(item.Status)}}
+                                                            title={item.Title}
+                                                            titleTypographyProps={{variant: "body1"}}
+                                                            action={item.UnreadCount > 0 && <Chip sx={{pt: "3px"}} size="small"
+                                                                                                  color={"error"}
+                                                                                                  label={item.UnreadCount}/>}
+                                                />
+                                            </Card>
+                                            <Grid
+                                                container
+                                                direction="row"
+                                                justifyContent="space-between"
+                                                alignItems={"top"}
+                                                sx={{px: 2}}
+                                            >
+                                                <Typography sx={{color: "gray"}} variant={"overline"}>
+                                                    {SupportStatus[item.Status]}
+                                                </Typography>
+                                                <Typography sx={{color: "gray"}} variant={"overline"}>
+                                                    {new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                        hour: "2-digit",
+                                                        minute: "2-digit"
+                                                    })}
+                                                </Typography>
+                                            </Grid>
+                                        </Link>
+                                    </div>
+
+                                ))}
+
+                            </List>
+                        </>}
                     </div>
                 </div>
-                <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-                    {support?.content.map(item => (
-                        <div key={item.Id}>
-                            <Link href={"/management/Support/detail/" + item.Id}
-                                  sx={{width: "100%", textDecoration: "none", color: "#666666"}}>
-                                <Card elevation={3} sx={{marginX: 1,mt:1,borderRadius:3}}>
-                                    <CardHeader sx={{backgroundColor:getCollorByStatus(item.Status)}}
-                                                title={item.Title}
-                                                titleTypographyProps={{variant:"body1"}}
-                                                action={item.UnreadCount>0 &&<Chip sx={{pt:"3px"}} size="small"
-                                                                                   color={"error"}
-                                                                                   label={item.UnreadCount}/>}
-                                    />
-                                </Card>
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justifyContent="space-between"
-                                    alignItems={"top"}
-                                    sx={{px:2}}
-                                >
-                                    <Typography sx={{color:"gray"}} variant={"overline"} >
-                                        {SupportStatus[item.Status]}
-                                    </Typography>
-                                    <Typography sx={{color:"gray"}} variant={"overline"} >
-                                        {new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric',
-                                            hour: "2-digit",
-                                            minute: "2-digit"
-                                        })}
-                                    </Typography>
-                                </Grid>
-                            </Link>
-                        </div>
+            </div>
 
-                    ))}
 
-                </List>
-            </>}
 
             {renderModalAdd()}
         </>

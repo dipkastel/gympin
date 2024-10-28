@@ -5,6 +5,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePer
 import com.notrika.gympin.common.finance.IncreaseUserDeposit.enums.DepositStatus;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
+import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
@@ -68,6 +69,8 @@ public class CalculatePaymentsServiceImpl {
     SmsInService smsService;
     @Autowired
     FinanceHelper financeHelper;
+    @Autowired
+    SettingsService settingsService;
 
 
     @Transactional
@@ -89,19 +92,22 @@ public class CalculatePaymentsServiceImpl {
                 }
                 if (TransactionResult) {
 
+                    //Tax
+                    BigDecimal amountToIncrease = BigDecimal.valueOf(request.getAmount().longValue()/(1+getCorporateTax()));
+                    BigDecimal tax = request.getAmount().subtract(amountToIncrease);
                     financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
                             .serial(transactionSerial)
                             .isChecked(false)
                             .latestBalance(corporateFinance.getTotalDeposit())
                             .transactionStatus(TransactionStatus.COMPLETE)
                             .transactionType(TransactionBaseType.USER)
-                            .amount(request.getAmount())
+                            .amount(amountToIncrease)
                             .financeCorporate(corporateFinance)
-                            .description(description + " " + additionalDescription)
+                            .description(description + " " + additionalDescription+" Tax : "+tax)
                             .build()
                     );
 
-                    var newDeposit = corporateFinance.getTotalDeposit().add(request.getAmount());
+                    var newDeposit = corporateFinance.getTotalDeposit().add(amountToIncrease);
                     corporateFinance.setTotalDeposit(newDeposit);
                     financeCorporateRepository.update(corporateFinance);
                     // todo send increase sms
@@ -112,7 +118,7 @@ public class CalculatePaymentsServiceImpl {
                                     SmsDto.builder()
                                             .smsType(SmsTypes.CORPORATE_CHARGE)
                                             .userNumber(corporateAdmin.getPhoneNumber())
-                                            .text1(request.getAmount().toString())
+                                            .text1(amountToIncrease.toString())
                                             .build()
                             );
                         }
@@ -176,6 +182,14 @@ public class CalculatePaymentsServiceImpl {
         }
     }
 
+    private Float getCorporateTax() {
+        try {
+            String taxValue =  settingsService.getByKey("CORPORATE_GENERAL_TAX").getValue();
+            return Float.parseFloat(taxValue)/100;
+        }catch (Exception e){
+            return 0.1f;
+        }
+    }
 
 
     public void PayToPlace(PurchasedSubscribeEntity subscribeEntity,FinanceSerialEntity serial) {

@@ -2,14 +2,14 @@ import React, {useContext, useEffect, useState} from "react";
 import _ListItem from "../../components/_ListItem";
 import {connect, useSelector} from "react-redux";
 import {authActions} from "../../helper/redux/actions/AuthActions";
-import {Support_getCorporateSupportCount, Support_query} from "../../network/api/support.api";
+import {Support_getCorporateSupportCount} from "../../network/api/support.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 
 
 function Management(props) {
 
     const error = useContext(ErrorContext);
-    const [badgeCount,setBadgeCount] = useState(0);
+    const [badgeCount, setBadgeCount] = useState(0);
     const corporate = useSelector(({corporate}) => corporate.corporate);
 
     useEffect(() => {
@@ -34,8 +34,8 @@ function Management(props) {
 
     }
 
-    function goToReports(){
-        switch(corporate.Status){
+    function goToReports() {
+        switch (corporate.Status) {
             case "DEMO":
                 error.showError({message: "این بخش برای DEMO فعال نیست",});
                 break;
@@ -47,22 +47,24 @@ function Management(props) {
     }
 
     return (
-        <>
-            <_ListItem title="مشخصات سازمان" destination="/management/details"/>
-            {/*<_ListItem title="پیام ها" destination="/management/notifs"/>*/}
-            <_ListItem title="گروه ها" destination="/management/categories"/>
-            <_ListItem title="پروفایل من" destination="/profile"/>
-            <_ListItem title="گزارشات" onClick={goToReports}/>
-            <_ListItem title="پشتیبانی" badgeCount={badgeCount} destination="/management/support"/>
-            {/*<_ListItem title="گزارشات" destination="/management/report"/>*/}
-            <_ListItem title="تنظیمات" destination="/management/settings"/>
-            {/*<_GenderEnter/>*/}
-            {/*<_GenderIncome/>*/}
-            {/*<_Income/>*/}
-            {/*<_IncomeSport/>*/}
-            {/*<_OurTraffic/>*/}
-            {/*<_SportRadar/>*/}
-        </>
+        <div className={"container"}>
+            <div className={"row"}>
+                <_ListItem  className={"col-md-6"} title="مشخصات سازمان" destination="/management/details"/>
+                {/*<_ListItem title="پیام ها" destination="/management/notifs"/>*/}
+                <_ListItem  className={"col-md-6"} title="گروه ها" destination="/management/categories"/>
+                <_ListItem  className={"col-md-6"} title="پروفایل من" destination="/profile"/>
+                <_ListItem  className={"col-md-6"} title="گزارشات" onClick={goToReports}/>
+                <_ListItem  className={"col-md-6"} title="پشتیبانی" badgeCount={badgeCount} destination="/management/support"/>
+                {/*<_ListItem title="گزارشات" destination="/management/report"/>*/}
+                <_ListItem  className={"col-md-6"} title="تنظیمات" destination="/management/settings"/>
+                {/*<_GenderEnter/>*/}
+                {/*<_GenderIncome/>*/}
+                {/*<_Income/>*/}
+                {/*<_IncomeSport/>*/}
+                {/*<_OurTraffic/>*/}
+                {/*<_SportRadar/>*/}
+            </div>
+        </div>
     );
 };
-export default connect(null,authActions)(Management);
+export default connect(null, authActions)(Management);

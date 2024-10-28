@@ -11,6 +11,7 @@ import com.notrika.gympin.common.finance.transaction.enums.GatewayType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
+import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.util.GeneralUtil;
 import com.notrika.gympin.common.util.exception.transactions.*;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -35,6 +36,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,6 +58,8 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
     private FinanceApplicationGatewayRepository financeApplicationGatewayRepository;
     @Autowired
     private GatewayServiceImpl gatewayService;
+    @Autowired
+    SettingsService settingsService;
 
     @Override
     public FinanceIncreaseCorporateDepositDto add(@NonNull FinanceIncreaseCorporateDepositParam param) {
@@ -135,6 +139,14 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
         List<FinanceIncreaseCorporateDepositDto> CorporateIncreases = corporate.getCorporateIncreases().stream().map(IncreaseConvertor::ToDto).collect(Collectors.toList());
         return CorporateIncreases;
     }
+    private Float getCorporateTax() {
+        try {
+            String taxValue =  settingsService.getByKey("CORPORATE_GENERAL_TAX").getValue();
+            return Float.parseFloat(taxValue)/100;
+        }catch (Exception e){
+            return 0.1f;
+        }
+    }
 
     @Override
     @Transactional
@@ -142,10 +154,14 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
         FinanceIncreaseCorporateDepositRequestEntity increase = financeIncreaseCorporateDepositRepository.getById(param.getId());
         increase.setDepositStatus(param.getAccept()? DepositStatus.CONFIRMED:DepositStatus.REJECTED);
         var financeCorporate = increase.getCorporate().getFinanceCorporate();
+
+        //Tax
+        var AmountToIncrease = BigDecimal.valueOf(increase.getAmount().longValue()/(1+getCorporateTax()));
+        var tax = increase.getAmount().subtract(AmountToIncrease);
         FinanceCorporateTransactionEntity corporateTransaction = FinanceCorporateTransactionEntity.builder()
                 .serial(increase.getSerial())
-                .amount(increase.getAmount())
-                .description(param.getDescription())
+                .amount(AmountToIncrease)
+                .description(param.getDescription()+" Tax : "+tax)
                 .latestBalance(financeCorporate.getTotalDeposit())
                 .financeCorporate(financeCorporate)
                 .transactionCorporateType(TransactionCorporateType.DEPOSIT)
@@ -154,7 +170,7 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
                 .isChecked(false)
                 .build();
         if(param.getAccept()){
-            var newDeposit = financeCorporate.getTotalDeposit().add(increase.getAmount());
+            var newDeposit = financeCorporate.getTotalDeposit().add(AmountToIncrease);
             financeCorporate.setTotalDeposit(newDeposit);
             increase.getCorporate().setFinanceCorporate(financeCorporate);
         }

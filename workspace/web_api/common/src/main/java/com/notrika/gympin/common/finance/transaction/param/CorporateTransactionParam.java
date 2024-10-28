@@ -18,5 +18,8 @@ public class CorporateTransactionParam extends BaseParam<CorporateTransactionPar
     @JsonProperty("CorporateId")
     private Long corporateId;
 
+    @JsonProperty("FinanceCorporateId")
+    private Long financeCorporateId;
+
 
 }

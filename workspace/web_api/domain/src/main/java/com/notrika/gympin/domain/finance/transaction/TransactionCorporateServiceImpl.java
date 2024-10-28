@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -127,4 +128,10 @@ public class TransactionCorporateServiceImpl extends AbstractBaseService<Corpora
     public Page<CorporateTransactionDto> convertToDtos(Page<FinanceCorporateTransactionEntity> entities) {
         return entities.map(p->TransactionConvertor.toDto(p));
     }
+
+    @Override
+    public BigDecimal getCorporateTotalIncreases(CorporateTransactionParam param) {
+       return corporatetransactionRepository.getCorporateTotalIncreases(param.getFinanceCorporateId());
+    }
 }
+

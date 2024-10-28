@@ -203,6 +203,20 @@ const EditProfile = (props) => {
                                 return;
                             }
 
+                            if(values?.FullName?.length>50){
+                                error.showError({message: "نام و نام خانوادگی طولانی است.",});
+                                return;
+                            }
+                            if(values?.Email?.length>50){
+                                error.showError({message: "ایمیل طولانی است.",});
+                                return;
+                            }
+
+                            if(values?.Username?.length>50){
+                                error.showError({message: "نام کاربری طولانی است.",});
+                                return;
+                            }
+
                             user_updateMe(values).then(result => {
                                 setUser(result.data.Data);
                                 props.RequestUser(values)

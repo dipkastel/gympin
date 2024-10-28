@@ -13,6 +13,7 @@ import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CorporateController extends BaseController<CorporateParam, CorporateDto, CorporateQuery> {
@@ -25,6 +26,7 @@ public interface CorporateController extends BaseController<CorporateParam, Corp
 
     //transactions
     ResponseEntity<List<CorporateTransactionDto>> getTransactions(CorporateTransactionParam param);
+    ResponseEntity<BigDecimal> getTotalIncreases(@RequestBody CorporateTransactionParam param);
 
     ResponseEntity<List<CorporatePersonnelGroupDto>> getCorporateGroups(CorporateParam param);
     ResponseEntity<FinanceCorporateDto> getFinanceCorporate(FinanceCorporateParam param);

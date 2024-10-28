@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -98,6 +99,13 @@ public class CorporateControllerImpl implements CorporateController {
     @GetMapping("getTransactions")
     public ResponseEntity<List<CorporateTransactionDto>> getTransactions(CorporateTransactionParam param) {
         return ResponseEntity.ok(corporateTransactionService.getByCorporate(param.getCorporateId()));
+    }
+
+
+    @Override
+    @PostMapping("getTotalIncreases")
+    public ResponseEntity<BigDecimal> getTotalIncreases(CorporateTransactionParam param) {
+        return ResponseEntity.ok(corporateTransactionService.getCorporateTotalIncreases(param));
     }
 
 

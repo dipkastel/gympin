@@ -11,7 +11,7 @@ export function checkMobileValid(mobileNumber) {
 export function toPriceWithComma(price){
     if(!price) return "0";
     if(price.length>1&&price.startsWith("0")) price = price.substring(1,price.length);
-    return (price+"")
+    return (Math.round(parseInt(price))+"")
         .replace(/\D/g, "")
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

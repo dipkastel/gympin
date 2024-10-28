@@ -54,6 +54,7 @@ export let CorporateApi = {
     updateContractDate: "v1/corporate/updateContractDate",
     updateStepPayment: "v1/corporate/updateStepPayment",
     getFinanceCorporate: "v1/corporate/getFinanceCorporate",
+    getTotalIncreases: "v1/corporate/getTotalIncreases",
     getCorporateGroups: "v1/corporate/getCorporateGroups",
     addGroup: "v1/corporate/addGroup",
     deleteGroup: "v1/corporate/deleteGroup",

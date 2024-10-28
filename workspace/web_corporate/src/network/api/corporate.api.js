@@ -29,6 +29,10 @@ export  function corporate_addCorporateGroups(data){
     return axios.post(Api_url.corporate.addCategory,data)
 }
 
+export  function corporate_getTotalIncreases(data){
+    return axios.post(Api_url.corporate.getTotalIncreases,data)
+}
+
 export  function corporate_getCorporateGroups(data){
     return axios.get(Api_url.corporate.getCorproteCategories,{ params: data })
 }

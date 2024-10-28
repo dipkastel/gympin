@@ -5,11 +5,15 @@ import com.notrika.gympin.common.finance.transaction.param.CorporateTransactionP
 import com.notrika.gympin.common.finance.transaction.query.CorporateTransactionQuery;
 import com.notrika.gympin.common.util._base.base.BaseService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CorporateTransactionService extends BaseService<CorporateTransactionParam, CorporateTransactionDto, CorporateTransactionQuery> {
 
+
+
     List<CorporateTransactionDto> getByCorporate(Long corporateId);
     List<CorporateTransactionDto> getByPersonel(Long personnelId);
+    BigDecimal getCorporateTotalIncreases(CorporateTransactionParam param);
 
 }

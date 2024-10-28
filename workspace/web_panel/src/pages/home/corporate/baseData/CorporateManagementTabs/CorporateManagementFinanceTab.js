@@ -52,7 +52,7 @@ const CorporateManagementFinanceTab = ({currentCorporate}) => {
                         <Tab label="تراکنش ها" value={"TRANSACTIONS"}/>
                     </Tabs>
                 </Paper>
-                {selectedTab === "INFORMATION" && <FinanceCorporateInformationTab financeCorporate={financeCorporate}/>}
+                {selectedTab === "INFORMATION" && <FinanceCorporateInformationTab currentCorporate={currentCorporate} financeCorporate={financeCorporate}/>}
                 {selectedTab === "REQUESTS" && <FinanceCorporateRequestTab currentCorporate={currentCorporate} updatePage={updatePage} financeCorporate={financeCorporate}/>}
                 {selectedTab === "TRANSACTIONS" && <FinanceCorporateTransactionsTab currentCorporate={currentCorporate} updatePage={updatePage} financeCorporate={financeCorporate}/>}
             </>}

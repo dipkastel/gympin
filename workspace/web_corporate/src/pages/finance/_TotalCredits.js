@@ -13,11 +13,11 @@ const _TotalCredits = (props) => {
     }, []);
 
     return (
-        <>
+        <div className={"col-md-6"}>
             <Alert variant={"outlined"} severity={"info"} sx={{m:1,borderRadius:3}}>
                 {" مجموع اعتبار پرسنل : "+toPriceWithComma(corporate?.FinanceCorporate?.TotalCredits||0) + " تومان"}
             </Alert>
-        </>
+        </div>
     );
 };
 

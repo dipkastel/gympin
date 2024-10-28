@@ -22,6 +22,7 @@ export let Api_url = {
         update:"v1/corporate/update",
         getCorproteCategories:"v1/corporate/getCorporateGroups",
         addCategory:"v1/corporate/addGroup",
+        getTotalIncreases:"v1/corporate/getTotalIncreases",
         deleteCategory:"v1/corporate/deleteGroup"
     },
     CorporatePersonnel:{

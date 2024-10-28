@@ -47,6 +47,9 @@ export function corporate_getFinanceCorporate(data) {
     return axios.get(CorporateApi.getFinanceCorporate,{ params: data });
 }
 
+export function corporate_getTotalIncreases(data) {
+    return axios.post(CorporateApi.getTotalIncreases,data);
+}
 // groups
 
 export function corporate_getCorporateGroups(data) {

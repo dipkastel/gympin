@@ -1,12 +1,16 @@
 import React from 'react';
 import CorporateTotalDeposit from "../../FinanceCorporate/CorporateTotalDeposit";
 import CorporateTotalCreadit from "../../FinanceCorporate/CorporateTotalCredit";
+import CorporateTotalIncreases from "../../FinanceCorporate/CorporateTotalIncreases";
 
-const FinanceCorporateInformationTab = ({financeCorporate}) => {
+const FinanceCorporateInformationTab = ({currentCorporate ,financeCorporate}) => {
     return (
         <div>
             <div className="row">
 
+                <div className="col-md-12">
+                    <CorporateTotalIncreases currentCorporate={currentCorporate} financeCorporate={financeCorporate}/>
+                </div>
                 <div className="col-md-6">
                     <CorporateTotalDeposit financeCorporate={financeCorporate}/>
                 </div>

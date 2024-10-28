@@ -64,10 +64,23 @@ const SingleUser = (props) => {
 
     return (
         <>
-            {corporatePersonnel&&<_UserBaseData corporatePersonnel={corporatePersonnel} getCorporatePerson={getCorporatePerson} />}
-            {corporatePersonnel&&<_UserCredits corporatePersonnel={corporatePersonnel} updatePage={getCorporatePerson}/>}
-            {corporatePersonnel&&<_UserGroup corporatePersonnel={corporatePersonnel} />}
-            {corporatePersonnel&&<_UserDelete corporatePersonnel={corporatePersonnel} />}
+
+            <div className={"container"}>
+                <div className={"row"}>
+                    <div className={"col-md-6"}>
+
+                        {corporatePersonnel&&<_UserBaseData corporatePersonnel={corporatePersonnel} getCorporatePerson={getCorporatePerson} />}
+
+                        {corporatePersonnel&&<_UserGroup corporatePersonnel={corporatePersonnel} />}
+                    </div>
+                    <div className={"col-md-6"}>
+
+                        {corporatePersonnel&&<_UserCredits corporatePersonnel={corporatePersonnel} updatePage={getCorporatePerson}/>}
+
+                        {corporatePersonnel&&<_UserDelete corporatePersonnel={corporatePersonnel} />}
+                    </div>
+                </div>
+            </div>
         </>
     );
 };
