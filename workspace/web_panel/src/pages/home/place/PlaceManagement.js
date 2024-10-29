@@ -27,7 +27,7 @@ const PlaceManagement = () => {
     const history = useHistory();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppPlaceManagement());
-    const [searchString, setSearchString] = useState("");
+    const [searchString, setSearchString] = useState(null);
     const [places, SetPlaces] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
     useEffect(() => {
@@ -123,6 +123,8 @@ const PlaceManagement = () => {
                 </p>
             </Notice>
 
+
+
             <Grid container sx={{mb: 3}} spacing={3}>
                 <Grid item xs={4}>
                     <Card>
@@ -192,8 +194,12 @@ const PlaceManagement = () => {
                                 type="text"
                                 value={searchString}
                                 onChange={(event) => {
-                                    setSearchString(event.target.value);
                                     setPage(0);
+                                    if (event.target.value===""){
+                                        setSearchString(null);
+                                        return;
+                                    }
+                                    setSearchString(event.target.value);
                                 }}
                                 label={"جستجو"}
                             />

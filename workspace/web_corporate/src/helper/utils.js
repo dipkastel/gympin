@@ -3,15 +3,30 @@ export const toAbsoluteUrl = (pathname) => process.env.PUBLIC_URL + pathname;
 
 
 export const getImagePath = (imageId)=>"/image/display/"+imageId;
-
+let persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
+let arabicNumbers  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+   function fixFarsiNumbers(str)
+    {
+        if(typeof str === 'string')
+        {
+            for(var i=0; i<10; i++)
+            {
+                str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+            }
+        }
+        return str;
+    };
 export function checkMobileValid(mobileNumber) {
     return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
 }
 
 export function toPriceWithComma(price){
     if(!price) return "0";
-    if(price.length>1&&price.startsWith("0")) price = price.substring(1,price.length);
-    return (Math.round(parseInt(price))+"")
+    price = fixFarsiNumbers(price);
+    // if(price.length>1&&price.startsWith("0")) price = price.substring(1,price.length);
+    if(price.length>16) return price.substring(0,17);
+    var number = parseInt(toPriceWithoutComma(price));
+    return (Math.round(number)+"")
         .replace(/\D/g, "")
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

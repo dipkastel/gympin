@@ -17,7 +17,7 @@ function DeleteCorporate({currentCorporate}) {
         function DeleteItem(e) {
             e.preventDefault()
             if(currentCorporate.Id==1){
-                error.showError({message: "این مجموعه نباید حذف شود",});
+                error.showError({message: "این سازمان نباید حذف شود",});
                 return;
             }
             corporate_delete({Id: currentCorporate.Id})
@@ -41,7 +41,7 @@ function DeleteCorporate({currentCorporate}) {
 
 
                         <Modal.Header closeButton>
-                            <Modal.Title>{"حذف پرسنل"}</Modal.Title>
+                            <Modal.Title>{"حذف سازمان"}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             {currentCorporate && "حذف " + currentCorporate.Name}

@@ -81,6 +81,6 @@ export const serviceEnum = {
     "public org.springframework.http.ResponseEntity<java.lang.Boolean> com.notrika.gympin.controller.impl.user.AccountControllerImpl.RequestRegisterCorporate(com.notrika.gympin.common.user.user.param.RequestRegisterParam)": "درخواست عضویت سازمان",
     "public org.springframework.http.ResponseEntity<java.lang.Boolean> com.notrika.gympin.controller.impl.user.AccountControllerImpl.RequestPublicMessage(com.notrika.gympin.common.user.user.param.RequestRegisterParam)":"پیام عمومی به جیم پین",
     "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto> com.notrika.gympin.controller.impl.corporate.CorporatePersonnelControllerImpl.manualExpireUserCredit(com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam)":"انقضای دستی",
-    " ":"",
+    "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.user.user.dto.UserCreditDto> com.notrika.gympin.controller.impl.user.UserControllerImpl.getMyPlaceWallet(com.notrika.gympin.common.place.place.param.PlaceParam)":"دریافت اطلاعات کیف پول",
     "  ":"",
 }
