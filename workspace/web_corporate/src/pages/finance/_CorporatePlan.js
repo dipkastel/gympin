@@ -50,7 +50,7 @@ const _CorporatePlan = () => {
                         <ProgressBar className={"mt-2 mb-3"} min={0} now={totalIncreases} max={200000000} />
 
                         <Typography variant={"subtitle1"}> {"امکانات پلن پرو :"}</Typography>
-                        <Typography variant={"caption"}> {"◄ امکان تایین تاریخ انقضا برای اعتبار ها"}</Typography>
+                        <Typography variant={"caption"}> {"◄ امکان تعیین تاریخ انقضا برای اعتبار ها"}</Typography>
                         <br />
                     </CardContent>
                 </Card>

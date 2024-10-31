@@ -9,47 +9,40 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {useHistory} from "react-router-dom";
-import {getUserFixedName, toPriceWithComma} from "../../../../helper";
+import {getUserFixedName} from "../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {Message, NoteAlt, RequestQuote} from "@mui/icons-material";
-import {SettlementUserDeposit_query} from "../../../../network/api/settlementUserDeposit.api";
-import {UserFinanceTypesEnum} from "../../../../helper/enums/UserFinanceTypesEnum";
+import {Message, NoteAlt} from "@mui/icons-material";
+import {Place_query} from "../../../../network/api/place.api";
 
-const _DashSettelment = () => {
+const _DashUncontractPlaces = () => {
 
     const error = useContext(ErrorContext);
     const history = useHistory();
-    const [settelment, setSettelment] = useState([])
+    const [UncontractPlaces, setUncontractPlaces] = useState(null)
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppDashSupport());
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        SettlementUserDeposit_query({
+        Place_query({
             queryType: "FILTER",
-            SettlementStatus:"REQUESTED",
-            paging: {Page: page, Size: (rowsPerPage), orderBy: "Serial", Desc: true}
-        }).then((data) => {
-            setSettelment(data.data.Data)
+            Status:"ACTIVE",
+            HasContract:false,
+            paging: {Page: page, Size: rowsPerPage, Desc: true}}
+        ).then(data => {
+            setUncontractPlaces(data.data.Data)
         }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message,});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
         });
     }, [page, rowsPerPage]);
 
-    function getLastMessage(support) {
-        try {
-            return support.Messages[support.Messages.length - 1]
-        } catch (e) {
-            return null;
-        }
-    }
 
     function renderModalSupport() {
         return (
@@ -71,32 +64,20 @@ const _DashSettelment = () => {
 
                                     <TableHead>
                                         <TableRow>
-
-                                            <TableCell align="right" padding="normal" sortDirection={false}>مبلغ</TableCell>
-                                            <TableCell align="right" padding="normal" sortDirection={false}>ایجاد کننده</TableCell>
-                                            <TableCell align="right" padding="normal" sortDirection={false}>کیف پول</TableCell>
-                                            <TableCell align="right" padding="normal" sortDirection={false}>صاحب کیف پول</TableCell>
-                                            <TableCell align="right" padding="normal" sortDirection={false}>موجودی کاربر</TableCell>
-                                            <TableCell align="right" padding="normal" sortDirection={false}>تاریخ درخواست</TableCell>
+                                            <TableCell align="right" padding="normal"
+                                                       sortDirection={false}>نام</TableCell>
+                                            <TableCell align="right" padding="normal" sortDirection={false}>زمان ایجاد</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {settelment.content && settelment.content.map((row, index) => (
+                                        {UncontractPlaces?.content && UncontractPlaces?.content.map((row, index) => (
                                             <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "/users/details/" + row?.FinanceUser?.User?.Id})}
+                                                      onClick={(event) => history.push({pathname: "/place/data/" + row.Id})}
                                                       role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                                 <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{toPriceWithComma(row?.Amount)}</TableCell>
+                                                           align="right">{row?.Name}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{getUserFixedName(row?.CreatorUser)}</TableCell>
-                                                <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{UserFinanceTypesEnum[row?.FinanceUser?.FinanceType]}</TableCell>
-                                                <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{getUserFixedName(row?.FinanceUser?.User)}</TableCell>
-                                                <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{toPriceWithComma(row?.FinanceUser?.TotalDeposit)}</TableCell>
-                                                <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{new Date(row?.CreatedDate).toLocaleDateString('fa-IR', {
+                                                           align="right">{new Date(row.CreatedDate).toLocaleDateString('fa-IR', {
                                                     year: 'numeric',
                                                     month: 'long',
                                                     day: 'numeric',
@@ -110,11 +91,11 @@ const _DashSettelment = () => {
                                 </Table>
                             </TableContainer>
 
-                            {(settelment.totalElements > 0) && <TablePagination
+                            {(UncontractPlaces?.totalElements > 0) && <TablePagination
                                 rowsPerPageOptions={[5, 10]}
                                 component="div"
                                 sx={{direction: "rtl"}}
-                                count={settelment.totalElements || 0}
+                                count={UncontractPlaces?.totalElements || 0}
                                 labelRowsPerPage={"تعداد نمایش"}
                                 labelDisplayedRows={(param) => {
                                     return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
@@ -136,15 +117,16 @@ const _DashSettelment = () => {
     };
 
     return (<>
+
         <QuickStatsIcon
-            onClick={()=>{setShowModal(settelment.totalElements > 0)}}
-            title="تسویه حساب"
-            text={settelment.totalElements > 0 ? "شما " + settelment.totalElements + " تسویه انجام نشده" : "تمام تسویه ها انجام شده"}
-            icon={<RequestQuote sx={{fontSize: 40, color: settelment.totalElements > 0 ? "#d00d48" : "#0c5049"}}
+            onClick={()=>{setShowModal(UncontractPlaces?.totalElements > 0)}}
+            title="قرارداد"
+            text={UncontractPlaces?.totalElements > 0 ? "شما " + UncontractPlaces?.totalElements + " مجموعه بدون قرارداد دارید" : "تمام مجموعه ها قرارداد دارند"}
+            icon={<Message sx={{fontSize: 40, color: UncontractPlaces?.totalElements > 0 ? "#d00d48" : "#0c5049"}}
                            color={"#AA5598"}/>}
         />
         {renderModalSupport()}
     </>)
 }
 
-export default _DashSettelment;
+export default _DashUncontractPlaces;

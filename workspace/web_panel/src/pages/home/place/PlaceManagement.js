@@ -3,7 +3,7 @@ import Notice from "../../partials/content/Notice";
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal, Table} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar,} from "../../partials/content/Portlet";
-import {Button, Card, CardContent, CardHeader, Chip, Grid, TextField, Tooltip} from "@mui/material";
+import {Button, Card, CardContent, CardHeader, Chip, Grid, Paper, Tab, Tabs, TextField, Tooltip} from "@mui/material";
 import {Place_addPlace, Place_query} from "../../../network/api/place.api";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
@@ -29,15 +29,50 @@ const PlaceManagement = () => {
     const [rowsPerPage, setRowsPerPage] = useState(getRppPlaceManagement());
     const [searchString, setSearchString] = useState(null);
     const [places, SetPlaces] = useState([]);
+    const [selectedTab, setSelectedTab] = useState("ALL");
+    const [queryType, setQueryType] = useState("ALL");
+    const [placeStatus, SetPlaceStatus] = useState(null);
+    const [deleted, SetDeleted] = useState(false);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
     useEffect(() => {
         getPlaces()
-    }, [page, rowsPerPage, searchString]);
+    }, [page, rowsPerPage, searchString,placeStatus,deleted,queryType]);
+    useEffect(() => {
+        switch (selectedTab){
+            case "ALL":
+                setQueryType("SEARCH");
+                SetPlaceStatus(null);
+                SetDeleted(false);
+                break;
+            case "ACTIVE":
+                setQueryType("FILTER");
+                SetPlaceStatus("ACTIVE");
+                SetDeleted(false);
+                break
+            case "INACTIVE":
+                setQueryType("FILTER");
+                SetPlaceStatus("INACTIVE");
+                SetDeleted(false);
+                break
+            case "PREREGISTER":
+                setQueryType("FILTER");
+                SetPlaceStatus("PREREGISTER");
+                SetDeleted(false);
+                break
+            case "DELETED":
+                setQueryType("SEARCH");
+                SetPlaceStatus(null);
+                SetDeleted(true);
+                break
+        }
+    }, [selectedTab]);
 
     function getPlaces() {
         Place_query({
-            queryType: "SEARCH",
-            name: searchString,
+            queryType: queryType,
+            Name: searchString,
+            Status:placeStatus,
+            Deleted:deleted,
             paging: {Page: page, Size: rowsPerPage,Desc:true}
         }).then((data) => {
             SetPlaces(data.data.Data)
@@ -178,6 +213,24 @@ const PlaceManagement = () => {
                     </Card>
                 </Grid>
             </Grid>
+
+            <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
+                <Tabs
+                    value={selectedTab}
+                    onChange={(e, n) => setSelectedTab(n)}
+                    indicatorColor="primary"
+                    textColor="inherit"
+                    variant={"standard"}
+                    aria-label="full width tabs example"
+                >
+                    <Tab label="همه" value={"ALL"}/>
+                    <Tab label="فعال" value={"ACTIVE"}/>
+                    <Tab label="غیر فعال" value={"INACTIVE"}/>
+                    <Tab label="پیش ثبت نام" value={"PREREGISTER"}/>
+                    <Tab label="حذف شده" value={"DELETED"}/>
+                </Tabs>
+            </Paper>
+
             <Portlet>
                 <PortletHeader
                     title="مراکز"
@@ -213,7 +266,6 @@ const PlaceManagement = () => {
                         </PortletHeaderToolbar>
                     }
                 />
-
                 <PortletBody>
                     <TableContainer>
                         <Table

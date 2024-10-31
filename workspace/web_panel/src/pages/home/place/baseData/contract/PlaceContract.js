@@ -11,16 +11,6 @@ const [wizard,SetWizard] = useState({Value:false})
 
 
 function changeHasContract(checked){
-    // user_SetUserSettings({Id:wizard?.Id,Value:!checked,Key:"USER_WIZARD_COMPLETE",User:{Id:currentUser.Id}}).then(result=>{
-    //     SetWizard(result.data.Data);
-    //     error.showError({message: "ثبت موفق",});
-    // }).catch(e => {
-    //     try {
-    //         error.showError({message: e.response.data.Message,});
-    //     } catch (f) {
-    //         error.showError({message: "خطا نا مشخص",});
-    //     }
-    // });
     place.HasContract = checked;
     updatePlace(place);
 }

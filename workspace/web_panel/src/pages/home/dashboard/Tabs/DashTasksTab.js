@@ -6,6 +6,7 @@ import _DashTicketBeneficiary from "../partials/_DashTicketBeneficiary";
 import _DashSettelment from "../partials/_DashSettelment";
 import _DashIncreaseCorporate from "../partials/_DashIncreaseCorporate";
 import _DashIncreaseUser from "../partials/_DashIncreaseUser";
+import _DashUncontractPlaces from "../partials/_DashUnContractPlaces";
 
 const DashTasksTab = ({updatePage}) => {
 
@@ -29,6 +30,9 @@ const DashTasksTab = ({updatePage}) => {
                 </Grid>
                 <Grid item xs={3}>
                     <_DashIncreaseUser/>
+                </Grid>
+                <Grid item xs={3}>
+                    <_DashUncontractPlaces/>
                 </Grid>
             </Grid>
         </>

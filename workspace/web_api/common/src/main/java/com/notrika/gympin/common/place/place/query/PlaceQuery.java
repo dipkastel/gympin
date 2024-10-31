@@ -52,5 +52,7 @@ public class PlaceQuery extends BaseQuery<PlaceQuery> {
     @JsonProperty("Gender")
     private Gender is_buyablesægender;
 
+    @JsonProperty("HasContract")
+    private Boolean is_hasContract;
 
 }
