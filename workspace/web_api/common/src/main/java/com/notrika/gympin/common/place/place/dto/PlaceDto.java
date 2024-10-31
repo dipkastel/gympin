@@ -42,6 +42,9 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
     @JsonProperty("CallUs")
     private Boolean callUs;
 
+    @JsonProperty("HasContract")
+    private Boolean hasContract;
+
     @JsonProperty("Address")
     private String address;
 

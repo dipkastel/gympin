@@ -19,7 +19,7 @@ import DangerousIcon from '@mui/icons-material/Dangerous';
 import PaidIcon from '@mui/icons-material/Paid';
 import ImageIcon from '@mui/icons-material/Image';
 import SportsIcon from '@mui/icons-material/Sports';
-import {ReceiptLong} from "@mui/icons-material";
+import {NoteAlt, ReceiptLong} from "@mui/icons-material";
 
 
 const PlaceManagement = () => {
@@ -251,6 +251,9 @@ const PlaceManagement = () => {
                                                 </Tooltip>
                                                 <Tooltip title={"ورزش ها"}>
                                                     <SportsIcon color={row.Sports?.[0]?"success":"error"} />
+                                                </Tooltip>
+                                                <Tooltip title={"قرارداد"}>
+                                                    <NoteAlt color={row.HasContract?"success":"error"} />
                                                 </Tooltip>
                                             </TableCell>
                                             <TableCell align="right">

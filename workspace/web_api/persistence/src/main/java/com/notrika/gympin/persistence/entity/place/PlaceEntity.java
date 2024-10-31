@@ -59,6 +59,9 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Column(name = "listOrder")
     private Short order;
 
+    @Column(name = "hasContract", nullable = false, columnDefinition = "bit default 0")
+    private boolean hasContract;
+
     @Column(name = "CallUs", nullable = false, columnDefinition = "bit default 0")
     private boolean callUs;
 

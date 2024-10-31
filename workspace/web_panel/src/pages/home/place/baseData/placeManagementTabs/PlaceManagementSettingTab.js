@@ -4,6 +4,7 @@ import PlaceInviteCode from "../Invite/PlaceInviteCode";
 import DeletePlace from "../Delete/DeletePlace";
 import PlaceQrMessages from "../QrMessages/PlaceQrMessages";
 import PlaceOrder from "../order/PlaceOrder";
+import PlaceContract from "../contract/PlaceContract";
 
 const PlaceManagementSettingTab = ({place, updatePlace}) => {
     return (
@@ -17,6 +18,7 @@ const PlaceManagementSettingTab = ({place, updatePlace}) => {
 
                 </div>
                 <div className="col-md-6">
+                    {place && <PlaceContract place={place} updatePlace={updatePlace}/>}
                     {place && <PlaceQrMessages place={place}/>}
                     {place && <PlaceInviteCode place={place}/>}
                 </div>

@@ -41,6 +41,9 @@ public class PlaceParam extends BaseParam<PlaceParam> {
     @JsonProperty("CallUs")
     private Boolean callUs;
 
+    @JsonProperty("HasContract")
+    private Boolean hasContract;
+
     @JsonProperty("AutoDiscount")
     private Boolean autoDiscount;
 

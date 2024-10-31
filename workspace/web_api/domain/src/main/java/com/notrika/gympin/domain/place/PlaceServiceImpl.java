@@ -75,6 +75,7 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         initPlace.setAddress(placeParam.getAddress());
         initPlace.setActiveTimes(placeParam.getActiveTimes());
         initPlace.setTell(placeParam.getTell());
+        initPlace.setHasContract(placeParam.getHasContract());
         initPlace.setCallUs(placeParam.getCallUs());
         initPlace.setAutoDiscount(placeParam.getAutoDiscount());
         if (placeParam.getLocation() != null && placeParam.getLocation().getId() != null && placeParam.getLocation().getId() > 0) {
