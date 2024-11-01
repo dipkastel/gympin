@@ -8,6 +8,7 @@ const _ListItem = (props) => {
                 component={"a"}
                 sx={{textDecoration:"none",color:"#000000",bgcolor:props.bgColor}}
                 href={props.destination}
+                target={props.target}
                 onClick={props.onClick}
                 title={props.title}
                 action={""}/>

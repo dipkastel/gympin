@@ -48,6 +48,19 @@ export function fixPersianNumbers(number) {
     return number;
 }
 
+export function fixTextToSlug(text) {
+    text = "اطلاعات کامل مجموعه ورزشی "+text + " به همراه آدرس قیمت شماره تماس امکانات"
+    return text
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-آ-ی]/g, '')
+        .replace(/\-\-+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+}
+
 export function toPriceWithComma(price) {
     price = fixPersianNumbers(price);
     if (!price) return "0";
