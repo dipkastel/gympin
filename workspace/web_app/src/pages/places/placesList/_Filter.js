@@ -15,10 +15,10 @@ import {
     Typography
 } from "@mui/material";
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import {getAllSports, sports_query} from "../../network/api/sport.api";
-import GetStringPrice from "../../helper/utils";
-import {ErrorContext} from "../../components/GympinPagesProvider";
-import {Location_query} from "../../network/api/location.api";
+import {getAllSports, sports_query} from "../../../network/api/sport.api";
+import GetStringPrice from "../../../helper/utils";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {Location_query} from "../../../network/api/location.api";
 import {useSelector} from "react-redux";
 
 const _Filter = ({setBaseFilters,BaseFilters, setBaseSortBy}) => {

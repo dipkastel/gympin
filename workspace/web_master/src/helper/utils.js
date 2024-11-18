@@ -48,6 +48,14 @@ export function fixPersianNumbers(number) {
     return number;
 }
 
+export function getFixPlaceName(place,char,startWith) {
+    var result = place.Name;
+    if(place.Name.length>char)
+        result = place.Name.substring(0,char)+"...";
+        if(startWith)
+            result = startWith+result;
+    return result;
+}
 export function fixTextToSlug(text) {
     text = "اطلاعات کامل مجموعه ورزشی "+text + " به همراه آدرس قیمت شماره تماس امکانات"
     return text

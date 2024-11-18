@@ -26,7 +26,7 @@ const HomeContentList = (props) => {
                 {props.item.Items && props.item.Items.map((item, index) => (
                     <div key={index}>
                         <Link onClick={()=>clickHandler(item,navigate)} underline="none" color="inherit" fontWeight="800">
-                            <Card sx={{margin:"5px",borderRadius:"10px",direction:"rtl"}} elevation={3} >
+                            <Card sx={{margin:1,borderRadius: 3,direction:"rtl"}} elevation={3} >
 
                                 <CardMedia
                                     component="img"

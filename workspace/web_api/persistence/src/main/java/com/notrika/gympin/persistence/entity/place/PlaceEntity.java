@@ -20,6 +20,7 @@ import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.authCodes.PlaceContractCodeEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -56,6 +57,9 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Column(name = "Tell")
     private String tell;
 
+    @Column(name = "ContractData")
+    private String contractData;
+
     @Column(name = "listOrder")
     private Short order;
 
@@ -76,6 +80,12 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
 
     @Column(name = "autoDiscount", nullable = false, columnDefinition = "bit default 1")
     private boolean autoDiscount;
+
+
+    @OneToOne(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private PlaceContractCodeEntity contractCode;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "locationId")

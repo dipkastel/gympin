@@ -12,7 +12,6 @@ import CoffeeMakerIcon from '@mui/icons-material/CoffeeMaker';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import PeopleIcon from '@mui/icons-material/People';
 import GavelIcon from '@mui/icons-material/Gavel'
-import GiteIcon from '@mui/icons-material/Gite';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
@@ -26,8 +25,6 @@ import WPageOptions from "../pages/WPageOptions";
 import WPageImages from "../pages/WPageImages";
 import WPagePersonel from "../pages/WPagePersonel";
 import WPageAbout from "../pages/WPageAbout";
-import WPageHalls from "../pages/WPageHalls";
-import WPageHallTimes from "../pages/WPageHallTimes";
 import WPageTickets from "../pages/WPageTickets";
 import WPageSubscribes from "../pages/WPageSubscribes";
 import WPageCourses from "../pages/WPageCourses";
@@ -38,8 +35,11 @@ import store from "../../../helper/redux/store";
 import {sagaActions} from "../../../helper/redux/actions/SagaActions";
 import WPageProfile from "../pages/WPageProfile";
 import WPageBases from "../pages/WPageBases";
-import {OtherHouses} from "@mui/icons-material";
+import {OtherHouses, Rule} from "@mui/icons-material";
 import WPageActivation from "../pages/WPageActivation";
+import WPageContract from "../pages/WPageContract";
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import WPagePlaceOwner from "../pages/WPagePlaceOwner";
 
 const WizardBody = () => {
     const [level, setLevel] = useState(getWizardLevel());
@@ -49,6 +49,9 @@ const WizardBody = () => {
     const [stickets, setSTickets] = useState(null);
     const [ctickets, setCTickets] = useState(null);
     const currentUser = useSelector(state => state.auth.user);
+    const place = useSelector(({place}) => place.place)
+
+
 
 
     useEffect(() => {
@@ -61,25 +64,19 @@ const WizardBody = () => {
     useEffect(() => {
         var id = 1;
         var stepsList = new Array();
-        stepsList.push({
-            id: id++,
-            title: 'مجموعه',
-            icon: <LocationCityIcon/>,
-            page: <WPageSelectPlace onNext={onNext}/>
-        })
+        stepsList.push({id: id++, title: 'مجموعه', icon: <LocationCityIcon/>, page: <WPageSelectPlace onNext={onNext}/>})
         stepsList.push({id: id++, title: 'اطلاعات پایه', icon: <OtherHouses/>, page: <WPageBases onNext={onNext}/>})
-        stepsList.push({
-            id: id++,
-            title: 'پروفایل',
-            icon: <SelfImprovementIcon/>,
-            page: <WPageProfile onNext={onNext}/>
-        })
+        stepsList.push({id: id++, title: 'پروفایل', icon: <SelfImprovementIcon/>, page: <WPageProfile onNext={onNext}/>})
+        if (place && !place.HasContract)
+            stepsList.push({id: id++, title: 'طرف قرارداد', icon: <AssignmentIndIcon/>, page: <WPagePlaceOwner onNext={onNext}/>})
+        if (place && !place.HasContract)
+            stepsList.push({id: id++, title: 'تفاهم نامه', icon: <GavelIcon/>, page: <WPageContract onNext={onNext}/>})
         stepsList.push({id: id++, title: 'ورزش ها', icon: <SportsBaseballIcon/>, page: <WPageSports onNext={onNext}/>})
         stepsList.push({id: id++, title: 'امکانات', icon: <CoffeeMakerIcon/>, page: <WPageOptions onNext={onNext}/>})
         stepsList.push({id: id++, title: 'دوربین', icon: <CameraIcon/>, page: <WPageCamera onNext={onNext}/>})
         stepsList.push({id: id++, title: 'تصاویر', icon: <CameraAltIcon/>, page: <WPageImages onNext={onNext}/>})
         stepsList.push({id: id++, title: 'پرسنل', icon: <PeopleIcon/>, page: <WPagePersonel onNext={onNext}/>})
-        stepsList.push({id: id++, title: 'قوانین', icon: <GavelIcon/>, page: <WPageAbout onNext={onNext}/>})
+        stepsList.push({id: id++, title: 'قوانین', icon: <Rule/>, page: <WPageAbout onNext={onNext}/>})
         // stepsList.push({
         //     id: id++,
         //     title: 'سالن ها',
@@ -217,7 +214,7 @@ const WizardBody = () => {
         <>
             {steps &&
             <>
-                <Grid container sx={{width: "100%", height: "auto", overflowY: "none", overflowX: "scroll", pt: 1}}>
+                <Grid container sx={{width: "100%", height: "auto", overflowY: "none", overflowX: "scroll", pt: 1, pb: 1}}>
                     <Stack sx={{direction: "rtl", height: "auto"}}>
                         <Stepper alternativeLabel activeStep={level - 1} connector={<ColorlibConnector/>}>
                             {steps.map((step) => (

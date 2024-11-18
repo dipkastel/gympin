@@ -26,7 +26,7 @@ const HomeDiscountList = (props) => {
         <Slick  className={"content-list"} {...settings}>
             {props.item.Items&&props.item.Items.map((singleItem, index) => (
                 <div key={index}>
-                    <Card elevation={3} sx={{margin: 1,borderRadius:"10px"}}>
+                    <Card elevation={3} sx={{margin: 1,borderRadius: 3}}>
                         <Link onClick={()=>clickHandler(singleItem,navigate)} underline="none" color="inherit" fontWeight="800">
                             <div className={"discount"}>
                                 <div className={"percent"}>

@@ -12,7 +12,7 @@ export default function _OurTraffic() {
         data.push(current);
     }
     return (
-        <Card elevation={3} sx={{margin: 1}}>
+        <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
             <CardHeader
             title="ترافیک ورودی"
             sx={{

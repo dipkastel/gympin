@@ -53,7 +53,7 @@ const _transactions = ({place}) => {
                 </div>
                 <List disablePadding>
                     {transactions?.content?.map((item, Num) => (
-                        <Card key={"transaction-" + Num} elevation={3} sx={{margin: 1}}>
+                        <Card key={"transaction-" + Num} elevation={3} sx={{borderRadius: 3,margin: 1}}>
                             <__TransactionListItem item={item}/>
                         </Card>
                     ))}
@@ -67,7 +67,7 @@ const _transactions = ({place}) => {
                 </Grid>
             </>}
             {transactions?.content?.length < 1 &&
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardContent>
                     <Grid
                         container
@@ -88,7 +88,7 @@ const _transactions = ({place}) => {
         </>
 
     ) : (<>
-        <Card elevation={3} sx={{margin: 1}}>
+        <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
             <CardHeader title={"تراکنش ها"}/>
             <CardContent>
                 <Grid container direction={"row"} alignItems={"center"} justifyContent={"center"}>

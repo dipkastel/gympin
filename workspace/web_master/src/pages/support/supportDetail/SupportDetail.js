@@ -64,7 +64,7 @@ const SupportDetail = () => {
 
     return (
         <Grid height={"100%"}>
-            <Card elevation={3} sx={{margin:1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin:1}}>
                 <CardHeader
                     title={supportDetail&&supportDetail.Title||""}
                     action={(
@@ -77,7 +77,7 @@ const SupportDetail = () => {
                     <Typography variant="body2">در صورتی که مشکل حل شده است و یا دیگر نیاز به پیگیری از سمت جیم پین ندارد میتوانید تیکت را ببندید.</Typography>
                 </CardContent>
             </Card>
-            <Card elevation={3} sx={{margin:1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin:1}}>
                 <CardHeader
                     title={"افزودن یادداشت"}
                 />

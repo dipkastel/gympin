@@ -150,7 +150,7 @@ const SubscribesList = ({OnChangeList}) => {
     return (
         <>
 
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardHeader
                     title={"عضویت های مجموعه"}
                     action={<Button variant={"contained"} title={"btn_add"} onClick={() => setOpenModalAdd(true)}>افزودن
@@ -161,7 +161,7 @@ const SubscribesList = ({OnChangeList}) => {
             </Card>
 
             {subscribesList && subscribesList.map((item, number) => (
-                <Card elevation={3} sx={{margin: 1}} key={"place-" + number}>
+                <Card elevation={3} sx={{borderRadius: 3,margin: 1}} key={"place-" + number}>
 
                     <CardActionArea href={introMode?(""):("/ticket/subscribe/" + item.Id)}>
                         <CardHeader

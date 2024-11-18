@@ -11,6 +11,7 @@ const HomeSingleUser = (props) => {
                     <div>
                         <Link onClick={()=>clickHandler(props.item,navigate)} underline="none">
                             <Card sx={{
+                                borderRadius: 3,
                                 marginX:0.3,
                                 marginY:1
 

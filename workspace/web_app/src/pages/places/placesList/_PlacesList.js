@@ -12,12 +12,12 @@ import {
     MenuItem,
     Select
 } from "@mui/material";
-import {Place_query} from "../../network/api/place.api";
-import {ErrorContext} from "../../components/GympinPagesProvider";
+import {Place_query} from "../../../network/api/place.api";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 import __placeListItem from "./__placeListItem";
-import {sports_query} from "../../network/api/sport.api";
-import {Location_query} from "../../network/api/location.api";
+import {sports_query} from "../../../network/api/sport.api";
+import {Location_query} from "../../../network/api/location.api";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
 

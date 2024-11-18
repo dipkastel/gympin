@@ -8,13 +8,21 @@ import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.util.exception.general.SmsServiceIsDisabled;
 import com.notrika.gympin.domain.user.UserServiceImpl;
+import com.notrika.gympin.persistence.dao.repository.authCodes.CorporateContractCodeRepository;
+import com.notrika.gympin.persistence.dao.repository.authCodes.PlaceContractCodeRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageSmsPatternRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageSmsRepository;
-import com.notrika.gympin.persistence.dao.repository.user.UserActivationCodeRepository;
+import com.notrika.gympin.persistence.dao.repository.authCodes.UserActivationCodeRepository;
+import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.management.sms.ManageSmsEntity;
 import com.notrika.gympin.persistence.entity.management.sms.ManageSmsPatternEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
-import com.notrika.gympin.persistence.entity.user.activationCode.UserActivationCodeEntity;
+import com.notrika.gympin.persistence.entity.authCodes.CorporateContractCodeEntity;
+import com.notrika.gympin.persistence.entity.authCodes.PlaceContractCodeEntity;
+import com.notrika.gympin.persistence.entity.authCodes.UserActivationCodeEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,6 +43,12 @@ public class SmsInServiceImpl implements SmsInService {
     private UserActivationCodeRepository userActivationCodeRepository;
 
     @Autowired
+    private PlaceContractCodeRepository placeContractCodeRepository;
+
+    @Autowired
+    private CorporateContractCodeRepository corporateContractCodeRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -42,6 +56,12 @@ public class SmsInServiceImpl implements SmsInService {
 
     @Autowired
     private SettingsService settingsService;
+
+    @Autowired
+    private PlaceRepository placeRepository;
+
+    @Autowired
+    private CorporateRepository corporateRepository;
 
     @Autowired
     private ManageSmsRepository manageSmsRepository;
@@ -245,6 +265,39 @@ public class SmsInServiceImpl implements SmsInService {
         return true;
     }
 
+    @Override
+    public boolean sendPlaceContractCode(Long placeId,SmsDto smsDto) throws Exception {
+        log.info("Going to sendPlaceContractCode with params: {} ...\n", smsDto);
+
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        updatePlaceContractCode(smsDto.getText1(), placeId, smsDto.getUserNumber(),"not send");
+        insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_PLACE_CONTRACT",SmsTypes.JOIN_PLACE_REQUEST);
+        return true;
+    }
+
+    @Override
+    public boolean sendCorporateContractCode(Long corporateId,SmsDto smsDto) throws Exception {
+        log.info("Going to sendPlaceContractCode with params: {} ...\n", smsDto);
+
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+
+        updateCorporateContractCode(smsDto.getText1(), corporateId, smsDto.getUserNumber(),"not send");
+        insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_CORPORATE_CONTRACT",SmsTypes.JOINED_TO_CORPORATE);
+        return true;
+    }
+
 
     private boolean sendToFixNumber() {
         SettingDto FixNumber = getFixNumber();
@@ -304,6 +357,42 @@ public class SmsInServiceImpl implements SmsInService {
         code.setDeleted(false);
         userActivationCodeRepository.update(code);
         log.info("Verification sms sent to user: {} with following code {}...\n", user, smsCode);
+    }
+    private void updateCorporateContractCode(String smsCode, Long CorporateId,String phoneNumber, String body) {
+
+        CorporateEntity corporate = corporateRepository.getById(CorporateId);
+        Calendar expireDate = Calendar.getInstance();
+        expireDate.add(Calendar.MINUTE, 3);
+
+        CorporateContractCodeEntity code = corporate.getContractCode();
+        if (code == null) {
+            code = new CorporateContractCodeEntity();
+            code.setCorporate(corporate);
+        }
+        code.setCode(passwordEncoder.encode(smsCode));
+        code.setSenderId(body);
+        code.setExpiredDate(expireDate.getTime());
+        code.setDeleted(false);
+        corporateContractCodeRepository.update(code);
+        log.info("Verification corporate sms sent to corporate: {} phoneNumber: {} with following code {}...\n", corporate,phoneNumber, smsCode);
+    }
+    private void updatePlaceContractCode(String smsCode, Long placeId,String phoneNumber, String body) {
+
+        PlaceEntity place = placeRepository.getById(placeId);
+        Calendar expireDate = Calendar.getInstance();
+        expireDate.add(Calendar.MINUTE, 3);
+
+        PlaceContractCodeEntity code = place.getContractCode();
+        if (code == null) {
+            code = new PlaceContractCodeEntity();
+            code.setPlace(place);
+        }
+        code.setCode(passwordEncoder.encode(smsCode));
+        code.setSenderId(body);
+        code.setExpiredDate(expireDate.getTime());
+        code.setDeleted(false);
+        placeContractCodeRepository.update(code);
+        log.info("Verification sms sent to place: {} phoneNumber: {} with following code {}...\n", place,phoneNumber, smsCode);
     }
 
 }

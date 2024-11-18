@@ -12,8 +12,8 @@
     border-radius: 5px;
 }
 .map{
-    height: 180px;
-    width: 90vw;
+    height: Calc(100VH - 90px);
+    width: 100vw;
 }
 .mb--8{
     margin-bottom: -8px;

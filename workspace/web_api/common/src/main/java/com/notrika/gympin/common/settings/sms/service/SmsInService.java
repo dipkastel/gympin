@@ -19,5 +19,7 @@ public interface SmsInService {
     boolean sendAdminRoleInCorporate(SmsDto smsDto) throws Exception;
     boolean sendFirstTicketSell(SmsDto smsDto) throws Exception;
     boolean sendOrdinaryTicketSell(SmsDto smsDto) throws Exception;
+    boolean sendPlaceContractCode(Long placeId,SmsDto smsDto) throws Exception;
+    boolean sendCorporateContractCode(Long corporateId,SmsDto smsDto) throws Exception;
 
 }

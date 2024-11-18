@@ -12,7 +12,7 @@ const _WorkWithUs = () => {
                         همکاری با جیم پین
                     </Typography>
                     <Typography sx={{mx:2,mt:1,direction:"rtl",fontSize:15,textAlign:"justify",lineHeight:"1.5em"}} variant={"subtitle1"}>
-                        در صورتی که سازمان هستید و می خواهید از خدمات جیم پین استفاده کنید و یا دارای مجموعه ورزشی هستید و میخواهید در جیم پین به عنوان خدمات دهنده فعالیت کنید از طریق دکمه های زیر اقدام نمایید و منتظر تماس کارشناسان جیم پین بمانید :
+                        در صورتی که سازمان هستید و می خواهید از خدمات جیم پین استفاده کنید و یا دارای مجموعه ورزشی هستید و می خواهید در جیم پین به عنوان مرکز ورزشی خدمات دهنده فعالیت کنید از طریق دکمه های زیر اقدام نمایید و منتظر تماس کارشناسان جیم پین بمانید:
                     </Typography>
                     <Button variant={"contained" } className={"btn-red3"} href="https://place.gympin.ir/auth/register"   sx={{mx:0,my:3,py:2,borderRadius:8}}>
                         <Typography sx={{mr:3,ml:3}} variant={"subtitle2"}>

@@ -17,7 +17,7 @@ const TicketsManagement = () => {
             {ticketTypes.map(item=>(
 
                 <Grid hidden={!getAccessOf(item.Access)} key={item.Id} item xs={4}>
-                    <Card onClick={(e)=>item.Status=="Active"?navigate(item.Destination, {replace: true}):{}}  sx={{m:1}} elevation={3}>
+                    <Card onClick={(e)=>item.Status=="Active"?navigate(item.Destination, {replace: true}):{}}  sx={{borderRadius: 3,m:1}} elevation={3}>
                         <CardContent className={"row"}>
                             <div className={"col-sm-12 col-md-6"}>
                                 {item.Icon}

@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.place.place.api;
 
+import com.notrika.gympin.common.place.place.param.PlaceContractSmsParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
@@ -40,5 +41,11 @@ public interface PlaceController extends BaseController<PlaceParam, PlaceDto, Pl
     ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceParam placeParam);
 
     ResponseEntity<PlaceDto> updateOrder(@RequestBody PlaceParam param);
+
+    ResponseEntity<PlaceDto> updateContract(@RequestBody PlaceParam param);
+
+    ResponseEntity<PlaceDto>  signContract(@RequestBody PlaceParam placeParam);
+
+    ResponseEntity<Boolean> sendContractCode(@RequestBody PlaceContractSmsParam param);
 
 }

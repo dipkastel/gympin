@@ -39,7 +39,7 @@ const _userSubscribes = ({user}) => {
             </div>
                     <List sx={{width: '100%', bgcolor: 'background.paper'}}>
                         {userPlaceSubscribes.map((item, num) => (
-                            <Card key={"userSubscribes-" + num} elevation={3} sx={{margin: 1}}>
+                            <Card key={"userSubscribes-" + num} elevation={3} sx={{borderRadius: 3,margin: 1}}>
                                 <CardContent>
 
                                 <div >

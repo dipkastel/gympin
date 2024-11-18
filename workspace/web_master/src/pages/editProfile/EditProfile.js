@@ -159,7 +159,7 @@ const EditProfile = (props) => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <Grid
                     container
                     direction="column"

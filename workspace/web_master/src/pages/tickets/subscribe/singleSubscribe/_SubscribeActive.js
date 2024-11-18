@@ -31,7 +31,7 @@ const _SubscribeActive = ({ticketSubscribe, getSubscribeData}) => {
     return (
         <>
             <Form onSubmit={(e) => updateStatus(e)}>
-                <Card elevation={3} sx={{margin: 1}}>
+                <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
 
                     {introMode&&
                     <Typography sx={{p:1}} color={"#a2a2a2"} variant={"subtitle2"}>

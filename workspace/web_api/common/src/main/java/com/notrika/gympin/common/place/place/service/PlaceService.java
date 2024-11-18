@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.place.place.service;
 
+import com.notrika.gympin.common.place.place.param.PlaceContractSmsParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
@@ -28,4 +29,7 @@ public interface PlaceService extends BaseService<PlaceParam, PlaceDto, PlaceQue
     InviteCode getPlaceInviteCode(PlaceParam param);
     List<TicketBuyableDto> getBuyableByPlace(PlaceParam param);
     PlaceDto updateOrder(PlaceParam placeParam);
+    PlaceDto updateContract(PlaceParam placeParam);
+    PlaceDto signContract(PlaceParam placeParam);
+    Boolean sendContractCode(PlaceContractSmsParam param);
 }

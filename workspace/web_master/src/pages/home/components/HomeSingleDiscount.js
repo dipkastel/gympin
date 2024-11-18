@@ -8,7 +8,7 @@ const HomeSingleDiscount = (props) => {
     const navigate = useNavigate()
     return (<>
                 <div >
-                    <Card elevation={3} sx={{margin: 1}}>
+                    <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                         <Link onClick={()=>clickHandler(props.item,navigate)} underline="none" color="inherit" fontWeight="800">
                             <div className={"discount"}>
                                 <div className={"percent"}>

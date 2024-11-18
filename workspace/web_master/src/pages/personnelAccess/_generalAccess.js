@@ -44,7 +44,7 @@ const _generalAccess = ({user}) => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardContent>
                     <List>
                         {userAccess && userAccess.map(item => (

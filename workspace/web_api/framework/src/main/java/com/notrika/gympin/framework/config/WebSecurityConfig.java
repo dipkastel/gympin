@@ -113,7 +113,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("09365375024").password(passwordEncoder().encode("123456")).roles("ADMIN");
     }
 
     //Cross origin resource sharing.

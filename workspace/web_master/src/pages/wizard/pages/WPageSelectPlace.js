@@ -16,7 +16,7 @@ const WPageSelectPlace = ({onNext}) => {
 
     return (
         <>
-             <Card sx={{m:2}} elevation={3}><CardHeader
+             <Card sx={{borderRadius: 3,m:2}} elevation={3}><CardHeader
                 sx={{
                     backgroundColor: "primary.main",
                     color: "#fff"

@@ -99,7 +99,7 @@ const _PlaceActivity = (props) => {
 
     return (
         <>
-            {place.Status == "ACTIVE" ? <Card elevation={3} sx={{margin: 1}}>
+            {place.Status == "ACTIVE" ? <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardHeader
                     component={"a"}
                     sx={{textDecoration: "none", color: "#000000"}}

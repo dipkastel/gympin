@@ -94,7 +94,7 @@ const Option = ({introCanGoNext}) => {
 
     return (
         <>
-            {!introMode&&<Card elevation={3} sx={{margin: 1}}>
+            {!introMode&&<Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardHeader
                     title={"مدیریت امکانات"}/>
             </Card>}

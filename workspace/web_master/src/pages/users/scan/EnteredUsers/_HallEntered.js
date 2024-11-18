@@ -93,7 +93,7 @@ export default function _HallEntered({selectSubscribe,updatePage}) {
 
     return (
         <>
-            <Card hidden={users.length<1} onClick={(e)=>SetOpenModalEnteredList(true)} sx={{m:1}} elevation={3}>
+            <Card hidden={users.length<1} onClick={(e)=>SetOpenModalEnteredList(true)} sx={{borderRadius: 3,m:1}} elevation={3}>
                 <CardContent className={"row"}>
                     <div className={"col-sm-12 col-md-6 text-center p-3"}>
                         <Badge badgeContent={users.length} color="primary">

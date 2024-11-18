@@ -75,7 +75,7 @@ const _ManageGatePrice = (props) => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardHeader
                     sx={{paddingBottom: 0}}
                     title={props.name}

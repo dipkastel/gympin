@@ -10,7 +10,7 @@ const HomeSingleContent =(props) => {
         <>
                     <div >
                         <Link onClick={()=>clickHandler(props.item,navigate)} underline="none" color="inherit" fontWeight="800">
-                            <Card sx={{margin:1}} elevation={3}>
+                            <Card sx={{borderRadius: 3,margin:1}} elevation={3}>
 
                                 <CardMedia
                                     component="img"

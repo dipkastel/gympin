@@ -136,7 +136,7 @@ export default function _ScannerCore({onFind, scannWork}) {
     }, [scannWork]);
 
     return (
-        <Card elevation={3} sx={{
+        <Card elevation={3} sx={{borderRadius: 3,
             margin: 2,direction:"ltr"
         }}>
             {cameraStatusEnum[cameraStatus]}

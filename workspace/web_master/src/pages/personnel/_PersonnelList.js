@@ -87,7 +87,7 @@ const _PersonnelList = ({personnelList, renewList}) => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardContent sx={{margin: 0, paddingTop: 0}}>
                     <List>
                         {inPersonnelList && inPersonnelList.map(item => (

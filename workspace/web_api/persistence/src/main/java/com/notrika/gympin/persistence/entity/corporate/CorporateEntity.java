@@ -11,6 +11,7 @@ import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
+import com.notrika.gympin.persistence.entity.authCodes.CorporateContractCodeEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -63,6 +64,11 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     @JsonIgnore
     @ToString.Exclude
     private MultimediaEntity logo;
+
+    @OneToOne(mappedBy = "corporate", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private CorporateContractCodeEntity contractCode;
 
     @OneToMany(mappedBy = "corporate", fetch = FetchType.LAZY)
     @JsonIgnore

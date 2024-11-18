@@ -74,6 +74,7 @@ export default function PlaceTrafic() {
 
     return (
         <Card sx={{
+            borderRadius: 3,
             margin:1
         }} elevation={3}>
             <CardHeader

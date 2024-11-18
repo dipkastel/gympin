@@ -44,7 +44,7 @@ const _UserCard = ({subscribe}) => {
     }
 
     return (<>
-            {inSubscribe && <Card elevation={3} sx={{margin: 1}}>
+            {inSubscribe && <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
 
                 <CardHeader
                     title={inSubscribe.User?.FullName || inSubscribe.User?.Username}

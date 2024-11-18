@@ -4,6 +4,8 @@ import {useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import ReactGA from "react-ga4";
 import {ErrorContext} from "./GympinPagesProvider";
+import {getFixPlaceName} from "../helper/utils";
+import {Typography} from "@mui/material";
 
 
 export default function NNavigaion(){
@@ -29,11 +31,14 @@ export default function NNavigaion(){
         }
     }, [location]);
 
+
     return (
         <Navbar bg="primary" variant="dark" >
             <Container>
                 <Navbar.Brand href="#home">
-                    {"Gympin"+(place?(" - "+place.Name):"")}
+                    <Typography variant={"h2"} sx={{fontSize:"1em"}}>
+                        {"Gympin - "+getFixPlaceName(place,18)}
+                    </Typography>
                 </Navbar.Brand>
             </Container>
         </Navbar>

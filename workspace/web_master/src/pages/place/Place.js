@@ -54,7 +54,6 @@ const Place = ({hallListChange,introCanGoNext}) => {
 
     return (
         <div>
-
             {!introMode&&getAccessOf(personnelAccessEnumT.ManagementStatus)&&<_PlaceActivity ShowIfActive={true}/>}
             {place&&<_PlaceInfo place={place} SubmitForm={(e)=>submitEdit(e)}/>}
             {place&&<_PlaceLocation place={place} SubmitForm={(e)=>submitEdit(e)}/>}

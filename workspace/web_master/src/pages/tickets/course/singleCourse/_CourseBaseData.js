@@ -84,7 +84,7 @@ const _CourseBaseData = ({ ticketCourse, getCourseData}) => {
     return (
         <>
             <Form onSubmit={(e) => updateCourse(e)}>
-                <Card elevation={3} sx={{margin: 1}}>
+                <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                     <CardContent sx={{margin: 0}}>
 
                         {introMode&&

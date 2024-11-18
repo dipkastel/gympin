@@ -65,7 +65,7 @@ const QrList = () => {
         <div>
             {qrList.map((item, number) => (<div key={number}>
 
-                <Card elevation={3} sx={{margin: 1}}>
+                <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                     <CardHeader
                         title={item.Name + " " + item.ItemNumber}
                         action={<IconButton onClick={e => share(item)}>

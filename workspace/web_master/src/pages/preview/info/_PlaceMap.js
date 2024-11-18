@@ -75,7 +75,7 @@ const _PlaceMap = ({place}) => {
 
     return (
         <div>
-            <Card elevation={3} sx={{margin: 1, padding: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1, padding: 1}}>
                 <Grid
                     container
                     direction="row"

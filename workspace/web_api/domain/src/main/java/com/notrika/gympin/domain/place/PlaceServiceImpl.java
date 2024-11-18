@@ -1,6 +1,13 @@
 package com.notrika.gympin.domain.place;
 
+import com.notrika.gympin.common.place.place.dto.PlaceContractDto;
+import com.notrika.gympin.common.place.place.param.PlaceContractSmsParam;
+import com.notrika.gympin.common.settings.sms.dto.SmsDto;
+import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
+import com.notrika.gympin.common.settings.sms.service.SmsService;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
+import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.common.util.exception.place.*;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
@@ -27,10 +34,13 @@ import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import org.apache.tomcat.util.json.JSONParser;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -46,10 +56,16 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     private PlaceRepository placeRepository;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private MultimediaRepository multimediaRepository;
 
     @Autowired
     private ManageLocationRepository manageLocationRepository;
+
+    @Autowired
+    private SmsInService smsInService;
 
     @Override
     public PlaceDto add(PlaceParam placeParam) {
@@ -74,8 +90,9 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         initPlace.setLongitude(placeParam.getLongitude());
         initPlace.setAddress(placeParam.getAddress());
         initPlace.setActiveTimes(placeParam.getActiveTimes());
-        initPlace.setTell(placeParam.getTell());
+        //TODO remove set has contract and set seprate api for panel with admin access only
         initPlace.setHasContract(placeParam.getHasContract());
+        initPlace.setTell(placeParam.getTell());
         initPlace.setCallUs(placeParam.getCallUs());
         initPlace.setAutoDiscount(placeParam.getAutoDiscount());
         if (placeParam.getLocation() != null && placeParam.getLocation().getId() != null && placeParam.getLocation().getId() > 0) {
@@ -94,7 +111,13 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         PlaceEntity place = update(initPlace);
         return PlaceConvertor.toDto(place);
     }
-
+    @Override
+    public PlaceDto updateContract(PlaceParam placeParam) {
+        PlaceEntity initPlace = getEntityById(placeParam.getId());
+        initPlace.setContractData(placeParam.getContractData());
+        PlaceEntity place = update(initPlace);
+        return PlaceConvertor.toDto(place);
+    }
     @Override
     public PlaceEntity update(PlaceEntity place) {
         return placeRepository.update(place);
@@ -263,5 +286,37 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
         return place.getBuyables().stream().filter(b->!b.isDeleted()).map(BuyableConvertor::ToDto).collect(Collectors.toList());
     }
 
+    @Override
+    public Boolean sendContractCode(PlaceContractSmsParam param) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        PlaceEntity place = placeRepository.getById(param.getPlaceId());
+       String contractData = place.getContractData();
+       String code = MyRandom.GenerateRandomVerificationSmsCode();
+        try {
+            PlaceContractDto contractDto = objectMapper.readValue(contractData, PlaceContractDto.class);
+            smsInService.sendPlaceContractCode(place.getId(),SmsDto.builder()
+                    .smsType(SmsTypes.JOINED_TO_PLACE)
+                    .userNumber(contractDto.ownerPhoneNumber)
+                    .text1(code)
+                    .build()
+            );
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    @Override
+    public PlaceDto signContract(PlaceParam placeParam) {
+        PlaceEntity initPlace = getEntityById(placeParam.getId());
+        if(passwordEncoder.matches(placeParam.getSignCode(),initPlace.getContractCode().getCode())){
+            initPlace.setHasContract(placeParam.getHasContract());
+            PlaceEntity place = update(initPlace);
+            return PlaceConvertor.toDto(place);
+        }
+        return null;
+    }
 
 }

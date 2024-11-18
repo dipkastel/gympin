@@ -1,7 +1,7 @@
-package com.notrika.gympin.persistence.dao.repository.user;
+package com.notrika.gympin.persistence.dao.repository.authCodes;
 
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
-import com.notrika.gympin.persistence.entity.user.activationCode.UserActivationCodeEntity;
+import com.notrika.gympin.persistence.entity.authCodes.UserActivationCodeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

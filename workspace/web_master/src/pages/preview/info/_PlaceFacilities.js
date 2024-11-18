@@ -21,7 +21,7 @@ const _PlaceFacilities = ({place}) => {
 
     return (
         <div className={"nopadding"}>
-            <Card elevation={3} sx={{margin: 1, padding: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1, padding: 1}}>
                 <Typography variant={"subtitle1"}>
                     امکانات مجموعه
                 </Typography>

@@ -27,6 +27,7 @@ const HomeUserList = (props) => {
                     <div key={index} >
                         <Link onClick={()=>clickHandler(item,navigate)} underline="none">
                             <Card sx={{
+                                borderRadius: 3,
                                 marginX:0.3,
                                 marginY:1
                             }} elevation={3}>

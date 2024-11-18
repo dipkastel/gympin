@@ -129,7 +129,7 @@ const _SettingsCodeForQr = () => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardHeader
                     title={"آیتم با qr"}
                 />
@@ -160,7 +160,7 @@ const _SettingsCodeForQr = () => {
                     </Form>
                 </CardContent>
             </Card>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardHeader
                     title={"یادداشت ها"}
                 />

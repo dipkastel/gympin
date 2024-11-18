@@ -3,7 +3,7 @@ import {Card, Divider, Grid, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 import {BoyRounded, ChildCare, GirlRounded, LocationOnOutlined, ManRounded, WomanRounded} from "@mui/icons-material";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import {fixTextToSlug, toPriceWithComma} from "../../helper/utils";
+import {fixTextToSlug, toPriceWithComma} from "../../../helper/utils";
 
 const __placeListItem = ({item}) => {
     return (

@@ -78,7 +78,7 @@ const DemandPayment = () => {
                     <List disablePadding>
                         {transactions.content.map((row) => (
 
-                            <Card key={"transaction-" + row.Id} elevation={3} sx={{margin: 2, borderRadius: 4}}>
+                            <Card key={"transaction-" + row.Id} elevation={3} sx={{margin: 1, borderRadius: 3}}>
                                 <CardContent sx={{p: "8px !important"}}>
                                     <ListItem disablePadding sx={{direction: "rtl", textAlign: "right"}}>
                                         <ListItemText>

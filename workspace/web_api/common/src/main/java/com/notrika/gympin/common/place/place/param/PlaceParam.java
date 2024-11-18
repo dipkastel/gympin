@@ -38,6 +38,12 @@ public class PlaceParam extends BaseParam<PlaceParam> {
     @JsonProperty("Tell")
     private String tell;
 
+    @JsonProperty("ContractData")
+    private String contractData;
+
+    @JsonProperty("SignCode")
+    private String signCode;
+
     @JsonProperty("CallUs")
     private Boolean callUs;
 

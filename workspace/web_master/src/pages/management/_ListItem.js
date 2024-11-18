@@ -3,7 +3,7 @@ import {Card, CardHeader} from "@mui/material";
 
 const _ListItem = (props) => {
     return (
-        <Card elevation={3} sx={{margin: 1}} >
+        <Card elevation={3} sx={{margin: 1,borderRadius:3}} >
             <CardHeader
                 component={"a"}
                 sx={{textDecoration:"none",color:"#000000",bgcolor:props.bgColor}}

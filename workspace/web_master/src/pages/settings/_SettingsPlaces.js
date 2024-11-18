@@ -24,6 +24,7 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import {placePersonnel_ByUser} from "../../network/api/placePersonnel.api";
 import {personnelRoles} from "../../helper/enums/personnelRoles";
 import {getWizardComplete} from "../../helper/pocket";
+import {getFixPlaceName} from "../../helper/utils";
 
 const _SettingsPlaces = ({setUserHasIntro}) => {
     const error = useContext(ErrorContext);
@@ -87,49 +88,51 @@ const _SettingsPlaces = ({setUserHasIntro}) => {
     }
 
     return (<>
-            {!loading && <Card elevation={3} sx={{margin: 1}}>
-                <CardHeader
-                    title={"مجموعه های من"}
-                />
-                <CardContent>
-                    <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-                        <FormControl
-                            style={{width: "100%"}}>
-                            <RadioGroup
-                                aria-labelledby="demo-radio-buttons-group-label"
-                                defaultValue="female"
-                                name="radio-buttons-group"
-                                value={(selectedPlace) ? selectedPlace.Id : 9999}
-                                onChange={(event) => selectedPlaceChanged(event)}
-                            >
-                                {getPlacePersonel().map((item, number) => (
-                                    <div key={"---"+number}>
-                                        <Grid
-                                            container
-                                            justifyContent={"space-between"}
-                                            sx={{padding: 1}}
-                                        >
-                                            <ListItemText
-                                                primary={<FormControlLabel value={item.Place.Id} control={<Radio/>} label={item.Place.Name}/>}
-                                                secondary={<>{item.UserRole.map(role=>(<Chip size={"small"} key={role} label={personnelRoles[role]} />))}</>}
-                                               secondaryTypographyProps={{component:"div"}}
+            {!loading && <>
+
+                <div>
+                    <div className={"section-title mt-3"}>مجموعه های من</div>
+                </div>
+                        <List sx={{width: '100%', bgcolor: 'background.paper'}}>
+                            <FormControl
+                                style={{width: "100%"}}>
+                                <RadioGroup
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    defaultValue="female"
+                                    name="radio-buttons-group"
+                                    value={(selectedPlace) ? selectedPlace.Id : 9999}
+                                    onChange={(event) => selectedPlaceChanged(event)}
+                                >
+                                    {getPlacePersonel().map((item, number) => (
+
+                                        <Card key={"---"+number} elevation={3} sx={{margin: 1,borderRadius:3}}>
+                                            <CardContent sx={{p: 0,paddingBottom:"0px !important"}}>
+                                        <div >
+                                            <Grid
+                                                container
+                                                justifyContent={"space-between"}
+                                                sx={{padding: 1}}
+                                            >
+                                                <ListItemText
+                                                    sx={{p:0,m:0}}
+                                                    primary={<FormControlLabel sx={{m:0}} value={item.Place.Id} control={<Radio sx={{pr:0,pt:0}}/>} label={getFixPlaceName(item.Place,30,null)}/>}
+                                                    secondary={<>{item.UserRole.map(role=>(<Chip size={"small"} key={role} label={personnelRoles[role]} />))}</>}
+                                                    secondaryTypographyProps={{component:"div"}}
                                                 />
 
-                                            {user&&!introMode&&IsOwner(item)&&<Button size={"small"} variant={"outlined"}
-                                                    href={"/management/place?id=" + item.Place.Id}>
-                                                ویرایش
-                                            </Button>}
-                                        </Grid>
-                                        <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="li"/>
-                                    </div>
-                                ))}
-                            </RadioGroup>
-                        </FormControl>
-
-
-                    </List>
-                </CardContent>
-            </Card>}
+                                                {user&&!introMode&&IsOwner(item)&&<Button size={"small"} variant={"outlined"}
+                                                                                          href={"/management/place?id=" + item.Place.Id}>
+                                                    ویرایش
+                                                </Button>}
+                                            </Grid>
+                                        </div>
+                                            </CardContent>
+                                        </Card>
+                                    ))}
+                                </RadioGroup>
+                            </FormControl>
+                        </List>
+            </>}
             {loading && <Box sx={{width:"100%",height:"100vh", display: 'flex'}}>
                 <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {genders} from "../places/_PlacesList";
+import {genders} from "../places/placesList/_PlacesList";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 import {sports_query} from "../../network/api/sport.api";

@@ -13,7 +13,7 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe}) => {
         <div>
             <ListItem disablePadding>
                 <ListItemButton disabled={!subscribe.Enable}>
-                    <Card sx={{width: "100%"}} elevation={6}>
+                    <Card sx={{borderRadius: 3,width: "100%"}} elevation={6}>
                         <CardHeader
                             component={"a"}
                             sx={{textDecoration: "none", textAlign: "start", color: "#000000"}}

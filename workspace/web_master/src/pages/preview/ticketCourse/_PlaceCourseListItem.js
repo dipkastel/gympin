@@ -13,7 +13,7 @@ const _PlaceCourseListItem = ({course, number, addToBasket}) => {
         <div>
             <ListItem disablePadding>
                 <ListItemButton disabled={!course.Enable}>
-                    <Card sx={{width: "100%"}} elevation={6}>
+                    <Card sx={{borderRadius: 3,width: "100%"}} elevation={6}>
                         <CardHeader
                             component={"a"}
                             sx={{textDecoration: "none", textAlign: "start", color: "#000000"}}

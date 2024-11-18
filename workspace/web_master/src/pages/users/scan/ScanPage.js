@@ -200,7 +200,7 @@ const ScanPage = ({selectedSubscribe}) => {
             {!updatePageP &&
             <Paper sx={{direction: "rtl"}}>
                 <_UserCard subscribe={subscribe}/>
-                {scannedCode ? <Card sx={{m: 1}} elevation={3}><Grid sx={{height: "240px"}} className={"rtl"} container
+                {scannedCode ? <Card sx={{borderRadius: 3,m: 1}} elevation={3}><Grid sx={{height: "240px"}} className={"rtl"} container
                                                                      alignContent={"space-around"}
                                                                      justifyContent={"space-around"}
                                                                      direction={"row"}><CircularProgress/></Grid></Card> :

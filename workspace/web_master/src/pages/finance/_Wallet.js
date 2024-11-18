@@ -12,7 +12,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
+import {getFixPlaceName, toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {Form} from "react-bootstrap";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
@@ -136,7 +136,7 @@ const _Wallet = ({place, user, onRequestComplete}) => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardContent
                 >
                     <Grid
@@ -147,9 +147,8 @@ const _Wallet = ({place, user, onRequestComplete}) => {
                         spacing={0}
                     >
                         <Grid item>
-
                             <Typography sx={{mt: 1, lineHeight: 0.6}} variant={"subtitle1"}>
-                                {" کیف پول " + place.Name + " : "}
+                                {" کیف پول " + getFixPlaceName(place,10)+ " : "}
                                 {`${toPriceWithComma(getIncomeWalletAmount())} تومان`}
                             </Typography>
                             {getUserWalletAmount() > 0 && <Typography sx={{mr: 1}} variant={"overline"}>

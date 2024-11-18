@@ -15,8 +15,6 @@ import {Place_query} from "../../../../network/api/place.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import Select from "react-select";
-import {TextField, Toolbar} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 
 const PlacesMap = () => {
     const error = useContext(ErrorContext);
@@ -70,8 +68,6 @@ const PlacesMap = () => {
         setLeaflet(map);
         var markerLaye = L.layerGroup().addTo(map)
         setMarkerLayer(markerLaye);
-
-
     };
 
     function getStatusOptions() {
@@ -129,8 +125,6 @@ const PlacesMap = () => {
                     title="مراکز"
                     toolbar={
                         <PortletHeaderToolbar>
-
-
                             <Select
                                     className={"dropdown w-100"}
                                     menuPortalTarget={document.body}

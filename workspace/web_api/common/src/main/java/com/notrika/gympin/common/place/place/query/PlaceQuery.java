@@ -55,4 +55,16 @@ public class PlaceQuery extends BaseQuery<PlaceQuery> {
     @JsonProperty("HasContract")
     private Boolean is_hasContract;
 
+    @JsonProperty("MAXlatitude")
+    private Double max_latitude;
+
+    @JsonProperty("MINlatitude")
+    private Double min_latitude;
+
+    @JsonProperty("MAXlongitude")
+    private Double max_longitude;
+
+    @JsonProperty("MINlongitude")
+    private Double min_longitude;
+
 }

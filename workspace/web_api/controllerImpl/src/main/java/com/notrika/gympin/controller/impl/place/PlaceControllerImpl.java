@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.place;
 
+import com.notrika.gympin.common.place.place.param.PlaceContractSmsParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
@@ -99,6 +100,18 @@ public class PlaceControllerImpl implements PlaceController {
     }
 
     @Override
+    @PostMapping("/updateContract")
+    public ResponseEntity<PlaceDto> updateContract(PlaceParam param) {
+        return ResponseEntity.ok(placeService.updateContract(param));
+    }
+
+    @Override
+    @PostMapping("/signContract")
+    public ResponseEntity<PlaceDto> signContract(PlaceParam param) {
+        return ResponseEntity.ok(placeService.signContract(param));
+    }
+
+    @Override
     @PutMapping("/deleteMultimedia")
     public ResponseEntity<PlaceDto> deleteMultimedia(PlaceMultimediaParam param) {
         return ResponseEntity.ok(placeService.removeMultimedia(param));
@@ -132,6 +145,13 @@ public class PlaceControllerImpl implements PlaceController {
     @GetMapping("/getBuyableByPlace")
     public ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceParam placeParam) {
         return new ResponseEntity<>(placeService.getBuyableByPlace(placeParam), HttpStatus.OK);
+    }
+
+
+    @Override
+    @PostMapping("/sendContractCode")
+    public ResponseEntity<Boolean> sendContractCode(PlaceContractSmsParam param) {
+        return new ResponseEntity<>(placeService.sendContractCode(param), HttpStatus.OK);
     }
 
 

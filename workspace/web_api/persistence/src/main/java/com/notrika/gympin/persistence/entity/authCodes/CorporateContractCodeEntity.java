@@ -1,7 +1,7 @@
-package com.notrika.gympin.persistence.entity.user.activationCode;
+package com.notrika.gympin.persistence.entity.authCodes;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,12 +20,12 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "userActivationCode")
-public class UserActivationCodeEntity extends BaseEntityWithCreateUpdate<UserActivationCodeEntity> {
+@Table(name = "corporateContractCode")
+public class CorporateContractCodeEntity extends BaseEntityWithCreateUpdate<CorporateContractCodeEntity> {
 
     //@Column(name = "userId")
     @OneToOne(cascade = CascadeType.ALL)
-    private UserEntity user;
+    private CorporateEntity corporate;
 
     @Column(name = "phoneNumber")
     private String phoneNumber;
@@ -39,8 +39,8 @@ public class UserActivationCodeEntity extends BaseEntityWithCreateUpdate<UserAct
     @Column(name = "expiredDate", nullable = false)
     private Date expiredDate;
 
-    public UserActivationCodeEntity(UserEntity user, String phoneNumber, String code, String senderId, Date expiredDate) {
-        this.user = user;
+    public CorporateContractCodeEntity(CorporateEntity corporate, String phoneNumber, String code, String senderId, Date expiredDate) {
+        this.corporate = corporate;
         this.phoneNumber = phoneNumber;
         this.code = code;
         this.senderId = senderId;
@@ -51,7 +51,7 @@ public class UserActivationCodeEntity extends BaseEntityWithCreateUpdate<UserAct
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        UserActivationCodeEntity that = (UserActivationCodeEntity) o;
+        CorporateContractCodeEntity that = (CorporateContractCodeEntity) o;
 
         return Objects.equals(getId(), that.getId());
     }

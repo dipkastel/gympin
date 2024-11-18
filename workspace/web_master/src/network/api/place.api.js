@@ -33,3 +33,15 @@ export  function Place_deleteMultimedia(data){
 export  function Place_update(data){
     return axios.put(Api_url.place.UPDATE,data)
 }
+
+export  function place_UpdateContract(data){
+    return axios.post(Api_url.place.updateContract,data)
+}
+
+export  function place_sendContractCode(data){
+    return axios.post(Api_url.place.sendContractCode,data)
+}
+
+export  function place_SignContract(data){
+    return axios.post(Api_url.place.signContract,data)
+}

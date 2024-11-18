@@ -269,7 +269,7 @@ const _HallSchedule = ({hall,introCanGoNext}) => {
 
     return (
         <>
-            {hall.Name&&<Card elevation={3} sx={{margin: 1}}>
+            {hall.Name&&<Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardHeader
                     sx={{paddingBottom: 0}}
                     title={"زمان بندی های سالن "+hall.Name}

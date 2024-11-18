@@ -58,5 +58,10 @@
 .qrCode{
   border: 1px solid #000;
 }
+.mapIcon{
+  position: fixed;
+  right: 15px;
+  bottom: 70px;
+}
 
 /*# sourceMappingURL=style.css.map */

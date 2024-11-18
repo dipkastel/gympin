@@ -4,7 +4,7 @@ import _PlaceCoachListItem from "./_PlaceCoachListItem";
 
 const _PlaceCoaches = ({place, personnel}) => {
     return personnel.filter(p => p.UserRole.includes("PLACE_COACH") && p.IsPublic)[0]&&(
-        <Card elevation={3} sx={{margin: 1, padding: 1}}>
+        <Card elevation={3} sx={{borderRadius: 3,margin: 1, padding: 1}}>
                <Typography variant={"subtitle1"}>
                     مربیان
                 </Typography>

@@ -83,6 +83,9 @@ const Settings = () => {
     return (
         <>
             {user&&<_SettingsPlaces setUserHasIntro={(e)=>{setUserHasIntro(e)}}/>}
+            <div>
+                <div className={"section-title "}>دیگر امکانات</div>
+            </div>
             {!introMode&&userHasIntro&&<_ListItem title="فعال سازی مراحل ورود اطلاعات" onClick={()=>setModalOpenActiveWizard(true)}/>}
             {!introMode&&getAccessOf(personnelAccessEnumT.ManagementSettingsQr)&&<_ListItem title="کنترل qr کد ها" destination="/management/qrManagement"/>}
             {!introMode&&<_ListItem title="خروج" destination="/auth/logout"/>}

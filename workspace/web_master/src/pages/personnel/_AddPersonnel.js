@@ -82,7 +82,7 @@ const _AddPersonnel = ({renewList}) => {
     }
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardHeader
                     title={"افزودن پرسنل"}
                     action={<Button variant={"contained"} title={"btn_add"} onClick={()=>setOpenModalAddPersonnel(true)}>افزودن فرد جدید</Button>}/>

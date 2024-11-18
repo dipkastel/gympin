@@ -96,7 +96,7 @@ export default function _HallAwaitingEntry({selectSubscribe,updatePage}) {
 
     return (
         <>
-            <Card hidden={awaitingUsers.length<1} onClick={(e)=>SetOpenModalAwaiteList(true)} sx={{m:1}} elevation={3}>
+            <Card hidden={awaitingUsers.length<1} onClick={(e)=>SetOpenModalAwaiteList(true)} sx={{borderRadius: 3,m:1}} elevation={3}>
                 <CardContent className={"row"}>
                     <div className={"col-sm-12 col-md-6  text-center p-3"}>
                         <Badge badgeContent={awaitingUsers.length} color="primary">

@@ -8,7 +8,6 @@ import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncreaseUserDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
-import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceSettlementUserDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.notification.ManageNotificationEntity;
@@ -24,7 +23,7 @@ import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.Purcha
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
-import com.notrika.gympin.persistence.entity.user.activationCode.UserActivationCodeEntity;
+import com.notrika.gympin.persistence.entity.authCodes.UserActivationCodeEntity;
 import com.notrika.gympin.persistence.entity.user.relation.UserFollowEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

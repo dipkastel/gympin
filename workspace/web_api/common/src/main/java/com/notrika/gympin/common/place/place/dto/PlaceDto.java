@@ -36,6 +36,9 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
     @JsonProperty("Tell")
     private String tell;
 
+    @JsonProperty("ContractData")
+    private String contractData;
+
     @JsonProperty("Order")
     private Short order;
 

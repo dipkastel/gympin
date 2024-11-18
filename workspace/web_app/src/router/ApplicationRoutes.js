@@ -6,6 +6,7 @@ import NNavigaion from "../components/NNavigaion";
 import NBottomNavigation from "../components/NBottomNavigation";
 import AuthRoutes from "./AuthRoutes"
 import Places from "../pages/places/Places";
+import PlacesMap from "../pages/places/map/PlacesMap";
 import Profile from "../pages/profile/Profile";
 import Purchased from "../pages/tickets/Purchased";
 import Wallet from "../pages/wallet/Wallet";
@@ -22,7 +23,6 @@ import Coaches from "../pages/coaches/Coaches";
 import Coach from "../pages/coaches/coach/Coach";
 import SingleCourse from "../pages/tickets/singleCourse/SingleCourse";
 import Settings from "../pages/settings/Settings";
-import UserTransactions from "../pages/wallet/userTransactions/UserTransactions";
 import UserRequests from "../pages/wallet/userReqests/UserRequests";
 
 export default function ApplicationRoutes() {
@@ -35,6 +35,7 @@ export default function ApplicationRoutes() {
 
                 <Route path="/places" element={isAuthorized?<Places/>: <AuthRoutes/>}/>
                 <Route path="/place/:placeId" element={<Place/>}/>
+                <Route path="/placesMap" element={isAuthorized?<PlacesMap/>: <AuthRoutes/>}/>
 
                 <Route path="/coaches" element={isAuthorized?<Coaches/>: <AuthRoutes/>}/>
                 <Route path="/coach/:coachId" element={<Coach/>}/>

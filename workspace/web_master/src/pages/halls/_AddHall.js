@@ -87,7 +87,7 @@ const _AddHall = ({renewList}) => {
     }
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardHeader
                     title={"افزودن سالن"}
                     action={<Button variant={"contained"} title={"btn_add"} onClick={()=>setOpenModalAdd(true)}>افزودن سالن جدید</Button>}/>

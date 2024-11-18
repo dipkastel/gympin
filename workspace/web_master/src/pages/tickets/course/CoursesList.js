@@ -145,7 +145,7 @@ const CoursesList = ({OnChangeList}) => {
     return (
         <>
 
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
                 <CardHeader
                     title={"کلاس های مجموعه"}
                     action={<Button variant={"contained"} title={"btn_add"} onClick={() => setOpenModalAdd(true)}>افزودن
@@ -156,7 +156,7 @@ const CoursesList = ({OnChangeList}) => {
             </Card>
 
             {coursesList && coursesList.map((item, number) => (
-                <Card elevation={3} sx={{margin: 1}} key={"place-" + number}>
+                <Card elevation={3} sx={{borderRadius: 3,margin: 1}} key={"place-" + number}>
 
                     <CardActionArea href={introMode?(""):("/ticket/course/" + item.Id)}>
                         <CardHeader
