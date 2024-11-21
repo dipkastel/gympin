@@ -7,6 +7,12 @@ import Layout from '../layouts/Layout'
 import HomeTwoService from "../components/HomeTwo/HomeTwoService";
 import HomeTwoWCU from "../components/HomeTwo/HomeTwoWCU";
 import HomeTwoWorkingProcess from "../components/HomeTwo/HomeTwoWorkingProcess";
+import HomeTwoTestimonial from "../components/HomeTwo/HomeTwoTestimonial";
+import HomeTwoCounter from "../components/HomeTwo/HomeTwoCounter";
+import HomeTwoProject from "../components/HomeTwo/HomeTwoProject";
+import HomeTwoBrand from "../components/HomeTwo/HomeTwoBrand";
+import HomeTwoTeam from "../components/HomeTwo/HomeTwoTeam";
+import HomeTwoNews from "../components/HomeTwo/HomeTwoNews";
 
 export default function corporate() {
     return (
@@ -16,8 +22,8 @@ export default function corporate() {
                 <HomeTwoWorkingProcess/>
                 <HomeTwoAbout/>
                 <HomeTwoVideo/>
+                <HomeTwoService/>
                 {/*<HomeTwoFeature/>*/}
-                {/*<HomeTwoService/>*/}
                 {/*<HomeTwoWCU/>*/}
                 {/*<HomeTwoTestimonial/>*/}
                 {/*<HomeTwoCounter/>*/}

@@ -14295,4 +14295,18 @@ input.form-control-sm {
 .footer-widget__2 .recent-news__date {
   color: #A4A6A9; }
 
+
+.border-radios-8{
+  border-radius: 8px;
+}
+.border-radios-10{
+  border-radius: 10px;
+}
+.border-radios-12{
+  border-radius: 12px;
+}
+.border-radios-14{
+  border-radius: 14px;
+}
+
 /*# sourceMappingURL=style.css.map */
