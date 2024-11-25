@@ -4,7 +4,7 @@ import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {Place_query} from "../../../network/api/place.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {Box, CircularProgress} from "@mui/material";
+import {LinearProgress} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {fixTextToSlug} from "../../../helper/utils";
 
@@ -27,10 +27,10 @@ const PlacesMap = () => {
             queryType: "FILTER",
             Status: "Active",
             Option: null,
-            MAXlatitude:map?.getBounds()?._northEast?.lat,
-            MINlatitude:map?.getBounds()?._southWest?.lat,
-            MAXlongitude:map?.getBounds()?._northEast?.lng,
-            MINlongitude:map?.getBounds()?._southWest?.lng,
+            MAXlatitude: map?.getBounds()?._northEast?.lat,
+            MINlatitude: map?.getBounds()?._southWest?.lat,
+            MAXlongitude: map?.getBounds()?._northEast?.lng,
+            MINlongitude: map?.getBounds()?._southWest?.lng,
             paging: {Page: 0, Size: 60}
         }).then(result => {
             setIsLoading(false);
@@ -47,7 +47,7 @@ const PlacesMap = () => {
     useEffect(() => {
         if (leaflet) return;
         if (map) return;
-        map = L.map("kt_leaflet_map", {center: [tehranCenterLat,tehranCenterLong], zoom: 13,});
+        map = L.map("kt_leaflet_map", {center: [tehranCenterLat, tehranCenterLong], zoom: 13,});
         prepareMap(map);
     }, []);
 
@@ -74,6 +74,7 @@ const PlacesMap = () => {
                 addMarker(place);
         });
     }
+
     function addMarker(place) {
         // set custom SVG icon marker
         var leafletIcon = L.divIcon({
@@ -86,7 +87,7 @@ const PlacesMap = () => {
 
         let marker = L.marker([place.Latitude, place.Longitude], {icon: leafletIcon, title: place.Name});
         marker.on('click', function (e) {
-            navigate("/place/"+place.Id+"-"+fixTextToSlug(place.Name), {replace: false});
+            navigate("/place/" + place.Id + "-" + fixTextToSlug(place.Name), {replace: false});
         });
         if (markerLayer) {
             marker.addTo(markerLayer);
@@ -107,10 +108,7 @@ const PlacesMap = () => {
 
     return (
         <div>
-            {isLoading&&
-            <Box sx={{ display: 'flex',height:"100vh",backgroundColor:"rgba(0,0,0,0.30)" }}>
-                <CircularProgress sx={{position:"absolute",left:"45vw",top:"38vh"}} />
-            </Box>}
+            {isLoading && <LinearProgress/>}
             <Form.Group controlId="MyMap">
                 <div id="kt_leaflet_map" className={"map"}/>
             </Form.Group>
