@@ -234,35 +234,35 @@ const _PlacesList = () => {
 
     return (
         <>{places?(<>
-            <Grid className={"mt-3 z1040 position-relative"} container direction={"row"} justifyContent={"space-between"} alignContent={"center"} sx={{paddingX:2}}>
-                <Grid>
-                    <IconButton  onClick={() => setOpenModal(!openModal)} sx={{color: "#000000"}} aria-label=""
-                                 name="filter">
-                        <FilterAltOutlinedIcon/>
-                    </IconButton>
-                    {filters.filter(item => item.value !== null).map(item => (
-                            <Chip key={item.type} label={item.selectedName} variant="outlined"
-                                  onDelete={() => removeFilter(item.type)}/>
-                        )
-                    )}
-                </Grid>
+            {/*<Grid className={"mt-3 z1040 position-relative"} container direction={"row"} justifyContent={"space-between"} alignContent={"center"} sx={{paddingX:2}}>*/}
+            {/*    <Grid>*/}
+            {/*        <IconButton  onClick={() => setOpenModal(!openModal)} sx={{color: "#000000"}} aria-label=""*/}
+            {/*                     name="filter">*/}
+            {/*            <FilterAltOutlinedIcon/>*/}
+            {/*        </IconButton>*/}
+            {/*        {filters.filter(item => item.value !== null).map(item => (*/}
+            {/*                <Chip key={item.type} label={item.selectedName} variant="outlined"*/}
+            {/*                      onDelete={() => removeFilter(item.type)}/>*/}
+            {/*            )*/}
+            {/*        )}*/}
+            {/*    </Grid>*/}
 
-                <Grid >
-                    <Select
-                        labelId="sort-select-label"
-                        id="sort-select"
-                        name={"sortby"}
-                        size={"small"}
-                        value={sortBy.Id}
-                        variant={"outlined"}
-                        onChange={(e) => changeSort(e.target.value)}
-                    >
-                        {sortPlaceItems.map(item => (
-                            <MenuItem key={item.Id} value={item.Id}>{item.Name}</MenuItem>
-                        ))}
-                    </Select>
-                </Grid>
-            </Grid>
+            {/*    <Grid >*/}
+            {/*        <Select*/}
+            {/*            labelId="sort-select-label"*/}
+            {/*            id="sort-select"*/}
+            {/*            name={"sortby"}*/}
+            {/*            size={"small"}*/}
+            {/*            value={sortBy.Id}*/}
+            {/*            variant={"outlined"}*/}
+            {/*            onChange={(e) => changeSort(e.target.value)}*/}
+            {/*        >*/}
+            {/*            {sortPlaceItems.map(item => (*/}
+            {/*                <MenuItem key={item.Id} value={item.Id}>{item.Name}</MenuItem>*/}
+            {/*            ))}*/}
+            {/*        </Select>*/}
+            {/*    </Grid>*/}
+            {/*</Grid>*/}
             <Dialog
                 className={"w-100"}
                 open={openModal} onClose={() => setOpenModal(false)}>

@@ -31,7 +31,8 @@ export default function ApplicationRoutes() {
         <>
             <NNavigaion/>
             <Routes>
-                <Route path="/" element={<Home/>}/>
+                {/*<Route path="/" element={<Home/>}/>*/}
+                <Route path="/" element={isAuthorized?<Places/>: <AuthRoutes/>}/>
 
                 <Route path="/places" element={isAuthorized?<Places/>: <AuthRoutes/>}/>
                 <Route path="/place/:placeId" element={<Place/>}/>

@@ -12,13 +12,13 @@ import { useLocation } from 'react-router-dom';
 export default function NBottomNavigation(){
     const location = useLocation();
     const bottomItems = [
-        {
-            value:"home",
-            lable:"جیم پین",
-            firstDirection:"/",
-            icon:<HomeIcon/>,
-            otherRouts:[""]
-        },
+        // {
+        //     value:"home",
+        //     lable:"جیم پین",
+        //     firstDirection:"/",
+        //     icon:<HomeIcon/>,
+        //     otherRouts:[""]
+        // },
         {
             value:"places",
             lable:"مجموعه‌ها",
