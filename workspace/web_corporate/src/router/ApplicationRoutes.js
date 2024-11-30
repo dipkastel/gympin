@@ -1,5 +1,4 @@
-import React from "react";
-import {Route, Routes} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import Home from "../pages/home/Home";
 import Finance from "../pages/finance/Finance";
 import Management from "../pages/management/Management";
@@ -15,32 +14,73 @@ import IncreaseHistory from "../pages/IncreaseListPeyment/IncreaseHistory";
 import Support from "../pages/support/Support";
 import SupportDetail from "../pages/support/supportDetail/SupportDetail";
 import EditProfile from "../pages/editProfile/EditProfile";
+import {useSelector} from "react-redux";
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import {getWizardComplete, setWizardComplete} from "../helper/pocket";
+import WizardBody from "../pages/wizard/body/WizardBody";
 
 export default function ApplicationRoutes() {
 
+
+    const user = useSelector(state => state.auth.user);
+    const corporate = useSelector(({corporate}) => corporate?.corporate);
+    const inSettings = useSelector(settings=>settings.settings.server);
+    const navigate = useNavigate();
+    const [inWizardComplete,setInWizardComplete] = useState(true);
+
+
+    useEffect(() => {
+
+        try{
+            setInWizardComplete(corporate.Status!=="PREREGISTER");
+            setWizardComplete(corporate.Status!=="PREREGISTER");
+        }catch (e) {
+            setInWizardComplete(true);
+            setWizardComplete(true);
+        }
+    }, [inSettings]);
+
+    useEffect(() => {
+        if (!getWizardComplete()) navigate('/intro/wizard', {replace: true});
+    }, []);
+
     return (
         <>
-            <NNavigaion/>
-            <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/management/details" element={<CorporateDetail/>}/>
-                <Route path="/management/settings" element={<Settings/>}/>
-                <Route path="/management/categories" element={<Groups/>}/>
-                <Route path="/management" element={<Management/>}/>
 
-                <Route path="/finance/IncreaseHistory" element={<IncreaseHistory/>}/>
-                <Route path="/finance" element={<Finance/>}/>
+            {inWizardComplete?(<>
+                <NNavigaion/>
 
-                <Route path="/management/support" element={<Support/>}/>
-                <Route path="/management/Support/detail/:supportId" element={<SupportDetail/>}/>
+                {corporate?.Status == "INACTIVE" &&
+                <Route path="/*" element={<Navigate to={"/error/inactive"}/>}/>
+                }
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/management/details" element={<CorporateDetail/>}/>
+                    <Route path="/management/settings" element={<Settings/>}/>
+                    <Route path="/management/categories" element={<Groups/>}/>
+                    <Route path="/management" element={<Management/>}/>
 
-                <Route path="/personnel/increasegroupcredit" element={<IncreaseGroupCredit/>}/>
-                <Route path="/personnel/detail/:PersonnelId" element={<SingleUser/>}/>
-                <Route path="/personnel" element={<Users/>}/>
-                <Route path="/profile" element={<EditProfile/>}/>
+                    <Route path="/finance/IncreaseHistory" element={<IncreaseHistory/>}/>
+                    <Route path="/finance" element={<Finance/>}/>
 
-            </Routes>
-            <NBottomNavigation/>
+                    <Route path="/management/support" element={<Support/>}/>
+                    <Route path="/management/Support/detail/:supportId" element={<SupportDetail/>}/>
+
+                    <Route path="/personnel/increasegroupcredit" element={<IncreaseGroupCredit/>}/>
+                    <Route path="/personnel/detail/:PersonnelId" element={<SingleUser/>}/>
+                    <Route path="/personnel" element={<Users/>}/>
+                    <Route path="/profile" element={<EditProfile/>}/>
+
+                    <Route path="/*" element={<Navigate to={"/error/404"}/>}/>
+
+                </Routes>
+                <NBottomNavigation/>
+            </>):(<>
+                <Routes>
+                    <Route path="/intro/wizard" element={<WizardBody/>}/>
+                    <Route path="/management/settings" element={<Settings/>}/>
+                </Routes>
+            </>)}
         </>
     )
 }

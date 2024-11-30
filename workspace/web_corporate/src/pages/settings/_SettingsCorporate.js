@@ -27,13 +27,14 @@ const _SettingsCorporate = (props) => {
         getUserCorporates();
     }, []);
 
+
     function getUserCorporates() {
         corporatePersonnel_corporateOwnedByUserId({id: user.Id}).then(result => {
             SetPersonCorporates(result.data.Data)
-            console.log(result.data.Data);
-            if (result.data.Data.length == 1) {
+            if (result.data.Data.length === 1&&selectedCorporate?.Id!==result.data.Data[0]?.Corporate.Id) {
                 SetSelectedCorporate(result.data.Data[0]?.Corporate);
                 props.SetCorporate(result.data.Data[0]?.Corporate);
+                window.location = window.location
             }
         }).catch(e => {
             try {
@@ -49,6 +50,7 @@ const _SettingsCorporate = (props) => {
         if (corporate) {
             SetSelectedCorporate(corporate);
             props.SetCorporate(corporate);
+            window.location = "/"
         }
     }
 

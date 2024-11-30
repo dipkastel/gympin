@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateContractTypeEnum;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.authCodes.CorporateContractCodeEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
+import com.notrika.gympin.persistence.entity.management.settings.CorporateSettingsEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
-import com.notrika.gympin.persistence.entity.authCodes.CorporateContractCodeEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -43,12 +45,21 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     @Column(name = "address")
     private String address;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "tel")
+    private String tel;
+
     //defaultExpireDuration
     @Column(name = "ded", columnDefinition = "smallint(6) default 90")
     private Short ded;
 
     @Column(name = "contractDate")
     private Date contractDate;
+
+    @Column(name = "ContractData")
+    private String contractData;
 
     @Column(name = "ContractType", columnDefinition = "varchar(255) default 'ALPHA'")
     @Enumerated(EnumType.STRING)
@@ -99,6 +110,12 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     @JsonIgnore
     @ToString.Exclude
     private List<FinanceIncreaseCorporateDepositRequestEntity> corporateIncreases;
+
+
+    @OneToMany(mappedBy = "corporate", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<CorporateSettingsEntity> settings;
 
     @Override
     public boolean equals(Object o) {

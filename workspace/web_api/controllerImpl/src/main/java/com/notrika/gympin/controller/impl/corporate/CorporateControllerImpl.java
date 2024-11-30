@@ -6,6 +6,14 @@ import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
 import com.notrika.gympin.common.finance.transaction.param.CorporateTransactionParam;
 import com.notrika.gympin.common.finance.transaction.param.FinanceCorporateParam;
 import com.notrika.gympin.common.finance.transaction.service.CorporateTransactionService;
+import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.place.param.PlaceContractSmsParam;
+import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.settings.corporateSettings.dto.CorporateSettingDto;
+import com.notrika.gympin.common.settings.corporateSettings.param.CorporateSettingParam;
+import com.notrika.gympin.common.settings.corporateSettings.service.corporateSettingsService;
+import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
+import com.notrika.gympin.common.settings.userSettings.param.UserSettingParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.corporate.corporate.api.CorporateController;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
@@ -15,6 +23,7 @@ import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
 import com.notrika.gympin.common.corporate.corporate.service.CorporateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +37,8 @@ public class CorporateControllerImpl implements CorporateController {
 
     @Autowired
     private CorporateService corporateService;
+    @Autowired
+    private corporateSettingsService corporateSettingsService;
     @Autowired
     private CorporateTransactionService corporateTransactionService;
 
@@ -131,6 +142,42 @@ public class CorporateControllerImpl implements CorporateController {
     @PutMapping("deleteGroup")
     public ResponseEntity<CorporatePersonnelGroupDto> deleteCorporateGroup(@RequestBody CorporatePersonnelGroupParam param) {
         return ResponseEntity.ok(corporateService.deleteGroup(param));
+    }
+
+    @Override
+    @PostMapping("/updateContract")
+    public ResponseEntity<CorporateDto> updateContract(CorporateParam param) {
+        return ResponseEntity.ok(corporateService.updateContract(param));
+    }
+
+    @Override
+    @PostMapping("/signContract")
+    public ResponseEntity<CorporateDto> signContract(CorporateParam param) {
+        return ResponseEntity.ok(corporateService.signContract(param));
+    }
+
+    @Override
+    @PostMapping("/sendContractCode")
+    public ResponseEntity<Boolean> sendContractCode(CorporateContractSmsParam param) {
+        return new ResponseEntity<>(corporateService.sendContractCode(param), HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/getCorporateSettings")
+    public ResponseEntity<List<CorporateSettingDto>> getCorporateSettings(CorporateSettingParam corporateSettingParam) {
+        return ResponseEntity.ok(corporateSettingsService.getCorporateSettings(corporateSettingParam.getId()));
+    }
+
+    @Override
+    @PostMapping("/setCorporateSettings")
+    public ResponseEntity<CorporateSettingDto> SetCorporateSettings(CorporateSettingParam corporateSettingParam) {
+        CorporateSettingDto corporateSettingDto;
+        if(corporateSettingParam.getId()!=null){
+            corporateSettingDto = corporateSettingsService.update(corporateSettingParam);
+        }else{
+            corporateSettingDto = corporateSettingsService.add(corporateSettingParam);
+        }
+        return ResponseEntity.ok(corporateSettingDto);
     }
 
 }

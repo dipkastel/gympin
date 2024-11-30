@@ -4,12 +4,11 @@ import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelGroupDto;
-import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
+import com.notrika.gympin.common.settings.corporateSettings.enums.CorporateSettingTypesEnum;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
-import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
+import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -24,12 +23,18 @@ public final class CorporateConvertor {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setAddress(entity.getAddress());
+        dto.setEmail(entity.getEmail());
+        dto.setTel(entity.getTel());
+        dto.setContractData(entity.getContractData());
         if (entity.getFinanceCorporate() != null)
             dto.setFinanceCorporate(TransactionConvertor.toSimpleDto(entity.getFinanceCorporate()));
         dto.setStatus(entity.getStatus());
         dto.setContractType(entity.getContractType());
         dto.setLogo(MultimediaConvertor.toDto(entity.getLogo()));
         dto.setDefaultExpireDuration(entity.getDed());
+        try{
+            dto.setWizard(getWizard(entity));
+        }catch (Exception e){}
         try{
             dto.setPersonnelCount(entity.getPersonnel().stream().filter(p->!p.isDeleted() ).count());
 
@@ -42,6 +47,11 @@ public final class CorporateConvertor {
             dto.setContractExpireDate(expireDate.getTime());
         }catch (Exception e){}
         return dto;
+    }
+
+    private static Boolean getWizard(CorporateEntity entity) {
+        var settings = entity.getSettings().stream().filter(r->r.getKey().equals(CorporateSettingTypesEnum.USER_WIZARD_COMPLETE)).findFirst();
+        return (settings.get().getValue().equals("true"));
     }
 
     public static CorporatePersonnelGroupDto toDto(CorporatePersonnelGroupEntity entity) {

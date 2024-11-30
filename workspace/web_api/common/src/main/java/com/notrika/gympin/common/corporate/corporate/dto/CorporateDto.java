@@ -28,6 +28,15 @@ public class CorporateDto extends BaseDtoWithCreateUpdate<CorporateDto> {
     @JsonProperty("Address")
     private String address;
 
+    @JsonProperty("Email")
+    private String email;
+
+    @JsonProperty("Tel")
+    private String tel;
+
+    @JsonProperty("ContractData")
+    private String contractData;
+
     @JsonProperty("FinanceCorporate")
     private FinanceCorporateDto financeCorporate;
 
@@ -54,5 +63,8 @@ public class CorporateDto extends BaseDtoWithCreateUpdate<CorporateDto> {
 
     @JsonProperty("PersonnelCount")
     private Long personnelCount;
+
+    @JsonProperty("Wizard")
+    private Boolean wizard;
 
 }

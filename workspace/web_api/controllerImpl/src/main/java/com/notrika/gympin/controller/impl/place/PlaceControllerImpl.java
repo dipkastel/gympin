@@ -100,18 +100,6 @@ public class PlaceControllerImpl implements PlaceController {
     }
 
     @Override
-    @PostMapping("/updateContract")
-    public ResponseEntity<PlaceDto> updateContract(PlaceParam param) {
-        return ResponseEntity.ok(placeService.updateContract(param));
-    }
-
-    @Override
-    @PostMapping("/signContract")
-    public ResponseEntity<PlaceDto> signContract(PlaceParam param) {
-        return ResponseEntity.ok(placeService.signContract(param));
-    }
-
-    @Override
     @PutMapping("/deleteMultimedia")
     public ResponseEntity<PlaceDto> deleteMultimedia(PlaceMultimediaParam param) {
         return ResponseEntity.ok(placeService.removeMultimedia(param));
@@ -147,6 +135,18 @@ public class PlaceControllerImpl implements PlaceController {
         return new ResponseEntity<>(placeService.getBuyableByPlace(placeParam), HttpStatus.OK);
     }
 
+
+    @Override
+    @PostMapping("/updateContract")
+    public ResponseEntity<PlaceDto> updateContract(PlaceParam param) {
+        return ResponseEntity.ok(placeService.updateContract(param));
+    }
+
+    @Override
+    @PostMapping("/signContract")
+    public ResponseEntity<PlaceDto> signContract(PlaceParam param) {
+        return ResponseEntity.ok(placeService.signContract(param));
+    }
 
     @Override
     @PostMapping("/sendContractCode")

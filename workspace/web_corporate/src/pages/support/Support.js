@@ -151,10 +151,10 @@ const Support = () => {
                         </div>
                         <Card elevation={3} sx={{margin: 1}}>
                             <CardContent>
-                                <Typography item variant={"subtitle1"} xs={8}>
+                                <Typography variant={"subtitle1"} xs={8}>
                                     پیش از ایجاد تیکت جدید سوالات متداول را مطالعه کنید!
                                 </Typography>
-                                <Button fullWidth item xs={4} variant={"outlined"} size={"small"} href={"https://gympin.ir/faq"}>سوالات
+                                <Button fullWidth xs={4} variant={"outlined"} size={"small"} href={"https://gympin.ir/faq"}>سوالات
                                     متداول</Button>
                                 <Alert className={"mt-2"} variant={"standard"} color={"info"} icon={false}>مشکلات ، پرسش ها و نظرات
                                     خود را برای ما ارسال کنید.همکاران ما در اسرع وقت پاسخگوی تیکت شما خواهند بود.</Alert>

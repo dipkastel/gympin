@@ -179,7 +179,7 @@ const Users = () => {
 
 
                     <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                        <Grid container alignItems={"center"} justifyContent={"space-between"}>
+                        <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
                             <Grid item>
                                 <Collapse in={!search}>
                                     <Tabs

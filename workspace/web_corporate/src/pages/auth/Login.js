@@ -222,7 +222,7 @@ function Login(props) {
                     <CardActions>
                         <Grid rowSpacing={1}>
                             <Link
-                                variant="caption" href="/auth/register">مرکز خود را ثبت نام کنید</Link>
+                                variant="caption" href="/auth/register">درخواست ثبت سازمان</Link>
                         </Grid>
                     </CardActions>
                 </Card>

@@ -30,9 +30,11 @@ public class PlaceContractDto extends BaseDtoWithCreateUpdate<PlaceContractDto> 
     public String ownerPhoneNumber;
     @JsonProperty("OwnersNationalCode")
     public String ownersNationalCode;
-    @JsonProperty("OccupationLicence")
-    public String occupationLicence;
+    @JsonProperty("OwnerPosition")
+    public String ownerPosition;
     @JsonProperty("RegistrationNumber")
     public String registrationNumber;
+    @JsonProperty("NationalId")
+    public String nationalId;
 
 }

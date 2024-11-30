@@ -1,9 +1,7 @@
 package com.notrika.gympin.persistence.entity.management.settings;
 
-import com.notrika.gympin.common.settings.base.enums.settingsType;
 import com.notrika.gympin.common.settings.userSettings.enums.UserSettingTypesEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.management.sms.ManageSmsPatternEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +11,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Getter

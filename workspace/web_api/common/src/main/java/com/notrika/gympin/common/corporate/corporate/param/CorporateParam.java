@@ -22,10 +22,28 @@ public class CorporateParam extends BaseParam<CorporateParam> {
     @JsonProperty("Address")
     private String address;
 
+    @JsonProperty("Email")
+    private String email;
+
+    @JsonProperty("Tel")
+    private String tel;
+
     @JsonProperty("Status")
     private CorporateStatusEnum status;
 
     @JsonProperty("StepPeyment")
     private Boolean stepPeyment;
+
+    @JsonProperty("ContractData")
+    private String contractData;
+
+    @JsonProperty("SignCode")
+    private String signCode;
+
+    @JsonProperty("Wizard")
+    private Boolean wizard;
+
+
+
 
 }

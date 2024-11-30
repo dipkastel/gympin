@@ -10,8 +10,17 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePerso
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelGroupParam;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
 import com.notrika.gympin.common.finance.transaction.param.FinanceCorporateParam;
+import com.notrika.gympin.common.place.place.dto.PlaceContractDto;
+import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.place.param.PlaceContractSmsParam;
+import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.settings.sms.dto.SmsDto;
+import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
+import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
+import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
@@ -24,17 +33,21 @@ import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEn
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import lombok.NonNull;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,11 +68,19 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
     @Autowired
     private FinanceCorporateRepository financeCorporateRepository;
 
+    @Autowired
+    private SmsInService smsInService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public CorporateDto add(@NonNull CorporateParam corporateParam) {
         CorporateEntity corporateEntity = corporateRepository.add(CorporateEntity.builder()
                 .name(corporateParam.getName())
                 .address(corporateParam.getAddress())
+                .email(corporateParam.getEmail())
+                .tel(corporateParam.getTel())
                 .status(CorporateStatusEnum.INACTIVE)
                 .contractType(CorporateContractTypeEnum.ALPHA)
                 .build());
@@ -77,6 +98,8 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         CorporateEntity entity = corporateRepository.getById(corporateParam.getId());
         entity.setName(corporateParam.getName());
         entity.setAddress(corporateParam.getAddress());
+        entity.setEmail(corporateParam.getEmail());
+        entity.setTel(corporateParam.getTel());
         entity.setStatus(CalculateStatus(entity));
         return CorporateConvertor.toDto(corporateRepository.update(entity));
     }
@@ -238,5 +261,46 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
                 return CorporateStatusEnum.ACTIVE;
 //            }
         }
+    }
+
+    @Override
+    public CorporateDto updateContract(CorporateParam corporateParam) {
+        CorporateEntity initCorporate = getEntityById(corporateParam.getId());
+        initCorporate.setContractData(corporateParam.getContractData());
+        CorporateEntity corporate = update(initCorporate);
+        return CorporateConvertor.toDto(corporate);
+    }
+
+    @Override
+    public Boolean sendContractCode(CorporateContractSmsParam param) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        CorporateEntity corporate = corporateRepository.getById(param.getCorporateId());
+        String contractData = corporate.getContractData();
+        String code = MyRandom.GenerateRandomVerificationSmsCode();
+        try {
+            PlaceContractDto contractDto = objectMapper.readValue(contractData, PlaceContractDto.class);
+            smsInService.sendCorporateContractCode(corporate.getId(), SmsDto.builder()
+                    .smsType(SmsTypes.JOINED_TO_CORPORATE)
+                    .userNumber(contractDto.ownerPhoneNumber)
+                    .text1(code)
+                    .build()
+            );
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    @Override
+    public CorporateDto signContract(CorporateParam param) {
+        CorporateEntity initCorporate = getEntityById(param.getId());
+        if(passwordEncoder.matches(param.getSignCode(),initCorporate.getContractCode().getCode())){
+            initCorporate.setContractDate(new Date());
+            CorporateEntity corporate = update(initCorporate);
+            return CorporateConvertor.toDto(corporate);
+        }
+        return null;
     }
 }

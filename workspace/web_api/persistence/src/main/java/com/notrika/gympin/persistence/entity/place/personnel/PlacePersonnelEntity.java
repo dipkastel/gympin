@@ -37,8 +37,8 @@ public class PlacePersonnelEntity extends BaseEntityWithCreateUpdate<PlacePerson
 
 
     @OneToMany(mappedBy = "placePersonnel", fetch = FetchType.LAZY)
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private Set<PlacePersonnelRoleEntity> placePersonnelRoles;
 
     @Column(name = "isBeneficiary", nullable = false, columnDefinition = "boolean default false")
@@ -51,24 +51,24 @@ public class PlacePersonnelEntity extends BaseEntityWithCreateUpdate<PlacePerson
     private Double commissionFee;
 
     @OneToMany(mappedBy = "placePerson")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<PlacePersonnelAccessEntity> placePersonnelAccess;
 
     @OneToMany(mappedBy = "placePerson")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private List<PlacePersonelBuyableAccessEntity> placePersonnelBuyableAccess;
 
 
-    @OneToMany(mappedBy = "beneficiary",fetch = FetchType.LAZY)
-   @JsonIgnore
-@ToString.Exclude
+    @OneToMany(mappedBy = "beneficiary", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<BuyableEntity> buyables;
 
-    @OneToMany(mappedBy = "beneficiary",fetch = FetchType.LAZY)
-   @JsonIgnore
-@ToString.Exclude
+    @OneToMany(mappedBy = "beneficiary", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<InvoiceBuyableEntity> invoiceBuyable;
 
 

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
     Avatar,
     Button,
-    Card,
+    Card, CardHeader,
     Dialog,
     DialogActions,
     DialogContent,
@@ -38,6 +38,8 @@ const EditProfile = (props) => {
     useEffect(() => {
         document.title = 'ویرایش پروفایل';
         SetImageUrl(currentUser?.Avatar?.Url||"")
+        if(currentUser.Username&&currentUser.FullName&&currentUser.Gender&&currentUser.Birthday&&currentUser.NationalCode)
+            props?.introCanGoNext(true);
     }, [currentUser]);
 
     useEffect(() => {
@@ -155,6 +157,8 @@ const EditProfile = (props) => {
     return (
         <>
             <Card elevation={3} sx={{margin: 1}}>
+                <CardHeader
+                    title="پروفایل من"/>
                 <Grid
                     container
                     direction="column"
@@ -205,6 +209,22 @@ const EditProfile = (props) => {
 
                             if(values?.FullName?.length>50){
                                 error.showError({message: "نام و نام خانوادگی طولانی است.",});
+                                return;
+                            }
+                            if(!values?.FullName){
+                                error.showError({message: "نام و نام خانوادگی الزامی است.",});
+                                return;
+                            }
+                            if(!values?.Gender){
+                                error.showError({message: "جنسیت الزامی است.",});
+                                return;
+                            }
+                            if(!values?.Birthday){
+                                error.showError({message: "تاریخ تولد الزامی است.",});
+                                return;
+                            }
+                            if(!values?.NationalCode){
+                                error.showError({message: "کد ملی الزامی است.",});
                                 return;
                             }
                             if(values?.Email?.length>50){
@@ -309,7 +329,7 @@ const EditProfile = (props) => {
                                                 <TextField
                                                     {...params}
                                                     fullWidth
-                                                    className="w-100"
+                                                    className="w-100 ltr"
                                                     variant="outlined"
                                                     margin="normal"
                                                     label={"تاریخ تولد"}

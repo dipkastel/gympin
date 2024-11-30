@@ -155,7 +155,7 @@ const _WPageContractText = ({place, contract, PlacePersonel}) => {
                         این تفاهم نامه در 11 ماده و1 تبصره در یک نسخه دیجیتال تنظیم و به امضاء دیجیتال طرف دوم از طریق ارسال کد، می رسد و
                         ثبت کد ارسال شده به منزله اطلاع کامل از مفاد و امضا طرف دوم خواهد بود.</Typography>
 
-                    <Typography variant={"body2"} textAlign={"right"}>در صورت نیاز، طرف دوم می تواند نسخه چاپی تفاهم نامه از طریق تیکت
+                    <Typography variant={"body2"} textAlign={"right"}>در صورت نیاز، طرف دوم می تواند نسخه چاپی تفاهم نامه را از طریق تیکت
                         درخواست نماید. </Typography>
                 </Grid>
 

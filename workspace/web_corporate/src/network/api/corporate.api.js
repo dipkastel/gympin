@@ -25,8 +25,25 @@ export  function corporate_deleteCorporateGroup(data){
     return axios.put(Api_url.corporate.deleteCategory,data);
 }
 
+export  function corporate_updateStatus(data){
+    return axios.put(Api_url.corporate.updateStatus,data);
+}
+
 export  function corporate_addCorporateGroups(data){
     return axios.post(Api_url.corporate.addCategory,data)
+}
+
+
+export  function corporate_sendContractCode(data){
+    return axios.post(Api_url.corporate.sendContractCode,data)
+}
+
+export  function corporate_SignContract(data){
+    return axios.post(Api_url.corporate.signContract,data)
+}
+
+export  function corporate_updateContract(data){
+    return axios.post(Api_url.corporate.updateContract,data)
 }
 
 export  function corporate_getTotalIncreases(data){

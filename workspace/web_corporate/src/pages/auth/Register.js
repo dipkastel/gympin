@@ -66,7 +66,7 @@ function Register(props) {
                                         errors.username = "نام و نام خانوادگی الزامی است";
                                     }
                                     if (!values.corporateName) {
-                                        errors.corporateName = "نام مجموعه الزامی است";
+                                        errors.corporateName = "نام شرکت یا سازمان الزامی است";
                                     }
                                     if (!values.phoneNumber) {
                                         errors.phoneNumber = "شماره تماس الزامی است";
@@ -143,7 +143,7 @@ function Register(props) {
                                                 margin="normal"
                                                 name="corporateName"
                                                 type="text"
-                                                label={"نام مجموعه"}
+                                                label={"نام شرکت یا سازمان"}
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
                                                 value={values.corporateName}
@@ -206,7 +206,7 @@ function Register(props) {
                                 backgroundColor: "primary.main",
                                 color: "#fff"
                             }}
-                            title="ثبت مجموعه"
+                            title="ثبت شرکت یا سازمان"
                         />
                         <CardContent sx={{textAlign: "center"}}>
                             <Typography variant={"body1"}>

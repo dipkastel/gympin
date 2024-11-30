@@ -5,7 +5,9 @@ import com.notrika.gympin.common.settings.base.enums.settingsType;
 import com.notrika.gympin.common.settings.base.param.*;
 import com.notrika.gympin.common.settings.base.service.ApplicationConfigService;
 import com.notrika.gympin.common.settings.base.service.SettingsService;
+import com.notrika.gympin.common.settings.corporateSettings.dto.CorporateSettingDto;
 import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
+import com.notrika.gympin.domain.settings.corporateSettings.CorporateSettingsServiceImpl;
 import com.notrika.gympin.domain.settings.userSettings.UserSettingsServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageUserSettingsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
     SettingsService settingsService;
     @Autowired
     UserSettingsServiceImpl userSettingsService;
+    @Autowired
+    CorporateSettingsServiceImpl CorporateSettingsService;
 
     @Override
     public AndroidSplashDto AndroidSplash(AndroidSplashParam splashParam) {
@@ -86,6 +90,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         result.setSettings(settingDtoList);
         List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
         result.setUserSettings(userSettings);
+        List<CorporateSettingDto> corporateSettings = CorporateSettingsService.getCorporateSettings(splashParam.getCorporateId());
+        result.setCorporateSettings(corporateSettings);
         return result;
     }
 

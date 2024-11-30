@@ -4,7 +4,9 @@ import {
     Button,
     Card,
     CardContent,
-    CardHeader, Dialog, DialogActions,
+    CardHeader,
+    Dialog,
+    DialogActions,
     DialogContent,
     FormControl,
     Grid,
@@ -33,6 +35,9 @@ const EditCorporate = (props) => {
     useEffect(() => {
         SetImageUrl(corporate.Logo ? corporate.Logo.Url : "");
         SetInCorporate(corporate);
+
+        if (corporate.Address)
+            props?.introCanGoNext(true);
     }, [corporate]);
     useEffect(() => {
         document.title = 'ویرایش مشخصات سازمان';
@@ -56,7 +61,13 @@ const EditCorporate = (props) => {
 
     function updateCorporate(e) {
         e.preventDefault()
-        corporate_Update({Id: corporate.Id, Name: inCorporate.Name, Address: inCorporate.Address}).then(result => {
+        corporate_Update({
+            Id: corporate.Id,
+            Name: inCorporate.Name,
+            Address: inCorporate.Address,
+            Email: inCorporate.Email,
+            Tel: inCorporate.Tel
+        }).then(result => {
             props.RequestCorporate(corporate);
             error.showError({message: "ثبت موفق",});
         }).catch(e => {
@@ -148,8 +159,8 @@ const EditCorporate = (props) => {
 
                         }}
                         stencilSize={{
-                            width: ratio?ratio.MAXW:1000,
-                            height: ratio?ratio.MAXH:1000,
+                            width: ratio ? ratio.MAXW : 1000,
+                            height: ratio ? ratio.MAXH : 1000,
                         }}
                         onChange={onChange}
                         className={'cropper'}
@@ -207,9 +218,33 @@ const EditCorporate = (props) => {
                                 autoFocus
                                 value={inCorporate.Name}
                                 label="نام سازمان"
+                                variant="outlined"
                                 type="text"
                                 onChange={(e) => SetInCorporate({...inCorporate, Name: e.target.value})}
-                                variant="standard"
+                            />
+                        </FormControl>
+                        <FormControl
+                            sx={{p: 1}}
+                            fullWidth>
+                            <TextField
+                                autoFocus
+                                value={inCorporate.Email}
+                                label="ایمیل"
+                                variant="outlined"
+                                type="text"
+                                onChange={(e) => SetInCorporate({...inCorporate, Email: e.target.value})}
+                            />
+                        </FormControl>
+                        <FormControl
+                            sx={{p: 1}}
+                            fullWidth>
+                            <TextField
+                                autoFocus
+                                value={inCorporate.Tel}
+                                label="تلفن"
+                                variant="outlined"
+                                type="text"
+                                onChange={(e) => SetInCorporate({...inCorporate, Tel: e.target.value})}
                             />
                         </FormControl>
                         <FormControl
@@ -218,11 +253,11 @@ const EditCorporate = (props) => {
                             <TextField
                                 label="آدرس"
                                 type="text"
+                                variant="outlined"
                                 value={inCorporate.Address}
                                 onChange={(e) => SetInCorporate({...inCorporate, Address: e.target.value})}
                                 multiline
                                 minRows={3}
-                                variant="standard"
                             />
                         </FormControl>
                         <FormControl

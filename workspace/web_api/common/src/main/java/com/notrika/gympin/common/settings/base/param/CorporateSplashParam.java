@@ -17,4 +17,7 @@ public class CorporateSplashParam extends BaseParam<CorporateSplashParam> {
 
     @JsonProperty("UserId")
     private Long userId;
+
+    @JsonProperty("CorporateId")
+    private Long corporateId;
 }
