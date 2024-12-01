@@ -107,7 +107,7 @@ const WPageContractData = ({onNext}) => {
                             disabled={thatsMe}
                             onChange={(e) => SetContract({...contranct, ownerName: e.target.value})}
                             margin="dense"
-                            label="نام و نام خانوادگی"
+                            label="نام و نام خانوادگی*"
                             type="text"
                             fullWidth
                             variant="outlined"
@@ -118,7 +118,7 @@ const WPageContractData = ({onNext}) => {
                             disabled={thatsMe}
                             onChange={(e) => SetContract({...contranct, ownerPhoneNumber: e.target.value})}
                             margin="dense"
-                            label="شماره همراه"
+                            label="شماره همراه*"
                             type="text"
                             fullWidth
                             variant="outlined"
@@ -132,7 +132,7 @@ const WPageContractData = ({onNext}) => {
                             disabled={thatsMe}
                             onChange={(e) => SetContract({...contranct, ownersNationalCode: e.target.value})}
                             margin="dense"
-                            label="کد ملی"
+                            label="کد ملی*"
                             type="text"
                             fullWidth
                             variant="outlined"
@@ -143,7 +143,7 @@ const WPageContractData = ({onNext}) => {
                             value={contranct.ownerPosition}
                             onChange={(e) => SetContract({...contranct, ownerPosition: e.target.value})}
                             margin="dense"
-                            label="سمت طرف قرارداد"
+                            label="سمت طرف قرارداد*"
                             type="text"
                             fullWidth
                             variant="outlined"
@@ -153,7 +153,7 @@ const WPageContractData = ({onNext}) => {
                             value={contranct.registrationNumber}
                             onChange={(e) => SetContract({...contranct, registrationNumber: e.target.value})}
                             margin="dense"
-                            label="شناسه ثبت"
+                            label="شناسه ثبت*"
                             type="text"
                             fullWidth
                             variant="outlined"
@@ -165,7 +165,7 @@ const WPageContractData = ({onNext}) => {
                             value={contranct.nationalId}
                             onChange={(e) => SetContract({...contranct, nationalId: e.target.value})}
                             margin="dense"
-                            label="شناسه ملی"
+                            label="شناسه ملی*"
                             type="text"
                             fullWidth
                             variant="outlined"

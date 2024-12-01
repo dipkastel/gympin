@@ -273,7 +273,7 @@ const EditProfile = (props) => {
                                         type="text"
                                         aria-readonly
                                         value={values.PhoneNumber || ""}
-                                        label={"شماره همراه"}
+                                        label={"شماره همراه*"}
                                     />
                                     <TextField
                                         fullWidth
@@ -285,7 +285,7 @@ const EditProfile = (props) => {
                                         type="text"
                                         value={values.Username || ""}
                                         onChange={e => setFieldValue("Username", e.target.value)}
-                                        label={"نام کاربری"}
+                                        label={"نام کاربری*"}
                                     />
                                     <TextField
                                         fullWidth
@@ -297,7 +297,7 @@ const EditProfile = (props) => {
                                         type="text"
                                         value={values.FullName || ""}
                                         onChange={handleChange}
-                                        label={"نام و نام خانوادگی"}
+                                        label={"نام و نام خانوادگی*"}
                                     />
 
                                     <FormControl sx={{mt:2}} variant={"outlined"} fullWidth >
@@ -309,7 +309,7 @@ const EditProfile = (props) => {
                                                 setFieldValue("Gender", e.target.value)
                                             }}
                                             value={values.Gender||""}
-                                            input={<OutlinedInput label="جنسیت * " />}
+                                            input={<OutlinedInput label="جنسیت*" />}
                                         >
                                             <MenuItem value={"FEMALE"} >خانم</MenuItem>
                                             <MenuItem value={"MALE"}>آقا</MenuItem>
@@ -332,7 +332,7 @@ const EditProfile = (props) => {
                                                     className="w-100 ltr"
                                                     variant="outlined"
                                                     margin="normal"
-                                                    label={"تاریخ تولد"}
+                                                    label={"تاریخ تولد*"}
                                                 />
                                             }
                                         />
@@ -348,7 +348,7 @@ const EditProfile = (props) => {
                                         type="text"
                                         value={values.NationalCode || ""}
                                         onChange={handleChange}
-                                        label={"کد ملی"}
+                                        label={"کد ملی*"}
                                     />
                                     <TextField
                                         fullWidth

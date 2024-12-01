@@ -36,8 +36,11 @@ const EditCorporate = (props) => {
         SetImageUrl(corporate.Logo ? corporate.Logo.Url : "");
         SetInCorporate(corporate);
 
-        if (corporate.Address)
-            props?.introCanGoNext(true);
+        try{
+
+            if (corporate?.Address&&corporate?.Email&&corporate?.Tel&&corporate?.Name)
+                props?.introCanGoNext(true);
+        }catch (e){}
     }, [corporate]);
     useEffect(() => {
         document.title = 'ویرایش مشخصات سازمان';
@@ -217,7 +220,7 @@ const EditCorporate = (props) => {
                             <TextField
                                 autoFocus
                                 value={inCorporate.Name}
-                                label="نام سازمان"
+                                label="نام سازمان*"
                                 variant="outlined"
                                 type="text"
                                 onChange={(e) => SetInCorporate({...inCorporate, Name: e.target.value})}
@@ -229,7 +232,7 @@ const EditCorporate = (props) => {
                             <TextField
                                 autoFocus
                                 value={inCorporate.Email}
-                                label="ایمیل"
+                                label="ایمیل*"
                                 variant="outlined"
                                 type="text"
                                 onChange={(e) => SetInCorporate({...inCorporate, Email: e.target.value})}
@@ -241,7 +244,7 @@ const EditCorporate = (props) => {
                             <TextField
                                 autoFocus
                                 value={inCorporate.Tel}
-                                label="تلفن"
+                                label="تلفن*"
                                 variant="outlined"
                                 type="text"
                                 onChange={(e) => SetInCorporate({...inCorporate, Tel: e.target.value})}
@@ -251,7 +254,7 @@ const EditCorporate = (props) => {
                             sx={{p: 1}}
                             fullWidth>
                             <TextField
-                                label="آدرس"
+                                label="آدرس*"
                                 type="text"
                                 variant="outlined"
                                 value={inCorporate.Address}
