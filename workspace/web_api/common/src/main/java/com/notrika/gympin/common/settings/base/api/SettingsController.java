@@ -11,7 +11,10 @@ import java.util.List;
 
 public interface SettingsController  extends BaseController<SettingParam, SettingDto, BaseQuery<?>> {
     ResponseEntity<List<SettingDto>> getSettingsByType(settingsType type);
-
+    ResponseEntity<Boolean> DoMaximumDiscount();
+    ResponseEntity<Boolean> RemoveAllDiscounts();
+    ResponseEntity<Boolean> SetAutoToAll();
+    ResponseEntity<Boolean> UpdateAutoDiscount();
 
 
 }

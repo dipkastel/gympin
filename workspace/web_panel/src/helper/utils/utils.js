@@ -45,6 +45,8 @@ export function getCorporateFixedName(corporate) {
 
 export function toPriceWithComma(price){
   if(!price) return "0";
+  console.log(price);
+  price = (price+"").split('.')[0]
   if(price.length>1&&price.startsWith("0")) price = price.substring(1,price.length);
   return (price+"")
       .replace(/\D/g, "")

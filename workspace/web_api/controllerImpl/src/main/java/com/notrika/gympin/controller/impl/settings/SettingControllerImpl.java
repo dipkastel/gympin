@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,34 @@ public class SettingControllerImpl implements SettingsController {
     @GetMapping("/getByType")
     public ResponseEntity<List<SettingDto>> getSettingsByType(settingsType type) {
         return new ResponseEntity<List<SettingDto>>(settingsService.getByType(type),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/DoMaximumDiscount")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    public ResponseEntity<Boolean> DoMaximumDiscount() {
+        return new ResponseEntity<Boolean>(settingsService.DoMaximumDiscount(),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/RemoveAllDiscounts")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    public ResponseEntity<Boolean> RemoveAllDiscounts() {
+        return new ResponseEntity<Boolean>(settingsService.RemoveAllDiscounts(),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/SetAutoToAll")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    public ResponseEntity<Boolean> SetAutoToAll() {
+        return new ResponseEntity<Boolean>(settingsService.SetAutoToAll(),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/UpdateAutoDiscount")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    public ResponseEntity<Boolean> UpdateAutoDiscount() {
+        return new ResponseEntity<Boolean>(settingsService.UpdateAutoDiscount(),HttpStatus.OK);
     }
 
     @Override

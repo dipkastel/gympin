@@ -31,7 +31,7 @@ body{
     padding: 3px;
 }
 .home-header{
-    height: 42px;
+    height: 10px;
     width: 100%;
     position: absolute;
     z-index: 1000;

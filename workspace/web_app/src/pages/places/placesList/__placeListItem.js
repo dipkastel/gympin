@@ -40,14 +40,14 @@ const __placeListItem = ({item}) => {
                                 </Typography>
                             </Grid>
                             <Grid>
-                                {item.Genders && item.Genders.map((gender, number) => (
-                                    <div key={"kh" + number} className={"d-inline"}>
-                                        {gender === "MALE" && <ManRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}
-                                        {gender === "FEMALE" && <WomanRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}
-                                        {gender === "BOYS" && <BoyRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}
-                                        {gender === "GIRLS" && <GirlRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}
-                                        {gender === "KIDS" && <ChildCare sx={{fontSize: 20, color: "#cc0f0f"}}/>}
-                                    </div>))}
+                                {/*{item.Genders && item.Genders.map((gender, number) => (*/}
+                                {/*    <div key={"kh" + number} className={"d-inline"}>*/}
+                                {/*        {gender === "MALE" && <ManRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}*/}
+                                {/*        {gender === "FEMALE" && <WomanRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}*/}
+                                {/*        {gender === "BOYS" && <BoyRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}*/}
+                                {/*        {gender === "GIRLS" && <GirlRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}*/}
+                                {/*        {gender === "KIDS" && <ChildCare sx={{fontSize: 20, color: "#cc0f0f"}}/>}*/}
+                                {/*    </div>))}*/}
                             </Grid>
                         </Grid>
                         <Typography sx={{paddingY: 0.5}} variant={"body1"} component={"div"}>
@@ -78,10 +78,14 @@ const __placeListItem = ({item}) => {
                               justifyContent={"center"}
 
                         >
-                            {item.MinPrice && <Typography sx={{color: "#757575"}} variant={"subtitle2"}>
+                            {item?.MinPrice && <Typography sx={{color: "#757575"}} variant={"subtitle2"}>
                                 {"شروع قیمت از "}
                             </Typography>}
-                            {item.MinPrice &&
+                            {item?.MinPriceBeforeDiscount &&
+                            <Typography sx={{paddingRight: 1, color: "#881a1a",textDecoration:"line-through", fontWeight: 700}} variant={"subtitle1"}>
+                                {toPriceWithComma(item?.MinPriceBeforeDiscount) }
+                            </Typography>}
+                            {item?.MinPrice &&
                             <Typography sx={{paddingRight: 1, color: "#26881a", fontWeight: 700}} variant={"subtitle1"}>
                                 {toPriceWithComma(item.MinPrice) + " تومان"}
                             </Typography>}

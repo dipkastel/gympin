@@ -5,6 +5,7 @@ import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.settings.base.dto.SettingDto;
 import com.notrika.gympin.common.settings.base.enums.settingsType;
 import com.notrika.gympin.common.settings.base.param.SettingParam;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -12,4 +13,9 @@ public interface SettingsService extends BaseService<SettingParam, SettingDto, B
 
     List<SettingDto> getByType(settingsType type);
     SettingDto getByKey(String Key);
+
+    Boolean DoMaximumDiscount();
+    Boolean RemoveAllDiscounts();
+    Boolean SetAutoToAll();
+    Boolean UpdateAutoDiscount();
 }

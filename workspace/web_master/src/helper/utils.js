@@ -72,6 +72,7 @@ export function fixTextToSlug(text) {
 export function toPriceWithComma(price) {
     price = fixPersianNumbers(price);
     if (!price) return "0";
+    price = (price+"").split('.')[0]
     if (price.length > 1 && price.startsWith("0")) price = price.substring(1, price.length);
     return (price + "")
         .replace(/\D/g, "")

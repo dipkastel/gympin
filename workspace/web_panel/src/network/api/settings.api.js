@@ -13,3 +13,19 @@ export function settings_getAll() {
 export function settings_update(data) {
   return axios.put(SettingsApi.update, data);
 }
+
+export function settings_UpdateAutoDiscount() {
+  return axios.get(SettingsApi.UpdateAutoDiscount);
+}
+
+export function settings_SetAutoToAll() {
+  return axios.get(SettingsApi.SetAutoToAll);
+}
+
+export function settings_RemoveAllDiscounts() {
+  return axios.get(SettingsApi.RemoveAllDiscounts);
+}
+
+export function settings_DoMaximumDiscount() {
+  return axios.get(SettingsApi.DoMaximumDiscount);
+}

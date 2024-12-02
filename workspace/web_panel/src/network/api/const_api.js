@@ -1,9 +1,6 @@
-import {user_addUserRole} from "./user.api";
-import {sms_updatePattern} from "./sms.api";
-
 export let AuthApi = {
     // BASEURL: "https://api.gympin.ir/",
-    BASEURL : "http://localhost:8080/api/",
+    BASEURL: "http://localhost:8080/api/",
     // BASEURL: "http://192.168.0.117:8080/api/",
     LOGIN_URL: "v1/account/login",
     SEND_SMS_URL: "v1/account/sendsms",
@@ -345,7 +342,11 @@ export let SettingsApi = {
     add: "v1/Settings/add",
     delete: "v1/Settings/delete",
     getAll: "v1/Settings/getAll",
-    update: "v1/Settings/update"
+    update: "v1/Settings/update",
+    DoMaximumDiscount: "v1/Settings/DoMaximumDiscount",
+    RemoveAllDiscounts: "v1/Settings/RemoveAllDiscounts",
+    SetAutoToAll: "v1/Settings/SetAutoToAll",
+    UpdateAutoDiscount: "v1/Settings/UpdateAutoDiscount",
 };
 export let SupportApi = {
     add: "v1/Support/add",

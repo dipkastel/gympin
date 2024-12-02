@@ -38,8 +38,10 @@ const EditProfile = (props) => {
     useEffect(() => {
         document.title = 'ویرایش پروفایل';
         SetImageUrl(currentUser?.Avatar?.Url||"")
-        if(currentUser.Username&&currentUser.FullName&&currentUser.Gender&&currentUser.Birthday&&currentUser.NationalCode)
-            props?.introCanGoNext(true);
+        try{
+            if(currentUser.Username&&currentUser.FullName&&currentUser.Gender&&currentUser.Birthday&&currentUser.NationalCode)
+                props?.introCanGoNext(true);
+        }catch (e){}
     }, [currentUser]);
 
     useEffect(() => {

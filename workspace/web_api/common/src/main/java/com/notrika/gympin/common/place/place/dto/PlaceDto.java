@@ -66,6 +66,9 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
     @JsonProperty("MinPrice")
     private BigDecimal minPrice;
 
+    @JsonProperty("MinPriceBeforeDiscount")
+    private BigDecimal minPriceBeforeDiscount;
+
     @JsonProperty("Status")
     private PlaceStatusEnum status = PlaceStatusEnum.ACTIVE;
 

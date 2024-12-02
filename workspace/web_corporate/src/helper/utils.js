@@ -24,6 +24,7 @@ export function toPriceWithComma(price){
     if(!price) return "0";
     price = fixFarsiNumbers(price);
     // if(price.length>1&&price.startsWith("0")) price = price.substring(1,price.length);
+    price = (price+"").split('.')[0]
     if(price.length>16) return price.substring(0,17);
     var number = parseInt(toPriceWithoutComma(price));
     return (Math.round(number)+"")

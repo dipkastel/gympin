@@ -10,7 +10,7 @@ import {
     IconButton,
     InputLabel,
     MenuItem,
-    Select
+    Select, TextField
 } from "@mui/material";
 import {Place_query} from "../../../network/api/place.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
@@ -100,6 +100,7 @@ const _PlacesList = () => {
     const [openModal, setOpenModal] = useState(false)
     const [sports, SetSports] = useState([])
     const [region, SetRegions] = useState([])
+    const [value, setValue] = useState("");
     const [filters, SetFilters] = useState([...defaultPlaceFilters,{
             type: "gender",
             name: "جنسیت",
@@ -114,6 +115,16 @@ const _PlacesList = () => {
     //         selectedName: currentUser?genders.find(i=>i.value===currentUser?.Gender)?.Name:null
     //     }]
     // )
+    useEffect(() => {
+
+        let debouncer = setTimeout(() => {
+            SetPlaces(null);
+            getData(0,value);
+        }, 1000);
+        return () => {
+            clearTimeout(debouncer);
+        }
+    }, [value]);
 
     useEffect(() => {
         sports_query({
@@ -145,29 +156,32 @@ const _PlacesList = () => {
         });
     }, []);
 
-    useEffect(() => {
-        getData(0);
-    }, [filters,sortBy]);
+    // useEffect(() => {
+    //     getData(0,null);
+    // }, [filters,sortBy]);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [isLoading]);
 
-    function getData(page){
+    function getData(page,searchString){
+        console.log(searchString);
         setIsLoading(true);
         Place_query({
             queryType: "FILTER",
             Status:"Active",
-            Sports:filters.find(f=>f.type==="Sports").value,
-            LocationId:filters.find(f=>f.type==="location").value,
-            Gender:filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null,
+            Name:searchString,
+            //
+            // Sports:filters.find(f=>f.type==="Sports").value,
+            // LocationId:filters.find(f=>f.type==="location").value,
+            // Gender:filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null,
             Option:null,
             paging: {Page: page, Size: 20,Desc:sortBy.Desc,OrderBy:sortBy.Value}
         }).then(result => {
             setIsLoading(false)
             setLoadedPage(page);
-            var content = places?places.content:[];
+            var content = searchString?[]:places?places.content:[];
             content.push(...result.data.Data.content);
             SetPlaces({...result.data.Data,content:content});
             setEndOfList(result.data.Data.last);
@@ -229,7 +243,7 @@ const _PlacesList = () => {
        itsStart = true;
          setLoadedPage(loadedPage+1);
 
-         getData(loadedPage+1);
+         getData(loadedPage+1,value);
     };
 
     return (
@@ -263,74 +277,92 @@ const _PlacesList = () => {
             {/*        </Select>*/}
             {/*    </Grid>*/}
             {/*</Grid>*/}
-            <Dialog
-                className={"w-100"}
-                open={openModal} onClose={() => setOpenModal(false)}>
-                <DialogTitle>فیلترها</DialogTitle>
-                <DialogContent className={"w-100"}>
+            {/*<Dialog*/}
+            {/*    className={"w-100"}*/}
+            {/*    open={openModal} onClose={() => setOpenModal(false)}>*/}
+            {/*    <DialogTitle>فیلترها</DialogTitle>*/}
+            {/*    <DialogContent className={"w-100"}>*/}
 
-                    شما میتوانید با محدود کردن لیست مراکز به سادگی مرکز مورد نظر خود را بیابید
-
-
-                    <FormControl
-                        className={"mt-3"}
-                        fullWidth>
-                        <InputLabel id="sport-select-label">ورزش</InputLabel>
-                        <Select
-                            labelId="sport-select-label"
-                            id="sport-select"
-                            name={"Sports"}
-                            value={filters.find(o => o.type === "Sports")?filters.find(o => o.type === "Sports").value:null}
-                            label="ورزش"
-                            onChange={(e) => handleChange(e, sports)}
-                        >
-                            <MenuItem value={null}>انتخاب نشده</MenuItem>
-                            {sports.map(item => (
-                                <MenuItem key={"S"+item.Id} value={item.Id}>{item.Name}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl
-                        className={"mt-3"}
-                        fullWidth>
-                        <InputLabel id="location-select-label">منطقه</InputLabel>
-                        <Select
-                            labelId="location-select-label"
-                            id="location-select"
-                            name={"location"}
-                            value={filters.find(o => o.type === "location").value}
-                            label="منطقه"
-                            onChange={(e) => handleChange(e, region)}
-                        >
-                            <MenuItem value={null}>انتخاب نشده</MenuItem>
-                            {region.map(item => (
-                                <MenuItem key={"L"+item.Id} value={item.Id}>{item.Name}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl
-                        className={"mt-3"}
-                        fullWidth>
-                        <InputLabel id="gender-select-label">جنسیت</InputLabel>
-                        <Select
-                            labelId="gender-select-label"
-                            id="gender-select"
-                            name={"gender"}
-                            value={filters.find(o => o.type === "gender").value?filters.find(o => o.type === "gender").value:""}
-                            label="جنسیت"
-                            onChange={(e) => handleChangeGender(e.target, genders)}
-                        >
-                            {genders.map(item => (
-                                <MenuItem key={"G"+item.value} value={item.value}>{item.Name}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </DialogContent>
-            </Dialog>
+            {/*        شما میتوانید با محدود کردن لیست مراکز به سادگی مرکز مورد نظر خود را بیابید*/}
 
 
+            {/*        <FormControl*/}
+            {/*            className={"mt-3"}*/}
+            {/*            fullWidth>*/}
+            {/*            <InputLabel id="sport-select-label">ورزش</InputLabel>*/}
+            {/*            <Select*/}
+            {/*                labelId="sport-select-label"*/}
+            {/*                id="sport-select"*/}
+            {/*                name={"Sports"}*/}
+            {/*                value={filters.find(o => o.type === "Sports")?filters.find(o => o.type === "Sports").value:null}*/}
+            {/*                label="ورزش"*/}
+            {/*                onChange={(e) => handleChange(e, sports)}*/}
+            {/*            >*/}
+            {/*                <MenuItem value={null}>انتخاب نشده</MenuItem>*/}
+            {/*                {sports.map(item => (*/}
+            {/*                    <MenuItem key={"S"+item.Id} value={item.Id}>{item.Name}</MenuItem>*/}
+            {/*                ))}*/}
+            {/*            </Select>*/}
+            {/*        </FormControl>*/}
+            {/*        <FormControl*/}
+            {/*            className={"mt-3"}*/}
+            {/*            fullWidth>*/}
+            {/*            <InputLabel id="location-select-label">منطقه</InputLabel>*/}
+            {/*            <Select*/}
+            {/*                labelId="location-select-label"*/}
+            {/*                id="location-select"*/}
+            {/*                name={"location"}*/}
+            {/*                value={filters.find(o => o.type === "location").value}*/}
+            {/*                label="منطقه"*/}
+            {/*                onChange={(e) => handleChange(e, region)}*/}
+            {/*            >*/}
+            {/*                <MenuItem value={null}>انتخاب نشده</MenuItem>*/}
+            {/*                {region.map(item => (*/}
+            {/*                    <MenuItem key={"L"+item.Id} value={item.Id}>{item.Name}</MenuItem>*/}
+            {/*                ))}*/}
+            {/*            </Select>*/}
+            {/*        </FormControl>*/}
+            {/*        <FormControl*/}
+            {/*            className={"mt-3"}*/}
+            {/*            fullWidth>*/}
+            {/*            <InputLabel id="gender-select-label">جنسیت</InputLabel>*/}
+            {/*            <Select*/}
+            {/*                labelId="gender-select-label"*/}
+            {/*                id="gender-select"*/}
+            {/*                name={"gender"}*/}
+            {/*                value={filters.find(o => o.type === "gender").value?filters.find(o => o.type === "gender").value:""}*/}
+            {/*                label="جنسیت"*/}
+            {/*                onChange={(e) => handleChangeGender(e.target, genders)}*/}
+            {/*            >*/}
+            {/*                {genders.map(item => (*/}
+            {/*                    <MenuItem key={"G"+item.value} value={item.value}>{item.Name}</MenuItem>*/}
+            {/*                ))}*/}
+            {/*            </Select>*/}
+            {/*        </FormControl>*/}
+            {/*    </DialogContent>*/}
+            {/*</Dialog>*/}
 
 
+
+            <div className={"w-100 px-2"}>
+
+                <TextField
+                    id="outlined-adornment-password"
+                    className="w-100"
+                    variant="outlined"
+                    margin="normal"
+                    name="username"
+                    type="username"
+                    onChange={e=>setValue(e.target.value)}
+                    value={value}
+                    label={"جستجو (نام مرکز)"}
+                    // onBlur={handleBlur}
+                    // onChange={handleChange}
+                    // value={values.username}
+                    // helperText={touched.username && errors.username}
+                    // error={Boolean(touched.username && errors.username)}
+                />
+            </div>
             <Grid container
                   direction="row"
                   justifyContent="center"

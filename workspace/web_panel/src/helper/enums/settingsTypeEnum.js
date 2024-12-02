@@ -1,7 +1,7 @@
 export const SettingTypes = {
     APPLICATION: "همه اپلیکیشن ها",
     ANDROID: "اندروید",
-    IOS: "آیفون",
+    IOS: "آی او اس",
     WEB_PANEL: "پنل ادمین",
     GENERAL: "عمومی",
     WEB_APP: "وب اپلیکیشن",

@@ -2,18 +2,18 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
+import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
-import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
-import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import org.springframework.data.domain.Page;
 
 import java.util.Collection;
@@ -51,11 +51,12 @@ public final class PlaceConvertor {
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setStatus(entity.getStatus());
         if (entity.getPlaceSport() != null)
-            placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p->!p.isDeleted()).map(PlaceSportEntity::getSport).collect(Collectors.toList())));
+            placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p -> !p.isDeleted()).map(PlaceSportEntity::getSport).collect(Collectors.toList())));
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
         return placeDto;
     }
+
     public static PlaceDto toSimpleDto(PlaceEntity entity) {
         if (entity == null) return null;
         PlaceDto placeDto = new PlaceDto();
@@ -66,6 +67,7 @@ public final class PlaceConvertor {
         placeDto.setStatus(entity.getStatus());
         return placeDto;
     }
+
     public static PlaceDto toDtoSecure(PlaceEntity entity) {
         if (entity == null) return null;
         PlaceDto placeDto = new PlaceDto();
@@ -77,22 +79,28 @@ public final class PlaceConvertor {
         placeDto.setOrder(entity.getOrder());
         placeDto.setAddress(entity.getAddress());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
-        placeDto.setHasBeneficiary(entity.getPlaceOwners().stream().filter(PlacePersonnelEntity::getIsBeneficiary).findFirst().map(p->true).orElse(false));
+        placeDto.setHasBeneficiary(entity.getPlaceOwners().stream().filter(PlacePersonnelEntity::getIsBeneficiary).findFirst().map(p -> true).orElse(false));
         placeDto.setStatus(entity.getStatus());
-        if(entity.getBuyables().size()>0){
+        if (entity.getBuyables().size() > 0) {
             try {
                 placeDto.setGenders(entity.getBuyables().stream().filter(BuyableEntity::getEnable).map(BuyableEntity::getGender).collect(Collectors.toSet()));
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
             try {
-                placeDto.setMinPrice(entity.getBuyables().stream().filter(p->p.getEnable()&&p.getPrice()!=null).min(Comparator.comparing(BuyableEntity::getPrice)).get().getPrice());
-            }catch (Exception e){}
+                var minPriceTicket = entity.getBuyables().stream().filter(p -> p.getEnable() && p.getPrice() != null).min(Comparator.comparing(BuyableEntity::getPrice)).get();
+                placeDto.setMinPrice(minPriceTicket.getPrice());
+                if(minPriceTicket.getValuePrice().compareTo(minPriceTicket.getPrice())>0)
+                    placeDto.setMinPriceBeforeDiscount(minPriceTicket.getValuePrice());
+            } catch (Exception e) {
+            }
         }
         if (entity.getPlaceSport() != null)
-            placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p->!p.isDeleted()).map(PlaceSportEntity::getSport).collect(Collectors.toList())));
+            placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p -> !p.isDeleted()).map(PlaceSportEntity::getSport).collect(Collectors.toList())));
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
         return placeDto;
     }
+
     public static PlaceParam toParm(PlaceEntity entity) {
         if (entity == null) return null;
         PlaceParam placeParam = new PlaceParam();
@@ -125,7 +133,7 @@ public final class PlaceConvertor {
                 .isDeleted(entity.isDeleted())
                 .placeDto(toDto(entity.getPlace()))
                 .userDto(UserConvertor.toDtoComplete(entity.getUser()))
-                .userRole(entity.getPlacePersonnelRoles().stream().filter(pp->!pp.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()))
+                .userRole(entity.getPlacePersonnelRoles().stream().filter(pp -> !pp.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()))
                 .isBeneficiary(entity.getIsBeneficiary())
                 .isPublic(entity.getIsPublic())
                 .commissionFee(entity.getCommissionFee())
@@ -141,6 +149,7 @@ public final class PlaceConvertor {
                 .access(entity.getAccess())
                 .build();
     }
+
     public static PlacePersonnelBuyableAccessDto personelBuyableAccessToDto(PlacePersonelBuyableAccessEntity entity) {
         if (entity == null) return null;
         return PlacePersonnelBuyableAccessDto.builder()
