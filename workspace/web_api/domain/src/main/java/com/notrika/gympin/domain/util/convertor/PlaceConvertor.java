@@ -87,7 +87,7 @@ public final class PlaceConvertor {
             } catch (Exception e) {
             }
             try {
-                var minPriceTicket = entity.getBuyables().stream().filter(p -> p.getEnable() && p.getPrice() != null).min(Comparator.comparing(BuyableEntity::getPrice)).get();
+                var minPriceTicket = entity.getBuyables().stream().filter(p ->!p.isDeleted()&& p.getEnable() && p.getPrice() != null).min(Comparator.comparing(BuyableEntity::getPrice)).get();
                 placeDto.setMinPrice(minPriceTicket.getPrice());
                 if(minPriceTicket.getValuePrice().compareTo(minPriceTicket.getPrice())>0)
                     placeDto.setMinPriceBeforeDiscount(minPriceTicket.getValuePrice());

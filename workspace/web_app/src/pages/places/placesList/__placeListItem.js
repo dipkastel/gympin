@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Divider, Grid, Typography} from "@mui/material";
+import {Card, Divider, Grid, ListItemText, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 import {BoyRounded, ChildCare, GirlRounded, LocationOnOutlined, ManRounded, WomanRounded} from "@mui/icons-material";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
@@ -78,17 +78,24 @@ const __placeListItem = ({item}) => {
                               justifyContent={"center"}
 
                         >
-                            {item?.MinPrice && <Typography sx={{color: "#757575"}} variant={"subtitle2"}>
+                            {item?.MinPrice && <Typography sx={{color: "#757575",fontWeight:200}} variant={"subtitle2"}>
                                 {"شروع قیمت از "}
                             </Typography>}
-                            {item?.MinPriceBeforeDiscount &&
-                            <Typography sx={{paddingRight: 1, color: "#881a1a",textDecoration:"line-through", fontWeight: 700}} variant={"subtitle1"}>
-                                {toPriceWithComma(item?.MinPriceBeforeDiscount) }
-                            </Typography>}
-                            {item?.MinPrice &&
-                            <Typography sx={{paddingRight: 1, color: "#26881a", fontWeight: 700}} variant={"subtitle1"}>
-                                {toPriceWithComma(item.MinPrice) + " تومان"}
-                            </Typography>}
+                            <ListItemText
+                                sx={{mt:"0px",flex:"none"}}
+                                primary={item?.MinPriceBeforeDiscount &&
+                                <Typography sx={{paddingRight: 1, color: "#b06161",textDecoration:"line-through", fontWeight: 500,lineHeight:1}} variant={"subtitle1"}>
+                                    {toPriceWithComma(item?.MinPriceBeforeDiscount) }
+                                </Typography>}
+                                primaryTypographyProps={{p:0,m:0,lineHeight:0}}
+                                secondaryTypographyProps={{p:0,m:0,lineHeight:0}}
+                                secondary= {item?.MinPrice &&
+                                <Typography sx={{paddingRight: 1, color: "#26881a", fontWeight: 700,lineHeight:1}} variant={"subtitle1"}>
+                                    {toPriceWithComma(item.MinPrice) + " تومان"}
+                                </Typography>}
+                            />
+
+
                             {!item.MinPrice && <Typography sx={{color: "#757575"}} variant={"subtitle1"}>
                                 {"بدون پلن فعال "}
                             </Typography>}

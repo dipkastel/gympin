@@ -14,7 +14,10 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
     function setFormValues(lable, value) {
         if(lable==="PlacePrice")
             SetInTicketSubscribe({...inTicketSubscribe, [lable]: value,Price:value})
-        else
+        else if(lable==="Discount"){
+            SetInTicketSubscribe({...inTicketSubscribe, [lable]: value,Price:inTicketSubscribe.PlacePrice*(1-value/100)})
+
+        } else
             SetInTicketSubscribe({...inTicketSubscribe, [lable]: value})
     }
 
@@ -136,7 +139,6 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
                         onChange={(e) => setFormValues("Discount", e.target.value)}
                         type={"text"}
                         fullWidth
-                        disabled={true}
                         margin="normal"
                         InputLabelProps={{
                             shrink: true,

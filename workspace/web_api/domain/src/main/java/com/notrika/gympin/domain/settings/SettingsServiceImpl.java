@@ -88,7 +88,7 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
             for (BuyableEntity buyable : ActiveBuyablesOfPlace) {
                 try {
                     BigDecimal beforPrice = buyable.getPrice();
-                    BigDecimal newPrice = BigDecimal.valueOf(buyable.getPlacePrice().intValue() * (1 - (buyable.getBeneficiary().getCommissionFee() / 100)));
+                    BigDecimal newPrice = BigDecimal.valueOf(Math.round(buyable.getPlacePrice().intValue()/1000) * (1 - (buyable.getBeneficiary().getCommissionFee() / 100))*1000);
                     if (newPrice.compareTo(buyable.getPrice()) != 0) {
                         buyable.setPrice(newPrice);
                         buyable.setDiscount(buyable.getBeneficiary().getCommissionFee().shortValue());
@@ -170,7 +170,7 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
                     try {
                         Double discountFee = (buyable.getBeneficiary().getCommissionFee() / 100)*Math.random();
                         BigDecimal beforPrice = buyable.getPrice();
-                        BigDecimal newPrice = BigDecimal.valueOf(buyable.getPlacePrice().intValue() * (1 - discountFee));
+                        BigDecimal newPrice = BigDecimal.valueOf(Math.round((buyable.getPlacePrice().intValue()/1000) * (1 - discountFee))*1000);
                         if (newPrice.compareTo(buyable.getPrice()) != 0) {
                             buyable.setPrice(newPrice);
                             buyable.setDiscount(discountFee.shortValue());
