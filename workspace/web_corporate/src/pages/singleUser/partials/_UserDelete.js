@@ -30,7 +30,7 @@ const _UserDelete = ({corporatePersonnel}) => {
         function deleteUser(e) {
             e.preventDefault()
 
-            if (corporate.Status=="DEMO"){
+            if (corporate.Status=="DEMO"||corporate.Status=="SECURE_DEMO"){
                 error.showError({message: "حذف کاربر برای Demo فعال نیست",});
                 return;
             }

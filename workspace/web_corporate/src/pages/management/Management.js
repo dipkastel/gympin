@@ -39,6 +39,9 @@ function Management(props) {
             case "DEMO":
                 error.showError({message: "این بخش برای DEMO فعال نیست",});
                 break;
+            case "SECURE_DEMO":
+                error.showError({message: "این بخش برای DEMO فعال نیست",});
+                break;
             default:
                 error.showError({message: "داده مورد نیاز برای این بخش وجود ندارد",});
                 break;

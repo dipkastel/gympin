@@ -54,7 +54,7 @@ const Groups = () => {
                 error.showError({message: "نام گروه وارد نشده",});
                 return;
             }
-            if(corporate?.Status=="DEMO"&&groups.length>1){
+            if((corporate?.Status=="DEMO"||corporate.Status=="SECURE_DEMO")&&groups.length>1){
                 error.showError({message: "بیش از 2 گروه برای DEMO امکان‌پذیر نیست",});
                 return;
             }

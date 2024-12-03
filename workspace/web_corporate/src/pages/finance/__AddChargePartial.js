@@ -94,7 +94,7 @@ const __AddChargePartial = ({setLoading,corporate,setOpenModalAdd}) => {
             return;
         }
 
-        if(corporate?.Status=="DEMO"){
+        if(corporate?.Status=="DEMO"||corporate?.Status=="SECURE_DEMO"){
             error.showError({message: "برای وضعیت DEMO امکان شارژ وجود ندارد",});
             return;
         }
@@ -156,7 +156,7 @@ const __AddChargePartial = ({setLoading,corporate,setOpenModalAdd}) => {
 
     function changeGateway(item){
 
-        if(corporate?.Status==="DEMO"){
+        if(corporate?.Status==="DEMO"||corporate?.Status=="SECURE_DEMO"){
             error.showError({message: "این عملکرد در حالت DEMO فعال نیست",});
         }else{
             setSelectedGatewayApplication(item);
@@ -174,7 +174,7 @@ const __AddChargePartial = ({setLoading,corporate,setOpenModalAdd}) => {
             return;
         }
 
-        if(corporate?.Status=="DEMO"){
+        if(corporate?.Status=="DEMO"||corporate?.Status=="SECURE_DEMO"){
             error.showError({message: "برای وضعیت DEMO امکان شارژ وجود ندارد",});
             return;
         }

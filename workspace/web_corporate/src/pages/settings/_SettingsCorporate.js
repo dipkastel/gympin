@@ -17,6 +17,7 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import {corporatePersonnel_corporateOwnedByUserId} from "../../network/api/corporatePersonnel.api";
 import {CorporateContractType} from "../../helper/enums/CorporateContractType";
 import {toPriceWithComma} from "../../helper/utils";
+import {CorporateStatusType} from "../../helper/enums/CorporateStatusType";
 
 const _SettingsCorporate = (props) => {
     const error = useContext(ErrorContext);
@@ -81,7 +82,7 @@ const _SettingsCorporate = (props) => {
                                                               primary={item.Corporate.Name+" ( "+CorporateContractType[item?.Corporate?.ContractType]+" )"}
                                                               secondary={item?.Corporate?.FinanceCorporate?.TotalDeposit>0&&toPriceWithComma(item?.Corporate?.FinanceCorporate?.TotalDeposit)}
                                                           />}/>
-                                        <Chip variant={"filled"} color={"success"} size={"small"} label={item?.Corporate?.Status} sx={{mx:1}}/>
+                                        <Chip variant={"filled"} color={"success"} size={"small"} label={CorporateStatusType[item?.Corporate?.Status]} sx={{mx:1}}/>
                                     </Grid>
                                 </Card>
                             </div>
