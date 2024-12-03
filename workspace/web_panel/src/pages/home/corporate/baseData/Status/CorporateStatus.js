@@ -29,6 +29,7 @@ const CorporateStatus = ({currentCorporate, updatePage}) => {
             {value: "INACTIVE", label: "غیر فعال"},
             {value: "PREREGISTER", label: "پیش ثبت نام"},
             {value: "DEMO", label: "دمو"},
+            {value: "SECURE_DEMO", label: "دمو امنیتی"},
         ]
     }
 

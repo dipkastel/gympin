@@ -1,11 +1,16 @@
 package com.notrika.gympin.domain.util.convertor;
 
+import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
+import com.notrika.gympin.common.util.exception.user.UnknownUserException;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
@@ -14,6 +19,7 @@ import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntit
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.data.domain.Page;
 
 import java.util.Collection;
@@ -36,16 +42,40 @@ public final class PlaceConvertor {
 
     public static PlaceDto toDto(PlaceEntity entity) {
         if (entity == null) return null;
+         Boolean isSequred = false;
+         try {
+             GympinContext context = GympinContextHolder.getContext();
+             if (context == null)
+                 throw new UnknownUserException();
+             UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+             for(CorporatePersonnelEntity personnel : user.getCorporatesPersonel().stream().filter(cp->!cp.isDeleted()).collect(Collectors.toList())){
+                 if(personnel.getCorporate().getStatus()== CorporateStatusEnum.SECURE_DEMO){
+                     isSequred = true;
+                 }
+             }
+         }catch (Exception e){
+         }
+
         PlaceDto placeDto = new PlaceDto();
         placeDto.setId(entity.getId());
-        placeDto.setName(entity.getName());
-        placeDto.setLatitude(entity.getLatitude());
-        placeDto.setLongitude(entity.getLongitude());
-        placeDto.setTell(entity.getTell());
+        try {
+            placeDto.setName(isSequred?(entity.getName().substring(0,2)+"*****" +entity.getName().substring(entity.getName().length()-2)):entity.getName());
+        }catch (Exception e){
+
+        }
+        try {
+            placeDto.setLatitude(isSequred?entity.getLatitude()+Math.random()*0.002:entity.getLatitude());
+            placeDto.setLongitude(isSequred?entity.getLongitude()+Math.random()*0.002:entity.getLongitude());
+        }catch (Exception e){
+
+        }
+        placeDto.setTell(isSequred?"02177487334":entity.getTell());
         placeDto.setContractData(entity.getContractData());
         placeDto.setHasContract(entity.isHasContract());
         placeDto.setCallUs(entity.isCallUs());
-        placeDto.setAddress(entity.getAddress());
+        try{
+            placeDto.setAddress(isSequred?(entity.getAddress().substring(0,3)+"****" +entity.getAddress().substring(entity.getAddress().length()-3)):entity.getAddress());
+        }catch (Exception e){}
         placeDto.setOrder(entity.getOrder());
         placeDto.setActiveTimes(entity.getActiveTimes());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
@@ -59,25 +89,64 @@ public final class PlaceConvertor {
 
     public static PlaceDto toSimpleDto(PlaceEntity entity) {
         if (entity == null) return null;
+        Boolean isSequred = false;
+        try {
+            GympinContext context = GympinContextHolder.getContext();
+            if (context == null)
+                throw new UnknownUserException();
+            UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+            for(CorporatePersonnelEntity personnel : user.getCorporatesPersonel().stream().filter(cp->!cp.isDeleted()).collect(Collectors.toList())){
+                if(personnel.getCorporate().getStatus()== CorporateStatusEnum.SECURE_DEMO){
+                    isSequred = true;
+                }
+            }
+        }catch (Exception e){
+        }
         PlaceDto placeDto = new PlaceDto();
         placeDto.setId(entity.getId());
-        placeDto.setName(entity.getName());
+        placeDto.setName(isSequred?(entity.getName().substring(0,2)+"*****" +entity.getName().substring(entity.getName().length()-2)):entity.getName());
         placeDto.setOrder(entity.getOrder());
-        placeDto.setAddress(entity.getAddress());
+        try{
+            placeDto.setAddress(isSequred?(entity.getAddress().substring(0,3)+"****" +entity.getAddress().substring(entity.getAddress().length()-3)):entity.getAddress());
+        }catch (Exception e){}
         placeDto.setStatus(entity.getStatus());
         return placeDto;
     }
 
     public static PlaceDto toDtoSecure(PlaceEntity entity) {
         if (entity == null) return null;
+        Boolean isSequred = false;
+        try {
+            GympinContext context = GympinContextHolder.getContext();
+            if (context == null)
+                throw new UnknownUserException();
+            UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+            for(CorporatePersonnelEntity personnel : user.getCorporatesPersonel().stream().filter(cp->!cp.isDeleted()).collect(Collectors.toList())){
+                if(personnel.getCorporate().getStatus()== CorporateStatusEnum.SECURE_DEMO){
+                    isSequred = true;
+                }
+            }
+        }catch (Exception e){
+        }
+
         PlaceDto placeDto = new PlaceDto();
         placeDto.setId(entity.getId());
-        placeDto.setName(entity.getName());
-        placeDto.setLatitude(entity.getLatitude());
-        placeDto.setLongitude(entity.getLongitude());
+        try {
+            placeDto.setName(isSequred?(entity.getName().substring(0,2)+"*****" +entity.getName().substring(entity.getName().length()-2)):entity.getName());
+        }catch (Exception e){
+
+        }
+        try {
+            placeDto.setLatitude(isSequred?entity.getLatitude()+Math.random()*0.002:entity.getLatitude());
+            placeDto.setLongitude(isSequred?entity.getLongitude()+Math.random()*0.002:entity.getLongitude());
+        }catch (Exception e){
+
+        }
         placeDto.setHasContract(entity.isHasContract());
         placeDto.setOrder(entity.getOrder());
-        placeDto.setAddress(entity.getAddress());
+        try{
+            placeDto.setAddress(isSequred?(entity.getAddress().substring(0,3)+"****" +entity.getAddress().substring(entity.getAddress().length()-3)):entity.getAddress());
+        }catch (Exception e){}
         placeDto.setAutoDiscount(entity.isAutoDiscount());
         placeDto.setHasBeneficiary(entity.getPlaceOwners().stream().filter(PlacePersonnelEntity::getIsBeneficiary).findFirst().map(p -> true).orElse(false));
         placeDto.setStatus(entity.getStatus());
@@ -165,6 +234,7 @@ public final class PlaceConvertor {
         return entities.stream().map(PlaceConvertor::personnelAccessToDto).collect(Collectors.toList());
 
     }
+
 
     public static List<PlacePersonnelBuyableAccessDto> personelBuyableAccessToDto(List<PlacePersonelBuyableAccessEntity> entities) {
         if (entities == null) return null;
