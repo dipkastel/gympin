@@ -144,7 +144,7 @@ public class ApiAspect {
         PostMapping postMapping = method.getAnnotation(PostMapping.class);
         PutMapping putMapping = method.getAnnotation(PutMapping.class);
         DeleteMapping deleteMapping = method.getAnnotation(DeleteMapping.class);
-        if (postMapping == null && putMapping == null && deleteMapping == null) return;
+       // if (postMapping == null && putMapping == null && deleteMapping == null) return;
         ObjectMapper objectMapper = new ObjectMapper();
         String paramJson = objectMapper.writeValueAsString(Arrays.stream(joinPoint.getArgs()).findFirst());
         String dtoJson = null;
@@ -158,7 +158,6 @@ public class ApiAspect {
             objectMapper.writeValueAsString(retVal);
         }
         UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-
         ManageServiceExecutionEntity serviceExecution = new ManageServiceExecutionEntity();
         serviceExecution.setService(method.toGenericString());
 //        serviceExecution.setParamClass(joinPoint.getArgs()[0].getClass());
