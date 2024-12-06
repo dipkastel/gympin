@@ -3,20 +3,25 @@ import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Por
 import {Button, Typography} from "@mui/material";
 import {Modal} from "react-bootstrap";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {settings_DoMaximumDiscount} from "../../../../network/api/settings.api";
+import {
+    settings_DoMaximumDiscount,
+    settings_RemoveAllDiscounts,
+    settings_SetAutoToAll,
+    settings_UpdateAutoDiscount
+} from "../../../../network/api/settings.api";
 
-const __MaximumDiscount = () => {
+const __UpdateAutoDiscount = () => {
 
     const error = useContext(ErrorContext);
-    const [openModal, setOpenModal] = useState(false);
+    const [openModal, setOpenModal] = useState(null);
 
     function renderModalConfirm() {
         function doActions(e) {
             e.preventDefault()
-            settings_DoMaximumDiscount()
-                .then(data => {
+            settings_UpdateAutoDiscount()
+                .then(data=>{
                     error.showError({message: "عملیات موفق",});
-                    setOpenModal(false);
+                    setOpenModal(null);
                 }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message,});
@@ -25,18 +30,15 @@ const __MaximumDiscount = () => {
                 }
             });
         }
-
         return (
             <>
-                <Modal show={openModal} onHide={() => setOpenModal(false)}>
+                <Modal show={!!openModal} onHide={() => setOpenModal(null)}>
                     <Modal.Header closeButton>
                         <Modal.Title>{"تایید انجام عملیات"}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Typography variant={"h2"}>لطفا احتیاط کنید</Typography>
-                        <Typography variant={"subtitle1"}>اعمال حداکثر تخفیف برای همه مجموعه ها ممکن است باعث از بین رفتن سود جیم پین شود
-                            لطفا حتما با هماهنگی مدیران این کار را انجام دهید. تایید این دکمه عملیاتی سنگین را آغاز میکند لطفا در ساعات
-                            خلوتی سرور انجام شود</Typography>
+                        <Typography variant={"subtitle1"}>بروز رسانی تخفیف ها</Typography>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button className={"button_danger"} type={"submit"} variant={"contained"}
@@ -51,10 +53,10 @@ const __MaximumDiscount = () => {
     return (
         <>
             <Portlet>
-                <PortletHeader title={"حد اکثر تخفیف ها"}/>
+                <PortletHeader title={"بروز رسانی تخفیف ها"}/>
                 <PortletBody className={"p-2"}>
-                    <Button variant={"outlined"} color={"error"} onClick={e => setOpenModal(true)}>اعمال بیشترین تخفیف ممکن
-                        در همه مجموعه ها</Button>
+                    <Button variant={"outlined"} color={"error"} onClick={e => setOpenModal("UpdateAutoDiscount")}>بروزرسانی تخفیفات
+                        سیستمیک</Button>
                 </PortletBody>
             </Portlet>
             {renderModalConfirm()}
@@ -62,4 +64,4 @@ const __MaximumDiscount = () => {
     );
 };
 
-export default __MaximumDiscount;
+export default __UpdateAutoDiscount;

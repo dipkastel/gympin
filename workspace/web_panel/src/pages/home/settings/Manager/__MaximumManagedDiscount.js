@@ -1,19 +1,20 @@
 import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Button, Typography} from "@mui/material";
+import {Button, TextField, Typography} from "@mui/material";
 import {Modal} from "react-bootstrap";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {settings_DoMaximumDiscount} from "../../../../network/api/settings.api";
+import {settings_DoMaximumDiscount, settings_DoMaximumManagedDiscount} from "../../../../network/api/settings.api";
 
-const __MaximumDiscount = () => {
+const __MaximumManagedDiscount = () => {
 
     const error = useContext(ErrorContext);
     const [openModal, setOpenModal] = useState(false);
+    const [profitMargin, setProfitMargin] = useState(null);
 
     function renderModalConfirm() {
         function doActions(e) {
             e.preventDefault()
-            settings_DoMaximumDiscount()
+            settings_DoMaximumManagedDiscount({Profit:profitMargin})
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
                     setOpenModal(false);
@@ -51,9 +52,23 @@ const __MaximumDiscount = () => {
     return (
         <>
             <Portlet>
-                <PortletHeader title={"حد اکثر تخفیف ها"}/>
+                <PortletHeader title={"تخفیف مدیریت شده"}/>
                 <PortletBody className={"p-2"}>
-                    <Button variant={"outlined"} color={"error"} onClick={e => setOpenModal(true)}>اعمال بیشترین تخفیف ممکن
+
+
+                    <TextField
+                        id="standard-full-width"
+                        label="حاشیه سود"
+                        placeholder="حاشیه سود"
+                        value={profitMargin}
+                        onChange={(e) => setProfitMargin( e.target.value)}
+                        type={"text"}
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                    <Button variant={"outlined"} color={"error"} onClick={e => setOpenModal(true)}>اعمال بیشترین تخفیف مدیریت شده ممکن
                         در همه مجموعه ها</Button>
                 </PortletBody>
             </Portlet>
@@ -62,4 +77,4 @@ const __MaximumDiscount = () => {
     );
 };
 
-export default __MaximumDiscount;
+export default __MaximumManagedDiscount;

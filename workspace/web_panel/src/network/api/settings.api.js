@@ -29,3 +29,7 @@ export function settings_RemoveAllDiscounts() {
 export function settings_DoMaximumDiscount() {
   return axios.get(SettingsApi.DoMaximumDiscount);
 }
+
+export function settings_DoMaximumManagedDiscount(data) {
+  return axios.post(SettingsApi.DoMaximumManagedDiscount,data);
+}

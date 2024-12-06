@@ -343,6 +343,7 @@ export let SettingsApi = {
     delete: "v1/Settings/delete",
     getAll: "v1/Settings/getAll",
     update: "v1/Settings/update",
+    DoMaximumManagedDiscount: "v1/Settings/DoMaximumManagedDiscount",
     DoMaximumDiscount: "v1/Settings/DoMaximumDiscount",
     RemoveAllDiscounts: "v1/Settings/RemoveAllDiscounts",
     SetAutoToAll: "v1/Settings/SetAutoToAll",

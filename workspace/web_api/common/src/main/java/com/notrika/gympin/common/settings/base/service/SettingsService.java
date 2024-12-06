@@ -1,5 +1,7 @@
 package com.notrika.gympin.common.settings.base.service;
 
+import com.notrika.gympin.common.settings.base.param.SettingProfitParam;
+import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.settings.base.dto.SettingDto;
@@ -15,6 +17,7 @@ public interface SettingsService extends BaseService<SettingParam, SettingDto, B
     SettingDto getByKey(String Key);
 
     Boolean DoMaximumDiscount();
+    Boolean DoMaximumManagedDiscount(SettingProfitParam pr);
     Boolean RemoveAllDiscounts();
     Boolean SetAutoToAll();
     Boolean UpdateAutoDiscount();

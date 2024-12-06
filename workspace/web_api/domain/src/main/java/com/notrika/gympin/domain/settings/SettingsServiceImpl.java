@@ -4,7 +4,9 @@ import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
 import com.notrika.gympin.common.settings.base.dto.SettingDto;
 import com.notrika.gympin.common.settings.base.enums.settingsType;
 import com.notrika.gympin.common.settings.base.param.SettingParam;
+import com.notrika.gympin.common.settings.base.param.SettingProfitParam;
 import com.notrika.gympin.common.settings.base.service.SettingsService;
+import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.SettingsConvertor;
@@ -97,6 +99,42 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
                                 BuyableDiscountHistoryEntity.builder()
                                         .buyable(buyable)
                                         .discount(buyable.getBeneficiary().getCommissionFee().shortValue())
+                                        .beforPrice(beforPrice)
+                                        .afterPrice(newPrice)
+                                        .build());
+                    }
+                } catch (Exception e) {
+                }
+
+            }
+        }
+        buyableRepository.updateAll(buyableToUpdate);
+        ticketSubscribeDiscountHistoryRepository.addAll(buyableDiscountHistoryEntityListToAdd);
+        return true;
+    }
+
+    @Override
+    public Boolean DoMaximumManagedDiscount(SettingProfitParam pr) {
+        List<PlaceEntity> places = placeRepository.findAllByStatusAndDeletedIsFalse(PlaceStatusEnum.ACTIVE);
+        List<BuyableEntity> buyableToUpdate = new ArrayList<>();
+        List<BuyableDiscountHistoryEntity> buyableDiscountHistoryEntityListToAdd = new ArrayList<>();
+        for (PlaceEntity place : places) {
+            List<BuyableEntity> ActiveBuyablesOfPlace = place.getBuyables().stream().filter(b -> b.getEnable() && !b.isDeleted()).collect(Collectors.toList());
+            for (BuyableEntity buyable : ActiveBuyablesOfPlace) {
+                try {
+                    BigDecimal beforPrice = buyable.getPrice();
+                    Double discount = buyable.getBeneficiary().getCommissionFee()-pr.getProfit();
+                    if(discount<1)
+                        discount = (double) 0;
+                    BigDecimal newPrice = BigDecimal.valueOf(Math.round(buyable.getPlacePrice().intValue()/1000) * (1 - (discount / 100))*1000);
+                    if (newPrice.compareTo(buyable.getPrice()) != 0) {
+                        buyable.setPrice(newPrice);
+                        buyable.setDiscount(discount.shortValue());
+                        buyableToUpdate.add(buyable);
+                        buyableDiscountHistoryEntityListToAdd.add(
+                                BuyableDiscountHistoryEntity.builder()
+                                        .buyable(buyable)
+                                        .discount(discount.shortValue())
                                         .beforPrice(beforPrice)
                                         .afterPrice(newPrice)
                                         .build());

@@ -1,5 +1,7 @@
 package com.notrika.gympin.controller.impl.settings;
 
+import com.notrika.gympin.common.settings.base.param.SettingProfitParam;
+import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.settings.base.api.SettingsController;
@@ -34,6 +36,13 @@ public class SettingControllerImpl implements SettingsController {
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public ResponseEntity<Boolean> DoMaximumDiscount() {
         return new ResponseEntity<Boolean>(settingsService.DoMaximumDiscount(),HttpStatus.OK);
+    }
+
+    @Override
+    @PostMapping("/DoMaximumManagedDiscount")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    public ResponseEntity<Boolean> DoMaximumManagedDiscount(SettingProfitParam pr) {
+        return new ResponseEntity<Boolean>(settingsService.DoMaximumManagedDiscount(pr),HttpStatus.OK);
     }
 
     @Override

@@ -52,8 +52,9 @@ const PlacesMap = () => {
 
     function addMarkers(places) {
         places.forEach(place => {
-            if (place.Latitude != null && place.Longitude != null)
+            if (place.Latitude != null && place.Longitude != null){
                 addMarker(place);
+            }
         });
     }
 
