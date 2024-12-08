@@ -65,11 +65,11 @@ const _UserActivity = ({currentUser}) => {
                         </TableHead>
                         <TableBody>
 
-                            {service.content && service.content.map(item => (
+                            {service?.content && service?.content.map(item => (
                                 <TableRow key={"transaction-" + item.Id}>
                                     <TableCell align="right" component="th" scope="row">{item.Id}</TableCell>
                                     <TableCell align="right" component="th"
-                                               scope="row">{serviceEnum[item.Service] ? serviceEnum[item.Service] : item.Service}</TableCell>
+                                               scope="row">{serviceEnum[item?.Service] ? serviceEnum[item.Service] : item.Service}</TableCell>
                                     <TableCell align="right" component="th"
                                                scope="row">{new Date(item.ExecutionDate).toLocaleDateString('fa-IR', {
                                         year: 'numeric',

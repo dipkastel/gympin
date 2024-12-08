@@ -8,7 +8,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {getUserFixedName} from "../../../../../helper";
-import {serviceEnum} from "../../../../../helper/enums/serviceEnum";
 import {useHistory} from "react-router-dom";
 
 const ___SettingsActivitiesUsersActives = () => {

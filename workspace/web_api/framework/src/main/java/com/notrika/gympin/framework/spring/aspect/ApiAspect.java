@@ -139,33 +139,35 @@ public class ApiAspect {
 
 
     private void saveServiceCall(ProceedingJoinPoint joinPoint, Object retVal) throws IOException {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        PostMapping postMapping = method.getAnnotation(PostMapping.class);
-        PutMapping putMapping = method.getAnnotation(PutMapping.class);
-        DeleteMapping deleteMapping = method.getAnnotation(DeleteMapping.class);
-       // if (postMapping == null && putMapping == null && deleteMapping == null) return;
-        ObjectMapper objectMapper = new ObjectMapper();
-        String paramJson = objectMapper.writeValueAsString(Arrays.stream(joinPoint.getArgs()).findFirst());
-        String dtoJson = null;
-        Class dtoClass;
-        if (retVal.getClass().isAssignableFrom(ResponseEntity.class)) {
-            Object body = ((ResponseEntity) retVal).getBody();
-            dtoClass = body.getClass();
-            dtoJson = objectMapper.writeValueAsString(body);
-        } else {
-            dtoClass = retVal.getClass();
-            objectMapper.writeValueAsString(retVal);
-        }
-        UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
-        ManageServiceExecutionEntity serviceExecution = new ManageServiceExecutionEntity();
-        serviceExecution.setService(method.toGenericString());
+        try {
+            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+            Method method = signature.getMethod();
+            PostMapping postMapping = method.getAnnotation(PostMapping.class);
+            PutMapping putMapping = method.getAnnotation(PutMapping.class);
+            DeleteMapping deleteMapping = method.getAnnotation(DeleteMapping.class);
+            // if (postMapping == null && putMapping == null && deleteMapping == null) return;
+            ObjectMapper objectMapper = new ObjectMapper();
+            String paramJson = objectMapper.writeValueAsString(Arrays.stream(joinPoint.getArgs()).findFirst());
+            String dtoJson = null;
+            Class dtoClass;
+            if (retVal.getClass().isAssignableFrom(ResponseEntity.class)) {
+                Object body = ((ResponseEntity) retVal).getBody();
+                dtoClass = body.getClass();
+                dtoJson = objectMapper.writeValueAsString(body);
+            } else {
+                dtoClass = retVal.getClass();
+                objectMapper.writeValueAsString(retVal);
+            }
+            UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
+            ManageServiceExecutionEntity serviceExecution = new ManageServiceExecutionEntity();
+            serviceExecution.setService(method.toGenericString());
 //        serviceExecution.setParamClass(joinPoint.getArgs()[0].getClass());
-        serviceExecution.setParam(paramJson);
-        serviceExecution.setDto(dtoJson);
+            serviceExecution.setParam(paramJson);
+            serviceExecution.setDto(dtoJson);
 //        serviceExecution.setDtoClass(dtoClass);
-        serviceExecution.setExecutorUser(user);
-        manageServiceExecutionRepository.add(serviceExecution);
+            serviceExecution.setExecutorUser(user);
+            manageServiceExecutionRepository.add(serviceExecution);
+        }catch (Exception e){}
 
     }
 

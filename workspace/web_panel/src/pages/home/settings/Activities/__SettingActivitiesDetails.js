@@ -86,7 +86,7 @@ const __SettingActivitiesDetails = () => {
                         </TableHead>
                         <TableBody>
 
-                            {service.content && service.content.map(item => (
+                            {service?.content && service?.content.map(item => (
                                 <TableRow key={"transaction-" + item.Id}>
                                     <TableCell align="right" component="th" scope="row">{item.Id}</TableCell>
                                     <TableCell align="left" component="th" scope="row">
@@ -120,11 +120,11 @@ const __SettingActivitiesDetails = () => {
                         </TableBody>
                     </Table>
 
-                    {(service.totalElements > 0) && <TablePagination
+                    {(service?.totalElements > 0) && <TablePagination
                         rowsPerPageOptions={[15, 25, 50, 100]}
                         component="div"
                         sx={{direction: "rtl"}}
-                        count={service.totalElements || 0}
+                        count={service?.totalElements || 0}
                         labelRowsPerPage={"تعداد نمایش"}
                         labelDisplayedRows={(param) => {
                             return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
