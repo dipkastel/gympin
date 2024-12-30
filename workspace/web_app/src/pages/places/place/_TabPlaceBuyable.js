@@ -109,7 +109,8 @@ const _TabPlaceBuyable = ({place}) => {
 
 
     function getfixedPlaceNumber() {
-        return place?.Tell;
+        return "02177162192"
+        // return place?.Tell;
     }
 
     function showCallSudjest() {
