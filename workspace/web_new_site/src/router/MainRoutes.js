@@ -9,7 +9,6 @@ import Faq from "../pages/faq/Faq";
 import Blog from "../pages/blog/Blog";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Mock from "../components/Mock";
 import BlogDetail from "../pages/blog-detail/BlogDetail";
 import _Loading from "../pages/partials/_Loading";
 import {Collapse} from "@mui/material";

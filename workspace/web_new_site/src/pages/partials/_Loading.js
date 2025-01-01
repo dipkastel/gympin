@@ -1,6 +1,6 @@
 import React from 'react';
 import Lottie from 'react-lottie';
-import * as animationData from "./1234.json"
+import * as animationData from "./gympin-lott.json"
 
 const _Loading = () => {
 
@@ -18,8 +18,8 @@ const _Loading = () => {
         <div className="loader-container">
             <div className={"center"}>
                 <Lottie options={defaultOptions}
-                        height={200}
-                        width={200}/>
+                        height={300}
+                        width={300}/>
             </div>
         </div>
     );
