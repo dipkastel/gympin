@@ -50,8 +50,9 @@ const Header = () => {
                         <img src={"/assets/images/logo300.png"} className={"logo"} alt={"لوگو جیم پین"} />
                     </a>
                     <ul>
+                        <li><a href={"/#intro"}>ثبت نام</a></li>
                         <li><a href={"/corporate"}>ثبت سازمان ها و شرکت ها</a></li>
-                        <li><a href={"/places"}>ثبت مجموعه ورزشی</a></li>
+                        {/*<li><a href={"/places"}>ثبت مجموعه ورزشی</a></li>*/}
                         <li><a href={"/about"}> آشنایی با جیم پین </a></li>
                         <li><a href={"/blog"}>مطالب و مقالات</a></li>
                         <li><a onClick={()=>{thisFormStatus===null?setThisFormStatus(formStatus.filled):setThisFormStatus(null)}}>درخواست تماس</a></li>
