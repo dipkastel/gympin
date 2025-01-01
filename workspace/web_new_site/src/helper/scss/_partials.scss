@@ -1,0 +1,23 @@
+.header{
+  height: 200px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color: $colors-primary;
+  .title{
+    color: $colors-text-on-dark;
+  }
+  .subtitle{
+    color: $colors-text-on-dark;
+  }
+}
+.headerw{
+  height: 200px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  .title{
+    color: $colors-primary;
+  }
+  .subtitle{
+    color: $colors-primary;
+  }
+}

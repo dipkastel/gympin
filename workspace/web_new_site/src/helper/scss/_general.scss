@@ -1,0 +1,26 @@
+body{
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  font-family: "IRANSans-web" !important;
+  color: $colors-text-primary !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+.ltr{
+  direction: ltr;
+}
+.rtl{
+  direction: rtl;
+}
+.notfound-center{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  img{
+    width: 100%;
+  }
+}

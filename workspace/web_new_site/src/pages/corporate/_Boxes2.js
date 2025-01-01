@@ -1,0 +1,41 @@
+import React from 'react';
+import Grid from "@mui/material/Grid2";
+import {Card, Container, Typography} from "@mui/material";
+
+const _Boxes2 = () => {
+    function SingleBox({image, title, text, alt}) {
+        return (<>
+            <Grid  item size={{md: 3, xs: 9}}>
+                <Card sx={{m:"2vw", bgcolor: "#f5ede0", borderRadius: 4}} elevation={10}>
+                    <Grid sx={{p: 3}} direction={"column"}>
+                        <img width={"30%"} alt={alt} src={image}/>
+                        <Typography variant={"subtitle1"} sx={{fontWeight: 600, mt: 1}}>{title}</Typography>
+                        <Typography variant={"subtitle2"} sx={{fontWeight: 400, mt: 0, mb: 1, minHeight: 105}}>{text}</Typography>
+                    </Grid>
+                </Card>
+            </Grid>
+
+        </>)
+    }
+
+    return (
+
+        <section>
+            <Container>
+                <Grid container className={"box2"} columns={9} alignContent={"center"} textAlign={"center"}>
+                    <SingleBox
+                        text={"تخفیفات متنوع و متغیر روزانه استفاده از خدمات و ورزش های مختلف را برای همه پرسنل سازمان ها امکانپذیز کرده."}
+                        title={"تخفیفات شگفت انگیز"} image={"/assets/images/strongMan.jpg"} alt={"asd"}/>
+                    <SingleBox
+                        text={"تنوع ورزشی بالا در جیم پین به کارمندان کمک می‌کند تا ورزش های جدید را امتحان کرده و ورزش مورد علاقه خود را پیدا کنند."}
+                        title={"تنوع ورزشی بسیار زیاد"} image={"/assets/images/inhand.jpg"}/>
+                    <SingleBox
+                        text={"جیم پین به سازمان‌ها این امکان را می‌دهد که از خدمات ورزشی بهره‌مند شوند بدون اینکه هزینه اضافه‌ای  برای آن‌ها ایجاد شود."}
+                        title={"بدون هزینه برای سازمان"} image={"/assets/images/shareLove.jpg"} alt={"asdasd"}/>
+                </Grid>
+            </Container>
+        </section>
+    );
+
+};
+export default _Boxes2;

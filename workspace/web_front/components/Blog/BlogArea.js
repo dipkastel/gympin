@@ -8,7 +8,6 @@ SwiperCore.use([Navigation, EffectFade]);
 
 export default function BlogArea({blogs, selectedPage, setSelectedPage}) {
     function createSlug(title) {
-        console.log()
         const slug = title
             .toLowerCase()
             .replace(/[^a-z0-9آ-ی]/g, '-')

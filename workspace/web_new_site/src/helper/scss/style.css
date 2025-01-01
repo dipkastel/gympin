@@ -1,0 +1,491 @@
+@charset "UTF-8";
+.loader-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #242d3e;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000000000000002000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  font-family: "IRANSans-web" !important;
+  color: #4b4b4b !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.notfound-center {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+.notfound-center img {
+  width: 100%;
+}
+
+footer {
+  background-color: #e7333e;
+  width: 100%;
+  min-height: 285px;
+}
+footer ul {
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 40px;
+  list-style: none;
+  padding-right: 20px;
+}
+footer ul li {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 300;
+  line-height: 2.5rem;
+}
+footer ul li a {
+  text-decoration: none;
+  color: inherit;
+}
+footer ul li:hover {
+  color: #DDDDDD;
+  transition: 0.3s all ease;
+  margin-right: 1px;
+}
+footer ul li::before {
+  content: "⮜";
+  padding-left: 5px;
+}
+footer .copyright {
+  margin-top: 25px;
+  padding: 4px 30px 4px 35px;
+  background-color: #FFFFFF;
+}
+footer .footer-li-img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+header {
+  width: 100%;
+  display: flex;
+}
+header::after {
+  content: " ";
+}
+header::before {
+  content: " ";
+}
+header img {
+  width: 117px;
+  height: 40px;
+  padding: 20px 44px 0 0;
+}
+header ul {
+  display: flex;
+  padding: 0px;
+}
+header ul li {
+  display: flex;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0 0 0 0;
+  margin: 12px 16px 0 0;
+}
+header ul li a {
+  text-decoration: none;
+  color: inherit;
+}
+header ul li a:hover {
+  color: #b01616;
+}
+header .header-actions {
+  position: absolute;
+  display: flex;
+  flex-direction: row-reverse;
+  left: 0;
+}
+header .header-actions svg {
+  rotation: 160deg;
+  transition: all 0.5s ease;
+}
+header .header-actions a {
+  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+header .header-actions a:hover {
+  font-weight: 900;
+  transition: all 0.5s;
+}
+header .header-call {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 20px 0 0 16px;
+}
+
+.DesktopHeader img {
+  margin-left: 25px;
+}
+@media only screen and (max-width: 960px) {
+  .DesktopHeader {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 961px) {
+  .mobileHeader {
+    display: none;
+  }
+}
+
+.drawer ul {
+  padding: 0;
+}
+.drawer li {
+  display: block;
+  border-bottom: 1px solid #c2c2c2;
+  padding: 8px 16px 8px 16px;
+}
+.drawer li a {
+  text-decoration: none;
+  color: #4b4b4b;
+}
+.drawer li:last-child {
+  border-bottom: none;
+}
+.drawer .logo {
+  align-self: center;
+  width: 120px;
+  margin-top: 35px;
+}
+.drawer a {
+  text-align: center;
+}
+
+.img-intro {
+  min-height: 380px;
+  width: 380px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  background: red;
+}
+
+.text-intro {
+  padding: 40px;
+}
+@media only screen and (max-width: 960px) {
+  .text-intro {
+    text-align: center;
+  }
+}
+
+.excitingBlock {
+  background: rgb(222, 222, 222);
+  background: linear-gradient(0deg, rgb(222, 222, 222) 0%, rgb(252, 252, 252) 2%, rgb(246, 246, 246) 4%, rgb(250, 250, 250) 50%, rgb(250, 250, 250) 95%, rgb(208, 208, 208) 98%, rgb(255, 255, 255) 100%);
+}
+.excitingBlock .text {
+  margin: 40px;
+  padding: 20px;
+  transition: 0.3s all ease;
+  color: #6b6b6b;
+}
+.excitingBlock .text:hover {
+  margin: 20px;
+  padding: 40px;
+  color: #242d3e;
+}
+
+.fx-into img {
+  margin-top: 62px;
+  margin-bottom: 62px;
+}
+@media only screen and (max-width: 960px) {
+  .fx-into img {
+    margin-top: 10px;
+    margin-bottom: 62px;
+  }
+}
+
+.fx-into-mob .main {
+  max-height: 400px;
+  position: relative;
+}
+@media only screen and (min-width: 961px) {
+  .fx-into-mob {
+    display: none;
+  }
+}
+
+.intro-buttons {
+  margin-top: 40px;
+}
+
+.allCompanies {
+  width: 100%;
+  background-color: #e7333e;
+}
+.allCompanies img {
+  object-fit: contain;
+  max-height: 210px;
+  padding: 10px;
+}
+
+.additionalCard {
+  background-color: #e22430 !important;
+  color: #FFFFFF !important;
+  text-align: right !important;
+}
+
+.goals img {
+  background-color: #fef8f9;
+  border-radius: 50%;
+  margin-top: 20px;
+  width: 65px;
+  height: 65px;
+  padding: 20px;
+  object-fit: contain;
+}
+.goals .text {
+  margin: 16px 32px 40px 32px;
+  text-align: justify;
+  line-height: 1.9rem;
+  font-weight: 300;
+  font-size: 0.75rem;
+}
+@media only screen and (max-width: 480px) {
+  .goals .text {
+    margin: 16px 4px 40px 4px;
+  }
+}
+
+.apps-img {
+  width: 100%;
+  border-radius: 1.6rem;
+  margin-top: 2rem;
+}
+
+.apps-img2 {
+  width: 100%;
+  border-radius: 1.6rem;
+}
+
+.experience-date {
+  direction: ltr;
+}
+
+.slider-container {
+  direction: ltr;
+  min-height: 330px;
+}
+.slider-container .card {
+  margin: 80px 40px;
+}
+.slider-container .faqTopCard {
+  margin: 80px 40px 20px 40px;
+  background-color: #e7333e;
+  color: #FFFFFF;
+}
+.slider-container .faqBottomCard {
+  margin: 20px 40px 30px 40px;
+}
+.valueCard {
+  margin: 60px 0;
+  text-align: center;
+}
+@media only screen and (max-width: 1920px) {
+  .valueCard p {
+    font-size: 1.8rem;
+  }
+}
+@media only screen and (max-width: 1240px) {
+  .valueCard p {
+    font-size: 1.7rem;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .valueCard p {
+    font-size: 1.6rem;
+  }
+}
+@media only screen and (max-width: 720px) {
+  .valueCard p {
+    font-size: 1.2rem;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .valueCard p {
+    font-size: 0.8rem;
+  }
+}
+
+.experienceSlider .image {
+  position: absolute;
+  top: 50px;
+  margin-right: -10px;
+  width: 100px;
+  height: 100px;
+  border: 3px solid #e7333e;
+}
+.experienceSlider .slick-center {
+  margin-bottom: 30px;
+}
+.experienceSlider .slick-center .image {
+  position: absolute;
+  top: 75px;
+  width: 100px;
+  height: 100px;
+  margin-right: 5px;
+  border: 5px solid #e7333e;
+  transition: 0.3s all ease;
+}
+.experienceSlider .slick-center .card {
+  margin: 60px 20px;
+  padding: 20px;
+  transition: 0.3s all ease;
+}
+.experienceSlider .slick-center .faqTopCard {
+  margin: 20px 20px 20px 20px;
+  padding: 10px 20px 20px 20px;
+  transition: 0.3s all ease;
+}
+.experienceSlider .slick-center .faqBottomCard {
+  margin: 20px 20px 0px 20px;
+  padding: 10px 20px 20px 20px;
+  transition: 0.3s all ease;
+}
+
+.sportCard {
+  margin: 16px;
+  border-radius: 25px !important;
+  transition: 0.3s all ease !important;
+}
+.sportCard:hover {
+  transform: rotate3d(0, 1, 0, 30deg);
+}
+.sportCard img {
+  width: 100%;
+  margin-bottom: -12px;
+}
+
+.sportCardHeader {
+  background-color: #e7333e !important;
+  color: #FFFFFF !important;
+  text-align: center;
+}
+
+.header {
+  height: 200px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color: #e7333e;
+}
+.header .title {
+  color: #FFFFFF;
+}
+.header .subtitle {
+  color: #FFFFFF;
+}
+
+.headerw {
+  height: 200px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.headerw .title {
+  color: #e7333e;
+}
+.headerw .subtitle {
+  color: #e7333e;
+}
+
+.accordion-faq .active {
+  background-color: #242d3e;
+  color: #FFFFFF;
+}
+.accordion-faq .answer {
+  color: #AAAAAA;
+}
+
+.blog .search {
+  width: 300px;
+  margin-right: -80px;
+}
+.blog .search:hover {
+  width: 400px;
+  transition: 0.5s all ease;
+}
+.blog .card {
+  margin: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  transition: 0.5s ease all;
+}
+.blog .card:hover {
+  padding: 20px;
+  margin: 10px;
+  border-radius: 20px;
+  transition: 0.5s ease all;
+}
+.blog .card:hover img {
+  filter: contrast(150%);
+}
+.blog .card img {
+  padding: 10px 10px 0px 10px;
+  width: -webkit-fill-available;
+}
+
+.article img {
+  width: 100%;
+}
+
+.RoadMap {
+  margin-top: 80px;
+  background: #f3eed9;
+  padding: 0 10vw 0 10vw;
+}
+.RoadMap img {
+  width: 100%;
+}
+
+.Corporate-form {
+  background: #e7333e;
+  color: #FFFFFF;
+}
+
+.box2 {
+  margin-top: 100px;
+  margin-bottom: 80px;
+}
+@media only screen and (max-width: 960px) {
+  .box2 {
+    margin-top: 180px;
+  }
+}
+
+.video {
+  margin-bottom: -11px;
+}
+
+/*# sourceMappingURL=style.css.map */

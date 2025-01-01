@@ -1,0 +1,89 @@
+import React from 'react';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import {Avatar, Card, Container, Divider, Typography} from "@mui/material";
+import Grid from "@mui/material/Grid2";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
+const _Experiences = () => {
+
+    const settings = {
+        className: "experienceSlider",
+        centerMode: true,
+        infinite: true,
+        centerPadding: "60px",
+        slidesToShow: 1,
+        dots: false,
+        rtl:true,
+        autoplay: true,
+        speed: 300,
+        autoplaySpeed: 3000,
+        nextArrow: <Arrow />,
+        prevArrow: <Arrow />
+
+    };
+
+
+    function Arrow() {
+        return (
+            <div
+                style={{ display: "none" }}
+            />
+        );
+    }
+
+    return (
+        <section>
+                <Grid sx={{mt:5}} container columns={4} alignContent={"center"} textAlign={"center"}>
+                    <Grid item size={4}>
+                        <Typography color={"primary"}  sx={{fontWeight: 600, mt: 8, mb: 3}} variant={"h1"}>مزایای جیم پین</Typography>
+                    </Grid>
+                </Grid>
+
+                <div className="slider-container">
+                    <Slider  {...settings}>
+                        <SliderItem text={"تعداد زیاد و رو به افزایش مراکز ورزشی"} />
+                        <SliderItem text={"پوشش دهی تمام مناطق استان تهران و البرز"} />
+                        <SliderItem text={"تنوع بی نظیر و گسترده رشته های ورزشی"} />
+                        <SliderItem text={"قدرتی، آبی، هوازی، توپی، رزمی، راکتی، ماساژ و ... "} />
+                        <SliderItem text={"تخفیف های شگفت انگیز برای کارمندان"} />
+                        <SliderItem text={"عضویت رایگان سازمان ها در جیم پین"} />
+                        <SliderItem text={"مشاوره رایگان حضوری برای شرکت ها"} />
+                        <SliderItem text={"امکان استفاده هر سازمان با هر بودجه ای"} />
+                        <SliderItem text={"گزارش های عمومی عملکرد کارمندان (ماهیانه)"} />
+                        <SliderItem text={"گزارش های اختصاصی عملکرد سازمان (سالیانه)"} />
+                        <SliderItem text={"عدم سوخت و حفظ بودجه رفاهی سازمان"} />
+                        <SliderItem text={"استفاده از باقیمانده مبلغ برای شارژ مجدد"} />
+                        <SliderItem text={"امکان تعریف تاریخ انقضا برای اعتبار کارمندان"} />
+                        <SliderItem text={"درگاه پرداخت برای افزایش اعتبار توسط کارمندان"} />
+                        <SliderItem text={"افزودن مراکز درخواستی شرکت ها و کارمندان"} />
+                        <SliderItem text={"هدایای مناسبتی(نوروز، یلدا، تولد، روز زن)"} />
+                        <SliderItem text={"نظرسنجی در راستای بهبود کیفیت و ارتفا خدمات"} />
+                        <SliderItem text={"ارتقا برند کارفرمایی از طریق پوشش هزینه ورزشی"} />
+                        <SliderItem text={"جشنواره های فصلی و فروش های ویژه"} />
+                        <SliderItem text={"پنل اختصاصی مدیریت بودجه منابع انسانی"} />
+                        <SliderItem text={"اپلیکیشن ویژه کارمندان با امکان مشاهده ی مراکز"} />
+                        <SliderItem text={"پاسخگویی و پشتیبانی کامل و سریع جیم پین"} />
+                    </Slider>
+                </div>
+        </section>
+    );
+
+    function SliderItem({text}){
+        return(
+            <div>
+                <Container>
+                    <Card className={"valueCard rtl"} elevation={18} sx={{borderRadius: 8, color:"#ffffff",bgcolor:"#e7333e",}}>
+                        <Grid width={"100%"} sx={{p:"2vw"}} container justifyContent={"center"} columns={8} >
+                            <Typography>{text}</Typography>
+                        </Grid>
+                    </Card>
+                </Container>
+            </div>)
+    }
+};
+
+
+
+export default _Experiences;

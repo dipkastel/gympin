@@ -1,0 +1,9 @@
+.accordion-faq{
+  .active{
+    background-color: $colors-secondary;
+    color: $colors-text-on-dark;
+  }
+  .answer{
+    color: $colors-text-on-dark6;
+  }
+}

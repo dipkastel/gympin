@@ -1,0 +1,122 @@
+header {
+  width: 100%;
+  display: flex;
+
+  &:hover {
+  }
+
+  &::after {
+    content: " ";
+  }
+
+  &::before {
+    content: " ";
+  }
+
+  img {
+    width: 117px;
+    height: 40px;
+    padding: 20px 44px 0 0;
+  }
+
+  ul {
+    display: flex;
+    padding: 0px;
+
+    li {
+      display: flex;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0 0 0 0;
+      margin: 12px 16px 0 0;
+
+      a {
+        text-decoration: none;
+        color: inherit;
+
+        &:hover {
+          color: $colors-text-primary-hover;
+        }
+      }
+    }
+  }
+
+  .header-actions {
+    position: absolute;
+    display: flex;
+    flex-direction: row-reverse;
+    left: 0;
+
+    svg {
+      rotation: 160deg;
+      transition: all .5s ease;
+    }
+
+    &:hover {
+    }
+
+    a {
+      padding: 10px;
+      text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        font-weight: 900;
+        transition: all .5s;
+      }
+    }
+  }
+
+  .header-call {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 20px 0 0 16px;
+  }
+
+}
+
+.DesktopHeader {
+  img{
+    margin-left: 25px;
+  }
+  @media only screen and (max-width: $break-points-desktopS) {
+    display: none;
+  }
+}
+
+.mobileHeader {
+  @media only screen and (min-width: ($break-points-desktopS)+1) {
+    display: none;
+  }
+}
+
+.drawer {
+  ul {
+    padding: 0;
+  }
+
+  li {
+    display: block;
+    border-bottom: 1px solid #c2c2c2;
+    padding: 8px 16px 8px 16px;
+
+    a {
+      text-decoration: none;
+      color: #4b4b4b;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .logo {
+    align-self: center;
+    width: 120px;
+    margin-top: 35px;
+  }
+
+  a {
+    text-align: center
+  }
+}

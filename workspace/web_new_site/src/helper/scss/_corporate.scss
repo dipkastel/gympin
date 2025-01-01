@@ -1,0 +1,24 @@
+.RoadMap {
+  margin-top: 80px;
+  background: #f3eed9;
+  padding: 0 10vw 0 10vw;
+  img {
+    width: 100%;
+  }
+}
+
+.Corporate-form {
+  background: $colors-primary;
+  color: $colors-text-on-dark;
+}
+.box2{
+  margin-top: 100px;
+  margin-bottom: 80px;
+
+  @media only screen and (max-width: $break-points-desktopS) {
+    margin-top: 180px;
+  }
+}
+.video{
+  margin-bottom: -11px;
+}
