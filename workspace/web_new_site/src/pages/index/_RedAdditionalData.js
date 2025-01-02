@@ -14,7 +14,7 @@ const _RedAdditionalData = () => {
                         <Card className={"additionalCard rtl"} elevation={0} sx={{m:4,borderRadius:10,p:3}} >
                             <CardContent>
                                 <Typography sx={{fontWeight:600}} variant={"h4"}>بدون محدودیت در اندازه سازمان یا شرکت</Typography>
-                                <Typography sx={{mt:3,textAlign:"justify"}} variant={"subtitle1"}>جیم پین این فرصت را فراهم کرده تا سازمان ها با هر تعداد پرسنل، بتوانند خدمات رفاهی خود را به شکلی نوین مدیریت کرده و برای کارکنان خود دسترسی به خدمات ورزشی ایجاد کنند.</Typography>
+                                <Typography sx={{mt:3,textAlign:"justify"}} variant={"subtitle1"}>جیم پین این فرصت را فراهم کرده تا سازمان‌ها با هر تعداد پرسنل، بتوانند خدمات رفاهی خود را به شکلی نوین مدیریت کرده و برای کارکنان خود دسترسی به خدمات ورزشی ایجاد کنند.</Typography>
                             </CardContent>
                         </Card>
                     </Grid>

@@ -18,7 +18,7 @@ const Header = () => {
                 </a>
                 <ul>
                     <li><a href={"/#intro"}>ثبت نام</a></li>
-                    <li><a href={"/corporate"}>سازمان ها و شرکت ها</a></li>
+                    <li><a href={"/corporate"}>سازمان‌ها و شرکت‌ها</a></li>
                     <li><a href={"/about"}> آشنایی با جیم پین </a></li>
                     <li><a href={"/blog"}>مطالب و مقالات</a></li>
                 </ul>
@@ -51,7 +51,7 @@ const Header = () => {
                     </a>
                     <ul>
                         <li><a href={"/#intro"}>ثبت نام</a></li>
-                        <li><a href={"/corporate"}>ثبت سازمان ها و شرکت ها</a></li>
+                        <li><a href={"/corporate"}>ثبت سازمان‌ها و شرکت‌ها</a></li>
                         {/*<li><a href={"/places"}>ثبت مجموعه ورزشی</a></li>*/}
                         <li><a href={"/about"}> آشنایی با جیم پین </a></li>
                         <li><a href={"/blog"}>مطالب و مقالات</a></li>
@@ -64,7 +64,7 @@ const Header = () => {
                     </Collapse>
                     <Collapse in={thisFormStatus === formStatus.error}>
                         <Alert sx={{m:3}} elevation={10} variant={"filled"} severity={"error"}>خطا در ارسال اطلاعات . لطفا با شماره
-                            های جیم پین تماس بگیرید!</Alert>
+                           ‌های جیم پین تماس بگیرید!</Alert>
                     </Collapse>
                     <Collapse in={thisFormStatus === formStatus.filled}>
                         <Card elevation={5} sx={{ borderRadius: 3,maxWidth:500,m:4}}>

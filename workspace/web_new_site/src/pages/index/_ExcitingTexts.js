@@ -20,12 +20,12 @@ const _ExcitingTexts = () => {
                 </Grid>
                 <Grid item size={{xs:3,sm:1}}>
                     <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={0}>
-                        <Typography variant={"subtitle2"}>هر هزارتومانی که برای سلامتی هزینه می شود دوهزارتومان بازگشت سرمایه به همراه خواهد داشت</Typography>
+                        <Typography variant={"subtitle2"}>هر هزارتومانی که برای سلامتی هزینه می‌شود دوهزارتومان بازگشت سرمایه به همراه خواهد داشت</Typography>
                     </Card>
                 </Grid>
                 <Grid item size={{xs:3,sm:1}}>
                     <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={0}>
-                        <Typography variant={"subtitle2"}>سواد کم سلامتی، عامل ۴۲% از بیماری های جسمی و روحی است که به صورت روزمره با آنها درگیر هستیم</Typography>
+                        <Typography variant={"subtitle2"}>سواد کم سلامتی، عامل ۴۲% از بیماری‌های جسمی‌و روحی است که به صورت روزمره با آنها درگیر هستیم</Typography>
                     </Card>
                 </Grid>
             </Grid>

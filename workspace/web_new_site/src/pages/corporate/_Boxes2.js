@@ -24,14 +24,14 @@ const _Boxes2 = () => {
             <Container>
                 <Grid container className={"box2"} columns={9} alignContent={"center"} textAlign={"center"}>
                     <SingleBox
-                        text={"تخفیفات متنوع و متغیر روزانه استفاده از خدمات و ورزش های مختلف را برای همه پرسنل سازمان ها امکانپذیز کرده."}
-                        title={"تخفیفات شگفت انگیز"} image={"/assets/images/strongMan.jpg"} alt={"asd"}/>
+                        text={"تخفیفات متنوع و متغیر روزانه استفاده از خدمات و ورزش‌های مختلف را برای همه پرسنل سازمان‌ها امکان‌پذیز کرده."}
+                        title={"تخفیفات شگفت انگیز"} image={"/assets/images/strongman1.jpg"} alt={"تخفیفات شگفت انگیز"}/>
                     <SingleBox
-                        text={"تنوع ورزشی بالا در جیم پین به کارمندان کمک می‌کند تا ورزش های جدید را امتحان کرده و ورزش مورد علاقه خود را پیدا کنند."}
-                        title={"تنوع ورزشی بسیار زیاد"} image={"/assets/images/inhand.jpg"}/>
+                        text={"تنوع ورزشی بالا در جیم پین به کارمندان کمک می‌کند تا ورزش‌های جدید را امتحان کرده و ورزش مورد علاقه خود را پیدا کنند."}
+                        title={"تنوع ورزشی بسیار زیاد"} image={"/assets/images/inhand1.jpg"} alt={"تنوع ورزشی بسیار زیاد"}/>
                     <SingleBox
                         text={"جیم پین به سازمان‌ها این امکان را می‌دهد که از خدمات ورزشی بهره‌مند شوند بدون اینکه هزینه اضافه‌ای  برای آن‌ها ایجاد شود."}
-                        title={"بدون هزینه برای سازمان"} image={"/assets/images/shareLove.jpg"} alt={"asdasd"}/>
+                        title={"بدون هزینه برای سازمان"} image={"/assets/images/savemoney1.jpg"} alt={"بدون هزینه برای سازمان"}/>
                 </Grid>
             </Container>
         </section>

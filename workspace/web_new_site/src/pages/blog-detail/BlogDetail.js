@@ -48,7 +48,7 @@ const BlogDetail = (props) => {
 
     return (
         <>
-            <title>{"جیم پین پل ارتباطی مراکز مرزشی و سازمان ها - "+article?.Title}</title>
+            <title>{"جیم پین پل ارتباطی مراکز مرزشی و سازمان‌ها - "+article?.Title}</title>
             <meta name={"description"} content={article?.Summary}/>
 
             <_PageTitle title={article?.Title} subtitle={getSubtitle(article)} />

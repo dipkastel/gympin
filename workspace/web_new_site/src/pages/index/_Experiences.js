@@ -91,7 +91,7 @@ const _Experiences = () => {
                     <Grid className={"experience-text"} container direction={"column"} alignItems={"start"} textAlign={"center"}>
                         <Typography sx={{px:2,pt:2,textAlign:"justify"}} variant={"body1"}>خیلی خوبه از وقتی با جیم پین آشنا شدم موهام کمتر میریزه رشد پاهام بیشتر شده و شکمم هم بهتر کار میکنه </Typography>
                         <Typography sx={{px:2,textAlign:"justify"}} variant={"body1"}>تازه مادر خانومم بیشتر دوسم داره خواهر زادم هم توی درساش پیشرفت کرده  </Typography>
-                        <Typography sx={{px:2,textAlign:"justify"}} variant={"body1"}>در روز برنج کمتری می خورم درد همیشگی پشت گردنم هم رفع شده</Typography>
+                        <Typography sx={{px:2,textAlign:"justify"}} variant={"body1"}>در روز برنج کمتری می‌خورم درد همیشگی پشت گردنم هم رفع شده</Typography>
                         <Typography sx={{px:2,pb:2,textAlign:"justify"}} variant={"body1"}>مدرسه دخترم هم نزدیک تر شده</Typography>
                     </Grid>
                     <Grid className={"experience-date"} container direction={"row"} alignItems={"start"} textAlign={"start"}>

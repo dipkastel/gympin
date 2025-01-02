@@ -28,7 +28,7 @@ const _CorporateForm = () => {
                     </Collapse>
                     <Collapse in={thisFormStatus === formStatus.error}>
                         <Alert sx={{mt: 3}} elevation={10} variant={"filled"} severity={"error"}>خطا در ارسال اطلاعات . لطفا با شماره
-                            های جیم پین تماس بگیرید!</Alert>
+                           ‌های جیم پین تماس بگیرید!</Alert>
                     </Collapse>
                     <Collapse in={thisFormStatus !== formStatus.complete}>
                     <Card elevation={2} sx={{mx:2,mt: 3,mb:-12, borderRadius: 3, maxWidth: 500}}>

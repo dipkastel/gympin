@@ -8,6 +8,7 @@ import _Faq from "./_Faq";
 import _Sports from "./_Sports";
 import _Contact from "./_Contact";
 import _Values from "./_Values";
+import _Experiences from "./_Experiences";
 
 const Index = () => {
     return (

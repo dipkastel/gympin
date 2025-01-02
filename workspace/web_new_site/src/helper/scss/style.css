@@ -303,12 +303,12 @@ header .header-call {
   margin: 80px 40px;
 }
 .slider-container .faqTopCard {
-  margin: 80px 40px 20px 40px;
+  margin: 80px 2vw 20px 2vw;
   background-color: #e7333e;
   color: #FFFFFF;
 }
 .slider-container .faqBottomCard {
-  margin: 20px 40px 30px 40px;
+  margin: 20px 2vw 30px 2vw;
 }
 .valueCard {
   margin: 60px 0;
@@ -380,9 +380,6 @@ header .header-call {
   margin: 16px;
   border-radius: 25px !important;
   transition: 0.3s all ease !important;
-}
-.sportCard:hover {
-  transform: rotate3d(0, 1, 0, 30deg);
 }
 .sportCard img {
   width: 100%;

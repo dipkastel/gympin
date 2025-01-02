@@ -1,6 +1,6 @@
 import React from 'react';
-import {Grid, Typography} from "@mui/material";
-import {Instagram} from "@mui/icons-material";
+import {Grid, IconButton, Typography} from "@mui/material";
+import {Instagram, LinkedIn, Telegram, WhatsApp} from "@mui/icons-material";
 
 const Footer = () => {
     return (
@@ -17,16 +17,15 @@ const Footer = () => {
                 <Grid md={15}>
                     <ul>
                         خدمات
-                        <li><a href={"/#intro"}>ثبت نام</a></li>
-                        <li><a target={"_blank"} href={"https://apps.gympin.ir"}>ورود به اپلیکیشن ها</a></li>
-                        <li><a href={"/corporate"}>سازمان ها و شرکت ها</a></li>
+                        <li><a href={"/#intro"}>ثبت نام سازمان‌ها</a></li>
+                        <li><a target={"_blank"} href={"https://apps.gympin.ir"}>ورود به اپلیکیشن‌ها</a></li>
+                        <li><a href={"/corporate"}>سازمان‌ها و شرکت‌ها</a></li>
                     </ul>
                 </Grid>
                 <Grid md={15}>
                     <ul>
-                        سیاست های پلتفرم
+                        سیاست‌های پلتفرم
                         <li><a href={"/term-and-conditions"}>قوانین و مقررات</a></li>
-                        <li><a href={"/term-and-conditions"}>حریم خصوصی</a></li>
                         <li><a href={"/faq"}>سوالات متداول</a></li>
                     </ul>
                 </Grid>
@@ -34,33 +33,41 @@ const Footer = () => {
                 <Grid md={30}>
                     <Grid container columns={4} alignContent={"center"}>
                         <Grid sx={{px:1,py:4}} md={1}>
-                            <img alt={"انجمن صنفی کسب و کار های اینترنتی"} className={"footer-li-img"} src={"/assets/images/anjoman.jpg"}/>
+                            <img alt={"انجمن صنفی کسب و کار‌های اینترنتی"} className={"footer-li-img"} src={"/assets/images/anjoman.jpg"}/>
                         </Grid>
                         <Grid sx={{px:1,py:4}} md={1}>
-                            <img alt={"درگاه ملی مجوز ها"} className={"footer-li-img"} src={"/assets/images/dargah-moj.jpg"}/>
+                            <img alt={"درگاه ملی مجوز‌ها"} className={"footer-li-img"} src={"/assets/images/dargah-moj.jpg"}/>
                         </Grid>
                         <Grid sx={{px:1,py:4}} md={1}>
                             <img alt={"نماد اعتماد الکترونیک"} className={"footer-li-img"} src={"/assets/images/enamad.jpg"}/>
                         </Grid>
                         <Grid sx={{px:1,py:4}} md={1}>
-                            <img alt={"اتحادیه کسب و کار های کشوری"} className={"footer-li-img"} src={"/assets/images/etehadie.jpg"}/>
+                            <img alt={"اتحادیه کسب و کار‌های کشوری"} className={"footer-li-img"} src={"/assets/images/etehadie.jpg"}/>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid container className={"copyright"}>
                 <Grid md={8}>
-                    <Typography variant={"overline"} sx={{fontSize: "0.75rem"}}> تمامی حقوق این وبسایت متعلق به شرکت </Typography>
+                    <Typography variant={"overline"} sx={{fontSize: "0.75rem"}}> تمامی‌حقوق این وبسایت متعلق به شرکت </Typography>
                     <Typography variant={"overline"} sx={{fontSize: "0.75rem"}} color={"primary"}>پیشگامان فناوری داده نوتریکا
                         © </Typography>
-                    <Typography variant={"overline"} sx={{fontSize: "0.75rem"}}>می باشد.</Typography>
+                    <Typography variant={"overline"} sx={{fontSize: "0.75rem"}}>می‌باشد.</Typography>
 
                 </Grid>
                 <Grid sx={{direction: "ltr"}} md={4}>
-                    <Instagram sx={{mt: 1, mx: 0.5}}/>
-                    <Instagram sx={{mt: 1, mx: 0.5}}/>
-                    <Instagram sx={{mt: 1, mx: 0.5}}/>
-                    <Instagram sx={{mt: 1, mx: 0.5}}/>
+                    <IconButton size={"small"} sx={{mx: 0.5}} href={"https://wa.me/+989221496746"}>
+                        <WhatsApp/>
+                    </IconButton>
+                    <IconButton size={"small"} sx={{mx: 0.5}} href={"https://t.me/gympin_info"}>
+                        <Telegram/>
+                    </IconButton>
+                    <IconButton size={"small"} sx={{mx: 0.5}} href={"https://www.linkedin.com/company/gympintdp"}>
+                        <LinkedIn />
+                    </IconButton>
+                    <IconButton size={"small"} sx={{mx: 0.5}} href={"https://www.instagram.com/gympin_ir"}>
+                        <Instagram />
+                    </IconButton>
                 </Grid>
             </Grid>
             <Grid container sx={{minHeight: "10px"}}>

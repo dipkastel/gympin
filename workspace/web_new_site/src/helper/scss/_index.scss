@@ -133,13 +133,13 @@
   }
 
   .faqTopCard {
-    margin: 80px 40px 20px 40px;
+    margin: 80px 2vw 20px 2vw;
     background-color: $colors-primary;
     color: $colors-text-on-dark;
   }
 
   .faqBottomCard {
-    margin: 20px 40px 30px 40px;
+    margin: 20px 2vw 30px 2vw;
   }
 
   .slick-active {
@@ -223,7 +223,7 @@
   transition: 0.3s all ease !important;
 
   &:hover {
-    transform: rotate3d(0, 1, 0, 30deg);
+    //transform: rotate3d(0, 1, 0, 30deg);
   }
 
   img {

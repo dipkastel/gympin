@@ -24,13 +24,13 @@ const _ContactForm = ({setFormStatus, formType}) => {
             error = {...error, Name: {error: true, errorMessage: "نام و نام خانوادگی کوتاه است."}}
         }
         if (!e?.target?.Name?.value) {
-            error = {...error, Name: {error: true, errorMessage: "نام و نام خانوادگی الزامی است."}}
+            error = {...error, Name: {error: true, errorMessage: "نام و نام خانوادگی الزامی‌است."}}
         }
         if (!e?.target?.Message?.value) {
-            error = {...error, Message: {error: true, errorMessage: "نام شرکت یا سازمان الزامی است."}}
+            error = {...error, Message: {error: true, errorMessage: "نام شرکت یا سازمان الزامی‌است."}}
         }
         if (!e?.target?.Tel?.value) {
-            error = {...error, Tel: {error: true, errorMessage: "شماره تلفن الزامی است."}}
+            error = {...error, Tel: {error: true, errorMessage: "شماره تلفن الزامی‌است."}}
         }
         if (!isEmpty(error)) {
             setFormData(error);

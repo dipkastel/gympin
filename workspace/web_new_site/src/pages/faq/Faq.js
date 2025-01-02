@@ -5,7 +5,7 @@ import _FaqList from "./_FaqList";
 const Faq = () => {
     return (
         <>
-            <_PageTitle title={"سوالات متداول"} subtitle={"پرسش و پاسخ های رایج دسته بندی شده"} />
+            <_PageTitle title={"سوالات متداول"} subtitle={"پرسش و پاسخ‌های رایج دسته بندی شده"} />
             <_FaqList />
         </>
     );
