@@ -5,7 +5,7 @@ import {Card, CardContent, CardHeader, Container, Typography} from "@mui/materia
 const _Sports = () => {
     function SportItem({title,alt,image,text}) {
         return (
-            <Grid size={{xs: 3, sm: 3, md: 2}}>
+            <Grid size={{xs: 6, sm: 6, md: 3,xl:2}} justifyItems={"center"}>
                 <Card className={"sportCard"} elevation={14} sx={{backgroundImage:image}} >
                     <img className={"bgImage"} alt={alt} src={image}/>
                     <div className={"overlay"}>
@@ -29,7 +29,7 @@ const _Sports = () => {
     return (
         <section>
             <Container>
-                <Grid sx={{mb: 8,mt:12}} container columns={6}>
+                <Grid sx={{mb: 8,mt:12}} container columns={6}  >
                     <SportItem image={"/assets/images/estakhr.jpg"} alt={"ورزش‌های آبی که برای کارمندان ایجاد نشاط می‌کند"} title={"ورزش‌های آبی"} text={"قدرت و شادابی را در دل آب پیدا کنید! با ورزش‌های آبی، تغییرات مثبت را در بدن و ذهن خود تجربه کنید و به بهترین نسخه از خود تبدیل شوید."}/>
                     <SportItem image={"/assets/images/bodybuilding.jpg"} alt={"ورزش‌هایی که برای عموم مردم جذاب است"} title={"باشگاه‌های بدنسازی"} text={"هر بار که به باشگاه می‌آیید، یک قدم به هدف‌های خود نزدیک‌تر می‌شوید! با جیم پین، هر تمرین فرصتی برای تغییر و تحول است."}/>
                     <SportItem image={"/assets/images/shamshir.jpg"} alt={"پدل برد ورزش مورد علاقه مدیران"} title={"ورزش‌های رزمی"} text={"آماده‌اید تا مرزهای خود را بشکنید؟ با ورزش‌های رزمی جیم پین، هر جلسه تمرین فرصتی برای ارتقاء مهارت‌ها و تقویت روحیه‌تان است."}/>

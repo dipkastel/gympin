@@ -50,14 +50,7 @@ const _BlogContents = () => {
         var result = Math.round(Math.random() * (max - min) + min);
         return result;
     }
-    // function createRandomString(length) {
-    //     const chars = "حچثتپباشسژزرذخقفغعظطضصیهونمل";
-    //     let result = "";
-    //     for (let i = 0; i < length; i++) {
-    //         result += chars.charAt(Math.floor(Math.random() * chars.length));
-    //     }
-    //     return result;
-    // }
+
 
     return (
         <section>
@@ -74,8 +67,8 @@ const _BlogContents = () => {
                             <Search sx={{color: "#aaaaaa", mx: 1}}/>
                             <InputBase
                                 sx={{flex: 1}}
-                                placeholder="جستجو مطلب مورد نظر..."
-                                inputProps={{width: "3px"}}
+                                placeholder="جستجو در مطالب ..."
+                                inputProps={{width: "2px"}}
                             />
                             <Button variant={"contained"} color="primary" sx={{px: 3, borderRadius: 4, ml: -14}} aria-label="directions">
                                 جستجوی مقاله
