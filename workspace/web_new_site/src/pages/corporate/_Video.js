@@ -27,7 +27,7 @@ const _video = () => {
             <Container>
                 <div className={"video-box"}>
                     <Card sx={{mt: 5,mb:12, borderRadius: 5}} elevation={10}>
-                        <video className={"video"} onClick={(e) => handlePlay()} poster="/assets/images/quotebg-1.jpeg"
+                        <video className={"video"} onClick={(e) => handlePlay()} poster="/assets/images/thumb1.jpg"
                                ref={videoRef} height={"100%"} width={"100%"} type="video/mp4"
                                controls={isPlaying}
                                playsInline>
