@@ -29,12 +29,14 @@ const _Faq = () => {
                 breakpoint: 900,
                 settings: {
                     slidesToShow: 2,
+                    centerMode: false,
                 }
             },
             {
                 breakpoint: 700,
                 settings: {
                     slidesToShow: 1,
+                    centerMode: false,
                 }
             }
         ],
@@ -51,9 +53,9 @@ const _Faq = () => {
 
     return (
         <section>
-            <Grid sx={{mt: 12}} container columns={4} alignContent={"center"} textAlign={"center"}>
+            <Grid sx={{mt: 8}} container columns={4} alignContent={"center"} textAlign={"center"}>
                 <Grid item size={4}>
-                    <Typography color={"primary"} sx={{fontWeight: 600, mt: 8, mb: 3}} variant={"h1"}>پاسخ به سوالات متداول</Typography>
+                    <Typography color={"primary"} sx={{fontWeight: 600, mt: 8}} variant={"h1"}>پاسخ به سوالات متداول</Typography>
                 </Grid>
             </Grid>
 

@@ -16,8 +16,8 @@ const Index = () => {
             <_Introduction/>
             <_ExcitingTexts/>
             <_RedAdditionalData/>
-            <_OurGoals/>
             <_Values/>
+            <_OurGoals/>
             <_Apps/>
             {/*<_Experiences />*/}
             <_Sports/>

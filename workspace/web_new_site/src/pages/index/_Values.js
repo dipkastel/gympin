@@ -35,11 +35,11 @@ const _Experiences = () => {
 
     return (
         <section>
-                <Grid sx={{mt:5}} container columns={4} alignContent={"center"} textAlign={"center"}>
-                    <Grid item size={4}>
-                        <Typography color={"primary"}  sx={{fontWeight: 600, mt: 8, mb: 3}} variant={"h1"}>مزایای جیم پین</Typography>
-                    </Grid>
-                </Grid>
+                {/*<Grid sx={{mt:5}} container columns={4} alignContent={"center"} textAlign={"center"}>*/}
+                {/*    <Grid item size={4}>*/}
+                {/*        <Typography color={"primary"}  sx={{fontWeight: 600, mt: 8, mb: 3}} variant={"h1"}>مزایای جیم پین</Typography>*/}
+                {/*    </Grid>*/}
+                {/*</Grid>*/}
 
                 <div className="slider-container">
                     <Slider  {...settings}>
@@ -74,8 +74,8 @@ const _Experiences = () => {
         return(
             <div>
                 <Container>
-                    <Card className={"valueCard rtl"} elevation={18} sx={{borderRadius: 8, color:"#ffffff",bgcolor:"#e7333e",}}>
-                        <Grid width={"100%"} sx={{p:"2vw"}} container justifyContent={"center"} columns={8} >
+                    <Card className={"valueCard rtl"} elevation={0} sx={{ color:"#FFFFFF",bgcolor:"#e22430",borderRadius:8}}>
+                        <Grid width={"100%"}  container justifyContent={"center"} columns={8} >
                             <Typography>{text}</Typography>
                         </Grid>
                     </Card>

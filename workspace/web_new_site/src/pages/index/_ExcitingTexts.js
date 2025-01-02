@@ -7,7 +7,6 @@ const _ExcitingTexts = () => {
         <section>
             <Grid container className={"excitingBlock"}
                   columns={3}
-                  sx={{mt:3}}
                   alignItems={"center"}
                   textAlign={"center"}
                   alignContent={"space-around"}>

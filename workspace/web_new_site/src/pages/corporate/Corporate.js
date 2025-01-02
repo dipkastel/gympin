@@ -9,6 +9,7 @@ import {Container, Typography} from "@mui/material";
 import _Boxes2 from "./_Boxes2";
 import _video from "./_Video";
 import Grid from "@mui/material/Grid2";
+import _VarietyMap from "./_VarietyMap";
 
 const Corporate = () => {
     return (
@@ -30,6 +31,7 @@ const Corporate = () => {
             <_RoadMap />
             <_CorporateForm />
             <_Boxes2 />
+            <_VarietyMap />
         </>
     );
 };

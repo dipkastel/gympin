@@ -86,7 +86,7 @@
 .goals {
   img {
     background-color: $colors-image-bg;
-    border-radius: 50%;
+    border-radius: 24px;
     margin-top: 20px;
     width: 65px;
     height: 65px;
@@ -97,10 +97,9 @@
 
   }
   .text{
-    margin: 16px 32px 40px 32px;
+    margin: 16px 10px 30px 10px;
     text-align: justify;
     line-height: 1.9rem;
-    font-weight: 300;
     font-size: 0.75rem;
 
     @media only screen and (max-width: $break-points-mobile) {
@@ -126,10 +125,11 @@
 
 .slider-container {
   direction: ltr;
-  min-height: 330px;
+  margin-top: 16px;
+  padding-top: 32px;
 
   .card {
-    margin: 80px 40px;
+
   }
 
   .faqTopCard {
@@ -150,7 +150,8 @@
 }
 
 .valueCard {
-  margin: 60px 0;
+  margin: 10px 0;
+  padding: 32px 0;
   text-align: center;
 
   p {
@@ -216,19 +217,71 @@
 
   }
 }
-
+*, ::before, ::after {
+  box-sizing: inherit;
+}
 .sportCard {
   margin: 16px;
   border-radius: 25px !important;
-  transition: 0.3s all ease !important;
+  position: relative;
+  height: 200px;
 
-  &:hover {
-    //transform: rotate3d(0, 1, 0, 30deg);
+  .title{
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #FFFFFF;
+    text-align: right;
+    transition:0.3s all ease !important;
+  }
+  .bgImage {
+    position: absolute;
+    width: 100%;
+  }
+  .shape{
+    width: 20px;
+    transition:1s all ease !important;
+
   }
 
-  img {
+  .overlay {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
     width: 100%;
-    margin-bottom: -12px;
+    height: 60px;
+    transition: all 0.3s ease-out;
+    background: rgb(255,0,0);
+    background: linear-gradient(0deg, rgba(255,0,0,0.804359243697479) 0%, rgba(0,0,0,0) 100%);
+  }
+  .description{
+    margin-top: 20px;
+    padding-left:20px;
+    font-size: 0.8rem;
+    color: #FFFFFF;
+    text-align: right;
+  }
+  &:hover{
+    .overlay{
+      height: 100%;
+      //background: rgb(255,0,0);
+      //background: linear-gradient(0deg, rgba(255,0,0,0.7539390756302521) 0%, rgba(66,64,119,0.6979166666666667) 100%);
+    }
+    .shape{
+      width: 20px;
+      margin-top: 60px;
+    }
+    .title{
+      margin-top: 80px;
+      font-size: 1rem;
+      color: #FFFFFF;
+      text-align: right;
+    }
+    .description{
+      margin-top: 5px;
+      font-size: 0.8rem;
+      color: #FFFFFF;
+      text-align: right;
+    }
   }
 }
 

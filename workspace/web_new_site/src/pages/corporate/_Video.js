@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Card, Container} from "@mui/material";
+import {PlayCircle} from "@mui/icons-material";
 
 const _video = () => {
 
@@ -30,7 +31,7 @@ const _video = () => {
                                ref={videoRef} height={"100%"} width={"100%"} type="video/mp4"
                                controls={isPlaying}
                                playsInline>
-                            <source src="/assets/videos/gympin-p.mp4" type="video/mp4"/>
+                            <source src="/assets/videos/gympin-corporate.mp4" type="video/mp4"/>
                             Your browser does not support the video tag.
                         </video>
                     </Card>

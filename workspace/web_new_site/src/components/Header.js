@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid2";
 import _ContactForm from "../pages/partials/_ContactForm";
 import {formTypeEnum} from "../helper/enum/formTypeEnum";
 import {formStatus} from "../helper/enum/fromStatusEnum";
+import _Values from "../pages/index/_Values";
 
 const Header = () => {
     const [openDrawer,setOpenDrawer] = useState(false);

@@ -13,7 +13,7 @@ const _Contact = () => {
                 <Grid sx={{mt: 2, mb: 18}} container columns={50} alignContent={"center"} textAlign={"center"}>
                     <Grid className={"ltr"} size={{sm: 50, md: 27}}>
                         <img className={"apps-img"} alt={"اولین ارتباط با جیم پین موثر ترین ارتباط خواهد بود"}
-                             src={"/assets/images/mobile-app.jpg"}/>
+                             src={"/assets/images/main-img-footer.jpg"}/>
                     </Grid>
                     <Grid sx={{direction: "rtl", mt: 5, px: 4}} alignContent={"start"} textAlign={"right"} size={{sm: 50, md: 23}}>
                         <Typography variant={"h4"} sx={{display: "inline", fontWeight: 600}}>تجربه نزدیک با </Typography>

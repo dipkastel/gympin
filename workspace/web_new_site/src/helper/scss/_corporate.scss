@@ -6,6 +6,14 @@
     width: 100%;
   }
 }
+.VarietyMap {
+  margin-top: 80px;
+  margin-bottom: 80px;
+  padding: 0 10vw;
+  img {
+    width: 100%;
+  }
+}
 
 .Corporate-form {
   background: $colors-primary;
@@ -14,9 +22,11 @@
 .box2{
   margin-top: 100px;
   margin-bottom: 80px;
-
   @media only screen and (max-width: $break-points-desktopS) {
     margin-top: 180px;
+  }
+  img{
+    border-radius: 50%;
   }
 }
 .video{
