@@ -7,7 +7,7 @@ const _OurGoals = () => {
     return (
         <section>
             <Container>
-                <Grid sx={{pb:12}} container columns={16} alignContent={"center"} textAlign={"center"}>
+                <Grid sx={{pb:12,pt:2}} container columns={16} alignContent={"center"} textAlign={"center"} justifyItems={"center"}>
                     {/*<Grid item size={16}>*/}
                     {/*    <Typography color={"primary"} sx={{fontWeight: 600, mt: 15, mb: 6}} variant={"h1"}>اهداف ما در جیم*/}
                     {/*        پین</Typography>*/}
