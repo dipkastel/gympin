@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Form} from "react-bootstrap";
-import * as L from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {Place_query} from "../../../network/api/place.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
@@ -47,8 +47,23 @@ const PlacesMap = () => {
     useEffect(() => {
         if (leaflet) return;
         if (map) return;
-        map = L.map("kt_leaflet_map", {center: [tehranCenterLat, tehranCenterLong], zoom: 13,});
+        map = L.map("kt_leaflet_map", {center: [tehranCenterLat, tehranCenterLong], zoom: 15,
+            minZoom: 14,
+            maxZoom: 16});
+
         prepareMap(map);
+    }, []);
+
+
+    useEffect(() => {
+        if (!map) return;
+        console.log("s");
+        map.locate().on("locationfound", function (e) {
+            console.log("e",e);
+            map.flyTo([e.latitude, e.longitude], 14)
+        }).on("locationerror", function (e) {
+            error.showError({message: "خطا در دسترسی به موقعیت مکانی",});
+        });
     }, []);
 
 
@@ -59,7 +74,6 @@ const PlacesMap = () => {
             attribution:
                 '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(map);
-
         setLeaflet(map);
         markerLayer = L.layerGroup().addTo(map)
         map.on('moveend', getPlacesInrange);
