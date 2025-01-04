@@ -19,6 +19,13 @@
   background: $colors-primary;
   color: $colors-text-on-dark;
 }
+.box{
+  img{
+    padding: 10px;
+    border-radius: 16px;
+    background: #FFFFFF;
+  }
+}
 .box2{
   margin-top: 100px;
   margin-bottom: 80px;
@@ -26,7 +33,7 @@
     margin-top: 180px;
   }
   img{
-    border-radius: 50%;
+    border-radius: 16px;
   }
 }
 .video{

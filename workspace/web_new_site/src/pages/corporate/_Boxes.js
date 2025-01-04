@@ -8,7 +8,7 @@ const _Boxes = () => {
             <Grid item size={{md: 3, xs: 9}}>
                 <Card sx={{m: "2vw", bgcolor: "#f5ede0", borderRadius: 4}} elevation={10}>
                     <Grid sx={{p: 3}} direction={"column"}>
-                        <img width={"30%"} alt={alt} src={image}/>
+                        <img width={"40%"} alt={alt} src={image}/>
                         <Typography variant={"subtitle1"} sx={{fontWeight: 600, mt: 1}}>{title}</Typography>
                         <Typography variant={"subtitle2"} sx={{fontWeight: 400, mt: 0, mb: 1, minHeight: 105}}>{text}</Typography>
                     </Grid>
@@ -21,7 +21,7 @@ const _Boxes = () => {
     return (
         <section>
             <Container>
-                <Grid container columns={9} alignContent={"center"} textAlign={"center"}>
+                <Grid className={"box"} container columns={9} alignContent={"center"} textAlign={"center"}>
                     <SingleBox
                         text={"به مناسبت‌های خود رنگ و بوی سلامتی ببخشید! با هدیه‌ی ورزش یرای مناسبت‌ها، سلامتی را یه همکاران خود هدیه کنید."}
                         title={"ورزش برای مناسبت‌ها"} image={"/assets/images/growth1.svg"} alt={"تخفیفات متنوع و متغیر روزانه"}/>

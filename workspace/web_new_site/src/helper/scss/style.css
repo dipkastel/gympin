@@ -215,6 +215,11 @@ header .header-call {
   transition: 0.3s all ease;
   color: #6b6b6b;
 }
+@media only screen and (max-width: 720px) {
+  .excitingBlock .text {
+    margin: 16px !important;
+  }
+}
 .excitingBlock .text:hover {
   margin: 20px;
   padding: 40px;
@@ -266,9 +271,9 @@ header .header-call {
   background-color: #fef8f9;
   border-radius: 24px;
   margin-top: 20px;
-  width: 65px;
-  height: 65px;
-  padding: 20px;
+  width: 115px;
+  height: 115px;
+  padding: 15px;
   object-fit: contain;
 }
 .goals .text {
@@ -535,6 +540,12 @@ header .header-call {
   color: #FFFFFF;
 }
 
+.box img {
+  padding: 10px;
+  border-radius: 16px;
+  background: #FFFFFF;
+}
+
 .box2 {
   margin-top: 100px;
   margin-bottom: 80px;
@@ -545,7 +556,7 @@ header .header-call {
   }
 }
 .box2 img {
-  border-radius: 50%;
+  border-radius: 16px;
 }
 
 .video {

@@ -8,9 +8,9 @@ const _Boxes2 = () => {
             <Grid  item size={{md: 3, xs: 9}}>
                 <Card sx={{m:"2vw", bgcolor: "#f5ede0", borderRadius: 4}} elevation={10}>
                     <Grid sx={{p: 3}} direction={"column"}>
-                        <img  width={"30%"} alt={alt} src={image}/>
-                        <Typography variant={"subtitle1"} sx={{fontWeight: 600, mt: 1}}>{title}</Typography>
-                        <Typography variant={"subtitle2"} sx={{fontWeight: 400, mt: 0, mb: 1, minHeight: 105}}>{text}</Typography>
+                        <img  width={"60%"} alt={alt} src={image}/>
+                        <Typography variant={"h5"} sx={{fontWeight: 600, mt: 1}}>{title}</Typography>
+                        <Typography variant={"subtitle2"} sx={{fontWeight: 400, mt: 2, mb: 1, minHeight: 105}}>{text}</Typography>
                     </Grid>
                 </Card>
             </Grid>
