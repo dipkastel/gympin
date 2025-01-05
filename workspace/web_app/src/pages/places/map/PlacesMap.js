@@ -1,13 +1,15 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import ReactDOM from "react-dom";
 import {Form} from "react-bootstrap";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {Place_query} from "../../../network/api/place.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {Button, Grid, LinearProgress, Typography} from "@mui/material";
+import {Button, Grid, IconButton, LinearProgress, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {fixTextToSlug} from "../../../helper/utils";
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+import {MyLocation} from "@mui/icons-material";
 
 const PlacesMap = () => {
 
@@ -17,8 +19,10 @@ const PlacesMap = () => {
     const navigate = useNavigate()
     const [leaflet, setLeaflet] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [userLocation, setUserLocation] = useState(null);
     var markerLayer = null;
-    var map = null;
+    let map = null;
+    const mapRef = useRef(null);
 
 
     function getPlacesInrange() {
@@ -46,6 +50,7 @@ const PlacesMap = () => {
     }
 
     useEffect(() => {
+        if (mapRef.current) return;
         if (leaflet) return;
         if (map) return;
         map = L.map("kt_leaflet_map", {center: [tehranCenterLat, tehranCenterLong], zoom: 15,
@@ -53,17 +58,18 @@ const PlacesMap = () => {
             maxZoom: 16});
 
         prepareMap(map);
+        mapRef.current = map;
     }, []);
 
 
     useEffect(() => {
         if (!map) return;
-        // map.locate().on("locationfound", function (e) {
-        //     console.log("e",e);
-        //     map.flyTo([e.latitude, e.longitude], 14)
-        // }).on("locationerror", function (e) {
-        //     error.showError({message: "خطا در دسترسی به موقعیت مکانی",});
-        // });
+        map.locate().on("locationfound", function (e) {
+            setUserLocation(e)
+        }).on("locationerror", function (e) {
+            setUserLocation(null)
+            error.showError({message: "خطا در دسترسی به موقعیت مکانی",});
+        });
     }, []);
 
 
@@ -141,13 +147,18 @@ const PlacesMap = () => {
         }
     }
 
+    const goToUserLocation = () => {
+        console.log(userLocation)
+        mapRef.current.flyTo([userLocation.latitude, userLocation.longitude], 14)
+    }
 
     return (
         <div>
             {isLoading && <LinearProgress/>}
             <Form.Group controlId="MyMap">
-                <div id="kt_leaflet_map" className={"map"}/>
+                <div  id="kt_leaflet_map" className={"map"}/>
             </Form.Group>
+            {userLocation&&<IconButton  sx={{position:"absolute",bottom:90,right:12,bgcolor:"#e7333e !important",zIndex:499}} size={"large"} onClick={()=>goToUserLocation()}><MyLocation sx={{color:"#FFFFFF"}} /> </IconButton>}
         </div>
     );
 };
