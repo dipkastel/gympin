@@ -28,7 +28,7 @@ const Place = ({hallListChange,introCanGoNext}) => {
     }, [place]);
 
     function getPlace(){
-        place_getById(introMode?inplace.Id:searchParams.get("id")).then(result=>{
+        place_getById(introMode?inplace?.Id:searchParams?.get("id")).then(result=>{
             setPlace(result.data.Data)
         }).catch(e => {
             try {

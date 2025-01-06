@@ -24,17 +24,19 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class PlaceContractDto extends BaseDtoWithCreateUpdate<PlaceContractDto> {
 
-    @JsonProperty("OwnerName")
+    @JsonProperty("ownerName")
     public String ownerName;
-    @JsonProperty("OwnerPhoneNumber")
+    @JsonProperty("ownerPhoneNumber")
     public String ownerPhoneNumber;
-    @JsonProperty("OwnersNationalCode")
+    @JsonProperty("ownersNationalCode")
     public String ownersNationalCode;
-    @JsonProperty("OwnerPosition")
+    @JsonProperty("ownerPosition")
     public String ownerPosition;
-    @JsonProperty("RegistrationNumber")
+    @JsonProperty("registrationNumber")
     public String registrationNumber;
-    @JsonProperty("NationalId")
+    @JsonProperty("nationalId")
     public String nationalId;
+    @JsonProperty("occupationLicence")
+    public String occupationLicence;
 
 }
