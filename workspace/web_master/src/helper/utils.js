@@ -49,12 +49,14 @@ export function fixPersianNumbers(number) {
 }
 
 export function getFixPlaceName(place,char,startWith) {
-    var result = place.Name;
-    if(place.Name.length>char)
-        result = place.Name.substring(0,char)+"...";
+    var result = place?.Name;
+    try{
+        if(place?.Name?.length>char)
+            result = place?.Name?.substring(0,char)+"...";
         if(startWith)
             result = startWith+result;
-    return result;
+        return result;
+    }catch (e){}
 }
 export function fixTextToSlug(text) {
     text = "اطلاعات کامل مجموعه ورزشی "+text + " به همراه آدرس قیمت شماره تماس امکانات"
