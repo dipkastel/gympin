@@ -232,8 +232,28 @@
   margin: 16px;
   border-radius: 25px !important;
   position: relative;
-  height: 200px;
-  width: 350px;
+
+  @media only screen and (max-width: $break-points-desktopHD) {
+    height: 200px;
+    width: 350px;
+  }
+  @media only screen and (max-width: $break-points-desktop) {
+    height: 160px;
+    width: 280px;
+  }
+  @media only screen and (max-width: $break-points-desktopS) {
+    height: 150px;
+    width: 260px;
+  }
+  @media only screen and (max-width: $break-points-tablet) {
+    height: 120px;
+    width: 220px;
+  }
+  @media only screen and (max-width: $break-points-mobile) {
+    height: 96px;
+    width: 170px;
+  }
+
 
   .title {
     margin-top: 20px;
@@ -241,6 +261,28 @@
     color: #FFFFFF;
     text-align: right;
     transition: 0.3s all ease !important;
+
+    @media only screen and (max-width: $break-points-desktopHD) {
+      margin-top: 18px;
+      font-size: 1.2rem;
+    }
+    @media only screen and (max-width: $break-points-desktop) {
+      margin-top: 20px;
+      font-size: 1rem;
+    }
+    @media only screen and (max-width: $break-points-desktopS) {
+      margin-top: 24px;
+      font-size: 0.9rem;
+    }
+    @media only screen and (max-width: $break-points-tablet) {
+      margin-top: 26px;
+      font-size: 0.8rem;
+    }
+    @media only screen and (max-width: $break-points-mobile) {
+      margin-top: 30px;
+      font-size: 0.7rem;
+    }
+
   }
 
   .bgImage {
@@ -283,13 +325,49 @@
     .shape {
       width: 20px;
       margin-top: 60px;
+
+      @media only screen and (max-width: $break-points-desktopHD) {
+        margin-top: 60px;
+      }
+      @media only screen and (max-width: $break-points-desktop) {
+        margin-top: 35px;
+      }
+      @media only screen and (max-width: $break-points-desktopS) {
+        margin-top: 25px;
+      }
+      @media only screen and (max-width: $break-points-tablet) {
+        margin-top: 20px;
+      }
+      @media only screen and (max-width: $break-points-mobile) {
+        margin-top: 10px;
+      }
     }
 
     .title {
-      margin-top: 80px;
-      font-size: 1rem;
       color: #FFFFFF;
       text-align: right;
+
+      @media only screen and (max-width: $break-points-desktopHD) {
+        margin-top: 80px;
+        font-size: 1rem;
+      }
+      @media only screen and (max-width: $break-points-desktop) {
+        margin-top: 60px;
+        font-size: 0.9rem;
+      }
+      @media only screen and (max-width: $break-points-desktopS) {
+        margin-top: 50px;
+        font-size: 0.8rem;
+      }
+      @media only screen and (max-width: $break-points-tablet) {
+        margin-top: 40px;
+        font-size: 0.7rem;
+      }
+      @media only screen and (max-width: $break-points-mobile) {
+        margin-top: 30px;
+        font-size: 0.7rem;
+      }
+
     }
 
     .description {
@@ -297,6 +375,28 @@
       font-size: 0.8rem;
       color: #FFFFFF;
       text-align: right;
+
+      @media only screen and (max-width: $break-points-desktopHD) {
+        margin-top: 3px;
+        font-size: 0.8rem;
+      }
+      @media only screen and (max-width: $break-points-desktop) {
+        margin-top: 3px;
+        font-size: 0.6rem;
+      }
+      @media only screen and (max-width: $break-points-desktopS) {
+        margin-top: 3px;
+        font-size: 0.5rem;
+      }
+      @media only screen and (max-width: $break-points-tablet) {
+        margin-top: 3px;
+        font-size: 0.4rem;
+      }
+      @media only screen and (max-width: $break-points-mobile) {
+        margin-top: 3px;
+        font-size: 0.4rem;
+      }
+
     }
   }
 }

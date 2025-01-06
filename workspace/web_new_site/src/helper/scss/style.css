@@ -391,8 +391,36 @@ header .header-call {
   margin: 16px;
   border-radius: 25px !important;
   position: relative;
-  height: 200px;
-  width: 350px;
+}
+@media only screen and (max-width: 1920px) {
+  .sportCard {
+    height: 200px;
+    width: 350px;
+  }
+}
+@media only screen and (max-width: 1240px) {
+  .sportCard {
+    height: 160px;
+    width: 280px;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .sportCard {
+    height: 150px;
+    width: 260px;
+  }
+}
+@media only screen and (max-width: 720px) {
+  .sportCard {
+    height: 120px;
+    width: 220px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .sportCard {
+    height: 96px;
+    width: 170px;
+  }
 }
 .sportCard .title {
   margin-top: 20px;
@@ -400,6 +428,36 @@ header .header-call {
   color: #FFFFFF;
   text-align: right;
   transition: 0.3s all ease !important;
+}
+@media only screen and (max-width: 1920px) {
+  .sportCard .title {
+    margin-top: 18px;
+    font-size: 1.2rem;
+  }
+}
+@media only screen and (max-width: 1240px) {
+  .sportCard .title {
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .sportCard .title {
+    margin-top: 24px;
+    font-size: 0.9rem;
+  }
+}
+@media only screen and (max-width: 720px) {
+  .sportCard .title {
+    margin-top: 26px;
+    font-size: 0.8rem;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .sportCard .title {
+    margin-top: 30px;
+    font-size: 0.7rem;
+  }
 }
 .sportCard .bgImage {
   position: absolute;
@@ -433,17 +491,100 @@ header .header-call {
   width: 20px;
   margin-top: 60px;
 }
+@media only screen and (max-width: 1920px) {
+  .sportCard:hover .shape {
+    margin-top: 60px;
+  }
+}
+@media only screen and (max-width: 1240px) {
+  .sportCard:hover .shape {
+    margin-top: 35px;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .sportCard:hover .shape {
+    margin-top: 25px;
+  }
+}
+@media only screen and (max-width: 720px) {
+  .sportCard:hover .shape {
+    margin-top: 20px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .sportCard:hover .shape {
+    margin-top: 10px;
+  }
+}
 .sportCard:hover .title {
-  margin-top: 80px;
-  font-size: 1rem;
   color: #FFFFFF;
   text-align: right;
+}
+@media only screen and (max-width: 1920px) {
+  .sportCard:hover .title {
+    margin-top: 80px;
+    font-size: 1rem;
+  }
+}
+@media only screen and (max-width: 1240px) {
+  .sportCard:hover .title {
+    margin-top: 60px;
+    font-size: 0.9rem;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .sportCard:hover .title {
+    margin-top: 50px;
+    font-size: 0.8rem;
+  }
+}
+@media only screen and (max-width: 720px) {
+  .sportCard:hover .title {
+    margin-top: 40px;
+    font-size: 0.7rem;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .sportCard:hover .title {
+    margin-top: 30px;
+    font-size: 0.7rem;
+  }
 }
 .sportCard:hover .description {
   margin-top: 5px;
   font-size: 0.8rem;
   color: #FFFFFF;
   text-align: right;
+}
+@media only screen and (max-width: 1920px) {
+  .sportCard:hover .description {
+    margin-top: 3px;
+    font-size: 0.8rem;
+  }
+}
+@media only screen and (max-width: 1240px) {
+  .sportCard:hover .description {
+    margin-top: 3px;
+    font-size: 0.6rem;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .sportCard:hover .description {
+    margin-top: 3px;
+    font-size: 0.5rem;
+  }
+}
+@media only screen and (max-width: 720px) {
+  .sportCard:hover .description {
+    margin-top: 3px;
+    font-size: 0.4rem;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .sportCard:hover .description {
+    margin-top: 3px;
+    font-size: 0.4rem;
+  }
 }
 
 .sportCardHeader {
