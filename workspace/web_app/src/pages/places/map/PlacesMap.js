@@ -20,27 +20,32 @@ const PlacesMap = () => {
     const [leaflet, setLeaflet] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [userLocation, setUserLocation] = useState(null);
-    var markerLayer = null;
+    const [Bounds, setBounds] = useState(null);
+    const [BoundsPlace, setBoundsPlace] = useState([]);
+    const [openPlace,setOpenPlace] = useState(null);
+    const [markerLayer,setMarkerLayer] = useState(null);
     let map = null;
     const mapRef = useRef(null);
 
 
-    function getPlacesInrange() {
-
+    function getPlacesInrange(bounds) {
+        if(!bounds) return;
         setIsLoading(true);
         Place_query({
             queryType: "FILTER",
             Status: "Active",
             Option: null,
-            MAXlatitude: map?.getBounds()?._northEast?.lat,
-            MINlatitude: map?.getBounds()?._southWest?.lat,
-            MAXlongitude: map?.getBounds()?._northEast?.lng,
-            MINlongitude: map?.getBounds()?._southWest?.lng,
+            MAXlatitude: bounds?._northEast?.lat,
+            MINlatitude: bounds?._southWest?.lat,
+            MAXlongitude: bounds?._northEast?.lng,
+            MINlongitude: bounds?._southWest?.lng,
             paging: {Page: 0, Size: 60}
         }).then(result => {
             setIsLoading(false);
-            addMarkers(result.data.Data.content);
+            console.log(result.data.Data.content);
+            setBoundsPlace(result.data.Data.content);
         }).catch(e => {
+            console.log(e);
             try {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
@@ -48,6 +53,16 @@ const PlacesMap = () => {
             }
         });
     }
+
+    useEffect(()=>{
+        getPlacesInrange(Bounds);
+    },[Bounds])
+
+    useEffect(()=>{
+
+        if(BoundsPlace?.length>0)
+            addMarkers(BoundsPlace);
+    },[BoundsPlace])
 
     useEffect(() => {
         if (mapRef.current) return;
@@ -82,14 +97,15 @@ const PlacesMap = () => {
                 '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(map);
         setLeaflet(map);
-        markerLayer = L.layerGroup().addTo(map)
-        map.on('moveend', getPlacesInrange);
-        getPlacesInrange();
+        setMarkerLayer( L.layerGroup().addTo(map));
+        map.on('moveend',(eve)=>setBounds(eve?.sourceTarget?.getBounds()));
+        setBounds(map?.getBounds());
     };
 
 
     function addMarkers(places) {
-        markerLayer.clearLayers();
+        console.log(markerLayer)
+        // markerLayer?.clearLayers();
         places.forEach(place => {
             if (place.Latitude != null && place.Longitude != null)
                 addMarker(place);
@@ -113,6 +129,7 @@ const PlacesMap = () => {
     }
 
     function addMarker(place) {
+        if(!place) return;
         // set custom SVG icon marker
         var leafletIcon = L.divIcon({
             html: getIconHtml(),
@@ -121,15 +138,28 @@ const PlacesMap = () => {
             popupAnchor: [-19, -35],
             className: "leaflet-marker",
         });
-
+        console.log("markerLayer",markerLayer);
+        for(let layer in markerLayer?.getLayers()){
+            if(markerLayer?.getLayers()[layer].id==place?.Id) return;
+        }
         let marker = L.marker([place.Latitude, place.Longitude], {icon: leafletIcon, title: place.Name});
-
+        marker.id = place.Id;
         marker.bindPopup(getPopup(place));
         marker.on('click', function (e) {
-
-            marker.openPopup();
+            setOpenPlace(place)
+           var a =  marker.openPopup();
+            console.log("aaa",a);
             // navigate("/place/" + place.Id + "-" + fixTextToSlug(place.Name), {replace: false});
         });
+
+        marker.on('popupclose',setOpenPlace(null))
+        if(place.Id===openPlace?.Id){
+            setTimeout(()=>{
+                console.log("openPlace",openPlace);
+                marker?.openPopup();
+            },200)
+        }
+
         if (markerLayer) {
             marker.addTo(markerLayer);
         }
@@ -148,7 +178,6 @@ const PlacesMap = () => {
     }
 
     const goToUserLocation = () => {
-        console.log(userLocation)
         mapRef.current.flyTo([userLocation.latitude, userLocation.longitude], 14)
     }
 

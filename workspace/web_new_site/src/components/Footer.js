@@ -47,11 +47,14 @@ const Footer = () => {
                         </Grid>
                         <Grid sx={{px: 1, py: 4}} size={{xs: 2, md: 1, xl: 1}} textAlign={"center"}>
                             <a referrerPolicy='origin' target='_blank'
-                               href='https://trustseal.enamad.ir/?id=530057&Code=fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'><img
-                                className={"enamad"}
-                                referrerPolicy='origin'
-                                src='https://trustseal.enamad.ir/logo.aspx?id=530057&Code=fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'
-                                alt='نشان اینماد وبسایت جیم پین' code='fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'/></a>
+                               href='https://trustseal.enamad.ir/?id=530057&Code=fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'>
+                                <img
+                                    className={"enamad"}
+                                    referrerPolicy='origin'
+                                    loading={"lazy"}
+                                    src='https://trustseal.enamad.ir/logo.aspx?id=530057&Code=fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'
+                                    alt='نشان اینماد وبسایت جیم پین' code='fPUbicgi3RqAfY4GyUD0UQYpJYadZKYf'/>
+                            </a>
                         </Grid>
                     </Grid>
                 </Grid>
