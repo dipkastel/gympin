@@ -30,13 +30,6 @@ export const MainRoutes = () => {
         }
     }, []);
 
-    useEffect(() => {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push('js', new Date());
-        window.dataLayer.push('config', 'G-KP10SXZPY7');
-        console.log(window.dataLayer);
-    }, []);
-
     return (
         <>
             <Collapse sx={{m:0,p:0}} in={pageStatus!=="Loaded"}><_Loading /></Collapse>
