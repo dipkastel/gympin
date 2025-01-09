@@ -123,7 +123,6 @@ const _WalletAmount = () => {
                         sx={{display: "inline", m: 1}}
                         variant={"subtitle"}
                         color={"white"}
-
                     >
                         {"اعتبار : " + toPriceWithComma(userCredit.TotalCredit) + " تومان"}
                     </Typography>}

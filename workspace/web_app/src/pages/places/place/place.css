@@ -15,6 +15,11 @@
     height: Calc(100VH - 110px);
     width: 100vw;
 }
+.mapDetail{
+    height: 320px;
+    width: 100%;
+    color: #dddddd;
+}
 .mb--8{
     margin-bottom: -8px;
 }

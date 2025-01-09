@@ -2,7 +2,7 @@ import React from 'react';
 import {Divider, Grid, ListItemText, Typography} from "@mui/material";
 import {toPriceWithComma} from "../../../helper/utils";
 
-const _LiCreditNonW = (credit) => {
+const _LiCreditNonW = ({credit}) => {
     return (
         <>
             <Grid container sx={{mb: 1}} direction={"column"} alignItems={"center"}
@@ -10,32 +10,19 @@ const _LiCreditNonW = (credit) => {
                 <Grid container sx={{mb: 1}} direction={"row"} alignItems={"center"}
                       justifyContent={"space-between"}>
                     <ListItemText
-                        primary={"asdasdasd"}
+                        primary={"اعتبار خرید"}
                         secondary={<Typography
-                            component="p"
-                            variant="body2"
-                            color={"green"}
+                            variant="subtitle2"
                         >
-                            {" قابل پرداخت : " + toPriceWithComma(credit.CreditPayableAmount)}
-
+                            {"نوع اعتبار : فقط خرید"}
                         </Typography>}
                     />
 
                     <ListItemText
                         primary={<Typography
-                            component="p"
-                            variant={"caption"}
-                            color="text.primary"
+                            variant="subtitle2"
                         >
                             {toPriceWithComma(credit.CreditAmount) + " تومان"}
-                        </Typography>}
-                        secondary={<Typography
-                            component="p"
-                            variant="body2"
-                            color={"green"}
-                        >
-                            {" قابل پرداخت : " + toPriceWithComma(credit.CreditPayableAmount)}
-
                         </Typography>}
                     />
 

@@ -52,7 +52,7 @@ const Header = () => {
                     </a>
                     <ul>
                         <li><a href={"/#intro"}>ثبت نام</a></li>
-                        <li><a href={"/corporate"}>ثبت سازمان‌ها و شرکت‌ها</a></li>
+                        <li><a href={"/corporate"}>سازمان‌ها و شرکت‌ها</a></li>
                         {/*<li><a href={"/places"}>ثبت مجموعه ورزشی</a></li>*/}
                         <li><a href={"/about"}> آشنایی با جیم پین </a></li>
                         <li><a href={"/blog"}>مطالب و مقالات</a></li>

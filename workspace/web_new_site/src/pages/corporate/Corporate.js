@@ -19,7 +19,7 @@ const Corporate = () => {
                 <Container>
                     <Grid  sx={{p:2}} textAlign={"center"}>
                         <Typography >ما در جیم پین دو مانع بزرگ کارمندان در مسیر ورزش کردن را از سر راه برداشته ایم</Typography>
-                        <Typography > مشکل فاصله ی مراکز ورزشی از محل زندگی کارمند و مشکل کم تنوعی ورزش‌ها</Typography>
+                        <Typography > مشکل فاصله‌ی مراکز ورزشی از محل زندگی کارمند و مشکل کم تنوعی ورزش‌ها</Typography>
                         <Typography > ما در حال حاضر با تعداد زیادی مجوعه ورزشی مشغول به همکاری هستیم که این تعداد روزانه در حال افزایش است</Typography>
                     </Grid>
                 </Container>

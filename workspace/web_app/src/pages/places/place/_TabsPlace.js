@@ -37,7 +37,7 @@ const _TabsPlace = ({place}) => {
                 slideClassName={"rtl"}
                 index={selectedTab}
                 onChangeIndex={(e) => setSelectedTab(e)}>
-                <_TabPlaceBuyable place={place}/>
+                <_TabPlaceBuyable place={place} setSelectedTab={setSelectedTab}/>
                 <_TabPlaceAbout place={place}/>
                 {/*<_TabPlaceComments place={place}/>*/}
             </SwipeableViews>

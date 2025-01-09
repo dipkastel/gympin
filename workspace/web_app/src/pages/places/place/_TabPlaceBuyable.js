@@ -7,11 +7,10 @@ import {ticketBuyable_query} from "../../../network/api/buyable.api";
 import _placeSubscribes from "./ticketSubscribe/_placeSubscribes";
 import _placeCourses from "./ticketCourse/_placeCourses";
 
-const _TabPlaceBuyable = ({place}) => {
+const _TabPlaceBuyable = ({place,setSelectedTab}) => {
     const navigate = useNavigate()
     const error = useContext(ErrorContext);
     const currentUser = useSelector(state => state.auth.user)
-    const [buyables, setBuyables] = useState([]);
     useEffect(() => {
         if (!place.Id) return;
         getPlans();
@@ -22,9 +21,11 @@ const _TabPlaceBuyable = ({place}) => {
         ticketBuyable_query({
             queryType: "FILTER",
             Place: place.Id,
-            paging: {Page: 0, Size: 50}
+            paging: {Page: 0, Size: 1}
         }).then(result => {
-            setBuyables(result.data.Data);
+            if(result.data.Data.numberOfElements===0)
+                setSelectedTab(1)
+            // if(result.data.Data)return;
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -109,8 +110,8 @@ const _TabPlaceBuyable = ({place}) => {
 
 
     function getfixedPlaceNumber() {
-        return "02177162192"
-        // return place?.Tell;
+        // return "02177162192"
+        return place?.Tell;
     }
 
     function showCallSudjest() {
