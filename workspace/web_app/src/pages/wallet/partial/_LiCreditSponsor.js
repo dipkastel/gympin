@@ -44,6 +44,7 @@ const _LiCreditSponsor = ({credit}) => {
                     <ListItemText
                         primary={toPriceWithComma(credit.CreditAmount) + " تومان"}
                         secondary={getExpireDesc(credit)}
+                        sx={{textAlign:"left"}}
                     />
 
 
