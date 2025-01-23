@@ -4,7 +4,7 @@ import {Card, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 import HomeTitle from "./HomeTitle";
 import clickHandler from "../homeClick";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 const HomeDiscountList = (props) => {
     const navigate = useNavigate()

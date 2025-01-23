@@ -17,7 +17,11 @@ let arabicNumbers  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /�
         return str;
     };
 export function checkMobileValid(mobileNumber) {
-    return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
+    try {
+        return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
+    }catch (e) {
+        return false;
+    }
 }
 
 export function toPriceWithComma(price){
@@ -37,6 +41,7 @@ export function toPriceWithoutComma(price){
 }
 
 export function fixMobile(mobileNumber) {
+    mobileNumber = fixFarsiNumbers(mobileNumber);
     switch (mobileNumber.toString()[0]) {
         case "0" : return  mobileNumber.toString()
         case "+": return mobileNumber.replace("+98","0")

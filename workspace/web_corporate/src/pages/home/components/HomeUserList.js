@@ -3,7 +3,7 @@ import Slick from "react-slick";
 import {Card, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 import clickHandler from "../homeClick";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 const HomeUserList = (props) => {
     const navigate = useNavigate()

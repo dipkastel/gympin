@@ -6,18 +6,13 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepConnector, {stepConnectorClasses} from '@mui/material/StepConnector';
-import {Grid} from "@mui/material";
-import {useSelector} from "react-redux";
+import {Grid2 as Grid, useColorScheme} from "@mui/material";
 import WPageIntro from "../pages/WPageIntro";
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-import LiveHelpIcon from '@mui/icons-material/LiveHelp';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
-import WPageFaq from "../pages/WPageFaq";
-import WPageSections from "../pages/WPageSections";
 import WPageCorporateDetails from "../pages/WPageCorporateDetails";
 import WPageProfile from "../pages/WPageProfile";
 import WPageContractData from "../pages/WPageContractData";
@@ -28,6 +23,8 @@ import WPageFinish from "../pages/WPageFinish";
 const WizardBody = () => {
     const [level, setLevel] = useState(getWizardLevel());
     const [steps, setSteps] = useState(null);
+
+    const {mode} = useColorScheme();
 
     useEffect(() => {
         var id = 1;
@@ -41,6 +38,10 @@ const WizardBody = () => {
         stepsList.push({id: id++, title: 'تکمیل', icon: <VerifiedIcon/>, page: <WPageFinish onNext={onNext}/>})
         setSteps(stepsList)
     }, [level]);
+
+    if (!mode) {
+        return null;
+    }
 
 
     function onNext(pageNumber) {
@@ -58,8 +59,8 @@ const WizardBody = () => {
     const ColorlibConnector = styled(StepConnector)(({theme}) => ({
         [`&.${stepConnectorClasses.alternativeLabel}`]: {
             top: 22,
-            right: "calc(-50% + 20px)",
-            left: "calc(50% + 20px)",
+            right: "calc(50% + 20px)",
+            left: "calc(-50% + 20px)",
         },
         [`&.${stepConnectorClasses.active}`]: {
             [`& .${stepConnectorClasses.line}`]: {
@@ -117,12 +118,12 @@ const WizardBody = () => {
         <>
             {steps &&
             <>
-                <Grid container sx={{width: "100%", height: "auto", overflowY: "none", overflowX: "scroll", pt: 1, pb: 1}}>
-                    <Stack sx={{direction: "rtl", height: "auto"}}>
-                        <Stepper alternativeLabel activeStep={level - 1} connector={<ColorlibConnector/>}>
+                <Grid container sx={{width: "100%", height: "auto", overflowY: "none", pt: 1, pb: 1}}>
+                    <Stack sx={{ height: "auto"}}>
+                        <Stepper alternativeLabel  dir={"rtl"} activeStep={level -1} connector={<ColorlibConnector/>}>
                             {steps.map((step) => (
-                                <Step key={"step" + step.id}>
-                                    <StepLabel StepIconComponent={ColorlibStepIcon}
+                                <Step  key={"step" + step.id}>
+                                    <StepLabel sx={{direction:"ltr"}} StepIconComponent={ColorlibStepIcon}
                                                onClick={(e) => goToStep(step)}
                                     >{step.title}</StepLabel>
                                 </Step>
@@ -132,8 +133,8 @@ const WizardBody = () => {
                 </Grid>
                 <Grid sx={{
                     width: "100%",
-                    height: "7px",
-                    background: "linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(245,245,245,1) 82%, rgba(221,221,221,1) 97%);"
+                    height: (mode==='dark')?"1px":"7px",
+                    background: (mode==='dark')?"#e7333e":"linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(245,245,245,1) 82%, rgba(221,221,221,1) 97%);"
                 }}/>
                 {steps.filter(p => p.id == level)[0]?.page}
             </>

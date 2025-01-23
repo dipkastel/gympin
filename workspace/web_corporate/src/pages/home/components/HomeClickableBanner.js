@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Link} from "@mui/material";
 import {Image} from "react-bootstrap";
 import clickHandler from "../homeClick";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 const HomeClickableBanner =(props) => {
     const navigate = useNavigate()

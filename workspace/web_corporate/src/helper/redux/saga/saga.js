@@ -57,5 +57,6 @@ export function* saga() {
         try{store.dispatch(settingActions.SetAppSettings(undefined));}catch (e) {}
         try{store.dispatch(corporateActions.SetCorporate(undefined));}catch (e) {}
         try{store.dispatch(authActions.Logout());}catch (e) {}
+
     });
 }

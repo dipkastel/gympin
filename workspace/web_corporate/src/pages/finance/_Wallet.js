@@ -27,25 +27,25 @@ const _Wallet = () => {
         }
     }
 
-
-    function ModalDemandPayment() {
-        return (
-            <div>
-                <Dialog  open={openModalAdd} onClose={() => closeModal()}>
-                    <DialogTitle>افزایش شارژ</DialogTitle>
-                    <DialogContent>
-                        <Backdrop
-                            sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-                            open={loading}
-                        >
-                            <CircularProgress color="inherit"/>
-                        </Backdrop>
-                        <__AddChargePartial corporate={corporate} setLoading={setLoading} setOpenModalAdd={setOpenModalAdd}/>
-                    </DialogContent>
-                </Dialog>
-            </div>
-        )
-    }
+    //
+    // function ModalDemandPayment() {
+    //     return (
+    //         <div>
+    //             <Dialog  open={openModalAdd} onClose={() => closeModal()}>
+    //                 <DialogTitle>افزایش شارژ</DialogTitle>
+    //                 <DialogContent>
+    //                     <Backdrop
+    //                         sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+    //                         open={loading}
+    //                     >
+    //                         <CircularProgress color="inherit"/>
+    //                     </Backdrop>
+    //                     <__AddChargePartial corporate={corporate} setLoading={setLoading} setOpenModalAdd={setOpenModalAdd}/>
+    //                 </DialogContent>
+    //             </Dialog>
+    //         </div>
+    //     )
+    // }
 
     return (
         <div  className={"col-md-6"}>
@@ -72,7 +72,7 @@ const _Wallet = () => {
                     </Typography>
                 </CardContent>
             </Card>
-            {ModalDemandPayment()}
+            {/*{ModalDemandPayment()}*/}
         </div>
     );
 };

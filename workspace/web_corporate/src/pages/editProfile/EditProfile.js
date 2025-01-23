@@ -6,19 +6,15 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    FormControl, FormHelperText,
-    Grid,
+    FormControl,
+    Grid2 as Grid,
     Input, InputLabel, MenuItem, OutlinedInput, Select,
     TextField
 } from "@mui/material";
 import {connect, useSelector} from "react-redux";
 import {media_AddImage, media_getCatById} from "../../network/api/multimedia.api";
 import {Formik} from "formik";
-import AdapterJalaali from '@date-io/jalaali';
-import {DatePicker} from '@mui/x-date-pickers/DatePicker';
-import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {user_updateAvatar, user_updateMe} from "../../network/api/user.api";
-import {format} from "date-fns";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {CircleStencil, FixedCropper} from 'react-advanced-cropper'
@@ -317,28 +313,28 @@ const EditProfile = (props) => {
                                             <MenuItem value={"MALE"}>آقا</MenuItem>
                                         </Select>
                                     </FormControl>
-                                    <LocalizationProvider
-                                        dateAdapter={AdapterJalaali} adapterLocale={"fa-IR"}>
-                                        <DatePicker
-                                            variant="outlined"
-                                            onChange={(e, w) => {
-                                                setFieldValue('Birthday', format(Date.parse(e), "yyyy-MM-dd"))
-                                            }}
-                                            toolbarFormat={"jYYYY/jMM/jDD"}
-                                            inputFormat={"jYYYY/jMM/jDD"}
-                                            value={values.Birthday || ""}
-                                            renderInput={(params) =>
-                                                <TextField
-                                                    {...params}
-                                                    fullWidth
-                                                    className="w-100 ltr"
-                                                    variant="outlined"
-                                                    margin="normal"
-                                                    label={"تاریخ تولد*"}
-                                                />
-                                            }
-                                        />
-                                    </LocalizationProvider>
+                                    {/*<LocalizationProvider*/}
+                                    {/*    dateAdapter={AdapterDateFnsJalali} adapterLocale={"fa-IR"}>*/}
+                                    {/*    <DatePicker*/}
+                                    {/*        variant="outlined"*/}
+                                    {/*        onChange={(e, w) => {*/}
+                                    {/*            setFieldValue('Birthday', format(Date.parse(e), "yyyy-MM-dd"))*/}
+                                    {/*        }}*/}
+                                    {/*        toolbarFormat={"jYYYY/jMM/jDD"}*/}
+                                    {/*        inputFormat={"jYYYY/jMM/jDD"}*/}
+                                    {/*        value={values.Birthday || ""}*/}
+                                    {/*        renderInput={(params) =>*/}
+                                    {/*            <TextField*/}
+                                    {/*                {...params}*/}
+                                    {/*                fullWidth*/}
+                                    {/*                className="w-100 ltr"*/}
+                                    {/*                variant="outlined"*/}
+                                    {/*                margin="normal"*/}
+                                    {/*                label={"تاریخ تولد*"}*/}
+                                    {/*            />*/}
+                                    {/*        }*/}
+                                    {/*    />*/}
+                                    {/*</LocalizationProvider>*/}
 
                                     <TextField
                                         fullWidth

@@ -18,22 +18,21 @@ const _WizardContract = ({contract, currentUser}) => {
                 <CardHeader
                     sx={{backgroundColor: "#e7333e", color: "#ffffff"}}
                     title={"قرارداد"}/>
-                <CardContent>
-                    <Grid sx={{maxHeight: "50VH", overflowY: "scroll"}} variant={"body2"}>
+                    <Grid sx={{maxHeight: "46VH", overflowY: "scroll",p:2}} variant={"body2"}>
 
                         <Typography variant={"body2"} textAlign={"center"}>بسم تعالی</Typography>
                         <Typography variant={"h6"} textAlign={"center"}>{"قرارداد همکاری سازمانی"}</Typography>
                         <br/>
-                        <Typography variant={"body1"} textAlign={"right"}>{"مقدمه"}</Typography>
+                        <Typography variant={"body1"} textAlign={"start"}>{"مقدمه"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"این قرارداد به منظور ایجاد رابطه همکاری جهت ارائه خدمات ورزشی و تسهیل در امر استفاده کارکنان سازمانها از مراکز ورزشی از طریق بستر پلتفرم جیمپین، بین طرفین قرارداد به شرح ذیل منعقد شده و با استناد به ماده 10 قانون مدنی لازم الاجرا می باشد: "}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده1 -  طرفین قرارداد"}</Typography>
-                        <Typography variant={"body1"} textAlign={"right"}>{"طرف اول"}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده1 -  طرفین قرارداد"}</Typography>
+                        <Typography variant={"body1"} textAlign={"start"}>{"طرف اول"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"شرکت پیشگامان فناوری داده نوتریکا با مسئولیت محدود به شناسه ملی 14007662864 و شماره ثبت527530  به آدرس تهران خیابان دماوند بعد از چهارراه آیت پلاک 416 و پست الکترونیکی info@gympin.ir با نمایندگی آقای علی اشرفی  به سمت مدیر عامل که از این پس در این قرارداد طرف اول نامیده می شود."}</Typography>
                        <br/>
-                        <Typography variant={"body1"} textAlign={"right"}>{"طرف دوم"}</Typography>
+                        <Typography variant={"body1"} textAlign={"start"}>{"طرف دوم"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"شرکت یا سازمان  "+corporate.Name+"  به شماره ثبت  "+contract.registrationNumber+"  شناسه ملی "+contract.nationalId}</Typography>
                         <Typography variant={"body2"}
@@ -42,15 +41,15 @@ const _WizardContract = ({contract, currentUser}) => {
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"تبصره1: آدرس اعلامی بر اساس ماده 1010 از قانون مدنی، اقامتگاه قراردادی طرفین محسوب شده و تمام مکاتبات مرتبط این قرارداد بر اساس همین آدرس صورت خواهد گرفت، مگر اینکه تغییر آدرس از قبل و به صورت کتبی به طرف دیگر اعلام گردد. "}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده2 -  تعاریف قراردادی"}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده2 -  تعاریف قراردادی"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"در این قرارداد، عبارات زیر به معنایی که بیان شده اند در نظر گرفته می‌شوند:"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"جیم پین: پلتفرم (سکوی) ارائه‌دهنده‌ی رزرو و پرداخت آنلاین (بر خط) بلیت خدمات ورزشی و تفریحی است. که شامل موارد زیر می باشد :"}</Typography>
                         <br/>
-                        <Typography variant={"body2"} textAlign={"right"}>{"وب اپلیکیشن سازمان ها"}</Typography>
-                        <Typography variant={"body2"} textAlign={"right"}>{"وب اپلیکیشن کاربران"}</Typography>
-                        <Typography variant={"body2"} textAlign={"right"}>{"وب اپلیکیشن مراکز"}</Typography>
+                        <Typography variant={"body2"} textAlign={"start"}>{"وب اپلیکیشن سازمان ها"}</Typography>
+                        <Typography variant={"body2"} textAlign={"start"}>{"وب اپلیکیشن کاربران"}</Typography>
+                        <Typography variant={"body2"} textAlign={"start"}>{"وب اپلیکیشن مراکز"}</Typography>
                         <br/>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"مراکز ورزشی: عبارت است از اشخاص حقیقی یا حقوقی متشکل از برندهای معتبری که در قبال تفاهم نامه یا قرارداد با طرف اول ملزم به فروش یا ارائه ی خدمات به اعضای طرف قرارداد با طرف اول می باشند."}</Typography>
@@ -79,17 +78,17 @@ const _WizardContract = ({contract, currentUser}) => {
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"مدیر پنل: شخصی که به عنوان نماینده ی تام الاختیار از طرف دوم برای مدیریت دسترسی ها، مدیریت مبالغ، حل مشکلات احتمالی، هماهنگی، پیگیری و حضور در جلسات پس از امضای قرارداد به جیم پین معرفی می گردد."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده3 -  موضوع قرارداد"}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده3 -  موضوع قرارداد"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"تعیین شرایط و ضوابط همکاری طرفین در زمینه‌ی ارائه خدمات ورزشی و سلامت توسط طرف اول به کارکنان طرف دوم قرارداد، از طریق پرداخت غیرمستقیم توسط طرف دوم در بستر پلتفرم طرف اول (جیم پین)."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده4 -  شروع و مدت قرارداد"}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده4 -  شروع و مدت قرارداد"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"  قرارداد حاضر از تاریخ  "+dateNow+" به مدت یک سال قابل اجرا خواهد بود و در صورت عدم فسخ، قرارداد به صورت خودکار هر سال تمدید خواهد شد، لازم به ذکر است که مدیر پنل توسط طرف دوم باید حداکثر تا سه روز کاری پیش از تاریخ مذکور، به صورت کتبی به طرف اول ابلاغ و معرفی گردد. "}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"تبصره1: بدیهی است که حتی با اتمام مدت قرارداد، مسئولیت های طرفین برای آن قسمت از تعهداتی که تا زمان انحلال و یا انقضای قرارداد به عمل نیامده است، برقرار می ماند و طرفین متعهد قانونی به انجام کامل کلیه تعهدات خویش می باشند. "}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده5 -  تعهدات طرف اول (جیم پین) "}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده5 -  تعهدات طرف اول (جیم پین) "}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"5-1- طرف اول متعهد می گردد تمامی مراکز ورزشی‌ای را که با آنها رابطه همکاری دارد، در اختیار پرسنل طرف دوم برای استفاده از خدمات مراکز ورزشی، قرار دهد. "}</Typography>
                         <Typography variant={"body2"}
@@ -99,7 +98,7 @@ const _WizardContract = ({contract, currentUser}) => {
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"5-4- طرف اول متعهد می شود همواره اطلاعات مراکز ورزشی، قیمت ها و تخفیف ها را به روز رسانی کند و مراکز جدید ورزشی را معرفی کرده و در پلتفرم اضافه کند."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده6 -  تعهدات طرف دوم (سازمان)"}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده6 -  تعهدات طرف دوم (سازمان)"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"6-1-  طرف دوم موظف است اطلاعات درخواست شده برای ثبت نام کاربران خود را به جیم پین ارائه دهد و یا خود، اقدام به ثبت آنها نماید."}</Typography>
                         <Typography variant={"body2"}
@@ -111,7 +110,7 @@ const _WizardContract = ({contract, currentUser}) => {
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"تبصره2: مسئولیت صحت اطلاعات داده شده با طرف دوم بوده و طرف دوم متعهد به ارائه اطلاعات منطبق با واقعیت از پرسنل خود می گردد و طرف اول مسئولیتی در قبال دعاوی احتمالی مطرح شده در این مورد نخواهد داشت."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده7 -  سایر تعهدات طرفین"}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده7 -  سایر تعهدات طرفین"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"7-1- امضا کنندگان این قرارداد اقرار مینمایند که برای امضاء و انعقاد قرارداد حاضر و انجام تعهدات قراردادی، اختیارات و صلاحیت لازم را دارند و در صورت کشف فساد اقرار، امضا کننده شخصاً مسئول اجرای تعهدات قراردادی و خسارت ناشی از نقض قرارداد یا بی اعتباری آن خواهد بود و بند حاضر به عنوان یک تعهد مستقل، در هر حال ولو در فرض بی اعتباری قرارداد، معتبر و لازم الاجرا است."}</Typography>
                         <Typography variant={"body2"}
@@ -122,7 +121,7 @@ const _WizardContract = ({contract, currentUser}) => {
                                     textAlign={"justify"}>{"7-4- طرفین متعهد می گردند که به بیان مطالب یا انجام عملی که به ضرر شهرت طرف اول باشد یا منجر به قطع همکاری اشخاص با طرف اول شود، مبادرت نخواهد ورزید."}</Typography>
                         <br/>
                         <Typography variant={"subtitle1"}
-                                    textAlign={"right"}>{"ماده8 -  نحوه ی ارائه ی خدمات طرف اول به پرسنل طرف دوم"}</Typography>
+                                    textAlign={"start"}>{"ماده8 -  نحوه ی ارائه ی خدمات طرف اول به پرسنل طرف دوم"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{" 8-1- جهت عضویت و امکان دریافت خدمات از سامانه الکترونیکی جیمپین توسط اعضای طرف دوم، نیاز به اخذ اطلاعاتی از قبیل نام و نام خانوادگی، شماره تلفن همراه متعلق به پرسنل شرکت مربوطه، گروه بندی ها، کد پرسنلی(دلخواه)، کدملی (دلخواه)، تاریخ تولد (دلخواه)، جنسیت (دلخواه)، جهت استفاده از خدمات موضوع قرارداد می باشد."}</Typography>
                         <Typography variant={"body2"}
@@ -132,11 +131,11 @@ const _WizardContract = ({contract, currentUser}) => {
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"تبصره2:  در صورت اتمام شارژ طرف اول مسئولیتی در قبال ارائه خدمات به پرسنل طرف دوم نخواهد داشت."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده9 -  مبلغ قرارداد و نحوه پرداخت"}</Typography>
-                        <Typography variant={"body2"} textAlign={"right"}>{"9-1 روش های پرداخت : "}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده9 -  مبلغ قرارداد و نحوه پرداخت"}</Typography>
+                        <Typography variant={"body2"} textAlign={"start"}>{"9-1 روش های پرداخت : "}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"9-1-1-درگاه پرداخت بانکی برخط  متصل به شاپرک، تعبیه شده در وب اپلیکیشن مخصوص سازمان ها و شرکت ها"}</Typography>
-                        <Typography variant={"body2"} textAlign={"right"}>{"9-1-2-کارت به کارت (نیازمند شماره ارجاع)"}</Typography>
+                        <Typography variant={"body2"} textAlign={"start"}>{"9-1-2-کارت به کارت (نیازمند شماره ارجاع)"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"9-1-3-پرداخت بانکی، نیازمند کد رهگیری پرداخت توسط بانک"}</Typography>
                         <Typography variant={"body2"}
@@ -154,11 +153,11 @@ const _WizardContract = ({contract, currentUser}) => {
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"9-7- جیم پین حق اطلاع رسانی مفاد طرح انتخاب شده توسط طرف دوم به کاربران را برای خود محفوظ می داند و می تواند در جهت ترغیب و تهییج کاربر نسبت به استفاده از خدمات ورزشی فراهم شده و در راستای بهبود وضعیت سلامتشان، مفاد طرح را معرفی و تبلیغ نماید."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده10 -  حفظ حریم خصوصی"}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده10 -  حفظ حریم خصوصی"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"10-1- طرف اول ملزم است حریم خصوصی کاربران را محترم شمرده و خود را متعهد به حفاظت از داده‌های شخصی پرسنل می‌داند. از آنجایی که جمع‌آوری و پردازش داده شخصی بخش غیرقابل اجتنابی در ارائه خدمات مبتنی بر فناوری اطلاعات است، جیم پین با اخذ رضایت کاربران و رعایت قوانین و مقررات از جمله قانون تجارت الکترونیکی، قانون جرایم رایانه‌ای، قانون حمایت از حقوق مصرف کننده نسبت به جمع‌آوری و نگهداری و پردازش داده‌های شخصی اقدام می‌کند."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده11 -  فورس ماژور "}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده11 -  فورس ماژور "}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"11-1- منظور از عبارت فورس‌ماژور در قرارداد، حوادث و اتفاقات غیر قابل‌پیش‌بینی، غیر قابل‌احتراز، غیر قابل رفع و غیر قابل کنترل است که مستقل و خارج از اراده و عمل متعهد بوده و در طول مدت قرارداد حادث شده باشد و تأثیر مستقیم و مؤثر بر مسئولیت‌های اطراف قرارداد داشته ‌باشد؛ به‌گونه‌ای که مانع انجام هر یک یا تمام تعهدات قراردادی به‌صورت کلی یا جزئی شود و ناظر بر اتفاقاتی است که ناشی از تقصیر نباشد. صرف دشواری اجرای تعهد، برای تحقق فورس‌ماژور کافی نیست، حتی "}</Typography>
                         <Typography variant={"body2"}
@@ -170,7 +169,7 @@ const _WizardContract = ({contract, currentUser}) => {
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"11-4- در صورتی که انجام تعهدات اطراف قرارداد، به سبب فورس‌ماژور ناممکن شود و بیش از 90 روز تقویمی ادامه یابد، هر یک از طرف‌های قرارداد به عنوان ذینفع و متعهدله مجاز خواهد بود با اعلام کتبی و ارائه ی ادله ی مستند و مکفی، قرارداد را فسخ نماید و با طرف مقابل تسویه حساب نماید."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده12 -  فسخ قرارداد "}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده12 -  فسخ قرارداد "}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"12-1- طرفین می توانند در صورت حدوث هر یک از شرایط زیر قرارداد را فسخ نمایند."}</Typography>
                         <Typography variant={"body2"}
@@ -190,24 +189,23 @@ const _WizardContract = ({contract, currentUser}) => {
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"12-5-  طرفین مکلفند هرگونه انتقال مالکیت که این مفاد قرارداد را تحت تاثیر قرار می‌دهد، به اطلاع طرف مقابل برسانند."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده13 -  نحوه اعمال تغییرات"}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده13 -  نحوه اعمال تغییرات"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"هرگونه تغییر در مفاد این قرارداد، با تنظیم الحاقیه با امضای دارندگان امضای مجاز و با مهر طرفین قرارداد حاضر نافذ و معتبر خواهد بود."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده14 -  مرجع حل اختلاف"}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده14 -  مرجع حل اختلاف"}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"14-1- در صورت بروز اختلاف در تفسیر یا اجرای قرارداد هر یک از مفاد این قرارداد، ابتدا مورد اختلاف از طریق مذاکره مستقیم و به صورت مسالمت آمیز در جلسه با حضور نمایندگان طرفین حل و فصل می گردد."}</Typography>
                         <Typography variant={"body2"}
                                     textAlign={"justify"}>{"14-2- در صورت عدم پیگیری نمایندگان طرفین یا عدم حصول نتیجه ظرف مدت 15 روز کاری از تاریخ ابلاغ کتبی، هر یک از طرفین می تواند به مراجع ذیصلاح و قضایی شهر تهران مراجعه نماید."}</Typography>
                         <br/>
-                        <Typography variant={"subtitle1"} textAlign={"right"}>{"ماده15 -  تعداد مواد و نسخ قرارداد "}</Typography>
+                        <Typography variant={"subtitle1"} textAlign={"start"}>{"ماده15 -  تعداد مواد و نسخ قرارداد "}</Typography>
                         <Typography variant={"body2"} textAlign={"justify"}>{"این قرارداد در 15 ماده، 6 تبصره و 1 پیوست در یک نسخه تنظیم و به امضای دیجیتال طرف دوم از طریق ارسال کد، می رسد و ثبت کد ارسال شده به منزله اطلاع کامل از مفاد و امضا طرف دوم خواهد بود."}</Typography>
 
                      <Typography variant={"body2"} textAlign={"justify"}>{"در صورت نیاز، طرف دوم می تواند نسخه چاپی قرارداد را از طریق تیکت درخواست نماید."} </Typography>
 
                     </Grid>
 
-                </CardContent>
             </Card>
         </Grid>
     );

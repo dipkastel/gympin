@@ -2,9 +2,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import {
     Alert,
     Button,
-    Card,
+    Card, CardActions,
     CardContent,
-    CardHeader,
+    CardHeader, Container,
     Dialog,
     DialogActions,
     DialogContent,
@@ -18,10 +18,11 @@ import {
 import {Form} from "react-bootstrap";
 import {corporatePersonnel_addCreditToAll} from "../../network/api/corporatePersonnel.api";
 import {useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {corporate_getCorporateGroups} from "../../network/api/corporate.api";
+import Grid from "@mui/material/Grid2";
 
 const IncreaseGroupCredit = () => {
     const error = useContext(ErrorContext);
@@ -76,8 +77,7 @@ const IncreaseGroupCredit = () => {
                 CreditAmount: toPriceWithoutComma(credit),
                 GroupId: selectedGroup?.Id || null
             }).then(result => {
-                console.log("res: : : ",result)
-                navigate('/personnel', {replace: true});
+                error.showError({message: "اعتبار‌ها داده شد.",});
             }).catch(ca => {
                 try {
                     error.showError({message: ca.response.data.Message,});
@@ -117,59 +117,39 @@ const IncreaseGroupCredit = () => {
 
     return (
         <>
-            {groups &&
-            <Alert sx={{m: 1}} severity={"warning"} variant={"outlined"}>
-                اعتباری که به هر یک از پرسنل اضافه میشود را وارد نمایید.
-            </Alert>}
+            <Container>
 
-            {groups && <Tabs
-                value={selectedTab}
-                onChange={(e, n) => setSelectedTab(n)}
-                aria-label="usersTab"
-                variant={"scrollable"}
-            >
-                <Tab label="همه" id={"group-tab-0"} aria-controls={"group-tabpanel-0"}/>
-                {groups && groups.map(group => (
-                    <Tab key={"g-" + group.Id} label={group.Name} id={"group-tab-" + group.Id}
-                         aria-controls={"group-tabpanel-" + group.Id}/>
-                ))}
-            </Tabs>}
-            {groups && <Card hidden={selectedTab !== 0} elevation={3} sx={{margin: 1}}>
-                <CardHeader
-                    titleTypographyProps={{variant: "body2"}}
-                    title={"اعتبار به هر یک از پرسنل"}
-                />
-                <CardContent>
+                <title>اعتبار دهی گروهی</title>
+                <Grid container columns={9} alignItems={"center"}>
+                    <Grid  size={{md:6,lg:6,xl:6}} ><Typography sx={{m:4}} variant={"h4"} >اعتبار دهی</Typography></Grid>
+                </Grid>
+                {groups &&
+                <Alert sx={{mt: 2,mx:1}} severity={"warning"} variant={"outlined"}>
+                    اعتباری که به هر یک از پرسنل اضافه میشود را وارد نمایید.
+                </Alert>}
 
-                    <Form onSubmit={(e) => openModalConfirmForm(e, null)}>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="credit"
-                            label="مقدار اعتبار (تومان)"
-                            type="text"
-                            onChange={(e) => {
-                                e.target.value = toPriceWithComma(e.target.value)
-                            }}
-                            fullWidth
-                            variant="standard"
-                        />
-                        <Typography variant={"body2"}>
-                            {/*{'مجموع اعتبار اضافه شده به پرسنل '+toPriceWithComma(credit*PersonelCount)+' تومان می باشد'}*/}
-                        </Typography>
-                        <Button variant={"outlined"} sx={{margin: 1}} type={"submit"}>ثبت</Button>
-                    </Form>
-                </CardContent>
-            </Card>}
-            {selectedTab != 0 && groups && groups.map(group => (
-                <Card hidden={group.Id !== groups[selectedTab - 1].Id} key={group.Id} elevation={3} sx={{margin: 1}}>
+                {groups && <Tabs
+                    sx={{mt:3}}
+                    value={selectedTab}
+                    onChange={(e, n) => setSelectedTab(n)}
+                    aria-label="usersTab"
+                    variant={"scrollable"}
+                >
+                    <Tab label="همه" id={"group-tab-0"} aria-controls={"group-tabpanel-0"}/>
+                    {groups && groups.map(group => (
+                        <Tab key={"g-" + group.Id} label={group.Name} id={"group-tab-" + group.Id}
+                             aria-controls={"group-tabpanel-" + group.Id}/>
+                    ))}
+                </Tabs>}
+                {groups && <Card hidden={selectedTab !== 0} elevation={3} sx={{margin: 1}}>
                     <CardHeader
                         titleTypographyProps={{variant: "body2"}}
-                        title={"اعتبار به هر یک از پرسنل گروه " + group.Name}
+                        title={"اعتبار به هر یک از پرسنل"}
                     />
                     <CardContent>
-                        <Form onSubmit={(e) => openModalConfirmForm(e, group)}>
+                        <Form onSubmit={(e) => openModalConfirmForm(e, null)}>
                             <TextField
+                                autoFocus
                                 margin="dense"
                                 name="credit"
                                 label="مقدار اعتبار (تومان)"
@@ -183,13 +163,46 @@ const IncreaseGroupCredit = () => {
                             <Typography variant={"body2"}>
                                 {/*{'مجموع اعتبار اضافه شده به پرسنل '+toPriceWithComma(credit*PersonelCount)+' تومان می باشد'}*/}
                             </Typography>
-                            <Button variant={"outlined"} sx={{margin: 1}}
-                                    type={"submit"}>ثبت</Button>
+                            <CardActions sx={{justifyContent:"end"}}>
+
+                                <Button variant={"contained"} sx={{margin: 1,px:9}} type={"submit"}>ثبت</Button>
+                            </CardActions>
                         </Form>
                     </CardContent>
-                </Card>
-            ))}
+                </Card>}
+                {selectedTab != 0 && groups && groups.map(group => (
+                    <Card hidden={group.Id !== groups[selectedTab - 1].Id} key={group.Id} elevation={3} sx={{margin: 1}}>
+                        <CardHeader
+                            titleTypographyProps={{variant: "body2"}}
+                            title={"اعتبار به هر یک از پرسنل گروه " + group.Name}
+                        />
+                        <CardContent>
+                            <Form onSubmit={(e) => openModalConfirmForm(e, group)}>
+                                <TextField
+                                    margin="dense"
+                                    name="credit"
+                                    label="مقدار اعتبار (تومان)"
+                                    type="text"
+                                    onChange={(e) => {
+                                        e.target.value = toPriceWithComma(e.target.value)
+                                    }}
+                                    fullWidth
+                                    variant="standard"
+                                />
+                                <Typography variant={"body2"}>
+                                    {/*{'مجموع اعتبار اضافه شده به پرسنل '+toPriceWithComma(credit*PersonelCount)+' تومان می باشد'}*/}
+                                </Typography>
+                                <CardActions sx={{justifyContent:"end"}}>
 
+                                    <Button variant={"contained"} sx={{margin: 1,px:9}} type={"submit"}>ثبت</Button>
+                                </CardActions>
+                            </Form>
+                        </CardContent>
+                    </Card>
+                ))}
+
+
+            </Container>
             {RenderModalConfirm()}
         </>
     );

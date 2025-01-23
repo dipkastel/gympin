@@ -6,7 +6,7 @@ import {
     CardContent,
     CardHeader,
     Chip, CircularProgress,
-    Grid,
+    Grid2 as Grid,
     IconButton,
     List,
     TextField,
@@ -32,7 +32,6 @@ const SupportDetail = () => {
     const listRef = useRef(null);
 
     useEffect(() => {
-        document.title = 'جزئیات پشتیبانی';
         setReadMessages();
     }, []);
     useEffect(() => {
@@ -114,28 +113,30 @@ const SupportDetail = () => {
             justifyContent={"center"}
             alignItems={"center"}
         >
+            <title>جزییات پشتیبانی - بارگذاری</title>
             <CircularProgress />
         </Grid>
     </>):(
 
         <Grid>
 
+            {supportDetail&&<div>
+                <title>جزییات پشتیبانی</title>
+                <Grid container columns={9} alignItems={"center"}>
+                    <Grid size={{md: 6, lg: 6, xl: 6}}><Typography sx={{m: 4}} variant={"h4"}>{supportDetail.Title}</Typography></Grid>
+                    <Grid textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}></Grid>
+                </Grid>
+            </div> }
             {(supportDetail?.Status!=="COMPLETE"&&supportDetail?.Status!=="CANCEL")&&<Alert icon={false} variant={"standard"} color={"info"} className={"m-2"}>
                 <Typography variant="body2">در صورتی که مشکل حل شده است و یا دیگر نیاز به پیگیری از سمت جیم پین ندارد
                     میتوانید تیکت را ببندید.</Typography>
 
                 <Button sx={{mt: 1}} fullWidth onClick={e => CloseSupport(e)} variant={"outlined"}>لغو تیکت</Button>
             </Alert>}
-            {supportDetail&&<div>
-                <div className={"section-title mt-3 me-3"}>
-                    <Typography variant={"body2"}>{supportDetail.Title}</Typography>
-
-                </div>
-            </div> }
             <List ref={listRef} sx={supportDetail?.Status!=="COMPLETE"&&{mb:8}}>
                 {supportDetail&&supportDetail.Messages.map(item=>(
                     <div key={item.id}>
-                        <Alert sx={item.IsAnswer?{m:"10px 30px 0px 3px",backgroundColor:"#dde5db",color:"#5c725c"}:{margin:"10px 3px 0px 30px",backgroundColor:"#ddebee",color:"#687b88"}}   variant={"filled"} icon={false}>
+                        <Alert sx={item.IsAnswer?{m:"10px 30px 0px 3px",backgroundColor:"quinary.boxBg",color:"quinary.darker"}:{margin:"10px 3px 0px 30px",backgroundColor:"quaternary.boxBg",color:"quaternary.darker"}}   variant={"filled"} icon={false}>
                             <Typography variant={"body2"}>{item.Message}</Typography>
                             {item?.CreatorUser&&"-"+<Typography variant={"caption"} component={"span"}>{item?.CreatorUser?.Username}</Typography>+"-"}
 
@@ -151,34 +152,34 @@ const SupportDetail = () => {
                 ))}
 
             </List>
-            {(supportDetail?.Status!=="COMPLETE"&&supportDetail?.Status!=="CANCEL")&&<div className={"messagebox"}>
-                <Card elevation={3} sx={{margin: 1}}>
-                    <CardContent sx={{p: 1, paddingBottom: "8px !important"}}>
-                        <Form onSubmit={e => sendMessage(e)}>
-                            <Grid container direction={"row"} spacing={1} alignItems={"center"}>
-                                <Grid item xs={10}>
-                                    <TextField
-                                        className={"rtl m-0"}
-                                        fullWidth
-                                        aria-multiline
-                                        variant="outlined"
-                                        margin="normal"
-                                        name="message"
-                                        size={"small"}
-                                        type="text"
-                                        label={"پیام جدید"}
-                                        multiline
-                                    />
+            {(supportDetail?.Status!=="COMPLETE"&&supportDetail?.Status!=="CANCEL")&&
+                    <Card elevation={3} sx={{margin: 1}}>
+                        <CardContent sx={{p: 1, paddingBottom: "8px !important"}}>
+                            <Form onSubmit={e => sendMessage(e)}>
+                                <Grid container direction={"row"} columns={12} spacing={1} alignItems={"center"}>
+                                    <Grid item size={11}>
+                                        <TextField
+                                            className={"rtl m-0"}
+                                            fullWidth
+                                            aria-multiline
+                                            variant="outlined"
+                                            margin="normal"
+                                            name="message"
+                                            size={"small"}
+                                            type="text"
+                                            label={"پیام جدید"}
+                                            multiline
+                                        />
+                                    </Grid>
+                                    <Grid item size={1}>
+                                        <Button sx={{mt: 0, minWidth: 0}} type={"submit"} size={"large"}
+                                                variant={"contained"} fullWidth><ChevronLeft/></Button>
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={2}>
-                                    <Button sx={{mt: 0, minWidth: 0}} type={"submit"} size={"large"}
-                                            variant={"contained"} fullWidth><ChevronLeft/></Button>
-                                </Grid>
-                            </Grid>
-                        </Form>
-                    </CardContent>
-                </Card>
-            </div>}
+                            </Form>
+                        </CardContent>
+                    </Card>
+            }
 
         </Grid>
     );

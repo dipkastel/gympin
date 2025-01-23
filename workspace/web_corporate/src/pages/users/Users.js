@@ -33,6 +33,7 @@ import {Form} from "react-bootstrap";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {corporate_getCorporateGroups} from "../../network/api/corporate.api";
 import {Search} from "@mui/icons-material";
+import SearchTextField from "../../components/SearchTextField";
 
 
 const Users = () => {
@@ -48,7 +49,6 @@ const Users = () => {
     const [searchText, setSearchText] = useState(null)
 
     useEffect(() => {
-        document.title = 'پرسنل';
         if (!corporate) return;
         getPersonnelGroup();
     }, []);
@@ -79,10 +79,11 @@ const Users = () => {
     }
 
     function getPersonnel() {
+        if(!corporate) return;
         setPersonnel({});
         corporatePersonnel_query({
             queryType: "FILTER",
-            CorporateId: corporate.Id,
+            CorporateId: corporate?.Id,
             PhoneNumber: search ? searchText : null,
             GroupId: (search || selectedTab == 0) ? null : groups[selectedTab - 1].Id,
             paging: {Page: selectedPage - 1, Size: 10, Desc: true}
@@ -104,7 +105,7 @@ const Users = () => {
 
         function addPersonnel(e) {
             e.preventDefault()
-            if (personnel?.content?.length > 1 && (corporate.Status == "DEMO"||corporate?.Status=="SECURE_DEMO")) {
+            if (personnel?.content?.length > 1 && (corporate.Status == "DEMO" || corporate?.Status == "SECURE_DEMO")) {
                 error.showError({message: "برای Demo بیش از 2 کاربر امکان پذیر نیست",});
                 return;
             }
@@ -168,68 +169,82 @@ const Users = () => {
     }
 
     return (
-        <div className={"container"}>
-            <div className={"row"}>
-                <div className={"col-md-6"}>
-                        <_ListItem title="افزایش اعتبار گروهی" destination={"/personnel/increasegroupcredit"}/>
-                        <_ListItem title="افزودن فرد جدید" onClick={() => setOpenModalAdd(true)}/>
-                </div>
+        <>
+            {/*<div className={"container"}>*/}
+                {/*<div className={"row"}>*/}
+                {/*<div className={"col-md-6"}>*/}
+                {/*    <_ListItem title="افزایش اعتبار گروهی" destination={"/personnel/increasegroupcredit"}/>*/}
+                {/*    <_ListItem title="افزودن فرد جدید" onClick={() => setOpenModalAdd(true)}/>*/}
+                {/*</div>*/}
 
-                <div className={"col-md-6"}>
+                {/*<div className={"col-md-6"}>*/}
 
 
-                    <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                        <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
-                            <Grid item>
-                                <Collapse in={!search}>
-                                    <Tabs
-                                        value={selectedTab}
-                                        onChange={(e, n) => setSelectedTab(n)}
-                                        aria-label="usersTab"
-                                        variant={"scrollable"}
-                                    >
-                                        <Tab label="همه" id={"group-tab-0"} aria-controls={"group-tabpanel-0"}/>
-                                        {groups && groups.map(group => (
-                                            <Tab key={"g-" + group.Id} label={group.Name} id={"group-tab-" + group.Id}
-                                                 aria-controls={"group-tabpanel-" + group.Id}/>
-                                        ))}
-                                    </Tabs>
-                                </Collapse>
-                                <Collapse in={search}>
-                                    <TextField
-                                        autoFocus
-                                        margin="dense"
-                                        label="جستجو با موبایل"
-                                        value={searchText}
-                                        onChange={e => setSearchText(e.target.value)}
-                                        fullWidth
-                                        variant={"outlined"}
-                                        sx={{mx: 1}}
-                                    />
-                                </Collapse>
-                            </Grid>
-                            <Grid item><IconButton onClick={e => setSearch(!search)}><Search/></IconButton></Grid>
+                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                    <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                        <Grid item>
+                            <Collapse in={!search}>
+                                <Tabs
+                                    value={selectedTab}
+                                    onChange={(e, n) => setSelectedTab(n)}
+                                    aria-label="usersTab"
+                                    variant={"scrollable"}
+                                >
+                                    <Tab label="همه" id={"group-tab-0"} aria-controls={"group-tabpanel-0"}/>
+                                    {groups && groups.map(group => (
+                                        <Tab key={"g-" + group.Id} label={group.Name} id={"group-tab-" + group.Id}
+                                             aria-controls={"group-tabpanel-" + group.Id}/>
+                                    ))}
+                                </Tabs>
+                            </Collapse>
+                            <Collapse in={search}>
+                                <SearchTextField
+                                    autoFocus={true}
+                                    margin="dense"
+                                    label="جستجو با موبایل"
+                                    value={searchText}
+                                    onChange={e => setSearchText(e)}
+                                    fullWidth
+                                    variant={"outlined"}
+                                    sx={{mx: 1}}
+                                    size={"small"}
+                                />
+                            </Collapse>
                         </Grid>
-                    </Box>
+                        <Grid item><IconButton onClick={e => setSearch(!search)}><Search/></IconButton></Grid>
+                    </Grid>
+                </Box>
 
-                    <List>
-                        {personnel.content && personnel.content.map((item) => (
+                <List>
+                    {personnel.content && personnel.content.map((item) => (
+                        <div key={item.Id}>
                             <div key={item.Id}>
-                                <div key={item.Id}>
-                                    <Card elevation={3} sx={{margin: 1}}>
-                                        <Link href={"/personnel/detail/" + item.Id}
-                                              sx={{textDecoration: "none", color: "#666666"}}>
-                                            <ListItem alignItems="flex-start"
-                                                      sx={{width: '100%', bgcolor: 'background.paper'}}>
-                                                <ListItemAvatar>
-                                                    <Avatar alt="item.User.Username"
-                                                            src={(item?.User?.Avatar) ? (item?.User?.Avatar?.Url || "") : ""}
-                                                            sx={{width: 40, height: 40}}/>
-                                                </ListItemAvatar>
-                                                <ListItemText
-                                                    className="text-start"
-                                                    primary={<>
+                                <Card elevation={3} sx={{margin: 1}}>
+                                    <Link href={"/personnel/detail/" + item.Id}
+                                          sx={{textDecoration: "none", color: "#666666"}}>
+                                        <ListItem alignItems="flex-start"
+                                                  sx={{width: '100%', bgcolor: 'background.paper'}}>
+                                            <ListItemAvatar>
+                                                <Avatar alt="item.User.Username"
+                                                        src={(item?.User?.Avatar) ? (item?.User?.Avatar?.Url || "") : ""}
+                                                        sx={{width: 40, height: 40}}/>
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                className="text-start"
+                                                primary={<>
 
+                                                    <Typography
+                                                        sx={{display: 'inline'}}
+                                                        component="span"
+                                                        variant="body2"
+                                                        color="text.primary"
+                                                    >
+
+                                                        {item.User.FullName ? item.User.FullName : item.User.Username}
+                                                    </Typography>
+                                                </>}
+                                                secondary={
+                                                    <>
                                                         <Typography
                                                             sx={{display: 'inline'}}
                                                             component="span"
@@ -237,60 +252,51 @@ const Users = () => {
                                                             color="text.primary"
                                                         >
 
-                                                            {item.User.FullName ? item.User.FullName : item.User.Username}
+                                                            {"اعتبار باقی مانده : " + toPriceWithComma(item.TotalCredit) + " تومان"}
                                                         </Typography>
-                                                    </>}
-                                                    secondary={
-                                                        <>
-                                                            <Typography
-                                                                sx={{display: 'inline'}}
-                                                                component="span"
-                                                                variant="body2"
-                                                                color="text.primary"
-                                                            >
-
-                                                                {"اعتبار باقی مانده : " + toPriceWithComma(item.TotalCredit) + " تومان"}
-                                                            </Typography>
-                                                        </>
-                                                    }
-
-                                                />
-                                                {(selectedTab == 0) && <ListItemText
-                                                    className="text-end"
-                                                    primary={
-                                                        <Typography
-                                                            sx={{display: 'inline'}}
-                                                            component="span"
-                                                            variant="body2"
-                                                            color="text.primary"
-                                                        >
-
-                                                            {item.PersonnelGroup?.Name || "همه"}
-                                                        </Typography>
-                                                    }
-                                                />
-
+                                                    </>
                                                 }
-                                            </ListItem>
-                                            <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}}
-                                                     component="li"/>
-                                        </Link>
-                                    </Card>
-                                </div>
+
+                                            />
+                                            {(selectedTab == 0) && <ListItemText
+                                                className="text-end"
+                                                primary={
+                                                    <Typography
+                                                        sx={{display: 'inline'}}
+                                                        component="span"
+                                                        variant="body2"
+                                                        color="text.primary"
+                                                    >
+
+                                                        {item.PersonnelGroup?.Name || "همه"}
+                                                    </Typography>
+                                                }
+                                            />
+
+                                            }
+                                        </ListItem>
+                                        <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}}
+                                                 component="li"/>
+                                    </Link>
+                                </Card>
                             </div>
-                        ))}
+                        </div>
+                    ))}
 
-                        {personnel?.totalPages > 0 &&
-                        <Grid container direction={"rows"} justifyContent={"center"} alignContent={"center"}>
-                            <Pagination count={personnel.totalPages} boundaryCount={1} defaultPage={1} size={"medium"}
-                                        page={selectedPage} onChange={(e, v) => onPageChange(e, v)}/>
-                        </Grid>}
-                    </List>
+                    {personnel?.totalPages > 0 &&
+                    <Grid container direction={"rows"} justifyContent={"center"} alignContent={"center"}>
+                        <Pagination count={personnel.totalPages} boundaryCount={1} defaultPage={1} size={"medium"}
+                                    page={selectedPage} onChange={(e, v) => onPageChange(e, v)}/>
+                    </Grid>}
+                </List>
 
-                </div>
-            </div>
-            {renderModalAdd()}
-        </div>
+                {/*</div>*/}
+                {/*</div>*/}
+                {renderModalAdd()}
+            {/*</div>*/}
+
+        </>
+
     );
 };
 

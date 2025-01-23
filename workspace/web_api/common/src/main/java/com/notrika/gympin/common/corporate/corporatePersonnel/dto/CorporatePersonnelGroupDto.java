@@ -15,5 +15,7 @@ public class CorporatePersonnelGroupDto extends BaseDtoWithCreateUpdate<Corporat
 
     @JsonProperty("Name")
     private String name;
+    @JsonProperty("UserCount")
+    private Long userCount;
 
 }

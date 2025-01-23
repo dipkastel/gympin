@@ -1,15 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
+    Avatar,
     Button,
     Card,
     CardContent,
-    CardHeader,
+    CardHeader, CircularProgress, Container,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Grid,
+    Grid2 as Grid, Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel,
     TextField,
     Typography
 } from "@mui/material";
@@ -31,7 +32,6 @@ const Groups = () => {
     const [itemToDelete, setItemToDelete] = useState(null)
 
     useEffect(() => {
-        document.title = 'گروه ها';
         getCorporateGroups();
     }, []);
 
@@ -138,31 +138,50 @@ const Groups = () => {
     }
 
     return (
-        <div>
+        <Container maxWidth>
 
-            <Card elevation={3} sx={{margin: 1}}>
-                <CardHeader
-                    title="گروه های پرسنل"
-                    action={(<><Button variant={"contained"} onClick={() => setOpenModalAdd(true)}
-                                       sx={{margin: 1}}>افزودن</Button></>)}/>
+
+            <title>گروه های پرسنل</title>
+
+            <Grid container columns={9} alignItems={"center"}>
+                <Grid size={{md: 6, lg: 6, xl: 6}}><Typography sx={{m: 4}} variant={"h4"}>گروه های پرسنل</Typography></Grid>
+                <Grid textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}><Button onClick={() => setOpenModalAdd(true)} variant={"contained"}>افزودن
+                    گروه</Button> </Grid>
+            </Grid>
+
+
+            <Card  elevation={3} sx={{margin: 1,borderRadius:3}}>
+
+                <Table aria-label="userLists">
+                    <TableHead sx={{bgcolor: 'primary.boxBg'}}>
+                        <TableRow>
+                            <TableCell>نام گروه</TableCell>
+                            <TableCell>تعداد اعضا</TableCell>
+                            <TableCell align={"right"}>عملیات</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    {!groups && <Grid container fullwidth width={"100%"} direction={"row"}><CircularProgress/></Grid>}
+                    <TableBody>
+                        {groups?.map(row => (
+                            <TableRow
+                                key={row.Id}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            >
+                                <TableCell>{row?.Name || "ثبت نشده"}</TableCell>
+                                <TableCell>{row?.UserCount || "ثبت نشده"}</TableCell>
+                                <TableCell align={"right"}><Button disabled={row?.UserCount>0} variant={"outlined"} color={"error"}
+                                                                  onClick={() => setItemToDelete(row)}>حذف</Button></TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+
+
+
             </Card>
-            {groups.map(c => (
-                <Card key={c.Id} elevation={3} sx={{margin: 1,borderRadius:3}}>
-                    <CardContent sx={{p:"8px !important"}}>
-                        <Grid container direction={"row"} textAlign={"center"} alignItems={"center"}
-                              justifyContent={"space-between"}>
-                            <h6 >
-                                {c.Name}
-                            </h6>
-                            <Button variant={"outlined"} color={"error"}
-                                    onClick={() => setItemToDelete(c)}>حذف</Button>
-                        </Grid>
-                    </CardContent>
-                </Card>
-            ))}
             {renderModalAdd()}
             {itemToDelete && renderModalDelete()}
-        </div>
+        </Container>
     );
 };
 

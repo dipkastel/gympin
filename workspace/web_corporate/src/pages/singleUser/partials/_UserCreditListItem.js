@@ -113,11 +113,13 @@ const _UserCreditListItem = ({userCredit, updatePage}) => {
 
                         <ListItemText
                             primary={toPriceWithComma(userCredit?.CreditAmount) + " تومان"}
+                            primaryTypographyProps={{textAlign:"start"}}
                             secondary={userCredit?.Status == "ACTIVE" ? "انقضا : " + new Date(userCredit?.ExpireDate).toLocaleDateString('fa-IR', {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric',
                             }) : CreditStatusEnum[userCredit?.Status]}
+                            secondaryTypographyProps={{textAlign:"start"}}
                         />
 
                     </Grid>
@@ -129,8 +131,9 @@ const _UserCreditListItem = ({userCredit, updatePage}) => {
                                 month: 'long',
                                 day: 'numeric',
                             })}
-                            primaryTypographyProps={{variant: "body2", color: "#969696"}}
+                            primaryTypographyProps={{variant: "body2", color: "#969696",textAlign:"end"}}
                             secondary={opendetails ? <ExpandLess/> : <ExpandMore/>}
+                            secondaryTypographyProps={{textAlign:"end"}}
                             sx={{textAlign: "left"}}/>
 
                     </Grid>

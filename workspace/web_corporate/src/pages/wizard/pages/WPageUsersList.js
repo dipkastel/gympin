@@ -15,32 +15,13 @@ const WPageUsersList = ({onNext}) => {
                             لطفا اطلاعات پرسنل مجموعه خود را در یک فایل اکسل مطابق تصویر زیر جمع آوری نمایید و از طریق راه های ارتباطی جیم پین برای ما ارسال نمایید.
                         </Typography>
                         <Typography variant={"body2"}>
-                            در فرم داده شده فقط نام، نام خانوادگی و شماره موبایل الزامی است
+                            در فرم داده شده فقط "نام و نام خانوادگی" و "شماره موبایل" الزامی است
                         </Typography>
                         <Typography variant={"body2"}>
                             برای گروه بندی پرسنل نام گروه مربوطه (دلخواه) را در قسمت گروه جدول وارد نمایید
                         </Typography>
                     </CardContent>
                 </Card>
-
-            </Grid>
-            <Grid item xs={12} md={6}>
-
-                <Card elevation={3} sx={{margin: 1, borderRadius: 3}}>
-                    <CardHeader sx={{
-                        backgroundColor: "primary.main", color: "#fff"
-                    }} title="جدول"/>
-                    <CardContent>
-                        <Typography variant={"subtitle1"}> برای دانلود فایل اکسل روی تصویر زیر کلیک کنید </Typography>
-
-                        <Link href={"/assets/download/excel_sample.csv"}>
-                            <Image src={"/assets/images/excel_sample.jpg"}  width={"100%"}/>
-                        </Link>
-
-                    </CardContent>
-                </Card>
-            </Grid>
-            <Grid item xs={12} md={6}>
 
                 <Card elevation={3} sx={{margin: 1, borderRadius: 3}}>
                     <CardHeader sx={{
@@ -63,7 +44,22 @@ const WPageUsersList = ({onNext}) => {
                     </CardContent>
                 </Card>
             </Grid>
+            <Grid item xs={12} md={6}>
 
+                <Card elevation={3} sx={{margin: 1, borderRadius: 3}}>
+                    <CardHeader sx={{
+                        backgroundColor: "primary.main", color: "#fff"
+                    }} title="جدول"/>
+                    <CardContent>
+                        <Typography variant={"subtitle1"}> برای دانلود فایل اکسل روی تصویر زیر کلیک کنید </Typography>
+
+                        <Link href={"/assets/download/excel_sample.csv"}>
+                            <Image src={"/assets/images/excel_sample.jpg"}  width={"100%"}/>
+                        </Link>
+
+                    </CardContent>
+                </Card>
+            </Grid>
             <Grid item sx={{p:2}} xs={12} md={12}>
                 <Button fullWidth variant={"contained"} onClick={(e)=>onNext()} > مرحله بعد </Button>
             </Grid>

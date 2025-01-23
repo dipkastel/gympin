@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Card, CardContent, CardHeader, Grid, Typography} from "@mui/material";
+import {Button, Card, CardActions, CardContent, CardHeader, Grid, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {corporate_updateStatus} from "../../../network/api/corporate.api";
 import store from "../../../helper/redux/store";
@@ -47,9 +47,11 @@ const WPageFinish = () => {
                         <Typography variant={"subtitle1"}>
                             تیم جیم.پین از شما متشکر است که با پیوستن به ما، ضمن بهره مندی از خدمات جیم پین گام مهمی در بالا بردن سطح سلامت جامعه برداشته اید.
                         </Typography>
+                    </CardContent>
+                    <CardActions>
                         <Button disabled={loading} fullWidth onClick={e => ActivateCorporate(e)} variant={"contained"}> فعالسازی
                             سازمان </Button>
-                    </CardContent>
+                    </CardActions>
                 </Card>
             </Grid>
         </Grid>

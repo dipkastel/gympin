@@ -103,7 +103,7 @@ const WPageContractData = ({onNext}) => {
 
                         <TextField
                             name={"OwnerName"}
-                            value={contranct.ownerName}
+                            value={contranct.ownerName||""}
                             disabled={thatsMe}
                             onChange={(e) => SetContract({...contranct, ownerName: e.target.value})}
                             margin="dense"
@@ -114,7 +114,7 @@ const WPageContractData = ({onNext}) => {
                         />
                         <TextField
                             name={"ownerPhoneNumber"}
-                            value={contranct.ownerPhoneNumber}
+                            value={contranct.ownerPhoneNumber||""}
                             disabled={thatsMe}
                             onChange={(e) => SetContract({...contranct, ownerPhoneNumber: e.target.value})}
                             margin="dense"
@@ -128,7 +128,7 @@ const WPageContractData = ({onNext}) => {
                             این فرم الزامی است </Typography>}
                         <TextField
                             name={"ownersNationalCode"}
-                            value={contranct.ownersNationalCode}
+                            value={contranct.ownersNationalCode||""}
                             disabled={thatsMe}
                             onChange={(e) => SetContract({...contranct, ownersNationalCode: e.target.value})}
                             margin="dense"
@@ -158,7 +158,7 @@ const WPageContractData = ({onNext}) => {
                             fullWidth
                             variant="outlined"
                         />
-                        <Typography color={"gray"} variant={"caption"}>درصورتی که شماره ثبت وجود ندارد 0 وارد شود</Typography>
+                        <Typography color={"gray"} variant={"caption"}>درصورتی که شماره ثبت وجود ندارد - وارد شود</Typography>
 
                         <TextField
                             name={"nationalId"}
@@ -170,7 +170,7 @@ const WPageContractData = ({onNext}) => {
                             fullWidth
                             variant="outlined"
                         />
-                        <Typography color={"gray"} variant={"caption"}>درصورتی که شناسه ملی وجود ندارد 0 وارد
+                        <Typography color={"gray"} variant={"caption"}>درصورتی که شناسه ملی وجود ندارد - وارد
                             شود</Typography>
 
 

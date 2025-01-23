@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, CardContent, CardMedia, Link, Typography} from "@mui/material";
 import clickHandler from "../homeClick";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 const HomeSingleContent =(props) => {
     const navigate = useNavigate()

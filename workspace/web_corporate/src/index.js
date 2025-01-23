@@ -4,26 +4,34 @@ import App from './helper/App';
 import reportWebVitals from './helper/reportWebVitals';
 import swDev from "./helper/swDev"
 import {setupAxios} from "./network/setupAxios";
+import {createBrowserRouter, RouterProvider} from 'react-router';
 import axios from "axios";
 import store, {persistor} from "./helper/redux/store";
-import {Provider} from "react-redux";
+import {Provider, useSelector} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
-
+import {BrowserRouter} from "./helper/BrowserRouter";
+import {useColorScheme} from "@mui/material";
 
 
 setupAxios(axios, store);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-    // <React.StrictMode>
+const router = createBrowserRouter([
+    {
+        Component: App,
+        children: BrowserRouter,
+    },
+],{});
 
-    <Provider store={store}>
-        <PersistGate persistor={persistor}>
-            <App/>
-        </PersistGate>
-    </Provider>
 
-    // </React.StrictMode>
+ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+        <Provider store={store}>
+            <PersistGate persistor={persistor}>
+                <RouterProvider router={router}/>
+            </PersistGate>
+        </Provider>
+    </React.StrictMode>,
 );
+
 swDev();
 reportWebVitals();

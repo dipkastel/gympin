@@ -26,9 +26,8 @@ const _UserCredits = ({corporatePersonnel,updatePage}) => {
         <>
             {corporatePersonnel?.CreditList?.length>0&&
             <Card elevation={3} sx={{margin: 1}}>
-                <CardHeader
-                    title={"تاریخچه اعتبارهای کاربر"}
-                />
+
+                <Typography variant={"h6"} sx={{px:1,pt:2}}>تاریخچه اعتبارهای کاربر</Typography>
                 <CardContent>
                     <List>
                         {corporatePersonnel.CreditList && corporatePersonnel.CreditList.map(item => (

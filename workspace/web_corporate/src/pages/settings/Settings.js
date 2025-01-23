@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import _ListItem from "../../components/_ListItem";
-import _SettingsCorporate from "./_SettingsCorporate";
+import _SettingsCorporate from "./SettingsCorporate";
 
 const Settings = () => {
 
@@ -12,12 +12,6 @@ const Settings = () => {
         <>
             <_SettingsCorporate/>
 
-            <div>
-                <div className={"section-title mb-2"}>
-                   بیشتر
-                </div>
-            </div>
-            <_ListItem title="خروج" destination="/auth/logout"/>
         </>
     );
 };

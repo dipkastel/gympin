@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import {corporatePersonnel_delete} from "../../../network/api/corporatePersonnel.api";
 import {Form} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 

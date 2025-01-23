@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Button, Card, CardContent, CardHeader, Grid, Typography} from "@mui/material";
-import Settings from "../../settings/Settings";
 import EditCorporate from "../../corporateDetail/EditCorporate";
 
 const WPageCorporateDetails = ({onNext}) => {

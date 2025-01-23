@@ -15,7 +15,7 @@ import Support from "../pages/support/Support";
 import SupportDetail from "../pages/support/supportDetail/SupportDetail";
 import EditProfile from "../pages/editProfile/EditProfile";
 import {useSelector} from "react-redux";
-import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes, useNavigate} from "react-router";
 import {getWizardComplete, setWizardComplete} from "../helper/pocket";
 import WizardBody from "../pages/wizard/body/WizardBody";
 
@@ -48,9 +48,9 @@ export default function ApplicationRoutes() {
         <>
 
             {inWizardComplete?(<>
-                <NNavigaion/>
+                {/*<NNavigaion/>*/}
 
-                {corporate?.Status == "INACTIVE" &&
+                {corporate?.Status === "INACTIVE" &&
                 <Route path="/*" element={<Navigate to={"/error/inactive"}/>}/>
                 }
                 <Routes>
@@ -74,7 +74,7 @@ export default function ApplicationRoutes() {
                     <Route path="/*" element={<Navigate to={"/error/404"}/>}/>
 
                 </Routes>
-                <NBottomNavigation/>
+                {/*<NBottomNavigation/>*/}
             </>):(<>
                 <Routes>
                     <Route path="/intro/wizard" element={<WizardBody/>}/>

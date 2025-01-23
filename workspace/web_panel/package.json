@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "http://panel.gympin.ir",
   "scripts": {
-    "start": "set PORT=2727 && react-scripts start",
+    "start": "set PORT=2727 && react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",
     "format": "prettier --write \"src/**/*.{js,css,scss,html}\"",
     "rtl": "webpack"
@@ -28,6 +28,8 @@
     ]
   },
   "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "@date-io/date-fns-jalali": "^2.16.0",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -47,8 +49,8 @@
     "date-fns-jalali": "^2.29.3-0",
     "draft-convert": "^2.1.13",
     "draft-js": "^0.11.7",
-    "dropzone": "^6.0.0-beta.1",
     "draftjs-to-html": "^0.9.1",
+    "dropzone": "^6.0.0-beta.1",
     "formik": "^2.2.9",
     "leaflet": "^1.7.1",
     "mui-rte": "^2.0.1",
@@ -77,9 +79,9 @@
     "socicon": "^3.0.5"
   },
   "devDependencies": {
-    "node-sass": "^6.0.1",
-    "prettier": "^2.4.1",
-    "serve": "^12.0.1",
+    "sass": "^1.54.0",
+    "prettier": "^3.4.2",
+    "serve": "^14.2.4",
     "webpack-messages": "^2.0.4",
     "webpack-rtl-plugin": "^2.0.0"
   }

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Col, Row} from "react-bootstrap";
 import {Container, Link} from "@mui/material";
 import clickHandler from "../homeClick";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 const HomeClickableTitle = (prop) => {
     const navigate = useNavigate()
