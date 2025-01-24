@@ -6,7 +6,7 @@ const ComingSoon = () => {
     return (
         <>
             <Grid alignContent={"center"} textAlign={"center"} sx={{height:"30vh"}}>
-                <Typography variant={"h3"}>این بخش به زودی فعال میشود</Typography>
+                <Typography variant={"h3"}>این بخش به زودی فعال می‌شود</Typography>
             </Grid>
         </>
     );

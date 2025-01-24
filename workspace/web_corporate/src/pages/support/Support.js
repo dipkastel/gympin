@@ -1,25 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate} from "react-router";
-import {
-    Alert,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    Chip, Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Grid2 as Grid,
-    Link,
-    List,
-    TextField,
-    Typography
-} from "@mui/material";
+import {Button, Card, CardHeader, Chip, Container, Grid2 as Grid, Link, List, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
-import {Support_add, Support_query} from "../../network/api/support.api";
-import {Form} from "react-bootstrap";
+import {Support_query} from "../../network/api/support.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {SupportStatus} from "../../helper/enums/SupportStatus";
 
@@ -75,7 +58,8 @@ const Support = () => {
                 <title>درخواست‌های پشتیبانی</title>
                 <Grid container columns={9} alignItems={"center"}>
                     <Grid size={{md: 6, lg: 6, xl: 6}}><Typography sx={{m: 4}} variant={"h4"}>درخواست‌های پشتیبانی</Typography></Grid>
-                    <Grid textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}><Button onClick={() => navigate("/support/new")} variant={"contained"}>تیکت پشتیبانی جدید</Button> </Grid>
+                    <Grid textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}><Button onClick={() => navigate("/support/new")}
+                                                                                 variant={"contained"}>تیکت پشتیبانی جدید</Button> </Grid>
                 </Grid>
 
 

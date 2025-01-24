@@ -11,7 +11,7 @@ const _PersonnelCount = () => {
         <div>
 
             <AnalyticsBox
-                icon={<img alt="icon" src="/assets/images/icons/ic-glass-dir.svg" />}
+                icon={<img alt="icon" src="/assets/images/icons/ic-glass-ticket.svg" />}
                 title="بلیط‌های هفته"
                 color={"secondary"}
                 percent={0}

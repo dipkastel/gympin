@@ -42,6 +42,10 @@ export const BrowserRouter =[
         Component: Layout,
         children: [
             {
+                path: '',
+                Component: NewUserPage,
+            },
+            {
                 path: 'list',
                 Component: NewUserPage,
             },
@@ -66,7 +70,7 @@ export const BrowserRouter =[
         children: [
             {
                 path: '',
-                Component: Finance,
+                Component: Charge,
             },
             {
                 path: 'increaseCharge',
@@ -82,6 +86,10 @@ export const BrowserRouter =[
         path: 'reports',
         Component: Layout,
         children: [
+            {
+                path: '',
+                Component: GeneralReport,
+            },
             {
                 path: 'general',
                 Component: GeneralReport,
@@ -100,6 +108,10 @@ export const BrowserRouter =[
         path: 'support',
         Component: Layout,
         children: [
+            {
+                path: '',
+                Component: Support,
+            },
             {
                 path: 'tickets',
                 Component: Support,
@@ -132,6 +144,10 @@ export const BrowserRouter =[
         path: 'settings',
         Component: Layout,
         children: [
+            {
+                path: '',
+                Component: EditProfile,
+            },
             {
                 path: 'profile',
                 Component: EditProfile,

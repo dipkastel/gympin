@@ -14,7 +14,7 @@ const data = {
 };
 
 function SlideTransition(props) {
-    return <Slide {...props} direction="left" />;
+    return <Slide {...props} direction="up" />;
 }
 
 class GympinPagesProvider extends React.Component {
@@ -48,6 +48,7 @@ class GympinPagesProvider extends React.Component {
                           open={this.state.data.show}
                           autoHideDuration={3000}
                           TransitionComponent={ SlideTransition}
+                          anchorOrigin={{ vertical:"bottom", horizontal:"right" }}
                           onClose={() => this.hideError()} >
                     <Paper sx={{width:"100%",backgroundColor:"#333",p:1}}>
                         <Grid

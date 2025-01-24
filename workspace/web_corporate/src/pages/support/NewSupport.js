@@ -67,8 +67,9 @@ const NewSupport = () => {
                             </Typography>
                             <Button fullWidth xs={4} sx={{mb: 2}} variant={"outlined"} target={"_blank"} size={"small"} href={"https://gympin.ir/faq"}>سوالات
                                 متداول</Button>
-                            <Alert className={"mt-2"} variant={"standard"} color={"info"} icon={false}>مشکلات ، پرسش ها و نظرات
-                                خود را برای ما ارسال کنید.همکاران ما در اسرع وقت پاسخگوی تیکت شما خواهند بود.</Alert>
+                            <Alert className={"mt-2"} variant={"standard"} severity={"info"} icon={false}>مشکلات ، پرسش ها و نظرات
+                                خود را برای ما ارسال کنید.</Alert>
+                            <Alert className={"mt-2"} variant={"standard"} color={"info"} icon={false}>همکاران ما در اسرع وقت پاسخگوی تیکت شما خواهند بود.</Alert>
                         </CardContent>
                     </Card>
 

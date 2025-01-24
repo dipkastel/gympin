@@ -15,7 +15,7 @@ export const GympinTheme = createTheme({
             xl: 1600,
         },
     },
-    direction:"rtl",
+    direction: "rtl",
     // palette: {
     //     primary: {
     //         light: '#f14651',
@@ -31,43 +31,54 @@ export const GympinTheme = createTheme({
                 primary: {
                     light: '#f14651',
                     main: '#e7333e',
-                    dark:'#b22828',
+                    dark: '#b22828',
                     darker: '#79141a',
                     contrastText: '#e7dfdf',
-                    boxBg:'#cecece'
+                    boxBg: '#cecece'
                 },
                 secondary: {
                     light: '#8546f1',
                     main: '#8533e7',
-                    dark:'#6628b2',
+                    dark: '#6628b2',
                     darker: '#451479',
                     contrastText: '#dbd8e3',
-                    boxBg:'#e8d9ff'
+                    boxBg: '#e8d9ff'
                 },
                 tertiary: {
                     light: '#46f1c3',
                     main: '#24b78f',
-                    dark:'#1f9a83',
+                    dark: '#1f9a83',
                     darker: '#147952',
                     contrastText: '#c0d5c4',
-                    boxBg:'#d9fff2'
+                    boxBg: '#d9fff2'
                 },
                 quaternary: {
                     light: '#f14651',
                     main: '#e7333e',
-                    dark:'#b22828',
+                    dark: '#b22828',
                     darker: '#79141a',
                     contrastText: '#decdd8',
-                    boxBg:'#ffecd9'
+                    boxBg: '#ffecd9'
                 },
                 quinary: {
                     light: '#f14651',
                     main: '#e7333e',
-                    dark:'#b22828',
+                    dark: '#b22828',
                     darker: '#79141a',
                     contrastText: '#d3c9d1',
-                    boxBg:'#daefd5'
+                    boxBg: '#daefd5'
                 },
+                info: {
+                    light: "#255612",
+                    main: '#2c6723',
+                    dark: '#3b7834',
+                    darker: '#4e8945',
+                    contrastText:'#5f9a56',
+                    lightChannel:"#876543",
+                    mainChannel:"#654321",
+                    darkChannel:"#543210",
+                    contrastTextChannel:"#987654",
+                }
             },
         },
         dark: {
@@ -75,57 +86,89 @@ export const GympinTheme = createTheme({
                 primary: {
                     light: '#f14651',
                     main: '#e7333e',
-                    dark:'#b22828',
+                    dark: '#b22828',
                     darker: '#79141a',
                     contrastText: '#310303',
-                    boxBg:'#575757'
+                    boxBg: '#575757'
                 },
                 secondary: {
                     light: '#f14651',
                     main: '#e7333e',
-                    dark:'#b22828',
+                    dark: '#b22828',
                     darker: '#79141a',
                     contrastText: '#2f0303',
-                    boxBg:'#190634'
+                    boxBg: '#190634'
                 },
                 tertiary: {
                     light: '#f14651',
                     main: '#e7333e',
-                    dark:'#b22828',
+                    dark: '#b22828',
                     darker: '#79141a',
                     contrastText: '#04163a',
-                    boxBg:'#04112c'
+                    boxBg: '#04112c'
                 },
                 quaternary: {
                     light: '#f14651',
                     main: '#e7333e',
-                    dark:'#b22828',
+                    dark: '#b22828',
                     darker: '#79141a',
                     contrastText: '#341604',
-                    boxBg:'#421e05'
+                    boxBg: '#421e05'
                 },
                 quinary: {
                     light: '#f14651',
                     main: '#e7333e',
-                    dark:'#b22828',
+                    dark: '#b22828',
                     darker: '#79141a',
                     contrastText: '#02310b',
-                    boxBg:'#031a03'
+                    boxBg: '#031a03'
                 },
+                info: {
+                    light: "#555555",
+                    main: '#bbbbbb',
+                    dark: '#333333',
+                    darker: '#222222',
+                    contrastText:'#cccccc',
+                    lightChannel:"#666666",
+                    mainChannel:"#444444",
+                    darkChannel:"#333333",
+                    contrastTextChannel:"#111111",
+                }
             },
         },
     },
-    shape:{
-        borderRadius:4,
+    shape: {
+        borderRadius: 4,
     },
-    components:{
-      MuiCard:{
-          styleOverrides:{
-              root:{
-                  borderRadius:12,
-              }
-          }
-      }
+    components: {
+        MuiCard: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 12,
+                }
+            }
+        },
+        MuiButton:{
+            styleOverrides:{
+                root:{
+                    borderRadius:12,
+                }
+            }
+        },
+        MuiAlert:{
+            styleOverrides:{
+                root:{
+                    borderRadius:12,
+                }
+            }
+        },
+        MuiOutlinedInput:{
+            styleOverrides:{
+                root:{
+                    borderRadius:12
+                }
+            }
+        }
     },
     typography: {
         fontFamily: "IRANSans-web",
