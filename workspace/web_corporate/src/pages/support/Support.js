@@ -5,6 +5,7 @@ import {useSelector} from "react-redux";
 import {Support_query} from "../../network/api/support.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {SupportStatus} from "../../helper/enums/SupportStatus";
+import {Image} from "react-bootstrap";
 
 const Support = () => {
     const error = useContext(ErrorContext);
@@ -59,7 +60,7 @@ const Support = () => {
                 <Grid container columns={9} alignItems={"center"}>
                     <Grid size={{md: 6, lg: 6, xl: 6}}><Typography sx={{m: 4}} variant={"h4"}>درخواست‌های پشتیبانی</Typography></Grid>
                     <Grid textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}><Button onClick={() => navigate("/support/new")}
-                                                                                 variant={"contained"}>تیکت پشتیبانی جدید</Button> </Grid>
+                                                                                 variant={"contained"}>درخواست‌ پشتیبانی جدید</Button> </Grid>
                 </Grid>
 
 
@@ -107,6 +108,21 @@ const Support = () => {
                 </>}
             </Container>
 
+            {!(support?.content?.length > 0) &&
+            <Grid
+                container
+                sx={{width: "100%", height: "80vh"}}
+                direction={"column"}
+                justifyContent={"center"}
+                alignItems={"center"}
+            >
+                <Image src={"/assets/images/icons/ic-empty-support.svg"} width={"30%"}/>
+                <Typography variant={"body"} sx={{m: 2}}>
+                    درخواست پشتیبانی وجود ندارد
+                </Typography>
+
+            </Grid>
+            }
         </>
     );
 };

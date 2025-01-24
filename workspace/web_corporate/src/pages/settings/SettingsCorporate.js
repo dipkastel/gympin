@@ -70,7 +70,7 @@ const SettingsCorporate = (props) => {
 
             <Grid container columns={4}>
                 {personCorporates.map((item, number) => (
-                            <Grid size={1} key={number}>
+                            <Grid size={{xs:4,sm:2,md:1}} key={number}>
                                 <Card elevation={3} sx={{margin: 1,p:1,border:"1px solid",borderColor:(selectedCorporate.Id===item?.Corporate?.Id)?"secondary.bgBox":"secondary.contrastText",borderRadius:4}} >
                                     <Grid container direction={"column"} alignItems={"center"} justifyContent={"space-between"}>
                                         <Avatar

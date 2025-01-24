@@ -105,12 +105,12 @@ const IncreaseHistory = () => {
 
                 <Grid
                     container
-                    sx={{width: "100%", height: "80vh"}}
+                    sx={{ width: "100%", height: "80vh"}}
                     direction={"column"}
                     justifyContent={"center"}
                     alignItems={"center"}
                 >
-                    <Image src={"https://api.gympin.ir/resource/image?Id=100"} width={"40%"}/>
+                    <Image src={"/assets/images/icons/ic-empty-transaction.svg"} width={"30%"}/>
                     <Typography variant={"body"} sx={{m: 2}}>
                         تراکنشی یافت نشد
                     </Typography>

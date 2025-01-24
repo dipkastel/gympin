@@ -1,26 +1,26 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
-    Avatar,
     Button,
     Card,
-    CardContent,
-    CardHeader, CircularProgress, Container,
+    CircularProgress,
+    Container,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Grid2 as Grid, Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel,
+    Grid2 as Grid,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
     TextField,
     Typography
 } from "@mui/material";
-import {Form} from "react-bootstrap";
+import {Form, Image} from "react-bootstrap";
 import {useSelector} from "react-redux";
-import {
-    corporate_addCorporateGroups,
-    corporate_deleteCorporateGroup,
-    corporate_getCorporateGroups
-} from "../../network/api/corporate.api";
+import {corporate_addCorporateGroups, corporate_deleteCorporateGroup, corporate_getCorporateGroups} from "../../network/api/corporate.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 
 const Groups = () => {
@@ -50,11 +50,11 @@ const Groups = () => {
     function renderModalAdd() {
         function addGroup(e) {
             e.preventDefault()
-            if(e.target.Name.value.length<1){
+            if (e.target.Name.value.length < 1) {
                 error.showError({message: "نام گروه وارد نشده",});
                 return;
             }
-            if((corporate?.Status=="DEMO"||corporate.Status=="SECURE_DEMO")&&groups.length>1){
+            if ((corporate?.Status == "DEMO" || corporate.Status == "SECURE_DEMO") && groups.length > 1) {
                 error.showError({message: "بیش از 2 گروه برای DEMO امکان‌پذیر نیست",});
                 return;
             }
@@ -77,20 +77,18 @@ const Groups = () => {
                 <Form onSubmit={(e) => addGroup(e)}>
                     <DialogTitle>افزودن گروه</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            <Typography variant={"body2"}>
-                                برای اضافه کردن گروه ، نام گروه را وارد نمایید.
-                            </Typography>
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                name="Name"
-                                label="نام گروه"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            />
-                        </DialogContentText>
+                        <Typography variant={"body2"}>
+                            برای اضافه کردن گروه ، نام گروه را وارد نمایید.
+                        </Typography>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="Name"
+                            label="نام گروه"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                        />
                     </DialogContent>
                     <DialogActions>
                         <Button variant={"contained"} color={"error"}
@@ -150,7 +148,8 @@ const Groups = () => {
             </Grid>
 
 
-            <Card  elevation={3} sx={{margin: 1,borderRadius:3}}>
+            {(groups?.length > 0) &&
+            <Card elevation={3} sx={{margin: 1, borderRadius: 3}}>
 
                 <Table aria-label="userLists">
                     <TableHead sx={{bgcolor: 'primary.boxBg'}}>
@@ -169,16 +168,31 @@ const Groups = () => {
                             >
                                 <TableCell>{row?.Name || "ثبت نشده"}</TableCell>
                                 <TableCell>{row?.UserCount || "ثبت نشده"}</TableCell>
-                                <TableCell align={"right"}><Button disabled={row?.UserCount>0} variant={"outlined"} color={"error"}
-                                                                  onClick={() => setItemToDelete(row)}>حذف</Button></TableCell>
+                                <TableCell align={"right"}><Button disabled={row?.UserCount > 0} variant={"outlined"} color={"error"}
+                                                                   onClick={() => setItemToDelete(row)}>حذف</Button></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
 
 
-
             </Card>
+            }
+            {!(groups?.length > 0) &&
+            <Grid
+                container
+                sx={{width: "100%", height: "80vh"}}
+                direction={"column"}
+                justifyContent={"center"}
+                alignItems={"center"}
+            >
+                <Image src={"/assets/images/icons/ic-empty-group.svg"} width={"30%"}/>
+                <Typography variant={"body"} sx={{m: 2}}>
+                    گروهی وجود ندارد
+                </Typography>
+
+            </Grid>
+            }
             {renderModalAdd()}
             {itemToDelete && renderModalDelete()}
         </Container>

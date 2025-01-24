@@ -59,7 +59,11 @@ public final class CorporateConvertor {
         CorporatePersonnelGroupDto dto = new CorporatePersonnelGroupDto();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
-        dto.setUserCount(entity.getPersonels().stream().count());
+        try{
+            dto.setUserCount(entity.getPersonels().stream().count());
+        }catch (Exception e){
+            dto.setUserCount(0l);
+        }
         return dto;
     }
 

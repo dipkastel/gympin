@@ -290,6 +290,7 @@ const EditProfile = (props) => {
                                                 fullWidth
                                                 id="outlined-adornment-password"
                                                 className="w-100"
+                                                disabled={true}
                                                 variant="outlined"
                                                 margin="normal"
                                                 name="PhoneNumber"

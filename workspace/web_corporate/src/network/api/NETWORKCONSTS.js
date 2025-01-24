@@ -1,8 +1,8 @@
 import {increaseCorporateDeposit_requestIncreaseCorporateDeposits} from "./increaseCorporateDeposit.api";
 
 export let AuthApi = {
-    BASEURL: "http://localhost:8080/api/",
-     // BASEURL: "https://api.gympin.ir/",
+    // BASEURL: "http://localhost:8080/api/",
+     BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
