@@ -74,9 +74,9 @@ const _UserDelete = ({corporatePersonnel}) => {
     return (
         <>
             {corporatePersonnel.Role != "ADMIN" &&
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{p: 1,m:1}}>
                 <CardContent>
-                    <Button variant={"contained"} onClick={() => setOpenModalDeleteUser(true)} sx={{margin: 1}}
+                    <Button variant={"contained"} onClick={() => setOpenModalDeleteUser(true)}
                             fullWidth>حذف کاربر از مجموعه</Button>
                 </CardContent>
             </Card>}

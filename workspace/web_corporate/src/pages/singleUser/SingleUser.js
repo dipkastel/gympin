@@ -31,7 +31,6 @@ const SingleUser = () => {
     const [openModalAdd, setOpenModalAdd] = useState(false);
 
     useEffect(() => {
-        document.title = 'اعتبارهای کاربر';
         getCorporatePerson();
     }, [PersonnelId]);
 
@@ -107,10 +106,10 @@ const SingleUser = () => {
                 <Grid container columns={9} alignItems={"center"}>
                     <Grid sx={{p: 4}} textAlign={"start"} size={{md: 6, lg: 6, xl: 6}}>
                         <Typography variant={"h4"}>
-                            {corporatePersonnel.User.FullName ? corporatePersonnel.User.FullName : corporatePersonnel.User.PhoneNumber}
+                            {corporatePersonnel?.User?.FullName ? corporatePersonnel?.User?.FullName : corporatePersonnel?.User?.PhoneNumber}
                         </Typography>
                         <Typography variant={"body2"}>
-                            {"اعتبار فعلی : " + toPriceWithComma(corporatePersonnel.TotalCredit)}
+                            {"اعتبار فعلی : " + toPriceWithComma(corporatePersonnel?.TotalCredit)}
                         </Typography>
                     </Grid>
                     <Grid sx={{p: 4}} textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}>

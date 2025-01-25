@@ -88,7 +88,7 @@ export const GympinTheme = createTheme({
                     main: '#e7333e',
                     dark: '#b22828',
                     darker: '#79141a',
-                    contrastText: '#310303',
+                    contrastText: '#ffffff',
                     boxBg: '#575757'
                 },
                 secondary: {

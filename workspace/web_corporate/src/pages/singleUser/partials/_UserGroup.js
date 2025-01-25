@@ -82,11 +82,11 @@ const _UserGroup = ({corporatePersonnel,updatePage}) => {
             </Card>
             }
             {groups&&!(groups?.length>0)&&
-            <Card elevation={3} sx={{margin: 1}}>
+            <Card elevation={3} sx={{margin: 1,p:1}}>
                 <CardHeader
                     title={"گروهی برای کاربران تعریف نشده"}
-                    titleTypographyProps={{variant:"body2"}}
-                    action={ <Button variant={"contained"} color={"error"} href={"/management/categories"}>مدیریت گروه ها</Button> } />
+                    titleTypographyProps={{variant:"body2"}} />
+                <Button variant={"contained"} fullWidth  href={"/personnel/groups"}>مدیریت گروه ها</Button>
             </Card>
             }
         </>
