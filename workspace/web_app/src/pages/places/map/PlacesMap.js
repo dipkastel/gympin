@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import {Form} from "react-bootstrap";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -114,8 +114,10 @@ const PlacesMap = () => {
 
     function getPopup(place){
         const popupContainer = document.createElement("div");
+
+        const root = ReactDOM.createRoot(popupContainer);
         try{
-            ReactDOM.render(
+            root.render(
                 <>
                     <Grid textAlign={"right"} >
                         <Typography sx={{fontFamily:"IRANSans-web"}} variant={"h6"}>{place.Name}</Typography>
@@ -123,10 +125,11 @@ const PlacesMap = () => {
                         <img width="100%" src={place.Multimedias[0].Url+"&width=400"}  />
                         <Button variant={"contained"} sx={{fontFamily:"IRANSans-web",mt:1,color:"#ffffff !important",bgcolor:"#e7333e"}} fullWidth color={"primary"} href={"/place/" + place.Id + "-" + fixTextToSlug(place.Name)} >اطلاعات بیشتر</Button>
                     </Grid>
-                </>,
-                popupContainer
+                </>
             );
-        }catch (e){}
+        }catch (e){
+            console.log(e);
+        }
         return popupContainer;
     }
 
