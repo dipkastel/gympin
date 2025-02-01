@@ -1,6 +1,6 @@
 import React from 'react';
 import {Figure} from "react-bootstrap";
-import {toAbsoluteUrl} from "../helper/utils";
+import {toAbsoluteUrl} from "../../helper/utils";
 
 export default function NOfflineMode(props) {
     return (

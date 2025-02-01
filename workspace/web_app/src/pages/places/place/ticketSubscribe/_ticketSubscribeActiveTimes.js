@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Dialog, DialogContent, DialogTitle, Divider, IconButton, Typography} from "@mui/material";
+import {Chip, Dialog, DialogContent, DialogTitle, Divider, Grid2 as Grid, IconButton, Typography} from "@mui/material";
 import BallotIcon from '@mui/icons-material/Ballot';
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {ticketSubscribe_getActiveTimesByTicketSubscribe} from "../../../../network/api/ticketSubscribe.api";
@@ -67,17 +67,16 @@ const _ticketSubscribeActiveTimes = ({subscribe}) => {
     //         ))}
     //     </div>
     // );
-    return (
-        <>
-            <IconButton
-                onClick={() => {
-                    setOpenModalTimes(true)
-                }}
-                color={"info"}>
-                <BallotIcon/>
-            </IconButton>
+    return subscribe?.Timing?(
+        <> <Chip label={"مشاهده"} size={"small"} sx={{bgcolor: "#555555", color: "#ffffff",px:2}}
+                                        onClick={() => {
+                                            setOpenModalTimes(true)
+                                        }} />
             {renderModalHallTime()}
         </>
+    ):(
+        <Typography variant={"h3"} color={"gray.contrastText"}
+                    sx={{fontSize: "0.8rem",fontWeight:600}} >نامشخص /ندارد</Typography>
     );
 };
 

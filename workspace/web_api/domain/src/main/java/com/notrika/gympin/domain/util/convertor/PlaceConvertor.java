@@ -69,6 +69,11 @@ public final class PlaceConvertor {
         }catch (Exception e){
 
         }
+        if (entity.getBuyables().size() > 0) {
+            try {
+                placeDto.setGenders(entity.getBuyables().stream().filter(be->be.getEnable()&&(!be.isDeleted())).map(BuyableEntity::getGender).collect(Collectors.toSet()));
+            } catch (Exception e) { }
+        }
         placeDto.setTell(isSequred?"02177487334":entity.getTell());
         placeDto.setContractData(entity.getContractData());
         placeDto.setHasContract(entity.isHasContract());
@@ -104,6 +109,7 @@ public final class PlaceConvertor {
         }
         PlaceDto placeDto = new PlaceDto();
         placeDto.setId(entity.getId());
+        placeDto.setActiveTimes(entity.getActiveTimes());
         placeDto.setName(isSequred?(entity.getName().substring(0,2)+"*****" +entity.getName().substring(entity.getName().length()-2)):entity.getName());
         placeDto.setOrder(entity.getOrder());
         try{
@@ -131,6 +137,7 @@ public final class PlaceConvertor {
 
         PlaceDto placeDto = new PlaceDto();
         placeDto.setId(entity.getId());
+        placeDto.setActiveTimes(entity.getActiveTimes());
         try {
             placeDto.setName(isSequred?(entity.getName().substring(0,2)+"*****" +entity.getName().substring(entity.getName().length()-2)):entity.getName());
         }catch (Exception e){
@@ -152,9 +159,8 @@ public final class PlaceConvertor {
         placeDto.setStatus(entity.getStatus());
         if (entity.getBuyables().size() > 0) {
             try {
-                placeDto.setGenders(entity.getBuyables().stream().filter(BuyableEntity::getEnable).map(BuyableEntity::getGender).collect(Collectors.toSet()));
-            } catch (Exception e) {
-            }
+                placeDto.setGenders(entity.getBuyables().stream().filter(be->be.getEnable()&&(!be.isDeleted())).map(BuyableEntity::getGender).collect(Collectors.toSet()));
+            } catch (Exception e) { }
             try {
                 var minPriceTicket = entity.getBuyables().stream().filter(p ->!p.isDeleted()&& p.getEnable() && p.getPrice() != null).min(Comparator.comparing(BuyableEntity::getPrice)).get();
                 placeDto.setMinPrice(minPriceTicket.getPrice());

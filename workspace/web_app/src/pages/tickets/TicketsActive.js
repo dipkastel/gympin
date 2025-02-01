@@ -1,18 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Box, Card, CardContent, CardHeader, Chip, CircularProgress, Grid, Typography} from "@mui/material";
-import {useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {ErrorContext} from "../../components/GympinPagesProvider";
-import {Image} from "react-bootstrap";
 import {purchased_query} from "../../network/api/purchased.api";
+import {ErrorContext} from "../../components/GympinPagesProvider";
+import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {Card, CardContent, CardHeader, Chip, CircularProgress, Grid, Typography} from "@mui/material";
+import {Image} from "react-bootstrap";
 import {BuyableType} from "../../helper/enums/BuyableType";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import __sharePersonelCreadits from "../wallet/__sharePersonelCreadits";
-import __personalTransactions from "../wallet/__personalTransactions";
 
-const Purchased = () => {
+const TicketsActive = () => {
+
     const error = useContext(ErrorContext);
     const navigate = useNavigate();
     const user = useSelector(({auth: {user}}) => user);
@@ -43,6 +39,35 @@ const Purchased = () => {
             }
         });
     }
+
+    function progress() {
+        return (<Grid
+            container
+            sx={{width: "100%", height: "80vh"}}
+            direction={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+        >
+            <CircularProgress/>
+        </Grid>);
+    }
+
+    function Empty() {
+        return (<Grid
+            container
+            sx={{width: "100%", height: "80vh"}}
+            direction={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+        >
+            <Image src={"https://api.gympin.ir/resource/image?Id=100"} width={"40%"}/>
+            <Typography variant={"body"} sx={{m: 2}}>
+                بلیط فعال یافت نشد
+            </Typography>
+
+        </Grid>);
+    }
+
 
     function getStatus(Status) {
         switch (Status) {
@@ -85,8 +110,8 @@ const Purchased = () => {
     }
 
     function goToDetail(item) {
-        if(item.PurchasedStatus==="EXPIRE"||item.PurchasedStatus==="COMPLETE")
-            return ;
+        if (item.PurchasedStatus === "EXPIRE" || item.PurchasedStatus === "COMPLETE")
+            return;
         switch (item.PurchasedType) {
             case "SUBSCRIBE":
                 navigate("/tickets/singleSubscribe/" + item.Key, {replace: false});
@@ -97,78 +122,44 @@ const Purchased = () => {
         }
     }
 
-    function progress() {
-        return (<Grid
-            container
-            sx={{width: "100%", height: "80vh"}}
-            direction={"column"}
-            justifyContent={"center"}
-            alignItems={"center"}
-        >
-            <CircularProgress/>
-        </Grid>);
-    }
-
-    function Empty() {
-        return (<Grid
-            container
-            sx={{width: "100%", height: "80vh"}}
-            direction={"column"}
-            justifyContent={"center"}
-            alignItems={"center"}
-        >
-            <Image src={"https://api.gympin.ir/resource/image?Id=100"} width={"40%"}/>
-            <Typography variant={"body"} sx={{m: 2}}>
-                شما هنوز بلیط ندارید
-            </Typography>
-
-        </Grid>);
-    }
-
     function tickets() {
-        function getByFilter(p){
-            if(tabIndex===0){
-                if(p.PurchasedStatus==="READY_TO_ACTIVE"||
-                    p.PurchasedStatus==="ACTIVE"||
-                    p.PurchasedStatus==="PROCESSING")
-                    return true
-                else return false;
-            }else if(tabIndex==1){
-                if(p.PurchasedStatus==="EXPIRE"
-                ||p.PurchasedStatus==="COMPLETE"
-                ||p.PurchasedStatus==="CANCEL")
-                    return true
-                else return false;
-            }else if(tabIndex===2){
-                navigate("/basket", {replace: false});
-            }
+        function getByFilter(p) {
+            if (p.PurchasedStatus === "READY_TO_ACTIVE" ||
+                p.PurchasedStatus === "ACTIVE" ||
+                p.PurchasedStatus === "PROCESSING")
+                return true
+            else return false;
+        }
+
+        function getTicket() {
+            return subscribes.filter(p => getByFilter(p));
         }
 
         return (<>
 
-            <Box sx={{bgcolor: 'background.paper',zIndex:1001,position:"relative"}}>
-                <AppBar position="static">
-                    <Tabs
-                        value={tabIndex}
-                        onChange={(e, num) => setTabIndex(num)}
-                        indicatorColor="secondary"
-                        textColor="inherit"
-                        variant="fullWidth"
-                        aria-label="full width tabs example"
-                    >
-                        <Tab label="فعال" id={"user-tab-0"} aria-controls={"user-tabpanel-0"}/>
-                        <Tab label="تاریخچه" id={"user-tab-1"} aria-controls={"user-tabpanel-1"}/>
-                        {userBasket&&<Tab label="سبد خرید" id={"user-tab-2"} aria-controls={"user-tabpanel-2"}/>}
-                    </Tabs>
-                </AppBar>
-            </Box>
-            {subscribes.filter(p=>getByFilter(p)).sort((a, b) => b.Id - a.Id).map(item => singleTicket(item))}
+            {/*<Box sx={{bgcolor: 'background.paper',zIndex:1001,position:"relative"}}>*/}
+            {/*    <AppBar position="static">*/}
+            {/*        <Tabs*/}
+            {/*            value={tabIndex}*/}
+            {/*            onChange={(e, num) => setTabIndex(num)}*/}
+            {/*            indicatorColor="secondary"*/}
+            {/*            textColor="inherit"*/}
+            {/*            variant="fullWidth"*/}
+            {/*            aria-label="full width tabs example"*/}
+            {/*        >*/}
+            {/*            <Tab label="فعال" id={"user-tab-0"} aria-controls={"user-tabpanel-0"}/>*/}
+            {/*            <Tab label="تاریخچه" id={"user-tab-1"} aria-controls={"user-tabpanel-1"}/>*/}
+            {/*            {userBasket&&<Tab label="سبد خرید" id={"user-tab-2"} aria-controls={"user-tabpanel-2"}/>}*/}
+            {/*        </Tabs>*/}
+            {/*    </AppBar>*/}
+            {/*</Box>*/}
+            {(getTicket().length > 0) ? getTicket().sort((a, b) => b.Id - a.Id).map(item => singleTicket(item)) : Empty()}
         </>)
     }
 
 
-    function singleTicket(ticket){
-        return  (
+    function singleTicket(ticket) {
+        return (
             <div key={ticket.Id}>
                 <Card elevation={3} sx={{margin: 1}} onClick={(e) => goToDetail(ticket)}>
                     <CardHeader sx={{pb: 1, pt: 1, color: "white", bgcolor: GetBgByType(ticket?.PurchasedType)}}
@@ -200,9 +191,9 @@ const Purchased = () => {
 
     return (
         <>
-            {!subscribes ? progress() :(subscribes.length > 0)? tickets() : Empty()}
+            {!subscribes ? progress() : (subscribes.length > 0) ? tickets() : Empty()}
         </>
     );
 };
 
-export default Purchased;
+export default TicketsActive;

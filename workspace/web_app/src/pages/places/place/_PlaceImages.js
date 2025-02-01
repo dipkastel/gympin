@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Slick from "react-slick";
-import {Box, Link, Typography} from "@mui/material";
+import {Box, Card, Link, Typography, Grid2 as Grid} from "@mui/material";
 import {Image} from "react-bootstrap";
-import _PlaceMap from "./info/_PlaceMap";
 
 const _PlaceImages = ({place}) => {
-    const [showDetails,setShowDetails] = useState(true);
+    const [itemToSlide,setItemToSlide] = useState(null);
     const settings = {
         dots: false,
         infinite: true,
@@ -14,33 +13,36 @@ const _PlaceImages = ({place}) => {
         initialSlide: 1,
         autoplay: true,
         rows: 1,
-        autoplaySpeed: 500000,
+        autoplaySpeed: 5000,
         pauseOnHover: true,
         arrows: false,
-        rtl: true
+        rtl: false
 
     };
+
+    useEffect(() => {
+        if(place){
+            if(place.Multimedias.length<2){
+                setItemToSlide([...place.Multimedias,...place.Multimedias])
+            }else{
+                setItemToSlide(place.Multimedias);
+            }
+        }
+    }, [place]);
+
     return (
         <>
-            <div className={"pdata"} onClick={()=>setShowDetails(!showDetails)}>
-                {showDetails&&<Typography className={"ptext"} variant={"h5"}>
-                    {"مجموعه "+place.Name}
-                </Typography>}
-                {showDetails&&<Typography className={"ptext"} variant={"body2"}>
-                    {place.Location.Name} -
-                    {place.Address}
-
-                </Typography>}
-            </div>
             <Slick className={"mb--8"} {...settings}>
-                {place.Multimedias.map((item, index) => (
-                    <div key={index}  onClick={()=>setShowDetails(!showDetails)}>
-                         <Link  underline="none" color="inherit" fontWeight="800">
-                            <Box>
-                                <Image width={"100%"} src={item.Url}/>
-                            </Box>
-                        </Link>
-                    </div>
+                {itemToSlide&&itemToSlide?.map((item, index) => (
+                    <Grid container sx={{p:2}} >
+                        <Card elevation={5} key={index} >
+                            <Link  underline="none" color="inherit" fontWeight="800">
+                                <Box>
+                                    <Image width={"100%"} src={item.Url}/>
+                                </Box>
+                            </Link>
+                        </Card>
+                    </Grid>
                 ))}
             </Slick>
         </>

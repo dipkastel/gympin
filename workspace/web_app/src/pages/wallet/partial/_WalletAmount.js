@@ -56,7 +56,7 @@ const _WalletAmount = () => {
 
         return (<>
             <Dialog
-                sx={{zIndex: 9999999999}}
+                sx={{zIndex: 1100}}
                 className={"w-100"}
                 open={!!selectedCredit}
                 onClose={()=>setSelectedCredit(null)}
@@ -74,7 +74,7 @@ const _WalletAmount = () => {
                         <Typography variant={"h6"}>
                             {selectedCredit&&("اعتبار نوع "+CorporateContractType[selectedCredit?.Corporate?.ContractType])}
                         </Typography>
-                        <InfoOutlined sx={{color:"#121c3b",fontSize:"35px"}}/>
+                        <InfoOutlined sx={{color:"#f31212",fontSize:"35px"}}/>
                     </Grid>
                 </DialogTitle>
                 <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>
@@ -117,7 +117,7 @@ const _WalletAmount = () => {
         <>
             <Card elevation={3} sx={{margin: 1}}>
                 <CardHeader
-                    sx={{backgroundColor: "#469391"}}
+                    sx={{backgroundColor: "primary.main"}}
                     onClick={(e) => setIsExpanded(!isExpanded)}
                     title={<Typography
                         sx={{display: "inline", m: 1}}
@@ -141,8 +141,7 @@ const _WalletAmount = () => {
                                 <div  key={number} onClick={(e)=>{setSelectedCredit(item)}} ><_WalletType credit={item}/></div>
                             ))}
                         </List>
-                        <Button href={"/UserRequests"} variant={"outlined" } fullWidth color={"info"} >تاریخچه درخواست‌ها</Button>
-
+                        <Button href={"/UserRequests"} variant={"outlined" } fullWidth color={"primary"} >تاریخچه درخواست‌ها</Button>
                     </CardContent>
                 </Collapse>
 

@@ -1,12 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Box, Button, Card, CardHeader, Divider, Grid, TextField, ToggleButton, Typography} from "@mui/material";
+import {Button, Card, CardHeader, Divider, Grid2 as Grid, TextField, ToggleButton, Typography} from "@mui/material";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../components/GympinPagesProvider";
-import {Image} from "react-bootstrap";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import AdapterJalali from "@date-io/date-fns-jalali";
-import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {gatewayApplication_query} from "../../network/api/gatewayApplication.api";
 import {suggest_query} from "../../network/api/suggest.api";
 import {InsertComment} from "@mui/icons-material";
@@ -135,9 +131,9 @@ const _IncreaseCredit = () => {
 
 
     return (<>
-            {paymentGatewaysApplication && <Card elevation={6} sx={{margin: 1}}>
+            {paymentGatewaysApplication && <Card elevation={6} sx={{margin: 1,pb:2}}>
                 <CardHeader title={<Typography
-                    sx={{display: "inline", margin: 1}}
+                    sx={{display: "inline", p: 1}}
                     component="p"
                     variant="subtitle1"
                     color="text.primary"
@@ -161,56 +157,60 @@ const _IncreaseCredit = () => {
                             justifyContent="space-around"
                             alignItems="center"
                             sx={{padding: 1}}
+                            columns={3}
+                            spacing={1}
                         >
                             {suggests && suggests.map(suggest => (
-                                <Button key={"suggest-" + suggest.Id} sx={{m: 2}}
-                                        onClick={() => SetAmountToPay(suggest.Amount)} color={"info"}
-                                        variant={"contained"}>{toPriceWithComma(suggest.Amount) + " تومان "}</Button>
+                                <Grid size={1} key={"suggest-" + suggest.Id}>
+                                    <Button sx={{m: 0.2,py:2,boxShadow:"none"}} fullWidth
+                                            onClick={() => SetAmountToPay(suggest.Amount)} color={"gray"}
+                                            variant={"contained"}>{toPriceWithComma(suggest.Amount) + " تومان "}</Button>
+                                </Grid>
                             ))}
                         </Grid>
-                        <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>
+                        <Divider variant="inset" sx={{ml: 0, mr: 0,mt:1, width: "100%"}} component="div"/>
 
 
                     </>}
 
-                    <Typography sx={{width: "100%", textAlign: "start", pt: 3, pr: 3}} variant={"subtitle1"}>
-                        نوع پرداخت
-                    </Typography>
-                    <Grid
-                        container
-                        direction="row"
-                        justifyContent="space-around"
-                        alignItems="center"
-                        sx={{padding: 1}}
-                        md={6}
-                        lg={4}
-                        item
-                        xs={12}
-                    >
+                    {/*<Typography sx={{width: "100%", textAlign: "start", pt: 3, pr: 3}} variant={"subtitle1"}>*/}
+                    {/*    نوع پرداخت*/}
+                    {/*</Typography>*/}
+                    {/*<Grid*/}
+                    {/*    container*/}
+                    {/*    direction="row"*/}
+                    {/*    justifyContent="space-around"*/}
+                    {/*    alignItems="center"*/}
+                    {/*    sx={{padding: 1}}*/}
+                    {/*    md={6}*/}
+                    {/*    lg={4}*/}
+                    {/*    item*/}
+                    {/*    xs={12}*/}
+                    {/*>*/}
 
-                        {paymentGatewaysApplication.content && paymentGatewaysApplication.content.map(item => (
+                    {/*    {paymentGatewaysApplication.content && paymentGatewaysApplication.content.map(item => (*/}
 
-                            <Grid
-                                key={item.Id}
-                                xs={3}
-                                item
-                                onClick={() => setSelectedGatewayApplication(item)}
-                            >
-                                <Box
-                                    sx={{border: (item.Gateway.Id == selectedGateway.Gateway.Id) ? "2px solid #37aa60" : "1px solid #ddd"}}>
-                                    <Image width={"100%"} rounded={"8px"} src={item?.Gateway?.Image?.Url}/>
-                                    <Typography sx={{width: "100%", textAlign: "center", minHeight: 55}}
-                                                variant={"subtitle1"}>
-                                        {item.Gateway.Name}
-                                    </Typography>
-                                </Box>
-                            </Grid>
-                        ))}
-                    </Grid>
+                    {/*        <Grid*/}
+                    {/*            key={item.Id}*/}
+                    {/*            xs={3}*/}
+                    {/*            item*/}
+                    {/*            onClick={() => setSelectedGatewayApplication(item)}*/}
+                    {/*        >*/}
+                    {/*            <Box*/}
+                    {/*                sx={{border: (item.Gateway.Id == selectedGateway.Gateway.Id) ? "2px solid #37aa60" : "1px solid #ddd"}}>*/}
+                    {/*                <Image width={"100%"} rounded={"8px"} src={item?.Gateway?.Image?.Url}/>*/}
+                    {/*                <Typography sx={{width: "100%", textAlign: "center", minHeight: 55}}*/}
+                    {/*                            variant={"subtitle1"}>*/}
+                    {/*                    {item.Gateway.Name}*/}
+                    {/*                </Typography>*/}
+                    {/*            </Box>*/}
+                    {/*        </Grid>*/}
+                    {/*    ))}*/}
+                    {/*</Grid>*/}
 
-                    <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>
+                    {/*<Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>*/}
 
-                    <Typography sx={{width: "100%", textAlign: "start", pt: 3, pr: 3}} variant={"h5"}>
+                    <Typography sx={{width: "100%", textAlign: "start", pt: 1, pr: 3}} variant={"h5"}>
                         {selectedGateway?.Gateway?.Description}
                     </Typography>
                     <Grid
@@ -218,7 +218,7 @@ const _IncreaseCredit = () => {
                         direction="row"
                         justifyContent="space-around"
                         alignItems="center"
-                        sx={{padding: 1}}
+                        sx={{px: 1}}
                     >
                         <TextField
                             variant="outlined"
@@ -264,30 +264,30 @@ const _IncreaseCredit = () => {
                         />
 
 
-                        <LocalizationProvider
-                            dateAdapter={AdapterJalali}>
-                            <DatePicker
-                                variant="outlined"
-                                mask="____/__/__"
-                                value={chequeDate || ""}
-                                onChange={(e, w) => {
-                                    setChequeDate(Date.parse(e))
-                                }}
-                                renderInput={(params) =>
+                        {/*<LocalizationProvider*/}
+                        {/*    dateAdapter={AdapterDateFnsJalali}>*/}
+                        {/*    <DatePicker*/}
+                        {/*        variant="outlined"*/}
+                        {/*        mask="____/__/__"*/}
+                        {/*        value={chequeDate || ""}*/}
+                        {/*        onChange={(e, w) => {*/}
+                        {/*            setChequeDate(Date.parse(e))*/}
+                        {/*        }}*/}
+                        {/*        renderInput={(params) =>*/}
 
-                                    <TextField
-                                        hidden={selectedGateway?.Gateway?.GatewayType !== 'CHEQUE'}
-                                        {...params}
-                                        fullWidth
-                                        sx={{mt: 3, direction: "ltr"}}
-                                        className="w-100"
-                                        variant="outlined"
-                                        margin="normal"
-                                        label={"تاریخ چک"}
-                                    />
-                                }
-                            />
-                        </LocalizationProvider>
+                        {/*            <TextField*/}
+                        {/*                hidden={selectedGateway?.Gateway?.GatewayType !== 'CHEQUE'}*/}
+                        {/*                {...params}*/}
+                        {/*                fullWidth*/}
+                        {/*                sx={{mt: 3, direction: "ltr"}}*/}
+                        {/*                className="w-100"*/}
+                        {/*                variant="outlined"*/}
+                        {/*                margin="normal"*/}
+                        {/*                label={"تاریخ چک"}*/}
+                        {/*            />*/}
+                        {/*        }*/}
+                        {/*    />*/}
+                        {/*</LocalizationProvider>*/}
 
                         <Button
                             edge="end"

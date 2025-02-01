@@ -17,7 +17,7 @@ const _TabsPlace = ({place}) => {
     const [selectedTab, setSelectedTab] = React.useState(0);
 
     return (
-        <Box sx={{bgcolor: 'background.paper',zIndex:1005,position:"relative"}}>
+        <Box sx={{bgcolor: 'background.paper',position:"relative"}}>
             <AppBar position="static">
                 <Tabs
                     value={selectedTab}
@@ -37,8 +37,8 @@ const _TabsPlace = ({place}) => {
                 slideClassName={"rtl"}
                 index={selectedTab}
                 onChangeIndex={(e) => setSelectedTab(e)}>
-                <_TabPlaceBuyable place={place} setSelectedTab={setSelectedTab}/>
-                <_TabPlaceAbout place={place}/>
+                {/*<_TabPlaceBuyable place={place} setSelectedTab={setSelectedTab}/>*/}
+                {/*<_TabPlaceAbout place={place}/>*/}
                 {/*<_TabPlaceComments place={place}/>*/}
             </SwipeableViews>
         </Box>

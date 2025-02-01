@@ -114,17 +114,19 @@ const PlacesMap = () => {
 
     function getPopup(place){
         const popupContainer = document.createElement("div");
-        ReactDOM.render(
-            <>
-                <Grid textAlign={"right"} >
-                    <Typography sx={{fontFamily:"IRANSans-web"}} variant={"h6"}>{place.Name}</Typography>
-                    <Typography sx={{fontFamily:"IRANSans-web",mb:2}} variant={"caption"}>{place.Address}</Typography>
-                    <img width="100%" src={place.Multimedias[0].Url+"&width=400"}  />
-                    <Button variant={"contained"} sx={{fontFamily:"IRANSans-web",mt:1,color:"#ffffff !important",bgcolor:"#e7333e"}} fullWidth color={"primary"} href={"/place/" + place.Id + "-" + fixTextToSlug(place.Name)} >اطلاعات بیشتر</Button>
-                </Grid>
-            </>,
-            popupContainer
-        );
+        try{
+            ReactDOM.render(
+                <>
+                    <Grid textAlign={"right"} >
+                        <Typography sx={{fontFamily:"IRANSans-web"}} variant={"h6"}>{place.Name}</Typography>
+                        <Typography sx={{fontFamily:"IRANSans-web",mb:2}} variant={"caption"}>{place.Address}</Typography>
+                        <img width="100%" src={place.Multimedias[0].Url+"&width=400"}  />
+                        <Button variant={"contained"} sx={{fontFamily:"IRANSans-web",mt:1,color:"#ffffff !important",bgcolor:"#e7333e"}} fullWidth color={"primary"} href={"/place/" + place.Id + "-" + fixTextToSlug(place.Name)} >اطلاعات بیشتر</Button>
+                    </Grid>
+                </>,
+                popupContainer
+            );
+        }catch (e){}
         return popupContainer;
     }
 

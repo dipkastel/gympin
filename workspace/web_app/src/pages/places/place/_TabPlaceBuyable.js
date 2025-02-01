@@ -118,14 +118,15 @@ const _TabPlaceBuyable = ({place,setSelectedTab}) => {
         return place?.CallUs&&place?.Tell;
     }
 
-    return (<>
-        {showCallSudjest()&&<Alert sx={{textDecoration:"none"}} severity="warning" href={"tel:"+getfixedPlaceNumber()} component={"a"}>
+    return (
+        <>
+        {showCallSudjest()&&<Alert sx={{textDecoration:"none",m:1}} severity="warning" href={"tel:"+getfixedPlaceNumber()} component={"a"}>
                 <AlertTitle>قبل از خرید بلیط، شرایط استفاده را هماهنگ نمایید.</AlertTitle>
             <Button variant={"contained"} color={"warning"}>تماس با مرکز</Button>
             </Alert>}
             <List className={"nopadding"} disablePadding>
                 {place.Id && <_placeSubscribes place={place}/>}
-                {place.Id && <_placeCourses place={place}/>}
+                {/*{place.Id && <_placeCourses place={place}/>}*/}
             </List>
 
         </>

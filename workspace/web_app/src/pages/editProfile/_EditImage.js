@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Avatar, Button, Dialog, DialogActions, DialogContent, Input} from "@mui/material";
-import {media_AddImage, media_getCatById} from "../../../network/api/multimedia.api";
-import {user_updateAvatar} from "../../../network/api/user.api";
-import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {media_AddImage, media_getCatById} from "../../network/api/multimedia.api";
+import {user_updateAvatar} from "../../network/api/user.api";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 import 'react-advanced-cropper/dist/style.css';
 import {CircleStencil, FixedCropper} from 'react-advanced-cropper'
-import {resizeCanvas} from "../../../helper/utils";
+import {resizeCanvas} from "../../helper/utils";
 
 const _EditImage = ({user, RequestUser}) => {
     const [imageUrl, SetImageUrl] = useState(null)

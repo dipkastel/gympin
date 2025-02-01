@@ -17,6 +17,15 @@ public final class LocationConvertor {
         dto.setCenterLat(entity.getCenterLat());
         dto.setCenterLng(entity.getCenterLng());
         dto.setMapPolygon(entity.getMapPolygon());
+        try{
+            dto.setParentName(entity.getParent().getName());
+        }catch (Exception e){}
+        try{
+            dto.setParentName2(entity.getParent().getParent().getName());
+        }catch (Exception e){}
+        try{
+            dto.setParentName3(entity.getParent().getParent().getParent().getName());
+        }catch (Exception e){}
         return dto;
     }
     public static LocationDto toDtoWithChilds(ManageLocationEntity entity) {

@@ -39,4 +39,13 @@ public class LocationDto extends BaseDto<LocationDto> {
     @JsonProperty("parent")
     private LocationDto parent;
 
+    @JsonProperty("parentName")
+    private String parentName;
+
+    @JsonProperty("parentName2")
+    private String parentName2;
+
+    @JsonProperty("parentName3")
+    private String parentName3;
+
 }

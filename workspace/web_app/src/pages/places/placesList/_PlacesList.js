@@ -1,24 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-    Chip,
-    CircularProgress,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    FormControl,
-    Grid,
-    IconButton,
-    InputLabel,
-    MenuItem,
-    Select, TextField
-} from "@mui/material";
+import {Card, CircularProgress, Collapse, Container, FormControl, FormControlLabel, Grid2 as Grid, Link, TextField} from "@mui/material";
 import {Place_query} from "../../../network/api/place.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 import __placeListItem from "./__placeListItem";
 import {sports_query} from "../../../network/api/sport.api";
 import {Location_query} from "../../../network/api/location.api";
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
+import {useNavigate} from "react-router-dom";
 
 
 export const defaultPlaceFilters = [
@@ -44,48 +32,49 @@ export const defaultPlaceFilters = [
 export const genders = [{
     Name: "خانم ها",
     value: "FEMALE"
-},{
+}, {
     Name: "آقایان",
     value: "MALE"
 }];
 
 export const sortPlaceItems = [{
-    Id:0,
+    Id: 0,
     Name: "مرتبط ترین",
     Value: "order",
-    Desc:true,
-},{
-    Id:1,
+    Desc: true,
+}, {
+    Id: 1,
     Name: "جدید ترین",
     Value: "id",
-    Desc:true,
-},{
-    Id:2,
+    Desc: true,
+}, {
+    Id: 2,
     Name: "قدیمی ترین",
     Value: "id",
-    Desc:false,
+    Desc: false,
 }, {
-    Id:3,
+    Id: 3,
     Name: "آ-ی",
     Value: "name",
-    Desc:false,
+    Desc: false,
 }, {
-    Id:4,
+    Id: 4,
     Name: "ی-آ",
     Value: "name",
-    Desc:true,
+    Desc: true,
 }, {
-    Id:5,
+    Id: 5,
     Name: "منطقه (آ-ی)",
     Value: "location",
-    Desc:false,
+    Desc: false,
 }, {
-    Id:6,
+    Id: 6,
     Name: "منطقه (ی-آ)",
     Value: "location",
-    Desc:true,
+    Desc: true,
 }]
 const _PlacesList = () => {
+    const navigate = useNavigate();
     const error = useContext(ErrorContext);
     const currentUser = useSelector(state => state.auth.user);
 
@@ -98,14 +87,15 @@ const _PlacesList = () => {
     const [endOfList, setEndOfList] = useState(false);
     const [sortBy, SetSortBy] = useState(sortPlaceItems[0])
     const [openModal, setOpenModal] = useState(false)
+    const [openSearch, setOpenSearch] = useState(false)
     const [sports, SetSports] = useState([])
     const [region, SetRegions] = useState([])
     const [value, setValue] = useState("");
-    const [filters, SetFilters] = useState([...defaultPlaceFilters,{
+    const [filters, SetFilters] = useState([...defaultPlaceFilters, {
             type: "gender",
             name: "جنسیت",
             value: null,
-            selectedName: currentUser?genders.find(i=>i.value===currentUser?.Gender)?.Name:null
+            selectedName: currentUser ? genders.find(i => i.value === currentUser?.Gender)?.Name : null
         }]
     )
     // const [filters, SetFilters] = useState([...defaultPlaceFilters,{
@@ -119,7 +109,7 @@ const _PlacesList = () => {
 
         let debouncer = setTimeout(() => {
             SetPlaces(null);
-            getData(0,value);
+            getData(0, value);
         }, 1000);
         return () => {
             clearTimeout(debouncer);
@@ -129,8 +119,8 @@ const _PlacesList = () => {
     useEffect(() => {
         sports_query({
             queryType: "FILTER",
-            HasPlace:0,
-            paging:{Page:0,Size:50}
+            HasPlace: 0,
+            paging: {Page: 0, Size: 50}
         }).then(result => {
             SetSports(result.data.Data.content)
         }).catch(e => {
@@ -142,9 +132,9 @@ const _PlacesList = () => {
         });
         Location_query({
             queryType: "FILTER",
-            ParentId:3,
-            HasPlace:0,
-            paging:{Page:0,Size:100}
+            ParentId: 3,
+            HasPlace: 0,
+            paging: {Page: 0, Size: 100}
         }).then(result => {
             SetRegions(result.data.Data.content)
         }).catch(e => {
@@ -165,25 +155,25 @@ const _PlacesList = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [isLoading]);
 
-    function getData(page,searchString){
+    function getData(page, searchString) {
         console.log(searchString);
         setIsLoading(true);
         Place_query({
             queryType: "FILTER",
-            Status:"Active",
-            Name:searchString,
+            Status: "Active",
+            Name: searchString,
             //
             // Sports:filters.find(f=>f.type==="Sports").value,
             // LocationId:filters.find(f=>f.type==="location").value,
             // Gender:filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null,
-            Option:null,
-            paging: {Page: page, Size: 20,Desc:sortBy.Desc,OrderBy:sortBy.Value}
+            Option: null,
+            paging: {Page: page, Size: 20, Desc: sortBy.Desc, OrderBy: sortBy.Value}
         }).then(result => {
             setIsLoading(false)
             setLoadedPage(page);
-            var content = searchString?[]:places?places.content:[];
+            var content = searchString ? [] : places ? places.content : [];
             content.push(...result.data.Data.content);
-            SetPlaces({...result.data.Data,content:content});
+            SetPlaces({...result.data.Data, content: content});
             setEndOfList(result.data.Data.last);
             itsStart = false;
         }).catch(e => {
@@ -232,22 +222,22 @@ const _PlacesList = () => {
 
     function changeSort(e) {
         SetPlaces(null);
-        SetSortBy(sortPlaceItems.find(f=>f.Id==e))
+        SetSortBy(sortPlaceItems.find(f => f.Id == e))
     }
 
     var itsStart = false;
     const handleScroll = () => {
-       if (window.innerHeight + document.documentElement.scrollTop+40 < document.documentElement.offsetHeight || isLoading||endOfList||itsStart) {
+        if (window.innerHeight + document.documentElement.scrollTop + 40 < document.documentElement.offsetHeight || isLoading || endOfList || itsStart) {
             return;
         }
-       itsStart = true;
-         setLoadedPage(loadedPage+1);
+        itsStart = true;
+        setLoadedPage(loadedPage + 1);
 
-         getData(loadedPage+1,value);
+        getData(loadedPage + 1, value);
     };
 
     return (
-        <>{places?(<>
+        <>{places ? (<>
             {/*<Grid className={"mt-3 z1040 position-relative"} container direction={"row"} justifyContent={"space-between"} alignContent={"center"} sx={{paddingX:2}}>*/}
             {/*    <Grid>*/}
             {/*        <IconButton  onClick={() => setOpenModal(!openModal)} sx={{color: "#000000"}} aria-label=""*/}
@@ -343,48 +333,66 @@ const _PlacesList = () => {
             {/*</Dialog>*/}
 
 
+            <Grid container sx={{px: 1, pt: 3}} columns={60}>
+                <Grid sx={{px: 1}} size={{xs: 49, md: 54, lg: 56, xl: 57}}>
+                    <Card elevation={0} sx={{width: "100%", borderRadius: 6, p: 2, backgroundImage: 'url("/assets/images/mapp.jpg")'}}
+                          onClick={(e) => navigate("/placesMap")}>
+                        <img height={25} width={25} src={"/logo192.png"} />
+                        <Link sx={{textDecoration: "none", color: "#222222"}} color={"primary"} href={"/placesMap"}>
+                            {" مشاهده مراکز روی نقشه"}
+                        </Link>
+                    </Card>
+                </Grid>
+                <Grid sx={{px: 1}} size={{xs:11, md:6, lg:4, xl:3}} textAlign={"center"}>
+                    <Card elevation={0} sx={{width: "100%", borderRadius: 6, p: 2, bgcolor: "#dfdfdf"}}
+                          onClick={(e) => setOpenSearch(!openSearch)}>
+                        <img src={"/assets/images/search.svg"} />
+                    </Card>
+                </Grid>
+            </Grid>
+            <Container maxWidth>
+                <Collapse in={openSearch} timeout={"auto"} unmountOnExit>
 
-            <div className={"w-100 px-2"}>
 
-                <TextField
-                    id="outlined-adornment-password"
-                    className="w-100"
-                    variant="outlined"
-                    margin="normal"
-                    name="username"
-                    type="username"
-                    onChange={e=>setValue(e.target.value)}
-                    value={value}
-                    label={"جستجو (نام مرکز)"}
-                    // onBlur={handleBlur}
-                    // onChange={handleChange}
-                    // value={values.username}
-                    // helperText={touched.username && errors.username}
-                    // error={Boolean(touched.username && errors.username)}
-                />
-            </div>
+                    <TextField
+                        id="outlined-adornment-password"
+                        fullWidth
+                        variant="outlined"
+                        margin="normal"
+                        name="username"
+                        type="username"
+                        onChange={e => setValue(e.target.value)}
+
+                        value={value}
+                        label={"جستجو (نام مرکز)"}
+                    />
+
+
+                </Collapse>
+            </Container>
+
             <Grid container
                   direction="row"
                   justifyContent="center"
                   alignItems="center">
-                {places.content&&places.content.map(item => (
-                        <__placeListItem key={"5i"+item.Id} item={item} />
+                {places.content && places.content.map(item => (
+                        <__placeListItem key={"5i" + item.Id} item={item}/>
                     )
                 )}
-                {isLoading&&<div>
-                    <CircularProgress />
+                {isLoading && <div>
+                    <CircularProgress/>
                 </div>}
             </Grid>
-        </>):(<Grid
-        container
-        sx={{width:"100%",height:"80vh"}}
-        direction={"column"}
-        justifyContent={"center"}
-        alignItems={"center"}
-    >
-        <CircularProgress />
-    </Grid>
-)}</>
+        </>) : (<Grid
+                container
+                sx={{width: "100%", height: "80vh"}}
+                direction={"column"}
+                justifyContent={"center"}
+                alignItems={"center"}
+            >
+                <CircularProgress/>
+            </Grid>
+        )}</>
     );
 };
 

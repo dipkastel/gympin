@@ -21,18 +21,17 @@ const _PlaceFacilities = ({place}) => {
 
     return (
         <div className={"nopadding"}>
-            <Card elevation={3} sx={{margin: 1, padding: 1}}>
+            <Card elevation={3} sx={{margin: 2, padding: 1}}>
                 <Typography variant={"subtitle1"}>
                     امکانات مجموعه
                 </Typography>
                 <Grid
                     container
                     direction="row"
-                    justifyContent="space-between"
                     alignItems="stretch"
                 >
                     {placeOptions.map((item,number)=>(
-                        <Chip size={"small"} key={number} sx={{padding:1,margin:1}} label={item.PlaceOption.Name} />
+                        <Chip variant={"outlined"} sx={{padding:1,margin:1}} key={number} label={item.PlaceOption.Name}/>
                     ))}
                 </Grid>
             </Card>

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {ticketSubscribe_getByPlace} from "../../../../network/api/ticketSubscribe.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import _PlaceSubscribeListItem from "./_PlaceSubscribeListItem";
-import {Collapse, Grid, Typography} from "@mui/material";
+import {Collapse, Grid2 as Grid, Typography} from "@mui/material";
 import {ExpandLessTwoTone} from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {useSelector} from "react-redux";
@@ -134,22 +134,23 @@ const _placeSubscribes = ({place}) => {
 
         return (
             <div>
-                {subscribes.length > 0 && <>
-                    <Grid container onClick={(e) => setIsExpanded(!isExpanded)} direction={"row"} alignItems={"center"}
-                          justifyContent={"space-between"} bgcolor={"#c7c7c7"}
-                          sx={{width: "100%", p: 1, borderBottom: "#e7333e solid 2px", mt: 1}}>
+                {subscribes.length > 0 && <Grid container columns={2}>
+                    {/*<Grid container onClick={(e) => setIsExpanded(!isExpanded)} direction={"row"} alignItems={"center"}*/}
+                    {/*      justifyContent={"space-between"} bgcolor={"#c7c7c7"}*/}
+                    {/*      sx={{width: "100%", p: 1, borderBottom: "#e7333e solid 2px", mt: 1}}>*/}
 
-                        <Typography variant={"subtitle1"} color={"white"}>عضویت ها</Typography>
-                        {isExpanded ? <ExpandLessTwoTone/> : <ExpandMoreIcon/>}
-                    </Grid>
-                    <Collapse in={isExpanded} timeout={"auto"} unmountOnExit>
+                    {/*    <Typography variant={"subtitle1"} color={"white"}>عضویت ها</Typography>*/}
+                    {/*    {isExpanded ? <ExpandLessTwoTone/> : <ExpandMoreIcon/>}*/}
+                    {/*</Grid>*/}
+                    {/*<Collapse in={isExpanded} timeout={"auto"} unmountOnExit>*/}
                         {subscribes?.filter(t => t.Enable).map((item, number) => (
                             <_PlaceSubscribeListItem key={"ac" + number} subscribe={item} number={number}
                                                      addToSubscribe={addToBasket}/>))}
                         {subscribes?.filter(t => !t.Enable).map((item, number) => (
                             <_PlaceSubscribeListItem key={"de" + number} subscribe={item} number={number}
                                                      addToSubscribe={addToBasket}/>))}
-                    </Collapse></>}
+                    {/*</Collapse>*/}
+                    </Grid>}
             </div>
         );
     };

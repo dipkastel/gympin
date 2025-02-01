@@ -11,16 +11,16 @@ import {
     Select,
     TextField
 } from "@mui/material";
-import {checkNationalCode, checkUsername, compareObjs} from "../../../helper/utils";
+import {checkNationalCode, checkUsername, compareObjs} from "../../helper/utils";
 import {connect, useSelector} from "react-redux";
 import {Formik} from "formik";
-import {user_checkUsernameAvailable, user_updateMe} from "../../../network/api/user.api";
-import AdapterJalali from '@date-io/date-fns-jalali';
+import {user_checkUsernameAvailable, user_updateMe} from "../../network/api/user.api";
+import {AdapterDateFnsJalali} from "@mui/x-date-pickers/AdapterDateFnsJalaliV3";
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {useNavigate} from "react-router-dom";
-import {sagaActions} from "../../../helper/redux/actions/SagaActions";
-import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {sagaActions} from "../../helper/redux/actions/SagaActions";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 import _EditImage from "./_EditImage";
 import {Form} from "react-bootstrap";
 
@@ -241,7 +241,7 @@ const EditProfile = (props) => {
                             >{getValidation("Gender",currentUser.Gender)}</FormHelperText>
                         </FormControl>
                         <LocalizationProvider
-                            dateAdapter={AdapterJalali}>
+                            dateAdapter={AdapterDateFnsJalali}>
                             <DatePicker
 
                                 variant="outlined"

@@ -1,104 +1,197 @@
-import React from 'react';
-import {Card, Divider, Grid, ListItemText, Typography} from "@mui/material";
+import React, {useState} from 'react';
+import {Alert, Box, Card, Chip, Collapse, Divider, Grid2 as Grid, ListItemText, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
-import {BoyRounded, ChildCare, GirlRounded, LocationOnOutlined, ManRounded, WomanRounded} from "@mui/icons-material";
+import {
+    AvTimerOutlined,
+    ChildCare,
+    Face2Outlined,
+    Face3Outlined,
+    Face6Outlined,
+    GroupOutlined,
+    SentimentSatisfiedAltOutlined,
+    SupervisedUserCircleOutlined
+} from "@mui/icons-material";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import {fixTextToSlug, toPriceWithComma} from "../../../helper/utils";
+import {useNavigate} from "react-router-dom";
 
 const __placeListItem = ({item}) => {
+    const navigate = useNavigate();
+    const [showActiveTime, setShowActiveTime] = useState(false)
     return (
-        <Grid item component={"a"} href={"/place/" + item.Id+"-"+fixTextToSlug(item.Name)} sx={{textDecoration: "none"}}
-              lg={3} md={4} sm={6} xs={12}>
+        <Grid item component={"a"} sx={{textDecoration: "none"}}
+              lg={3} size={{md: 4, sm: 6, xs: 12}}>
             <Card elevation={8} sx={{margin: 2, padding: 0, borderRadius: 3}}>
                 <Grid container
                       direction="row"
                       justifyContent="center"
                       alignItems="center">
                     <Grid item
-                          sx={{padding: 0, display: "flex", flexDirection: "column-reverse", alignItems: "center"}}>
+                          onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}
+                          sx={{padding: 0, display: "flex", flexDirection: "column-reverse", alignItems: "end"}}>
                         <Image
                             src={item?.Multimedias?.[0] ? (item.Multimedias?.[0]?.Url + "&width=400") : "https://api.gympin.ir/resource/image?Id=11"}
-                            width={"100%"}
-                            rounded={3}/>
-                        {/*<Box sx={{width:"160px",marginTop:1,height:"30px",opacity:"0.6",backgroundColor:"black",position:"absolute",borderRadius:"15px 15px 0 0"}}>*/}
+                            width={"100%"}/>
+                        {item?.Location?.Name &&
+                        <Grid container direction={"row"} sx={{mb: "-1px", height: "30px", position: "absolute"}}>
 
-                        {/*</Box>*/}
+
+                            <img src={"/assets/images/cornerShape.svg"} style={{marginLeft: "-1px"}} height={"30px"}/>
+                            <Box sx={{px: 1, backgroundColor: "white", borderRadius: "0 8px 0 0"}}>
+                                <Typography sx={{paddingY: 0.5}} variant={"body1"} component={"div"}>
+                                    <img src={"/logo192.png"} width={"18px"}/> {item.Location.Name}
+                                </Typography>
+                            </Box>
+                        </Grid>}
+
+
                         {/*<Rating name="read-only" value={4} sx={{position:"absolute",marginBottom:"5px"}}  />*/}
                     </Grid>
                     <Grid item sx={{padding: 1, minHeight: "88px", width: "100%"}}>
 
-                        <Grid container
-                              direction="row"
-                              justifyContent={"space-between"}
-                              alignItems="center">
-
+                        <Typography
+                            onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))} className={"sportBullet"} sx={{paddingTop: 0.5, paddingBottom: 0.5}}
+                                    variant={"h5"}>
+                            {item.Name}
+                        </Typography>
+                        {item.Genders.length > 0 && <Grid container
+                                                          direction="row"
+                                                          sx={{mt: 1}}
+                                                          justifyContent={"space-between"}
+                                                          onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}
+                                                          alignItems="center">
                             <Grid>
-
-                                <Typography className={"sportBullet"} sx={{paddingTop: 0.5, paddingBottom: 0.5}}
-                                            variant={"h5"}>
-                                    {item.Name}
+                                <GroupOutlined/>
+                                <Typography sx={{mx: 0.5, fontSize: 13}}
+                                            variant={"caption"}>
+                                    جنسیت
                                 </Typography>
                             </Grid>
                             <Grid>
-                                {/*{item.Genders && item.Genders.map((gender, number) => (*/}
-                                {/*    <div key={"kh" + number} className={"d-inline"}>*/}
-                                {/*        {gender === "MALE" && <ManRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}*/}
-                                {/*        {gender === "FEMALE" && <WomanRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}*/}
-                                {/*        {gender === "BOYS" && <BoyRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}*/}
-                                {/*        {gender === "GIRLS" && <GirlRounded sx={{fontSize: 20, color: "#cc0f0f"}}/>}*/}
-                                {/*        {gender === "KIDS" && <ChildCare sx={{fontSize: 20, color: "#cc0f0f"}}/>}*/}
-                                {/*    </div>))}*/}
+                                {item.Genders.map((gender, number) => (
+                                    <div key={"kh" + number} className={"d-inline"}>
+                                        {gender === "MALE" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                                                    label={<><SentimentSatisfiedAltOutlined
+                                                                        sx={{color: "#ffffff"}}/><Typography variant={"caption"}
+                                                                                                             sx={{px: 1}}>آقایان</Typography></>}/>}
+                                        {gender === "FEMALE" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                                                      label={<><Face3Outlined sx={{color: "#ffffff"}}/><Typography
+                                                                          variant={"caption"} sx={{px: 1}}>خانم‌ها</Typography></>}/>}
+                                        {gender === "BOYS" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                                                    label={<><Face6Outlined sx={{color: "#ffffff"}}/><Typography
+                                                                        variant={"caption"} sx={{px: 1}}>پسرها</Typography></>}/>}
+                                        {gender === "GIRLS" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                                                     label={<><Face2Outlined sx={{color: "#ffffff"}}/><Typography
+                                                                         variant={"caption"} sx={{px: 1}}>دخترها</Typography></>}/>}
+                                        {gender === "KIDS" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                                                    label={<><ChildCare sx={{color: "#ffffff"}}/><Typography
+                                                                        variant={"caption"} sx={{px: 1}}>کودکان</Typography></>}/>}
+                                        {gender === "NONE" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                                                    label={<><SupervisedUserCircleOutlined
+                                                                        sx={{color: "#ffffff"}}/><Typography variant={"caption"}
+                                                                                                             sx={{px: 1}}>همه</Typography></>}/>}
+                                    </div>))}
+                            </Grid>
+                        </Grid>}
+                        {item.ActiveTimes && <><Grid container
+                                                     direction="row"
+                                                     sx={{mt: 1}}
+                                                     justifyContent={"space-between"}
+                                                     alignItems="center">
+                            <Grid>
+                                <AvTimerOutlined/>
+                                <Typography sx={{mx: 0.5, fontSize: 13}}
+                                            variant={"caption"}>
+                                    زمان فعالیت
+                                </Typography>
+                            </Grid>
+                            <Grid>
+                                <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}} onClick={() => {
+                                    setShowActiveTime(!showActiveTime)
+                                }}
+                                      label={<Typography variant={"caption"} sx={{px: 1}}>مشاهده</Typography>}/>
                             </Grid>
                         </Grid>
-                        <Typography sx={{paddingY: 0.5}} variant={"body1"} component={"div"}>
-                            {item.Location && <>
-                                <LocationOnOutlined sx={{fontSize: 15, color: "#cc0f0f"}}/> {item.Location.Name}
-                            </>}
-                        </Typography>
-                        <Typography sx={{paddingY: 0.5}} variant={"body1"} component={"div"}>
+                            <Collapse in={showActiveTime}>
+                                <Alert>{item.ActiveTimes}</Alert>
+                            </Collapse>
+                        </>}
+                        <Typography sx={{mt: 1, paddingY: 0.5}} variant={"body1"} component={"div"}
+                                    onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}>
                             {item.Sports && item.Sports.map((sport, number) => (
                                 <div key={"ph" + number} className={"d-inline"}>
-                                    {number<3&&<div className={"d-inline"}>
+                                    {number < 3 && <div className={"d-inline"}>
                                         <FiberManualRecordIcon className={"sportBullet"}
-                                                               sx={{fontSize: 8, color: "#cc0f0f"}}/>
-                                        {sport.Name}
+                                                               sx={{fontSize: 6, color: "#cc0f0f"}}/>
+                                        <Typography variant={"caption"}>
+                                            {sport.Name}
+                                        </Typography>
                                     </div>}
-                                    {number>3&&number<7&&<div className={"d-inline"}>
+                                    {number > 3 && number < 7 && <div className={"d-inline"}>
                                         <FiberManualRecordIcon className={"sportBullet"}
-                                                               sx={{fontSize: 8, color: "#cc0f0f"}}/>
+                                                               sx={{fontSize: 6, color: "#cc0f0f"}}/>
                                     </div>}
                                 </div>
                             ))}
                         </Typography>
                         <Divider variant="inset" sx={{marginY: 1, marginLeft: 0, marginRight: 0}} component="div"/>
-                        <Grid sx={{width: "100%"}}
-                              container
-                              direction="row"
-                              alignItems={"center"}
-                              justifyContent={"center"}
-
+                        <Grid
+                            container
+                            direction={"row"}
+                            alignItems={"center"}
+                            columns={22}
+                            onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}
                         >
-                            {item?.MinPrice && <Typography sx={{color: "#757575",fontWeight:200}} variant={"subtitle2"}>
+                            <Grid textAlign={"end"} size={7}>{item?.MinPrice && <Typography sx={{color: "#757575", fontWeight: 200,pr:1}} variant={"subtitle2"}>
                                 {"شروع قیمت از "}
-                            </Typography>}
-                            <ListItemText
-                                sx={{mt:"0px",flex:"none"}}
-                                primary={item?.MinPriceBeforeDiscount &&
-                                <Typography sx={{paddingRight: 1, color: "#b06161",textDecoration:"line-through", fontWeight: 500,lineHeight:1}} variant={"subtitle1"}>
-                                    {toPriceWithComma(item?.MinPriceBeforeDiscount) }
-                                </Typography>}
-                                primaryTypographyProps={{p:0,m:0,lineHeight:0}}
-                                secondaryTypographyProps={{p:0,m:0,lineHeight:0}}
-                                secondary= {item?.MinPrice &&
-                                <Typography sx={{paddingRight: 1, color: "#26881a", fontWeight: 700,lineHeight:1}} variant={"subtitle1"}>
-                                    {toPriceWithComma(item.MinPrice) + " تومان"}
-                                </Typography>}
-                            />
+                            </Typography>}</Grid>
+                            <Grid textAlign={"start"} size={8}>
+                                <ListItemText
+                                    sx={{mt: "0px", flex: "none"}}
+                                    primary={item?.MinPriceBeforeDiscount &&
+                                    <Typography
+                                        sx={{
+                                            paddingRight: 1,
+                                            color: "#b06161",
+                                            textDecoration: "line-through",
+                                            fontWeight: 500,
+                                            lineHeight: 1
+                                        }}
+                                        variant={"subtitle1"}>
+                                        {toPriceWithComma(item?.MinPriceBeforeDiscount)}
+                                    </Typography>}
+                                    primaryTypographyProps={{p: 0, m: 0, lineHeight: 0}}
+                                    secondaryTypographyProps={{p: 0, m: 0, lineHeight: 0}}
+                                    secondary={item?.MinPrice &&
+                                    <Typography sx={{paddingRight: 1, color: "#26881a", fontWeight: 700, lineHeight: 1}}
+                                                variant={"subtitle1"}>
+                                        {toPriceWithComma(item.MinPrice) + " تومان"}
+                                    </Typography>}
+                                />
+                            </Grid>
+                            {item?.MinPriceBeforeDiscount&&<><Grid textAlign={"start"} size={1}>
+                                <Divider orientation="vertical"
+                                         sx={{height: "45px", width: "1px", borderColor: "gray.darker", borderStyle: "dashed"}}
+                                         component="div"/>
+                            </Grid>
+                                <Grid direction={"column"} container size={6}>
+
+                                <Grid>
+                                <Typography variant={"caption"} color={"primary"} sx={{fontSize:"0.9rem",fontWeight:400}}>{toPriceWithComma(item?.MinPriceBeforeDiscount-item.MinPrice)}</Typography>
+                                <Typography variant={"caption"} color={"primary"} sx={{fontSize:"1rem",fontWeight:400}}>{" تومان"}</Typography>
+                                </Grid>
+                                <Grid>
+                                <img src={"/assets/images/discountIcon.svg"} width={"15px"}/>
+                                <Typography variant={"caption"} color={"primary"} sx={{fontSize:"1rem",fontWeight:900,pl:0.5}}>تخفیف</Typography>
+                                </Grid>
+                                </Grid></>}
+                            {!item.MinPrice && <Grid textAlign={"center"} size={22}>
+                                <Typography sx={{color: "#757575"}} variant={"subtitle1"}>
+                                    {"بدون پلن فعال "}
+                                </Typography>
+                            </Grid>}
 
 
-                            {!item.MinPrice && <Typography sx={{color: "#757575"}} variant={"subtitle1"}>
-                                {"بدون پلن فعال "}
-                            </Typography>}
                         </Grid>
                     </Grid>
 

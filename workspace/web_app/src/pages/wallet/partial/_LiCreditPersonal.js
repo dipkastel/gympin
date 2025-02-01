@@ -13,7 +13,7 @@ const _LiCreditPersonal = ({credit}) => {
                       justifyContent={"space-between"}>
                     <ListItemText primary={"کیف پول شخصی"} />
                     <ListItemText
-                        sx={{textAlign:"left"}}
+                        sx={{textAlign:"end"}}
                         primary={toPriceWithComma(credit.CreditAmount) + " تومان"} />
                 </Grid>
                 <Divider variant="inset" sx={{margin: 0, padding: 0, width: "100%"}}

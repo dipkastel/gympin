@@ -21,7 +21,7 @@ const _LiCreditNonW = ({credit}) => {
                     <ListItemText
                         primary={<Typography
                             variant="subtitle2"
-                            sx={{textAlign:"left"}}
+                            sx={{textAlign:"end"}}
                         >
 
                             {toPriceWithComma(credit.CreditAmount) + " تومان"}
