@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 import __placeListItem from "./__placeListItem";
 import {sports_query} from "../../../network/api/sport.api";
 import {Location_query} from "../../../network/api/location.api";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 export const defaultPlaceFilters = [
@@ -76,6 +76,9 @@ export const sortPlaceItems = [{
 const _PlacesList = () => {
     const navigate = useNavigate();
     const error = useContext(ErrorContext);
+
+    const {sid} = useParams();
+    console.log("sid",sid);
     const currentUser = useSelector(state => state.auth.user);
 
     const [places, SetPlaces] = useState(null);
@@ -162,8 +165,7 @@ const _PlacesList = () => {
             queryType: "FILTER",
             Status: "Active",
             Name: searchString,
-            //
-            // Sports:filters.find(f=>f.type==="Sports").value,
+            Sports:sid,
             // LocationId:filters.find(f=>f.type==="location").value,
             // Gender:filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null,
             Option: null,
@@ -376,7 +378,10 @@ const _PlacesList = () => {
                   justifyContent="center"
                   alignItems="center">
                 {places.content && places.content.map(item => (
-                        <__placeListItem key={"5i" + item.Id} item={item}/>
+                    <Grid item component={"a"} key={"5i" + item.Id} sx={{textDecoration: "none"}}
+                          lg={3} size={{md: 4, sm: 6, xs: 12}}>
+                        <__placeListItem  item={item}/>
+                    </Grid>
                     )
                 )}
                 {isLoading && <div>

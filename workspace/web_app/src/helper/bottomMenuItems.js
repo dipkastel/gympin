@@ -5,13 +5,13 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import HomeIcon from "@mui/icons-material/Home";
 
 export const bottomMenuItems = [
-    // {
-    //     value:"home",
-    //     lable:"جیم پین",
-    //     firstDirection:"/",
-    //     icon:<HomeIcon/>,
-    //     otherRouts:[""]
-    // },
+    {
+        value:"home",
+        lable:"جیم پین",
+        firstDirection:"/",
+        icon:<HomeIcon/>,
+        otherRouts:[""]
+    },
     {
         value:"places",
         lable:"مجموعه‌ها",

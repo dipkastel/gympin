@@ -27,6 +27,7 @@ import PageLayout from "../components/PageLayout";
 import Home from "../pages/home/Home";
 import {useColorScheme} from "@mui/material";
 import TicketsActive from "../pages/tickets/TicketsActive";
+import NewHome from "../pages/newHome/NewHome";
 
 export default function ApplicationRoutes() {
     const isAuthorized = useSelector(({auth: {user}}) => user ? user.Id != null : false);
@@ -43,8 +44,9 @@ export default function ApplicationRoutes() {
             {isAuthorized && <PageLayout>
                 <Routes>
                     {/*<Route path="/" element={<NewHome/>}/>*/}
-                    <Route path="/" element={<Places/>}/>
+                    <Route path="/" element={<NewHome/>}/>
                     <Route path="/places" element={ <Places/>}/>
+                    <Route path="/places/:sid" element={ <Places/>}/>
                     <Route path="/place/:placeId" element={<Place/>}/>
                     <Route path="/placesMap" element={ <PlacesMap/>}/>
                     <Route path="/coaches" element={ <Coaches/>}/>

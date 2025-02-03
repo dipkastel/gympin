@@ -63,5 +63,7 @@
   right: 15px;
   bottom: 70px;
 }
-
+.slick-slide{
+  float:left !important
+}
 /*# sourceMappingURL=style.css.map */

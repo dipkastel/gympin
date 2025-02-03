@@ -8,6 +8,7 @@ import {
     Face3Outlined,
     Face6Outlined,
     GroupOutlined,
+    NewReleases,
     SentimentSatisfiedAltOutlined,
     SupervisedUserCircleOutlined
 } from "@mui/icons-material";
@@ -19,27 +20,28 @@ const __placeListItem = ({item}) => {
     const navigate = useNavigate();
     const [showActiveTime, setShowActiveTime] = useState(false)
     return (
-        <Grid item component={"a"} sx={{textDecoration: "none"}}
-              lg={3} size={{md: 4, sm: 6, xs: 12}}>
+        <Grid container>
             <Card elevation={8} sx={{margin: 2, padding: 0, borderRadius: 3}}>
                 <Grid container
                       direction="row"
+                      sx={{direction: "ltr"}}
                       justifyContent="center"
                       alignItems="center">
                     <Grid item
                           onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}
-                          sx={{padding: 0, display: "flex", flexDirection: "column-reverse", alignItems: "end"}}>
+                          sx={{padding: 0, display: "flex", flexDirection: "column-reverse", alignItems: "end",width:"100%"}}>
                         <Image
                             src={item?.Multimedias?.[0] ? (item.Multimedias?.[0]?.Url + "&width=400") : "https://api.gympin.ir/resource/image?Id=11"}
                             width={"100%"}/>
                         {item?.Location?.Name &&
-                        <Grid container direction={"row"} sx={{mb: "-1px", height: "30px", position: "absolute"}}>
+                        <Grid container direction={"row"} sx={{height: "30px", position: "absolute",mb:"-1px"}}>
 
 
-                            <img src={"/assets/images/cornerShape.svg"} style={{marginLeft: "-1px"}} height={"30px"}/>
-                            <Box sx={{px: 1, backgroundColor: "white", borderRadius: "0 8px 0 0"}}>
-                                <Typography sx={{paddingY: 0.5}} variant={"body1"} component={"div"}>
-                                    <img src={"/logo192.png"} width={"18px"}/> {item.Location.Name}
+                            <img src={"/assets/images/cornerShape.svg"} style={{marginLeft: "-1px"}} height={"30px"} width={"30px"}/>
+                            <Box alignItems={"center"} sx={{px: 1, backgroundColor: "white", borderRadius: "0 8px 0 0", display: "flex"}}>
+                                <img src={"/logo192.png"} height={"18px"} width={"18px"}/>
+                                <Typography sx={{paddingY: 0.5, pl: 1, display: "inline-block"}} variant={"body1"} component={"div"}>
+                                    {item.Location.Name}
                                 </Typography>
                             </Box>
                         </Grid>}
@@ -50,16 +52,17 @@ const __placeListItem = ({item}) => {
                     <Grid item sx={{padding: 1, minHeight: "88px", width: "100%"}}>
 
                         <Typography
-                            onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))} className={"sportBullet"} sx={{paddingTop: 0.5, paddingBottom: 0.5}}
-                                    variant={"h5"}>
+                            onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))} className={"sportBullet"}
+                            sx={{paddingTop: 0.5, paddingBottom: 0.5}}
+                            variant={"h5"}>
                             {item.Name}
                         </Typography>
-                        {item.Genders.length > 0 && <Grid container
-                                                          direction="row"
-                                                          sx={{mt: 1}}
-                                                          justifyContent={"space-between"}
-                                                          onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}
-                                                          alignItems="center">
+                        <Grid container
+                              direction="row"
+                              sx={{mt: 1}}
+                              justifyContent={"space-between"}
+                              onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}
+                              alignItems="center">
                             <Grid>
                                 <GroupOutlined/>
                                 <Typography sx={{mx: 0.5, fontSize: 13}}
@@ -68,7 +71,12 @@ const __placeListItem = ({item}) => {
                                 </Typography>
                             </Grid>
                             <Grid>
-                                {item.Genders.map((gender, number) => (
+                                {item.Genders.length < 1 && <Chip size={"small"} sx={{bgcolor: "#cccccc", color: "#555555"}}
+                                                                  label={<><NewReleases
+                                                                      sx={{color: "#cccccc"}}/><Typography variant={"caption"}
+                                                                                                           sx={{px: 1}}>ثبت
+                                                                      نشده</Typography></>}/>}
+                                {item?.Genders?.map((gender, number) => (
                                     <div key={"kh" + number} className={"d-inline"}>
                                         {gender === "MALE" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
                                                                     label={<><SentimentSatisfiedAltOutlined
@@ -92,12 +100,12 @@ const __placeListItem = ({item}) => {
                                                                                                              sx={{px: 1}}>همه</Typography></>}/>}
                                     </div>))}
                             </Grid>
-                        </Grid>}
-                        {item.ActiveTimes && <><Grid container
-                                                     direction="row"
-                                                     sx={{mt: 1}}
-                                                     justifyContent={"space-between"}
-                                                     alignItems="center">
+                        </Grid>
+                        <Grid container
+                              direction="row"
+                              sx={{mt: 1}}
+                              justifyContent={"space-between"}
+                              alignItems="center">
                             <Grid>
                                 <AvTimerOutlined/>
                                 <Typography sx={{mx: 0.5, fontSize: 13}}
@@ -106,16 +114,23 @@ const __placeListItem = ({item}) => {
                                 </Typography>
                             </Grid>
                             <Grid>
-                                <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}} onClick={() => {
+                                {item.ActiveTimes && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}} onClick={() => {
                                     setShowActiveTime(!showActiveTime)
                                 }}
-                                      label={<Typography variant={"caption"} sx={{px: 1}}>مشاهده</Typography>}/>
+                                                           label={<Typography variant={"caption"} sx={{px: 1}}>مشاهده</Typography>}/>
+                                }
+                                {!item.ActiveTimes && <Chip size={"small"} sx={{bgcolor: "#cccccc", color: "#555555"}}
+                                                            label={<><NewReleases
+                                                                sx={{color: "#cccccc"}}/><Typography variant={"caption"}
+                                                                                                     sx={{px: 1}}>ثبت
+                                                                نشده</Typography></>}/>
+                                }
                             </Grid>
                         </Grid>
-                            <Collapse in={showActiveTime}>
-                                <Alert>{item.ActiveTimes}</Alert>
-                            </Collapse>
-                        </>}
+                        <Collapse in={showActiveTime}>
+                            <Alert>{item.ActiveTimes}</Alert>
+                        </Collapse>
+
                         <Typography sx={{mt: 1, paddingY: 0.5}} variant={"body1"} component={"div"}
                                     onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}>
                             {item.Sports && item.Sports.map((sport, number) => (
@@ -140,9 +155,11 @@ const __placeListItem = ({item}) => {
                             direction={"row"}
                             alignItems={"center"}
                             columns={22}
+                            sx={{minHeight:50}}
                             onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}
                         >
-                            <Grid textAlign={"end"} size={7}>{item?.MinPrice && <Typography sx={{color: "#757575", fontWeight: 200,pr:1}} variant={"subtitle2"}>
+                            <Grid textAlign={"end"} size={7}>{item?.MinPrice &&
+                            <Typography sx={{color: "#757575", fontWeight: 200, pr: 1}} variant={"subtitle2"}>
                                 {"شروع قیمت از "}
                             </Typography>}</Grid>
                             <Grid textAlign={"start"} size={8}>
@@ -169,24 +186,29 @@ const __placeListItem = ({item}) => {
                                     </Typography>}
                                 />
                             </Grid>
-                            {item?.MinPriceBeforeDiscount&&<><Grid textAlign={"start"} size={1}>
+                            {item?.MinPriceBeforeDiscount && <><Grid textAlign={"start"} size={1}>
                                 <Divider orientation="vertical"
                                          sx={{height: "45px", width: "1px", borderColor: "gray.darker", borderStyle: "dashed"}}
                                          component="div"/>
                             </Grid>
                                 <Grid direction={"column"} container size={6}>
 
-                                <Grid>
-                                <Typography variant={"caption"} color={"primary"} sx={{fontSize:"0.9rem",fontWeight:400}}>{toPriceWithComma(item?.MinPriceBeforeDiscount-item.MinPrice)}</Typography>
-                                <Typography variant={"caption"} color={"primary"} sx={{fontSize:"1rem",fontWeight:400}}>{" تومان"}</Typography>
-                                </Grid>
-                                <Grid>
-                                <img src={"/assets/images/discountIcon.svg"} width={"15px"}/>
-                                <Typography variant={"caption"} color={"primary"} sx={{fontSize:"1rem",fontWeight:900,pl:0.5}}>تخفیف</Typography>
-                                </Grid>
+                                    <Grid>
+                                        <Typography variant={"caption"} color={"primary"} sx={{
+                                            fontSize: "0.9rem",
+                                            fontWeight: 400
+                                        }}>{toPriceWithComma(item?.MinPriceBeforeDiscount - item.MinPrice)}</Typography>
+                                        <Typography variant={"caption"} color={"primary"}
+                                                    sx={{fontSize: "1rem", fontWeight: 400}}>{" تومان"}</Typography>
+                                    </Grid>
+                                    <Grid>
+                                        <img src={"/assets/images/discountIcon.svg"} width={"15px"}/>
+                                        <Typography variant={"caption"} color={"primary"}
+                                                    sx={{fontSize: "1rem", fontWeight: 900, pl: 0.5}}>تخفیف</Typography>
+                                    </Grid>
                                 </Grid></>}
                             {!item.MinPrice && <Grid textAlign={"center"} size={22}>
-                                <Typography sx={{color: "#757575"}} variant={"subtitle1"}>
+                                <Typography sx={{color: "#757575"}} variant={item?.MinPriceBeforeDiscount?"subtitle1":"h6"}>
                                     {"بدون پلن فعال "}
                                 </Typography>
                             </Grid>}
@@ -198,6 +220,7 @@ const __placeListItem = ({item}) => {
                 </Grid>
             </Card>
         </Grid>
+
     );
 };
 
