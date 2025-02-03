@@ -34,31 +34,31 @@ const _HomeCategories = () => {
             {
                 breakpoint: 2500,
                 settings: {
-                    slidesToShow: 11
+                    slidesToShow: 10
                 }
             },
             {
                 breakpoint: 1200,
                 settings: {
-                    slidesToShow: 9
+                    slidesToShow: 8
                 }
             },
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 7
+                    slidesToShow: 6
                 }
             },
             {
                 breakpoint: 768,
                 settings: {
-                    slidesToShow: 5
+                    slidesToShow: 4
                 }
             },
             {
                 breakpoint: 530,
                 settings: {
-                    slidesToShow: 4
+                    slidesToShow: 3
                 }
             }
         ]
