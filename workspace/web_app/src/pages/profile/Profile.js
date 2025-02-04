@@ -13,9 +13,9 @@ const Profile = (props) => {
 
     return (
         <>
-            {user && <Grid sx={{width:"100%",position:"absolute",justifyItems:"center"}}>
+            {user && <Grid sx={{width:"100%",position:"absolute",justifyItems:"center",textAlign:"center"}}>
                 <Avatar
-                    sx={{width: 150, height: 150, marginTop: 1, marginBottom: 1,border:"#FFFFFF solid 5px"}}
+                    sx={{width: 150, height: 150, marginTop: 1, marginBottom: 1,mx:"auto",border:"#FFFFFF solid 5px"}}
                     alt="Remy Sharp"
                     src={user.Avatar && user.Avatar.Url}/>
             </Grid>}

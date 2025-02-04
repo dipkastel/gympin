@@ -83,12 +83,12 @@ function GNotification() {
 
     function popup() {
         return (<>
-            {(state === States.notWorking) &&
-            <Alert severity="error">
-                <AlertTitle>مرورگر شما از بعضی امکانات جیم پین پشتیبانی نمیکند !</AlertTitle>
-                برای استفاده از همه امکانات جیم پین، پیشنهاد میشود از <strong> آخرین ورژن گوگل کروم </strong>استفاده
-                نمایید .
-            </Alert>}
+            {/*{(state === States.notWorking) &&*/}
+            {/*<Alert severity="error">*/}
+            {/*    <AlertTitle>مرورگر شما از بعضی امکانات جیم پین پشتیبانی نمیکند !</AlertTitle>*/}
+            {/*    برای استفاده از همه امکانات جیم پین، پیشنهاد میشود از <strong> آخرین ورژن گوگل کروم </strong>استفاده*/}
+            {/*    نمایید .*/}
+            {/*</Alert>}*/}
             <Dialog
                 sx={{zIndex: 99999999}}
                 fullWidth

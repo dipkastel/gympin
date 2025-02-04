@@ -110,7 +110,7 @@ const PageLayout = (props) => {
                 {props.children}
             </Paper>
 
-            <Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1098,borderRadius:"32px 32px 0 0",boxShadow:"0px 0px 15px #333333"}} elevation={24}>
+            <Paper sx={{position: 'fixed',mx:2, bottom: 0, left: 0, right: 0, zIndex: 1098,borderRadius:"32px 32px 0 0",boxShadow:"0px 0px 15px #333333"}} elevation={24}>
                 <BottomNavigation
                     showLabels
                     value={value}
