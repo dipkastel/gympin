@@ -29,22 +29,22 @@ const __placeListItem = ({item}) => {
                   alignItems="center">
                 <Grid item
                       onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}
-                      sx={{padding: 0, display: "flex", flexDirection: "column-reverse", alignItems: "end"}}>
+                      sx={{padding: 0, display: "flex",direction:"rtl", flexDirection: "row", alignItems: "end"}}>
                     <Image
 
                         src={item?.Multimedias?.[0] ? (item.Multimedias?.[0]?.Url + "&width=400") : "https://api.gympin.ir/resource/image?Id=11"}
                         width={"100%"}/>
                     {item?.Location?.Name &&
-                    <Grid container direction={"row"} sx={{height: "30px", position: "absolute",mb:"-1px"}}>
-
-
-                        <img src={"/assets/images/cornerShape.svg"}  style={{marginLeft: "-1px"}}  height={"30px"} width={"30px"}/>
-                        <Box alignItems={"center"} sx={{px: 1, backgroundColor: "white", borderRadius: "0 8px 0 0", display: "flex"}}>
+                    <Grid container direction={"row"} justifyContent={"space-between"} alignItems={"s"} sx={{height: "30px", position: "absolute",m:"auto"}} >
+                        <Box alignItems={"center"} sx={{m:"auto",px: 1,height:"30px", backgroundColor: "white", borderRadius: "0 8px 0 0", display: "flex"}}>
                             <img src={"/logo192.png"} height={"18px"} width={"18px"}/>
                             <Typography sx={{paddingY: 0.5, pl: 1, display: "inline-block"}} variant={"caption"} component={"div"}>
                                 {item.Location.Name}
                             </Typography>
                         </Box>
+                        <img src={"/assets/images/cornerShape.svg"}  style={{marginLeft: "-1px"}}  height={"30px"} width={"30px"}/>
+
+
                     </Grid>}
 
 

@@ -26,7 +26,7 @@ const _HomeCategories = () => {
         initialSlide: categories.length,
         autoplay: true,
         rows: 1,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 93000,
         pauseOnHover: false,
         arrows: false,
         rtl: true,
@@ -70,11 +70,11 @@ const _HomeCategories = () => {
 
             <Slick {...settings}>
                 {[...categories,...categories,...categories].map((item, index) => (
-                    <Grid sx={{placeItems:"center"}} direction={"column"} container key={index}  onClick={()=>navigate("/places/"+item.sid)} >
-                        <Paper sx={{m:1 ,width:"100px",borderRadius:8,p:2}} elevation={8} >
+                    <Grid sx={{placeItems:"center",alignItems:"center",alignContent:"center",mt:1}} alignItems={"center"} alignContent={"center"} textAlign={"center"} direction={"column"} container key={index}  onClick={()=>navigate("/places/"+item.sid)} >
+                        <Paper sx={{m:"auto" ,width:"100px",borderRadius:8,p:2}} elevation={8} >
                             <img width={64} src={item.icon}/>
                         </Paper>
-                        <Typography sx={{fontWeight:"600"}} variant={"body2"} >{item.name}</Typography>
+                        <Typography sx={{fontWeight:"600",textAlign:"center",mt:1}} variant={"body2"} >{item.name}</Typography>
                     </Grid>
                 ))}
             </Slick>
