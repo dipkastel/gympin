@@ -127,7 +127,7 @@ const __placeListItem = ({item}) => {
                         </Grid>
                     </Grid>
                     <Collapse in={showActiveTime}>
-                        <Alert>{item.ActiveTimes}</Alert>
+                        <Alert icon={false} sx={{fontSize:"0.6rem"}}>{item.ActiveTimes}</Alert>
                     </Collapse>
 
                     <Typography sx={{mt: 1, paddingY: 0.5}} variant={"body1"} component={"div"}>
@@ -135,14 +135,14 @@ const __placeListItem = ({item}) => {
                             <div key={"ph" + number} className={"d-inline"}>
                                 {number < 3 && <div className={"d-inline"}>
                                     <FiberManualRecordIcon className={"sportBullet"}
-                                                           sx={{fontSize: "0.6rem", color: "#cc0f0f"}}/>
-                                    <Typography sx={{fontSize:"0.6rem"}} variant={"caption"}>
+                                                           sx={{fontSize: "0.3rem", color: "#cc0f0f"}}/>
+                                    <Typography sx={{fontSize:"0.55rem"}} variant={"caption"}>
                                         {sport.Name}
                                     </Typography>
                                 </div>}
                                 {number > 3 && number < 7 && <div className={"d-inline"}>
                                     <FiberManualRecordIcon className={"sportBullet"}
-                                                           sx={{fontSize: 4, color: "#cc0f0f"}}/>
+                                                           sx={{fontSize: "0.3rem", color: "#cc0f0f"}}/>
                                 </div>}
                             </div>
                         ))}
@@ -170,7 +170,7 @@ const __placeListItem = ({item}) => {
                                         color: "#b06161",
                                         textDecoration: "line-through",
                                         fontWeight: 500,
-                                        lineHeight: 1,fontSize:"0.6rem"
+                                        lineHeight: 1,fontSize:"0.7rem"
                                     }}
                                     variant={"subtitle1"}>
                                     {toPriceWithComma(item?.MinPriceBeforeDiscount)}
@@ -178,7 +178,7 @@ const __placeListItem = ({item}) => {
                                 primaryTypographyProps={{p: 0, m: 0, lineHeight: 0}}
                                 secondaryTypographyProps={{p: 0, m: 0, lineHeight: 0}}
                                 secondary={item?.MinPrice &&
-                                <Typography sx={{paddingRight: 1, color: "#26881a", fontWeight: 700, lineHeight: 1,fontSize:"0.6rem"}}
+                                <Typography sx={{paddingRight: 1, color: "#26881a", fontWeight: 700, lineHeight: 1,fontSize:"0.7rem"}}
                                             variant={"subtitle1"}>
                                     {toPriceWithComma(item.MinPrice) + " تومان"}
                                 </Typography>}

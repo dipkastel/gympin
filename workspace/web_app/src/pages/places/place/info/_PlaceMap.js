@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, Grid, Typography} from "@mui/material";
+import {Button, Card, Grid2 as Grid, Typography} from "@mui/material";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {Form} from "react-bootstrap";
@@ -97,30 +97,25 @@ const _PlaceMap = ({place}) => {
                     direction="row"
                     justifyContent="center"
                     alignItems="center"
+                    spacing={2}
+                    sx={{mt:3}}
                 >
-                    <Grid md={6}><Card elevation={3} sx={{margin: 1, padding: 1}}>
-                            <Button  rel="nofollow" href={"https://waze.com/ul?ll="+place.Latitude+","+place.Longitude+"&navigate=yes"} variant={"outlined"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
-                                <Typography variant={"h6"}>{"مسیریابی با ویز"}</Typography>
-                            </Button>
-                        </Card>
+                    <Grid size={6}>
+                        <Button  rel="nofollow" href={"https://waze.com/ul?ll="+place.Latitude+","+place.Longitude+"&navigate=yes"} variant={"contained"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
+                            <Typography variant={"h6"}>{"مسیریابی با ویز"}</Typography>
+                        </Button>
                     </Grid>
-                    <Grid md={6}><Card elevation={3} sx={{margin: 1, padding: 1}}>
-                            <Button rel="nofollow"  href={"https://www.google.com/maps/dir/?api=1&destination="+place.Latitude+","+place.Longitude} variant={"outlined"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
-                                <Typography variant={"h6"}>{"مسیریابی با گوگل"}</Typography>
-                            </Button>
-                        </Card>
+                    <Grid size={6}><Button rel="nofollow"  href={"https://www.google.com/maps/dir/?api=1&destination="+place.Latitude+","+place.Longitude} variant={"contained"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
+                        <Typography variant={"h6"}>{"مسیریابی با گوگل"}</Typography>
+                    </Button>
                     </Grid>
-                    <Grid md={6}><Card elevation={3} sx={{margin: 1, padding: 1}}>
-                            <Button rel="nofollow" href={"https://balad.ir/location?latitude="+place.Latitude+"&longitude="+place.Longitude+"&zoom=16.5"} variant={"outlined"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
-                                <Typography variant={"h6"}>{"مسیریابی با بلد"}</Typography>
-                            </Button>
-                        </Card>
+                    <Grid size={6}><Button rel="nofollow" href={"https://balad.ir/location?latitude="+place.Latitude+"&longitude="+place.Longitude+"&zoom=16.5"} variant={"contained"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
+                        <Typography variant={"h6"}>{"مسیریابی با بلد"}</Typography>
+                    </Button>
                     </Grid>
-                    <Grid md={6}><Card elevation={3} sx={{margin: 1, padding: 1}}>
-                            <Button rel="nofollow" href={"https://neshan.org/maps/@"+place.Latitude+","+place.Longitude+",15.8z,0p/routing/car"} variant={"outlined"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
-                                <Typography variant={"h6"}>{"مسیریابی با نشان"}</Typography>
-                            </Button>
-                        </Card>
+                    <Grid size={6}><Button rel="nofollow" href={"https://neshan.org/maps/@"+place.Latitude+","+place.Longitude+",15.8z,0p/routing/car"} variant={"contained"} color={"primary"} sx={{textAlign: "center"}} fullWidth>
+                        <Typography variant={"h6"}>{"مسیریابی با نشان"}</Typography>
+                    </Button>
                     </Grid>
                 </Grid>
         </div>

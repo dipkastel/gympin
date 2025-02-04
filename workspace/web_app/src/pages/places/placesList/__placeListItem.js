@@ -78,23 +78,23 @@ const __placeListItem = ({item}) => {
                                                                       نشده</Typography></>}/>}
                                 {item?.Genders?.map((gender, number) => (
                                     <div key={"kh" + number} className={"d-inline"}>
-                                        {gender === "MALE" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                        {gender === "MALE" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff",mx:0.5}}
                                                                     label={<><SentimentSatisfiedAltOutlined
                                                                         sx={{color: "#ffffff"}}/><Typography variant={"caption"}
                                                                                                              sx={{px: 1}}>آقایان</Typography></>}/>}
-                                        {gender === "FEMALE" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                        {gender === "FEMALE" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff",mx:0.5}}
                                                                       label={<><Face3Outlined sx={{color: "#ffffff"}}/><Typography
                                                                           variant={"caption"} sx={{px: 1}}>خانم‌ها</Typography></>}/>}
-                                        {gender === "BOYS" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                        {gender === "BOYS" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff",mx:0.5}}
                                                                     label={<><Face6Outlined sx={{color: "#ffffff"}}/><Typography
                                                                         variant={"caption"} sx={{px: 1}}>پسرها</Typography></>}/>}
-                                        {gender === "GIRLS" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                        {gender === "GIRLS" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff",mx:0.5}}
                                                                      label={<><Face2Outlined sx={{color: "#ffffff"}}/><Typography
                                                                          variant={"caption"} sx={{px: 1}}>دخترها</Typography></>}/>}
-                                        {gender === "KIDS" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                        {gender === "KIDS" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff",mx:0.5}}
                                                                     label={<><ChildCare sx={{color: "#ffffff"}}/><Typography
                                                                         variant={"caption"} sx={{px: 1}}>کودکان</Typography></>}/>}
-                                        {gender === "NONE" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff"}}
+                                        {gender === "NONE" && <Chip size={"small"} sx={{bgcolor: "#555555", color: "#ffffff",mx:0.5}}
                                                                     label={<><SupervisedUserCircleOutlined
                                                                         sx={{color: "#ffffff"}}/><Typography variant={"caption"}
                                                                                                              sx={{px: 1}}>همه</Typography></>}/>}

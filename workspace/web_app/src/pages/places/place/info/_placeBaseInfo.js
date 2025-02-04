@@ -118,7 +118,7 @@ const _placeBaseInfo = ({place}) => {
                             {"ورزش ها : "}
                         </Typography>
                         <Grid sx={{mt:1}}>
-                            {place?.Sports?.map((sport, number) => (<Chip variant={"outlined"} sx={{mx:0.5}} key={number} label={sport.Name}/>))}
+                            {place?.Sports?.map((sport, number) => (<Chip variant={"outlined"} sx={{margin:1}} key={number} label={sport.Name}/>))}
                         </Grid>
                     </Grid>
                 </Grid>
