@@ -15,6 +15,12 @@ export const GympinTheme = createTheme({
                     dark: '#9b9b9b',
                     contrastText: '#4f4f4f',
                 },
+                manuBadge: {
+                    light: '#c7c7c7',
+                    main: '#911212',
+                    dark: '#9b9b9b',
+                    contrastText: '#ffffff',
+                },
                 gray: {
                     light: '#efefef',
                     main: '#e9e9e9',

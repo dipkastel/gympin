@@ -65,7 +65,7 @@ const PageLayout = (props) => {
         <>
 
             <Box sx={{flexGrow: 1}}>
-                <AppBar position={"fixed"} color={"appbar"} >
+                <AppBar position={"fixed"} color={"primary"} >
                     <Toolbar>
                         <IconButton
                             size="large"
@@ -75,8 +75,12 @@ const PageLayout = (props) => {
                             onClick={()=>{SetOpenDrawer(!openDrawer)}}
 
                         >
-                            <Badge badgeContent={userBasket?.InvoiceBuyables?.length||0} color={"primary"} variant="dot">
-                                {openDrawer ? <MenuOpen/> : <MenuIcon/>}
+                            <Badge badgeContent={userBasket?.InvoiceBuyables?.length}  sx={{
+                                '& .MuiBadge-standard': {
+                                    // boxShadow: '2px 3px 4px #000000'
+                                },
+                            }} color={"manuBadge"}  variant={"standard"}>
+                                {openDrawer ? <MenuOpen sx={{fontSize:"1.8rem"}}/> : <MenuIcon sx={{fontSize:"1.8rem"}}/>}
                             </Badge>
                         </IconButton>
 
@@ -88,7 +92,7 @@ const PageLayout = (props) => {
                         </Typography>
 
                         {currentUser &&
-                        <Button size={"large"} color={"inherit"} endIcon={<AccountCircleIcon/>}  href={"/wallet"}>
+                        <Button sx={{fontWeight:600,fontSize:"1rem"}} color={"inherit"} endIcon={<AccountCircleIcon sx={{fontSize:"1.8rem !important"}}/>}  href={"/wallet"}>
                             {toPriceWithComma(currentUser.Balance)}
                         </Button>}
 
