@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import Places from "../pages/places/Places";
 import PlacesMap from "../pages/places/map/PlacesMap";
@@ -38,6 +38,13 @@ export default function ApplicationRoutes() {
         setMode("light");
     }, []);
 
+    function DynamicRedirect({ to }) {
+        const params = useParams();
+        const resolvedPath = Object.keys(params).reduce(
+            (path, param) => path.replace(`:${param}`, params[param]), to );
+        return <Navigate to={resolvedPath} replace />;
+    }
+
     return (
         <>
 
@@ -60,6 +67,7 @@ export default function ApplicationRoutes() {
                     <Route path="/tickets/singleSubscribe/:subscribeKey" element={ <SingleSubscribe/>}/>
                     <Route path="/tickets/singleCourse/:courseKey" element={ <SingleCourse/>}/>
                     <Route path="/wallet" element={ <Wallet/>}/>
+                    <Route path="/wallet/:code" element={ <Wallet/>}/>
                     {/*<Route path="/UserTransactions" element={isAuthorized?<UserTransactions/>: <AuthRoutes/>}/>*/}
                     <Route path="/UserRequests" element={ <UserRequests/>}/>
                     <Route path="/checkout/:formData" element={ <Checkout/>}/>
@@ -72,15 +80,18 @@ export default function ApplicationRoutes() {
                     <Route path="/login" element={ <Navigate to={"/"}/>}/>
                     <Route path="/logout" element={<LogoutPage/>}/>
                     <Route path="/404" element={<NotFound />} />
+                    <Route path="/code/:code" element={ <DynamicRedirect to={"/wallet/:code"} />}/>
                     <Route path="/*" element={ <Navigate exact={true} to="/error/404" />}/>
                 </Routes>
             </PageLayout>}
 
             {!isAuthorized &&
             <Routes>
+                <Route path="/code/:code" element={ <DynamicRedirect to={"/login/:code"} />}/>
                 <Route path="/place/:placeId" element={<Place/>}/>
                 <Route path="/coach/:coachId" element={<Coach/>}/>
                 <Route path="/login" element={<Login/>}/>
+                <Route path="/login/:code" element={<Login/>}/>
                 <Route path="/logout" element={<Navigate to={"/"}/>}/>
                 <Route path="/*" element={<Navigate exact={true} to="/login"/>}/>
             </Routes>}

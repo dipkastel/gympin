@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useSearchParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import {Button, Card, CardContent, Grid2 as Grid, Paper, TextField, Typography} from "@mui/material";
 import {checkMobileValid} from "../../helper/utils";
 import {login, registerWithInviteCode, sendSms} from "../../network/api/account.api";
@@ -11,16 +11,15 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 function Login(props) {
 
     const error = useContext(ErrorContext);
-    const [searchParams] = useSearchParams();
-    const [mobileNumber, setMobileNumber] = useState({value: searchParams.get("u")});
+    const params = useParams();
+    const [mobileNumber, setMobileNumber] = useState({value: params?.phoneNumber});
     const [disableSendBtn, setDisableSendBtn] = useState(true);
     const [sendBtnText, setSendBtnText] = useState("ارسال کد ورود");
     const [disablePhoneNumber, setDisablePhoneNumber] = useState(false);
-    const [resend, setResend] = useState(-3);
     const [registered, setRegistered] = useState(true);
     const [fullName, setFullName] = useState({});
     const [disableFullName, setDisableFullName] = useState(false);
-    const [inviteCode, setInviteCode] = useState({value:searchParams.get("p")});
+    const [inviteCode, setInviteCode] = useState({value:params?.code});
     const [disableInviteCode, setDisableInviteCode] = useState(false);
     const [disableRegisterBtn, setDisableRegisterBtn] = useState(true);
     const [sentCode, setSentCode] = useState(false);
@@ -46,7 +45,6 @@ function Login(props) {
             error.showError({message: "شماره همراه صحیح نیست"});
         }
         var count = 120;
-        setResend(count);
         setDisableSendBtn(true);
         sendSms({
             "phoneNumber": mobileNumber.value.toString(),
@@ -56,7 +54,6 @@ function Login(props) {
                 let interval = setInterval(() => {
                     if (count > 0) {
                         count--;
-                        setResend(count);
                         setSendBtnText("ارسال مجدد : " + count)
                         setSentCode(true);
                     } else {
@@ -68,7 +65,6 @@ function Login(props) {
                 }, 1000);
             })
             .catch((err) => {
-                setResend(-3);
                 setDisableSendBtn(false);
                 try {
                     if (err?.response?.data?.Error?.code === 1102) {
