@@ -173,6 +173,17 @@ export let NoteApi = {
     update: "v1/note/update",
     query: "v1/note/query",
 };
+export let TagApi = {
+    add: "v1/tag/add",
+    delete: "v1/tag/delete",
+    getAll: "v1/tag/getAll",
+    getById: "v1/tag/getById",
+    update: "v1/tag/update",
+    query: "v1/tag/query",
+    getPlaceTags: "v1/tag/getPlaceTags",
+    addToPlace: "v1/tag/addToPlace",
+    removeFromPlace: "v1/tag/removeFromPlace",
+};
 export let optionOfPlaceApi = {
     add: "v1/OptionOfPlace/add",
     delete: "v1/OptionOfPlace/delete",

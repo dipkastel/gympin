@@ -20,7 +20,6 @@ const OptionOfPlace = ({place}) => {
     const error = useContext(ErrorContext);
   const [placeOptions,SetPlaceOptions] = useState([])
   const [allOptions,SetAllOptions] = useState([])
-  const [openModalAdd,setOpenModalAdd] = useState(false)
   const [openBoxAdd,setOpenBoxAdd] = useState(false)
   const [itemToDelete,setItemToDelete] = useState(null)
   useEffect(() => {
@@ -68,55 +67,6 @@ const OptionOfPlace = ({place}) => {
         });
     }
 
-    function renderModalAdd() {
-      var selectedId = 0;
-
-        function getAllOptions() {
-            return allOptions.map(o=>{return{label:o.Name,value:o.Id}});
-        }
-
-        return (
-            <>
-                <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
-                    <form onSubmit={(e)=>addOption(e)}>
-
-
-                        <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن امکانات "}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-
-
-                            <Form.Group controlId="formAddSport">
-                                <Form.Label>امکانات مورد نظر را انتخاب کنید</Form.Label>
-                                <Select
-                                    className={"dropdown"}
-                                    inputId="react-select-single"
-                                    name="formState"
-                                    options={getAllOptions()}
-                                    onChange={(e)=>{selectedId = e.value}}
-                                />
-                            </Form.Group>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button
-                                className={"button_edit"}
-                                onClick={() => setOpenModalAdd(false)}
-                            >
-                                خیر
-                            </Button>
-                            <Button
-                                className={"button_danger"}
-                                type={"submit"}
-                            >
-                                اضافه
-                            </Button>
-                        </Modal.Footer>
-                    </form>
-                </Modal>
-            </>
-        );
-    }
 
     function renderModalDelete() {
 
@@ -218,7 +168,6 @@ const OptionOfPlace = ({place}) => {
               </Table>
             </PortletBody>
           </Portlet>
-            {renderModalAdd()}
             {renderModalDelete()}
         </>
     );

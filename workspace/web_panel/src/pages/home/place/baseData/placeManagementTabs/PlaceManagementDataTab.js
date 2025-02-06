@@ -5,6 +5,7 @@ import PlaceImages from "../Images/PlaceImages";
 import PlaceSports from "../placeSport/PlaceSport";
 import OptionOfPlace from "../OptionsOfPlace/OptionOfPlace";
 import PlacePersonnel from "../Personnel/PlacePersonnel";
+import PlaceTags from "../placeTags/PlaceTags";
 
 const PlaceManagementDataTab = ({place, updatePlace}) => {
     return (
@@ -18,7 +19,8 @@ const PlaceManagementDataTab = ({place, updatePlace}) => {
                 <div className="col-md-6">
                     {place && <PlacePersonnel place={place}/>}
                     {place && <PlaceImages place={place}/>}
-                    {place && <Halls place={place}/>}
+                    {place && <PlaceTags place={place}/>}
+                    {/*{place && <Halls place={place}/>}*/}
                 </div>
 
             </div>}

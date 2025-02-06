@@ -53,9 +53,9 @@ const __UpdateAutoDiscount = () => {
     return (
         <>
             <Portlet>
-                <PortletHeader title={"بروز رسانی تخفیف ها"}/>
+                <PortletHeader title={"به‌روزرسانی تخفیف ها"}/>
                 <PortletBody className={"p-2"}>
-                    <Button variant={"outlined"} color={"error"} onClick={e => setOpenModal("UpdateAutoDiscount")}>بروزرسانی تخفیفات
+                    <Button variant={"outlined"} color={"error"} onClick={e => setOpenModal("UpdateAutoDiscount")}>به‌روزرسانی تخفیفات
                         سیستمیک</Button>
                 </PortletBody>
             </Portlet>

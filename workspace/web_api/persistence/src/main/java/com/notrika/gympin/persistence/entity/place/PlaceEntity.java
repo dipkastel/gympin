@@ -8,6 +8,7 @@ import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
+import com.notrika.gympin.persistence.entity.management.tags.ManageTagsEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import com.notrika.gympin.persistence.entity.place.comment.PlaceCommentEntity;
@@ -167,6 +168,12 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @JsonIgnore
     @ToString.Exclude
     private List<MultimediaEntity> multimedias;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "placeTags", joinColumns = @JoinColumn(name = "placeId"), inverseJoinColumns = @JoinColumn(name = "tagId"))
+    @JsonIgnore
+    @ToString.Exclude
+    private List<ManageTagsEntity> tags;
 
     @Override
     public boolean equals(Object o) {
