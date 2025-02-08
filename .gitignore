@@ -1,3 +1,10 @@
-
 workspace/web_api/logs/*.log
+**/**/**/**/**/*.log
+**/**/**/**/*.log
+**/**/**/*.log
+**/**/*.log
 **/*.log
+*/*.log
+/*.log
+*.Log
+workspace/web_api/logs/logFile.log
