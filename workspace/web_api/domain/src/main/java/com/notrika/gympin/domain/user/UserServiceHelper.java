@@ -59,8 +59,8 @@ public class UserServiceHelper {
         List<CorporatePersonnelEntity> corportePersonnels = corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(param.getId());
         List<UserCreditDetailDto> result = new ArrayList<>();
         //check User
-        Boolean canPay = true;
         for (CorporatePersonnelEntity personnel : corportePersonnels) {
+            Boolean canPay = true;
             //Check corporate
             CorporateEntity corporate = personnel.getCorporate();
             if (corporate.getStatus() != CorporateStatusEnum.ACTIVE)
