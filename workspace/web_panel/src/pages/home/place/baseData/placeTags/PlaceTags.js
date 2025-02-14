@@ -5,11 +5,10 @@ import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../.
 import AddIcon from "@mui/icons-material/Add";
 import {
     tag_add,
-    tag_addPlaceTags, tag_addToPlace,
+    tag_addToPlace,
     tag_getPlaceTags,
     tag_query,
     tag_removeFromPlace,
-    tag_removePlaceTags
 } from "../../../../../network/api/Tags.api";
 import {Row} from "reactstrap";
 

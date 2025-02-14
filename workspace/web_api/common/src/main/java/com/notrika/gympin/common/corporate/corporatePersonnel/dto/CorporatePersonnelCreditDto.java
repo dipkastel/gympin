@@ -17,6 +17,10 @@ import java.util.Date;
 @ToString
 public class CorporatePersonnelCreditDto extends BaseDtoWithCreateUpdate<CorporatePersonnelCreditDto> {
 
+
+    @JsonProperty("Name")
+    private String name;
+
     @JsonProperty("CorporatePersonnel")
     private CorporatePersonnelDto personnel;
 

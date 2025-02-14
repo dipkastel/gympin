@@ -2,9 +2,9 @@ import {PlaceAbout_getAllByPlaces} from "./placeAbout.api";
 import {User_couchQuery} from "./user.api";
 
 export let AuthApi = {
-    // BASEURL: "http://localhost:8080/api/",
+    BASEURL: "http://localhost:8080/api/",
     // BASEURL: "http://192.168.0.117:8080/api/",
-     BASEURL: "https://api.gympin.ir/",
+    // BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
@@ -26,11 +26,17 @@ export let Api_url = {
     qrCode: {
         getCode: "v1/qrCode/getCode",
     },
+    giftCredit:{
+        checkStatus:"v1/giftCredit/checkStatus"
+    },
     homePage: {
         GET_HOME_PAGE: "v1/homepage/getHome",
     },
     TicketBuyable:{
         query:"v1/TicketBuyable/query"
+    },
+    gift:{
+        claim:"v1/giftCredit/claimGift"
     },
     invoice:{
         add:"v1/invoice/add",

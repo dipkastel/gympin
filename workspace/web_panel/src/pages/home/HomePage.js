@@ -42,6 +42,7 @@ import CoachDetailsManagement from "./coach/baseData/CoachDetailsManagement";
 import LocationDetail from "./location/LocationDetail/LocationDetail";
 import ProcessManagement from "./process/ProcessManagement";
 import ProcessSerialDetail from "./process/detail/ProcessSerialDetail";
+import Gifts from "./gifts/Gifts";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -81,6 +82,8 @@ export default function HomePage() {
         <Route path="/corporates" component={CorporateManagement} />
         {/*  sells */}
         <Route path="/sells/" component={SellsManagement} />
+        {/*  gifts */}
+        <Route path="/gifts/" component={Gifts} />
         {/*subscribes*/}
         <Route path="/place/ticketSubscribe/:ticketSubscribeId" component={TicketSubscribeDataManagement} />
         <Route path="/subscribe/data/:subscribeId" component={SubscribeDataManagement} />

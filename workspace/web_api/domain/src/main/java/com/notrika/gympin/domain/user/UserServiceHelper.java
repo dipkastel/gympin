@@ -77,6 +77,7 @@ public class UserServiceHelper {
                 detail.setId(credit.getId());
                 detail.setCreditStatus(credit.getStatus());
                 detail.setPersonnelId(personnel.getId());
+                detail.setName(credit.getName());
                 detail.setCreditType(CreditType.SPONSOR);
                 detail.setContractType(corporate.getContractType());
                 detail.setCreditAmount(credit.getCreditAmount());

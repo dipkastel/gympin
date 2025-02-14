@@ -15,6 +15,16 @@ export function getImageUrlById(id, Height = 0, Width = 0) {
   return url;
 }
 
+export function getRandStr(length) {
+  const list = "ABCDEFGHJKMNPQRSTUVWXYZ123456789";
+  var res = "";
+  for(var i = 0; i < length; i++) {
+    var rnd = Math.floor(Math.random() * list.length);
+    res = res + list.charAt(rnd);
+  }
+  return res;
+}
+
 
 export function getUserFixedName(user) {
   if(!user) return "";

@@ -59,6 +59,7 @@ public final class UserConvertor {
         dto.setId(user.getId());
         dto.setFullName(user.getFullName());
         dto.setUsername(user.getUsername());
+        dto.setPhoneNumber("09*******"+user.getPhoneNumber().substring(9,11));
         dto.setAvatar(MultimediaConvertor.toDto(user.getUserAvatar()));
         return dto;
     }

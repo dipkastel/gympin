@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useParams, useSearchParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {Button, Card, CardContent, Grid2 as Grid, Paper, TextField, Typography} from "@mui/material";
 import {checkMobileValid} from "../../helper/utils";
 import {login, registerWithInviteCode, sendSms} from "../../network/api/account.api";
@@ -19,7 +19,7 @@ function Login(props) {
     const [registered, setRegistered] = useState(true);
     const [fullName, setFullName] = useState({});
     const [disableFullName, setDisableFullName] = useState(false);
-    const [inviteCode, setInviteCode] = useState({value:params?.code});
+    const [inviteCode, setInviteCode] = useState({value: params?.code});
     const [disableInviteCode, setDisableInviteCode] = useState(false);
     const [disableRegisterBtn, setDisableRegisterBtn] = useState(true);
     const [sentCode, setSentCode] = useState(false);
@@ -32,11 +32,10 @@ function Login(props) {
 
 
     useEffect(() => {
-        if(code?.value?.length==4){
+        if (code?.value?.length == 4) {
             loginByNumber(null);
         }
     }, [code]);
-
 
 
     function sendMessage(e) {
@@ -139,22 +138,23 @@ function Login(props) {
         if (inviteCode.ok)
             setDisableRegisterBtn(false);
         setFullName({value: name, ok: true});
+        changeInviteCode(inviteCode.value)
     }
 
-    function changeInviteCode(e) {
-        var name = e.target.value;
+    function changeInviteCode(name) {
         if (name.length < 7) {
             setInviteCode({value: name, helperText: "کد معرف صحیح نیست"});
             setDisableRegisterBtn(true);
             return;
         }
-        if (name.length > 7) {
+        if (name.length > 8) {
             return;
         }
         if (fullName.ok)
             setDisableRegisterBtn(false);
         setInviteCode({value: name, ok: true});
     }
+
     function changeCode(e) {
         var name = e.target.value;
         if (name.length < 4) {
@@ -175,20 +175,17 @@ function Login(props) {
             username: mobileNumber.value,
             password: code.value,
             Application: "WEBAPP"
-        })
-            .then((data) => {
-                props.SetUser(data.data.Data);
-                props.SetToken(data.data.Data.Token);
-                props.SetRefreshToken(data.data.Data.RefreshToken);
-            })
-            .catch((err) => {
-                try {
-                    error.showError({message: err.response.data.Message});
-                } catch (f) {
-                    error.showError({message: "اتصال به شبکه را بررسی نمایید",});
-                }
-            });
-
+        }).then((data) => {
+            props.SetUser(data.data.Data);
+            props.SetToken(data.data.Data.Token);
+            props.SetRefreshToken(data.data.Data.RefreshToken);
+        }).catch((err) => {
+            try {
+                error.showError({message: err.response.data.Message});
+            } catch (f) {
+                error.showError({message: "اتصال به شبکه را بررسی نمایید",});
+            }
+        });
     }
 
     return (
@@ -212,7 +209,8 @@ function Login(props) {
                         </Paper>
                         <CardContent>
                             <Typography color={"gray.darker"} sx={{mt: 1, fontWeight: 800}} variant={"h5"}>خوش آمدید</Typography>
-                            <Typography color={"gray.darker"} sx={{mt: 1,lineHeight:1.8 }} variant={"body2"}>برای استفاده از خدمات جیم پین، شماره موبایل خود
+                            <Typography color={"gray.darker"} sx={{mt: 1, lineHeight: 1.8}} variant={"body2"}>برای استفاده از خدمات جیم پین،
+                                شماره موبایل خود
                                 را وارد کرده و سپس کد تایید را ثبت نمایید</Typography>
 
                             <TextField
@@ -252,7 +250,7 @@ function Login(props) {
                                 sx={{mt: 1}}
                                 value={inviteCode?.value || ""}
                                 onChange={(e) => {
-                                    changeInviteCode(e)
+                                    changeInviteCode(e.target.value)
                                 }}
                                 hidden={registered}
                                 label={"کد معرف"}
@@ -283,113 +281,8 @@ function Login(props) {
                                 helperText={code?.helperText || " "}
                                 fullWidth
                             />
-                            {sentCode && <Button onClick={(e) => loginByNumber(e)} disabled={disableLoginBtn}  size={"large"} fullWidth
-                                                   variant={"contained"}>ورود</Button>}
-                            {/*<Formik*/}
-                            {/*    initialValues={{*/}
-                            {/*        username: mobileNumber,*/}
-                            {/*        password: "",*/}
-                            {/*    }}*/}
-                            {/*    validate={(values) => {*/}
-                            {/*        const errors = {};*/}
-                            {/*        if (!values.username.toString()) {*/}
-                            {/*            errors.username = "شماره همراه الزامی است";*/}
-                            {/*        }*/}
-                            {/*        if (!checkMobileValid(values.username.toString())) {*/}
-                            {/*            errors.username = "شماره همراه صحیح نیست";*/}
-                            {/*        }*/}
-
-                            {/*        if (!values.password) {*/}
-                            {/*            errors.password = "کد پیامک شده الزامی است";*/}
-                            {/*        }*/}
-
-                            {/*        return errors;*/}
-                            {/*    }}*/}
-                            {/*    onSubmit={(values, {setStatus, setSubmitting}) => {*/}
-                            {/*        setTimeout(() => {*/}
-                            {/*        }, 1000);*/}
-                            {/*    }}*/}
-                            {/*>*/}
-                            {/*    {({*/}
-                            {/*          values,*/}
-                            {/*          status,*/}
-                            {/*          errors,*/}
-                            {/*          touched,*/}
-                            {/*          handleChange,*/}
-                            {/*          handleBlur,*/}
-                            {/*          handleSubmit,*/}
-                            {/*          isSubmitting*/}
-                            {/*      }) => (*/}
-                            {/*        <form*/}
-                            {/*            noValidate={true}*/}
-                            {/*            autoComplete="off"*/}
-                            {/*            className="kt-form"*/}
-                            {/*            onSubmit={handleSubmit}*/}
-                            {/*        >*/}
-                            {/*            {status ? (*/}
-                            {/*                <div role="alert" className="alert alert-danger">*/}
-                            {/*                    <div className="alert-text">{status}</div>*/}
-                            {/*                </div>*/}
-                            {/*            ) : (*/}
-                            {/*                ""*/}
-                            {/*            )}*/}
-
-                            {/*            <div className="form-group">*/}
-                            {/*                <TextField*/}
-                            {/*                    className="kt-width-full"*/}
-                            {/*                    variant="outlined"*/}
-                            {/*                    margin="normal"*/}
-                            {/*                    name="username"*/}
-                            {/*                    type="text"*/}
-                            {/*                    inputProps={{inputMode: 'numeric'}}*/}
-                            {/*                    label={"شماره همراه"}*/}
-                            {/*                    onBlur={handleBlur}*/}
-                            {/*                    onChange={handleChange}*/}
-                            {/*                    value={fixMobile(values.username || 0)}*/}
-                            {/*                    helperText={touched.username && errors.username}*/}
-                            {/*                    error={Boolean(touched.username && errors.username)}*/}
-                            {/*                />*/}
-                            {/*            </div>*/}
-
-                            {/*            {(checkMobileValid(values.username.toString())) && (*/}
-                            {/*                (resend > 0) ? (*/}
-                            {/*                    <div>*/}
-                            {/*                        <Spinner animation="border" size="sm"/>*/}
-                            {/*                        <Typography variant="body1" display="block"*/}
-                            {/*                                    gutterBottom>*/}
-                            {/*                            {resend}*/}
-                            {/*                        </Typography>*/}
-                            {/*                    </div>*/}
-                            {/*                ) : <Button onClick={(e) => sendMessage(e, values.username.toString())} disabled={(resend > 0)}*/}
-                            {/*                            variant={"contained"}>ارسال کد</Button>*/}
-                            {/*            )*/}
-                            {/*            }*/}
-
-                            {/*            <Hidden lgDown={(resend < -1)} lgUp={(resend < -1)}>*/}
-                            {/*                <div className="form-group"*/}
-                            {/*                >*/}
-                            {/*                    <TextField*/}
-                            {/*                        type="number"*/}
-                            {/*                        margin="normal"*/}
-                            {/*                        label={"کد پیامک"}*/}
-                            {/*                        className="kt-width-full"*/}
-                            {/*                        name="password"*/}
-                            {/*                        onBlur={handleBlur}*/}
-                            {/*                        onChange={handleChange}*/}
-                            {/*                        value={values.password}*/}
-                            {/*                        helperText={touched.password && errors.password}*/}
-                            {/*                        error={Boolean(touched.password && errors.password)}*/}
-                            {/*                    />*/}
-                            {/*                </div>*/}
-                            {/*                <Button*/}
-                            {/*                    type="submit"*/}
-                            {/*                    variant="contained"*/}
-                            {/*                    disabled={isSubmitting}*/}
-                            {/*                >ورود</Button>*/}
-                            {/*            </Hidden>*/}
-                            {/*        </form>*/}
-                            {/*    )}*/}
-                            {/*</Formik>*/}
+                            {sentCode && <Button onClick={(e) => loginByNumber(e)} disabled={disableLoginBtn} size={"large"} fullWidth
+                                                 variant={"contained"}>ورود</Button>}
                         </CardContent>
                     </Card>
                 </Grid>

@@ -114,6 +114,7 @@ public final class CorporateConvertor {
         if(entity==null) return null;
         CorporatePersonnelCreditDto dto = CorporatePersonnelCreditDto.builder()
                 .id(entity.getId())
+                .name(entity.getName())
                 .creditAmount(entity.getCreditAmount())
                 .personnel(CorporateConvertor.toSimplePersonnelDto(entity.getCorporatePersonnel()))
                 .expireDate(entity.getExpireDate())

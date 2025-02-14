@@ -7,6 +7,7 @@ import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.authCodes.CorporateContractCodeEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
+import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.settings.CorporateSettingsEntity;
@@ -116,6 +117,11 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     @JsonIgnore
     @ToString.Exclude
     private Set<CorporateSettingsEntity> settings;
+
+    @OneToMany(mappedBy = "corporate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<ManageGiftCreditEntity> gifts;
 
     @Override
     public boolean equals(Object o) {

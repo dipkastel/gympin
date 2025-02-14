@@ -220,7 +220,7 @@ const EditProfile = (props) => {
                             error={!!getValidation("FullName",currentUser.FullName)}
                             helperText={getValidation("FullName",currentUser.FullName)}
                         />
-                        <FormControl sx={{mt:2}} variant={"outlined"} fullWidth error={!!getValidation("Gender",currentUser.Gender)}>
+                        <FormControl sx={{mt:1}} variant={"outlined"} fullWidth error={!!getValidation("Gender",currentUser.Gender)}>
                             <InputLabel
                                 color={!!getValidation("Gender",currentUser.Gender)?"error":"success"} id="demo-simple-select-label">جنسیت * </InputLabel>
                             <Select
@@ -244,8 +244,11 @@ const EditProfile = (props) => {
                             dateAdapter={AdapterDateFnsJalali}>
                             <DatePicker
 
+                                fullWidth
+                                className="w-100 mt-3"
                                 variant="outlined"
                                 mask="____/__/__"
+                                label={"تاریخ تولد * "}
                                 value={currentUser.Birthday||""}
                                 onChange={(e,w)=>{
                                     setFieldValue('Birthday', Date.parse(e))
@@ -260,7 +263,6 @@ const EditProfile = (props) => {
                                         className="w-100"
                                         variant="outlined"
                                         margin="normal"
-                                        label={"تاریخ تولد * "}
                                         color={!!getValidation("Birthday",currentUser.Birthday)?"error":"success"}
                                         error={!!getValidation("Birthday",currentUser.Birthday)}
                                         helperText={getValidation("Birthday",currentUser.Birthday)}
@@ -271,7 +273,7 @@ const EditProfile = (props) => {
 
                         <TextField
                             fullWidth
-                            className="w-100"
+                            className="w-100 mt-4"
                             variant="outlined"
                             margin="normal"
                             name="NationalCode"

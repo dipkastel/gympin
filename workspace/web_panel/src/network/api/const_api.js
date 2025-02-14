@@ -184,6 +184,12 @@ export let TagApi = {
     addToPlace: "v1/tag/addToPlace",
     removeFromPlace: "v1/tag/removeFromPlace",
 };
+export let giftCreditApi = {
+    add: "v1/giftCredit/add",
+    delete: "v1/giftCredit/delete",
+    update: "v1/giftCredit/update",
+    query: "v1/giftCredit/query",
+};
 export let optionOfPlaceApi = {
     add: "v1/OptionOfPlace/add",
     delete: "v1/OptionOfPlace/delete",

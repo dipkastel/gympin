@@ -28,6 +28,7 @@ import Home from "../pages/home/Home";
 import {useColorScheme} from "@mui/material";
 import TicketsActive from "../pages/tickets/TicketsActive";
 import NewHome from "../pages/newHome/NewHome";
+import Code from "../pages/auth/Code";
 
 export default function ApplicationRoutes() {
     const isAuthorized = useSelector(({auth: {user}}) => user ? user.Id != null : false);
@@ -78,6 +79,7 @@ export default function ApplicationRoutes() {
                     <Route path="/coach/:coachId" element={<Coach/>}/>
                     <Route path="/auth/*" element={<Navigate to={"/"}/>}/>
                     <Route path="/login" element={ <Navigate to={"/"}/>}/>
+                    <Route path="/login/:code" element={ <Navigate to={"/"}/>}/>
                     <Route path="/logout" element={<LogoutPage/>}/>
                     <Route path="/404" element={<NotFound />} />
                     <Route path="/code/:code" element={ <DynamicRedirect to={"/wallet/:code"} />}/>
@@ -87,7 +89,7 @@ export default function ApplicationRoutes() {
 
             {!isAuthorized &&
             <Routes>
-                <Route path="/code/:code" element={ <DynamicRedirect to={"/login/:code"} />}/>
+                <Route path="/code/:code" element={ <Code />}/>
                 <Route path="/place/:placeId" element={<Place/>}/>
                 <Route path="/coach/:coachId" element={<Coach/>}/>
                 <Route path="/login" element={<Login/>}/>

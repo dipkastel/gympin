@@ -14,5 +14,4 @@ public interface CorporatePersonnelCreditService extends BaseService<CorporatePe
     List<FinanceUserDto> addNWToAll(CorporatePersonnelCreditParam param);
     BigDecimal getTotalUserCredits(CorporatePersonnelCreditParam param);
     CorporatePersonnelCreditDto decreasePersonnelCredit(CorporatePersonnelCreditParam param);
-    CorporatePersonnelCreditDto ExpirePersonnelCredit(CorporatePersonnelCreditParam param);
-}
+    CorporatePersonnelCreditDto ExpirePersonnelCredit(CorporatePersonnelCreditParam param);}

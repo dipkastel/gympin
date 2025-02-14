@@ -1,12 +1,29 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Card, CardHeader, Divider, Grid2 as Grid, TextField, ToggleButton, Typography} from "@mui/material";
+import {
+    Button,
+    Card,
+    CardHeader,
+    CircularProgress,
+    Dialog,
+    DialogTitle,
+    Divider,
+    Grid2 as Grid,
+    IconButton,
+    TextField,
+    ToggleButton,
+    Typography
+} from "@mui/material";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {gatewayApplication_query} from "../../network/api/gatewayApplication.api";
 import {suggest_query} from "../../network/api/suggest.api";
-import {InsertComment} from "@mui/icons-material";
+import {InsertComment, QrCode} from "@mui/icons-material";
 import {increaseUserDeposit_requestIncreaseUserDeposits} from "../../network/api/increaseUserDeposit.api";
+import _ScannerCore from "../qrCode/scanner/_ScannerCore";
+import {gift_claim} from "../../network/api/GiftCredits.api";
+import store from "../../helper/redux/store";
+import {sagaActions} from "../../helper/redux/actions/SagaActions";
 
 const _IncreaseCredit = () => {
     const error = useContext(ErrorContext);
@@ -16,15 +33,61 @@ const _IncreaseCredit = () => {
     const [chequeDate, setChequeDate] = useState(null);
     const [paymentGatewaysApplication, setPaymentGatewaysApplication] = useState(null);
     const [selectedGateway, setSelectedGatewayApplication] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [giftLoading, setGiftLoading] = useState(false);
     const [suggests, setSuggests] = useState(null);
     const [commentToggle, setCommentToggle] = useState(false);
     const [transactionDescription, SetTransactionDescription] = useState(null);
+    const [openModalScan, setOpenModalScan] = useState(false);
+    const [scannedCode, SetScannedCode] = useState(null);
+    const [lastScanedCode, SetLastScanedCode] = useState(null);
 
     useEffect(() => {
         getPaymentGateways();
         getPaymentSuggest();
     }, []);
+
+
+    useEffect(() => {
+        if (scannedCode&&scannedCode !== lastScanedCode) {
+            SetLastScanedCode(scannedCode);
+            claimGift();
+        }
+    }, [scannedCode]);
+
+
+    function claimGift() {
+        setGiftLoading(true);
+        var code = "";
+        try {
+            if (scannedCode.startsWith("G"))
+                code = scannedCode
+            else
+                code = scannedCode.split('/')[scannedCode.split('/').length - 1];
+        } catch (ex) {
+            error.showError({message: "کد نامعتبر",});
+        }
+        gift_claim({Code: code, User: {Id: currentUser.Id}}).then(result => {
+            try {
+            setGiftLoading(false);
+            SetScannedCode(null);
+            setOpenModalScan(false);
+            } catch (e) {
+            }
+            try {
+                error.showError({message: "با موفقیت وارد شد",});
+                store.dispatch(sagaActions.RequestUser())
+            } catch (e) {
+            }
+        }).catch(e => {
+            setGiftLoading(false);
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }
+
 
     function getPaymentGateways() {
         gatewayApplication_query({
@@ -80,7 +143,6 @@ const _IncreaseCredit = () => {
                 return "شناسایی ربات";
                 break;
         }
-
     }
 
     function submitPayment(e) {
@@ -97,7 +159,7 @@ const _IncreaseCredit = () => {
         //     error.showError({message: "کد مرجع تراکنش نمیتواند خالی باشد",});
         //     return;
         // }
-        setLoading(true);
+
         increaseUserDeposit_requestIncreaseUserDeposits({
             GatewayApplication: {Id: selectedGateway?.Id},
             TransactionReference: transactionReference,
@@ -129,17 +191,35 @@ const _IncreaseCredit = () => {
         })
     }
 
+    function renderModalScan() {
+        return (<Dialog
+            className={"w-100"}
+            open={openModalScan} onClose={() => setOpenModalScan(false)}>
+            <DialogTitle>{"کارت خود را اسکن کنید"}</DialogTitle>
+            {giftLoading ? (<Grid sx={{p:2,textAlign:"center"}}><CircularProgress/></Grid>) : (<_ScannerCore scannWork={(!scannedCode)} onFind={(e) => {
+                SetScannedCode(e);
+            }}/>)}
+
+        </Dialog>);
+    }
+
 
     return (<>
-            {paymentGatewaysApplication && <Card elevation={6} sx={{margin: 1,pb:2}}>
-                <CardHeader title={<Typography
-                    sx={{display: "inline", p: 1}}
-                    component="p"
-                    variant="subtitle1"
-                    color="text.primary"
+            {paymentGatewaysApplication && <Card elevation={6} sx={{margin: 1, pb: 2}}>
+                <CardHeader
+                    title={<Typography
+                        sx={{display: "inline", p: 1}}
+                        component="p"
+                        variant="subtitle1"
+                        color="text.primary"
+                    >
+                        افزایش اعتبار شخصی
+                    </Typography>}
+
+
+                    action={<IconButton onClick={() => setOpenModalScan(true)}><QrCode/></IconButton>}
+
                 >
-                    افزایش اعتبار شخصی
-                </Typography>}>
 
                 </CardHeader>
                 <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}} component="div"/>
@@ -150,7 +230,7 @@ const _IncreaseCredit = () => {
                     alignItems="center"
                     sx={{padding: 1}}
                 >
-                    {((amountToPay||0)<1)&& <>
+                    {((amountToPay || 0) < 1) && <>
                         <Grid
                             container
                             direction="row"
@@ -162,13 +242,13 @@ const _IncreaseCredit = () => {
                         >
                             {suggests && suggests.map(suggest => (
                                 <Grid size={1} key={"suggest-" + suggest.Id}>
-                                    <Button sx={{m: 0.2,py:2,boxShadow:"none"}} fullWidth
+                                    <Button sx={{m: 0.2, py: 2, boxShadow: "none"}} fullWidth
                                             onClick={() => SetAmountToPay(suggest.Amount)} color={"gray"}
                                             variant={"contained"}>{toPriceWithComma(suggest.Amount) + " تومان "}</Button>
                                 </Grid>
                             ))}
                         </Grid>
-                        <Divider variant="inset" sx={{ml: 0, mr: 0,mt:1, width: "100%"}} component="div"/>
+                        <Divider variant="inset" sx={{ml: 0, mr: 0, mt: 1, width: "100%"}} component="div"/>
 
 
                     </>}
@@ -300,6 +380,7 @@ const _IncreaseCredit = () => {
                     </Grid>
                 </Grid>
             </Card>}
+            {renderModalScan()}
         </>
     );
 };

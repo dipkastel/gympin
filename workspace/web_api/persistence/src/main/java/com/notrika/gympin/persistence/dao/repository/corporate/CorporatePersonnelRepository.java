@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface CorporatePersonnelRepository extends BaseRepository<CorporatePersonnelEntity, Long> {
 
+    CorporatePersonnelEntity findByUserIdAndCorporateIdAndDeletedIsFalse(Long userId,Long corporateId);
     List<CorporatePersonnelEntity> findByCorporateIdAndDeletedIsFalse(Long corporateId);
     List<CorporatePersonnelEntity> findByCorporateIdAndPersonnelGroupIdAndDeletedIsFalse(Long CorporateId,Long GroupId);
     List<CorporatePersonnelEntity> findByUserIdAndDeletedIsFalse(Long userId);

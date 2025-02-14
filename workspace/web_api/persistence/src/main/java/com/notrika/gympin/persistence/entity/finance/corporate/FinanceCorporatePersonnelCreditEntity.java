@@ -28,6 +28,9 @@ import java.util.Objects;
 @Table(name = "financeCorporatePersonelCredit")
 public class FinanceCorporatePersonnelCreditEntity extends BaseEntityWithCreateUpdate<FinanceCorporatePersonnelCreditEntity> {
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private CorporatePersonnelCreditStatusEnum status;

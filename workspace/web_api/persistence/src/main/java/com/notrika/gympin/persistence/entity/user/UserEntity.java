@@ -9,6 +9,7 @@ import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncreaseUserDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
+import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.notification.ManageNotificationEntity;
 import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionEntity;
@@ -169,6 +170,11 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @JsonIgnore
     @ToString.Exclude
     private List<ManageNoteEntity> notes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<ManageGiftCreditEntity> gifts;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

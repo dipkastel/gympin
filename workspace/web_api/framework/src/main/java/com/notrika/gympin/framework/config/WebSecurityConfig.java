@@ -83,6 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/configs/MasterSplash"
                         ,"/api/v1/configs/CorporateSplash"
                         ,"/api/v1/configs/AdminPanelSplash"
+                        ,"/api/v1/giftCredit/checkStatus"
                         ,"/api/v1/homepage/getHome"
                         ,"/api/v1/location/getAllPlace"
                         ,"/api/v1/location/getPlaceById"

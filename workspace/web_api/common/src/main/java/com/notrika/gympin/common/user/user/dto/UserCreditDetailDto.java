@@ -23,6 +23,9 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 public class UserCreditDetailDto extends BaseDto<UserCreditDetailDto> {
 
+    @JsonProperty("Name")
+    private String name;
+
     @JsonProperty("CreditType")
     private CreditType creditType;
 

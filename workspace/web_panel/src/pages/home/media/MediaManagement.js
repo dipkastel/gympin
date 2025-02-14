@@ -9,9 +9,7 @@ import VideoManager from "./Video/VideoManager";
 import AudioManager from "./Audio/AudioManager";
 import "./AddMedia.css"
 import {FilterAlt} from "@mui/icons-material";
-import {defaultFilterImages} from "./Image/_ImageFilter";
 import AllFilesManager from "./AllFiles/AllFilesManager";
-
 
 
 const MediaManagement = () => {
@@ -65,14 +63,14 @@ const MediaManagement = () => {
                                     <TabPanel sx={{padding: 0}} value="IMAGE">
                                         <IconButton aria-label="fingerprint"
                                                     color={"default"}
-                                                    onClick={(e) =>openAddModalRef.current.OpenModal(tab)}>
-                                            <AddIcon />
+                                                    onClick={(e) => openAddModalRef.current.OpenModal(tab)}>
+                                            <AddIcon/>
                                         </IconButton>
 
                                         <IconButton aria-label="fingerprint"
                                                     color={"default"}
                                                     onClick={() => openFilterModalRef.current.OpenModal(true)}>
-                                            <FilterAlt />
+                                            <FilterAlt/>
                                         </IconButton>
                                     </TabPanel>
                                     <TabPanel sx={{padding: 0}} value="VIDEO">
@@ -93,7 +91,7 @@ const MediaManagement = () => {
                         <div className="kt-section ">
                             <div className="kt-section__body">
                                 <TabPanel sx={{padding: 0}} value="IMAGE">
-                                    <ImageManager openAddModalRef={openAddModalRef} openFilterModalRef={openFilterModalRef} />
+                                    <ImageManager openAddModalRef={openAddModalRef} openFilterModalRef={openFilterModalRef}/>
                                 </TabPanel>
                                 <TabPanel sx={{padding: 0}} value="VIDEO">
                                     <VideoManager/>

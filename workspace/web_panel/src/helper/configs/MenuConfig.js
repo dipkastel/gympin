@@ -87,12 +87,19 @@ export default {
         page: "sells",
       },
       {
-        title: "manage transactions",
+        title: "manage gifts",
         root: true,
-        icon: "flaticon2-document",
-        translate: "MENU.MANAGE_TRANSACTIONS",
-        page: "FinanceTransactions",
+        icon: "flaticon2-gift",
+        translate: "MENU.MANAGE_GIFTS",
+        page: "Gifts",
       },
+      // {
+      //   title: "manage transactions",
+      //   root: true,
+      //   icon: "flaticon2-document",
+      //   translate: "MENU.MANAGE_TRANSACTIONS",
+      //   page: "FinanceTransactions",
+      // },
       { section: "محتوا" },
       {
         title: "manage HomePage",

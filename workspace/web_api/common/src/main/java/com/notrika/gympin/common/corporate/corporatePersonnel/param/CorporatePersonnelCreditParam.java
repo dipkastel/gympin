@@ -19,6 +19,10 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 public class CorporatePersonnelCreditParam extends BaseParam<CorporatePersonnelCreditParam> {
 
+
+    @JsonProperty("Name")
+    private String name;
+
     @JsonProperty("CorporatePersonnel")
     private CorporatePersonnelParam personnel;
 

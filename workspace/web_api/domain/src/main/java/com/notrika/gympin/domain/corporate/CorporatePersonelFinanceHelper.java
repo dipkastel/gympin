@@ -33,6 +33,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,18 +76,19 @@ public class CorporatePersonelFinanceHelper {
         return totalPersonnelCreditsAfterAdd.compareTo(TotalDeposit.multiply(BigDecimal.valueOf(coefficient))) > 0;
     }
 
-    public FinanceCorporatePersonnelCreditEntity addCorporatePersonnelCredit(CorporatePersonnelEntity personnelEntity, @NonNull CorporatePersonnelCreditParam param, FinanceSerialEntity serial) {
+    public FinanceCorporatePersonnelCreditEntity addCorporatePersonnelCredit(CorporatePersonnelEntity personnelEntity, Date creditExpireDate,BigDecimal creditAmount,String name, FinanceSerialEntity serial) {
         if (personnelEntity.getCorporate().getContractType() == CorporateContractTypeEnum.ALPHA) {
             Calendar c = Calendar.getInstance();
             c.setTime(personnelEntity.getCorporate().getContractDate());
             c.add(Calendar.YEAR, 1);
-            param.setExpireDate(c.getTime());
+            creditExpireDate = c.getTime();
         }
         FinanceCorporatePersonnelCreditEntity result = financeCorporatePersonnelCreditRepository.add(FinanceCorporatePersonnelCreditEntity.builder()
                 .status(CorporatePersonnelCreditStatusEnum.ACTIVE)
                 .corporatePersonnel(personnelEntity)
-                .creditAmount(param.getCreditAmount())
-                .ExpireDate(param.getExpireDate())
+                .creditAmount(creditAmount)
+                .name(name)
+                .ExpireDate(creditExpireDate)
                 .build());
         //add finance corporate personnel credit transaction
         financeCorporatePersonnelCreditTransactionRepository.add(FinanceCorporatePersonnelCreditTransactionEntity.builder()

@@ -2,15 +2,21 @@ package com.notrika.gympin.domain.corporate;
 
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelCreditService;
+import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelService;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.corporate.CorporateContractIsNotComplete;
 import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.user.LowDepositException;
+import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.convertor.FinanceUserConvertor;
@@ -26,6 +32,8 @@ import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
+import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,6 +55,10 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
     @Autowired
     CorporatePersonnelRepository corporatePersonnelRepository;
+
+    @Autowired
+    CorporatePersonnelService corporatePersonnelService;
+
     @Autowired
     CorporateServiceImpl corporateService;
     @Autowired
@@ -78,7 +90,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
         financeSerialRepository.add(serial);
         //add finance corporate personnel credit
-        FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnelEntity, param, serial);
+        FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnelEntity, param.getExpireDate(),param.getCreditAmount(),param.getName(), serial);
         //update corporate finance total credit
         FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(personnelEntity.getCorporate(), param.getCreditAmount(), serial,null);
 
@@ -246,5 +258,37 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     @Override
     public Page<CorporatePersonnelCreditDto> convertToDtos(Page<FinanceCorporatePersonnelCreditEntity> entities) {
         return entities.map(CorporateConvertor::toCreditDto);
+    }
+
+    public CorporatePersonnelCreditDto addGiftCredit(ManageGiftCreditEntity gift,UserEntity user) {
+        //find or add user to corporate
+        CorporatePersonnelEntity personnel = gift.getCorporate().getPersonnel().stream().filter(cp-> cp.getUser().getId().equals(user.getId())).findFirst().orElse(null);
+        if(personnel==null){
+            CorporatePersonnelEntity corporatePersonnelEntity = CorporatePersonnelEntity.builder()
+                    .corporate(gift.getCorporate())
+                    .user(user)
+                    .role(CorporatePersonnelRoleEnum.PERSONEL)
+                    .build();
+           personnel = corporatePersonnelRepository.add(corporatePersonnelEntity);
+        }
+
+
+        var serial = FinanceSerialEntity.builder()
+                .serial(java.util.UUID.randomUUID().toString())
+                .processTypeEnum(ProcessTypeEnum.TRA_INCREASE_PERSONNEL_CREDIT_GIFT)
+                .build();
+
+        //checks
+        if (!helper.checkContractContract(personnel.getCorporate()))
+            throw new CorporateContractIsNotComplete();
+        if (helper.checkLowBudjetByContract(gift.getCorporate(), gift.getAmount()))
+            throw new LowDepositException();
+
+        financeSerialRepository.add(serial);
+        //add finance corporate personnel credit
+        FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnel,gift.getExpireDate(),gift.getAmount(),gift.getName(), serial);
+        //update corporate finance total credit
+        FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(gift.getCorporate(), gift.getAmount(), serial,null);
+        return CorporateConvertor.toCreditDto(corporatePersonnelCredit);
     }
 }

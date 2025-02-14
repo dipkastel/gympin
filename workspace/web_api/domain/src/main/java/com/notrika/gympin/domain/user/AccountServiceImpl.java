@@ -3,6 +3,7 @@ package com.notrika.gympin.domain.user;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
+import com.notrika.gympin.common.settings.gifts.enums.GiftCreditStatusEnum;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
@@ -36,8 +37,10 @@ import com.notrika.gympin.common.util.exception.user.UserSuspendedException;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.authCodes.UserActivationCodeRepository;
+import com.notrika.gympin.persistence.dao.repository.settings.ManageGiftCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
+import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;
 import com.notrika.gympin.persistence.entity.user.UserRolesEntity;
@@ -82,6 +85,10 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private SupportService supportService;
 
+    @Autowired
+    ManageGiftCreditRepository giftCreditRepository;
+
+
 
     @Override
     @Transactional
@@ -110,11 +117,19 @@ public class AccountServiceImpl implements AccountService {
         log.info("Going to register user by invite code...\n");
         UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
         if (user != null) throw new EntryAlreadyExistException();
-        if (!GeneralHelper.checkInviteCode(userRegisterParam.getInvitedBy(), userRepository))
-            throw new InviteCodeNotValid();
+        GeneralHelper.checkInviteCode(userRegisterParam.getInvitedBy(), userRepository,giftCreditRepository);
+//        if (!)
+//            throw new InviteCodeNotValid();
         try {
             userRegisterParam.setUserRole(RoleEnum.USER);
             UserEntity insertedUser = addUser(userRegisterParam);
+            if(userRegisterParam.getInvitedBy().startsWith("G")){
+                //updateInviteCode
+                ManageGiftCreditEntity gift = giftCreditRepository.getByRegisterCodeAndDeletedIsFalse(userRegisterParam.getInvitedBy());
+                gift.setStatus(GiftCreditStatusEnum.REGISTERED);
+                gift.setCanRegister(false);
+                gift.setUser(insertedUser);
+            }
             return UserConvertor.toRegisterDto(insertedUser);
         } catch (DataIntegrityViolationException e) {
             throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.REGISTER_USER_EXIST);
@@ -376,8 +391,8 @@ public class AccountServiceImpl implements AccountService {
         UserInviteCodesDto codesDto = new UserInviteCodesDto();
         codesDto.setTitle("کد های دعوت شما");
         codesDto.setDescriptoin("با کد دعوت زیر 2 نفر از دوستان خود را به جیم پین دعوت کنید");
-        String inviteCode1 = GeneralHelper.getInviteCode(userEntity.getId(), 1);
-        String inviteCode2 = GeneralHelper.getInviteCode(userEntity.getId(), 2);
+        String inviteCode1 = "U"+GeneralHelper.getInviteCode(userEntity.getId(), 1);
+        String inviteCode2 = "U"+GeneralHelper.getInviteCode(userEntity.getId(), 2);
         codesDto.setFirstInviteCode(
                 InviteCode
                         .builder()
@@ -393,5 +408,9 @@ public class AccountServiceImpl implements AccountService {
         return codesDto;
     }
 
+    private boolean checkInviteByGifts(String inviteCode) {
+        ManageGiftCreditEntity giftCreditEntity = giftCreditRepository.getByCodeAndDeletedIsFalse(inviteCode);
+        return false;
+    }
 
 }
