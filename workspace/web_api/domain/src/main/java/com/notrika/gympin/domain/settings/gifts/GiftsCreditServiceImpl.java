@@ -34,6 +34,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.ws.rs.BadRequestException;
 import java.math.BigDecimal;
@@ -109,6 +110,7 @@ public class GiftsCreditServiceImpl extends AbstractBaseService<GiftCreditParam,
 
 
     @Override
+    @Transactional
     public GiftCreditDto claimGiftCredit(@NonNull GiftCreditParam giftCreditParam) throws Exception {
         ManageGiftCreditEntity gift = manageGiftCreditRepository.getByCodeAndDeletedIsFalse(giftCreditParam.getCode());
         if(gift==null)
@@ -134,6 +136,9 @@ public class GiftsCreditServiceImpl extends AbstractBaseService<GiftCreditParam,
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
         if(!userRequester.getId().equals(giftCreditParam.getUser().getId()))
             throw new GiftCreditIsForOtherPersonException();
+
+        if(gift.getUser()==null)
+            gift.setUser(userRepository.getById(giftCreditParam.getUser().getId()));
 
         corporatePersonnelCreditServiceImpl.addGiftCredit(gift,userRequester);
         gift.setStatus(GiftCreditStatusEnum.USED);

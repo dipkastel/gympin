@@ -26,20 +26,20 @@ import java.util.Objects;
 @Table(name = "corporatePersonel")
 public class CorporatePersonnelEntity extends BaseEntityWithCreateUpdate<CorporatePersonnelEntity> {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "corporateId")
     @JsonIgnore
     @ToString.Exclude
     private CorporateEntity corporate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "personnelUserId")
     @JsonIgnore
     @ToString.Exclude
     private UserEntity user;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "personelGroupId")
     @JsonIgnore
     @ToString.Exclude

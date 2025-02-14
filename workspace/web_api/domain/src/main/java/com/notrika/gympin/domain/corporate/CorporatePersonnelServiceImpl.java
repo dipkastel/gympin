@@ -73,11 +73,21 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public CorporatePersonnelDto add(@NonNull CorporatePersonnelParam Param) {
+        CorporatePersonnelEntity personnelEntity =  addUserToCorporate(Param.getPhoneNumber(),Param.getCorporate().getId());
+        try {
+            smsService.sendJoinedToCorporateSms(new SmsDto(personnelEntity.getUser().getPhoneNumber(), SmsTypes.JOINED_TO_CORPORATE, personnelEntity.getCorporate().getName()));
+        } catch (Exception e) {
+            throw new SendSmsException();
+        }
+        return CorporateConvertor.toPersonnelDto(personnelEntity);
+    }
 
-        UserEntity user = userRepository.findByPhoneNumber(Param.getPhoneNumber());
-        CorporateEntity corporate = corporateService.getEntityById(Param.getCorporate().getId());
+    private CorporatePersonnelEntity addUserToCorporate(String phoneNumber,Long corporateId) {
+
+        UserEntity user = userRepository.findByPhoneNumber(phoneNumber);
+        CorporateEntity corporate = corporateService.getEntityById(corporateId);
         if (user == null) {
-            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(Param.getPhoneNumber()).invitedBy("C" + GeneralHelper.getInviteCode(corporate.getId(), 1)).userRole(RoleEnum.USER).build());
+            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(phoneNumber).invitedBy("C" + GeneralHelper.getInviteCode(corporate.getId(), 1)).userRole(RoleEnum.USER).build());
         } else {
             //check for duplication
             UserEntity finalUser = user;
@@ -90,14 +100,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
                 .user(user)
                 .role(CorporatePersonnelRoleEnum.PERSONEL)
                 .build();
-        corporatePersonnelRepository.add(corporatePersonnelEntity);
-
-        try {
-            smsService.sendJoinedToCorporateSms(new SmsDto(user.getPhoneNumber(), SmsTypes.JOINED_TO_CORPORATE, corporate.getName()));
-        } catch (Exception e) {
-            throw new SendSmsException();
-        }
-        return CorporateConvertor.toPersonnelDto(corporatePersonnelEntity);
+       return corporatePersonnelRepository.add(corporatePersonnelEntity);
     }
 
     @Override

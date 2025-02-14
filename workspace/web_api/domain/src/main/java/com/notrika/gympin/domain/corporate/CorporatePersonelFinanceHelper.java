@@ -29,6 +29,7 @@ import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class CorporatePersonelFinanceHelper {
         return totalPersonnelCreditsAfterAdd.compareTo(TotalDeposit.multiply(BigDecimal.valueOf(coefficient))) > 0;
     }
 
+    @Transactional
     public FinanceCorporatePersonnelCreditEntity addCorporatePersonnelCredit(CorporatePersonnelEntity personnelEntity, Date creditExpireDate,BigDecimal creditAmount,String name, FinanceSerialEntity serial) {
         if (personnelEntity.getCorporate().getContractType() == CorporateContractTypeEnum.ALPHA) {
             Calendar c = Calendar.getInstance();
@@ -103,7 +105,7 @@ public class CorporatePersonelFinanceHelper {
         return result;
     }
 
-
+    @Transactional
     public FinanceCorporateEntity addCorporateTotalCredit(CorporateEntity corporate, BigDecimal CreditAmount, FinanceSerialEntity serial, String trDescription) {
         FinanceCorporateEntity financeCorporate = corporate.getFinanceCorporate();
         BigDecimal totalCreditBeforeAdd = financeCorporate.getTotalCredits();

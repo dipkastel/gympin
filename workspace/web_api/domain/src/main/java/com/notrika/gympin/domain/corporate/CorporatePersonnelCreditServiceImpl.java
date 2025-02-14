@@ -4,19 +4,15 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePerso
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelCreditService;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelService;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
-import com.notrika.gympin.common.settings.context.GympinContext;
-import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.corporate.CorporateContractIsNotComplete;
 import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.user.LowDepositException;
-import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.convertor.FinanceUserConvertor;
@@ -90,9 +86,9 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
         financeSerialRepository.add(serial);
         //add finance corporate personnel credit
-        FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnelEntity, param.getExpireDate(),param.getCreditAmount(),param.getName(), serial);
+        FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnelEntity, param.getExpireDate(), param.getCreditAmount(), param.getName(), serial);
         //update corporate finance total credit
-        FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(personnelEntity.getCorporate(), param.getCreditAmount(), serial,null);
+        FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(personnelEntity.getCorporate(), param.getCreditAmount(), serial, null);
 
         return CorporateConvertor.toCreditDto(corporatePersonnelCredit);
     }
@@ -116,16 +112,16 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
             throw new CorporateContractIsNotComplete();
         if (helper.checkLowBudjetByContract(corporate, totalAddAmount))
             throw new LowDepositException();
-        if (totalAddAmount.compareTo(BigDecimal.ZERO)<1)
+        if (totalAddAmount.compareTo(BigDecimal.ZERO) < 1)
             throw new CreditCannotBeNegativeException();
-        if (personnelsToAddCredit.size()<1)
+        if (personnelsToAddCredit.size() < 1)
             throw new NotFoundException();
 
         financeSerialRepository.add(serial);
         //add finance corporate personnel credits
         List<FinanceCorporatePersonnelCreditEntity> credits = helper.addCorporatePersonnelCredits(personnelsToAddCredit, param, serial);
         //update corporate finance total credit
-        FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(corporate, totalAddAmount, serial, helper.getTransactionDiscription(param,personnelsToAddCredit,totalAddAmount));
+        FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(corporate, totalAddAmount, serial, helper.getTransactionDiscription(param, personnelsToAddCredit, totalAddAmount));
 
         return convertToDtos(credits);
     }
@@ -146,9 +142,9 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
         if (!helper.checkContractContract(corporate))
             throw new CorporateContractIsNotComplete();
-        if (totalAddAmount.compareTo(BigDecimal.ZERO)<1)
+        if (totalAddAmount.compareTo(BigDecimal.ZERO) < 1)
             throw new CreditCannotBeNegativeException();
-        if (personnelsToAddCredit.size()<1)
+        if (personnelsToAddCredit.size() < 1)
             throw new NotFoundException();
 
         financeSerialRepository.add(serial);
@@ -171,7 +167,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         //decrease finance corporate personnel credit
         FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.decreaseCorporatePersonnelCredit(credit, param.getCreditAmount(), serial);
         //update corporate finance totalcredit
-        FinanceCorporateEntity financeCorporate = helper.decreaseCorporateTotalCredit(credit.getCorporatePersonnel().getCorporate().getFinanceCorporate(), param.getCreditAmount(), serial,null);
+        FinanceCorporateEntity financeCorporate = helper.decreaseCorporateTotalCredit(credit.getCorporatePersonnel().getCorporate().getFinanceCorporate(), param.getCreditAmount(), serial, null);
 
         return CorporateConvertor.toCreditDto(corporatePersonnelCredit);
     }
@@ -192,7 +188,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         credit.setStatus(CorporatePersonnelCreditStatusEnum.EXPIRE);
         FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.decreaseCorporatePersonnelCredit(credit, param.getCreditAmount(), serial);
         //update corporate finance totalcredit
-        FinanceCorporateEntity financeCorporate = helper.decreaseCorporateTotalCredit(credit.getCorporatePersonnel().getCorporate().getFinanceCorporate(), param.getCreditAmount(), serial,null);
+        FinanceCorporateEntity financeCorporate = helper.decreaseCorporateTotalCredit(credit.getCorporatePersonnel().getCorporate().getFinanceCorporate(), param.getCreditAmount(), serial, null);
 
         return CorporateConvertor.toCreditDto(corporatePersonnelCredit);
     }
@@ -260,16 +256,19 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         return entities.map(CorporateConvertor::toCreditDto);
     }
 
-    public CorporatePersonnelCreditDto addGiftCredit(ManageGiftCreditEntity gift,UserEntity user) {
+    @Transactional
+    public CorporatePersonnelCreditDto addGiftCredit(ManageGiftCreditEntity gift, UserEntity user) {
         //find or add user to corporate
-        CorporatePersonnelEntity personnel = gift.getCorporate().getPersonnel().stream().filter(cp-> cp.getUser().getId().equals(user.getId())&&!cp.isDeleted()).findFirst().orElse(null);
-        if(personnel==null){
-            CorporateEntity corporate = corporateService.getEntityById(gift.getCorporate().getId());
-            CorporatePersonnelEntity corporatePersonnelEntity = new CorporatePersonnelEntity();
-            corporatePersonnelEntity.setCorporate(corporate);
-            corporatePersonnelEntity.setUser(user);
-            corporatePersonnelEntity.setRole(CorporatePersonnelRoleEnum.PERSONEL);
-           personnel = corporatePersonnelRepository.add(corporatePersonnelEntity);
+        CorporatePersonnelEntity personnel = gift.getCorporate().getPersonnel().stream().filter(cp -> cp.getUser().getId().equals(user.getId()) && !cp.isDeleted()).findFirst().orElse(null);
+
+
+        if (personnel == null) {
+            personnel = CorporatePersonnelEntity.builder()
+                    .corporate(gift.getCorporate())
+                    .user(gift.getUser())
+                    .role(CorporatePersonnelRoleEnum.PERSONEL)
+                    .build();
+            corporatePersonnelRepository.add(personnel);
         }
 
 
@@ -286,9 +285,9 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
         financeSerialRepository.add(serial);
         //add finance corporate personnel credit
-        FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnel,gift.getExpireDate(),gift.getAmount(),gift.getName(), serial);
+        FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnel, gift.getExpireDate(), gift.getAmount(), gift.getName(), serial);
         //update corporate finance total credit
-        FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(gift.getCorporate(), gift.getAmount(), serial,null);
+        FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(gift.getCorporate(), gift.getAmount(), serial, null);
         return CorporateConvertor.toCreditDto(corporatePersonnelCredit);
     }
 }
