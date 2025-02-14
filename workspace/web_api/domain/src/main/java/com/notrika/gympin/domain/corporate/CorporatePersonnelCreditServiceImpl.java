@@ -264,11 +264,11 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         //find or add user to corporate
         CorporatePersonnelEntity personnel = gift.getCorporate().getPersonnel().stream().filter(cp-> cp.getUser().getId().equals(user.getId())&&!cp.isDeleted()).findFirst().orElse(null);
         if(personnel==null){
-            CorporatePersonnelEntity corporatePersonnelEntity = CorporatePersonnelEntity.builder()
-                    .corporate(gift.getCorporate())
-                    .user(user)
-                    .role(CorporatePersonnelRoleEnum.PERSONEL)
-                    .build();
+            CorporateEntity corporate = corporateService.getEntityById(gift.getCorporate().getId());
+            CorporatePersonnelEntity corporatePersonnelEntity = new CorporatePersonnelEntity();
+            corporatePersonnelEntity.setCorporate(corporate);
+            corporatePersonnelEntity.setUser(user);
+            corporatePersonnelEntity.setRole(CorporatePersonnelRoleEnum.PERSONEL);
            personnel = corporatePersonnelRepository.add(corporatePersonnelEntity);
         }
 
