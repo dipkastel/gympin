@@ -128,9 +128,7 @@ const _GiftCredit = () => {
                                     label="تاریخ انقضا اعتبار"
                                     name="CreditExpireDate"
                                     value={addFormData.CreditExpireDate}
-                                    onChange={e => {
-                                        setAddFormData({...addFormData, CreditExpireDate: e});
-                                    }}
+                                    onChange={e => setAddFormData({...addFormData, CreditExpireDate: e})}
                                     renderInput={(params) => <TextField fullWidth {...params} />}
                                 />
                             </LocalizationProvider>
