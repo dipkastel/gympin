@@ -120,7 +120,7 @@ const _GiftCredit = () => {
                                     label="تاریخ انقضا"
                                     name="ExpireDate"
                                     value={addFormData.ExpireDate}
-                                    onChange={e => setAddFormData({...addFormData,ExpireDate:e.target.value})}
+                                    onChange={e => setAddFormData({...addFormData,ExpireDate:e})}
                                     renderInput={(params) => <TextField fullWidth {...params} />}
                                 />
                                 <DatePicker
@@ -128,7 +128,9 @@ const _GiftCredit = () => {
                                     label="تاریخ انقضا اعتبار"
                                     name="CreditExpireDate"
                                     value={addFormData.CreditExpireDate}
-                                    onChange={e => setAddFormData({...addFormData,CreditExpireDate:e.target.value})}
+                                    onChange={e => {
+                                        setAddFormData({...addFormData, CreditExpireDate: e});
+                                    }}
                                     renderInput={(params) => <TextField fullWidth {...params} />}
                                 />
                             </LocalizationProvider>
