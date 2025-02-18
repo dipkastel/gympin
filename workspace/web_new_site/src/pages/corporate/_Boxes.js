@@ -24,7 +24,7 @@ const _Boxes = () => {
                 <Grid className={"box"} container columns={9} alignContent={"center"} textAlign={"center"}>
                     <SingleBox
                         text={"به مناسبت‌های خود رنگ و بوی سلامتی ببخشید! با هدیه‌ی ورزش برای مناسبت‌ها، سلامتی را یه همکاران خود هدیه کنید."}
-                        title={"ورزش برای مناسبت‌ها"} image={"/assets/images/growth1.svg"} alt={"تخفیفات متنوع و متغیر روزانه"}/>
+                        title={"ورزش برای مناسبت‌ها"} image={"/assets/images/corporateGift.svg"} alt={"تخفیفات متنوع و متغیر روزانه"}/>
                     <SingleBox
                         text={"آیا مرکز خاصی در ذهنتان دارید؟ صدای شما مهم است! با پیشنهادات خود، به ما کمک کنید تا بهترین مراکز را به لیست خدمات‌مان اضافه کنیم."}
                         title={"افزودن مراکز درخواستی"} image={"/assets/images/shoes.svg"} alt={" جیم پین به کارمندان کمک می‌کند تا ورزش‌های جدید را امتحان کرده"}/>

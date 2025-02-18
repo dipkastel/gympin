@@ -12,21 +12,37 @@ const _ExcitingTexts = () => {
                   alignContent={"space-around"}>
                 <Grid item size={{xs:3,sm:1}}>
                     <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={0}>
-                        <Typography variant={"subtitle2"}>
-                            ۶۲% از کارفرمایان کاهش قابل توجهی در هزینه‌های درمانی را با اجرای ورزش کارکنان
-                            تجربه کرده‌اند </Typography>
+                        <Typography component={"span"} variant={"subtitle2"}>
+                            {"150 دقیقه فعالیت بدنی متوسط در هفته، می‌تواند هم اندازه داروهای ضدافسردگی تاثیر گذار باشد. "}
+                        </Typography>
+                        <Typography href={"https://gympin.ir/blog-detail/215150461/%D9%85%D8%B7%D8%A7%D9%84%D8%B9%D8%A7%D8%AA-%D8%AC%D8%AF%DB%8C%D8%AF-%D9%88-%D8%AA%D8%A7%D8%AB%DB%8C%D8%B1-%D9%88%D8%B1%D8%B2%D8%B4-%D8%A8%D8%B1-%D8%A7%D9%81%D8%B3%D8%B1%D8%AF%DA%AF%DB%8C"} component={"a"} color={"primary"} variant={"subtitle2"}>
+                            {"[ 1 ]"}
+                        </Typography>
                     </Card>
                 </Grid>
                 <Grid item size={{xs:3,sm:1}}>
                     <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={0}>
-                        <Typography variant={"subtitle2"}>هر هزارتومانی که برای سلامتی هزینه می‌شود دوهزارتومان بازگشت سرمایه به همراه خواهد داشت</Typography>
+                        <Typography component={"span"} variant={"subtitle2"}>
+                            توجه سازمان به سلامت ذهن و بدن کارمندان، اکنون بیشتر از هر زمان دیگری برای جذب و نگه‌داشت نیرو حیاتی‌ است.
+                        </Typography>
+                        {/*<Typography component={"span"} color={"primary"} variant={"subtitle2"}>*/}
+                        {/*    {" [_2_] "}*/}
+                        {/*</Typography>*/}
+
                     </Card>
                 </Grid>
                 <Grid item size={{xs:3,sm:1}}>
                     <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={0}>
-                        <Typography variant={"subtitle2"}>سواد کم سلامتی، عامل ۴۲% از بیماری‌های جسمی‌و روحی است که به صورت روزمره با آنها درگیر هستیم</Typography>
+                        <Typography component={"span"} variant={"subtitle2"}>
+                            در نظر گرفتن بودجه ورزشی از سمت سازمان، به کارمندان احساس ارزشمند بودن می‌دهد.
+                        </Typography>
+                        {/*<Typography component={"span"} color={"primary"} variant={"subtitle2"}>*/}
+                        {/*    {" [_3_] "}*/}
+                        {/*</Typography>*/}
+
                     </Card>
                 </Grid>
+
             </Grid>
         </section>
     );

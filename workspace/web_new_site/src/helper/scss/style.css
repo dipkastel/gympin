@@ -5,7 +5,7 @@
   background-color: #FFFFFF;
   width: 100vw;
   height: 100vh;
-  z-index: 10000000000000002000;
+  z-index: 10000000000000000000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -262,7 +262,7 @@ header .header-call {
 }
 
 .additionalCard {
-  background-color: #e22430 !important;
+  background-color: #be1e1e !important;
   color: #FFFFFF !important;
   text-align: right !important;
 }

@@ -50,13 +50,13 @@ const _Apps = () => {
                             مجموعه‌های ورزشی و امکانات آنها را کسب کنند. این اپلیکیشن دارای امکاناتی مانند:
                             مشاهده‌ی عکس‌ها و امکانات مجموعه‌های ورزشی طرف قرارداد، مشاهده‌ی رشته ی‌های ورزشی هر مجموعه و روز و ساعت برگزاری
                             هر کلاس، مشاهده‌ی آدرس مراکز ورزشی بر روی نقشه، امکان جستجوی نزدیک ترین مراکز ورزشی و مسیریابی، امکان رزرو کلاس‌ها هماهنگی
-                            قبل از خرید، پاسخگویی و پشتیانی کامل</Typography>
+                            قبل از خرید، پاسخگویی و پشتیانی کامل است.</Typography>
                     </Grid>
                 </Grid>
 
                 <Grid container sx={{direction: "ltr"}} columns={4} alignContent={"center"} textAlign={"right"}>
                     <Grid sx={{p: 3}} item size={{md: 2, xs: 4}}>
-                        <img alt={"اپلیکیشن اختصاصی شرکت‌ها"} className={"apps-img"} src={"/assets/images/mobile-app.jpg"}/>
+                        <img alt={"اپلیکیشن اختصاصی شرکت‌ها"} className={"apps-img"} src={"/assets/images/place-application.jpg"}/>
                     </Grid>
                     <Grid sx={{px: 6, direction: "rtl"}} item size={{md: 2, xs: 4}}>
                         <Typography sx={{fontWeight: 600, mt: 8}} variant={"h5"}>پنل اختصاصی مراکز طرف قرارداد</Typography>

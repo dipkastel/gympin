@@ -9,6 +9,7 @@ import _Sports from "./_Sports";
 import _Contact from "./_Contact";
 import _Values from "./_Values";
 import _Experiences from "./_Experiences";
+import _video from "../corporate/_Video";
 
 const Index = () => {
     return (
@@ -16,6 +17,7 @@ const Index = () => {
             <_Introduction/>
             <_ExcitingTexts/>
             <_RedAdditionalData/>
+            <_video />
             <_Values/>
             <_OurGoals/>
             <_Apps/>
