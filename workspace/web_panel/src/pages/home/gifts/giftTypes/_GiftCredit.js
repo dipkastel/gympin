@@ -30,6 +30,8 @@ const _GiftCredit = () => {
 
     useEffect(() => {
         getGifts();
+    }, [page,rowsPerPage]);
+    useEffect(() => {
         var Edate = new Date();
         Edate.setDate(Edate.getDate()+13);
         var CEdate = new Date();

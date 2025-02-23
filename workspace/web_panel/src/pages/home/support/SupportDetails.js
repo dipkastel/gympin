@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import Notice from "../../partials/content/Notice";
 import {Support_addMessage, Support_getById} from "../../../network/api/support.api";
 import {Portlet, PortletBody, PortletHeader} from "../../partials/content/Portlet";
-import {Checkbox, FormControlLabel, FormGroup, Grid, List, TextField, Typography} from "@mui/material";
+import {Checkbox, FormControlLabel, FormGroup, List, TextField, Typography} from "@mui/material";
 import {Alert} from "react-bootstrap";
 import {Row} from "reactstrap";
 import {getUserFixedName} from "../../../helper";
@@ -16,7 +16,7 @@ const SupportDetails = () => {
     const [Messages, SetMessages] = useState([])
     const [answer, SetAnswer] = useState("")
     const [isLastMessage, SetIsLastMessage] = useState(false)
-    const [sending,setSending] = useState(false);
+    const [sending, setSending] = useState(false);
     useEffect(() => {
         getSupportDetail()
     }, []);
@@ -26,40 +26,40 @@ const SupportDetails = () => {
             SetSupport(result.data.Data);
             SetMessages(result.data.Data.Messages.reverse())
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function SendAnswer() {
-        if(!answer||answer==""||sending){
+        if (!answer || answer == "" || sending) {
             error.showError({message: "پیام وارد نشده",});
             return;
         }
-            setSending(true);
+        setSending(true);
         Support_addMessage({
-            "SupportId":support.Id,
-            "Status":isLastMessage?"COMPLETE":"AWAITING_USER",
-            "Message":answer,
-            "IsRead":false,
-            "IsAnswer":true
+            "SupportId": support.Id,
+            "Status": isLastMessage ? "COMPLETE" : "AWAITING_USER",
+            "Message": answer,
+            "IsRead": false,
+            "IsAnswer": true
         }).then(result => {
             error.showError({message: "عملیات موفق",});
-                getSupportDetail()
-                SetIsLastMessage(false)
-                SetAnswer("")
-                setSending(false);
-            })
+            getSupportDetail()
+            SetIsLastMessage(false)
+            SetAnswer("")
+            setSending(false);
+        })
             .catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
 
     }
 
@@ -106,7 +106,8 @@ const SupportDetails = () => {
                         variant="outlined"
                     />
                     <FormGroup>
-                        <FormControlLabel control={<Checkbox checked={isLastMessage}  />} onChange={(e)=>SetIsLastMessage(e.target.checked)} label="با این پیام مکالمه به پایان میرسد" />
+                        <FormControlLabel control={<Checkbox checked={isLastMessage}/>} onChange={(e) => SetIsLastMessage(e.target.checked)}
+                                          label="با این پیام مکالمه به پایان میرسد"/>
                     </FormGroup>
                     <button
                         type="button"
@@ -127,34 +128,34 @@ const SupportDetails = () => {
                     <List>
                         {Messages.map(item => (
 
-                                item.IsAnswer ?
-                                    ( <Row><Alert key={item.Id} variant={"info"} className={"m-2  d-block"}>
-                                        <Typography variant={"h6"} component={"p"}>{item.Message}</Typography>
+                            item.IsAnswer ?
+                                (<Row><Alert key={item.Id} variant={"info"} className={"m-2  d-block"}>
+                                    <Typography variant={"h6"} component={"p"}>{item.Message}</Typography>
 
-                                        {console.log(item)}
-                                        <Typography
-                                            variant={"caption"}  component={"p"}>{getUserFixedName(item.CreatorUser)+" - "+new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric',
-                                            hour: "2-digit",
-                                            minute: "2-digit"
-                                        })}</Typography>
-                                    </Alert></Row>)
-                                    :
-                                    ( <Row className={"ltr"}><Alert key={item.Id} variant={"warning"} className={"m-2 d-block "}>
-                                            <Typography variant={"h6"} component={"p"}>{item.Message}</Typography>
 
-                                        {console.log(item)}
-                                            <Typography
-                                                variant={"caption"}  component={"p"}>{getUserFixedName(item.CreatorUser)+" - "+new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
-                                                    year: 'numeric',
-                                                    month: 'long',
-                                                    day: 'numeric',
-                                                    hour: "2-digit",
-                                                    minute: "2-digit"
-                                                })}</Typography>
-                                    </Alert></Row>)
+                                    <Typography
+                                        variant={"caption"}
+                                        component={"p"}>{getUserFixedName(item.CreatorUser) + " - " + new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: "2-digit",
+                                        minute: "2-digit"
+                                    })}</Typography>
+                                </Alert></Row>)
+                                :
+                                (<Row className={"ltr"}><Alert key={item.Id} variant={"warning"} className={"m-2 d-block "}>
+                                    <Typography variant={"h6"} component={"p"}>{item.Message}</Typography>
+                                    <Typography
+                                        variant={"caption"}
+                                        component={"p"}>{getUserFixedName(item.CreatorUser) + " - " + new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: "2-digit",
+                                        minute: "2-digit"
+                                    })}</Typography>
+                                </Alert></Row>)
                         ))}
                     </List>
                 </PortletBody>

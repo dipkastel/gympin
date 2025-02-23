@@ -9,7 +9,7 @@ const _selectCategories = ({itemCategories,changeSelectedCategories}) => {
     const [categories,SetCategories] = useState([])
 
     useEffect(() => {
-        ArticleCategory_getAll().then(result=>{
+        ArticleCategory_getAll({Page: 0, Size: 100, Desc: true}).then(result=>{
             SetCategories(result.data.Data);
         }).catch(e => {
             try {

@@ -33,6 +33,7 @@ export let ArticleCategoryApi = {
     getAll: "v1/articleCategory/getall",
     getById: "v1/articleCategory/getbyid",
     update: "v1/articleCategory/update",
+    query: "v1/articleCategory/query",
 };
 
 export let CorporateApi = {

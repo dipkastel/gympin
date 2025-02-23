@@ -137,7 +137,7 @@ const ArticleCategories = () => {
     }
 
     function getAllCategories() {
-        ArticleCategory_getAll()
+        ArticleCategory_getAll( {Page: 0, Size: 100, Desc: true})
             .then((data) => {
                 setCategories(data.data.Data);
             })
