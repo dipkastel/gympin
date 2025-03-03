@@ -8,6 +8,8 @@ import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
+import com.notrika.gympin.common.util.exception.purchased.CreditExpireException;
+import com.notrika.gympin.common.util.exception.ticket.TicketExpireDateCannotBeNull;
 import com.notrika.gympin.domain.finance.helper.FinanceHelper;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
@@ -85,6 +87,8 @@ public class CorporatePersonelFinanceHelper {
             c.add(Calendar.YEAR, 1);
             creditExpireDate = c.getTime();
         }
+        if(creditExpireDate==null)
+           throw new TicketExpireDateCannotBeNull();
         FinanceCorporatePersonnelCreditEntity result = financeCorporatePersonnelCreditRepository.add(FinanceCorporatePersonnelCreditEntity.builder()
                 .status(CorporatePersonnelCreditStatusEnum.ACTIVE)
                 .corporatePersonnel(personnelEntity)
@@ -129,16 +133,23 @@ public class CorporatePersonelFinanceHelper {
     public List<CorporatePersonnelEntity> getPeronelForAddCredits(CorporatePersonnelCreditParam param) {
         if (param.getGroupId() != null) {
             return corporatePersonnelRepository.findByCorporateIdAndPersonnelGroupIdAndDeletedIsFalse(param.getCorporateId(), param.getGroupId());
+        }else if(param.getPersonnelIds()!=null){
+            return corporatePersonnelRepository.findAllByIdIn(param.getPersonnelIds());
         } else {
             return corporatePersonnelRepository.findByCorporateIdAndDeletedIsFalse(param.getCorporateId());
         }
     }
 
     public List<FinanceCorporatePersonnelCreditEntity> addCorporatePersonnelCredits(List<CorporatePersonnelEntity> personnelsToAddCredit, CorporatePersonnelCreditParam param, FinanceSerialEntity serial) {
+        if(param.getExpireDate()==null)
+            throw new TicketExpireDateCannotBeNull();
+         if(param.getCreditAmount()==null)
+            throw new CreditCannotBeNegativeException();
         List<FinanceCorporatePersonnelCreditEntity> listToAdd = personnelsToAddCredit.stream().map(personel -> FinanceCorporatePersonnelCreditEntity.builder()
                 .status(CorporatePersonnelCreditStatusEnum.ACTIVE)
                 .corporatePersonnel(personel)
                 .creditAmount(param.getCreditAmount())
+                .name(param.getName())
                 .ExpireDate(param.getExpireDate())
                 .build()).collect(Collectors.toList());
         List<FinanceCorporatePersonnelCreditEntity> result = financeCorporatePersonnelCreditRepository.addAll(listToAdd);

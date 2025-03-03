@@ -9,6 +9,9 @@ import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import _PersonnelCount from "./_PersonnelCount";
 import _TicketCount from "./_TicketCount";
 import Home from "../home/Home";
+import _RChargeUsage from "../report/Finance/_RChargeUsage";
+import _RUsageByUser from "../report/Usage/_RUsageByUser";
+import _RAverageOfUserTickets from "../report/Finance/_RAverageOfUserTickets";
 
 const Dashboard = (props) => {
 
@@ -54,9 +57,20 @@ const Dashboard = (props) => {
                     <_TicketCount />
                 </Grid>
             </Grid>
-            <Container>
-                <Home />
-            </Container>
+            <Grid container columns={12}>
+                <Grid size={{xs: 12, sm: 12, md: 12}}>
+                    <_RChargeUsage />
+                </Grid>
+                <Grid  size={{xs: 6, sm: 6, md: 6}}>
+                    <_RUsageByUser />
+                </Grid>
+                <Grid size={{xs: 6, sm: 6, md: 6}}>
+                    <_RAverageOfUserTickets />
+                </Grid>
+            </Grid>
+            {/*<Container>*/}
+            {/*    <Home />*/}
+            {/*</Container>*/}
         </>
     );
 };

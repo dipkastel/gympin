@@ -7,8 +7,10 @@ import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.query.FinanceI
 import com.notrika.gympin.common.finance.IncreaseUserDeposit.dto.FinanceIncreaseUserDepositDto;
 import com.notrika.gympin.common.finance.IncreaseUserDeposit.param.FinanceIncreaseUserDepositParam;
 import com.notrika.gympin.common.finance.IncreaseUserDeposit.query.FinanceIncreaseUserDepositQuery;
+import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.util._base.base.BaseService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface FinanceIncreaseCorporateDepositService extends BaseService<FinanceIncreaseCorporateDepositParam, FinanceIncreaseCorporateDepositDto, FinanceIncreaseCorporateDepositQuery> {
@@ -17,5 +19,8 @@ public interface FinanceIncreaseCorporateDepositService extends BaseService<Fina
     List<FinanceIncreaseCorporateDepositDto> getIncreaseCorporateDeposits(Long corporateId);
     FinanceIncreaseCorporateDepositDto confirmIncreaseRequest(FinanceIncreaseCorporateDepositParam param);
     String requestIncreaseCorporateDeposits(RequestIncreaseCorporateDepositParam param);
+    String completeRequestIncreaseCorporateDeposits(RequestIncreaseCorporateDepositParam param);
+    FinanceIncreaseCorporateDepositDto requestIncreaseCorporateDepositsDraft(RequestIncreaseCorporateDepositParam param);
+    byte[] getProFormaInvoice(RequestIncreaseCorporateDepositParam param) throws Exception;
 
 }

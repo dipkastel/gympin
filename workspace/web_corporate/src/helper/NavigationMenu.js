@@ -1,18 +1,24 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import DescriptionIcon from "@mui/icons-material/Description";
-import LayersIcon from "@mui/icons-material/Layers";
 import {Chip} from "@mui/material";
 import {
-    AccountBalanceWallet, AccountBalanceWalletOutlined,
-    AddCard, AddTask, CalendarMonth,
-    CardGiftcard, ChecklistRtl, CorporateFare,
+    AccountBalanceWalletOutlined,
+    AddCard,
+    BubbleChart,
+    CalendarMonth,
+    CardGiftcard,
+    CorporateFare,
     CreditScore,
     Group,
-    GroupAdd, LegendToggle,
-    ManageAccounts, PieChart,
-    PermContactCalendar, PersonPin, PowerSettingsNew, Settings, ShowChart, SsidChart, StackedBarChart, SupportAgent, BubbleChart
+    GroupAdd,
+    ManageAccounts,
+    PermContactCalendar,
+    PersonPin,
+    PieChart,
+    PowerSettingsNew,
+    Settings,
+    StackedBarChart,
+    SupportAgent
 } from "@mui/icons-material";
 
 export const NavigationMenu = [
@@ -54,23 +60,23 @@ export const NavigationMenu = [
         segment: 'finance',
         title: 'مالی',
         icon: <AccountBalanceWalletOutlined/>,
-        children: [
+        // children: [
             // {
             //     segment: '',
             //     title: 'صورت وضعیت',
             //     icon: <DescriptionIcon/>,
             // },
-            {
-                segment: 'increaseCharge',
-                title: 'افزایش شارژ',
-                icon: <AddCard/>,
-            },
-            {
-                segment: 'IncreaseHistory',
-                title: 'تاریخچه',
-                icon: <CreditScore/>,
-            },
-        ],
+        //     {
+        //         segment: 'increaseCharge',
+        //         title: 'افزایش شارژ',
+        //         icon: <AddCard/>,
+        //     },
+        //     {
+        //         segment: 'IncreaseHistory',
+        //         title: 'تاریخچه',
+        //         icon: <CreditScore/>,
+        //     },
+        // ],
     },
     // {
     //     segment: 'profile',
@@ -100,13 +106,13 @@ export const NavigationMenu = [
         segment: 'buyTicket',
         title: 'هدایا',
         icon: <CardGiftcard/>,
-        action: <Chip label={"به زودی"} color={"default"} size="small" />,
+        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
     },
     {
         segment: 'events',
         title: 'ایونت ها',
         icon: <CalendarMonth/>,
-        action: <Chip label={"به زودی"} color={"default"} size="small" />,
+        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
     },
     {
         kind: 'divider',
@@ -137,18 +143,18 @@ export const NavigationMenu = [
         segment: 'support',
         title: 'پشتیبانی',
         icon: <SupportAgent/>,
-        children: [
-            {
-                segment: 'tickets',
-                title: 'تیکت ها',
-                icon: <ChecklistRtl/>,
-            },
-            {
-                segment: 'new',
-                title: 'پشتیبانی جدید',
-                icon: <AddTask/>,
-            },
-        ],
+        // children: [
+        //     {
+        //         segment: 'tickets',
+        //         title: 'تیکت ها',
+        //         icon: <ChecklistRtl/>,
+        //     },
+        //     {
+        //         segment: 'new',
+        //         title: 'پشتیبانی جدید',
+        //         icon: <AddTask/>,
+        //     },
+        // ],
     },
     {
         segment: 'settings',
@@ -164,12 +170,7 @@ export const NavigationMenu = [
                 segment: 'corporates',
                 title: 'سازمان های من',
                 icon: <CorporateFare/>,
-            },
-            {
-                segment: 'exit',
-                title: 'خروج',
-                icon: <PowerSettingsNew/>,
-            },
+            }
         ],
     }
 ];

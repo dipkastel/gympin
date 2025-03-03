@@ -18,4 +18,5 @@ public interface CorporatePersonnelRepository extends BaseRepository<CorporatePe
     List<CorporatePersonnelEntity> findByCorporateIdAndPersonnelGroupIdAndDeletedIsFalse(Long CorporateId,Long GroupId);
     List<CorporatePersonnelEntity> findByUserIdAndDeletedIsFalse(Long userId);
     List<CorporatePersonnelEntity> findByUserIdAndRoleAndDeletedIsFalse(Long userId, CorporatePersonnelRoleEnum userRole);
+    List<CorporatePersonnelEntity> findAllByIdIn(List<Long> ids);
 }

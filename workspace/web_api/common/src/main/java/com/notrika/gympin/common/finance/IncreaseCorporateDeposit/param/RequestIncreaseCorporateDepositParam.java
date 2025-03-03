@@ -43,4 +43,10 @@ public class RequestIncreaseCorporateDepositParam extends BaseParam<RequestIncre
     @JsonProperty("Description")
     private String description;
 
+    @JsonProperty("RequestInvoice")
+    Boolean requestInvoice;
+
+    @JsonProperty("Draft")
+    Boolean draft;
+
 }

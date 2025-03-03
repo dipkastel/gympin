@@ -11,7 +11,7 @@ import {
     FormControl,
     Grid,
     Input,
-    TextField
+    TextField, Typography
 } from "@mui/material";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {connect, useSelector} from "react-redux";
@@ -178,11 +178,15 @@ const EditCorporate = (props) => {
 
     return (
         <>
-            <Card elevation={3} sx={{margin: 1}}>
-                <CardHeader
-                    title="مشخصات سازمان"/>
-                <CardContent>
 
+
+            <title>مشخصات سازمان</title>
+            <Grid container columns={9} alignItems={"center"}>
+                <Grid size={{md: 6, lg: 6, xl: 6}}><Typography sx={{m: 4}} variant={"h4"}>مشخصات سازمان</Typography></Grid>
+                <Grid textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}> </Grid>
+            </Grid>
+            <Card elevation={3} sx={{margin: 1}}>
+                <CardContent>
                     <Grid
                         container
                         direction="column"

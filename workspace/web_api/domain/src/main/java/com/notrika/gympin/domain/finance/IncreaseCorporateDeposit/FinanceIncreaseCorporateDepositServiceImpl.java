@@ -1,5 +1,10 @@
 package com.notrika.gympin.domain.finance.IncreaseCorporateDeposit;
 
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
+import com.lowagie.text.Image;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.*;
 import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.dto.FinanceIncreaseCorporateDepositDto;
 import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.param.FinanceIncreaseCorporateDepositParam;
 import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.param.RequestIncreaseCorporateDepositParam;
@@ -18,12 +23,15 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.finance.gateways.GatewayServiceImpl;
 import com.notrika.gympin.domain.util.convertor.IncreaseConvertor;
+import com.notrika.gympin.domain.util.helper.PdfHelper;
 import com.notrika.gympin.persistence.dao.repository.finance.gateway.FinanceApplicationGatewayRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.gateway.FinanceGatewayRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.request.FinanceIncreaseCorporateDepositRequestRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
+import com.notrika.gympin.persistence.entity.finance.gateway.FinanceGatewayEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.gateway.FinanceApplicationGatewayEntity;
@@ -32,9 +40,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -58,6 +72,8 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
     private FinanceApplicationGatewayRepository financeApplicationGatewayRepository;
     @Autowired
     private GatewayServiceImpl gatewayService;
+    @Autowired
+    private FinanceGatewayRepository financeGatewayRepository;
     @Autowired
     SettingsService settingsService;
 
@@ -85,7 +101,10 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
 
     @Override
     public FinanceIncreaseCorporateDepositDto delete(@NonNull FinanceIncreaseCorporateDepositParam param) {
-        return null;
+        FinanceIncreaseCorporateDepositRequestEntity entity = getEntityById(param.getId());
+        entity.setDepositStatus(DepositStatus.CANCELED);
+        financeIncreaseCorporateDepositRepository.update(entity);
+        return IncreaseConvertor.ToDto(entity);
     }
 
     @Override
@@ -211,6 +230,7 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
         request.setAmount(param.getAmount());
         request.setSerial(serial);
         request.setDescription(param.getDescription());
+        request.setRequestInvoice(param.getRequestInvoice());
         request.setGatewayType(applicationGateway.getGateway().getGatewayType());
         switch (applicationGateway.getGateway().getGatewayType()){
             case BANK_PORTAL:
@@ -240,4 +260,61 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
         return result;
     }
 
+    @Override
+    @Transactional
+    public String completeRequestIncreaseCorporateDeposits(RequestIncreaseCorporateDepositParam param) {
+        String result = null;
+        FinanceIncreaseCorporateDepositRequestEntity request = getEntityById(param.getId());
+        request.setRefrence(GeneralUtil.GetPaymentDescription(request.getGatewayType(),param.getTransactionReference(),param.getChequeDate()));
+        request.setDepositStatus(DepositStatus.REQUESTED);
+        result = request.getSerial().getSerial().split("-")[0];
+        update(request);
+        return result;
+    }
+
+    @Override
+    @Transactional
+    public FinanceIncreaseCorporateDepositDto requestIncreaseCorporateDepositsDraft(RequestIncreaseCorporateDepositParam param) {
+        if (param.getGatewayApplication() == null)
+            throw new unknownPaymentType();
+        if (param.getGatewayApplication().getId() == null)
+            throw new unsupportedTransactionType();
+        if (param.getAmount() == null)
+            throw new RequestUnderLimit();
+        if (param.getAmount().compareTo(BigDecimal.valueOf(100))<1)
+            throw new RequestUnderLimit();
+        if (param.getCorporateId() == null)
+            throw new unknownPaymentBuyer();
+        if (param.getApplication() == null)
+            throw new unknownPaymentType();
+        if (!param.getDraft())
+            throw new unknownPaymentType();
+
+
+
+        FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder()
+                .serial(java.util.UUID.randomUUID().toString())
+                .processTypeEnum(ProcessTypeEnum.CASH_IN_ACCOUNT_CHARGE_CORPORATE)
+                .build());
+        CorporateEntity corporate = corporateService.getEntityById(param.getCorporateId());
+        FinanceApplicationGatewayEntity applicationGateway = financeApplicationGatewayRepository.getById(param.getGatewayApplication().getId());
+
+        var request =new FinanceIncreaseCorporateDepositRequestEntity();
+        request.setCorporate(corporate);
+        request.setAmount(param.getAmount());
+        request.setSerial(serial);
+        request.setDepositStatus(DepositStatus.DRAFT);
+        request.setRequestInvoice(param.getRequestInvoice());
+        request.setGatewayType(applicationGateway.getGateway().getGatewayType());
+        add(request);
+
+        return IncreaseConvertor.ToDto(request);
+    }
+
+    @Override
+    public byte[] getProFormaInvoice(RequestIncreaseCorporateDepositParam param) {
+        FinanceIncreaseCorporateDepositRequestEntity request = getEntityById(param.getId());
+        FinanceGatewayEntity gatewayEntity = financeGatewayRepository.findByGatewayType(request.getGatewayType());
+        return PdfHelper.getProFormaInvoice(request,gatewayEntity);
+    }
 }

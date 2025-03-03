@@ -1,34 +1,17 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {
-    Alert,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    Chip, CircularProgress, Container,
-    Grid2 as Grid,
-    IconButton,
-    List,
-    TextField,
-    Typography
-} from "@mui/material";
+import {Alert, Button, Card, CardContent, CircularProgress, Container, Grid2 as Grid, List, TextField, Typography} from "@mui/material";
 import {Form} from "react-bootstrap";
 import {useNavigate, useParams} from "react-router-dom";
-import {
-    Support_add,
-    Support_addMessage,
-    Support_getById,
-    Support_setMessagesRead
-} from "../../../network/api/support.api";
-import {getSupportPersianStatus} from "../../../helper/utils";
+import {Support_addMessage, Support_getById, Support_setMessagesRead} from "../../../network/api/support.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {ChevronLeft, Send} from "@mui/icons-material";
-import {Connect} from "react-redux";
+import {ChevronLeft} from "@mui/icons-material";
+import _SupportMessageItem from "./_SupportMessageItem";
+
 const SupportDetail = () => {
     const error = useContext(ErrorContext);
     let {supportId} = useParams()
-    const [supportDetail,SetSupportDetail] = useState(null);
-    const [loading,SetLoading] = useState(true);
+    const [supportDetail, SetSupportDetail] = useState(null);
+    const [loading, SetLoading] = useState(true);
     const navigate = useNavigate();
     const listRef = useRef(null);
 
@@ -37,10 +20,11 @@ const SupportDetail = () => {
     }, []);
     useEffect(() => {
         //scroll down
-        window.scrollBy(0,1500000);
+        window.scrollBy(0, 1500000);
     }, [supportDetail]);
+
     function setReadMessages() {
-        Support_setMessagesRead({id:supportId}).then(result=>{
+        Support_setMessagesRead({id: supportId}).then(result => {
             getSupportDetail();
         }).catch(e => {
             try {
@@ -51,9 +35,9 @@ const SupportDetail = () => {
         })
     }
 
-    function getSupportDetail(){
+    function getSupportDetail() {
 
-        Support_getById({id:supportId}).then(result=>{
+        Support_getById({id: supportId}).then(result => {
             SetSupportDetail(result.data.Data)
         }).catch(e => {
             try {
@@ -64,18 +48,18 @@ const SupportDetail = () => {
         })
     }
 
-    function sendMessage(e){
+    function sendMessage(e) {
         e.preventDefault()
-        if(!e.target.message.value){
+        if (!e.target.message.value) {
             error.showError({message: "پیام را وارد نمایید",});
             return;
         }
         Support_addMessage({
-            SupportId:supportId,
-            Status:"AWAITING_EXPERT",
-            Message:e.target.message.value,
-            IsRead:true
-        }).then(result=>{
+            SupportId: supportId,
+            Status: "AWAITING_EXPERT",
+            Message: e.target.message.value,
+            IsRead: true
+        }).then(result => {
             e.target.message.value = ""
             getSupportDetail()
         }).catch(e => {
@@ -87,14 +71,14 @@ const SupportDetail = () => {
         })
     }
 
-    function CloseSupport(e){
+    function CloseSupport(e) {
         e.preventDefault()
         Support_addMessage({
-            SupportId:supportId,
-            Status:"CANCEL",
-            Message:"لغو تیکت",
-            IsRead:true
-        }).then(result=>{
+            SupportId: supportId,
+            Status: "CANCEL",
+            Message: "لغو تیکت",
+            IsRead: true
+        }).then(result => {
             navigate('/management/support', {replace: true});
         }).catch(e => {
             try {
@@ -106,52 +90,43 @@ const SupportDetail = () => {
     }
 
 
-    return !supportDetail?(<>
+    return !supportDetail ? (<>
         <Grid
             container
-            sx={{width:"100%",height:"80vh"}}
+            sx={{width: "100%", height: "80vh"}}
             direction={"column"}
             justifyContent={"center"}
             alignItems={"center"}
         >
             <title>جزییات پشتیبانی - بارگذاری</title>
-            <CircularProgress />
+            <CircularProgress/>
         </Grid>
-    </>):(
+    </>) : (
         <Container>
             <Grid>
-                {supportDetail&&<div>
+                {supportDetail && <div>
                     <title>جزییات پشتیبانی</title>
                     <Grid container columns={9} alignItems={"center"}>
                         <Grid size={{md: 6, lg: 6, xl: 6}}><Typography sx={{m: 4}} variant={"h4"}>{supportDetail.Title}</Typography></Grid>
                         <Grid textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}></Grid>
                     </Grid>
-                </div> }
-                {(supportDetail?.Status!=="COMPLETE"&&supportDetail?.Status!=="CANCEL")&&<Alert icon={false} variant={"standard"} color={"info"} className={"m-2"}>
+                </div>}
+                {(supportDetail?.Status !== "COMPLETE" && supportDetail?.Status !== "CANCEL") &&
+                <Alert icon={false} variant={"standard"} color={"info"} className={"m-2"}>
                     <Typography variant="body2">در صورتی که مشکل حل شده است و یا دیگر نیاز به پیگیری از سمت جیم پین ندارد
                         میتوانید تیکت را ببندید.</Typography>
 
                     <Button sx={{mt: 1}} fullWidth onClick={e => CloseSupport(e)} variant={"outlined"}>لغو تیکت</Button>
                 </Alert>}
-                <List ref={listRef} sx={supportDetail?.Status!=="COMPLETE"&&{mb:8}}>
-                    {supportDetail&&supportDetail.Messages.map(item=>(
+                <List ref={listRef} sx={supportDetail?.Status !== "COMPLETE" && {mb: 8}}>
+                    {supportDetail && supportDetail.Messages.map(item => (
                         <div key={item.id}>
-                            <Alert sx={item.IsAnswer?{m:"10px 30% 0px 3%",backgroundColor:"quinary.boxBg"}:{margin:"10px 3% 0px 30%",backgroundColor:"quaternary.boxBg"}}  color={"primary"}  variant={"filled"} icon={false}>
-                                <Typography variant={"body2"}>{item.Message}</Typography>
-                                {item?.CreatorUser&&"-"+<Typography variant={"caption"} component={"span"}>{item?.CreatorUser?.Username}</Typography>+"-"}
-                            </Alert>
-                            <Typography variant={"overline"} sx={{mt:-0.6,ml:5,mr:5,textAlign:item.IsAnswer?"start":"end"}} component={"p"}>{new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                                hour: "2-digit",
-                                minute: "2-digit"
-                            })}</Typography>
+                            <_SupportMessageItem item={item} />
                         </div>
                     ))}
 
                 </List>
-                {(supportDetail?.Status!=="COMPLETE"&&supportDetail?.Status!=="CANCEL")&&
+                {(supportDetail?.Status !== "COMPLETE" && supportDetail?.Status !== "CANCEL") &&
                 <Card elevation={3} sx={{margin: 1}}>
                     <CardContent sx={{p: 1, paddingBottom: "8px !important"}}>
                         <Form onSubmit={e => sendMessage(e)}>

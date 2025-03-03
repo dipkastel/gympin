@@ -23,6 +23,9 @@ import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {corporate_getCorporateGroups} from "../../network/api/corporate.api";
 import Grid from "@mui/material/Grid2";
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import {AdapterDateFnsJalali} from "@mui/x-date-pickers/AdapterDateFnsJalaliV3";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 
 const IncreaseGroupCredit = () => {
     const error = useContext(ErrorContext);
@@ -30,21 +33,12 @@ const IncreaseGroupCredit = () => {
 
     const corporate = useSelector(({corporate}) => corporate.corporate)
     const minCredit = 1000;
-    const [credit, setCredit] = useState(0);
     const [groups, setGroups] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
     const [selectedTab, setSelectedTab] = useState(0);
+    const [formData,setFormData] = useState({})
 
-    useEffect(() => {
-        document.title = 'افزایش اعتبار گروهی';
-        if (openModalConfirm) {
-            if (credit < minCredit) {
-                error.showError({message: "حداقل اعتبار قابل افزایش " + toPriceWithComma(minCredit) + " تومان می باشد"})
-                setOpenModalConfirm(false);
-            }
-        }
-    }, [openModalConfirm]);
 
     useEffect(() => {
         getPersonnelGroup()
@@ -71,10 +65,15 @@ const IncreaseGroupCredit = () => {
 
         function addPersonnelCredit(e) {
             e.preventDefault()
+
+            if (formData.CreditAmount < minCredit) {
+                error.showError({message: "حداقل اعتبار قابل افزایش " + toPriceWithComma(minCredit) + " تومان می باشد"});
+                return;
+            }
             setOpenModalConfirm(false);
             corporatePersonnel_addCreditToAll({
                 CorporateId: corporate.Id,
-                CreditAmount: toPriceWithoutComma(credit),
+                ...formData,
                 GroupId: selectedGroup?.Id || null
             }).then(result => {
                 error.showError({message: "اعتبار‌ها داده شد.",});
@@ -93,9 +92,17 @@ const IncreaseGroupCredit = () => {
                     <DialogTitle>{selectedGroup ? ('افزودن اعتبار برای کاربران گروه ' + selectedGroup.Name) : 'افزودن اعتبار برای همه'}</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            {selectedGroup ?
-                                "افزایش اعتبار برای کاربران گروه " + selectedGroup.Name + " و هر یک به مبلغ " + toPriceWithComma(credit) + " تومان را تایید میکنم" :
-                                "افزایش اعتبار برای همه کاربران و هر یک به مبلغ " + toPriceWithComma(credit) + " تومان را تایید میکنم. این اعتبار بدون توجه به گروه بندی، به همه کاربران داده خواهد شد."}
+                            <Typography variant={"subtitle1"}>
+                                {selectedGroup ?
+                                    "افزایش اعتبار "+formData.Name+" برای کاربران گروه " + selectedGroup.Name + " و هر یک به مبلغ " + toPriceWithComma(formData.CreditAmount) + " تومان را تایید میکنم" :
+                                    "افزایش اعتبار "+formData.Name+" برای همه کاربران و هر یک به مبلغ " + toPriceWithComma(formData.CreditAmount) + " تومان را تایید میکنم. این اعتبار بدون توجه به گروه بندی، به همه کاربران داده خواهد شد."}
+                            </Typography>
+
+                            {(corporate.ContractType!="ALPHA")&&<Typography variant={"body2"}> {"تاریخ انقضا اعتبار ها : " + new Date( formData.ExpireDate).toLocaleDateString('fa-IR', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })} </Typography>}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -110,7 +117,20 @@ const IncreaseGroupCredit = () => {
 
     function openModalConfirmForm(e, group) {
         e.preventDefault();
-        setCredit(e.target.credit.value);
+
+        console.log(formData.CreditAmount , minCredit,formData.CreditAmount < minCredit)
+        if (!formData.CreditAmount||formData.CreditAmount < minCredit) {
+            error.showError({message: "حداقل اعتبار قابل افزایش " + toPriceWithComma(minCredit) + " تومان می باشد"});
+            return;
+        }
+        if (!formData.Name) {
+            error.showError({message: "نام برای اعتبار انتخاب نشده"});
+            return;
+        }
+        if ((corporate.ContractType!="ALPHA")&&!formData.ExpireDate) {
+            error.showError({message: "تاریخ انقضا برای اعتبار ها الزامی است"});
+            return;
+        }
         setSelectedGroup(group);
         setOpenModalConfirm(true);
     }
@@ -148,17 +168,38 @@ const IncreaseGroupCredit = () => {
                     />
                     <CardContent>
                         <Form onSubmit={(e) => openModalConfirmForm(e, null)}>
+
+                            <TextField
+                                autoFocus
+                                sx={{mt:2}}
+                                name={"CreditAmount"}
+                                label="نام اعتبار"
+                                type="text"
+                                value={formData.Name}
+                                onChange={(e) => setFormData({...formData,Name:e.target.value})}
+                                fullWidth
+                                variant={"outlined"}
+                            />
+                            {(corporate.ContractType!="ALPHA")&&<LocalizationProvider dateAdapter={AdapterDateFnsJalali} >
+                                <DatePicker
+                                    value={formData?.ExpireDate}
+                                    sx={{mt: 2, mb: 1}}
+                                    name={"ExpireDate"}
+                                    label={"تاریخ انقضا"}
+                                    onChange={(e)=>setFormData({...formData,ExpireDate:e})}
+                                    className="w-100"
+                                />
+                            </LocalizationProvider>}
                             <TextField
                                 autoFocus
                                 margin="dense"
-                                name="credit"
-                                label="مقدار اعتبار (تومان)"
+                                name={"CreditAmount"}
+                                label="تومان"
                                 type="text"
-                                onChange={(e) => {
-                                    e.target.value = toPriceWithComma(e.target.value)
-                                }}
+                                value={toPriceWithComma(formData.CreditAmount)}
+                                onChange={(e) => setFormData({...formData,CreditAmount:toPriceWithoutComma(e.target.value)})}
                                 fullWidth
-                                variant="standard"
+                                variant={"outlined"}
                             />
                             <Typography variant={"body2"}>
                                 {/*{'مجموع اعتبار اضافه شده به پرسنل '+toPriceWithComma(credit*PersonelCount)+' تومان می باشد'}*/}
@@ -178,16 +219,38 @@ const IncreaseGroupCredit = () => {
                         />
                         <CardContent>
                             <Form onSubmit={(e) => openModalConfirmForm(e, group)}>
+
                                 <TextField
-                                    margin="dense"
-                                    name="credit"
-                                    label="مقدار اعتبار (تومان)"
+                                    autoFocus
+                                    sx={{mt:2}}
+                                    name={"CreditAmount"}
+                                    label="نام اعتبار"
                                     type="text"
-                                    onChange={(e) => {
-                                        e.target.value = toPriceWithComma(e.target.value)
-                                    }}
+                                    value={formData.Name}
+                                    onChange={(e) => setFormData({...formData,Name:e.target.value})}
                                     fullWidth
-                                    variant="standard"
+                                    variant={"outlined"}
+                                />
+                                {(corporate.ContractType!="ALPHA")&&<LocalizationProvider dateAdapter={AdapterDateFnsJalali} >
+                                    <DatePicker
+                                        value={formData?.ExpireDate}
+                                        sx={{mt: 2, mb: 1}}
+                                        name={"ExpireDate"}
+                                        label={"تاریخ انقضا"}
+                                        onChange={(e)=>setFormData({...formData,ExpireDate:e})}
+                                        className="w-100"
+                                    />
+                                </LocalizationProvider>}
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    name={"CreditAmount"}
+                                    label="تومان"
+                                    type="text"
+                                    value={toPriceWithComma(formData.CreditAmount)}
+                                    onChange={(e) => setFormData({...formData,CreditAmount:toPriceWithoutComma(e.target.value)})}
+                                    fullWidth
+                                    variant={"outlined"}
                                 />
                                 <Typography variant={"body2"}>
                                     {/*{'مجموع اعتبار اضافه شده به پرسنل '+toPriceWithComma(credit*PersonelCount)+' تومان می باشد'}*/}

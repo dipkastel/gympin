@@ -8,6 +8,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import {Image} from "react-bootstrap";
+import {Receipt} from "@mui/icons-material";
 
 const IncreaseHistory = () => {
     const error = useContext(ErrorContext);
@@ -66,9 +67,17 @@ const IncreaseHistory = () => {
                                                 رد شده
                                                 <RemoveCircleIcon color={"error"}/>
                                             </>}
+                                            {row.DepositStatus == "DRAFT" && <>
+                                                پیش فاکتور
+                                                <Receipt color={"warning"}/>
+                                            </>}
+                                            {row.DepositStatus == "CANCELED" && <>
+                                                لغو شده
+                                                <RemoveCircleIcon color={"error"}/>
+                                            </>}
                                             {row.DepositStatus == "REQUESTED" && <>
                                                 در انتظار بررسی
-                                                <HourglassBottomIcon color={"warning"}/>
+                                                <HourglassBottomIcon color={"inherit"}/>
                                             </>}
                                         </Typography>
 

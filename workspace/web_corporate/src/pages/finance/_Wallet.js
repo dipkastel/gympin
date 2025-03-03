@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import {useSelector} from "react-redux";
 import {toPriceWithComma} from "../../helper/utils";
-import __AddChargePartial from "./__AddChargePartial";
+
 
 const _Wallet = () => {
     const corporate = useSelector(({corporate}) => corporate.corporate)

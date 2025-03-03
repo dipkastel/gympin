@@ -73,10 +73,6 @@ export const BrowserRouter =[
                 Component: Charge,
             },
             {
-                path: 'increaseCharge',
-                Component: Charge,
-            },
-            {
                 path: 'IncreaseHistory',
                 Component: IncreaseHistory,
             },

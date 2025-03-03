@@ -60,8 +60,6 @@ const SettingsCorporate = (props) => {
 
     return (
         <>
-
-
             <title>سازمان های من</title>
             <Grid container columns={9} alignItems={"center"}>
                 <Grid size={{md: 6, lg: 6, xl: 6}}><Typography sx={{m: 4}} variant={"h4"}>سازمان های من</Typography></Grid>
@@ -71,7 +69,7 @@ const SettingsCorporate = (props) => {
             <Grid container columns={4}>
                 {personCorporates.map((item, number) => (
                             <Grid size={{xs:4,sm:2,md:1}} key={number}>
-                                <Card elevation={3} sx={{margin: 1,p:1,border:"1px solid",borderColor:(selectedCorporate.Id===item?.Corporate?.Id)?"secondary.bgBox":"secondary.contrastText",borderRadius:4}} >
+                                <Card elevation={3} sx={{margin: 1,p:1,border:"2px solid",borderColor:(selectedCorporate.Id===item?.Corporate?.Id)?"secondary.otherText":"quaternary.otherText",borderRadius:4}} >
                                     <Grid container direction={"column"} alignItems={"center"} justifyContent={"space-between"}>
                                         <Avatar
                                             sx={{width: 120, height: 120, marginTop: 3}}
@@ -85,49 +83,14 @@ const SettingsCorporate = (props) => {
                                         />
                                         <Chip variant={"filled"} color={"success"} size={"small"} label={CorporateStatusType[item?.Corporate?.Status]} sx={{mx:1}}/>
                                         <Grid container justifyContent={"space-around"} spacing={2}>
-                                            <Button hidden={!(selectedCorporate.Id===item?.Corporate?.Id)} variant={"outlined"} color={"secondary"} sx={{my:1}} size={"large"} onClick={()=>{navigate("/management/details/")}} >ویرایش</Button>
-                                            <Button hidden={(selectedCorporate.Id===item?.Corporate?.Id)} variant={"outlined"} color={"tertiary"} sx={{my:1}} size={"large"} onClick={()=>selectedPlaceChanged(item.Corporate.Id)} >فعالسازی مرکز</Button>
+                                            <Button hidden={!(selectedCorporate.Id===item?.Corporate?.Id)} variant={"outlined"}  sx={{my:1,color:"secondary.otherText",borderColor:"secondary.otherText"}} size={"large"} onClick={()=>{navigate("/management/details/")}} >ویرایش</Button>
+                                            <Button hidden={(selectedCorporate.Id===item?.Corporate?.Id)} variant={"outlined"} sx={{my:1,color:"quaternary.otherText",borderColor:"quaternary.otherText"}} size={"large"} onClick={()=>selectedPlaceChanged(item.Corporate.Id)} >فعالسازی مرکز</Button>
                                         </Grid>
                                     </Grid>
                                 </Card>
                             </Grid>
                         ))}
-
-
             </Grid>
-
-
-
-            {/*<FormControl*/}
-            {/*    style={{width: "100%"}}>*/}
-            {/*    <RadioGroup*/}
-            {/*        aria-labelledby="demo-radio-buttons-group-label"*/}
-            {/*        defaultValue="female"*/}
-            {/*        name="radio-buttons-group"*/}
-            {/*        value={(selectedCorporate) ? selectedCorporate.Id : 9999}*/}
-            {/*        onChange={(event) => selectedPlaceChanged(event)}*/}
-            {/*    >*/}
-            {/*        {personCorporates.map((item, number) => (*/}
-            {/*            <div key={number}>*/}
-            {/*                <Card elevation={3} sx={{margin: 1}}>*/}
-            {/*                    <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>*/}
-            {/*                        <FormControlLabel value={item.Corporate.Id} control={<Radio/>}*/}
-            {/*                                          label={<ListItemText*/}
-            {/*                                              primary={item.Corporate.Name+" ( "+CorporateContractType[item?.Corporate?.ContractType]+" )"}*/}
-            {/*                                              secondary={item?.Corporate?.FinanceCorporate?.TotalDeposit>0&&toPriceWithComma(item?.Corporate?.FinanceCorporate?.TotalDeposit)}*/}
-            {/*                                          />}/>*/}
-            {/*                        <Chip variant={"filled"} color={"success"} size={"small"} label={CorporateStatusType[item?.Corporate?.Status]} sx={{mx:1}}/>*/}
-            {/*                    </Grid>*/}
-            {/*                </Card>*/}
-            {/*            </div>*/}
-            {/*        ))}*/}
-            {/*    </RadioGroup>*/}
-            {/*</FormControl>*/}
-
-
-
-
-
         </>
 
     );

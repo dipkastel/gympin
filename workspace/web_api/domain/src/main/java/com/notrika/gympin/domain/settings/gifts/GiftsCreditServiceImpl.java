@@ -115,7 +115,7 @@ public class GiftsCreditServiceImpl extends AbstractBaseService<GiftCreditParam,
         ManageGiftCreditEntity gift = manageGiftCreditRepository.getByCodeAndDeletedIsFalse(giftCreditParam.getCode());
         if(gift==null)
             throw new ActivationCodeNotFoundException();
-        checkForExpire(gift,manageGiftCreditRepository);
+        checkForExpire(gift);
         if(gift.getStatus()==GiftCreditStatusEnum.DRAFT)
             throw new GiftCreditIsNotActiveException();
         if(gift.getStatus()==GiftCreditStatusEnum.USED)
@@ -148,7 +148,7 @@ public class GiftsCreditServiceImpl extends AbstractBaseService<GiftCreditParam,
         return GiftConvertor.toDto(gift);
     }
 
-    private Boolean checkForExpire(ManageGiftCreditEntity gift, ManageGiftCreditRepository manageGiftCreditRepository) {
+    private Boolean checkForExpire(ManageGiftCreditEntity gift) {
         if(gift.getExpireDate().before(new Date())){
           gift.setStatus(GiftCreditStatusEnum.EXPIRED);
           gift.setCanRegister(false);
@@ -173,18 +173,22 @@ public class GiftsCreditServiceImpl extends AbstractBaseService<GiftCreditParam,
 
     @Override
     public GiftCreditDto delete(@NonNull GiftCreditParam giftCreditParam) {
-        ManageGiftCreditEntity tag = manageGiftCreditRepository.getById(giftCreditParam.getId());
-        return GiftConvertor.toDto(manageGiftCreditRepository.deleteById2(tag));
+        ManageGiftCreditEntity gift = manageGiftCreditRepository.getById(giftCreditParam.getId());
+        return GiftConvertor.toDto(manageGiftCreditRepository.deleteById2(gift));
     }
 
     @Override
     public GiftCreditDto getById(long id) {
-        return GiftConvertor.toDto(manageGiftCreditRepository.getById(id));
+        ManageGiftCreditEntity gift = manageGiftCreditRepository.getById(id);
+        checkForExpire(gift);
+        return GiftConvertor.toDto(gift);
     }
 
     @Override
     public GiftCreditDto getByCode(String code) {
-        return GiftConvertor.toDto(manageGiftCreditRepository.getByCodeAndDeletedIsFalse(code));
+        ManageGiftCreditEntity giftCredit = manageGiftCreditRepository.getByCodeAndDeletedIsFalse(code);
+        checkForExpire(giftCredit);
+        return GiftConvertor.toDto(giftCredit);
     }
 
     @Override

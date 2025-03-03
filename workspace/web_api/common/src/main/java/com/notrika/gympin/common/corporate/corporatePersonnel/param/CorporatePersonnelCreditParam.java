@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -37,6 +38,9 @@ public class CorporatePersonnelCreditParam extends BaseParam<CorporatePersonnelC
 
     @JsonProperty("GroupId")
     private Long groupId;
+
+    @JsonProperty("PersonnelIds")
+    private List<Long> personnelIds;
 
     @JsonProperty("Serial")
     private SerialParam serial;

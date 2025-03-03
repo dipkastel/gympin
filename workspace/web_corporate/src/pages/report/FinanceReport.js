@@ -16,12 +16,12 @@ const FinanceReport = () => {
                 <Grid textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}></Grid>
             </Grid>
             <Grid container columns={2} alignItems={"start"}>
-                <Grid size={{md: 2, lg: 1, xl: 1}}>
+                <Grid size={{xs:2,md: 2, lg: 1, xl: 1}}>
                     <_RChargeUsage />
                     <_RCreditByGroup />
                     <_RAverageOfUserTickets />
                 </Grid>
-                <Grid size={{md: 2, lg: 1, xl: 1}}>
+                <Grid size={{xs:2,md: 2, lg: 1, xl: 1}}>
                     <_RSumOfUserDiscounts />
                     <_RUsedCreditByGroup />
                 </Grid>

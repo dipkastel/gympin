@@ -8,10 +8,7 @@ const WPageProfile = ({onNext}) => {
 
     return (
         <Grid container>
-            <Grid item xs={12} md={6}>
-                <EditProfile introCanGoNext={setIntroCanGoNext}/>
-            </Grid>
-
+            <EditProfile introCanGoNext={setIntroCanGoNext}/>
             <Grid item sx={{p:2}} xs={12} md={12}>
                 <Button fullWidth variant={"contained"} disabled={!introCanGoNext} onClick={(e)=>onNext()} color={"primary"}> مرحله بعد </Button>
             </Grid>

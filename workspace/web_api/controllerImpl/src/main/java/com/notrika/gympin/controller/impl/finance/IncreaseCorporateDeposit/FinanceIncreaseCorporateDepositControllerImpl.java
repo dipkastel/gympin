@@ -6,14 +6,24 @@ import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.param.FinanceI
 import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.param.RequestIncreaseCorporateDepositParam;
 import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.query.FinanceIncreaseCorporateDepositQuery;
 import com.notrika.gympin.common.finance.IncreaseCorporateDeposit.service.FinanceIncreaseCorporateDepositService;
+import com.notrika.gympin.common.multimedia.enums.MediaType;
+import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
+import com.notrika.gympin.common.user.user.enums.MyMediaType;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.annotation.IgnoreWrapAspect;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 @RequestMapping("/api/v1/increaseCorporateDeposit")
@@ -65,14 +75,34 @@ public class FinanceIncreaseCorporateDepositControllerImpl implements FinanceInc
     @Override
     @PostMapping("confirmIncreaseRequest")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
-    public ResponseEntity<FinanceIncreaseCorporateDepositDto> confirmIncreaseRequest(@RequestBody FinanceIncreaseCorporateDepositParam param) {
+    public ResponseEntity<FinanceIncreaseCorporateDepositDto> confirmIncreaseRequest( FinanceIncreaseCorporateDepositParam param) {
         return ResponseEntity.ok(increaseCorporateDepositService.confirmIncreaseRequest(param));
     }
 
     @Override
     @PostMapping("requestIncreaseCorporateDeposits")
-    public ResponseEntity<String> requestIncreaseCorporateDeposits(@RequestBody RequestIncreaseCorporateDepositParam param) {
+    public ResponseEntity<String> requestIncreaseCorporateDeposits(RequestIncreaseCorporateDepositParam param) {
         return ResponseEntity.ok(increaseCorporateDepositService.requestIncreaseCorporateDeposits(param));
     }
 
+    @Override
+    @PostMapping("completeRequestIncreaseCorporateDeposits")
+    public ResponseEntity<String> completeRequestIncreaseCorporateDeposits(RequestIncreaseCorporateDepositParam param) {
+        return ResponseEntity.ok(increaseCorporateDepositService.completeRequestIncreaseCorporateDeposits(param));
+    }
+
+    @Override
+    @PostMapping("requestIncreaseCorporateDepositsDraft")
+    public ResponseEntity<FinanceIncreaseCorporateDepositDto> requestIncreaseCorporateDepositsDraft(RequestIncreaseCorporateDepositParam param) {
+        return ResponseEntity.ok(increaseCorporateDepositService.requestIncreaseCorporateDepositsDraft(param));
+    }
+
+    @Override
+    @RequestMapping(path = "getProFormaInvoice", method = GET)
+    @IgnoreWrapAspect
+    public  @ResponseBody void getProFormaInvoice(HttpServletResponse response,RequestIncreaseCorporateDepositParam param) throws Exception {
+        response.setContentType(MyMediaType.APPLICATION_PDF_VALUE);
+        InputStream inputStream = new ByteArrayInputStream(increaseCorporateDepositService.getProFormaInvoice(param));
+        IOUtils.copy(inputStream,response.getOutputStream());
+    }
 }

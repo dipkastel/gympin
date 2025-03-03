@@ -1,10 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Card, CardContent, CardHeader, Grid, Typography} from "@mui/material";
 import EditCorporate from "../../corporateDetail/EditCorporate";
+import {useSelector} from "react-redux";
 
 const WPageCorporateDetails = ({onNext}) => {
 
     const [introCanGoNext,setIntroCanGoNext] = useState(false);
+
+    const corporate = useSelector(({corporate}) => corporate.corporate);
+    useEffect(() => {
+        if (corporate?.Status !== "PREREGISTER")
+            window.location = "/";
+    }, []);
 
     return (
         <Grid container>

@@ -102,7 +102,11 @@ export let Api_url = {
         UPDATE_AVATAR: "v1/user/updateUserAvatar",
     },
     increaseCorporateDeposit:{
-        requestIncreaseCorporateDeposits:"v1/increaseCorporateDeposit/requestIncreaseCorporateDeposits"
+        requestIncreaseCorporateDeposits:"v1/increaseCorporateDeposit/requestIncreaseCorporateDeposits",
+        requestIncreaseCorporateDepositsDraft:"v1/increaseCorporateDeposit/requestIncreaseCorporateDepositsDraft",
+        completeRequestIncreaseCorporateDeposits:"v1/increaseCorporateDeposit/completeRequestIncreaseCorporateDeposits",
+        getProFormaInvoice:"v1/increaseCorporateDeposit/getProFormaInvoice",
+        delete:"v1/increaseCorporateDeposit/delete"
     },
     transaction:{
         setPaymentRequest:"v1/transaction/setPaymentRequest",

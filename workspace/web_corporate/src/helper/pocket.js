@@ -1,6 +1,23 @@
 import {getStorage, setStorage} from "./utils";
 
 
+const po_selected_theme = "po_selected_theme";
+
+export function getSelectedTheme() {
+    try {
+        var result = getStorage(po_selected_theme);
+        if (result)
+            return result;
+        else return "light";
+    } catch (e) {
+        return "light";
+    }
+}
+
+export function setSelectedTheme(value) {
+    setStorage(po_selected_theme, value);
+}
+
 const po_wizard_complete = "po_wizard_complete";
 
 export function getWizardComplete() {

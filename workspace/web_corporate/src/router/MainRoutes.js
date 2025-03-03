@@ -13,7 +13,7 @@ export const MainRoutes = ({router}) => {
         console.log(router)
         switch (router.pathname) {
             case '/auth/*' : return <AuthRoutes/>
-            case '/error/*' : return <>جواب</>
+            case '/error/*' : return <>خطا</>
 
         }
     }

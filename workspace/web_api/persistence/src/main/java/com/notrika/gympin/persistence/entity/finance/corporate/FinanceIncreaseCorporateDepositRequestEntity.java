@@ -52,6 +52,9 @@ public class FinanceIncreaseCorporateDepositRequestEntity extends BaseEntityWith
     @Column(name = "description")
     private String description;
 
+    @Column(name = "requestInvoice", nullable = false, columnDefinition = "boolean default false")
+    private Boolean requestInvoice;
+
 
     @Override
     public boolean equals(Object o) {

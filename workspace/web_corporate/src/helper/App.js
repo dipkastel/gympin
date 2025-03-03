@@ -16,6 +16,9 @@ import {ReactRouterAppProvider} from '@toolpad/core/react-router';
 import {Outlet} from 'react-router';
 import {useSelector} from "react-redux";
 import NewLogin from "../pages/auth/NewLogin";
+import {useEffect} from "react";
+import {getSelectedTheme} from "./pocket";
+import {useColorScheme} from "@mui/material";
 
 
 const cacheRtl = createCache({
@@ -29,16 +32,18 @@ function App(props) {
 
     const isAuthorized = useSelector(({auth: {token}}) => token != null);
 
-    const {window} = props;
+    const {mode} = useColorScheme();
+    useEffect(() => {
+        console.log("GympinTheme",GympinTheme.colorSchemes.light)
+    }, [mode]);
 
-    const demoWindow = window !== undefined ? window() : undefined;
+
 
     function CheckAuth() {
        return(isAuthorized)?
         <ReactRouterAppProvider
             navigation={NavigationMenu}
-                                theme={GympinTheme}
-                                window={demoWindow}
+                                theme={mode==='light'?GympinTheme.colorSchemes.light:GympinTheme.colorSchemes.dark}
                                 branding={{
                                     logo: <img src="/logo192.png" alt="MUI logo"/>,
                                     title: 'جیم پین',

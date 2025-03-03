@@ -29,7 +29,7 @@ const WizardBody = () => {
     useEffect(() => {
         var id = 1;
         var stepsList = new Array();
-        stepsList.push({id: id++, title: 'معرفی جیم پین', icon: <TipsAndUpdatesIcon/>, page: <WPageIntro onNext={onNext}/>})
+        // stepsList.push({id: id++, title: 'معرفی جیم پین', icon: <TipsAndUpdatesIcon/>, page: <WPageIntro onNext={onNext}/>})
         stepsList.push({id: id++, title: 'اطلاعات شرکت', icon: <ContactPageIcon/>, page: <WPageCorporateDetails onNext={onNext}/>})
         stepsList.push({id: id++, title: 'پروفایل من (مدیر پنل)', icon: <ContactPageIcon/>, page: <WPageProfile onNext={onNext}/>})
         stepsList.push({id: id++, title: 'اطلاعات قرارداد', icon: <ContactPageIcon/>, page: <WPageContractData onNext={onNext}  />})

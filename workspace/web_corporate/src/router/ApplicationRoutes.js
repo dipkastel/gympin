@@ -18,6 +18,7 @@ import {useSelector} from "react-redux";
 import {Navigate, Route, Routes, useNavigate} from "react-router";
 import {getWizardComplete, setWizardComplete} from "../helper/pocket";
 import WizardBody from "../pages/wizard/body/WizardBody";
+import LogoutPage from "../pages/auth/Logout";
 
 export default function ApplicationRoutes() {
 
@@ -70,6 +71,7 @@ export default function ApplicationRoutes() {
                     <Route path="/personnel/detail/:PersonnelId" element={<SingleUser/>}/>
                     <Route path="/personnel" element={<Users/>}/>
                     <Route path="/profile" element={<EditProfile/>}/>
+                    <Route path="/logout" element={<LogoutPage/>}/>
 
                     <Route path="/*" element={<Navigate to={"/error/404"}/>}/>
 
