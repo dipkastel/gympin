@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.settings.schedules;
 
+import com.notrika.gympin.common.place.place.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,10 @@ public class gympinScheduleService {
     scheduleReports scheduleReports;
 
     @Autowired
-    scheduleCorporateSms scheduleCorporateSms;
+    ScheduleCorporate scheduleCorporate;
+
+    @Autowired
+    SchedulePlace schedulePlace;
 
     @Autowired
     schedulePeymentCheck schedulePeymentCheck;
@@ -38,10 +42,19 @@ public class gympinScheduleService {
 //        scheduleReports.updateMinTicketSubscribePrice();
     }
 
+    @Scheduled(cron = "0 */30 * * * ?")
+    public void UpdatePlaceSearchesStr(){
+        schedulePlace.UpdatePlaceSearchStr();
+//        scheduleReports.updateMaxSellByPlace();
+//        scheduleReports.updateMaxSellByTicketSubscribe();
+//        scheduleReports.updateMaxTicketSubscribePrice();
+//        scheduleReports.updateMinTicketSubscribePrice();
+    }
+
     @Scheduled(cron = "0 0 10 ? * SUN,MON,TUE,WED,THU,SAT")
     public void checkCorporatesLowBudget(){
         scheduleReports.updateLastTimeCorporateChargeCheck();
-        scheduleCorporateSms.checkLowBudgets();
+        scheduleCorporate.checkLowBudgetsSms();
     }
 
 

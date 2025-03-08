@@ -37,6 +37,9 @@ public class PlaceQuery extends BaseQuery<PlaceQuery> {
     @JsonProperty("Name")
     private String like_name;
 
+    @JsonProperty("SearchStr")
+    private String like_searchStr;
+
     @JsonProperty("Status")
     private PlaceStatusEnum is_status;
 

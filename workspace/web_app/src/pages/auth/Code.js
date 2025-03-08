@@ -6,12 +6,14 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import {replacePersianNumbers, toPriceWithComma} from "../../helper/utils";
 import {AccountCircle, QrCodeScanner} from "@mui/icons-material";
 
+
 const Code = () => {
 
     const error = useContext(ErrorContext);
     const navigate = useNavigate();
     const [loading, SetLoading] = useState(true)
     const [codeDetails, SetCodeDetails] = useState(null)
+    const [message,setMessage] = useState(null);
 
     const {code} = useParams();
 
@@ -22,11 +24,12 @@ const Code = () => {
     function getCodeDetails() {
         giftCredit_checkStatus({code: code}).then(result => {
             SetLoading(false);
-            SetCodeDetails(result.data.Data);
-            console.log(result);
+            SetCodeDetails(result?.data?.Data);
         }).catch(e => {
+            SetLoading(false);
             try {
-                error.showError({message: e.response.data.Message,});
+                error.showError({message: e.response?.data?.Message||"خطا در دریافت اطلاعات کد",});
+                setMessage(e?.response?.data?.Message);
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
             }
@@ -57,24 +60,24 @@ const Code = () => {
                             <CircularProgress/>
                         </CardContent>}
                         {!loading && <Grid container sx={{mt: 3, mb: 3}}>
-                            <Grid sx={{bgcolor: "#CCCCCC", width: "100%", p: 3, textAlign: "center"}}>
+                            {message==null&&<Grid sx={{bgcolor: "#CCCCCC", width: "100%", p: 3, textAlign: "center"}}>
                                 <Typography variant={"h6"} component={"span"}>{"کارت هدیه  : "}</Typography>
-                                <Typography variant={"h3"} component={"span"}>{toPriceWithComma(codeDetails.Amount)}</Typography>
+                                <Typography variant={"h3"} component={"span"}>{toPriceWithComma(codeDetails?.Amount)}</Typography>
                                 <Typography variant={"h6"} component={"span"}>{" تومان"}</Typography>
-                            </Grid>
+                            </Grid>}
 
 
-                            <Grid sx={{width: "100%", p: 2}}>
+                            {message==null&&<Grid sx={{width: "100%", p: 2}}>
                                 <Typography variant={"subtitle1"}>{"طریقه استفاده  : "}</Typography>
 
-                                {codeDetails.CanRegister &&
+                                {codeDetails?.CanRegister &&
                                 <Typography variant={"body1"} component={"span"}>با شماره موبایل خود در اپلیکیشن کاربران جیم پین ثبت نام
                                     کنید.</Typography>}
-                                {!codeDetails.CanRegister && <><Typography lineHeight={"1.4rem"} variant={"body2"}>
+                                {!codeDetails?.CanRegister && <><Typography lineHeight={"1.4rem"} variant={"body2"}>
                                     {"با شماره موبایل خود "}
-                                    <span dir={"ltr"}>{replacePersianNumbers(codeDetails.User.PhoneNumber)}</span>
+                                    <span dir={"ltr"}>{replacePersianNumbers(codeDetails?.User?.PhoneNumber)}</span>
                                     {" در اپلیکیشن کاربران جیم پین ورود کنید."}</Typography></>}
-                                <Typography sx={{mt: 1}}  lineHeight={"1.4rem"} variant={"body2"} >
+                                <Typography sx={{mt: 1}} lineHeight={"1.4rem"} variant={"body2"}>
                                     {"از قسمت پروفایل "}
                                     <AccountCircle/>
                                     {" گزینه اسکن کد "}
@@ -83,16 +86,20 @@ const Code = () => {
 
                                 </Typography>
 
-                            </Grid>
+                            </Grid>}
+
+                            {message!=null&&<Grid sx={{width: "100%", p: 2}}>
+                                <Typography variant={"subtitle1"}>{message}</Typography>
+                            </Grid>}
+
                             <Grid sx={{width: "100%", p: 2}}>
                                 <Button fullWidth variant={"contained"} sx={{p: 1}}
-                                        onClick={(e) => navigate("/login/" + codeDetails.RegisterCode)}>{codeDetails.CanRegister ? "ثبت نام" : "ورود"}</Button>
+                                        onClick={(e) => navigate("/login")} >{"ورود"}</Button>
                             </Grid>
 
                             <Grid sx={{width: "100%", textAlign: "center"}}>
                                 <img width={"300px"} src={"/assets/images/svg/gift.svg"}/>
                             </Grid>
-
 
                         </Grid>}
                     </Card>

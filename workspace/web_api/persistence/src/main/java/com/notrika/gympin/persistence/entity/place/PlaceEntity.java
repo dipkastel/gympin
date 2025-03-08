@@ -82,6 +82,9 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Column(name = "autoDiscount", nullable = false, columnDefinition = "bit default 1")
     private boolean autoDiscount;
 
+    @Column(name = "searchStr", columnDefinition = "varchar(12000)")
+    private String searchStr;
+
 
     @OneToOne(mappedBy = "place", fetch = FetchType.LAZY)
     @JsonIgnore

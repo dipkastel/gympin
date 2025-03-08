@@ -78,7 +78,6 @@ const _PlacesList = () => {
     const error = useContext(ErrorContext);
 
     const {sid} = useParams();
-    console.log("sid",sid);
     const currentUser = useSelector(state => state.auth.user);
 
     const [places, SetPlaces] = useState(null);
@@ -164,7 +163,7 @@ const _PlacesList = () => {
         Place_query({
             queryType: "FILTER",
             Status: "Active",
-            Name: searchString,
+            SearchStr: searchString,
             Sports:sid,
             // LocationId:filters.find(f=>f.type==="location").value,
             // Gender:filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null,

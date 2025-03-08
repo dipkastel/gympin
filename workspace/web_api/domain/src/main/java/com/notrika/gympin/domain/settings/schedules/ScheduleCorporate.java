@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class scheduleCorporateSms {
+public class ScheduleCorporate {
 
     @Autowired
     private CorporateRepository corporateRepository;
@@ -29,7 +29,7 @@ public class scheduleCorporateSms {
 
 
     @Transactional
-    public void checkLowBudgets() {
+    public void checkLowBudgetsSms() {
         List<CorporateEntity> corporateEntities = corporateRepository.findAllByDeletedIsFalseAndStatus(CorporateStatusEnum.LOW_BUDGET);
 
         SettingDto canSend = settingsService.getByKey("SMS_LOWBUDGET_TO_CORPORATE");
