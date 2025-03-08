@@ -159,6 +159,8 @@ const _PlacesList = () => {
 
     function getData(page, searchString) {
         console.log(searchString);
+        if(!searchString)
+            searchString = null;
         setIsLoading(true);
         Place_query({
             queryType: "FILTER",
