@@ -61,7 +61,7 @@ const Images = ({introCanGoNext}) => {
     }
 
     function getImageList(){
-        place_getMultimedias(place.Id).then(result=>{
+        place_getMultimedias(place?.Id).then(result=>{
             SetImageList(result.data.Data);
             try{introCanGoNext(result.data.Data.length>0);}catch (e) {}
 

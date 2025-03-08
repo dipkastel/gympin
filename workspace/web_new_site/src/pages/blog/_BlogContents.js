@@ -80,7 +80,6 @@ const _BlogContents = () => {
                             <Card  className={"card"}  elevation={3}>
 
                                 <CardActionArea href={"/blog-detail/"+createCId(article)+"/"+createSlug(article.Title)}>
-                                {console.log(article)}
                                 <img alt={article?.Title} src={article?.ArticleImage?.Url}/>
                                 <Typography sx={{mr:1,fontSize:"1rem",fontWeight:600,color:"#555555"}} variant={"subtitle1"}>{article?.Title}</Typography>
                                 <Typography sx={{mr:1,fontSize:"0.8rem",fontWeight:400,minHeight:160,color:"#999999"}} variant={"subtitle1"}><div dangerouslySetInnerHTML={{__html: article?.Summary}}/></Typography>

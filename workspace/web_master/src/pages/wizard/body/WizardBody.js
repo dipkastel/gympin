@@ -40,10 +40,12 @@ import WPageActivation from "../pages/WPageActivation";
 import WPageContract from "../pages/WPageContract";
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import WPagePlaceOwner from "../pages/WPagePlaceOwner";
+import {useNavigate} from "react-router-dom";
 
 const WizardBody = () => {
     const [level, setLevel] = useState(getWizardLevel());
 
+    const navigate = useNavigate();
     const [steps, setSteps] = useState(null);
     const [halls, setHalls] = useState(null);
     const [stickets, setSTickets] = useState(null);
@@ -62,6 +64,12 @@ const WizardBody = () => {
     }, []);
 
     useEffect(() => {
+        if(!place&&level!=1){
+            setWizardLevel(1);
+            setLevel(1)
+            navigate("/")
+            return;
+        }
         var id = 1;
         var stepsList = new Array();
         stepsList.push({id: id++, title: 'مجموعه', icon: <LocationCityIcon/>, page: <WPageSelectPlace onNext={onNext}/>})

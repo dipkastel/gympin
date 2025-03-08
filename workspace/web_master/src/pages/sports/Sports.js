@@ -40,7 +40,7 @@ const Sport = ({introCanGoNext}) => {
         return <AccessDenied/>;
 
     function getPlaceSports() {
-        placeSport_getSportsByPlace({id: place.Id}).then(result => {
+        placeSport_getSportsByPlace({id: place?.Id}).then(result => {
             SetPlaceSports(result.data.Data)
             SetItemToProgress(null);
             try{introCanGoNext(result.data.Data.length > 0)}catch (e) {}

@@ -31,7 +31,7 @@ const About = ({introCanGoNext}) => {
     }, []);
 
     function getPlaceAbouts() {
-        PlaceAbout_getByPlace({id: place.Id}).then(result => {
+        PlaceAbout_getByPlace({id: place?.Id}).then(result => {
             SetPlaceAbouts(result.data.Data)
             try{introCanGoNext(result.data.Data.length>0)}catch (e) {}
         }).catch(e => {

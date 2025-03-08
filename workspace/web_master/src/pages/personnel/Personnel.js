@@ -23,7 +23,7 @@ const Personnel = () => {
 
     function getPersonnelList() {
         SetPersonnelList(null);
-        placePersonnel_ByPlace({Id: place.Id}).then(result => {
+        placePersonnel_ByPlace({Id: place?.Id}).then(result => {
             SetPersonnelList(result.data.Data);
         }).catch(e => {
             try {

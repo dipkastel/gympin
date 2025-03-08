@@ -39,7 +39,7 @@ const Option = ({introCanGoNext}) => {
         return <AccessDenied/>;
 
     function getPlaceOptions(){
-        optionOfPlace_getByPlaceId({id: place.Id}).then(result => {
+        optionOfPlace_getByPlaceId({id: place?.Id}).then(result => {
             SetPlaceOption(result.data.Data)
             SetItemToProgress(null);
             try{ introCanGoNext(result.data.Data.length>0)}catch (e) {}
