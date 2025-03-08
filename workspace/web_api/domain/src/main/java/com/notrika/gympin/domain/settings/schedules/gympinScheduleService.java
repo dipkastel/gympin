@@ -42,7 +42,8 @@ public class gympinScheduleService {
 //        scheduleReports.updateMinTicketSubscribePrice();
     }
 
-    @Scheduled(cron = "0 */30 * * * ?")
+
+    @Scheduled(cron = "0 */15 * * * ?")
     public void UpdatePlaceSearchesStr(){
         schedulePlace.UpdatePlaceSearchStr();
 //        scheduleReports.updateMaxSellByPlace();

@@ -34,11 +34,11 @@ public class SchedulePlace {
             searchSrt += " "+place.getAddress();
             searchSrt += " "+place.getLocation().getName();
             searchSrt += " "+place.getActiveTimes();
-            searchSrt += " "+ place.getBuyables().stream().map(BuyableEntity::getName).collect(Collectors.joining(" "));
-            searchSrt += " "+ place.getPlaceSport().stream().map(be ->be.getSport().getName()).collect(Collectors.joining(" "));
-            searchSrt += " "+ place.getTags().stream().map(ManageTagsEntity::getName).collect(Collectors.joining(" "));
-            searchSrt += " "+ place.getOptionsOfPlaces().stream().map(be ->be.getPlaceOption().getName()).collect(Collectors.joining(" "));
-            searchSrt += " "+ place.getAboutPlaces().stream().map(be ->be.getName()+" "+be.getDescription()).collect(Collectors.joining(" "));
+            searchSrt += " "+ place.getBuyables().stream().filter(be->!be.isDeleted()).map(BuyableEntity::getName).collect(Collectors.joining(" "));
+            searchSrt += " "+ place.getPlaceSport().stream().filter(be->!be.isDeleted()).map(be ->be.getSport().getName()).collect(Collectors.joining(" "));
+            searchSrt += " "+ place.getTags().stream().filter(be->!be.isDeleted()).map(ManageTagsEntity::getName).collect(Collectors.joining(" "));
+            searchSrt += " "+ place.getOptionsOfPlaces().stream().filter(be->!be.isDeleted()).map(be ->be.getPlaceOption().getName()).collect(Collectors.joining(" "));
+            searchSrt += " "+ place.getAboutPlaces().stream().filter(be->!be.isDeleted()).map(be ->be.getName()+" "+be.getDescription()).collect(Collectors.joining(" "));
             searchSrt = searchSrt.replaceAll("null" ,"") ;
             place.setSearchStr(searchSrt);
             placesToUpdate.add(place);
