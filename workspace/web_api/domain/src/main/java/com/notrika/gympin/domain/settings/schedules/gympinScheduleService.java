@@ -43,7 +43,7 @@ public class gympinScheduleService {
     }
 
 
-    @Scheduled(cron = "0 */15 * * * ?")
+    @Scheduled(cron = "0 0 2 * * ?")
     public void UpdatePlaceSearchesStr(){
         schedulePlace.UpdatePlaceSearchStr();
 //        scheduleReports.updateMaxSellByPlace();
