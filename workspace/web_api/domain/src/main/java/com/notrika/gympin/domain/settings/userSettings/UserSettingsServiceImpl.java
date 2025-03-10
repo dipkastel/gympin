@@ -98,7 +98,7 @@ public class UserSettingsServiceImpl extends AbstractBaseService<UserSettingPara
 
     @Override
     public List<UserSettingDto> convertToDtos(List<UserSettingsEntity> entities) {
-        return entities.stream().map(UserSettingsConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(UserSettingsConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

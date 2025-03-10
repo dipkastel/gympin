@@ -95,7 +95,7 @@ public class HallServiceImpl extends AbstractBaseService<HallParam, HallDto, Hal
 
     @Override
     public List<HallDto> convertToDtos(List<HallEntity> entities) {
-        return entities.stream().map(HallConvertor::convertToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -111,12 +111,12 @@ public class HallServiceImpl extends AbstractBaseService<HallParam, HallDto, Hal
 
     @Override
     public List<HallDto> getHallsByPlace(PlaceParam place) {
-        return hallRepository.findAllByPlaceAndDeletedIsFalse(PlaceEntity.builder().id(place.getId()).build()).stream().map(HallConvertor::convertToDto).collect(Collectors.toList());
+        return hallRepository.findAllByPlaceAndDeletedIsFalse(PlaceEntity.builder().id(place.getId()).build()).stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToDto).collect(Collectors.toList());
     }
 
     @Override
     public List<HallDto> getHallsBySport(SportParam sport) {
-        return hallRepository.findAllByPlace_PlaceSport_SportAndDeletedIsFalse(SportEntity.builder().id(sport.getId()).build()).stream().map(HallConvertor::convertToDto).collect(Collectors.toList());
+        return hallRepository.findAllByPlace_PlaceSport_SportAndDeletedIsFalse(SportEntity.builder().id(sport.getId()).build()).stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToDto).collect(Collectors.toList());
     }
 
 

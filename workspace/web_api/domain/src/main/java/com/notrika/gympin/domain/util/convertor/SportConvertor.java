@@ -11,12 +11,12 @@ public final class SportConvertor {
 
     public static SportDto toDto(SportEntity sport) {
         SportDto sportDto = SportDto.builder().id(sport.getId()).isDeleted(sport.isDeleted()).name(sport.getName()).launchStatus(sport.getLaunchStatus()).build();
-        if (sport.getSportMultimedias() != null) sportDto.setLogoIds(sport.getSportMultimedias().stream().map(t -> t.getMultimedia().getId()).collect(Collectors.toList()));
+        if (sport.getSportMultimedias() != null) sportDto.setLogoIds(sport.getSportMultimedias().stream().filter(o->!o.isDeleted()).map(t -> t.getMultimedia().getId()).collect(Collectors.toList()));
         return sportDto;
     }
 
     public static List<SportDto> toDto(List<SportEntity> sportList) {
-        return sportList.stream().map(SportConvertor::toDto).collect(Collectors.toList());
+        return sportList.stream().filter(o->!o.isDeleted()).map(SportConvertor::toDto).collect(Collectors.toList());
     }
     public static Page<SportDto> toDto(Page<SportEntity> sportList) {
         return sportList.map(SportConvertor::toDto);

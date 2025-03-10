@@ -136,7 +136,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
 
     @Override
     public List<InvoiceDto> convertToDtos(List<InvoiceEntity> entities) {
-        return entities.stream().map(InvoiceConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -235,7 +235,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
                 throw new GenderIsNotCompatible();
         }
 
-        if (invoice.getPriceToPay().compareTo(param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
+        if (invoice.getPriceToPay().compareTo(param.getCheckout().stream().filter(o->!o.isDeleted()).map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
             throw new PriceTotalConflictException();
 
         //calculation
@@ -268,7 +268,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
                 throw new GenderIsNotCompatible();
         }
 
-        if (invoice.getPriceToPay().compareTo(param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
+        if (invoice.getPriceToPay().compareTo(param.getCheckout().stream().filter(o->!o.isDeleted()).map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
             throw new PriceTotalConflictException();
 
         //calculation
@@ -301,7 +301,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
                 throw new GenderIsNotCompatible();
         }
 
-        if (invoice.getPriceToPay().compareTo(param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
+        if (invoice.getPriceToPay().compareTo(param.getCheckout().stream().filter(o->!o.isDeleted()).map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
             throw new PriceTotalConflictException();
 
         //calculation

@@ -78,7 +78,7 @@ public class SerialServiceImpl extends AbstractBaseService<SerialParam, SerialDt
 
     @Override
     public List<SerialDto> convertToDtos(List<FinanceSerialEntity> entities) {
-        return entities.stream().map(SerialConvertor::ToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(SerialConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override

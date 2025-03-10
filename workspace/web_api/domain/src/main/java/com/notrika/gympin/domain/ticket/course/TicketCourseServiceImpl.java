@@ -166,7 +166,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
 
     @Override
     public List<TicketCourseDto> convertToDtos(List<TicketCourseEntity> entities) {
-        return entities.stream().map(TicketCourseConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(TicketCourseConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -193,7 +193,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
         List<PlaceSportEntity> ticketCourseSports = ticketCourse.getTicketCourseSport();
         if (ticketCourseSports == null) ticketCourseSports = new ArrayList<>();
         for (var placeSportParam : ticketCourseSportParam.getPlaceSports()) {
-            if (ticketCourse.getTicketCourseSport().stream().anyMatch(s -> s.getId().equals(placeSportParam.getId())))
+            if (ticketCourse.getTicketCourseSport().stream().filter(o->!o.isDeleted()).anyMatch(s -> s.getId().equals(placeSportParam.getId())))
                 throw new DuplicateEntryAddExeption();
             PlaceSportEntity placeSport = placeSportRepository.getById(placeSportParam.getId());
             ticketCourseSports.add(placeSport);
@@ -207,8 +207,8 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
     public TicketCourseDto deleteSport(TicketCourseSportParam ticketCourseSportParam) {
         TicketCourseEntity ticketCourse = ticketCourseRepository.getById(ticketCourseSportParam.getTicketCourse().getId());
         var sports = ticketCourse.getTicketCourseSport();
-        var placeSportRemoveIds = ticketCourseSportParam.getPlaceSports().stream().map(BaseParam::getId).collect(Collectors.toList());
-        var afterfilter = sports.stream().filter(a -> !placeSportRemoveIds.contains(a.getId())).collect(Collectors.toList());
+        var placeSportRemoveIds = ticketCourseSportParam.getPlaceSports().stream().filter(o->!o.isDeleted()).map(BaseParam::getId).collect(Collectors.toList());
+        var afterfilter = sports.stream().filter(o->!o.isDeleted()).filter(a -> !placeSportRemoveIds.contains(a.getId())).collect(Collectors.toList());
         ticketCourse.setTicketCourseSport(afterfilter);
         ticketCourseRepository.update(ticketCourse);
         return TicketCourseConvertor.toDto(ticketCourse);
@@ -217,14 +217,14 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
     @Override
     public List<UserDto> getCoaches(Long ticketId) {
         TicketCourseEntity ticketCourse = ticketCourseRepository.getById(ticketId);
-        return ticketCourse.getCoaches().stream().map(UserConvertor::toCoachDto).collect(Collectors.toList());
+        return ticketCourse.getCoaches().stream().filter(o->!o.isDeleted()).map(UserConvertor::toCoachDto).collect(Collectors.toList());
     }
 
     @Override
     public TicketCourseDto addCoach(TicketCourseCoachParam param) {
         TicketCourseEntity ticketCourse = ticketCourseRepository.getById(param.getTicketCourse().getId());
         List<UserEntity> ticketCourseCoaches = ticketCourse.getCoaches();
-        if (ticketCourse.getCoaches().stream().anyMatch(s -> s.getId().equals(param.getPlaceCoach().getId())))
+        if (ticketCourse.getCoaches().stream().filter(o->!o.isDeleted()).anyMatch(s -> s.getId().equals(param.getPlaceCoach().getId())))
             throw new DuplicateEntryAddExeption();
         UserEntity placeCoach = userRepository.getById(param.getPlaceCoach().getId());
         ticketCourseCoaches.add(placeCoach);
@@ -237,7 +237,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
     public TicketCourseDto deleteCoach(TicketCourseCoachParam param) {
         TicketCourseEntity ticketCourse = ticketCourseRepository.getById(param.getTicketCourse().getId());
         List<UserEntity> ticketCourseCoaches = ticketCourse.getCoaches();
-        if (!ticketCourse.getCoaches().stream().anyMatch(s -> s.getId().equals(param.getPlaceCoach().getId())))
+        if (!ticketCourse.getCoaches().stream().filter(o->!o.isDeleted()).anyMatch(s -> s.getId().equals(param.getPlaceCoach().getId())))
             throw new NotFoundException();
         UserEntity placeCoach = userRepository.getById(param.getPlaceCoach().getId());
         ticketCourseCoaches.remove(placeCoach);
@@ -307,7 +307,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
 
     @Override
     public List<ActiveTimesDto> getTicketActiveTimesByTicketCourse(Long ticketCourseId) {
-        return ticketCourseRepository.getById(ticketCourseId).getActiveTimes().stream().map(HallConvertor::convertToActionDto).collect(Collectors.toList());
+        return ticketCourseRepository.getById(ticketCourseId).getActiveTimes().stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToActionDto).collect(Collectors.toList());
     }
 
     @Override
@@ -315,7 +315,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
         var ticketCourse = ticketCourseRepository.getById(param.getTicket().getId());
         List<TicketHallActiveTimeEntity> activeTimes = ticketCourse.getActiveTimes();
         for (ActiveTimesParam activeTime : param.getActiveTime()) {
-            if (ticketCourse.getActiveTimes().stream().anyMatch(s -> s.getId().equals(activeTime.getId())))
+            if (ticketCourse.getActiveTimes().stream().filter(o->!o.isDeleted()).anyMatch(s -> s.getId().equals(activeTime.getId())))
                 throw new DuplicateEntryAddExeption();
             activeTimes.add(ticketCourseHallActiveTimesRepository.getById(activeTime.getId()));
         }
@@ -327,8 +327,8 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
     public TicketCourseDto deleteCourseActiveTimes(TicketActiveTimesParam param) {
         TicketCourseEntity ticketCourse = ticketCourseRepository.getById(param.getTicket().getId());
         List<TicketHallActiveTimeEntity> activeTimes = ticketCourse.getActiveTimes();
-        var activeTimesRemoveIds = param.getActiveTime().stream().map(BaseParam::getId).collect(Collectors.toList());
-        var afterfilter = activeTimes.stream().filter(a -> !activeTimesRemoveIds.contains(a.getId())).collect(Collectors.toList());
+        var activeTimesRemoveIds = param.getActiveTime().stream().filter(o->!o.isDeleted()).map(BaseParam::getId).collect(Collectors.toList());
+        var afterfilter = activeTimes.stream().filter(o->!o.isDeleted()).filter(a -> !activeTimesRemoveIds.contains(a.getId())).collect(Collectors.toList());
         ticketCourse.setActiveTimes(afterfilter);
         ticketCourseRepository.update(ticketCourse);
         return TicketCourseConvertor.toDto(ticketCourse);

@@ -38,7 +38,7 @@ public class ScheduleCorporate {
         }
         for (CorporateEntity corporateEntity : corporateEntities) {
             try {
-                List<CorporatePersonnelEntity> owners = corporateEntity.getPersonnel().stream().filter(p->p.getRole()== CorporatePersonnelRoleEnum.ADMIN).collect(Collectors.toList());
+                List<CorporatePersonnelEntity> owners = corporateEntity.getPersonnel().stream().filter(o->!o.isDeleted()).filter(p->p.getRole()== CorporatePersonnelRoleEnum.ADMIN).collect(Collectors.toList());
 
                 for (CorporatePersonnelEntity owner : owners) {
                     smsService.sendLowBudgetToCorporate(new SmsDto(owner.getUser().getPhoneNumber(), SmsTypes.CORPORATE_LOW_BUDGET,corporateEntity.getName()));

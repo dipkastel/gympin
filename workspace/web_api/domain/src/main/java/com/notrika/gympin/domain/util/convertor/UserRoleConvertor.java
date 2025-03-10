@@ -15,7 +15,7 @@ public final class UserRoleConvertor {
     public static UserRoleDto ToUserRoleDto(UserEntity entity) {
         if (entity == null) return null;
         UserRoleDto dto = new UserRoleDto();
-        dto.setRole(entity.getUserRoles().stream().map(UserRolesEntity::getRole).collect(Collectors.toSet()));
+        dto.setRole(entity.getUserRoles().stream().filter(o->!o.isDeleted()).map(UserRolesEntity::getRole).collect(Collectors.toSet()));
         dto.setUser(UserConvertor.toDtoSimple(entity));
         return dto;
     }

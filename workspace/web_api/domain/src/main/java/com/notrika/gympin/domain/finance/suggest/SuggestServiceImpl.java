@@ -88,7 +88,7 @@ public class SuggestServiceImpl extends AbstractBaseService<SuggestParam, Sugges
 
     @Override
     public List<SuggestDto> convertToDtos(List<FinancePaymentSuggestEntity> entities) {
-        return entities.stream().map(SuggestConvertor::ToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(SuggestConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override

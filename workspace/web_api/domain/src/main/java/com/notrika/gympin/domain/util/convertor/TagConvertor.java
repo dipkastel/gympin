@@ -21,7 +21,7 @@ public final class TagConvertor {
                 .creatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()))
                 .build();
         try {
-            dto.setPlaceCount(entity.getPlaces().stream().count());
+            dto.setPlaceCount(entity.getPlaces().stream().filter(o->!o.isDeleted()).count());
         }catch (Exception e){}
         return dto;
     }

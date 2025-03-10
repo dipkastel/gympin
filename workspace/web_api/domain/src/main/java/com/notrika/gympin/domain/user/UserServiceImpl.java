@@ -200,7 +200,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Override
     public UserEntity getEntityById(long id) {
 
-        return userRepository.findById(id).stream().findFirst().get();
+        return userRepository.findById(id).stream().filter(o->!o.isDeleted()).findFirst().get();
     }
 
     public UserEntity getByPhoneNumberAndUsernameAndEmail(String phoneNumber, String username, String email) {
@@ -282,7 +282,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
             detalsList.add(FinanceUserConvertor.toDto(wallet));
 
         result.setCreditDetail(detalsList);
-        result.setTotalCredit(detalsList.stream().map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
+        result.setTotalCredit(detalsList.stream().filter(o->!o.isDeleted()).map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
         return result;
     }
 
@@ -294,12 +294,12 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 //        corporate credits
         detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserNonWithdrawableWallet(user)));
         List<UserCreditDetailDto> creditsBySponcers = userServiceHelper.getUserCreditsByCorporate(param);
-        detalsList.addAll(creditsBySponcers.stream().sorted(Comparator.comparing(UserCreditDetailDto::getExpireDate)).collect(Collectors.toList()));
+        detalsList.addAll(creditsBySponcers.stream().filter(o->!o.isDeleted()).sorted(Comparator.comparing(UserCreditDetailDto::getExpireDate)).collect(Collectors.toList()));
 //        user wallets
         detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserPersonalWallet(user)));
 
         result.setCreditDetail(detalsList);
-        result.setTotalCredit(detalsList.stream().map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
+        result.setTotalCredit(detalsList.stream().filter(o->!o.isDeleted()).map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
         return result;
     }
 
@@ -321,7 +321,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
         PlaceEntity place = placeRepository.getById(param.getId());
         UserEntity user = userRepository.getById(userRequester.getId());
-        if(place.getPlaceOwners().stream().noneMatch(po->userRequester.getId().equals(po.getUser().getId())))
+        if(place.getPlaceOwners().stream().filter(o->!o.isDeleted()).noneMatch(po->userRequester.getId().equals(po.getUser().getId())))
             throw new NotFoundException();
         UserCreditDto result = new UserCreditDto();
         List<UserCreditDetailDto> detalsList = new ArrayList<>();

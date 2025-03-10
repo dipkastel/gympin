@@ -187,7 +187,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         List<PlacePersonnelAccessEntity> toUpdate = new ArrayList<>();
         for (PlacePersonnelAccessParam param : personnelAccess) {
             try {
-                PlacePersonnelAccessEntity access = placePersonnel.getPlacePersonnelAccess().stream().filter(a -> a.getSection() == param.getSection()).findFirst().get();
+                PlacePersonnelAccessEntity access = placePersonnel.getPlacePersonnelAccess().stream().filter(o->!o.isDeleted()).filter(a -> a.getSection() == param.getSection()).findFirst().get();
                 access.setAccess(param.getAccess());
                 toUpdate.add(access);
             } catch (Exception e) {
@@ -212,7 +212,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             resultItem.setPlacePersonelId(placePersonnel.getId());
             var hasAccess = false;
             try {
-                var currentAccessItem = currentAccess.stream().filter(a -> a.getSection().equals(section)).findFirst().orElse(null);
+                var currentAccessItem = currentAccess.stream().filter(o->!o.isDeleted()).filter(a -> a.getSection().equals(section)).findFirst().orElse(null);
                 if (currentAccessItem==null) {
                     var access = placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr->(ppr.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER&&!ppr.isDeleted())) || hasAccess;
                     toAdd.add(
@@ -241,7 +241,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             return placeRepository
                     .getById(placeId)
                     .getPlaceOwners()
-                    .stream()
+                    .stream().filter(o->!o.isDeleted())
                     .filter(PlacePersonnelEntity::getIsBeneficiary)
                     .map(PlaceConvertor::personnelToDto)
                     .collect(Collectors.toList());
@@ -257,7 +257,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         List<PlacePersonelBuyableAccessEntity> toUpdate = new ArrayList<>();
         for (PlacePersonnelBuyableAccessParam param : personnelhallAccess) {
             try {
-                PlacePersonelBuyableAccessEntity access = placePersonnel.getPlacePersonnelBuyableAccess().stream().filter(a -> a.getBuyable().getId() == param.getBuyableParam().getId()).findFirst().get();
+                PlacePersonelBuyableAccessEntity access = placePersonnel.getPlacePersonnelBuyableAccess().stream().filter(o->!o.isDeleted()).filter(a -> a.getBuyable().getId() == param.getBuyableParam().getId()).findFirst().get();
                 access.setAccess(param.getAccess());
                 toUpdate.add(access);
             } catch (Exception e) {
@@ -283,7 +283,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             resultItem.setPlacePersonelId(placePersonnel.getId());
             var hasAccess = false;
             try {
-                var currentAccessItem = currentAccess.stream().filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
+                var currentAccessItem = currentAccess.stream().filter(o->!o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
                 if (currentAccessItem.isEmpty()) {
                     toAdd.add(
                             PlacePersonelBuyableAccessEntity.builder()
@@ -323,7 +323,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             resultItem.setPlacePersonelId(placePersonnel.getId());
             var hasAccess = false;
             try {
-                var currentAccessItem = currentAccess.stream().filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
+                var currentAccessItem = currentAccess.stream().filter(o->!o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
                 if (currentAccessItem.isEmpty()) {
                     toAdd.add(
                             PlacePersonelBuyableAccessEntity.builder()
@@ -361,7 +361,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             resultItem.setPlacePersonelId(personnel.getId());
             var hasAccess = false;
             try {
-                var currentAccessItem = currentAccess.stream().filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
+                var currentAccessItem = currentAccess.stream().filter(o->!o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
                 if (currentAccessItem.isEmpty()) {
                     toAdd.add(
                             PlacePersonelBuyableAccessEntity.builder()
@@ -417,7 +417,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Override
     public List<PlacePersonnelDto> convertToDtos(List<PlacePersonnelEntity> entities) {
-        return entities.stream().map(PlaceConvertor::personnelToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(PlaceConvertor::personnelToDto).collect(Collectors.toList());
     }
 
     @Override

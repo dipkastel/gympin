@@ -41,7 +41,7 @@ public final class BuyableConvertor {
 
     public static List<PlacePersonnelBuyableAccessDto> ToDto(List<PlacePersonelBuyableAccessEntity> entities) {
         if (entities == null) return null;
-        return entities.stream().map(BuyableConvertor::ToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(BuyableConvertor::ToDto).collect(Collectors.toList());
 
     }
 

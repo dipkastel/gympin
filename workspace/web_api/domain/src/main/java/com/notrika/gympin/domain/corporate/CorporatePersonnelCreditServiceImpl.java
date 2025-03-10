@@ -248,7 +248,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
     @Override
     public List<CorporatePersonnelCreditDto> convertToDtos(List<FinanceCorporatePersonnelCreditEntity> entities) {
-        return entities.stream().map(CorporateConvertor::toCreditDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(CorporateConvertor::toCreditDto).collect(Collectors.toList());
     }
 
     @Override

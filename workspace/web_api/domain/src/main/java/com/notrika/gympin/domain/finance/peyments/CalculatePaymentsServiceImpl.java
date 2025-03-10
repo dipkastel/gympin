@@ -112,7 +112,7 @@ public class CalculatePaymentsServiceImpl {
                     financeCorporateRepository.update(corporateFinance);
                     // todo send increase sms
                     try {
-                        List<UserEntity> corporateAdmins = request.getCorporate().getPersonnel().stream().filter(p -> p.getRole() == CorporatePersonnelRoleEnum.ADMIN).map(p -> p.getUser()).collect(Collectors.toList());
+                        List<UserEntity> corporateAdmins = request.getCorporate().getPersonnel().stream().filter(o->!o.isDeleted()).filter(p -> p.getRole() == CorporatePersonnelRoleEnum.ADMIN).map(p -> p.getUser()).collect(Collectors.toList());
                         for (UserEntity corporateAdmin : corporateAdmins) {
                             smsService.sendCorporateTransactionComplete(
                                     SmsDto.builder()

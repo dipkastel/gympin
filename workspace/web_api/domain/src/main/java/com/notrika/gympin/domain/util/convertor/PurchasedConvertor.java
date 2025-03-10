@@ -23,7 +23,9 @@ public final class PurchasedConvertor {
         dto.setDiscount(entity.getDiscount());
         dto.setPurchasedType(entity.getPurchasedType());
         dto.setSellPrice(entity.getSellPrice());
-        dto.setSerials((List<SerialDto>) entity.getSerials().stream().map(serial -> SerialConvertor.ToDto((FinanceSerialEntity) serial)).collect(Collectors.toList()));
+        try {
+            dto.setSerials((List<SerialDto>) entity.getSerials().stream().map(serial -> SerialConvertor.ToDto((FinanceSerialEntity) serial)).collect(Collectors.toList()));
+        }catch (Exception e){}
         dto.setGender(entity.getGender());
         dto.setDescription(entity.getDescription());
         try{

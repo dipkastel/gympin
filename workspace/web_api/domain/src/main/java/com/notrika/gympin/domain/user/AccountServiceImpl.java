@@ -241,7 +241,7 @@ public class AccountServiceImpl implements AccountService {
             case IOS:
                 return true;
             case WEBPANEL:
-                return user.getUserRoles().stream().map(UserRolesEntity::getRole).anyMatch(p -> p == RoleEnum.ADMIN
+                return user.getUserRoles().stream().filter(o->!o.isDeleted()).map(UserRolesEntity::getRole).anyMatch(p -> p == RoleEnum.ADMIN
                         || p == RoleEnum.SUPER_ADMIN
                         || p == RoleEnum.MANAGER
                         || p == RoleEnum.MARKET);
@@ -250,7 +250,7 @@ public class AccountServiceImpl implements AccountService {
             case WEBMASTER:
                 return user.getPlacePersonnel().size() > 0;
             case WEBCORPORATE:
-                return user.getCorporatesPersonel().stream().filter(f -> f.getRole() == CorporatePersonnelRoleEnum.ADMIN).count() > 0;
+                return user.getCorporatesPersonel().stream().filter(o->!o.isDeleted()).filter(f -> f.getRole() == CorporatePersonnelRoleEnum.ADMIN).count() > 0;
         }
         return false;
     }
@@ -287,7 +287,7 @@ public class AccountServiceImpl implements AccountService {
             //            throw new ExceptionBase();
         }
         setUserContext(user);
-        ArrayList<RoleEnum> roles = user.getUserRoles().stream().map(UserRolesEntity::getRole).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<RoleEnum> roles = user.getUserRoles().stream().filter(o->!o.isDeleted()).map(UserRolesEntity::getRole).collect(Collectors.toCollection(ArrayList::new));
         UserDetailsImpl userDetails = new UserDetailsImpl(roles, password, phoneNumber, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
         log.info("User loaded: {}", userDetails);
         return userDetails;

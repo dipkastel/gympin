@@ -45,7 +45,7 @@ public class PlaceSportServiceImpl extends AbstractBaseService<PlaceSportParam, 
 
     @Override
     public PlaceSportEntity add(PlaceSportEntity placeSport) {
-        if(getSportsByPlace(placeSport.getPlace()).stream().anyMatch(o-> Objects.equals(o.getSport().getId(), placeSport.getSport().getId())))
+        if(getSportsByPlace(placeSport.getPlace()).stream().filter(o->!o.isDeleted()).anyMatch(o-> Objects.equals(o.getSport().getId(), placeSport.getSport().getId())))
             throw new DuplicateEntryAddExeption();
         return placeSportRepository.add(placeSport);
     }

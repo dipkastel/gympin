@@ -225,7 +225,7 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
 
     @Override
     public List<PlaceDto> getPlacesByUser(UserParam userParam) {
-        List<PlaceEntity> places = placeRepository.getPlaceByUser(userParam.getId()).stream().filter(p -> p.getStatus() != PlaceStatusEnum.PREREGISTER).collect(Collectors.toList());
+        List<PlaceEntity> places = placeRepository.getPlaceByUser(userParam.getId()).stream().filter(o->!o.isDeleted()).filter(p -> p.getStatus() != PlaceStatusEnum.PREREGISTER).collect(Collectors.toList());
         return PlaceConvertor.toDto(places);
     }
 

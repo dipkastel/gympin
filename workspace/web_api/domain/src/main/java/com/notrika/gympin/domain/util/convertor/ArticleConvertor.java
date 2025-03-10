@@ -26,7 +26,7 @@ public class ArticleConvertor {
         dto.setUpdatedDate(entity.getUpdatedDate());
         dto.setUpdaterUser(UserConvertor.toDtoSimple(entity.getUpdaterUser()));
         if(entity.getCategories()!=null)
-            dto.setCategories(entity.getCategories().stream().map(ArticleConvertor::toDto).collect(Collectors.toList()));
+            dto.setCategories(entity.getCategories().stream().filter(o->!o.isDeleted()).map(ArticleConvertor::toDto).collect(Collectors.toList()));
         return dto;
     }
 
@@ -47,7 +47,7 @@ public class ArticleConvertor {
     }
 
     public static List<ArticleCategoryParam> toParam(List<ArticleCategoryDto> categories){
-       return categories.stream().map(ArticleConvertor::toParam).collect(Collectors.toList());
+       return categories.stream().filter(o->!o.isDeleted()).map(ArticleConvertor::toParam).collect(Collectors.toList());
     }
 
 }

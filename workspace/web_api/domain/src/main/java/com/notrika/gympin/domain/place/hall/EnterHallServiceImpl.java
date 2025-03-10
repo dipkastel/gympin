@@ -36,7 +36,7 @@ public class EnterHallServiceImpl implements EnterHallService {
     public EnterHallRequestDto request(EnterHallRequestParam param) {
         UserEntity user = (UserEntity) GympinContextHolder.getContext().getEntry().get(GympinContext.USER_KEY);
         HallEntity hall = hallService.getEntityById(param.getHall().getId());
-//        Optional<TicketSubscribeHallActiveTime> HallEntity = null; //ticketSubscribeOfUser.getTicketSubscribeHalls().stream().filter(g -> g.getHall().equals(hall)).findAny();
+//        Optional<TicketSubscribeHallActiveTime> HallEntity = null; //ticketSubscribeOfUser.getTicketSubscribeHalls().stream().filter(o->!o.isDeleted()).filter(g -> g.getHall().equals(hall)).findAny();
 //        if (HallEntity.isEmpty()) {
 //            throw new HallNotInTicketSubscribeException();
 //        }

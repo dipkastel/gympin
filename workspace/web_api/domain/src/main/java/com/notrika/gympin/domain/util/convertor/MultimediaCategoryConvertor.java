@@ -24,7 +24,7 @@ public final class MultimediaCategoryConvertor {
     }
 
     public static List<MultimediaCategoryDto> multimediaCategoriesToMultimediaCategoryDto(List<MultimediaCategoryEntity> multimediaCategories) {
-        return multimediaCategories.stream().map(MultimediaCategoryConvertor::multimediaCategoryToMultimediaCategoryDto).collect(Collectors.toList());
+        return multimediaCategories.stream().filter(o->!o.isDeleted()).map(MultimediaCategoryConvertor::multimediaCategoryToMultimediaCategoryDto).collect(Collectors.toList());
     }
 
     public static MultimediaCategoryEntity multimediaCategoryDtoToMultimediaCategory(MultimediaCategoryDto dto) {

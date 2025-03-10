@@ -40,6 +40,6 @@ public final class NoteConvertor {
     }
 
     public static List<SimpleNoteDto> convertToSimpleDtos(List<ManageNoteEntity> entities) {
-        return entities.stream().map(NoteConvertor::toSimpleDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(NoteConvertor::toSimpleDto).collect(Collectors.toList());
     }
 }

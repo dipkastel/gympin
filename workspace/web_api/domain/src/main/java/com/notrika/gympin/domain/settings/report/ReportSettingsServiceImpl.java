@@ -96,7 +96,7 @@ public class ReportSettingsServiceImpl extends AbstractBaseService<ReportSetting
 
     @Override
     public List<ReportSettingsDto> convertToDtos(List<ManageReportSettingsEntity> entities) {
-        return entities.stream().map(ReportSettingsConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(ReportSettingsConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

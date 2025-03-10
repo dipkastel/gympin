@@ -78,7 +78,7 @@ public class TransactionIncomeServiceImpl extends AbstractBaseService<IncomeTran
 
     @Override
     public List<IncomeTransactionDto> convertToDtos(List<FinanceIncomeTransactionEntity> entities) {
-        return entities.stream().map(TransactionConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(TransactionConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

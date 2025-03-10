@@ -191,7 +191,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
     @Override
     public List<PurchasedSubscribeDto> convertToDtos(List<PurchasedSubscribeEntity> entities) {
-        return entities.stream().map(purchasedSubscribeHelper::checkForExpire).map(PurchasedSubscribeConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(purchasedSubscribeHelper::checkForExpire).map(PurchasedSubscribeConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -203,19 +203,19 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
     //ticket
     @Override
     public List<PurchasedSubscribeDto> getUserEnteredSubscribe(Long placeId) {
-        List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.findSubscribesHasOpenEnterByPlaceId(placeId).stream().map(purchasedSubscribeHelper::checkForExpire).filter(t -> purchasedSubscribeHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
-        return subscribeEntities.stream().map(PurchasedSubscribeConvertor::toDto).collect(Collectors.toList());
+        List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.findSubscribesHasOpenEnterByPlaceId(placeId).stream().filter(o->!o.isDeleted()).map(purchasedSubscribeHelper::checkForExpire).filter(t -> purchasedSubscribeHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
+        return subscribeEntities.stream().filter(o->!o.isDeleted()).map(PurchasedSubscribeConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
     public List<PurchasedSubscribeDto> getUserSubscribesByPlace(UserPlacePurchasedParam param) {
-        List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.getUserPlaceSubscribe(param.getUserId(), param.getPlaceId()).stream().map(purchasedSubscribeHelper::checkForExpire).filter(f -> READY_TO_ACTIVE != f.getStatus()).collect(Collectors.toList());
+        List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.getUserPlaceSubscribe(param.getUserId(), param.getPlaceId()).stream().filter(o->!o.isDeleted()).map(purchasedSubscribeHelper::checkForExpire).filter(f -> READY_TO_ACTIVE != f.getStatus()).collect(Collectors.toList());
         return convertToDtos(subscribeEntities);
     }
 
     @Override
     public List<PurchasedSubscribeDto> getActiveSubscribesOfPlace(Long placeId) {
-        List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.getActiveSubscribeOfPlace(placeId).stream().map(purchasedSubscribeHelper::checkForExpire).filter(t -> purchasedSubscribeHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
+        List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.getActiveSubscribeOfPlace(placeId).stream().filter(o->!o.isDeleted()).map(purchasedSubscribeHelper::checkForExpire).filter(t -> purchasedSubscribeHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
         return convertToDtos(subscribeEntities);
     }
 
@@ -224,7 +224,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
     public List<PurchasedSubscribeDto> getPlaceSubscribes(Long placeId) {
         List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.findAllByPlaceIdAndDeletedFalse(placeId).stream().map(purchasedSubscribeHelper::checkForExpire).filter(t -> purchasedSubscribeHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
         List<PurchasedSubscribeDto> result = convertToDtos(subscribeEntities);
-        result = result.stream().map(s -> {
+        result = result.stream().filter(o->!o.isDeleted()).map(s -> {
             if (s.getStatus() == READY_TO_ACTIVE)
                 return PurchasedSubscribeDto.builder().status(s.getStatus()).build();
             return s;
@@ -256,9 +256,9 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
             PlacePersonnelEntity jointPlacePersonel = userEntity.getPlacePersonnel().stream().filter(pp -> pp.getPlace().getId().equals(ticket.getPlace().getId())&&!pp.isDeleted()).findFirst().orElse(null);
             if (jointPlacePersonel == null)
                 throw new UserNotAllowedException();
-            if (jointPlacePersonel.getPlacePersonnelRoles().stream().map(r->r.getRole()).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER))
+            if (jointPlacePersonel.getPlacePersonnelRoles().stream().filter(o->!o.isDeleted()).map(r->r.getRole()).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER))
                 return true;
-            if (ticket.getPurchasedType() == PurchasedType.SUBSCRIBE && jointPlacePersonel.getPlacePersonnelAccess().stream().filter(ppa -> ppa.getSection() == PlacePersonnelAccessEnum.SubscribeDetail).findFirst().get().getAccess())
+            if (ticket.getPurchasedType() == PurchasedType.SUBSCRIBE && jointPlacePersonel.getPlacePersonnelAccess().stream().filter(o->!o.isDeleted()).filter(ppa -> ppa.getSection() == PlacePersonnelAccessEnum.SubscribeDetail).findFirst().get().getAccess())
                 return true;
             return false;
         } catch (Exception e) {
@@ -357,7 +357,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
         } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.ACTIVE) {
             //requeset check
-            if (subscribeEntity.getEntryList().stream().anyMatch(t -> t.getSubscribeEntryStatus() == SubscribeEntryStatus.REQUESTED)) {
+            if (subscribeEntity.getEntryList().stream().filter(o->!o.isDeleted()).anyMatch(t -> t.getSubscribeEntryStatus() == SubscribeEntryStatus.REQUESTED)) {
                 throw new UserRequestEnterException();
             }
             //avoid duplicate enery
@@ -365,7 +365,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
                 throw new EntryAlreadyExistException();
             }
             //subscribe limit
-            if (subscribeEntity.getEntryTotalCount() <= subscribeEntity.getEntryList().stream().filter(en -> en.getSubscribeEntryStatus() == SubscribeEntryStatus.ACCEPTED).count()) {
+            if (subscribeEntity.getEntryTotalCount() <= subscribeEntity.getEntryList().stream().filter(o->!o.isDeleted()).filter(en -> en.getSubscribeEntryStatus() == SubscribeEntryStatus.ACCEPTED).count()) {
                 throw new UsageLimitException();
             }
             //enter User
@@ -386,7 +386,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
     public Boolean acceptEnterRequested(PurchasedSubscribeParam param) throws Exception {
         PurchasedSubscribeEntity subscribeEntity = getEntityById(param.getId());
         UserEntity userEntity = userRepository.getById(param.getUser().getId());
-        PurchasedSubscribeEntryEntity entry = subscribeEntity.getEntryList().stream().filter(e -> e.getSubscribeEntryStatus() == SubscribeEntryStatus.REQUESTED).findFirst().get();
+        PurchasedSubscribeEntryEntity entry = subscribeEntity.getEntryList().stream().filter(o->!o.isDeleted()).filter(e -> e.getSubscribeEntryStatus() == SubscribeEntryStatus.REQUESTED).findFirst().get();
         if (entry == null)
             throw new NotFoundException();
 
@@ -413,7 +413,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         }
 
         var userSubscribes = purchasedSubscribeRepository.findAllByCustomerIdAndDeletedFalse(userEntity.getId());
-        var unEnterdSubscribe = userSubscribes.stream().anyMatch(ps -> ps.getEntryList().stream().anyMatch(e -> e.getSubscribeEntryStatus() == SubscribeEntryStatus.REQUESTED));
+        var unEnterdSubscribe = userSubscribes.stream().anyMatch(ps -> ps.getEntryList().stream().filter(o->!o.isDeleted()).anyMatch(e -> e.getSubscribeEntryStatus() == SubscribeEntryStatus.REQUESTED));
         if (unEnterdSubscribe)
             throw new UserRequestEnterException();
         if (psubscribeEntity.getEntryList().size() > 0) {
@@ -424,7 +424,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         } else {
             throw new FirstEntryRequestException();
         }
-        if (psubscribeEntity.getEntryTotalCount() <= psubscribeEntity.getEntryList().stream().filter(en -> en.getSubscribeEntryStatus() == SubscribeEntryStatus.ACCEPTED).count()) {
+        if (psubscribeEntity.getEntryTotalCount() <= psubscribeEntity.getEntryList().stream().filter(o->!o.isDeleted()).filter(en -> en.getSubscribeEntryStatus() == SubscribeEntryStatus.ACCEPTED).count()) {
             throw new UsageLimitException();
         }
         PurchasedSubscribeEntryEntity psubscribeEntryEntity = PurchasedSubscribeEntryEntity.builder().subscribeEntryStatus(SubscribeEntryStatus.REQUESTED).enterDate(new Date()).purchasedSubscribe(psubscribeEntity).build();

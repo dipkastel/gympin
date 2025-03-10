@@ -62,7 +62,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     private UserServiceImpl userService;
 
     /*public UserToken generateToken(User user, Authentication auth) {
-        String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining());
+        String authorities = auth.getAuthorities().stream().filter(o->!o.isDeleted()).map(GrantedAuthority::getAuthority).collect(Collectors.joining());
 
         String tokenString =
                 Jwts.builder().setSubject(auth.getName()).claim("roles", authorities).claim("GympinRole", user.getUserRole()).setExpiration(new Date(System.currentTimeMillis() +

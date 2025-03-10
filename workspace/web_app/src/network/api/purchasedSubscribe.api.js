@@ -21,3 +21,7 @@ export function purchasedSubscribe_enterRequest(data) {
 export function purchasedSubscribe_exitRequest(data) {
     return axios.get(Api_url.purchasedSubscribe.exitRequest, {params: data});
 }
+
+export function purchasedSubscribe_query(data) {
+    return axios.post(Api_url.purchasedSubscribe.query,  data);
+}

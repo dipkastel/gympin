@@ -24,6 +24,6 @@ public final class PlaceSportConvertor {
     }
 
     public static List<PlaceSportDto> toDto(List<PlaceSportEntity> placeSportList) {
-        return placeSportList.stream().map(PlaceSportConvertor::ToDto).collect(Collectors.toList());
+        return placeSportList.stream().filter(o->!o.isDeleted()).map(PlaceSportConvertor::ToDto).collect(Collectors.toList());
     }
 }

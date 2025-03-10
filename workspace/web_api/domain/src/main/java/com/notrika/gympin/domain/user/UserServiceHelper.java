@@ -65,9 +65,9 @@ public class UserServiceHelper {
             CorporateEntity corporate = personnel.getCorporate();
             if (corporate.getStatus() != CorporateStatusEnum.ACTIVE)
                 canPay = false;
-            var activeCredits = personnel.getCredits().stream().filter(c -> c.getStatus() == CorporatePersonnelCreditStatusEnum.ACTIVE).collect(Collectors.toList());
+            var activeCredits = personnel.getCredits().stream().filter(o->!o.isDeleted()).filter(c -> c.getStatus() == CorporatePersonnelCreditStatusEnum.ACTIVE).collect(Collectors.toList());
             activeCredits = checkCreditExpiration(activeCredits);
-            var personelCorproateMaxCredit = activeCredits.stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+            var personelCorproateMaxCredit = activeCredits.stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
             if (personelCorproateMaxCredit.compareTo(corporate.getFinanceCorporate().getTotalDeposit()) > 0)
                 canPay = false;
             for (FinanceCorporatePersonnelCreditEntity credit : activeCredits) {
@@ -91,9 +91,9 @@ public class UserServiceHelper {
     }
 
     private List<FinanceCorporatePersonnelCreditEntity> checkCreditExpiration(List<FinanceCorporatePersonnelCreditEntity> activeCredits) {
-        for (FinanceCorporatePersonnelCreditEntity credit : activeCredits.stream().filter(credit -> credit.getStatus().equals(CorporatePersonnelCreditStatusEnum.ACTIVE)).collect(Collectors.toList())) {
+        for (FinanceCorporatePersonnelCreditEntity credit : activeCredits.stream().filter(o->!o.isDeleted()).filter(credit -> credit.getStatus().equals(CorporatePersonnelCreditStatusEnum.ACTIVE)).collect(Collectors.toList())) {
             if (credit.getExpireDate().before(new Date())) {
-                activeCredits = activeCredits.stream().filter(f->!f.getId().equals(credit.getId())).collect(Collectors.toList());
+                activeCredits = activeCredits.stream().filter(o->!o.isDeleted()).filter(f->!f.getId().equals(credit.getId())).collect(Collectors.toList());
                 ExpireCredit(credit);
             }
         }

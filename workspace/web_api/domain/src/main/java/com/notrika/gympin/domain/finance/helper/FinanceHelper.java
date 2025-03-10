@@ -86,25 +86,25 @@ public class FinanceHelper {
 
 
     public FinanceUserEntity getUserNonWithdrawableWallet(UserEntity user) {
-        FinanceUserEntity result = user.getFinanceUser().stream().filter(w->w.getUserFinanceType()== UserFinanceType.NON_WITHDRAWABLE_WALLET).findFirst().orElse(null);
+        FinanceUserEntity result = user.getFinanceUser().stream().filter(o->!o.isDeleted()).filter(w->w.getUserFinanceType()== UserFinanceType.NON_WITHDRAWABLE_WALLET).findFirst().orElse(null);
         if(result==null)
             result = financeUserRepository.add(FinanceUserEntity.builder().user(user).userFinanceType(UserFinanceType.NON_WITHDRAWABLE_WALLET).totalDeposit(BigDecimal.ZERO).build());
         return result;
     }
 
     public List<FinanceUserEntity> getAllUserIncomeWallets(UserEntity user) {
-        List<FinanceUserEntity> result = user.getFinanceUser().stream().filter(w->w.getUserFinanceType()== UserFinanceType.INCOME_WALLET).collect(Collectors.toList());
+        List<FinanceUserEntity> result = user.getFinanceUser().stream().filter(o->!o.isDeleted()).filter(w->w.getUserFinanceType()== UserFinanceType.INCOME_WALLET).collect(Collectors.toList());
         return result;
     }
     public FinanceUserEntity getUserIncomeWallet(UserEntity user, PlaceEntity place) {
-        FinanceUserEntity result = user.getFinanceUser().stream().filter(w->w.getUserFinanceType()== UserFinanceType.INCOME_WALLET&& Objects.equals(w.getPlace().getId(), place.getId())).findFirst().orElse(null);
+        FinanceUserEntity result = user.getFinanceUser().stream().filter(o->!o.isDeleted()).filter(w->w.getUserFinanceType()== UserFinanceType.INCOME_WALLET&& Objects.equals(w.getPlace().getId(), place.getId())).findFirst().orElse(null);
         if(result==null)
             result = financeUserRepository.add(FinanceUserEntity.builder().user(user).place(place).userFinanceType(UserFinanceType.INCOME_WALLET).totalDeposit(BigDecimal.ZERO).build());
         return result;
     }
 
     public FinanceUserEntity getUserPersonalWallet(UserEntity user) {
-        var result = user.getFinanceUser().stream().filter(w->w.getUserFinanceType()== UserFinanceType.PERSONAL_WALLET).findFirst().orElse(null);
+        var result = user.getFinanceUser().stream().filter(o->!o.isDeleted()).filter(w->w.getUserFinanceType()== UserFinanceType.PERSONAL_WALLET).findFirst().orElse(null);
         if(result==null)
             result = financeUserRepository.add(FinanceUserEntity.builder().user(user).userFinanceType(UserFinanceType.PERSONAL_WALLET).totalDeposit(BigDecimal.ZERO).build());
         return result;

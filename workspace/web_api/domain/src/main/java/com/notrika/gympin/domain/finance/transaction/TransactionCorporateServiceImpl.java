@@ -121,7 +121,7 @@ public class TransactionCorporateServiceImpl extends AbstractBaseService<Corpora
 
     @Override
     public List<CorporateTransactionDto> convertToDtos(List<FinanceCorporateTransactionEntity> entities) {
-        return entities.stream().map(TransactionConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(TransactionConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

@@ -30,6 +30,6 @@ public final class PlaceQrMessageConvertor {
 
 
     public static List<PlaceQrMessageDto> ToDto(List<PlaceQrMessageEntity> placeQrMessageEntities) {
-        return placeQrMessageEntities.stream().map(PlaceQrMessageConvertor::ToDto).collect(Collectors.toList());
+        return placeQrMessageEntities.stream().filter(o->!o.isDeleted()).map(PlaceQrMessageConvertor::ToDto).collect(Collectors.toList());
     }
 }

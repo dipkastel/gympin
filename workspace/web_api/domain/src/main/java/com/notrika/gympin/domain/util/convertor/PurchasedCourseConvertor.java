@@ -19,7 +19,7 @@ public final class PurchasedCourseConvertor {
                 .user(UserConvertor.toDtoSimple(entity.getCustomer()))
                 .name(entity.getName())
                 .key(entity.getKey())
-                .serials(entity.getSerials().stream().map(SerialConvertor::ToDto).collect(Collectors.toList()))
+                .serials(entity.getSerials().stream().filter(o->!o.isDeleted()).map(SerialConvertor::ToDto).collect(Collectors.toList()))
                 .price(entity.getSellPrice())
                 .placePrice(entity.getPlacePrice())
                 .description(entity.getDescription())
@@ -28,7 +28,7 @@ public final class PurchasedCourseConvertor {
                 .targetOfCourse(entity.getTargetOfCourse())
                 .ageLimit(entity.getAgeLimit())
                 .entryList(toDto(entity.getEntryList()))
-                .coaches(entity.getCoaches().stream().map(UserConvertor::toDtoSimple).collect(Collectors.toList()))
+                .coaches(entity.getCoaches().stream().filter(o->!o.isDeleted()).map(UserConvertor::toDtoSimple).collect(Collectors.toList()))
                 .courseCapacity(entity.getCourseCapacity())
                 .courseLevel(entity.getCourseLevel())
                 .startDate(entity.getStartDate())
@@ -39,7 +39,7 @@ public final class PurchasedCourseConvertor {
 
     private static List<PurchasedCourseEntryDto> toDto(List<PurchasedCourseEntryEntity> entryList) {
         if (entryList == null) return null;
-        return entryList.stream().map(PurchasedCourseConvertor::toDto).collect(Collectors.toList());
+        return entryList.stream().filter(o->!o.isDeleted()).map(PurchasedCourseConvertor::toDto).collect(Collectors.toList());
     }
 
     public static PurchasedCourseEntryDto toDto(PurchasedCourseEntryEntity entity) {

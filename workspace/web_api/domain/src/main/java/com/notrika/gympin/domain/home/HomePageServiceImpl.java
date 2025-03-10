@@ -117,7 +117,7 @@ public class HomePageServiceImpl extends AbstractBaseService<HomePageItemParam, 
     @Override
     public List<HomePageDeadendDto> convertToDtos(List<HomePageItemEntity> entities) {
         log.info("List<MainPageLayoutChildItemDto> convertToDtos is going to execute with param {}", entities);
-        return entities.stream().map(HomePageConvertor::toDeadendDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(HomePageConvertor::toDeadendDto).collect(Collectors.toList());
     }
 
     @Override

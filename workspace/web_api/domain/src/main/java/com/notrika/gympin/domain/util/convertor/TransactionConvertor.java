@@ -69,7 +69,7 @@ public final class TransactionConvertor {
         } catch (Exception e) {
         }
         try {
-            dto.setCurrentTotalCredit(entity.getPersonnelCredit().getCorporatePersonnel().getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
+            dto.setCurrentTotalCredit(entity.getPersonnelCredit().getCorporatePersonnel().getCredits().stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
         } catch (Exception e) {
         }
 

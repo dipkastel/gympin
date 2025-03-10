@@ -34,7 +34,7 @@ public class TicketCourseConvertor {
         dto.setDayBeforeStartSell(entity.getDayBeforeStartSell());
         dto.setDayAfterStartSell(entity.getDayAfterStartSell());
         if(entity.getCoaches()!=null)
-            dto.setCoaches(entity.getCoaches().stream().map(UserConvertor::toCoachDto).collect(Collectors.toList()));
+            dto.setCoaches(entity.getCoaches().stream().filter(o->!o.isDeleted()).map(UserConvertor::toCoachDto).collect(Collectors.toList()));
 
 
         return dto;

@@ -145,7 +145,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     @Override
     public Boolean setMessagesReadById(Long id) {
         SupportEntity support = supportRepository.getById(id);
-        support.getSupportMessages().stream().peek(sm-> sm.setIsRead(true)).collect(Collectors.toList());
+        support.getSupportMessages().stream().filter(o->!o.isDeleted()).peek(sm-> sm.setIsRead(true)).collect(Collectors.toList());
         supportRepository.update(support);
         return true;
     }
@@ -197,7 +197,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public List<SupportDto> convertToDtos(List<SupportEntity> entities) {
-        return entities.stream().map(SupportConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(SupportConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

@@ -131,7 +131,7 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
 
     @Override
     public List<PurchasedCourseDto> convertToDtos(List<PurchasedCourseEntity> entities) {
-        return entities.stream().map(purchasedCourseHelper::checkForExpire).map(PurchasedCourseConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(purchasedCourseHelper::checkForExpire).map(PurchasedCourseConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -143,19 +143,19 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
     //ticket
     @Override
     public List<PurchasedCourseDto> getUserEnteredCourse(Long placeId) {
-        List<PurchasedCourseEntity> courseEntities = purchasedCourseRepository.findCoursesHasOpenEnterByPlaceId(placeId).stream().map(purchasedCourseHelper::checkForExpire).filter(t -> purchasedCourseHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
-        return courseEntities.stream().map(PurchasedCourseConvertor::toDto).collect(Collectors.toList());
+        List<PurchasedCourseEntity> courseEntities = purchasedCourseRepository.findCoursesHasOpenEnterByPlaceId(placeId).stream().filter(o->!o.isDeleted()).map(purchasedCourseHelper::checkForExpire).filter(t -> purchasedCourseHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
+        return courseEntities.stream().filter(o->!o.isDeleted()).map(PurchasedCourseConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
     public List<PurchasedCourseDto> getUserCoursesByPlace(UserPlacePurchasedParam param) {
-        List<PurchasedCourseEntity> courseEntities = purchasedCourseRepository.getUserPlaceCourse(param.getUserId(), param.getPlaceId()).stream().map(purchasedCourseHelper::checkForExpire).filter(f -> READY_TO_ACTIVE != f.getStatus()).collect(Collectors.toList());
+        List<PurchasedCourseEntity> courseEntities = purchasedCourseRepository.getUserPlaceCourse(param.getUserId(), param.getPlaceId()).stream().filter(o->!o.isDeleted()).map(purchasedCourseHelper::checkForExpire).filter(f -> READY_TO_ACTIVE != f.getStatus()).collect(Collectors.toList());
         return convertToDtos(courseEntities);
     }
 
     @Override
     public List<PurchasedCourseDto> getActiveCoursesOfPlace(Long placeId) {
-        List<PurchasedCourseEntity> courseEntities = purchasedCourseRepository.getActiveCourseOfPlace(placeId).stream().map(purchasedCourseHelper::checkForExpire).filter(t -> purchasedCourseHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
+        List<PurchasedCourseEntity> courseEntities = purchasedCourseRepository.getActiveCourseOfPlace(placeId).stream().filter(o->!o.isDeleted()).map(purchasedCourseHelper::checkForExpire).filter(t -> purchasedCourseHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
         return convertToDtos(courseEntities);
     }
 
@@ -205,7 +205,7 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
 //
 //        } else if (courseEntity.getStatus() == CoursePurchasedStatus.ACTIVE) {
 //            //requeset check
-//            if (courseEntity.getEntryList().stream().anyMatch(t -> t.getCourseEntryStatus() == CourseEntryStatus.REQUESTED)) {
+//            if (courseEntity.getEntryList().stream().filter(o->!o.isDeleted()).anyMatch(t -> t.getCourseEntryStatus() == CourseEntryStatus.REQUESTED)) {
 //                throw new UserRequestEnterException();
 //            }
 //            //avoid duplicate enery
@@ -213,7 +213,7 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
 //                throw new EntryAlreadyExistException();
 //            }
 //            //course limit
-//            if (courseEntity.getEntryTotalCount() <= courseEntity.getEntryList().stream().filter(en -> en.getCourseEntryStatus() == CourseEntryStatus.ACCEPTED).count()) {
+//            if (courseEntity.getEntryTotalCount() <= courseEntity.getEntryList().stream().filter(o->!o.isDeleted()).filter(en -> en.getCourseEntryStatus() == CourseEntryStatus.ACCEPTED).count()) {
 //                throw new UsageLimitException();
 //            }
 //            //enter User
@@ -234,12 +234,12 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
     public Boolean acceptEnterRequested(PurchasedCourseParam param) throws Exception {
         PurchasedCourseEntity courseEntity = getEntityById(param.getId());
         UserEntity userEntity = userRepository.getById(param.getUser().getId());
-        PurchasedCourseEntryEntity entry = courseEntity.getEntryList().stream().filter(e -> e.getCourseEntryStatus() == CourseEntryStatus.REQUESTED).findFirst().get();
+        PurchasedCourseEntryEntity entry = courseEntity.getEntryList().stream().filter(o->!o.isDeleted()).filter(e -> e.getCourseEntryStatus() == CourseEntryStatus.REQUESTED).findFirst().get();
         if (entry == null)
             throw new NotFoundException();
 
         //check course Limit
-        if (courseEntity.getEntryTotalCount() <= courseEntity.getEntryList().stream().filter(en -> en.getCourseEntryStatus() == CourseEntryStatus.ACCEPTED).count()) {
+        if (courseEntity.getEntryTotalCount() <= courseEntity.getEntryList().stream().filter(o->!o.isDeleted()).filter(en -> en.getCourseEntryStatus() == CourseEntryStatus.ACCEPTED).count()) {
             throw new UsageLimitException();
         }
 
@@ -261,7 +261,7 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
         }
 
         var userCourses = purchasedCourseRepository.findAllByCustomerIdAndDeletedFalse(userEntity.getId());
-        var unEnterdCourse = userCourses.stream().anyMatch(ps -> ps.getEntryList().stream().anyMatch(e -> e.getCourseEntryStatus() == CourseEntryStatus.REQUESTED));
+        var unEnterdCourse = userCourses.stream().filter(o->!o.isDeleted()).anyMatch(ps -> ps.getEntryList().stream().anyMatch(e -> e.getCourseEntryStatus() == CourseEntryStatus.REQUESTED));
         if (unEnterdCourse)
             throw new UserRequestEnterException();
         if (pcourseEntity.getEntryList().size() > 0) {
@@ -272,7 +272,7 @@ public class PurchasedCourseServiceImpl extends AbstractBaseService<PurchasedCou
         } else {
             throw new FirstEntryRequestException();
         }
-        if (pcourseEntity.getEntryTotalCount() <= pcourseEntity.getEntryList().stream().filter(en -> en.getCourseEntryStatus() == CourseEntryStatus.ACCEPTED).count()) {
+        if (pcourseEntity.getEntryTotalCount() <= pcourseEntity.getEntryList().stream().filter(o->!o.isDeleted()).filter(en -> en.getCourseEntryStatus() == CourseEntryStatus.ACCEPTED).count()) {
             throw new UsageLimitException();
         }
         PurchasedCourseEntryEntity pcourseEntryEntity = PurchasedCourseEntryEntity.builder().CourseEntryStatus(CourseEntryStatus.REQUESTED).enterDate(new Date()).purchasedCourse(pcourseEntity).build();

@@ -209,7 +209,7 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
 
     @Override
     public List<CorporateDto> convertToDtos(List<CorporateEntity> entities) {
-        return entities.stream().map(CorporateConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(CorporateConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -234,8 +234,8 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
             return CorporateStatusEnum.ACTIVE;
         }else{
 //            //check max and sum chredit sum amount of new table co per cred
-//            BigDecimal MaxUserCredit = entity.getPersonnel().stream().sorted(Comparator.comparing(CorporatePersonnelEntity::getCreditBalance)).findFirst().get().getCreditBalance();
-//            BigDecimal sumUserCredits = entity.getPersonnel().stream().map(CorporatePersonnelEntity::getCreditBalance).reduce(BigDecimal.ZERO, BigDecimal::add);
+//            BigDecimal MaxUserCredit = entity.getPersonnel().stream().filter(o->!o.isDeleted()).sorted(Comparator.comparing(CorporatePersonnelEntity::getCreditBalance)).findFirst().get().getCreditBalance();
+//            BigDecimal sumUserCredits = entity.getPersonnel().stream().filter(o->!o.isDeleted()).map(CorporatePersonnelEntity::getCreditBalance).reduce(BigDecimal.ZERO, BigDecimal::add);
 //            if(MaxUserCredit.compareTo(BigDecimal.ZERO) > 0){
 //                //corporate personel has creadit
 //                Double zarib = 0.15;

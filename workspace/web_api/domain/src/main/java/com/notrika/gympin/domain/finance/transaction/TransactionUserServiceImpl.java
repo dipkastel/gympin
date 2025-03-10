@@ -352,7 +352,7 @@ public class TransactionUserServiceImpl extends AbstractBaseService<UserTransact
 //            }
 //            transaction.setBalance(corporateEntity.getFinanceCorporate().getTotalDeposit());
 //            try {
-//                List<UserEntity> corporateAdmins = corporateEntity.getPersonnel().stream().filter(p -> p.getRole() == CorporatePersonnelRoleEnum.ADMIN).map(p -> p.getUser()).collect(Collectors.toList());
+//                List<UserEntity> corporateAdmins = corporateEntity.getPersonnel().stream().filter(o->!o.isDeleted()).filter(p -> p.getRole() == CorporatePersonnelRoleEnum.ADMIN).map(p -> p.getUser()).collect(Collectors.toList());
 //                for (UserEntity corporateAdmin : corporateAdmins) {
 //                    smsService.sendCorporateTransactionComplete(
 //                            SmsDto.builder()
@@ -479,7 +479,7 @@ public class TransactionUserServiceImpl extends AbstractBaseService<UserTransact
 
     @Override
     public List<UserTransactionDto> convertToDtos(List<FinanceUserTransactionEntity> entities) {
-        return entities.stream().map(TransactionConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(TransactionConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

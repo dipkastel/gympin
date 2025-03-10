@@ -73,7 +73,7 @@ public class MultimediaServiceImpl extends AbstractBaseService<MultimediaStorePa
 
     @Override
     public List<MultimediaDto> getAllFiles(BasePagedParam pageable, MediaType mediaType) {
-        return helper.getAllFiles().stream().skip((pageable.getPage()-1)*pageable.getSize()).limit(pageable.getSize()).collect(Collectors.toList());
+        return helper.getAllFiles().stream().filter(o->!o.isDeleted()).skip((pageable.getPage()-1)*pageable.getSize()).limit(pageable.getSize()).collect(Collectors.toList());
     }
 
 
@@ -89,7 +89,7 @@ public class MultimediaServiceImpl extends AbstractBaseService<MultimediaStorePa
 
     @Override
     public List<MultimediaDto> convertToDtos(List<MultimediaEntity> entities) {
-        return entities.stream().map(MultimediaConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(MultimediaConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

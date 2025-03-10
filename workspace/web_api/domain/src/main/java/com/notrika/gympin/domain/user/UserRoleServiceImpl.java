@@ -65,7 +65,7 @@ public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, User
     @Override
     public UserRoleDto delete(UserRoleParam userRoleParam) {
        var user =  userRepository.getById(userRoleParam.getUser().getId());
-       var itemToDelete = user.getUserRoles().stream().filter(ur->ur.getRole()==userRoleParam.getRole()).collect(Collectors.toList());
+       var itemToDelete = user.getUserRoles().stream().filter(o->!o.isDeleted()).filter(ur->ur.getRole()==userRoleParam.getRole()).collect(Collectors.toList());
        userRoleRepository.deleteAll(itemToDelete);
         return UserRoleConvertor.ToUserRoleDto(user);
     }
@@ -83,7 +83,7 @@ public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, User
 
     @Override
     public UserRolesEntity getEntityById(long id) {
-        return userRoleRepository.findById(id).stream().findFirst().get();
+        return userRoleRepository.findById(id).stream().filter(o->!o.isDeleted()).findFirst().get();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class UserRoleServiceImpl extends AbstractBaseService<UserRoleParam, User
 
     @Override
     public List<UserRoleDto> convertToDtos(List<UserRolesEntity> entities) {
-        return entities.stream().map(r -> UserRoleConvertor.ToUserRoleDto(r.getUser())).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(r -> UserRoleConvertor.ToUserRoleDto(r.getUser())).collect(Collectors.toList());
     }
 
     @Override

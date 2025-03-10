@@ -90,7 +90,7 @@ public class HallTrafficServiceImpl extends AbstractBaseService<HallTrafficParam
 
     @Override
     public List<HallTrafficDto> convertToDtos(List<HallTrafficEntity> entities) {
-        return entities.stream().map(HallConvertor::convertToHallTrafficDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToHallTrafficDto).collect(Collectors.toList());
     }
 
     @Override

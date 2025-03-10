@@ -98,7 +98,7 @@ public class ServiceServiceImpl extends AbstractBaseService<ServiceParam, Servic
 
     @Override
     public List<ServiceDto> convertToDtos(List<ManageServiceExecutionEntity> entities) {
-        return entities.stream().map(ServiceConvertor::ToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(ServiceConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override

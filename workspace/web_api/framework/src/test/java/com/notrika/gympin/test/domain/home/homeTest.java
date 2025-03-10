@@ -162,7 +162,7 @@ public class homeTest extends BaseTest {
                 new TypeReference<ResponseModel<HomePageItemDto>>() {
                 });
 
-        Assertions.assertTrue(result.getData().getItems().stream().findFirst().get().getItems().size()>0);
+        Assertions.assertTrue(result.getData().getItems().stream().filter(o->!o.isDeleted()).findFirst().get().getItems().size()>0);
     }
 
 

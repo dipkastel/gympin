@@ -14,6 +14,6 @@ public class GeneralGatewayServiceImpl implements GeneralGatewayService {
 //
 //    public List<GatewaysDto> getPaymentGateways(GatewaysParam param) {
 //        List<FinanceApplicationGatewayEntity> gatewayes = financeApplicationGatewayRepository.findAllByApplicationAndDeletedIsFalse(param.getApplication());
-//        return gatewayes.stream().map(GatewayConvertor::toDto).collect(Collectors.toList());
+//        return gatewayes.stream().filter(o->!o.isDeleted()).map(GatewayConvertor::toDto).collect(Collectors.toList());
 //    }
 }

@@ -197,7 +197,7 @@ public final class HomePageConvertor {
 
     public static List<HomePageTypeDto> toTypeDto(List<HomePageTypeEntity> entityList) {
         if(entityList==null)return null;
-        return entityList.stream().map(HomePageConvertor::toTypeDto).collect(Collectors.toList());
+        return entityList.stream().filter(o->!o.isDeleted()).map(HomePageConvertor::toTypeDto).collect(Collectors.toList());
     }
 
     public static HomePageTypeDto toTypeDto(HomePageTypeEntity entity) {
@@ -227,7 +227,7 @@ public final class HomePageConvertor {
 
     public static List<HomePageDestinationDto> toDestinationDto(List<HomePageDestionationEntity> entityList) {
         if(entityList==null)return null;
-        return entityList.stream().map(HomePageConvertor::toDestinationDto).collect(Collectors.toList());
+        return entityList.stream().filter(o->!o.isDeleted()).map(HomePageConvertor::toDestinationDto).collect(Collectors.toList());
     }
 
     public static HomePageDestinationDto toDestinationDto(HomePageDestionationEntity entity) {

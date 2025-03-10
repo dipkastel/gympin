@@ -29,7 +29,7 @@ public class TicketSubscribeConvertor {
         dto.setSubscribeCapacity(entity.getSubscribeCapacity());
         dto.setTiming(entity.getTiming());
         if(entity.getCoaches()!=null)
-            dto.setCoaches(entity.getCoaches().stream().map(UserConvertor::toCoachDto).collect(Collectors.toList()));
+            dto.setCoaches(entity.getCoaches().stream().filter(o->!o.isDeleted()).map(UserConvertor::toCoachDto).collect(Collectors.toList()));
         return dto;
     }
 

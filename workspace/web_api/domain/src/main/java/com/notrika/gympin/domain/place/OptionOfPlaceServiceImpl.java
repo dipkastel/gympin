@@ -47,7 +47,7 @@ public class OptionOfPlaceServiceImpl extends AbstractBaseService<OptionOfPlaceP
     @Override
     @Transactional
     public PlaceOptionOfPlaceEntity add(PlaceOptionOfPlaceEntity placeOption) {
-        if(getByPlaceId(placeOption.getPlace().getId()).stream().anyMatch(o-> Objects.equals(o.getPlaceOption().getId(), placeOption.getPlaceOption().getId())))
+        if(getByPlaceId(placeOption.getPlace().getId()).stream().filter(o->!o.isDeleted()).anyMatch(o-> Objects.equals(o.getPlaceOption().getId(), placeOption.getPlaceOption().getId())))
             throw new DuplicateEntryAddExeption();
         return placeOptionOfPlaceRepository.add(placeOption);
     }

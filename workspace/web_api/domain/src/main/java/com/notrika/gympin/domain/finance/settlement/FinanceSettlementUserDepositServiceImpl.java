@@ -118,7 +118,7 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
         if(financeUserRepository.getById(param.getUserFinanceID()).getTotalDeposit().compareTo(param.getAmount())<0)
             throw new LowDepositException();
 
-        if(financeUser.getUserSettlements().stream().anyMatch(settle->settle.getSettlementStatus()==SettlementStatus.REQUESTED))
+        if(financeUser.getUserSettlements().stream().filter(o->!o.isDeleted()).anyMatch(settle->settle.getSettlementStatus()==SettlementStatus.REQUESTED))
             throw new UserHasOpenSettlementRequest();
 
         financeSerialRepository.add(serial);
@@ -179,7 +179,7 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
 
     @Override
     public List<FinanceSettlementUserDepositDto> convertToDtos(List<FinanceSettlementUserDepositRequestEntity> entities) {
-        return entities.stream().map(SettlementConvertor::ToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(SettlementConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override

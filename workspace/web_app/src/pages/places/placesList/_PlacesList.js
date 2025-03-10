@@ -76,39 +76,15 @@ export const sortPlaceItems = [{
 const _PlacesList = () => {
     const navigate = useNavigate();
     const error = useContext(ErrorContext);
-
     const {sid} = useParams();
-    const currentUser = useSelector(state => state.auth.user);
-
     const [places, SetPlaces] = useState(null);
-
     const [loadedPage, setLoadedPage] = useState(-1);
-
-
     const [isLoading, setIsLoading] = useState(false);
     const [endOfList, setEndOfList] = useState(false);
-    const [sortBy, SetSortBy] = useState(sortPlaceItems[0])
-    const [openModal, setOpenModal] = useState(false)
     const [openSearch, setOpenSearch] = useState(false)
-    const [sports, SetSports] = useState([])
-    const [region, SetRegions] = useState([])
     const [value, setValue] = useState("");
-    const [filters, SetFilters] = useState([...defaultPlaceFilters, {
-            type: "gender",
-            name: "جنسیت",
-            value: null,
-            selectedName: currentUser ? genders.find(i => i.value === currentUser?.Gender)?.Name : null
-        }]
-    )
-    // const [filters, SetFilters] = useState([...defaultPlaceFilters,{
-    //         type: "gender",
-    //         name: "جنسیت",
-    //         value: currentUser?currentUser?.Gender:null,
-    //         selectedName: currentUser?genders.find(i=>i.value===currentUser?.Gender)?.Name:null
-    //     }]
-    // )
-    useEffect(() => {
 
+    useEffect(() => {
         let debouncer = setTimeout(() => {
             SetPlaces(null);
             getData(0, value);
@@ -119,58 +95,23 @@ const _PlacesList = () => {
     }, [value]);
 
     useEffect(() => {
-        sports_query({
-            queryType: "FILTER",
-            HasPlace: 0,
-            paging: {Page: 0, Size: 50}
-        }).then(result => {
-            SetSports(result.data.Data.content)
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
-        Location_query({
-            queryType: "FILTER",
-            ParentId: 3,
-            HasPlace: 0,
-            paging: {Page: 0, Size: 100}
-        }).then(result => {
-            SetRegions(result.data.Data.content)
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
-    }, []);
-
-    // useEffect(() => {
-    //     getData(0,null);
-    // }, [filters,sortBy]);
-
-    useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [isLoading]);
 
     function getData(page, searchString) {
-        console.log(searchString);
         if(!searchString)
             searchString = null;
+        else
+            searchString = " "+searchString+" ";
         setIsLoading(true);
         Place_query({
             queryType: "FILTER",
             Status: "Active",
             SearchStr: searchString,
             Sports:sid,
-            // LocationId:filters.find(f=>f.type==="location").value,
-            // Gender:filters.find(f=>f.type==="gender")?filters.find(f=>f.type==="gender").value:null,
             Option: null,
-            paging: {Page: page, Size: 20, Desc: sortBy.Desc, OrderBy: sortBy.Value}
+            paging: {Page: page, Size: 20, Desc: true, OrderBy: "order"}
         }).then(result => {
             setIsLoading(false)
             setLoadedPage(page);
@@ -188,46 +129,6 @@ const _PlacesList = () => {
         });
     }
 
-    function handleChange(evt, allItems) {
-        SetPlaces(null);
-        if (evt.target.value === null) {
-            removeFilter(evt.target.name)
-            return
-        }
-
-        const item = filters.find(o => o.type === evt.target.name);
-        item.value = evt.target.value
-        item.selectedName = allItems.find(p => p.Id === evt.target.value).Name
-        SetFilters([...filters]);
-        setOpenModal(false);
-    }
-
-    function handleChangeGender(evt, allItems) {
-        SetPlaces(null);
-        if (evt.value === null) {
-            removeFilter(evt.name)
-            return
-        }
-        const item = filters.find(o => o.type === evt.name);
-        item.value = evt.value
-        item.selectedName = allItems.find(p => p.value === evt.value).Name
-        SetFilters([...filters]);
-        setOpenModal(false);
-    }
-
-    function removeFilter(type) {
-        SetPlaces(null);
-        const item = filters.find(o => o.type === type);
-        item.value = null;
-        item.selectedName = "";
-        SetFilters([...filters]);
-    }
-
-    function changeSort(e) {
-        SetPlaces(null);
-        SetSortBy(sortPlaceItems.find(f => f.Id == e))
-    }
-
     var itsStart = false;
     const handleScroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop + 40 < document.documentElement.offsetHeight || isLoading || endOfList || itsStart) {
@@ -241,101 +142,6 @@ const _PlacesList = () => {
 
     return (
         <>{places ? (<>
-            {/*<Grid className={"mt-3 z1040 position-relative"} container direction={"row"} justifyContent={"space-between"} alignContent={"center"} sx={{paddingX:2}}>*/}
-            {/*    <Grid>*/}
-            {/*        <IconButton  onClick={() => setOpenModal(!openModal)} sx={{color: "#000000"}} aria-label=""*/}
-            {/*                     name="filter">*/}
-            {/*            <FilterAltOutlinedIcon/>*/}
-            {/*        </IconButton>*/}
-            {/*        {filters.filter(item => item.value !== null).map(item => (*/}
-            {/*                <Chip key={item.type} label={item.selectedName} variant="outlined"*/}
-            {/*                      onDelete={() => removeFilter(item.type)}/>*/}
-            {/*            )*/}
-            {/*        )}*/}
-            {/*    </Grid>*/}
-
-            {/*    <Grid >*/}
-            {/*        <Select*/}
-            {/*            labelId="sort-select-label"*/}
-            {/*            id="sort-select"*/}
-            {/*            name={"sortby"}*/}
-            {/*            size={"small"}*/}
-            {/*            value={sortBy.Id}*/}
-            {/*            variant={"outlined"}*/}
-            {/*            onChange={(e) => changeSort(e.target.value)}*/}
-            {/*        >*/}
-            {/*            {sortPlaceItems.map(item => (*/}
-            {/*                <MenuItem key={item.Id} value={item.Id}>{item.Name}</MenuItem>*/}
-            {/*            ))}*/}
-            {/*        </Select>*/}
-            {/*    </Grid>*/}
-            {/*</Grid>*/}
-            {/*<Dialog*/}
-            {/*    className={"w-100"}*/}
-            {/*    open={openModal} onClose={() => setOpenModal(false)}>*/}
-            {/*    <DialogTitle>فیلترها</DialogTitle>*/}
-            {/*    <DialogContent className={"w-100"}>*/}
-
-            {/*        شما میتوانید با محدود کردن لیست مراکز به سادگی مرکز مورد نظر خود را بیابید*/}
-
-
-            {/*        <FormControl*/}
-            {/*            className={"mt-3"}*/}
-            {/*            fullWidth>*/}
-            {/*            <InputLabel id="sport-select-label">ورزش</InputLabel>*/}
-            {/*            <Select*/}
-            {/*                labelId="sport-select-label"*/}
-            {/*                id="sport-select"*/}
-            {/*                name={"Sports"}*/}
-            {/*                value={filters.find(o => o.type === "Sports")?filters.find(o => o.type === "Sports").value:null}*/}
-            {/*                label="ورزش"*/}
-            {/*                onChange={(e) => handleChange(e, sports)}*/}
-            {/*            >*/}
-            {/*                <MenuItem value={null}>انتخاب نشده</MenuItem>*/}
-            {/*                {sports.map(item => (*/}
-            {/*                    <MenuItem key={"S"+item.Id} value={item.Id}>{item.Name}</MenuItem>*/}
-            {/*                ))}*/}
-            {/*            </Select>*/}
-            {/*        </FormControl>*/}
-            {/*        <FormControl*/}
-            {/*            className={"mt-3"}*/}
-            {/*            fullWidth>*/}
-            {/*            <InputLabel id="location-select-label">منطقه</InputLabel>*/}
-            {/*            <Select*/}
-            {/*                labelId="location-select-label"*/}
-            {/*                id="location-select"*/}
-            {/*                name={"location"}*/}
-            {/*                value={filters.find(o => o.type === "location").value}*/}
-            {/*                label="منطقه"*/}
-            {/*                onChange={(e) => handleChange(e, region)}*/}
-            {/*            >*/}
-            {/*                <MenuItem value={null}>انتخاب نشده</MenuItem>*/}
-            {/*                {region.map(item => (*/}
-            {/*                    <MenuItem key={"L"+item.Id} value={item.Id}>{item.Name}</MenuItem>*/}
-            {/*                ))}*/}
-            {/*            </Select>*/}
-            {/*        </FormControl>*/}
-            {/*        <FormControl*/}
-            {/*            className={"mt-3"}*/}
-            {/*            fullWidth>*/}
-            {/*            <InputLabel id="gender-select-label">جنسیت</InputLabel>*/}
-            {/*            <Select*/}
-            {/*                labelId="gender-select-label"*/}
-            {/*                id="gender-select"*/}
-            {/*                name={"gender"}*/}
-            {/*                value={filters.find(o => o.type === "gender").value?filters.find(o => o.type === "gender").value:""}*/}
-            {/*                label="جنسیت"*/}
-            {/*                onChange={(e) => handleChangeGender(e.target, genders)}*/}
-            {/*            >*/}
-            {/*                {genders.map(item => (*/}
-            {/*                    <MenuItem key={"G"+item.value} value={item.value}>{item.Name}</MenuItem>*/}
-            {/*                ))}*/}
-            {/*            </Select>*/}
-            {/*        </FormControl>*/}
-            {/*    </DialogContent>*/}
-            {/*</Dialog>*/}
-
-
             <Grid container sx={{px: 1, pt: 3}} columns={60}>
                 <Grid sx={{px: 1}} size={{xs: 49, md: 54, lg: 56, xl: 57}}>
                     <Card elevation={0} sx={{width: "100%", borderRadius: 6, p: 2, backgroundImage: 'url("/assets/images/mapp.jpg")'}}
@@ -355,8 +161,6 @@ const _PlacesList = () => {
             </Grid>
             <Container maxWidth>
                 <Collapse in={openSearch} timeout={"auto"} unmountOnExit>
-
-
                     <TextField
                         id="outlined-adornment-password"
                         fullWidth
@@ -365,12 +169,9 @@ const _PlacesList = () => {
                         name="username"
                         type="username"
                         onChange={e => setValue(e.target.value)}
-
                         value={value}
                         label={"جستجو (نام مرکز)"}
                     />
-
-
                 </Collapse>
             </Container>
 

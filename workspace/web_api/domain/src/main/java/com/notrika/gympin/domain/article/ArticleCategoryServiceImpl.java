@@ -71,7 +71,7 @@ public class ArticleCategoryServiceImpl extends AbstractBaseService<ArticleCateg
 
     @Override
     public List<ArticleCategoryDto> convertToDtos(List<ArticleCategoryEntity> entities) {
-        return entities.stream().map(ArticleConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(ArticleConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

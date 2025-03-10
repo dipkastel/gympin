@@ -95,7 +95,7 @@ public class LocationServiceImpl extends AbstractBaseService<LocationParam, Loca
 
     @Override
     public List<LocationDto> convertToDtos(List<ManageLocationEntity> entities) {
-        return entities.stream().map(LocationConvertor::toDtoWithChilds).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(LocationConvertor::toDtoWithChilds).collect(Collectors.toList());
     }
 
     @Override

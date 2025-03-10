@@ -64,7 +64,7 @@ public class FinanceIncreaseUserDepositServiceImpl extends AbstractBaseService<F
     @Override
     public List<FinanceIncreaseUserDepositDto> getIncreaseUserDeposits(Long userId) {
         UserEntity user = userService.getEntityById(userId);
-        List<FinanceIncreaseUserDepositDto> UserIncreases = user.getUserIncreases().stream().map(IncreaseConvertor::ToDto).collect(Collectors.toList());
+        List<FinanceIncreaseUserDepositDto> UserIncreases = user.getUserIncreases().stream().filter(o->!o.isDeleted()).map(IncreaseConvertor::ToDto).collect(Collectors.toList());
         return UserIncreases;
     }
 
@@ -222,7 +222,7 @@ public class FinanceIncreaseUserDepositServiceImpl extends AbstractBaseService<F
 
     @Override
     public List<FinanceIncreaseUserDepositDto> convertToDtos(List<FinanceIncreaseUserDepositRequestEntity> entities) {
-        return entities.stream().map(IncreaseConvertor::ToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(IncreaseConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override

@@ -96,7 +96,7 @@ public class PlaceQrMessageServiceImpl extends AbstractBaseService<PlaceQrMessag
 
     @Override
     public List<PlaceQrMessageDto> convertToDtos(List<PlaceQrMessageEntity> entities) {
-        return entities.stream().map(PlaceQrMessageConvertor::ToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(PlaceQrMessageConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override

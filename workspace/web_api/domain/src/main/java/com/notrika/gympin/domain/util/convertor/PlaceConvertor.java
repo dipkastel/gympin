@@ -32,7 +32,7 @@ public final class PlaceConvertor {
 
     public static List<PlaceDto> toDto(Collection<PlaceEntity> entities) {
         if (entities == null) return null;
-        return entities.stream().map(PlaceConvertor::toDtoSecure).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(PlaceConvertor::toDtoSecure).collect(Collectors.toList());
     }
 
     public static Page<PlaceDto> toDto(Page<PlaceEntity> entities) {
@@ -155,7 +155,7 @@ public final class PlaceConvertor {
             placeDto.setAddress(isSequred?(entity.getAddress().substring(0,3)+"****" +entity.getAddress().substring(entity.getAddress().length()-3)):entity.getAddress());
         }catch (Exception e){}
         placeDto.setAutoDiscount(entity.isAutoDiscount());
-        placeDto.setHasBeneficiary(entity.getPlaceOwners().stream().filter(PlacePersonnelEntity::getIsBeneficiary).findFirst().map(p -> true).orElse(false));
+        placeDto.setHasBeneficiary(entity.getPlaceOwners().stream().filter(o->!o.isDeleted()).filter(PlacePersonnelEntity::getIsBeneficiary).findFirst().map(p -> true).orElse(false));
         placeDto.setStatus(entity.getStatus());
         if (entity.getBuyables().size() > 0) {
             try {
@@ -237,14 +237,14 @@ public final class PlaceConvertor {
 
     public static List<PlacePersonnelAccessDto> personnelAccessToDto(List<PlacePersonnelAccessEntity> entities) {
         if (entities == null) return null;
-        return entities.stream().map(PlaceConvertor::personnelAccessToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(PlaceConvertor::personnelAccessToDto).collect(Collectors.toList());
 
     }
 
 
     public static List<PlacePersonnelBuyableAccessDto> personelBuyableAccessToDto(List<PlacePersonelBuyableAccessEntity> entities) {
         if (entities == null) return null;
-        return entities.stream().map(PlaceConvertor::personelBuyableAccessToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(PlaceConvertor::personelBuyableAccessToDto).collect(Collectors.toList());
 
     }
 }

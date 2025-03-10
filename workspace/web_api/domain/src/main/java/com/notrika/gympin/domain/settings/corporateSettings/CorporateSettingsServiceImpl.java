@@ -96,7 +96,7 @@ public class CorporateSettingsServiceImpl extends AbstractBaseService<CorporateS
 
     @Override
     public List<CorporateSettingDto> convertToDtos(List<CorporateSettingsEntity> entities) {
-        return entities.stream().map(CorporateSettingsConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(CorporateSettingsConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

@@ -152,7 +152,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
                         if (!columns[5].isEmpty()) {
                             try {
                                 var personnelEntity = getEntityById(personnel.getId());
-                                var group = groupEntities.stream().filter(p -> p.getName().trim().equals(columns[5].trim())).findFirst();
+                                var group = groupEntities.stream().filter(o->!o.isDeleted()).filter(p -> p.getName().trim().equals(columns[5].trim())).findFirst();
                                 if (group.isPresent()) {
                                     personnelEntity.setPersonnelGroup(group.get());
                                 } else {
@@ -214,8 +214,8 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
                 .processTypeEnum(ProcessTypeEnum.TRA_REMOVE_CORPORATE_PERSONNEL)
                 .build();
         //calc total ammount
-        List<FinanceCorporatePersonnelCreditEntity> credits =personnel.getCredits().stream().filter(pc->pc.getStatus() == CorporatePersonnelCreditStatusEnum.ACTIVE).collect(Collectors.toList());
-        BigDecimal totalAmount = credits.stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add);
+        List<FinanceCorporatePersonnelCreditEntity> credits =personnel.getCredits().stream().filter(o->!o.isDeleted()).filter(pc->pc.getStatus() == CorporatePersonnelCreditStatusEnum.ACTIVE).collect(Collectors.toList());
+        BigDecimal totalAmount = credits.stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add);
         //check corporate has deposit
         if(financeCorporate.getTotalDeposit().compareTo(totalAmount)<0){
             throw new LowDepositException();
@@ -277,7 +277,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public List<CorporatePersonnelDto> convertToDtos(List<CorporatePersonnelEntity> entities) {
-        return entities.stream().map(CorporateConvertor::toPersonnelDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(CorporateConvertor::toPersonnelDto).collect(Collectors.toList());
     }
 
     @Override
@@ -287,7 +287,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public List<CorporatePersonnelDto> getPersonnelByCorporate(CorporateParam corporateParam) {
-        return corporatePersonnelRepository.findByCorporateIdAndDeletedIsFalse(corporateParam.getId()).stream().map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
+        return corporatePersonnelRepository.findByCorporateIdAndDeletedIsFalse(corporateParam.getId()).stream().filter(o->!o.isDeleted()).map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
     }
 
     @Override

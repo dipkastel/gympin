@@ -144,7 +144,7 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
 
     @Override
     public List<FinanceIncreaseCorporateDepositDto> convertToDtos(List<FinanceIncreaseCorporateDepositRequestEntity> entities) {
-        return entities.stream().map(IncreaseConvertor::ToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(IncreaseConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -155,7 +155,7 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
     @Override
     public List<FinanceIncreaseCorporateDepositDto> getIncreaseCorporateDeposits(Long corporateId) {
         CorporateEntity corporate = corporateService.getEntityById(corporateId);
-        List<FinanceIncreaseCorporateDepositDto> CorporateIncreases = corporate.getCorporateIncreases().stream().map(IncreaseConvertor::ToDto).collect(Collectors.toList());
+        List<FinanceIncreaseCorporateDepositDto> CorporateIncreases = corporate.getCorporateIncreases().stream().filter(o->!o.isDeleted()).map(IncreaseConvertor::ToDto).collect(Collectors.toList());
         return CorporateIncreases;
     }
     private Float getCorporateTax() {

@@ -46,7 +46,7 @@ public class TagServiceImpl extends AbstractBaseService<TagParam, TagDto, TagQue
         PlaceEntity place = placeRepository.getById(tagParam.getPlace().getId());
         ManageTagsEntity entity = getEntityById(tagParam.getId());
         List<ManageTagsEntity> placeTags = place.getTags();
-        if(placeTags.stream().anyMatch(p->p.getId().equals(entity.getId())))
+        if(placeTags.stream().filter(o->!o.isDeleted()).anyMatch(p->p.getId().equals(entity.getId())))
             throw new DuplicateEntryAddExeption();
         placeTags.add(entity);
         place.setTags(placeTags);
@@ -125,7 +125,7 @@ public class TagServiceImpl extends AbstractBaseService<TagParam, TagDto, TagQue
 
     @Override
     public List<TagDto> convertToDtos(List<ManageTagsEntity> entities) {
-        return entities.stream().map(TagConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(TagConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

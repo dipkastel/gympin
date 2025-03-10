@@ -150,7 +150,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
 
     @Override
     public List<TicketSubscribeDto> convertToDtos(List<TicketSubscribeEntity> entities) {
-        return entities.stream().map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -160,7 +160,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
 
     @Override
     public List<TicketSubscribeDto> getTicketSubscribeByPlace(PlaceParam place) {
-        return ticketSubscribeRepository.findAllByPlaceAndDeletedIsFalse(PlaceEntity.builder().id(place.getId()).build()).stream().map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
+        return ticketSubscribeRepository.findAllByPlaceAndDeletedIsFalse(PlaceEntity.builder().id(place.getId()).build()).stream().filter(o->!o.isDeleted()).map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -177,7 +177,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
         List<PlaceSportEntity> ticketSubscribeSports = ticketSubscribe.getTicketSubscribeSport();
         if (ticketSubscribeSports == null) ticketSubscribeSports = new ArrayList<>();
         for (var placeSportParam : ticketSubscribeSportParam.getPlaceSports()) {
-            if (ticketSubscribe.getTicketSubscribeSport().stream().anyMatch(s -> s.getId().equals(placeSportParam.getId())))
+            if (ticketSubscribe.getTicketSubscribeSport().stream().filter(o->!o.isDeleted()).anyMatch(s -> s.getId().equals(placeSportParam.getId())))
                 throw new DuplicateEntryAddExeption();
             PlaceSportEntity placeSport = placeSportRepository.getById(placeSportParam.getId());
             ticketSubscribeSports.add(placeSport);
@@ -191,8 +191,8 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     public TicketSubscribeDto deleteSport(TicketSubscribeSportParam ticketSubscribeSportParam) {
         TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(ticketSubscribeSportParam.getTicketSubscribe().getId());
         var sports = ticketSubscribe.getTicketSubscribeSport();
-        var placeSportRemoveIds = ticketSubscribeSportParam.getPlaceSports().stream().map(BaseParam::getId).collect(Collectors.toList());
-        var afterfilter = sports.stream().filter(a -> !placeSportRemoveIds.contains(a.getId())).collect(Collectors.toList());
+        var placeSportRemoveIds = ticketSubscribeSportParam.getPlaceSports().stream().filter(o->!o.isDeleted()).map(BaseParam::getId).collect(Collectors.toList());
+        var afterfilter = sports.stream().filter(o->!o.isDeleted()).filter(a -> !placeSportRemoveIds.contains(a.getId())).collect(Collectors.toList());
         ticketSubscribe.setTicketSubscribeSport(afterfilter);
         ticketSubscribeRepository.update(ticketSubscribe);
         return TicketSubscribeConvertor.toDto(ticketSubscribe);
@@ -202,14 +202,14 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     @Override
     public List<UserDto> getCoaches(Long ticketId) {
         TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(ticketId);
-        return ticketSubscribe.getCoaches().stream().map(UserConvertor::toCoachDto).collect(Collectors.toList());
+        return ticketSubscribe.getCoaches().stream().filter(o->!o.isDeleted()).map(UserConvertor::toCoachDto).collect(Collectors.toList());
     }
 
     @Override
     public TicketSubscribeDto addCoach(TicketSubscribeCoachParam param) {
         TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(param.getTicketSubscribe().getId());
         List<UserEntity> ticketSubscribeCoaches = ticketSubscribe.getCoaches();
-        if (ticketSubscribe.getCoaches().stream().anyMatch(s -> s.getId().equals(param.getPlaceCoach().getId())))
+        if (ticketSubscribe.getCoaches().stream().filter(o->!o.isDeleted()).anyMatch(s -> s.getId().equals(param.getPlaceCoach().getId())))
             throw new DuplicateEntryAddExeption();
         UserEntity placeCoach = userRepository.getById(param.getPlaceCoach().getId());
         ticketSubscribeCoaches.add(placeCoach);
@@ -222,7 +222,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     public TicketSubscribeDto deleteCoach(TicketSubscribeCoachParam param) {
         TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(param.getTicketSubscribe().getId());
         List<UserEntity> ticketSubscribeCoaches = ticketSubscribe.getCoaches();
-        if (!ticketSubscribe.getCoaches().stream().anyMatch(s -> s.getId().equals(param.getPlaceCoach().getId())))
+        if (!ticketSubscribe.getCoaches().stream().filter(o->!o.isDeleted()).anyMatch(s -> s.getId().equals(param.getPlaceCoach().getId())))
             throw new NotFoundException();
         UserEntity placeCoach = userRepository.getById(param.getPlaceCoach().getId());
         ticketSubscribeCoaches.remove(placeCoach);
@@ -234,7 +234,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     @Override
     public List<TicketDiscountHistoryDto> getTicketSubscribeDiscountHistory(Long ticketSubscribeId) {
         TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(ticketSubscribeId);
-        return ticketSubscribe.getDiscountHistory().stream().skip(Math.max(0, ticketSubscribe.getDiscountHistory().size() - 30)).map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
+        return ticketSubscribe.getDiscountHistory().stream().filter(o->!o.isDeleted()).skip(Math.max(0, ticketSubscribe.getDiscountHistory().size() - 30)).map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -292,7 +292,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
 
     @Override
     public List<ActiveTimesDto> getTicketSubscribeActiveTimesByTicketSubscribe(Long ticketSubscribeId) {
-        return ticketSubscribeRepository.getById(ticketSubscribeId).getActiveTimes().stream().map(HallConvertor::convertToActionDto).collect(Collectors.toList());
+        return ticketSubscribeRepository.getById(ticketSubscribeId).getActiveTimes().stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToActionDto).collect(Collectors.toList());
     }
 
     @Override
@@ -300,7 +300,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
        var ticketSubscribe = ticketSubscribeRepository.getById(param.getTicket().getId());
        List<TicketHallActiveTimeEntity> activeTimes = ticketSubscribe.getActiveTimes();
        for(ActiveTimesParam activeTime:param.getActiveTime()){
-           if (ticketSubscribe.getActiveTimes().stream().anyMatch(s -> s.getId().equals(activeTime.getId())))
+           if (ticketSubscribe.getActiveTimes().stream().filter(o->!o.isDeleted()).anyMatch(s -> s.getId().equals(activeTime.getId())))
                throw new DuplicateEntryAddExeption();
            activeTimes.add(ticketSubscribeHallActiveTimesRepository.getById(activeTime.getId()));
        }
@@ -313,8 +313,8 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     public TicketSubscribeDto deleteSubscribeActiveTimes(TicketActiveTimesParam param) {
         TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(param.getTicket().getId());
         List<TicketHallActiveTimeEntity> activeTimes = ticketSubscribe.getActiveTimes();
-        var activeTimesRemoveIds = param.getActiveTime().stream().map(BaseParam::getId).collect(Collectors.toList());
-        var afterfilter = activeTimes.stream().filter(a -> !activeTimesRemoveIds.contains(a.getId())).collect(Collectors.toList());
+        var activeTimesRemoveIds = param.getActiveTime().stream().filter(o->!o.isDeleted()).map(BaseParam::getId).collect(Collectors.toList());
+        var afterfilter = activeTimes.stream().filter(o->!o.isDeleted()).filter(a -> !activeTimesRemoveIds.contains(a.getId())).collect(Collectors.toList());
         ticketSubscribe.setActiveTimes(afterfilter);
         ticketSubscribeRepository.update(ticketSubscribe);
         return TicketSubscribeConvertor.toDto(ticketSubscribe);

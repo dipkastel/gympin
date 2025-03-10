@@ -110,7 +110,7 @@ public class SmsServiceImpl extends AbstractBaseService<SmsParam, SmsDto, SmsQue
 
     @Override
     public List<SmsDto> convertToDtos(List<ManageSmsEntity> entities) {
-        return entities.stream().map(SmsConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(SmsConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -127,7 +127,7 @@ public class SmsServiceImpl extends AbstractBaseService<SmsParam, SmsDto, SmsQue
 
     @Override
     public List<PatternDto> getAllPatterns() throws Exception {
-        return manageSmsPatternRepository.findAll().stream().map(SmsConvertor::toDto).collect(Collectors.toList());
+        return manageSmsPatternRepository.findAll().stream().filter(o->!o.isDeleted()).map(SmsConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

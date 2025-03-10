@@ -58,7 +58,7 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
         entity.setArticleStatus(articleParam.getArticleStatus());
         entity.setArticleType(articleParam.getArticleType());
         if (articleParam.getCategories() != null) {
-            List<ArticleCategoryEntity> newCategorires = articleCategoryRepository.findAllByDeletedIsFalseAndIdIn(articleParam.getCategories().stream().map(BaseParam::getId).collect(Collectors.toList()));
+            List<ArticleCategoryEntity> newCategorires = articleCategoryRepository.findAllByDeletedIsFalseAndIdIn(articleParam.getCategories().stream().filter(o->!o.isDeleted()).map(BaseParam::getId).collect(Collectors.toList()));
             entity.setCategories(newCategorires);
         }
         return ArticleConvertor.toDto(articleRepository.update(entity));
@@ -108,7 +108,7 @@ public class ArticleServiceImpl extends AbstractBaseService<ArticleParam, Articl
 
     @Override
     public List<ArticleDto> convertToDtos(List<ArticleEntity> entities) {
-        return entities.stream().map(ArticleConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(ArticleConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

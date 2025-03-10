@@ -29,7 +29,7 @@ public final class MultimediaConvertor {
     }
     public static List<MultimediaDto> toDto(List<MultimediaEntity> entity) {
         if(entity==null)return null;
-        return entity.stream().map(MultimediaConvertor::toDto).collect(Collectors.toList());
+        return entity.stream().filter(o->!o.isDeleted()).map(MultimediaConvertor::toDto).collect(Collectors.toList());
     }
 
 }

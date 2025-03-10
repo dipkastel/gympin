@@ -87,7 +87,7 @@ public class TicketBuyableServiceImpl extends AbstractBaseService<TicketBuyableP
 
     @Override
     public List<TicketBuyableDto> convertToDtos(List<BuyableEntity> entities) {
-        return entities.stream().map(BuyableConvertor::ToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(BuyableConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override

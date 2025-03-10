@@ -14,7 +14,7 @@ public final class FinanceUserConvertor {
 
 
     public static List<FinanceUserDto> toFinanceDto(List<FinanceUserEntity> finance) {
-        return finance.stream().map(FinanceUserConvertor::toFinanceDto).collect(Collectors.toList());
+        return finance.stream().filter(o->!o.isDeleted()).map(FinanceUserConvertor::toFinanceDto).collect(Collectors.toList());
     }
 
     public static FinanceUserDto toFinanceDto(FinanceUserEntity finance) {

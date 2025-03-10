@@ -74,7 +74,7 @@ public class ParsianGatewayBankServiceImpl implements GatewayBankService {
             ClientConfirmRequestData requestData = new ClientConfirmRequestData();
            FinanceGatewayEntity parsianSetting = null;
            try {
-               parsianSetting  = financeGatewayRepository.findAll().stream().filter(p->p.getData1()!=null).filter(f->f.getData1().equals("PARSIAN")).collect(Collectors.toList()).get(0);
+               parsianSetting  = financeGatewayRepository.findAll().stream().filter(o->!o.isDeleted()).filter(p->p.getData1()!=null).filter(f->f.getData1().equals("PARSIAN")).collect(Collectors.toList()).get(0);
            }catch (Exception e){
                throw new Exception("Parsian Gateway is not defined correctly. Please call the system administrator.");
            }

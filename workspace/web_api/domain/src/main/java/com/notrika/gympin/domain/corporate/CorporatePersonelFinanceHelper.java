@@ -66,7 +66,7 @@ public class CorporatePersonelFinanceHelper {
     public boolean checkLowBudjetByContract(CorporateEntity corporate, BigDecimal CreditToAdd) {
 
         //TODO change this by query
-        BigDecimal totalPersonnelCreditsBeforeAdd = corporate.getPersonnel().stream().map(p -> p.getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, (f, q) -> f.add(q))).findAny().get();
+        BigDecimal totalPersonnelCreditsBeforeAdd = corporate.getPersonnel().stream().map(p -> p.getCredits().stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, (f, q) -> f.add(q))).findAny().get();
         BigDecimal totalPersonnelCreditsAfterAdd = totalPersonnelCreditsBeforeAdd.add(CreditToAdd);
         if (corporate.getContractType() == CorporateContractTypeEnum.NEO) {
             return compareDepositAndCredit(totalPersonnelCreditsAfterAdd, corporate.getFinanceCorporate().getTotalDeposit(), 3);
@@ -145,7 +145,7 @@ public class CorporatePersonelFinanceHelper {
             throw new TicketExpireDateCannotBeNull();
          if(param.getCreditAmount()==null)
             throw new CreditCannotBeNegativeException();
-        List<FinanceCorporatePersonnelCreditEntity> listToAdd = personnelsToAddCredit.stream().map(personel -> FinanceCorporatePersonnelCreditEntity.builder()
+        List<FinanceCorporatePersonnelCreditEntity> listToAdd = personnelsToAddCredit.stream().filter(o->!o.isDeleted()).map(personel -> FinanceCorporatePersonnelCreditEntity.builder()
                 .status(CorporatePersonnelCreditStatusEnum.ACTIVE)
                 .corporatePersonnel(personel)
                 .creditAmount(param.getCreditAmount())
@@ -154,7 +154,7 @@ public class CorporatePersonelFinanceHelper {
                 .build()).collect(Collectors.toList());
         List<FinanceCorporatePersonnelCreditEntity> result = financeCorporatePersonnelCreditRepository.addAll(listToAdd);
         //add finance corporate personnel credit transaction
-        List<FinanceCorporatePersonnelCreditTransactionEntity> tListToAdd = result.stream().map(credit -> FinanceCorporatePersonnelCreditTransactionEntity.builder()
+        List<FinanceCorporatePersonnelCreditTransactionEntity> tListToAdd = result.stream().filter(o->!o.isDeleted()).map(credit -> FinanceCorporatePersonnelCreditTransactionEntity.builder()
                 .personnelCredit(credit)
                 .latestBalance(BigDecimal.ZERO)
                 .transactionStatus(TransactionStatus.COMPLETE)
@@ -168,7 +168,7 @@ public class CorporatePersonelFinanceHelper {
     }
     public List<FinanceUserEntity> addNWToCorporatePersonnelCredits(List<CorporatePersonnelEntity> personnelsToAddCredit, CorporatePersonnelCreditParam param, FinanceSerialEntity serial) {
         List<FinanceUserTransactionEntity> tListToAdd = new ArrayList<>();
-        List<FinanceUserEntity> listToUpdate = personnelsToAddCredit.stream().map(personel -> {
+        List<FinanceUserEntity> listToUpdate = personnelsToAddCredit.stream().filter(o->!o.isDeleted()).map(personel -> {
             //add user none withdrawable credit;
             FinanceUserEntity userNwWallet = financeHelper.getUserNonWithdrawableWallet(personel.getUser());
             BigDecimal before = userNwWallet.getTotalDeposit();

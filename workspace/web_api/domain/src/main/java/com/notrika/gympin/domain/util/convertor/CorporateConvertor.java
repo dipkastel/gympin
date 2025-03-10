@@ -50,7 +50,7 @@ public final class CorporateConvertor {
     }
 
     private static Boolean getWizard(CorporateEntity entity) {
-        var settings = entity.getSettings().stream().filter(r->r.getKey().equals(CorporateSettingTypesEnum.USER_WIZARD_COMPLETE)).findFirst();
+        var settings = entity.getSettings().stream().filter(o->!o.isDeleted()).filter(r->r.getKey().equals(CorporateSettingTypesEnum.USER_WIZARD_COMPLETE)).findFirst();
         return (settings.get().getValue().equals("true"));
     }
 
@@ -60,7 +60,7 @@ public final class CorporateConvertor {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         try{
-            dto.setUserCount(entity.getPersonels().stream().count());
+            dto.setUserCount(entity.getPersonels().stream().filter(o->!o.isDeleted()).count());
         }catch (Exception e){
             dto.setUserCount(0l);
         }
@@ -75,9 +75,9 @@ public final class CorporateConvertor {
         dto.setUser(UserConvertor.toDtoSimple(entity.getUser()));
         dto.setPersonnelGroup(toDto(entity.getPersonnelGroup()));
         if (entity.getCredits() != null)
-            dto.setCreditList(entity.getCredits().stream().map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
+            dto.setCreditList(entity.getCredits().stream().filter(o->!o.isDeleted()).map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
         try{
-            dto.setTotalCredit(entity.getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
+            dto.setTotalCredit(entity.getCredits().stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
         }catch (Exception e){}
         return dto;
     }
@@ -89,7 +89,7 @@ public final class CorporateConvertor {
         dto.setRole(entity.getRole());
         dto.setUser(UserConvertor.toDtoSimple(entity.getUser()));
         try{
-            dto.setTotalCredit(entity.getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
+            dto.setTotalCredit(entity.getCredits().stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
         }catch (Exception e){}
         return dto;
     }
@@ -103,10 +103,10 @@ public final class CorporateConvertor {
         dto.setPersonnelGroup(toDto(entity.getPersonnelGroup()));
         dto.setUser(UserConvertor.toDtoLessDetails(entity.getUser()));
         try{
-            dto.setTotalCredit(entity.getCredits().stream().map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
+            dto.setTotalCredit(entity.getCredits().stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
         }catch (Exception e){}
         if (entity.getCredits() != null)
-            dto.setCreditList(entity.getCredits().stream().sorted((o1, o2)->o2.getId().compareTo(o1.getId())).map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
+            dto.setCreditList(entity.getCredits().stream().filter(o->!o.isDeleted()).sorted((o1, o2)->o2.getId().compareTo(o1.getId())).map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
         return dto;
     }
 

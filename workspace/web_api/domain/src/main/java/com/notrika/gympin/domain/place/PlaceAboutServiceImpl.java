@@ -107,7 +107,7 @@ public class PlaceAboutServiceImpl extends AbstractBaseService<PlaceAboutParam, 
 
     @Override
     public List<PlaceAboutDto> convertToDtos(List<PlaceAboutEntity> entities) {
-        return entities.stream().map(PlaceConvertor::AboutToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(PlaceConvertor::AboutToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -121,16 +121,16 @@ public class PlaceAboutServiceImpl extends AbstractBaseService<PlaceAboutParam, 
 
     @Override
     public List<PlaceAboutDto> getByPlaceId(Long id) {
-        return placeAboutRepository.findByPlaceId(id).stream().map(PlaceConvertor::AboutToDto).collect(Collectors.toList());
+        return placeAboutRepository.findByPlaceId(id).stream().filter(o->!o.isDeleted()).map(PlaceConvertor::AboutToDto).collect(Collectors.toList());
     }
 
     @Override
     public List<PlaceAboutDto> getAllAboutByPlaces(List<PlaceParam> params) {
         List<PlaceAboutEntity> placeAboutes = new ArrayList<>();
-        for (Long id : params.stream().map(BaseParam::getId).collect(Collectors.toList())) {
-            if (placeAboutes.stream().noneMatch(pa-> pa.getPlace().getId().equals(id)))
+        for (Long id : params.stream().filter(o->!o.isDeleted()).map(BaseParam::getId).collect(Collectors.toList())) {
+            if (placeAboutes.stream().filter(o->!o.isDeleted()).noneMatch(pa-> pa.getPlace().getId().equals(id)))
                 placeAboutes.addAll(placeAboutRepository.findByPlaceId(id));
         }
-        return placeAboutes.stream().map(PlaceConvertor::AboutToDto).collect(Collectors.toList());
+        return placeAboutes.stream().filter(o->!o.isDeleted()).map(PlaceConvertor::AboutToDto).collect(Collectors.toList());
     }
 }

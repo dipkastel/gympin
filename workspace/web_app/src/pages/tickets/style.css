@@ -1,0 +1,89 @@
+
+.ticket .widget {
+    -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+}
+.ticket .widget .tco {
+    height: 35px;
+    margin: 0 35px;
+    position: relative;
+}
+.ticket .widget .tco:before, .ticket .widget .tco:after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: 0%;
+    background-color: red;
+}
+.ticket .widget .tco:before {
+    left: -35px;
+    -webkit-mask-image: url('../../../public/assets/images/svg/Cornertl.svg');
+    mask-image: url('../../../public/assets/images/svg/Cornertl.svg');
+}
+.ticket .widget .tco:after {
+    right: -35px;
+    -webkit-mask-image: url('../../../public/assets/images/svg/Cornertr.svg');
+    mask-image: url('../../../public/assets/images/svg/Cornertr.svg');
+
+}
+
+.ticket .widget .bco {
+    height: 35px;
+    margin: 0 35px;
+    position: relative;
+}
+.ticket .widget .bco:before, .ticket .widget .bco:after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
+}
+.ticket .widget .bco:before {
+    left: -35px;
+    top: -0px;
+    z-index: -1;
+    -webkit-mask-image: url('../../../public/assets/images/svg/Cornerbl.svg');
+    mask-image: url('../../../public/assets/images/svg/Cornerbl.svg');
+
+}
+.ticket .widget .bco:after {
+    right: -35px;
+    top: -0px;
+    z-index: -1;
+    -webkit-mask-image: url('../../../public/assets/images/svg/Cornerbr.svg');
+    mask-image: url('../../../public/assets/images/svg/Cornerbr.svg');
+
+}
+
+
+.red .ticket .widget .top,.red .ticket .widget .bottom,.red .ticket .widget .rip,.red .widget .tco,.red .widget .bco,
+.red .ticket .widget .tco:before,.red .ticket .widget .tco:after,
+.red .ticket .widget .bco:before,.red .ticket .widget .bco:after {
+    background-color: #e7333e;
+    color: #FFFFFF;
+}
+.red .ticket .widget .tco:before {
+    border-right-color: #e7333e;
+}
+.red .ticket .widget .tco:after,.red .ticket .widget .bco:after {
+    border-left-color: #e7333e;
+}
+.red .ticket .widget .bco:before {
+    border-bottom-color: #e7333e;
+}
+
+.white .ticket .widget .top,.white .ticket .widget .bottom,.white .ticket .widget .rip,.white .widget .tco,.white .widget .bco,
+.white .ticket .widget .tco:before,.white .ticket .widget .tco:after,
+.white .ticket .widget .bco:before,.white .ticket .widget .bco:after {
+    background-color: #FFFFFF;
+}
+.white .ticket .widget .tco:before {
+    border-right-color: #FFFFFF;
+}
+.white .ticket .widget .tco:after,.white .ticket .widget .bco:after {
+    border-left-color: #FFFFFF;
+}
+.white .ticket .widget .bco:before {
+    border-bottom-color: #FFFFFF;
+}

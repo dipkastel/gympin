@@ -67,6 +67,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.ws.rs.BadRequestException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -339,7 +340,7 @@ public class InvoiceServiceHelper {
                 .place(invoiceBuyable.getPlace())
                 .customer(invoice.getUser())
                 .Serials(List.of(invoice.getSerial()))
-                .coaches(ticketSubscribe.getCoaches().stream().map(c -> UserEntity.builder().id(c.getId()).build()).collect(Collectors.toList()))
+                .coaches(ticketSubscribe.getCoaches().stream().filter(o->!o.isDeleted()).map(c -> UserEntity.builder().id(c.getId()).build()).collect(Collectors.toList()))
                 .purchasedType(PurchasedType.SUBSCRIBE)
                 .status(SubscribePurchasedStatus.READY_TO_ACTIVE)
                 .ticketSubscribe(ticketSubscribe)
@@ -366,8 +367,7 @@ public class InvoiceServiceHelper {
         var buyables = invoiceBuyableRepository.findAllByInvoiceIdAndDeletedIsFalse(invoice.getId());
         BigDecimal priceToPay;
         if (buyables != null) {
-            priceToPay = buyables.stream()
-                    .filter(b -> !b.isDeleted())
+            priceToPay = buyables.stream().filter(b -> !b.isDeleted())
                     .map(p -> p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
         } else {
@@ -380,10 +380,9 @@ public class InvoiceServiceHelper {
 
     @Transactional
     public void updateInvoicePrice(InvoiceEntity invoice) {
-        var buyables = invoice.getInvoiceBuyables();
+        var buyables = invoice.getInvoiceBuyables().stream().filter(o->!o.isDeleted()).collect(Collectors.toList());
         BigDecimal priceToPay = BigDecimal.ZERO;
-        priceToPay = buyables.stream()
-                .filter(b -> !b.isDeleted())
+        priceToPay = buyables.stream().filter(b -> !b.isDeleted())
                 .map(p -> p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         invoice.setPriceToPay(priceToPay);
@@ -477,27 +476,26 @@ public class InvoiceServiceHelper {
 
     public void sendSms(InvoiceEntity invoice) {
         //TODO sms To Place for preparation
-        if(invoice.getInvoiceBuyables().size()<1){
-            //no ticket sells
-        }else if (invoice.getInvoiceBuyables().size() == 1) {
+        List<InvoiceBuyableEntity> buyableEntities = invoice.getInvoiceBuyables().stream().filter(o->!o.isDeleted()).collect(Collectors.toList());
+        if(buyableEntities.size()<1){
+            throw new BadRequestException("بلیط وجود ندارد");
+        }else if (buyableEntities.size() == 1) {
             try {
                 smsService.sendYouBuySubscribe(SmsDto.builder()
                         .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
                         .userNumber(invoice.getUser().getPhoneNumber())
-                        .text1(invoice.getInvoiceBuyables().get(0).getName())
-                        .text2(invoice.getInvoiceBuyables().get(0).getPlace().getName())
+                        .text1(buyableEntities.get(0).getName())
+                        .text2(buyableEntities.get(0).getPlace().getName())
                         .build()
                 );
             } catch (Exception e) {
             }
-
-            PlaceEntity place= invoice.getInvoiceBuyables().get(0).getPlace();
-            sendSellMessageToPlace(place,invoice.getInvoiceBuyables().get(0));
+            PlaceEntity place= buyableEntities.get(0).getPlace();
+            sendSellMessageToPlace(place,buyableEntities.get(0));
         } else {
             String ticketsName = "";
-            for(InvoiceBuyableEntity ticket : invoice.getInvoiceBuyables()){
+            for(InvoiceBuyableEntity ticket : buyableEntities){
                 ticketsName += ticket.getName()+" ";
-
                 sendSellMessageToPlace(ticket.getPlace(),ticket);
             }
             if(ticketsName.length()>36)
@@ -516,9 +514,9 @@ public class InvoiceServiceHelper {
     }
 
     private void sendSellMessageToPlace(PlaceEntity place, InvoiceBuyableEntity invoiceBuyables) {
-        if(place.getPurchased().size()<1){
+        if(place.getPurchased().stream().filter(o->!o.isDeleted()).collect(Collectors.toList()).size()<1){
             try {
-                List<PlacePersonnelEntity> owners =place.getPlaceOwners().stream().filter(po->po.getPlacePersonnelRoles().stream().map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
+                List<PlacePersonnelEntity> owners =place.getPlaceOwners().stream().filter(pl->!pl.isDeleted()).filter(po->po.getPlacePersonnelRoles().stream().filter(ppr->!ppr.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
                 for(PlacePersonnelEntity owner:owners){
                     smsService.sendFirstTicketSell(SmsDto.builder()
                             .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
@@ -531,7 +529,7 @@ public class InvoiceServiceHelper {
             }
         }else{
             try {
-                List<PlacePersonnelEntity> owners =place.getPlaceOwners().stream().filter(po->po.getPlacePersonnelRoles().stream().map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
+                List<PlacePersonnelEntity> owners =place.getPlaceOwners().stream().filter(pl->!pl.isDeleted()).filter(po->po.getPlacePersonnelRoles().stream().filter(pl->!pl.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
                 for(PlacePersonnelEntity owner:owners){
                     smsService.sendOrdinaryTicketSell(SmsDto.builder()
                             .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
@@ -550,7 +548,7 @@ public class InvoiceServiceHelper {
         //only by user
         UserCreditDto userCredits = userService.getMyCredits();
         UserHowToPayDto result = new UserHowToPayDto();
-        var creditList = userCredits.getCreditDetail().stream().filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
+        var creditList = userCredits.getCreditDetail().stream().filter(o->!o.isDeleted()).filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
         if (invoice.getPriceToPay().compareTo(userCredits.getTotalCredit()) > 0)
             return UserHowToPayDto.builder()
                     .creditDetail(creditList)
@@ -579,12 +577,12 @@ public class InvoiceServiceHelper {
 
     public UserHowToPayDto getAdvancedHowToPay(InvoiceEntity invoice, InvoiceCheckoutParam param) {
         UserCreditDto userCredits = userService.getAllCreditsByUser(UserParam.builder().id(invoice.getUser().getId()).build());
-        var creditList = userCredits.getCreditDetail().stream().filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
+        var creditList = userCredits.getCreditDetail().stream().filter(o->!o.isDeleted()).filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
         if (userCredits.getTotalCredit().compareTo(invoice.getPriceToPay()) < 0)
             throw new TatalUserCreditIsNotEnough();
         if (param.getPrice().compareTo(invoice.getPriceToPay()) != 0)
             throw new PricesIsNotCompatible();
-        if (param.getCheckout().stream().map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add).compareTo(invoice.getPriceToPay()) != 0)
+        if (param.getCheckout().stream().filter(o->!o.isDeleted()).map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add).compareTo(invoice.getPriceToPay()) != 0)
             throw new PricesIsNotCompatible();
 
         UserHowToPayDto result = UserHowToPayDto.builder()
@@ -594,7 +592,7 @@ public class InvoiceServiceHelper {
         var credits = new ArrayList<UserCreditDetailDto>();
 
         for (CheckoutDetailParam checkout : param.getCheckout()) {
-            var credit = creditList.stream().filter(cr -> cr.getId().equals(checkout.getId())).findFirst().orElse(null);
+            var credit = creditList.stream().filter(o->!o.isDeleted()).filter(cr -> cr.getId().equals(checkout.getId())).findFirst().orElse(null);
             if (credit == null)
                 throw new PricesIsNotCompatible();
             credit.setCreditPayableAmount(checkout.getAmount());

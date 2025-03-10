@@ -79,7 +79,7 @@ public class PurchasedServiceImpl extends AbstractBaseService<PurchasedParam, Pu
 
     @Override
     public List<PurchasedDto> convertToDtos(List<PurchasedBaseEntity> entities) {
-        return entities.stream().map(PurchasedConvertor::ToDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(PurchasedConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override

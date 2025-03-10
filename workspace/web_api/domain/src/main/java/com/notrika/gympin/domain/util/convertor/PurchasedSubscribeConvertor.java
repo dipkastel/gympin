@@ -59,7 +59,7 @@ public final class PurchasedSubscribeConvertor {
 
     private static List<PurchasedSubscribeEntryDto> toDto(List<PurchasedSubscribeEntryEntity> entryList) {
         if (entryList == null) return null;
-        return entryList.stream().map(PurchasedSubscribeConvertor::toDto).collect(Collectors.toList());
+        return entryList.stream().filter(o->!o.isDeleted()).map(PurchasedSubscribeConvertor::toDto).collect(Collectors.toList());
     }
 
     public static PurchasedSubscribeEntryDto toDto(PurchasedSubscribeEntryEntity entity) {
@@ -84,7 +84,7 @@ public final class PurchasedSubscribeConvertor {
                 .price(entity.getSellPrice())
                 .timing(entity.getTiming())
                 .placePrice(entity.getPlacePrice())
-                .serials(entity.getSerials().stream().map(SerialConvertor::ToDto).collect(Collectors.toList()))
+                .serials(entity.getSerials().stream().filter(o->!o.isDeleted()).map(SerialConvertor::ToDto).collect(Collectors.toList()))
                 .description(entity.getDescription())
                 .entryTotalCount(entity.getEntryTotalCount())
                 .userEntryCount(entity.getEntryList().size())
@@ -96,7 +96,7 @@ public final class PurchasedSubscribeConvertor {
 
     private static List<PurchasedSubscribeEntryMessageDto> toMessageDto(List<PurchasedSubscribeMessageEntity> messagesList) {
         if (messagesList == null) return null;
-        return messagesList.stream().map(PurchasedSubscribeConvertor::toMessageDto).collect(Collectors.toList());
+        return messagesList.stream().filter(o->!o.isDeleted()).map(PurchasedSubscribeConvertor::toMessageDto).collect(Collectors.toList());
     }
 
     private static PurchasedSubscribeEntryMessageDto toMessageDto(PurchasedSubscribeMessageEntity message) {

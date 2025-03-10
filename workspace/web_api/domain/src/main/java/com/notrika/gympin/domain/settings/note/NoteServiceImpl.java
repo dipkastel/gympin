@@ -122,7 +122,7 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Not
 
     @Override
     public List<NoteDto> convertToDtos(List<ManageNoteEntity> entities) {
-        return entities.stream().map(NoteConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(NoteConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

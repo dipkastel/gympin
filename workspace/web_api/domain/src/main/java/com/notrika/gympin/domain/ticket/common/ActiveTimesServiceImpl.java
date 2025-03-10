@@ -96,7 +96,7 @@ public class ActiveTimesServiceImpl extends AbstractBaseService<ActiveTimesParam
 
     @Override
     public List<ActiveTimesDto> convertToDtos(List<TicketHallActiveTimeEntity> entities) {
-        return entities.stream().map(HallConvertor::convertToActionDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToActionDto).collect(Collectors.toList());
     }
 
     @Override
@@ -133,6 +133,6 @@ public class ActiveTimesServiceImpl extends AbstractBaseService<ActiveTimesParam
 
     @Override
     public List<ActiveTimesDto> activeTimesByTicketSubscribe(Long ticketSubscribeId) {
-        return ticketSubscribeHallActiveTimesRepository.findAllByDeletedFalseAndTicketSubscribes_Id(ticketSubscribeId).stream().map(HallConvertor::convertToActionDto).collect(Collectors.toList());
+        return ticketSubscribeHallActiveTimesRepository.findAllByDeletedFalseAndTicketSubscribes_Id(ticketSubscribeId).stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToActionDto).collect(Collectors.toList());
     }
 }

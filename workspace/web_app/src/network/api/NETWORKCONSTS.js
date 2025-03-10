@@ -106,7 +106,8 @@ export let Api_url = {
         DELETE:"v1/purchasedSubscribe/delete",
         checkout:"v1/purchasedSubscribe/checkout",
         exitRequest:"v1/purchasedSubscribe/exitRequest",
-        enterRequest:"v1/purchasedSubscribe/enterRequest"
+        enterRequest:"v1/purchasedSubscribe/enterRequest",
+        query:"v1/purchasedSubscribe/query"
     },
     purchasedCourse:{
         ADD:"v1/purchasedCourse/add",

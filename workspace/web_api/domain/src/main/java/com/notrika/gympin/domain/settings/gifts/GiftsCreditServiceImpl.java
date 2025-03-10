@@ -95,7 +95,7 @@ public class GiftsCreditServiceImpl extends AbstractBaseService<GiftCreditParam,
                     throw new BadRequestException("اگر امکان ثبت نام وجود ندارد کاربر مشخص کنید");
                 UserEntity user = userRepository.getById(giftCreditParam.getUser().getId());
                 if(corporate!=null){
-                    if(corporate.getPersonnel().stream().noneMatch(p-> p.getUser().getId().equals(user.getId())))
+                    if(corporate.getPersonnel().stream().filter(o->!o.isDeleted()).noneMatch(p-> p.getUser().getId().equals(user.getId())))
                         throw new BadRequestException("کاربر انتخاب شده در سازمان انتخاب شده وجود ندارد");
                 }
                 entity.setUser(user);
@@ -223,7 +223,7 @@ public class GiftsCreditServiceImpl extends AbstractBaseService<GiftCreditParam,
 
     @Override
     public List<GiftCreditDto> convertToDtos(List<ManageGiftCreditEntity> entities) {
-        return entities.stream().map(GiftConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(GiftConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

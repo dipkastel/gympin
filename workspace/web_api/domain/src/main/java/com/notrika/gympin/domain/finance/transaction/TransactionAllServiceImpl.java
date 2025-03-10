@@ -77,7 +77,7 @@ public class TransactionAllServiceImpl extends AbstractBaseService<TransactionAl
 
     @Override
     public List<TransactionAllDto> convertToDtos(List<BaseTransactionEntity> entities) {
-        return entities.stream().map(TransactionConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(TransactionConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

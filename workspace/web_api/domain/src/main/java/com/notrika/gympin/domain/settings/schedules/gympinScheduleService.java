@@ -1,6 +1,5 @@
 package com.notrika.gympin.domain.settings.schedules;
 
-import com.notrika.gympin.common.place.place.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

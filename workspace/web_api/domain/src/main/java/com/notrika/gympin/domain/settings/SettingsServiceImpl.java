@@ -264,7 +264,7 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
 
     @Override
     public List<SettingDto> convertToDtos(List<SettingsEntity> entities) {
-        return entities.stream().map(SettingsConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(SettingsConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

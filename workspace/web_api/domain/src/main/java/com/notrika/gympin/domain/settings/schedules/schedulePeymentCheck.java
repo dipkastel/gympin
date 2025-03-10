@@ -14,7 +14,7 @@ public class schedulePeymentCheck {
 
 //       log.error("Going to checkPendingPayments\n");
 //       List<TransactionEntity> pendingTransactions =  transactionRepository.findPendingRequests();
-//        log.error("Going to checkPendingPayments for count:"+pendingTransactions.stream().count()+"\n");
+//        log.error("Going to checkPendingPayments for count:"+pendingTransactions.stream().filter(o->!o.isDeleted()).count()+"\n");
 //       for (TransactionEntity transaction : pendingTransactions){
 //           log.error("Going to checkPendingPayments for transactionId :"+transaction.getId()+"\n");
 //           Calendar instance = Calendar.getInstance();

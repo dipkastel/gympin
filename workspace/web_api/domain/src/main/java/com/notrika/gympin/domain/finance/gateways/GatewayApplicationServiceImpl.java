@@ -91,7 +91,7 @@ public class GatewayApplicationServiceImpl extends AbstractBaseService<GatewayAp
 
     @Override
     public List<GatewayApplicationDto> convertToDtos(List<FinanceApplicationGatewayEntity> entities) {
-        return entities.stream().map(GatewayConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(GatewayConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

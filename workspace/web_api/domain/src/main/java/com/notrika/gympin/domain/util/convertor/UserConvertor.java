@@ -35,7 +35,7 @@ public final class UserConvertor {
 
     private static Boolean getWizard(UserEntity user) {
         try {
-           var settings = user.getSettings().stream().filter(r->r.getKey().equals(UserSettingTypesEnum.USER_WIZARD_COMPLETE)).findFirst();
+           var settings = user.getSettings().stream().filter(o->!o.isDeleted()).filter(r->r.getKey().equals(UserSettingTypesEnum.USER_WIZARD_COMPLETE)).findFirst();
            return (settings.get().getValue().equals("true"));
         }catch (Exception e){
             return null;
@@ -91,7 +91,7 @@ public final class UserConvertor {
     }
 
     public static List<UserDto> toDto(List<UserEntity> users) {
-        return users.stream().map(UserConvertor::toDtoComplete).collect(Collectors.toList());
+        return users.stream().filter(o->!o.isDeleted()).map(UserConvertor::toDtoComplete).collect(Collectors.toList());
     }
 
     public static Page<UserDto> toDto(Page<UserEntity> users) {
