@@ -85,6 +85,11 @@ const _PlacesList = () => {
     const [value, setValue] = useState("");
 
     useEffect(() => {
+        if(!openSearch)
+            setValue(null);
+    }, [openSearch]);
+
+    useEffect(() => {
         let debouncer = setTimeout(() => {
             SetPlaces(null);
             getData(0, value);
@@ -102,8 +107,6 @@ const _PlacesList = () => {
     function getData(page, searchString) {
         if(!searchString)
             searchString = null;
-        else
-            searchString = " "+searchString+" ";
         setIsLoading(true);
         Place_query({
             queryType: "FILTER",

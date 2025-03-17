@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import "./style.css"
 import {Divider, Grid2 as Grid, Typography} from "@mui/material";
 import {getStringOfTime, replacePersianNumbers, toPriceWithComma} from "../../helper/utils";
 import {subscribeStatusEnum} from "../../helper/enums/subscribeStatusEnum";
 import {useNavigate} from "react-router-dom";
+import TicketLayout from "./TicketLayout";
 
 const TicketListItem = ({item,getSubscribe}) => {
 
@@ -32,31 +32,23 @@ const TicketListItem = ({item,getSubscribe}) => {
     }, []);
 
 
+    function getColor(item) {
+        switch (item.Status){
+            case "READY_TO_ACTIVE" : return "blue";
+            case "EXPIRE" : return "red";
+            case "COMPLETE" : return "secondGreen";
+            case "CANCEL" : return "red";
+            case "ACTIVE" : return "green";
+            case "PROCESSING" : return "red";
 
-    function TicketLayer(props) {
-        return (
-            <div className={props.color}>
-                <div className="ticket">
-                    <div className="widget --flex-column">
-                        <div className="tco"></div>
-                        <div className="top --flex-column">
-                            <div className="deetz --flex-row-j!sb">
-                                <div className="label">{props.children}</div>
-                            </div>
-                        </div>
-                        <div className="bco"></div>
-                    </div>
-                </div>
-            </div>
-
-        );
+        }
     }
 
 
     return (
         <Grid onClick={()=>navigate("/tickets/singleSubscribe/" + item.Key, {replace: false})}>
 
-            <TicketLayer color={"white"}>
+            <TicketLayout color={"white"}>
                 <Grid container direction={"column"} >
                     <Grid sx={{mx:5}} container direction={"row"} justifyContent={"space-between"}>
                         <Typography variant={"h5"}>{item.Name}</Typography>
@@ -79,8 +71,9 @@ const TicketListItem = ({item,getSubscribe}) => {
                         <Typography variant={"body1"}>{replacePersianNumbers(item?.Serial[0]?.Serial?.split("-")[0])}</Typography>
                     </Grid>
                 </Grid>
-            </TicketLayer>
-            <TicketLayer color={"red"}>
+            </TicketLayout>
+
+            <TicketLayout color={getColor(item)}>
                 <Grid container direction={"column"} >
                     <Grid sx={{mx:5}} container direction={"row"} justifyContent={"space-between"}>
                         <Typography variant={"body1"} >پرداخت شده</Typography>
@@ -91,7 +84,7 @@ const TicketListItem = ({item,getSubscribe}) => {
                         <Typography variant={"caption"}>{subscribeStatusEnum[item?.Status]}</Typography>
                     </Grid>
                 </Grid>
-            </TicketLayer>
+            </TicketLayout>
 
         </Grid>
     );

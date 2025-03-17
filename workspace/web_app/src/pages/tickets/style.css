@@ -87,3 +87,66 @@
 .white .ticket .widget .bco:before {
     border-bottom-color: #FFFFFF;
 }
+
+.blue .ticket .widget .top,.blue .ticket .widget .bottom,.blue .ticket .widget .rip,.blue .widget .tco,.blue .widget .bco,
+.blue .ticket .widget .tco:before,.blue .ticket .widget .tco:after,
+.blue .ticket .widget .bco:before,.blue .ticket .widget .bco:after {
+    background-color: #1345b4;
+    color: #FFFFFF;
+}
+.blue .ticket .widget .tco:before {
+    border-right-color: #1345b4;
+}
+.blue .ticket .widget .tco:after,.blue .ticket .widget .bco:after {
+    border-left-color: #1345b4;
+}
+.blue .ticket .widget .bco:before {
+    border-bottom-color: #1345b4;
+}
+
+.green .ticket .widget .top,.green .ticket .widget .bottom,.green .ticket .widget .rip,.green .widget .tco,.green .widget .bco,
+.green .ticket .widget .tco:before,.green .ticket .widget .tco:after,
+.green .ticket .widget .bco:before,.green .ticket .widget .bco:after {
+    background-color: #07500c;
+    color: #FFFFFF;
+}
+.green .ticket .widget .tco:before {
+    border-right-color: #07500c;
+}
+.green .ticket .widget .tco:after,.green .ticket .widget .bco:after {
+    border-left-color: #07500c;
+}
+.green .ticket .widget .bco:before {
+    border-bottom-color: #07500c;
+}
+
+.secondGreen .ticket .widget .top,.secondGreen .ticket .widget .bottom,.secondGreen .ticket .widget .rip,.secondGreen .widget .tco,.secondGreen .widget .bco,
+.secondGreen .ticket .widget .tco:before,.secondGreen .ticket .widget .tco:after,
+.secondGreen .ticket .widget .bco:before,.secondGreen .ticket .widget .bco:after {
+    background-color: #043107;
+    color: #FFFFFF;
+}
+.secondGreen .ticket .widget .tco:before {
+    border-right-color: #043107;
+}
+.secondGreen .ticket .widget .tco:after,.secondGreen .ticket .widget .bco:after {
+    border-left-color: #043107;
+}
+.secondGreen .ticket .widget .bco:before {
+    border-bottom-color: #043107;
+}
+
+.yellow .ticket .widget .top,.yellow .ticket .widget .bottom,.yellow .ticket .widget .rip,.yellow .widget .tco,.yellow .widget .bco,
+.yellow .ticket .widget .tco:before,.yellow .ticket .widget .tco:after,
+.yellow .ticket .widget .bco:before,.yellow .ticket .widget .bco:after {
+    background-color: #f3e16b;
+}
+.yellow .ticket .widget .tco:before {
+    border-right-color: #f3e16b;
+}
+.yellow .ticket .widget .tco:after,.yellow .ticket .widget .bco:after {
+    border-left-color: #f3e16b;
+}
+.yellow .ticket .widget .bco:before {
+    border-bottom-color: #f3e16b;
+}
