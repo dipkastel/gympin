@@ -18,7 +18,7 @@ public final class PdfHelper {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             Document document = new Document();
-            BaseFont baseFont = BaseFont.createFont("framework/src/main/resources/IRANSans.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont baseFont = BaseFont.createFont("framework/src/main/resources/static/IRANSans.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
             PdfWriter.getInstance(document, outputStream);
             document.open();
@@ -241,7 +241,7 @@ public final class PdfHelper {
         cell.setColspan(1);
         table.addCell(cell);
         PdfPCell icell = new PdfPCell();
-        Image image = Image.getInstance("framework/src/main/resources/logoTypo300.png");
+        Image image = Image.getInstance("framework/src/main/resources/static/logoTypo300.png");
         float newWidth = 130f;
         float newHeight = (image.getHeight() / image.getWidth()) * newWidth;
         image.scaleAbsolute(newWidth, newHeight);
