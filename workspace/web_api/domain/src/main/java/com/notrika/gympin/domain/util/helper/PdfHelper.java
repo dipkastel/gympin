@@ -10,6 +10,7 @@ import com.notrika.gympin.persistence.entity.finance.gateway.FinanceGatewayEntit
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 
 public final class PdfHelper {
 
@@ -19,7 +20,7 @@ public final class PdfHelper {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             Document document = new Document();
-            BaseFont baseFont = BaseFont.createFont("/gympin/asset/IRANSans.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont baseFont = BaseFont.createFont(Paths.get("/gympin/asset/IRANSans.ttf").toAbsolutePath().normalize().toString(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
             PdfWriter.getInstance(document, outputStream);
             document.open();
