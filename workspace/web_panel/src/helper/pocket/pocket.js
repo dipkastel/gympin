@@ -1,4 +1,14 @@
-import _UserActivity from "../../pages/home/user/baseDate/activity/_UserActivity";
+
+
+const user_SelectedEditor = "user_SelectedEditor";
+
+export function getSelectedEditor(){
+    return getValue(user_SelectedEditor)||"JODIT";
+}
+export function SetSelectedEditor(Editor){
+    setValue(user_SelectedEditor,Editor);
+    return getValue(user_SelectedEditor);
+}
 
 const rpp_support = "rpp_support";
 

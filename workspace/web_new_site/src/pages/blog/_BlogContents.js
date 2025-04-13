@@ -86,7 +86,6 @@ const _BlogContents = () => {
                                 </CardActionArea>
                                 </Card>
                         </Grid>
-
                     ))}
 
                     <Grid justifyItems={"center"} size={60} sx={{mb: 5}}>

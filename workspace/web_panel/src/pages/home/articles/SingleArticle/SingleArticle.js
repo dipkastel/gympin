@@ -4,14 +4,14 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useParams} from "react-router-dom";
 import {Article_getById, Article_update} from "../../../../network/api/article.api";
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Button, FormControl, InputLabel, LinearProgress, MenuItem, Select} from "@mui/material";
+import {Button, FormControl, InputLabel, LinearProgress, MenuItem, Select, Typography} from "@mui/material";
 import _selectCategories from "./category/_selectCategories";
 import _baseData from "./baseData/_baseData";
 import _artilceText from "./text/_articleText";
 import _summary from "./summary/_summary";
 import {ArticleStatus} from "../../../../helper/enums/ArticleStatus";
 import _image from "./image/_image";
-import {Progress} from "reactstrap";
+import _selectEditor from "./baseData/_selectEditor";
 
 const SingleArticle = () => {
 
@@ -68,7 +68,9 @@ const SingleArticle = () => {
 
     return (
         <>
-            {article && <Notice icon="flaticon-layer kt-font-primary">{article.Title}</Notice>}
+            {article && <Notice icon="flaticon-layer kt-font-primary">
+                <Typography>{article.Title}</Typography>
+            </Notice>}
 
             <div className="row">
                 <div className="col-md-9">
@@ -108,6 +110,7 @@ const SingleArticle = () => {
                                                    changeSelectedCategories={changeSelectedCategories}/>}
                     {/*<_tags article={article} updateArticle={updateArticle}/>*/}
                     {article && <_image article={article} updateArticle={updateArticle}/>}
+                    <_selectEditor />
                 </div>
             </div>
 
