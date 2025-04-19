@@ -33,10 +33,10 @@ const _artilceText = ({article, updateArticle}) => {
     const onEditorStateChange = (editorState) => {
         if(userSelectedEditor=="WYSIWYG") {
             setDefaultEditorState(editorState)
-            updateArticle("Summary", draftToHtml(convertToRaw(editorState.getCurrentContent())))
+            updateArticle("FullText", draftToHtml(convertToRaw(editorState.getCurrentContent())))
         }else{
             setDefaultEditorState(editorState)
-            updateArticle("Summary", draftToHtml(editorState))
+            updateArticle("FullText", draftToHtml(editorState))
         }
     };
 
