@@ -35,6 +35,14 @@ export let ArticleCategoryApi = {
     update: "v1/articleCategory/update",
     query: "v1/articleCategory/query",
 };
+export let AffiliateApi = {
+    add: "v1/affiliate/add",
+    getAll: "v1/affiliate/getall",
+    delete: "v1/affiliate/delete",
+    getById: "v1/affiliate/getbyid",
+    update: "v1/affiliate/update",
+    query: "v1/affiliate/query",
+};
 
 export let CorporateApi = {
     add: "v1/corporate/add",

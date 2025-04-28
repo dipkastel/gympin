@@ -3,6 +3,7 @@ package com.notrika.gympin.persistence.entity.place;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.finance.affiliate.FinanceAffiliatorEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
@@ -177,6 +178,11 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @JsonIgnore
     @ToString.Exclude
     private List<ManageTagsEntity> tags;
+
+    @ManyToOne
+    @JsonIgnore
+    @ToString.Exclude
+    private FinanceAffiliatorEntity affiliator;
 
     @Override
     public boolean equals(Object o) {

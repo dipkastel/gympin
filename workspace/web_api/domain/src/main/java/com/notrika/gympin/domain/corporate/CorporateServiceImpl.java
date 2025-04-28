@@ -17,11 +17,13 @@ import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
+import com.notrika.gympin.common.user.user.dto.InviteCode;
 import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
+import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
@@ -195,6 +197,17 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
     @Override
     public CorporateEntity getEntityById(long id) {
         return corporateRepository.getById(id);
+    }
+
+
+    @Override
+    public InviteCode getAffiliateCode(Long id) {
+        CorporateEntity place = corporateRepository.getById(id);
+        InviteCode code = InviteCode.builder()
+                .code("A"+ GeneralHelper.getInviteCode(place.getId(),1))
+                .isActive(true)
+                .build();
+        return code;
     }
 
     @Override

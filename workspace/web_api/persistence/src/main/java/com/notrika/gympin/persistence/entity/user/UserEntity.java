@@ -6,6 +6,7 @@ import com.notrika.gympin.common.user.user.enums.UserGroup;
 import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
+import com.notrika.gympin.persistence.entity.finance.affiliate.FinanceAffiliatorEntity;
 import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncreaseUserDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
@@ -122,6 +123,11 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @JsonIgnore
     @ToString.Exclude
     private UserActivationCodeEntity activationCode;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private FinanceAffiliatorEntity affiliate;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @Where(clause = "token_status='ACTIVE'")

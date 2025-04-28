@@ -64,6 +64,13 @@ export default {
         translate: "MENU.MANAGE_CORPORATES",
         page: "corporates",
       },
+      {
+        title: "manage affiliate",
+        root: true,
+        icon: "flaticon-users",
+        translate: "MENU.MANAGE_AFFILIATE",
+        page: "affiliate",
+      },
       { section: "مالی" },
       {
         title: "manage process",

@@ -34,7 +34,7 @@ const _summary = ({article,updateArticle}) => {
             updateArticle("Summary", draftToHtml(convertToRaw(editorState.getCurrentContent())))
         }else{
             setDefaultEditorState(editorState)
-            updateArticle("Summary", draftToHtml(editorState))
+            updateArticle("Summary", editorState)
         }
     };
 
@@ -42,7 +42,8 @@ const _summary = ({article,updateArticle}) => {
         readonly: false,
         placeholder: "اینجا بنویسید...",
         toolbarSticky: false,
-        language: "fa"
+        language: "fa",
+        height:"70VH"
     };
     return (
         <>

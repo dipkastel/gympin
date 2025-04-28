@@ -25,7 +25,6 @@ const _artilceText = ({article, updateArticle}) => {
                 setDefaultEditorState(article.FullText)
             } else {
                 setDefaultEditorState("");
-
             }
         }
     }, [userSelectedEditor]);
@@ -35,8 +34,9 @@ const _artilceText = ({article, updateArticle}) => {
             setDefaultEditorState(editorState)
             updateArticle("FullText", draftToHtml(convertToRaw(editorState.getCurrentContent())))
         }else{
+            console.log("judit text = ",editorState);
             setDefaultEditorState(editorState)
-            updateArticle("FullText", draftToHtml(editorState))
+            updateArticle("FullText", editorState)
         }
     };
 
@@ -45,7 +45,8 @@ const _artilceText = ({article, updateArticle}) => {
         readonly: false,
         placeholder: "اینجا بنویسید...",
         toolbarSticky: false,
-        language: "fa"
+        language: "fa",
+        height:"70VH"
     };
     return (
         <>

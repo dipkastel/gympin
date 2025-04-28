@@ -86,6 +86,13 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Override
     @Transactional
     public UserDto add(UserParam userParam) {
+        UserEntity user = addUser(userParam);
+        UserPasswordEntity password = UserPasswordEntity.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
+        userPasswordRepository.add(password);
+        return UserConvertor.toDtoComplete(user);
+    }
+
+    public UserEntity addUser(UserParam userParam) {
         UserEntity initUser = new UserEntity();
         initUser.setFullName(userParam.getFullName());
         initUser.setUsername(userParam.getUsername());
@@ -98,10 +105,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setUserGroup(UserGroup.CLIENT);
         initUser.setUserStatus(UserStatus.ENABLED);
         initUser.setBio(userParam.getBio());
-        UserEntity user = userRepository.add(initUser);
-        UserPasswordEntity password = UserPasswordEntity.builder().user(user).password(passwordEncoder.encode(userParam.getPassword())).expired(false).build();
-        userPasswordRepository.add(password);
-        return UserConvertor.toDtoComplete(user);
+        return userRepository.add(initUser);
     }
 
     @Override

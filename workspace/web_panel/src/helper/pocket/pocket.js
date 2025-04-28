@@ -68,6 +68,15 @@ export function SetRppArticlesManagement(number){
     return getValue(rpp_articlesManagement);
 }
 
+const rpp_affiliateManagement = "rpp_affiliateManagement";
+export function getRppAffiliateManagement(){
+    return getValue(rpp_affiliateManagement)||5;
+}
+export function SetRppAffiliateManagement(number){
+    setValue(rpp_affiliateManagement,number);
+    return getValue(rpp_affiliateManagement);
+}
+
 const rpp_corporateManagement = "rpp_corporateManagement";
 export function getRppCorporateManagement(){
     return getValue(rpp_corporateManagement)||5;

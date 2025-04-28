@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceAffiliateTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
@@ -47,6 +48,12 @@ public class FinanceSerialEntity extends BaseEntityWithCreateUpdate<FinanceSeria
     @JsonIgnore
     @ToString.Exclude
     private List<FinanceUserTransactionEntity> userTransactions;
+
+
+    @OneToMany(mappedBy = "serial", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<FinanceAffiliateTransactionEntity> affiliateTransactions;
 
     @OneToMany(mappedBy = "serial", fetch = FetchType.LAZY)
     @JsonIgnore

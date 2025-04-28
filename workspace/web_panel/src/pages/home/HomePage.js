@@ -43,6 +43,7 @@ import LocationDetail from "./location/LocationDetail/LocationDetail";
 import ProcessManagement from "./process/ProcessManagement";
 import ProcessSerialDetail from "./process/detail/ProcessSerialDetail";
 import Gifts from "./gifts/Gifts";
+import AffiliateManagement from "./affiliate/AffiliateManagement";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -98,6 +99,8 @@ export default function HomePage() {
         {/* invoice */}
         <Route path="/invoice/detail/:invoiceId" component={InvoiceDetailManagement} />
         <Route path="/invoices" component={InvoiceManagement} />
+        {/* affiliate */}
+        <Route path="/affiliate" component={AffiliateManagement} />
 
 
         {/* location */}

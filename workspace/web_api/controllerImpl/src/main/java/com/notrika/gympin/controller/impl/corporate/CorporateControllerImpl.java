@@ -14,6 +14,7 @@ import com.notrika.gympin.common.settings.corporateSettings.param.CorporateSetti
 import com.notrika.gympin.common.settings.corporateSettings.service.corporateSettingsService;
 import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
 import com.notrika.gympin.common.settings.userSettings.param.UserSettingParam;
+import com.notrika.gympin.common.user.user.dto.InviteCode;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.corporate.corporate.api.CorporateController;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
@@ -166,6 +167,11 @@ public class CorporateControllerImpl implements CorporateController {
     @GetMapping("/getCorporateSettings")
     public ResponseEntity<List<CorporateSettingDto>> getCorporateSettings(CorporateSettingParam corporateSettingParam) {
         return ResponseEntity.ok(corporateSettingsService.getCorporateSettings(corporateSettingParam.getId()));
+    }
+    @Override
+    @GetMapping("/getAffiliateCode")
+    public ResponseEntity<InviteCode> getCorporateAffiliateCode(CorporateParam corporateParam) {
+        return ResponseEntity.ok(corporateService.getAffiliateCode(corporateParam.getId()));
     }
 
     @Override

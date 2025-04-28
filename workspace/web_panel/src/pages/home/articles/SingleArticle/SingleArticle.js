@@ -37,7 +37,8 @@ const SingleArticle = () => {
     }
 
     function updateArticle(name, data) {
-        setArticle({...article, [name]: data})
+        console.log("update article",name,data);
+        setArticle({...article, [name]: data});
     }
 
     function changeSelectedCategories(data, category) {
@@ -52,6 +53,7 @@ const SingleArticle = () => {
 
     function updateArticleData() {
         setLoading(true)
+        console.log("article",article);
         Article_update(article).then(result => {
             setLoading(false);
             error.showError({message: "با موفقیت ویرایش شد",});

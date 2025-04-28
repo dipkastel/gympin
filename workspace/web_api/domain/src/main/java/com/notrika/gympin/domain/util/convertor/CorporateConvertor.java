@@ -68,6 +68,7 @@ public final class CorporateConvertor {
     }
 
     public static CorporatePersonnelDto toPersonnelDto(CorporatePersonnelEntity entity) {
+        if(entity==null) return null;
         CorporatePersonnelDto dto = new CorporatePersonnelDto();
         dto.setId(entity.getId());
         dto.setCorporate(toDto(entity.getCorporate()));

@@ -4,6 +4,7 @@ import com.notrika.gympin.common.corporate.corporate.param.*;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
 import com.notrika.gympin.common.finance.transaction.param.FinanceCorporateParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.user.user.dto.InviteCode;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
@@ -30,4 +31,5 @@ public interface CorporateService extends BaseService<CorporateParam, CorporateD
     Boolean sendContractCode(CorporateContractSmsParam param);
     CorporateDto signContract(CorporateParam corporateParam);
 
+    InviteCode getAffiliateCode(Long id);
 }

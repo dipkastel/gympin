@@ -48,6 +48,7 @@ public final class GeneralHelper {
 
 
     /*invite codes
+    A : invited by Affiliate
     P : invited by place
     C : invited by corporate
     U : invited by user
@@ -79,6 +80,15 @@ public final class GeneralHelper {
         return false;
     }
 
+    public static Long CodeToId(String inviteCode) {
+        if(inviteCode==null) return null;
+        String pureInviteCode = "";
+        pureInviteCode = (inviteCode.startsWith("A") ||inviteCode.startsWith("P") || inviteCode.startsWith("C") || inviteCode.startsWith("U")) ?
+                inviteCode.substring(1) : inviteCode;
+        String code = pureInviteCode.substring(3, pureInviteCode.length() - 2);
+        return Long.parseLong(code, 16);
+    }
+
     private static boolean checkInviteByGifts(String inviteCode, ManageGiftCreditRepository giftCreditRepository) {
         ManageGiftCreditEntity giftCreditEntity = giftCreditRepository.getByRegisterCodeAndDeletedIsFalse(inviteCode);
         if (giftCreditEntity == null)
@@ -92,13 +102,13 @@ public final class GeneralHelper {
         return true;
     }
 
-    public static String getInviteCode(Long userId, Integer num) {
-        var Token = secret[(int) (userId % secret.length)] +
-                secret[(int) (userId % (secret.length - 1))] +
+    public static String getInviteCode(Long id, Integer num) {
+        var Token = secret[(int) (id % secret.length)] +
+                secret[(int) (id % (secret.length - 1))] +
                 num +
-                Long.toHexString(userId) +
-                secret[(int) (userId % (secret.length - 2))] +
-                secret[(int) (userId % (secret.length - 3))];
+                Long.toHexString(id) +
+                secret[(int) (id % (secret.length - 2))] +
+                secret[(int) (id % (secret.length - 3))];
         return Token.toUpperCase();
     }
 
@@ -123,7 +133,7 @@ public final class GeneralHelper {
     }
 
     private static String GenerateString(int range) {
-        String list = "ABCDEFGHJKMNPQRSTUVWXYZ123456789";
+        String list = "ABCDEFGHJMNPQRSTUVWXYZ123456789";
         var res = "";
         for (var i = 0; i < range; i++) {
             int rnd = Math.round((float) Math.random() * (list.length() - 1));

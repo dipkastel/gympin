@@ -16,6 +16,7 @@ public interface CorporatePersonnelService extends BaseService<CorporatePersonne
 
     List<CorporatePersonnelDto> getPersonnelByCorporate(CorporateParam corporateParam);
     List<CorporatePersonnelDto> getByUserid(Long userId);
+    CorporatePersonnelDto getPersonnelByCorporateIdAndUserId(long corporateId,long userId);
     List<CorporatePersonnelDto> getOwnedByUserid(Long userId);
     List<CorporatePersonnelDto> addList(CorporatePersonnelFileParam param);
 }

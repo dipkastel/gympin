@@ -10,6 +10,7 @@ import com.notrika.gympin.common.place.place.param.PlaceContractSmsParam;
 import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.settings.corporateSettings.dto.CorporateSettingDto;
 import com.notrika.gympin.common.settings.corporateSettings.param.CorporateSettingParam;
+import com.notrika.gympin.common.user.user.dto.InviteCode;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelGroupDto;
@@ -49,6 +50,8 @@ public interface CorporateController extends BaseController<CorporateParam, Corp
     ResponseEntity<List<CorporateSettingDto>> getCorporateSettings(CorporateSettingParam corporateSettingParam);
 
     ResponseEntity<CorporateSettingDto> SetCorporateSettings(@RequestBody CorporateSettingParam corporateSettingParam);
+
+    ResponseEntity<InviteCode> getCorporateAffiliateCode(CorporateParam corporateParam);
 
 
 }

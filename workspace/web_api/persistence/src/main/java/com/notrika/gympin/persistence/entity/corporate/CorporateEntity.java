@@ -5,6 +5,7 @@ import com.notrika.gympin.common.corporate.corporate.enums.CorporateContractType
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.authCodes.CorporateContractCodeEntity;
+import com.notrika.gympin.persistence.entity.finance.affiliate.FinanceAffiliatorEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
@@ -122,6 +123,12 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     @JsonIgnore
     @ToString.Exclude
     private List<ManageGiftCreditEntity> gifts;
+
+    @ManyToOne
+    @JsonIgnore
+    @ToString.Exclude
+    private FinanceAffiliatorEntity affiliator;
+
 
     @Override
     public boolean equals(Object o) {

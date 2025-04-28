@@ -78,6 +78,7 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
     SettingsService settingsService;
 
     @Override
+    @Transactional
     public FinanceIncreaseCorporateDepositDto add(@NonNull FinanceIncreaseCorporateDepositParam param) {
         FinanceSerialEntity serial = financeSerialRepository.add(FinanceSerialEntity.builder()
                 .serial(java.util.UUID.randomUUID().toString())
@@ -90,6 +91,7 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
                 .serial(serial)
                 .gatewayType(GatewayType.ADMIN_PANEL)
                 .depositStatus(DepositStatus.REQUESTED)
+                .requestInvoice(false)
                 .build());
         return IncreaseConvertor.ToDto(increaseCorporateDeposit);
     }
