@@ -29,4 +29,7 @@ public interface AffiliateService extends BaseService<AffiliateParam, AffiliateD
     PlaceDto AddPlaceToAffiliator(AffiliateAddPlaceParam param);
     List<PlaceDto> getPlacesByAffiliatorId(Long id);
 
+    CorporateDto RemoveCorporatesToAffiliator(AffiliateAddCorporateParam param);
+    PlaceDto RemovePlaceToAffiliator(AffiliateAddPlaceParam param);
+
 }

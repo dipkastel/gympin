@@ -211,6 +211,15 @@ public class AffiliateServiceImpl extends AbstractBaseService<AffiliateParam, Af
     }
     @Override
     @Transactional
+    public CorporateDto RemoveCorporatesToAffiliator(AffiliateAddCorporateParam param){
+        CorporateEntity corporate = CorporateService.getEntityById(param.getCorporate().getId());
+        corporate.setAffiliator(null);
+        CorporateService.update(corporate);
+    return CorporateConvertor.toDto(corporate);
+
+    }
+    @Override
+    @Transactional
     public List<CorporateDto> getCorporatesByAffiliatorId(Long id){
         FinanceAffiliatorEntity entity = financeAffiliateRepository.getById(id);
     return entity.getCorporates().stream().map(CorporateConvertor::toDto).collect(Collectors.toList());
@@ -223,6 +232,15 @@ public class AffiliateServiceImpl extends AbstractBaseService<AffiliateParam, Af
         FinanceAffiliatorEntity affiliator = getEntityById(param.getId());
         PlaceEntity place = placeService.getEntityById(param.getPlace().getId());
         place.setAffiliator(affiliator);
+        placeService.update(place);
+        return PlaceConvertor.toDto(place);
+    }
+
+    @Override
+    @Transactional
+    public PlaceDto RemovePlaceToAffiliator(AffiliateAddPlaceParam param){
+        PlaceEntity place = placeService.getEntityById(param.getPlace().getId());
+        place.setAffiliator(null);
         placeService.update(place);
         return PlaceConvertor.toDto(place);
     }

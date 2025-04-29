@@ -4,7 +4,7 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {
     affiliate_add,
     affiliate_AddCorporatesToAffiliator,
-    affiliate_getCorporatesByAffiliatorId
+    affiliate_getCorporatesByAffiliatorId, affiliate_RemoveCorporatesToAffiliator
 } from "../../../../network/api/affiliate.api";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -101,6 +101,19 @@ const AffiliateCorporates = ({affiliateId}) => {
     }
 
 
+    function remove(item){
+        affiliate_RemoveCorporatesToAffiliator({Corporate:{Id:item.Id}})
+            .then((data) => {
+                getCorporates();
+            }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }
+
     return (
         <>
 
@@ -145,7 +158,7 @@ const AffiliateCorporates = ({affiliateId}) => {
                                                 <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                            align="right">{getCorporateFixedName(row)}</TableCell>
                                                 <TableCell component="th" id={labelId} scope="row" padding="normal"
-                                                           align="left"><Button color={"error"} variant={"contained"}>حذف</Button></TableCell>
+                                                           align="left"><Button color={"error"} variant={"contained"} onClick={()=>remove(row)}>حذف</Button></TableCell>
                                             </TableRow>
                                         );
                                     })}

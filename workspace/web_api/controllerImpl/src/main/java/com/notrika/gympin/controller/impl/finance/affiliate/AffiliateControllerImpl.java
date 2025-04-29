@@ -52,6 +52,12 @@ public class AffiliateControllerImpl implements AffiliateController {
     }
 
     @Override
+    @PostMapping("RemoveCorporatesToAffiliator")
+    public ResponseEntity<CorporateDto> RemoveCorporatesToAffiliator(AffiliateAddCorporateParam param) {
+        return ResponseEntity.ok(affiliateService.RemoveCorporatesToAffiliator(param));
+    }
+
+    @Override
     @GetMapping("getCorporatesByAffiliatorId")
     public ResponseEntity<List<CorporateDto>> getCorporatesByAffiliatorId(Long id) {
         return ResponseEntity.ok(affiliateService.getCorporatesByAffiliatorId(id));
@@ -61,6 +67,12 @@ public class AffiliateControllerImpl implements AffiliateController {
     @PostMapping("AddPlaceToAffiliator")
     public ResponseEntity<PlaceDto> AddPlaceToAffiliator(AffiliateAddPlaceParam param) {
         return ResponseEntity.ok(affiliateService.AddPlaceToAffiliator(param));
+    }
+
+    @Override
+    @PostMapping("RemovePlaceToAffiliator")
+    public ResponseEntity<PlaceDto> RemovePlaceToAffiliator(AffiliateAddPlaceParam param) {
+        return ResponseEntity.ok(affiliateService.RemovePlaceToAffiliator(param));
     }
 
     @Override

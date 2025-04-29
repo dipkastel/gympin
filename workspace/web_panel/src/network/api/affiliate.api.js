@@ -22,11 +22,17 @@ export function affiliate_query(data) {
 export function affiliate_AddCorporatesToAffiliator(data) {
     return axios.post(AffiliateApi.AddCorporatesToAffiliator,data);
 }
+export function affiliate_RemoveCorporatesToAffiliator(data) {
+    return axios.post(AffiliateApi.RemoveCorporatesToAffiliator,data);
+}
 export function affiliate_getCorporatesByAffiliatorId(id) {
     return axios.get(AffiliateApi.getCorporatesByAffiliatorId,{ params: id });
 }
 export function affiliate_AddPlaceToAffiliator(data) {
     return axios.post(AffiliateApi.AddPlaceToAffiliator,data);
+}
+export function affiliate_RemovePlaceToAffiliator(data) {
+    return axios.post(AffiliateApi.RemovePlaceToAffiliator,data);
 }
 export function affiliate_getPlacesByAffiliatorId(id) {
     return axios.get(AffiliateApi.getPlacesByAffiliatorId,{ params: id });

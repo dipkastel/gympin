@@ -1,14 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {affiliate_AddPlaceToAffiliator, affiliate_getPlacesByAffiliatorId} from "../../../../network/api/affiliate.api";
+import {
+    affiliate_AddPlaceToAffiliator,
+    affiliate_getPlacesByAffiliatorId,
+    affiliate_RemoveCorporatesToAffiliator, affiliate_RemovePlaceToAffiliator
+} from "../../../../network/api/affiliate.api";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {getCorporateFixedName} from "../../../../helper";
+import {getCorporateFixedName, getPlaceFixedName} from "../../../../helper";
 import {Button, CircularProgress} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal} from "react-bootstrap";
@@ -94,6 +98,20 @@ const AffiliateCorporates = ({affiliateId}) => {
     }
 
 
+    function remove(item){
+        affiliate_RemovePlaceToAffiliator({Place:{Id:item.Id}})
+            .then((data) => {
+                getPlaces();
+            }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }
+
+
     return (
         <>
 
@@ -136,10 +154,10 @@ const AffiliateCorporates = ({affiliateId}) => {
                                                 <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                            align="right">{row.Id}</TableCell>
                                                 <TableCell component="th" id={labelId} scope="row" padding="normal"
-                                                           align="right">{getCorporateFixedName(row)}</TableCell>
+                                                           align="right">{getPlaceFixedName(row)}</TableCell>
                                                 <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                            align="left">
-                                                    <Button color={"error"} variant={"contained"} size={"small"} >حذف</Button></TableCell>
+                                                    <Button color={"error"} variant={"contained"} size={"small"} onClick={(e)=>remove(row)} >حذف</Button></TableCell>
                                             </TableRow>
                                         );
                                     })}

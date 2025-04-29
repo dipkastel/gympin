@@ -25,8 +25,10 @@ public interface AffiliateController extends BaseController<AffiliateParam, Affi
     ResponseEntity<AffiliateTPRegisterDto> tpRegister(HttpServletRequest request,@RequestBody AffiliateTPRegisterParam param) throws Exception;
 
     ResponseEntity<CorporateDto> AddCorporatesToAffiliator(@RequestBody AffiliateAddCorporateParam param);
+    ResponseEntity<CorporateDto> RemoveCorporatesToAffiliator(@RequestBody AffiliateAddCorporateParam param);
     ResponseEntity<List<CorporateDto>> getCorporatesByAffiliatorId(Long id);
     ResponseEntity<PlaceDto> AddPlaceToAffiliator(@RequestBody AffiliateAddPlaceParam param);
+    ResponseEntity<PlaceDto> RemovePlaceToAffiliator(@RequestBody AffiliateAddPlaceParam param);
     ResponseEntity<List<PlaceDto>> getPlacesByAffiliatorId(Long id);
 
 }
