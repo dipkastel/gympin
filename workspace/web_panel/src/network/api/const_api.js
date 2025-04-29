@@ -42,6 +42,10 @@ export let AffiliateApi = {
     getById: "v1/affiliate/getbyid",
     update: "v1/affiliate/update",
     query: "v1/affiliate/query",
+    AddCorporatesToAffiliator: "v1/affiliate/AddCorporatesToAffiliator",
+    getCorporatesByAffiliatorId: "v1/affiliate/getCorporatesByAffiliatorId",
+    AddPlaceToAffiliator: "v1/affiliate/AddPlaceToAffiliator",
+    getPlacesByAffiliatorId: "v1/affiliate/getPlacesByAffiliatorId",
 };
 
 export let CorporateApi = {

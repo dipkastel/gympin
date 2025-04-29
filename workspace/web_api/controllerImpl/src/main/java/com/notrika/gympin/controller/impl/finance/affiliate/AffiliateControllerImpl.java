@@ -1,16 +1,22 @@
 package com.notrika.gympin.controller.impl.finance.affiliate;
 
+import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.finance.affiliate.api.AffiliateController;
 import com.notrika.gympin.common.finance.affiliate.dto.AffiliateDto;
 import com.notrika.gympin.common.finance.affiliate.dto.AffiliateTPRegisterDto;
+import com.notrika.gympin.common.finance.affiliate.param.AffiliateAddCorporateParam;
+import com.notrika.gympin.common.finance.affiliate.param.AffiliateAddPlaceParam;
 import com.notrika.gympin.common.finance.affiliate.param.AffiliateParam;
 import com.notrika.gympin.common.finance.affiliate.param.AffiliateTPRegisterParam;
 import com.notrika.gympin.common.finance.affiliate.query.AffiliateQuery;
 import com.notrika.gympin.common.finance.affiliate.service.AffiliateService;
+import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,15 +31,42 @@ public class AffiliateControllerImpl implements AffiliateController {
     @Autowired
     AffiliateService affiliateService;
 
+    @Autowired
+    UserService userService;
+
     @Override
     public ResponseEntity<AffiliateDto> add(AffiliateParam param) {
-        return null;
+        return ResponseEntity.ok(affiliateService.add(param));
     }
 
     @Override
     @PostMapping("TPRegister")
     public ResponseEntity<AffiliateTPRegisterDto> tpRegister(HttpServletRequest request, AffiliateTPRegisterParam param) throws Exception {
         return ResponseEntity.ok(affiliateService.tpRegister(request, param));
+    }
+
+    @Override
+    @PostMapping("AddCorporatesToAffiliator")
+    public ResponseEntity<CorporateDto> AddCorporatesToAffiliator(AffiliateAddCorporateParam param) {
+        return ResponseEntity.ok(affiliateService.AddCorporatesToAffiliator(param));
+    }
+
+    @Override
+    @GetMapping("getCorporatesByAffiliatorId")
+    public ResponseEntity<List<CorporateDto>> getCorporatesByAffiliatorId(Long id) {
+        return ResponseEntity.ok(affiliateService.getCorporatesByAffiliatorId(id));
+    }
+
+    @Override
+    @PostMapping("AddPlaceToAffiliator")
+    public ResponseEntity<PlaceDto> AddPlaceToAffiliator(AffiliateAddPlaceParam param) {
+        return ResponseEntity.ok(affiliateService.AddPlaceToAffiliator(param));
+    }
+
+    @Override
+    @GetMapping("getPlacesByAffiliatorId")
+    public ResponseEntity<List<PlaceDto>> getPlacesByAffiliatorId(Long id) {
+        return ResponseEntity.ok(affiliateService.getPlacesByAffiliatorId(id));
     }
 
     @Override

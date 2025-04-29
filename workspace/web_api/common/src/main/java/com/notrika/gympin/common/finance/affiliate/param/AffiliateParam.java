@@ -2,6 +2,7 @@ package com.notrika.gympin.common.finance.affiliate.param;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.finance.affiliate.enums.AffiliatorStatus;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util.ApplicationEnum;
 import com.notrika.gympin.common.util._base.param.BaseParam;
@@ -31,5 +32,8 @@ public class AffiliateParam extends BaseParam<AffiliateParam> {
 
     @JsonProperty("Password")
     private String password;
+
+    @JsonProperty("Status")
+    private AffiliatorStatus status;
 
 }

@@ -45,4 +45,5 @@ public class AffiliateDto extends BaseDtoWithCreateUpdate<AffiliateDto> {
     @JsonProperty("PlaceCount")
     private Integer placeCount = 0;
 
+
 }

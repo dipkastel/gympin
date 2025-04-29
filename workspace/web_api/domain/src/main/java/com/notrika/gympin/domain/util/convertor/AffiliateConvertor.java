@@ -14,8 +14,12 @@ public final class AffiliateConvertor {
         dto.setCommissionFee(entity.getCommissionFee());
         dto.setUsername(entity.getUsername());
         dto.setIncome(entity.getIncome());
-        dto.setCorporateCount(entity.getCorporates().size());
-        dto.setPlaceCount(entity.getPlaces().size());
+        try {
+            dto.setCorporateCount(entity.getCorporates().size());
+        }catch (Exception e){}
+        try {
+            dto.setPlaceCount(entity.getPlaces().size());
+        }catch (Exception e){}
         dto.setAffiliatorStatus(entity.getAffiliatorStatus());
         return dto;
     }

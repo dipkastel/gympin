@@ -18,7 +18,6 @@ const __SelectCorporate = ({hidden,onChange,value}) => {
     const promiseUserOptions = (inputValue) => {
         return new Promise((resolve) => {
             function getLabelOfUser(itm) {
-                console.log(itm);
                 return (<Grid container direction="row" justifyContent="space-between" alignItems="center">
                     <Typography variant={"body2"}>{itm.Name}</Typography>
                     <Typography variant={"body2"}>{toPriceWithComma(itm?.FinanceCorporate?.TotalDeposit-itm?.FinanceCorporate?.TotalCredits)}</Typography>

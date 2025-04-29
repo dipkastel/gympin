@@ -1,10 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {getRppAffiliateManagement, SetRppAffiliateManagement, SetRppArticlesManagement} from "../../../helper/pocket/pocket";
-import {Article_query} from "../../../network/api/article.api";
-import {affiliate_query} from "../../../network/api/affiliate.api";
+import {getRppAffiliateManagement, SetRppAffiliateManagement} from "../../../helper/pocket/pocket";
+import {affiliate_add, affiliate_query} from "../../../network/api/affiliate.api";
 import Notice from "../../partials/content/Notice";
-import {Button, Card, CardContent, CardHeader, Chip, Grid, TextField} from "@mui/material";
+import {Button} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
@@ -13,24 +12,27 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {Image} from "react-bootstrap";
-import {ArticleStatus} from "../../../helper/enums/ArticleStatus";
+import {Form, Modal} from "react-bootstrap";
 import TablePagination from "@mui/material/TablePagination";
 import {getUserFixedName} from "../../../helper";
+import {useHistory} from "react-router-dom";
+import __SelectUser from "../gifts/partial/__SelectUser";
 
 const AffiliateManagement = () => {
 
 
     const error = useContext(ErrorContext);
+    const history = useHistory();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppAffiliateManagement());
     const [affiliatorsList, setAffiliatorsList] = useState([]);
+    const [openModalAdd, setOpenModalAdd] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState(null);
 
 
     useEffect(() => {
         getAffiliators();
     }, []);
-
 
     function getAffiliators() {
 
@@ -53,6 +55,88 @@ const AffiliateManagement = () => {
             });
     }
 
+
+    function RenderModalAdd() {
+        function addAffiliator(e) {
+            e.preventDefault()
+            affiliate_add({
+                User: {Id: selectedUserId},
+                Username: e.target.formUsername.value,
+                Password: e.target.formPassword.value,
+                CommissionFee: e.target.formCommissionFee.value
+            })
+                .then((data) => {
+                    history.push({
+                        pathname: "/affiliate/detail/" + data.data.Data.Id
+                    });
+                })
+                .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
+        }
+
+        return (
+            <>
+                <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
+                    <Form
+                        noValidate
+                        autoComplete="off"
+                        onSubmit={(e) => addAffiliator(e)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{"افزودن همکار فروش"}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <__SelectUser onChange={(e) => {
+                                setSelectedUserId(e.value)
+                            }}/>
+
+                            <Form.Group controlId="formUsername">
+                                <Form.Control
+                                    className={"mt-4"}
+                                    name="Username"
+                                    type="text"
+                                    placeholder="نام کاربری"
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formPassword">
+                                <Form.Control
+                                    name="password"
+                                    type="text"
+                                    placeholder="رمز عبور"
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formCommissionFee">
+                                <Form.Control
+                                    name="commission"
+                                    type="number"
+                                    placeholder="کمیسیون"
+                                />
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                className={"button_edit"}
+                                onClick={() => setOpenModalAdd(false)}
+                            >
+                                خیر
+                            </Button>
+                            <Button
+                                className={"button_danger"}
+                                type={"submit"}
+                            >
+                                اضافه
+                            </Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
+            </>
+        );
+    }
+
     return (
         <>
             <Notice icon="flaticon-warning kt-font-primary">مدیریت همکاران فروش</Notice>
@@ -60,7 +144,17 @@ const AffiliateManagement = () => {
             <Portlet>
                 <PortletHeader
                     title="همکاران فروش"
-
+                    toolbar={
+                        <PortletHeaderToolbar>
+                            <button
+                                type="button"
+                                className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
+                                onClick={(e) => setOpenModalAdd(true)}
+                            >
+                                <AddIcon/>
+                            </button>
+                        </PortletHeaderToolbar>
+                    }
                 />
 
                 <PortletBody>
@@ -80,23 +174,30 @@ const AffiliateManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>درامد</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>تعداد شرکت ها</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>تعداد مراکز</TableCell>
-                                    <TableCell align="right" padding="normal" sortDirection={false}>action</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {affiliatorsList.content && affiliatorsList.content.map((row, index) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
-                                        <TableRow hover  role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+                                        <TableRow hover onClick={(event) => {
+                                            history.push({pathname: "/affiliate/detail/" + row.Id});
+                                        }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
 
-                                            <TableCell component="th" id={labelId} scope="row" padding="normal" align="right">{row.Id}</TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="normal" align="right">{getUserFixedName(row.User)}</TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="normal" align="right">{row.CommissionFee}</TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="normal" align="right">{row.Username}</TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="normal" align="right">{row.Income}</TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="normal" align="right">{row.CorporateCount}</TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="normal" align="right">{row.PlaceCount}</TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="normal" align="right"></TableCell>
+                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
+                                                       align="right">{row.Id}</TableCell>
+                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
+                                                       align="right">{getUserFixedName(row.User)}</TableCell>
+                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
+                                                       align="right">{row.CommissionFee}</TableCell>
+                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
+                                                       align="right">{row.Username}</TableCell>
+                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
+                                                       align="right">{row.Income}</TableCell>
+                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
+                                                       align="right">{row.CorporateCount}</TableCell>
+                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
+                                                       align="right">{row.PlaceCount}</TableCell>
 
 
                                             {/*<TableCell onClick={(event) => {history.push({pathname: "/articles/details/" + row.Id});}} component="th" id={labelId} scope="row" padding="normal"*/}
@@ -133,6 +234,7 @@ const AffiliateManagement = () => {
                     />}
                 </PortletBody>
             </Portlet>
+            {RenderModalAdd()}
         </>
     );
 };
