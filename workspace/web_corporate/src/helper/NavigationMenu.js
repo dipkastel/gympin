@@ -8,7 +8,7 @@ import {
     CalendarMonth,
     CardGiftcard,
     CorporateFare,
-    CreditScore,
+    CreditScore, Fastfood, FoodBank,
     Group,
     GroupAdd,
     ManageAccounts,
@@ -112,6 +112,12 @@ export const NavigationMenu = [
         segment: 'events',
         title: 'ایونت ها',
         icon: <CalendarMonth/>,
+        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
+    },
+    {
+        segment: 'food',
+        title: 'غذای سازمانی',
+        icon: <Fastfood/>,
         action: <Chip label={"به زودی"} color={"default"} size="small"/>,
     },
     {

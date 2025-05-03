@@ -14,7 +14,7 @@ const _PersonnelCount = () => {
 
     useEffect(() => {
         getPersonnel();
-    }, []);
+    }, [corporate]);
 
 
 

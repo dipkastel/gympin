@@ -1,0 +1,13 @@
+package com.notrika.gympin.common.report.api;
+
+import com.notrika.gympin.common.report.dto.ReportDto;
+import com.notrika.gympin.common.report.dto.ReportUseCorporateChargeDto;
+import com.notrika.gympin.common.report.param.ReportParam;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+
+public interface ReportController  {
+
+    ResponseEntity<ReportUseCorporateChargeDto> useCorporateCharge(ReportParam param);
+
+}

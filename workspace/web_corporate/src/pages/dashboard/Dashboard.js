@@ -34,7 +34,7 @@ const Dashboard = (props) => {
                     <AnalyticsBox
                         icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />}
                         title="شارژ باقی مانده"
-                        onClick={()=>navigate("/finance/increaseCharge")}
+                        onClick={()=>navigate("/finance")}
                         color={"quaternary"}
                         total={toPriceWithComma(corporate?.FinanceCorporate?.TotalDeposit || 0) + " تومان"}
                     />

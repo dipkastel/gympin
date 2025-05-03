@@ -78,6 +78,9 @@ export let Api_url = {
         GET_ALL:"v1/region/getAll",
         GET_BY_CITY:"v1/region/getRegionsByCity"
     },
+    report:{
+        useCorporateCharge:"v1/report/useCorporateCharge"
+    },
     sport:{
         GET_ALL:"v1/sport/getAll"
     },

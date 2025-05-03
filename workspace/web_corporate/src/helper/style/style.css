@@ -111,6 +111,15 @@ input[type=number] {
   height: 160px;
 }
 
+.apexcharts-tooltip {
+  direction: rtl !important;
+}
+
+.apexcharts-tooltip-marker {
+  margin-left: 4px;
+  margin-right: 0px !important;
+}
+
 @-webkit-keyframes rotating /* Safari and Chrome */ {
   from {
     -webkit-transform: rotate(0deg);

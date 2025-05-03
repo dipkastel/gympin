@@ -169,6 +169,16 @@ export const BrowserRouter =[
         ],
     },
     {
+        path: 'food',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: ComingSoon,
+            },
+        ],
+    },
+    {
         path: 'management',
         Component: Layout,
         children: [
