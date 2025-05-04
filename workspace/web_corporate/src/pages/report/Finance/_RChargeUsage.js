@@ -19,7 +19,7 @@ const _RChargeUsage = () => {
 
     useEffect(() => {
         getUseCorporateCharge();
-    }, []);
+    }, [corporate]);
 
     if (!mode) {
         return null;
@@ -27,7 +27,8 @@ const _RChargeUsage = () => {
 
     function getUseCorporateCharge(){
         setLoadStatus(LoadStatus.LOADING);
-        Report_useCorporateCharge({id:corporate.Id}).then(result => {
+        if(!corporate)return;
+        Report_useCorporateCharge({id:corporate?.Id}).then(result => {
             if(result?.data?.Data?.Amounts?.length > 0){
                 setDData(result.data.Data);
                 setLoadStatus(LoadStatus.LOADED);
