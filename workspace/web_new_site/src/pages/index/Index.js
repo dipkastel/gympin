@@ -7,18 +7,20 @@ import _Apps from "./_Apps";
 import _Faq from "./_Faq";
 import _Sports from "./_Sports";
 import _Contact from "./_Contact";
-import _Values from "./_Values";
-import _Experiences from "./_Experiences";
 import _video from "../corporate/_Video";
+import _Values2 from "./_Values2";
+import _Slider from "./_Slider";
 
 const Index = () => {
     return (
         <>
+            <_Slider />
             <_Introduction/>
             <_ExcitingTexts/>
             <_RedAdditionalData/>
             <_video />
-            <_Values/>
+            <_Values2/>
+            {/*<_Values/>*/}
             <_OurGoals/>
             <_Apps/>
             {/*<_Experiences />*/}

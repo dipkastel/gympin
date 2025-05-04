@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from "@mui/material/Grid2";
-import {Container, Typography} from "@mui/material";
+import {Card, Container, Typography} from "@mui/material";
 
 const _Apps = () => {
     return (
@@ -40,7 +40,7 @@ const _Apps = () => {
                 </Grid>
                 <Grid container columns={4} alignContent={"center"} textAlign={"right"}>
                     <Grid sx={{p: 3}} item size={{md: 2, xs: 4}}>
-                        <img alt={"اپلیکیشن اختصاصی شرکت‌ها"} className={"apps-img"} src={"/assets/images/appuser.jpg"}/>
+                            <img alt={"اپلیکیشن اختصاصی شرکت‌ها"} className={"apps-img"} src={"/assets/images/appuser.jpg"}/>
                     </Grid>
                     <Grid sx={{px: 6}} item size={{md: 2, xs: 4}}>
                         <Typography sx={{fontWeight: 600, lineHeight: 2, mt: 8}} variant={"h5"}>اپلیکیشن اختصاصی کارمندان</Typography>

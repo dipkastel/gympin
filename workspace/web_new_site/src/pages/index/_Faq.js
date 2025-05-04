@@ -77,12 +77,12 @@ const _Faq = () => {
     function FaqSliderItem({title,text}) {
         return (
             <div>
-                    <Card className={"faqTopCard rtl"} elevation={12} sx={{borderRadius: 8}}>
+                    <Card className={"faqTopCard rtl"} elevation={12} sx={{borderRadius: 4}}>
                         <Grid className={"experience-text"} container direction={"column"} alignItems={"start"} textAlign={"center"}>
                             <Typography sx={{px: 2, p: 2, textAlign: "justify"}} variant={"body1"}>{title}</Typography>
                         </Grid>
                     </Card>
-                    <Card className={"faqBottomCard rtl"} elevation={12} sx={{borderRadius: 8}}>
+                    <Card className={"faqBottomCard rtl"} elevation={12} sx={{borderRadius: 4}}>
                         <Grid className={"experience-text"} container direction={"column"} alignItems={"start"} textAlign={"center"}>
                             <Typography sx={{px: 2, p: 2, textAlign: "justify"}} variant={"body1"}>{text}</Typography>
                         </Grid>

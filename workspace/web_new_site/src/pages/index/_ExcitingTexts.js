@@ -11,7 +11,7 @@ const _ExcitingTexts = () => {
                   textAlign={"center"}
                   alignContent={"space-around"}>
                 <Grid item size={{xs:3,sm:1}}>
-                    <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={0}>
+                    <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={3}>
                         <Typography component={"span"} variant={"subtitle2"}>
                             {"150 دقیقه فعالیت بدنی متوسط در هفته، می‌تواند هم اندازه داروهای ضدافسردگی تاثیر گذار باشد. "}
                         </Typography>
@@ -21,7 +21,7 @@ const _ExcitingTexts = () => {
                     </Card>
                 </Grid>
                 <Grid item size={{xs:3,sm:1}}>
-                    <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={0}>
+                    <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={3}>
                         <Typography component={"span"} variant={"subtitle2"}>
                             توجه سازمان به سلامت ذهن و بدن کارمندان، اکنون بیشتر از هر زمان دیگری برای جذب و نگه‌داشت نیرو حیاتی‌ است.
                         </Typography>
@@ -32,7 +32,7 @@ const _ExcitingTexts = () => {
                     </Card>
                 </Grid>
                 <Grid item size={{xs:3,sm:1}}>
-                    <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={0}>
+                    <Card className={"text"} sx={{mx: 3,my: 5, p: 2, bgcolor: "#eae8e9", borderRadius: 3}} elevation={3}>
                         <Typography component={"span"} variant={"subtitle2"}>
                             در نظر گرفتن بودجه ورزشی از سمت سازمان، به کارمندان احساس ارزشمند بودن می‌دهد.
                         </Typography>

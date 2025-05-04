@@ -22,7 +22,7 @@ const _BlogContents = () => {
             "Status": "PUBLISHED",
             "paging": {
                 "Page": page,
-                "Size": 10,
+                "Size": 9,
                 "Desc": true
             }
         }).then(result => {

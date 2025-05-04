@@ -33,7 +33,7 @@ const __IntroForm = () => {
                     تماس بگیرید!</Alert>
             </Collapse>
             <Collapse in={thisFormStatus !== formStatus.complete}>
-                <Card elevation={2} sx={{my: 3, borderRadius: 3, maxWidth: 500}}>
+                <Card elevation={4} sx={{my: 3, borderRadius: 3, maxWidth: 500}}>
                     <CardContent>
                         <Grid direction={"column"} spacing={3} textAlign={"center"}><Typography variant={"body2"} sx={{
                             fontWeight: 500,

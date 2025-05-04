@@ -6,7 +6,7 @@ const _Sports = () => {
     function SportItem({title,alt,image,text,size}) {
         return (
             <Grid size={size} justifyItems={"center"}>
-                <Card className={"sportCard"} elevation={14} sx={{backgroundImage:image}} >
+                <Card className={"sportCard"} elevation={3} sx={{backgroundImage:image,borderRadius:3}} >
                     <img className={"bgImage"} alt={alt} src={image}/>
                     <div className={"overlay"}>
                         <Grid container columns={12}>
