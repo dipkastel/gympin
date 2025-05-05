@@ -9,6 +9,7 @@ import com.notrika.gympin.persistence.dao.repository.settings.ManageGiftCreditRe
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -53,6 +54,7 @@ public final class GeneralHelper {
     C : invited by corporate
     U : invited by user
     G : invited by gift Cards*/
+    @Transactional
     public static boolean checkInviteCode(String inviteCode, UserRepository userRepository, ManageGiftCreditRepository giftRepository) {
 
         String pureInviteCode = "";
@@ -73,6 +75,7 @@ public final class GeneralHelper {
                 if (generatedInviteCode.equals(pureInviteCode))
                     return true;
             default:
+                if(!inviteCode.equals(generatedInviteCode)) return false;
                 List<UserEntity> alreadyUseByUser = userRepository.findByInvitedBy(generatedInviteCode);
                 if (alreadyUseByUser.size() < 1 && generatedInviteCode.equals(pureInviteCode))
                     return true;

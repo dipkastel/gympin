@@ -113,13 +113,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public UserRegisterDto registerByInviteCode(UserRegisterParam userRegisterParam) {
         log.info("Going to register user by invite code...\n");
         UserEntity user = userService.getByPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
         if (user != null) throw new EntryAlreadyExistException();
-        GeneralHelper.checkInviteCode(userRegisterParam.getInvitedBy(), userRepository,giftCreditRepository);
-//        if (!)
-//            throw new InviteCodeNotValid();
+        boolean checkResult = GeneralHelper.checkInviteCode(userRegisterParam.getInvitedBy(), userRepository,giftCreditRepository);
+        if (!checkResult)
+            throw new InviteCodeNotValid();
         try {
             userRegisterParam.setUserRole(RoleEnum.USER);
             UserEntity insertedUser = addUser(userRegisterParam);
@@ -143,19 +144,14 @@ public class AccountServiceImpl implements AccountService {
         UserEntity user = new UserEntity();
         user.setUsername("USER_" + new Date().getTime());
         user.setPhoneNumber(GeneralHelper.fixPhoneNumber(userRegisterParam.getPhoneNumber()));
-
-
         if (userRegisterParam.getUserRole() == null)
             userRegisterParam.setUserRole(RoleEnum.USER);
-
         Set<UserRolesEntity> userRoles = new java.util.HashSet<>(Set.of(
                 UserRolesEntity.builder().role(RoleEnum.USER).build()
         ));
         if (userRegisterParam.getUserRole() != RoleEnum.USER)
             userRoles.add(UserRolesEntity.builder().role(userRegisterParam.getUserRole()).build());
         user.setUserRoles(userRoles);
-
-
         if (userRegisterParam.getFullName() != null)
             user.setFullName(userRegisterParam.getFullName());
         if (userRegisterParam.getInvitedBy() != null)
