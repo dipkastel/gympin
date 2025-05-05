@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Grid from "@mui/material/Grid2";
 import {Avatar, Card, Typography} from "@mui/material";
 import Slider from "react-slick";
 
 const _Slider = () => {
 
+    const [ww,setWw] = useState(window.innerWidth);
+
     const settings = {
-        centerMode: true,
+        centerMode: false,
         infinite: true,
         slidesToShow: 1,
         dots: true,
@@ -41,9 +43,9 @@ const _Slider = () => {
 
             <div>
                 <Slider  {...settings}>
-                    <SliderItem src={"/assets/images/slide1.jpg"} />
-                    <SliderItem src={"/assets/images/slide2.jpg"}/>
-                    <SliderItem src={"/assets/images/slide3.jpg"}/>
+                    <SliderItem src={ww>600?"/assets/images/slide1.jpg":"/assets/images/slide11.jpg"} />
+                    <SliderItem src={ww>600?"/assets/images/slide2.jpg":"/assets/images/slide12.jpg"}/>
+                    <SliderItem src={ww>600?"/assets/images/slide3.jpg":"/assets/images/slide13.jpg"}/>
                 </Slider>
             </div>
         </section>

@@ -1,9 +1,11 @@
-import React from 'react';
-import {Typography} from "@mui/material";
+import React, {useEffect, useState} from 'react';
+import {Container, Typography} from "@mui/material";
 import {TypeAnimation} from "react-type-animation";
+import Grid from "@mui/material/Grid2";
 
 const _Values2 = () => {
     const canvasRef = React.useRef(null);
+    const widthRef = React.useRef(null);
     const [particles, setParticles] = React.useState([])
     const [canvas, setCanvas] = React.useState(null)
     const [context, setContext] = React.useState(null)
@@ -13,20 +15,22 @@ const _Values2 = () => {
     const RADIUS = 5;
     const COLOURS = ["#eaa7a7", "#de7a7a", "#e05b5b"];
 
-    React.useEffect(() => {
+    useEffect(() => {
         let canvasTemp = canvasRef.current;
-        canvasTemp.width = window.innerWidth-15;
-        canvasTemp.height = window.innerHeight/4;
+        let width = widthRef.current;
+        console.log("innerwidth",window.innerWidth,"screenWidth",window.screen.width,"outherwidth",window.outerWidth,widthRef)
+        canvasTemp.width = width.clientWidth;
+        canvasTemp.height = window.innerHeight/3;
         setContext(canvasTemp.getContext('2d'));
         setCanvas(canvasTemp);
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if(particles&&context)
             animate();
     }, [particles,context]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if(canvas)
             createParticles();
     }, [canvas]);
@@ -77,18 +81,18 @@ const _Values2 = () => {
     };
 
     return (
-        <>
-            <div className={"HeaderText"}>
+        <section>
+            <Grid className={"HeaderText"}>
                 <Typography variant={"h2"}>چرا جیم پین؟</Typography>
                 <TypeAnimation
                     sequence={[
                         "تعداد زیاد و رو به افزایش مراکز ورزشی",
                         3000,
+                        "قدرتی، آبی، هوازی، توپی، رزمی، راکتی، ماساژ و ... ",
+                        3000,
                         "پوشش دهی تمام مناطق استان تهران و البرز",
                         3000,
                         "تنوع بی‌نظیر و گسترده رشته‌های ورزشی",
-                        3000,
-                        "قدرتی، آبی، هوازی، توپی، رزمی، راکتی، ماساژ و ... ",
                         3000,
                         "تخفیف‌های شگفت انگیز برای کارمندان",
                         3000,
@@ -132,9 +136,11 @@ const _Values2 = () => {
                     repeat={Infinity}
                     style={{ fontSize: '2.5em', display: 'inline-block' }}
                 />
-            </div>
-            <canvas ref={canvasRef} className=" block headerCanvas"/>
-        </>
+            </Grid>
+            <Grid ref={widthRef} sx={{width:"100%"}}>
+            </Grid>
+                <canvas ref={canvasRef} className=" block headerCanvas"/>
+        </section>
     );
 };
 
