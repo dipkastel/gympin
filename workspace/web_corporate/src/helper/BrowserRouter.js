@@ -21,6 +21,7 @@ import SupportDetail from "../pages/support/supportDetail/SupportDetail";
 import NewSupport from "../pages/support/NewSupport";
 import SettingsCorporate from "../pages/settings/SettingsCorporate";
 import GeneralReport from "../pages/report/GeneralReport";
+import Food from "../pages/food/Food";
 
 export const BrowserRouter =[
     {
@@ -174,7 +175,7 @@ export const BrowserRouter =[
         children: [
             {
                 path: '',
-                Component: ComingSoon,
+                Component: Food,
             },
         ],
     },

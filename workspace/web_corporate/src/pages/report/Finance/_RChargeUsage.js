@@ -150,7 +150,7 @@ const _RChargeUsage = () => {
                 {/*             fill="#e7333e"/>*/}
                 {/*    </BarChart>*/}
                 {/*</ResponsiveContainer>*/}
-                <Chart options={Roptions} series={Rseries}  type="bar" height={350} />
+                <Chart options={Roptions} series={Rseries}  type="bar" height={280} />
             </BaseReportBox>
     </>
     );

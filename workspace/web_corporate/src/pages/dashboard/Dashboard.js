@@ -12,6 +12,11 @@ import Home from "../home/Home";
 import _RChargeUsage from "../report/Finance/_RChargeUsage";
 import _RUsageByUser from "../report/Usage/_RUsageByUser";
 import _RAverageOfUserTickets from "../report/Finance/_RAverageOfUserTickets";
+import _DashTotalDeposit from "./_DashTotalDeposit";
+import _TotalCredits from "../finance/_TotalCredits";
+import _DashTotalCredit from "./_DashTotalCredit";
+import _DashSlider from "./_DashSlider";
+import _DashCatItem from "../../components/_DashCatItem";
 
 const Dashboard = (props) => {
 
@@ -27,28 +32,16 @@ const Dashboard = (props) => {
         <>
             <title>پیشخوان</title>
             <Grid container columns={12}>
-                <Grid sx={{m:3}} size={{xs: 12, sm: 12, md: 12}}>
-                    <Typography variant={"subtitle1"}>به پیشخوان خوش آمدید 👋</Typography>
-                </Grid>
-                <Grid size={{xs: 12, sm: 6, md: 5 ,lg:3}}>
-                    <AnalyticsBox
-                        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />}
-                        title="شارژ باقی مانده"
-                        onClick={()=>navigate("/finance")}
-                        color={"quaternary"}
-                        total={toPriceWithComma(corporate?.FinanceCorporate?.TotalDeposit || 0) + " تومان"}
-                    />
+                <Grid size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
+                    <_DashSlider />
                 </Grid>
 
                 <Grid size={{xs: 12, sm: 6, md: 5 ,lg:3}}>
-                    <AnalyticsBox
-                        icon={<img alt="icon" src="/assets/images/icons/ic-glass-mob.svg" />}
-                        title="مجموع اعتبارها"
-                        color={"tertiary"}
-                        onClick={()=>navigate("/personnel/increaseGroups")}
-                        total={toPriceWithComma(corporate?.FinanceCorporate?.TotalCredits||0) + " تومان"}
+                    <_DashTotalDeposit totalDeposit={corporate?.FinanceCorporate?.TotalDeposit} navigate={navigate} />
+                </Grid>
 
-                    />
+                <Grid size={{xs: 12, sm: 6, md: 5 ,lg:3}}>
+                    <_DashTotalCredit totalCredit={corporate?.FinanceCorporate?.TotalCredits} navigate={navigate} />
                 </Grid>
                 <Grid size={{xs: 12, sm: 6, md: 5 ,lg:3}}>
                     <_PersonnelCount />
@@ -61,12 +54,90 @@ const Dashboard = (props) => {
                 <Grid size={{xs: 12, sm: 12, md: 12}}>
                     <_RChargeUsage />
                 </Grid>
-                <Grid  size={{xs: 6, sm: 6, md: 6}}>
+                {/*<Grid  size={{xs: 12, sm: 12, md: 12,lg:12}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"جیم پین"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 12, sm: 4, md: 4,lg:6}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"سلامت"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 12, sm: 4, md: 4,lg:6}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"غذا"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 6, sm: 4, md: 4,lg:4}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"میان وعده"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 6, sm: 4, md: 4,lg:4}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"ایونت ها"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 6, sm: 4, md: 4,lg:4}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"فاکتور ها"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 6, sm: 4, md: 4,lg:3}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"پرسنل"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 12, sm: 4, md: 4,lg:3}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"استخدام"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 12, sm: 4, md: 4,lg:3}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"تیم سازی"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 6, sm: 4, md: 4,lg:3}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"هدایا"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 6, sm: 4, md: 4,lg:4}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"آموزش"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 6, sm: 4, md: 4,lg:4}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"بسته هاب ورود"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 6, sm: 4, md: 4,lg:4}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"چالش ها"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                <Grid  size={{xs: 12, sm: 6, md: 6}}>
                     <_RUsageByUser />
                 </Grid>
-                <Grid size={{xs: 6, sm: 6, md: 6}}>
+                <Grid size={{xs: 12, sm: 6, md: 6}}>
                     <_RAverageOfUserTickets />
                 </Grid>
+
+                {/*<Grid  size={{xs: 6, sm: 6, md: 6}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"پشتیبانی"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+                {/*<Grid  size={{xs: 6, sm: 6, md: 6}}>*/}
+                {/*    <_DashCatItem*/}
+                {/*        title={"فاکتور ها"}*/}
+                {/*        icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />} />*/}
+                {/*</Grid>*/}
+            </Grid>
+            <Grid container columns={12}>
             </Grid>
             {/*<Container>*/}
             {/*    <Home />*/}

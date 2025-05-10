@@ -11,7 +11,9 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    FormControl, FormControlLabel, IconButton,
+    FormControl,
+    FormControlLabel,
+    IconButton,
     InputLabel,
     MenuItem,
     Select,
@@ -28,8 +30,8 @@ import {
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 import {
-    corporatePersonnel_add, corporatePersonnel_addCreditToAll,
-    corporatePersonnel_addPersonnelCredit,
+    corporatePersonnel_add,
+    corporatePersonnel_addCreditToAll,
     corporatePersonnel_query
 } from "../../network/api/corporatePersonnel.api";
 import Grid from "@mui/material/Grid2";
@@ -39,10 +41,10 @@ import {checkMobileValid, fixMobile, toPriceWithComma, toPriceWithoutComma} from
 import {Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {Delete} from "@mui/icons-material";
-import TableContext from "@mui/material/Table/TableContext";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDateFnsJalali} from "@mui/x-date-pickers/AdapterDateFnsJalaliV3";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import _UsersActions from "../../components/_UsersActions";
 
 export const _UserList = () => {
 
@@ -53,7 +55,7 @@ export const _UserList = () => {
     const [personnel, setPersonnel] = useState(null);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [sortBy, setSortBy] = useState({Name:"Id",Desc:false});
+    const [sortBy, setSortBy] = useState({Name: "Id", Desc: false});
     const [searchText, setSearchText] = useState(undefined);
     const [groups, setGroups] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
@@ -62,11 +64,11 @@ export const _UserList = () => {
     const [allSelected, setAllSelected] = useState(false);
     const [someSelected, setSomeSelected] = useState(false);
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const [formData,setFormData] = useState({})
+    const [formData, setFormData] = useState({})
 
     useEffect(() => {
-        if(corporate?.ContractType=="PRO"||corporate?.ContractType=="NEO"){
-            setFormData({...formData , ExpireDate : new Date().setDate(new Date().getDate()+corporate?.DefaultExpireDuration) })
+        if (corporate?.ContractType == "PRO" || corporate?.ContractType == "NEO") {
+            setFormData({...formData, ExpireDate: new Date().setDate(new Date().getDate() + corporate?.DefaultExpireDuration)})
         }
     }, [corporate]);
 
@@ -74,7 +76,7 @@ export const _UserList = () => {
     useEffect(() => {
         var all = personnel?.content?.every(p => selectedUsers?.map(d => d.Id).includes(p?.Id));
         setAllSelected(all)
-        console.log("pe",personnel?.content?.some(p => selectedUsers?.some(su => su?.Id === p?.Id)));
+        console.log("pe", personnel?.content?.some(p => selectedUsers?.some(su => su?.Id === p?.Id)));
         setSomeSelected(!all && personnel?.content?.some(p => selectedUsers?.some(su => su?.Id === p?.Id)))
     }, [personnel, selectedUsers]);
 
@@ -84,12 +86,12 @@ export const _UserList = () => {
     }, []);
 
     useEffect(() => {
-            setPage(0);
+        setPage(0);
     }, [sortBy]);
 
     useEffect(() => {
         getPersonnel();
-    }, [selectedGroup, page, rowsPerPage, searchText,sortBy]);
+    }, [selectedGroup, page, rowsPerPage, searchText, sortBy]);
 
     function getGroups() {
         corporate_getCorporateGroups({Id: corporate.Id}).then(result => {
@@ -111,7 +113,7 @@ export const _UserList = () => {
             CorporateId: corporate?.Id,
             FullName: searchText,
             GroupId: selectedGroup,
-            paging: {Page: page, Size: rowsPerPage,orderBy:sortBy.Name, Desc: !sortBy.Desc}
+            paging: {Page: page, Size: rowsPerPage, orderBy: sortBy.Name, Desc: !sortBy.Desc}
         }).then(result => {
             setPersonnel(result.data.Data);
         }).catch(e => {
@@ -217,10 +219,10 @@ export const _UserList = () => {
     }
 
     function ChangeSelectAll() {
-        if(allSelected){
-            setSelectedUsers(selectedUsers.filter(su=>!personnel?.content?.map(pp=>pp.Id).includes(su.Id)));
-        }else{
-           setSelectedUsers([...selectedUsers,...personnel?.content?.filter(pp=>!selectedUsers.map(su=>su.Id).includes(pp.Id))]);
+        if (allSelected) {
+            setSelectedUsers(selectedUsers.filter(su => !personnel?.content?.map(pp => pp.Id).includes(su.Id)));
+        } else {
+            setSelectedUsers([...selectedUsers, ...personnel?.content?.filter(pp => !selectedUsers.map(su => su.Id).includes(pp.Id))]);
         }
     }
 
@@ -231,10 +233,10 @@ export const _UserList = () => {
             e.preventDefault()
             setOpenModalAddCredit(false);
             error.showError({message: "لطفا کمی صبر کنید",});
-            let personnelId = selectedUsers.map(s=>s.Id);
+            let personnelId = selectedUsers.map(s => s.Id);
             corporatePersonnel_addCreditToAll({
-                PersonnelIds:  personnelId,
-                CorporateId:corporate.Id,
+                PersonnelIds: personnelId,
+                CorporateId: corporate.Id,
                 ...formData
             })
                 .then(result => {
@@ -255,7 +257,7 @@ export const _UserList = () => {
         return (
             <Dialog open={openModalAddCredit} onClose={() => setOpenModalAddCredit(false)}>
                 <Form onSubmit={(e) => addCredit(e)}>
-                    <DialogTitle>{"افزودن اعتبار به "+selectedUsers.length+" کاربر انتخاب شده"}</DialogTitle>
+                    <DialogTitle>{"افزودن اعتبار به " + selectedUsers.length + " کاربر انتخاب شده"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             برای افزودن اعتبار مبلغ را وارد کنید
@@ -264,23 +266,23 @@ export const _UserList = () => {
 
                         <TextField
                             autoFocus
-                            sx={{mt:2}}
+                            sx={{mt: 2}}
                             name={"CreditAmount"}
                             label="نام اعتبار"
                             type="text"
                             value={formData.Name}
-                            onChange={(e) => setFormData({...formData,Name:e.target.value})}
+                            onChange={(e) => setFormData({...formData, Name: e.target.value})}
                             fullWidth
                             variant={"outlined"}
                         />
 
-                        {(corporate.ContractType!="ALPHA")&&<LocalizationProvider dateAdapter={AdapterDateFnsJalali} >
+                        {(corporate.ContractType != "ALPHA") && <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
                             <DatePicker
                                 value={formData?.ExpireDate}
                                 sx={{mt: 2, mb: 1}}
                                 name={"ExpireDate"}
                                 label={"تاریخ انقضا"}
-                                onChange={(e)=>setFormData({...formData,ExpireDate:e})}
+                                onChange={(e) => setFormData({...formData, ExpireDate: e})}
                                 className="w-100"
                             />
                         </LocalizationProvider>}
@@ -291,7 +293,7 @@ export const _UserList = () => {
                             label="تومان"
                             type="text"
                             value={toPriceWithComma(formData.CreditAmount)}
-                            onChange={(e) => setFormData({...formData,CreditAmount:toPriceWithoutComma(e.target.value)})}
+                            onChange={(e) => setFormData({...formData, CreditAmount: toPriceWithoutComma(e.target.value)})}
                             fullWidth
                             variant={"outlined"}
                         />
@@ -311,11 +313,32 @@ export const _UserList = () => {
             <title>لیست کارمندان</title>
             <Grid container columns={9} alignItems={"center"}>
                 <Grid size={{md: 6, lg: 6, xl: 6}}><Typography sx={{m: 4}} variant={"h4"}>کارمندان</Typography></Grid>
-                <Grid textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}><Button onClick={() => setOpenModalAdd(true)} variant={"contained"}>افزودن
-                    کارمند</Button> </Grid>
+            </Grid>
+            <Grid container columns={9} spacing={3} alignItems={"center"}>
+                <Grid size={{md: 3, lg: 3, xl: 3}}>
+                    <_UsersActions
+                        title={"افزودن کارمند"}
+                        icon={<img alt="icon" src="/assets/images/icons/ic-glass-users.svg" />}
+                        onClick={() => setOpenModalAdd(true)}
+                    />
+                </Grid>
+                <Grid size={{md: 3, lg: 3, xl: 3}}>
+                    <_UsersActions
+                        title={"ویرایش گروه‌ها"}
+                        icon={<img alt="icon" src="/assets/images/icons/ic-glass-users.svg" />}
+                        onClick={() => navigate("/personnel/groups")}
+                    />
+                </Grid>
+                <Grid size={{md: 3, lg: 3, xl: 3}}>
+                    <_UsersActions
+                        title={"اعتباردهی گروهی"}
+                        icon={<img alt="icon" src="/assets/images/icons/ic-glass-users.svg" />}
+                        onClick={() => navigate("/personnel/increaseGroups")}
+                    />
+                </Grid>
             </Grid>
 
-            <Card elevation={8} sx={{mt: 5, mb: 10, width: '100%', borderRadius: 2}}>
+            <Card elevation={8} sx={{mt: 2, mb: 10, width: '100%', borderRadius: 2}}>
                 <Grid container columns={12}>
                     <Grid sx={{p: 2}} size={4}>
                         {groups && <FormControl fullWidth>
@@ -350,70 +373,69 @@ export const _UserList = () => {
 
 
                 <Table aria-label="userLists">
-                        <TableHead sx={{bgcolor: 'primary.boxBg'}}>
-                            <TableRow>
-                                <TableCell>
+                    <TableHead sx={{bgcolor: 'primary.boxBg'}}>
+                        <TableRow>
+                            <TableCell>
 
-                                    <FormControlLabel
-                                        onChange={(e) => ChangeSelectAll()}
+                                <FormControlLabel
+                                    onChange={(e) => ChangeSelectAll()}
+                                    color="primary"
+                                    control={<Checkbox
+                                        checked={allSelected}
+                                        indeterminate={someSelected}/>}
+                                />
+                            </TableCell>
+                            <TableCell></TableCell>
+                            <TableCell><TableSortLabel onClick={() => {
+                                setSortBy({Name: "User.FullName", Desc: !sortBy.Desc})
+                            }} direction={(sortBy.Desc) ? "desc" : "asc"}>نام و نام خانوادگی</TableSortLabel></TableCell>
+                            <TableCell>مجموع اعتبار</TableCell>
+                            <TableCell>تعداد اعتبار</TableCell>
+                            <TableCell>نزدیک ترین انقضا</TableCell>
+                            <TableCell><TableSortLabel onClick={() => {
+                                setSortBy({Name: "User.Birthday", Desc: !sortBy.Desc})
+                            }} direction={(sortBy.Desc) ? "desc" : "asc"}>تاریخ تولد</TableSortLabel></TableCell>
+                            <TableCell>گروه</TableCell>
+                            <TableCell align={"right"}>عملیات</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    {!personnel && <Grid container fullwidth width={"100%"} direction={"row"}><CircularProgress/></Grid>}
+                    <TableBody>
+                        {personnel?.content.map((row) => (
+                            <TableRow
+                                key={row.name}
+                                hover
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            >
+
+                                <TableCell padding="checkbox">
+                                    <Checkbox
+                                        onChange={(e) => changeSelected(row)}
                                         color="primary"
-                                        control={<Checkbox
-                                            checked={allSelected}
-                                            indeterminate={someSelected}/>}
+                                        checked={selectedUsers.some(p => p.Id === row.Id)}
                                     />
                                 </TableCell>
-                                <TableCell></TableCell>
-                                <TableCell><TableSortLabel onClick={() => {
-                                    setSortBy({Name:"User.FullName",Desc: !sortBy.Desc})
-                                }} direction={(sortBy.Desc)?"desc":"asc"}>نام و نام خانوادگی</TableSortLabel></TableCell>
-                                <TableCell>مجموع اعتبار</TableCell>
-                                <TableCell>تعداد اعتبار</TableCell>
-                                <TableCell>نزدیک ترین انقضا</TableCell>
-                                <TableCell><TableSortLabel onClick={() => {
-                                    setSortBy({Name:"User.Birthday",Desc: !sortBy.Desc})
-                                }} direction={(sortBy.Desc)?"desc":"asc"}>تاریخ تولد</TableSortLabel></TableCell>
-                                <TableCell>گروه</TableCell>
-                                <TableCell align={"right"}>عملیات</TableCell>
+                                <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.User?.Avatar?.Url}
+                                                                                 sx={{width: 25, height: 25}}/></TableCell>
+                                <TableCell>{row?.User?.FullName || " - "}</TableCell>
+                                <TableCell>{row?.TotalCredit || 0}</TableCell>
+                                <TableCell>{row?.CreditList?.length || 0}</TableCell>
+                                <TableCell>{getNearestExpirationDate(row?.CreditList)}</TableCell>
+                                <TableCell>{(row?.User?.Birthday) ? new Date(row?.User?.Birthday).toLocaleDateString('fa-IR', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                }) : " - "}</TableCell>
+                                <TableCell>{row?.PersonnelGroup?.Name || "بدون گروه"}</TableCell>
+                                <TableCell align={"right"}>
+                                    <Button
+                                        onClick={() => navigate("/personnel/detail/" + row.Id)} variant={"contained"}>جزئیات</Button>
+                                </TableCell>
                             </TableRow>
-                        </TableHead>
-                        {!personnel && <Grid container fullwidth width={"100%"} direction={"row"}><CircularProgress/></Grid>}
-                        <TableBody>
-                            {personnel?.content.map((row) => (
-                                <TableRow
-                                    key={row.name}
-                                    hover
-                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                >
-
-                                    <TableCell padding="checkbox">
-                                        <Checkbox
-                                            onChange={(e) => changeSelected(row)}
-                                            color="primary"
-                                            checked={selectedUsers.some(p => p.Id === row.Id)}
-                                        />
-                                    </TableCell>
-                                    <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.User?.Avatar?.Url}
-                                                                                     sx={{width: 25, height: 25}}/></TableCell>
-                                    <TableCell>{row?.User?.FullName || " - "}</TableCell>
-                                    <TableCell>{row?.TotalCredit || 0}</TableCell>
-                                    <TableCell>{row?.CreditList?.length || 0}</TableCell>
-                                    <TableCell>{getNearestExpirationDate(row?.CreditList)}</TableCell>
-                                    <TableCell>{(row?.User?.Birthday)?new Date(row?.User?.Birthday).toLocaleDateString('fa-IR', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric'
-                                    }) : " - "}</TableCell>
-                                    <TableCell>{row?.PersonnelGroup?.Name || "بدون گروه"}</TableCell>
-                                    <TableCell align={"right"}>
-                                        <Button
-                                            onClick={() => navigate("/personnel/detail/" + row.Id)} variant={"contained"}>جزئیات</Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
+                        ))}
+                    </TableBody>
                 </Table>
                 <CardActions sx={{bgcolor: 'primary.boxBg', justifyContent: "end"}}>
-
                     {personnel && <TablePagination
                         sx={{alignItems: "center"}}
                         rowsPerPageOptions={[5, 20, 30, 50]}
@@ -433,13 +455,13 @@ export const _UserList = () => {
                     />}
                 </CardActions>
             </Card>
-            {selectedUsers.length>0 &&<Card elevation={8} sx={{mt: 5, mb: 10, width: '100%', borderRadius: 2}}>
+            {selectedUsers.length > 0 && <Card elevation={8} sx={{mt: 5, mb: 10, width: '100%', borderRadius: 2}}>
 
                 <Table aria-label="userLists">
                     <TableHead sx={{bgcolor: 'primary.boxBg'}}>
                         <TableRow>
                             <TableCell></TableCell>
-                            <TableCell>{selectedUsers.length+" نفر"}</TableCell>
+                            <TableCell>{selectedUsers.length + " نفر"}</TableCell>
                             <TableCell>نام و نام خانوادگی</TableCell>
                             <TableCell>تاریخ تولد</TableCell>
                             <TableCell>گروه</TableCell>
@@ -455,7 +477,7 @@ export const _UserList = () => {
                             >
 
                                 <TableCell padding="checkbox">
-                                    <IconButton onClick={()=>changeSelected(row)}>
+                                    <IconButton onClick={() => changeSelected(row)}>
                                         <Delete
                                             color="primary"
                                         />
@@ -464,7 +486,7 @@ export const _UserList = () => {
                                 <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.User?.Avatar?.Url}
                                                                                  sx={{width: 25, height: 25}}/></TableCell>
                                 <TableCell>{row?.User?.FullName || " - "}</TableCell>
-                                <TableCell>{(row?.User?.Birthday)?new Date(row?.User?.Birthday).toLocaleDateString('fa-IR', {
+                                <TableCell>{(row?.User?.Birthday) ? new Date(row?.User?.Birthday).toLocaleDateString('fa-IR', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric'
@@ -474,9 +496,9 @@ export const _UserList = () => {
                         ))}
                     </TableBody>
                 </Table>
-                <CardActions sx={{bgcolor: 'primary.boxBg', justifyContent: "start",py:2}}>
+                <CardActions sx={{bgcolor: 'primary.boxBg', justifyContent: "start", py: 2}}>
 
-                    <Button variant={"contained"} sx={{px:10}} onClick={()=>setOpenModalAddCredit(true)} >اعتبار دهی</Button>
+                    <Button variant={"contained"} sx={{px: 10}} onClick={() => setOpenModalAddCredit(true)}>اعتبار دهی</Button>
                 </CardActions>
             </Card>}
             {renderModalAdd()}

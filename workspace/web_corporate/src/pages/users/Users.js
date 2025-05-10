@@ -282,7 +282,6 @@ const Users = () => {
                             </div>
                         </div>
                     ))}
-
                     {personnel?.totalPages > 0 &&
                     <Grid container direction={"rows"} justifyContent={"center"} alignContent={"center"}>
                         <Pagination count={personnel.totalPages} boundaryCount={1} defaultPage={1} size={"medium"}

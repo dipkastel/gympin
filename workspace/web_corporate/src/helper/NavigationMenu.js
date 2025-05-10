@@ -38,23 +38,23 @@ export const NavigationMenu = [
         segment: 'personnel',
         title: 'کارمندان',
         icon: <Group/>,
-        children: [
-            {
-                segment: 'list',
-                title: 'لیست',
-                icon: <PermContactCalendar/>,
-            },
-            {
-                segment: 'increaseGroups',
-                title: 'اعتبار دهی گروهی',
-                icon: <GroupAdd/>,
-            },
-            {
-                segment: 'groups',
-                title: 'ویرایش گروه ها',
-                icon: <ManageAccounts/>,
-            },
-        ],
+        // children: [
+        //     {
+        //         segment: 'list',
+        //         title: 'لیست',
+        //         icon: <PermContactCalendar/>,
+        //     },
+        //     {
+        //         segment: 'increaseGroups',
+        //         title: 'اعتبار دهی گروهی',
+        //         icon: <GroupAdd/>,
+        //     },
+        //     {
+        //         segment: 'groups',
+        //         title: 'ویرایش گروه ها',
+        //         icon: <ManageAccounts/>,
+        //     },
+        // ],
     },
     {
         segment: 'finance',
@@ -118,7 +118,6 @@ export const NavigationMenu = [
         segment: 'food',
         title: 'غذای سازمانی',
         icon: <Fastfood/>,
-        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
     },
     {
         kind: 'divider',
