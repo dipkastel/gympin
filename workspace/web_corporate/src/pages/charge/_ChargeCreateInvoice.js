@@ -385,14 +385,14 @@ const _ChargeCreateInvoice = ({refreshList}) => {
                                 control={<Switch/>}
                                 label={"درخواست پیش فاکتور"}/>
                         </Grid>
-                        <Grid size={1}>
-                            <FormControlLabel
-                                name={"Renew"}
-                                checked={requestInvoice}
-                                onChange={(e) => setRequestInvoice(e.target.checked)}
-                                control={<Switch/>}
-                                label={"درخواست فاکتور رسمی"}/>
-                        </Grid>
+                        {/*<Grid size={1}>*/}
+                        {/*    <FormControlLabel*/}
+                        {/*        name={"Renew"}*/}
+                        {/*        checked={requestInvoice}*/}
+                        {/*        onChange={(e) => setRequestInvoice(e.target.checked)}*/}
+                        {/*        control={<Switch/>}*/}
+                        {/*        label={"درخواست فاکتور رسمی"}/>*/}
+                        {/*</Grid>*/}
                     </Grid>
                     <Grid
                         container
