@@ -30,11 +30,11 @@ const _Slider = () => {
         );
     }
 
-    function SliderItem({src}){
+    function SliderItem({src,alt}){
         return(
             <div>
                 <Card className={"rtl"} elevation={4}  sx={{borderRadius: 4,mx:"1VW",my:"1VW"}}>
-                    <img alt={"درگاه ملی مجوز‌ها"} width={"100%"} className={"slider-img"} src={src}/>
+                    <img alt={alt} width={"100%"} className={"slider-img"} src={src}/>
                 </Card>
             </div>)
     }
@@ -43,9 +43,9 @@ const _Slider = () => {
 
             <div>
                 <Slider  {...settings}>
-                    <SliderItem src={ww>600?"/assets/images/slide1.jpg":"/assets/images/slide11.jpg"} />
-                    <SliderItem src={ww>600?"/assets/images/slide2.jpg":"/assets/images/slide12.jpg"}/>
-                    <SliderItem src={ww>600?"/assets/images/slide3.jpg":"/assets/images/slide13.jpg"}/>
+                    <SliderItem src={ww>600?"/assets/images/slide1.jpg":"/assets/images/slide11.jpg"} alt={""} />
+                    <SliderItem src={ww>600?"/assets/images/slide2.jpg":"/assets/images/slide12.jpg"} alt={""} />
+                    <SliderItem src={ww>600?"/assets/images/slide3.jpg":"/assets/images/slide13.jpg"} alt={""} />
                 </Slider>
             </div>
         </section>

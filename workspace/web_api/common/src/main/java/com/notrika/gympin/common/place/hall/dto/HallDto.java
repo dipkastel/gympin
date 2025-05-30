@@ -1,9 +1,9 @@
 package com.notrika.gympin.common.place.hall.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.sport.sport.dto.SportDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,7 +24,7 @@ public class HallDto extends BaseDtoWithCreateUpdate<HallDto> {
     private String name;
 
     @JsonProperty(value = "Place")
-    private PlaceDto place;
+    private PlaceGymDto place;
 
     @JsonProperty(value = "Sport")
     private SportDto sport;

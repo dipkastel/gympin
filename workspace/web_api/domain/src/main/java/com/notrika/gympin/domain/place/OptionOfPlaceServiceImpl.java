@@ -7,10 +7,12 @@ import com.notrika.gympin.common.place.option.param.OptionOfPlaceParam;
 import com.notrika.gympin.common.place.option.service.OptionOfPlaceService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.OptionConvertor;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceOptionOfPlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceOptionRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.option.PlaceOptionOfPlaceEntity;
 import com.notrika.gympin.persistence.entity.place.option.PlaceOptionOfPlaceEntity;
 import com.notrika.gympin.persistence.entity.place.option.PlaceOptionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,14 @@ public class OptionOfPlaceServiceImpl extends AbstractBaseService<OptionOfPlaceP
     private PlaceOptionOfPlaceRepository placeOptionOfPlaceRepository;
 
     @Autowired
-    private PlaceRepository placeRepository;
+    private PlaceGymRepository placeGymRepository;
     @Autowired
     private PlaceOptionRepository placeOptionRepository;
 
     @Override
     @Transactional
     public OptionOfPlaceDto add(OptionOfPlaceParam optionOfPlaceParam) {
-        PlaceEntity place = placeRepository.findById(optionOfPlaceParam.getPlace().getId()).get();
+        PlaceGymEntity place = placeGymRepository.findById(optionOfPlaceParam.getPlace().getId()).get();
         PlaceOptionEntity placeOption = placeOptionRepository.findById(optionOfPlaceParam.getPlaceOption().getId()).get();
         PlaceOptionOfPlaceEntity initPlaceOption = PlaceOptionOfPlaceEntity.builder().place(place).placeOption(placeOption).build();
         PlaceOptionOfPlaceEntity optionOfPlace = add(initPlaceOption);

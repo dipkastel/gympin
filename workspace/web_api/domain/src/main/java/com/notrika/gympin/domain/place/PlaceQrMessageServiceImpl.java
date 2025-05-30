@@ -6,9 +6,10 @@ import com.notrika.gympin.common.place.qrMessage.param.PlaceQrMessageParam;
 import com.notrika.gympin.common.place.qrMessage.service.PlaceQrMessageService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.PlaceQrMessageConvertor;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceQrMessageRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,11 @@ public class PlaceQrMessageServiceImpl extends AbstractBaseService<PlaceQrMessag
     private PlaceQrMessageRepository placeQrMessageRepository;
 
     @Autowired
-    private PlaceRepository placeRepository;
+    private PlaceGymRepository placeGymRepository;
 
     @Override
     public PlaceQrMessageDto add(PlaceQrMessageParam placeQrMessageParam) {
-        PlaceEntity place = placeRepository.findById(placeQrMessageParam.getPlace().getId()).get();
+        PlaceGymEntity place = placeGymRepository.findById(placeQrMessageParam.getPlace().getId()).get();
         PlaceQrMessageEntity initPlaceAbout = PlaceQrMessageEntity.builder()
                 .place(place)
                 .text(placeQrMessageParam.getText())

@@ -3,7 +3,7 @@ package com.notrika.gympin.common.user.user.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateContractTypeEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.user.user.enums.CreditType;
@@ -42,7 +42,7 @@ public class UserCreditDetailDto extends BaseDto<UserCreditDetailDto> {
     private CorporateDto corporate;
 
     @JsonProperty("Place")
-    private PlaceDto place;
+    private PlaceGymDto place;
 
     @JsonProperty("CreditAmount")
     private BigDecimal creditAmount;

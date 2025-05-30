@@ -3,6 +3,7 @@ package com.notrika.gympin.persistence.entity.place.hall;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryRequstEntity;
 import lombok.Getter;
@@ -37,7 +38,7 @@ public class HallEntity extends BaseEntityWithCreateUpdate<HallEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hallPlaceId")
-    private PlaceEntity place;
+    private PlaceGymEntity place;
 
     @OneToMany(mappedBy = "hall")
    @JsonIgnore

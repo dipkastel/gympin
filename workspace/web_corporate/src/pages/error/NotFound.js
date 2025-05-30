@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react';
+import Grid from "@mui/material/Grid2";
+import {Typography} from "@mui/material";
 
 export function  NotFound(){
     useEffect(() => {
@@ -6,9 +8,9 @@ export function  NotFound(){
     }, []);
 
     return (
-        <div>
-            <h1>صفحه مورد نظر یافت نشد</h1>
-        </div>
+        <Grid container sx={{textAlign:"center",p:5}} >
+            <Typography variant={"h3"} sx={{width:"100%"}}>موردی یافت نشد</Typography>
+        </Grid>
     );
 }
 

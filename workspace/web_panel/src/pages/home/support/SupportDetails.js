@@ -83,12 +83,15 @@ const SupportDetails = () => {
                         variant={"h5"}>{"ایجاد کننده : "}<small>{getUserFixedName(support.CreatorUser)}</small></Typography>
                     {support.Place && <Typography
                         variant={"h5"}>{"مربوط به : "}<small>{"مجموعه " + support.Place.Name}</small></Typography>}
+                    {support.Corporate && <Typography
+                        variant={"h5"}>{"مربوط به : "}<small>{"سازمان " + support.Corporate.Name}</small></Typography>}
                     <Typography
                         variant={"h5"}>{"تاریخ ایجاد : "}<small>{new Date(support.CreatedDate).toLocaleDateString('fa-IR')}</small></Typography>
                     <Typography
                         variant={"h5"}>{"ساعت ایجاد : "}<small>{new Date(support.CreatedDate).toLocaleTimeString()}</small></Typography>
                 </PortletBody>
             </Portlet>
+
 
             <Portlet>
                 <PortletHeader title="پاسخ به مشتری"/>

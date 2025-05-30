@@ -4,7 +4,7 @@ import {Form} from "react-bootstrap";
 import {Button, Switch, TextField} from "@mui/material";
 import PlaceMap from "../Base/PlaceMap";
 import Select from "react-select";
-import {place_changeStatus} from "../../../../../network/api/place.api";
+import {placeGym_changeStatus} from "../../../../../network/api/place.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const _ChangePlaceStatus = ({place, updatePlace}) => {
@@ -21,7 +21,7 @@ const _ChangePlaceStatus = ({place, updatePlace}) => {
         ]
     }
     function setStatusOptions(status) {
-        place_changeStatus({
+        placeGym_changeStatus({
             Id:inPlace.Id,
             Status:status
         }).then(result=>{

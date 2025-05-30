@@ -5,6 +5,7 @@ import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import lombok.Getter;
@@ -54,7 +55,7 @@ public class InvoiceBuyableEntity extends BaseEntityWithCreateUpdate<InvoiceBuya
     @JoinColumn(name = "buyablePlaceId")
     @JsonIgnore
     @ToString.Exclude
-    private PlaceEntity place;
+    private PlaceGymEntity placeGym;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "beneficiary")

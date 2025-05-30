@@ -6,7 +6,7 @@ import com.notrika.gympin.common.place.hall.dto.HallDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.place.hall.dto.HallTrafficDto;
 import com.notrika.gympin.common.place.hall.param.HallParam;
-import com.notrika.gympin.domain.place.PlaceServiceImpl;
+import com.notrika.gympin.domain.place.PlaceGymServiceImpl;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import com.notrika.gympin.persistence.entity.place.hall.HallTrafficEntity;
@@ -22,7 +22,7 @@ public final class HallConvertor {
         hallEntity.setEnable(true);
         hallEntity.setTrafficManagement(hallParam.getTrafficManagement());
         hallEntity.setDeleted(false);
-        hallEntity.setPlace(GympinContext.getBean(PlaceServiceImpl.class).getEntityById(hallParam.getPlace().getId()));
+        hallEntity.setPlace(GympinContext.getBean(PlaceGymServiceImpl.class).getEntityById(hallParam.getPlace().getId()));
 
         try{
             List<TicketHallActiveTimeEntity> actionEntities=new ArrayList<>();
@@ -41,7 +41,7 @@ public final class HallConvertor {
         hallDto.setName(entity.getName());
         hallDto.setEnable(entity.getEnable());
         hallDto.setTrafficManagement(entity.getTrafficManagement());
-        hallDto.setPlace(PlaceConvertor.toDto(entity.getPlace()));
+        hallDto.setPlace(PlaceConvertor.ToGymDto(entity.getPlace()));
         return hallDto;
     }
 

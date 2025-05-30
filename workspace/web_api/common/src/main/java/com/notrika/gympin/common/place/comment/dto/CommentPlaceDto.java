@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.place.comment.dto;
 
 import com.notrika.gympin.common.util._base.dto.BaseDto;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class CommentPlaceDto extends BaseDto<CommentPlaceDto> {
 
-    private PlaceDto place;
+    private PlaceGymDto place;
 
     private String comment;
 

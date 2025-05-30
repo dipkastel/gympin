@@ -3,7 +3,7 @@ import {Modal} from "react-bootstrap";
 import {Form} from "reactstrap";
 import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {Place_query} from "../../../../network/api/place.api";
+import {PlaceGym_query} from "../../../../network/api/place.api";
 import {multimediacategory_getAll} from "../../../../network/api/mediaCategories.api";
 import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
 import AsyncSelect from "react-select/async";

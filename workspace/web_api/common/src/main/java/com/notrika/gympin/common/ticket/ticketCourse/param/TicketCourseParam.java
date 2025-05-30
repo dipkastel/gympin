@@ -1,9 +1,8 @@
 package com.notrika.gympin.common.ticket.ticketCourse.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.ticketCourse.enums.CourseStatus;
-import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import lombok.Data;
@@ -14,7 +13,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @SuperBuilder
@@ -45,7 +43,7 @@ public class TicketCourseParam extends BaseParam<TicketCourseParam> {
     private String description;
 
     @JsonProperty(value = "Place", required = true)
-    private PlaceParam place;
+    private PlaceGymParam place;
 
     @JsonProperty("TargetOfCourse")
     private String targetOfCourse;

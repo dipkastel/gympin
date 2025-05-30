@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {Place_getPlaceById, Place_updatePlace} from "../../../../network/api/place.api";
+import {PlaceGym_getPlaceById, PlaceGym_updatePlace} from "../../../../network/api/place.api";
 import Notice from "../../../partials/content/Notice";
 import Notes from "../../../partials/content/notes/Notes";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
@@ -22,7 +22,7 @@ const PlaceDataManagement = () => {
     }, []);
 
     function getPlace() {
-        Place_getPlaceById({id: placeId}).then((result) => {
+        PlaceGym_getPlaceById({id: placeId}).then((result) => {
             setPlace(result.data.Data);
         }).catch(e => {
             try {
@@ -34,7 +34,7 @@ const PlaceDataManagement = () => {
     }
 
     function updatePlace(place) {
-        Place_updatePlace(place).then(data => {
+        PlaceGym_updatePlace(place).then(data => {
             setPlace(data.data.Data);
             error.showError({message: "با موفقیت ثبت شد"});
         }).catch(e => {

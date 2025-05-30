@@ -3,16 +3,16 @@
 //    @Override
 //    @Transactional
 //    public Boolean settlementRequest(UserSettlementRequestParam param) {
-//        PlaceEntity placeEntity = placeRepository.getById(param.getPlaceId());
-//        if (param.getAmount().compareTo(placeEntity.getBalance()) > 0)
+//        PlaceGymEntity PlaceGymEntity = placeRepository.getById(param.getPlaceId());
+//        if (param.getAmount().compareTo(PlaceGymEntity.getBalance()) > 0)
 //            throw new RequestOverCreditLimit();
 //        if (param.getAmount().compareTo(BigDecimal.valueOf(50000)) < 0)
 //            throw new RequestUnderLimit();
-//        placeEntity.setBalance(placeEntity.getBalance().subtract(param.getAmount()));
-//        placeRepository.update(placeEntity);
+//        PlaceGymEntity.setBalance(PlaceGymEntity.getBalance().subtract(param.getAmount()));
+//        placeRepository.update(PlaceGymEntity);
 //        corporatetransactionRepository.add(FinanceCorporateTransactionEntity.builder()
-//                .place(placeEntity)
-//                .balance(placeEntity.getBalance())
+//                .place(PlaceGymEntity)
+//                .balance(PlaceGymEntity.getBalance())
 //                .amount(param.getAmount().negate())
 //                .transactionStatus(TransactionStatus.REQUEST)
 //                .transactionType(TransactionType.PLACE_SETTLEMENT)
@@ -108,9 +108,9 @@
 //            transaction.setBalance(userEntity.getBalance());
 //            transaction.setTransactionType(TransactionType.CHARGE_USER);
 //        } else if (param.getPlaceId() != null) {
-//            PlaceEntity placeEntity = placeRepository.getById(param.getPlaceId());
-//            transaction.setPlace(placeEntity);
-//            transaction.setBalance(placeEntity.getBalance());
+//            PlaceGymEntity PlaceGymEntity = placeRepository.getById(param.getPlaceId());
+//            transaction.setPlace(PlaceGymEntity);
+//            transaction.setBalance(PlaceGymEntity.getBalance());
 //            transaction.setTransactionType(TransactionType.CHARGE_PLACE);
 //        } else if (param.getCorporateId() != null) {
 //            CorporateEntity corporateEntity = corporateService.getEntityById(param.getCorporateId());
@@ -154,10 +154,10 @@
 //
 //                transactionAccepted.setBalance(userEntity.getBalance());
 //            } else if (transactionRequest.getPlace() != null) {
-//                PlaceEntity placeEntity = transactionRequest.getPlace();
-//                placeEntity.setBalance(placeEntity.getBalance().add(transactionRequest.getAmount()));
-//                placeRepository.update(placeEntity);
-//                transactionAccepted.setBalance(placeEntity.getBalance());
+//                PlaceGymEntity PlaceGymEntity = transactionRequest.getPlace();
+//                PlaceGymEntity.setBalance(PlaceGymEntity.getBalance().add(transactionRequest.getAmount()));
+//                placeRepository.update(PlaceGymEntity);
+//                transactionAccepted.setBalance(PlaceGymEntity.getBalance());
 //            } else if (transactionRequest.getCorporate() != null) {
 //                CorporateEntity corporateEntity = transactionRequest.getCorporate();
 //                //todo fix this shit

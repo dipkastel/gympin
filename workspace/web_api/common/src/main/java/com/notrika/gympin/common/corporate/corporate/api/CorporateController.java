@@ -5,9 +5,6 @@ import com.notrika.gympin.common.finance.transaction.dto.CorporateTransactionDto
 import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
 import com.notrika.gympin.common.finance.transaction.param.CorporateTransactionParam;
 import com.notrika.gympin.common.finance.transaction.param.FinanceCorporateParam;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.place.place.param.PlaceContractSmsParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.settings.corporateSettings.dto.CorporateSettingDto;
 import com.notrika.gympin.common.settings.corporateSettings.param.CorporateSettingParam;
 import com.notrika.gympin.common.user.user.dto.InviteCode;
@@ -17,7 +14,6 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePerso
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelGroupParam;
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigDecimal;

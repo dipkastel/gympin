@@ -56,7 +56,7 @@ import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
@@ -337,7 +337,7 @@ public class InvoiceServiceHelper {
                 .sellPrice(invoiceBuyable.getPlacePrice())
                 .placePrice(invoiceBuyable.getPlacePrice())
                 .key(GenerateNewKey())
-                .place(invoiceBuyable.getPlace())
+                .place(invoiceBuyable.getPlaceGym())
                 .customer(invoice.getUser())
                 .Serials(List.of(invoice.getSerial()))
                 .coaches(ticketSubscribe.getCoaches().stream().filter(o->!o.isDeleted()).map(c -> UserEntity.builder().id(c.getId()).build()).collect(Collectors.toList()))
@@ -397,9 +397,8 @@ public class InvoiceServiceHelper {
                 .description(buyable.getDescription())
                 .discount(buyable.getDiscount())
                 .placePrice(buyable.getPlacePrice())
-                .gender(buyable.getGender())
                 .buyableType(buyable.getBuyableType())
-                .place(buyable.getPlace())
+                .placeGym((PlaceGymEntity) buyable.getPlace())
                 .beneficiary(buyable.getBeneficiary())
                 .unitPrice(buyable.getPrice())
                 .count(count)
@@ -485,18 +484,18 @@ public class InvoiceServiceHelper {
                         .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
                         .userNumber(invoice.getUser().getPhoneNumber())
                         .text1(buyableEntities.get(0).getName())
-                        .text2(buyableEntities.get(0).getPlace().getName())
+                        .text2(buyableEntities.get(0).getPlaceGym().getName())
                         .build()
                 );
             } catch (Exception e) {
             }
-            PlaceEntity place= buyableEntities.get(0).getPlace();
+            PlaceGymEntity place= buyableEntities.get(0).getPlaceGym();
             sendSellMessageToPlace(place,buyableEntities.get(0));
         } else {
             String ticketsName = "";
             for(InvoiceBuyableEntity ticket : buyableEntities){
                 ticketsName += ticket.getName()+" ";
-                sendSellMessageToPlace(ticket.getPlace(),ticket);
+                sendSellMessageToPlace(ticket.getPlaceGym(),ticket);
             }
             if(ticketsName.length()>36)
                 ticketsName = ticketsName.substring(0,36)+"...";
@@ -513,7 +512,7 @@ public class InvoiceServiceHelper {
 
     }
 
-    private void sendSellMessageToPlace(PlaceEntity place, InvoiceBuyableEntity invoiceBuyables) {
+    private void sendSellMessageToPlace(PlaceGymEntity place, InvoiceBuyableEntity invoiceBuyables) {
         if(place.getPurchased().stream().filter(o->!o.isDeleted()).collect(Collectors.toList()).size()<1){
             try {
                 List<PlacePersonnelEntity> owners =place.getPlaceOwners().stream().filter(pl->!pl.isDeleted()).filter(po->po.getPlacePersonnelRoles().stream().filter(ppr->!ppr.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
@@ -529,7 +528,7 @@ public class InvoiceServiceHelper {
             }
         }else{
             try {
-                List<PlacePersonnelEntity> owners =place.getPlaceOwners().stream().filter(pl->!pl.isDeleted()).filter(po->po.getPlacePersonnelRoles().stream().filter(pl->!pl.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
+                List<PlacePersonnelEntity> owners = place.getPlaceOwners().stream().filter(pl->!pl.isDeleted()).filter(po->po.getPlacePersonnelRoles().stream().filter(pl->!pl.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
                 for(PlacePersonnelEntity owner:owners){
                     smsService.sendOrdinaryTicketSell(SmsDto.builder()
                             .smsType(SmsTypes.USER_BUY_SUBSCRIBE)

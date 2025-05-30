@@ -5,6 +5,7 @@ import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,7 @@ import java.util.List;
 public interface UserRepository extends BaseRepository<UserEntity, Long> {
 
     @Query("select u from UserEntity u,PlacePersonnelEntity po where u.id=po.user.id and po.place.id=:#{#place.id}")
-    List<UserEntity> getOwnersPlace(PlaceEntity place);
+    List<UserEntity> getOwnersPlace(PlaceGymEntity place);
 
     List<UserEntity> findByInvitedBy(String inviteBy);
 

@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.user.user.service;
 
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
@@ -30,7 +30,7 @@ public interface UserService extends BaseService<UserParam, UserDto, UserQuery> 
 
     UserCreditDto getMyCredits();
 
-    UserCreditDto getMyPlaceWallet(PlaceParam param);
+    UserCreditDto getMyPlaceWallet(PlaceGymParam param);
 
 
 }

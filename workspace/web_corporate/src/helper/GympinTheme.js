@@ -74,8 +74,8 @@ export const GympinTheme = createTheme({
                     otherText: '#1c0534',
                 },
                 info: {
-                    light: "#255612",
-                    main: '#2c6723',
+                    light: "#2a2a2a",
+                    main: '#484848',
                     dark: '#3b7834',
                     darker: '#4e8945',
                     contrastText:'#5f9a56',

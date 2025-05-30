@@ -7,6 +7,7 @@ import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTra
 import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceSettlementUserDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,7 @@ public class FinanceUserEntity extends BaseEntityWithCreateUpdate<FinanceUserEnt
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private PlaceEntity place;
+    private PlaceGymEntity place;
 
     @OneToMany(mappedBy = "financeUser", fetch = FetchType.LAZY)
     @JsonIgnore

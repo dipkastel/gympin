@@ -1,7 +1,6 @@
 package com.notrika.gympin.common.user.user.api;
 
-import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
 import com.notrika.gympin.common.settings.userSettings.param.UserSettingParam;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
@@ -9,7 +8,6 @@ import com.notrika.gympin.common.user.user.param.*;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.query.UserQuery;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -33,7 +31,7 @@ public interface UserController extends BaseController<UserParam, UserDto, UserQ
     ResponseEntity<Boolean> checkUsernameAvailable(String username);
 
     ResponseEntity<UserDto> getMyInfo();
-    ResponseEntity<UserCreditDto> getMyPlaceWallet(@RequestBody PlaceParam placeParam);
+    ResponseEntity<UserCreditDto> getMyPlaceWallet(@RequestBody PlaceGymParam placeParam);
 
     ResponseEntity<UserCreditDto> getUserCredits(UserParam param);
     ResponseEntity<UserCreditDto> getMyCredits();

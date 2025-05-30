@@ -99,6 +99,14 @@ const _UserCreditListItem = ({userCredit, updatePage}) => {
         )
     }
 
+    function getTitle(uc){
+        var title ="";
+        title+= toPriceWithComma(uc.CreditAmount);
+        title+=" تومان ";
+        title+=uc.Name?"( "+uc.Name+" )":"";
+        return title;
+    }
+
     return (
         <div>
             <ListItem onClick={e => setOpenDetails(!opendetails)} sx={{textAlign: "right", p: 0}}>
@@ -112,7 +120,7 @@ const _UserCreditListItem = ({userCredit, updatePage}) => {
                     <Grid item>
 
                         <ListItemText
-                            primary={toPriceWithComma(userCredit?.CreditAmount) + " تومان"}
+                            primary={getTitle(userCredit)}
                             primaryTypographyProps={{textAlign:"start"}}
                             secondary={userCredit?.Status == "ACTIVE" ? "انقضا : " + new Date(userCredit?.ExpireDate).toLocaleDateString('fa-IR', {
                                 year: 'numeric',

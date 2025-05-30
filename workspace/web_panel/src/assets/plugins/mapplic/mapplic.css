@@ -1,5 +1,5 @@
 /*
- * Mapplic - Custom Interactive PlaceMap Plugin by @sekler
+ * Mapplic - Custom Interactive CateringMap Plugin by @sekler
  * Version 4.0
  * http://www.mapplic.com/
  */
@@ -34,7 +34,7 @@
   opacity: 0;
 }
 
-/* PlaceMap container */
+/* CateringMap container */
 .mapplic-container {
   display: inline-block;
   overflow: hidden;
@@ -50,7 +50,7 @@
   overflow: visible !important;
 }
 
-/* PlaceMap layer */
+/* CateringMap layer */
 .mapplic-layer img {
   width: 100%;
 }
@@ -1059,7 +1059,7 @@ a.mapplic-zoomout-button {
   }
 }
 
-/* PlaceMap */
+/* CateringMap */
 .mapplic-element svg {
   width: 100%;
   height: 100%;

@@ -2,7 +2,8 @@ package com.notrika.gympin.common.ticket.buyable.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.util._base.dto.BaseDto;

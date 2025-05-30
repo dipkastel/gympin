@@ -5,6 +5,7 @@ import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -39,14 +40,20 @@ public class SupportEntity extends BaseEntityWithCreateUpdate<SupportEntity> {
     private String title;
 
     @ManyToOne
+    @JsonIgnore
+    @ToString.Exclude
     @JoinColumn(name = "supportPlaceId")
     private PlaceEntity place;
 
     @ManyToOne
+    @JsonIgnore
+    @ToString.Exclude
     @JoinColumn(name = "supportUserId")
     private UserEntity user;
 
     @ManyToOne
+    @JsonIgnore
+    @ToString.Exclude
     @JoinColumn(name = "CorporateId")
     private CorporateEntity corporate;
 

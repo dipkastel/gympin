@@ -3,7 +3,7 @@ import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/
 import {Button, TextField} from "@mui/material";
 import {Form} from "react-bootstrap";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {Place_updateOrder} from "../../../../../network/api/place.api";
+import {PlaceGym_updateOrder} from "../../../../../network/api/place.api";
 
 const PlaceOrder = ({place,updatePlace}) => {
 
@@ -12,7 +12,7 @@ const PlaceOrder = ({place,updatePlace}) => {
 
     function UpdatePlaceOrder(e) {
         e.preventDefault()
-        Place_updateOrder({Id: place.Id, Order: inplaceOrder}).then(result => {
+        PlaceGym_updateOrder({Id: place.Id, Order: inplaceOrder}).then(result => {
             setInplaceOrder(result.data.Data.Order);
             error.showError({message: "ثبت موفق",});
             updatePlace(place);

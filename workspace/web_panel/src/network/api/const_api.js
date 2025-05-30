@@ -236,6 +236,31 @@ export let PlaceApi = {
     query: "v1/place/query",
     deleteMultimedia: "v1/place/deleteMultimedia"
 };
+export let CateringApi = {
+    getAll: "v1/catering/getAll",
+    getById: "v1/catering/getById",
+    add: "v1/catering/add",
+    delete: "v1/catering/delete",
+    update: "v1/catering/update",
+    query: "v1/catering/query",
+};
+export let TicketFoodApi = {
+    getAll: "v1/TicketFood/getAll",
+    getById: "v1/TicketFood/getById",
+    add: "v1/TicketFood/add",
+    delete: "v1/TicketFood/delete",
+    update: "v1/TicketFood/update",
+    query: "v1/TicketFood/query",
+};
+export let TicketFoodMenuApi = {
+    getAll: "v1/TicketFoodMenu/getAll",
+    getById: "v1/TicketFoodMenu/getById",
+    add: "v1/TicketFoodMenu/add",
+    delete: "v1/TicketFoodMenu/delete",
+    update: "v1/TicketFoodMenu/update",
+    query: "v1/TicketFoodMenu/query",
+    getDates: "v1/TicketFoodMenu/getDates",
+};
 export let TicketSubscribesApi = {
     add: "v1/TicketSubscribe/add",
     delete: "v1/TicketSubscribe/delete",

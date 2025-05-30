@@ -12,7 +12,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {Location_add, Location_addCity, Location_getById, Location_query} from "../../../network/api/location.api";
-import {Place_addPlace} from "../../../network/api/place.api";
+import {PlaceGym_addPlace} from "../../../network/api/place.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {getRppLocationManagement, SetRppLocationManagement} from "../../../helper/pocket/pocket";
 

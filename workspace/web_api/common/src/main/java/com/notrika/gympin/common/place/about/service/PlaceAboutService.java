@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.place.about.service;
 
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
@@ -12,5 +12,5 @@ public interface PlaceAboutService extends BaseService<PlaceAboutParam, PlaceAbo
 
 
     List<PlaceAboutDto> getByPlaceId(Long id);
-    List<PlaceAboutDto> getAllAboutByPlaces(List<PlaceParam> id);
+    List<PlaceAboutDto> getAllAboutByPlaces(List<PlaceGymParam> id);
 }

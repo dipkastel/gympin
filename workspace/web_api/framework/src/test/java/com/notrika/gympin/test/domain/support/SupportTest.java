@@ -3,8 +3,8 @@ package com.notrika.gympin.test.domain.support;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.support.dto.SupportDto;
 import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
@@ -30,15 +30,15 @@ public class SupportTest extends BaseTest {
     @BeforeAll
     @Order(1)
     public void addPlace() throws Exception{
-        final PlaceParam param = PlaceParam.builder()
+        final PlaceGymParam param = PlaceGymParam.builder()
                 .name("مرکز برای پشتیبانی")
                 .build();
 
-        ResponseModel<PlaceDto> result = TestPost(
+        ResponseModel<PlaceGymDto> result = TestPost(
                 "/api/v1/place/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<PlaceDto>>() {
+                new TypeReference<ResponseModel<PlaceGymDto>>() {
                 });
 
         placeId = result.getData().getId();

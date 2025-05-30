@@ -1,5 +1,5 @@
 /*
- * Mapplic - Custom Interactive PlaceMap Plugin by @sekler
+ * Mapplic - Custom Interactive CateringMap Plugin by @sekler
  * Version 4.1
  * http://www.mapplic.com/
  */

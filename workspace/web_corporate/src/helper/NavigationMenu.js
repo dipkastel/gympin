@@ -3,22 +3,22 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import {Chip} from "@mui/material";
 import {
     AccountBalanceWalletOutlined,
-    AddCard,
-    BubbleChart,
     CalendarMonth,
     CardGiftcard,
+    Commute,
+    ConnectingAirports,
+    ContactEmergency,
     CorporateFare,
-    CreditScore, Fastfood, FoodBank,
+    CreditScore,
+    Fastfood,
     Group,
-    GroupAdd,
-    ManageAccounts,
-    PermContactCalendar,
-    PersonPin,
-    PieChart,
-    PowerSettingsNew,
+    HealthAndSafety,
+    LocalLibrary,
+    Movie,
+    PersonPin, ReceiptLong,
     Settings,
-    StackedBarChart,
-    SupportAgent
+    SportsVolleyball,
+    SupportAgent,
 } from "@mui/icons-material";
 
 export const NavigationMenu = [
@@ -26,6 +26,68 @@ export const NavigationMenu = [
         segment: 'dashboard',
         title: 'پیشخوان',
         icon: <DashboardIcon/>,
+    },
+    {
+        kind: 'divider',
+    },
+    {
+        kind: 'header',
+        title: 'خدمات',
+    },
+    {
+        segment: 'sport',
+        title: 'ورزش',
+        icon: <SportsVolleyball/>,
+    },
+    {
+        segment: 'food',
+        title: 'غذا و میان وعده',
+        icon: <Fastfood/>,
+    },
+    {
+        segment: 'health',
+        title: 'سلامت',
+        icon: <HealthAndSafety/>,
+    },
+    {
+        segment: 'event',
+        title: 'رویداد',
+        icon: <CalendarMonth/>,
+    },
+    {
+        segment: 'consult',
+        title: 'مشاوره',
+        icon: <ContactEmergency/>,
+    },
+    {
+        segment: 'gift',
+        title: 'هدایا',
+        icon: <CardGiftcard/>,
+    },
+    {
+        segment: 'learn',
+        title: 'آموزش و توسعه',
+        icon: <LocalLibrary/>,
+    },
+    {
+        segment: 'loan',
+        title: 'اقساط و تسهیلات',
+        icon: <CreditScore/>,
+    },
+    {
+        segment: 'transport',
+        title: 'حمل و نقل',
+        icon: <Commute/>,
+    },
+    {
+        segment: 'travel',
+        title: 'سفر و گردشگری',
+        icon: <ConnectingAirports/>,
+    },
+    {
+        segment: 'cult',
+        title: 'فرهنگ و هنر',
+        icon: <Movie/>,
     },
     {
         kind: 'divider',
@@ -58,14 +120,36 @@ export const NavigationMenu = [
     },
     {
         segment: 'finance',
-        title: 'مالی',
+        title: 'شارژ',
         icon: <AccountBalanceWalletOutlined/>,
         // children: [
-            // {
-            //     segment: '',
-            //     title: 'صورت وضعیت',
-            //     icon: <DescriptionIcon/>,
-            // },
+        // {
+        //     segment: '',
+        //     title: 'صورت وضعیت',
+        //     icon: <DescriptionIcon/>,
+        // },
+        //     {
+        //         segment: 'increaseCharge',
+        //         title: 'افزایش شارژ',
+        //         icon: <AddCard/>,
+        //     },
+        //     {
+        //         segment: 'IncreaseHistory',
+        //         title: 'تاریخچه',
+        //         icon: <CreditScore/>,
+        //     },
+        // ],
+    },
+    {
+        segment: 'receipt',
+        title: 'فاکتور ها',
+        icon: <ReceiptLong/>,
+        // children: [
+        // {
+        //     segment: '',
+        //     title: 'صورت وضعیت',
+        //     icon: <DescriptionIcon/>,
+        // },
         //     {
         //         segment: 'increaseCharge',
         //         title: 'افزایش شارژ',
@@ -99,50 +183,27 @@ export const NavigationMenu = [
         kind: 'divider',
     },
     {
-        kind: 'header',
-        title: 'خرید',
-    },
-    {
-        segment: 'buyTicket',
-        title: 'هدایا',
-        icon: <CardGiftcard/>,
-        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
-    },
-    {
-        segment: 'events',
-        title: 'ایونت ها',
-        icon: <CalendarMonth/>,
-        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
-    },
-    {
-        segment: 'food',
-        title: 'غذای سازمانی',
-        icon: <Fastfood/>,
-    },
-    {
-        kind: 'divider',
-    },
-    {
         segment: 'reports',
         title: 'گزارشات',
         icon: <BarChartIcon/>,
-        children: [
-            {
-                segment: 'general',
-                title: 'عمومی',
-                icon: <StackedBarChart/>,
-            },
-            {
-                segment: 'usage',
-                title: 'استفاده',
-                icon: <PieChart/>,
-            },
-            {
-                segment: 'finance',
-                title: 'مالی',
-                icon: <BubbleChart/>,
-            },
-        ],
+        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
+        // children: [
+        //     {
+        //         segment: 'general',
+        //         title: 'عمومی',
+        //         icon: <StackedBarChart/>,
+        //     },
+        //     {
+        //         segment: 'usage',
+        //         title: 'استفاده',
+        //         icon: <PieChart/>,
+        //     },
+        //     {
+        //         segment: 'finance',
+        //         title: 'مالی',
+        //         icon: <BubbleChart/>,
+        //     },
+        // ],
     },
     {
         segment: 'support',

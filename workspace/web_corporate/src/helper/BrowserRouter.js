@@ -22,6 +22,18 @@ import NewSupport from "../pages/support/NewSupport";
 import SettingsCorporate from "../pages/settings/SettingsCorporate";
 import GeneralReport from "../pages/report/GeneralReport";
 import Food from "../pages/food/Food";
+import FoodDetails from "../pages/food/detail/FoodDetails";
+import Health from "../pages/health/Health";
+import Event from "../pages/Event/Event";
+import Cult from "../pages/Cult/Cult";
+import Travel from "../pages/Travel/Travel";
+import Transport from "../pages/Transport/Transport";
+import Loan from "../pages/Loan/Loan";
+import Gift from "../pages/Gift/Gift";
+import Consult from "../pages/Consult/Consult";
+import Sports from "../pages/sport/Sports";
+import Gympin from "../pages/sport/Gympin/Gympin";
+import Learn from "../pages/Learn/Learn";
 
 export const BrowserRouter =[
     {
@@ -49,10 +61,6 @@ export const BrowserRouter =[
             {
                 path: 'list',
                 Component: NewUserPage,
-            },
-            {
-                path: 'increaseGroups',
-                Component: IncreaseGroupCredit,
             },
             {
                 path: 'groups',
@@ -176,6 +184,123 @@ export const BrowserRouter =[
             {
                 path: '',
                 Component: Food,
+            },
+            {
+                path: 'details/:cateringId',
+                Component: FoodDetails,
+            },
+        ],
+    },
+    {
+        path: 'sport',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Sports,
+            },
+            {
+                path: 'Gympin',
+                children: [
+                    {
+                        path: '',
+                        Component: Gympin,
+                    },
+                    {
+                        path: 'increaseGroups',
+                        Component: IncreaseGroupCredit,
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        path: 'health',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Health,
+            },
+        ],
+    },
+    {
+        path: 'learn',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Learn,
+            },
+        ],
+    },
+    {
+        path: 'event',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Event,
+            },
+        ],
+    },
+    {
+        path: 'consult',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Consult,
+            },
+        ],
+    },
+    {
+        path: 'gift',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Gift,
+            },
+        ],
+    },
+    {
+        path: 'loan',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Loan,
+            },
+        ],
+    },
+    {
+        path: 'transport',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Transport,
+            },
+        ],
+    },
+    {
+        path: 'travel',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Travel,
+            },
+        ],
+    },
+    {
+        path: 'cult',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Cult,
             },
         ],
     },

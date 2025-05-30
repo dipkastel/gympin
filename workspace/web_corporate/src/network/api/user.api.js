@@ -13,3 +13,7 @@ export function user_updateMe(user) {
 export function user_updateAvatar(avatar) {
     return axios.put(Api_url.user.UPDATE_AVATAR,avatar);
 }
+
+export function user_query(data) {
+    return axios.post(Api_url.user.query, data);
+}

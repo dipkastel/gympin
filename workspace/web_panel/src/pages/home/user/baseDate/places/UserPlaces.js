@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {Place_getPlaceByUser} from "../../../../../network/api/place.api";
+import {PlaceGym_getPlaceByUser} from "../../../../../network/api/place.api";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -14,7 +14,7 @@ function UserPlaces({currentUser}) {
     const history = useHistory();
     const [userPlaces, setUserPlaces] = useState([]);
     useEffect(() => {
-        Place_getPlaceByUser({id: currentUser.Id}).then(result => {
+        PlaceGym_getPlaceByUser({id: currentUser.Id}).then(result => {
             setUserPlaces(result.data.Data)
         }).catch(e => {
             try {

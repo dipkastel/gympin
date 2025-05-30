@@ -182,6 +182,24 @@ export function SetRppPlaceManagement(number){
     setValue(rpp_placeManagement,number);
     return getValue(rpp_placeManagement);
 }
+const rpp_cateringManagement = "rpp_cateringManagement";
+export function getRppCateringManagement(){
+    return getValue(rpp_cateringManagement)||5;
+}
+export function SetRppCateringManagement(number){
+    setValue(rpp_cateringManagement,number);
+    return getValue(rpp_cateringManagement);
+}
+
+const rpp_foodManagement = "rpp_foodManagement";
+export function getRppFoodsManagement(){
+    return getValue(rpp_foodManagement)||5;
+}
+export function SetRppFoodsManagement(number){
+    setValue(rpp_foodManagement,number);
+    return getValue(rpp_foodManagement);
+}
+
 const rpp_placeSells = "rpp_placeSells";
 export function getRppPlaceSells(){
     return getValue(rpp_placeSells)||25;

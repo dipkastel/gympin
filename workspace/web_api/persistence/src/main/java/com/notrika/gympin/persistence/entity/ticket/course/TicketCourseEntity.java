@@ -2,6 +2,7 @@ package com.notrika.gympin.persistence.entity.ticket.course;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.ticketCourse.enums.CourseStatus;
+import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
@@ -72,6 +73,10 @@ public class TicketCourseEntity extends BuyableEntity<TicketCourseEntity> {
 
     @Column(name = "dayAfterStartSell")
     private Short dayAfterStartSell;
+
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
 //    @Column(name = "endDate")
 //    @Temporal(TemporalType.TIMESTAMP)

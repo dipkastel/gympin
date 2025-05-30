@@ -1,10 +1,11 @@
 package com.notrika.gympin.common.support.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
+import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.support.enums.SupportStatus;
-import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
+import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,9 @@ public class SupportDto extends BaseDtoWithCreateUpdate<SupportDto> {
 
     @JsonProperty("Place")
     private PlaceDto place;
+
+    @JsonProperty("Corporate")
+    private CorporateDto corporate;
 
     @JsonProperty("User")
     private UserDto user;

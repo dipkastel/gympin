@@ -19,11 +19,13 @@ public final class SupportConvertor {
         dto.setUpdatedDate(entity.getUpdatedDate());
         dto.setStatus(entity.getSupportStatus());
         dto.setUnreadCount(entity.getSupportMessages().stream().filter(o->!o.isDeleted()).filter(sm->!sm.getIsRead()).count());
+        if(entity.getCorporate()!=null)
+            dto.setCorporate(CorporateConvertor.toDto(entity.getCorporate()));
         if(entity.getPlace()!=null)
             dto.setPlace(PlaceConvertor.toDto(entity.getPlace()));
         if(entity.getUser()!=null)
             dto.setUser(UserConvertor.toDtoSimple(entity.getUser()));
-        //add corporate
+
         dto.setCreatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()));
         return dto;
     }

@@ -1,14 +1,9 @@
 package com.notrika.gympin.domain.settings.schedules;
 
-import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
-import com.notrika.gympin.common.settings.base.dto.SettingDto;
-import com.notrika.gympin.common.settings.base.service.SettingsService;
-import com.notrika.gympin.common.settings.sms.dto.SmsDto;
-import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
-import com.notrika.gympin.domain.settings.sms.SmsInServiceImpl;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.entity.management.tags.ManageTagsEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,19 +17,19 @@ import java.util.stream.Collectors;
 public class SchedulePlace {
 
     @Autowired
-    private PlaceRepository placeRepository;
+    private PlaceGymRepository placeGymRepository;
 
 
     @Transactional
     public void UpdatePlaceSearchStr() {
-        List<PlaceEntity> placeEntities = placeRepository.findAllByStatusAndDeletedIsFalseAndSearchStrIsNull(PlaceStatusEnum.ACTIVE);
-        List<PlaceEntity> placesToUpdate = new ArrayList<>();
-        for (PlaceEntity place : placeEntities) {
+        List<PlaceGymEntity> placeEntities = placeGymRepository.findAllByStatusAndDeletedIsFalseAndSearchStrIsNull(PlaceStatusEnum.ACTIVE);
+        List<PlaceGymEntity> placesToUpdate = new ArrayList<>();
+        for (PlaceGymEntity place : placeEntities) {
             String searchSrt = place.getName();
             searchSrt += " "+place.getAddress();
             searchSrt += " "+place.getLocation().getName();
             searchSrt += " "+place.getActiveTimes();
-            searchSrt += " "+ place.getBuyables().stream().filter(be->!be.isDeleted()).map(BuyableEntity::getName).collect(Collectors.joining(" "));
+            searchSrt += " "+ place.getTicketSubscribes().stream().filter(be->!be.isDeleted()).map(BuyableEntity::getName).collect(Collectors.joining(" "));
             searchSrt += " "+ place.getPlaceSport().stream().filter(be->!be.isDeleted()).map(be ->be.getSport().getName()).collect(Collectors.joining(" "));
             searchSrt += " "+ place.getTags().stream().filter(be->!be.isDeleted()).map(ManageTagsEntity::getName).collect(Collectors.joining(" "));
             searchSrt += " "+ place.getOptionsOfPlaces().stream().filter(be->!be.isDeleted()).map(be ->be.getPlaceOption().getName()).collect(Collectors.joining(" "));
@@ -43,6 +38,6 @@ public class SchedulePlace {
             place.setSearchStr(searchSrt);
             placesToUpdate.add(place);
         }
-        placeRepository.updateAll(placesToUpdate);
+        placeGymRepository.updateAll(placesToUpdate);
     }
 }

@@ -1,9 +1,9 @@
 package com.notrika.gympin.domain.settings.schedules;
 
-import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketDiscountHistoryRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
@@ -19,7 +19,7 @@ import java.util.List;
 public class scheduleDiscounts {
 
     @Autowired
-    private PlaceRepository placeRepository;
+    private PlaceGymRepository placeGymRepository;
     @Autowired
     private TicketSubscribeRepository ticketSubscribeRepository;
     @Autowired
@@ -28,11 +28,11 @@ public class scheduleDiscounts {
 
     @Transactional
     public void UpdateAutoTicketSubscribeDiscount() {
-      List<PlaceEntity> places =  placeRepository.findAllByDeletedIsFalseAndAutoDiscountIsTrue();
+      List<PlaceGymEntity> places =  placeGymRepository.findAllByDeletedIsFalseAndAutoDiscountIsTrue();
       List<BuyableDiscountHistoryEntity> buyableDiscountHistoryEntityListToAdd = new ArrayList<>();
       List<TicketSubscribeEntity> ticketSubscribeEntityListToUpdate = new ArrayList<>();
-        for (PlaceEntity place : places) {
-            for (BuyableEntity<TicketSubscribeEntity> buyable : place.getBuyables()) {
+        for (PlaceGymEntity place : places) {
+            for (BuyableEntity<TicketSubscribeEntity> buyable : place.getTicketSubscribes()) {
                 BigDecimal beforPrice = buyable.getPrice();
                 //TODO Commition fee
 //                Short newDiscount = (short) Math.round(place.getCommissionFee()*Math.random());

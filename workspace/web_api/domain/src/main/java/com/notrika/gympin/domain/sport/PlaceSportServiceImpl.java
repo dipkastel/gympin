@@ -1,16 +1,16 @@
 package com.notrika.gympin.domain.sport;
 
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.place.placeSport.param.PlaceSportParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.place.placeSport.service.PlaceSportService;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.place.PlaceServiceImpl;
+import com.notrika.gympin.domain.place.PlaceGymServiceImpl;
 import com.notrika.gympin.domain.util.convertor.PlaceSportConvertor;
 import com.notrika.gympin.persistence.dao.repository.sport.PlaceSportRepository;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import java.util.Objects;
 public class PlaceSportServiceImpl extends AbstractBaseService<PlaceSportParam, PlaceSportDto, BaseQuery<?>, PlaceSportEntity> implements PlaceSportService {
 
     @Autowired
-    private PlaceServiceImpl placeService;
+    private PlaceGymServiceImpl placeService;
 
     @Autowired
     private SportServiceImpl sportService;
@@ -36,7 +36,7 @@ public class PlaceSportServiceImpl extends AbstractBaseService<PlaceSportParam, 
 
     @Override
     public PlaceSportDto add(PlaceSportParam placeSportParam) {
-        PlaceEntity place = placeService.getEntityById(placeSportParam.getPlace().getId());
+        PlaceGymEntity place = placeService.getEntityById(placeSportParam.getPlace().getId());
         SportEntity sport = sportService.getEntityById(placeSportParam.getSport().getId());
         PlaceSportEntity initPlaceSport = PlaceSportEntity.builder().place(place).sport(sport).build();
         PlaceSportEntity placeSport = add(initPlaceSport);
@@ -52,7 +52,7 @@ public class PlaceSportServiceImpl extends AbstractBaseService<PlaceSportParam, 
 
     @Override
     public PlaceSportDto update(PlaceSportParam placeSportParam) {
-        PlaceEntity place = placeService.getEntityById(placeSportParam.getPlace().getId());
+        PlaceGymEntity place = placeService.getEntityById(placeSportParam.getPlace().getId());
         SportEntity sport = sportService.getEntityById(placeSportParam.getSport().getId());
         PlaceSportEntity initPlaceSport = getEntityById(placeSportParam.getId());
         initPlaceSport.setPlace(place);
@@ -110,13 +110,13 @@ public class PlaceSportServiceImpl extends AbstractBaseService<PlaceSportParam, 
     }
 
     @Override
-    public List<PlaceSportDto> getSportsByPlace(PlaceParam placeParam) {
-        PlaceEntity place = PlaceEntity.builder().id(placeParam.getId()).build();
+    public List<PlaceSportDto> getSportsByPlace(PlaceGymParam placeParam) {
+        PlaceGymEntity place = PlaceGymEntity.builder().id(placeParam.getId()).build();
         List<PlaceSportEntity> sportList = getSportsByPlace(place);
         return PlaceSportConvertor.toDto(sportList);
     }
 
-    public List<PlaceSportEntity> getSportsByPlace(PlaceEntity place) {
+    public List<PlaceSportEntity> getSportsByPlace(PlaceGymEntity place) {
         return placeSportRepository.getPlaceSportByPlace(place);
     }
 

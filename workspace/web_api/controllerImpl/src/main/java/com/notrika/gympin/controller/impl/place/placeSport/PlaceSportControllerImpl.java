@@ -4,7 +4,7 @@ import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.place.placeSport.param.PlaceSportParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.placeSport.api.PlaceSportController;
 import com.notrika.gympin.common.place.placeSport.service.PlaceSportService;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
@@ -51,7 +51,7 @@ public class PlaceSportControllerImpl implements PlaceSportController {
 
     @Override
     @GetMapping("getSportsByPlace")
-    public ResponseEntity<List<PlaceSportDto>> getSportsByPlace(PlaceParam placeParam) {
+    public ResponseEntity<List<PlaceSportDto>> getSportsByPlace(PlaceGymParam placeParam) {
         return new ResponseEntity<List<PlaceSportDto>>(placeSportService.getSportsByPlace(placeParam), HttpStatus.OK);
     }
 

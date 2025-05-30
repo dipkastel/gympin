@@ -3,7 +3,7 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {Location_query} from "../../../../network/api/location.api";
 import {user_query} from "../../../../network/api/user.api";
 import {sport_query} from "../../../../network/api/sport.api";
-import {Place_query} from "../../../../network/api/place.api";
+import {PlaceGym_query} from "../../../../network/api/place.api";
 import {Grid} from "@mui/material";
 import _DashItem from "../partials/_DashItem";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
@@ -73,7 +73,7 @@ const DashTasksTab = ({updatePage}) => {
     }, []);
 
     useEffect(() => {
-        Place_query({
+        PlaceGym_query({
             Status:"ACTIVE",
             paging: {Page: 0, Size: 1}}).then(data => {
             SetPlaceCount(data.data.Data.totalElements)

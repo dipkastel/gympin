@@ -2,6 +2,7 @@ package com.notrika.gympin.persistence.entity.place.option;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -26,7 +27,7 @@ public class PlaceOptionOfPlaceEntity extends BaseEntityWithCreateUpdate<PlaceOp
 
     @ManyToOne
     @JoinColumn(name = "placePlaceId")
-    private PlaceEntity place;
+    private PlaceGymEntity place;
 
     @ManyToOne
     @JoinColumn(name = "placeOptionId")

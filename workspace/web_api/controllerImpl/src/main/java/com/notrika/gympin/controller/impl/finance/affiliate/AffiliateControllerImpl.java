@@ -10,7 +10,7 @@ import com.notrika.gympin.common.finance.affiliate.param.AffiliateParam;
 import com.notrika.gympin.common.finance.affiliate.param.AffiliateTPRegisterParam;
 import com.notrika.gympin.common.finance.affiliate.query.AffiliateQuery;
 import com.notrika.gympin.common.finance.affiliate.service.AffiliateService;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,19 +65,19 @@ public class AffiliateControllerImpl implements AffiliateController {
 
     @Override
     @PostMapping("AddPlaceToAffiliator")
-    public ResponseEntity<PlaceDto> AddPlaceToAffiliator(AffiliateAddPlaceParam param) {
+    public ResponseEntity<PlaceGymDto> AddPlaceToAffiliator(AffiliateAddPlaceParam param) {
         return ResponseEntity.ok(affiliateService.AddPlaceToAffiliator(param));
     }
 
     @Override
     @PostMapping("RemovePlaceToAffiliator")
-    public ResponseEntity<PlaceDto> RemovePlaceToAffiliator(AffiliateAddPlaceParam param) {
+    public ResponseEntity<PlaceGymDto> RemovePlaceToAffiliator(AffiliateAddPlaceParam param) {
         return ResponseEntity.ok(affiliateService.RemovePlaceToAffiliator(param));
     }
 
     @Override
     @GetMapping("getPlacesByAffiliatorId")
-    public ResponseEntity<List<PlaceDto>> getPlacesByAffiliatorId(Long id) {
+    public ResponseEntity<List<PlaceGymDto>> getPlacesByAffiliatorId(Long id) {
         return ResponseEntity.ok(affiliateService.getPlacesByAffiliatorId(id));
     }
 

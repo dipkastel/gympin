@@ -40,7 +40,7 @@ public final class InvoiceConvertor {
                 .placePrice(entity.getPlacePrice())
                 .gender(entity.getGender())
                 .buyableType(entity.getBuyableType())
-                .place(PlaceConvertor.toDto(entity.getPlace()))
+                .place(PlaceConvertor.ToGymDto(entity.getPlaceGym()))
                 .beneficiary(PlaceConvertor.personnelToDto(entity.getBeneficiary()))
                 .unitPrice(entity.getUnitPrice())
                 .count(entity.getCount())

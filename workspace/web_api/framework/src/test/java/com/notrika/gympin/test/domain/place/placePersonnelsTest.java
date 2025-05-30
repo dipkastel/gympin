@@ -7,8 +7,8 @@ import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
 import com.notrika.gympin.test.domain.utils.BaseTest;
 import org.junit.jupiter.api.*;
@@ -32,15 +32,15 @@ public class placePersonnelsTest extends BaseTest {
     @BeforeAll
     @Order(1)
     public void addPlace() throws Exception{
-        final PlaceParam param = PlaceParam.builder()
+        final PlaceGymParam param = PlaceGymParam.builder()
                 .name("مرکز برای پرسنل")
                 .build();
 
-        ResponseModel<PlaceDto> result = TestPost(
+        ResponseModel<PlaceGymDto> result = TestPost(
                 "/api/v1/place/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<PlaceDto>>() {
+                new TypeReference<ResponseModel<PlaceGymDto>>() {
                 });
 
         placeId = result.getData().getId();
@@ -53,7 +53,7 @@ public class placePersonnelsTest extends BaseTest {
         if (placeId == null) throw new Exception("is not exist");
         final PlacePersonnelParam param = PlacePersonnelParam.builder()
                 .PhoneNumber("09126540027")
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .build();
 
         ResponseModel<PlacePersonnelDto> result = TestPost(
@@ -73,7 +73,7 @@ public class placePersonnelsTest extends BaseTest {
         if (placeId == null) throw new Exception("is not exist");
         final PlacePersonnelParam param = PlacePersonnelParam.builder()
                 .PhoneNumber("09194711540")
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .userRole(PlacePersonnelRoleEnum.PLACE_PERSONNEL)
                 .build();
 
@@ -96,7 +96,7 @@ public class placePersonnelsTest extends BaseTest {
         if (placePersonnelId == null) throw new Exception("is not exist");
         final PlacePersonnelParam param = PlacePersonnelParam.builder()
                 .id(placePersonnelId)
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .userRole(PlacePersonnelRoleEnum.PLACE_COACH)
                 .build();
 

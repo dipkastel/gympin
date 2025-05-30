@@ -1,7 +1,8 @@
 package com.notrika.gympin.common.ticket.ticketCourse.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.ticketCourse.enums.CourseStatus;

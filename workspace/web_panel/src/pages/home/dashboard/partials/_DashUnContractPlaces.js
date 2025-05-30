@@ -14,7 +14,7 @@ import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
 import {Message, NoteAlt} from "@mui/icons-material";
-import {Place_query} from "../../../../network/api/place.api";
+import {PlaceGym_query} from "../../../../network/api/place.api";
 
 const _DashUncontractPlaces = () => {
 
@@ -27,7 +27,7 @@ const _DashUncontractPlaces = () => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        Place_query({
+        PlaceGym_query({
             queryType: "FILTER",
             Status:"ACTIVE",
             HasContract:false,

@@ -16,11 +16,6 @@ import {getSelectedTheme} from "../pocket";
 
 export default function Layout() {
     const {mode, setMode} = useColorScheme();
-
-    useEffect(() => {
-            console.log("mode",mode)
-    }, [mode]);
-
     if (!mode) {
         return null;
     }

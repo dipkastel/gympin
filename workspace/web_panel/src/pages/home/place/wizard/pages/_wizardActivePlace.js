@@ -4,7 +4,7 @@ import {Form} from "react-bootstrap";
 import {Button, Typography} from "@mui/material";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useHistory, useParams} from "react-router-dom";
-import {place_changeStatus, Place_getPlaceById} from "../../../../../network/api/place.api";
+import {placeGym_changeStatus, PlaceGym_getPlaceById} from "../../../../../network/api/place.api";
 
 const _wizardActivePlace = ({allowNext}) => {
 
@@ -24,7 +24,7 @@ const _wizardActivePlace = ({allowNext}) => {
     }, [inPlace]);
 
     function getPlace(placeId){
-        Place_getPlaceById({id:placeId}).then(result=>{
+        PlaceGym_getPlaceById({id:placeId}).then(result=>{
             SetInPlace(result.data.Data);
         }).catch(e => {
             try {
@@ -38,7 +38,7 @@ const _wizardActivePlace = ({allowNext}) => {
     function ActivePlace(e) {
         e.preventDefault();
         if(inPlace){
-            place_changeStatus({
+            placeGym_changeStatus({
                 Id:inPlace.Id,
                 Status:"ACTIVE"
             }).then(result=>{

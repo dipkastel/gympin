@@ -2,7 +2,7 @@ package com.notrika.gympin.common.place.about.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.util._base.param.BaseParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -30,7 +30,7 @@ public class PlaceAboutParam extends BaseParam<PlaceAboutParam> {
     private Boolean active;
 
     @JsonProperty("Place")
-    private PlaceParam place;
+    private PlaceGymParam place;
 
 
 }

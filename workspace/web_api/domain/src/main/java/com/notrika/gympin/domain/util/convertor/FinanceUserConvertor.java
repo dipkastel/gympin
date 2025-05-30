@@ -39,7 +39,7 @@ public final class FinanceUserConvertor {
         if (userPersonalWallet.getUserFinanceType() == UserFinanceType.NON_WITHDRAWABLE_WALLET)
             detail.setCreditType(CreditType.NON_WITHDRAWABLE);
         detail.setCreditPayableAmount(userDebit);
-        detail.setPlace(PlaceConvertor.toSimpleDto(userPersonalWallet.getPlace()));
+        detail.setPlace(PlaceConvertor.toSimpleGymDto(userPersonalWallet.getPlace()));
         return detail;
     }
 }

@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal, Table} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar,} from "../../partials/content/Portlet";
 import {Button, Card, CardContent, CardHeader, Chip, Grid, Paper, Tab, Tabs, TextField, Tooltip} from "@mui/material";
-import {Place_addPlace, Place_query} from "../../../network/api/place.api";
+import {PlaceGym_addPlace, PlaceGym_query} from "../../../network/api/place.api";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -68,7 +68,7 @@ const PlaceManagement = () => {
     }, [selectedTab]);
 
     function getPlaces() {
-        Place_query({
+        PlaceGym_query({
             queryType: queryType,
             Name: searchString,
             Status:placeStatus,
@@ -88,7 +88,7 @@ const PlaceManagement = () => {
     function RenderModalAdd() {
         function addPlace(e) {
             e.preventDefault()
-            Place_addPlace({Address: "", Name: e.target.formName.value , Region: {Id: 1}})
+            PlaceGym_addPlace({Address: "", Name: e.target.formName.value , Region: {Id: 1}})
                 .then((data) => {
                     error.showError({message: "عملیات موفق",});
                     history.push({

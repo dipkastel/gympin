@@ -25,7 +25,7 @@ public final class OptionConvertor {
     public static OptionOfPlaceDto optionOfPlaceToOptionOfPlaceDto(PlaceOptionOfPlaceEntity optionOfPlace) {
         return OptionOfPlaceDto.builder()
                 .id(optionOfPlace.getId())
-                .place(PlaceConvertor.toDto(optionOfPlace.getPlace()))
+                .place(PlaceConvertor.ToGymDto(optionOfPlace.getPlace()))
                 .placeOption(placeOptionToPlaceOptionDto(optionOfPlace.getPlaceOption()))
                 .build();
     }

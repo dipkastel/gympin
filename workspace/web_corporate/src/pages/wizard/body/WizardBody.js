@@ -26,6 +26,7 @@ const WizardBody = () => {
 
     const {mode} = useColorScheme();
 
+
     useEffect(() => {
         var id = 1;
         var stepsList = new Array();

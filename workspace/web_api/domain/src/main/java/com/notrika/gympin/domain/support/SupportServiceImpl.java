@@ -1,13 +1,12 @@
 package com.notrika.gympin.domain.support;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.support.query.SupportQuery;
-import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.support.dto.SupportDto;
 import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
@@ -17,12 +16,13 @@ import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.SupportConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.support.SupportMessageRepository;
 import com.notrika.gympin.persistence.dao.repository.support.SupportRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.support.SupportMessagesEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -50,7 +50,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     UserRepository userRepository;
 
     @Autowired
-    PlaceRepository placeRepository;
+    PlaceGymRepository placeGymRepository;
 
     @Autowired
     CorporateRepository corporateRepository;
@@ -65,7 +65,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         SupportEntity supportEntity = new SupportEntity();
         supportEntity.setTitle(supportParam.getTitle());;
         if (supportParam.getPlaceId() != null) {
-            PlaceEntity place = placeRepository.getById(supportParam.getPlaceId());
+            PlaceGymEntity place = placeGymRepository.getById(supportParam.getPlaceId());
             supportEntity.setPlace(place);
         }
 
@@ -104,7 +104,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         supportMessageRepository.saveAll(support.getSupportMessages());
         try {
             if (param.isAnswer()) {
-                UserEntity user = (tme.getSupport().getUser()!=null)?tme.getSupport().getUser():tme.getSupport().getPlace().getPlaceOwners().stream().filter(po->po.getPlacePersonnelRoles().stream().anyMatch(ppp->ppp.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER)&&!po.isDeleted()).findFirst().get().getUser();
+                UserEntity user = (tme.getSupport().getUser()!=null)?tme.getSupport().getUser():((PlacePersonnelEntity)tme.getSupport().getPlace().getPlaceOwners().stream().filter(po->((PlacePersonnelEntity)po).getPlacePersonnelRoles().stream().anyMatch(ppp->ppp.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER)&&!((PlacePersonnelEntity)po).isDeleted()).findFirst().get()).getUser();
                 smsService.sendSupportAnswered(SmsDto.builder()
                         .smsType(SmsTypes.SUPPORT_ANSWERED)
                         .userNumber(user.getPhoneNumber())
@@ -124,8 +124,8 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     }
 
     @Override
-    public List<SupportDto> getByPlace(PlaceParam param) {
-        PlaceEntity place = placeRepository.getById(param.getId());
+    public List<SupportDto> getByPlace(PlaceGymParam param) {
+        PlaceGymEntity place = placeGymRepository.getById(param.getId());
         return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndPlace(place));
     }
 

@@ -2,9 +2,6 @@ import React, {useEffect, useState} from "react";
 import Home from "../pages/home/Home";
 import Finance from "../pages/finance/Finance";
 import Management from "../pages/management/Management";
-import Users from "../pages/users/Users";
-import NNavigaion from "../components/NNavigaion";
-import NBottomNavigation from "../components/NBottomNavigation";
 import CorporateDetail from "../pages/corporateDetail/EditCorporate";
 import IncreaseGroupCredit from "../pages/increaseGroupCredit/IncreaseGroupCredit";
 import SingleUser from "../pages/singleUser/SingleUser";
@@ -48,41 +45,41 @@ export default function ApplicationRoutes() {
     return (
         <>
 
-            {inWizardComplete?(<>
-                {/*<NNavigaion/>*/}
+            {/*{inWizardComplete?(<>*/}
+            {/*    /!*<NNavigaion/>*!/*/}
 
-                {corporate?.Status === "INACTIVE" &&
-                <Route path="/*" element={<Navigate to={"/error/inactive"}/>}/>
-                }
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/management/details" element={<CorporateDetail/>}/>
-                    <Route path="/management/settings" element={<Settings/>}/>
-                    <Route path="/management/categories" element={<Groups/>}/>
-                    <Route path="/management" element={<Management/>}/>
+            {/*    {corporate?.Status === "INACTIVE" &&*/}
+            {/*    <Route path="/*" element={<Navigate to={"/error/inactive"}/>}/>*/}
+            {/*    }*/}
+            {/*    <Routes>*/}
+            {/*        <Route path="/" element={<Home/>}/>*/}
+            {/*        <Route path="/management/details" element={<CorporateDetail/>}/>*/}
+            {/*        <Route path="/management/settings" element={<Settings/>}/>*/}
+            {/*        <Route path="/management/categories" element={<Groups/>}/>*/}
+            {/*        <Route path="/management" element={<Management/>}/>*/}
 
-                    <Route path="/finance/IncreaseHistory" element={<IncreaseHistory/>}/>
-                    <Route path="/finance" element={<Finance/>}/>
+            {/*        <Route path="/finance/IncreaseHistory" element={<IncreaseHistory/>}/>*/}
+            {/*        <Route path="/finance" element={<Finance/>}/>*/}
 
-                    <Route path="/management/support" element={<Support/>}/>
-                    <Route path="/management/Support/detail/:supportId" element={<SupportDetail/>}/>
+            {/*        <Route path="/management/support" element={<Support/>}/>*/}
+            {/*        <Route path="/management/Support/detail/:supportId" element={<SupportDetail/>}/>*/}
 
-                    <Route path="/personnel/increasegroupcredit" element={<IncreaseGroupCredit/>}/>
-                    <Route path="/personnel/detail/:PersonnelId" element={<SingleUser/>}/>
-                    <Route path="/personnel" element={<Users/>}/>
-                    <Route path="/profile" element={<EditProfile/>}/>
-                    <Route path="/logout" element={<LogoutPage/>}/>
+            {/*        <Route path="/personnel/increasegroupcredit" element={<IncreaseGroupCredit/>}/>*/}
+            {/*        <Route path="/personnel/detail/:PersonnelId" element={<SingleUser/>}/>*/}
+            {/*        <Route path="/personnel" element={<Users/>}/>*/}
+            {/*        <Route path="/profile" element={<EditProfile/>}/>*/}
+            {/*        <Route path="/logout" element={<LogoutPage/>}/>*/}
 
-                    <Route path="/*" element={<Navigate to={"/error/404"}/>}/>
+            {/*        <Route path="/*" element={<Navigate to={"/error/404"}/>}/>*/}
 
-                </Routes>
-                {/*<NBottomNavigation/>*/}
-            </>):(<>
-                <Routes>
-                    <Route path="/intro/wizard" element={<WizardBody/>}/>
-                    <Route path="/management/settings" element={<Settings/>}/>
-                </Routes>
-            </>)}
+            {/*    </Routes>*/}
+            {/*    /!*<NBottomNavigation/>*!/*/}
+            {/*</>):(<>*/}
+            {/*    <Routes>*/}
+            {/*        <Route path="/intro/wizard" element={<WizardBody/>}/>*/}
+            {/*        <Route path="/management/settings" element={<Settings/>}/>*/}
+            {/*    </Routes>*/}
+            {/*</>)}*/}
         </>
     )
 }

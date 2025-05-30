@@ -11,6 +11,7 @@ import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.authCodes.CorporateContractCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.authCodes.PlaceContractCodeRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageSmsPatternRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageSmsRepository;
@@ -18,7 +19,7 @@ import com.notrika.gympin.persistence.dao.repository.authCodes.UserActivationCod
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.management.sms.ManageSmsEntity;
 import com.notrika.gympin.persistence.entity.management.sms.ManageSmsPatternEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.authCodes.CorporateContractCodeEntity;
 import com.notrika.gympin.persistence.entity.authCodes.PlaceContractCodeEntity;
@@ -58,7 +59,7 @@ public class SmsInServiceImpl implements SmsInService {
     private SettingsService settingsService;
 
     @Autowired
-    private PlaceRepository placeRepository;
+    private PlaceGymRepository placeGymRepository;
 
     @Autowired
     private CorporateRepository corporateRepository;
@@ -378,7 +379,7 @@ public class SmsInServiceImpl implements SmsInService {
     }
     private void updatePlaceContractCode(String smsCode, Long placeId,String phoneNumber, String body) {
 
-        PlaceEntity place = placeRepository.getById(placeId);
+        PlaceGymEntity place = placeGymRepository.getById(placeId);
         Calendar expireDate = Calendar.getInstance();
         expireDate.add(Calendar.MINUTE, 3);
 

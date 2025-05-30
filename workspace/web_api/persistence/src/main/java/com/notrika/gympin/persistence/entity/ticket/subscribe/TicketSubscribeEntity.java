@@ -2,6 +2,9 @@ package com.notrika.gympin.persistence.entity.ticket.subscribe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
+import com.notrika.gympin.common.user.user.enums.Gender;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
@@ -44,6 +47,10 @@ public class TicketSubscribeEntity extends BuyableEntity<TicketSubscribeEntity> 
     @Column(name = "Timing", columnDefinition = "varchar(800)")
     private String timing;
 
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
     @OneToMany(mappedBy = "ticketSubscribe")
     @JsonIgnore
     @ToString.Exclude
@@ -66,6 +73,12 @@ public class TicketSubscribeEntity extends BuyableEntity<TicketSubscribeEntity> 
     @JsonIgnore
     @ToString.Exclude
     private List<UserEntity> coaches;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "buyablePlaceId")
+    @JsonIgnore
+    @ToString.Exclude
+    private PlaceGymEntity place;
 
 
     @Override

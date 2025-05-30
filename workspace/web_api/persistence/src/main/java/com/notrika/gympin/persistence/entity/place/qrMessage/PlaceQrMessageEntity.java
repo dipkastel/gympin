@@ -2,6 +2,7 @@ package com.notrika.gympin.persistence.entity.place.qrMessage;
 
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,7 +24,7 @@ public class PlaceQrMessageEntity extends BaseEntityWithCreateUpdate<PlaceQrMess
 
     @ManyToOne
     @JoinColumn(name = "qrplaceId")
-    private PlaceEntity place;
+    private PlaceGymEntity place;
 
 
     @Column(name = "text", nullable = false)

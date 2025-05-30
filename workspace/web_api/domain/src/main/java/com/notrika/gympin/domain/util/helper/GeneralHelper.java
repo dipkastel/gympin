@@ -54,7 +54,6 @@ public final class GeneralHelper {
     C : invited by corporate
     U : invited by user
     G : invited by gift Cards*/
-    @Transactional
     public static boolean checkInviteCode(String inviteCode, UserRepository userRepository, ManageGiftCreditRepository giftRepository) {
 
         String pureInviteCode = "";

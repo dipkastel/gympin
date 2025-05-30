@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
@@ -29,7 +30,7 @@ public class PlacePersonnelEntity extends BaseEntityWithCreateUpdate<PlacePerson
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personnelPlaceId")
-    private PlaceEntity place;
+    private PlaceGymEntity place;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personnelUserId")

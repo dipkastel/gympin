@@ -99,10 +99,37 @@ export let Api_url = {
         getCorporateSupportCount:"v1/support/getCorporateSupportCount",
         query: "v1/support/query"
     },
+    catering:{
+        getAll: "v1/catering/getAll",
+        getById: "v1/catering/getById",
+        add: "v1/catering/add",
+        delete: "v1/catering/delete",
+        update: "v1/catering/update",
+        query: "v1/catering/query",
+    },
+    ticketFood:{
+
+        getAll: "v1/TicketFood/getAll",
+        getById: "v1/TicketFood/getById",
+        add: "v1/TicketFood/add",
+        delete: "v1/TicketFood/delete",
+        update: "v1/TicketFood/update",
+        query: "v1/TicketFood/query",
+    },
+    ticketMenu:{
+        getAll: "v1/TicketFoodMenu/getAll",
+        getById: "v1/TicketFoodMenu/getById",
+        add: "v1/TicketFoodMenu/add",
+        delete: "v1/TicketFoodMenu/delete",
+        update: "v1/TicketFoodMenu/update",
+        query: "v1/TicketFoodMenu/query",
+        getDates: "v1/TicketFoodMenu/getDates",
+    },
     user: {
         GET_BY_ID: "v1/user/getById",
         UPDATE_USER: "v1/user/update",
         UPDATE_AVATAR: "v1/user/updateUserAvatar",
+        query:"v1/user/query",
     },
     increaseCorporateDeposit:{
         requestIncreaseCorporateDeposits:"v1/increaseCorporateDeposit/requestIncreaseCorporateDeposits",

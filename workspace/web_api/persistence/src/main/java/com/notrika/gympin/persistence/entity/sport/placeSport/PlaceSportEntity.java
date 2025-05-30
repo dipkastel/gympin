@@ -2,7 +2,7 @@ package com.notrika.gympin.persistence.entity.sport.placeSport;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
@@ -28,7 +28,7 @@ public class PlaceSportEntity extends BaseEntityWithCreateUpdate<PlaceSportEntit
 
     @ManyToOne
     @JoinColumn(name = "placeSportId")
-    private PlaceEntity place;
+    private PlaceGymEntity place;
 
     @ManyToOne
     @JoinColumn(name = "sportId")

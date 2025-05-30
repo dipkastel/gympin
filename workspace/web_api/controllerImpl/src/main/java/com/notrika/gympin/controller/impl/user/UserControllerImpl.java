@@ -1,7 +1,6 @@
 package com.notrika.gympin.controller.impl.user;
 
-import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
 import com.notrika.gympin.common.settings.userSettings.param.UserSettingParam;
 import com.notrika.gympin.common.settings.userSettings.service.userSettingsService;
@@ -68,7 +67,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @PostMapping("/getMyPlaceWallet")
-    public ResponseEntity<UserCreditDto> getMyPlaceWallet(PlaceParam placeParam) {
+    public ResponseEntity<UserCreditDto> getMyPlaceWallet(PlaceGymParam placeParam) {
         return ResponseEntity.ok(userService.getMyPlaceWallet(placeParam));
     }
 

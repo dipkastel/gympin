@@ -5,15 +5,14 @@ import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.place.hall.filter.HallFilter;
 import com.notrika.gympin.common.place.hall.param.HallParam;
 import com.notrika.gympin.common.place.hall.service.HallService;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.sport.sport.param.SportParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.HallConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.hall.HallRepository;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.sport.SportEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -110,8 +109,8 @@ public class HallServiceImpl extends AbstractBaseService<HallParam, HallDto, Hal
 
 
     @Override
-    public List<HallDto> getHallsByPlace(PlaceParam place) {
-        return hallRepository.findAllByPlaceAndDeletedIsFalse(PlaceEntity.builder().id(place.getId()).build()).stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToDto).collect(Collectors.toList());
+    public List<HallDto> getHallsByPlace(PlaceGymParam place) {
+        return hallRepository.findAllByPlaceAndDeletedIsFalse(PlaceGymEntity.builder().id(place.getId()).build()).stream().filter(o->!o.isDeleted()).map(HallConvertor::convertToDto).collect(Collectors.toList());
     }
 
     @Override

@@ -1,11 +1,15 @@
 package com.notrika.gympin.domain.user;
 
-import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
-import com.notrika.gympin.common.user.user.dto.*;
-import com.notrika.gympin.common.user.user.enums.*;
+import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
+import com.notrika.gympin.common.user.user.dto.UserCreditDto;
+import com.notrika.gympin.common.user.user.dto.UserDto;
+import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
+import com.notrika.gympin.common.user.user.enums.UserGroup;
+import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.common.user.user.param.UserAvatarParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.param.UserStatusParam;
@@ -16,20 +20,18 @@ import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.finance.helper.FinanceHelper;
 import com.notrika.gympin.domain.user.relation.FollowServiceImpl;
-import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.convertor.FinanceUserConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.convertor.UserRoleConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;
 import com.notrika.gympin.persistence.entity.user.UserRolesEntity;
@@ -68,7 +70,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     private MultimediaRepository multimediaRepository;
 
     @Autowired
-    private PlaceRepository placeRepository;
+    private PlaceGymRepository placeGymRepository;
 
     @Autowired
     private FollowServiceImpl followService;
@@ -78,8 +80,6 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 
     @Autowired
     private FinanceHelper financeHelper;
-
-
 
 
     //base
@@ -204,7 +204,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     @Override
     public UserEntity getEntityById(long id) {
 
-        return userRepository.findById(id).stream().filter(o->!o.isDeleted()).findFirst().get();
+        return userRepository.findById(id).stream().filter(o -> !o.isDeleted()).findFirst().get();
     }
 
     public UserEntity getByPhoneNumberAndUsernameAndEmail(String phoneNumber, String username, String email) {
@@ -282,11 +282,11 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 //        user wallets
         detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserPersonalWallet(user)));
         detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserNonWithdrawableWallet(user)));
-        for(FinanceUserEntity wallet : financeHelper.getAllUserIncomeWallets(user))
+        for (FinanceUserEntity wallet : financeHelper.getAllUserIncomeWallets(user))
             detalsList.add(FinanceUserConvertor.toDto(wallet));
 
         result.setCreditDetail(detalsList);
-        result.setTotalCredit(detalsList.stream().filter(o->!o.isDeleted()).map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
+        result.setTotalCredit(detalsList.stream().filter(o -> !o.isDeleted()).map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
         return result;
     }
 
@@ -298,12 +298,12 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 //        corporate credits
         detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserNonWithdrawableWallet(user)));
         List<UserCreditDetailDto> creditsBySponcers = userServiceHelper.getUserCreditsByCorporate(param);
-        detalsList.addAll(creditsBySponcers.stream().filter(o->!o.isDeleted()).sorted(Comparator.comparing(UserCreditDetailDto::getExpireDate)).collect(Collectors.toList()));
+        detalsList.addAll(creditsBySponcers.stream().filter(o -> !o.isDeleted()).sorted(Comparator.comparing(UserCreditDetailDto::getExpireDate)).collect(Collectors.toList()));
 //        user wallets
         detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserPersonalWallet(user)));
 
         result.setCreditDetail(detalsList);
-        result.setTotalCredit(detalsList.stream().filter(o->!o.isDeleted()).map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
+        result.setTotalCredit(detalsList.stream().filter(o -> !o.isDeleted()).map(UserCreditDetailDto::getCreditPayableAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
         return result;
     }
 
@@ -318,18 +318,18 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     }
 
     @Override
-    public UserCreditDto getMyPlaceWallet(PlaceParam param) {
+    public UserCreditDto getMyPlaceWallet(PlaceGymParam param) {
         GympinContext context = GympinContextHolder.getContext();
         if (context == null)
             throw new UnknownUserException();
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-        PlaceEntity place = placeRepository.getById(param.getId());
+        PlaceGymEntity place = placeGymRepository.getById(param.getId());
         UserEntity user = userRepository.getById(userRequester.getId());
-        if(place.getPlaceOwners().stream().filter(o->!o.isDeleted()).noneMatch(po->userRequester.getId().equals(po.getUser().getId())))
+        if (place.getPlaceOwners().stream().filter(o -> !o.isDeleted()).noneMatch(po -> userRequester.getId().equals(po.getUser().getId())))
             throw new NotFoundException();
         UserCreditDto result = new UserCreditDto();
         List<UserCreditDetailDto> detalsList = new ArrayList<>();
-        detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserIncomeWallet(user,place)));
+        detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserIncomeWallet(user, place)));
         detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserPersonalWallet(user)));
         result.setCreditDetail(detalsList);
         return result;

@@ -8,7 +8,7 @@ import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelBuyableAccessParam;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
 import com.notrika.gympin.common.place.personnel.service.PlacePersonnelService;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
@@ -56,7 +56,7 @@ public class PlacePersonnelControllerImpl implements PlacePersonnelController {
 
     @Override
     @GetMapping("PersonnelByPlace")
-    public ResponseEntity<List<PlacePersonnelDto>> getPersonnelByPlace(PlaceParam placeParam) {
+    public ResponseEntity<List<PlacePersonnelDto>> getPersonnelByPlace(PlaceGymParam placeParam) {
         return new ResponseEntity<>(placePersonnelService.getPersonnelByPlace(placeParam), HttpStatus.OK);
     }
 

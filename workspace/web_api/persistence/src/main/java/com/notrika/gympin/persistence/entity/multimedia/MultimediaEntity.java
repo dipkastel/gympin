@@ -7,6 +7,7 @@ import com.notrika.gympin.persistence.entity.article.ArticleEntity;
 import com.notrika.gympin.persistence.entity.finance.gateway.FinanceGatewayEntity;
 import com.notrika.gympin.persistence.entity.homePage.HomePageItemEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.sport.SportMultimediaEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserMultimediaEntity;
@@ -70,7 +71,7 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @ManyToMany(mappedBy = "multimedias", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private List<PlaceEntity> places;
+    private List<PlaceGymEntity> places;
 
     @OneToMany(mappedBy = "multimedia", fetch = FetchType.LAZY)
     @JsonIgnore

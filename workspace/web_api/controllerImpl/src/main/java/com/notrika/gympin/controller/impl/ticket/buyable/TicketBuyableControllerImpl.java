@@ -1,6 +1,5 @@
 package com.notrika.gympin.controller.impl.ticket.buyable;
 
-import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.ticket.buyable.api.TicketBuyableController;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
 import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;

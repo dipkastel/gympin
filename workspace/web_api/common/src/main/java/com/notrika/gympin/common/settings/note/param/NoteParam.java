@@ -5,7 +5,7 @@ import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
 import com.notrika.gympin.common.purchased.purchased.param.PurchasedParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.settings.note.enums.NoteType;
 import lombok.Data;
@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 public class NoteParam extends BaseParam<NoteParam> {
 
     @JsonProperty("Place")
-    private PlaceParam place;
+    private PlaceGymParam place;
 
     @JsonProperty("Corporate")
     private CorporateParam corporate;

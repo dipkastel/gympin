@@ -8,7 +8,7 @@ import _UserCredits from "./partials/_UserCredits";
 import _UserBaseData from "./partials/_UserBaseData";
 import {Container, Grid2 as Grid, Typography} from "@mui/material";
 import {toPriceWithComma} from "../../helper/utils";
-import _UserAddCredit from "./partials/_UserAddCredit";
+import _UserAddCredit from "../sport/Gympin/Actions/_UserAddCredit";
 
 const SingleUser = () => {
 
@@ -48,9 +48,6 @@ const SingleUser = () => {
                         <Typography variant={"body2"}>
                             {"اعتبار فعلی : " + toPriceWithComma(corporatePersonnel?.TotalCredit)}
                         </Typography>
-                    </Grid>
-                    <Grid sx={{p: 4}} textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}>
-                        <_UserAddCredit getCorporatePerson={getCorporatePerson}  personnelId={corporatePersonnel?.Id}/>
                     </Grid>
                 </Grid>
 

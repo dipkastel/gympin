@@ -2,7 +2,7 @@ package com.notrika.gympin.common.ticket.buyable.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import lombok.Data;
@@ -45,7 +45,7 @@ public class TicketBuyableParam extends BaseParam<TicketBuyableParam> {
     private String description;
 
     @JsonProperty(value = "Place")
-    private PlaceParam place;
+    private PlaceGymParam place;
 
     @JsonProperty(value = "Beneficiary")
     private PlacePersonnelParam beneficiary;

@@ -2,7 +2,6 @@ package com.notrika.gympin.domain.finance.affiliate;
 
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
-import com.notrika.gympin.common.corporate.corporate.service.CorporateService;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
@@ -19,10 +18,8 @@ import com.notrika.gympin.common.finance.affiliate.param.AffiliateTPRegisterPara
 import com.notrika.gympin.common.finance.affiliate.query.AffiliateQuery;
 import com.notrika.gympin.common.finance.affiliate.service.AffiliateService;
 import com.notrika.gympin.common.place.personnel.service.PlacePersonnelService;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.user.user.param.UserParam;
-import com.notrika.gympin.common.user.user.service.AccountService;
-import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.common.util.exception.affiliate.AffiliateAuthException;
 import com.notrika.gympin.common.util.exception.affiliate.AffiliatorHasNotThisCorporateException;
 import com.notrika.gympin.common.util.exception.corporate.CorporateContractIsNotComplete;
@@ -32,32 +29,27 @@ import com.notrika.gympin.common.util.exception.user.UserPhoneNumberRequiredExce
 import com.notrika.gympin.common.util.exception.user.UserPhoneNumberValidationException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
-import com.notrika.gympin.domain.place.PlaceServiceImpl;
-import com.notrika.gympin.domain.user.UserServiceHelper;
+import com.notrika.gympin.domain.place.PlaceGymServiceImpl;
 import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.AffiliateConvertor;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
-import com.notrika.gympin.domain.util.convertor.SettlementConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceAffiliateRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.affiliate.FinanceAffiliatorEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -75,7 +67,7 @@ public class AffiliateServiceImpl extends AbstractBaseService<AffiliateParam, Af
     UserServiceImpl userService;
 
     @Autowired
-    PlaceServiceImpl placeService;
+    PlaceGymServiceImpl placeService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -228,28 +220,28 @@ public class AffiliateServiceImpl extends AbstractBaseService<AffiliateParam, Af
 
     @Override
     @Transactional
-    public PlaceDto AddPlaceToAffiliator(AffiliateAddPlaceParam param){
+    public PlaceGymDto AddPlaceToAffiliator(AffiliateAddPlaceParam param){
         FinanceAffiliatorEntity affiliator = getEntityById(param.getId());
-        PlaceEntity place = placeService.getEntityById(param.getPlace().getId());
+        PlaceGymEntity place = placeService.getEntityById(param.getPlace().getId());
         place.setAffiliator(affiliator);
         placeService.update(place);
-        return PlaceConvertor.toDto(place);
+        return PlaceConvertor.ToGymDto(place);
     }
 
     @Override
     @Transactional
-    public PlaceDto RemovePlaceToAffiliator(AffiliateAddPlaceParam param){
-        PlaceEntity place = placeService.getEntityById(param.getPlace().getId());
+    public PlaceGymDto RemovePlaceToAffiliator(AffiliateAddPlaceParam param){
+        PlaceGymEntity place = placeService.getEntityById(param.getPlace().getId());
         place.setAffiliator(null);
         placeService.update(place);
-        return PlaceConvertor.toDto(place);
+        return PlaceConvertor.ToGymDto(place);
     }
 
     @Override
     @Transactional
-    public List<PlaceDto> getPlacesByAffiliatorId(Long id){
+    public List<PlaceGymDto> getPlacesByAffiliatorId(Long id){
         FinanceAffiliatorEntity entity = financeAffiliateRepository.getById(id);
-        return entity.getPlaces().stream().map(PlaceConvertor::toDtoSecure).collect(Collectors.toList());
+        return entity.getPlaces().stream().map(PlaceConvertor::toDtoSecureGym).collect(Collectors.toList());
     }
 
     @Override

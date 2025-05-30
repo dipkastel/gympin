@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {Place_getPlaceById, Place_updatePlace} from "../../../../../network/api/place.api";
+import {PlaceGym_getPlaceById, PlaceGym_updatePlace} from "../../../../../network/api/place.api";
 import __wizardRegister from "./base/__wizardRegister";
 import {useParams} from "react-router-dom";
 import {Location_query} from "../../../../../network/api/location.api";
@@ -33,7 +33,7 @@ const _wizardPlaceBase = ({allowNext}) => {
     }
 
     function updateInPlace() {
-        Place_updatePlace(inPlace).then(data => {
+        PlaceGym_updatePlace(inPlace).then(data => {
             SetInPlace(data.data.Data);
             checkAllowNext();
             error.showError({message: "با موفقیت ثبت شد"});
@@ -67,7 +67,7 @@ const _wizardPlaceBase = ({allowNext}) => {
     }
 
     function getPlace(placeId) {
-        Place_getPlaceById({id: placeId}).then(result => {
+        PlaceGym_getPlaceById({id: placeId}).then(result => {
             SetInPlace(result.data.Data);
         }).catch(e => {
             try {

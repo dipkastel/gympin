@@ -27,7 +27,7 @@ import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,7 +96,7 @@ public class FinanceHelper {
         List<FinanceUserEntity> result = user.getFinanceUser().stream().filter(o->!o.isDeleted()).filter(w->w.getUserFinanceType()== UserFinanceType.INCOME_WALLET).collect(Collectors.toList());
         return result;
     }
-    public FinanceUserEntity getUserIncomeWallet(UserEntity user, PlaceEntity place) {
+    public FinanceUserEntity getUserIncomeWallet(UserEntity user, PlaceGymEntity place) {
         FinanceUserEntity result = user.getFinanceUser().stream().filter(o->!o.isDeleted()).filter(w->w.getUserFinanceType()== UserFinanceType.INCOME_WALLET&& Objects.equals(w.getPlace().getId(), place.getId())).findFirst().orElse(null);
         if(result==null)
             result = financeUserRepository.add(FinanceUserEntity.builder().user(user).place(place).userFinanceType(UserFinanceType.INCOME_WALLET).totalDeposit(BigDecimal.ZERO).build());

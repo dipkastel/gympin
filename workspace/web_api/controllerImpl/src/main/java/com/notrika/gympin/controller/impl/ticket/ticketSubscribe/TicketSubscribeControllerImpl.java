@@ -1,14 +1,12 @@
 package com.notrika.gympin.controller.impl.ticket.ticketSubscribe;
 
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
-import com.notrika.gympin.common.ticket.ticketCourse.dto.TicketCourseDto;
-import com.notrika.gympin.common.ticket.ticketCourse.param.TicketCourseCoachParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeCoachParam;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.api.TicketSubscribeController;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
@@ -63,7 +61,7 @@ public class TicketSubscribeControllerImpl implements TicketSubscribeController 
 
     @Override
     @GetMapping("/getByPlace")
-    public ResponseEntity<List<TicketSubscribeDto>> getTicketSubscribeByPlace(PlaceParam place) {
+    public ResponseEntity<List<TicketSubscribeDto>> getTicketSubscribeByPlace(PlaceGymParam place) {
         return ResponseEntity.ok(ticketSubscribeService.getTicketSubscribeByPlace(place));
     }
 

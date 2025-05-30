@@ -16,7 +16,7 @@ import {Form, Modal} from "react-bootstrap";
 import TablePagination from "@mui/material/TablePagination";
 import {getUserFixedName} from "../../../helper";
 import {useHistory} from "react-router-dom";
-import __SelectUser from "../gifts/partial/__SelectUser";
+import __SelectUser from "../../partials/selector/__SelectUser";
 
 const AffiliateManagement = () => {
 

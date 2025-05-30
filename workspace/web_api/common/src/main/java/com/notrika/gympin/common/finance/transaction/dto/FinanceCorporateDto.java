@@ -2,11 +2,6 @@ package com.notrika.gympin.common.finance.transaction.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
-import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
-import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
-import com.notrika.gympin.common.finance.transaction.enums.TransactionType;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

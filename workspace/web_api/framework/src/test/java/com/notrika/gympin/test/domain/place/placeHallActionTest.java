@@ -6,8 +6,8 @@ import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.place.hall.dto.HallDto;
 import com.notrika.gympin.common.ticket.common.enums.DayOfWeek;
 import com.notrika.gympin.common.place.hall.param.HallParam;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
 import com.notrika.gympin.test.domain.utils.BaseTest;
 import org.junit.jupiter.api.*;
@@ -31,15 +31,15 @@ public class placeHallActionTest extends BaseTest {
     @BeforeAll
     @Order(1)
     public void addPlace() throws Exception{
-        final PlaceParam param = PlaceParam.builder()
+        final PlaceGymParam param = PlaceGymParam.builder()
                 .name("مرکز برای سالن")
                 .build();
 
-        ResponseModel<PlaceDto> result = TestPost(
+        ResponseModel<PlaceGymDto> result = TestPost(
                 "/api/v1/place/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<PlaceDto>>() {
+                new TypeReference<ResponseModel<PlaceGymDto>>() {
                 });
 
         placeId = result.getData().getId();
@@ -52,7 +52,7 @@ public class placeHallActionTest extends BaseTest {
     public void addHall() throws Exception {
         final HallParam param = HallParam.builder()
                 .name("سالن برای فعالیت")
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .build();
 
         ResponseModel<HallDto> result = TestPost(

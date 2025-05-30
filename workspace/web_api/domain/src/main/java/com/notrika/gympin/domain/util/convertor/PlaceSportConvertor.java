@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.sport.sport.dto.SportDto;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public final class PlaceSportConvertor {
 
     public static PlaceSportDto ToDto(PlaceSportEntity placeSport) {
-        PlaceDto placeDto = PlaceConvertor.toDto(placeSport.getPlace());
+        PlaceGymDto placeDto = PlaceConvertor.ToGymDto(placeSport.getPlace());
         SportDto sportDto = SportConvertor.toDto(placeSport.getSport());
         PlaceSportDto placeSportDto = new PlaceSportDto();
         placeSportDto.setId(placeSport.getId());

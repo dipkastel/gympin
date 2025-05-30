@@ -3,8 +3,8 @@ package com.notrika.gympin.test.domain.ticket.subscribe;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.notrika.gympin.common.place.hall.dto.HallDto;
 import com.notrika.gympin.common.place.hall.param.HallParam;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.place.placeSport.param.PlaceSportParam;
 import com.notrika.gympin.common.sport.sport.param.SportParam;
@@ -33,7 +33,7 @@ import java.util.TreeMap;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ticketSubscribeTest extends BaseTest {
 
-    public static PlaceDto place = null;
+    public static PlaceGymDto place = null;
     public static TicketSubscribeDto ticket = null;
     public static TicketSubscribeDto ticket2 = null;
     public static PlaceSportDto placeSport = null;
@@ -44,15 +44,15 @@ public class ticketSubscribeTest extends BaseTest {
     @BeforeAll
     @Order(1)
     public void addPlace() throws Exception{
-        final PlaceParam param = PlaceParam.builder()
+        final PlaceGymParam param = PlaceGymParam.builder()
                 .name("مرکز برای پرسنل")
                 .build();
 
-        ResponseModel<PlaceDto> result = TestPost(
+        ResponseModel<PlaceGymDto> result = TestPost(
                 "/api/v1/place/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<PlaceDto>>() {
+                new TypeReference<ResponseModel<PlaceGymDto>>() {
                 });
 
         place = result.getData();
@@ -63,7 +63,7 @@ public class ticketSubscribeTest extends BaseTest {
     public void addSportToPlace() throws Exception {
         final PlaceSportParam param = PlaceSportParam.builder()
                 .sport(SportParam.builder().id(3l).build())
-                .place(PlaceParam.builder().id(place.getId()).build())
+                .place(PlaceGymParam.builder().id(place.getId()).build())
                 .build();
 
         ResponseModel<PlaceSportDto> result = TestPost(
@@ -82,7 +82,7 @@ public class ticketSubscribeTest extends BaseTest {
     public void addHall() throws Exception {
         final HallParam param = HallParam.builder()
                 .name("سالن برای تست عضویت")
-                .place(PlaceParam.builder().id(place.getId()).build())
+                .place(PlaceGymParam.builder().id(place.getId()).build())
                 .build();
 
         ResponseModel<HallDto> result = TestPost(
@@ -122,7 +122,7 @@ public class ticketSubscribeTest extends BaseTest {
     public void add() throws Exception {
         if (place == null) throw new Exception("is not exist");
         final TicketSubscribeParam param = TicketSubscribeParam.builder()
-                .place(PlaceParam.builder().id(place.getId()).build())
+                .place(PlaceGymParam.builder().id(place.getId()).build())
                 .name("تک جلسه بدنسازی آقایان")
                 .placePrice(BigDecimal.valueOf(120000))
                 .valuePrice(BigDecimal.valueOf(120000))
@@ -149,7 +149,7 @@ public class ticketSubscribeTest extends BaseTest {
     public void addForDelete() throws Exception {
         if (place == null) throw new Exception("is not exist");
         final TicketSubscribeParam param = TicketSubscribeParam.builder()
-                .place(PlaceParam.builder().id(place.getId()).build())
+                .place(PlaceGymParam.builder().id(place.getId()).build())
                 .name("8 جلسه بدنسازی آقایان برای حذف")
                 .placePrice(BigDecimal.valueOf(100000))
                 .valuePrice(BigDecimal.valueOf(100000))
@@ -177,7 +177,7 @@ public class ticketSubscribeTest extends BaseTest {
         if (ticket == null) throw new Exception("is not exist");
         final TicketSubscribeParam param = TicketSubscribeParam.builder()
                 .id(ticket.getId())
-                .place(PlaceParam.builder().id(place.getId()).build())
+                .place(PlaceGymParam.builder().id(place.getId()).build())
                 .name("10 جلسه بدنسازی آقایان")
                 .placePrice(BigDecimal.valueOf(130000))
                 .valuePrice(BigDecimal.valueOf(130000))

@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
-    Place_addMultimeida, Place_addMultimeidaList,
-    Place_deleteMultimedia,
-    Place_GetMultimedias
+    PlaceGym_addMultimeida, PlaceGym_addMultimeidaList,
+    PlaceGym_deleteMultimedia,
+    PlaceGym_GetMultimedias
 } from "../../../../../network/api/place.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useParams} from "react-router-dom";
@@ -28,7 +28,7 @@ const _wizardImages = ({allowNext}) => {
     }, [placeImages]);
 
     function getPlaceImages() {
-        Place_GetMultimedias({Id: placeId}).then(data => {
+        PlaceGym_GetMultimedias({Id: placeId}).then(data => {
             SetPlaceImages(data.data.Data);
         }).catch(e => {
             try {
@@ -42,7 +42,7 @@ const _wizardImages = ({allowNext}) => {
     function DeleteImage(e,item) {
 
         e.preventDefault()
-        Place_deleteMultimedia({Place:{Id: placeId},Multimedia:{Id:item.Id}})
+        PlaceGym_deleteMultimedia({Place:{Id: placeId},Multimedia:{Id:item.Id}})
             .then(data => {
                 error.showError({message: "عملیات موفق",});
                 getPlaceImages()
@@ -62,7 +62,7 @@ const _wizardImages = ({allowNext}) => {
         images.map( image=>{
             multimedia.push({Id:image.Id})
         })
-        Place_addMultimeidaList({Place:{Id: placeId},Multimedias:multimedia}).then(data => {
+        PlaceGym_addMultimeidaList({Place:{Id: placeId},Multimedias:multimedia}).then(data => {
             error.showError({message: "عملیات موفق",});
             getPlaceImages()
         }).catch(e => {

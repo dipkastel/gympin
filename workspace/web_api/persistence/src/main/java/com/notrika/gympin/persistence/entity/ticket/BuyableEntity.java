@@ -3,7 +3,6 @@ package com.notrika.gympin.persistence.entity.ticket;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
-import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
@@ -50,10 +49,6 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
 
     @Column(name = "discount", nullable = false, columnDefinition = "smallint default 0")
     private Short discount;
-
-    @Column(name = "gender")
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
 
     @Column(name = "price")
     private BigDecimal price;

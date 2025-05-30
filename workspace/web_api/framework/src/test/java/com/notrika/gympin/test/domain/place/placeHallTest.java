@@ -3,10 +3,8 @@ package com.notrika.gympin.test.domain.place;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.notrika.gympin.common.place.hall.dto.HallDto;
 import com.notrika.gympin.common.place.hall.param.HallParam;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
-import com.notrika.gympin.common.settings.location.param.LocationParam;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.sport.sport.param.SportParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
 import com.notrika.gympin.test.domain.utils.BaseTest;
@@ -28,15 +26,15 @@ public class placeHallTest extends BaseTest {
     @BeforeAll
     @Order(1)
     public void addPlace() throws Exception{
-        final PlaceParam param = PlaceParam.builder()
+        final PlaceGymParam param = PlaceGymParam.builder()
                 .name("مرکز برای سالن")
                 .build();
 
-        ResponseModel<PlaceDto> result = TestPost(
+        ResponseModel<PlaceGymDto> result = TestPost(
                 "/api/v1/place/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<PlaceDto>>() {
+                new TypeReference<ResponseModel<PlaceGymDto>>() {
                 });
 
         placeId = result.getData().getId();
@@ -49,7 +47,7 @@ public class placeHallTest extends BaseTest {
     public void addByName() throws Exception {
         final HallParam param = HallParam.builder()
                 .name("سالن 1")
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .build();
 
         ResponseModel<HallDto> result = TestPost(
@@ -68,7 +66,7 @@ public class placeHallTest extends BaseTest {
     public void add() throws Exception {
         final HallParam param = HallParam.builder()
                 .name("سالن 2")
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .trafficManagement(false)
                 .enable(false)
                 .sport(SportParam.builder().id(1l).build())
@@ -93,7 +91,7 @@ public class placeHallTest extends BaseTest {
         final HallParam param = HallParam.builder()
                 .id(hall1Id)
                 .name("تغییر سالن 1")
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .trafficManagement(true)
                 .enable(false)
                 .sport(SportParam.builder().id(2l).build())

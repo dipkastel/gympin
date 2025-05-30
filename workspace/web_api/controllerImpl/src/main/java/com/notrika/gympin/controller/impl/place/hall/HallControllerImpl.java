@@ -5,7 +5,7 @@ import com.notrika.gympin.common.place.hall.api.HallController;
 import com.notrika.gympin.common.place.hall.dto.HallDto;
 import com.notrika.gympin.common.place.hall.filter.HallFilter;
 import com.notrika.gympin.common.place.hall.param.HallParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.hall.service.HallService;
 import com.notrika.gympin.common.sport.sport.param.SportParam;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
@@ -57,7 +57,7 @@ public class HallControllerImpl implements HallController {
 
     @Override
     @GetMapping("/getHallsByPlace")
-    public ResponseEntity<List<HallDto>> getHallsByPlace(PlaceParam place) {
+    public ResponseEntity<List<HallDto>> getHallsByPlace(PlaceGymParam place) {
         return ResponseEntity.ok(hallService.getHallsByPlace(place));
     }
 

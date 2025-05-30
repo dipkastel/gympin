@@ -7,7 +7,7 @@ import {TransactionCorporateTypes} from "../../../helper/enums/TransactionCorpor
 import AsyncSelect from "react-select/async";
 import {user_query} from "../../../network/api/user.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {Place_query} from "../../../network/api/place.api";
+import {PlaceGym_query} from "../../../network/api/place.api";
 import {corporate_query} from "../../../network/api/corporate.api";
 
 export const defaultFilterFinance = {
@@ -67,7 +67,7 @@ const _financeFilter = ({openModal, setOpenModal,filter,setFilter}) => {
     const promisePlaceOptions = (inputValue) => {
         return new Promise((resolve) => {
 
-            Place_query({
+            PlaceGym_query({
                 queryType: "SEARCH",
                 Name: inputValue,
                 paging: {Page: 0, Size: 50, Desc: true}

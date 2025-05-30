@@ -2,11 +2,9 @@ package com.notrika.gympin.common.finance.invoice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.sport.sport.enums.LaunchStatus;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
-import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;
@@ -16,7 +14,6 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @SuperBuilder
@@ -44,7 +41,7 @@ public class InvoiceBuyableDto extends BaseDtoWithCreateUpdate<InvoiceBuyableDto
     private BuyableType buyableType;
 
     @JsonProperty("Place")
-    private PlaceDto place;
+    private PlaceGymDto place;
 
     @JsonProperty("Beneficiary")
     private PlacePersonnelDto beneficiary;

@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.place.rate.param;
 
 import com.notrika.gympin.common.util._base.param.BaseParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class RatePlaceParam extends BaseParam<RatePlaceParam> {
 
-    private PlaceParam place;
+    private PlaceGymParam place;
 
     private Float rate;
 

@@ -3,14 +3,16 @@ package com.notrika.gympin.domain.place;
 import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
 import com.notrika.gympin.common.place.about.param.PlaceAboutParam;
 import com.notrika.gympin.common.place.about.service.PlaceAboutService;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceAboutRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class PlaceAboutServiceImpl extends AbstractBaseService<PlaceAboutParam, 
     @Autowired
     private PlaceAboutRepository placeAboutRepository;
 
+    @Autowired
+    private PlaceGymRepository placeGymRepository;
     @Autowired
     private PlaceRepository placeRepository;
 
@@ -54,7 +58,7 @@ public class PlaceAboutServiceImpl extends AbstractBaseService<PlaceAboutParam, 
     public PlaceAboutDto update(@NonNull PlaceAboutParam param) {
         PlaceAboutEntity init = getEntityById(param.getId());
         init.setName(param.getName());
-        init.setPlace(placeRepository.getById(param.getPlace().getId()));
+        init.setPlace(placeGymRepository.getById(param.getPlace().getId()));
         init.setAcceptable(param.getAcceptable());
         init.setDescription(param.getDescription());
         init.setActive(param.getActive());
@@ -77,7 +81,7 @@ public class PlaceAboutServiceImpl extends AbstractBaseService<PlaceAboutParam, 
     public PlaceAboutEntity update(PlaceAboutEntity entity) {
         PlaceAboutEntity init = getEntityById(entity.getId());
         init.setName(entity.getName());
-        init.setPlace(placeRepository.getById(entity.getPlace().getId()));
+        init.setPlace(placeGymRepository.getById(entity.getPlace().getId()));
         init.setAcceptable(entity.getAcceptable());
         init.setDescription(entity.getDescription());
         init.setActive(entity.getActive());
@@ -125,7 +129,7 @@ public class PlaceAboutServiceImpl extends AbstractBaseService<PlaceAboutParam, 
     }
 
     @Override
-    public List<PlaceAboutDto> getAllAboutByPlaces(List<PlaceParam> params) {
+    public List<PlaceAboutDto> getAllAboutByPlaces(List<PlaceGymParam> params) {
         List<PlaceAboutEntity> placeAboutes = new ArrayList<>();
         for (Long id : params.stream().filter(o->!o.isDeleted()).map(BaseParam::getId).collect(Collectors.toList())) {
             if (placeAboutes.stream().filter(o->!o.isDeleted()).noneMatch(pa-> pa.getPlace().getId().equals(id)))

@@ -33,9 +33,7 @@ function App(props) {
     const isAuthorized = useSelector(({auth: {token}}) => token != null);
 
     const {mode} = useColorScheme();
-    useEffect(() => {
-        console.log("GympinTheme",GympinTheme.colorSchemes.light)
-    }, [mode]);
+
 
 
 

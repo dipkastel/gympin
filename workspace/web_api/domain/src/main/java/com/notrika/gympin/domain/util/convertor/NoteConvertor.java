@@ -16,7 +16,7 @@ public final class NoteConvertor {
                 .text(entity.getText())
                 .type(entity.getType())
                 .corporate(CorporateConvertor.toDto(entity.getCorporate()))
-                .placeDto(PlaceConvertor.toSimpleDto(entity.getPlace()))
+                .placeDto(PlaceConvertor.toSimpleGymDto(entity.getPlace()))
                 .user(UserConvertor.toDtoSimple(entity.getUser()))
                 .invoice(InvoiceConvertor.toDto(entity.getInvoice()))
                 .purchased(PurchasedConvertor.ToDto(entity.getPurchased()))

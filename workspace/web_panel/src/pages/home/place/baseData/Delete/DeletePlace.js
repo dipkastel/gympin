@@ -5,7 +5,7 @@ import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import {corporate_delete} from "../../../../../network/api/corporate.api";
 import {Modal} from "react-bootstrap";
-import {Place_deletePlace} from "../../../../../network/api/place.api";
+import {PlaceGym_deletePlace} from "../../../../../network/api/place.api";
 
 function DeletePlace({place}) {
 
@@ -22,7 +22,7 @@ function DeletePlace({place}) {
                 error.showError({message: "این مجموعه نباید حذف شود",});
                 return;
             }
-            Place_deletePlace({Id: place.Id})
+            PlaceGym_deletePlace({Id: place.Id})
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
                     setOpenModalDelete(false)

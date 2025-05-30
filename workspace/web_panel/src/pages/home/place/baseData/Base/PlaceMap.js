@@ -35,7 +35,7 @@ class PlaceMap extends Component {
 
         markerLayer = L.layerGroup().addTo(leaflet);
 
-        // PlaceMap onClick Action
+        // CateringMap onClick Action
         leaflet.on(
             "click",
             function (e) {

@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {place_getBuyableByPlace} from "../../../../../network/api/place.api";
+import {placeGym_getBuyableByPlace} from "../../../../../network/api/place.api";
 import {placePersonnel_ByPlace} from "../../../../../network/api/placePersonnel.api";
 import Select from "react-select";
 import { buyable_setTicketBeneficiary} from "../../../../../network/api/buyable.api";
@@ -21,7 +21,7 @@ const PlaceBeneficiaries = ({place}) => {
         getAllBuyables();
     }, []);
     function getAllBuyables(){
-        place_getBuyableByPlace({Id:place.Id}).then(data=>{
+        placeGym_getBuyableByPlace({Id:place.Id}).then(data=>{
             SetPlaceTickets(data.data.Data);
             getBeneficiaries();
         }).catch(e => {

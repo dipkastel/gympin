@@ -2,7 +2,7 @@ package com.notrika.gympin.persistence.dao.repository.authCodes;
 
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
 import com.notrika.gympin.persistence.entity.authCodes.PlaceContractCodeEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,6 +23,6 @@ public interface PlaceContractCodeRepository extends BaseRepository<PlaceContrac
 
     @Transactional
     @Modifying
-    void deleteAllByPlace(PlaceEntity place);
+    void deleteAllByPlace(PlaceGymEntity place);
 
 }

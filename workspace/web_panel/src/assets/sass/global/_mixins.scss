@@ -112,7 +112,7 @@
 }
 
 // Icon Sizing
-// SASS PlaceMap:  (lineawesome: 1.1rem, fontawesome: 1.2rem, flaticon: 1.1rem)
+// SASS CateringMap:  (lineawesome: 1.1rem, fontawesome: 1.2rem, flaticon: 1.1rem)
 @mixin kt-icons-size($config) {
   // Lineawesome
   [class^="la-"],
@@ -138,7 +138,7 @@
 }
 
 // Icon attr
-// SASS PlaceMap:  (lineawesome: 1.1rem, fontawesome: 1.2rem, flaticon: 1.1rem)
+// SASS CateringMap:  (lineawesome: 1.1rem, fontawesome: 1.2rem, flaticon: 1.1rem)
 @mixin kt-icons-style($attr, $config) {
   // lineawesome
   [class^="la-"],
@@ -161,7 +161,7 @@
   }
 }
 
-// SASS PlaceMap:  (lineawesome: 1.1rem, fontawesome: 1.2rem, flaticon: 1.1rem)
+// SASS CateringMap:  (lineawesome: 1.1rem, fontawesome: 1.2rem, flaticon: 1.1rem)
 @mixin kt-icons {
   [class^="la-"],
   [class*=" la-"],

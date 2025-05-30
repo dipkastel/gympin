@@ -15,10 +15,6 @@ const _PersonnelCount = () => {
                 color={"secondary"}
                 percent={0}
                 total={0}
-                chart={{
-                    categories: [0,0],
-                    series: [0,0],
-                }}
             />
         </div>
     );

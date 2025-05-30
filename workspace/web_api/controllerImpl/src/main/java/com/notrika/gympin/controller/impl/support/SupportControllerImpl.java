@@ -1,10 +1,9 @@
 package com.notrika.gympin.controller.impl.support;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.support.query.SupportQuery;
-import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.support.api.SupportController;
 import com.notrika.gympin.common.support.dto.SupportDto;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
@@ -46,7 +45,7 @@ public class SupportControllerImpl implements SupportController {
 
     @Override
     @GetMapping("/getByPlace")
-    public ResponseEntity<List<SupportDto>> getByPlace(PlaceParam param) {
+    public ResponseEntity<List<SupportDto>> getByPlace(PlaceGymParam param) {
         return new ResponseEntity<List<SupportDto>>(supportService.getByPlace(param),HttpStatus.OK);
     }
     @Override

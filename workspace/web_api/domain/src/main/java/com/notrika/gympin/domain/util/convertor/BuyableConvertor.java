@@ -34,7 +34,6 @@ public final class BuyableConvertor {
         dto.setDiscount(entity.getDiscount());
         dto.setBuyableType(entity.getBuyableType());
         dto.setEnable(entity.getEnable());
-        dto.setGender(entity.getGender());
         dto.setDescription(entity.getDescription());
         return dto;
     }

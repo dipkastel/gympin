@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.ticket.course;
 
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
@@ -22,12 +22,12 @@ import com.notrika.gympin.domain.util.convertor.HallConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceSportConvertor;
 import com.notrika.gympin.domain.util.convertor.TicketCourseConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.sport.PlaceSportRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketHallActiveTimesRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.course.TicketCourseRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import com.notrika.gympin.persistence.entity.ticket.course.TicketCourseEntity;
@@ -54,13 +54,13 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
     @Autowired
     private PlaceSportRepository placeSportRepository;
     @Autowired
-    private PlaceRepository placeRepository;
+    private PlaceGymRepository placeGymRepository;
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public TicketCourseDto add(@NonNull TicketCourseParam param) {
-        PlaceEntity place = placeRepository.getById(param.getPlace().getId());
+        PlaceGymEntity place = placeGymRepository.getById(param.getPlace().getId());
         TicketCourseEntity ticketCourseEntity = TicketCourseEntity.builder()
                 .place(place)
                 .name(param.getName())
@@ -175,8 +175,8 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
     }
 
     @Override
-    public List<TicketCourseDto> getTicketCourseByPlace(PlaceParam place) {
-        return ticketCourseRepository.findAllByPlaceAndDeletedIsFalse(PlaceEntity.builder().id(place.getId()).build()).stream().map(TicketCourseConvertor::toDto).collect(Collectors.toList());
+    public List<TicketCourseDto> getTicketCourseByPlace(PlaceGymParam place) {
+        return ticketCourseRepository.findAllByPlaceAndDeletedIsFalse(PlaceGymEntity.builder().id(place.getId()).build()).stream().map(TicketCourseConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

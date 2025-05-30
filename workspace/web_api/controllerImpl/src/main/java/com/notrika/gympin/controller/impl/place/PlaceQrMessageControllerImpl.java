@@ -2,7 +2,7 @@ package com.notrika.gympin.controller.impl.place;
 
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.qrMessage.api.PlaceQrMessageController;
 import com.notrika.gympin.common.place.qrMessage.dto.PlaceQrMessageDto;
 import com.notrika.gympin.common.place.qrMessage.param.PlaceQrMessageParam;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -60,7 +59,7 @@ public class PlaceQrMessageControllerImpl implements PlaceQrMessageController {
 
     @Override
     @GetMapping("/getByPlace")
-    public ResponseEntity<List<PlaceQrMessageDto>> getByPlace(PlaceParam placeParam) {
+    public ResponseEntity<List<PlaceQrMessageDto>> getByPlace(PlaceGymParam placeParam) {
         return new ResponseEntity<List<PlaceQrMessageDto>>(placeQrMessageService.getByPlaceId(placeParam.getId()), HttpStatus.OK);
     }
 }

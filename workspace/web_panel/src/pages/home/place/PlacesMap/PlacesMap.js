@@ -11,7 +11,7 @@ import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {Form} from "react-bootstrap";
 import "./map.css"
-import {Place_query} from "../../../../network/api/place.api";
+import {PlaceGym_query} from "../../../../network/api/place.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import Select from "react-select";
@@ -35,7 +35,7 @@ const PlacesMap = () => {
     }, [markerLayer,placeStatus]);
 
     const getPlaces = (page) => {
-        Place_query({
+        PlaceGym_query({
             queryType: "FILTER",
             Status:placeStatus,
             paging: {Page: page, Size: 300, Desc: true}

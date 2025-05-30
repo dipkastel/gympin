@@ -45,6 +45,8 @@ import ProcessSerialDetail from "./process/detail/ProcessSerialDetail";
 import Gifts from "./gifts/Gifts";
 import AffiliateManagement from "./affiliate/AffiliateManagement";
 import AffiliateDetail from "./affiliate/affiliateDetail/AffiliateDetail";
+import CateringDataManagement from "./catering/baseData/CateringDataManagement";
+import CateringManagement from "./catering/CateringManagement";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -59,6 +61,9 @@ export default function HomePage() {
         <Route path="/place/placeOnMap" component={PlacesMap} />
         <Route path="/place/wizard/:placeId" component={PlaceWizard} />
         <Route path="/places" component={PlaceManagement} />
+        {/*place*/}
+        <Route path="/catering/data/:cateringId" component={CateringDataManagement} />
+        <Route path="/catering" component={CateringManagement} />
         {/*articles*/}
         <Route path="/articles/details/:articleId" component={SingleArticle} />
         <Route path="/articles/categories/" component={ArticleCategories} />

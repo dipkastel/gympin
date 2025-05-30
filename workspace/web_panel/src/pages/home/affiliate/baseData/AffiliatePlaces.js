@@ -16,7 +16,7 @@ import {getCorporateFixedName, getPlaceFixedName} from "../../../../helper";
 import {Button, CircularProgress} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal} from "react-bootstrap";
-import __SelectPlace from "../../gifts/partial/__SelectPlace";
+import __SelectPlace from "../../../partials/selector/__SelectPlace";
 
 const AffiliateCorporates = ({affiliateId}) => {
 

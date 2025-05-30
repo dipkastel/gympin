@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Portlet, PortletBody} from "../../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
 import {Button} from "@mui/material";
-import {Place_addPlace} from "../../../../../../network/api/place.api";
+import {PlaceGym_addPlace} from "../../../../../../network/api/place.api";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 
 const __wizardRegister = ({setPlace}) => {
@@ -15,7 +15,7 @@ const __wizardRegister = ({setPlace}) => {
             error.showError({message:"نام مجموعه الزامی است"});
             return;
         }
-        Place_addPlace({Address: "", Name: e.target.formName.value , Region: {Id: 1}})
+        PlaceGym_addPlace({Address: "", Name: e.target.formName.value , Region: {Id: 1}})
             .then((data) => {
                 error.showError({message: "عملیات موفق",});
                 setPlace(data.data.Data);

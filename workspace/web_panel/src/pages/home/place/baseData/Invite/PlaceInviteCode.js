@@ -2,14 +2,14 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Typography} from "@mui/material";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {Place_getPlacesInviteCode} from "../../../../../network/api/place.api";
+import {PlaceGym_getPlacesInviteCode} from "../../../../../network/api/place.api";
 
 const PlaceInviteCode = ({place}) => {
     const error = useContext(ErrorContext);
     const [placeInviteCode, SetPlaceInviteCode] = useState(null);
 
     useEffect(() => {
-        Place_getPlacesInviteCode({Id: place.Id})
+        PlaceGym_getPlacesInviteCode({Id: place.Id})
             .then(data => {
                 SetPlaceInviteCode(data.data.Data);
             }).catch(e => {

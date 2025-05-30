@@ -7,6 +7,7 @@ import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceAffiliateTransactionEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +63,7 @@ public class FinanceAffiliatorEntity extends BaseEntityWithCreateUpdate<FinanceA
     @OneToMany(mappedBy = "affiliator", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private List<PlaceEntity> places;
+    private List<PlaceGymEntity> places;
 
     @OneToMany(mappedBy = "affiliator", fetch = FetchType.LAZY)
     @JsonIgnore

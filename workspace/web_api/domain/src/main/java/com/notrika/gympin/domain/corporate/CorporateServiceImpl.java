@@ -10,10 +10,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePerso
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelGroupParam;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
 import com.notrika.gympin.common.finance.transaction.param.FinanceCorporateParam;
-import com.notrika.gympin.common.place.place.dto.PlaceContractDto;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.place.place.param.PlaceContractSmsParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymContractDto;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
@@ -21,7 +18,6 @@ import com.notrika.gympin.common.user.user.dto.InviteCode;
 import com.notrika.gympin.common.util.MyRandom;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
-import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
@@ -35,7 +31,6 @@ import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEn
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import lombok.NonNull;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +41,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -291,7 +284,7 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         String contractData = corporate.getContractData();
         String code = MyRandom.GenerateRandomVerificationSmsCode();
         try {
-            PlaceContractDto contractDto = objectMapper.readValue(contractData, PlaceContractDto.class);
+            PlaceGymContractDto contractDto = objectMapper.readValue(contractData, PlaceGymContractDto.class);
             smsInService.sendCorporateContractCode(corporate.getId(), SmsDto.builder()
                     .smsType(SmsTypes.JOINED_TO_CORPORATE)
                     .userNumber(contractDto.ownerPhoneNumber)

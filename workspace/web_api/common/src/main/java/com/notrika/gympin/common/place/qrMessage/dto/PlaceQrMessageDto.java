@@ -1,8 +1,8 @@
 package com.notrika.gympin.common.place.qrMessage.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,6 +23,6 @@ public class PlaceQrMessageDto extends BaseDtoWithCreateUpdate<PlaceQrMessageDto
     private String replace_text;
 
     @JsonProperty("Place")
-    private PlaceDto place;
+    private PlaceGymDto place;
 
 }

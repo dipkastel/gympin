@@ -1,28 +1,23 @@
 package com.notrika.gympin.persistence.entity.place;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.notrika.gympin.common.place.place.enums.PlaceStatusEnum;
+import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
+import com.notrika.gympin.common.place.placeBase.enums.PlaceTypesEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.finance.affiliate.FinanceAffiliatorEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.tags.ManageTagsEntity;
-import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import com.notrika.gympin.persistence.entity.place.comment.PlaceCommentEntity;
-import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
-import com.notrika.gympin.persistence.entity.place.option.PlaceOptionOfPlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
-import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntity;
 import com.notrika.gympin.persistence.entity.place.rating.PlaceRateEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
-import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
-import com.notrika.gympin.persistence.entity.authCodes.PlaceContractCodeEntity;
+import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -41,7 +36,8 @@ import java.util.Objects;
 @SuperBuilder
 @Entity
 @Table(name = "place")
-public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class PlaceEntity<P> extends BaseEntityWithCreateUpdate<P> {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -56,52 +52,22 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @Enumerated(EnumType.STRING)
     private PlaceStatusEnum status;
 
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private PlaceTypesEnum type;
+
     @Column(name = "Tell")
     private String tell;
 
-    @Column(name = "ContractData")
-    private String contractData;
-
-    @Column(name = "listOrder")
-    private Short order;
-
-    @Column(name = "hasContract", nullable = false, columnDefinition = "bit default 0")
-    private boolean hasContract;
-
-    @Column(name = "CallUs", nullable = false, columnDefinition = "bit default 0")
-    private boolean callUs;
 
     @Column(name = "address")
     private String address;
-
-    @Column(name = "activeTimes", columnDefinition = "varchar(800)")
-    private String activeTimes;
-
-    @Column(name = "inviteCode")
-    private String inviteCode;
-
-    @Column(name = "autoDiscount", nullable = false, columnDefinition = "bit default 1")
-    private boolean autoDiscount;
-
-    @Column(name = "searchStr", columnDefinition = "varchar(12000)")
-    private String searchStr;
-
-
-    @OneToOne(mappedBy = "place", fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
-    private PlaceContractCodeEntity contractCode;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "locationId")
     @JsonIgnore
     @ToString.Exclude
     private ManageLocationEntity location;
-
-    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
-    private List<PlaceOptionOfPlaceEntity> optionsOfPlaces;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -116,29 +82,14 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private List<PlaceQrMessageEntity> qrMessages;
-
-    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
     private List<PlacePersonnelEntity> placeOwners;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private List<PlaceSportEntity> placeSport;
+    private List<TicketSubscribeEntity> ticketSubscribes;
 
-    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
-    private List<HallEntity> halls;
-
-    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
-    private List<BuyableEntity> buyables;
-
-    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "placeGym", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<InvoiceBuyableEntity> invoiceBuyables;
@@ -168,21 +119,10 @@ public class PlaceEntity extends BaseEntityWithCreateUpdate<PlaceEntity> {
     private List<FinanceUserEntity> financeUsers;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "placeImage", joinColumns = @JoinColumn(name = "multimediaPlaceId"), inverseJoinColumns = @JoinColumn(name = "multimediaId"))
-    @JsonIgnore
-    @ToString.Exclude
-    private List<MultimediaEntity> multimedias;
-
-    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "placeTags", joinColumns = @JoinColumn(name = "placeId"), inverseJoinColumns = @JoinColumn(name = "tagId"))
     @JsonIgnore
     @ToString.Exclude
     private List<ManageTagsEntity> tags;
-
-    @ManyToOne
-    @JsonIgnore
-    @ToString.Exclude
-    private FinanceAffiliatorEntity affiliator;
 
     @Override
     public boolean equals(Object o) {

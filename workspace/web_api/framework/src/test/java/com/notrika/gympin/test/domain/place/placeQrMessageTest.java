@@ -1,8 +1,8 @@
 package com.notrika.gympin.test.domain.place;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.qrMessage.dto.PlaceQrMessageDto;
 import com.notrika.gympin.common.place.qrMessage.param.PlaceQrMessageParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
@@ -24,15 +24,15 @@ public class placeQrMessageTest extends BaseTest {
     @BeforeAll
     @Order(1)
     public void addPlace() throws Exception{
-        final PlaceParam param = PlaceParam.builder()
+        final PlaceGymParam param = PlaceGymParam.builder()
                 .name("مرکز برای qr")
                 .build();
 
-        ResponseModel<PlaceDto> result = TestPost(
+        ResponseModel<PlaceGymDto> result = TestPost(
                 "/api/v1/place/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<PlaceDto>>() {
+                new TypeReference<ResponseModel<PlaceGymDto>>() {
                 });
 
         placeId = result.getData().getId();
@@ -44,7 +44,7 @@ public class placeQrMessageTest extends BaseTest {
         final PlaceQrMessageParam param = PlaceQrMessageParam.builder()
                 .text("qr 1")
                 .replaceText("qr___1")
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .build();
 
         ResponseModel<PlaceQrMessageDto> result = TestPost(
@@ -65,7 +65,7 @@ public class placeQrMessageTest extends BaseTest {
         if(placeQrId==null) throw new Exception("is not exist");
         final PlaceQrMessageParam param = PlaceQrMessageParam.builder()
                 .id(placeQrId)
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .text("qr 2")
                 .replaceText("qr___2")
                 .build();

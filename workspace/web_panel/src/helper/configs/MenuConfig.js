@@ -51,6 +51,13 @@ export default {
         page: "users",
       },
       {
+        title: "manage caterings",
+        root: true,
+        icon: "flaticon-truck",
+        translate: "MENU.MANAGE_CATERING",
+        page: "catering",
+      },
+      {
         title: "manage coaches",
         root: true,
         icon: "flaticon-profile-1",

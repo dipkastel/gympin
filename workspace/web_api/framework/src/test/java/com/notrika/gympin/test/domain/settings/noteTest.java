@@ -3,15 +3,14 @@ package com.notrika.gympin.test.domain.settings;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.note.dto.NoteDto;
 import com.notrika.gympin.common.settings.note.enums.NoteType;
 import com.notrika.gympin.common.settings.note.param.NoteParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
 import com.notrika.gympin.test.domain.utils.BaseTest;
 import org.junit.jupiter.api.*;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -30,15 +29,15 @@ public class noteTest  extends BaseTest {
     @BeforeAll
     @Order(1)
     public void addPlace() throws Exception{
-        final PlaceParam param = PlaceParam.builder()
+        final PlaceGymParam param = PlaceGymParam.builder()
                 .name("مرکز برای نوت")
                 .build();
 
-        ResponseModel<PlaceDto> result = TestPost(
+        ResponseModel<PlaceGymDto> result = TestPost(
                 "/api/v1/place/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<PlaceDto>>() {
+                new TypeReference<ResponseModel<PlaceGymDto>>() {
                 });
 
         placeId = result.getData().getId();
@@ -65,7 +64,7 @@ public class noteTest  extends BaseTest {
     @Order(1)
     public void addNoteToPlace() throws Exception {
         final NoteParam param = NoteParam.builder()
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .text("value 1")
                 .type(NoteType.NOTE)
                 .isToDo(false)

@@ -1,8 +1,7 @@
 package com.notrika.gympin.common.finance.affiliate.param;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -16,6 +15,6 @@ import lombok.experimental.SuperBuilder;
 public class AffiliateAddPlaceParam extends BaseParam<AffiliateAddPlaceParam> {
 
     @JsonProperty("Place")
-    private PlaceParam place;
+    private PlaceGymParam place;
 
 }

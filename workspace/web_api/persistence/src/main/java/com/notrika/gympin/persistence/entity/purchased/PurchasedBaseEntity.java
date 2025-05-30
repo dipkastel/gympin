@@ -10,6 +10,7 @@ import com.notrika.gympin.persistence.entity.finance.transactions.gympin.Finance
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +63,7 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @JoinColumn(name = "PlaceId")
     @JsonIgnore
     @ToString.Exclude
-    private PlaceEntity place;
+    private PlaceGymEntity place;
 
     @ManyToOne
     @JoinColumn(name = "customerUserId")

@@ -6,10 +6,10 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImagePicker from "../../../media/Pickers/ImagePicker";
 import {
-    Place_addMultimeida,
-    Place_addMultimeidaList,
-    Place_deleteMultimedia,
-    Place_GetMultimedias
+    PlaceGym_addMultimeida,
+    PlaceGym_addMultimeidaList,
+    PlaceGym_deleteMultimedia,
+    PlaceGym_GetMultimedias
 } from "../../../../../network/api/place.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
@@ -24,7 +24,7 @@ const PlaceImage = ({place}) => {
     }, []);
 
     function getPlaceImages() {
-        Place_GetMultimedias({Id: place.Id}).then(data => {
+        PlaceGym_GetMultimedias({Id: place.Id}).then(data => {
             SetPlaceImages(data.data.Data);
         }).catch(e => {
                     try {
@@ -40,7 +40,7 @@ const PlaceImage = ({place}) => {
         images.map( image=>{
             multimedia.push({Id:image.Id})
         })
-        Place_addMultimeidaList({Place:{Id: place.Id},Multimedias:multimedia}).then(data => {
+        PlaceGym_addMultimeidaList({Place:{Id: place.Id},Multimedias:multimedia}).then(data => {
             error.showError({message: "عملیات موفق",});
             getPlaceImages()
         }).catch(e => {
@@ -56,7 +56,7 @@ const PlaceImage = ({place}) => {
 
         function DeleteItem(e) {
             e.preventDefault()
-            Place_deleteMultimedia({Place:{Id: place.Id},Multimedia:{Id:itemToDelete.Id}})
+            PlaceGym_deleteMultimedia({Place:{Id: place.Id},Multimedia:{Id:itemToDelete.Id}})
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
                     setItemToDelete(null)

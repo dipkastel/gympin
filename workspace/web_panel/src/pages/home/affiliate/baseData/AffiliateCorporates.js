@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {
-    affiliate_add,
     affiliate_AddCorporatesToAffiliator,
     affiliate_getCorporatesByAffiliatorId, affiliate_RemoveCorporatesToAffiliator
 } from "../../../../network/api/affiliate.api";
@@ -16,8 +15,7 @@ import {getCorporateFixedName} from "../../../../helper";
 import {Button, CircularProgress} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal} from "react-bootstrap";
-import __SelectUser from "../../gifts/partial/__SelectUser";
-import __SelectCorporate from "../../gifts/partial/__SelectCorporate";
+import __SelectCorporate from "../../../partials/selector/__SelectCorporate";
 
 const AffiliateCorporates = ({affiliateId}) => {
 

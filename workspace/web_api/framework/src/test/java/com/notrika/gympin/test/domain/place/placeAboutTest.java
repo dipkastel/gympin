@@ -3,11 +3,8 @@ package com.notrika.gympin.test.domain.place;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
 import com.notrika.gympin.common.place.about.param.PlaceAboutParam;
-import com.notrika.gympin.common.place.hall.dto.HallDto;
-import com.notrika.gympin.common.place.hall.param.HallParam;
-import com.notrika.gympin.common.place.place.dto.PlaceDto;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
-import com.notrika.gympin.common.sport.sport.param.SportParam;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
 import com.notrika.gympin.test.domain.utils.BaseTest;
 import org.junit.jupiter.api.*;
@@ -28,15 +25,15 @@ public class placeAboutTest extends BaseTest {
     @BeforeAll
     @Order(1)
     public void addPlace() throws Exception{
-        final PlaceParam param = PlaceParam.builder()
+        final PlaceGymParam param = PlaceGymParam.builder()
                 .name("مرکز برای درباره")
                 .build();
 
-        ResponseModel<PlaceDto> result = TestPost(
+        ResponseModel<PlaceGymDto> result = TestPost(
                 "/api/v1/place/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<PlaceDto>>() {
+                new TypeReference<ResponseModel<PlaceGymDto>>() {
                 });
 
         placeId = result.getData().getId();
@@ -52,7 +49,7 @@ public class placeAboutTest extends BaseTest {
                 .active(true)
                 .acceptable(false)
                 .description("درباره 1 مجموعه ")
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .build();
 
         ResponseModel<PlaceAboutDto> result = TestPost(
@@ -75,7 +72,7 @@ public class placeAboutTest extends BaseTest {
                 .active(true)
                 .acceptable(true)
                 .description("قوانین 2 مجموعه ")
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .build();
 
         ResponseModel<PlaceAboutDto> result = TestPost(
@@ -100,7 +97,7 @@ public class placeAboutTest extends BaseTest {
                 .active(true)
                 .acceptable(false)
                 .description("تغییر درباره 1 مجموعه ")
-                .place(PlaceParam.builder().id(placeId).build())
+                .place(PlaceGymParam.builder().id(placeId).build())
                 .build();
 
         ResponseModel<PlaceAboutDto> result = TestPut(

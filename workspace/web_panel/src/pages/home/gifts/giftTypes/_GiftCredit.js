@@ -16,8 +16,8 @@ import {getCorporateFixedName, getRandStr, getUserFixedName, toPriceWithComma, t
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import adapterJalali from "@date-io/date-fns-jalali";
 import {DatePicker} from "@mui/x-date-pickers";
-import __SelectUser from "../partial/__SelectUser";
-import __SelectCorporate from "../partial/__SelectCorporate";
+import __SelectUser from "../../../partials/selector/__SelectUser";
+import __SelectCorporate from "../../../partials/selector/__SelectCorporate";
 
 const _GiftCredit = () => {
 

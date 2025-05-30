@@ -14,7 +14,7 @@ public final class PurchasedConvertor {
     public static PurchasedDto ToDto(PurchasedBaseEntity entity) {
         if (entity == null) return null;
         PurchasedDto dto = new PurchasedDto();
-        dto.setPlace(PlaceConvertor.toDtoSecure(entity.getPlace()));
+        dto.setPlace(PlaceConvertor.toDtoSecureGym(entity.getPlace()));
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setKey(entity.getKey());

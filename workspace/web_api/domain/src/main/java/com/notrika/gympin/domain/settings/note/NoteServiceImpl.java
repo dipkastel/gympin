@@ -2,23 +2,20 @@ package com.notrika.gympin.domain.settings.note;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.purchased.purchased.param.PurchasedParam;
-import com.notrika.gympin.common.purchased.purchasedSubscribe.param.PurchasedSubscribeParam;
 import com.notrika.gympin.common.settings.note.dto.NoteDto;
 import com.notrika.gympin.common.settings.note.dto.SimpleNoteDto;
 import com.notrika.gympin.common.settings.note.param.NoteParam;
 import com.notrika.gympin.common.settings.note.query.NoteQuery;
 import com.notrika.gympin.common.settings.note.service.NoteService;
 import com.notrika.gympin.common.user.user.param.UserParam;
-import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
 import com.notrika.gympin.domain.finance.Invoice.InvoiceServiceImpl;
 import com.notrika.gympin.domain.util.convertor.NoteConvertor;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.PurchasedRepository;
-import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
@@ -38,7 +35,7 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Not
     @Autowired
     private ManageNoteRepository manageNoteRepository;
     @Autowired
-    private PlaceRepository placeRepository;
+    private PlaceGymRepository placeGymRepository;
     @Autowired
     private CorporateServiceImpl corporateService;
     @Autowired
@@ -52,7 +49,7 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Not
     public NoteDto add(@NonNull NoteParam noteParam) {
         ManageNoteEntity entity = new ManageNoteEntity();
         if (noteParam.getPlace() != null)
-            entity.setPlace(placeRepository.getById(noteParam.getPlace().getId()));
+            entity.setPlace(placeGymRepository.getById(noteParam.getPlace().getId()));
         if (noteParam.getCorporate() != null)
             entity.setCorporate(corporateService.getEntityById(noteParam.getCorporate().getId()));
         if (noteParam.getUser() != null)
@@ -131,7 +128,7 @@ public class NoteServiceImpl extends AbstractBaseService<NoteParam, NoteDto, Not
     }
 
     @Override
-    public List<SimpleNoteDto> getByPlace(PlaceParam placeParam) {
+    public List<SimpleNoteDto> getByPlace(PlaceGymParam placeParam) {
         return NoteConvertor.convertToSimpleDtos(manageNoteRepository.findAllByPlaceIdAndDeletedIsFalse(placeParam.getId()));
     }
 

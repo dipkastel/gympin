@@ -4,6 +4,7 @@ import com.notrika.gympin.persistence.entity.finance.BaseTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class FinanceUserTransactionEntity extends BaseTransactionEntity<FinanceU
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "placeId")
-    private PlaceEntity place;
+    private PlaceGymEntity place;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "purchasedId")

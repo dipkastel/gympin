@@ -1,12 +1,12 @@
 package com.notrika.gympin.controller.impl.place;
 
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.place.about.api.PlaceAboutController;
 import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
 import com.notrika.gympin.common.place.about.param.PlaceAboutParam;
 import com.notrika.gympin.common.place.about.service.PlaceAboutService;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -57,13 +57,13 @@ public class PlaceAboutControllerImpl implements PlaceAboutController {
 
     @Override
     @GetMapping("getByPlaceId")
-    public ResponseEntity<List<PlaceAboutDto>> getAboutByPlace(PlaceParam placeParam) {
+    public ResponseEntity<List<PlaceAboutDto>> getAboutByPlace(PlaceGymParam placeParam) {
         return new ResponseEntity<List<PlaceAboutDto>>(placeAboutService.getByPlaceId(placeParam.getId()),HttpStatus.OK);
     }
 
     @Override
     @PostMapping("getAllAboutByPlaces")
-    public ResponseEntity<List<PlaceAboutDto>> getAllAboutByPlaces(@RequestBody List<PlaceParam> placeParam) {
+    public ResponseEntity<List<PlaceAboutDto>> getAllAboutByPlaces(@RequestBody List<PlaceGymParam> placeParam) {
         return new ResponseEntity<List<PlaceAboutDto>>(placeAboutService.getAllAboutByPlaces(placeParam),HttpStatus.OK);
     }
 }

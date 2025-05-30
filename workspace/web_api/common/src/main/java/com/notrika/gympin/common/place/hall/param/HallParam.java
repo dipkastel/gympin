@@ -1,9 +1,9 @@
 package com.notrika.gympin.common.place.hall.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
 import com.notrika.gympin.common.sport.sport.param.SportParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,7 +24,7 @@ public class HallParam extends BaseParam<HallParam> {
     private String name;
 
     @JsonProperty(value = "Place", required = true)
-    private PlaceParam place;
+    private PlaceGymParam place;
 
     @JsonProperty(value = "Sport", required = true)
     private SportParam sport;

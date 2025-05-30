@@ -1,8 +1,8 @@
 package com.notrika.gympin.common.place.option.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
-import com.notrika.gympin.common.place.place.param.PlaceParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 public class OptionOfPlaceParam extends BaseParam<OptionOfPlaceParam> {
 
     @JsonProperty("Place")
-    private PlaceParam place;
+    private PlaceGymParam place;
 
     @JsonProperty("PlaceOption")
     private PlaceOptionParam placeOption;
