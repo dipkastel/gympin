@@ -40,7 +40,7 @@ public final class TransactionConvertor {
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setCreatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()));
         dto.setDescription(entity.getDescription());
-        dto.setPlace(PlaceConvertor.toSimpleGymDto(entity.getPlace()));
+        dto.setPlace(PlaceConvertor.ToDto(entity.getPlace()));
         dto.setPurchased(PurchasedConvertor.ToDto(entity.getPurchased()));
         dto.setFinanceUser(FinanceUserConvertor.toFinanceDto(entity.getFinanceUser()));
         dto.setAmount(entity.getAmount());

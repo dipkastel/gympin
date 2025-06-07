@@ -1,20 +1,17 @@
 package com.notrika.gympin.controller.impl.ticket.ticketFood;
 
-import com.notrika.gympin.common.ticket.ticketFood.api.TicketFoodController;
 import com.notrika.gympin.common.ticket.ticketFood.api.TicketFoodMenuController;
-import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodDto;
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodMenuDto;
+import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodMenuCopyParam;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodMenuParam;
-import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodParam;
 import com.notrika.gympin.common.ticket.ticketFood.query.TicketFoodMenuQuery;
-import com.notrika.gympin.common.ticket.ticketFood.query.TicketFoodQuery;
 import com.notrika.gympin.common.ticket.ticketFood.servie.TicketFoodMenuService;
-import com.notrika.gympin.common.ticket.ticketFood.servie.TicketFoodService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -63,5 +60,11 @@ public class TicketFoodMenuControllerImpl implements TicketFoodMenuController {
     @GetMapping("getDates")
     public ResponseEntity<List<Date>> getFoodMenuDates(Long cateringId) {
         return ResponseEntity.ok(ticketFoodMenuService.getFoodMenuDates(cateringId));
+    }
+
+    @Override
+    @PostMapping("copyDate")
+    public ResponseEntity<Boolean> copyDate(TicketFoodMenuCopyParam param) {
+        return ResponseEntity.ok(ticketFoodMenuService.copyDate(param));
     }
 }

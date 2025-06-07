@@ -8,6 +8,7 @@ import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.place.option.PlaceOptionOfPlaceEntity;
 import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
+import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -92,6 +93,10 @@ public class PlaceGymEntity extends PlaceEntity<PlaceGymEntity> {
     @ToString.Exclude
     private FinanceAffiliatorEntity affiliator;
 
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<TicketSubscribeEntity> ticketSubscribes;
 
     @Override
     public boolean equals(Object o) {

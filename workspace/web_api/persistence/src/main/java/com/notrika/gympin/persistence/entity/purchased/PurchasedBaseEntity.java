@@ -63,7 +63,7 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @JoinColumn(name = "PlaceId")
     @JsonIgnore
     @ToString.Exclude
-    private PlaceGymEntity place;
+    private PlaceEntity place;
 
     @ManyToOne
     @JoinColumn(name = "customerUserId")

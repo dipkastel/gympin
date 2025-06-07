@@ -53,7 +53,7 @@ public class FinanceUserEntity extends BaseEntityWithCreateUpdate<FinanceUserEnt
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private PlaceGymEntity place;
+    private PlaceEntity place;
 
     @OneToMany(mappedBy = "financeUser", fetch = FetchType.LAZY)
     @JsonIgnore

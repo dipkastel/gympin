@@ -2,6 +2,7 @@ package com.notrika.gympin.common.purchased.purchased.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
+import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
 import com.notrika.gympin.common.user.user.dto.UserDto;
@@ -45,7 +46,7 @@ public class PurchasedDto extends BaseDto<PurchasedDto> {
     private BigDecimal placePrice;
 
     @JsonProperty("Place")
-    private PlaceGymDto place;
+    private PlaceDto place;
 
     @JsonProperty("Serial")
     private List<SerialDto> serials;

@@ -11,7 +11,7 @@ import Grid from "@mui/material/Grid2";
 import {toPriceWithComma} from "../../../helper/utils";
 import {Add} from "@mui/icons-material";
 
-const _FoodMenuList = ({title, Items}) => {
+const _FoodMenuList = ({title, Items,onAddClick}) => {
     return (
         <Card elevation={10}>
             <CardHeader title={title}/>
@@ -36,7 +36,7 @@ const _FoodMenuList = ({title, Items}) => {
                                         {row.Food.Name}
                                     </TableCell>
                                     <TableCell align="right">{row.Food.Price}</TableCell>
-                                    <TableCell align="right"><IconButton fullWidth variant={"contained"} color={"secondary"}> <Add/> </IconButton></TableCell>
+                                    <TableCell align="right"><IconButton fullWidth variant={"contained"} color={"secondary"} onClick={()=>onAddClick(row.Food)}> <Add/> </IconButton></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

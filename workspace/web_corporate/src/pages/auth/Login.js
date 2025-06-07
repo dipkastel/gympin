@@ -10,7 +10,7 @@ import {
     InputAdornment,
     Link,
     TextField,
-    Typography
+    Typography, useColorScheme
 } from "@mui/material";
 import {Formik} from "formik";
 import {checkMobileValid, fixMobile} from "../../helper/utils";
@@ -25,6 +25,7 @@ function Login(props) {
     const error = useContext(ErrorContext);
     const [loading, setLoading] = useState(false);
     const [resend, setResend] = useState(-3);
+    const {mode} = useColorScheme();
     const [loadingButtonStyle, setLoadingButtonStyle] = useState({
         paddingRight: "2.5rem",
     });
@@ -32,6 +33,11 @@ function Login(props) {
     useEffect(() => {
         document.title = 'ورود';
     }, []);
+
+
+    if (!mode) {
+        return null;
+    }
 
 
     const enableLoading = () => {

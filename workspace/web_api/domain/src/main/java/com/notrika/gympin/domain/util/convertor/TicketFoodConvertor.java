@@ -11,7 +11,7 @@ public class TicketFoodConvertor {
     public static TicketFoodDto toDto(TicketFoodItemEntity entity) {
         if (entity == null) return null;
         TicketFoodDto dto = new TicketFoodDto();
-        dto.setPlace(PlaceConvertor.toDto(entity.getPlace()));
+        dto.setPlace(PlaceConvertor.ToDto(entity.getPlace()));
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setPrice(entity.getPrice());

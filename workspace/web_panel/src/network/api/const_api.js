@@ -260,6 +260,7 @@ export let TicketFoodMenuApi = {
     update: "v1/TicketFoodMenu/update",
     query: "v1/TicketFoodMenu/query",
     getDates: "v1/TicketFoodMenu/getDates",
+    copyDate: "v1/TicketFoodMenu/copyDate",
 };
 export let TicketSubscribesApi = {
     add: "v1/TicketSubscribe/add",

@@ -55,7 +55,7 @@ public class InvoiceBuyableEntity extends BaseEntityWithCreateUpdate<InvoiceBuya
     @JoinColumn(name = "buyablePlaceId")
     @JsonIgnore
     @ToString.Exclude
-    private PlaceGymEntity placeGym;
+    private PlaceEntity place;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "beneficiary")

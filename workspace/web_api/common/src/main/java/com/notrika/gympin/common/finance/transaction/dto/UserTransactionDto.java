@@ -3,6 +3,7 @@ package com.notrika.gympin.common.finance.transaction.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
+import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.purchased.purchased.dto.PurchasedDto;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
@@ -40,7 +41,7 @@ public class UserTransactionDto extends BaseDtoWithCreateUpdate<UserTransactionD
     private String description;
 
     @JsonProperty("Place")
-    private PlaceGymDto place;
+    private PlaceDto place;
 
     @JsonProperty("Purchased")
     private PurchasedDto purchased;

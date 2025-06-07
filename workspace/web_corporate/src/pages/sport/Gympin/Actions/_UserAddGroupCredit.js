@@ -13,12 +13,7 @@ import {useNavigate} from "react-router";
 
 const _UserAddGroupCredit = () => {
 
-    const error = useContext(ErrorContext);
     const navigate = useNavigate();
-    const corporate = useSelector(({corporate}) => corporate.corporate)
-    const [openModalAdd, setOpenModalAdd] = useState(false);
-    const [formData, setFormData] = useState({})
-    const [selectedPersonnel, setSelectedPersonnel] = useState(null)
 
     return (
         <>

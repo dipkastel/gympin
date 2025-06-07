@@ -22,6 +22,9 @@ const _FoodSelectDate = ({selectedDate, setSelectedDate, catering}) => {
         }
         setDates(initDates);
     }, []);
+    useEffect(()=>{
+       console.log(selectedDate);
+    },[selectedDate])
 
 
     useEffect(() => {
@@ -46,7 +49,7 @@ const _FoodSelectDate = ({selectedDate, setSelectedDate, catering}) => {
 
     function getLabel(itemDate) {
         return (<Grid sx={{p:2,borderRadius:3,border:"1px solid"}} disabled={isDisable(itemDate)}>
-                    <Typography variant={"h6"}> {new Date(itemDate).toLocaleDateString('fa-IR', {
+                    <Typography sx={{textDecoration:isDisable(itemDate)?"line-through":"none"}} variant={"h6"}> {new Date(itemDate).toLocaleDateString('fa-IR', {
                         weekday: 'long'
                     })}</Typography>
                     <Typography variant={"caption"}> {new Date(itemDate).toLocaleDateString('fa-IR', {
@@ -69,7 +72,7 @@ const _FoodSelectDate = ({selectedDate, setSelectedDate, catering}) => {
             >
 
                 {dates?.map((item, number) => (
-                    <Tab key={item.Date} color={"secondary"} label={getLabel(item.Date)} value={new Date(item.Date.setHours(0,0,0,0)).getTime().toString()}
+                    <Tab key={item.Date} color={"secondary"} label={getLabel(item.Date)} value={item.Date.toLocaleDateString()}
                          disabled={isDisable(item.Date)} />
                 ))}
             </Tabs>

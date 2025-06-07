@@ -24,7 +24,7 @@ public final class BuyableConvertor {
     public static TicketBuyableDto ToDto(BuyableEntity entity) {
         if (entity == null) return null;
         TicketBuyableDto dto = new TicketBuyableDto();
-        dto.setPlace(PlaceConvertor.toDto(entity.getPlace()));
+        dto.setPlace(PlaceConvertor.ToDto(entity.getPlace()));
         dto.setBeneficiary(PlaceConvertor.personnelToDto(entity.getBeneficiary()));
         dto.setId(entity.getId());
         dto.setName(entity.getName());

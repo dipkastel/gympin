@@ -129,7 +129,7 @@ public final class PlaceConvertor {
         return placeDto;
     }
 
-    public static PlaceDto toDto(PlaceEntity entity) {
+    public static PlaceDto ToDto(PlaceEntity entity) {
         if (entity == null) return null;
         PlaceDto placeDto = new PlaceDto();
         placeDto.setId(entity.getId());
@@ -251,7 +251,7 @@ public final class PlaceConvertor {
                 .description(entity.getDescription())
                 .acceptable(entity.getAcceptable())
                 .active(entity.getActive())
-                .place(toDto(entity.getPlace()))
+                .place(ToDto(entity.getPlace()))
                 .build();
     }
 
@@ -260,7 +260,7 @@ public final class PlaceConvertor {
         return PlacePersonnelDto.builder()
                 .id(entity.getId())
                 .isDeleted(entity.isDeleted())
-                .placeDto(ToGymDto(entity.getPlace()))
+                .placeDto(ToDto(entity.getPlace()))
                 .userDto(UserConvertor.toDtoComplete(entity.getUser()))
                 .userRole(entity.getPlacePersonnelRoles().stream().filter(pp -> !pp.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()))
                 .isBeneficiary(entity.getIsBeneficiary())

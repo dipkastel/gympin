@@ -89,24 +89,6 @@ const _placeSubscribes = ({place}) => {
                 });
                 return;
             }
-            //
-            // if (!userBasket) {
-            //
-            //     invoice_add({User: {Id: currentUser.Id}}).then(data => {
-            //         store.dispatch(sagaActions.RequestUserInvoices(currentUser))
-            //         setTimeout(function () {
-            //             addToBasket(item);
-            //         }, 2000);
-            //     }).catch(e => {
-            //         try {
-            //             error.showError({message: e.response.data.Message,});
-            //         } catch (f) {
-            //             error.showError({message: "خطا نا مشخص",});
-            //         }
-            //     });
-            //     return;
-            // }
-
 
             invoice_addBuyable({
                 Invoice: {Id: userBasket?.Id || null},

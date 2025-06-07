@@ -22,7 +22,7 @@ public final class SupportConvertor {
         if(entity.getCorporate()!=null)
             dto.setCorporate(CorporateConvertor.toDto(entity.getCorporate()));
         if(entity.getPlace()!=null)
-            dto.setPlace(PlaceConvertor.toDto(entity.getPlace()));
+            dto.setPlace(PlaceConvertor.ToDto(entity.getPlace()));
         if(entity.getUser()!=null)
             dto.setUser(UserConvertor.toDtoSimple(entity.getUser()));
 

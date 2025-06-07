@@ -40,7 +40,6 @@ const _Slider = () => {
     }
     return (
         <section>
-
             <div>
                 <Slider  {...settings}>
                     <SliderItem src={ww>600?"/assets/images/slide1.jpg":"/assets/images/slide11.jpg"} alt={""} />

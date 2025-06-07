@@ -9,7 +9,7 @@ public class TicketCourseConvertor {
 
     public static TicketCourseDto toDto(TicketCourseEntity entity) {
         TicketCourseDto dto = new TicketCourseDto();
-        dto.setPlace(PlaceConvertor.toDto(entity.getPlace()));
+        dto.setPlace(PlaceConvertor.ToDto(entity.getPlace()));
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setPrice(entity.getPrice());

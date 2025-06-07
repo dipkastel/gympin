@@ -183,6 +183,50 @@ input[type=number] {
   color: rgb(243, 243, 243);
 }
 
+.rdselect-container .rselect__control {
+  background-color: #ffffff;
+  border: 1px solid #838383;
+  border-radius: 8px;
+  padding: 8px;
+  transition: none;
+  margin-top: 20px;
+}
+.rdselect-container .rselect__control:hover {
+  border-color: #f1f1f1;
+}
+.rdselect-container .rselect__menu {
+  z-index: 9999;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+}
+.rdselect-container .rselect__option {
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  padding: 10px;
+}
+.rdselect-container .rselect__option:hover {
+  background-color: #dadada;
+}
+.rdselect-container .rselect__indicator-separator {
+  background-color: #2c3034;
+}
+.rdselect-container .rselect__input-container {
+  color: #232323;
+}
+.rdselect-container .rselect__placeholder,
+.rdselect-container .rselect__single-value {
+  color: rgb(44, 44, 44);
+}
+
+.count {
+  width: 40px !important;
+  text-align: center;
+  padding: 0 !important;
+}
+.count .MuiInputBase-root {
+  border-radius: 0 !important;
+}
+
 body {
   font-family: "IRANSans-web" !important;
 }

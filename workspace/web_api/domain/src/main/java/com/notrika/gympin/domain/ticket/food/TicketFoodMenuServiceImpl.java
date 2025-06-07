@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.ticket.food;
 
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodMenuDto;
+import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodMenuCopyParam;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodMenuParam;
 import com.notrika.gympin.common.ticket.ticketFood.query.TicketFoodMenuQuery;
 import com.notrika.gympin.common.ticket.ticketFood.servie.TicketFoodMenuService;
@@ -19,6 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -114,5 +116,24 @@ public class TicketFoodMenuServiceImpl extends AbstractBaseService<TicketFoodMen
     public List<Date> getFoodMenuDates(Long cateringId) {
         List<Date> activeDates = ticketFoodMenuRepository.getActiveDatesByCateringId(cateringId);
         return activeDates;
+    }
+
+    @Override
+    public Boolean copyDate(TicketFoodMenuCopyParam param) {
+        List<TicketFoodMenuEntity> foodOfDate = ticketFoodMenuRepository.getByCateringIdAndDateOfMenu(param.getCatering().getId(),param.getFromDate());
+        List<TicketFoodMenuEntity> newMenu = new ArrayList<>();
+        for (TicketFoodMenuEntity entity:foodOfDate) {
+            newMenu.add(TicketFoodMenuEntity.builder()
+                    .category(entity.getCategory())
+                    .date(param.getToDate())
+                    .foodItem(entity.getFoodItem())
+                    .foodItemStatus(entity.getFoodItemStatus())
+                    .minOrderCount(entity.getMinOrderCount())
+                    .maxOrderCount(entity.getMaxOrderCount())
+                    .build()
+            );
+        }
+        ticketFoodMenuRepository.addAll(newMenu);
+        return true;
     }
 }

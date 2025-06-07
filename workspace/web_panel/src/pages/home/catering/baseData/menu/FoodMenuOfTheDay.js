@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Card, CardActionArea, CardHeader, Grid, TextField, Typography} from "@mui/material";
+import {Button, Card, CardActionArea, CardContent, CardHeader, Grid, TextField, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
 import {TicketFoodMenu_add, TicketFoodMenu_query} from "../../../../../network/api/TicketFoodMenu.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
@@ -7,6 +7,7 @@ import {Form, Modal} from "react-bootstrap";
 import __SelectFood from "../../../../partials/selector/__SelectFood";
 import FoodMenuCategoryList from "./FoodMenuCategoryList";
 import {TicketFoods_query} from "../../../../../network/api/TicketFoods.api";
+import __CopyFromDate from "./__CopyFromDate";
 
 const FoodMenuOfTheDay = ({catering, date}) => {
 
@@ -14,16 +15,18 @@ const FoodMenuOfTheDay = ({catering, date}) => {
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [foodMenu, setFoodMenu] = useState(null);
     const [allFoods, setAllFoods] = useState(null);
+    const [hasFood, setHasFood] = useState(false);
 
 
     useEffect(() => {
-        getFoodMenuByDate()
+        if (date)
+            getFoodMenuByDate()
     }, [date]);
 
     useEffect(() => {
         TicketFoods_query({
             queryType: "FILTER",
-            PlaceId:catering.Id,
+            PlaceId: catering.Id,
             paging: {Page: 0, Size: 250, Desc: true}
         }).then((data) => {
             setAllFoods(data.data.Data.content);
@@ -37,11 +40,10 @@ const FoodMenuOfTheDay = ({catering, date}) => {
     }, []);
 
 
-
     function getFoodMenuByDate() {
         TicketFoodMenu_query({
             queryType: "FILTER",
-            PlaceId:catering.Id,
+            PlaceId: catering.Id,
             Date: date,
             paging: {
                 Page: 0,
@@ -49,7 +51,8 @@ const FoodMenuOfTheDay = ({catering, date}) => {
                 Desc: true
             }
         }).then(result => {
-            setFoodMenu( Object.groupBy(result.data.Data.content, ({ Category }) => Category))
+            setHasFood(result?.data?.Data?.content?.length>0);
+            setFoodMenu(Object.groupBy(result.data.Data.content, ({Category}) => Category))
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -128,11 +131,15 @@ const FoodMenuOfTheDay = ({catering, date}) => {
 
             <Grid container spacing={3}>
 
-                {Object.keys(foodMenu).map((cat, num) => (
+                {foodMenu && Object.keys(foodMenu).map((cat, num) => (
                     <Grid key={num} item xs={6}>
-                        <FoodMenuCategoryList allFoods={allFoods} date={date} catering={catering} category={cat} menuList={foodMenu[cat]} getMenu={getFoodMenuByDate}/>
+                        <FoodMenuCategoryList allFoods={allFoods} date={date} catering={catering} category={cat} menuList={foodMenu[cat]}
+                                              getMenu={getFoodMenuByDate}/>
                     </Grid>
                 ))}
+                {foodMenu&&!hasFood && <Grid item xs={6}>
+                    <__CopyFromDate catering={catering} selectedDate={date} copyDone={getFoodMenuByDate} />
+                </Grid>}
                 <Grid item xs={6}>
                     <Card sx={{width: "fit-content"}} elevation={10}>
                         <CardActionArea sx={{p: 2}} onClick={() => {

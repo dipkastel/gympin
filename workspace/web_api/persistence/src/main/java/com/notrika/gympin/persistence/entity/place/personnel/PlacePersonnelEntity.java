@@ -30,7 +30,7 @@ public class PlacePersonnelEntity extends BaseEntityWithCreateUpdate<PlacePerson
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personnelPlaceId")
-    private PlaceGymEntity place;
+    private PlaceEntity place;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personnelUserId")

@@ -84,10 +84,20 @@ const NewLogin = (props) => {
     }, []);
 
 
+    useEffect(() => {
+        if (mode === 'system') {
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            setMode(mediaQuery.matches ? 'dark' : 'light');
+            const handler = (e) => setMode(e.matches ? 'dark' : 'light');
+            mediaQuery.addEventListener('change', handler);
+            return () => mediaQuery.removeEventListener('change', handler);
+        }
+    }, [mode]);
+
+
     if (!mode) {
         return null;
     }
-
 
 
     function submitForm(event) {

@@ -23,17 +23,15 @@ import com.notrika.gympin.common.util.exception.general.SendSmsException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
-import com.notrika.gympin.domain.util.convertor.BuyableConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.place.*;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
-import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +63,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     PlacePersonnelRoleRepository placePersonnelRoleRepository;
 
     @Autowired
-    private PlaceGymRepository placeGymRepository;
+    private PlaceRepository placeRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -80,7 +78,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     @Transactional
     public PlacePersonnelDto add(@NonNull PlacePersonnelParam placePersonnelParam) {
         UserEntity user = userRepository.findByPhoneNumber(placePersonnelParam.getPhoneNumber());
-        PlaceGymEntity place = placeGymRepository.getById(placePersonnelParam.getPlace().getId());
+        PlaceEntity place = placeRepository.getById(placePersonnelParam.getPlace().getId());
 
         if (user == null) {
             RoleEnum role = placePersonnelParam.getUserRole() == PlacePersonnelRoleEnum.PLACE_COACH ? RoleEnum.COACH : place.getPlaceOwners().size() > 0 ? RoleEnum.PLACE_PERSONNEL : RoleEnum.PLACE_MANAGER;
@@ -93,7 +91,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         } else {
             //check for duplication
             UserEntity finalUser = user;
-            if (place.getPlaceOwners().stream().anyMatch(p -> !p.isDeleted() && Objects.equals(p.getUser().getId(), finalUser.getId())))
+            if (place.getPlaceOwners().stream().anyMatch(p -> !((PlacePersonnelEntity) p).isDeleted() && Objects.equals(((PlacePersonnelEntity) p).getUser().getId(), finalUser.getId())))
                 throw new DuplicateEntryAddExeption();
         }
         var placePersonnelRole = placePersonnelParam.getUserRole() == PlacePersonnelRoleEnum.PLACE_COACH ? PlacePersonnelRoleEnum.PLACE_COACH : place.getPlaceOwners().size() > 0 ? (placePersonnelParam.getUserRole() != null ? placePersonnelParam.getUserRole() : PlacePersonnelRoleEnum.PLACE_PERSONNEL) : PlacePersonnelRoleEnum.PLACE_OWNER;
@@ -163,7 +161,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Override
     public List<PlacePersonnelDto> getPersonnelByPlace(PlaceGymParam placeParam) {
-        PlaceGymEntity place = placeGymRepository.getById(placeParam.getId());
+        PlaceEntity place = placeRepository.getById(placeParam.getId());
 
         return convertToDtos(placePersonnelRepository.getAllByPlaceAndDeletedFalse(place));
     }
@@ -239,12 +237,12 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     @Override
     public List<PlacePersonnelDto> getPlaceBeneficiaries(Long placeId) {
         try {
-            return placeGymRepository
+            return ( List<PlacePersonnelDto> ) placeRepository
                     .getById(placeId)
                     .getPlaceOwners()
-                    .stream().filter(o -> !o.isDeleted())
-                    .filter(PlacePersonnelEntity::getIsBeneficiary)
-                    .map(PlaceConvertor::personnelToDto)
+                    .stream().filter(o -> !((PlacePersonnelEntity) o).isDeleted())
+                    .filter(p->((PlacePersonnelEntity) p).getIsBeneficiary())
+                    .map(p->PlaceConvertor.personnelToDto((PlacePersonnelEntity) p))
                     .collect(Collectors.toList());
         } catch (Exception e) {
             return null;
@@ -268,49 +266,50 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         return PlaceConvertor.personelBuyableAccessToDto(toUpdate);
     }
 
-    @Override
-    public List<PlacePersonnelBuyableAccessDto> getUserPlaceHallAccess(Long placeId, Long userId) {
-        PlaceGymEntity place = placeGymRepository.getById(placeId);
-        PlacePersonnelEntity placePersonnel = placePersonnelRepository.findByUserIdAndPlaceIdAndDeletedFalse(userId, placeId);
-        if (placePersonnel == null)
-            throw new UnknownUserException();
-        List<PlacePersonelBuyableAccessEntity> currentAccess = placePersonnel.getPlacePersonnelBuyableAccess();
-        List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
-        List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
 
-        for (BuyableEntity placeBuyable : place.getTicketSubscribes()) {
-            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
-            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
-            resultItem.setPlacePersonelId(placePersonnel.getId());
-            var hasAccess = false;
-            try {
-                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
-                if (currentAccessItem.isEmpty()) {
-                    toAdd.add(
-                            PlacePersonelBuyableAccessEntity.builder()
-                                    .access(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
-                                    .placePerson(placePersonnel)
-                                    .buyable(placeBuyable)
-                                    .build()
-                    );
-                }
-                hasAccess = currentAccessItem.get().getAccess();
-            } catch (Exception e) {
-            }
-            resultItem.setAccess(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
-            result.add(resultItem);
-        }
-
-        if (toAdd.size() > 0) {
-            placePersonnelHallAccessRepository.addAll(toAdd);
-        }
-        return result;
-
-    }
+//    @Override
+//    public List<PlacePersonnelBuyableAccessDto> getUserPlaceHallAccess(Long placeId, Long userId) {
+//        PlaceEntity place = placeRepository.getById(placeId);
+//        PlacePersonnelEntity placePersonnel = placePersonnelRepository.findByUserIdAndPlaceIdAndDeletedFalse(userId, placeId);
+//        if (placePersonnel == null)
+//            throw new UnknownUserException();
+//        List<PlacePersonelBuyableAccessEntity> currentAccess = placePersonnel.getPlacePersonnelBuyableAccess();
+//        List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
+//        List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
+//
+//        for (BuyableEntity placeBuyable : place.getTicketSubscribes()) {
+//            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
+//            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
+//            resultItem.setPlacePersonelId(placePersonnel.getId());
+//            var hasAccess = false;
+//            try {
+//                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
+//                if (currentAccessItem.isEmpty()) {
+//                    toAdd.add(
+//                            PlacePersonelBuyableAccessEntity.builder()
+//                                    .access(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
+//                                    .placePerson(placePersonnel)
+//                                    .buyable(placeBuyable)
+//                                    .build()
+//                    );
+//                }
+//                hasAccess = currentAccessItem.get().getAccess();
+//            } catch (Exception e) {
+//            }
+//            resultItem.setAccess(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
+//            result.add(resultItem);
+//        }
+//
+//        if (toAdd.size() > 0) {
+//            placePersonnelHallAccessRepository.addAll(toAdd);
+//        }
+//        return result;
+//
+//    }
 
     @Override
     public List<PlacePersonnelBuyableAccessDto> getUserPlaceBuyableAccess(Long placeId, Long userId) {
-        PlaceGymEntity place = placeGymRepository.getById(placeId);
+        PlaceEntity place = placeRepository.getById(placeId);
         PlacePersonnelEntity placePersonnel = placePersonnelRepository.findByUserIdAndPlaceIdAndDeletedFalse(userId, placeId);
         if (placePersonnel == null)
             throw new UnknownUserException();
@@ -318,28 +317,29 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
         List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
 
-        for (BuyableEntity placeBuyable : place.getTicketSubscribes()) {
-            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
-            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
-            resultItem.setPlacePersonelId(placePersonnel.getId());
-            var hasAccess = false;
-            try {
-                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
-                if (currentAccessItem.isEmpty()) {
-                    toAdd.add(
-                            PlacePersonelBuyableAccessEntity.builder()
-                                    .access(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
-                                    .placePerson(placePersonnel)
-                                    .buyable(placeBuyable)
-                                    .build()
-                    );
-                }
-                hasAccess = currentAccessItem.get().getAccess();
-            } catch (Exception e) {
-            }
-            resultItem.setAccess(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
-            result.add(resultItem);
-        }
+        //TODO FIX THIS
+//        for (BuyableEntity placeBuyable : place.getTicketSubscribes()) {
+//            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
+//            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
+//            resultItem.setPlacePersonelId(placePersonnel.getId());
+//            var hasAccess = false;
+//            try {
+//                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
+//                if (currentAccessItem.isEmpty()) {
+//                    toAdd.add(
+//                            PlacePersonelBuyableAccessEntity.builder()
+//                                    .access(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
+//                                    .placePerson(placePersonnel)
+//                                    .buyable(placeBuyable)
+//                                    .build()
+//                    );
+//                }
+//                hasAccess = currentAccessItem.get().getAccess();
+//            } catch (Exception e) {
+//            }
+//            resultItem.setAccess(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
+//            result.add(resultItem);
+//        }
 
         if (toAdd.size() > 0) {
             placePersonnelHallAccessRepository.addAll(toAdd);
@@ -357,28 +357,28 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
         List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
 
-        for (BuyableEntity placeBuyable : personnel.getPlace().getTicketSubscribes()) {
-            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
-            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
-            resultItem.setPlacePersonelId(personnel.getId());
-            var hasAccess = false;
-            try {
-                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
-                if (currentAccessItem.isEmpty()) {
-                    toAdd.add(
-                            PlacePersonelBuyableAccessEntity.builder()
-                                    .access(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
-                                    .placePerson(personnel)
-                                    .buyable(placeBuyable)
-                                    .build()
-                    );
-                }
-                hasAccess = currentAccessItem.get().getAccess();
-            } catch (Exception e) {
-            }
-            resultItem.setAccess(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
-            result.add(resultItem);
-        }
+//        for (BuyableEntity placeBuyable : personnel.getPlace().getTicketSubscribes()) {
+//            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
+//            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
+//            resultItem.setPlacePersonelId(personnel.getId());
+//            var hasAccess = false;
+//            try {
+//                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
+//                if (currentAccessItem.isEmpty()) {
+//                    toAdd.add(
+//                            PlacePersonelBuyableAccessEntity.builder()
+//                                    .access(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
+//                                    .placePerson(personnel)
+//                                    .buyable(placeBuyable)
+//                                    .build()
+//                    );
+//                }
+//                hasAccess = currentAccessItem.get().getAccess();
+//            } catch (Exception e) {
+//            }
+//            resultItem.setAccess(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
+//            result.add(resultItem);
+//        }
 
         if (toAdd.size() > 0) {
             placePersonnelHallAccessRepository.addAll(toAdd);

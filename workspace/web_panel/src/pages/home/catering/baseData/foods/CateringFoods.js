@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import {Modal} from "react-bootstrap";
-import {Button, FormControlLabel, Switch, TableCell, TablePagination, TextField} from "@mui/material";
+import {Button, FormControlLabel, IconButton, Switch, TableCell, TablePagination, TextField} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -11,8 +11,9 @@ import {useHistory} from "react-router-dom";
 import {getRppFoodsManagement, SetRppFoodsManagement} from "../../../../../helper/pocket/pocket";
 import AddIcon from "@mui/icons-material/Add";
 import {useEffect} from "react/index";
-import {TicketFoods_add, TicketFoods_query} from "../../../../../network/api/TicketFoods.api";
+import {TicketFoods_add, TicketFoods_query, TicketFoods_update} from "../../../../../network/api/TicketFoods.api";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
+import {Edit} from "@mui/icons-material";
 
 
 const CateringFoods = ({catering}) => {
@@ -25,6 +26,7 @@ const CateringFoods = ({catering}) => {
     const [perPage, setPerPage] = useState(getRppFoodsManagement());
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [addHasNext, setAddHasNext] = useState(false);
+    const [itemToEdit, setItemToEdit] = useState(null);
 
 
     useEffect(() => {
@@ -55,7 +57,7 @@ const CateringFoods = ({catering}) => {
 
     function renderModalAdd() {
 
-        function addOption(e) {
+        function add(e) {
             e.preventDefault()
             TicketFoods_add({
                 Place: {Id: catering.Id},
@@ -88,7 +90,7 @@ const CateringFoods = ({catering}) => {
         return (
             <>
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
-                    <form onSubmit={(e) => addOption(e)}>
+                    <form onSubmit={(e) => add(e)}>
                         <Modal.Header closeButton>
                             <Modal.Title>{"افزودن غذا "}</Modal.Title>
                         </Modal.Header>
@@ -163,6 +165,107 @@ const CateringFoods = ({catering}) => {
             </>
         );
     }
+    function renderModalEdit() {
+
+        function editItem(e) {
+            e.preventDefault()
+            TicketFoods_update({
+                Id:itemToEdit.Id,
+                Place: {Id: catering.Id},
+                Name: e.target.Name.value,
+                PlacePrice: toPriceWithoutComma(e.target.PlacePrice.value),
+                ValuePrice: toPriceWithoutComma(e.target.ValuePrice.value),
+                Enable:true,
+                Description:""
+            })
+                .then(data => {
+                    error.showError({message: "عملیات موفق",});
+                    setItemToEdit(null);
+                    getFoods();
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+
+        }
+
+        return (
+            <>
+                <Modal show={!!itemToEdit} onHide={() => setItemToEdit(null)}>
+                    <form onSubmit={(e) => editItem(e)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{"افزودن غذا "}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <TextField
+                                id="standard-full-width"
+                                label="نام غذا"
+                                placeholder="نام غذا"
+                                name={"Name"}
+                                type={"text"}
+                                fullWidth
+                                defaultValue={itemToEdit?.Name}
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                            <TextField
+                                id="standard-full-width"
+                                label="ارزش به تومان"
+                                placeholder="ارزش به تومان"
+                                defaultValue={itemToEdit?.Price}
+                                name={"ValuePrice"}
+                                onChange={e =>
+                                    e.target.value = toPriceWithComma(e.target.value)
+                                }
+                                type={"text"}
+                                fullWidth
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+
+                            <TextField
+                                id="standard-full-width"
+                                label="قیمت به تومان"
+                                name={"PlacePrice"}
+                                placeholder="قیمت به تومان"
+                                defaultValue={itemToEdit?.Price}
+                                onChange={e =>
+                                    e.target.value = toPriceWithComma(e.target.value)
+                                }
+                                type={"text"}
+                                fullWidth
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                className={"button_edit"}
+                                onClick={() => setItemToEdit(null)}
+                            >
+                                خیر
+                            </Button>
+                            <Button
+                                className={"button_danger"}
+                                type={"submit"}
+                            >
+                                ویرایش
+                            </Button>
+                        </Modal.Footer>
+                    </form>
+                </Modal>
+            </>
+        );
+    }
 
     return (
         <>
@@ -190,6 +293,7 @@ const CateringFoods = ({catering}) => {
                                 <TableCell align="right">id</TableCell>
                                 <TableCell align="right">نام</TableCell>
                                 <TableCell align="right">قیمت</TableCell>
+                                <TableCell align="left">عملیات</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -200,6 +304,7 @@ const CateringFoods = ({catering}) => {
                                     <TableCell align="right">{item.Id}</TableCell>
                                     <TableCell align="right">{item.Name}</TableCell>
                                     <TableCell align="right">{toPriceWithComma(item.Price)}</TableCell>
+                                    <TableCell align="left"><IconButton onClick={(e)=>setItemToEdit(item)} ><Edit color={"primary"} /></IconButton></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -226,6 +331,7 @@ const CateringFoods = ({catering}) => {
                 </PortletBody>
             </Portlet>
             {renderModalAdd()}
+            {renderModalEdit()}
         </>
     );
 };

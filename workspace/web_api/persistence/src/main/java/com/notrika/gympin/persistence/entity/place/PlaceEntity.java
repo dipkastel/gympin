@@ -84,12 +84,8 @@ public class PlaceEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @ToString.Exclude
     private List<PlacePersonnelEntity> placeOwners;
 
-    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
-    private List<TicketSubscribeEntity> ticketSubscribes;
 
-    @OneToMany(mappedBy = "placeGym", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<InvoiceBuyableEntity> invoiceBuyables;

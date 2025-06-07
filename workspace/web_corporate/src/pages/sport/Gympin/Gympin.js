@@ -1,12 +1,13 @@
 import React from 'react';
 import Grid from "@mui/material/Grid2";
-import {Card, CardActionArea, Typography} from "@mui/material";
+import {Card, CardActionArea, IconButton, Typography} from "@mui/material";
 import _ActivePersonnelCount from "./Base/_ActivePersonnelCount";
 import _SportTicketCount from "./Base/_SportTicketCount";
 import GympinUsageReport from "./Report/GympinUsageReport";
 import _SportTotalCredit from "./Base/_SportTotalCredit";
 import _UserAddCredit from "./Actions/_UserAddCredit";
 import _UserAddGroupCredit from "./Actions/_UserAddGroupCredit";
+import {LinkedIn, Telegram, WhatsApp,Instagram} from "@mui/icons-material";
 
 const Gympin = () => {
     return (
@@ -72,27 +73,31 @@ const Gympin = () => {
                 </Grid>
                 <Grid size={{xs: 12, sm: 6, md: 4, lg: 4}}>
                     <Card elevation={10} sx={{m: 2, p: 3}}>
-                        <Typography variant={"h3"} color={"info"}>
-                            تلفن:
+                        <Typography sx={{mb:3}} variant={"h3"} color={"info"}>
+                            شبکه های اجتماعی:
                         </Typography>
-                        <Typography sx={{mt: 2, lineHeight: "1.4rem", textAlign: "justify"}} variant={"body2"} color={"info"}>
-                            021-77162191
-                        </Typography>
-                        <Typography sx={{mt: 2, lineHeight: "1.4rem", textAlign: "justify"}} variant={"body2"} color={"info"}>
-                            021-77162192
-                        </Typography>
+
+                        <IconButton size={"small"} sx={{mx: 0.5}} href={"https://wa.me/+989221496746"}>
+                            <WhatsApp sx={{fontSize: "2rem"}}/>
+                        </IconButton>
+                        <IconButton size={"small"} sx={{mx: 0.5}} href={"https://t.me/gympin_info"}>
+                            <Telegram sx={{fontSize: "2rem"}}/>
+                        </IconButton>
+                        <IconButton size={"small"} sx={{mx: 0.5}} href={"https://www.linkedin.com/company/gympintdp"}>
+                            <LinkedIn sx={{fontSize: "2rem"}}/>
+                        </IconButton>
+                        <IconButton size={"small"} sx={{mx: 0.5}} href={"https://www.instagram.com/gympin_ir"}>
+                            <Instagram sx={{fontSize: "2rem"}}/>
+                        </IconButton>
                     </Card>
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 4, lg: 4}}>
                     <Card elevation={10} sx={{m: 2, p: 3}}>
                         <Typography variant={"h3"} color={"info"}>
-                            تلفن:
+                            آدرس:
                         </Typography>
                         <Typography sx={{mt: 2, lineHeight: "1.4rem", textAlign: "justify"}} variant={"body2"} color={"info"}>
-                            021-77162191
-                        </Typography>
-                        <Typography sx={{mt: 2, lineHeight: "1.4rem", textAlign: "justify"}} variant={"body2"} color={"info"}>
-                            021-77162192
+                            تهران - نارمک جنوبی - پلاک ۴۱۶
                         </Typography>
                     </Card>
                 </Grid>

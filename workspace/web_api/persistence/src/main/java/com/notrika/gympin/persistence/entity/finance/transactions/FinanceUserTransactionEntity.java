@@ -36,7 +36,7 @@ public class FinanceUserTransactionEntity extends BaseTransactionEntity<FinanceU
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "placeId")
-    private PlaceGymEntity place;
+    private PlaceEntity place;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "purchasedId")

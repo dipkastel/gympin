@@ -28,3 +28,7 @@ export function TicketFoodMenu_query(data) {
 export function TicketFoodMenu_getDates(data) {
     return axios.get(TicketFoodMenuApi.getDates, {params: data});
 }
+
+export function TicketFoodMenu_copyDate(data) {
+    return axios.post(TicketFoodMenuApi.copyDate,  data);
+}

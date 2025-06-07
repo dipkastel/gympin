@@ -2,6 +2,7 @@ package com.notrika.gympin.common.place.personnel.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
@@ -21,7 +22,7 @@ import java.util.List;
 public class PlacePersonnelDto extends BaseDto<PlacePersonnelDto> {
 
     @JsonProperty("Place")
-    private PlaceGymDto placeDto;
+    private PlaceDto placeDto;
 
     @JsonProperty("User")
     private UserDto userDto;
