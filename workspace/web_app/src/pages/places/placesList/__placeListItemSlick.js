@@ -70,7 +70,7 @@ const __placeListItem = ({item}) => {
                             </Typography>
                         </Grid>
                         <Grid>
-                            {item.Genders.length < 1 && <Chip size={"small"} sx={chipSx}
+                            {item?.Genders?.length < 1 && <Chip size={"small"} sx={chipSx}
                                                               label={<><NewReleases
                                                                   sx={{color: "#cccccc",fontSize:"0.6rem"}}/><Typography variant={"caption"}
                                                                                                        sx={{px: 1,fontSize:"0.5rem"}}>ثبت

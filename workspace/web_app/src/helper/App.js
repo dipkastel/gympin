@@ -8,7 +8,7 @@ import createCache from "@emotion/cache";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "bootstrap/dist/css/bootstrap.rtl.min.css"
-import "../helper/style.css"
+import "./style/style.css"
 import GympinPagesProvider from "../components/GympinPagesProvider";
 import GNotification from "./notification";
 import React, {useEffect, useState} from "react";

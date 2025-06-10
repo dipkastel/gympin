@@ -1,0 +1,135 @@
+.bg-primary {
+  background-color: #d90a1a !important;
+}
+
+.MuiSlider-thumb {
+  -webkit-transform: translate(50%, -50%) !important;
+  -moz-transform: translate(50%, -50%) !important;
+  -ms-transform: translate(50%, -50%) !important;
+  transform: translate(50%, -50%) !important;
+}
+
+#qrCanvas {
+  width: 100%;
+}
+
+.bg-primary {
+  background-color: #d90a1a !important;
+}
+
+.MuiChip-deleteIcon {
+  margin: 0 -6px 0 5px !important;
+}
+
+.MuiSlider-thumb {
+  -webkit-transform: translate(50%, -50%) !important;
+  -moz-transform: translate(50%, -50%) !important;
+  -ms-transform: translate(50%, -50%) !important;
+  transform: translate(50%, -50%) !important;
+}
+
+.z1040 {
+  z-index: 1040;
+}
+
+.end-10 {
+  left: 10px;
+}
+
+.sportBullet {
+  margin: 5px 5px;
+}
+
+.sportBullet:first-child {
+  margin: 0 0px 0 5px;
+}
+
+@media (min-width: 1000px) {
+  body {
+    /*position: absolute;*/
+    /*width: 390px;*/
+    /*max-width: 390px;*/
+    /*left: Calc(50% - 195px);*/
+  }
+}
+#qrCanvas {
+  width: 100%;
+}
+
+.blur {
+  filter: blur(6px);
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.section-title {
+  color: #fff;
+  background-color: #e7333e;
+  width: fit-content;
+  padding: 10px 10px 10px 40px;
+  border-radius: 25px 0 0 25px;
+}
+
+.MuiAlert-icon {
+  margin-right: 0 !important;
+  margin-left: 12px;
+}
+
+.MuiAlert-action {
+  margin-right: auto !important;
+  margin-left: -8px !important;
+}
+
+.qrCode {
+  border: 1px solid #000;
+}
+
+.mapIcon {
+  position: fixed;
+  right: 15px;
+  bottom: 70px;
+}
+
+.slick-slide {
+  float: left !important;
+}
+
+.rselect-container .rselect__control {
+  background-color: #ffffff;
+  border: 1px solid #c7c7c7;
+  border-radius: 13px;
+  padding: 8px;
+  transition: none;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.rselect-container .rselect__control:hover {
+  border-color: #414141;
+}
+.rselect-container .rselect__menu {
+  z-index: 9999;
+  background-color: #efefef;
+  border-radius: 8px;
+}
+.rselect-container .rselect__option {
+  background-color: #efefef;
+  border-radius: 8px;
+  padding: 10px;
+}
+.rselect-container .rselect__option:hover {
+  background-color: #dedede;
+}
+.rselect-container .rselect__indicator-separator {
+  background-color: #737373;
+}
+.rselect-container .rselect__input-container {
+  color: #262626;
+}
+.rselect-container .rselect__placeholder,
+.rselect-container .rselect__single-value {
+  color: rgb(42, 42, 42);
+}
+
+/*# sourceMappingURL=style.css.map */

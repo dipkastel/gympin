@@ -1,3 +1,6 @@
+#qrCanvas {
+  width: 100%;
+}
 .bg-primary {
   background-color: #d90a1a !important;
 }
@@ -55,6 +58,7 @@
   margin-right: auto !important;
   margin-left: -8px !important;
 }
+
 .qrCode{
   border: 1px solid #000;
 }
@@ -66,4 +70,49 @@
 .slick-slide{
   float:left !important
 }
-/*# sourceMappingURL=style.css.map */
+
+
+
+
+
+.rselect-container {
+  .rselect__control {
+    background-color: #ffffff;
+    border: 1px solid #c7c7c7;
+    border-radius: 13px;
+    padding: 8px;
+    transition: none;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    &:hover {
+      border-color: #414141;
+    }
+  }
+  .rselect__menu {
+    z-index: 9999;
+    background-color: #efefef;
+    border-radius: 8px;
+  }
+
+
+  .rselect__option {
+    background-color: #efefef;
+    border-radius: 8px;
+    padding: 10px;
+
+    &:hover {
+      background-color: #dedede;
+    }
+  }
+  .rselect__indicator-separator {
+    background-color: #737373;
+  }
+  .rselect__input-container{
+    color: #262626;
+  }
+  .rselect__placeholder,
+  .rselect__single-value {
+    color: rgb(42, 42, 42);
+  }
+}

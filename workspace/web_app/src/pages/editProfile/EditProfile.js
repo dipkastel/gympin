@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import {checkNationalCode, checkUsername, compareObjs} from "../../helper/utils";
 import {connect, useSelector} from "react-redux";
-import {Formik} from "formik";
 import {user_checkUsernameAvailable, user_updateMe} from "../../network/api/user.api";
 import {AdapterDateFnsJalali} from "@mui/x-date-pickers/AdapterDateFnsJalaliV3";
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
@@ -22,7 +21,7 @@ import {useNavigate} from "react-router-dom";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import _EditImage from "./_EditImage";
-import {Form} from "react-bootstrap";
+import __SelectCity from "../../components/__SelectCity";
 
 const EditProfile = (props) => {
     const error = useContext(ErrorContext);
@@ -220,6 +219,7 @@ const EditProfile = (props) => {
                             error={!!getValidation("FullName",currentUser.FullName)}
                             helperText={getValidation("FullName",currentUser.FullName)}
                         />
+                        <__SelectCity />
                         <FormControl sx={{mt:1}} variant={"outlined"} fullWidth error={!!getValidation("Gender",currentUser.Gender)}>
                             <InputLabel
                                 color={!!getValidation("Gender",currentUser.Gender)?"error":"success"} id="demo-simple-select-label">جنسیت * </InputLabel>
@@ -249,7 +249,7 @@ const EditProfile = (props) => {
                                 variant="outlined"
                                 mask="____/__/__"
                                 label={"تاریخ تولد * "}
-                                value={currentUser.Birthday||""}
+                                value={new Date(currentUser.Birthday)||""}
                                 onChange={(e,w)=>{
                                     setFieldValue('Birthday', Date.parse(e))
                                 }}
@@ -270,7 +270,6 @@ const EditProfile = (props) => {
                                 }
                             />
                         </LocalizationProvider>
-
                         <TextField
                             fullWidth
                             className="w-100 mt-4"

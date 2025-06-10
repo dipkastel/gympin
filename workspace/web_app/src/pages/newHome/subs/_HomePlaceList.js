@@ -3,7 +3,6 @@ import {Box, Card, CircularProgress, Container, Grid2 as Grid, Link, Typography}
 import {Place_query} from "../../../network/api/place.api";
 import {useNavigate} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import __placeListItem from "../../places/placesList/__placeListItem";
 import Slick from "react-slick";
 import {Image} from "react-bootstrap";
 import __placeListItemSlick from "../../places/placesList/__placeListItemSlick";
