@@ -10,6 +10,7 @@ import _Contact from "./_Contact";
 import _video from "../corporate/_Video";
 import _Values2 from "./_Values2";
 import _Slider from "./_Slider";
+import _Companies from "./_Companies";
 
 const Index = () => {
     return (
@@ -18,6 +19,7 @@ const Index = () => {
             <_Introduction/>
             <_ExcitingTexts/>
             <_RedAdditionalData/>
+            <_Companies/>
             <_video />
             <_Values2/>
             {/*<_Values/>*/}

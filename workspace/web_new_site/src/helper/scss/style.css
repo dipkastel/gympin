@@ -317,6 +317,12 @@ header .header-call {
 .slider-container .faqBottomCard {
   margin: 20px 2vw 30px 2vw;
 }
+.slider-companies-container {
+  direction: ltr;
+}
+.slider-companies-container .itemHolder {
+  margin: 40px 2vw 40px 2vw;
+}
 .valueCard {
   margin: 10px 0;
   padding: 32px 0;

@@ -155,6 +155,24 @@
     }
   }
 }
+.slider-companies-container {
+  direction: ltr;
+
+  .card {
+
+  }
+
+  .itemHolder {
+    margin: 40px 2vw 40px 2vw;
+  }
+
+
+  .slick-active {
+    img {
+      //width: 80%;
+    }
+  }
+}
 
 .valueCard {
   margin: 10px 0;
