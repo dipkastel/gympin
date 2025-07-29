@@ -112,21 +112,23 @@ public final class PlaceConvertor {
     public static PlaceCateringDto ToCateringDto(PlaceCateringEntity entity) {
         if (entity == null) return null;
 
-        PlaceCateringDto placeDto = new PlaceCateringDto();
-        placeDto.setId(entity.getId());
-        placeDto.setName(entity.getName());
-        placeDto.setLatitude(entity.getLatitude());
-        placeDto.setLongitude(entity.getLongitude());
-        placeDto.setTell(entity.getTell());
-        placeDto.setAddress(entity.getAddress());
-        placeDto.setOrder(entity.getOrder());
-        placeDto.setAutoDiscount(entity.isAutoDiscount());
-        placeDto.setStatus(entity.getStatus());
-        placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
-        placeDto.setLogo(MultimediaConvertor.toDto(entity.getLogo()));
-        placeDto.setLastOrderDayCount(entity.getLastOrderDayCount());
-        placeDto.setMinOrderCount(entity.getMinOrderCount());
-        return placeDto;
+        PlaceCateringDto catering = new PlaceCateringDto();
+        catering.setId(entity.getId());
+        catering.setName(entity.getName());
+        catering.setLatitude(entity.getLatitude());
+        catering.setLongitude(entity.getLongitude());
+        catering.setTell(entity.getTell());
+        catering.setAddress(entity.getAddress());
+        catering.setOrder(entity.getOrder());
+        catering.setAutoDiscount(entity.isAutoDiscount());
+        catering.setStatus(entity.getStatus());
+        catering.setLocation(LocationConvertor.toDto(entity.getLocation()));
+        catering.setLogo(MultimediaConvertor.toDto(entity.getLogo()));
+        catering.setLastOrderDayCount(entity.getLastOrderDayCount());
+        catering.setMinOrderCount(entity.getMinOrderCount());
+        catering.setFreeDeliveryPrice(entity.getFreeDeliveryPrice());
+        catering.setHasDishesPrice(entity.getHasDishesPrice());
+        return catering;
     }
 
     public static PlaceDto ToDto(PlaceEntity entity) {
@@ -140,6 +142,10 @@ public final class PlaceConvertor {
         placeDto.setAddress(entity.getAddress());
         placeDto.setStatus(entity.getStatus());
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
+        if(entity instanceof PlaceGymEntity)
+            placeDto.setPlaceType("Gym");
+        if(entity instanceof PlaceCateringEntity)
+            placeDto.setPlaceType("Catering");
         return placeDto;
     }
 

@@ -3,7 +3,6 @@ package com.notrika.gympin.common.finance.invoice.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.user.user.enums.Gender;
@@ -21,7 +20,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class InvoiceBuyableDto extends BaseDtoWithCreateUpdate<InvoiceBuyableDto> {
+public class InvoiceSubscribesDto extends BaseDtoWithCreateUpdate<InvoiceSubscribesDto> {
 
     @JsonProperty("Name")
     private String name;
@@ -49,6 +48,9 @@ public class InvoiceBuyableDto extends BaseDtoWithCreateUpdate<InvoiceBuyableDto
 
     @JsonProperty("Count")
     private Short count;
+
+    @JsonProperty("Gender")
+    private Gender gender;
 
     @JsonProperty("Buyable")
     private TicketBuyableDto buyableDto;

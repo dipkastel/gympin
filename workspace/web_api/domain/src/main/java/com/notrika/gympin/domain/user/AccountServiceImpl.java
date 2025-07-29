@@ -41,6 +41,8 @@ import com.notrika.gympin.persistence.dao.repository.settings.ManageGiftCreditRe
 import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;
 import com.notrika.gympin.persistence.entity.user.UserRolesEntity;
@@ -244,9 +246,11 @@ public class AccountServiceImpl implements AccountService {
             case WEBAPP:
                 return true;
             case WEBMASTER:
-                return user.getPlacePersonnel().size() > 0;
+                return user.getPlacePersonnel().stream().anyMatch(pp->pp.getPlace() instanceof PlaceGymEntity && !pp.isDeleted());
             case WEBCORPORATE:
                 return user.getCorporatesPersonel().stream().filter(o->!o.isDeleted()).filter(f -> f.getRole() == CorporatePersonnelRoleEnum.ADMIN).count() > 0;
+            case WEBFOODWORKS:
+                return user.getPlacePersonnel().stream().anyMatch(pp->pp.getPlace() instanceof PlaceCateringEntity && !pp.isDeleted());
         }
         return false;
     }

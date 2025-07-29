@@ -43,11 +43,19 @@ public class UserParam extends BaseParam<UserParam> {
     @JsonProperty("Email")
     private String email;
 
+    @JsonProperty("LocationId")
+    private Long locationId;
+
     @JsonProperty("Bio")
     private String bio;
 
     @JsonProperty("AvatarId")
     private Long avatarId;
+
+
+    @JsonProperty("CorporateId")
+    private Long corporateId;
+
 
 
 

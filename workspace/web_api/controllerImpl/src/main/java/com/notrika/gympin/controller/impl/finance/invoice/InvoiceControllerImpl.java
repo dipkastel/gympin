@@ -3,11 +3,10 @@ package com.notrika.gympin.controller.impl.finance.invoice;
 import com.notrika.gympin.common.finance.invoice.api.InvoiceController;
 import com.notrika.gympin.common.finance.invoice.dto.InvoiceDto;
 import com.notrika.gympin.common.finance.invoice.dto.UserHowToPayDto;
-import com.notrika.gympin.common.finance.invoice.param.InvoiceBuyableParam;
-import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
-import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
+import com.notrika.gympin.common.finance.invoice.param.*;
 import com.notrika.gympin.common.finance.invoice.query.InvoiceQuery;
 import com.notrika.gympin.common.finance.invoice.service.InvoiceService;
+import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
@@ -67,6 +66,18 @@ public class InvoiceControllerImpl implements InvoiceController {
     }
 
     @Override
+    @GetMapping("sendOrderToCatering")
+    public ResponseEntity<InvoiceDto> sendOrderToCatering(InvoiceParam param) throws Exception {
+        return ResponseEntity.ok(invoiceService.sendOrderToCatering(param));
+    }
+
+    @Override
+    @GetMapping("getPreOrderByCatering")
+    public ResponseEntity<List<InvoiceDto>> getPreOrderByCatering(PlaceCateringParam param) throws Exception {
+        return ResponseEntity.ok(invoiceService.getPreOrderByCatering(param));
+    }
+
+    @Override
     @GetMapping("getBasketByUserId")
     public ResponseEntity<InvoiceDto> getBasketByUserId(UserParam param) throws Exception {
         return ResponseEntity.ok(invoiceService.getBasketByUserId(param));
@@ -118,8 +129,20 @@ public class InvoiceControllerImpl implements InvoiceController {
 
     @Override
     @PostMapping("addBuyable")
-    public ResponseEntity<InvoiceDto> addBuyable(@RequestBody InvoiceBuyableParam param) throws Exception {
+    public ResponseEntity<InvoiceDto> addBuyable(InvoiceBuyableParam param) throws Exception {
         return ResponseEntity.ok(invoiceService.addBuyable(param));
+    }
+
+    @Override
+    @PostMapping("addFood")
+    public ResponseEntity<InvoiceDto> addFood(InvoiceBuyableFoodParam param) throws Exception {
+        return ResponseEntity.ok(invoiceService.addFood(param));
+    }
+
+    @Override
+    @PostMapping("addSubscribe")
+    public ResponseEntity<InvoiceDto> addSubscribe(InvoiceBuyableSubscribeParam param) throws Exception {
+        return ResponseEntity.ok(invoiceService.addSubscribe(param));
     }
 
     @Override

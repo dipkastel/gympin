@@ -28,7 +28,7 @@ import java.util.Objects;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "invoiceBuyable")
-public class InvoiceBuyableEntity extends BaseEntityWithCreateUpdate<InvoiceBuyableEntity> {
+public class InvoiceBuyableEntity<b> extends BaseEntityWithCreateUpdate<b> {
 
 
     @Column(name = "name")
@@ -42,10 +42,6 @@ public class InvoiceBuyableEntity extends BaseEntityWithCreateUpdate<InvoiceBuya
 
     @Column(name = "placePrice")
     private BigDecimal placePrice;
-
-    @Column(name = "gender")
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
 
     @Column(name = "buyableType", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -74,6 +70,7 @@ public class InvoiceBuyableEntity extends BaseEntityWithCreateUpdate<InvoiceBuya
     @JsonIgnore
     @ToString.Exclude
     private InvoiceEntity invoice;
+
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "buyableId")

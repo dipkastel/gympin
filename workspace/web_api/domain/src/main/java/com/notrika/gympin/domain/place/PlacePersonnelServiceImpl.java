@@ -27,7 +27,9 @@ import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.place.*;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
+import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
@@ -169,6 +171,18 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     @Override
     public List<PlacePersonnelDto> getPersonnelByUser(UserParam userParam) {
         List<PlacePersonnelEntity> placePersonnel = placePersonnelRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId());
+        return convertToDtos(placePersonnel);
+    }
+
+    @Override
+    public List<PlacePersonnelDto> getGymPersonnelByUser(UserParam userParam) {
+        List<PlacePersonnelEntity> placePersonnel = placePersonnelRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId()).stream().filter(p->p.getPlace() instanceof PlaceGymEntity).collect(Collectors.toList());
+        return convertToDtos(placePersonnel);
+    }
+
+    @Override
+    public List<PlacePersonnelDto> getCateringPersonnelByUser(UserParam userParam) {
+        List<PlacePersonnelEntity> placePersonnel = placePersonnelRepository.findAllByUserIdAndDeletedIsFalse(userParam.getId()).stream().filter(p->p.getPlace() instanceof PlaceCateringEntity).collect(Collectors.toList());
         return convertToDtos(placePersonnel);
     }
 

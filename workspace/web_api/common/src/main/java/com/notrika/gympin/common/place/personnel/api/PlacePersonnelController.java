@@ -19,6 +19,8 @@ public interface PlacePersonnelController extends BaseController<PlacePersonnelP
     ResponseEntity<List<PlacePersonnelDto>> getPersonnelByPlace(PlaceGymParam placeParam);
 
     ResponseEntity<List<PlacePersonnelDto>> getPersonnelByUser(UserParam placeParam);
+    ResponseEntity<List<PlacePersonnelDto>> getGymPersonnelByUser(UserParam placeParam);
+    ResponseEntity<List<PlacePersonnelDto>> getCateringPersonnelByUser(UserParam placeParam);
 
     ResponseEntity<List<PlacePersonnelAccessDto>> getUserPlaceAccess(Long placeId,Long userId);
 

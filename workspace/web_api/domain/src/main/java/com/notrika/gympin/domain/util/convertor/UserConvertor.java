@@ -24,6 +24,7 @@ public final class UserConvertor {
         dto.setNationalCode(user.getNationalCode());
         dto.setEmail(user.getEmail());
         dto.setUserGroup(user.getUserGroup());
+        dto.setLocation(LocationConvertor.toDto(user.getLocation()));
         dto.setWizard(getWizard(user));
         dto.setUserRole(UserRoleConvertor.ToUserRoleDto(user).getRole());
         dto.setUserStatus(user.getUserStatus());

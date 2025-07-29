@@ -43,8 +43,6 @@ public class TicketFoodMenuServiceImpl extends AbstractBaseService<TicketFoodMen
                 .foodItem(item)
                 .date(param.getDate())
                 .foodItemStatus(param.getFoodItemStatus())
-                .minOrderCount(param.getMinOrderCount())
-                .maxOrderCount(param.getMaxOrderCount())
                 .category(param.getCategory())
                 .build();
         TicketFoodMenuEntity entity = this.add(foodMenu);
@@ -114,7 +112,7 @@ public class TicketFoodMenuServiceImpl extends AbstractBaseService<TicketFoodMen
 
     @Override
     public List<Date> getFoodMenuDates(Long cateringId) {
-        List<Date> activeDates = ticketFoodMenuRepository.getActiveDatesByCateringId(cateringId);
+        List<Date> activeDates = ticketFoodMenuRepository.getActiveDatesByCateringId(cateringId).stream().limit(30).collect(Collectors.toList());
         return activeDates;
     }
 
@@ -128,8 +126,6 @@ public class TicketFoodMenuServiceImpl extends AbstractBaseService<TicketFoodMen
                     .date(param.getToDate())
                     .foodItem(entity.getFoodItem())
                     .foodItemStatus(entity.getFoodItemStatus())
-                    .minOrderCount(entity.getMinOrderCount())
-                    .maxOrderCount(entity.getMaxOrderCount())
                     .build()
             );
         }

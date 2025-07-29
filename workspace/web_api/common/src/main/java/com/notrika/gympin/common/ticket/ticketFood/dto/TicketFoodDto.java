@@ -42,11 +42,21 @@ public class TicketFoodDto extends BaseDto<TicketFoodDto> {
     @JsonProperty("Enable")
     private Boolean enable;
 
+    @JsonProperty("IsCount")
+    private Boolean isCount;
+
     @JsonProperty("Description")
     private String description;
 
     @JsonProperty(value = "Place")
     private PlaceDto place;
+
+    @JsonProperty("MinOrderCount")
+    private Short minOrderCount;
+
+    @JsonProperty("MaxOrderCount")
+    private Short maxOrderCount;
+
 
 
 }

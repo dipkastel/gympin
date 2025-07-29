@@ -2,7 +2,6 @@ package com.notrika.gympin.persistence.entity.place;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
-import com.notrika.gympin.common.place.placeBase.enums.PlaceTypesEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
@@ -17,7 +16,6 @@ import com.notrika.gympin.persistence.entity.place.rating.PlaceRateEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
-import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -26,6 +24,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,10 +50,6 @@ public class PlaceEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private PlaceStatusEnum status;
-
-    @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    private PlaceTypesEnum type;
 
     @Column(name = "Tell")
     private String tell;
@@ -119,6 +114,22 @@ public class PlaceEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @JsonIgnore
     @ToString.Exclude
     private List<ManageTagsEntity> tags;
+
+
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<BuyableEntity<?>> buyables = new ArrayList<>();
+
+    public void addBuyable(BuyableEntity<?> buyable) {
+        buyables.add(buyable);
+        buyable.setPlace(this);
+    }
+
+    public void removeBuyable(BuyableEntity<?> buyable) {
+        buyables.remove(buyable);
+        buyable.setPlace(null);
+    }
 
     @Override
     public boolean equals(Object o) {

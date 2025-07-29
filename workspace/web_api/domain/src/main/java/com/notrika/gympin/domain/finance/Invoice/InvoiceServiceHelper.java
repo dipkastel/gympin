@@ -33,6 +33,7 @@ import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.finance.helper.FinanceHelper;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
@@ -40,12 +41,15 @@ import com.notrika.gympin.persistence.dao.repository.finance.transaction.Finance
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceUserTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceFoodRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.course.PurchasedCourseRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.course.TicketCourseRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
+import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
@@ -55,14 +59,16 @@ import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTra
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceFoodEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceSubscribeEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodMenuEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,11 +104,17 @@ public class InvoiceServiceHelper {
     @Autowired
     InvoiceBuyableRepository invoiceBuyableRepository;
     @Autowired
+    InvoiceFoodRepository invoiceFoodRepository;
+    @Autowired
+    InvoiceSubscribeRepository invoiceSubscribeRepository;
+    @Autowired
     FinanceSerialRepository financeSerialRepository;
     @Autowired
     TicketCourseRepository ticketCourseRepository;
     @Autowired
     FinanceUserRepository financeUserRepository;
+    @Autowired
+    CorporateRepository corporateRepository;
     @Autowired
     ManageNoteRepository noteRepository;
     @Autowired
@@ -302,7 +314,7 @@ public class InvoiceServiceHelper {
         return invoice;
     }
 
-    public boolean checkBuyableCanPurchase(List<InvoiceBuyableEntity> buyables) throws Exception{
+    public boolean checkBuyableCanPurchase(List<InvoiceBuyableEntity<?>> buyables) throws Exception{
         for(InvoiceBuyableEntity buyable:buyables){
             switch (buyable.getBuyableType()) {
                 case SUBSCRIBE:
@@ -411,8 +423,49 @@ public class InvoiceServiceHelper {
         return result;
     }
 
+    public InvoiceFoodEntity addFoodBuyableToInvoice(InvoiceEntity invoice, TicketFoodMenuEntity menu, Short count) {
+
+        InvoiceFoodEntity invoiceFood = InvoiceFoodEntity.builder()
+                .name(menu.getFoodItem().getName())
+                .description(menu.getFoodItem().getDescription())
+                .discount(menu.getFoodItem().getDiscount())
+                .date(menu.getDate())
+                .foodMenus(menu)
+                .placePrice(menu.getFoodItem().getPlacePrice())
+                .buyableType(menu.getFoodItem().getBuyableType())
+                .place(menu.getFoodItem().getPlace())
+                .beneficiary(menu.getFoodItem().getBeneficiary())
+                .unitPrice(menu.getFoodItem().getPrice())
+                .count(count)
+                .invoice(invoice)
+                .foodMenus(menu)
+                .buyable(menu.getFoodItem())
+                .build();
+        var result = invoiceFoodRepository.add(invoiceFood);
+        return result;
+    }
+    public InvoiceSubscribeEntity addSubscribeBuyableToInvoice(InvoiceEntity invoice, TicketSubscribeEntity subscribe, Short count) {
+
+        InvoiceSubscribeEntity invoiceSubscribe = InvoiceSubscribeEntity.builder()
+                .name(subscribe.getName())
+                .description(subscribe.getDescription())
+                .discount(subscribe.getDiscount())
+                .placePrice(subscribe.getPlacePrice())
+                .buyableType(subscribe.getBuyableType())
+                .gender(subscribe.getGender())
+                .place(subscribe.getPlace())
+                .beneficiary(subscribe.getBeneficiary())
+                .unitPrice(subscribe.getPrice())
+                .count(count)
+                .invoice(invoice)
+                .buyable(subscribe)
+                .build();
+        var result = invoiceSubscribeRepository.add(invoiceSubscribe);
+        return result;
+    }
+
     @Transactional
-    public InvoiceEntity getUserBasket(InvoiceParam invoiceParam) {
+    public InvoiceEntity getUserBasket(InvoiceParam invoiceParam,Long corporateId) {
 
         if (invoiceParam.getId() != null) {
             return invoiceRepository.getById(invoiceParam.getId());
@@ -437,11 +490,18 @@ public class InvoiceServiceHelper {
                         .phoneNumber(currentUser.getPhoneNumber())
                         .gender(currentUser.getGender())
                         .nationalCode(currentUser.getNationalCode())
+                        .corporate(getCorporate(corporateId))
                         .totalPrice(BigDecimal.ZERO)
                         .priceToPay(BigDecimal.ZERO)
                         .build());
             }
         }
+    }
+    private CorporateEntity getCorporate(Long corporateId){
+        try {
+            return corporateRepository.getById(corporateId);
+        }catch (Exception e){}
+        return null;
     }
 
     private UserEntity getcurrentUser() {
@@ -460,7 +520,7 @@ public class InvoiceServiceHelper {
             invoiceRepository.updateAll(userDraftInvoices);
     }
 
-    public InvoiceEntity AddNewInvoice(UserEntity user, FinanceSerialEntity serial) {
+    public InvoiceEntity AddNewInvoice(UserEntity user, FinanceSerialEntity serial,Long corporateId) {
         var invoice = InvoiceEntity.builder()
                 .status(InvoiceStatus.DRAFT)
                 .fullName(user.getFullName())
@@ -471,6 +531,7 @@ public class InvoiceServiceHelper {
                 .nationalCode(user.getNationalCode())
                 .totalPrice(BigDecimal.ZERO)
                 .priceToPay(BigDecimal.ZERO)
+                .corporate(getCorporate(corporateId))
                 .build();
         return invoiceRepository.add(invoice);
     }

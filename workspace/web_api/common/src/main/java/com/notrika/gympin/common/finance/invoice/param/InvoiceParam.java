@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.finance.invoice.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
@@ -23,4 +24,6 @@ public class InvoiceParam extends BaseParam<InvoiceParam> {
     @JsonProperty("Status")
     private InvoiceStatus status;
 
+    @JsonProperty("CorporateId")
+    private Long corporateId;
 }

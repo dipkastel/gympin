@@ -17,6 +17,8 @@ public interface PlacePersonnelService extends BaseService<PlacePersonnelParam, 
 
     List<PlacePersonnelDto> getPersonnelByPlace(PlaceGymParam placeParam);
     List<PlacePersonnelDto> getPersonnelByUser(UserParam userParam);
+    List<PlacePersonnelDto> getGymPersonnelByUser(UserParam userParam);
+    List<PlacePersonnelDto> getCateringPersonnelByUser(UserParam userParam);
 
     List<PlacePersonnelAccessDto> updatePersonnelAccess(List<PlacePersonnelAccessParam> personnelAccess);
 

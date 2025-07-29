@@ -45,4 +45,7 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
     @JsonProperty("Location")
     private LocationDto location;
 
+    @JsonProperty("PlaceType")
+    private String placeType;
+
 }

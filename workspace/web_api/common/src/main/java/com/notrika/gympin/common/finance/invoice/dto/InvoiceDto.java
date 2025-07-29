@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.finance.invoice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.user.user.dto.UserDto;
@@ -43,6 +44,9 @@ public class InvoiceDto extends BaseDtoWithCreateUpdate<InvoiceDto> {
     @JsonProperty("NationalCode")
     private String nationalCode;
 
+    @JsonProperty("Corporate")
+    private CorporateDto corporate;
+
     @JsonProperty("TotalPrice")
     private BigDecimal totalPrice;
 
@@ -51,4 +55,10 @@ public class InvoiceDto extends BaseDtoWithCreateUpdate<InvoiceDto> {
 
     @JsonProperty("InvoiceBuyables")
     private List<InvoiceBuyableDto> invoiceBuyables;
+
+    @JsonProperty("InvoiceFoods")
+    private List<InvoiceFoodsDto> invoiceFoods;
+
+    @JsonProperty("InvoiceSubscribe")
+    private List<InvoiceSubscribesDto> invoiceSubscribes;
 }

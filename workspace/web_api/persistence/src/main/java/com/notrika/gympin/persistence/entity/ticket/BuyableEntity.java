@@ -32,11 +32,7 @@ import java.util.Objects;
 public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "buyablePlaceId")
-    @JsonIgnore
-    @ToString.Exclude
-    private PlaceEntity place;
+
 
     @Column(name = "name")
     private String name;
@@ -97,7 +93,16 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @OneToMany(mappedBy = "buyable", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private List<InvoiceBuyableEntity> inInvoices;
+    private List<InvoiceBuyableEntity> invoices;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "buyablePlaceId")
+    @JsonIgnore
+    @ToString.Exclude
+    private PlaceEntity<?> place;
+
 
     @Override
     public boolean equals(Object o) {

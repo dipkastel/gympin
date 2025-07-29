@@ -74,12 +74,13 @@ public class TicketSubscribeEntity extends BuyableEntity<TicketSubscribeEntity> 
     @ToString.Exclude
     private List<UserEntity> coaches;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "buyablePlaceId")
-    @JsonIgnore
-    @ToString.Exclude
-    private PlaceGymEntity place;
 
+    public PlaceGymEntity getPlaceGym() {
+        if (getPlace() instanceof PlaceGymEntity) {
+            return (PlaceGymEntity) getPlace();
+        }
+        return null;
+    }
 
     @Override
     public boolean equals(Object o) {

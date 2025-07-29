@@ -38,6 +38,8 @@ public class AffiliateTPRegisterParam extends BaseParam<AffiliateTPRegisterParam
     @JsonProperty("UserEmail")
     private String userEmail;
 
+    @JsonProperty("LocationId")
+    private Long locationId;
 
     @JsonProperty("CorporateCode")
     private String corporateCode;

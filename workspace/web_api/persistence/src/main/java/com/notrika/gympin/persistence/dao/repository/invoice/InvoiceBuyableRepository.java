@@ -9,4 +9,6 @@ public interface InvoiceBuyableRepository extends BaseRepository<InvoiceBuyableE
 
 
     List<InvoiceBuyableEntity> findAllByInvoiceIdAndDeletedIsFalse(Long invoiceId);
+
+
 }

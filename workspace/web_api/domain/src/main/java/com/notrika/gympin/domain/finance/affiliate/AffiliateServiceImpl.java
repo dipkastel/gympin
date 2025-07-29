@@ -268,6 +268,7 @@ public class AffiliateServiceImpl extends AbstractBaseService<AffiliateParam, Af
                     .birthday(param.getUserBirthday())
                     .gender(param.getUserGender())
                     .email(param.getUserEmail())
+                    .locationId(param.getLocationId())
                     .nationalCode(param.getUserNationalCode())
                     .build()
             );

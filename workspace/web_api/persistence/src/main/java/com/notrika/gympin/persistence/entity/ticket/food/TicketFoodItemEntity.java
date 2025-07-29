@@ -29,12 +29,28 @@ public class TicketFoodItemEntity extends BuyableEntity<TicketFoodItemEntity> {
     @ToString.Exclude
     private List<PurchasedFoodEntity> purchasedFood;
 
-
     @OneToMany(mappedBy = "foodItem")
     @JsonIgnore
     @ToString.Exclude
     private List<TicketFoodMenuEntity> menu;
 
+    @Column(name = "isCount", nullable = false , columnDefinition = "boolean default true")
+    private Boolean isCount;
+
+    @Column(name = "minOrderCount", nullable = false , columnDefinition = "smallint(6) default 1")
+    private Short minOrderCount;
+
+    @Column(name = "maxOrderCount", nullable = false , columnDefinition = "smallint(6) default 1000")
+    private Short maxOrderCount;
+
+
+
+    public PlaceCateringEntity getPlaceCatering() {
+        if (getPlace() instanceof PlaceCateringEntity) {
+            return (PlaceCateringEntity) getPlace();
+        }
+        return null;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -42,10 +42,12 @@ public class TicketFoodServiceImpl extends AbstractBaseService<TicketFoodParam, 
                 .placePrice(param.getPlacePrice())
                 .discount((short) 0)
                 .enable(false)
+                .isCount(param.getIsCount())
                 .buyableType(BuyableType.FOOD)
                 .description(param.getDescription())
+                .minOrderCount(param.getMinOrderCount())
+                .maxOrderCount(param.getMaxOrderCount())
                 .build();
-
         ticketSubscribeEntity = this.add(ticketSubscribeEntity);
         return TicketFoodConvertor.toDto(ticketSubscribeEntity);
     }
@@ -63,6 +65,8 @@ public class TicketFoodServiceImpl extends AbstractBaseService<TicketFoodParam, 
         ticketSubscribeEntity.setPrice(param.getPlacePrice());
         ticketSubscribeEntity.setValuePrice(param.getValuePrice());
         ticketSubscribeEntity.setPlacePrice(param.getPlacePrice());
+        ticketSubscribeEntity.setMinOrderCount(param.getMinOrderCount());
+        ticketSubscribeEntity.setMaxOrderCount(param.getMaxOrderCount());
         ticketSubscribeEntity.setDiscount((short) 0);
         ticketSubscribeEntity.setBuyableType(BuyableType.SUBSCRIBE);
         ticketSubscribeEntity.setDescription(param.getDescription());

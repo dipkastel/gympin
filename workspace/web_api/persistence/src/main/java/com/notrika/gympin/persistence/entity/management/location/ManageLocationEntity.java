@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.settings.location.enums.LocationType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -32,20 +33,25 @@ public class ManageLocationEntity extends BaseEntityWithCreateUpdate<ManageLocat
     @Column(name = "mapPolygon")
     private String mapPolygon;
 
-    @Column(name = "centerLat", nullable = false ,columnDefinition = "double default 0.0")
+    @Column(name = "centerLat", nullable = false, columnDefinition = "double default 0.0")
     private double centerLat;
 
-    @Column(name = "centerLng", nullable = false,columnDefinition = "double default 0.0")
+    @Column(name = "centerLng", nullable = false, columnDefinition = "double default 0.0")
     private double centerLng;
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private LocationType locationType;
 
-    @OneToMany(mappedBy = "location",fetch = FetchType.LAZY)
-   @JsonIgnore
-@ToString.Exclude
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<PlaceEntity> places;
+
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<UserEntity> users;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentId")
@@ -53,7 +59,7 @@ public class ManageLocationEntity extends BaseEntityWithCreateUpdate<ManageLocat
     @Setter
     private ManageLocationEntity parent;
 
-    @OneToMany(mappedBy = "parent",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Setter
     private List<ManageLocationEntity> childes;

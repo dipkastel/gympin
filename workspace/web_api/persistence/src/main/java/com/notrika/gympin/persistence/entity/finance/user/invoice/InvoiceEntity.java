@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -16,8 +17,10 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -29,13 +32,14 @@ import java.util.Objects;
 public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
 
     @ManyToOne
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private UserEntity user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "serialId")
     private FinanceSerialEntity serial;
+
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -61,20 +65,47 @@ public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
     @Column(name = "priceToPay")
     private BigDecimal priceToPay;
 
+    @ManyToOne
+    @JoinColumn(name = "corporateId")
+    @JsonIgnore
+    @ToString.Exclude
+    private CorporateEntity corporate;
 
-    //list-buyable
-    @OneToMany(mappedBy = "invoice",fetch = FetchType.LAZY)
-   @JsonIgnore
-@ToString.Exclude
-    private List<InvoiceBuyableEntity> invoiceBuyables;
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<InvoiceBuyableEntity<?>> invoiceBuyables = new ArrayList<>();
 
-    //list-pay-details
+    public void addInvoiceBuyable(InvoiceBuyableEntity<?> buyable) {
+        invoiceBuyables.add(buyable);
+        buyable.setInvoice(this);
+    }
 
+    public void removeBuyable(InvoiceBuyableEntity<?> buyable) {
+        invoiceBuyables.remove(buyable);
+        buyable.setPlace(null);
+    }
+
+    public List<InvoiceFoodEntity> getInvoiceFoods() {
+        return getInvoiceBuyables().stream()
+                .filter(b -> !b.isDeleted())
+                .filter(b -> b instanceof InvoiceFoodEntity)
+                .map(b -> (InvoiceFoodEntity) b)
+                .collect(Collectors.toList());
+    }
+
+    public List<InvoiceSubscribeEntity> getInvoiceSubscribes() {
+        return getInvoiceBuyables().stream()
+                .filter(b -> !b.isDeleted())
+                .filter(b -> b instanceof InvoiceSubscribeEntity)
+                .map(b -> (InvoiceSubscribeEntity) b)
+                .collect(Collectors.toList());
+    }
 
     //note
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-   @JsonIgnore
-@ToString.Exclude
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<ManageNoteEntity> notes;
 
 

@@ -2,8 +2,12 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.finance.invoice.dto.InvoiceBuyableDto;
 import com.notrika.gympin.common.finance.invoice.dto.InvoiceDto;
+import com.notrika.gympin.common.finance.invoice.dto.InvoiceFoodsDto;
+import com.notrika.gympin.common.finance.invoice.dto.InvoiceSubscribesDto;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceFoodEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceSubscribeEntity;
 
 import java.util.stream.Collectors;
 
@@ -24,6 +28,9 @@ public final class InvoiceConvertor {
                 .nationalCode(entity.getNationalCode())
                 .totalPrice(entity.getTotalPrice())
                 .priceToPay(entity.getPriceToPay())
+                .corporate(CorporateConvertor.toDto(entity.getCorporate()))
+                .invoiceFoods(entity.getInvoiceFoods()==null?null:entity.getInvoiceFoods().stream().filter(i->!i.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()))
+                .invoiceSubscribes(entity.getInvoiceSubscribes()==null?null:entity.getInvoiceSubscribes().stream().filter(i->!i.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()))
                 .invoiceBuyables(entity.getInvoiceBuyables()==null?null:entity.getInvoiceBuyables().stream().filter(i->!i.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()))
                 .build();
         return dto;
@@ -38,7 +45,47 @@ public final class InvoiceConvertor {
                 .description(entity.getDescription())
                 .discount(entity.getDiscount())
                 .placePrice(entity.getPlacePrice())
+                .buyableType(entity.getBuyableType())
+                .place(PlaceConvertor.ToDto(entity.getPlace()))
+                .beneficiary(PlaceConvertor.personnelToDto(entity.getBeneficiary()))
+                .unitPrice(entity.getUnitPrice())
+                .count(entity.getCount())
+                .buyableDto(BuyableConvertor.ToDto(entity.getBuyable()))
+                .build();
+        return dto;
+    }
+    public static InvoiceFoodsDto toDto(InvoiceFoodEntity entity) {
+        if(entity==null) return null;
+        InvoiceFoodsDto dto = InvoiceFoodsDto.builder()
+                .id(entity.getId())
+                .createdDate(entity.getCreatedDate())
+                .creatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()))
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .date(entity.getDate())
+                .discount(entity.getDiscount())
+                .placePrice(entity.getPlacePrice())
+                .buyableType(entity.getBuyableType())
+                .place(PlaceConvertor.ToDto(entity.getPlace()))
+                .beneficiary(PlaceConvertor.personnelToDto(entity.getBeneficiary()))
+                .unitPrice(entity.getUnitPrice())
+                .count(entity.getCount())
+                .isCount(entity.getFoodMenus().getFoodItem().getIsCount())
+                .buyableDto(BuyableConvertor.ToDto(entity.getBuyable()))
+                .build();
+        return dto;
+    }
+    public static InvoiceSubscribesDto toDto(InvoiceSubscribeEntity entity) {
+        if(entity==null) return null;
+        InvoiceSubscribesDto dto = InvoiceSubscribesDto.builder()
+                .id(entity.getId())
+                .createdDate(entity.getCreatedDate())
+                .creatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()))
+                .name(entity.getName())
                 .gender(entity.getGender())
+                .description(entity.getDescription())
+                .discount(entity.getDiscount())
+                .placePrice(entity.getPlacePrice())
                 .buyableType(entity.getBuyableType())
                 .place(PlaceConvertor.ToDto(entity.getPlace()))
                 .beneficiary(PlaceConvertor.personnelToDto(entity.getBeneficiary()))

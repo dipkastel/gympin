@@ -2,6 +2,7 @@ package com.notrika.gympin.common.user.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
+import com.notrika.gympin.common.settings.location.dto.LocationDto;
 import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreate;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
@@ -78,6 +79,9 @@ public class UserDto extends BaseDtoWithCreate<UserDto> /*implements UserDetails
 
     @JsonProperty("UserGroup")
     private UserGroup userGroup;
+
+    @JsonProperty("Location")
+    private LocationDto location;
 
     @JsonProperty("Avatar")
     private MultimediaDto avatar;

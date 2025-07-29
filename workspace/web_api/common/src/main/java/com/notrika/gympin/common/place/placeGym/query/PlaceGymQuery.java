@@ -52,6 +52,12 @@ public class PlaceGymQuery extends BaseQuery<PlaceGymQuery> {
     @JsonProperty("LocationId")
     private Long is_locationæid;
 
+    @JsonProperty("ParentLocationId")
+    private Long is_locationæparentæid;
+
+    @JsonProperty("ParentParentLocationId")
+    private Long is_locationæparentæparentæid;
+
     @JsonProperty("Gender")
     private Gender is_buyablesægender;
 

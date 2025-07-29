@@ -67,6 +67,18 @@ public class PlacePersonnelControllerImpl implements PlacePersonnelController {
     }
 
     @Override
+    @GetMapping("GymPersonnelByUser")
+    public ResponseEntity<List<PlacePersonnelDto>> getGymPersonnelByUser(UserParam userpara) {
+        return new ResponseEntity<>(placePersonnelService.getGymPersonnelByUser(userpara), HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("CateringPersonnelByUser")
+    public ResponseEntity<List<PlacePersonnelDto>> getCateringPersonnelByUser(UserParam userpara) {
+        return new ResponseEntity<>(placePersonnelService.getCateringPersonnelByUser(userpara), HttpStatus.OK);
+    }
+
+    @Override
     @GetMapping("getPlaceBeneficiaries")
     public ResponseEntity<List<PlacePersonnelDto>> getPlaceBeneficiaries(Long placeId) {
         return new ResponseEntity<>(placePersonnelService.getPlaceBeneficiaries(placeId), HttpStatus.OK);

@@ -1,21 +1,17 @@
 package com.notrika.gympin.domain.finance.Invoice;
 
+import com.notrika.gympin.common.finance.invoice.api.InvoiceController;
 import com.notrika.gympin.common.finance.invoice.dto.InvoiceDto;
 import com.notrika.gympin.common.finance.invoice.dto.UserHowToPayDto;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
 import com.notrika.gympin.common.finance.invoice.enums.UserCheckoutTypes;
-import com.notrika.gympin.common.finance.invoice.param.CheckoutDetailParam;
-import com.notrika.gympin.common.finance.invoice.param.InvoiceBuyableParam;
-import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
-import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
+import com.notrika.gympin.common.finance.invoice.param.*;
 import com.notrika.gympin.common.finance.invoice.query.InvoiceQuery;
 import com.notrika.gympin.common.finance.invoice.service.InvoiceService;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
-import com.notrika.gympin.common.user.user.dto.UserCreditDto;
+import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.service.UserService;
-import com.notrika.gympin.common.util.GeneralUtil;
-import com.notrika.gympin.common.util.exception.purchased.GenderIsNotCompatible;
 import com.notrika.gympin.common.util.exception.purchased.IsAlreadyPayedException;
 import com.notrika.gympin.common.util.exception.purchased.PriceConflictException;
 import com.notrika.gympin.common.util.exception.purchased.PriceTotalConflictException;
@@ -24,13 +20,21 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.InvoiceConvertor;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceFoodRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.BuyableRepository;
+import com.notrika.gympin.persistence.dao.repository.ticket.food.TicketFoodMenuRepository;
+import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceFoodEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceSubscribeEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodMenuEntity;
+import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +44,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.naming.CannotProceedException;
+import java.lang.invoke.WrongMethodTypeException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,7 +67,18 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     InvoiceBuyableRepository invoiceBuyableRepository;
 
     @Autowired
+    InvoiceFoodRepository invoiceFoodRepository;
+
+    @Autowired
+    InvoiceSubscribeRepository invoiceSubscribeRepository;
+
+    @Autowired
     BuyableRepository buyableRepository;
+
+    @Autowired
+    TicketFoodMenuRepository ticketFoodMenuRepository;
+    @Autowired
+    TicketSubscribeRepository ticketSubscribeRepository;
 
     @Autowired
     FinanceSerialRepository financeSerialRepository;
@@ -81,7 +97,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
                 .processTypeEnum(ProcessTypeEnum.TRA_CHECKOUT_BASKET)
                 .build());
         helper.CancellAllDrafts(invoiceParam.getUser().getId());
-        InvoiceEntity invoice = helper.AddNewInvoice(user, serial);
+        InvoiceEntity invoice = helper.AddNewInvoice(user, serial,invoiceParam.getCorporateId());
         return InvoiceConvertor.toDto(invoice);
     }
 
@@ -125,6 +141,12 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     }
 
     @Override
+    public List<InvoiceDto> getPreOrderByCatering(PlaceCateringParam param){
+        List<InvoiceEntity> invoices =  invoiceRepository.findPreOrderByCateringId(param.getId());
+        return convertToDtos(invoices);
+    }
+
+    @Override
     public List<InvoiceEntity> getAll(Pageable pageable) {
         return invoiceRepository.findAllUndeleted(pageable);
     }
@@ -163,6 +185,17 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     }
 
     @Override
+    public InvoiceDto sendOrderToCatering(InvoiceParam param) {
+        InvoiceEntity invoice = invoiceRepository.getById(param.getId());
+        if(invoice.getStatus()==InvoiceStatus.COMPLETED)
+            throw new CannotChangeCompletedInvoicesException();
+        String note = "تغییر وضعیت از " + invoice.getStatus() + " به " + param.getStatus();
+        invoice.setStatus(InvoiceStatus.NEED_REVIEW);
+        helper.addNote(invoice, note);
+        return InvoiceConvertor.toDto(invoiceRepository.update(invoice));
+    }
+
+    @Override
     public InvoiceDto changeInvoiceBuyableCount(InvoiceBuyableParam param) {
         InvoiceBuyableEntity invoiceBuyable = invoiceBuyableRepository.getById(param.getId());
         var note = "تغییر تعداد آیتم " + invoiceBuyable.getName() + " از " + invoiceBuyable.getCount() + " به " + param.getCount();
@@ -175,20 +208,92 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
 
     @Override
     @Transactional
+    @Deprecated
     public InvoiceDto addBuyable(InvoiceBuyableParam param) {
 
-        BuyableEntity buyable = buyableRepository.getById(param.getBuyable().getId());
-        InvoiceEntity invoice = helper.getUserBasket(param.getInvoice());
+        throw new RuntimeException("این عملکرد دیگر در دسترس نیست!");
+//
+//        BuyableEntity buyable = buyableRepository.getById(param.getBuyable().getId());
+//        InvoiceEntity invoice = helper.getUserBasket(param.getInvoice());
+//
+//
+//        //if buyable exist add +1
+//        InvoiceBuyableEntity userBuyable = null;
+//        try {
+//            userBuyable = invoice.getInvoiceBuyables().stream().filter(b -> b.getBuyable().getId().equals(buyable.getId()) && !b.isDeleted()).findFirst().orElse(null);
+//            if (userBuyable != null) {
+//                userBuyable.setCount((short) (userBuyable.getCount() + param.getCount()));
+//                var resultInvoice = invoiceBuyableRepository.update(userBuyable).getInvoice();
+//                helper.updateInvoicePrice(resultInvoice, buyable);
+//                return InvoiceConvertor.toDto(resultInvoice);
+//            }
+//        } catch (Exception e) {
+//        }
+//
+//        //add buyable to invoice
+//
+//        var result = helper.addBuyableToInvoice(invoice, buyable, param.getCount());
+//
+//        //update invoice
+//        helper.updateInvoicePrice(invoice, buyable);
+//        helper.addNote(result.getInvoice(), "افزودن آیتم " + result.getName());
+//        return InvoiceConvertor.toDto(result.getInvoice());
+    }
 
+    @Override
+    public InvoiceDto addFood(InvoiceBuyableFoodParam param) {
+        TicketFoodMenuEntity foodmenu = ticketFoodMenuRepository.getById(param.getMenu().getId());
+        InvoiceEntity invoice = helper.getUserBasket(param.getInvoice(),param.getCorporate().getId());
+
+        Set<Date> dates = invoice.getInvoiceFoods().stream().filter(p->!p.isDeleted()).map(InvoiceFoodEntity::getDate).collect(Collectors.toSet());
+        if(dates.stream().findFirst().isPresent() &&dates.stream().findFirst().get().compareTo(foodmenu.getDate())!=0)
+            throw new UserHasOpenBasketException();
+        if(dates.size()>1)
+            throw new UserHasOpenBasketException();
+
+        if (invoice.getInvoiceSubscribes().size()>0)
+            throw new UserHasOpenBasketException();
+
+        //if foodmenu exist add +1
+        InvoiceFoodEntity userFoods = null;
+        try {
+            userFoods = invoice.getInvoiceFoods().stream().filter(b -> b.getFoodMenus().getId().equals(foodmenu.getId()) && !b.isDeleted()).findFirst().orElse(null);
+            if (userFoods != null) {
+                userFoods.setCount((short) (userFoods.getCount() + param.getCount()));
+                userFoods.setDate(foodmenu.getDate());
+                var resultInvoice = invoiceFoodRepository.update(userFoods).getInvoice();
+                helper.updateInvoicePrice(resultInvoice, foodmenu.getFoodItem());
+                return InvoiceConvertor.toDto(resultInvoice);
+            }
+        } catch (Exception e) {
+        }
+
+        //add foodmenu to invoice
+        var result = helper.addFoodBuyableToInvoice(invoice, foodmenu, param.getCount());
+
+        //update invoice
+        helper.updateInvoicePrice(invoice, foodmenu.getFoodItem());
+        helper.addNote(result.getInvoice(), "افزودن آیتم " + result.getName());
+        return InvoiceConvertor.toDto(result.getInvoice());
+    }
+
+    @Override
+    public InvoiceDto addSubscribe(InvoiceBuyableSubscribeParam param) {
+        TicketSubscribeEntity subscribe = ticketSubscribeRepository.getById(param.getSubscribe().getId());
+        InvoiceEntity invoice = helper.getUserBasket(param.getInvoice(),null);
+
+
+        if (invoice.getInvoiceFoods().size()>0)
+            throw new UserHasOpenBasketException();
 
         //if buyable exist add +1
-        InvoiceBuyableEntity userBuyable = null;
+        InvoiceSubscribeEntity userBuyable = null;
         try {
-            userBuyable = invoice.getInvoiceBuyables().stream().filter(b -> b.getBuyable().getId().equals(buyable.getId()) && !b.isDeleted()).findFirst().orElse(null);
+            userBuyable = invoice.getInvoiceSubscribes().stream().filter(b -> b.getBuyable().getId().equals(subscribe.getId()) && !b.isDeleted()).findFirst().orElse(null);
             if (userBuyable != null) {
                 userBuyable.setCount((short) (userBuyable.getCount() + param.getCount()));
-                var resultInvoice = invoiceBuyableRepository.update(userBuyable).getInvoice();
-                helper.updateInvoicePrice(resultInvoice, buyable);
+                var resultInvoice = invoiceSubscribeRepository.update(userBuyable).getInvoice();
+                helper.updateInvoicePrice(resultInvoice, subscribe);
                 return InvoiceConvertor.toDto(resultInvoice);
             }
         } catch (Exception e) {
@@ -196,10 +301,10 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
 
         //add buyable to invoice
 
-        var result = helper.addBuyableToInvoice(invoice, buyable, param.getCount());
+        var result = helper.addSubscribeBuyableToInvoice(invoice, subscribe, param.getCount());
 
         //update invoice
-        helper.updateInvoicePrice(invoice, buyable);
+        helper.updateInvoicePrice(invoice, subscribe);
         helper.addNote(result.getInvoice(), "افزودن آیتم " + result.getName());
         return InvoiceConvertor.toDto(result.getInvoice());
     }
@@ -230,10 +335,10 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
             throw new RequestOverCreditLimit();
         helper.checkBuyableCanPurchase(invoice.getInvoiceBuyables());
 
-        for (InvoiceBuyableEntity buyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
-            if (!GeneralUtil.isGenderCompatible(buyable.getGender(), invoice.getUser().getGender()))
-                throw new GenderIsNotCompatible();
-        }
+//        for (InvoiceBuyableEntity buyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
+//            if (!GeneralUtil.isGenderCompatible(buyable.getGender(), invoice.getUser().getGender()))
+//                throw new GenderIsNotCompatible();
+//        }
 
         if (invoice.getPriceToPay().compareTo(param.getCheckout().stream().filter(o->!o.isDeleted()).map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
             throw new PriceTotalConflictException();
@@ -263,10 +368,10 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         if(!howToPay.getCreditCovrage())
             throw new RequestOverCreditLimit();
         helper.checkBuyableCanPurchase(invoice.getInvoiceBuyables());
-        for (InvoiceBuyableEntity buyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
-            if (!GeneralUtil.isGenderCompatible(buyable.getGender(), invoice.getUser().getGender()))
-                throw new GenderIsNotCompatible();
-        }
+//        for (InvoiceBuyableEntity buyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
+//            if (!GeneralUtil.isGenderCompatible(buyable.getGender(), invoice.getUser().getGender()))
+//                throw new GenderIsNotCompatible();
+//        }
 
         if (invoice.getPriceToPay().compareTo(param.getCheckout().stream().filter(o->!o.isDeleted()).map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
             throw new PriceTotalConflictException();
@@ -296,10 +401,10 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         if(!howToPay.getCreditCovrage())
             throw new RequestOverCreditLimit();
         helper.checkBuyableCanPurchase(invoice.getInvoiceBuyables());
-        for (InvoiceBuyableEntity buyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
-            if (!GeneralUtil.isGenderCompatible(buyable.getGender(), invoice.getUser().getGender()))
-                throw new GenderIsNotCompatible();
-        }
+//        for (InvoiceBuyableEntity buyable : invoice.getInvoiceBuyables().stream().filter(b -> !b.isDeleted()).collect(Collectors.toList())) {
+//            if (!GeneralUtil.isGenderCompatible(buyable.getGender(), invoice.getUser().getGender()))
+//                throw new GenderIsNotCompatible();
+//        }
 
         if (invoice.getPriceToPay().compareTo(param.getCheckout().stream().filter(o->!o.isDeleted()).map(CheckoutDetailParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add)) != 0)
             throw new PriceTotalConflictException();
@@ -340,8 +445,11 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     @Override
     public InvoiceDto getBasketByUserId(UserParam param) {
         var invoice = invoiceRepository.findByUserIdAndStatusAndDeletedIsFalse(param.getId(),InvoiceStatus.DRAFT).stream().findFirst().orElse(null);
-        if(invoice==null)
-            return add(InvoiceParam.builder().user(param).build());
+        if(invoice==null){
+            InvoiceParam invoiceParam = InvoiceParam.builder().user(param).build();
+            invoiceParam.setCorporateId(param.getCorporateId());
+            return add(invoiceParam);
+        }
         return InvoiceConvertor.toDto(invoice);
     }
 }

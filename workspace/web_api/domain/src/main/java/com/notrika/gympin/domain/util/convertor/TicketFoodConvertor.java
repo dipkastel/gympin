@@ -19,6 +19,9 @@ public class TicketFoodConvertor {
         dto.setPlacePrice(entity.getPlacePrice());
         dto.setDiscount(entity.getDiscount());
         dto.setEnable(entity.getEnable());
+        dto.setIsCount(entity.getIsCount());
+        dto.setMinOrderCount(entity.getMinOrderCount());
+        dto.setMaxOrderCount(entity.getMaxOrderCount());
         dto.setDescription(entity.getDescription());
         return dto;
     }
@@ -31,8 +34,6 @@ public class TicketFoodConvertor {
         dto.setId(entity.getId());
         dto.setDate(entity.getDate());
         dto.setFoodItemStatus(entity.getFoodItemStatus());
-        dto.setMinOrderCount(entity.getMinOrderCount());
-        dto.setMaxOrderCount(entity.getMaxOrderCount());
         dto.setCategory(entity.getCategory());
         return dto;
     }

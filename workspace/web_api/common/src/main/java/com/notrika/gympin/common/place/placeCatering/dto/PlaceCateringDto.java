@@ -66,4 +66,10 @@ public class PlaceCateringDto extends BaseDtoWithCreateUpdate<PlaceCateringDto> 
     @JsonProperty("MinOrderCount")
     private Short minOrderCount;
 
+    @JsonProperty("FreeDeliveryPrice")
+    private BigDecimal freeDeliveryPrice;
+
+    @JsonProperty("HasDishesPrice")
+    private Boolean hasDishesPrice;
+
 }

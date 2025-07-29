@@ -33,11 +33,21 @@ public class TicketFoodParam extends BaseParam<TicketFoodParam> {
     @JsonProperty("Enable")
     private Boolean enable;
 
+    @JsonProperty("IsCount")
+    private Boolean isCount;
+
     @JsonProperty("Description")
     private String description;
 
     @JsonProperty(value = "Place", required = true)
     private PlaceCateringParam place;
+
+    @JsonProperty("MinOrderCount")
+    private Short minOrderCount;
+
+    @JsonProperty("MaxOrderCount")
+    private Short maxOrderCount;
+
 
 
 

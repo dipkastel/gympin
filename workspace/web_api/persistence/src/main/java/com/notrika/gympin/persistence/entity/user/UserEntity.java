@@ -11,6 +11,7 @@ import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncrea
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
+import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.notification.ManageNotificationEntity;
 import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionEntity;
@@ -80,6 +81,12 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @Column(name = "userGroup", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserGroup userGroup;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "locationId")
+    @JsonIgnore
+    @ToString.Exclude
+    private ManageLocationEntity location;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore

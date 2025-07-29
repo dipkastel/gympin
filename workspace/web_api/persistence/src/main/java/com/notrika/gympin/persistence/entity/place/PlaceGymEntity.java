@@ -8,6 +8,7 @@ import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.place.option.PlaceOptionOfPlaceEntity;
 import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -93,10 +95,17 @@ public class PlaceGymEntity extends PlaceEntity<PlaceGymEntity> {
     @ToString.Exclude
     private FinanceAffiliatorEntity affiliator;
 
-    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
-    private List<TicketSubscribeEntity> ticketSubscribes;
+
+    public List<TicketSubscribeEntity> getTicketSubscribes() {
+        return getBuyables().stream()
+                .filter(b -> b instanceof TicketSubscribeEntity)
+                .map(b -> (TicketSubscribeEntity) b)
+                .collect(Collectors.toList());
+    }
+
+    public void addTicketSubscribe(TicketSubscribeEntity ticket) {
+        addBuyable(ticket);
+    }
 
     @Override
     public boolean equals(Object o) {

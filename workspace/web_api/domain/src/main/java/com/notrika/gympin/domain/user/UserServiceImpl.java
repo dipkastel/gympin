@@ -27,6 +27,7 @@ import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonne
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
+import com.notrika.gympin.persistence.dao.repository.settings.ManageLocationRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
@@ -62,6 +63,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 
     @Autowired
     CorporatePersonnelRepository corporatePersonnelRepository;
+
+    @Autowired
+    ManageLocationRepository manageLocationRepository;
 
     @Autowired
     FinanceCorporatePersonnelCreditRepository financeCorporatePersonnelCreditRepository;
@@ -101,6 +105,8 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setNationalCode(userParam.getNationalCode());
         initUser.setGender(userParam.getGender());
         initUser.setEmail(userParam.getEmail());
+        if(userParam.getLocationId()!=null)
+            initUser.setLocation(manageLocationRepository.getById(userParam.getLocationId()));
         initUser.setUserRoles(Set.of(UserRolesEntity.builder().role((userParam.getRole() == null) ? RoleEnum.USER : userParam.getRole()).build()));
         initUser.setUserGroup(UserGroup.CLIENT);
         initUser.setUserStatus(UserStatus.ENABLED);
@@ -125,6 +131,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
             initUser.setUsername(userParam.getUsername());
         if (userParam.getBirthday() != null)
             initUser.setBirthday(userParam.getBirthday());
+        if (userParam.getLocationId() != null){
+            initUser.setLocation(manageLocationRepository.getById(userParam.getLocationId()));
+        }
         if (userParam.getGender() != null)
             initUser.setGender(userParam.getGender());
         if (StringUtils.hasText(userParam.getNationalCode()))

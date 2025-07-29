@@ -3,7 +3,6 @@ package com.notrika.gympin.persistence.entity.ticket.food;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.ticketFood.enums.FoodItemStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -36,12 +35,6 @@ public class TicketFoodMenuEntity extends BaseEntityWithCreateUpdate<TicketFoodM
     @Column(name = "foodItemStatus")
     @Enumerated(EnumType.STRING)
     private FoodItemStatus foodItemStatus;
-
-    @Column(name = "minOrderCount")
-    private Short minOrderCount;
-
-    @Column(name = "maxOrderCount")
-    private Short maxOrderCount;
 
     @Column(name = "category")
     private String category;

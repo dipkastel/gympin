@@ -33,12 +33,6 @@ public class TicketFoodMenuDto extends BaseDto<TicketFoodMenuDto> {
     @JsonProperty(value = "Date", required = true)
     private Date date;
 
-    @JsonProperty("MinOrderCount")
-    private Short minOrderCount;
-
-    @JsonProperty("MaxOrderCount")
-    private Short maxOrderCount;
-
     @JsonProperty("Category")
     private String category;
 

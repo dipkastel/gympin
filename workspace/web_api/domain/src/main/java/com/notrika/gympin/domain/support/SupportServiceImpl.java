@@ -17,10 +17,12 @@ import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.SupportConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.support.SupportMessageRepository;
 import com.notrika.gympin.persistence.dao.repository.support.SupportRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
@@ -50,7 +52,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     UserRepository userRepository;
 
     @Autowired
-    PlaceGymRepository placeGymRepository;
+    PlaceRepository placeRepository;
 
     @Autowired
     CorporateRepository corporateRepository;
@@ -65,7 +67,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         SupportEntity supportEntity = new SupportEntity();
         supportEntity.setTitle(supportParam.getTitle());;
         if (supportParam.getPlaceId() != null) {
-            PlaceGymEntity place = placeGymRepository.getById(supportParam.getPlaceId());
+            PlaceEntity place = placeRepository.getById(supportParam.getPlaceId());
             supportEntity.setPlace(place);
         }
 
@@ -125,7 +127,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public List<SupportDto> getByPlace(PlaceGymParam param) {
-        PlaceGymEntity place = placeGymRepository.getById(param.getId());
+        PlaceEntity place = placeRepository.getById(param.getId());
         return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndPlace(place));
     }
 
