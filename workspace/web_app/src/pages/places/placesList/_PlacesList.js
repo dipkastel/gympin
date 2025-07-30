@@ -117,7 +117,7 @@ const _PlacesList = () => {
             queryType: "FILTER",
             Status: "Active",
             SearchStr: searchString,
-            ParentParentLocationId:currentUser.Location.Id,
+            ParentParentLocationId:currentUser?.Location?.Id,
             Sports:sid,
             Option: null,
             paging: {Page: page, Size: 20, Desc: true, OrderBy: "order"}

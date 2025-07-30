@@ -76,7 +76,7 @@ const _HomePlaceList = ({title,query,ls,playSpeed}) => {
         Place_query({
             queryType: "FILTER",
             Status: "Active",
-            ParentParentLocationId:currentUser.Location.Id,
+            ParentParentLocationId:currentUser?.Location?.Id,
             ...query,
             // Name: searchString,
             // Sports:filters.find(f=>f.type==="Sports").value,
