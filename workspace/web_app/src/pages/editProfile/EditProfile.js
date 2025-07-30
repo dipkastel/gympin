@@ -40,6 +40,7 @@ const EditProfile = (props) => {
     }, []);
 
     useEffect(() => {
+        console.log(currentUser);
         var can = true;
             if (!currentUser.FullName) can=false;
             if (!currentUser.Gender) can=false;
@@ -85,8 +86,12 @@ const EditProfile = (props) => {
     }
 
     function setFieldValue(name, value) {
+        console.log(value?.label?.props?.children?.props?.children);
         setCurrentUser(lastUser => {
-            return {...lastUser, [name]: value}
+            if(name=="LocationId")
+                return {...lastUser, [name]: value.value,Location:{Id:value.value,Name:value?.label?.props?.children?.props?.children}}
+            else
+                return {...lastUser, [name]: value}
         })
     }
 
@@ -219,7 +224,7 @@ const EditProfile = (props) => {
                             error={!!getValidation("FullName",currentUser.FullName)}
                             helperText={getValidation("FullName",currentUser.FullName)}
                         />
-                        <__SelectCity />
+                        <__SelectCity onChange={e=>setFieldValue("LocationId", e)} selectedLocation={currentUser?.Location} />
                         <FormControl sx={{mt:1}} variant={"outlined"} fullWidth error={!!getValidation("Gender",currentUser.Gender)}>
                             <InputLabel
                                 color={!!getValidation("Gender",currentUser.Gender)?"error":"success"} id="demo-simple-select-label">جنسیت * </InputLabel>

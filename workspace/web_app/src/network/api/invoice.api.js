@@ -20,6 +20,11 @@ export function invoice_getBasketByUserId(invoiceId) {
 export function invoice_addBuyable(data) {
     return axios.post(Api_url.invoice.addBuyable, data);
 }
+
+export function invoice_addSubscribe(data) {
+    return axios.post(Api_url.invoice.addSubscribe, data);
+}
+
 export function invoice_changeInvoiceBuyableCount(data) {
     return axios.post(Api_url.invoice.changeInvoiceBuyableCount, data);
 }

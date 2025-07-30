@@ -30,7 +30,7 @@ const _invoiceAgreements = ({userBasket, setAcceptAgreements}) => {
     }, [checkedItem, acceptableTerm]);
 
     function getAbouts() {
-        PlaceAbout_getAllAboutByPlaces(userBasket?.InvoiceBuyables?.map(b => ({Id: b.Place.Id}))).then(result => {
+        PlaceAbout_getAllAboutByPlaces(userBasket?.InvoiceSubscribe?.map(b => ({Id: b.Place.Id}))).then(result => {
             setAcceptableTerm(result.data.Data.filter(ap => ap.Acceptable));
             setLoading(false);
         }).catch(e => {

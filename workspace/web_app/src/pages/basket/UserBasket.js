@@ -29,6 +29,10 @@ const UserBasket = () => {
         updatePage();
     }, []);
 
+    useEffect(() => {
+        console.log("CurrentBasket",CurrentBasket);
+    }, [CurrentBasket]);
+
 
     function updatePage() {
         document.title = 'سبد خرید';
@@ -55,14 +59,13 @@ const UserBasket = () => {
                 alignItems={"center"}
             >
                 <CircularProgress/>
-
             </Grid>
         </>);
-    return (CurrentBasket?.InvoiceBuyables?.length || 0 > 0) ? (
+    return (CurrentBasket?.InvoiceSubscribe?.length || 0 > 0) ? (
         <>
             <_InvoiceTitle/>
-            {CurrentBasket?.InvoiceBuyables?.map((item, number) => (
-                <_InvoiceBuyableCard key={"buyable" + item.Id} buyable={item} updatePage={updatePage}/>
+            {CurrentBasket?.InvoiceSubscribe?.map((item, number) => (
+                <_InvoiceBuyableCard key={"subs" + item.Id} buyable={item} updatePage={updatePage}/>
             ))}
             {/*<_InvoiceVocher />}*/}
             {currentCheckoutType === "SIMPLE" &&

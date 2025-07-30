@@ -5,7 +5,7 @@ import {Collapse, Grid, Typography} from "@mui/material";
 import {ExpandLessTwoTone} from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {useSelector} from "react-redux";
-import {invoice_addBuyable} from "../../../../network/api/invoice.api";
+import {invoice_addBuyable, invoice_addSubscribe} from "../../../../network/api/invoice.api";
 import {sagaActions} from "../../../../helper/redux/actions/SagaActions";
 import store from "../../../../helper/redux/store";
 import {useNavigate} from "react-router-dom";
@@ -109,9 +109,9 @@ const _placeCourses = ({place}) => {
             // }
 
 
-            invoice_addBuyable({
+            invoice_addSubscribe({
                 Invoice: {Id: userBasket?.Id||null},
-                Buyable: {Id: item.Id},
+                Subscribe: {Id: item.Id},
                 Count: 1
             }).then(result => {
                 store.dispatch(sagaActions.RequestUserInvoices(currentUser))

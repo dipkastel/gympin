@@ -6,12 +6,14 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 import Slick from "react-slick";
 import {Image} from "react-bootstrap";
 import __placeListItemSlick from "../../places/placesList/__placeListItemSlick";
+import {useSelector} from "react-redux";
 
 const _HomePlaceList = ({title,query,ls,playSpeed}) => {
 
 
     const error = useContext(ErrorContext);
     const [places,setPlaces] = useState(null);
+    const currentUser = useSelector(state => state.auth.user);
 
 
     const settings = {
@@ -74,6 +76,7 @@ const _HomePlaceList = ({title,query,ls,playSpeed}) => {
         Place_query({
             queryType: "FILTER",
             Status: "Active",
+            ParentParentLocationId:currentUser.Location.Id,
             ...query,
             // Name: searchString,
             // Sports:filters.find(f=>f.type==="Sports").value,

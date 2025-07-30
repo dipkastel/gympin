@@ -89,7 +89,6 @@ const _InvoiceHowToPayModirate = ({userBasket, setUserCanPay, invoiceCredits, Se
                                 alignItems={"center"}
                                 justifyContent={"space-between"}
                                 key={"walet" + number}>
-                                {console.log(item)}
                                 <ListItemText
                                     primary={getCreditName(item)}
                                     secondary={<>{"پرداخت : " + toPriceWithComma(item?.CreditPayableAmount)+" تومان از " + toPriceWithComma(item?.CreditAmount)+" تومان"}</>}

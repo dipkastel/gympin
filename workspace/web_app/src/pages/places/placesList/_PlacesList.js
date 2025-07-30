@@ -73,6 +73,9 @@ export const sortPlaceItems = [{
     Value: "location",
     Desc: true,
 }]
+
+
+
 const _PlacesList = () => {
     const navigate = useNavigate();
     const error = useContext(ErrorContext);
@@ -83,6 +86,7 @@ const _PlacesList = () => {
     const [endOfList, setEndOfList] = useState(false);
     const [openSearch, setOpenSearch] = useState(false)
     const [value, setValue] = useState("");
+    const currentUser = useSelector(state => state.auth.user);
 
     useEffect(() => {
         if(!openSearch)
@@ -90,6 +94,7 @@ const _PlacesList = () => {
     }, [openSearch]);
 
     useEffect(() => {
+        console.log("currentUser",currentUser);
         let debouncer = setTimeout(() => {
             SetPlaces(null);
             getData(0, value);
@@ -97,7 +102,7 @@ const _PlacesList = () => {
         return () => {
             clearTimeout(debouncer);
         }
-    }, [value]);
+    }, [value,currentUser]);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -112,6 +117,7 @@ const _PlacesList = () => {
             queryType: "FILTER",
             Status: "Active",
             SearchStr: searchString,
+            ParentParentLocationId:currentUser.Location.Id,
             Sports:sid,
             Option: null,
             paging: {Page: page, Size: 20, Desc: true, OrderBy: "order"}

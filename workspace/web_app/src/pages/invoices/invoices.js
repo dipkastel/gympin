@@ -42,7 +42,7 @@ const Invoices = () => {
 
                         <Typography sx={{padding:1}}  variant={"body1"}>{"خرید ها : "}</Typography>
 
-                        {invoice?.InvoiceBuyables?.map(buyable=>(
+                        {invoice?.InvoiceSubscribe?.map(buyable=>(
 
                             <ListItemText
                                 key={buyable.Id}

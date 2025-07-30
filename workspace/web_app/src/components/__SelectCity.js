@@ -4,7 +4,7 @@ import AsyncSelect from "react-select/async";
 import {Location_query} from "../network/api/location.api";
 import {ErrorContext} from "./GympinPagesProvider";
 
-const __SelectCity = ({hidden, onChange, value}) => {
+const __SelectCity = ({hidden, onChange, selectedLocation}) => {
 
     const error = useContext(ErrorContext);
 
@@ -47,8 +47,9 @@ const __SelectCity = ({hidden, onChange, value}) => {
                                      className={"rselect-container"}
                                      classNamePrefix="rselect"
                                      name={"Location"}
-                                     label="انتخاب شهر"
-                                     placeholder="شهر"
+                                     label="انتخاب استان"
+                                     value={{ label: selectedLocation?.Name, value: selectedLocation?.Id }}
+                                     placeholder="استان"
                                      onChange={onChange}
                                      loadOptions={promiseUserOptions}/>}
         </>
