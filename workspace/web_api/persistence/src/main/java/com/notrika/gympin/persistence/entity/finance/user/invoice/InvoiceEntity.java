@@ -38,6 +38,8 @@ public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "serialId")
+    @JsonIgnore
+    @ToString.Exclude
     private FinanceSerialEntity serial;
 
 
@@ -87,6 +89,7 @@ public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
     }
 
     public List<InvoiceFoodEntity> getInvoiceFoods() {
+        if(getInvoiceBuyables()==null) return new ArrayList<>();
         return getInvoiceBuyables().stream()
                 .filter(b -> !b.isDeleted())
                 .filter(b -> b instanceof InvoiceFoodEntity)
@@ -95,6 +98,7 @@ public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
     }
 
     public List<InvoiceSubscribeEntity> getInvoiceSubscribes() {
+        if(getInvoiceBuyables()==null) return new ArrayList<>();
         return getInvoiceBuyables().stream()
                 .filter(b -> !b.isDeleted())
                 .filter(b -> b instanceof InvoiceSubscribeEntity)
