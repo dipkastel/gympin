@@ -34,7 +34,6 @@ const Food = () => {
         <>
 
             <Grid container columns={12}>
-
                 <Grid size={{xs: 12, sm: 12, md: 12, lg: 12}}>
                     <_InSectionSlider sliders={[
                         {Image: "/assets/banners/food1.jpg"},

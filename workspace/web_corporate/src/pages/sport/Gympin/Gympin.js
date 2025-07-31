@@ -8,6 +8,7 @@ import _SportTotalCredit from "./Base/_SportTotalCredit";
 import _UserAddCredit from "./Actions/_UserAddCredit";
 import _UserAddGroupCredit from "./Actions/_UserAddGroupCredit";
 import {LinkedIn, Telegram, WhatsApp,Instagram} from "@mui/icons-material";
+import _UserAddSelectedCredit from "./Actions/_UserAddSelectedCredit";
 
 const Gympin = () => {
     return (
@@ -38,17 +39,13 @@ const Gympin = () => {
                     <_SportTicketCount/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 4, lg: 4}}>
-                    <_UserAddGroupCredit/>
+                    <_UserAddCredit/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 4, lg: 4}}>
-                    <_UserAddCredit />
+                    <_UserAddGroupCredit />
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 4, lg: 4}}>
-                    <Card sx={{m:2}}>
-                        <CardActionArea sx={{p:2,textAlign:"center"}}>
-                                    اعتبار دهی مناسبتی
-                        </CardActionArea>
-                    </Card>
+                    <_UserAddSelectedCredit />
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 6, lg: 6}}>
                     <GympinUsageReport/>

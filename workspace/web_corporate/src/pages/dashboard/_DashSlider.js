@@ -11,7 +11,7 @@ const _DashSlider = () => {
         centerMode: false,
         infinite: true,
         slidesToShow: 1,
-        dots: true,
+        dots: false,
         rtl:true,
         autoplay: true,
         speed: 1000,
@@ -40,7 +40,6 @@ const _DashSlider = () => {
     }
     return (
         <section>
-
             <div>
                 <Slider  {...settings}>
                     <SliderItem src={ww>600?"/assets/images/slide1.jpg":"/assets/images/slide11.jpg"} alt={"شادی کارمندان در دستان توست"}/>

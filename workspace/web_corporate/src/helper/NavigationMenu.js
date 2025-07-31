@@ -2,7 +2,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import {Chip} from "@mui/material";
 import {
-    AccountBalanceWalletOutlined,
+    AccountBalanceWalletOutlined, Badge,
     CalendarMonth,
     CardGiftcard,
     Commute,
@@ -45,49 +45,16 @@ export const NavigationMenu = [
         icon: <Fastfood/>,
     },
     {
-        segment: 'health',
-        title: 'سلامت',
-        icon: <HealthAndSafety/>,
-    },
-    {
-        segment: 'event',
-        title: 'رویداد',
-        icon: <CalendarMonth/>,
-    },
-    {
-        segment: 'consult',
-        title: 'مشاوره',
-        icon: <ContactEmergency/>,
-    },
-    {
-        segment: 'gift',
-        title: 'هدایا',
-        icon: <CardGiftcard/>,
-    },
-    {
         segment: 'learn',
         title: 'آموزش و توسعه',
-        icon: <LocalLibrary/>,
+        icon: <HealthAndSafety/>,
+        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
     },
     {
-        segment: 'loan',
-        title: 'اقساط و تسهیلات',
-        icon: <CreditScore/>,
-    },
-    {
-        segment: 'transport',
-        title: 'حمل و نقل',
-        icon: <Commute/>,
-    },
-    {
-        segment: 'travel',
-        title: 'سفر و گردشگری',
-        icon: <ConnectingAirports/>,
-    },
-    {
-        segment: 'cult',
-        title: 'فرهنگ و هنر',
-        icon: <Movie/>,
+        segment: 'employment',
+        title: 'جذب و استخدام',
+        icon: <Badge/>,
+        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
     },
     {
         kind: 'divider',

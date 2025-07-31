@@ -5,7 +5,7 @@ import {
     Card,
     CardActions,
     Checkbox,
-    CircularProgress,
+    CircularProgress, Container,
     Dialog,
     DialogActions,
     DialogContent,
@@ -45,8 +45,9 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDateFnsJalali} from "@mui/x-date-pickers/AdapterDateFnsJalaliV3";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import _UsersActions from "../../components/_UsersActions";
+import _UserList from "../users/_UserList";
 
-export const _UserList = () => {
+export const IncreaseSelect = () => {
 
 
     const error = useContext(ErrorContext);
@@ -309,172 +310,177 @@ export const _UserList = () => {
 
     return (
         <>
-            <Card elevation={8} sx={{mt: 2, mb: 10, width: '100%', borderRadius: 2}}>
-                <Grid container columns={12}>
-                    <Grid sx={{p: 2}} size={4}>
-                        {groups && <FormControl fullWidth>
-                            <InputLabel id="UserGroups">گروه‌ها</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={selectedGroup}
-                                label="گروه‌ها"
+
+            <title>لیست کارمندان</title>
+            <Container maxWidth>
+
+                <Card elevation={8} sx={{mt: 2, mb: 10, width: '100%', borderRadius: 2}}>
+                    <Grid container columns={12}>
+                        <Grid sx={{p: 2}} size={4}>
+                            {groups && <FormControl fullWidth>
+                                <InputLabel id="UserGroups">گروه‌ها</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={selectedGroup}
+                                    label="گروه‌ها"
+                                    onChange={(e) => {
+                                        selectGroup(e)
+                                    }}
+                                >
+                                    <MenuItem>همه کارمندان</MenuItem>
+                                    {groups.map(item => (
+                                        <MenuItem key={item.Id} value={item.Id}>{item.Name}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>}
+                            {!groups && <CircularProgress/>}
+                        </Grid>
+                        <Grid sx={{p: 2}} size={8}>
+                            <SearchTextField
+                                label={"جستجو نام و نام خانوادگی"}
+                                fullWidth={true}
                                 onChange={(e) => {
-                                    selectGroup(e)
+                                    setSearchText(e)
                                 }}
-                            >
-                                <MenuItem>همه کارمندان</MenuItem>
-                                {groups.map(item => (
-                                    <MenuItem key={item.Id} value={item.Id}>{item.Name}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>}
-                        {!groups && <CircularProgress/>}
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid sx={{p: 2}} size={8}>
-                        <SearchTextField
-                            label={"جستجو نام و نام خانوادگی"}
-                            fullWidth={true}
-                            onChange={(e) => {
-                                setSearchText(e)
-                            }}
-                        />
-                    </Grid>
-                </Grid>
 
 
-                <Table aria-label="userLists">
-                    <TableHead sx={{bgcolor: 'primary.boxBg'}}>
-                        <TableRow>
-                            <TableCell>
-                                <FormControlLabel
-                                    onChange={(e) => ChangeSelectAll()}
-                                    color="primary"
-                                    control={<Checkbox
-                                        checked={allSelected}
-                                        indeterminate={someSelected}/>}
-                                />
-                            </TableCell>
-                            <TableCell></TableCell>
-                            <TableCell><TableSortLabel onClick={() => {
-                                setSortBy({Name: "User.FullName", Desc: !sortBy.Desc})
-                            }} direction={(sortBy.Desc) ? "desc" : "asc"}>نام و نام خانوادگی</TableSortLabel></TableCell>
-                            <TableCell>مجموع اعتبار</TableCell>
-                            <TableCell>تعداد اعتبار</TableCell>
-                            <TableCell>نزدیک ترین انقضا</TableCell>
-                            <TableCell><TableSortLabel onClick={() => {
-                                setSortBy({Name: "User.Birthday", Desc: !sortBy.Desc})
-                            }} direction={(sortBy.Desc) ? "desc" : "asc"}>تاریخ تولد</TableSortLabel></TableCell>
-                            <TableCell>گروه</TableCell>
-                            <TableCell align={"right"}>عملیات</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    {!personnel && <Grid container fullwidth width={"100%"} direction={"row"}><CircularProgress/></Grid>}
-                    <TableBody>
-                        {personnel?.content.map((row) => (
-                            <TableRow
-                                key={row.name}
-                                hover
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                            >
-
-                                <TableCell padding="checkbox">
-                                    <Checkbox
-                                        onChange={(e) => changeSelected(row)}
+                    <Table aria-label="userLists">
+                        <TableHead sx={{bgcolor: 'primary.boxBg'}}>
+                            <TableRow>
+                                <TableCell>
+                                    <FormControlLabel
+                                        onChange={(e) => ChangeSelectAll()}
                                         color="primary"
-                                        checked={selectedUsers.some(p => p.Id === row.Id)}
+                                        control={<Checkbox
+                                            checked={allSelected}
+                                            indeterminate={someSelected}/>}
                                     />
                                 </TableCell>
-                                <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.User?.Avatar?.Url}
-                                                                                 sx={{width: 25, height: 25}}/></TableCell>
-                                <TableCell>{row?.User?.FullName || " - "}</TableCell>
-                                <TableCell>{row?.TotalCredit || 0}</TableCell>
-                                <TableCell>{row?.CreditList?.length || 0}</TableCell>
-                                <TableCell>{getNearestExpirationDate(row?.CreditList)}</TableCell>
-                                <TableCell>{(row?.User?.Birthday) ? new Date(row?.User?.Birthday).toLocaleDateString('fa-IR', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric'
-                                }) : " - "}</TableCell>
-                                <TableCell>{row?.PersonnelGroup?.Name || "بدون گروه"}</TableCell>
-                                <TableCell align={"right"}>
-                                    <Button
-                                        onClick={() => navigate("/personnel/detail/" + row.Id)} variant={"contained"}>جزئیات</Button>
-                                </TableCell>
+                                <TableCell></TableCell>
+                                <TableCell><TableSortLabel onClick={() => {
+                                    setSortBy({Name: "User.FullName", Desc: !sortBy.Desc})
+                                }} direction={(sortBy.Desc) ? "desc" : "asc"}>نام و نام خانوادگی</TableSortLabel></TableCell>
+                                <TableCell>مجموع اعتبار</TableCell>
+                                <TableCell>تعداد اعتبار</TableCell>
+                                <TableCell>نزدیک ترین انقضا</TableCell>
+                                <TableCell><TableSortLabel onClick={() => {
+                                    setSortBy({Name: "User.Birthday", Desc: !sortBy.Desc})
+                                }} direction={(sortBy.Desc) ? "desc" : "asc"}>تاریخ تولد</TableSortLabel></TableCell>
+                                <TableCell>گروه</TableCell>
+                                <TableCell align={"right"}>عملیات</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                <CardActions sx={{bgcolor: 'primary.boxBg', justifyContent: "end"}}>
-                    {personnel && <TablePagination
-                        sx={{alignItems: "center"}}
-                        rowsPerPageOptions={[5, 20, 30, 50]}
-                        count={personnel?.totalElements}
-                        labelRowsPerPage={"تعداد نمایش"}
-                        labelDisplayedRows={(a) => {
-                            return ("نمایش " + a?.from + " تا " + a?.to + " از " + a?.count + " کارمند")
-                        }}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={(event, newPage) => setPage(newPage)}
-                        onRowsPerPageChange={(event) => {
-                            console.log(parseInt(event.target.value, 10));
-                            setRowsPerPage(parseInt(event.target.value, 10));
-                            setPage(0);
-                        }}
-                    />}
-                </CardActions>
-            </Card>
-            {selectedUsers.length > 0 && <Card elevation={8} sx={{mt: 5, mb: 10, width: '100%', borderRadius: 2}}>
+                        </TableHead>
+                        {!personnel && <Grid container fullwidth width={"100%"} direction={"row"}><CircularProgress/></Grid>}
+                        <TableBody>
+                            {personnel?.content.map((row) => (
+                                <TableRow
+                                    key={row.name}
+                                    hover
+                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                >
 
-                <Table aria-label="userLists">
-                    <TableHead sx={{bgcolor: 'primary.boxBg'}}>
-                        <TableRow>
-                            <TableCell></TableCell>
-                            <TableCell>{selectedUsers.length + " نفر"}</TableCell>
-                            <TableCell>نام و نام خانوادگی</TableCell>
-                            <TableCell>تاریخ تولد</TableCell>
-                            <TableCell>گروه</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    {!selectedUsers && <Grid container fullwidth width={"100%"} direction={"row"}><CircularProgress/></Grid>}
-                    <TableBody>
-                        {selectedUsers?.map((row) => (
-                            <TableRow
-                                key={row.name}
-                                hover
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                            >
-
-                                <TableCell padding="checkbox">
-                                    <IconButton onClick={() => changeSelected(row)}>
-                                        <Delete
+                                    <TableCell padding="checkbox">
+                                        <Checkbox
+                                            onChange={(e) => changeSelected(row)}
                                             color="primary"
+                                            checked={selectedUsers.some(p => p.Id === row.Id)}
                                         />
-                                    </IconButton>
-                                </TableCell>
-                                <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.User?.Avatar?.Url}
-                                                                                 sx={{width: 25, height: 25}}/></TableCell>
-                                <TableCell>{row?.User?.FullName || " - "}</TableCell>
-                                <TableCell>{(row?.User?.Birthday) ? new Date(row?.User?.Birthday).toLocaleDateString('fa-IR', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric'
-                                }) : " - "}</TableCell>
-                                <TableCell>{row?.PersonnelGroup?.Name || "بدون گروه"}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                <CardActions sx={{bgcolor: 'primary.boxBg', justifyContent: "start", py: 2}}>
+                                    </TableCell>
+                                    <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.User?.Avatar?.Url}
+                                                                                     sx={{width: 25, height: 25}}/></TableCell>
+                                    <TableCell>{row?.User?.FullName || " - "}</TableCell>
+                                    <TableCell>{row?.TotalCredit || 0}</TableCell>
+                                    <TableCell>{row?.CreditList?.length || 0}</TableCell>
+                                    <TableCell>{getNearestExpirationDate(row?.CreditList)}</TableCell>
+                                    <TableCell>{(row?.User?.Birthday) ? new Date(row?.User?.Birthday).toLocaleDateString('fa-IR', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    }) : " - "}</TableCell>
+                                    <TableCell>{row?.PersonnelGroup?.Name || "بدون گروه"}</TableCell>
+                                    <TableCell align={"right"}>
+                                        <Button
+                                            onClick={() => navigate("/personnel/detail/" + row.Id)} variant={"contained"}>جزئیات</Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                    <CardActions sx={{bgcolor: 'primary.boxBg', justifyContent: "end"}}>
+                        {personnel && <TablePagination
+                            sx={{alignItems: "center"}}
+                            rowsPerPageOptions={[5, 20, 30, 50]}
+                            count={personnel?.totalElements}
+                            labelRowsPerPage={"تعداد نمایش"}
+                            labelDisplayedRows={(a) => {
+                                return ("نمایش " + a?.from + " تا " + a?.to + " از " + a?.count + " کارمند")
+                            }}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onPageChange={(event, newPage) => setPage(newPage)}
+                            onRowsPerPageChange={(event) => {
+                                console.log(parseInt(event.target.value, 10));
+                                setRowsPerPage(parseInt(event.target.value, 10));
+                                setPage(0);
+                            }}
+                        />}
+                    </CardActions>
+                </Card>
+                {selectedUsers.length > 0 && <Card elevation={8} sx={{mt: 5, mb: 10, width: '100%', borderRadius: 2}}>
 
-                    <Button variant={"contained"} sx={{px: 10}} onClick={() => setOpenModalAddCredit(true)}>اعتبار دهی</Button>
-                </CardActions>
-            </Card>}
+                    <Table aria-label="userLists">
+                        <TableHead sx={{bgcolor: 'primary.boxBg'}}>
+                            <TableRow>
+                                <TableCell></TableCell>
+                                <TableCell>{selectedUsers.length + " نفر"}</TableCell>
+                                <TableCell>نام و نام خانوادگی</TableCell>
+                                <TableCell>تاریخ تولد</TableCell>
+                                <TableCell>گروه</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        {!selectedUsers && <Grid container fullwidth width={"100%"} direction={"row"}><CircularProgress/></Grid>}
+                        <TableBody>
+                            {selectedUsers?.map((row) => (
+                                <TableRow
+                                    key={row.name}
+                                    hover
+                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                >
+
+                                    <TableCell padding="checkbox">
+                                        <IconButton onClick={() => changeSelected(row)}>
+                                            <Delete
+                                                color="primary"
+                                            />
+                                        </IconButton>
+                                    </TableCell>
+                                    <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.User?.Avatar?.Url}
+                                                                                     sx={{width: 25, height: 25}}/></TableCell>
+                                    <TableCell>{row?.User?.FullName || " - "}</TableCell>
+                                    <TableCell>{(row?.User?.Birthday) ? new Date(row?.User?.Birthday).toLocaleDateString('fa-IR', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    }) : " - "}</TableCell>
+                                    <TableCell>{row?.PersonnelGroup?.Name || "بدون گروه"}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                    <CardActions sx={{bgcolor: 'primary.boxBg', justifyContent: "start", py: 2}}>
+
+                        <Button variant={"contained"} sx={{px: 10}} onClick={() => setOpenModalAddCredit(true)}>اعتبار دهی</Button>
+                    </CardActions>
+                </Card>}
+            </Container>
             {renderModalAdd()}
             {renderModalAddCreditToSelectedUsers()}
         </>
     );
 };
 
-export default _UserList;
+export default IncreaseSelect;

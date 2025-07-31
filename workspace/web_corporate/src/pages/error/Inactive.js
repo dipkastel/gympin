@@ -14,7 +14,7 @@ const Inactive = () => {
         <div>
             این مجموعه غیر فعال می باشد
 
-            {/*TODO set a button for check can go to gome*/}
+            {/*TODO set a button for check can go to home*/}
         </div>
     );
 };

@@ -14,11 +14,14 @@ export function invoice_getHowToPay(data) {
 export function invoice_getById(invoiceId) {
     return axios.get(Api_url.invoice.getById,{params:{id:invoiceId}});
 }
-export function invoice_getBasketByUserId(invoiceId) {
-    return axios.get(Api_url.invoice.getBasketByUserId,{params:{id:invoiceId}});
+export function invoice_sendOrderToCatering(invoice) {
+    return axios.get(Api_url.invoice.sendOrderToCatering,{params:invoice});
 }
-export function invoice_addBuyable(data) {
-    return axios.post(Api_url.invoice.addBuyable, data);
+export function invoice_getBasketByUserId(param) {
+    return axios.get(Api_url.invoice.getBasketByUserId,{params:param});
+}
+export function invoice_addFood(data) {
+    return axios.post(Api_url.invoice.addFood, data);
 }
 export function invoice_changeInvoiceBuyableCount(data) {
     return axios.post(Api_url.invoice.changeInvoiceBuyableCount, data);

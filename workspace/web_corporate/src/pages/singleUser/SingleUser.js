@@ -8,7 +8,7 @@ import _UserCredits from "./partials/_UserCredits";
 import _UserBaseData from "./partials/_UserBaseData";
 import {Container, Grid2 as Grid, Typography} from "@mui/material";
 import {toPriceWithComma} from "../../helper/utils";
-import _UserAddCredit from "../sport/Gympin/Actions/_UserAddCredit";
+import _UserAddGroupCredit from "../sport/Gympin/Actions/_UserAddCredit";
 
 const SingleUser = () => {
 

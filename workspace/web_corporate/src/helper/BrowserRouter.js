@@ -22,7 +22,7 @@ import NewSupport from "../pages/support/NewSupport";
 import SettingsCorporate from "../pages/settings/SettingsCorporate";
 import GeneralReport from "../pages/report/GeneralReport";
 import Food from "../pages/food/Food";
-import FoodDetails from "../pages/food/detail/FoodDetails";
+import CateringDetail from "../pages/cateringDetail/CateringDetail";
 import Health from "../pages/health/Health";
 import Event from "../pages/Event/Event";
 import Cult from "../pages/Cult/Cult";
@@ -34,6 +34,8 @@ import Consult from "../pages/Consult/Consult";
 import Sports from "../pages/sport/Sports";
 import Gympin from "../pages/sport/Gympin/Gympin";
 import Learn from "../pages/Learn/Learn";
+import Employment from "../pages/employment/Employment";
+import IncreaseSelect from "../pages/increaseSelect/IncreaseSelect";
 
 export const BrowserRouter =[
     {
@@ -187,7 +189,7 @@ export const BrowserRouter =[
             },
             {
                 path: 'details/:cateringId',
-                Component: FoodDetails,
+                Component: CateringDetail,
             },
         ],
     },
@@ -209,6 +211,10 @@ export const BrowserRouter =[
                     {
                         path: 'increaseGroups',
                         Component: IncreaseGroupCredit,
+                    },
+                    {
+                        path: 'increaseSelect',
+                        Component: IncreaseSelect,
                     },
                 ],
             },
@@ -281,6 +287,16 @@ export const BrowserRouter =[
             {
                 path: '',
                 Component: Transport,
+            },
+        ],
+    },
+    {
+        path: 'employment',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Employment,
             },
         ],
     },
