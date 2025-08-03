@@ -147,6 +147,7 @@ public final class MultimediaServiceHelper {
         multimedia.setMediaType(multimediaStoreParam.getMediaType());
         multimedia.setTitle(multimediaStoreParam.getTitle());
         multimedia.setDescription(multimediaStoreParam.getDescription());
+        multimedia.setIsDef(multimediaStoreParam.getIsDefault());
         //save and get address
         Path targetLocation = null;
         try {

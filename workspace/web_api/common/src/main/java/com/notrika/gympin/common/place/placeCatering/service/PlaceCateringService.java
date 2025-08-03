@@ -21,5 +21,6 @@ import java.util.List;
 
 public interface PlaceCateringService extends BaseService<PlaceCateringParam, PlaceCateringDto, PlaceCateringQuery> {
 
+    List<TicketBuyableDto> getBuyableByPlace(PlaceGymParam param);
 
 }

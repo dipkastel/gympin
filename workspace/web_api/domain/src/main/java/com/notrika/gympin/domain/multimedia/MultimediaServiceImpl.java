@@ -54,6 +54,7 @@ public class MultimediaServiceImpl extends AbstractBaseService<MultimediaStorePa
 //                multimediaCategories.add(categoryService.getEntityById(categoryParam.getId()));
 //            }
 //        }
+        multimedia.setIsDef(multimediaStoreParam.getIsDefault());
         multimedia.setTitle(multimediaStoreParam.getTitle());
         multimedia.setDescription(multimediaStoreParam.getDescription());
         MultimediaEntity update = multimediaRepository.update(multimedia);

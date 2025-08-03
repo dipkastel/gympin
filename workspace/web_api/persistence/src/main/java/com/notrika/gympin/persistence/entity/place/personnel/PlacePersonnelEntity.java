@@ -3,6 +3,7 @@ package com.notrika.gympin.persistence.entity.place.personnel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceExtraItemEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
@@ -71,6 +72,12 @@ public class PlacePersonnelEntity extends BaseEntityWithCreateUpdate<PlacePerson
     @JsonIgnore
     @ToString.Exclude
     private List<InvoiceBuyableEntity> invoiceBuyable;
+
+
+    @OneToMany(mappedBy = "beneficiary", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<InvoiceExtraItemEntity> invoiceExtraItems;
 
 
     @Override

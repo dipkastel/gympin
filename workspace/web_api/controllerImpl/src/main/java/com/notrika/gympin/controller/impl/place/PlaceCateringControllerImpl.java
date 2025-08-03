@@ -62,6 +62,14 @@ public class PlaceCateringControllerImpl implements PlaceCateringController {
     }
 
     @Override
+    @GetMapping("/getBuyableByPlace")
+    public ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceGymParam placeParam) {
+        return new ResponseEntity<>(placeService.getBuyableByPlace(placeParam), HttpStatus.OK);
+    }
+
+
+
+    @Override
     public ResponseEntity<PlaceCateringDto> getById(Long id) {
         return new ResponseEntity<>(placeService.getById(id), HttpStatus.OK);
     }

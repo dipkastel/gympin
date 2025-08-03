@@ -37,4 +37,7 @@ public class MultimediaDto extends BaseDtoWithCreateUpdate<MultimediaDto> {
     @JsonProperty("Url")
     private String url;
 
+    @JsonProperty("default")
+    private Boolean isDefault;
+
 }

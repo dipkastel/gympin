@@ -1,13 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.finance.invoice.dto.InvoiceBuyableDto;
-import com.notrika.gympin.common.finance.invoice.dto.InvoiceDto;
-import com.notrika.gympin.common.finance.invoice.dto.InvoiceFoodsDto;
-import com.notrika.gympin.common.finance.invoice.dto.InvoiceSubscribesDto;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceFoodEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceSubscribeEntity;
+import com.notrika.gympin.common.finance.invoice.dto.*;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.*;
 
 import java.util.stream.Collectors;
 
@@ -32,6 +26,7 @@ public final class InvoiceConvertor {
                 .invoiceFoods(entity.getInvoiceFoods()==null?null:entity.getInvoiceFoods().stream().filter(i->!i.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()))
                 .invoiceSubscribes(entity.getInvoiceSubscribes()==null?null:entity.getInvoiceSubscribes().stream().filter(i->!i.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()))
                 .invoiceBuyables(entity.getInvoiceBuyables()==null?null:entity.getInvoiceBuyables().stream().filter(i->!i.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()))
+                .invoiceExtras(entity.getInvoiceExtraItems()==null?null:entity.getInvoiceExtraItems().stream().filter(i->!i.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()))
                 .build();
         return dto;
     }
@@ -51,6 +46,22 @@ public final class InvoiceConvertor {
                 .unitPrice(entity.getUnitPrice())
                 .count(entity.getCount())
                 .buyableDto(BuyableConvertor.ToDto(entity.getBuyable()))
+                .build();
+        return dto;
+    }
+    public static InvoiceExtraDto toDto(InvoiceExtraItemEntity entity) {
+        if(entity==null) return null;
+        InvoiceExtraDto dto = InvoiceExtraDto.builder()
+                .id(entity.getId())
+                .createdDate(entity.getCreatedDate())
+                .creatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()))
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .placePrice(entity.getPlacePrice())
+                .place(PlaceConvertor.ToDto(entity.getPlace()))
+                .beneficiary(PlaceConvertor.personnelToDto(entity.getBeneficiary()))
+                .unitPrice(entity.getUnitPrice())
+                .count(entity.getCount())
                 .build();
         return dto;
     }

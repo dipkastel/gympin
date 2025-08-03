@@ -78,6 +78,11 @@ public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
     @ToString.Exclude
     private List<InvoiceBuyableEntity<?>> invoiceBuyables = new ArrayList<>();
 
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<InvoiceExtraItemEntity> invoiceExtraItems;
+
     public void addInvoiceBuyable(InvoiceBuyableEntity<?> buyable) {
         invoiceBuyables.add(buyable);
         buyable.setInvoice(this);

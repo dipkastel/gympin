@@ -6,6 +6,7 @@ import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceExtraItemEntity;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.tags.ManageTagsEntity;
@@ -79,11 +80,15 @@ public class PlaceEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @ToString.Exclude
     private List<PlacePersonnelEntity> placeOwners;
 
-
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<InvoiceBuyableEntity> invoiceBuyables;
+
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<InvoiceExtraItemEntity> invoiceExtraItems;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     @JsonIgnore

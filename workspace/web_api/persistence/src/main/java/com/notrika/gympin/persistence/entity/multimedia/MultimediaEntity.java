@@ -58,6 +58,9 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @Column(name = "description")
     private String description;
 
+    @Column(name = "def", nullable = true , columnDefinition = "boolean default false")
+    private Boolean isDef;
+
     @OneToMany(mappedBy = "multimedia", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude

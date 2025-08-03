@@ -27,4 +27,6 @@ public class MultimediaStoreParam extends BaseParam<MultimediaStoreParam> {
 
     private String Description;
 
+    private Boolean IsDefault = false;
+
 }

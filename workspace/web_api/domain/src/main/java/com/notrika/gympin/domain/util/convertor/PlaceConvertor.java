@@ -263,16 +263,21 @@ public final class PlaceConvertor {
 
     public static PlacePersonnelDto personnelToDto(PlacePersonnelEntity entity) {
         if (entity == null) return null;
-        return PlacePersonnelDto.builder()
-                .id(entity.getId())
-                .isDeleted(entity.isDeleted())
-                .placeDto(ToDto(entity.getPlace()))
-                .userDto(UserConvertor.toDtoComplete(entity.getUser()))
-                .userRole(entity.getPlacePersonnelRoles().stream().filter(pp -> !pp.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()))
-                .isBeneficiary(entity.getIsBeneficiary())
-                .isPublic(entity.getIsPublic())
-                .commissionFee(entity.getCommissionFee())
-                .build();
+        PlacePersonnelDto dto = new PlacePersonnelDto();
+
+        dto.setId(entity.getId());
+        dto.setDeleted(entity.isDeleted());
+        dto.setPlaceDto(ToDto(entity.getPlace()));
+        if(entity.getPlace() instanceof PlaceCateringEntity)
+            dto.setPlaceCateringDto(ToCateringDto((PlaceCateringEntity) entity.getPlace()));
+        if(entity.getPlace() instanceof PlaceGymEntity)
+            dto.setPlaceGymDto(ToGymDto((PlaceGymEntity) entity.getPlace()));
+        dto.setUserDto(UserConvertor.toDtoComplete(entity.getUser()));
+        dto.setUserRole(entity.getPlacePersonnelRoles().stream().filter(pp -> !pp.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()));
+        dto.setIsBeneficiary(entity.getIsBeneficiary());
+        dto.setIsPublic(entity.getIsPublic());
+        dto.setCommissionFee(entity.getCommissionFee());
+        return dto;
     }
 
     public static PlacePersonnelAccessDto personnelAccessToDto(PlacePersonnelAccessEntity entity) {

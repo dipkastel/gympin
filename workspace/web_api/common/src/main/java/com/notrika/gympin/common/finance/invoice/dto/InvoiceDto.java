@@ -61,4 +61,7 @@ public class InvoiceDto extends BaseDtoWithCreateUpdate<InvoiceDto> {
 
     @JsonProperty("InvoiceSubscribe")
     private List<InvoiceSubscribesDto> invoiceSubscribes;
+
+    @JsonProperty("InvoiceExtras")
+    private List<InvoiceExtraDto> invoiceExtras;
 }
