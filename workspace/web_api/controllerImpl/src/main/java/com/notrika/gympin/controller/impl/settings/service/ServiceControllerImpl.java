@@ -74,4 +74,10 @@ public class ServiceControllerImpl implements ServiceController {
     public ResponseEntity<List<ServiceDto>> getUsersActive(ServiceByDateParam param) {
         return ResponseEntity.ok(serviceService.getUsersActive(param));
     }
+
+    @Override
+    @PostMapping("/getActiveUsersByCorporate")
+    public ResponseEntity<List<Long>> getActiveUsersByCorporate(ServiceByDateParam param) {
+        return ResponseEntity.ok(serviceService.getActiveUsersByCorporate(param));
+    }
 }

@@ -12,5 +12,6 @@ public interface ServiceService extends BaseService<ServiceParam, ServiceDto, Se
 
     Boolean deleteCorruptedItems();
     List<ServiceDto> getUsersActive(ServiceByDateParam param);
+    List<Long> getActiveUsersByCorporate(ServiceByDateParam param);
 
 }

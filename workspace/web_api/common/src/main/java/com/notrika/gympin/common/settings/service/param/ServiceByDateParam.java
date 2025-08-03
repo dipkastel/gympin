@@ -17,6 +17,9 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 public class ServiceByDateParam extends BaseParam<ServiceByDateParam> {
 
+    @JsonProperty("CorporateId")
+    public Long corporateId;
+
     @JsonProperty("FromDate")
     public Date fromDate;
 

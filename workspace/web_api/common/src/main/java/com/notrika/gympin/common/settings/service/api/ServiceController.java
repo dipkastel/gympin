@@ -15,4 +15,6 @@ public interface ServiceController extends BaseController<ServiceParam, ServiceD
     ResponseEntity<Boolean> deleteCorruptedItems();
 
     ResponseEntity<List<ServiceDto>> getUsersActive(@RequestBody ServiceByDateParam param);
+
+    ResponseEntity<List<Long>> getActiveUsersByCorporate(@RequestBody ServiceByDateParam param);
 }
