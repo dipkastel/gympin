@@ -12,9 +12,7 @@ import {
     Typography
 } from "@mui/material";
 import {toPriceWithComma} from "../../../helper/utils";
-import {corporatePersonnel_addCreditToAll} from "../../../network/api/corporatePersonnel.api";
 import {Form} from "react-bootstrap";
-import {invoice_sendOrderToCatering} from "../../../network/api/invoice.api";
 
 const _ProinvoiceBill = ({CurrentBasket,catering,getItemCount,confirmOrder}) => {
 
@@ -26,7 +24,7 @@ const _ProinvoiceBill = ({CurrentBasket,catering,getItemCount,confirmOrder}) => 
     }, [CurrentBasket]);
 
     function getCalculatedBill(){
-        return  CurrentBasket.InvoiceBuyables.reduce( function(a, b){
+        return  CurrentBasket?.InvoiceBuyables?.reduce( function(a, b){
             return a + (b.Count*b.Buyable.Price);
         }, 0);
     }

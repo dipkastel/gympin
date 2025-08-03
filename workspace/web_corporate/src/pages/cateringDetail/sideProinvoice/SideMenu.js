@@ -18,7 +18,7 @@ const SideMenu = ({CurrentBasket, addBuyable, removeOrder, setOrderCount, cateri
     };
 
     function getItemCount() {
-        return CurrentBasket.InvoiceFoods.reduce(function (a, b) {
+        return CurrentBasket?.InvoiceFoods?.reduce(function (a, b) {
             return (b.IsCount)? a+b.Count:a;
         }, 0);
     }
@@ -29,7 +29,7 @@ const SideMenu = ({CurrentBasket, addBuyable, removeOrder, setOrderCount, cateri
             <>
                 <Card sx={{py: 4}} onClick={toggleDrawer(true)}>
                     <Grid container justifyContent={"center"}>
-                        <Badge badgeContent={CurrentBasket.InvoiceBuyables.length} color="error">
+                        <Badge badgeContent={CurrentBasket?.InvoiceBuyables?.length} color="error">
                             <DinnerDining sx={{m: 1}} fontSize={"large"}/>
                         </Badge>
                     </Grid>
