@@ -4,6 +4,7 @@ import {corporatePersonnel_query} from "../../network/api/corporatePersonnel.api
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {CircularProgress} from "@mui/material";
 
 const _PersonnelCount = () => {
 
@@ -20,7 +21,6 @@ const _PersonnelCount = () => {
 
     function getPersonnel() {
         if(!corporate)return;
-        setPersonnel({});
         corporatePersonnel_query({
             queryType: "FILTER",
             CorporateId: corporate?.Id,
@@ -44,7 +44,7 @@ const _PersonnelCount = () => {
                 icon={<img alt="icon" src="/assets/images/icons/ic-glass-users.svg" />}
                 title="تعداد کارمندان"
                 color={"quinary"}
-                total={personnel?.totalElements}
+                total={personnel?personnel?.totalElements:<><CircularProgress size={20} /></>}
                 onClick={()=>navigate("/personnel/list")}
             />
         </div>

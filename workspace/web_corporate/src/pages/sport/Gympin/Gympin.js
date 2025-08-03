@@ -9,8 +9,13 @@ import _UserAddCredit from "./Actions/_UserAddCredit";
 import _UserAddGroupCredit from "./Actions/_UserAddGroupCredit";
 import {LinkedIn, Telegram, WhatsApp,Instagram} from "@mui/icons-material";
 import _UserAddSelectedCredit from "./Actions/_UserAddSelectedCredit";
+import {useSelector} from "react-redux";
 
 const Gympin = () => {
+
+
+    const corporate = useSelector(({corporate}) => corporate.corporate)
+
     return (
         <>
 
@@ -30,13 +35,13 @@ const Gympin = () => {
                 </Grid>
 
                 <Grid size={{xs: 12, sm: 6, md: 4, lg: 4}}>
-                    <_SportTotalCredit/>
+                    <_SportTotalCredit corporate={corporate}/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 6, md: 4, lg: 4}}>
-                    <_ActivePersonnelCount/>
+                    <_ActivePersonnelCount corporate={corporate}/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 4, lg: 4}}>
-                    <_SportTicketCount/>
+                    <_SportTicketCount corporate={corporate}/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 4, lg: 4}}>
                     <_UserAddCredit/>

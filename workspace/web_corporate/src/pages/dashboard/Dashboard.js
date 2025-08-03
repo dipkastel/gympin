@@ -61,13 +61,14 @@ const Dashboard = (props) => {
                             navigate("/sport")
                         }}/>
                 </Grid>
-                <Grid size={{xs: 12, sm: 6, md: 6, lg: 6}}>
+                <Grid size={{xs: 12, sm: 12, md: 6, lg: 6}}>
                     <_DashCatItem
                         title={"غذاو میان وعده"}
                         description={"بهترین کترینگ‌ها و میان وعده‌های سازمانی"}
                         // bgColor={"rgba(90,23,171,0.4)"}
+
                         header={<img width={"100%"} alt="icon" src="/assets/images/btn/food.jpg"/>}
-                        icon={<img alt="icon" height={80} src="/assets/images/btn/foodIcons.png"/>}
+                        icon={<img alt="icon" width={180} height={80} src="/assets/images/btn/foodIcons.png"/>}
                         onClick={() => {
                             navigate("/food")
                         }}
@@ -95,7 +96,7 @@ const Dashboard = (props) => {
                 {/*        }}*/}
                 {/*    />*/}
                 {/*</Grid>*/}
-                <Grid size={{xs: 6, sm: 12, md: 4, lg: 3}}>
+                <Grid size={{xs: 12, sm: 12, md: 6, lg: 3}}>
                     <_DashCatItem
                         title={"رویداد ها"}
                         description={"تست و نظرسنجی، بازی‌های گروهی، مناسبت ها"}
@@ -107,7 +108,7 @@ const Dashboard = (props) => {
                         }}
                     />
                 </Grid>
-                <Grid size={{xs: 6, sm: 6,  md: 4, lg: 3}}>
+                <Grid size={{xs: 6, sm: 6,  md: 6, lg: 3}}>
                     <_DashCatItem
                         title={"مشاوره"}
                         description={"بیمه، مالیات، حقوقی، تیم سازی و مدیریتی"}
@@ -162,7 +163,7 @@ const Dashboard = (props) => {
                         }}
                     />
                 </Grid>
-                <Grid size={{xs: 6, sm: 6, md: 4, lg: 4}}>
+                <Grid size={{xs: 6, sm: 6, md: 6, lg: 4}}>
                     <_DashCatItem
                         title={"سفر و گردشگری"}
                         description={"تور‌های یک روزه، مسافرت و بلیط"}
@@ -173,7 +174,7 @@ const Dashboard = (props) => {
                         }}
                     />
                 </Grid>
-                <Grid size={{xs: 6, sm: 6, md: 4, lg: 4}}>
+                <Grid size={{xs: 6, sm: 6, md: 6, lg: 4}}>
                     <_DashCatItem
                         title={"فرهنگ و هنر"}
                         description={"سینما، تئاتر، موزه، گالری، کافه"}

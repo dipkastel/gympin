@@ -84,6 +84,9 @@ export let Api_url = {
     sport:{
         GET_ALL:"v1/sport/getAll"
     },
+    service:{
+        GET_ACTIVE_USERS_BY_CORPORATE:"v1/service/getActiveUsersByCorporate"
+    },
     state:{
         GET_ALL:"v1/state/getAll"
     },

@@ -4,14 +4,16 @@ import {toPriceWithComma} from "../../../../helper/utils";
 import DetailsSimpleData from "../../../../components/DetailsSimpleData";
 
 
-const _SportTotalCredit = () => {
+const _SportTotalCredit = ({corporate}) => {
+
+
 
     return (
         <div>
             <DetailsSimpleData
                 title="مجموع اعتبارهای ورزشی"
                 color={"tertiary"}
-                total={toPriceWithComma(0) + " تومان"}
+                total={toPriceWithComma(corporate?.FinanceCorporate?.TotalCredits) + " تومان"}
             />
         </div>
     );
