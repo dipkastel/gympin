@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class gympinScheduleService {
 
@@ -19,6 +21,9 @@ public class gympinScheduleService {
 
     @Autowired
     SchedulePlace schedulePlace;
+
+    @Autowired
+    ScheduleUser scheduleUser;
 
     @Autowired
     schedulePeymentCheck schedulePeymentCheck;
@@ -41,6 +46,17 @@ public class gympinScheduleService {
 //        scheduleReports.updateMinTicketSubscribePrice();
     }
 
+    @Scheduled(cron = "0 3 22 * * ?")
+    public void UpdateWarningBaskets(){
+        scheduleUser.sendAlarmToUsers();
+    }
+
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void UpdateBaskets(){
+        scheduleUser.CloseOpenInvoices();
+    }
+
 
     @Scheduled(cron = "0 0 2 * * ?")
     public void UpdatePlaceSearchesStr(){
@@ -49,6 +65,11 @@ public class gympinScheduleService {
 //        scheduleReports.updateMaxSellByTicketSubscribe();
 //        scheduleReports.updateMaxTicketSubscribePrice();
 //        scheduleReports.updateMinTicketSubscribePrice();
+    }
+
+    @Scheduled(cron = "0 0 3 * * ?")
+    public void UpdateExecution(){
+
     }
 
     @Scheduled(cron = "0 0 10 ? * SUN,MON,TUE,WED,THU,SAT")

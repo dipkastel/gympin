@@ -196,6 +196,17 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     }
 
     @Override
+    public InvoiceDto sendOrderToCorporate(InvoiceParam param) {
+        InvoiceEntity invoice = invoiceRepository.getById(param.getId());
+        if(invoice.getStatus()!=InvoiceStatus.NEED_REVIEW)
+            throw new CannotChangeCompletedInvoicesException();
+        String note = "تغییر وضعیت از " + invoice.getStatus() + " به " + param.getStatus();
+        invoice.setStatus(InvoiceStatus.NEED_TO_PAY);
+        helper.addNote(invoice, note);
+        return InvoiceConvertor.toDto(invoiceRepository.update(invoice));
+    }
+
+    @Override
     public InvoiceDto changeInvoiceBuyableCount(InvoiceBuyableParam param) {
         InvoiceBuyableEntity invoiceBuyable = invoiceBuyableRepository.getById(param.getId());
         var note = "تغییر تعداد آیتم " + invoiceBuyable.getName() + " از " + invoiceBuyable.getCount() + " به " + param.getCount();

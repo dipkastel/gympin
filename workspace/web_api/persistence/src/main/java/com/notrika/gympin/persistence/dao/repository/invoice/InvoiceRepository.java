@@ -14,6 +14,8 @@ public interface InvoiceRepository extends BaseRepository<InvoiceEntity, Long> {
 
     List<InvoiceEntity> findByUserIdAndStatusAndDeletedIsFalse(Long userId, InvoiceStatus status);
 
+    List<InvoiceEntity> findByStatusAndDeletedIsFalse(InvoiceStatus status);
+
     @Query("SELECT ib.invoice FROM InvoiceBuyableEntity ib where ib.place.id =:#{#cateringId} and ib.invoice.status like 'NEED_REVIEW' and ib.invoice.deleted = false and  ib.deleted = false  GROUP by ib.invoice.id")
     List<InvoiceEntity> findPreOrderByCateringId(Long cateringId);
 }

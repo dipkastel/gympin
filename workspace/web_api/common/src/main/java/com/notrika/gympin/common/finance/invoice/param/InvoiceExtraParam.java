@@ -45,6 +45,4 @@ public class InvoiceExtraParam extends BaseParam<InvoiceExtraParam> {
     @JsonProperty("Count")
     private Short count;
 
-    @JsonProperty("PlacePersonelId")
-    private Long placePersonelId;
 }

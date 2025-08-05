@@ -40,10 +40,7 @@ import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserReposito
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporatePersonnelCreditTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceUserTransactionRepository;
-import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
-import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceFoodRepository;
-import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
-import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceSubscribeRepository;
+import com.notrika.gympin.persistence.dao.repository.invoice.*;
 import com.notrika.gympin.persistence.dao.repository.purchased.course.PurchasedCourseRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
@@ -379,11 +376,15 @@ public class InvoiceServiceHelper {
     @Transactional
     public void updateInvoicePrice(InvoiceEntity invoice, BuyableEntity buyable) {
         var buyables = invoiceBuyableRepository.findAllByInvoiceIdAndDeletedIsFalse(invoice.getId());
+        var extras = invoice.getInvoiceExtraItems();
         BigDecimal priceToPay;
         if (buyables != null) {
             priceToPay = buyables.stream().filter(b -> !b.isDeleted())
                     .map(p -> p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
+            priceToPay = priceToPay.add(extras.stream().filter(b -> !b.isDeleted())
+                    .map(p -> p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add));
         } else {
             priceToPay = buyable.getPrice();
         }
@@ -395,10 +396,14 @@ public class InvoiceServiceHelper {
     @Transactional
     public void updateInvoicePrice(InvoiceEntity invoice) {
         var buyables = invoice.getInvoiceBuyables().stream().filter(o -> !o.isDeleted()).collect(Collectors.toList());
+        var extraItems = invoice.getInvoiceExtraItems().stream().filter(o -> !o.isDeleted()).collect(Collectors.toList());
         BigDecimal priceToPay = BigDecimal.ZERO;
         priceToPay = buyables.stream().filter(b -> !b.isDeleted())
                 .map(p -> p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+        priceToPay = priceToPay.add(extraItems.stream().filter(b -> !b.isDeleted())
+                .map(p -> p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
         invoice.setPriceToPay(priceToPay);
         invoice.setTotalPrice(priceToPay);
         invoiceRepository.update(invoice);

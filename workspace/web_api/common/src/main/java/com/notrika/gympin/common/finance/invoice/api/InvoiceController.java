@@ -17,6 +17,7 @@ public interface InvoiceController extends BaseController<InvoiceParam, InvoiceD
 
     ResponseEntity<InvoiceDto> changeStatus(InvoiceParam param) throws Exception;
     ResponseEntity<InvoiceDto> sendOrderToCatering(InvoiceParam param) throws Exception;
+    ResponseEntity<InvoiceDto> sendOrderToCorporate(InvoiceParam param) throws Exception;
     ResponseEntity<InvoiceDto> getBasketByUserId(UserParam param) throws Exception;
     ResponseEntity<InvoiceDto> changeInvoiceBuyableCount(InvoiceBuyableParam param) throws Exception;
     ResponseEntity<InvoiceDto> deleteBuyable(InvoiceBuyableParam param) throws Exception;

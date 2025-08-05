@@ -252,6 +252,21 @@ public class SmsInServiceImpl implements SmsInService {
     }
 
     @Override
+    public boolean sendCloseInvoiceWarning(SmsDto smsDto) throws Exception {
+        log.info("Going to sendCloseInvoiceWarning with params: {} ...\n", smsDto);
+
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        insertSendRequest(smsDto,"FARAZ_SEND_CLOSE_INVOICE_WARNING",SmsTypes.USER_BUY_SUBSCRIBE);
+        return true;
+    }
+
+    @Override
     public boolean sendSupportAnswered(SmsDto smsDto) throws Exception {
         log.info("Going to sendSupportAnswered with params: {} ...\n", smsDto);
 

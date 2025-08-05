@@ -8,11 +8,12 @@ import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.InvoiceConvertor;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
-import com.notrika.gympin.persistence.dao.repository.invoice.*;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceExtraItemRepository;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlacePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.BuyableRepository;
-import com.notrika.gympin.persistence.dao.repository.ticket.food.TicketFoodMenuRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceExtraItemEntity;
@@ -32,11 +33,7 @@ import java.util.stream.Collectors;
 public class InvoiceExtraServiceImpl extends AbstractBaseService<InvoiceExtraParam, InvoiceExtraDto, InvoiceExtraQuery, InvoiceExtraItemEntity> implements InvoiceExtraService {
 
     @Autowired
-    InvoiceExtraItemRepository invoiceExtraItemRepository;
-
-
-    @Autowired
-    FinanceSerialRepository serialRepository;
+    UserService userService;
 
     @Autowired
     PlaceRepository placeRepository;
@@ -45,40 +42,49 @@ public class InvoiceExtraServiceImpl extends AbstractBaseService<InvoiceExtraPar
     InvoiceRepository invoiceRepository;
 
     @Autowired
-    InvoiceSubscribeRepository invoiceSubscribeRepository;
-
-    @Autowired
     BuyableRepository buyableRepository;
 
     @Autowired
-    PlacePersonnelRepository placePersonnelRepository;
+    FinanceSerialRepository serialRepository;
+
     @Autowired
-    TicketSubscribeRepository ticketSubscribeRepository;
+    InvoiceServiceHelper invoiceServiceHelper;
 
     @Autowired
     FinanceSerialRepository financeSerialRepository;
 
     @Autowired
-    UserService userService;
+    PlacePersonnelRepository placePersonnelRepository;
+
+    @Autowired
+    TicketSubscribeRepository ticketSubscribeRepository;
+
+    @Autowired
+    InvoiceExtraItemRepository invoiceExtraItemRepository;
+
+    @Autowired
+    InvoiceSubscribeRepository invoiceSubscribeRepository;
 
     @Override
     public InvoiceExtraDto add(@NonNull InvoiceExtraParam param) {
 
-        PlaceEntity place =  placeRepository.getById(param.getPlace().getId());
-        InvoiceEntity invoice =  invoiceRepository.getById(param.getInvoice().getId());
-        PlacePersonnelEntity placepersonel =  placePersonnelRepository.getById(param.getPlacePersonelId());
+        PlaceEntity place = placeRepository.getById(param.getPlace().getId());
+        InvoiceEntity invoice = invoiceRepository.getById(param.getInvoice().getId());
 
 
-        InvoiceExtraItemEntity invoiceExtra = InvoiceExtraItemEntity.builder()
+        InvoiceExtraItemEntity invoiceExtra = add(InvoiceExtraItemEntity.builder()
                 .name(param.getName())
-                .beneficiary(placepersonel)
+                .beneficiary((PlacePersonnelEntity) place.getPlaceOwners().stream().filter(pp -> !((PlacePersonnelEntity) pp).isDeleted()).findFirst().get())
                 .count(param.getCount())
                 .description(param.getDescription())
                 .placePrice(param.getPlacePrice())
                 .unitPrice(param.getUnitPrice())
                 .place(place)
                 .invoice(invoice)
-                .build();
+                .build());
+
+        invoiceServiceHelper.updateInvoicePrice(invoiceExtra.getInvoice());
+
         return InvoiceConvertor.toDto(invoiceExtra);
     }
 
@@ -91,6 +97,10 @@ public class InvoiceExtraServiceImpl extends AbstractBaseService<InvoiceExtraPar
         invoiceExtra.setName(param.getName());
         invoiceExtra.setPlacePrice(param.getPlacePrice());
         invoiceExtra.setUnitPrice(param.getUnitPrice());
+
+        invoiceExtraItemRepository.update(invoiceExtra);
+        invoiceServiceHelper.updateInvoicePrice(invoiceExtra.getInvoice());
+
         return InvoiceConvertor.toDto(invoiceExtra);
     }
 

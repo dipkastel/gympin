@@ -72,6 +72,12 @@ public class InvoiceControllerImpl implements InvoiceController {
     }
 
     @Override
+    @GetMapping("sendOrderToCorporate")
+    public ResponseEntity<InvoiceDto> sendOrderToCorporate(InvoiceParam param) throws Exception {
+        return ResponseEntity.ok(invoiceService.sendOrderToCorporate(param));
+    }
+
+    @Override
     @GetMapping("getPreOrderByCatering")
     public ResponseEntity<List<InvoiceDto>> getPreOrderByCatering(PlaceCateringParam param) throws Exception {
         return ResponseEntity.ok(invoiceService.getPreOrderByCatering(param));

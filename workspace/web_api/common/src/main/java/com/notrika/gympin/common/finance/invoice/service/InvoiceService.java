@@ -14,6 +14,7 @@ public interface InvoiceService extends BaseService<InvoiceParam, InvoiceDto, In
 
     InvoiceDto changeStatus(InvoiceParam param);
     InvoiceDto sendOrderToCatering(InvoiceParam param);
+    InvoiceDto sendOrderToCorporate(InvoiceParam param);
     InvoiceDto changeInvoiceBuyableCount(InvoiceBuyableParam param);
     InvoiceDto addBuyable(InvoiceBuyableParam param);
     InvoiceDto addFood(InvoiceBuyableFoodParam param);
