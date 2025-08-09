@@ -13,6 +13,7 @@ import BlogDetail from "../pages/blog-detail/BlogDetail";
 import _Loading from "../pages/partials/_Loading";
 import {Collapse} from "@mui/material";
 import PageNotFound from "../pages/other/PageNotFound";
+import Redirect from "../pages/Redirect/Redirect";
 
 export const MainRoutes = () => {
 
@@ -43,6 +44,7 @@ export const MainRoutes = () => {
                 <Route path="/term-and-conditions" element={<Terms/>}/>
                 <Route path="/contact" element={<Contact/>}/>
                 <Route path="/about" element={<About/>}/>
+                <Route path="/r/:TO/:US" element={<Redirect/>}/>
                 <Route path="/*" element={<PageNotFound/>}/>
             </Routes>
             <Footer/>
