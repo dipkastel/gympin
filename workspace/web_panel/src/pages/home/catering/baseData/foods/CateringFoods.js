@@ -64,7 +64,10 @@ const CateringFoods = ({catering}) => {
                 Name: e.target.Name.value,
                 PlacePrice: toPriceWithoutComma(e.target.PlacePrice.value),
                 ValuePrice: addHasNext?toPriceWithoutComma(e.target.PlacePrice.value):toPriceWithoutComma(e.target.ValuePrice.value),
+                maxOrderCount:1000,
+                minOrderCount:1,
                 Enable:true,
+                IsCount:true,
                 Description:""
             })
                 .then(data => {
@@ -197,7 +200,7 @@ const CateringFoods = ({catering}) => {
                 <Modal show={!!itemToEdit} onHide={() => setItemToEdit(null)}>
                     <form onSubmit={(e) => editItem(e)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن غذا "}</Modal.Title>
+                            <Modal.Title>{"ویرایش غذا "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <TextField

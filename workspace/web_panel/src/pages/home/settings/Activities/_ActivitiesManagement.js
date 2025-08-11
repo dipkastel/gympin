@@ -25,11 +25,11 @@ const _ActivitiesManagement = () => {
                     aria-label="full width tabs example"
                 >
                     <Tab label="عمومی" value={"GENERAL"}/>
-                    <Tab label="جزئیات" value={"FINANCE"}/>
+                    <Tab label="جزئیات" value={"DETAILS"}/>
                 </Tabs>
             </Paper>
             {selectedTab == "GENERAL" && <__SettingActivitiesGeneral />}
-            {selectedTab == "FINANCE" && <__SettingActivitiesDetails />}
+            {selectedTab == "DETAILS" && <__SettingActivitiesDetails />}
         </>
     );
 };

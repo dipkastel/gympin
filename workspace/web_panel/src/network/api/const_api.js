@@ -237,12 +237,13 @@ export let PlaceApi = {
     deleteMultimedia: "v1/place/deleteMultimedia"
 };
 export let CateringApi = {
-    getAll: "v1/catering/getAll",
-    getById: "v1/catering/getById",
     add: "v1/catering/add",
+    query: "v1/catering/query",
     delete: "v1/catering/delete",
     update: "v1/catering/update",
-    query: "v1/catering/query",
+    getAll: "v1/catering/getAll",
+    getById: "v1/catering/getById",
+    getBuyableByPlace: "v1/catering/getBuyableByPlace",
 };
 export let TicketFoodApi = {
     getAll: "v1/TicketFood/getAll",

@@ -52,7 +52,12 @@ const FoodMenuOfTheDay = ({catering, date}) => {
             }
         }).then(result => {
             setHasFood(result?.data?.Data?.content?.length>0);
-            setFoodMenu(Object.groupBy(result.data.Data.content, ({Category}) => Category))
+
+            const grouped = Object.groupBy(result.data.Data.content, ({ Category }) => Category);
+            const sortedEntries = Object.entries(grouped).sort((a, b) =>
+                a[0].localeCompare(b[0], 'fa')
+            );
+            setFoodMenu(Object.fromEntries(sortedEntries));
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

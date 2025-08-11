@@ -8,6 +8,8 @@ import {Paper, Tab, Tabs} from "@mui/material";
 import CateringManagementCateringTab from "./CateringManagementTabs/CateringManagementCateringTab";
 import CateringManagementDataTab from "./CateringManagementTabs/CateringManagementDataTab";
 import CateringManagementManuTab from "./CateringManagementTabs/CateringManagementManuTab";
+import PlaceManagementBeneficiariesTab from "../../place/baseData/placeManagementTabs/PlaceManagementBeneficiariesTab";
+import CateringManagementBeneficiariesTab from "./CateringManagementTabs/CateringManagementBeneficiariesTab";
 
 
 
@@ -68,12 +70,14 @@ const CateringDataManagement = () => {
                             <Tab label="اطلاعات" value={"DATA"}/>
                             <Tab label="منو" value={"TICKET"}/>
                             <Tab label="فروش ها" value={"SELLS"}/>
+                            <Tab label="ذینفعان" value={"BENEFICIARIES"}/>
                             <Tab label="تنظیمات" value={"SETTING"}/>
                         </Tabs>
                     </Paper>
                     {selectedTab === "CATERING"&&<CateringManagementCateringTab catering={catering} update={update}/>}
                     {selectedTab === "DATA"&&<CateringManagementDataTab catering={catering} update={update}/>}
                     {selectedTab === "TICKET"&&<CateringManagementManuTab catering={catering} update={update}/>}
+                    {selectedTab === "BENEFICIARIES"&&<CateringManagementBeneficiariesTab catering={catering} update={update}/>}
             {/*        {selectedTab === "PLACE"&&<PlaceManagementPlaceTab place={place} update={update}/>}*/}
             {/*        {selectedTab === "DATA"&&<PlaceManagementDataTab place={place} update={update}/>}*/}
             {/*        {selectedTab === "TICKET"&&<PlaceManagementTicketsTab place={place}/>}*/}

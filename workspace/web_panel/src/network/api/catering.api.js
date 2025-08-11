@@ -25,3 +25,7 @@ export function Catering_update(place) {
 export function Catering_query(data) {
     return axios.post(CateringApi.query, data);
 }
+
+export function Catering_getBuyableByPlace(data) {
+    return axios.get(CateringApi.getBuyableByPlace, {params:data});
+}

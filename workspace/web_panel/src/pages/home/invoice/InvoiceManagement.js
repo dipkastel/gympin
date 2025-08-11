@@ -59,6 +59,8 @@ const InvoiceManagement = () => {
                 return "error";
             case "NEED_REVIEW":
                 return "warning";
+            case "NEED_TO_PAY":
+                return "warning";
             case "COMPLETED":
                 return "success";
             case "REFUNDED":

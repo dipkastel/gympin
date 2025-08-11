@@ -1,10 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Grid, Paper, Tab, Tabs} from "@mui/material";
-import {sport_query} from "../../../network/api/sport.api";
-import {user_query} from "../../../network/api/user.api";
-import {PlaceGym_query} from "../../../network/api/place.api";
-import {Location_query} from "../../../network/api/location.api";
-import {ErrorContext} from "../../../components/GympinPagesProvider";
 import DashTasksTab from "./Tabs/DashTasksTab";
 import DashConfigsTab from "./Tabs/DashConfigsTab";
 import DashReportsTab from "./Tabs/DashReportsTab";

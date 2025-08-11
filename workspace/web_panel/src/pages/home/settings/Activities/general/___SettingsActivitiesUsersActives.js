@@ -23,8 +23,6 @@ const ___SettingsActivitiesUsersActives = () => {
 
 
     function getActivities() {
-
-
         service_GetActiveUsers({
             ToDate: new Date(),
             FromDate: new Date().setDate(new Date().getDate()-1)
