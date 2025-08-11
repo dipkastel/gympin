@@ -72,6 +72,14 @@ export function getStringOfTime(time) {
     else
         return "0"+time;
 }
+export function toTimerFromat(day,hour,minutes,seconds) {
+    var result = "";
+        result += getStringOfTime(day);
+        result += ":"+getStringOfTime(hour);
+        result +=  ":"+getStringOfTime(minutes);
+        result +=  ":"+getStringOfTime(seconds);
+    return result;
+}
 export function removePersianNumbers(number) {
     var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
     var arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];

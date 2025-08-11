@@ -28,7 +28,6 @@ function Login(props) {
     const [disableLoginBtn, setDisableLoginBtn] = useState(true);
 
 
-    const [userInviteCode, SetUserInviteCode] = useState();
 
 
     useEffect(() => {
@@ -36,6 +35,12 @@ function Login(props) {
             loginByNumber(null);
         }
     }, [code]);
+
+    useEffect(() => {
+        if (inviteCode) {
+            setRegistered(false);
+        }
+    }, [inviteCode]);
 
 
     function sendMessage(e) {

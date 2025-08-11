@@ -23,6 +23,7 @@ const Code = () => {
 
     function getCodeDetails() {
         giftCredit_checkStatus({code: code}).then(result => {
+            console.log(result);
             SetLoading(false);
             SetCodeDetails(result?.data?.Data);
         }).catch(e => {
@@ -93,8 +94,9 @@ const Code = () => {
                             </Grid>}
 
                             <Grid sx={{width: "100%", p: 2}}>
-                                <Button fullWidth variant={"contained"} sx={{p: 1}}
-                                        onClick={(e) => navigate("/login")} >{"ورود"}</Button>
+                                {!codeDetails?.CanRegister&&<Button fullWidth variant={"contained"} sx={{p: 1}} onClick={(e) => navigate("/login"+(codeDetails?.CanRegister?("/"+codeDetails.RegisterCode):""))} >ورود</Button>}
+                                {codeDetails?.CanRegister&&<Button fullWidth variant={"contained"} sx={{p: 1}}  onClick={(e) => navigate("/login/"+codeDetails.RegisterCode)} >ثبت نام</Button>}
+
                             </Grid>
 
                             <Grid sx={{width: "100%", textAlign: "center"}}>

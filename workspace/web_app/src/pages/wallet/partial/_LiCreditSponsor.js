@@ -18,8 +18,11 @@ const _LiCreditSponsor = ({credit}) => {
 
     function getCorportateType(credit) {
         return (<Typography variant={"subtitle2"} className={"animate__animated animate__repeat-3 animate__flash"}>
-            {"نوع اعتبار : "+CorporateContractType[credit?.Corporate?.ContractType]}
+            {"نوع اعتبار : با تاریخ انقضا"}
         </Typography>)
+        // return (<Typography variant={"subtitle2"} className={"animate__animated animate__repeat-3 animate__flash"}>
+        //     {"نوع اعتبار : "+CorporateContractType[credit?.Corporate?.ContractType]}
+        // </Typography>)
     }
 
     function getExpireDesc(credit) {
