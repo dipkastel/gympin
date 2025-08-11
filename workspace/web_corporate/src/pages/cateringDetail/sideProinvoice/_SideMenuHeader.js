@@ -1,29 +1,31 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Grid from "@mui/material/Grid2";
 import {Button, Card, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {corporate_deleteCorporateGroup} from "../../../network/api/corporate.api";
 import {Form} from "react-bootstrap";
+import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {invoice_cancel} from "../../../network/api/invoice.api";
 
-const _SideMenuHeader = ({CurrentBasket, catering}) => {
+const _SideMenuHeader = ({CurrentBasket, catering,update,refresh}) => {
 
+    const error = useContext(ErrorContext);
     const [openModalCancel, setOpenModalCancel] = useState(false);
 
 
     function renderModalCancel() {
         function invoiceChangeStatus(e) {
             e.preventDefault()
-            // Invoice_cancel({Id: CurrentBasket.Id}).then(result => {
-            //
-            // }).catch(e => {
-            //     try {
-            //         error.showError({message: e.response.data.Message,});
-            //     } catch (f) {
-            //         error.showError({message: "خطا نا مشخص",});
-            //     }
-            // })
-            // setItemToDelete(null)
-            // setGroups([]);
+            setOpenModalCancel(false);
+            invoice_cancel({Id:CurrentBasket.Id}).then(result => {
+                refresh();
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            })
         }
 
         return (

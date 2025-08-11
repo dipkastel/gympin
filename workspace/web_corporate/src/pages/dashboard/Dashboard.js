@@ -13,6 +13,7 @@ import _DashTotalCredit from "./_DashTotalCredit";
 import _DashSlider from "./_DashSlider";
 import _DashCatItem from "../../components/_DashCatItem";
 import {Card, Typography} from "@mui/material";
+import _DashAlerts from "./_DashAlerts";
 
 const Dashboard = (props) => {
 
@@ -28,6 +29,9 @@ const Dashboard = (props) => {
         <>
             <title>پیشخوان</title>
             <Grid container columns={12}>
+                <Grid size={{xs: 12, sm: 12, md: 12, lg: 12}}>
+                    <_DashAlerts />
+                </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 12, lg: 12}}>
                     <_DashSlider/>
                 </Grid>

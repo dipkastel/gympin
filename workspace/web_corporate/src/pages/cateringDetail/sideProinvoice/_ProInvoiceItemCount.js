@@ -1,9 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Button, ButtonGroup, LinearProgress, TextField} from "@mui/material";
 import {Add, Check, DeleteOutline, Remove} from "@mui/icons-material";
-import {ProgressBar} from "react-bootstrap";
 
-const _ProInvoiceItemCount = ({item,addBuyable,removeOrder,setOrderCount}) => {
+const _ProInvoiceItemCount = ({item,removeOrder,setOrderCount}) => {
     const [itemInValue,setItemInValue] = useState(item.Count);
     const [loading,setLoading] = useState(true);
 
@@ -14,7 +13,7 @@ const _ProInvoiceItemCount = ({item,addBuyable,removeOrder,setOrderCount}) => {
 
     function inAddOrder(item){
         setLoading(true);
-        addBuyable(item.Buyable.Id);
+        setOrderCount(item,item.Count+1);
     }
     function inRemoveOrder(item){
         setLoading(true);

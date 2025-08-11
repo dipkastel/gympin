@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Card, CardContent, Typography} from "@mui/material";
+import {Badge, Button, Card, CardContent} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import SideMenu from "./sideProinvoice/SideMenu";
 import _CateringSelectDate from "./partials/_CateringSelectDate";
@@ -10,7 +10,9 @@ import {
     invoice_addFood,
     invoice_changeInvoiceBuyableCount,
     invoice_deleteBuyable,
-    invoice_getBasketByUserId, invoice_sendOrderToCatering
+    invoice_getBasketByUserId,
+    invoice_query,
+    invoice_sendOrderToCatering
 } from "../../network/api/invoice.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useNavigate} from "react-router";
@@ -26,6 +28,8 @@ const CateringDetail = () => {
     const currentUser = useSelector(state => state.auth.user);
     const [CurrentBasket, SetCurrentBasket] = useState(null);
     const [catering, SetCatering] = useState(null);
+    const [invoiceToPayCount, SetInvoiceToPayCount] = useState(0);
+    const [invoiceProcessingCount, SetInvoiceProcessingCount] = useState(0);
     const corporate = useSelector(({corporate}) => corporate.corporate)
 
 
@@ -34,7 +38,62 @@ const CateringDetail = () => {
         getCatering()
     }, []);
 
-    function getCatering(){
+    useEffect(() => {
+        getInvoiceToPay()
+        getInvoiceProcessing()
+    }, [catering]);
+
+    function getInvoiceToPay() {
+        if (!catering) return;
+        invoice_query({
+            queryType: "FILTER",
+            PlaceId: catering.Id,
+            Corporate: corporate.Id,
+            Status: "NEED_TO_PAY",
+            paging: {
+                Page: 0,
+                Size: 1,
+                Desc: true
+            }
+        })
+            .then((result) => {
+                SetInvoiceToPayCount(result.data.Data.totalElements);
+            })
+            .catch((e) => {
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص"});
+                }
+            });
+    }
+
+    function getInvoiceProcessing() {
+        if (!catering) return;
+        invoice_query({
+            queryType: "FILTER",
+            PlaceId: catering.Id,
+            Corporate: corporate.Id,
+            Status: "PROCESSING",
+            paging: {
+                Page: 0,
+                Size: 1,
+                Desc: true
+            }
+        })
+            .then((result) => {
+                SetInvoiceProcessingCount(result.data.Data.totalElements);
+            })
+            .catch((e) => {
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص"});
+                }
+            });
+    }
+
+    function getCatering() {
         Catering_getById({id: cateringId}).then(result => {
             SetCatering(result.data.Data);
         }).catch(e => {
@@ -47,7 +106,7 @@ const CateringDetail = () => {
     }
 
     function getBasket() {
-        invoice_getBasketByUserId({id:currentUser.Id,CorporateId:corporate.Id}).then(result => {
+        invoice_getBasketByUserId({id: currentUser.Id, CorporateId: corporate.Id}).then(result => {
             SetCurrentBasket(result.data.Data);
         }).catch(e => {
             try {
@@ -63,7 +122,7 @@ const CateringDetail = () => {
             Invoice: {Id: CurrentBasket?.Id || null},
             MenuItem: {Id: itemId},
             Count: 1,
-            Corporate:{Id:corporate.Id},
+            Corporate: {Id: corporate.Id},
         }).then(result => {
             error.showError({message: 'به سبد خرید اضافه شد'});
             getBasket();
@@ -80,7 +139,7 @@ const CateringDetail = () => {
     function ConfirmOrder(e) {
         e.preventDefault()
 
-        invoice_sendOrderToCatering({Id:CurrentBasket.Id})
+        invoice_sendOrderToCatering({Id: CurrentBasket.Id})
             .then(result => {
                 getBasket();
             })
@@ -95,7 +154,7 @@ const CateringDetail = () => {
 
 
     function RemoveOrder(item) {
-        if(item.Count<2){
+        if (item.Count < 2) {
             invoice_deleteBuyable({id: item.Id})
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
@@ -108,21 +167,21 @@ const CateringDetail = () => {
                     error.showError({message: "خطا نا مشخص",});
                 }
             });
-        }else{
-            updateCount("minus",item);
+        } else {
+            updateCount("minus", item);
         }
     }
 
-    function updateOrderCount(item,Count) {
-        if(Count<1){
+    function updateOrderCount(item, Count) {
+        if (Count < 1) {
             error.showError({message: "تعداد آیتم ها نمی‌تواند کمتر از 1 باشد!",});
             getBasket();
             return;
         }
-        updateCount("update",item,Count);
+        updateCount("update", item, Count);
     }
 
-    function updateCount(action,item,_newCount) {
+    function updateCount(action, item, _newCount) {
         let newCount = item.Count;
         if (action === "plus") {
             newCount++;
@@ -131,7 +190,7 @@ const CateringDetail = () => {
         if (action === "minus") {
             newCount--;
         }
-        if(action === "update"){
+        if (action === "update") {
             newCount = _newCount;
         }
         invoice_changeInvoiceBuyableCount({
@@ -155,20 +214,29 @@ const CateringDetail = () => {
             <Grid columns={120} container>
                 <Grid sx={{p: 1}} size={{xs: 90, sm: 96, md: 102, lg: 104, xl: 108}}>
                     <Card><CardContent sx={{p: 2}}>
-                        <_CateringAbout Catering={catering} />
+                        <_CateringAbout Catering={catering}/>
                     </CardContent></Card>
                 </Grid>
                 <Grid sx={{p: 1, alignContent: "top"}} size={{xs: 30, sm: 24, md: 18, lg: 16, xl: 12}}>
-                    <Button sx={{my: 1}} variant={"contained"} fullWidth size={"small"}>تاریخچه و پیگیری</Button>
-                    <SideMenu CurrentBasket={CurrentBasket} catering={catering} addBuyable={AddFood}
-                              setOrderCount={updateOrderCount} removeOrder={RemoveOrder} confirmOrder={ConfirmOrder}/>
+
+                    <Badge sx={{my: 1}} badgeContent={invoiceProcessingCount} color="error">
+                        <Button variant={"contained"} onClick={(e) => navigate("/food/Process/" + cateringId)}
+                                disabled={!invoiceProcessingCount} color={"warning"} fullWidth size={"small"}>در حال آماده سازی</Button>
+                    </Badge>
+                    <Badge sx={{my: 1}} badgeContent={invoiceToPayCount} color="error">
+                        <Button variant={"contained"} onClick={(e) => navigate("/food/needToPay/" + cateringId)}
+                                disabled={!invoiceToPayCount} color={"warning"} fullWidth size={"small"}>تاریخچه و پیگیری</Button>
+                    </Badge>
+                    <SideMenu CurrentBasket={CurrentBasket} catering={catering}
+                              setOrderCount={updateOrderCount} removeOrder={RemoveOrder} confirmOrder={ConfirmOrder} refresh={getBasket}/>
                 </Grid>
-                {catering&&<Grid size={{xs: 120, sm: 120, md: 120, lg: 120, xl: 120}}>
+                {catering && <Grid size={{xs: 120, sm: 120, md: 120, lg: 120, xl: 120}}>
                     <_CateringSelectDate selectedDate={selectedDate} setSelectedDate={setSelectedDate} catering={catering}/>
                 </Grid>}
                 <Grid size={{xs: 120, sm: 120, md: 120, lg: 120, xl: 120}}>
-                    {selectedDate && <_CateringMenu selectedDate={selectedDate} catering={cateringId} orders={CurrentBasket} addOrder={AddFood}
-                                                />}
+                    {selectedDate &&
+                    <_CateringMenu selectedDate={selectedDate} catering={cateringId} orders={CurrentBasket} addOrder={AddFood}
+                    />}
                 </Grid>
 
 

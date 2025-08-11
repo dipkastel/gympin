@@ -36,6 +36,8 @@ import Gympin from "../pages/sport/Gympin/Gympin";
 import Learn from "../pages/Learn/Learn";
 import Employment from "../pages/employment/Employment";
 import IncreaseSelect from "../pages/increaseSelect/IncreaseSelect";
+import PayCateringInvoices from "../pages/cateringDetail/payCateringInvoices/PayCateringInvoces";
+import ProcessingInvoices from "../pages/cateringDetail/ProcessingInvoices/ProcessingInvoces";
 
 export const BrowserRouter =[
     {
@@ -190,6 +192,14 @@ export const BrowserRouter =[
             {
                 path: 'details/:cateringId',
                 Component: CateringDetail,
+            },
+            {
+                path: 'needToPay/:cateringId',
+                Component: PayCateringInvoices,
+            },
+            {
+                path: 'Process/:cateringId',
+                Component: ProcessingInvoices,
             },
         ],
     },

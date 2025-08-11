@@ -9,7 +9,7 @@ import _ProInvoiceItemCount from "./_ProInvoiceItemCount";
 import _ProinvoiceBill from "./_ProinvoiceBill";
 import _SideMenuHeader from "./_SideMenuHeader";
 
-const SideMenu = ({CurrentBasket, addBuyable, removeOrder, setOrderCount, catering,confirmOrder}) => {
+const SideMenu = ({CurrentBasket, removeOrder, setOrderCount, catering,confirmOrder,refresh}) => {
 
     const [open, setOpen] = React.useState(false);
 
@@ -36,9 +36,9 @@ const SideMenu = ({CurrentBasket, addBuyable, removeOrder, setOrderCount, cateri
                 </Card>
                 <Drawer open={open} anchor={'right'} onClose={toggleDrawer(false)}>
                     <Box sx={{width: 520, mt: 8}}>
-                        <_SideMenuHeader CurrentBasket={CurrentBasket} catering={catering} />
+                        <_SideMenuHeader CurrentBasket={CurrentBasket} catering={catering} refresh={refresh} />
                         {!!CurrentBasket?.InvoiceBuyables?.length > 0 ? <Card sx={{m: 1}}>
-                            <CardHeader title={"سفارشات"}/>
+                            <CardHeader title={"سفارشات از "+CurrentBasket?.InvoiceBuyables[0]?.Place?.Name}/>
 
                             <CardContent>
                                 <Grid container direction={"row"}>
@@ -47,8 +47,7 @@ const SideMenu = ({CurrentBasket, addBuyable, removeOrder, setOrderCount, cateri
                                             <Grid><ListItemText primary={item.Name}
                                                                 secondary={toPriceWithComma(item.UnitPrice) + " تومان"}/></Grid>
                                             <Grid>
-                                                <_ProInvoiceItemCount item={item} setOrderCount={setOrderCount} removeOrder={removeOrder}
-                                                                      addBuyable={addBuyable}/>
+                                                <_ProInvoiceItemCount item={item} setOrderCount={setOrderCount} removeOrder={removeOrder}/>
                                             </Grid>
                                             <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}}
                                                      component="div"/>

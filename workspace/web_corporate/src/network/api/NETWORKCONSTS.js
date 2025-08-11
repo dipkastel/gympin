@@ -1,35 +1,34 @@
-import {increaseCorporateDeposit_requestIncreaseCorporateDeposits} from "./increaseCorporateDeposit.api";
-
 export let AuthApi = {
     BASEURL: "http://localhost:8080/api/",
-     // BASEURL: "https://api.gympin.ir/",
+    // BASEURL: "http://192.168.1.108:8080/api/",
+    // BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
         LOGIN_URL: "v1/account/login",
         SEND_SMS_URL: "v1/account/sendsms",
-        requestRegisterCorporate:"v1/account/requestRegisterCorporate",
-        REFRESH_TOKEN:"v1/account/refreshToken"
+        requestRegisterCorporate: "v1/account/requestRegisterCorporate",
+        REFRESH_TOKEN: "v1/account/refreshToken"
     },
-    configs:{
-        CorporateSplash:"v1/configs/CorporateSplash"
+    configs: {
+        CorporateSplash: "v1/configs/CorporateSplash"
     },
-    corporate:{
-        GET_BY_ID:"v1/corporate/getById",
-        updateLogo:"v1/corporate/updateLogo",
-        getTransactions:"v1/corporate/getTransactions",
-        getTotalDeposit:"v1/corporate/getTotalDeposit",
-        update:"v1/corporate/update",
-        getCorproteCategories:"v1/corporate/getCorporateGroups",
-        addCategory:"v1/corporate/addGroup",
-        sendContractCode:"v1/corporate/sendContractCode",
-        signContract:"v1/corporate/signContract",
-        updateContract:"v1/corporate/updateContract",
-        getTotalIncreases:"v1/corporate/getTotalIncreases",
-        deleteCategory:"v1/corporate/deleteGroup",
-        updateStatus:"v1/corporate/updateStatus"
+    corporate: {
+        GET_BY_ID: "v1/corporate/getById",
+        updateLogo: "v1/corporate/updateLogo",
+        getTransactions: "v1/corporate/getTransactions",
+        getTotalDeposit: "v1/corporate/getTotalDeposit",
+        update: "v1/corporate/update",
+        getCorproteCategories: "v1/corporate/getCorporateGroups",
+        addCategory: "v1/corporate/addGroup",
+        sendContractCode: "v1/corporate/sendContractCode",
+        signContract: "v1/corporate/signContract",
+        updateContract: "v1/corporate/updateContract",
+        getTotalIncreases: "v1/corporate/getTotalIncreases",
+        deleteCategory: "v1/corporate/deleteGroup",
+        updateStatus: "v1/corporate/updateStatus"
     },
-    CorporatePersonnel:{
+    CorporatePersonnel: {
         add: "v1/corporatePersonnel/add",
         corporateOwnedByUserId: "v1/corporatePersonnel/corporateOwnedByUserId",
         addPersonnelCredit: "v1/corporatePersonnel/addPersonnelCredit",
@@ -41,68 +40,68 @@ export let Api_url = {
         getById: "v1/corporatePersonnel/getById",
         update: "v1/corporatePersonnel/update",
         query: "v1/corporatePersonnel/query",
-        PersonnelByCorporate:"v1/corporatePersonnel/PersonnelByCorporate"
+        PersonnelByCorporate: "v1/corporatePersonnel/PersonnelByCorporate"
     },
-    gateway:{
-        getPaymentGateways:"v1/Gateway/getPaymentGateways",
-        getPaymentSuggest:"v1/suggest/getall",
+    gateway: {
+        getPaymentGateways: "v1/Gateway/getPaymentGateways",
+        getPaymentSuggest: "v1/suggest/getall",
     },
-    gatewayApplication:{
+    gatewayApplication: {
         query: "v1/GatewayApplication/query",
     },
     homePage: {
         GET_HOME_PAGE: "v1/homepage/getHome",
     },
-    multimedia:{
-        add:"v1/multimedia/add",
-        categoryGetById:"v1/multimediacategory/getById"
+    multimedia: {
+        add: "v1/multimedia/add",
+        categoryGetById: "v1/multimediacategory/getById"
     },
-    Notification:{
-        getUserNotifications:"v1/Notification/getUserNotifications"
+    Notification: {
+        getUserNotifications: "v1/Notification/getUserNotifications"
     },
-    optionOfPlace:{
+    optionOfPlace: {
         GET_BY_PLACE_ID: "v1/OptionOfPlace/getByPlaceId",
     },
-    place:{
-        GET_ALL:"v1/place/getAll",
-        GET_BY_ID:"v1/place/getById",
+    place: {
+        GET_ALL: "v1/place/getAll",
+        GET_BY_ID: "v1/place/getById",
     },
-    placeAbout:{
-        GET_BY_PLACE_ID:"v1/placeAbout/getByPlaceId",
+    placeAbout: {
+        GET_BY_PLACE_ID: "v1/placeAbout/getByPlaceId",
     },
-    plans:{
-        GET_BY_ID:"v1/plan/getById",
-        GET_BY_PLACE_ID:"v1/plan/getPlansByPlace"
+    plans: {
+        GET_BY_ID: "v1/plan/getById",
+        GET_BY_PLACE_ID: "v1/plan/getPlansByPlace"
     },
-    region:{
-        GET_ALL:"v1/region/getAll",
-        GET_BY_CITY:"v1/region/getRegionsByCity"
+    region: {
+        GET_ALL: "v1/region/getAll",
+        GET_BY_CITY: "v1/region/getRegionsByCity"
     },
-    report:{
-        useCorporateCharge:"v1/report/useCorporateCharge"
+    report: {
+        useCorporateCharge: "v1/report/useCorporateCharge"
     },
-    sport:{
-        GET_ALL:"v1/sport/getAll"
+    sport: {
+        GET_ALL: "v1/sport/getAll"
     },
-    service:{
-        GET_ACTIVE_USERS_BY_CORPORATE:"v1/service/getActiveUsersByCorporate"
+    service: {
+        GET_ACTIVE_USERS_BY_CORPORATE: "v1/service/getActiveUsersByCorporate"
     },
-    state:{
-        GET_ALL:"v1/state/getAll"
+    state: {
+        GET_ALL: "v1/state/getAll"
     },
     suggest: {
         query: "v1/suggest/query",
     },
-    support:{
-        ADD:"v1/support/add",
-        ADD_MESSAGE:"v1/support/addMessage",
-        GET_BY_PLACE:"v1/support/getByPlace",
-        GET_BY_ID:"v1/support/getById",
-        setMessagesRead:"v1/support/setMessagesRead",
-        getCorporateSupportCount:"v1/support/getCorporateSupportCount",
+    support: {
+        ADD: "v1/support/add",
+        ADD_MESSAGE: "v1/support/addMessage",
+        GET_BY_PLACE: "v1/support/getByPlace",
+        GET_BY_ID: "v1/support/getById",
+        setMessagesRead: "v1/support/setMessagesRead",
+        getCorporateSupportCount: "v1/support/getCorporateSupportCount",
         query: "v1/support/query"
     },
-    catering:{
+    catering: {
         getAll: "v1/catering/getAll",
         getById: "v1/catering/getById",
         add: "v1/catering/add",
@@ -110,7 +109,7 @@ export let Api_url = {
         update: "v1/catering/update",
         query: "v1/catering/query",
     },
-    ticketFood:{
+    ticketFood: {
 
         getAll: "v1/TicketFood/getAll",
         getById: "v1/TicketFood/getById",
@@ -119,7 +118,7 @@ export let Api_url = {
         update: "v1/TicketFood/update",
         query: "v1/TicketFood/query",
     },
-    ticketMenu:{
+    ticketMenu: {
         getAll: "v1/TicketFoodMenu/getAll",
         getById: "v1/TicketFoodMenu/getById",
         add: "v1/TicketFoodMenu/add",
@@ -132,37 +131,39 @@ export let Api_url = {
         GET_BY_ID: "v1/user/getById",
         UPDATE_USER: "v1/user/update",
         UPDATE_AVATAR: "v1/user/updateUserAvatar",
-        query:"v1/user/query",
+        query: "v1/user/query",
     },
-    invoice:{
-        add:"v1/invoice/add",
-        query:"v1/invoice/query",
-        update:"v1/invoice/update",
-        delete:"v1/invoice/delete",
-        getAll:"v1/invoice/getAll",
-        addFood:"v1/invoice/addFood",
-        getById:"v1/invoice/getById",
-        userCheckout:"v1/invoice/userCheckout",
-        addSubscribe:"v1/invoice/addSubscribe",
-        deleteBuyable:"v1/invoice/deleteBuyable",
+    invoice: {
+        add: "v1/invoice/add",
+        query: "v1/invoice/query",
+        update: "v1/invoice/update",
+        delete: "v1/invoice/delete",
+        getAll: "v1/invoice/getAll",
+        addFood: "v1/invoice/addFood",
+        getById: "v1/invoice/getById",
+        cancelOrder: "v1/invoice/cancelOrder",
+        userCheckout: "v1/invoice/userCheckout",
+        addSubscribe: "v1/invoice/addSubscribe",
+        deleteBuyable: "v1/invoice/deleteBuyable",
         getHowToPay: "v1/invoice/getUserHowToPay",
-        getBasketByUserId:"v1/invoice/getBasketByUserId",
-        sendOrderToCatering:"v1/invoice/sendOrderToCatering",
-        changeInvoiceBuyableCount:"v1/invoice/changeInvoiceBuyableCount",
+        getBasketByUserId: "v1/invoice/getBasketByUserId",
+        confirmFoodPayment: "v1/invoice/confirmFoodPayment",
+        sendOrderToCatering: "v1/invoice/sendOrderToCatering",
+        changeInvoiceBuyableCount: "v1/invoice/changeInvoiceBuyableCount",
     },
-    increaseCorporateDeposit:{
-        requestIncreaseCorporateDeposits:"v1/increaseCorporateDeposit/requestIncreaseCorporateDeposits",
-        requestIncreaseCorporateDepositsDraft:"v1/increaseCorporateDeposit/requestIncreaseCorporateDepositsDraft",
-        completeRequestIncreaseCorporateDeposits:"v1/increaseCorporateDeposit/completeRequestIncreaseCorporateDeposits",
-        getProFormaInvoice:"v1/increaseCorporateDeposit/getProFormaInvoice",
-        delete:"v1/increaseCorporateDeposit/delete"
+    increaseCorporateDeposit: {
+        requestIncreaseCorporateDeposits: "v1/increaseCorporateDeposit/requestIncreaseCorporateDeposits",
+        requestIncreaseCorporateDepositsDraft: "v1/increaseCorporateDeposit/requestIncreaseCorporateDepositsDraft",
+        completeRequestIncreaseCorporateDeposits: "v1/increaseCorporateDeposit/completeRequestIncreaseCorporateDeposits",
+        getProFormaInvoice: "v1/increaseCorporateDeposit/getProFormaInvoice",
+        delete: "v1/increaseCorporateDeposit/delete"
     },
-    transaction:{
-        setPaymentRequest:"v1/transaction/setPaymentRequest",
-        query:"v1/TransactionCorporate/query",
+    transaction: {
+        setPaymentRequest: "v1/transaction/setPaymentRequest",
+        query: "v1/TransactionCorporate/query",
         increaseQuery: "v1/increaseCorporateDeposit/query",
     },
-    TransactionPersonnelCredit:{
-        query:"v1/TransactionPersonnelCredit/query",
+    TransactionPersonnelCredit: {
+        query: "v1/TransactionPersonnelCredit/query",
     }
 };
