@@ -15,6 +15,7 @@ public interface InvoiceService extends BaseService<InvoiceParam, InvoiceDto, In
     InvoiceDto changeStatus(InvoiceParam param);
     InvoiceDto sendOrderToCatering(InvoiceParam param);
     InvoiceDto sendOrderToCorporate(InvoiceParam param);
+    InvoiceDto cancelOrder(InvoiceParam param);
     InvoiceDto changeInvoiceBuyableCount(InvoiceBuyableParam param);
     InvoiceDto addBuyable(InvoiceBuyableParam param);
     InvoiceDto addFood(InvoiceBuyableFoodParam param);
@@ -24,6 +25,8 @@ public interface InvoiceService extends BaseService<InvoiceParam, InvoiceDto, In
     InvoiceDto moderateCheckout(InvoiceCheckoutParam param) throws Exception;
     InvoiceDto advancedCheckout(InvoiceCheckoutParam param) throws Exception;
     InvoiceDto userCheckout(InvoiceCheckoutParam param) throws Exception;
+    InvoiceDto confirmFoodPayment(InvoiceCheckoutParam param) throws Exception;
+    InvoiceDto completeFoodPayment(InvoiceCheckoutParam param) throws Exception;
     UserHowToPayDto getHowToPay(InvoiceCheckoutParam param);
     InvoiceDto getBasketByUserId(UserParam param);
     List<InvoiceDto> getPreOrderByCatering(PlaceCateringParam param);

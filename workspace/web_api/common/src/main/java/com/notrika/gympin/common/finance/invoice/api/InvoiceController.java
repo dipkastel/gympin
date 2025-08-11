@@ -18,6 +18,7 @@ public interface InvoiceController extends BaseController<InvoiceParam, InvoiceD
     ResponseEntity<InvoiceDto> changeStatus(InvoiceParam param) throws Exception;
     ResponseEntity<InvoiceDto> sendOrderToCatering(InvoiceParam param) throws Exception;
     ResponseEntity<InvoiceDto> sendOrderToCorporate(InvoiceParam param) throws Exception;
+    ResponseEntity<InvoiceDto> cancelOrder(InvoiceParam param) throws Exception;
     ResponseEntity<InvoiceDto> getBasketByUserId(UserParam param) throws Exception;
     ResponseEntity<InvoiceDto> changeInvoiceBuyableCount(InvoiceBuyableParam param) throws Exception;
     ResponseEntity<InvoiceDto> deleteBuyable(InvoiceBuyableParam param) throws Exception;
@@ -25,6 +26,8 @@ public interface InvoiceController extends BaseController<InvoiceParam, InvoiceD
     ResponseEntity<InvoiceDto> addFood(@RequestBody InvoiceBuyableFoodParam param) throws Exception;
     ResponseEntity<InvoiceDto> addSubscribe(@RequestBody InvoiceBuyableSubscribeParam param) throws Exception;
     ResponseEntity<InvoiceDto> simpleCheckout(InvoiceCheckoutParam param) throws Exception;
+    ResponseEntity<InvoiceDto> confirmFoodPayment(InvoiceCheckoutParam param) throws Exception;
+    ResponseEntity<InvoiceDto> completeFoodPayment(InvoiceCheckoutParam param) throws Exception;
     ResponseEntity<InvoiceDto> moderateCheckout(InvoiceCheckoutParam param) throws Exception;
     ResponseEntity<InvoiceDto> advancedCheckout(InvoiceCheckoutParam param) throws Exception;
     ResponseEntity<InvoiceDto> userCheckout(InvoiceCheckoutParam param) throws Exception;

@@ -40,7 +40,10 @@ import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserReposito
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporatePersonnelCreditTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceUserTransactionRepository;
-import com.notrika.gympin.persistence.dao.repository.invoice.*;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceFoodRepository;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
+import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.course.PurchasedCourseRepository;
 import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
@@ -59,6 +62,7 @@ import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceFoodEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceSubscribeEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
@@ -177,7 +181,7 @@ public class InvoiceServiceHelper {
             throw new CreditCannotBeNegativeException();
         //update personnel credit
         wallet.setCreditAmount(afterCredit);
-        if(afterCredit.compareTo(BigDecimal.ZERO)==0){
+        if (afterCredit.compareTo(BigDecimal.ZERO) == 0) {
             //TODO check THIS
             wallet.setStatus(CorporatePersonnelCreditStatusEnum.COMPLETE);
         }
@@ -311,16 +315,16 @@ public class InvoiceServiceHelper {
         return invoice;
     }
 
-    public boolean checkBuyableCanPurchase(List<InvoiceBuyableEntity<?>> buyables) throws Exception{
-        for(InvoiceBuyableEntity buyable:buyables){
+    public boolean checkBuyableCanPurchase(List<InvoiceBuyableEntity<?>> buyables) throws Exception {
+        for (InvoiceBuyableEntity buyable : buyables) {
             switch (buyable.getBuyableType()) {
                 case SUBSCRIBE:
+                    break;
+                case FOOD:
                     break;
                 case COURSE:
                     throw new Exception("آیتم برای خرید آماده نیست");
                 case PRODUCT:
-                    throw new Exception("آیتم برای خرید آماده نیست");
-                case FOOD:
                     throw new Exception("آیتم برای خرید آماده نیست");
                 case SERVICE:
                     throw new Exception("آیتم برای خرید آماده نیست");
@@ -685,4 +689,29 @@ public class InvoiceServiceHelper {
             code = GenerateNewKey();
         return code;
     }
+
+    public InvoiceEntity deductingFoodExpenses(InvoiceEntity invoice,CorporateEntity corporate) {
+        // deducting from deposit
+        FinanceCorporateEntity financeCorporate = corporate.getFinanceCorporate();
+        BigDecimal lastCorporateDeposit = financeCorporate.getTotalDeposit();
+        BigDecimal newCorporateDeposit = financeCorporate.getTotalDeposit().subtract(invoice.getPriceToPay());
+        financeCorporate.setTotalDeposit(newCorporateDeposit);
+        corporate.setFinanceCorporate(financeCorporate);
+        corporateRepository.update(corporate);
+        // add transaction
+        financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
+                .serial(invoice.getSerial())
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .latestBalance(lastCorporateDeposit)
+                .transactionCorporateType(TransactionCorporateType.DEPOSIT)
+                .financeCorporate(financeCorporate)
+                .isChecked(false)
+                .transactionType(TransactionBaseType.CORPORATE)
+                .amount(invoice.getPriceToPay().negate())
+                .build());
+
+
+        return invoice;
+    }
+
 }

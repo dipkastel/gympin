@@ -48,7 +48,6 @@ public class InvoiceControllerImpl implements InvoiceController {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<InvoiceDto> getById(Long id) {
         return ResponseEntity.ok(invoiceService.getById(id));
     }
@@ -78,6 +77,12 @@ public class InvoiceControllerImpl implements InvoiceController {
     }
 
     @Override
+    @GetMapping("cancelOrder")
+    public ResponseEntity<InvoiceDto> cancelOrder(InvoiceParam param) throws Exception {
+        return ResponseEntity.ok(invoiceService.cancelOrder(param));
+    }
+
+    @Override
     @GetMapping("getPreOrderByCatering")
     public ResponseEntity<List<InvoiceDto>> getPreOrderByCatering(PlaceCateringParam param) throws Exception {
         return ResponseEntity.ok(invoiceService.getPreOrderByCatering(param));
@@ -87,6 +92,18 @@ public class InvoiceControllerImpl implements InvoiceController {
     @GetMapping("getBasketByUserId")
     public ResponseEntity<InvoiceDto> getBasketByUserId(UserParam param) throws Exception {
         return ResponseEntity.ok(invoiceService.getBasketByUserId(param));
+    }
+
+    @Override
+    @GetMapping("confirmFoodPayment")
+    public ResponseEntity<InvoiceDto> confirmFoodPayment(InvoiceCheckoutParam param) throws Exception {
+        return ResponseEntity.ok(invoiceService.confirmFoodPayment(param));
+    }
+    @Override
+    @GetMapping("completeFoodPayment")
+    public ResponseEntity<InvoiceDto> completeFoodPayment(InvoiceCheckoutParam param) throws Exception {
+        return ResponseEntity.ok(invoiceService.completeFoodPayment(param));
+
     }
 
     @Override

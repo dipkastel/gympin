@@ -17,6 +17,7 @@ import com.notrika.gympin.common.util.exception.purchased.PriceConflictException
 import com.notrika.gympin.common.util.exception.purchased.PriceTotalConflictException;
 import com.notrika.gympin.common.util.exception.transactions.*;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.finance.peyments.CalculatePaymentsServiceImpl;
 import com.notrika.gympin.domain.util.convertor.InvoiceConvertor;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
@@ -27,11 +28,13 @@ import com.notrika.gympin.persistence.dao.repository.ticket.common.BuyableReposi
 import com.notrika.gympin.persistence.dao.repository.ticket.food.TicketFoodMenuRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
+import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceFoodEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceSubscribeEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodMenuEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
@@ -48,6 +51,7 @@ import java.lang.invoke.WrongMethodTypeException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -79,6 +83,9 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     TicketFoodMenuRepository ticketFoodMenuRepository;
     @Autowired
     TicketSubscribeRepository ticketSubscribeRepository;
+
+    @Autowired
+    CalculatePaymentsServiceImpl calculatePaymentsService;
 
     @Autowired
     FinanceSerialRepository financeSerialRepository;
@@ -189,7 +196,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         InvoiceEntity invoice = invoiceRepository.getById(param.getId());
         if(invoice.getStatus()==InvoiceStatus.COMPLETED)
             throw new CannotChangeCompletedInvoicesException();
-        String note = "تغییر وضعیت از " + invoice.getStatus() + " به " + param.getStatus();
+        String note = "تغییر وضعیت از " + invoice.getStatus() + " به NEED_REVIEW";
         invoice.setStatus(InvoiceStatus.NEED_REVIEW);
         helper.addNote(invoice, note);
         return InvoiceConvertor.toDto(invoiceRepository.update(invoice));
@@ -200,8 +207,19 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         InvoiceEntity invoice = invoiceRepository.getById(param.getId());
         if(invoice.getStatus()!=InvoiceStatus.NEED_REVIEW)
             throw new CannotChangeCompletedInvoicesException();
-        String note = "تغییر وضعیت از " + invoice.getStatus() + " به " + param.getStatus();
+        String note = "تغییر وضعیت از " + invoice.getStatus() + " به NEED_TO_PAY" ;
         invoice.setStatus(InvoiceStatus.NEED_TO_PAY);
+        helper.addNote(invoice, note);
+        return InvoiceConvertor.toDto(invoiceRepository.update(invoice));
+    }
+
+    @Override
+    public InvoiceDto cancelOrder(InvoiceParam param) {
+        InvoiceEntity invoice = invoiceRepository.getById(param.getId());
+        if(invoice.getStatus()!=InvoiceStatus.DRAFT)
+            throw new CannotChangeCompletedInvoicesException();
+        String note = "تغییر وضعیت از " + invoice.getStatus() + " به CANCELLED" ;
+        invoice.setStatus(InvoiceStatus.CANCELLED);
         helper.addNote(invoice, note);
         return InvoiceConvertor.toDto(invoiceRepository.update(invoice));
     }
@@ -256,12 +274,20 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         TicketFoodMenuEntity foodmenu = ticketFoodMenuRepository.getById(param.getMenu().getId());
         InvoiceEntity invoice = helper.getUserBasket(param.getInvoice(),param.getCorporate().getId());
 
+        //date check
         Set<Date> dates = invoice.getInvoiceFoods().stream().filter(p->!p.isDeleted()).map(InvoiceFoodEntity::getDate).collect(Collectors.toSet());
         if(dates.stream().findFirst().isPresent() &&dates.stream().findFirst().get().compareTo(foodmenu.getDate())!=0)
             throw new UserHasOpenBasketException();
         if(dates.size()>1)
             throw new UserHasOpenBasketException();
+        //cateringCheck
+        Set<Long> places = invoice.getInvoiceFoods().stream().filter(p->!p.isDeleted()).map(p->p.getPlace().getId()).collect(Collectors.toSet());
+        if(places.size()>1)
+            throw new UserHasOpenBasketException();
+        if(places.size()!=0&& !Objects.equals(foodmenu.getFoodItem().getPlace().getId(), places.stream().findFirst().get()))
+            throw new UserHasOpenBasketException();
 
+        //Gym check
         if (invoice.getInvoiceSubscribes().size()>0)
             throw new UserHasOpenBasketException();
 
@@ -363,6 +389,63 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         helper.sendSms(invoice);
         helper.addNote(invoice, "پرداخت سبد خرید و ایجاد بلیط ها ");
         return InvoiceConvertor.toDto(result);
+    }
+
+    @Override
+    @Transactional
+    public InvoiceDto confirmFoodPayment(InvoiceCheckoutParam param) throws Exception {
+        //init
+        InvoiceEntity invoice = invoiceRepository.getById(param.getId());
+        CorporateEntity corporate = invoice.getCorporate();
+        PlaceCateringEntity catering = (PlaceCateringEntity) invoice.getInvoiceFoods().stream().filter(d->!d.isDeleted()).findFirst().get().getPlace();
+
+        //checks
+        if (invoice.getStatus() != InvoiceStatus.NEED_TO_PAY)
+            throw new IsAlreadyPayedException();
+
+        //TODO Check and test
+        helper.checkBuyableCanPurchase(invoice.getInvoiceBuyables());
+
+        //kam kardan az sazman
+        invoice =  helper.deductingFoodExpenses(invoice,corporate);
+
+        //change invoice status
+        invoice.setStatus(InvoiceStatus.PROCESSING);
+        invoiceRepository.update(invoice);
+        //TODO sms to corporate user
+//        helper.sendCorporatePayForFoodSms(catering);
+        //TODO sms to catering user
+//        helper.sendCateringPayForFoodSms(catering);
+
+
+
+//        helper.sendCateringSms(invoice);
+        helper.addNote(invoice, "پرداخت غذای سازمانی ");
+        return InvoiceConvertor.toDto(invoice);
+    }
+
+    @Override
+    @Transactional
+    public InvoiceDto completeFoodPayment(InvoiceCheckoutParam param) throws Exception {
+        //init
+        InvoiceEntity invoice = invoiceRepository.getById(param.getId());
+        CorporateEntity corporate = invoice.getCorporate();
+        PlaceCateringEntity catering = (PlaceCateringEntity) invoice.getInvoiceFoods().stream().filter(d->!d.isDeleted()).findFirst().get().getPlace();
+
+        //checks
+        if (invoice.getStatus() != InvoiceStatus.PROCESSING)
+            throw new IsAlreadyPayedException();
+
+
+        //add to catering
+        calculatePaymentsService.PayFoodToCatering(invoice,catering);
+
+        //change invoice status
+        invoice.setStatus(InvoiceStatus.COMPLETED);
+        invoiceRepository.update(invoice);
+
+        helper.addNote(invoice, "پرداخت غذای سازمانی به کیترینگ ");
+        return InvoiceConvertor.toDto(invoice);
     }
 
     @Override

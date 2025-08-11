@@ -41,4 +41,7 @@ public class TicketFoodMenuQuery extends BaseQuery<TicketFoodMenuQuery> {
     @JsonProperty("PlaceId")
     private Long is_foodItemæplaceæid;
 
+    @JsonProperty("Name")
+    private String like_foodItemæname;
+
 }

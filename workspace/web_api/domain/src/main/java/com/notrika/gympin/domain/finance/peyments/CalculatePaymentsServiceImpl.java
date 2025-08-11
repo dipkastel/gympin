@@ -9,11 +9,14 @@ import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
+import com.notrika.gympin.common.util.exception.ticket.TicketHasNotOwner;
 import com.notrika.gympin.common.util.exception.transactions.TransactionAlreadyChecked;
 import com.notrika.gympin.common.util.exception.transactions.TransactionNotFound;
 import com.notrika.gympin.domain.finance.helper.FinanceHelper;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
-import com.notrika.gympin.persistence.dao.repository.finance.*;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.request.FinanceIncreaseCorporateDepositRequestRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.request.FinanceIncreaseUserDepositRequestRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
@@ -23,12 +26,14 @@ import com.notrika.gympin.persistence.dao.repository.finance.transaction.Finance
 import com.notrika.gympin.persistence.dao.repository.purchased.subscribe.PurchasedSubscribeRepository;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
-import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncreaseUserDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceDiscountTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
-import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncreaseUserDepositRequestEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
@@ -257,6 +262,54 @@ public class CalculatePaymentsServiceImpl {
         financeUserRepository.update(beneficiaryFinance);
     }
 
+
+    public void PayFoodToCatering(InvoiceEntity invoice, PlaceCateringEntity catering) {
+
+
+        PlacePersonnelEntity beneficiary = catering.getPlaceOwners().stream().filter(po->!po.isDeleted()&&po.getIsBeneficiary()).findFirst().orElse(null);
+        if(beneficiary==null)
+            throw new TicketHasNotOwner();
+        FinanceUserEntity beneficiaryFinance = financeHelper.getUserIncomeWallet(beneficiary.getUser(),beneficiary.getPlace());
+        Double commissionFee = beneficiary.getCommissionFee();
+
+        BigDecimal commission = null;
+        BigDecimal discount = null;
+        BigDecimal beneficiaryShare = null;
+
+        //settlement
+            commission = invoice.getTotalPrice().multiply(BigDecimal.valueOf(commissionFee / 100));
+            beneficiaryShare = invoice.getTotalPrice().multiply(BigDecimal.valueOf(1 - (commissionFee / 100)));
+
+
+
+        //place catering personel
+        financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
+                .amount(beneficiaryShare)
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .transactionType(TransactionBaseType.USER)
+                .place(catering)
+                .isChecked(false)
+                .latestBalance(beneficiaryFinance.getTotalDeposit())
+                .financeUser(beneficiaryFinance)
+                .serial(invoice.getSerial())
+                .build());
+
+        //income
+        financeIncomeTransactionRepository.add(FinanceIncomeTransactionEntity.builder()
+                .amount(commission)
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .transactionType(TransactionBaseType.USER)
+                .isChecked(false)
+                .latestBalance(financeIncomeTransactionRepository.gympinTotalIncome() == null ? BigDecimal.ZERO : financeIncomeTransactionRepository.gympinTotalIncome())
+                .serial(invoice.getSerial())
+                .build());
+
+
+
+        //to beneficiary
+        beneficiaryFinance.setTotalDeposit(beneficiaryFinance.getTotalDeposit().add(beneficiaryShare));
+        financeUserRepository.update(beneficiaryFinance);
+    }
     public void PayToPlace(PurchasedCourseEntity courseEntity) {
 
 //        PlacePersonnelEntity beneficiary = courseEntity.getTicketCourse().getBeneficiary();

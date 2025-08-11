@@ -27,12 +27,15 @@ import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonne
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageLocationRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserPasswordEntity;
 import com.notrika.gympin.persistence.entity.user.UserRolesEntity;
@@ -74,7 +77,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
     private MultimediaRepository multimediaRepository;
 
     @Autowired
-    private PlaceGymRepository placeGymRepository;
+    private PlaceRepository placeRepository;
 
     @Autowired
     private FollowServiceImpl followService;
@@ -332,9 +335,9 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         if (context == null)
             throw new UnknownUserException();
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-        PlaceGymEntity place = placeGymRepository.getById(param.getId());
+        PlaceEntity place = placeRepository.getById(param.getId());
         UserEntity user = userRepository.getById(userRequester.getId());
-        if (place.getPlaceOwners().stream().filter(o -> !o.isDeleted()).noneMatch(po -> userRequester.getId().equals(po.getUser().getId())))
+        if (place.getPlaceOwners().stream().filter(o -> !((PlacePersonnelEntity)o).isDeleted()).noneMatch(po -> userRequester.getId().equals(((PlacePersonnelEntity)po).getUser().getId())))
             throw new NotFoundException();
         UserCreditDto result = new UserCreditDto();
         List<UserCreditDetailDto> detalsList = new ArrayList<>();
