@@ -76,10 +76,10 @@ export let Api_url = {
     PlanGateTimingApi:{
         getByPlan:"v1/plan-gate-timing/getByPlan"
     },
-    place:{
-        GET_ALL:"v1/place/getAll",
-        GET_BY_ID:"v1/place/getById",
-        query:"v1/place/query",
+    gym:{
+        GET_ALL:"v1/gym/getAll",
+        GET_BY_ID:"v1/gym/getById",
+        query:"v1/gym/query",
     },
     TicketSubscribe:{
         getById:"v1/TicketSubscribe/getById",

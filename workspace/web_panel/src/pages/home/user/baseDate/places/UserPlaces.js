@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {PlaceGym_getPlaceByUser} from "../../../../../network/api/place.api";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -8,13 +7,14 @@ import {Avatar, Chip, TableCell} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import {useHistory} from "react-router-dom";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
+import {Place_getPlaceByUser} from "../../../../../network/api/place.api";
 
 function UserPlaces({currentUser}) {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [userPlaces, setUserPlaces] = useState([]);
     useEffect(() => {
-        PlaceGym_getPlaceByUser({id: currentUser.Id}).then(result => {
+        Place_getPlaceByUser({id: currentUser.Id}).then(result => {
             setUserPlaces(result.data.Data)
         }).catch(e => {
             try {

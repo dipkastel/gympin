@@ -35,17 +35,17 @@ export let Api_url = {
     Notification: {
         getUserNotifications: "v1/Notification/getUserNotifications"
     },
-    place: {
-        GET_PLACES_BY_USER: "v1/place/getPlacesByUser",
-        GET_BY_ID: "v1/place/getById",
-        CHANGE_STATUS: "v1/place/changeStatus",
-        UPDATE: "/v1/place/UPDATE",
-        updateContract: "/v1/place/updateContract",
-        sendContractCode: "/v1/place/sendContractCode",
-        signContract: "/v1/place/signContract",
-        GET_MULTIMEDIAS: "/v1/place/GetMultimedias",
-        ADD_MULTIMEDIA: "/v1/place/addMultimedia",
-        DELETE_MULTIMEDIA: "/v1/place/deleteMultimedia",
+    gym: {
+        GET_PLACES_BY_USER: "v1/gym/getPlacesByUser",
+        GET_BY_ID: "v1/gym/getById",
+        CHANGE_STATUS: "v1/gym/changeStatus",
+        UPDATE: "/v1/gym/UPDATE",
+        updateContract: "/v1/gym/updateContract",
+        sendContractCode: "/v1/gym/sendContractCode",
+        signContract: "/v1/gym/signContract",
+        GET_MULTIMEDIAS: "/v1/gym/GetMultimedias",
+        ADD_MULTIMEDIA: "/v1/gym/addMultimedia",
+        DELETE_MULTIMEDIA: "/v1/gym/deleteMultimedia",
     },
     placeOption: {
         GET_ALL: "v1/placeOption/getAll"

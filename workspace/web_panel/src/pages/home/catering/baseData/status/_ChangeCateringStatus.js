@@ -1,16 +1,15 @@
 import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
-import {Button, Switch, TextField} from "@mui/material";
-import PlaceMap from "../Base/PlaceMap";
 import Select from "react-select";
-import {placeGym_changeStatus} from "../../../../../network/api/placeGym.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
+import {placeGym_changeStatus} from "../../../../../network/api/placeGym.api";
+import {Catering_changeStatus} from "../../../../../network/api/placeCatering.api";
 
-const _ChangePlaceStatus = ({place, updatePlace}) => {
+const _ChangeCateringStatus = ({catering, update}) => {
     const error = useContext(ErrorContext);
 
-    const [inPlace, SetInPlace] = useState(place)
+    const [inCatering, SetInCatering] = useState(catering)
 
 
     function getStatusOptions() {
@@ -21,11 +20,11 @@ const _ChangePlaceStatus = ({place, updatePlace}) => {
         ]
     }
     function setStatusOptions(status) {
-        placeGym_changeStatus({
-            Id:inPlace.Id,
+        Catering_changeStatus({
+            Id:inCatering.Id,
             Status:status
         }).then(result=>{
-            SetInPlace(result.data.Data);
+            SetInCatering(result.data.Data);
             error.showError({message: "ثبت موفق",});
         }).catch(e => {
             try {
@@ -41,7 +40,7 @@ const _ChangePlaceStatus = ({place, updatePlace}) => {
 
             <Portlet>
                 <PortletHeader
-                    title={"وضعیت " + place.Name}
+                    title={"وضعیت " + catering.Name}
                 />
 
                 <PortletBody>
@@ -52,7 +51,7 @@ const _ChangePlaceStatus = ({place, updatePlace}) => {
                             name="formStatus"
                             value={
                                 getStatusOptions().filter(option =>
-                                    option.value === inPlace.Status)
+                                    option.value === inCatering.Status)
                             }
                             options={getStatusOptions()}
                             onChange={(e) => setStatusOptions( e.value)}
@@ -64,4 +63,4 @@ const _ChangePlaceStatus = ({place, updatePlace}) => {
     );
 };
 
-export default _ChangePlaceStatus;
+export default _ChangeCateringStatus;

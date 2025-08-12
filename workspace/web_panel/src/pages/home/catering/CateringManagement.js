@@ -16,7 +16,7 @@ import {
     getRppCateringManagement,
     SetRppCateringManagement,
 } from "../../../helper/pocket/pocket";
-import {Catering_add, Catering_query} from "../../../network/api/catering.api";
+import {Catering_add, Catering_query} from "../../../network/api/placeCatering.api";
 
 
 const CateringManagement = () => {

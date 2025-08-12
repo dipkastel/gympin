@@ -62,10 +62,6 @@ export let Api_url = {
     optionOfPlace: {
         GET_BY_PLACE_ID: "v1/OptionOfPlace/getByPlaceId",
     },
-    place: {
-        GET_ALL: "v1/place/getAll",
-        GET_BY_ID: "v1/place/getById",
-    },
     placeAbout: {
         GET_BY_PLACE_ID: "v1/placeAbout/getByPlaceId",
     },

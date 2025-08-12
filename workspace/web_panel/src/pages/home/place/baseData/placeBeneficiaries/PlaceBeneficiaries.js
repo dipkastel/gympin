@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {placeGym_getBuyableByPlace} from "../../../../../network/api/place.api";
+import {placeGym_getBuyableByPlace} from "../../../../../network/api/placeGym.api";
 import {placePersonnel_ByPlace} from "../../../../../network/api/placePersonnel.api";
 import Select from "react-select";
 import { buyable_setTicketBeneficiary} from "../../../../../network/api/buyable.api";

@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import _PlaceInfo from "./_PlaceInfo";
 import {useSearchParams} from "react-router-dom";
-import {place_getById, Place_update} from "../../network/api/place.api";
+import {gym_getById, gym_update} from "../../network/api/place.api";
 import _PlaceLocation from "./_placeLocation";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import getAccessOf from "../../helper/accessManager";
@@ -28,7 +28,7 @@ const Place = ({hallListChange,introCanGoNext}) => {
     }, [place]);
 
     function getPlace(){
-        place_getById(introMode?inplace?.Id:searchParams?.get("id")).then(result=>{
+        gym_getById(introMode?inplace?.Id:searchParams?.get("id")).then(result=>{
             setPlace(result.data.Data)
         }).catch(e => {
             try {
@@ -39,7 +39,7 @@ const Place = ({hallListChange,introCanGoNext}) => {
         })
     }
     function submitEdit(data){
-        Place_update(data).then(result=>{
+        gym_update(data).then(result=>{
             getPlace();
             error.showError({message: "با موفقیت ثبت شد.",});
         }).catch(e => {

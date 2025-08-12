@@ -1,6 +1,8 @@
-package com.notrika.gympin.domain.place.rate;
+package com.notrika.gympin.domain.place;
 
+import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
+import com.notrika.gympin.common.place.placeBase.param.PlaceParam;
 import com.notrika.gympin.common.place.placeCatering.dto.PlaceCateringDto;
 import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
 import com.notrika.gympin.common.place.placeCatering.query.PlaceCateringQuery;
@@ -8,6 +10,7 @@ import com.notrika.gympin.common.place.placeCatering.service.PlaceCateringServic
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
+import com.notrika.gympin.common.util.exception.place.*;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.BuyableConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
@@ -16,6 +19,7 @@ import com.notrika.gympin.persistence.dao.repository.place.PlaceCateringReposito
 import com.notrika.gympin.persistence.dao.repository.settings.ManageLocationRepository;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,17 +37,10 @@ public class PlaceCateringServiceImpl extends AbstractBaseService<PlaceCateringP
     @Autowired
     private PlaceCateringRepository placeCateringRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private MultimediaRepository multimediaRepository;
 
     @Autowired
     private ManageLocationRepository manageLocationRepository;
 
-    @Autowired
-    private SmsInService smsInService;
 
     @Override
     public PlaceCateringDto add(PlaceCateringParam placeParam) {
@@ -103,6 +100,33 @@ public class PlaceCateringServiceImpl extends AbstractBaseService<PlaceCateringP
     @Override
     public Page<PlaceCateringEntity> findAll(Specification<PlaceCateringEntity> specification, Pageable pageable) {
         return placeCateringRepository.findAll(specification, pageable);
+    }
+
+    @Override
+    public PlaceCateringDto changeStatus(PlaceCateringParam param) {
+        PlaceCateringEntity catering = placeCateringRepository.getById(param.getId());
+        catering.setStatus(param.getStatus());
+        if (param.getStatus() == PlaceStatusEnum.ACTIVE) {
+            if (catering.getName() == null) {
+                throw new PlaceNameCanNotBeNull();
+            }
+            if (catering.getLatitude() == 0) {
+                throw new PlaceLocationMustSelectOnMap();
+            }
+            if (catering.getLongitude() == 0) {
+                throw new PlaceLocationMustSelectOnMap();
+            }
+            if (catering.getLocation() == null) {
+                throw new PlaceLocationCanNotBeNull();
+            }
+            if (catering.getAddress() == null) {
+                throw new PlaceAdressCanNotBeNull();
+            }
+            if (catering.isDeleted()) {
+                throw new PlaceIsDeleted();
+            }
+        }
+        return PlaceConvertor.ToCateringDto(placeCateringRepository.update(catering));
     }
 
     @Override

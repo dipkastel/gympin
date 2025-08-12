@@ -2,46 +2,39 @@ import axios from "axios";
 import {Api_url} from "./NETWORKCONSTS";
 
 
-export  function Places_getPlacesByUserId(id){
-    return axios.get(Api_url.place.GET_PLACES_BY_USER,{params:{id:id}})
+export  function gym_getById(id){
+    return axios.get(Api_url.gym.GET_BY_ID,{params:{id:id}})
+}
+
+export  function gym_changeStatus(place){
+    return axios.put(Api_url.gym.CHANGE_STATUS,place)
+}
+
+export  function gym_getMultimedias(placeId){
+    return axios.get(Api_url.gym.GET_MULTIMEDIAS,{params:{id:placeId}})
+}
+
+export  function gym_AddMultimedia(data){
+    return axios.post(Api_url.gym.ADD_MULTIMEDIA,data)
 }
 
 
-export  function place_getById(id){
-    return axios.get(Api_url.place.GET_BY_ID,{params:{id:id}})
+export  function gym_deleteMultimedia(data){
+    return axios.put(Api_url.gym.DELETE_MULTIMEDIA,data)
 }
 
-export  function place_changeStatus(place){
-    return axios.put(Api_url.place.CHANGE_STATUS,place)
+export  function gym_update(data){
+    return axios.put(Api_url.gym.UPDATE,data)
 }
 
-
-export  function place_getMultimedias(placeId){
-    return axios.get(Api_url.place.GET_MULTIMEDIAS,{params:{id:placeId}})
+export  function gym_UpdateContract(data){
+    return axios.post(Api_url.gym.updateContract,data)
 }
 
-
-export  function place_AddMultimedia(data){
-    return axios.post(Api_url.place.ADD_MULTIMEDIA,data)
+export  function gym_sendContractCode(data){
+    return axios.post(Api_url.gym.sendContractCode,data)
 }
 
-
-export  function Place_deleteMultimedia(data){
-    return axios.put(Api_url.place.DELETE_MULTIMEDIA,data)
-}
-
-export  function Place_update(data){
-    return axios.put(Api_url.place.UPDATE,data)
-}
-
-export  function place_UpdateContract(data){
-    return axios.post(Api_url.place.updateContract,data)
-}
-
-export  function place_sendContractCode(data){
-    return axios.post(Api_url.place.sendContractCode,data)
-}
-
-export  function place_SignContract(data){
-    return axios.post(Api_url.place.signContract,data)
+export  function gym_SignContract(data){
+    return axios.post(Api_url.gym.signContract,data)
 }

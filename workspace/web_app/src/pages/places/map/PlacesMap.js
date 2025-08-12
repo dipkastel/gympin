@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import {Form} from "react-bootstrap";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import {Place_query} from "../../../network/api/place.api";
+import {gym_query} from "../../../network/api/gym.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {Button, Grid, IconButton, LinearProgress, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
@@ -31,7 +31,7 @@ const PlacesMap = () => {
     function getPlacesInrange(bounds) {
         if(!bounds) return;
         setIsLoading(true);
-        Place_query({
+        gym_query({
             queryType: "FILTER",
             Status: "Active",
             Option: null,

@@ -12,7 +12,7 @@ import {
     TextField, Typography
 } from "@mui/material";
 import {connect, useSelector} from "react-redux";
-import {place_changeStatus} from "../../network/api/place.api";
+import {gym_changeStatus} from "../../network/api/place.api";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {Form} from "react-bootstrap";
@@ -33,7 +33,7 @@ const _PlaceActivity = (props) => {
 
     function changePlaceStatus(status) {
         if (!place) return;
-        place_changeStatus({
+        gym_changeStatus({
             Id: place.Id,
             Status: status
         }).then(result => {

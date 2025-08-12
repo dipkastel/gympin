@@ -7,7 +7,7 @@ import {TransactionCorporateTypes} from "../../../helper/enums/TransactionCorpor
 import AsyncSelect from "react-select/async";
 import {user_query} from "../../../network/api/user.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {PlaceGym_query} from "../../../network/api/place.api";
+import {PlaceGym_query} from "../../../network/api/placeGym.api";
 import {corporate_query} from "../../../network/api/corporate.api";
 
 export const defaultFilterFinance = {

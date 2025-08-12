@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CateringApi, PlaceApi, SportApi} from "./const_api";
+import {CateringApi, GymApi, SportApi} from "./const_api";
 
 //catering
 export function Catering_getAll() {
@@ -29,3 +29,8 @@ export function Catering_query(data) {
 export function Catering_getBuyableByPlace(data) {
     return axios.get(CateringApi.getBuyableByPlace, {params:data});
 }
+
+export  function Catering_changeStatus(data){
+    return axios.put(CateringApi.CHANGE_STATUS,data)
+}
+

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Box, Card, CircularProgress, Container, Grid2 as Grid, Link, Typography} from "@mui/material";
-import {Place_query} from "../../../network/api/place.api";
+import {gym_query} from "../../../network/api/gym.api";
 import {useNavigate} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import Slick from "react-slick";
@@ -73,7 +73,7 @@ const _HomePlaceList = ({title,query,ls,playSpeed}) => {
     }, []);
 
     function getPlaces(){
-        Place_query({
+        gym_query({
             queryType: "FILTER",
             Status: "Active",
             ParentParentLocationId:currentUser?.Location?.Id,

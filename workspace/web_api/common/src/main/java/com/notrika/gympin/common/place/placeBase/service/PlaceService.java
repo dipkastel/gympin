@@ -1,11 +1,9 @@
-package com.notrika.gympin.common.place.placeCatering.service;
+package com.notrika.gympin.common.place.placeBase.service;
 
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeBase.param.PlaceParam;
-import com.notrika.gympin.common.place.placeCatering.dto.PlaceCateringDto;
-import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
-import com.notrika.gympin.common.place.placeCatering.query.PlaceCateringQuery;
+import com.notrika.gympin.common.place.placeBase.query.PlaceQuery;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymContractSmsParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaListParam;
@@ -21,10 +19,13 @@ import com.notrika.gympin.common.util._base.base.BaseService;
 
 import java.util.List;
 
-public interface PlaceCateringService extends BaseService<PlaceCateringParam, PlaceCateringDto, PlaceCateringQuery> {
+public interface PlaceService extends BaseService<PlaceParam, PlaceDto, PlaceQuery> {
 
-    PlaceCateringDto changeStatus(PlaceCateringParam param);
+    List<PlaceDto> getPlacesByLocation(LocationParam param);
 
-    List<TicketBuyableDto> getBuyableByPlace(PlaceGymParam param);
+    List<PlaceDto> getPlacesByUser(UserParam userParam);
 
+    InviteCode getPlaceInviteCode(PlaceParam param);
+
+    List<TicketBuyableDto> getBuyableByPlace(PlaceParam param);
 }

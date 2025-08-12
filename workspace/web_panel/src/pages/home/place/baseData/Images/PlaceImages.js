@@ -10,7 +10,7 @@ import {
     PlaceGym_addMultimeidaList,
     PlaceGym_deleteMultimedia,
     PlaceGym_GetMultimedias
-} from "../../../../../network/api/place.api";
+} from "../../../../../network/api/placeGym.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 

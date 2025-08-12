@@ -218,23 +218,28 @@ export let ServiceApi = {
     deleteCorruptedItems: "v1/service/deleteCorruptedItems",
     getUsersActive: "v1/service/getUsersActive",
 };
+export let GymApi = {
+    getAllPlace: "v1/gym/getAll",
+    getPlaceById: "v1/gym/getById",
+    getPlacesInviteCode: "v1/gym/getPlacesInviteCode",
+    addPlace: "v1/gym/add",
+    CHANGE_STATUS: "v1/gym/changeStatus",
+    deletePlace: "v1/gym/delete",
+    updatePlace: "v1/gym/update",
+    updateOrder: "v1/gym/updateOrder",
+    getMultimedias: "v1/gym/getMultimedias",
+    addMultimedia: "v1/gym/addMultimedia",
+    getBuyableByPlace: "v1/gym/getBuyableByPlace",
+    addMultimediaList: "v1/gym/addMultimediaList",
+    getByUser: "v1/gym/getPlacesByUser",
+    query: "v1/gym/query",
+    deleteMultimedia: "v1/gym/deleteMultimedia"
+};
 export let PlaceApi = {
-    getAllPlace: "v1/place/getAll",
-    getPlaceById: "v1/place/getById",
-    getPlacesInviteCode: "v1/place/getPlacesInviteCode",
-    addPlace: "v1/place/add",
-    CHANGE_STATUS: "v1/place/changeStatus",
-    deletePlace: "v1/place/delete",
-    updatePlace: "v1/place/update",
-    updateOrder: "v1/place/updateOrder",
-    countFilter: "v1/place/count-filter",
-    getMultimedias: "v1/place/getMultimedias",
-    addMultimedia: "v1/place/addMultimedia",
-    getBuyableByPlace: "v1/place/getBuyableByPlace",
-    addMultimediaList: "v1/place/addMultimediaList",
-    getByUser: "v1/place/getPlacesByUser",
-    query: "v1/place/query",
-    deleteMultimedia: "v1/place/deleteMultimedia"
+    getPlacesInviteCode: "v1/Place/getPlacesInviteCode",
+    getBuyableByPlace: "v1/Place/getBuyableByPlace",
+    getByUser: "v1/Place/getPlacesByUser",
+    query: "v1/Place/query",
 };
 export let CateringApi = {
     add: "v1/catering/add",
@@ -243,6 +248,7 @@ export let CateringApi = {
     update: "v1/catering/update",
     getAll: "v1/catering/getAll",
     getById: "v1/catering/getById",
+    CHANGE_STATUS: "v1/catering/changeStatus",
     getBuyableByPlace: "v1/catering/getBuyableByPlace",
 };
 export let TicketFoodApi = {

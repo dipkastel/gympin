@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Portlet, PortletBody} from "../../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
 import {Button} from "@mui/material";
-import {PlaceGym_addPlace} from "../../../../../../network/api/place.api";
+import {PlaceGym_addPlace} from "../../../../../../network/api/placeGym.api";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 
 const __wizardRegister = ({setPlace}) => {

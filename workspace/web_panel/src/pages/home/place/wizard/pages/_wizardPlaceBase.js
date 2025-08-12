@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {PlaceGym_getPlaceById, PlaceGym_updatePlace} from "../../../../../network/api/place.api";
+import {PlaceGym_getPlaceById, PlaceGym_updatePlace} from "../../../../../network/api/placeGym.api";
 import __wizardRegister from "./base/__wizardRegister";
 import {useParams} from "react-router-dom";
 import {Location_query} from "../../../../../network/api/location.api";

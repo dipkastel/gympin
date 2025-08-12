@@ -3,7 +3,7 @@ import {authActions} from "../actions/authActions";
 import store from "../store";
 import {ActionTypesSaga, sagaActions} from "../actions/SagaActions"
 import {user_getById} from "../../../network/api/user.api";
-import {place_getById} from "../../../network/api/place.api";
+import {gym_getById} from "../../../network/api/place.api";
 import {placeActions} from "../actions/PlaceActions";
 import {Halls_getByPlace} from "../../../network/api/halls.api";
 import {placePersonnel_getAccess} from "../../../network/api/placePersonnel.api";
@@ -37,7 +37,7 @@ export function* saga() {
     yield takeLatest(ActionTypesSaga.RequestPlace, function* placeRequested(action) {
         const result = yield call(
             () => new Promise((resolve) => {
-                place_getById(action.payload.placeId).then((_result) => {
+                gym_getById(action.payload.placeId).then((_result) => {
                     resolve(_result.data.Data);
                 }).catch(e => {
                     console.log(e)

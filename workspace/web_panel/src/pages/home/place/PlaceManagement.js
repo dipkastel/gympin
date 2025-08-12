@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal, Table} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar,} from "../../partials/content/Portlet";
 import {Button, Card, CardContent, CardHeader, Chip, Grid, Paper, Tab, Tabs, TextField, Tooltip} from "@mui/material";
-import {PlaceGym_addPlace, PlaceGym_query} from "../../../network/api/place.api";
+import {PlaceGym_addPlace, PlaceGym_query} from "../../../network/api/placeGym.api";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";

@@ -7,7 +7,7 @@
 //import com.notrika.gympin.common.place.hallEnter.dto.EnterHallRequestDto;
 //import com.notrika.gympin.common.place.hallEnter.param.EnterHallRequestParam;
 //import com.notrika.gympin.common.place.place.dto.PlaceGymDto;
-//import com.notrika.gympin.common.place.place.param.PlaceGymParam;
+//import com.notrika.gympin.common.place.place.param.PlaceParam;
 //import com.notrika.gympin.common.sportTest.sportTest.param.SportParam;
 //import com.notrika.gympin.common.util._base.base.ResponseModel;
 //import com.notrika.gympin.test.domain.utils.BaseTest;
@@ -26,7 +26,7 @@
 //    @BeforeAll
 //    @Order(1)
 //    public void addPlace() throws Exception{
-//        final PlaceGymParam param = PlaceGymParam.builder()
+//        final PlaceParam param = PlaceParam.builder()
 //                .name("مرکز برای سالن")
 //                .build();
 //
@@ -47,7 +47,7 @@
 //        if(placeId==null) throw new Exception("is not exist");
 //        final HallParam param = HallParam.builder()
 //                .name("سالن برای ورود")
-//                .place(PlaceGymParam.builder().id(placeId).build())
+//                .place(PlaceParam.builder().id(placeId).build())
 //                .trafficManagement(false)
 //                .enable(true)
 //                .sportTest(SportParam.builder().id(1l).build())

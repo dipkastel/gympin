@@ -2,14 +2,14 @@ import React, {useContext, useEffect, useState} from 'react';
 import Notice from "../../../partials/content/Notice";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useParams} from "react-router-dom";
-import {Catering_getById, Catering_update} from "../../../../network/api/catering.api";
+import {Catering_getById, Catering_update} from "../../../../network/api/placeCatering.api";
 import Notes from "../../../partials/content/notes/Notes";
 import {Paper, Tab, Tabs} from "@mui/material";
 import CateringManagementCateringTab from "./CateringManagementTabs/CateringManagementCateringTab";
 import CateringManagementDataTab from "./CateringManagementTabs/CateringManagementDataTab";
 import CateringManagementManuTab from "./CateringManagementTabs/CateringManagementManuTab";
-import PlaceManagementBeneficiariesTab from "../../place/baseData/placeManagementTabs/PlaceManagementBeneficiariesTab";
 import CateringManagementBeneficiariesTab from "./CateringManagementTabs/CateringManagementBeneficiariesTab";
+import CateringManagementSettingTab from "./CateringManagementTabs/CateringManagementSettingTab";
 
 
 
@@ -83,7 +83,7 @@ const CateringDataManagement = () => {
             {/*        {selectedTab === "TICKET"&&<PlaceManagementTicketsTab place={place}/>}*/}
             {/*        {selectedTab === "SELLS"&&<PlaceManagementSellsTab place={place}/>}*/}
             {/*        {selectedTab === "BENEFICIARIES"&&<PlaceManagementBeneficiariesTab place={place}/>}*/}
-            {/*        {selectedTab === "SETTING"&&<PlaceManagementSettingTab place={place} update={update}/>}*/}
+                    {selectedTab === "SETTING"&&<CateringManagementSettingTab catering={catering} update={update}/>}
                 </div>
                 <div className="col-md-2">
                     {catering && <Notes source={{Place: {Id: catering.Id}}}/>}

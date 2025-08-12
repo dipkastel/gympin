@@ -64,7 +64,7 @@ public class placeSportTest extends BaseTest {
 //        if(placeSportId==null) throw new Exception("is not exist");
 //        final PlaceSportParam param = PlaceSportParam.builder()
 //                .id(placeSportId)
-//                .place(PlaceGymParam.builder().id(placeId).build())
+//                .place(PlaceParam.builder().id(placeId).build())
 //                .sportTest(SportParam.builder().id(2l).build())
 //                .build();
 //

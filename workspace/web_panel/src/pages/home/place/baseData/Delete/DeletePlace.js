@@ -5,7 +5,7 @@ import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import {corporate_delete} from "../../../../../network/api/corporate.api";
 import {Modal} from "react-bootstrap";
-import {PlaceGym_deletePlace} from "../../../../../network/api/place.api";
+import {PlaceGym_deletePlace} from "../../../../../network/api/placeGym.api";
 
 function DeletePlace({place}) {
 

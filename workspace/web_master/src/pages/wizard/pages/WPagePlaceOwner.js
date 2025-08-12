@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, CardContent, FormControl, FormControlLabel, Grid, Switch, TextField, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {Form} from "react-bootstrap";
-import {place_AddMultimedia, place_UpdateContract} from "../../../network/api/place.api";
+import {gym_AddMultimedia, gym_UpdateContract} from "../../../network/api/place.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import store from "../../../helper/redux/store";
 import {sagaActions} from "../../../helper/redux/actions/SagaActions";
@@ -63,7 +63,7 @@ const WPagePlaceOwner = ({onNext}) => {
             return;
         }
 
-        place_UpdateContract({
+        gym_UpdateContract({
             Id:place.Id,
             ContractData:JSON.stringify(contranct)
         }).then(result => {

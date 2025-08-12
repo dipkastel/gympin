@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Card, CircularProgress, Collapse, Container, FormControl, FormControlLabel, Grid2 as Grid, Link, TextField} from "@mui/material";
-import {Place_query} from "../../../network/api/place.api";
+import {gym_query} from "../../../network/api/gym.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 import __placeListItem from "./__placeListItem";
@@ -113,7 +113,7 @@ const _PlacesList = () => {
         if(!searchString)
             searchString = null;
         setIsLoading(true);
-        Place_query({
+        gym_query({
             queryType: "FILTER",
             Status: "Active",
             SearchStr: searchString,

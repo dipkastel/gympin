@@ -131,6 +131,16 @@ public final class PlaceConvertor {
         return catering;
     }
 
+    public static List<PlaceDto> ToDto(Collection<PlaceEntity> entities) {
+        if (entities == null) return null;
+        return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::ToDto).collect(Collectors.toList());
+    }
+
+    public static Page<PlaceDto> ToDto(Page<PlaceEntity> entities) {
+        if (entities == null) return null;
+        return entities.map(PlaceConvertor::ToDto);
+    }
+
     public static PlaceDto ToDto(PlaceEntity entity) {
         if (entity == null) return null;
         PlaceDto placeDto = new PlaceDto();

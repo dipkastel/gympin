@@ -3,7 +3,7 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {Location_query} from "../../../../network/api/location.api";
 import {user_query} from "../../../../network/api/user.api";
 import {sport_query} from "../../../../network/api/sport.api";
-import {PlaceGym_query} from "../../../../network/api/place.api";
+import {PlaceGym_query} from "../../../../network/api/placeGym.api";
 import {Row} from "react-bootstrap";
 import {Grid} from "@mui/material";
 import _DashNotes from "../partials/_DashNotes";

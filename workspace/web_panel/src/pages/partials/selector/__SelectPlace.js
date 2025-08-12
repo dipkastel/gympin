@@ -4,7 +4,7 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 import AsyncSelect from "react-select/async";
 import {corporate_query} from "../../../network/api/corporate.api";
 import {toPriceWithComma} from "../../../helper";
-import {PlaceGym_query} from "../../../network/api/place.api";
+import {PlaceGym_query} from "../../../network/api/placeGym.api";
 
 const __SelectPlace = ({hidden,onChange,value}) => {
 

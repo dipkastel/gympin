@@ -17,7 +17,7 @@
 //    @BeforeAll
 //    @Order(1)
 //    public void addPlace() throws Exception{
-//        final PlaceGymParam param = PlaceGymParam.builder()
+//        final PlaceParam param = PlaceParam.builder()
 //                .name("مرکز برای سالن")
 //                .build();
 //
@@ -38,7 +38,7 @@
 //    public void addByName() throws Exception {
 //        final HallParam param = HallParam.builder()
 //                .name("سالن 1")
-//                .place(PlaceGymParam.builder().id(placeId).build())
+//                .place(PlaceParam.builder().id(placeId).build())
 //                .build();
 //
 //        ResponseModel<HallDto> result = TestPost(
@@ -57,7 +57,7 @@
 //    public void add() throws Exception {
 //        final HallParam param = HallParam.builder()
 //                .name("سالن 2")
-//                .place(PlaceGymParam.builder().id(placeId).build())
+//                .place(PlaceParam.builder().id(placeId).build())
 //                .trafficManagement(false)
 //                .enable(false)
 //                .sportTest(SportParam.builder().id(1l).build())
@@ -82,7 +82,7 @@
 //        final HallParam param = HallParam.builder()
 //                .id(hall1Id)
 //                .name("تغییر سالن 1")
-//                .place(PlaceGymParam.builder().id(placeId).build())
+//                .place(PlaceParam.builder().id(placeId).build())
 //                .trafficManagement(true)
 //                .enable(false)
 //                .sportTest(SportParam.builder().id(2l).build())

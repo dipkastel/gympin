@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {PlaceGym_getPlaceById, PlaceGym_updatePlace} from "../../../../network/api/place.api";
+import {PlaceGym_getPlaceById, PlaceGym_updatePlace} from "../../../../network/api/placeGym.api";
 import Notice from "../../../partials/content/Notice";
 import Notes from "../../../partials/content/notes/Notes";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";

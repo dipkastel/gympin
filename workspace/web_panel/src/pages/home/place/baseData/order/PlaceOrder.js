@@ -3,7 +3,7 @@ import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/
 import {Button, TextField} from "@mui/material";
 import {Form} from "react-bootstrap";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {PlaceGym_updateOrder} from "../../../../../network/api/place.api";
+import {PlaceGym_updateOrder} from "../../../../../network/api/placeGym.api";
 
 const PlaceOrder = ({place,updatePlace}) => {
 

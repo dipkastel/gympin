@@ -4,7 +4,7 @@ import {Form} from "react-bootstrap";
 import {Button, Typography} from "@mui/material";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useHistory, useParams} from "react-router-dom";
-import {placeGym_changeStatus, PlaceGym_getPlaceById} from "../../../../../network/api/place.api";
+import {placeGym_changeStatus, PlaceGym_getPlaceById} from "../../../../../network/api/placeGym.api";
 
 const _wizardActivePlace = ({allowNext}) => {
 

@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import _PlaceImages from "./_PlaceImages";
-import {place_getById} from "../../../network/api/place.api";
+import {gym_getById} from "../../../network/api/gym.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import "./place.css"
 import {fixTextToSlug} from "../../../helper/utils";
@@ -42,7 +42,7 @@ const Place = () => {
     }
 
     function getPlace(id) {
-        place_getById(id).then(result => {
+        gym_getById(id).then(result => {
             setPlace(result.data.Data);
             if (placeId.includes("-") && !placeId.includes(fixTextToSlug(result.data.Data.Name)))
                 navigate("/");

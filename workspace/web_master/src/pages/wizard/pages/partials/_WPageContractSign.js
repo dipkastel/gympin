@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {Button, Card, CardContent, CardHeader, Grid, TextField, Typography} from "@mui/material";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {place_sendContractCode, place_SignContract} from "../../../../network/api/place.api";
+import {gym_sendContractCode, gym_SignContract} from "../../../../network/api/place.api";
 import {Form} from "react-bootstrap";
 import store from "../../../../helper/redux/store";
 import {sagaActions} from "../../../../helper/redux/actions/SagaActions";
@@ -14,7 +14,7 @@ const _WPageContractSign = ({place, contract, PlacePersonel, onNext}) => {
 
     function sendCode(e) {
         e.preventDefault()
-        place_sendContractCode({
+        gym_sendContractCode({
             PlaceId: place.Id
         }).then(result => {
             if (result.data.Data)
@@ -33,7 +33,7 @@ const _WPageContractSign = ({place, contract, PlacePersonel, onNext}) => {
 
     function confirmCode(e) {
         e.preventDefault();
-        place_SignContract({
+        gym_SignContract({
             Id: place.Id,
             SignCode: code,
             HasContract:true

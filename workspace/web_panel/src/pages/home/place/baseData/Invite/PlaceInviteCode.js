@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Typography} from "@mui/material";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {PlaceGym_getPlacesInviteCode} from "../../../../../network/api/place.api";
+import {PlaceGym_getPlacesInviteCode} from "../../../../../network/api/placeGym.api";
 
 const PlaceInviteCode = ({place}) => {
     const error = useContext(ErrorContext);

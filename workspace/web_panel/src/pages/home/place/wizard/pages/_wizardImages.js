@@ -3,7 +3,7 @@ import {
     PlaceGym_addMultimeida, PlaceGym_addMultimeidaList,
     PlaceGym_deleteMultimedia,
     PlaceGym_GetMultimedias
-} from "../../../../../network/api/place.api";
+} from "../../../../../network/api/placeGym.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useParams} from "react-router-dom";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";

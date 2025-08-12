@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {media_AddImage, media_getCatById} from "../../network/api/multimedia.api";
-import {place_AddMultimedia, Place_deleteMultimedia, place_getMultimedias} from "../../network/api/place.api";
+import {gym_AddMultimedia, gym_deleteMultimedia, gym_getMultimedias} from "../../network/api/place.api";
 import {
     Box,
     Button,
@@ -61,7 +61,7 @@ const Images = ({introCanGoNext}) => {
     }
 
     function getImageList(){
-        place_getMultimedias(place?.Id).then(result=>{
+        gym_getMultimedias(place?.Id).then(result=>{
             SetImageList(result.data.Data);
             try{introCanGoNext(result.data.Data.length>0);}catch (e) {}
 
@@ -75,7 +75,7 @@ const Images = ({introCanGoNext}) => {
     }
 
     function deleteMultimedia(event,item){
-        Place_deleteMultimedia({
+        gym_deleteMultimedia({
             Place:{Id:place.Id},
             Multimedia:{Id:item.Id}
         }).then(result=>{
@@ -107,7 +107,7 @@ const Images = ({introCanGoNext}) => {
             error.showError({message: "لطفا صبر کنید...",});
             media_AddImage(formData)
                 .then(data => {
-                    place_AddMultimedia({
+                    gym_AddMultimedia({
                         Place:{Id:place.Id},
                         Multimedia:{Id:data.data.Data.Id}
                     }).then(result => {

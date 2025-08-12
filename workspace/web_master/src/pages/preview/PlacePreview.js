@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 // import _TabsPlace from "./_TabsPlace";
 // import {ErrorContext} from "../../../components/GympinPagesProvider";
 import "./placePreview.css"
-import {place_getById} from "../../network/api/place.api";
+import {gym_getById} from "../../network/api/place.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 import _PlaceImages from "./_PlaceImages";
