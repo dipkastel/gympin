@@ -2,76 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82a1e8ab-7850-4472-b2c7-7003016a9de7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/api/PlaceController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/param/PlaceParam.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/query/PlaceQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/service/PlaceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/PlaceControllerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/PlaceServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/network/api/gym.api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/network/api/placeGym.api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/CateringManagementTabs/CateringManagementSettingTab.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/status/_ChangeCateringStatus.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeCatering/api/PlaceCateringController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeCatering/api/PlaceCateringController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeCatering/service/PlaceCateringService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeCatering/service/PlaceCateringService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/PlaceCateringControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/PlaceCateringControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/PlaceGymControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/PlaceGymControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/rate/PlaceCateringServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/PlaceCateringServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/PlaceConvertor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/PlaceConvertor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/framework/src/test/java/com/notrika/gympin/test/domain/place/placeCommentTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/framework/src/test/java/com/notrika/gympin/test/domain/place/placeCommentTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/framework/src/test/java/com/notrika/gympin/test/domain/place/placeHallEnterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/framework/src/test/java/com/notrika/gympin/test/domain/place/placeHallEnterTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/framework/src/test/java/com/notrika/gympin/test/domain/place/placeRateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/framework/src/test/java/com/notrika/gympin/test/domain/place/placeRateTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/framework/src/test/java/com/notrika/gympin/test/domain/place/placeSportTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/framework/src/test/java/com/notrika/gympin/test/domain/place/placeSportTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_api/logs/logFile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/logs/logFile.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/place/PlaceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/place/PlaceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/place.api.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/newHome/subs/_HomePlaceList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/newHome/subs/_HomePlaceList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/map/PlacesMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/map/PlacesMap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/Place.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/Place.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/placesList/_PlacesList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/placesList/_PlacesList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_corporate/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/network/api/NETWORKCONSTS.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/helper/redux/saga/saga.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/helper/redux/saga/saga.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/network/api/NETWORKCONSTS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/network/api/place.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/network/api/place.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/images/Images.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/images/Images.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/management/_PlaceActivity.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/management/_PlaceActivity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/place/Place.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/place/Place.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/preview/PlacePreview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/preview/PlacePreview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/wizard/pages/WPagePlaceOwner.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/wizard/pages/WPagePlaceOwner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/wizard/pages/partials/_WPageContractSign.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/wizard/pages/partials/_WPageContractSign.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/TicketFoodMenu.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/TicketFoodMenu.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/TicketFoods.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/TicketFoods.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/catering.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/placeCatering.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/const_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/const_api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/note.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/note.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/place.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/place.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/CateringManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/CateringManagement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/CateringBeneficiaries/CateringBeneficiaries.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/CateringBeneficiaries/CateringBeneficiaries.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/CateringDataManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/CateringDataManagement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/Tabs/DashConfigsTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/Tabs/DashConfigsTab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/Tabs/DashReportsTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/Tabs/DashReportsTab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashUnContractPlaces.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashUnContractPlaces.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/finance/_financeFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/finance/_financeFilter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/location/LocationManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/location/LocationManagement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/media/Image/_ImageFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/media/Image/_ImageFilter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/PlaceManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/PlaceManagement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/PlacesMap/PlacesMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/PlacesMap/PlacesMap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Delete/DeletePlace.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Delete/DeletePlace.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Images/PlaceImages.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Images/PlaceImages.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Invite/PlaceInviteCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Invite/PlaceInviteCode.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/PlaceDataManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/PlaceDataManagement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/order/PlaceOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/order/PlaceOrder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/placeBeneficiaries/PlaceBeneficiaries.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/placeBeneficiaries/PlaceBeneficiaries.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/status/_ChangePlaceStatus.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/status/_ChangePlaceStatus.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/wizard/pages/_wizardActivePlace.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/wizard/pages/_wizardActivePlace.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/wizard/pages/_wizardImages.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/wizard/pages/_wizardImages.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/wizard/pages/_wizardPlaceBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/wizard/pages/_wizardPlaceBase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/wizard/pages/base/__wizardRegister.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/wizard/pages/base/__wizardRegister.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/user/baseDate/places/UserPlaces.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/user/baseDate/places/UserPlaces.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/partials/selector/__SelectPlace.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/partials/selector/__SelectPlace.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +119,7 @@
       <workItem from="1754409830718" duration="11381000" />
       <workItem from="1754743984069" duration="7406000" />
       <workItem from="1754835648137" duration="6867000" />
-      <workItem from="1754930282682" duration="1591000" />
+      <workItem from="1754930282682" duration="2286000" />
     </task>
     <servers />
   </component>

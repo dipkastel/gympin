@@ -37,7 +37,7 @@ function Login(props) {
     }, [code]);
 
     useEffect(() => {
-        if (inviteCode) {
+        if (inviteCode?.value) {
             setRegistered(false);
         }
     }, [inviteCode]);
