@@ -17,7 +17,7 @@ import {
 } from "@mui/icons-material";
 
 
-const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe}) => {
+const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe,login}) => {
     function getGender(Gender) {
         switch (Gender) {
             case "MALE" :
@@ -50,8 +50,8 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe}) => {
     }
 
     return (
-        <Grid size={{xs: 2, sm: 2, md: 2, lg: 1, xl: 1}}>
-            <Card sx={{m: 1}} elevation={6}>
+        <Grid size={{xs: 2, sm: 2, md: 2, lg: 1, xl: 1}} sx={{width:"100%"}}>
+            <Card  elevation={6} sx={{width:"100%"}}>
                 <CardHeader
                     component={"a"}
                     sx={{textDecoration: "none", textAlign: "start", color: "#000000"}}
@@ -67,8 +67,7 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe}) => {
 
 
                 />
-                <CardContent sx={{pt: 0}}>
-
+                <CardContent sx={{pt: 0}} >
                     <Grid sx={{mt: 1}} container justifyContent={"space-between"} direction={"row"} alignItems={"center"}>
                         <Grid><GroupOutlined sx={{mx: 1, color: "gray.contrastText"}}/><Typography sx={{display: "inline"}}
                                                                                                    variant={"body2"}
@@ -133,8 +132,8 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe}) => {
                     <Button disabled={!subscribe.Enable} variant={"contained"} color={"primary"} onClick={() => addToSubscribe(subscribe)}
                             sx={{mt: 1}} fullWidth>
                         {subscribe.Enable ? <Grid container sx={{width: "100%", minHeight: 45}} columns={42}>
-                            <Grid size={20} container direction={"column"} justifyContent={"center"} alignContent={"center"}
-                                  alignItems={"start"}>
+                            {login&&<Grid size={20} container direction={"column"} justifyContent={"center"} alignContent={"center"}
+                                   alignItems={"start"}>
                                 {(subscribe.Price < subscribe.ValuePrice) && <Grid>
                                     <Typography component={"span"}
                                                 sx={{textAlign: "start", textDecoration: "line-through", fontSize: "0.8rem"}}
@@ -145,7 +144,14 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe}) => {
                                     <Typography component={"span"} variant={"h5"}
                                                 sx={{fontSize: "0.8rem"}}>{toPriceWithComma(subscribe.Price) + " تومان"}</Typography>
                                 </Grid>
-                            </Grid>
+                            </Grid>}
+                            {!login&&<Grid size={20} container direction={"column"} justifyContent={"center"} alignContent={"center"}
+                                   alignItems={"start"}>
+                                <Grid>
+                                    <Typography component={"span"} variant={"h5"}
+                                                sx={{fontSize: "0.8rem"}}>{"وارد شوید"}</Typography>
+                                </Grid>
+                            </Grid>}
                             <Grid size={1}>
 
                                 <Divider orientation="vertical"

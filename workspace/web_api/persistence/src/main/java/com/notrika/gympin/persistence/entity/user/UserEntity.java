@@ -17,9 +17,9 @@ import com.notrika.gympin.persistence.entity.management.notification.ManageNotif
 import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionEntity;
 import com.notrika.gympin.persistence.entity.management.settings.UserSettingsEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
-import com.notrika.gympin.persistence.entity.place.comment.PlaceCommentEntity;
+import com.notrika.gympin.persistence.entity.place.rateAndComment.PlaceCommentEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
-import com.notrika.gympin.persistence.entity.place.rating.PlaceRateEntity;
+import com.notrika.gympin.persistence.entity.place.rateAndComment.PlaceRateEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryRequstEntity;

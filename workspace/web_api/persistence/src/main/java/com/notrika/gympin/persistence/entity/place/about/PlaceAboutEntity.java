@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.place.about;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
@@ -25,6 +26,8 @@ public class PlaceAboutEntity extends BaseEntityWithCreateUpdate<PlaceAboutEntit
 
     @ManyToOne
     @JoinColumn(name = "aboutPlaceId")
+    @JsonIgnore
+    @ToString.Exclude
     private PlaceEntity place;
 
 

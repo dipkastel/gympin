@@ -52,6 +52,13 @@ export let Api_url = {
         addSubscribe:"v1/invoice/addSubscribe",
         deleteBuyable:"v1/invoice/deleteBuyable",
     },
+    placeRate:{
+        add:"v1/placeRate/add",
+    },
+    placeComment:{
+        add:"v1/placeComment/add",
+        query:"v1/placeComment/query"
+    },
     increaseUserDeposit:{
         requestIncreaseUserDeposits:"v1/increaseUserDeposit/requestIncreaseUserDeposits",
         query: "v1/increaseUserDeposit/query",

@@ -94,7 +94,6 @@ const _PlacesList = () => {
     }, [openSearch]);
 
     useEffect(() => {
-        console.log("currentUser",currentUser);
         let debouncer = setTimeout(() => {
             SetPlaces(null);
             getData(0, value);

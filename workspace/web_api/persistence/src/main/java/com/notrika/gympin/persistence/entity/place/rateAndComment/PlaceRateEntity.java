@@ -1,5 +1,6 @@
-package com.notrika.gympin.persistence.entity.place.rating;
+package com.notrika.gympin.persistence.entity.place.rateAndComment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -13,7 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -25,15 +25,18 @@ import java.util.Date;
 public class PlaceRateEntity extends BaseEntityWithCreateUpdate<PlaceRateEntity> {
 
     @ManyToOne
-    @JoinColumn(name = "ratePlaceId")
+    @JoinColumn(name = "placeId")
+    @JsonIgnore
+    @ToString.Exclude
     private PlaceEntity place;
 
     @ManyToOne
-    @JoinColumn(name = "rateUserId")
+    @JoinColumn(name = "userId")
+    @JsonIgnore
+    @ToString.Exclude
     private UserEntity user;
 
-    private Float rate;
 
-    private Date date;
+    private Double rate;
 
 }

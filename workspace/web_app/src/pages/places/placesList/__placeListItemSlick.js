@@ -20,6 +20,12 @@ const __placeListItem = ({item}) => {
     const navigate = useNavigate();
     const [showActiveTime, setShowActiveTime] = useState(false)
     const chipSx = {bgcolor: "#838383", color: "#ffffff",fontSize:"0.6rem",p:"2px",height:"16px",m:0.2}
+
+    const imageStyle = {
+        minHeight: '200px',
+        width: '100%',
+        objectFit: 'cover',
+    };
     return (
         <Card elevation={8} sx={{margin: 2, padding: 0, borderRadius: 3}}>
             <Grid container
@@ -29,10 +35,11 @@ const __placeListItem = ({item}) => {
                   alignItems="center">
                 <Grid item
                       onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}
-                      sx={{padding: 0, display: "flex",direction:"rtl", flexDirection: "row", alignItems: "end"}}>
+                      sx={{padding: 0, display: "flex",direction:"rtl", flexDirection: "row", alignItems: "end",width:"100%"}}>
                     <Image
 
                         src={item?.Multimedias?.[0] ? (item.Multimedias?.[0]?.Url + "&width=400") : "https://api.gympin.ir/resource/image?Id=11"}
+                        style={imageStyle}
                         width={"100%"}/>
                     {item?.Location?.Name &&
                     <Grid container direction={"row"} justifyContent={"space-between"} alignItems={"s"} sx={{height: "30px", position: "absolute",m:"auto"}} >

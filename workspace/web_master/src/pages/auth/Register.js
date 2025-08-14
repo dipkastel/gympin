@@ -68,11 +68,9 @@ export default function Register(props) {
                             title="فرم تماس مراکز"
                         />
                         <CardContent>
-
-
                             <Alert variant={"info"} className={"m-2"} onClick={()=>setShowVideo(true)}>
                                 <Typography variant={"body1"} sx={{pb:1,px:1,textAlign:"center"}} >
-                                    برای مشاوره رایگان و افزایش فروش از طریق قرارگرفتن در لیست مجموعه های جیم پین فرم زیر را تکمیل نمایید.
+                                    برای افزودن مجموعه خود در لیست مجموعه های جیم پین فرم زیر را تکمیل نمایید.
                                 </Typography>
                                 <Typography variant={"body2"} sx={{pb:0,px:0,textAlign:"left"}} >
                                      مشاهده ویدئو

@@ -30,7 +30,7 @@ const PlaceManagement = () => {
     const [searchString, setSearchString] = useState(null);
     const [places, SetPlaces] = useState([]);
     const [selectedTab, setSelectedTab] = useState("ALL");
-    const [queryType, setQueryType] = useState("ALL");
+    const [queryType, setQueryType] = useState("SEARCH");
     const [placeStatus, SetPlaceStatus] = useState(null);
     const [deleted, SetDeleted] = useState(false);
     const [openModalAdd, SetOpenModalAdd] = useState(false);

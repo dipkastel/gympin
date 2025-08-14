@@ -18,21 +18,21 @@ const _TabPlaceBuyable = ({place,setSelectedTab}) => {
 
 
     function getPlans() {
-        ticketBuyable_query({
-            queryType: "FILTER",
-            Place: place.Id,
-            paging: {Page: 0, Size: 1}
-        }).then(result => {
-            if(result.data.Data.numberOfElements===0)
-                setSelectedTab(1)
+        // ticketBuyable_query({
+        //     queryType: "FILTER",
+        //     Place: place.Id,
+        //     paging: {Page: 0, Size: 1}
+        // }).then(result => {
+            // if(result?.data?.Data?.numberOfElements===0)
+            //     setSelectedTab(1)
             // if(result.data.Data)return;
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        })
+        // }).catch(e => {
+        //     try {
+        //         error.showError({message: e.response.data.Message});
+        //     } catch (f) {
+        //         error.showError({message: "خطا نا مشخص",});
+        //     }
+        // })
     }
 
     function addToSubscribes(item) {
@@ -115,7 +115,7 @@ const _TabPlaceBuyable = ({place,setSelectedTab}) => {
     }
 
     function showCallSudjest() {
-        return place?.CallUs&&place?.Tell;
+        return (!!currentUser)&&place?.CallUs&&place?.Tell;
     }
 
     return (
@@ -125,7 +125,7 @@ const _TabPlaceBuyable = ({place,setSelectedTab}) => {
             <Button variant={"contained"} color={"warning"}>تماس با مرکز</Button>
             </Alert>}
             <List className={"nopadding"} disablePadding>
-                {place.Id && <_placeSubscribes place={place}/>}
+                {place?.Id && <_placeSubscribes place={place}/>}
                 {/*{place.Id && <_placeCourses place={place}/>}*/}
             </List>
 

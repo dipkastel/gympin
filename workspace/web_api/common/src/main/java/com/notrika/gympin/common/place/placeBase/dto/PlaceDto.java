@@ -48,4 +48,10 @@ public class PlaceDto extends BaseDtoWithCreateUpdate<PlaceDto> {
     @JsonProperty("PlaceType")
     private String placeType;
 
+
+    @JsonProperty("Rate")
+    private Double rate;
+
+
+
 }

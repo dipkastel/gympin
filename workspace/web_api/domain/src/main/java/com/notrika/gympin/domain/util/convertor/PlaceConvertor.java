@@ -88,9 +88,11 @@ public final class PlaceConvertor {
             placeDto.setAddress(isSequred ? (entity.getAddress().substring(0, 3) + "****" + entity.getAddress().substring(entity.getAddress().length() - 3)) : entity.getAddress());
         } catch (Exception e) {
         }
+        placeDto.setCommentCount((short) entity.getPlaceComments().size());
         placeDto.setOrder(entity.getOrder());
         placeDto.setActiveTimes(entity.getActiveTimes());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
+        placeDto.setRate(entity.getRate());
         placeDto.setStatus(entity.getStatus());
         if (entity.getPlaceSport() != null)
             placeDto.setSports(SportConvertor.toDto(entity.getPlaceSport().stream().filter(p -> !p.isDeleted()).map(PlaceSportEntity::getSport).collect(Collectors.toList())));
@@ -151,6 +153,7 @@ public final class PlaceConvertor {
         placeDto.setTell(entity.getTell());
         placeDto.setAddress(entity.getAddress());
         placeDto.setStatus(entity.getStatus());
+        placeDto.setRate(entity.getRate());
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
         if(entity instanceof PlaceGymEntity)
             placeDto.setPlaceType("Gym");
@@ -177,6 +180,7 @@ public final class PlaceConvertor {
         PlaceGymDto placeDto = new PlaceGymDto();
         placeDto.setId(entity.getId());
         placeDto.setActiveTimes(entity.getActiveTimes());
+        placeDto.setRate(entity.getRate());
         placeDto.setName(isSequred ? (entity.getName().substring(0, 2) + "*****" + entity.getName().substring(entity.getName().length() - 2)) : entity.getName());
         placeDto.setOrder(entity.getOrder());
         try {
@@ -206,6 +210,7 @@ public final class PlaceConvertor {
         PlaceGymDto placeDto = new PlaceGymDto();
         placeDto.setId(entity.getId());
         placeDto.setActiveTimes(entity.getActiveTimes());
+        placeDto.setRate(entity.getRate());
         try {
             placeDto.setName(isSequred ? (entity.getName().substring(0, 2) + "*****" + entity.getName().substring(entity.getName().length() - 2)) : entity.getName());
         } catch (Exception e) {
@@ -244,15 +249,6 @@ public final class PlaceConvertor {
         placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
         return placeDto;
-    }
-
-    public static PlaceGymParam toGymParm(PlaceGymEntity entity) {
-        if (entity == null) return null;
-        PlaceGymParam placeParam = new PlaceGymParam();
-        placeParam.setId(entity.getId());
-        placeParam.setName(entity.getName());
-        placeParam.setStatus(entity.getStatus());
-        return placeParam;
     }
 
     public static PlaceAboutDto AboutToDto(PlaceAboutEntity entity) {
@@ -315,7 +311,6 @@ public final class PlaceConvertor {
         return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::personnelAccessToDto).collect(Collectors.toList());
 
     }
-
 
     public static List<PlacePersonnelBuyableAccessDto> personelBuyableAccessToDto(List<PlacePersonelBuyableAccessEntity> entities) {
         if (entities == null) return null;

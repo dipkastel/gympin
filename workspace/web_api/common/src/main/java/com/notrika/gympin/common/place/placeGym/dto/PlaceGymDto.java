@@ -81,5 +81,10 @@ public class PlaceGymDto extends BaseDtoWithCreateUpdate<PlaceGymDto> {
     @JsonProperty("Multimedias")
     private List<MultimediaDto> multimedias;
 
+    @JsonProperty("Rate")
+    private Double rate;
+
+    @JsonProperty("CommentCount")
+    private short commentCount;
 
 }

@@ -19,9 +19,15 @@ import {useNavigate} from "react-router-dom";
 const __placeListItem = ({item}) => {
     const navigate = useNavigate();
     const [showActiveTime, setShowActiveTime] = useState(false)
+
+    const imageStyle = {
+        minHeight: '200px',
+        width: '100%',
+        objectFit: 'cover',
+    };
     return (
         <Grid container>
-            <Card elevation={8} sx={{margin: 2, padding: 0, borderRadius: 3}}>
+            <Card elevation={8} sx={{margin: 2, padding: 0, borderRadius: 3,width:"100%"}}>
                 <Grid container
                       direction="row"
                       sx={{direction: "ltr"}}
@@ -32,6 +38,7 @@ const __placeListItem = ({item}) => {
                           sx={{padding: 0, display: "flex", flexDirection: "column-reverse", alignItems: "end",width:"100%"}}>
                         <Image
                             src={item?.Multimedias?.[0] ? (item.Multimedias?.[0]?.Url + "&width=400") : "https://api.gympin.ir/resource/image?Id=11"}
+                            style={imageStyle}
                             width={"100%"}/>
                         {item?.Location?.Name &&
                         <Grid container direction={"row"} sx={{height: "30px", position: "absolute",mb:"-1px"}}>

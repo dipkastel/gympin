@@ -195,9 +195,9 @@ public class PlaceGymServiceImpl extends AbstractBaseService<PlaceGymParam, Plac
 //            if (place.getHalls().size() < 1) {
 //                throw new PlaceHALLMustBeAdded();
 //            }
-            if (place.getTicketSubscribes().size() < 1) {
-                throw new PlaceTicketSubscribesCanNotBeEmpty();
-            }
+//            if (place.getTicketSubscribes().size() < 1) {
+//                throw new PlaceTicketSubscribesCanNotBeEmpty();
+//            }
             if (place.getMultimedias().size() < 1) {
                 throw new PlaceImagesIsEmpty();
             }

@@ -11,9 +11,9 @@ import com.notrika.gympin.persistence.entity.management.location.ManageLocationE
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.management.tags.ManageTagsEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
-import com.notrika.gympin.persistence.entity.place.comment.PlaceCommentEntity;
+import com.notrika.gympin.persistence.entity.place.rateAndComment.PlaceCommentEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
-import com.notrika.gympin.persistence.entity.place.rating.PlaceRateEntity;
+import com.notrika.gympin.persistence.entity.place.rateAndComment.PlaceRateEntity;
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
@@ -96,12 +96,21 @@ public class PlaceEntity<P> extends BaseEntityWithCreateUpdate<P> {
     private List<ManageNoteEntity> notes;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<PlaceCommentEntity> placeComments;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<PlaceRateEntity> placeRates;
 
+    @Column(name = "PlaceRate")
+    private Double rate;
+
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<PurchasedBaseEntity> purchased;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)

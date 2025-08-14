@@ -12,6 +12,10 @@ import _TabPlaceAbout from "./info/_TabPlaceAbout";
 import _PlaceSingleAbout from "./info/_PlaceSingleAbout";
 import {PlaceAbout_getByPlace} from "../../../network/api/placeAbout.api";
 import _PlaceFacilities from "./info/_PlaceFacilities";
+import {useSelector} from "react-redux";
+import _SinglePlaceGeneralHeader from "./partial/_SinglePlaceGeneralHeader";
+import _SinglePlaceGeneralFooter from "./partial/_SinglePlaceGeneralFooter";
+import _PlaceComments from "./comments/_PlaceComments";
 
 const Place = () => {
     const error = useContext(ErrorContext);
@@ -19,6 +23,7 @@ const Place = () => {
     const {placeId} = useParams();
     const [place, setPlace] = useState({});
     const [abouts,SetAbouts] = useState([]);
+    const currentUser = useSelector(state => state.auth.user)
 
     useEffect(() => {
         let placeLongId = placeId.split('-')[0];
@@ -43,6 +48,7 @@ const Place = () => {
 
     function getPlace(id) {
         gym_getById(id).then(result => {
+            console.log(result.data.Data);
             setPlace(result.data.Data);
             if (placeId.includes("-") && !placeId.includes(fixTextToSlug(result.data.Data.Name)))
                 navigate("/");
@@ -58,10 +64,14 @@ const Place = () => {
 
     return (
         <Grid container alignItems={"flex-start"}>
+            {!currentUser&&<Grid size={{xs:12 ,sm: 12, md: 12}} sx={{float: "right"}}>
+                <_SinglePlaceGeneralHeader />
+            </Grid>}
             <Grid size={{sm: 12, md: 6}} sx={{float: "right"}}>
                 {place.Multimedias && <_PlaceImages place={place}/>}
-                <_placeBaseInfo place={place}/>
+                <_placeBaseInfo place={place} currentUser={currentUser}/>
                 <_PlaceFacilities place={place} />
+                <_PlaceComments place={place}  currentUser={currentUser} />
                 {abouts.map((item,number) => (
                         <_PlaceSingleAbout key={"a"+number} about={item} number={number}/>
                     )
@@ -70,6 +80,9 @@ const Place = () => {
             <Grid size={{sm: 12, md: 6}} sx={{float: "right"}}>
                 {place && <_TabPlaceBuyable place={place}/>}
             </Grid>
+            {!currentUser&&<Grid size={{sm: 12, md: 12}} sx={{float: "right"}}>
+                <_SinglePlaceGeneralFooter />
+            </Grid>}
         </Grid>
     );
 };

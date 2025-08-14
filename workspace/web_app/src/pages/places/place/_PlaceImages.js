@@ -34,8 +34,8 @@ const _PlaceImages = ({place}) => {
         <>
             <Slick className={"mb--8"} {...settings}>
                 {itemToSlide&&itemToSlide?.map((item, index) => (
-                    <Grid container sx={{p:2}} >
-                        <Card elevation={5} key={index} >
+                    <Grid container sx={{p:2}}  key={"image-"+index} >
+                        <Card elevation={5} >
                             <Link  underline="none" color="inherit" fontWeight="800">
                                 <Box>
                                     <Image width={"100%"} src={item.Url}/>

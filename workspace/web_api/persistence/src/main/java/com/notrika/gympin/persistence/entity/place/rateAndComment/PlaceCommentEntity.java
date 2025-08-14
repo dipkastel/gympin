@@ -1,5 +1,8 @@
-package com.notrika.gympin.persistence.entity.place.comment;
+package com.notrika.gympin.persistence.entity.place.rateAndComment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.common.place.placeBase.enums.PlaceCommentStatusEnum;
+import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -10,7 +13,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,14 +26,31 @@ public class PlaceCommentEntity extends BaseEntityWithCreateUpdate<PlaceCommentE
 
     @ManyToOne
     @JoinColumn(name = "commentPlaceId")
+    @JsonIgnore
+    @ToString.Exclude
     private PlaceEntity place;
 
     @ManyToOne
     @JoinColumn(name = "commentUserId")
+    @JsonIgnore
+    @ToString.Exclude
     private UserEntity user;
 
     private String comment;
 
-    private Date date;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private PlaceCommentStatusEnum status;
+
+    @ManyToOne
+    @JoinColumn(name = "parentId")
+    @JsonIgnore
+    @ToString.Exclude
+    private PlaceCommentEntity parent;
+
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<PlaceCommentEntity> childs;
 
 }
