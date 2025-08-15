@@ -26,7 +26,7 @@ import {
     LocalActivity, LocalActivityOutlined,
     Notifications,
     PowerSettingsNew,
-    ReceiptLong,
+    ReceiptLong, ShoppingCart,
     SupportAgent,
     Wallet
 } from "@mui/icons-material";
@@ -229,9 +229,9 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                     {UserBasket &&
                     <ListItemButton href={"/basket"}>
                         <ListItemIcon>
-                            <LocalActivity/>
+                            <ShoppingCart/>
                         </ListItemIcon>
-                        <ListItemText primary="خرید"/>
+                        <ListItemText primary="سبد خرید"/>
                         <Badge sx={{mr: 2}} badgeContent={UserBasket?.InvoiceSubscribe?.length} color="primary"/>
                     </ListItemButton>
                     }
@@ -295,7 +295,7 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                         <ListItemText primary="شرایط و قوانین"/>
                     </ListItemButton>
 
-                    <ListItemButton target={"_blank"} href={"https://gympin.ir/contact"}>
+                    <ListItemButton sx={{mb:8}}  target={"_blank"} href={"https://gympin.ir/contact"}>
                         <ListItemIcon>
                             <Dialpad/>
                         </ListItemIcon>
@@ -319,14 +319,15 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                     {/*    </List>*/}
                     {/*</Collapse>*/}
                 </List>
-                <Divider sx={{position: "absolute", bottom: 50, right: 0, width: "100%", borderColor: "#000000"}} color={"primary"}/>
-                <Typography sx={{position: "absolute", bottom: 5, left: 5}} variant={"overline"}>ساخته شده در جیم پین© 2025</Typography>
-                <IconButton sx={{position: "absolute", bottom: 5, right: 5}} onClick={()=>{
-                    setOpenModalExit(true)
-                    setMenuOpen(false);
-                }}>
-                    <PowerSettingsNew/>
-                </IconButton>
+                <Grid sx={{ backgroundColor:"#FFFFFF !important",position:"fixed",bottom:0,width:250}} container justifyContent={"space-between"}>
+                    <Typography sx={{ bottom: 5, left: 5}} variant={"overline"}>ساخته شده در جیم پین© 2025</Typography>
+                    <IconButton sx={{ bottom: 5, right: 5}} onClick={()=>{
+                        setOpenModalExit(true)
+                        setMenuOpen(false);
+                    }}>
+                        <PowerSettingsNew/>
+                    </IconButton>
+                </Grid>
             </Grid>
             {renderModalExit()}
             {renderModalRegister()}

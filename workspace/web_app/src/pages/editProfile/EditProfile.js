@@ -42,13 +42,13 @@ const EditProfile = (props) => {
     useEffect(() => {
         console.log(currentUser);
         var can = true;
-            if (!currentUser.FullName) can=false;
-            if (!currentUser.Gender) can=false;
-            if (!currentUser.Birthday) can=false;
-            if (!checkNationalCode(currentUser.NationalCode)) can=false;
-            if(!!usernameAvalableError) can=false;
-            if(currentUser?.Bio?.length>220) can=false;
-            setCanSubmit(can);
+        if (!currentUser.FullName) can=false;
+        if (!currentUser.Gender) can=false;
+        if (!currentUser.Birthday) can=false;
+        if (!checkNationalCode(currentUser.NationalCode)) can=false;
+        if(!!usernameAvalableError) can=false;
+        if(currentUser?.Bio?.length>220) can=false;
+        setCanSubmit(can);
     }, [currentUser,usernameAvalableError]);
 
     useEffect(() => {
@@ -104,68 +104,68 @@ const EditProfile = (props) => {
             setUsernameAvalableError( "حروف ، اعداد و _ و - مجاز است");
             return;
         }
-            new Promise(resolve => user_checkUsernameAvailable(username).then((result) => {
-                if (!result.data.Data) {
-                    setUsernameAvalableError( "نام کاربری قبلا توسط کاربر دیگری دریافت شده.");
-                } else {
-                    setUsernameAvalableError(null);
-                }
-            }).catch(e => {
-                try {
-                    setUsernameAvalableError( e.response.data.Message);
-                } catch (f) {
-                    setUsernameAvalableError( "خطا نا مشخص");
-                }
-            }));
+        new Promise(resolve => user_checkUsernameAvailable(username).then((result) => {
+            if (!result.data.Data) {
+                setUsernameAvalableError( "نام کاربری قبلا توسط کاربر دیگری دریافت شده.");
+            } else {
+                setUsernameAvalableError(null);
+            }
+        }).catch(e => {
+            try {
+                setUsernameAvalableError( e.response.data.Message);
+            } catch (f) {
+                setUsernameAvalableError( "خطا نا مشخص");
+            }
+        }));
     }
 
 
     function getValidation(name, value) {
         switch (name) {
-                case "FullName": {
-                    if (!value) {
-                        return  "نام و نام خانوادگی الزامی است";
-                    }
-                    if(value?.length>50){
-                        return "نام و نام خانوادگی طولانی است.";
-                    }
-                    break
+            case "FullName": {
+                if (!value) {
+                    return  "نام و نام خانوادگی الزامی است";
                 }
-                case "Gender": {
-                    if (!value) {
-                        return  "جنسیت الزامی است";
-                    }
-                    break
+                if(value?.length>50){
+                    return "نام و نام خانوادگی طولانی است.";
                 }
-
-                case "Birthday": {
-                    if (!value) {
-                        return  "تاریخ تولد الزامی است";
-                    }
-                    break
-                }
-                case "NationalCode": {
-                    if (!value || !value.toString()) {
-                        return  "کد ملی الزامی است";
-                    }
-                    if (!checkNationalCode(value.toString())) {
-                        return  "کد ملی صحیح نیست";
-                    }
-                    break
-                }
-                case "Email": {
-                    if(value?.length>50){
-                        return "ایمیل طولانی است.";
-                    }
-                    return ;
-                }
-                case "Bio": {
-                    if(value?.length>220){
-                        return "درباره من طولانی است.";
-                    }
-                    break;
-                }
+                break
             }
+            case "Gender": {
+                if (!value) {
+                    return  "جنسیت الزامی است";
+                }
+                break
+            }
+
+            case "Birthday": {
+                if (!value) {
+                    return  "تاریخ تولد الزامی است";
+                }
+                break
+            }
+            case "NationalCode": {
+                if (!value || !value.toString()) {
+                    return  "کد ملی الزامی است";
+                }
+                if (!checkNationalCode(value.toString())) {
+                    return  "کد ملی صحیح نیست";
+                }
+                break
+            }
+            case "Email": {
+                if(value?.length>50){
+                    return "ایمیل طولانی است.";
+                }
+                return ;
+            }
+            case "Bio": {
+                if(value?.length>220){
+                    return "درباره من طولانی است.";
+                }
+                break;
+            }
+        }
 
     }
 
@@ -254,9 +254,9 @@ const EditProfile = (props) => {
                                 variant="outlined"
                                 mask="____/__/__"
                                 label={"تاریخ تولد * "}
-                                value={new Date(currentUser.Birthday)||""}
-                                onChange={(e,w)=>{
-                                    setFieldValue('Birthday', Date.parse(e))
+                                value={currentUser.Birthday ? new Date(currentUser.Birthday) : null}
+                                onChange={(newValue) => {
+                                    setFieldValue('Birthday', newValue ? new Date(newValue) : null);
                                 }}
                                 renderInput={(params) =>
 
@@ -268,9 +268,12 @@ const EditProfile = (props) => {
                                         className="w-100"
                                         variant="outlined"
                                         margin="normal"
-                                        color={!!getValidation("Birthday",currentUser.Birthday)?"error":"success"}
-                                        error={!!getValidation("Birthday",currentUser.Birthday)}
-                                        helperText={getValidation("Birthday",currentUser.Birthday)}
+                                        color={ "error"}
+                                        error={true}
+                                        helperText={"error"}
+                                        // color={!!getValidation("Birthday", currentUser.Birthday) ? "error" : "success"}
+                                        // error={!!getValidation("Birthday", currentUser.Birthday)}
+                                        // helperText={getValidation("Birthday", currentUser.Birthday)}
                                     />
                                 }
                             />

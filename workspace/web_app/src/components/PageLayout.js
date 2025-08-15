@@ -93,7 +93,7 @@ const PageLayout = (props) => {
 
                         {currentUser &&
                         <Button sx={{fontWeight:600,fontSize:"1rem"}} color={"inherit"} endIcon={<AccountCircleIcon sx={{fontSize:"1.8rem !important"}}/>}  href={"/wallet"}>
-                            {toPriceWithComma(currentUser.Balance)}
+                            {!!currentUser.Balance&&toPriceWithComma(currentUser.Balance)}
                         </Button>}
 
                     </Toolbar>
