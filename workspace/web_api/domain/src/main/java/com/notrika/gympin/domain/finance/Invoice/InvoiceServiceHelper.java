@@ -381,15 +381,20 @@ public class InvoiceServiceHelper {
     public void updateInvoicePrice(InvoiceEntity invoice, BuyableEntity buyable) {
         var buyables = invoiceBuyableRepository.findAllByInvoiceIdAndDeletedIsFalse(invoice.getId());
         var extras = invoice.getInvoiceExtraItems();
-        BigDecimal priceToPay;
+        BigDecimal priceToPay = BigDecimal.ZERO;
         if (buyables != null) {
-            priceToPay = buyables.stream().filter(b -> !b.isDeleted())
+            BigDecimal buyableSumPrice = buyables.stream().filter(b -> !b.isDeleted())
                     .map(p -> p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
-            priceToPay = priceToPay.add(extras.stream().filter(b -> !b.isDeleted())
+            priceToPay = priceToPay.add(buyableSumPrice);
+        }
+        if (extras != null) {
+            BigDecimal extraSumAmount = extras.stream().filter(b -> !b.isDeleted())
                     .map(p -> p.getUnitPrice().multiply(BigDecimal.valueOf(p.getCount())))
-                    .reduce(BigDecimal.ZERO, BigDecimal::add));
-        } else {
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            priceToPay = priceToPay.add(extraSumAmount);
+        }
+        if(priceToPay.compareTo(BigDecimal.ZERO)==0){
             priceToPay = buyable.getPrice();
         }
         invoice.setPriceToPay(priceToPay);

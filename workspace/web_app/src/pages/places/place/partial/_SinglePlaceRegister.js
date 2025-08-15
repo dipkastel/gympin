@@ -1,7 +1,10 @@
 import React from 'react';
 import {Box, Button, Card, CardContent, Typography} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 const _SinglePlaceRegister = () => {
+
+    const navigate = useNavigate();
     return (
         <>
 
@@ -11,10 +14,10 @@ const _SinglePlaceRegister = () => {
                             این مجموعه هنوز در جیم پین ثبت نشده
                         </Typography>
                         <Box display="flex" justifyContent="center" gap={2} my={3}>
-                            <Button variant="contained" sx={{ backgroundColor: "#C8102E", "&:hover": { backgroundColor: "#a50e26" } }}>
+                            <Button onClick={(e)=>{navigate("/login", {replace: false})}} variant="contained" sx={{ backgroundColor: "#C8102E", "&:hover": { backgroundColor: "#a50e26" } }}>
                                 درخواست ثبت توسط کارمند
                             </Button>
-                            <Button variant="outlined" sx={{ color: "#C8102E", borderColor: "#C8102E", "&:hover": { borderColor: "#a50e26", color: "#a50e26" } }}>
+                            <Button onClick={(e)=>{window.location="https://place.gympin.ir/auth/register"}} variant="outlined" sx={{ color: "#C8102E", borderColor: "#C8102E", "&:hover": { borderColor: "#a50e26", color: "#a50e26" } }}>
                                 مدیر مجموعه هستم
                             </Button>
                         </Box>
