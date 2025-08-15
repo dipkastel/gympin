@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
-    Badge,
+    Badge, Box,
     Button,
     Dialog,
     DialogActions,
@@ -13,7 +13,7 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    ListSubheader,
+    ListSubheader, TextField,
     Typography,
     useColorScheme
 } from "@mui/material";
@@ -30,10 +30,26 @@ import {
     SupportAgent,
     Wallet
 } from "@mui/icons-material";
+import {Support_add} from "../network/api/support.api";
+import {useSelector} from "react-redux";
+import {ErrorContext} from "./GympinPagesProvider";
 
 const DrawerLayout = ({UserBasket,setMenuOpen}) => {
 
     const [openModalExit,setOpenModalExit] = useState(false);
+    const [openModalRegister,setOpenModalRegister] = useState(false);
+    const currentUser = useSelector(state => state.auth.user);
+    const error = useContext(ErrorContext);
+
+    const [formData, setFormData] = useState({
+        gymName: '',
+        gymAddress: '',
+        gymPhone: '',
+        description: ''
+    });
+    const [errors, setErrors] = useState({});
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+
     const {mode, setMode} = useColorScheme();
 
     useEffect(() => {
@@ -44,6 +60,51 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
         return null;
     }
 
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setErrors({ ...errors, [e.target.name]: '' });
+    };
+
+    const validate = () => {
+        const newErrors = {};
+        if (!formData.gymName) newErrors.gymName = 'نام مجموعه ضروری است';
+        if (!formData.gymAddress) newErrors.gymAddress = 'آدرس ضروری است';
+        if (!formData.gymPhone) newErrors.gymPhone = 'شماره تماس ضروری است';
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = () => {
+        if (validate()) {
+            Support_add({
+                Title:  "درخواست افزودن مجموعه "+formData.gymName,
+                Message: {
+                    Status: "AWAITING_EXPERT",
+                    Message: "درخواست افزودن "+formData.gymName+" با شماره "+formData.gymPhone+" با آدرس " + formData.gymAddress +" را دارم اطلاعات اضافی : "+formData.description,
+                    IsRead: "true"
+                },
+                UserId: currentUser.Id
+            }).then(result => {
+                setSubmitSuccess(true);
+                setFormData({
+                    gymName: '',
+                    gymAddress: '',
+                    gymPhone: '',
+                    description: '',
+                });
+                setTimeout(() => {
+                    error.showError({message: "ثبت درخواست با موفقیت انجام شد",});
+                    setOpenModalRegister(false)
+                }, 2000);
+            }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        }
+    };
 
 
     function renderModalExit() {
@@ -60,6 +121,78 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                 <Button sx={{m: 1}} variant={"contained"} color={"error"} href={"/logout"} >خروج</Button>
             </DialogActions>
         </Dialog>)
+    }
+
+
+
+    function renderModalRegister() {
+        return(
+            <Dialog
+                open={openModalRegister}
+                onClose={() => setOpenModalRegister(false)}
+            >
+                <DialogTitle>درخواست ثبت مجموعه</DialogTitle>
+                <DialogContent>
+                    <Typography variant="body2" align="center" sx={{ mb: 2,textAlign:"justify" }}>
+                        اگر مجموعه ورزشی مورد نظرتان در اپلیکیشن موجود نیست، جزئیات آن را اینجا وارد کنید. تیم ما بررسی می‌کند و در صورت امکان، ظرف حدود ۵ روز به اپ اضافه می‌کنیم.
+                    </Typography>
+                    <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <TextField
+                            fullWidth
+                            label="نام مجموعه ورزشی"
+                            name="gymName"
+                            value={formData.gymName}
+                            onChange={handleChange}
+                            error={!!errors.gymName}
+                            helperText={errors.gymName}
+                            variant="outlined"
+                        />
+                        <TextField
+                            fullWidth
+                            label="آدرس دقیق مجموعه (شامل شهر و خیابان)"
+                            name="gymAddress"
+                            value={formData.gymAddress}
+                            onChange={handleChange}
+                            error={!!errors.gymAddress}
+                            helperText={errors.gymAddress}
+                            variant="outlined"
+                        />
+                        <TextField
+                            fullWidth
+                            label="شماره تماس مجموعه"
+                            name="gymPhone"
+                            value={formData.gymPhone}
+                            onChange={handleChange}
+                            error={!!errors.gymPhone}
+                            helperText={errors.gymPhone}
+                            variant="outlined"
+                        />
+                        <TextField
+                            fullWidth
+                            label="توضیحات اضافی (اختیاری، مثل نام مدیر مجموعه و..)"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            multiline
+                            rows={3}
+                            variant="outlined"
+                        />
+                        {submitSuccess && (
+                            <Typography variant="body2" color="success.main" align="center">
+                                پیشنهاد شما ثبت شد. ممنون!
+                            </Typography>
+                        )}
+                    </Box>
+                </DialogContent>
+                <DialogActions>
+                    <Button sx={{ m: 1 }} variant="contained" color="error" onClick={() => setOpenModalRegister(false)}>
+                        لغو
+                    </Button>
+                    <Button sx={{ m: 1 }} variant="contained" color="success" onClick={handleSubmit}>
+                        ثبت درخواست
+                    </Button>
+                </DialogActions>
+            </Dialog>)
     }
 
 
@@ -120,12 +253,6 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                     <ListSubheader>
                         دسترسی ها
                     </ListSubheader>
-                    {/*<ListItemButton href={"/support"}>*/}
-                    {/*    <ListItemIcon>*/}
-                    {/*        <SupportAgent/>*/}
-                    {/*    </ListItemIcon>*/}
-                    {/*    <ListItemText primary="پشتیبانی"/>*/}
-                    {/*</ListItemButton>*/}
                     <ListItemButton href={"/invoices"}>
                         <ListItemIcon>
                             <ReceiptLong/>
@@ -138,9 +265,22 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                         </ListItemIcon>
                         <ListItemText primary="تاریخچه بلیط ها"/>
                     </ListItemButton>
+                    <ListItemButton href={"/support"}>
+                        <ListItemIcon>
+                            <SupportAgent/>
+                        </ListItemIcon>
+                        <ListItemText primary="پشتیبانی"/>
+                    </ListItemButton>
                     <ListSubheader>
                         سیاست‌ها
                     </ListSubheader>
+                    <ListItemButton target={"_blank"} onClick={(e)=>{setOpenModalRegister(true)}}>
+                        <ListItemIcon>
+                            <HelpCenter/>
+                        </ListItemIcon>
+                        <ListItemText primary="درخواست ثبت مجموعه"/>
+                    </ListItemButton>
+
                     <ListItemButton target={"_blank"} href={"https://gympin.ir/faq"}>
                         <ListItemIcon>
                             <HelpCenter/>
@@ -189,6 +329,7 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                 </IconButton>
             </Grid>
             {renderModalExit()}
+            {renderModalRegister()}
         </>
 
     );

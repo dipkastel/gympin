@@ -5,11 +5,8 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import _TabPlaceBuyable from "./_TabPlaceBuyable";
-import _TabPlaceAbout from "./info/_TabPlaceAbout";
 import BadgeIcon from '@mui/icons-material/Badge';
 import InfoIcon from '@mui/icons-material/Info';
-import {useEffect} from "react";
 
 
 const _TabsPlace = ({place}) => {
@@ -17,7 +14,7 @@ const _TabsPlace = ({place}) => {
     const [selectedTab, setSelectedTab] = React.useState(0);
 
     return (
-        <Box sx={{bgcolor: 'background.paper',position:"relative"}}>
+        <Box sx={{bgcolor: 'background.paper', position: "relative"}}>
             <AppBar position="static">
                 <Tabs
                     value={selectedTab}
@@ -27,8 +24,8 @@ const _TabsPlace = ({place}) => {
                     variant="fullWidth"
                     aria-label="full width tabs example"
                 >
-                    <Tab label={<BadgeIcon fontSize={"large"} />}/>
-                    <Tab label={<InfoIcon fontSize={"large"} />}/>
+                    <Tab label={<BadgeIcon fontSize={"large"}/>}/>
+                    <Tab label={<InfoIcon fontSize={"large"}/>}/>
                     {/*<Tab label="نظرات"/>*/}
                 </Tabs>
             </AppBar>

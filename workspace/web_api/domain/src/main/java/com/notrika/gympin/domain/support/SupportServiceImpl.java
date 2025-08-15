@@ -127,12 +127,14 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public List<SupportDto> getByPlace(PlaceGymParam param) {
+        //TODO check User has this place
         PlaceEntity place = placeRepository.getById(param.getId());
         return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndPlace(place));
     }
 
     @Override
     public List<SupportDto> getByCorporate(CorporateParam param) {
+        //TODO check User has this corporate
         CorporateEntity corporate = corporateRepository.getById(param.getId());
         return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndCorporate(corporate));
     }
@@ -164,6 +166,8 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public SupportDto getById(long id) {
+
+        //TODO check User has this message
         return SupportConvertor.toDto(supportRepository.getById(id));
     }
 

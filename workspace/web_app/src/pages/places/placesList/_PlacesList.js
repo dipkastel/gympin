@@ -97,7 +97,7 @@ const _PlacesList = () => {
         let debouncer = setTimeout(() => {
             SetPlaces(null);
             getData(0, value);
-        }, 1000);
+        }, 2000);
         return () => {
             clearTimeout(debouncer);
         }
@@ -149,21 +149,22 @@ const _PlacesList = () => {
     };
 
     return (
-        <>{places ? (<>
+        <>
+
             <Grid container sx={{px: 1, pt: 3}} columns={60}>
                 <Grid sx={{px: 1}} size={{xs: 49, md: 54, lg: 56, xl: 57}}>
                     <Card elevation={0} sx={{width: "100%", borderRadius: 6, p: 2, backgroundImage: 'url("/assets/images/mapp.jpg")'}}
                           onClick={(e) => navigate("/placesMap")}>
-                        <img height={25} width={25} src={"/logo192.png"} />
+                        <img height={25} width={25} src={"/logo192.png"}/>
                         <Link sx={{textDecoration: "none", color: "#222222"}} color={"primary"} href={"/placesMap"}>
                             {" مشاهده مراکز روی نقشه"}
                         </Link>
                     </Card>
                 </Grid>
-                <Grid sx={{px: 1}} size={{xs:11, md:6, lg:4, xl:3}} textAlign={"center"}>
+                <Grid sx={{px: 1}} size={{xs: 11, md: 6, lg: 4, xl: 3}} textAlign={"center"}>
                     <Card elevation={0} sx={{width: "100%", borderRadius: 6, p: 2, bgcolor: "#dfdfdf"}}
                           onClick={(e) => setOpenSearch(!openSearch)}>
-                        <img src={"/assets/images/search.svg"} />
+                        <img src={"/assets/images/search.svg"}/>
                     </Card>
                 </Grid>
             </Grid>
@@ -183,22 +184,24 @@ const _PlacesList = () => {
                 </Collapse>
             </Container>
 
+            {places && <>
             <Grid container
                   direction="row"
                   justifyContent="center"
                   alignItems="center">
                 {places.content && places.content.map(item => (
-                    <Grid item component={"a"} key={"5i" + item.Id} sx={{textDecoration: "none"}}
-                          lg={3} size={{md: 4, sm: 6, xs: 12}}>
-                        <__placeListItem  item={item}/>
-                    </Grid>
+                        <Grid item component={"a"} key={"5i" + item.Id} sx={{textDecoration: "none"}}
+                              lg={3} size={{md: 4, sm: 6, xs: 12}}>
+                            <__placeListItem item={item}/>
+                        </Grid>
                     )
                 )}
                 {isLoading && <div>
                     <CircularProgress/>
                 </div>}
             </Grid>
-        </>) : (<Grid
+        </>}
+            {!places &&<Grid
                 container
                 sx={{width: "100%", height: "80vh"}}
                 direction={"column"}
@@ -206,8 +209,8 @@ const _PlacesList = () => {
                 alignItems={"center"}
             >
                 <CircularProgress/>
-            </Grid>
-        )}</>
+            </Grid>}
+        </>
     );
 };
 

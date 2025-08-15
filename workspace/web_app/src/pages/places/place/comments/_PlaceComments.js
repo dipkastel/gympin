@@ -9,19 +9,21 @@ import {
     CircularProgress,
     Divider,
     Grid,
-    List, ListItem, ListItemText,
+    List, ListItem, ListItemText, Paper,
     TextField,
     Typography
 } from "@mui/material";
 import {PlaceComment_AddComment, PlaceComment_query} from "../../../../network/api/placeRateAndComment.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {SportsHockeyRounded} from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
 
 const _PlaceComments = ({place,currentUser}) => {
 
     const [loading, setLoading] = useState(true);
     const [comments,SetComments] = useState(null);
     const [comment,setComment] = useState(null);
+    const navigate = useNavigate();
     const error = useContext(ErrorContext);
 
     useEffect(() => {
@@ -55,6 +57,18 @@ const _PlaceComments = ({place,currentUser}) => {
 
     function addNewComment(e){
         e.preventDefault();
+        if(!currentUser?.Id){
+            error.showError({
+                clickable: true,
+                message: 'برای ثبت نظر باید وارد شوید',
+                buttonTitle: 'ورود',
+                duration: 8000,
+                onClick: () => {
+                    navigate("/auth/login", {replace: false});
+                }
+            });
+            return ;
+        }
         PlaceComment_AddComment({
             Comment: e.target.comment.value,
             PlaceId: place.Id,
@@ -73,9 +87,9 @@ const _PlaceComments = ({place,currentUser}) => {
     return (
         <section id={"Comments"}>
 
-            <Card elevation={3} sx={{margin: 2, padding: 1}}>
+            <Card elevation={3}  sx={{mx: 2,mt:4,mb:2, padding: 1}}>
                 <CardContent>
-                    <Typography variant="h5" fontWeight="bold" textAlign="center" gutterBottom>
+                    <Typography variant="h5" fontWeight="bold" textAlign={"left"} sx={{mt:-5,bgcolor:"#FFFFFF",position:"absolute",px:3}} gutterBottom>
                         نظرات کاربران
                     </Typography>
                     {loading ? (
@@ -88,10 +102,17 @@ const _PlaceComments = ({place,currentUser}) => {
                         </Typography>
                     ) : (
                         <List sx={{ mb: 2 }}>
-                            {comments?.content?.map((c, index) => (
-                                <ListItem key={index} sx={{ backgroundColor: "#f9f9f9", borderRadius: 2, mb: 1 }}>
-                                    <ListItemText primary={c.Comment} />
-                                </ListItem>
+                            {comments?.content?.map((comment, index) => (
+                                <Grid container direction={"row"} justifyContent={"space-between"} sx={{width:"100%"}}>
+                                    <Paper key={index} sx={{ backgroundColor: "#f9f9f9",pl:2,pt:2,pr:1, borderRadius: 2, mb: 1 ,width:"100%"}}>
+                                        <ListItemText primary={comment.Comment} primaryTypographyProps={{width:"100%"}} />
+                                        <ListItemText primaryTypographyProps={{variant:"caption",color:"#999999"}}  sx={{width:"100%",direction:"rtl",mt:2}} primary={comment?.User?.FullName||"کاربر جیم پین"} />
+                                        {comment?.CreatedDate&&<ListItemText primaryTypographyProps={{variant:"caption",color:"#999999"}}  sx={{width:"100%",direction:"rtl"}} primary={new Date(comment?.CreatedDate).toLocaleDateString('fa-IR', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                        })} />}
+                                    </Paper>
+                                </Grid>
                             ))}
                         </List>
                     )}

@@ -8,7 +8,6 @@ import {fixTextToSlug} from "../../../helper/utils";
 import _TabPlaceBuyable from "./_TabPlaceBuyable";
 import _placeBaseInfo from "./info/_placeBaseInfo";
 import {Grid2 as Grid} from "@mui/material";
-import _TabPlaceAbout from "./info/_TabPlaceAbout";
 import _PlaceSingleAbout from "./info/_PlaceSingleAbout";
 import {PlaceAbout_getByPlace} from "../../../network/api/placeAbout.api";
 import _PlaceFacilities from "./info/_PlaceFacilities";
@@ -16,13 +15,16 @@ import {useSelector} from "react-redux";
 import _SinglePlaceGeneralHeader from "./partial/_SinglePlaceGeneralHeader";
 import _SinglePlaceGeneralFooter from "./partial/_SinglePlaceGeneralFooter";
 import _PlaceComments from "./comments/_PlaceComments";
+import _PlaceSports from "./info/_PlaceSports";
+import _PlaceAddress from "./info/_PlaceAddress";
+import {Masonry} from "@mui/lab";
 
 const Place = () => {
     const error = useContext(ErrorContext);
     const navigate = useNavigate();
     const {placeId} = useParams();
     const [place, setPlace] = useState({});
-    const [abouts,SetAbouts] = useState([]);
+    const [abouts, SetAbouts] = useState([]);
     const currentUser = useSelector(state => state.auth.user)
 
     useEffect(() => {
@@ -35,7 +37,7 @@ const Place = () => {
     }, [place]);
 
     function getAbouts() {
-        PlaceAbout_getByPlace({Id:place.Id}).then(result=>{
+        PlaceAbout_getByPlace({Id: place.Id}).then(result => {
             SetAbouts(result.data.Data)
         }).catch(e => {
             try {
@@ -63,25 +65,37 @@ const Place = () => {
     }
 
     return (
+
+
         <Grid container alignItems={"flex-start"}>
-            {!currentUser&&<Grid size={{xs:12 ,sm: 12, md: 12}} sx={{float: "right"}}>
-                <_SinglePlaceGeneralHeader />
+            {!currentUser && <Grid size={{xs: 12, sm: 12, md: 12}} sx={{float: "right"}}>
+                <_SinglePlaceGeneralHeader/>
             </Grid>}
-            <Grid size={{sm: 12, md: 6}} sx={{float: "right"}}>
-                {place.Multimedias && <_PlaceImages place={place}/>}
-                <_placeBaseInfo place={place} currentUser={currentUser}/>
-                <_PlaceFacilities place={place} />
-                <_PlaceComments place={place}  currentUser={currentUser} />
-                {abouts.map((item,number) => (
-                        <_PlaceSingleAbout key={"a"+number} about={item} number={number}/>
-                    )
-                )}
-            </Grid>
-            <Grid size={{sm: 12, md: 6}} sx={{float: "right"}}>
-                {place && <_TabPlaceBuyable place={place}/>}
-            </Grid>
-            {!currentUser&&<Grid size={{sm: 12, md: 12}} sx={{float: "right"}}>
-                <_SinglePlaceGeneralFooter />
+            <Masonry columns={{xs: 1, sm: 1,md:2,lg:2}} >
+
+                <Grid>
+                    <_placeBaseInfo place={place} currentUser={currentUser}/>
+                    {place.Multimedias && <_PlaceImages place={place}/>}
+                </Grid>
+
+                <Grid sx={{float: "right"}}>
+                    {place && <_TabPlaceBuyable place={place}/>}
+                </Grid>
+                <Grid  sx={{float: "right"}}>
+                    <_PlaceAddress place={place}/>
+                    <_PlaceSports place={place}/>
+                    <_PlaceFacilities place={place}/>
+                    <_PlaceComments place={place} currentUser={currentUser}/>
+                    {abouts.map((item, number) => (
+                            <_PlaceSingleAbout key={"a" + number} about={item} number={number}/>
+                        )
+                    )}
+                </Grid>
+            </Masonry>
+
+
+            {!currentUser && <Grid size={{sm: 12, md: 12}} sx={{float: "right"}}>
+                <_SinglePlaceGeneralFooter/>
             </Grid>}
         </Grid>
     );

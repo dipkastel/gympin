@@ -1,13 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {purchased_query} from "../../network/api/purchased.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {Card, CardContent, CardHeader, Chip, CircularProgress, Container, Grid2 as Grid, Typography} from "@mui/material";
+import {CircularProgress, Container, Grid2 as Grid, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
-import {BuyableType} from "../../helper/enums/BuyableType";
 import TicketListItem from "./TicketListItem";
-import {purchasedSubscribe_enterRequest, purchasedSubscribe_query} from "../../network/api/purchasedSubscribe.api";
+import {purchasedSubscribe_query} from "../../network/api/purchasedSubscribe.api";
+import {toAbsoluteUrl} from "../../helper/utils";
 
 const TicketsActive = () => {
 
@@ -62,23 +61,28 @@ const TicketsActive = () => {
             justifyContent={"center"}
             alignItems={"center"}
         >
-            <Image src={"https://api.gympin.ir/resource/image?Id=100"} width={"40%"}/>
-            <Typography variant={"body"} sx={{m: 2}}>
+            <Image src={toAbsoluteUrl("/assets/images/noTicket2.png")} width={"40%"} style={{maxWidth: "300px"}}/>
+            <Typography variant={"h5"} sx={{m: 2,fontWeight:900,color:"#444444"}}>
                 بلیط فعال یافت نشد
+            </Typography>
+            <Typography variant={"body2"} sx={{m: 2,color:"#666666"}} >
+                در این بخش بلیط های خریداری شده شما نمایش داده می‌شود
+            </Typography>
+            <Typography component={"a"} variant={"body1"} href={"/places"} sx={{m: 2,textDecoration:"none",cursor:"pointer"}} >
+                خرید بلیط
             </Typography>
 
         </Grid>);
     }
 
 
-
     function tickets() {
-        return (<Container sx={{px:2,py:2}}>
-            { getTicket().sort((a, b) => b.Id - a.Id).map(item =>
-                <Grid sx={{py:2}}>
-                    <TicketListItem item={item} />
+        return (<Container sx={{px: 2, py: 2}}>
+            {getTicket().sort((a, b) => b.Id - a.Id).map(item =>
+                <Grid sx={{py: 2}}>
+                    <TicketListItem item={item}/>
                 </Grid>
-            ) }
+            )}
         </Container>)
     }
 

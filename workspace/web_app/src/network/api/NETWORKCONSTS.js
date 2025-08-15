@@ -105,6 +105,15 @@ export let Api_url = {
         GET_ALL:"v1/sport/getAll",
         query:"v1/sport/query"
     },
+    support: {
+        ADD: "v1/support/add",
+        ADD_MESSAGE: "v1/support/addMessage",
+        GET_BY_PLACE: "v1/support/getByPlace",
+        GET_BY_ID: "v1/support/getById",
+        setMessagesRead: "v1/support/setMessagesRead",
+        getCorporateSupportCount: "v1/support/getCorporateSupportCount",
+        query: "v1/support/query"
+    },
     purchasedSubscribe:{
         ADD:"v1/purchasedSubscribe/add",
         GET_BY_USER:"v1/purchasedSubscribe/getByUser",

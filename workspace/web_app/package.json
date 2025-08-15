@@ -9,6 +9,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.1",
     "@mui/material": "^6.4.1",
+    "@mui/lab": "^6.0.1-beta.36",
     "@mui/styles": "6.4.1",
     "@mui/x-date-pickers": "^7.24.1",
     "@testing-library/jest-dom": "^6.6.3",

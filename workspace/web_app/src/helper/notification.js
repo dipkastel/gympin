@@ -116,7 +116,7 @@ function GNotification() {
 
     return (
         <>
-            {popup()}
+            {/*{popup()}*/}
         </>
     )
 };

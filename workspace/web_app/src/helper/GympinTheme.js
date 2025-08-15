@@ -68,11 +68,15 @@ export const GympinTheme = createTheme({
             }
         },
         MuiCard: {
+            defaultProps:{
+                variant:"outlined"
+            },
             styleOverrides: {
                 root: {
-                    borderRadius: 12,
-                }
+                    borderRadius: 12
+                },
             }
+
         },
         MuiButton: {
             styleOverrides: {

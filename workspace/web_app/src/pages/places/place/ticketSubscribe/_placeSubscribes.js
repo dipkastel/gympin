@@ -12,13 +12,12 @@ import store from "../../../../helper/redux/store";
 import {useNavigate} from "react-router-dom";
 import _SinglePlaceRegister from "../partial/_SinglePlaceRegister";
 
-const _placeSubscribes = ({place}) => {
+const _placeSubscribes = ({place,genderFilter}) => {
 
         const error = useContext(ErrorContext);
         const navigate = useNavigate()
         const currentUser = useSelector(state => state.auth.user)
-        const [subscribes, setSubscribes] = useState([])
-        const [isExpanded, setIsExpanded] = useState(true)
+        const [subscribes, setSubscribes] = useState(null)
         const userBasket = useSelector(state => state.invoice.userBasket);
         useEffect(() => {
             ticketSubscribe_getByPlace({Id: place.Id}).then(result => {
@@ -118,15 +117,15 @@ const _placeSubscribes = ({place}) => {
         return (
             <div>
                 <Box sx={{ display: "flex", justifyContent: "center", p: 2,width:"100%" }}>
-                    {subscribes.length > 0 && <Grid container columns={2} spacing={2} sx={{width:"100%" }} >
-                        {subscribes?.filter(t => t.Enable).map((item, number) => (
+                    {subscribes?.length > 0 && <Grid container columns={2} spacing={2} sx={{width:"100%" }} >
+                        {subscribes?.filter(t => t.Enable).filter(b=>genderFilter==null||b.Gender==genderFilter).map((item, number) => (
                             <_PlaceSubscribeListItem key={"ac" + number} subscribe={item} number={number}
                                                      addToSubscribe={addToBasket} login={!!currentUser}/>))}
-                        {subscribes?.filter(t => !t.Enable).map((item, number) => (
+                        {subscribes?.filter(t => !t.Enable).filter(b=>genderFilter==null||b.Gender==genderFilter).map((item, number) => (
                             <_PlaceSubscribeListItem key={"de" + number} subscribe={item} number={number}
                                                      addToSubscribe={addToBasket} login={!!currentUser}/>))}
                     </Grid>}
-                    {subscribes.length <1 && <Grid container columns={2} sx={{width:"100%"}}>
+                    {subscribes&&subscribes?.length <1 && <Grid container columns={2} sx={{width:"100%"}}>
                         <_SinglePlaceRegister/>
                     </Grid>}
                 </Box>

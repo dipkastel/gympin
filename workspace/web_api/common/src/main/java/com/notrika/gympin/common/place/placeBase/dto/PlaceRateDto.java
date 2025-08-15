@@ -5,6 +5,7 @@ import com.notrika.gympin.common.place.placeBase.enums.PlaceCommentStatusEnum;
 import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class PlaceRateDto extends BaseDto<PlaceRateDto> {
+public class PlaceRateDto extends BaseDtoWithCreateUpdate<PlaceRateDto> {
 
     @JsonProperty("Rate")
     private Double rate;

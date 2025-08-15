@@ -17,6 +17,7 @@ public final class PlaceRateAndCommentConvertor {
                 .status(entity.getStatus())
                 .place(PlaceConvertor.ToDto(entity.getPlace()))
                 .childes(entity.getChilds() != null ? entity.getChilds().stream().map(p -> toDto(p)).collect(Collectors.toList()) : null)
+                .createdDate(entity.getCreatedDate())
                 .build();
 
     }

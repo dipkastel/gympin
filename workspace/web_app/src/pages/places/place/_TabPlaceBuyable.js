@@ -1,19 +1,23 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Alert, AlertTitle, Button, List,} from "@mui/material";
+import {Alert, AlertTitle, AppBar, Button, Card, CardContent, Grid, List, Paper, Tab, Tabs,} from "@mui/material";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
-import {ticketBuyable_query} from "../../../network/api/buyable.api";
 import _placeSubscribes from "./ticketSubscribe/_placeSubscribes";
-import _placeCourses from "./ticketCourse/_placeCourses";
+import {genders} from "../../../helper/enums/genders";
 
-const _TabPlaceBuyable = ({place,setSelectedTab}) => {
+const _TabPlaceBuyable = ({place}) => {
     const navigate = useNavigate()
     const error = useContext(ErrorContext);
     const currentUser = useSelector(state => state.auth.user)
+    const [genderFilter, setGenderFilter] = useState(null);
+
     useEffect(() => {
         if (!place.Id) return;
         getPlans();
+        if(place?.Genders?.length==1){
+            setGenderFilter(place?.Genders[0])
+        }
     }, [place]);
 
 
@@ -23,9 +27,9 @@ const _TabPlaceBuyable = ({place,setSelectedTab}) => {
         //     Place: place.Id,
         //     paging: {Page: 0, Size: 1}
         // }).then(result => {
-            // if(result?.data?.Data?.numberOfElements===0)
-            //     setSelectedTab(1)
-            // if(result.data.Data)return;
+        // if(result?.data?.Data?.numberOfElements===0)
+        //     setSelectedTab(1)
+        // if(result.data.Data)return;
         // }).catch(e => {
         //     try {
         //         error.showError({message: e.response.data.Message});
@@ -115,18 +119,53 @@ const _TabPlaceBuyable = ({place,setSelectedTab}) => {
     }
 
     function showCallSudjest() {
-        return (!!currentUser)&&place?.CallUs&&place?.Tell;
+        return (!!currentUser) && place?.CallUs && place?.Tell;
     }
 
     return (
         <>
-        {showCallSudjest()&&<Alert sx={{textDecoration:"none",m:1}} severity="warning" href={"tel:"+getfixedPlaceNumber()} component={"a"}>
+            {showCallSudjest() &&
+            <Alert sx={{textDecoration: "none", m: 2}} severity="warning" href={"tel:" + getfixedPlaceNumber()} component={"a"}>
                 <AlertTitle>قبل از خرید بلیط، شرایط استفاده را هماهنگ نمایید.</AlertTitle>
-            <Button variant={"contained"} color={"warning"}>تماس با مرکز</Button>
+                <Button variant={"contained"} color={"warning"}>تماس با مرکز</Button>
             </Alert>}
-            <List className={"nopadding"} disablePadding>
-                {place?.Id && <_placeSubscribes place={place}/>}
-                {/*{place.Id && <_placeCourses place={place}/>}*/}
+
+
+
+            {place?.Genders?.length > 0 && (
+                <Tabs
+                    value={genderFilter}
+                    onChange={(e, n) => setGenderFilter(n)}
+                    variant="fullWidth"
+                    textColor="inherit"
+                    TabIndicatorProps={{ sx: { display: "none" } }} // حذف اندیکاتور
+                    sx={{
+                        background: "linear-gradient(90deg, #ff416c, #ff4b2b)",
+                        borderRadius: 3,
+                        p: 0.5,
+                        m:2
+                    }}
+                >
+                    {place?.Genders?.map((gender, number) => (
+                        <Tab
+                            key={number}
+                            label={genders[gender]}
+                            value={gender}
+                            sx={{
+                                color: "white",
+                                fontWeight: genderFilter === number ? "bold" : "normal",
+                                fontSize: genderFilter === number ? "1.1rem" : "0.95rem",
+                                transition: "all 0.3s ease",
+                                "&.Mui-selected": { color: "#fff" }
+                            }}
+                        />
+                    ))}
+                </Tabs>
+            )}
+
+
+            <List sx={{minHeight: {sm: 50, md: 800}}} className={"nopadding"} disablePadding>
+                {place?.Id && <_placeSubscribes place={place} genderFilter={genderFilter}/>}
             </List>
 
         </>

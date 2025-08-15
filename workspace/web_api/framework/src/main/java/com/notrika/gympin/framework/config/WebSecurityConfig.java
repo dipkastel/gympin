@@ -99,6 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/OptionOfPlace/getByPlaceId"
                         ,"/api/v1/OptionOfPlace/getByPlaceId"
                         ,"/api/v1/TicketSubscribeAction/getByTicketSubscribe"
+                        ,"/api/v1/placeComment/query"
                         ,"/api/v1/sport/query"
                         ,"/api/v1/article/query"
                         ,"/api/v1/article/getById"
