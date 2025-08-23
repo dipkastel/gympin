@@ -164,7 +164,6 @@ const CorporateManagement = () => {
                                         }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                             <TableCell component="th" scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
-                                            {console.log(row)}
                                             <TableCell align="right">
                                                 <Avatar alt="corporate Logo" src={row?.Logo?.Url||""}  sx={{width:40,height:40}} /></TableCell>
                                             <TableCell align="right">{row.Name||"ثبت نشده"}</TableCell>
