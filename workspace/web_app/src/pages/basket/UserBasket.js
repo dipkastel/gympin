@@ -33,8 +33,7 @@ const UserBasket = (props) => {
 
     useEffect(() => {
         if(serverSettings){
-            console.log("serverSettingsChanged",serverSettings)
-            setCurrentCheckoutType(getCheckoutType(serverSettings))
+            setCurrentCheckoutType(getCheckoutType(serverSettings)||"SIMPLE")
         }
     }, [serverSettings]);
 
