@@ -70,6 +70,7 @@ export let CorporateApi = {
     getCorporateGroups: "v1/corporate/getCorporateGroups",
     addGroup: "v1/corporate/addGroup",
     deleteGroup: "v1/corporate/deleteGroup",
+    getCorporateInviteCode: "v1/corporate/getCorporateInviteCode",
 };
 export let CorporatePersonnelApi = {
     add: "v1/corporatePersonnel/add",

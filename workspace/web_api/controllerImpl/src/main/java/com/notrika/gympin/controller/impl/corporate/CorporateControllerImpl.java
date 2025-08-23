@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
 import com.notrika.gympin.common.finance.transaction.param.CorporateTransactionParam;
 import com.notrika.gympin.common.finance.transaction.param.FinanceCorporateParam;
 import com.notrika.gympin.common.finance.transaction.service.CorporateTransactionService;
+import com.notrika.gympin.common.place.placeBase.param.PlaceParam;
 import com.notrika.gympin.common.settings.corporateSettings.dto.CorporateSettingDto;
 import com.notrika.gympin.common.settings.corporateSettings.param.CorporateSettingParam;
 import com.notrika.gympin.common.settings.corporateSettings.service.corporateSettingsService;
@@ -180,5 +181,14 @@ public class CorporateControllerImpl implements CorporateController {
         }
         return ResponseEntity.ok(corporateSettingDto);
     }
+
+
+
+    @Override
+    @GetMapping("/getCorporateInviteCode")
+    public ResponseEntity<InviteCode> getCorporateInviteCode(CorporateParam param) {
+        return new ResponseEntity<>(corporateService.getCorporateInviteCode(param), HttpStatus.OK);
+    }
+
 
 }

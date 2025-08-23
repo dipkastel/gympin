@@ -12,11 +12,10 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
     const [inTicketSubscribe, SetInTicketSubscribe] = useState(ticketSubscribe)
 
     function setFormValues(lable, value) {
-        if(lable==="PlacePrice")
-            SetInTicketSubscribe({...inTicketSubscribe, [lable]: value,Price:value})
-        else if(lable==="Discount"){
+        if(lable==="PlacePrice"){
+            SetInTicketSubscribe({...inTicketSubscribe, [lable]: value,Price:value*(1-inTicketSubscribe.Discount/100)})
+        }else if(lable==="Discount"){
             SetInTicketSubscribe({...inTicketSubscribe, [lable]: value,Price:inTicketSubscribe.PlacePrice*(1-value/100)})
-
         } else
             SetInTicketSubscribe({...inTicketSubscribe, [lable]: value})
     }
@@ -95,7 +94,6 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
                         value={toPriceWithComma(inTicketSubscribe.Price)}
                         type={"text"}
                         disabled={true}
-                        onChange={(e) => setFormValues("Price", toPriceWithoutComma(e.target.value))}
                         fullWidth
                         margin="normal"
                         InputLabelProps={{

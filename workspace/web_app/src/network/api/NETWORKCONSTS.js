@@ -48,6 +48,7 @@ export let Api_url = {
         query:"v1/invoice/query",
         getHowToPay: "v1/invoice/getUserHowToPay",
         changeInvoiceBuyableCount:"v1/invoice/changeInvoiceBuyableCount",
+        SmartisCheckOut:"v1/invoice/SmartisCheckOut",
         userCheckout:"v1/invoice/userCheckout",
         addSubscribe:"v1/invoice/addSubscribe",
         deleteBuyable:"v1/invoice/deleteBuyable",

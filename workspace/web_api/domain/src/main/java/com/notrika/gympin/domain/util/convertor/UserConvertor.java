@@ -26,6 +26,7 @@ public final class UserConvertor {
         dto.setUserGroup(user.getUserGroup());
         dto.setLocation(LocationConvertor.toDto(user.getLocation()));
         dto.setWizard(getWizard(user));
+        dto.setProvider(user.getUserProvider());
         dto.setUserRole(UserRoleConvertor.ToUserRoleDto(user).getRole());
         dto.setUserStatus(user.getUserStatus());
         dto.setBio(user.getBio());

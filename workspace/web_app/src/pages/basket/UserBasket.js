@@ -1,37 +1,47 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import _InvoiceBuyableCard from "./partial/_InvoiceBuyableCard";
-import _InvoiceHowToPayModirate from "./partial/_InvoiceHowToPayModirate";
 import _InvoiceTitle from "./partial/_InvoiceTitle";
 import _InvoiceAction from "./partial/_InvoiceAction";
 import {CircularProgress, Grid} from "@mui/material";
 import {getCheckoutType} from "../../helper/serverSettingsHelper";
 import _InvoiceEmptyBasket from "./partial/_InvoiceEmptyBasket";
 import _InvoiceHowToPaySimple from "./partial/_InvoiceHowToPaySimple";
+import _InvoiceHowToPayModirate from "./partial/_InvoiceHowToPayModirate";
 import _InvoiceHowToPayAdvanced from "./partial/_InvoiceHowToPayAdvanced";
+import _InvoiceHowToPaySmartis from "./partial/_InvoiceHowToPaySmartis";
 import {invoice_getBasketByUserId} from "../../network/api/invoice.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {invoiceActions} from "../../helper/redux/actions/InvoiceActions";
 import store from "../../helper/redux/store";
+import {sagaActions} from "../../helper/redux/actions/SagaActions";
 
-const UserBasket = () => {
+const UserBasket = (props) => {
     const error = useContext(ErrorContext);
     const [CurrentBasket, SetCurrentBasket] = useState(null);
     const currentUser = useSelector(state => state.auth.user);
     const [invoiceCredits, SetInvoiceCredits] = useState(null)
     const [userCanPay, setUserCanPay] = useState(false);
 
-    const [serverSettings] = useState(useSelector(settings => settings));
-    const [currentCheckoutType] = useState(getCheckoutType(serverSettings)||"SIMPLE")
+    const serverSettings = useSelector(settings => settings);
+    const [currentCheckoutType,setCurrentCheckoutType] = useState(getCheckoutType(serverSettings))
 
+    useEffect(() => {
+        if(currentUser)
+            props.RequestServerSettings(currentUser);
+    }, [currentUser]);
+
+    useEffect(() => {
+        if(serverSettings){
+            console.log("serverSettingsChanged",serverSettings)
+            setCurrentCheckoutType(getCheckoutType(serverSettings))
+        }
+    }, [serverSettings]);
 
     useEffect(() => {
         updatePage();
     }, []);
 
-    useEffect(() => {
-        console.log("CurrentBasket",CurrentBasket);
-    }, [CurrentBasket]);
 
 
     function updatePage() {
@@ -68,22 +78,27 @@ const UserBasket = () => {
                 <_InvoiceBuyableCard key={"subs" + item.Id} buyable={item} updatePage={updatePage}/>
             ))}
             {/*<_InvoiceVocher />}*/}
-            {currentCheckoutType === "SIMPLE" &&
-            <_InvoiceHowToPaySimple userBasket={CurrentBasket} setUserCanPay={setUserCanPay}
-                                    invoiceCredits={invoiceCredits}
-                                    SetInvoiceCredits={SetInvoiceCredits}/>}
-            {currentCheckoutType === "MODERATE" &&
-            <_InvoiceHowToPayModirate userBasket={CurrentBasket} setUserCanPay={setUserCanPay}
-                                      invoiceCredits={invoiceCredits}
-                                      SetInvoiceCredits={SetInvoiceCredits}/>}
-            {currentCheckoutType === "ADVANCED" &&
-            <_InvoiceHowToPayAdvanced userBasket={CurrentBasket} setUserCanPay={setUserCanPay}
-                                      invoiceCredits={invoiceCredits}
-                                      SetInvoiceCredits={SetInvoiceCredits}/>}
+
+                {currentCheckoutType === "SIMPLE" &&
+                <_InvoiceHowToPaySimple userBasket={CurrentBasket} setUserCanPay={setUserCanPay}
+                                        invoiceCredits={invoiceCredits}
+                                        SetInvoiceCredits={SetInvoiceCredits}/>}
+                {currentCheckoutType === "MODERATE" &&
+                <_InvoiceHowToPayModirate userBasket={CurrentBasket} setUserCanPay={setUserCanPay}
+                                          invoiceCredits={invoiceCredits}
+                                          SetInvoiceCredits={SetInvoiceCredits}/>}
+                {currentCheckoutType === "ADVANCED" &&
+                <_InvoiceHowToPayAdvanced userBasket={CurrentBasket} setUserCanPay={setUserCanPay}
+                                          invoiceCredits={invoiceCredits}
+                                          SetInvoiceCredits={SetInvoiceCredits}/>}
+                {currentCheckoutType === "SMARTIS" &&
+                <_InvoiceHowToPaySmartis userBasket={CurrentBasket} setUserCanPay={setUserCanPay}
+                                          invoiceCredits={invoiceCredits}
+                                          SetInvoiceCredits={SetInvoiceCredits}/>}
             <_InvoiceAction userBasket={CurrentBasket} userCanPay={userCanPay} invoiceCredits={invoiceCredits}
                             checkoutType={currentCheckoutType}/>
         </>
     ) : (<_InvoiceEmptyBasket/>);
 };
 
-export default UserBasket;
+export default connect(null, sagaActions)(UserBasket)

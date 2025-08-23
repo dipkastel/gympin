@@ -9,6 +9,7 @@ import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.user.user.dto.UserRoleInfoDto;
 import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.enums.UserGroup;
+import com.notrika.gympin.common.user.user.enums.UserProvider;
 import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.common.user.user.param.UserAvatarParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
@@ -114,6 +115,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         initUser.setUserGroup(UserGroup.CLIENT);
         initUser.setUserStatus(UserStatus.ENABLED);
         initUser.setBio(userParam.getBio());
+        initUser.setUserProvider(UserProvider.GYMPIN);
         return userRepository.add(initUser);
     }
 

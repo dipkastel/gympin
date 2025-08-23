@@ -33,4 +33,5 @@ public interface InvoiceController extends BaseController<InvoiceParam, InvoiceD
     ResponseEntity<InvoiceDto> userCheckout(InvoiceCheckoutParam param) throws Exception;
     ResponseEntity<UserHowToPayDto> getUserHowToPay(@RequestBody InvoiceCheckoutParam param) throws Exception;
     ResponseEntity<List<InvoiceDto>> getPreOrderByCatering(PlaceCateringParam param) throws Exception;
+    ResponseEntity<String> SmartisCheckOut(@RequestBody InvoiceCheckoutParam param) throws Exception;
 }

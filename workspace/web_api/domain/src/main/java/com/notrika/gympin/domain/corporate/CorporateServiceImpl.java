@@ -27,8 +27,8 @@ import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRep
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import lombok.NonNull;
@@ -198,6 +198,22 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         CorporateEntity place = corporateRepository.getById(id);
         InviteCode code = InviteCode.builder()
                 .code("A"+ GeneralHelper.getInviteCode(place.getId(),1))
+                .isActive(true)
+                .build();
+        return code;
+    }
+
+    public CorporateEntity getCorporeteByInviteCode(String InviteCode) {
+        Long id = GeneralHelper.CodeToId(InviteCode);
+        CorporateEntity corporate = corporateRepository.getById(id);
+        return corporate;
+    }
+
+    @Override
+    public InviteCode getCorporateInviteCode(CorporateParam param) {
+        CorporateEntity corporate = corporateRepository.getById(param.getId());
+        InviteCode code = InviteCode.builder()
+                .code("C" + GeneralHelper.getInviteCode(corporate.getId(), 1))
                 .isActive(true)
                 .build();
         return code;

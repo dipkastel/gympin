@@ -2,6 +2,8 @@ package com.notrika.gympin.domain.ticket.subscribe;
 
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
@@ -18,6 +20,7 @@ import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.ticket.*;
+import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.HallConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceSportConvertor;
@@ -94,7 +97,7 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
             throw new UncomfortableValueExeption();
         TicketSubscribeEntity ticketSubscribeEntity = getEntityById(ticketSubscribeParam.getId());
         ticketSubscribeEntity.setName(ticketSubscribeParam.getName());
-        ticketSubscribeEntity.setPrice(ticketSubscribeParam.getPlacePrice());
+        ticketSubscribeEntity.setPrice(ticketSubscribeParam.getPrice());
         ticketSubscribeEntity.setValuePrice(ticketSubscribeParam.getValuePrice());
         ticketSubscribeEntity.setPlacePrice(ticketSubscribeParam.getPlacePrice());
         ticketSubscribeEntity.setDiscount((short) 0);
@@ -163,6 +166,8 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
 
     @Override
     public List<TicketSubscribeDto> getTicketSubscribeByPlace(PlaceGymParam place) {
+
+
         return ticketSubscribeRepository.findAllByPlaceAndDeletedIsFalse(PlaceGymEntity.builder().id(place.getId()).build()).stream().filter(o -> !o.isDeleted()).map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
     }
 

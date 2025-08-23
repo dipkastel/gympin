@@ -1,21 +1,23 @@
 package com.notrika.gympin.domain.user;
 
+import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
+import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
+import com.notrika.gympin.common.place.personnel.service.PlacePersonnelService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.gifts.enums.GiftCreditStatusEnum;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
+import com.notrika.gympin.common.settings.userSettings.enums.UserSettingTypesEnum;
 import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
 import com.notrika.gympin.common.support.service.SupportService;
 import com.notrika.gympin.common.user.user.dto.*;
-import com.notrika.gympin.common.user.user.enums.RoleEnum;
-import com.notrika.gympin.common.user.user.enums.TokenType;
-import com.notrika.gympin.common.user.user.enums.UserGroup;
-import com.notrika.gympin.common.user.user.enums.UserStatus;
+import com.notrika.gympin.common.user.user.enums.*;
 import com.notrika.gympin.common.user.user.param.*;
 import com.notrika.gympin.common.user.user.service.AccountService;
 import com.notrika.gympin.common.user.user.service.JwtTokenProvider;
@@ -34,13 +36,20 @@ import com.notrika.gympin.common.util.exception.user.BadUserCredentialsException
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.common.util.exception.user.UserLockedException;
 import com.notrika.gympin.common.util.exception.user.UserSuspendedException;
+import com.notrika.gympin.domain.corporate.CorporatePersonnelServiceImpl;
+import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
+import com.notrika.gympin.domain.settings.userSettings.UserSettingsServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.authCodes.UserActivationCodeRepository;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
+import com.notrika.gympin.persistence.dao.repository.place.PlacePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageGiftCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
+import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
+import com.notrika.gympin.persistence.entity.management.settings.UserSettingsEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -61,9 +70,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -74,6 +81,8 @@ public class AccountServiceImpl implements AccountService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private UserSettingsServiceImpl userSettingsService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -86,9 +95,13 @@ public class AccountServiceImpl implements AccountService {
     private UserPasswordRepository userPasswordRepository;
     @Autowired
     private SupportService supportService;
+    @Autowired
+    private CorporateServiceImpl corporateServiceImpl;
 
     @Autowired
     ManageGiftCreditRepository giftCreditRepository;
+    @Autowired
+    CorporatePersonnelServiceImpl corporatePersonnelService;
 
 
 
@@ -133,6 +146,26 @@ public class AccountServiceImpl implements AccountService {
                 gift.setCanRegister(false);
                 gift.setUser(insertedUser);
             }
+
+            if(userRegisterParam.getInvitedBy().startsWith("C")){
+                //registerToCorporate
+                CorporateEntity corporate = corporateServiceImpl.getCorporeteByInviteCode(userRegisterParam.getInvitedBy());
+                corporatePersonnelService.add(CorporatePersonnelParam.builder()
+                                .corporate(CorporateParam.builder().id(corporate.getId()).build())
+                                .phoneNumber(userRegisterParam.getPhoneNumber())
+                        .build());
+                if(userRegisterParam.getInvitedBy().equals("CGF153DS")){
+                    insertedUser.setUserProvider(UserProvider.SMARTIS);
+                    userService.update(insertedUser);
+                    UserSettingsEntity paySettings = UserSettingsEntity.builder()
+                            .user(insertedUser)
+                            .value("SMARTIS")
+                            .key(UserSettingTypesEnum.USER_CHECKOUT_TYPE)
+                            .build();
+                    userSettingsService.add(paySettings);
+                }
+            }
+
             return UserConvertor.toRegisterDto(insertedUser);
         } catch (DataIntegrityViolationException e) {
             throw new ExceptionBase(HttpStatus.BAD_REQUEST, Error.ErrorType.REGISTER_USER_EXIST);
@@ -160,6 +193,7 @@ public class AccountServiceImpl implements AccountService {
             user.setInvitedBy(userRegisterParam.getInvitedBy());
         user.setUserGroup(UserGroup.CLIENT);
         user.setUserStatus(UserStatus.ENABLED);
+        user.setUserProvider(UserProvider.GYMPIN);
         return userService.add(user);
     }
 

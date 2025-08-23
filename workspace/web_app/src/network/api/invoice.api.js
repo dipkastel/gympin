@@ -34,3 +34,7 @@ export function invoice_deleteBuyable(data) {
 export function invoice_userCheckout(data) {
     return axios.post(Api_url.invoice.userCheckout, data);
 }
+
+export function invoice_SmartisCheckOut(data) {
+    return axios.post(Api_url.invoice.SmartisCheckOut, data);
+}

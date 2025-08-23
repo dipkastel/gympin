@@ -11,6 +11,7 @@ import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
+import com.notrika.gympin.common.user.user.enums.UserProvider;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
@@ -27,6 +28,7 @@ import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEnt
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.data.domain.Page;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -88,7 +90,7 @@ public final class PlaceConvertor {
             placeDto.setAddress(isSequred ? (entity.getAddress().substring(0, 3) + "****" + entity.getAddress().substring(entity.getAddress().length() - 3)) : entity.getAddress());
         } catch (Exception e) {
         }
-        placeDto.setCommentCount((short) entity.getPlaceComments().size());
+        placeDto.setCommentCount((short) (entity.getPlaceComments()==null?0:entity.getPlaceComments().size()));
         placeDto.setOrder(entity.getOrder());
         placeDto.setActiveTimes(entity.getActiveTimes());
         placeDto.setAutoDiscount(entity.isAutoDiscount());
@@ -194,16 +196,19 @@ public final class PlaceConvertor {
     public static PlaceGymDto toDtoSecureGym(PlaceGymEntity entity) {
         if (entity == null) return null;
         Boolean isSequred = false;
+        UserProvider provider = UserProvider.GYMPIN;
         try {
             GympinContext context = GympinContextHolder.getContext();
             if (context == null)
                 throw new UnknownUserException();
             UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+
             for (CorporatePersonnelEntity personnel : user.getCorporatesPersonel().stream().filter(cp -> !cp.isDeleted()).collect(Collectors.toList())) {
                 if (personnel.getCorporate().getStatus() == CorporateStatusEnum.SECURE_DEMO) {
                     isSequred = true;
                 }
             }
+            provider = user.getUserProvider();
         } catch (Exception e) {
         }
 
@@ -237,10 +242,17 @@ public final class PlaceConvertor {
             } catch (Exception e) {
             }
             try {
-                var minPriceTicket = entity.getTicketSubscribes().stream().filter(p -> !p.isDeleted() && p.getEnable() && p.getPrice() != null).min(Comparator.comparing(BuyableEntity::getPrice)).get();
-                placeDto.setMinPrice(minPriceTicket.getPrice());
-                if (minPriceTicket.getValuePrice().compareTo(minPriceTicket.getPrice()) > 0)
-                    placeDto.setMinPriceBeforeDiscount(minPriceTicket.getValuePrice());
+                if(provider==UserProvider.SMARTIS){
+                    var minPriceTicket = entity.getTicketSubscribes().stream().filter(p -> !p.isDeleted() && p.getEnable() && p.getPlacePrice() != null).min(Comparator.comparing(BuyableEntity::getPlacePrice)).get();
+                    placeDto.setMinPrice(minPriceTicket.getPlacePrice());
+                    if (minPriceTicket.getValuePrice().compareTo(minPriceTicket.getPlacePrice()) > 0)
+                        placeDto.setMinPriceBeforeDiscount(minPriceTicket.getValuePrice());
+                }else{
+                    var minPriceTicket = entity.getTicketSubscribes().stream().filter(p -> !p.isDeleted() && p.getEnable() && p.getPrice() != null).min(Comparator.comparing(BuyableEntity::getPrice)).get();
+                    placeDto.setMinPrice(minPriceTicket.getPrice());
+                    if (minPriceTicket.getValuePrice().compareTo(minPriceTicket.getPrice()) > 0)
+                        placeDto.setMinPriceBeforeDiscount(minPriceTicket.getValuePrice());
+                }
             } catch (Exception e) {
             }
         }

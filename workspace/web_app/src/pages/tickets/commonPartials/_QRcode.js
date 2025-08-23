@@ -21,7 +21,10 @@ const _QRcode = ({ticket, userCanEnter, type}) => {
             let distance = new Date().getTime() - startTimer.getTime();
             var minutes = respite - 1 - Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = 60 - Math.floor((distance % (1000 * 60)) / 1000);
-            setTimerText(getStringOfTime(seconds) + " : " + getStringOfTime(minutes));
+            if((respite*60*1000-distance)<0)
+                getCodeOfSubscribe();
+            else
+                setTimerText(getStringOfTime(seconds) + " : " + getStringOfTime(minutes));
         }, 1000)
         return () => {
             clearInterval(changeTimer);
@@ -30,14 +33,7 @@ const _QRcode = ({ticket, userCanEnter, type}) => {
 
 
     useEffect(() => {
-        getCodeOfSubscribe();
-        let changeQrInterval = setInterval(function () {
             getCodeOfSubscribe();
-        }, respite * 60 * 1000)
-
-        return () => {
-            clearInterval(changeQrInterval);
-        };
     }, []);
 
 

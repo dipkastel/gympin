@@ -43,17 +43,17 @@ const _placeBaseInfo = ({place, currentUser}) => {
                         >
 
                             <Grid container direction={"row"}>
-                                <Rating size={"large"} name="half-rating" value={place.Rate || 5} precision={0.5}
+                                <Rating size={"large"} name="half-rating" value={place.Rate || 5} precision={1} sx={{pt:0.5}}
                                         onChange={(e) => setRankForPlace(e, place)}/>
                                 {place?.Rate && <Typography sx={{px: 1, pt: 1}} variant={"subtitle1"}>
                                     {place.Rate + " از 5"}
                                 </Typography>}
                             </Grid>
-                            <Grid container direction={"row"}>
+                            <Grid container direction={"row"} sx={{pt:1.5}}>
                                 <Link href={"#Comments"}  variant={"caption"}>
                                     <Comment/>
-                                    {place?.CommentCount!=0 &&<>{ "کاربران برای "+place.Name+" "+ place?.CommentCount+" نظر ثبت کرده‌اند"}</>}
-                                    {place?.CommentCount==0 &&<>{ "با ثبت نظر خدمات دریافتی خود از مجموعه "+place.Name+" را ارتقا دهید"}</>}
+                                    {place?.CommentCount!=0 &&<>{ "برای "+place.Name+" "+ place?.CommentCount+" نظر ثبت شده"}</>}
+                                    {place?.CommentCount==0 &&<>{ "با ثبت نظر مجموعه "+place.Name+" را ارتقا دهید"}</>}
                                 </Link>
                             </Grid>
                         </Grid>

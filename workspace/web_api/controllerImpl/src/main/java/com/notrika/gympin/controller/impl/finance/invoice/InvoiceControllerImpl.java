@@ -145,6 +145,12 @@ public class InvoiceControllerImpl implements InvoiceController {
     }
 
     @Override
+    @PostMapping("SmartisCheckOut")
+    public ResponseEntity<String> SmartisCheckOut(@RequestBody InvoiceCheckoutParam param) throws Exception {
+        return ResponseEntity.ok(invoiceService.SmartisCheckOut(param));
+    }
+
+    @Override
     @PostMapping("getUserHowToPay")
     public ResponseEntity<UserHowToPayDto> getUserHowToPay(InvoiceCheckoutParam param) {
         return ResponseEntity.ok(invoiceService.getHowToPay(param));

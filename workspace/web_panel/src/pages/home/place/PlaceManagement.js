@@ -88,6 +88,7 @@ const PlaceManagement = () => {
     function RenderModalAdd() {
         function addPlace(e) {
             e.preventDefault()
+            SetOpenModalAdd(false);
             PlaceGym_addPlace({Address: "", Name: e.target.formName.value , Region: {Id: 1}})
                 .then((data) => {
                     error.showError({message: "عملیات موفق",});

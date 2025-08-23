@@ -1,10 +1,15 @@
 package com.notrika.gympin.domain.util.convertor;
 
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 //import com.notrika.gympin.common.ticket.subscribe.dto.TicketSubscribeActionDto;
+import com.notrika.gympin.common.user.user.enums.UserProvider;
+import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 
 import java.util.stream.Collectors;
 //import com.notrika.gympin.persistence.entity.ticket.common.TicketSubscribeHallActiveTime;
@@ -28,6 +33,13 @@ public class TicketSubscribeConvertor {
         dto.setExpireDuration(entity.getExpireDuration());
         dto.setSubscribeCapacity(entity.getSubscribeCapacity());
         dto.setTiming(entity.getTiming());
+
+        GympinContext context = GympinContextHolder.getContext();
+        if (context == null)
+            throw new UnknownUserException();
+        UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+        if(user.getUserProvider()== UserProvider.SMARTIS)
+            dto.setPrice(entity.getPlacePrice());
         if(entity.getCoaches()!=null)
             dto.setCoaches(entity.getCoaches().stream().filter(o->!o.isDeleted()).map(UserConvertor::toCoachDto).collect(Collectors.toList()));
         return dto;

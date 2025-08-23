@@ -130,10 +130,4 @@ public class FinanceHelper {
         return wallet;
     }
 
-    public UserEntity getcurrentUser() {
-        GympinContext context = GympinContextHolder.getContext();
-        if (context == null)
-            throw new UnknownUserException();
-        return (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-    }
 }

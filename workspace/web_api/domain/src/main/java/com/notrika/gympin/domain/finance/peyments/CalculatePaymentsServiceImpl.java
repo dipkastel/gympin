@@ -9,6 +9,7 @@ import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import com.notrika.gympin.common.util.exception.ticket.TicketHasNotOwner;
 import com.notrika.gympin.common.util.exception.transactions.TransactionAlreadyChecked;
 import com.notrika.gympin.common.util.exception.transactions.TransactionNotFound;
@@ -43,6 +44,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -206,17 +208,19 @@ public class CalculatePaymentsServiceImpl {
         BigDecimal commission = null;
         BigDecimal discount = null;
         BigDecimal beneficiaryShare = null;
+        float discountValue =100- subscribeEntity.getSellPrice().multiply(BigDecimal.valueOf(100)).divide(subscribeEntity.getPlacePrice()).longValue();
+
 
         if (subscribeEntity.getCustomer().getInvitedBy() != null && subscribeEntity.getCustomer().getInvitedBy().startsWith("P") && subscribeEntity.getCustomer().getInvitedBy().equals("P" + GeneralHelper.getInviteCode(subscribeEntity.getPlace().getId(), 1))) {
             commission = BigDecimal.ZERO;
             beneficiaryShare = subscribeEntity.getPlacePrice();
-        } else if (subscribeEntity.getDiscount() == null) {
-            commission = subscribeEntity.getPlacePrice().multiply(BigDecimal.valueOf(commissionFee / 100));
-            beneficiaryShare = subscribeEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (commissionFee / 100)));
+        } else if (discountValue == 0) {
+            commission = subscribeEntity.getPlacePrice().multiply(BigDecimal.valueOf(commissionFee / 100)).round(MathContext.DECIMAL32);
+            beneficiaryShare = subscribeEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (commissionFee / 100))).round(MathContext.DECIMAL32);
         } else {
-            commission = subscribeEntity.getPlacePrice().multiply(BigDecimal.valueOf(((Double) commissionFee - (float) subscribeEntity.getDiscount()) / 100));
-            discount = subscribeEntity.getPlacePrice().multiply(BigDecimal.valueOf((float) subscribeEntity.getDiscount() / 100));
-            beneficiaryShare = subscribeEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (commissionFee / 100)));
+            commission = subscribeEntity.getPlacePrice().multiply(BigDecimal.valueOf((commissionFee - discountValue) / 100)).round(MathContext.DECIMAL32);
+            discount = subscribeEntity.getPlacePrice().multiply(BigDecimal.valueOf(discountValue / 100)).round(MathContext.DECIMAL32);
+            beneficiaryShare = subscribeEntity.getPlacePrice().multiply(BigDecimal.valueOf(1 - (commissionFee / 100))).round(MathContext.DECIMAL32);
         }
 
         //place personel

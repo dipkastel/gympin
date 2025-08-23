@@ -19,15 +19,14 @@ function Login(props) {
     const [registered, setRegistered] = useState(true);
     const [fullName, setFullName] = useState({});
     const [disableFullName, setDisableFullName] = useState(false);
-    const [inviteCode, setInviteCode] = useState({value: params?.code});
+    const [inviteCode, setInviteCode] = useState(null);
     const [disableInviteCode, setDisableInviteCode] = useState(false);
     const [disableRegisterBtn, setDisableRegisterBtn] = useState(true);
     const [sentCode, setSentCode] = useState(false);
     const [code, setCode] = useState({});
     const [disableCode, setDisableCode] = useState(false);
     const [disableLoginBtn, setDisableLoginBtn] = useState(true);
-
-
+    const [isSmartiz, setIsSmartiz] = useState(false);
 
 
     useEffect(() => {
@@ -37,10 +36,17 @@ function Login(props) {
     }, [code]);
 
     useEffect(() => {
-        if (inviteCode?.value) {
+
+        if (params?.code == "smartispay") {
+            setInviteCode({value:"CGF153DS"})
+            setIsSmartiz(true);
+        } else if (params?.code) {
+            setInviteCode({value:params.code});
             setRegistered(false);
         }
-    }, [inviteCode]);
+
+
+    }, [params]);
 
 
     function sendMessage(e) {
@@ -87,7 +93,7 @@ function Login(props) {
         registerWithInviteCode({
             PhoneNumber: mobileNumber?.value,
             FullName: fullName?.value,
-            InvitedBy: inviteCode?.value
+            InvitedBy: isSmartiz?"CGF153DS":(inviteCode?.value)
         }).then((data) => {
             sendMessage(e);
             setRegistered(true);
@@ -213,10 +219,25 @@ function Login(props) {
                             <img width={"100%"} src={"/assets/images/gympinTypoLight.svg"}/>
                         </Paper>
                         <CardContent>
-                            <Typography color={"gray.darker"} sx={{mt: 1, fontWeight: 800}} variant={"h5"}>خوش آمدید</Typography>
-                            <Typography color={"gray.darker"} sx={{mt: 1, lineHeight: 1.8}} variant={"body2"}>برای استفاده از خدمات جیم پین،
-                                شماره موبایل خود
-                                را وارد کرده و سپس کد تایید را ثبت نمایید</Typography>
+                            {!isSmartiz && <>
+                                <Typography color={"gray.darker"} sx={{mt: 1, fontWeight: 800}} variant={"h5"}>خوش آمدید</Typography>
+                                <Typography color={"gray.darker"} sx={{mt: 1, lineHeight: 1.8}} variant={"body2"}>برای استفاده از خدمات جیم
+                                    پین،
+                                    شماره موبایل خود
+                                    را وارد کرده و سپس کد تایید را ثبت نمایید</Typography></>}
+                            {isSmartiz && <>
+                                <Grid sx={{mt:2}} container spacing={1} justifyContent={"start"} direction={"row"} alignItems={"center"}  >
+                                    <img src={"/assets/images/smartiz-picto.png"} width={"39px"} height={"28px"} />
+
+                                    <Typography color={"gray.darker"} sx={{ fontWeight: 800}} variant={"h5"}>
+                                        {"کاربر اسمارتیز خوش آمدید"}
+                                    </Typography>
+                                </Grid>
+                                <Typography color={"gray.darker"} sx={{mt: 1, lineHeight: 1.8}} variant={"body2"}>برای استفاده از خدمات جیم
+                                    پین،
+                                    شماره همراهی که در اسمارتیز ثبت شده
+                                    را وارد کرده و سپس کد تایید را ثبت نمایید</Typography>
+                            </>}
 
                             <TextField
                                 variant="outlined"
@@ -257,7 +278,7 @@ function Login(props) {
                                 onChange={(e) => {
                                     changeInviteCode(e.target.value)
                                 }}
-                                hidden={registered}
+                                hidden={registered||isSmartiz}
                                 label={"کد معرف"}
                                 inputProps={{inputMode: 'numeric', style: {letterSpacing: "0.5rem", textAlign: "center", direction: "ltr"}}}
                                 disabled={disableInviteCode}

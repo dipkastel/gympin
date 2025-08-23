@@ -19,18 +19,24 @@ const _placeSubscribes = ({place,genderFilter}) => {
         const currentUser = useSelector(state => state.auth.user)
         const [subscribes, setSubscribes] = useState(null)
         const userBasket = useSelector(state => state.invoice.userBasket);
-        useEffect(() => {
-            ticketSubscribe_getByPlace({Id: place.Id}).then(result => {
-                setSubscribes(result.data.Data);
-            }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            })
+
+
+    useEffect(() => {
+        if(!!place?.Id)
+            getTickets()
         }, []);
 
+    function getTickets() {
+        ticketSubscribe_getByPlace({Id: place.Id}).then(result => {
+            setSubscribes(result.data.Data);
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        })
+    }
 
         function addToBasket(item) {
             if (!currentUser) {

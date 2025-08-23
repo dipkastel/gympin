@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CorporateApi} from "./const_api";
+import {CorporateApi, PlaceApi} from "./const_api";
 
 export function corporate_add(data) {
     return axios.post(CorporateApi.add, data);
@@ -60,4 +60,8 @@ export function corporate_addGroup(data) {
 }
 export function corporate_deleteGroup(data) {
     return axios.put(CorporateApi.deleteGroup,  data );
+}
+
+export function corporate_getCorporateInviteCode(corporate) {
+    return axios.get(CorporateApi.getCorporateInviteCode, {params: corporate});
 }

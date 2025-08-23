@@ -117,7 +117,7 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe,login}) => {
                                                                                                       variant={"body2"}
                                                                                                       color={"gray.contrastText"}>مربی</Typography></Grid>
                         <Grid>
-                            <_ticketCoach ticket={subscribe}/>
+                            <_ticketCoach subscribe={subscribe}/>
                         </Grid>
                     </Grid>
                     <Grid sx={{mt: 1}} container justifyContent={"space-between"} direction={"row"} alignItems={"center"}>
@@ -126,7 +126,7 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe,login}) => {
                                                                                                       color={"gray.contrastText"}>اطلاعات
                             لازم</Typography></Grid>
                         <Grid>
-                            <_ticketInfo ticket={subscribe}/>
+                            <_ticketInfo subscribe={subscribe}/>
                         </Grid>
                     </Grid>
                     <Button disabled={!subscribe.Enable} variant={"contained"} color={"primary"} onClick={() => addToSubscribe(subscribe)}

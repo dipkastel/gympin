@@ -48,13 +48,10 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
     @Autowired
     CorporatePersonnelCreditRepository corporatePersonnelCreditRepository;
-
     @Autowired
     CorporatePersonnelRepository corporatePersonnelRepository;
-
     @Autowired
     CorporatePersonnelService corporatePersonnelService;
-
     @Autowired
     CorporateServiceImpl corporateService;
     @Autowired
@@ -81,8 +78,8 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         //checks
         if (!helper.checkContractContract(personnelEntity.getCorporate()))
             throw new CorporateContractIsNotComplete();
-        if (helper.checkLowBudjetByContract(personnelEntity.getCorporate(), param.getCreditAmount()))
-            throw new LowDepositException();
+//        if (helper.checkLowBudjetByContract(personnelEntity.getCorporate(), param.getCreditAmount()))
+//            throw new LowDepositException();
 
         financeSerialRepository.add(serial);
         //add finance corporate personnel credit
@@ -110,8 +107,8 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
         if (!helper.checkContractContract(corporate))
             throw new CorporateContractIsNotComplete();
-        if (helper.checkLowBudjetByContract(corporate, totalAddAmount))
-            throw new LowDepositException();
+//        if (helper.checkLowBudjetByContract(corporate, totalAddAmount))
+//            throw new LowDepositException();
         if (totalAddAmount.compareTo(BigDecimal.ZERO) < 1)
             throw new CreditCannotBeNegativeException();
         if (personnelsToAddCredit.size() < 1)

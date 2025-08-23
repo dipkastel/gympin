@@ -49,6 +49,6 @@ public interface CorporateController extends BaseController<CorporateParam, Corp
 
     ResponseEntity<InviteCode> getCorporateAffiliateCode(CorporateParam corporateParam);
 
-
+    ResponseEntity<InviteCode> getCorporateInviteCode(CorporateParam param);
 }
 

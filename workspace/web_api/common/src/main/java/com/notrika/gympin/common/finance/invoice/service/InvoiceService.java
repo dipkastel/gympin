@@ -30,4 +30,5 @@ public interface InvoiceService extends BaseService<InvoiceParam, InvoiceDto, In
     UserHowToPayDto getHowToPay(InvoiceCheckoutParam param);
     InvoiceDto getBasketByUserId(UserParam param);
     List<InvoiceDto> getPreOrderByCatering(PlaceCateringParam param);
+    String SmartisCheckOut(InvoiceCheckoutParam param) throws Exception;
 }

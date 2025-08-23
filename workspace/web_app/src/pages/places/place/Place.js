@@ -23,21 +23,22 @@ const Place = () => {
     const error = useContext(ErrorContext);
     const navigate = useNavigate();
     const {placeId} = useParams();
-    const [place, setPlace] = useState({});
+    const [place, setPlace] = useState(null);
     const [abouts, SetAbouts] = useState([]);
     const currentUser = useSelector(state => state.auth.user)
 
     useEffect(() => {
         let placeLongId = placeId.split('-')[0];
-        getPlace(placeLongId);
+            getPlace(placeLongId);
     }, [placeId]);
 
     useEffect(() => {
-        getAbouts();
+        if(!!place)
+            getAbouts();
     }, [place]);
 
     function getAbouts() {
-        PlaceAbout_getByPlace({Id: place.Id}).then(result => {
+        PlaceAbout_getByPlace({Id: place?.Id}).then(result => {
             SetAbouts(result.data.Data)
         }).catch(e => {
             try {
@@ -50,7 +51,6 @@ const Place = () => {
 
     function getPlace(id) {
         gym_getById(id).then(result => {
-            console.log(result.data.Data);
             setPlace(result.data.Data);
             if (placeId.includes("-") && !placeId.includes(fixTextToSlug(result.data.Data.Name)))
                 navigate("/");
@@ -74,22 +74,22 @@ const Place = () => {
             <Masonry columns={{xs: 1, sm: 1,md:2,lg:2}} >
 
                 <Grid>
-                    <_placeBaseInfo place={place} currentUser={currentUser}/>
-                    {place.Multimedias && <_PlaceImages place={place}/>}
+                    {place&&currentUser&& <_placeBaseInfo place={place} currentUser={currentUser}/>}
+                    {place&&place?.Multimedias && <_PlaceImages place={place}/>}
                 </Grid>
 
                 <Grid sx={{float: "right"}}>
                     {place && <_TabPlaceBuyable place={place}/>}
                 </Grid>
                 <Grid  sx={{float: "right"}}>
-                    <_PlaceAddress place={place}/>
-                    <_PlaceSports place={place}/>
-                    <_PlaceFacilities place={place}/>
-                    <_PlaceComments place={place} currentUser={currentUser}/>
+                    {place&&<_PlaceAddress place={place}/>}
+                    {place&&<_PlaceSports place={place}/>}
+                    {place&&<_PlaceFacilities place={place}/>}
+                    {place&&<_PlaceComments place={place} currentUser={currentUser}/>}
                     {abouts.map((item, number) => (
-                            <_PlaceSingleAbout key={"a" + number} about={item} number={number}/>
+                        <_PlaceSingleAbout key={"a" + number} about={item} number={number}/>
                         )
-                    )}
+                        )}
                 </Grid>
             </Masonry>
 

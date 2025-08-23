@@ -13,7 +13,7 @@ import {toPriceWithComma} from "../../../helper/utils";
 import _invoiceAgreements from "./_invoiceAgreements";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
-import {invoice_userCheckout} from "../../../network/api/invoice.api";
+import {invoice_SmartisCheckOut, invoice_userCheckout} from "../../../network/api/invoice.api";
 import {useNavigate} from "react-router-dom";
 import store from "../../../helper/redux/store";
 import {sagaActions} from "../../../helper/redux/actions/SagaActions";
@@ -30,21 +30,51 @@ const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits,checkoutType}) =
 
     function renderModalConfirm() {
         function onConfirm() {
+
             if (!acceptAgreements) {
                 error.showError({message: "تمام قوانین باید خوانده و تایید شوند.",});
                 return;
             }
             setOpenModalConfirm(false);
             setLoading(true);
+
+            if(checkoutType=="SMARTIS"){
+                SmartisPay();
+            }else{
+                GympinPay();
+            }
+
+        }
+
+        function SmartisPay(){
+            var postData = {
+                Invoice: {Id: userBasket.Id},
+                Price: userBasket.TotalPrice,
+                CheckoutType:checkoutType,
+            }
+
+            console.log(postData)
+            invoice_SmartisCheckOut(postData).then(result => {
+                console.log(result)
+                window.location = result.data.Data.toString();
+            }).catch(e => {
+                setLoading(false);
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                    console.log("خطا - 22")
+                }
+            })
+        }
+        function GympinPay(){
             var checkout = [];
-            console.log(invoiceCredits);
             invoiceCredits.filter(p => p.CreditPayableAmount > 0).map((invoiceCredit,Number) => {
                 checkout.push({
                     CreditType: invoiceCredit.CreditType,
                     PersonnelId: invoiceCredit.PersonnelId,
                     priority: Number,
                     amount: invoiceCredit.CreditPayableAmount,
-
                 })
             });
             var postData = {
@@ -53,7 +83,6 @@ const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits,checkoutType}) =
                 CheckoutType:checkoutType,
                 Checkout: checkout,
             }
-            console.log(postData);
             invoice_userCheckout(postData).then(result => {
                 error.showError({message: "پرداخت انجام شد.",});
                 store.dispatch(sagaActions.RequestUserInvoices(currentUser))

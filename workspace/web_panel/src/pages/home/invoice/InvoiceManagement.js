@@ -139,9 +139,9 @@ const InvoiceManagement = () => {
                                             <TableCell component="th" id={labelId} scope="row" padding="normal" align="right">
                                                 <Grid container direction={"row"} justifyContent={"start"} alignItems={"center"}>
                                                     <Avatar
-                                                        alt={row.User.Name}
+                                                        alt={row?.User?.Name}
                                                         onClick={() => history.push("/users/details/" + row.User.Id)}
-                                                        src={row.User.Multimedias ? row.Corporate.Multimedias[0].Url : ""}
+                                                        src={row?.User?.Multimedias ? row?.Corporate?.Multimedias[0]?.Url : ""}
                                                         sx={{width: 20, height: 20,mx:1}}/>
                                                     <Typography variant={"subtitle1"} >
                                                         {row.UserFullName}

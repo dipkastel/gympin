@@ -23,6 +23,9 @@ public class TicketSubscribeParam extends BaseParam<TicketSubscribeParam> {
     @JsonProperty(value = "Name", required = true)
     private String name;
 
+    @JsonProperty("Price")
+    private BigDecimal price;
+
     @JsonProperty("ValuePrice")
     private BigDecimal valuePrice;
 

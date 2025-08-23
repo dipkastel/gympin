@@ -10,12 +10,16 @@ import com.notrika.gympin.common.finance.invoice.query.InvoiceQuery;
 import com.notrika.gympin.common.finance.invoice.service.InvoiceService;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
+import com.notrika.gympin.common.user.user.enums.UserProvider;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.common.util.exception.purchased.IsAlreadyPayedException;
 import com.notrika.gympin.common.util.exception.purchased.PriceConflictException;
 import com.notrika.gympin.common.util.exception.purchased.PriceTotalConflictException;
 import com.notrika.gympin.common.util.exception.transactions.*;
+import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.finance.peyments.CalculatePaymentsServiceImpl;
 import com.notrika.gympin.domain.util.convertor.InvoiceConvertor;
@@ -95,6 +99,8 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
 
     @Autowired
     InvoiceServiceHelper helper;
+    @Autowired
+    InvoiceServiceSmartisPayHelper smartisPayHelper;
 
     @Override
     public InvoiceDto add(@NonNull InvoiceParam invoiceParam) {
@@ -323,6 +329,10 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         if (invoice.getInvoiceFoods().size()>0)
             throw new UserHasOpenBasketException();
 
+        if(invoice.getUser().getUserProvider()== UserProvider.SMARTIS){
+            subscribe.setPrice(subscribe.getPlacePrice());
+        }
+
         //if buyable exist add +1
         InvoiceSubscribeEntity userBuyable = null;
         try {
@@ -512,6 +522,21 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         helper.sendSms(invoice);
         helper.addNote(invoice, "پرداخت سبد خرید و ایجاد بلیط ها ");
         return InvoiceConvertor.toDto(result);
+    }
+
+    @Override
+    @Transactional
+    public String SmartisCheckOut(InvoiceCheckoutParam param) throws Exception {
+        InvoiceEntity invoice = invoiceRepository.getById(param.getInvoice().getId());
+        UserEntity user = invoice.getUser();
+
+        //checks
+        if (invoice.getStatus() != InvoiceStatus.DRAFT)
+            throw new IsAlreadyPayedException();
+        if (invoice.getPriceToPay().compareTo(param.getPrice()) != 0)
+            throw new PriceConflictException();
+
+        return smartisPayHelper.getUrl(invoice,user);
     }
 
     @Override

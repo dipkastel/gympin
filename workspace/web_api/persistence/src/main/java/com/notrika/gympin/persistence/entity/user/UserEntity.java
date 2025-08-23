@@ -3,6 +3,7 @@ package com.notrika.gympin.persistence.entity.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.user.user.enums.UserGroup;
+import com.notrika.gympin.common.user.user.enums.UserProvider;
 import com.notrika.gympin.common.user.user.enums.UserStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
@@ -81,6 +82,10 @@ public class UserEntity extends BaseEntityWithCreateUpdate<UserEntity> {
     @Column(name = "userGroup", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserGroup userGroup;
+
+    @Column(name = "userProvider", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserProvider userProvider;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "locationId")

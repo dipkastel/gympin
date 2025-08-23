@@ -51,10 +51,11 @@ const Profile = (props) => {
 
                         </Grid>}
                     </Grid>
-                    <IconButton href={"/profile/edit"} color={"primary"} >
-                        <EditNote/>
-                    </IconButton>
-
+                    {user.Provider!="SMARTIS"&&<>
+                        <IconButton href={"/profile/edit"} color={"primary"} >
+                            <EditNote/>
+                        </IconButton>
+                    </>}
 
                 </CardContent>
             </Card>

@@ -349,7 +349,7 @@ public class InvoiceServiceHelper {
                 .description(ticketSubscribe.getDescription())
                 .discount(ticketSubscribe.getDiscount())
                 .gender(ticketSubscribe.getGender())
-                .sellPrice(invoiceBuyable.getPlacePrice())
+                .sellPrice(invoiceBuyable.getUnitPrice())
                 .placePrice(invoiceBuyable.getPlacePrice())
                 .key(GenerateNewKey())
                 .place(invoiceBuyable.getPlace())

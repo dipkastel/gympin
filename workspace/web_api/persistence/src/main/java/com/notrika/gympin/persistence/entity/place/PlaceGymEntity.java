@@ -18,6 +18,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -97,6 +98,7 @@ public class PlaceGymEntity extends PlaceEntity<PlaceGymEntity> {
 
 
     public List<TicketSubscribeEntity> getTicketSubscribes() {
+        if(getBuyables()==null) return new ArrayList<>();
         return getBuyables().stream()
                 .filter(b -> b instanceof TicketSubscribeEntity)
                 .map(b -> (TicketSubscribeEntity) b)
