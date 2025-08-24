@@ -19,9 +19,10 @@ const Header = () => {
                 </a>
                 <ul>
                     <li><a href={"/#intro"}>ثبت نام</a></li>
-                    <li><a href={"/corporate"}>سازمان‌ها و شرکت‌ها</a></li>
+                    {/*<li><a href={"/corporate"}>سازمان‌ها و شرکت‌ها</a></li>*/}
                     <li><a href={"/about"}> آشنایی با جیم پین </a></li>
                     <li><a href={"/blog"}>مطالب و مقالات</a></li>
+                    <li><a href={"/contact"}>پشتیبانی</a></li>
                 </ul>
                 <div className={"header-actions"}>
                     <Button href={"https://apps.gympin.ir"} color={"primary"} sx={{px:"32px !important",mt:2,ml:1.6,color:"#ffffff !important"}} size={"small"} variant={"contained"} >ورود</Button>
@@ -53,9 +54,9 @@ const Header = () => {
                     <ul>
                         <li><a href={"/#intro"}>ثبت نام</a></li>
                         <li><a href={"/corporate"}>سازمان‌ها و شرکت‌ها</a></li>
-                        {/*<li><a href={"/places"}>ثبت مجموعه ورزشی</a></li>*/}
                         <li><a href={"/about"}> آشنایی با جیم پین </a></li>
                         <li><a href={"/blog"}>مطالب و مقالات</a></li>
+                        <li><a href={"/contact"}>پشتیبانی</a></li>
                         <li><a onClick={()=>{thisFormStatus===null?setThisFormStatus(formStatus.filled):setThisFormStatus(null)}}>درخواست تماس</a></li>
                     </ul>
 

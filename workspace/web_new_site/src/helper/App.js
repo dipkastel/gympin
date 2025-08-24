@@ -5,6 +5,7 @@ import {MainRoutes} from "../router/MainRoutes";
 import rtlPlugin from 'stylis-plugin-rtl';
 import {prefixer} from "stylis";
 import createCache from '@emotion/cache';
+import {useEffect} from "react";
 
 const { PUBLIC_URL } = process.env;
 
@@ -12,6 +13,8 @@ const { PUBLIC_URL } = process.env;
 
 
 function App() {
+
+
   return (
       <BrowserRouter basename={PUBLIC_URL}>
         <MuiThemeProvider theme={GympinTheme}>

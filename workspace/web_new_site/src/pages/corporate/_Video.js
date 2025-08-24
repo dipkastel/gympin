@@ -23,7 +23,7 @@ const _video = () => {
 
 
     return (
-        <section>
+        <section  data-aos="fade-up">
             <Container>
                 <div className={"video-box"}>
                     <Card sx={{mt: 5,mb:12, borderRadius: 3}} elevation={10}>

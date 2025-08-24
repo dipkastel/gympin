@@ -81,8 +81,8 @@ const _Values2 = () => {
     };
 
     return (
-        <section>
-            <Grid className={"HeaderText"}>
+        <section  data-aos="fade-up">
+            <Grid className={"HeaderText"} >
                 <Typography variant={"h2"}>چرا جیم پین؟</Typography>
                 <TypeAnimation
                     sequence={[

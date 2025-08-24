@@ -4,18 +4,18 @@ import {Card, Container, Typography} from "@mui/material";
 
 const _Apps = () => {
     return (
-        <section>
+        <section >
             <Container>
-                <Grid container columns={4} alignContent={"center"} textAlign={"center"}>
+                <Grid sx={{mt:12}} container columns={4} alignContent={"center"} textAlign={"center"}  data-aos="fade-down">
                     <Grid item size={4}>
                         <Typography color={"primary"} sx={{fontWeight: 600, mb: 3}} variant={"h1"}>اپلیکیشن‌های اختصاصی</Typography>
                     </Grid>
                 </Grid>
                 <Grid container sx={{direction: "ltr"}} columns={4} alignContent={"center"} textAlign={"right"}>
-                    <Grid sx={{p: 3}} item size={{md: 2, xs: 4}}>
+                    <Grid sx={{p: 3}} item size={{md: 2, xs: 4}} data-aos="zoom-in-right">
                         <img alt={"اپلیکیشن اختصاصی شرکت‌ها"} className={"apps-img"} src={"/assets/images/corporatelaptop.jpg"}/>
                     </Grid>
-                    <Grid sx={{px: 6, direction: "rtl"}} item size={{md: 2, xs: 4}}>
+                    <Grid sx={{px: 6, direction: "rtl"}} item size={{md: 2, xs: 4}} data-aos="zoom-in-left">
                         <Typography sx={{fontWeight: 600, mt: 8}} variant={"h5"}>پنل اختصاصی سازمان‌ها و شرکت‌ها</Typography>
                         <Typography sx={{fontWeight: 400, mt: 2, mb: 0, lineHeight: 2, textAlign: "justify"}} variant={"subtitle2"}>پنل
                             اختصاصی سازمان‌ها و شرکت‌ها در جیم پین، ابزاری جامع برای مدیریت فعالیت‌های کارکنان و تخصیص اعتبار به آن‌ها است.
@@ -38,11 +38,11 @@ const _Apps = () => {
                         {/*</Typography>*/}
                     </Grid>
                 </Grid>
-                <Grid container columns={4} alignContent={"center"} textAlign={"right"}>
-                    <Grid sx={{p: 3}} item size={{md: 2, xs: 4}}>
+                <Grid container columns={4} alignContent={"center"} textAlign={"right"} >
+                    <Grid sx={{p: 3}} item size={{md: 2, xs: 4}} data-aos="zoom-in-left">
                             <img alt={"اپلیکیشن اختصاصی شرکت‌ها"} className={"apps-img"} src={"/assets/images/appuser.jpg"}/>
                     </Grid>
-                    <Grid sx={{px: 6}} item size={{md: 2, xs: 4}}>
+                    <Grid sx={{px: 6}} item size={{md: 2, xs: 4}} data-aos="zoom-in-right">
                         <Typography sx={{fontWeight: 600, lineHeight: 2, mt: 8}} variant={"h5"}>اپلیکیشن اختصاصی کارمندان</Typography>
                         <Typography sx={{fontWeight: 400, mt: 2, mb: 3, lineHeight: 2, textAlign: "justify"}} variant={"subtitle2"}>اپلیکیشن
                             کارمندان یک
@@ -55,10 +55,10 @@ const _Apps = () => {
                 </Grid>
 
                 <Grid container sx={{direction: "ltr"}} columns={4} alignContent={"center"} textAlign={"right"}>
-                    <Grid sx={{p: 3}} item size={{md: 2, xs: 4}}>
+                    <Grid sx={{p: 3}} item size={{md: 2, xs: 4}} data-aos="zoom-in-right">
                         <img alt={"اپلیکیشن اختصاصی شرکت‌ها"} className={"apps-img"} src={"/assets/images/place-application.jpg"}/>
                     </Grid>
-                    <Grid sx={{px: 6, direction: "rtl"}} item size={{md: 2, xs: 4}}>
+                    <Grid sx={{px: 6, direction: "rtl"}} item size={{md: 2, xs: 4}} data-aos="zoom-in-left">
                         <Typography sx={{fontWeight: 600, mt: 8}} variant={"h5"}>پنل اختصاصی مراکز طرف قرارداد</Typography>
                         <Typography sx={{fontWeight: 400, mt: 2, mb: 1, lineHeight: 2, textAlign: "justify"}} variant={"subtitle2"}>پنل
                             اختصاصی مراکز ورزشی

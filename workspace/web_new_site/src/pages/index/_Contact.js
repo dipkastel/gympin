@@ -8,7 +8,7 @@ import {formStatus} from "../../helper/enum/fromStatusEnum";
 const _Contact = () => {
     const [thisFormStatus, setThisFormStatus] = useState(null)
     return (
-        <section>
+        <section  data-aos="fade-up">
             <Container>
                 <Grid sx={{mt: 2, mb: 18}} container columns={50} alignContent={"center"} textAlign={"center"}>
                     <Grid className={"ltr"} size={{sm: 50, md: 27}}>

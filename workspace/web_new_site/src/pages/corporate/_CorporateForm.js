@@ -10,7 +10,7 @@ const _CorporateForm = () => {
     const [thisFormStatus, setThisFormStatus] = useState(null)
 
     return (
-        <div className={"Corporate-form"}>
+        <section  data-aos="fade-up" className={"Corporate-form"}>
 
             <Grid container columns={10} alignContent={"center"} textAlign={"right"}>
                 <Grid sx={{py:5,px:"8vw"}} item size={{md: 6, xs: 10}}>
@@ -47,7 +47,7 @@ const _CorporateForm = () => {
                     </Collapse>
                 </Grid>
             </Grid>
-        </div>
+        </section>
     );
 };
 

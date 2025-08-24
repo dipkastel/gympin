@@ -52,7 +52,7 @@ const _Faq = () => {
 
 
     return (
-        <section>
+        <section  data-aos="fade-up">
             <Grid sx={{mt: 8}} container columns={4} alignContent={"center"} textAlign={"center"}>
                 <Grid item size={4}>
                     <Typography color={"primary"} sx={{fontWeight: 600, mt: 8}} variant={"h1"}>پاسخ به سوالات متداول</Typography>

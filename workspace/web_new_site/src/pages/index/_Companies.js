@@ -52,27 +52,26 @@ const _Companies = () => {
 
 
     return (
-        <section>
+        <section >
             <div className="slider-companies-container">
                 <Slider  {...settings}>
-                    <SliderItem url={"/assets/images/company/company1.jpg"}/>
-                    <SliderItem url={"/assets/images/company/company2.jpg"}/>
-                    <SliderItem url={"/assets/images/company/company3.jpg"}/>
-                    <SliderItem url={"/assets/images/company/company4.jpg"}/>
-                    <SliderItem url={"/assets/images/company/company5.jpg"}/>
-                    <SliderItem url={"/assets/images/company/company6.jpg"}/>
-                    <SliderItem url={"/assets/images/company/company7.jpg"}/>
-                    <SliderItem url={"/assets/images/company/company8.jpg"}/>
-                    <SliderItem url={"/assets/images/company/company9.jpg"}/>
+                    <SliderItem url={"/assets/images/company/company1.jpg"} delay={"150"}/>
+                    <SliderItem url={"/assets/images/company/company5.jpg"} delay={"500"}/>
+                    <SliderItem url={"/assets/images/company/company4.jpg"} delay={"400"}/>
+                    <SliderItem url={"/assets/images/company/company8.jpg"} delay={"800"}/>
+                    <SliderItem url={"/assets/images/company/company3.jpg"} delay={"300"}/>
+                    <SliderItem url={"/assets/images/company/company6.jpg"} delay={"600"}/>
+                    <SliderItem url={"/assets/images/company/company2.jpg"} delay={"200"}/>
+                    <SliderItem url={"/assets/images/company/company7.jpg"} delay={"750"}/>
+                    <SliderItem url={"/assets/images/company/company9.jpg"} delay={"700"}/>
                </Slider>
             </div>
-
         </section>
     );
 
-    function SliderItem({url}) {
+    function SliderItem({url,delay}) {
         return (
-            <div className={"itemHolder"}>
+            <div className={"itemHolder"} data-aos="zoom-in" data-aos-delay={delay}>
 
                 <img alt={"شرکت‌ها"} className={"apps-img"} src={url}/>
 

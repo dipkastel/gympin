@@ -11,7 +11,7 @@ const __IntroForm = () => {
 
     return (
         <>
-            <Collapse in={true}>
+            <Collapse in={true}  data-aos="fade-left" >
                 <Typography variant={"h1"} color={"primary"} sx={{display: "inline", fontWeight: "700"}}> جیم پین </Typography>
                 <Typography variant={"h1"} sx={{display: "inline", fontWeight: "700"}}>چیست</Typography>
                 <Typography variant={"body2"} sx={{fontWeight: 500, mt: 4, lineHeight: 2, textAlign: "justify"}}>جیم پین در حوزه رفاهیات
@@ -24,15 +24,15 @@ const __IntroForm = () => {
                 {/*<Button variant={"outlined"} color={"primary"} sx={{borderRadius:2,mr:1}}  >درخواست دمو</Button>*/}
                 {/*</div>*/}
             </Collapse>
-            <Collapse in={thisFormStatus === formStatus.complete}>
+            <Collapse in={thisFormStatus === formStatus.complete}  data-aos="fade-up" >
                 <Alert sx={{mt: 3}} elevation={10} variant={"filled"} severity={"success"}>با تشکر از شما. همکاران ما به زودی با شما تماس
                     خواهند گرفت.</Alert>
             </Collapse>
-            <Collapse in={thisFormStatus === formStatus.error}>
+            <Collapse in={thisFormStatus === formStatus.error}  data-aos="fade-up" >
                 <Alert sx={{mt: 3}} elevation={10} variant={"filled"} severity={"error"}>خطا در ارسال اطلاعات . لطفا با شماره‌های جیم پین
                     تماس بگیرید!</Alert>
             </Collapse>
-            <Collapse in={thisFormStatus !== formStatus.complete}>
+            <Collapse in={thisFormStatus !== formStatus.complete}  data-aos="fade-up" >
                 <Card elevation={4} sx={{my: 3, borderRadius: 3, maxWidth: 500}}>
                     <CardContent>
                         <Grid direction={"column"} spacing={3} textAlign={"center"}><Typography variant={"body2"} sx={{

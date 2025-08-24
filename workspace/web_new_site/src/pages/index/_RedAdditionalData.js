@@ -4,13 +4,13 @@ import {Card, CardContent, Typography} from "@mui/material";
 
 const _RedAdditionalData = () => {
     return (
-        <section>
+        <section  >
             <div className={"allCompanies ltr"}>
                 <Grid container alignItems={"center"} justifyContent={"center"} alignContent={"center"} textAlign={"center"} columns={7}>
-                    <Grid size={{xs:7,sm:3}}>
+                    <Grid size={{xs:7,sm:3}} data-aos="fade-left">
                         <img alt={"رفاهی ورزشی"} width={"100%"} src={"/assets/images/bgex.jpg"}/>
                     </Grid>
-                    <Grid size={{xs:7,sm:4}}>
+                    <Grid size={{xs:7,sm:4}} data-aos="fade-left">
                         <Card className={"additionalCard rtl"} elevation={0} sx={{m:4,borderRadius:3,p:3}} >
                             <CardContent>
                                 <Typography sx={{fontWeight:600}} variant={"h4"}>بدون محدودیت در اندازه سازمان یا شرکت</Typography>

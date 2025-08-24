@@ -2,9 +2,9 @@ import React from 'react';
 import Grid from "@mui/material/Grid2";
 import {Card, CardContent, Typography} from "@mui/material";
 
-const __SingleGoal = ({title,text,image,alt}) => {
+const __SingleGoal = ({title,text,image,alt,Aos}) => {
     return (
-        <Grid justifyItems={"center"} sx={{p:2}} size={{ lg: 4, sm: 8, xs: 16}}>
+        <Grid justifyItems={"center"} sx={{p:2}} size={{ lg: 4, sm: 8, xs: 16}} data-aos={Aos}>
             <Card elevation={10} sx={{width: "100%",minHeight:360, borderRadius: 3}}>
                 <CardContent className={"goals"}>
                     <Grid direction={"column"}>
