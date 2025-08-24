@@ -23,7 +23,7 @@ const Index = () => {
 
     useEffect(() => {
         AOS.init({
-            delay:1000,
+            delay:500,
             duration: 1000,
             once: true,
         });
@@ -39,11 +39,9 @@ const Index = () => {
             <_TextBox />
             <_Boxes />
             <_Values2/>
-            {/*<_Values/>*/}
             <_OurGoals/>
             <_CorporateForm />
             <_Apps/>
-            {/*<_Experiences />*/}
             <_Sports/>
             <_Faq/>
             <_Contact/>

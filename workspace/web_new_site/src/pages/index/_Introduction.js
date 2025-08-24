@@ -10,7 +10,7 @@ const _Introduction = () => {
                     <Grid className={"text-intro rtl"} md={6} item>
                         <__IntroForm />
                     </Grid>
-                    <Grid className={"fx-into"} md={6}  data-aos="fade-right"  item>
+                    <Grid className={"fx-into"} md={6}  data-aos="fade-down"  item>
                         {/*<__IntroImage/>*/}
                         <img alt={"رفاهی ورزشی"} width={"100%"} src={"/assets/images/main-img.jpg"}/>
                     </Grid>

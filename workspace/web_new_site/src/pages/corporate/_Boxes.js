@@ -24,7 +24,7 @@ const _Boxes = () => {
             <Container sx={{mb:5}}>
                 <Grid className={"box"} container columns={9} alignContent={"center"} textAlign={"center"}>
                     <SingleBox
-                        dataAos="fade-left"
+                        dataAos="fade-up"
                         text={"به مناسبت‌های خود رنگ و بوی سلامتی ببخشید! با هدیه‌ی ورزش برای مناسبت‌ها، سلامتی را به همکاران خود هدیه کنید."}
                         title={"ورزش برای مناسبت‌ها"} image={"/assets/images/corporateGift.svg"} alt={"تخفیفات متنوع و متغیر روزانه"}/>
                     <SingleBox
@@ -32,7 +32,7 @@ const _Boxes = () => {
                         text={"جیم پین برای کارمندان این امکان را فراهم کرده تا با پیشنهاد مجموعه ورزشی، در مرکز مورد علاقه خود از ورزش کردن لذت ببرند."}
                         title={"افزودن مراکز درخواستی"} image={"/assets/images/shoes.svg"} alt={" جیم پین به کارمندان کمک می‌کند تا ورزش‌های جدید را امتحان کرده"}/>
                     <SingleBox
-                        dataAos="fade-right"
+                        dataAos="fade-up"
                         text={"جیم پین با تیم پشتیبانی سریع، همیشه آماده پاسخ به نیازهای کاربران است. این خدمات، تجربه ورزشی شما را آسان و لذت‌بخش می‌کند."}
                         title={"پاسخگویی و پشتیبانی سریع"} image={"/assets/images/protect.svg"} alt={"از خدمات ورزشی بهره‌مند شوید"}/>
                 </Grid>
