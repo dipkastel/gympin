@@ -109,7 +109,7 @@ export const NavigationMenu = [
     },
     {
         segment: 'receipt',
-        title: 'فاکتور ها',
+        title: 'تراکنش ها',
         icon: <ReceiptLong/>,
         // children: [
         // {

@@ -53,25 +53,12 @@ export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,row
     const error = useContext(ErrorContext);
     const [groups, setGroups] = useState(null);
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const [openModalAddCredit, setOpenModalAddCredit] = useState(false);
 
-
-    // useEffect(() => {
-    //     var all = personnel?.content?.every(p => selectedUsers?.map(d => d.Id).includes(p?.Id));
-    //     setAllSelected(all)
-    //     console.log("pe", personnel?.content?.some(p => selectedUsers?.some(su => su?.Id === p?.Id)));
-    //     setSomeSelected(!all && personnel?.content?.some(p => selectedUsers?.some(su => su?.Id === p?.Id)))
-    // }, [personnel, selectedUsers]);
 
 
     useEffect(() => {
         getGroups();
     }, []);
-
-    // useEffect(() => {
-    //     setPage(0);
-    // }, [sortBy]);
-
 
 
     function getGroups() {
@@ -108,101 +95,6 @@ export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,row
         setSelectedGroup(e.target.value);
     }
 
-    function changeSelected(user) {
-        if (selectedUsers.some(p => p.Id === user.Id))
-            setSelectedUsers(selectedUsers.filter(p => p.Id !== user.Id));
-        else
-            setSelectedUsers([...selectedUsers, user]);
-    }
-
-    // function ChangeSelectAll() {
-    //     if (allSelected) {
-    //         setSelectedUsers(selectedUsers.filter(su => !personnel?.content?.map(pp => pp.Id).includes(su.Id)));
-    //     } else {
-    //         setSelectedUsers([...selectedUsers, ...personnel?.content?.filter(pp => !selectedUsers.map(su => su.Id).includes(pp.Id))]);
-    //     }
-    // }
-
-    //
-    // function renderModalAddCreditToSelectedUsers() {
-    //
-    //     function addCredit(e) {
-    //         e.preventDefault()
-    //         setOpenModalAddCredit(false);
-    //         error.showError({message: "لطفا کمی صبر کنید",});
-    //         let personnelId = selectedUsers.map(s => s.Id);
-    //         corporatePersonnel_addCreditToAll({
-    //             PersonnelIds: personnelId,
-    //             CorporateId: corporate.Id,
-    //             ...formData
-    //         })
-    //             .then(result => {
-    //                 setSelectedUsers([])
-    //                 getPersonnel();
-    //                 error.showError({message: "اعتبار ها داده شد",});
-    //             }).catch(e => {
-    //             try {
-    //                 error.showError({message: e.response.data.Message,});
-    //             } catch (f) {
-    //                 error.showError({message: "خطا نا مشخص",});
-    //             }
-    //         });
-    //
-    //     }
-    //
-    //
-    //     return (
-    //         <Dialog open={openModalAddCredit} onClose={() => setOpenModalAddCredit(false)}>
-    //             <Form onSubmit={(e) => addCredit(e)}>
-    //                 <DialogTitle>{"افزودن اعتبار به " + selectedUsers.length + " کاربر انتخاب شده"}</DialogTitle>
-    //                 <DialogContent>
-    //                     <DialogContentText>
-    //                         برای افزودن اعتبار مبلغ را وارد کنید
-    //                     </DialogContentText>
-    //
-    //
-    //                     <TextField
-    //                         autoFocus
-    //                         sx={{mt: 2}}
-    //                         name={"CreditAmount"}
-    //                         label="نام اعتبار"
-    //                         type="text"
-    //                         value={formData.Name}
-    //                         onChange={(e) => setFormData({...formData, Name: e.target.value})}
-    //                         fullWidth
-    //                         variant={"outlined"}
-    //                     />
-    //
-    //                     {(corporate.ContractType != "ALPHA") && <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-    //                         <DatePicker
-    //                             value={formData?.ExpireDate}
-    //                             sx={{mt: 2, mb: 1}}
-    //                             name={"ExpireDate"}
-    //                             label={"تاریخ انقضا"}
-    //                             onChange={(e) => setFormData({...formData, ExpireDate: e})}
-    //                             className="w-100"
-    //                         />
-    //                     </LocalizationProvider>}
-    //                     <TextField
-    //                         autoFocus
-    //                         margin="dense"
-    //                         name={"CreditAmount"}
-    //                         label="تومان"
-    //                         type="text"
-    //                         value={toPriceWithComma(formData.CreditAmount)}
-    //                         onChange={(e) => setFormData({...formData, CreditAmount: toPriceWithoutComma(e.target.value)})}
-    //                         fullWidth
-    //                         variant={"outlined"}
-    //                     />
-    //
-    //                 </DialogContent>
-    //                 <DialogActions>
-    //                     <Button variant={"contained"} color={"primary"} onClick={() => setOpenModalAddCredit(false)}>لغو</Button>
-    //                     <Button variant={"contained"} color={"success"} type={"submit"}>ثبت</Button>
-    //                 </DialogActions>
-    //             </Form>
-    //         </Dialog>)
-    // }
 
     return (
         <>
@@ -243,15 +135,6 @@ export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,row
                 <Table aria-label="userLists">
                     <TableHead sx={{bgcolor: 'primary.boxBg'}}>
                         <TableRow>
-                            {/*<TableCell>*/}
-                            {/*    <FormControlLabel*/}
-                            {/*        onChange={(e) => ChangeSelectAll()}*/}
-                            {/*        color="primary"*/}
-                            {/*        control={<Checkbox*/}
-                            {/*            checked={allSelected}*/}
-                            {/*            indeterminate={someSelected}/>}*/}
-                            {/*    />*/}
-                            {/*</TableCell>*/}
                             <TableCell></TableCell>
                             <TableCell><TableSortLabel onClick={() => {
                                 setSortBy({Name: "User.FullName", Desc: !sortBy.Desc})
@@ -285,7 +168,7 @@ export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,row
                                 <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.User?.Avatar?.Url}
                                                                                  sx={{width: 25, height: 25}}/></TableCell>
                                 <TableCell>{row?.User?.FullName || " - "}</TableCell>
-                                <TableCell>{row?.TotalCredit || 0}</TableCell>
+                                <TableCell>{toPriceWithComma(row?.TotalCredit)}</TableCell>
                                 <TableCell>{row?.CreditList?.length || 0}</TableCell>
                                 <TableCell>{getNearestExpirationDate(row?.CreditList)}</TableCell>
                                 <TableCell>{(row?.User?.Birthday) ? new Date(row?.User?.Birthday).toLocaleDateString('fa-IR', {

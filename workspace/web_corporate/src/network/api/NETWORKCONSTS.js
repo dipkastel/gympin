@@ -52,6 +52,9 @@ export let Api_url = {
     homePage: {
         GET_HOME_PAGE: "v1/homepage/getHome",
     },
+    transactionCorporate: {
+        query: "v1/transactionCorporate/query",
+    },
     multimedia: {
         add: "v1/multimedia/add",
         categoryGetById: "v1/multimediacategory/getById"

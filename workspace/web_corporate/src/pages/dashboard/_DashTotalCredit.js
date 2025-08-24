@@ -9,7 +9,6 @@ const _DashTotalCredit = ({totalCredit,navigate}) => {
             icon={<img alt="icon" src="/assets/images/icons/ic-glass-mob.svg" />}
             title="مجموع اعتبارها"
             color={"tertiary"}
-            onClick={()=>navigate("/personnel/increaseGroups")}
             total={toPriceWithComma(totalCredit||0) + " تومان"}
 
         />

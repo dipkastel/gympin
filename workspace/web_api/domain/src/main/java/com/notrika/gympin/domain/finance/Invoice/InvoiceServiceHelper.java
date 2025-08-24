@@ -622,6 +622,7 @@ public class InvoiceServiceHelper {
 
     }
 
+    @Transactional
     public UserHowToPayDto getSimpleHowToPay(InvoiceEntity invoice) {
         //only by user
         UserCreditDto userCredits = userService.getMyCredits();
@@ -636,9 +637,13 @@ public class InvoiceServiceHelper {
         result.setCreditDetail(new ArrayList<>());
         BigDecimal totalToPay = invoice.getPriceToPay();
         for (var credit : creditList) {
-            if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) > 0) {
+            if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) >= 0) {
                 totalToPay = totalToPay.subtract(credit.getCreditPayableAmount());
                 result.getCreditDetail().add(credit);
+                if(totalToPay.compareTo(BigDecimal.ZERO)<=0){
+                    result.setCreditCovrage(true);
+                    totalToPay = BigDecimal.ZERO;
+                }
             } else if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) < 0) {
                 credit.setCreditPayableAmount(totalToPay);
                 result.getCreditDetail().add(credit);

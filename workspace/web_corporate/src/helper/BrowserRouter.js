@@ -38,6 +38,7 @@ import Employment from "../pages/employment/Employment";
 import IncreaseSelect from "../pages/increaseSelect/IncreaseSelect";
 import PayCateringInvoices from "../pages/cateringDetail/payCateringInvoices/PayCateringInvoces";
 import ProcessingInvoices from "../pages/cateringDetail/ProcessingInvoices/ProcessingInvoces";
+import Transactions from "../pages/TransActions/Transactions";
 
 export const BrowserRouter =[
     {
@@ -327,6 +328,16 @@ export const BrowserRouter =[
             {
                 path: '',
                 Component: Cult,
+            },
+        ],
+    },
+    {
+        path: 'receipt',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Transactions,
             },
         ],
     },

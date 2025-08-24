@@ -76,6 +76,7 @@ const IncreaseGroupCredit = () => {
                 ...formData,
                 GroupId: selectedGroup?.Id || null
             }).then(result => {
+                navigate("/sport/gympin");
                 error.showError({message: "اعتبار‌ها داده شد.",});
             }).catch(ca => {
                 try {

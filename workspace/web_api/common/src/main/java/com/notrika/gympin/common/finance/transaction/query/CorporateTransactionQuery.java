@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -56,5 +58,8 @@ public class CorporateTransactionQuery extends BaseQuery<CorporateTransactionQue
 
     @JsonProperty("Serial")
     private String like_serialæserial;
+
+    @JsonProperty("MaxPrice")
+    private BigDecimal ismax_amount;
 
 }
