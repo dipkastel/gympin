@@ -160,6 +160,21 @@ public class SmsInServiceImpl implements SmsInService {
         insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_USER_CHARGE",SmsTypes.USER_CHARGE);
         return true;
     }
+    @Override
+    public boolean sendUserAddCreditByCorporate(SmsDto smsDto) throws Exception {
+
+        log.info("Going to sendUserAddCredit with params: {} ...\n", smsDto);
+
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        insertSendRequest(smsDto,"FARAZ_CORPORATE_ADD_CREDIT_TO_USER",SmsTypes.USER_CHARGE);
+        return true;
+    }
 
     @Override
     public boolean sendCorporateTransactionComplete(SmsDto smsDto) throws Exception {

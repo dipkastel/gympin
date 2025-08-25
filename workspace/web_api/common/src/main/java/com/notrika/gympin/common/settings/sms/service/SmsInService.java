@@ -22,5 +22,6 @@ public interface SmsInService {
     boolean sendCloseInvoiceWarning(SmsDto smsDto) throws Exception;
     boolean sendPlaceContractCode(Long placeId,SmsDto smsDto) throws Exception;
     boolean sendCorporateContractCode(Long corporateId,SmsDto smsDto) throws Exception;
+    boolean sendUserAddCreditByCorporate(SmsDto smsDto) throws Exception;
 
 }

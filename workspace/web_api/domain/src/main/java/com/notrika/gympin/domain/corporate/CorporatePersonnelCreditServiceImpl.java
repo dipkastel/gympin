@@ -8,6 +8,9 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporateP
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelService;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
+import com.notrika.gympin.common.settings.sms.dto.SmsDto;
+import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.corporate.CorporateContractIsNotComplete;
 import com.notrika.gympin.common.util.exception.corporate.CreditCannotBeNegativeException;
@@ -64,6 +67,8 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     CorporatePersonnelGroupRepository corporatePersonnelGroupRepository;
     @Autowired
     CorporatePersonelFinanceHelper helper;
+    @Autowired
+    private SmsInService smsInService;
 
     @Override
     @Transactional
@@ -87,6 +92,17 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         //update corporate finance total credit
         FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(personnelEntity.getCorporate(), param.getCreditAmount(), serial, null);
 
+        //sms
+        try {
+            smsInService.sendUserAddCreditByCorporate(SmsDto.builder()
+                    .smsType(SmsTypes.USER_CHARGE)
+                    .userNumber(personnelEntity.getUser().getPhoneNumber())
+                    .text1(corporatePersonnelCredit.getName())
+                    .text2(corporatePersonnelCredit.getCreditAmount().toString())
+                    .build()
+            );
+        } catch (Exception e) {
+        }
         return CorporateConvertor.toCreditDto(corporatePersonnelCredit);
     }
 
@@ -119,7 +135,19 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         List<FinanceCorporatePersonnelCreditEntity> credits = helper.addCorporatePersonnelCredits(personnelsToAddCredit, param, serial);
         //update corporate finance total credit
         FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(corporate, totalAddAmount, serial, helper.getTransactionDiscription(param, personnelsToAddCredit, totalAddAmount));
+        //sms
 
+        try {
+            for (CorporatePersonnelEntity personnel : personnelsToAddCredit) {
+                smsInService.sendUserAddCreditByCorporate(SmsDto.builder()
+                        .smsType(SmsTypes.USER_CHARGE)
+                        .userNumber(personnel.getUser().getPhoneNumber())
+                        .text1(param.getName())
+                        .text2(param.getCreditAmount().toString())
+                        .build());
+            }
+        } catch (Exception e) {
+        }
         return convertToDtos(credits);
     }
 
@@ -147,7 +175,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         financeSerialRepository.add(serial);
         //add finance corporate personnel credits
         List<FinanceUserEntity> credits = helper.addNWToCorporatePersonnelCredits(personnelsToAddCredit, param, serial);
-
+        //sms
         return FinanceUserConvertor.toFinanceDto(credits);
     }
 
@@ -165,7 +193,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.decreaseCorporatePersonnelCredit(credit, param.getCreditAmount(), serial);
         //update corporate finance totalcredit
         FinanceCorporateEntity financeCorporate = helper.decreaseCorporateTotalCredit(credit.getCorporatePersonnel().getCorporate().getFinanceCorporate(), param.getCreditAmount(), serial, null);
-
+        //sms
         return CorporateConvertor.toCreditDto(corporatePersonnelCredit);
     }
 
@@ -186,7 +214,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.decreaseCorporatePersonnelCredit(credit, param.getCreditAmount(), serial);
         //update corporate finance totalcredit
         FinanceCorporateEntity financeCorporate = helper.decreaseCorporateTotalCredit(credit.getCorporatePersonnel().getCorporate().getFinanceCorporate(), param.getCreditAmount(), serial, null);
-
+        //sms
         return CorporateConvertor.toCreditDto(corporatePersonnelCredit);
     }
 
@@ -245,7 +273,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
     @Override
     public List<CorporatePersonnelCreditDto> convertToDtos(List<FinanceCorporatePersonnelCreditEntity> entities) {
-        return entities.stream().filter(o->!o.isDeleted()).map(CorporateConvertor::toCreditDto).collect(Collectors.toList());
+        return entities.stream().filter(o -> !o.isDeleted()).map(CorporateConvertor::toCreditDto).collect(Collectors.toList());
     }
 
     @Override
@@ -285,6 +313,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
         FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnel, gift.getExpireDate(), gift.getAmount(), gift.getName(), serial);
         //update corporate finance total credit
         FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(gift.getCorporate(), gift.getAmount(), serial, null);
+        //sms
         return CorporateConvertor.toCreditDto(corporatePersonnelCredit);
     }
 }
