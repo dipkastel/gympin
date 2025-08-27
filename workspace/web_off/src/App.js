@@ -27,8 +27,10 @@ function App() {
                 className="scene">
                 <li className="layer" data-depth="0.40">
                     <div className="content">
-                        <h1 id="title">به زودی دردسترس خواهیم بود</h1>
-                        <p>الان سایت برای مواردی مثل افزودن امکانات جدید یا رفع بعضی ایراد ها در دسترس نیست اما ...</p>
+                        <h1 className={"center"} id="title">به زودی دردسترس خواهیم بود</h1>
+                        <p  className={"center"}>اکنون سایت در دسترس نیست!</p>
+                        <p  className={"center"}>تا دقایقی دیگر برمیگردیم.</p>
+                        <h3  className={"center"} id="title">از صبوری شما سپاسگزاریم.</h3>
                     </div>
                 </li>
                 <li className="layer" data-depth="1.00">

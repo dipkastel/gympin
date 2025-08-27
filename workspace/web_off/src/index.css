@@ -42,6 +42,10 @@ img {
   position: absolute;
 }
 
+.center {
+  text-align: center;
+}
+
 .content {
   position: relative;
   padding: 20px;
