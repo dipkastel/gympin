@@ -2,61 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82a1e8ab-7850-4472-b2c7-7003016a9de7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/api/PlaceCommentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/api/PlaceRateController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/enums/PlaceCommentStatusEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/query/PlaceCommentQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/query/PlaceRateQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/service/PlaceCommentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/service/PlaceRateService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/util/exception/user/UserAlreadyCommentThisPlaceException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/util/exception/user/UserAlreadyRatedThisPlaceException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/rateAndComment/PlaceCommentControllerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/rateAndComment/PlaceRateControllerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/PlaceRateAndCommentConvertor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/network/api/placeRateAndComment.api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/comments/_PlaceComments.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/partial/_SinglePlaceGeneralFooter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/partial/_SinglePlaceGeneralHeader.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/partial/_SinglePlaceRegister.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/comment/api/CommentPlaceController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/comment/dto/CommentPlaceDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/dto/PlaceCommentDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/comment/param/CommentPlaceParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/param/PlaceCommentParam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/comment/service/CommentPlaceService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/dto/PlaceDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/dto/PlaceDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeGym/dto/PlaceGymDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeGym/dto/PlaceGymDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/rate/api/RatePlaceController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/rate/dto/RatePlaceDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/dto/PlaceRateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/rate/param/RatePlaceParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/placeBase/param/PlaceRateParam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/place/rate/service/RatePlaceService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/util/exception/Error.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/util/exception/Error.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/resources/i18n/messages_fa.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/resources/i18n/messages_fa.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/PlaceGymServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/PlaceGymServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/comment/CommentPlaceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/rateAndComment/PlaceCommentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/rate/RatePlaceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/rateAndComment/PlaceRateServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/PlaceConvertor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/PlaceConvertor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/PlacePersonnelServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/PlacePersonnelServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_api/logs/logFile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/logs/logFile.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/place/PlaceCommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/place/PlaceCommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/place/PlaceRateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/place/PlaceRateRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/PlaceEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/PlaceEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/about/PlaceAboutEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/about/PlaceAboutEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/comment/PlaceCommentEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/rateAndComment/PlaceCommentEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/rating/PlaceRateEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/rateAndComment/PlaceRateEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/user/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/user/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/Place.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/Place.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/_PlaceImages.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/_PlaceImages.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/_TabPlaceBuyable.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/_TabPlaceBuyable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/info/_placeBaseInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/info/_placeBaseInfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/place.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/place.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/ticketSubscribe/_PlaceSubscribeListItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/ticketSubscribe/_PlaceSubscribeListItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/ticketSubscribe/_placeSubscribes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/ticketSubscribe/_placeSubscribes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/placesList/_PlacesList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/placesList/_PlacesList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/placesList/__placeListItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/placesList/__placeListItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/placesList/__placeListItemSlick.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/placesList/__placeListItemSlick.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/partial/_SinglePlaceGeneralHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/partial/_SinglePlaceGeneralHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_corporate/src/pages/sport/Gympin/Gympin.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/pages/sport/Gympin/Gympin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/auth/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/auth/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/PlaceManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/PlaceManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/users/scan/awaitingEnter/_HallAwaitingEntry.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/users/scan/awaitingEnter/_HallAwaitingEntry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/wizard/intro.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/wizard/intro.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,6 +128,11 @@
       <workItem from="1754835648137" duration="6867000" />
       <workItem from="1754930282682" duration="2881000" />
       <workItem from="1755086621066" duration="761000" />
+      <workItem from="1755420756703" duration="1414000" />
+      <workItem from="1755695594446" duration="2671000" />
+      <workItem from="1755959453335" duration="1174000" />
+      <workItem from="1756025348935" duration="1222000" />
+      <workItem from="1756283727756" duration="605000" />
     </task>
     <servers />
   </component>
