@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class PurchasedSubscribeConvertor {
-    public static PurchasedSubscribeDto toDto(PurchasedSubscribeEntity entity) {
+    public static PurchasedSubscribeDto toDto(PurchasedSubscribeEntity entity,SettingsService settingsService) {
         if(entity==null) return null;
         Boolean useExpire = null;
         Calendar c = Calendar.getInstance();
         if(entity.getEntryList().size()<1){
             c.setTime(entity.getCreatedDate());
-            c.add(Calendar.HOUR, getTicketUsageThreshold());
+            c.add(Calendar.HOUR, getTicketUsageThreshold(settingsService));
             useExpire = (c.getTime().before(new Date()));
         }
         PurchasedSubscribeDto dto = PurchasedSubscribeDto.builder()
@@ -49,11 +49,11 @@ public final class PurchasedSubscribeConvertor {
         return dto;
     }
 
-    private static Integer getTicketUsageThreshold() {
+    private static Integer getTicketUsageThreshold(SettingsService settingsService) {
         try{
-            return Integer.parseInt(new SettingsServiceImpl().getByKey("TICKET_USAGE_THRESHOLD").getValue());
+            return Integer.parseInt(settingsService.getByKey("TICKET_USAGE_THRESHOLD").getValue());
         }catch (Exception e){
-            return 70;
+            return 72;
         }
     }
 

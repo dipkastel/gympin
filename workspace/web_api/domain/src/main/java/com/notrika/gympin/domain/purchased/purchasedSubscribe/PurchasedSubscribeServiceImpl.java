@@ -14,8 +14,10 @@ import com.notrika.gympin.common.purchased.purchasedSubscribe.param.IncreaseExpi
 import com.notrika.gympin.common.purchased.purchasedSubscribe.param.PurchasedSubscribeParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.query.PurchasedSubscribeQuery;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.service.PurchasedSubscribeService;
+import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
+import com.notrika.gympin.common.settings.service.service.ServiceService;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
@@ -68,6 +70,8 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
     UserRepository userRepository;
     @Autowired
     PlaceRepository placeRepository;
+    @Autowired
+    SettingsService settingsService;
     @Autowired
     CorporateServiceImpl corporateService;
     @Autowired
@@ -153,7 +157,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
     @Override
     public PurchasedSubscribeDto getById(long id) {
-        return PurchasedSubscribeConvertor.toDto(getEntityById(id));
+        return PurchasedSubscribeConvertor.toDto(getEntityById(id),settingsService);
     }
 
     @Override
@@ -191,12 +195,12 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
 
     @Override
     public List<PurchasedSubscribeDto> convertToDtos(List<PurchasedSubscribeEntity> entities) {
-        return entities.stream().filter(o->!o.isDeleted()).map(purchasedSubscribeHelper::checkForExpire).map(PurchasedSubscribeConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o->!o.isDeleted()).map(purchasedSubscribeHelper::checkForExpire).map(p->PurchasedSubscribeConvertor.toDto(p, settingsService)).collect(Collectors.toList());
     }
 
     @Override
     public Page<PurchasedSubscribeDto> convertToDtos(Page<PurchasedSubscribeEntity> entities) {
-        return entities.map(purchasedSubscribeHelper::checkForExpire).map(PurchasedSubscribeConvertor::toDto);
+        return entities.map(purchasedSubscribeHelper::checkForExpire).map(p->PurchasedSubscribeConvertor.toDto(p, settingsService));
     }
 
 
@@ -204,7 +208,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
     @Override
     public List<PurchasedSubscribeDto> getUserEnteredSubscribe(Long placeId) {
         List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.findSubscribesHasOpenEnterByPlaceId(placeId).stream().filter(o->!o.isDeleted()).map(purchasedSubscribeHelper::checkForExpire).filter(t -> purchasedSubscribeHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
-        return subscribeEntities.stream().filter(o->!o.isDeleted()).map(PurchasedSubscribeConvertor::toDto).collect(Collectors.toList());
+        return subscribeEntities.stream().filter(o->!o.isDeleted()).map(p->PurchasedSubscribeConvertor.toDto(p, settingsService)).collect(Collectors.toList());
     }
 
     @Override
@@ -242,7 +246,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         var ticket = purchasedSubscribeRepository.findByKey(key);
         if (!checkUserAccessToTicket(ticket))
             throw new UserNotAllowedException();
-        return PurchasedSubscribeConvertor.toDto(purchasedSubscribeHelper.checkForExpire(ticket));
+        return PurchasedSubscribeConvertor.toDto(purchasedSubscribeHelper.checkForExpire(ticket),settingsService);
     }
 
     private boolean checkUserAccessToTicket(PurchasedBaseEntity ticket) {
@@ -293,7 +297,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         PurchasedSubscribeEntity subscribeEntity = getEntityById(param.getId());
         subscribeEntity.setStatus(param.getStatus());
         purchasedSubscribeRepository.update(subscribeEntity);
-        return PurchasedSubscribeConvertor.toDto(subscribeEntity);
+        return PurchasedSubscribeConvertor.toDto(subscribeEntity,settingsService);
     }
 
     //messages
@@ -371,7 +375,7 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
             //enter User
             purchasedSubscribeHelper.enterUser(subscribeEntity, userEntity);
         }
-        return PurchasedSubscribeConvertor.toDto(subscribeEntity);
+        return PurchasedSubscribeConvertor.toDto(subscribeEntity,settingsService);
 
     }
 

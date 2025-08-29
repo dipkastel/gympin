@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {
+    Alert,
     Button,
     Card,
     CircularProgress,
@@ -102,12 +103,17 @@ const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits,checkoutType}) =
             sx={{zIndex: 99999999}}
             className={"w-100"}
             open={openModalConfirm} onClose={() => setOpenModalConfirm(false)}>
-            <DialogTitle>{"آیا از خرید عضویت اطمینان دارید"}</DialogTitle>
+            <DialogTitle>{"تایید نهایی"}</DialogTitle>
             <DialogContent className={"w-100"}>
-                <Typography variant={"subtitle2"}>
+                <Typography variant={"subtitle2"} sx={{mb:2}}>
                     توجه داشته باشید امکان لغو یا بازپرداخت بلیط های خریداری شده وجود ندارد!
                 </Typography>
                 {userBasket && <_invoiceAgreements userBasket={userBasket} setAcceptAgreements={setAcceptAgreements}/>}
+                <Alert sx={{mt:2}} severity={"warning"} >
+                    <Typography variant={"subtitle2"}>
+                        مهلت مراجعه به مرکز و اولین استفاده بلیط ها، از زمان خرید تا 72 ساعت می باشد.
+                    </Typography>
+                </Alert>
             </DialogContent>
             <DialogActions>
                 <Button sx={{bgcolor: "#e7333e", borderRadius: 3, fontWeight: "bold", fontSize: 18, m: 1}}

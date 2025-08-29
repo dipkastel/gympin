@@ -376,28 +376,28 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
         List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
 
-//        for (BuyableEntity placeBuyable : personnel.getPlace().getTicketSubscribes()) {
-//            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
-//            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
-//            resultItem.setPlacePersonelId(personnel.getId());
-//            var hasAccess = false;
-//            try {
-//                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
-//                if (currentAccessItem.isEmpty()) {
-//                    toAdd.add(
-//                            PlacePersonelBuyableAccessEntity.builder()
-//                                    .access(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
-//                                    .placePerson(personnel)
-//                                    .buyable(placeBuyable)
-//                                    .build()
-//                    );
-//                }
-//                hasAccess = currentAccessItem.get().getAccess();
-//            } catch (Exception e) {
-//            }
-//            resultItem.setAccess(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
-//            result.add(resultItem);
-//        }
+        for (BuyableEntity placeBuyable : ((PlaceGymEntity)personnel.getPlace()).getTicketSubscribes()) {
+            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
+            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
+            resultItem.setPlacePersonelId(personnel.getId());
+            var hasAccess = false;
+            try {
+                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
+                if (currentAccessItem.isEmpty()) {
+                    toAdd.add(
+                            PlacePersonelBuyableAccessEntity.builder()
+                                    .access(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
+                                    .placePerson(personnel)
+                                    .buyable(placeBuyable)
+                                    .build()
+                    );
+                }
+                hasAccess = currentAccessItem.get().getAccess();
+            } catch (Exception e) {
+            }
+            resultItem.setAccess(personnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
+            result.add(resultItem);
+        }
 
         if (toAdd.size() > 0) {
             placePersonnelHallAccessRepository.addAll(toAdd);
