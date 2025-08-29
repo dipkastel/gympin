@@ -66,10 +66,7 @@ const Gympin = () => {
                             تلفن:
                         </Typography>
                         <Typography sx={{mt: 2, lineHeight: "1.4rem", textAlign: "justify"}} variant={"body2"} color={"info"}>
-                            021-77162191
-                        </Typography>
-                        <Typography sx={{mt: 2, lineHeight: "1.4rem", textAlign: "justify"}} variant={"body2"} color={"info"}>
-                            021-77162192
+                            021-28424190
                         </Typography>
                     </Card>
                 </Grid>
