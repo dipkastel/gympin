@@ -23,15 +23,10 @@ const _ContactData = () => {
                                 :</Typography>
                         </div>
                         <div>
-                            <Typography variant={"caption"} sx={{fontSize: "1rem", lineHeight: "2rem", fontWeight: 600}}>خـط ۱
+                            <Typography variant={"caption"} sx={{fontSize: "1rem", lineHeight: "2rem", fontWeight: 600}}>تلفن
                                 :</Typography>
                             <Typography variant={"caption"}
-                                        sx={{fontSize: "1rem", lineHeight: "2rem", fontWeight: 400}}> ۰۲۱۷۷۱۶۲۱۹۱</Typography>
-                        </div>
-                        <div>
-                            <Typography variant={"caption"} sx={{fontSize: "1rem", lineHeight: "2rem", fontWeight: 600}}>خط ۲ :</Typography>
-                            <Typography variant={"caption"}
-                                        sx={{fontSize: "1rem", lineHeight: "2rem", fontWeight: 400}}> ۰۲۱۷۷۱۶۲۱۹۲</Typography>
+                                        sx={{fontSize: "1rem", lineHeight: "2rem", fontWeight: 400}}>۰۲۱۲۸۴۲۴۱۹۰</Typography>
                         </div>
                         <div>
                             <Typography variant={"caption"} sx={{fontSize: "1rem", lineHeight: "2rem", fontWeight: 600}}>ایمیل
