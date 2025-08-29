@@ -68,10 +68,10 @@ const _SinglePlaceGeneralHeader = () => {
                         <Box display="flex" alignItems="center"
                              component={"a"}
                              sx={{ color: "white", fontWeight: 600, fontSize: "0.85rem",direction:"rtl" }}
-                             href={"tel:02177162191"}
+                             href={"tel:02128424190"}
                         >
                             <Phone sx={{ fontSize: 20, mr: 0.5 }} />
-                            (۰۲۱)۷۷۱۶۲۱۹۱
+                            (۰۲۱)۲۸۴۲۴۱۹۰
                         </Box>
                         <Button
                             variant="contained"

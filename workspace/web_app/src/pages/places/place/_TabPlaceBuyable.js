@@ -114,7 +114,6 @@ const _TabPlaceBuyable = ({place}) => {
 
 
     function getfixedPlaceNumber() {
-        // return "02177162192"
         return place?.Tell;
     }
 
