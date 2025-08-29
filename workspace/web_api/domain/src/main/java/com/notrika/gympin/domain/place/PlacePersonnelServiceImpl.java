@@ -23,6 +23,7 @@ import com.notrika.gympin.common.util.exception.general.SendSmsException;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
+import com.notrika.gympin.domain.util.convertor.BuyableConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.place.*;
@@ -34,6 +35,8 @@ import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyabl
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelAccessEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +69,9 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Autowired
     private PlaceRepository placeRepository;
+
+    @Autowired
+    private PlaceGymRepository placeGymRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -323,7 +329,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
 
     @Override
     public List<PlacePersonnelBuyableAccessDto> getUserPlaceBuyableAccess(Long placeId, Long userId) {
-        PlaceEntity place = placeRepository.getById(placeId);
+        PlaceGymEntity place = placeGymRepository.getById(placeId);
         PlacePersonnelEntity placePersonnel = placePersonnelRepository.findByUserIdAndPlaceIdAndDeletedFalse(userId, placeId);
         if (placePersonnel == null)
             throw new UnknownUserException();
@@ -331,29 +337,28 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
         List<PlacePersonelBuyableAccessEntity> toAdd = new ArrayList<>();
         List<PlacePersonnelBuyableAccessDto> result = new ArrayList<>();
 
-        //TODO FIX THIS
-//        for (BuyableEntity placeBuyable : place.getTicketSubscribes()) {
-//            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
-//            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
-//            resultItem.setPlacePersonelId(placePersonnel.getId());
-//            var hasAccess = false;
-//            try {
-//                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
-//                if (currentAccessItem.isEmpty()) {
-//                    toAdd.add(
-//                            PlacePersonelBuyableAccessEntity.builder()
-//                                    .access(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
-//                                    .placePerson(placePersonnel)
-//                                    .buyable(placeBuyable)
-//                                    .build()
-//                    );
-//                }
-//                hasAccess = currentAccessItem.get().getAccess();
-//            } catch (Exception e) {
-//            }
-//            resultItem.setAccess(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
-//            result.add(resultItem);
-//        }
+        for (TicketSubscribeEntity placeBuyable : place.getTicketSubscribes()) {
+            PlacePersonnelBuyableAccessDto resultItem = new PlacePersonnelBuyableAccessDto();
+            resultItem.setBuyableDto(BuyableConvertor.ToDto(placeBuyable));
+            resultItem.setPlacePersonelId(placePersonnel.getId());
+            var hasAccess = false;
+            try {
+                var currentAccessItem = currentAccess.stream().filter(o -> !o.isDeleted()).filter(a -> a.getBuyable().getId().equals(placeBuyable.getId())).findFirst();
+                if (currentAccessItem.isEmpty()) {
+                    toAdd.add(
+                            PlacePersonelBuyableAccessEntity.builder()
+                                    .access(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess)
+                                    .placePerson(placePersonnel)
+                                    .buyable(placeBuyable)
+                                    .build()
+                    );
+                }
+                hasAccess = currentAccessItem.get().getAccess();
+            } catch (Exception e) {
+            }
+            resultItem.setAccess(placePersonnel.getPlacePersonnelRoles().stream().anyMatch(ppr -> (ppr.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER && !ppr.isDeleted())) || hasAccess);
+            result.add(resultItem);
+        }
 
         if (toAdd.size() > 0) {
             placePersonnelHallAccessRepository.addAll(toAdd);
