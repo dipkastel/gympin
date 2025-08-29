@@ -4,7 +4,7 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 import _SubscribeDetail from "./_SubscribeDetail";
 import {purchasedSubscribe_getByKey} from "../../../network/api/purchasedSubscribe.api";
 import _TicketOwner from "../commonPartials/_TicketOwner";
-import {Alert, Card, Typography} from "@mui/material";
+import {Alert, Typography} from "@mui/material";
 import _UseExpire from "../commonPartials/_UseExpire";
 import _UsageProgress from "../commonPartials/_UsageProgress";
 import _QRcode from "../commonPartials/_QRcode";
@@ -42,10 +42,12 @@ const SingleSubscribe = () => {
     return (
         <>
             {subscribe &&
-                <Card variant={"outlined"} sx={{m:1,p:3}}>
+            <div>
+                <div className={"section-title mt-3 me-3"}>
                     <Typography variant={"body2"}>{subscribe.Name}</Typography>
-                </Card>
-            }
+
+                </div>
+            </div>}
             {subscribe && <_UseExpire subscribe={subscribe} getSubscribe={getSubscribe}  />}
             {subscribe && <_TicketOwner subscribe={subscribe}/>}
             {subscribe && <_SubscribeDetail subscribe={subscribe}/>}
