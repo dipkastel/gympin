@@ -26,9 +26,13 @@ export default function _HallAwaitingEntry({selectSubscribe,updatePage}) {
     const [openModalAwaiteList, SetOpenModalAwaiteList] = useState(false)
 
 
+
     useEffect(() => {
         getRequestedUsers();
-        setInterval(getRequestedUsers, 2 * 60 * 1000);
+        var interval = setInterval(getRequestedUsers, 2 * 60 * 1000);
+        return () => {
+            clearInterval(interval);
+        };
     }, []);
 
     function getRequestedUsers() {
