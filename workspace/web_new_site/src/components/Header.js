@@ -28,7 +28,7 @@ const Header = () => {
                     <Button href={"https://apps.gympin.ir"} color={"primary"} sx={{px:"32px !important",mt:2,ml:1.6,color:"#ffffff !important"}} size={"small"} variant={"contained"} >ورود</Button>
                     <div className={"header-call"} >
                         <LocalPhone color={"primary"} />
-                        <Typography sx={{mt:"5px" ,ml:"8px",fontWeight:600,direction:"ltr" }} ><a href={"tel:02177162191"}>(۰۲۱) ۷۷۱۶۲۱۹۱_۲</a></Typography>
+                        <Typography sx={{mt:"5px" ,ml:"8px",fontWeight:600,direction:"ltr" }} ><a href={"tel:02128424190"}>(۰۲۱) ۲۸۴۲۴۱۹۰</a></Typography>
                     </div>
                 </div>
             </header>
