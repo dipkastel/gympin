@@ -62,7 +62,6 @@ import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceFoodEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceSubscribeEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
@@ -72,6 +71,7 @@ import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodMenuEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
+import net.bytebuddy.dynamic.TypeResolutionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -164,6 +164,97 @@ public class InvoiceServiceHelper {
         if (subscribeRemainderPrice.compareTo(BigDecimal.ZERO) != 0)
             throw new PriceTotalConflictException();
         return invoice;
+    }
+
+    public void refoundCorporateTransaction(List<FinanceCorporateTransactionEntity> corporateTransactions, FinanceSerialEntity serial) {
+
+        // undo for corporate deposit transaction
+
+
+        for (FinanceCorporateTransactionEntity entity : corporateTransactions.stream().filter(e -> !e.isDeleted()).collect(Collectors.toList())) {
+            if (entity.getTransactionCorporateType() == TransactionCorporateType.DEPOSIT) {
+                FinanceCorporateEntity financeCorporate =  entity.getFinanceCorporate();
+                BigDecimal lastCorporateDeposit = financeCorporate.getTotalDeposit();
+                BigDecimal afterCorporateDeposit = lastCorporateDeposit.subtract(entity.getAmount());
+                financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
+                        .serial(serial)
+                        .transactionStatus(TransactionStatus.COMPLETE)
+                        .latestBalance(lastCorporateDeposit)
+                        .transactionCorporateType(TransactionCorporateType.DEPOSIT)
+                        .financeCorporate(financeCorporate)
+                        .isChecked(false)
+                        .transactionType(TransactionBaseType.CORPORATE)
+                        .amount(entity.getAmount().negate())
+                        .build());
+                financeCorporate.setTotalDeposit(afterCorporateDeposit);
+                financeCorporateRepository.update(financeCorporate);
+
+            } else if (entity.getTransactionCorporateType() == TransactionCorporateType.CREDIT) {
+
+                FinanceCorporateEntity financeCorporate =  entity.getFinanceCorporate();
+                BigDecimal lastCorporateCredit = financeCorporate.getTotalCredits();
+                BigDecimal afterCorporateCredit = lastCorporateCredit.subtract(entity.getAmount());
+                financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
+                        .serial(serial)
+                        .transactionStatus(TransactionStatus.COMPLETE)
+                        .latestBalance(lastCorporateCredit)
+                        .transactionCorporateType(TransactionCorporateType.CREDIT)
+                        .financeCorporate(financeCorporate)
+                        .isChecked(false)
+                        .transactionType(TransactionBaseType.CORPORATE)
+                        .amount(entity.getAmount().negate())
+                        .build());
+                financeCorporate.setTotalCredits(afterCorporateCredit);
+                financeCorporateRepository.update(financeCorporate);
+            }
+
+        }
+    }
+
+    public void refoundpersonelCredit(List<FinanceCorporatePersonnelCreditTransactionEntity> corporatePersonelTransactions, FinanceSerialEntity serial) {
+
+        for (FinanceCorporatePersonnelCreditTransactionEntity entity : corporatePersonelTransactions.stream().filter(e -> !e.isDeleted()).collect(Collectors.toList())) {
+            FinanceCorporatePersonnelCreditEntity personnelCredit =  entity.getPersonnelCredit();
+            BigDecimal lastCredit = personnelCredit.getCreditAmount();
+            BigDecimal afterCredit = lastCredit.subtract(entity.getAmount());
+            financeCorporatePersonnelCreditTransactionRepository.add(FinanceCorporatePersonnelCreditTransactionEntity.builder()
+                    .serial(serial)
+                    .transactionStatus(TransactionStatus.COMPLETE)
+                    .latestBalance(lastCredit)
+                    .personnelCredit(personnelCredit)
+                    .isChecked(false)
+                    .transactionType(TransactionBaseType.CORPORATE_PERSONNEL)
+                    .amount(entity.getAmount().negate())
+                    .build());
+            personnelCredit.setCreditAmount(afterCredit);
+            if(personnelCredit.getStatus()==CorporatePersonnelCreditStatusEnum.COMPLETE)
+                personnelCredit.setStatus(CorporatePersonnelCreditStatusEnum.ACTIVE);
+            financeCorporatePersonnelCreditRepository.update(personnelCredit);
+        }
+
+    }
+
+    public void refoundUserDeposit(List<FinanceUserTransactionEntity> userTransactions, FinanceSerialEntity serial) {
+
+        for (FinanceUserTransactionEntity entity : userTransactions.stream().filter(e -> !e.isDeleted()).collect(Collectors.toList())) {
+            FinanceUserEntity financeUser =  entity.getFinanceUser();
+            BigDecimal lastDeposit = financeUser.getTotalDeposit();
+            BigDecimal afterDeposit = lastDeposit.subtract(entity.getAmount());
+
+            financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
+                    .serial(serial)
+                    .transactionStatus(TransactionStatus.COMPLETE)
+                    .latestBalance(lastDeposit)
+                    .financeUser(financeUser)
+                    .isChecked(false)
+                    .transactionType(TransactionBaseType.USER)
+                    .amount(entity.getAmount().negate())
+                    .build());
+
+            financeUser.setTotalDeposit(afterDeposit);
+            financeUserRepository.update(financeUser);
+        }
+
     }
 
     private void payBySponsor(InvoiceEntity invoice, UserCreditDetailDto credit, FinanceCorporatePersonnelCreditEntity wallet) {
@@ -394,7 +485,7 @@ public class InvoiceServiceHelper {
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             priceToPay = priceToPay.add(extraSumAmount);
         }
-        if(priceToPay.compareTo(BigDecimal.ZERO)==0){
+        if (priceToPay.compareTo(BigDecimal.ZERO) == 0) {
             priceToPay = buyable.getPrice();
         }
         invoice.setPriceToPay(priceToPay);
@@ -640,7 +731,7 @@ public class InvoiceServiceHelper {
             if (totalToPay.compareTo(BigDecimal.ZERO) > 0 && totalToPay.subtract(credit.getCreditPayableAmount()).compareTo(BigDecimal.ZERO) >= 0) {
                 totalToPay = totalToPay.subtract(credit.getCreditPayableAmount());
                 result.getCreditDetail().add(credit);
-                if(totalToPay.compareTo(BigDecimal.ZERO)<=0){
+                if (totalToPay.compareTo(BigDecimal.ZERO) <= 0) {
                     result.setCreditCovrage(true);
                     totalToPay = BigDecimal.ZERO;
                 }
@@ -700,7 +791,7 @@ public class InvoiceServiceHelper {
         return code;
     }
 
-    public InvoiceEntity deductingFoodExpenses(InvoiceEntity invoice,CorporateEntity corporate) {
+    public InvoiceEntity deductingFoodExpenses(InvoiceEntity invoice, CorporateEntity corporate) {
         // deducting from deposit
         FinanceCorporateEntity financeCorporate = corporate.getFinanceCorporate();
         BigDecimal lastCorporateDeposit = financeCorporate.getTotalDeposit();

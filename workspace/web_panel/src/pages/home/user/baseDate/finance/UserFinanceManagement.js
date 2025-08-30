@@ -26,7 +26,6 @@ const UserFinanceManagement = ({currentUser}) => {
     function getUserFinance() {
 
         User_getUserCredits({Id:currentUser.Id}).then(result=>{
-            console.log("User finance",result);
             SetUserFinance(result.data.Data);
         }).catch(e => {
             try {

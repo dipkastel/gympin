@@ -65,7 +65,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-ui/**"
                         ,"/swagger-resources/**"
                         ,"/v2/api-docs/**"
+                        ,"/v2/api-docs/**"
                         ,"/v2/swagger-ui/**"
+                        ,"/api/v1/Gateway/PersianCallbackMethod"
                         ,"/api/v1/affiliate/TPRegister"
                         ,"/api/resource/image"
                         ,"/api/resource/audio"
@@ -103,7 +105,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/api/v1/sport/query"
                         ,"/api/v1/article/query"
                         ,"/api/v1/article/getById"
-                        ,"/api/v1/Gateway/PersianCallbackMethod"
                 )
                 .permitAll()
                 .antMatchers("/api/test/**")

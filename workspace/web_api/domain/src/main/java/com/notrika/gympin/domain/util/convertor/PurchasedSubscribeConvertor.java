@@ -49,7 +49,7 @@ public final class PurchasedSubscribeConvertor {
         return dto;
     }
 
-    private static Integer getTicketUsageThreshold(SettingsService settingsService) {
+    public static Integer getTicketUsageThreshold(SettingsService settingsService) {
         try{
             return Integer.parseInt(settingsService.getByKey("TICKET_USAGE_THRESHOLD").getValue());
         }catch (Exception e){
