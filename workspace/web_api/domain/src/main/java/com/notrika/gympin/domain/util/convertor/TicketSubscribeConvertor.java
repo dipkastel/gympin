@@ -33,13 +33,14 @@ public class TicketSubscribeConvertor {
         dto.setExpireDuration(entity.getExpireDuration());
         dto.setSubscribeCapacity(entity.getSubscribeCapacity());
         dto.setTiming(entity.getTiming());
-
-        GympinContext context = GympinContextHolder.getContext();
-        if (context == null)
-            throw new UnknownUserException();
-        UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-        if(user.getUserProvider()== UserProvider.SMARTIS)
-            dto.setPrice(entity.getPlacePrice());
+        try {
+            GympinContext context = GympinContextHolder.getContext();
+            if (context == null)
+                throw new UnknownUserException();
+            UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+            if(user.getUserProvider()== UserProvider.SMARTIS)
+                dto.setPrice(entity.getPlacePrice());
+        }catch (Exception e){}
         if(entity.getCoaches()!=null)
             dto.setCoaches(entity.getCoaches().stream().filter(o->!o.isDeleted()).map(UserConvertor::toCoachDto).collect(Collectors.toList()));
         return dto;

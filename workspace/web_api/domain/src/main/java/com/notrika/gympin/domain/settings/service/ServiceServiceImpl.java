@@ -93,7 +93,7 @@ public class ServiceServiceImpl extends AbstractBaseService<ServiceParam, Servic
 
     @Override
     public List<ServiceDto> getUsersActive(ServiceByDateParam param) {
-        return convertToDtos(manageServiceExecutionRepository.getUsersActive(param.fromDate,param.toDate));
+        return ServiceConvertor.ToDtos(manageServiceExecutionRepository.getFastUsersActive(param.fromDate,param.toDate));
     }
 
     @Override

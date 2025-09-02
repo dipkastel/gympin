@@ -660,12 +660,15 @@ public class InvoiceServiceHelper {
             } catch (Exception e) {
             }
             PlaceEntity place = buyableEntities.get(0).getPlace();
-            sendSellMessageToPlace(place, buyableEntities.get(0));
+            if(place.getPurchased()==null||place.getPurchased().size()<5)
+                sendSellMessageToPlace(place, buyableEntities.get(0));
         } else {
             String ticketsName = "";
             for (InvoiceBuyableEntity ticket : buyableEntities) {
                 ticketsName += ticket.getName() + " ";
-                sendSellMessageToPlace(ticket.getPlace(), ticket);
+
+                if(ticket.getPlace().getPurchased()==null||ticket.getPlace().getPurchased().size()<5)
+                        sendSellMessageToPlace(ticket.getPlace(), ticket);
             }
             if (ticketsName.length() > 36)
                 ticketsName = ticketsName.substring(0, 36) + "...";
