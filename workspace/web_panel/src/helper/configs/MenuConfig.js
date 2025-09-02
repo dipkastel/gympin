@@ -129,6 +129,13 @@ export default {
         translate: "MENU.MANAGE_ARTICLES",
         page: "articles",
       },
+      {
+        title: "manage links",
+        root: true,
+        icon: "flaticon-more-v4",
+        translate: "MENU.MANAGE_LINKS",
+        page: "links",
+      },
       { section: "مدیا" },
       {
         title: "manage media",

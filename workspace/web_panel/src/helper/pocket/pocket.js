@@ -166,6 +166,14 @@ export function SetRppLocationManagement(number){
     setValue(rpp_locationManagement,number);
     return getValue(rpp_locationManagement);
 }
+const rpp_linkManagement = "rpp_linkManagement";
+export function getRppLinkManagement(){
+    return getValue(rpp_linkManagement)||5;
+}
+export function SetRppLinkManagement(number){
+    setValue(rpp_linkManagement,number);
+    return getValue(rpp_linkManagement);
+}
 const rpp_mainPageList = "rpp_mainPageList";
 export function getRppMainPageList(){
     return getValue(rpp_mainPageList)||5;

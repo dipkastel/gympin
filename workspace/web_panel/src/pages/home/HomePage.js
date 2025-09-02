@@ -47,6 +47,7 @@ import AffiliateManagement from "./affiliate/AffiliateManagement";
 import AffiliateDetail from "./affiliate/affiliateDetail/AffiliateDetail";
 import CateringDataManagement from "./catering/baseData/CateringDataManagement";
 import CateringManagement from "./catering/CateringManagement";
+import LinksManagement from "./links/LinksManagement";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -68,6 +69,8 @@ export default function HomePage() {
         <Route path="/articles/details/:articleId" component={SingleArticle} />
         <Route path="/articles/categories/" component={ArticleCategories} />
         <Route path="/articles" component={ArticlesManagement} />
+        {/*links*/}
+        <Route path="/links" component={LinksManagement} />
         {/*home*/}
         <Route path="/homePage/edit/:ItemId" component={HomePageDetail} />
         <Route path="/homePage/types" component={HomePageTypes} />

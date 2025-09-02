@@ -206,6 +206,13 @@ export let giftCreditApi = {
     update: "v1/giftCredit/update",
     query: "v1/giftCredit/query",
 };
+export let linkApi = {
+    add: "v1/link/add",
+    delete: "v1/link/delete",
+    update: "v1/link/update",
+    query: "v1/link/query",
+    getById: "v1/link/getById",
+};
 export let optionOfPlaceApi = {
     add: "v1/OptionOfPlace/add",
     delete: "v1/OptionOfPlace/delete",

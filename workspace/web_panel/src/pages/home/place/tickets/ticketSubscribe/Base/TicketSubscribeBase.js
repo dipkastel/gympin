@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, FormGroup, TextField} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader,} from "../../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
@@ -11,9 +11,25 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
 
     const [inTicketSubscribe, SetInTicketSubscribe] = useState(ticketSubscribe)
 
+
+    useEffect(() => {
+        var inTicketCheck = inTicketSubscribe;
+        if(!inTicketSubscribe.Gender)
+            inTicketCheck.Gender = "MALE"
+        if(!inTicketSubscribe.SubscribeStatus)
+            inTicketCheck.SubscribeStatus = "ONPLACE"
+        if(!inTicketSubscribe.SubscribeCapacity)
+            inTicketCheck.SubscribeCapacity = 100
+        if(!inTicketSubscribe.ExpireDuration)
+            inTicketCheck.ExpireDuration = 30
+        SetInTicketSubscribe({...inTicketSubscribe, ...inTicketCheck})
+    }, []);
+
+
+
     function setFormValues(lable, value) {
         if(lable==="PlacePrice"){
-            SetInTicketSubscribe({...inTicketSubscribe, [lable]: value,Price:value*(1-inTicketSubscribe.Discount/100)})
+            SetInTicketSubscribe({...inTicketSubscribe, [lable]: value,Price:value,Discount:0,ValuePrice:value})
         }else if(lable==="Discount"){
             SetInTicketSubscribe({...inTicketSubscribe, [lable]: value,Price:inTicketSubscribe.PlacePrice*(1-value/100)})
         } else
