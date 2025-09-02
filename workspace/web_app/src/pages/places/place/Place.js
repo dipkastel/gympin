@@ -18,6 +18,7 @@ import _PlaceComments from "./comments/_PlaceComments";
 import _PlaceSports from "./info/_PlaceSports";
 import _PlaceAddress from "./info/_PlaceAddress";
 import {Masonry} from "@mui/lab";
+import _GympinIntro from "./partial/_GympinIntro";
 
 const Place = () => {
     const error = useContext(ErrorContext);
@@ -74,6 +75,7 @@ const Place = () => {
             <Masonry columns={{xs: 1, sm: 1,md:2,lg:2}} >
 
                 <Grid>
+                    {place&&!currentUser&& <Grid sx={{mx: 2, mt: 4, mb: 2, padding: 1}}><_GympinIntro/></Grid>}
                     {place&&currentUser&& <_placeBaseInfo place={place} currentUser={currentUser}/>}
                     {place&&place?.Multimedias && <_PlaceImages place={place}/>}
                 </Grid>

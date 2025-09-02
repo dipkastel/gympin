@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Card, CardContent, Grid, Typography} from "@mui/material";
+import {Button, Card, CardContent, Divider, Grid, Typography} from "@mui/material";
 import {purchasedSubscribe_exitRequest} from "../../../network/api/purchasedSubscribe.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 
@@ -28,27 +28,24 @@ const _SubscribeEnterList = ({subscribe,getSubscribe,setUserCanEnter}) => {
         })
     }
 
-    return (
-    <>
-
-        {entryList.length>0 &&
-        <div>
-            <div className={"section-title mt-3 me-3"}>
-                <Typography variant={"body2"}>ورود ها</Typography>
-            </div>
-        </div>}
+    return entryList.length>0&& (
+    <Grid>
+        <Card elevation={3} sx={{margin:1,mt:2,padding: 1}}>
+            <CardContent>
+                <Typography variant="h5" fontWeight="bold" textAlign={"left"} sx={{mt:-5,bgcolor:"#FFFFFF",position:"absolute",px:3}} gutterBottom>
+                    ورود ها
+                </Typography>
         {entryList.map((item,number)=>(
 
-            <Card key={"entry"+number} elevation={3} sx={{margin:1}}>
-                <CardContent>
                     <Grid
                         container
-                        sx={{width:"100%"}}
+                        key={"entry"+number}
                         direction="row"
                         justifyContent={"space-between"}
                         alignItems={"center"}
                     >
-                        <Typography variant={"body1"}>
+                        <Typography variant={"body1"}
+                                    sx={{my:1}}>
                             {item.EnterDate&&("ورود : "+new Date(item.EnterDate).toLocaleDateString('fa-IR', {
                                 year: 'numeric',
                                 month: 'long',
@@ -57,24 +54,27 @@ const _SubscribeEnterList = ({subscribe,getSubscribe,setUserCanEnter}) => {
                                 minute: "2-digit"
                             }))}
                         </Typography>
-                        {item.SubscribeEntryStatus=="ACCEPTED"&&<Typography  variant={"body1"}>
+                        {item.SubscribeEntryStatus=="ACCEPTED"&&<Typography  variant={"body1"}
+                                                                             sx={{my:1}}>
                             {(item.ExitDate)?( "خروج : "+new Date(item.ExitDate).toLocaleDateString('fa-IR', {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric',
                                 hour: "2-digit",
                                 minute: "2-digit"
-                            })):<><Button onClick={(event)=>submitExit(item)} variant={"contained"} color={"primary"}>خروج</Button> </>}
+                            })):<><Button onClick={(event)=>submitExit(item)} variant={"contained"} color={"primary"}
+                                          sx={{my:1}}>خروج</Button> </>}
                         </Typography>}
 
-                        {item.SubscribeEntryStatus=="REQUESTED"&&<Typography sx={{width:"100%"}} variant={"subtitle1"}>
+                        {item.SubscribeEntryStatus=="REQUESTED"&&<Typography sx={{width:"100%",py:1}} variant={"subtitle1"}>
                             درخواست ورود به مجموعه ارسال شده است.
                         </Typography>}
+                        <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0,width:"100%"}} component="div"/>
                     </Grid>
-                </CardContent>
-            </Card>
         ))}
-    </>
+            </CardContent>
+        </Card>
+    </Grid>
     );
 };
 

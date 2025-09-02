@@ -22,7 +22,7 @@ const _SubscribeDetail = ({subscribe}) => {
                             <Typography variant={"subtitle1"}>{subscribe?.TicketSubscribe?.Place?.Name}</Typography>
                         </Grid>
                         <Grid container direction="row" justifyContent={"space-between"} alignItems={"center"}>
-                            <Typography sx={{color: "#858585"}} variant={"body2"}>{"اعتبار : "}</Typography>
+                            <Typography sx={{color: "#858585"}} variant={"body2"}>{"انقضا : "}</Typography>
                             <Typography variant={"subtitle1"}>{new Date(subscribe?.TicketSubscribeExpireDate).toLocaleDateString('fa-IR', {
                                 year: 'numeric',
                                 month: 'long',
@@ -46,6 +46,11 @@ const _SubscribeDetail = ({subscribe}) => {
                                 <HelpOutlineIcon/>
                             </IconButton>
                         </Grid>}
+                        <Collapse in={openDescription} timeout="auto" sx={{my: 1}} unmountOnExit>
+                            <Alert severity="info">
+                                {subscribe.Description}
+                            </Alert>
+                        </Collapse>
                         {subscribe?.Timing&&<Grid
                             container
                             sx={{width: "100%"}}
@@ -60,23 +65,10 @@ const _SubscribeDetail = ({subscribe}) => {
                                 <HistoryToggleOffIcon/>
                             </IconButton>
                         </Grid>}
-                        <Collapse in={openDescription} timeout="auto" sx={{my: 1}} unmountOnExit>
+                        <Collapse in={openTiming} sx={{my: 1}} timeout="auto" unmountOnExit>
                             <Alert severity="info">
-                                {subscribe.Description}
+                                {subscribe?.Timing}
                             </Alert>
-                        </Collapse>
-                        <Collapse in={openTiming} timeout="auto" unmountOnExit>
-                            <Divider variant="inset" sx={{mx: 0, my: 1}} component="div"/>
-                            <Grid
-                                container
-                                sx={{width: "100%"}}
-                                direction="row"
-                                justifyContent={"right"}
-                                alignItems={"center"}
-                            >
-                                <Typography width={"100%"} sx={{paddingY: 0.5}} color={"gray"}
-                                            variant={"subtitle1"}>{subscribe?.Timing}</Typography>
-                            </Grid>
                         </Collapse>
 
                     </CardContent>

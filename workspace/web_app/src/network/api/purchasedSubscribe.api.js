@@ -13,7 +13,9 @@ export function purchasedSubscribe_delete(data) {
 export function purchasedSubscribe_checkout(data) {
     return axios.post(Api_url.purchasedSubscribe.checkout,  data);
 }
-
+export function purchasedSubscribe_addEnterToSubscribe(data) {
+    return axios.post(Api_url.purchasedSubscribe.addEnterToSubscribe, data);
+}
 export function purchasedSubscribe_enterRequest(data) {
     return axios.post(Api_url.purchasedSubscribe.enterRequest,  data);
 }

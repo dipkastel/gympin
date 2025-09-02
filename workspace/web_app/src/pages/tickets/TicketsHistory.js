@@ -5,6 +5,7 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import {Image} from "react-bootstrap";
 import TicketListItem from "./TicketListItem";
 import {purchasedSubscribe_query} from "../../network/api/purchasedSubscribe.api";
+import {toAbsoluteUrl} from "../../helper/utils";
 
 const TicketsHistory = () => {
     const error = useContext(ErrorContext);
@@ -54,9 +55,15 @@ const TicketsHistory = () => {
             justifyContent={"center"}
             alignItems={"center"}
         >
-            <Image src={"https://api.gympin.ir/resource/image?Id=100"} width={"40%"}/>
-            <Typography variant={"body"} sx={{m: 2}}>
-                بلیط فعال یافت نشد
+            <Image src={toAbsoluteUrl("/assets/images/noTicket2.png")} width={"40%"} style={{maxWidth: "300px"}}/>
+            <Typography variant={"h5"} sx={{m: 2,fontWeight:900,color:"#444444"}}>
+                بلیط یافت نشد
+            </Typography>
+            <Typography variant={"body2"} sx={{m: 2,color:"#666666"}} >
+                در این بخش بلیط های خریداری شده قبلی شما نمایش داده می‌شود
+            </Typography>
+            <Typography component={"a"} variant={"body1"} href={"/places"} sx={{m: 2,textDecoration:"none",cursor:"pointer"}} >
+                خرید بلیط
             </Typography>
 
         </Grid>);
@@ -75,12 +82,14 @@ const TicketsHistory = () => {
     function getByFilter(p) {
         if (p.Status === "EXPIRE"
             || p.Status === "COMPLETE"
-            || p.Status === "CANCEL")
+            || p.Status === "REFUNDED"
+            || p.Status === "CANCELED")
             return true
         else return false;
     }
 
     function getTicket() {
+        console.log(subscribes);
         return subscribes.filter(p => getByFilter(p));
     }
 

@@ -1,5 +1,4 @@
-import {PlaceAbout_getAllByPlaces} from "./placeAbout.api";
-import {User_couchQuery} from "./user.api";
+
 
 export let AuthApi = {
     BASEURL: "http://localhost:8080/api/",
@@ -94,6 +93,9 @@ export let Api_url = {
         getByPlace:"v1/TicketSubscribe/getByPlace",
         getActiveTimesByTicketSubscribe:"v1/TicketSubscribe/getActiveTimesByTicketSubscribe"
     },
+    Link:{
+        getByCode: "v1/link/getByCode",
+    },
     TicketCourses:{
         getById:"v1/TicketCourse/getById",
         getByPlace:"v1/TicketCourse/getByPlace",
@@ -117,14 +119,15 @@ export let Api_url = {
     },
     purchasedSubscribe:{
         ADD:"v1/purchasedSubscribe/add",
-        GET_BY_USER:"v1/purchasedSubscribe/getByUser",
-        getById:"v1/purchasedSubscribe/getById",
-        getByKey:"v1/purchasedSubscribe/getByKey",
+        query:"v1/purchasedSubscribe/query",
         DELETE:"v1/purchasedSubscribe/delete",
+        getById:"v1/purchasedSubscribe/getById",
         checkout:"v1/purchasedSubscribe/checkout",
+        getByKey:"v1/purchasedSubscribe/getByKey",
+        GET_BY_USER:"v1/purchasedSubscribe/getByUser",
         exitRequest:"v1/purchasedSubscribe/exitRequest",
         enterRequest:"v1/purchasedSubscribe/enterRequest",
-        query:"v1/purchasedSubscribe/query"
+        addEnterToSubscribe: "v1/purchasedSubscribe/addEnterToSubscribe",
     },
     purchasedCourse:{
         ADD:"v1/purchasedCourse/add",

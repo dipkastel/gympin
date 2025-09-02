@@ -1,13 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import _SubscribeDetail from "./_SubscribeDetail";
 import {purchasedSubscribe_getByKey} from "../../../network/api/purchasedSubscribe.api";
-import _TicketOwner from "../commonPartials/_TicketOwner";
-import {Alert, Typography} from "@mui/material";
+import {Grid2 as Grid, Typography} from "@mui/material";
 import _UseExpire from "../commonPartials/_UseExpire";
+import _TicketOwner from "../commonPartials/_TicketOwner";
+import _SubscribeDetail from "./_SubscribeDetail";
 import _UsageProgress from "../commonPartials/_UsageProgress";
-import _QRcode from "../commonPartials/_QRcode";
+import _SubscribeUserEnter from "./_SubscribeUserEnter";
+import {Masonry} from "@mui/lab";
 import _SubscribePhoneLessEnter from "./_SubscribePhoneLessEnter";
 import _SubscribeEnterList from "./_SubscribeEnterList";
 
@@ -25,8 +26,7 @@ const SingleSubscribe = () => {
     function getSubscribe() {
         purchasedSubscribe_getByKey({key: subscribeKey}).then(result => {
             setSubscribe(result.data.Data);
-            console.log(result.data.Data);
-            if(result.data.Data.UseExpire){
+            if (result.data.Data.UseExpire) {
                 setUserCanEnter(false);
             }
         }).catch(e => {
@@ -41,24 +41,32 @@ const SingleSubscribe = () => {
 
     return (
         <>
-            {subscribe &&
-            <div>
+            {subscribe && <Grid sx={{minHeight:30}}>
                 <div className={"section-title mt-3 me-3"}>
                     <Typography variant={"body2"}>{subscribe.Name}</Typography>
 
                 </div>
-            </div>}
-            {subscribe && <_UseExpire subscribe={subscribe} getSubscribe={getSubscribe}  />}
-            {subscribe && <_TicketOwner subscribe={subscribe}/>}
-            {subscribe && <_SubscribeDetail subscribe={subscribe}/>}
-            {subscribe && <_UsageProgress setUserCanEnter={setUserCanEnter} ticket={subscribe}/>}
+            </Grid>}
             {subscribe &&
-            (subscribe.Status == "ACTIVE"||subscribe.Status == "READY_TO_ACTIVE")&&<_QRcode ticket={subscribe} type={"SUBSCRIBE"} userCanEnter={userCanEnter}/>
-            }
-            {subscribe && userCanEnter &&
-            (subscribe.Status == "ACTIVE")&&<_SubscribePhoneLessEnter subscribe={subscribe} getSubscribe={getSubscribe}/>}
-            {subscribe && <_SubscribeEnterList subscribe={subscribe} getSubscribe={getSubscribe} setUserCanEnter={setUserCanEnter}/>}
+            <Masonry columns={{xs: 1, sm: 1, md: 2, lg: 2}}>
+                    <_UseExpire subscribe={subscribe} getSubscribe={getSubscribe}/>
+
+                    <_TicketOwner subscribe={subscribe}/>
+
+                    <_SubscribeDetail subscribe={subscribe}/>
+                    <_UsageProgress setUserCanEnter={setUserCanEnter} ticket={subscribe}/>
+
+                    {(subscribe.Status == "ACTIVE" || subscribe.Status == "READY_TO_ACTIVE") &&
+                    <_SubscribeUserEnter ticket={subscribe} type={"SUBSCRIBE"} userCanEnter={userCanEnter}/>}
+
+                    <_SubscribeEnterList subscribe={subscribe} getSubscribe={getSubscribe} setUserCanEnter={setUserCanEnter}/>
+
+                {/*{(subscribe.Status == "ACTIVE") &&<Grid>*/}
+                {/*     <_SubscribePhoneLessEnter subscribe={subscribe} getSubscribe={getSubscribe}/>*/}
+                {/*</Grid>}*/}
+            </Masonry>}
         </>
+
     );
 };
 

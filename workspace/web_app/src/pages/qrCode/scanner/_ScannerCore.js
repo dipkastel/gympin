@@ -1,142 +1,117 @@
-import React, {useEffect, useRef, useState} from 'react';
-import jsQR from 'jsqr';
-import {Grid, IconButton, Typography} from "@mui/material";
-import KeyboardHideIcon from '@mui/icons-material/KeyboardHide';
+import React, {useCallback, useEffect, useRef, useState} from "react";
+import jsQR from "jsqr";
+import {Grid2 as Grid, Typography} from "@mui/material";
 import _ByCode from "./_ByCode";
 
 
-export default function _ScannerCore({onFind, scannWork}) {
-    const cameraStatusEnum = {
-        permisionDenied: <>permisionDenied</>,
-        active: <></>,
-        loading: <><Grid container direction={"row"} justifyContent={"center"} alignItems={"center"}
-                         sx={{width: "100%", height: "250px"}}>
-            <progress></progress>
-        </Grid></>,
-        disabled: <>disabled</>,
-        byCode: <>
-            <_ByCode setCode={onFind} toCamera={() => setCameraStatus(cameraStatusTypeEnum.loading)}/>
-        </>,
-        error: <><Typography sx={{width: "100%", p: 1, direction: "rtl"}}
-                             variant={"subtitle1"}>{"خطا در اتصال به دوربین"}</Typography><br/> </>
-    };
 
-    const cameraStatusTypeEnum = {
-        permisionDenied: "permisionDenied",
-        active: "active",
-        loading: "loading",
-        disabled: "disabled",
-        byCode: "byCode",
-        error: "error"
-    };
+export default function _ScannerCore({ onFind, scannWork, actionOnScan }) {
+    const videoRef = useRef(null);
+    const canvasRef = useRef(null);
+    const ctxRef = useRef(null);
 
-    const {
-        requestAnimationFrame
-    } = global;
-
-    const [InVideo, setInVideo] = useState(document.createElement('video'));
-    const [cameraStatus, setCameraStatus] = useState(cameraStatusTypeEnum.loading);
-    const [randomNnumber, setRandomNumber] = useState(0);
-    const [canvasContext, setCanvasContext] = useState(null);
-    const convas = useRef(null);
-
+    const [cameraStatus, setCameraStatus] = useState("loading");
 
     useEffect(() => {
-        if (cameraStatus == cameraStatusTypeEnum.byCode) return;
-        navigator.mediaDevices?.getUserMedia({
-            video: {
-                facingMode: 'environment'
+        const video = document.createElement("video");
+        video.setAttribute("playsinline", true); // iOS fix
+        videoRef.current = video;
+
+        navigator.mediaDevices
+            .getUserMedia({ video: { facingMode: "environment" } })
+            .then((stream) => {
+                video.srcObject = stream;
+                video.play();
+
+                const canvas = canvasRef.current;
+                ctxRef.current = canvas.getContext("2d", { willReadFrequently: true });
+
+                setCameraStatus("active");
+                requestAnimationFrame(tick); // start loop
+            })
+            .catch(() => setCameraStatus("error"));
+
+        return () => {
+            if (videoRef.current) {
+                videoRef.current.pause();
+                if (videoRef.current.srcObject) {
+                    videoRef.current.srcObject.getTracks().forEach((t) => t.stop());
+                }
             }
-        }).then(function (stream) {
-            InVideo.srcObject = stream;
-            InVideo.setAttribute('playsinline', true);
-            InVideo.play();
-            setInVideo(InVideo);
-            setCanvasContext(convas.current.getContext('2d', {willReadFrequently: true}))
-            requestAnimationFrame(tick);
-        });
-
-        if (!navigator.mediaDevices) {
-            setCameraStatus(cameraStatusTypeEnum.error)
-        }
-
-        return () => {
-            InVideo.pause();
-        }
-
-    }, [cameraStatus]);
-
-
-    useEffect(() => {
-        var interval = setInterval(() => setRandomNumber(Math.random()), 125);
-        return () => {
-            clearInterval(interval);
         };
     }, []);
 
     useEffect(() => {
-        requestAnimationFrame(tick);
-    }, [randomNnumber]);
-
-
-    function tick() {
-
-        return new Promise((resolve) => {
-            if (InVideo.readyState === InVideo.HAVE_ENOUGH_DATA && canvasContext) {
-                if (cameraStatus != cameraStatusTypeEnum.active && cameraStatus != cameraStatusTypeEnum.byCode) {
-                    resolve(setCameraStatus(status => cameraStatusTypeEnum.active));
-                }
-
-                convas.current.height = InVideo.videoHeight;
-                convas.current.width = InVideo.videoWidth;
-                canvasContext.drawImage(InVideo, 0, 0, convas.current.width, convas.current.height);
-                var imageData = canvasContext.getImageData(0, 0, convas.current.width, convas.current.height);
-
-                var code = jsQR(imageData.data, imageData.width, imageData.height, {inversionAttempts: 'attemptBoth'});
-                if (code) {
-                    onFind(code.data);
-                }
-
+        const handleVisibility = () => {
+            if (document.hidden) {
+                videoRef.current?.pause();
             } else {
+                videoRef.current?.play();
                 requestAnimationFrame(tick);
             }
-        });
-    }
+        };
 
-
-    // useEffect(() => {
-    //     if(loading) return;
-    //     setMessage(!enabled?React.createElement("div", null, React.createElement("span", {
-    //         role: "img",
-    //         "aria-label": "camera"
-    //     }, ""), failedToLoadCamera()):null);
-    // }, [enabled,loading]);
-
-    // useEffect(() => {
-    //     setMessage(loading?React.createElement("div", null, React.createElement("span", {
-    //         role: "img",
-    //         "aria-label": "time"
-    //     }, ""), loadCamera()):null);
-    // }, [loading]);
+        document.addEventListener("visibilitychange", handleVisibility);
+        return () => {
+            document.removeEventListener("visibilitychange", handleVisibility);
+        };
+    }, []);
 
     useEffect(() => {
-
-        (scannWork) ? InVideo.pause() : InVideo.play();
+        if (scannWork) {
+            videoRef.current?.pause();
+        } else {
+            videoRef.current?.play();
+            requestAnimationFrame(tick);
+        }
     }, [scannWork]);
+
+    function tick() {
+        try {
+            const video = videoRef.current;
+            const canvas = canvasRef.current;
+            const ctx = ctxRef.current;
+
+            if (video && video.readyState === video.HAVE_ENOUGH_DATA && ctx) {
+                if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                }
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "attemptBoth",
+                });
+
+                if (code) {
+                    const data = actionOnScan ? actionOnScan(code.data) : code.data;
+                    onFind(data);
+                }
+            }
+
+        }catch (e){}
+        requestAnimationFrame(tick);
+    }
 
     return (
         <>
-            {cameraStatusEnum[cameraStatus]}
-            <Grid hidden={cameraStatus != cameraStatusTypeEnum.active} sx={{direction: "ltr", mb: 4}}>
-                <canvas ref={convas} id="qrCanvas"/>
+            {cameraStatus === "loading" && (
+                <Grid container justifyContent="center" alignItems="center" sx={{ width: "100%", height: "250px" }}>
+                    <progress />
+                </Grid>
+            )}
+            {cameraStatus === "error" && (
+                <Typography sx={{ width: "100%", p: 1, direction: "rtl" }} variant="subtitle1">
+                    خطا در اتصال به دوربین
+                </Typography>
+            )}
+            <Grid hidden={cameraStatus !== "active"} sx={{ direction: "ltr", mb: 4 }}>
+                <canvas ref={canvasRef} id="qrCanvas" />
             </Grid>
-            {!(cameraStatus == cameraStatusTypeEnum.byCode) && <Grid sx={{bottom: "50px", right: "10px", position: "absolute"}}>
-                <IconButton onClick={(e) => {
-                    setCameraStatus(cameraStatusTypeEnum.byCode)
-                }} sx={{backgroundColor: "#ffffff"}} color={"default"}>
-                    <KeyboardHideIcon/>
-                </IconButton>
-            </Grid>}
+            <_ByCode setCode={onFind} />
         </>
     );
 }

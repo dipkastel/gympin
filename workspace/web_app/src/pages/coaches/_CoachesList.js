@@ -85,7 +85,6 @@ const _CoachesList = () => {
             Role:"COACH",
             paging: {Page: page, Size: 120,Desc:sortBy.Desc,OrderBy:sortBy.Value}
         }).then(result => {
-            console.log(result.data.Data);
             setIsLoading(false)
             setLoadedPage(page);
             var content = coaches?coaches.content:[];

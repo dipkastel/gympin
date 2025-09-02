@@ -3,7 +3,7 @@ import {Button, Card, IconButton, InputAdornment, TextField} from "@mui/material
 import {Formik} from "formik";
 import {Cameraswitch} from "@mui/icons-material";
 
-const _ByCode = ({setCode,toCamera}) => {
+const _ByCode = ({setCode}) => {
 
 
     const AcceptLogin=(e, values)=> {
@@ -59,8 +59,8 @@ const _ByCode = ({setCode,toCamera}) => {
                         margin="normal"
                         name="code"
                         type="text"
-                        sx={{textAlign:"center",minWidth:"320px"}}
-                        label={"کد زیر qr"}
+                        sx={{textAlign:"center"}}
+                        label={"یا کد زیر qr را وارد کنید"}
                         onBlur={handleBlur}
                         onChange={handleChange}
                         value={values.code}
@@ -68,7 +68,7 @@ const _ByCode = ({setCode,toCamera}) => {
                         helperText={touched.code && errors.code}
                         error={Boolean(touched.code && errors.code)}
                         InputProps={{
-                            startAdornment: (
+                            endAdornment: (
                                 <InputAdornment position="start">
                                     <Button
                                         edge="start"
@@ -78,13 +78,6 @@ const _ByCode = ({setCode,toCamera}) => {
                                     > ثبت
                                     </Button>
                                 </InputAdornment>
-                            ),
-                            endAdornment:(
-                            <InputAdornment position="end">
-                                <IconButton onClick={toCamera}>
-                                    <Cameraswitch/>
-                                </IconButton>
-                            </InputAdornment>
                             )
                         }}
                     />

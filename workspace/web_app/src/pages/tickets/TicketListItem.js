@@ -38,6 +38,7 @@ const TicketListItem = ({item,getSubscribe}) => {
             case "EXPIRE" : return "red";
             case "COMPLETE" : return "secondGreen";
             case "CANCEL" : return "red";
+            case "REFUNDED" : return "red";
             case "ACTIVE" : return "green";
             case "PROCESSING" : return "red";
 

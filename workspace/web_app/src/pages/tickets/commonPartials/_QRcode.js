@@ -1,12 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, CardContent, CircularProgress, Grid, Typography} from "@mui/material";
-import QRCode from "react-qr-code";
+import {CardContent, CircularProgress, Grid, Typography} from "@mui/material";
+import QRCode from "react-qrcode-logo";
 import {qrCode_getCode} from "../../../network/api/qrCode.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {GympinTheme} from "../../../helper/GympinTheme";
 import {getStringOfTime} from "../../../helper/utils";
 
-const _QRcode = ({ticket, userCanEnter, type}) => {
+const _QRcode = ({ticket, type}) => {
 
     let lock = false;
     let respite = 2;
@@ -21,7 +20,7 @@ const _QRcode = ({ticket, userCanEnter, type}) => {
             let distance = new Date().getTime() - startTimer.getTime();
             var minutes = respite - 1 - Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = 60 - Math.floor((distance % (1000 * 60)) / 1000);
-            if((respite*60*1000-distance)<0)
+            if ((respite * 60 * 1000 - distance) < 0)
                 getCodeOfSubscribe();
             else
                 setTimerText(getStringOfTime(seconds) + " : " + getStringOfTime(minutes));
@@ -33,7 +32,7 @@ const _QRcode = ({ticket, userCanEnter, type}) => {
 
 
     useEffect(() => {
-            getCodeOfSubscribe();
+        getCodeOfSubscribe();
     }, []);
 
 
@@ -57,39 +56,47 @@ const _QRcode = ({ticket, userCanEnter, type}) => {
         });
     }
 
-    if (!userCanEnter) return (<></>);
     return (
         <>
-            <Card elevation={10} sx={{margin: 3, borderRadius: 3}}>
+            <CardContent>
                 <Grid
-                    sx={{backgroundColor: GympinTheme.palette.primary.main, color: "white"}}
                     container
                     direction={"column"}
                     justifyContent="center"
                     alignItems="center">
-                    {code?.QrCode ? <Typography variant={"h2"} sx={{margin: 1}}>{code.QrCode}</Typography> :
-                        <CircularProgress  sx={{p:1}} size={"3rem"} color={"inherit"}/>}
-                </Grid>
-                <CardContent>
-                    <Grid
-                        container
-                        direction={"column"}
-                        justifyContent="center"
-                        alignItems="center">
-                        {code?.QrCode ? <QRCode className={"qrCode"} value={code.QrCode}/> : <CircularProgress/>}
+                    {code?.QrCode ?
+                        <Grid sx={{borderTop:"2px solid",borderBottom:"2px solid", my:3,borderImage:"linear-gradient(to right, #ddd 15%, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0) 85%, #ddd 85%) 1" }}>
+                        <Grid sx={{borderLeft:"2px solid",borderRight:"2px solid",borderImage:"linear-gradient(to bottom, #ddd 15%, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0) 85%, #ddd 85%) 1" }}>
+                        <QRCode value={code?.QrCode}
+                                size={250}
+                                qrStyle="dots"
+                                eyeRadius={25}
+                                quietZone={25}
+                                eyeColor="#E7333E"
+                                fgColor="#333333"
+                                bgColor="#ffffff"
+                                logoImage="/assets/images/qrlogo.png"
+                                logoWidth={60}
+                                logoHeight={60}
+                                logoOpacity={1}
+                        />
                     </Grid>
-                </CardContent>
-                <Grid
-                    sx={{backgroundColor: GympinTheme.palette.primary.main, color: "white"}}
-                    container
-                    direction={"column"}
-                    justifyContent="center"
-                    alignItems="center">
-
-                    {timerText ? <Typography sx={{p:1}} variant={"h2"}>{timerText}</Typography> : <CircularProgress sx={{p:1}} size={"3rem"} color={"inherit"}/>}
-
+                        </Grid>  : <Grid sx={{minHeight:300}} alignContent={"center"}><CircularProgress/></Grid>}
+                    {code?.QrCode ? <Typography variant={"h2"} sx={{margin: 1}}></Typography> :
+                        <CircularProgress sx={{p: 1}} size={"3rem"} color={"inherit"}/>}
                 </Grid>
-            </Card>
+            </CardContent>
+            <Grid
+                sx={{background: "linear-gradient(90deg, #ff416c, #ff4b2b)", color: "white"}}
+                container
+                direction={"column"}
+                justifyContent="center"
+                alignItems="center">
+                {timerText ? <><Typography sx={{px: 1, pt: 2}} variant={"h2"}>{code?.QrCode}</Typography><Typography sx={{px: 1, pb: 2}}
+                                                                                                                    variant={"h6"}>{timerText}</Typography>  </> :
+                    <CircularProgress sx={{p: 1}} size={"3rem"} color={"inherit"}/>}
+
+            </Grid>
         </>
     )
 };
