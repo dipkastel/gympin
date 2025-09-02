@@ -44,7 +44,7 @@ export const MainRoutes = () => {
                 <Route path="/term-and-conditions" element={<Terms/>}/>
                 <Route path="/contact" element={<Contact/>}/>
                 <Route path="/about" element={<About/>}/>
-                <Route path="/r/:TO/:US" element={<Redirect/>}/>
+                <Route path="/r/:code" element={<Redirect/>}/>
                 <Route path="/*" element={<PageNotFound/>}/>
             </Routes>
             <Footer/>

@@ -8,6 +8,9 @@ export let ArticleApi = {
     query: "v1/article/query",
     getById: "v1/article/getById",
 };
+export let LinkApi = {
+    getByCode: "v1/link/getByCode",
+};
 
 export let AccountApi={
     requestRegisterAdvise : "v1/account/requestRegisterAdvise",
