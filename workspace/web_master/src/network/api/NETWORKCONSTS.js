@@ -173,6 +173,7 @@ export let Api_url = {
     },
     purchasedSubscribe: {
         enter: "v1/purchasedSubscribe/enter",
+        query: "v1/purchasedSubscribe/query",
         getById: "v1/purchasedSubscribe/getById",
         getByKey:"v1/purchasedSubscribe/getByKey",
         exitRequest: "v1/purchasedSubscribe/exitRequest",

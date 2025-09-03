@@ -12,7 +12,7 @@ import {
     ListItemText,
     Typography
 } from "@mui/material";
-import {purchasedSubscribe_getPlaceSubscribes} from "../../../../network/api/subscribe.api";
+import {purchasedSubscribe_getPlaceSubscribes, purchasedSubscribe_query} from "../../../../network/api/subscribe.api";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {SubscribeStatusEnum} from "../../../../helper/enums/SubscribeStatusEnum";
@@ -21,14 +21,29 @@ import {Image} from "react-bootstrap";
 export default function _ActiveSubscribes() {
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(100);
     const [PlaceSubscribes, setPlaceSubscribes] = useState([])
     useEffect(() => {
         getActiveSubscribes();
     }, []);
 
     function getActiveSubscribes() {
-        purchasedSubscribe_getPlaceSubscribes({placeId: place.Id}).then(result => {
-            setPlaceSubscribes(result.data.Data);
+        // purchasedSubscribe_getPlaceSubscribes({placeId: place.Id}).then(result => {
+        //     setPlaceSubscribes(result.data.Data);
+        // }).catch(e => {
+        //     try {
+        //         error.showError({message: e.response.data.Message,});
+        //     } catch (f) {
+        //         error.showError({message: "خطا نا مشخص",});
+        //     }
+        // })
+        purchasedSubscribe_query({
+            queryType: "FILTER",
+            placeId: place.Id,
+            paging: {Page: page, Size: rowsPerPage, Desc: true}
+        }).then(result => {
+            setPlaceSubscribes(result.data.Data.content);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -46,6 +61,7 @@ export default function _ActiveSubscribes() {
             case "ACTIVE":return "success";
             case "EXPIRE":return "error";
             case "COMPLETE":return "secondary";
+            case "REFUNDED":return "warning";
             case "CANCEL":return "primary";
             default:return "primary";
         }
@@ -58,7 +74,45 @@ export default function _ActiveSubscribes() {
                 <Typography variant={"body1"} sx={{px: 1}}>{"احتمال ورود "+PlaceSubscribes.filter(ps=>ps.Status=="READY_TO_ACTIVE").length+ " کاربر تا 72 ساعت آینده"}</Typography>
             </Alert>}
             <List sx={{width: '100%', direction: "rtl", bgcolor: 'background.paper'}}>
-                {PlaceSubscribes.filter(ps=>ps.Status!=="READY_TO_ACTIVE").map((item, Index) => (
+                {PlaceSubscribes.filter(ps=>ps.Status==="ACTIVE").map((item, Index) => (
+                    <div key={Index}>
+                        <ListItemButton sx={{direction: "rtl", textAlign: "right", justifyContent: "space-between"}}>
+                            <ListItemAvatar sx={{margin: 0}}>
+                                <Avatar
+                                    sx={{width: 50, height: 50}}
+                                    alt="Remy Sharp"
+                                    src={item?.User?.Avatar?.Url}/>
+                            </ListItemAvatar>
+                            <Link href={"/users/SingleSubscribe/" + item?.Key}
+                                  sx={{textDecoration: "none", color: "#666666", width: "100%"}}>
+                                <ListItemText primary={`${item?.User?.FullName || ""} (${item?.User?.Username})`}/>
+                                <ListItemText secondary={`${item?.Name || ""}`}/>
+                            </Link>
+                            <Chip color={getColor(item.Status)}
+                                  label={SubscribeStatusEnum[item?.Status]}/>
+                        </ListItemButton>
+                        <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
+                    </div>))}
+                {PlaceSubscribes.filter(ps=>ps.Status==="COMPLETE").map((item, Index) => (
+                    <div key={Index}>
+                        <ListItemButton sx={{direction: "rtl", textAlign: "right", justifyContent: "space-between"}}>
+                            <ListItemAvatar sx={{margin: 0}}>
+                                <Avatar
+                                    sx={{width: 50, height: 50}}
+                                    alt="Remy Sharp"
+                                    src={item?.User?.Avatar?.Url}/>
+                            </ListItemAvatar>
+                            <Link href={"/users/SingleSubscribe/" + item?.Key}
+                                  sx={{textDecoration: "none", color: "#666666", width: "100%"}}>
+                                <ListItemText primary={`${item?.User?.FullName || ""} (${item?.User?.Username})`}/>
+                                <ListItemText secondary={`${item?.Name || ""}`}/>
+                            </Link>
+                            <Chip color={getColor(item.Status)}
+                                  label={SubscribeStatusEnum[item?.Status]}/>
+                        </ListItemButton>
+                        <Divider variant="inset" sx={{marginLeft: 0, marginRight: "72px"}} component="li"/>
+                    </div>))}
+                {PlaceSubscribes.filter(ps=>ps.Status==="EXPIRE").map((item, Index) => (
                     <div key={Index}>
                         <ListItemButton sx={{direction: "rtl", textAlign: "right", justifyContent: "space-between"}}>
                             <ListItemAvatar sx={{margin: 0}}>

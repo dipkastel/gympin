@@ -5,5 +5,6 @@ export const SubscribeStatusEnum = {
     ACTIVE:"فعال",
     EXPIRE:"منقضی",
     COMPLETE:"تکمیل جلسات",
+    REFUNDED:"باز پرداخت شده",
     CANCEL:"لغو شده"
 }

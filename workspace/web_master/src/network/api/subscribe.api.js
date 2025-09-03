@@ -49,6 +49,10 @@ export function purchasedSubscribe_exitUserOfPlace(data) {
     return axios.get(Api_url.purchasedSubscribe.exitUserOfPlace, {params: data});
 }
 
+export function purchasedSubscribe_query(data) {
+    return axios.post(Api_url.purchasedSubscribe.query, data);
+}
+
 export function purchasedSubscribe_enterRequest(data) {
     return axios.post(Api_url.purchasedSubscribe.enterRequest,  data);
 }
