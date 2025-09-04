@@ -57,8 +57,8 @@ const TicketListItem = ({item,getSubscribe}) => {
                     <Grid sx={{mx:5}} container direction={"row"} justifyContent={"space-between"}>
                         {item?.Status=="READY_TO_ACTIVE"&&
                         <Alert sx={{m: 2,width:"100%"}} severity="warning">
-                            <AlertTitle >مبلغ بلیط به مجموعه پرداخت نشده</AlertTitle>
-                            برای پرداخت،اینجا کلیک کرده و از qr کد و اسکنر تابلو استفاده نمایید
+                            <AlertTitle >مراحل خرید این بلیط تکمیل نشده</AlertTitle>
+                            برای فعالسازی، اینجا کلیک کرده و با حضور در مجموعه از qr کد و اسکنر تابلو استفاده نمایید
                         </Alert>}
                     </Grid>
                     <Divider variant={"middle"} sx={{my:2,borderStyle:"dashed"}} component="div"/>

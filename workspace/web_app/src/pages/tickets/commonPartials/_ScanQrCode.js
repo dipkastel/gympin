@@ -123,14 +123,14 @@ const ScanQrCode = ({ ticket }) => {
         <Dialog open={!!scannedCode} onClose={() => setScannedCode(null)}>
             {placeId && firstLogin && (
                 <>
-                    <DialogTitle>ثبت اولین ورود و پرداخت به مجموعه</DialogTitle>
+                    <DialogTitle>ثبت اولین ورود و فعالسازی بلیط</DialogTitle>
                     <DialogContent>
                         <Alert sx={{ mt: 1 }} severity="warning" variant="outlined">
-                            تایید این پیام به منزله پرداخت به مجموعه میباشد و پس از آن وجه
+                            تایید این پیام به منزله پرداخت به مجموعه می‌باشد و پس از آن وجه
                             پرداختی به هیچ عنوان عودت نخواهد شد!
                         </Alert>
                         <Alert sx={{ mt: 1 }} severity="info" variant="outlined">
-                            آیا از ثبت اولین ورود و پرداخت به مجموعه اطمینان دارید؟
+                            آیا از ثبت اولین ورود و فعالسازی بلیط اطمینان دارید؟
                         </Alert>
                     </DialogContent>
                     <DialogActions>
