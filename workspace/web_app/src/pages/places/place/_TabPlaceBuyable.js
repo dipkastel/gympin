@@ -43,7 +43,7 @@ const _TabPlaceBuyable = ({place}) => {
         if (!currentUser) {
             error.showError({
                 clickable: true,
-                message: 'برای خرید ابتدا باید وارد شوید',
+                message: 'برای رزرو ابتدا باید وارد شوید',
                 buttonTitle: 'پروفایل',
                 duration: 6000,
                 onClick: () => {
@@ -125,7 +125,7 @@ const _TabPlaceBuyable = ({place}) => {
         <>
             {showCallSudjest() &&
             <Alert sx={{textDecoration: "none", m: 2}} severity="warning" href={"tel:" + getfixedPlaceNumber()} component={"a"}>
-                <AlertTitle>قبل از خرید بلیط، شرایط استفاده را هماهنگ نمایید.</AlertTitle>
+                <AlertTitle>قبل از رزرو بلیط، شرایط استفاده را هماهنگ نمایید.</AlertTitle>
                 <Button variant={"contained"} color={"warning"}>تماس با مرکز</Button>
             </Alert>}
 

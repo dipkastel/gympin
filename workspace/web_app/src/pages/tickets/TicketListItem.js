@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Divider, Grid2 as Grid, Typography} from "@mui/material";
+import {Alert, AlertTitle, Button, Divider, Grid2 as Grid, Typography} from "@mui/material";
 import {getStringOfTime, replacePersianNumbers, toPriceWithComma} from "../../helper/utils";
 import {subscribeStatusEnum} from "../../helper/enums/subscribeStatusEnum";
 import {useNavigate} from "react-router-dom";
@@ -54,6 +54,13 @@ const TicketListItem = ({item,getSubscribe}) => {
                     <Grid sx={{mx:5}} container direction={"row"} justifyContent={"space-between"}>
                         <Typography variant={"h5"}>{item.Name}</Typography>
                     </Grid>
+                    <Grid sx={{mx:5}} container direction={"row"} justifyContent={"space-between"}>
+                        {item?.Status=="READY_TO_ACTIVE"&&
+                        <Alert sx={{m: 2,width:"100%"}} severity="warning">
+                            <AlertTitle >مبلغ بلیط به مجموعه پرداخت نشده</AlertTitle>
+                            برای پرداخت،اینجا کلیک کرده و از qr کد و اسکنر تابلو استفاده نمایید
+                        </Alert>}
+                    </Grid>
                     <Divider variant={"middle"} sx={{my:2,borderStyle:"dashed"}} component="div"/>
                     <Grid sx={{mx:5,mt:1}} container direction={"row"} justifyContent={"space-between"}>
                         <Typography variant={"subtitle2"} sx={{color:"#888888"}} >مجموعه ورزشی</Typography>
@@ -61,14 +68,18 @@ const TicketListItem = ({item,getSubscribe}) => {
                     </Grid>
                     <Grid sx={{mx:5,mt:1}} container direction={"row"} justifyContent={"space-between"}>
                         <Typography variant={"subtitle2"} sx={{color:"#888888"}} >{item?.Status=="READY_TO_ACTIVE"?"مهلت ورود":"انقضا"}</Typography>
-                        <Typography variant={"body1"}>{item?.Status=="READY_TO_ACTIVE"?timerText:item.ExpireDate}</Typography>
+                        <Typography variant={"body1"}>{item?.Status=="READY_TO_ACTIVE"?timerText:(new Date(item?.ExpireDate).toLocaleDateString('fa-IR', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        }))}</Typography>
                     </Grid>
                     <Grid sx={{mx:5,mt:1}} container direction={"row"} justifyContent={"space-between"}>
                         <Typography variant={"subtitle2"} sx={{color:"#888888"}} >تعداد ورود</Typography>
                         <Typography variant={"body1"}>{replacePersianNumbers(item?.EntryTotalCount+"")}</Typography>
                     </Grid>
                     <Grid sx={{mx:5,mt:1}} container direction={"row"} justifyContent={"space-between"}>
-                        <Typography variant={"subtitle2"} sx={{color:"#888888"}} >سریال</Typography>
+                        <Typography variant={"subtitle2"} sx={{color:"#888888"}} >کد رزرو</Typography>
                         <Typography variant={"body1"}>{replacePersianNumbers(item?.Serial[0]?.Serial?.split("-")[0])}</Typography>
                     </Grid>
                 </Grid>
@@ -77,7 +88,7 @@ const TicketListItem = ({item,getSubscribe}) => {
             <TicketLayout color={getColor(item)}>
                 <Grid container direction={"column"} >
                     <Grid sx={{mx:5}} container direction={"row"} justifyContent={"space-between"}>
-                        <Typography variant={"body1"} >پرداخت شده</Typography>
+                        <Typography variant={"body1"} >{item?.Status=="READY_TO_ACTIVE"?"آماده فعالسازی":"پرداخت شده"}</Typography>
                         <Typography variant={"caption"}>وضعیت</Typography>
                     </Grid>
                     <Grid sx={{mx:5}} container direction={"row"} justifyContent={"space-between"}>

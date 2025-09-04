@@ -43,7 +43,7 @@ const _placeSubscribes = ({place,genderFilter}) => {
                 navigate("/auth/login");
                 error.showError({
                     clickable: false,
-                    message: 'برای خرید ابتدا باید وارد شوید',
+                    message: 'برای رزرو ابتدا باید وارد شوید',
                     duration: 6000,
                 });
                 return;
@@ -102,15 +102,7 @@ const _placeSubscribes = ({place,genderFilter}) => {
                 Count: 1
             }).then(result => {
                 store.dispatch(sagaActions.RequestUserInvoices(currentUser))
-                error.showError({
-                    clickable: true,
-                    message: 'با موفقیت به سبد خرید شما اضافه شد',
-                    buttonTitle: 'سبد خرید',
-                    duration: 8000,
-                    onClick: () => {
-                        navigate("/basket", {replace: false});
-                    }
-                });
+                navigate("/basket", {replace: false});
             }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message,});

@@ -1,15 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {
-    Alert,
-    Button,
-    Card,
-    CircularProgress,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle, LinearProgress,
-    Typography
-} from "@mui/material";
+import {Alert, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, Typography} from "@mui/material";
 import {toPriceWithComma} from "../../../helper/utils";
 import _invoiceAgreements from "./_invoiceAgreements";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
@@ -19,7 +9,7 @@ import {useNavigate} from "react-router-dom";
 import store from "../../../helper/redux/store";
 import {sagaActions} from "../../../helper/redux/actions/SagaActions";
 
-const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits,checkoutType}) => {
+const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits, checkoutType}) => {
 
     const error = useContext(ErrorContext);
     const navigate = useNavigate();
@@ -39,24 +29,21 @@ const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits,checkoutType}) =
             setOpenModalConfirm(false);
             setLoading(true);
 
-            if(checkoutType=="SMARTIS"){
+            if (checkoutType == "SMARTIS") {
                 SmartisPay();
-            }else{
+            } else {
                 GympinPay();
             }
 
         }
 
-        function SmartisPay(){
+        function SmartisPay() {
             var postData = {
                 Invoice: {Id: userBasket.Id},
                 Price: userBasket.TotalPrice,
-                CheckoutType:checkoutType,
+                CheckoutType: checkoutType,
             }
-
-            console.log(postData)
             invoice_SmartisCheckOut(postData).then(result => {
-                console.log(result)
                 window.location = result.data.Data.toString();
             }).catch(e => {
                 setLoading(false);
@@ -68,9 +55,10 @@ const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits,checkoutType}) =
                 }
             })
         }
-        function GympinPay(){
+
+        function GympinPay() {
             var checkout = [];
-            invoiceCredits.filter(p => p.CreditPayableAmount > 0).map((invoiceCredit,Number) => {
+            invoiceCredits.filter(p => p.CreditPayableAmount > 0).map((invoiceCredit, Number) => {
                 checkout.push({
                     CreditType: invoiceCredit.CreditType,
                     PersonnelId: invoiceCredit.PersonnelId,
@@ -81,11 +69,11 @@ const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits,checkoutType}) =
             var postData = {
                 Invoice: {Id: userBasket.Id},
                 Price: userBasket.TotalPrice,
-                CheckoutType:checkoutType,
+                CheckoutType: checkoutType,
                 Checkout: checkout,
             }
             invoice_userCheckout(postData).then(result => {
-                error.showError({message: "پرداخت انجام شد.",});
+                error.showError({message: "پرداخت و رزرو انجام شد.",});
                 store.dispatch(sagaActions.RequestUserInvoices(currentUser))
                 store.dispatch(sagaActions.RequestUser())
                 navigate("/tickets", {replace: false});
@@ -103,22 +91,31 @@ const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits,checkoutType}) =
             sx={{zIndex: 99999999}}
             className={"w-100"}
             open={openModalConfirm} onClose={() => setOpenModalConfirm(false)}>
-            <DialogTitle>{"تایید نهایی"}</DialogTitle>
+            <DialogTitle>{"تایید رزرو"}</DialogTitle>
             <DialogContent className={"w-100"}>
-                <Typography variant={"subtitle2"} sx={{mb:2}}>
-                    توجه داشته باشید امکان لغو یا بازپرداخت بلیط های خریداری شده وجود ندارد!
-                </Typography>
-                {userBasket && <_invoiceAgreements userBasket={userBasket} setAcceptAgreements={setAcceptAgreements}/>}
-                <Alert sx={{mt:2}} severity={"warning"} >
-                    <Typography variant={"subtitle2"}>
-                        مهلت مراجعه به مرکز و اولین استفاده بلیط ها، از زمان خرید تا 72 ساعت می باشد.
+                <Alert sx={{mt: 2}} severity={"warning"}>
+                    <Typography variant={"subtitle1"}>
+                        مهلت مراجعه به مرکز و اولین استفاده بلیط، 72 ساعت از زمان رزرو می‌باشد
+                    </Typography>
+                    <Typography variant={"caption"}>◄ پس از این مدت، مبلغ بلیط به کیف پول مرجع برگشت داده میشود
                     </Typography>
                 </Alert>
+                <Alert sx={{mt: 2,mb:2}} severity={"info"}>
+                    <Typography variant={"subtitle1"}>
+                        رزرو به معنای پرداخت به مجموعه نیست! هنگام مراجعه به مجموعه، حتماً گوشی موبایل خود را به همراه داشته باشید و فرایند پرداخت را به یکی از روش های زیر تکمیل نمایید:
+                    </Typography>
+                    <Typography variant={"caption"}>◄ روش اول: QR کد داخل بلیط را برای اسکن، به متصدی مجموعه ورزشی ارائه کنید.
+                    </Typography>
+                    <br/>
+                    <Typography variant={"caption"}>◄ روش دوم: از داخل بلیط، "توسط خودم" را انتخاب کرده و QR کد تابلو جیم پین در مجموعه ورزشی را اسکن کنید، سپس رسید را به متصدی ارائه دهید.
+                    </Typography>
+                </Alert>
+                {userBasket && <_invoiceAgreements userBasket={userBasket} setAcceptAgreements={setAcceptAgreements}/>}
             </DialogContent>
             <DialogActions>
                 <Button sx={{bgcolor: "#e7333e", borderRadius: 3, fontWeight: "bold", fontSize: 18, m: 1}}
                         size={"large"} disabled={!acceptAgreements} variant={"contained"} fullWidth
-                        onClick={() => onConfirm()}>تایید خرید</Button>
+                        onClick={() => onConfirm()}>تایید رزرو</Button>
             </DialogActions>
         </Dialog>);
     }
@@ -131,10 +128,10 @@ const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits,checkoutType}) =
                 <Typography sx={{textAlign: "center", mt: 2, mb: 1}} variant={"h6"} color={"#14757e"}>
                     {"مجموع پرداخت : " + toPriceWithComma(userBasket.PriceToPay)}
                 </Typography>
-                {!loading&&<Button sx={{bgcolor: "#e7333e", borderRadius: 3, fontWeight: "bold", fontSize: 18}} size={"large"}
-                        disabled={!userCanPay} variant={"contained"} fullWidth
-                        onClick={(e) => setOpenModalConfirm(true)}>تایید قوانین</Button>}
-                {loading&&<LinearProgress />}
+                {!loading && <Button sx={{bgcolor: "#e7333e", borderRadius: 3, fontWeight: "bold", fontSize: 18}} size={"large"}
+                                     disabled={!userCanPay} variant={"contained"} fullWidth
+                                     onClick={(e) => setOpenModalConfirm(true)}>تایید قوانین</Button>}
+                {loading && <LinearProgress/>}
             </Card>
             {renderModalConfirm()}
         </>

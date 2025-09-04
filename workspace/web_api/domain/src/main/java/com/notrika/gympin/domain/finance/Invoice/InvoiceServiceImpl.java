@@ -332,6 +332,8 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         if(invoice.getUser().getUserProvider()== UserProvider.SMARTIS){
             subscribe.setPrice(subscribe.getPlacePrice());
         }
+        if(invoice.getInvoiceSubscribes().size()>0)
+            throw new OnlyOneItemCanBeInInvoice();
 
         //if buyable exist add +1
         InvoiceSubscribeEntity userBuyable = null;

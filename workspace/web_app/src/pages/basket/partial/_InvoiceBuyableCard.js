@@ -6,7 +6,7 @@ import {
     CardActions,
     CardContent,
     CardHeader,
-    Grid,
+    Grid, IconButton,
     LinearProgress,
     Typography
 } from "@mui/material";
@@ -81,6 +81,7 @@ const _InvoiceBuyableCard = ({buyable, updatePage}) => {
                 component={"a"}
                 sx={{textDecoration: "none", textAlign: "start", color: "#000000"}}
                 title={buyable.Name}
+                action={getMinusButton(buyable)}
                 subheader={<><Typography component={"span"} variant={"subtitle2"}>
                     {"مرکز : " + buyable.Place.Name}
                 </Typography>
@@ -95,31 +96,23 @@ const _InvoiceBuyableCard = ({buyable, updatePage}) => {
 
                         <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
 
-                            <ButtonGroup size={"small"} sx={{
-                                mb: 2,
-                                direction: "ltr",
-                                borderColor: "#000",
-                                borderRadius: 2,
-                                border: "1px solid #e2e2e2"
-                            }} variant="outlined"
-                                         aria-label="Basic button group">
-                                {!loading && <Button sx={{border: "0px solid #fff !important"}}
-                                                     onClick={(e) => updateCount(buyable.Count + 1, "plus")}><Add/></Button>}
-                                {!loading &&
-                                <Button sx={{border: "0px solid #fff !important"}}>{buyable.Count}</Button>}
-                                {!loading && getMinusButton(buyable)}
-                                {loading && <LinearProgress sx={{width: "90px", m: 1.8}}/>}
-                            </ButtonGroup>
-                            {/*{loading&&}*/}
-                            {/*{buyable.Count>1&&<IconButton size={"small"} >*/}
-                            {/*    <Remove color={"error"}/>*/}
-                            {/*</IconButton>}*/}
-                            {/*<Typography variant={"subtitle1"}>*/}
-                            {/*    {buyable.Count}*/}
-                            {/*</Typography>*/}
-                            {/*<IconButton size={"small"} >*/}
-                            {/*    <Add color={"success"}/>*/}
-                            {/*</IconButton>*/}
+                            {/*<ButtonGroup size={"small"} sx={{*/}
+                            {/*    mb: 2,*/}
+                            {/*    direction: "ltr",*/}
+                            {/*    borderColor: "#000",*/}
+                            {/*    borderRadius: 2,*/}
+                            {/*    border: "1px solid #e2e2e2"*/}
+                            {/*}} variant="outlined"*/}
+                            {/*             aria-label="Basic button group">*/}
+                            {/*    {!loading && <Button sx={{border: "0px solid #fff !important"}}*/}
+                            {/*                         onClick={(e) => updateCount(buyable.Count + 1, "plus")}><Add/></Button>}*/}
+                            {/*    {!loading &&*/}
+                            {/*    <Button sx={{border: "0px solid #fff !important"}}>{buyable.Count}</Button>}*/}
+                            {/*    {!loading && getMinusButton(buyable)}*/}
+                            {/*    {loading && <LinearProgress sx={{width: "90px", m: 1.8}}/>}*/}
+                            {/*</ButtonGroup>*/}
+
+
                         </Grid>
                     </Grid>
 

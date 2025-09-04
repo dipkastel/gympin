@@ -159,7 +159,7 @@ const _PlaceSubscribeListItem = ({subscribe, number, addToSubscribe,login}) => {
                                          component="div"/>
                             </Grid>
                             <Grid alignContent={"center"} size={21}>
-                                <Typography component={"span"} variant={"h5"} sx={{fontSize: "1.0rem"}}>جزئیات و خرید</Typography>
+                                <Typography component={"span"} variant={"h5"} sx={{fontSize: "1.0rem"}}>جزئیات و رزرو</Typography>
                             </Grid>
                         </Grid> : <Typography variant={"h6"}>{"غیر فعال"}</Typography>}
                     </Button>

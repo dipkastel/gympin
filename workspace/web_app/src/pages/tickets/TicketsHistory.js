@@ -60,10 +60,10 @@ const TicketsHistory = () => {
                 بلیط یافت نشد
             </Typography>
             <Typography variant={"body2"} sx={{m: 2,color:"#666666"}} >
-                در این بخش بلیط های خریداری شده قبلی شما نمایش داده می‌شود
+                در این بخش تاریخچه بلیط های قبلی شما نمایش داده می‌شود
             </Typography>
             <Typography component={"a"} variant={"body1"} href={"/places"} sx={{m: 2,textDecoration:"none",cursor:"pointer"}} >
-                خرید بلیط
+                رزرو بلیط
             </Typography>
 
         </Grid>);

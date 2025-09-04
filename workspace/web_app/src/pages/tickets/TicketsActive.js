@@ -63,13 +63,13 @@ const TicketsActive = () => {
         >
             <Image src={toAbsoluteUrl("/assets/images/noTicket2.png")} width={"40%"} style={{maxWidth: "300px"}}/>
             <Typography variant={"h5"} sx={{m: 2,fontWeight:900,color:"#444444"}}>
-                بلیط فعال یافت نشد
+                بلیط رزرو شده یا فعال یافت نشد
             </Typography>
             <Typography variant={"body2"} sx={{m: 2,color:"#666666"}} >
-                در این بخش بلیط های خریداری شده شما نمایش داده می‌شود
+                در این بخش بلیط های رزرو یا فعال شده شما نمایش داده می‌شود
             </Typography>
             <Typography component={"a"} variant={"body1"} href={"/places"} sx={{m: 2,textDecoration:"none",cursor:"pointer"}} >
-                خرید بلیط
+                رزرو بلیط
             </Typography>
 
         </Grid>);
