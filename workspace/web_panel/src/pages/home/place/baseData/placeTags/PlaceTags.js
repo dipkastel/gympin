@@ -15,7 +15,7 @@ import {Row} from "reactstrap";
 
 const PlaceTags = ({place}) => {
     const error = useContext(ErrorContext);
-    const [searchString, SetSearchString] = useState(null)
+    const [searchString, SetSearchString] = useState("")
     const [searchedTags, SetSearchedTags] = useState([])
     const [placeTags, SetPlaceTags] = useState([])
 
@@ -117,7 +117,7 @@ const PlaceTags = ({place}) => {
                                 variant={"outlined"}
                                 size={"small"}
                                 value={searchString}
-                                onChange={e => SetSearchString(e.target.value)}
+                                onChange={e => SetSearchString(e.target.value)||""}
                             />
                             {searchString&&<IconButton onClick={() => addTag()}>
                                 <AddIcon/>

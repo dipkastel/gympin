@@ -227,21 +227,22 @@ export let ServiceApi = {
     getUsersActive: "v1/service/getUsersActive",
 };
 export let GymApi = {
-    getAllPlace: "v1/gym/getAll",
-    getPlaceById: "v1/gym/getById",
-    getPlacesInviteCode: "v1/gym/getPlacesInviteCode",
+    query: "v1/gym/query",
     addPlace: "v1/gym/add",
-    CHANGE_STATUS: "v1/gym/changeStatus",
     deletePlace: "v1/gym/delete",
     updatePlace: "v1/gym/update",
+    getAllPlace: "v1/gym/getAll",
+    getPlaceById: "v1/gym/getById",
     updateOrder: "v1/gym/updateOrder",
-    getMultimedias: "v1/gym/getMultimedias",
+    getByUser: "v1/gym/getPlacesByUser",
+    CHANGE_STATUS: "v1/gym/changeStatus",
     addMultimedia: "v1/gym/addMultimedia",
+    getMultimedias: "v1/gym/getMultimedias",
+    deleteMultimedia: "v1/gym/deleteMultimedia",
     getBuyableByPlace: "v1/gym/getBuyableByPlace",
     addMultimediaList: "v1/gym/addMultimediaList",
-    getByUser: "v1/gym/getPlacesByUser",
-    query: "v1/gym/query",
-    deleteMultimedia: "v1/gym/deleteMultimedia"
+    getPlacesInviteCode: "v1/gym/getPlacesInviteCode",
+    setDefaultMultimedia: "v1/gym/setDefaultMultimedia",
 };
 export let PlaceApi = {
     getPlacesInviteCode: "v1/Place/getPlacesInviteCode",

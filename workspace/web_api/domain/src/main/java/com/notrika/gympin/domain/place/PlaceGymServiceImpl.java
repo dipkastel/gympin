@@ -41,6 +41,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -232,7 +233,6 @@ public class PlaceGymServiceImpl extends AbstractBaseService<PlaceGymParam, Plac
     public List<MultimediaDto> getMultimedias(PlaceGymParam param) {
         PlaceGymEntity place = getEntityById(param.getId());
         List<MultimediaEntity> multimedias = place.getMultimedias();
-        Collections.reverse(multimedias);
         return MultimediaConvertor.toDto(multimedias);
     }
 
@@ -242,6 +242,25 @@ public class PlaceGymServiceImpl extends AbstractBaseService<PlaceGymParam, Plac
         MultimediaEntity multimedia = multimediaRepository.getById(param.getMultimedia().getId());
         place.getMultimedias().add(multimedia);
         update(place);
+        return PlaceConvertor.ToGymDto(place);
+    }
+
+    @Override
+    public PlaceGymDto setDefaultMultimedia(PlaceGymMultimediaParam param) {
+        List<MultimediaEntity> updateList = new ArrayList<>();
+        PlaceGymEntity place = getEntityById(param.getPlaceParam().getId());
+        for (MultimediaEntity multimedia : place.getMultimedias()){
+            if(multimedia.getIsDef())
+            {
+                multimedia.setIsDef(false);
+                updateList.add(multimedia);
+            }
+        }
+        MultimediaEntity multimedia = multimediaRepository.getById(param.getMultimedia().getId());
+        multimedia.setIsDef(true);
+        updateList.add(multimedia);
+        multimediaRepository.updateAll(updateList);
+        place = getEntityById(param.getPlaceParam().getId());
         return PlaceConvertor.ToGymDto(place);
     }
 

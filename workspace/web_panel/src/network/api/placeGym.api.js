@@ -51,6 +51,10 @@ export function PlaceGym_addMultimeidaList(data) {
     return axios.post(GymApi.addMultimediaList, data);
 }
 
+export function PlaceGym_setDefaultMultimedia(data) {
+    return axios.post(GymApi.setDefaultMultimedia, data);
+}
+
 export function PlaceGym_deleteMultimedia(data) {
     return axios.put(GymApi.deleteMultimedia,data );
 }

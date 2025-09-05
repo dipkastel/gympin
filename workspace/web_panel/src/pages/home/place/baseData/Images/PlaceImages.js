@@ -1,17 +1,17 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
-import {Button, Checkbox, Fab, IconButton, ImageList, ImageListItem, ImageListItemBar, TableCell} from "@mui/material";
+import {Button, IconButton, ImageList, ImageListItem, ImageListItemBar} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImagePicker from "../../../media/Pickers/ImagePicker";
 import {
-    PlaceGym_addMultimeida,
     PlaceGym_addMultimeidaList,
     PlaceGym_deleteMultimedia,
-    PlaceGym_GetMultimedias
+    PlaceGym_setDefaultMultimedia
 } from "../../../../../network/api/placeGym.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
+import {media_query} from "../../../../../network/api/media.api";
 
 
 const PlaceImage = ({place}) => {
@@ -24,50 +24,67 @@ const PlaceImage = ({place}) => {
     }, []);
 
     function getPlaceImages() {
-        PlaceGym_GetMultimedias({Id: place.Id}).then(data => {
-            SetPlaceImages(data.data.Data);
+        media_query({
+            PlaceId: place.Id,
+            paging: {Page: 0, Size: 100, Desc: false}
+        }).then(result => {
+            SetPlaceImages(result.data.Data.content);
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
-    function selectImage(images){
+    function selectImage(images) {
         var multimedia = [];
-        images.map( image=>{
-            multimedia.push({Id:image.Id})
+        images.map(image => {
+            multimedia.push({Id: image.Id})
         })
-        PlaceGym_addMultimeidaList({Place:{Id: place.Id},Multimedias:multimedia}).then(data => {
+        PlaceGym_addMultimeidaList({Place: {Id: place.Id}, Multimedias: multimedia}).then(data => {
             error.showError({message: "عملیات موفق",});
             getPlaceImages()
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }
+
+    function setAsDefaultImage(image) {
+        PlaceGym_setDefaultMultimedia({Place: {Id: place.Id}, Multimedia: image})
+            .then(data => {
+                error.showError({message: "عملیات موفق",});
+                getPlaceImages()
+            }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     function renderModalDelete() {
 
         function DeleteItem(e) {
             e.preventDefault()
-            PlaceGym_deleteMultimedia({Place:{Id: place.Id},Multimedia:{Id:itemToDelete.Id}})
+            PlaceGym_deleteMultimedia({Place: {Id: place.Id}, Multimedia: {Id: itemToDelete.Id}})
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
                     setItemToDelete(null)
                     getPlaceImages()
                 }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
 
         return (
@@ -125,23 +142,24 @@ const PlaceImage = ({place}) => {
 
                     {placeImages.length > 0 && <ImageList cols={3} sx={{width: "100%"}}>
                         {placeImages.map((item, number) => (
-                            <ImageListItem key={number} >
+                            <ImageListItem key={number} sx={{border: item.default ? "2px solid #e7333e" : "none"}}>
                                 <img
                                     src={item.Url}
                                     srcSet={item.Url}
                                     alt={item.Title}
                                     loading="lazy"
+                                    onClick={(e) => setAsDefaultImage(item)}
                                 />
                                 <ImageListItemBar
-                                    sx={{direction:"ltr"}}
+                                    sx={{direction: "ltr"}}
                                     title={item.Title}
                                     subtitle={item.Description}
                                     actionIcon={
 
                                         <IconButton
-                                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                            sx={{color: 'rgba(255, 255, 255, 0.54)'}}
                                             aria-label={item.title}
-                                            onClick={()=>setItemToDelete(item)}
+                                            onClick={() => setItemToDelete(item)}
                                         >
                                             <DeleteIcon
                                                 color={"error"}/>
@@ -154,13 +172,13 @@ const PlaceImage = ({place}) => {
                     </ImageList>}
                 </PortletBody>
             </Portlet>
-            {openModalAdd&&<ImagePicker setClose={()=>setOpenModalAdd(false)} onSelect={selectImage} options={{
-                    rowCount: 8,
-                    isSingle:false,
-                    filters:{CategoryId:3},
-                    DefaultDiscHelper:"مجموعه "+place.Name
-                }} />}
-            {itemToDelete&&renderModalDelete()}
+            {openModalAdd && <ImagePicker setClose={() => setOpenModalAdd(false)} onSelect={selectImage} options={{
+                rowCount: 8,
+                isSingle: false,
+                filters: {CategoryId: 3},
+                DefaultDiscHelper: "مجموعه " + place.Name
+            }}/>}
+            {itemToDelete && renderModalDelete()}
         </>
     );
 };

@@ -50,4 +50,7 @@ public class MultimediaQuery extends BaseQuery<MultimediaQuery> {
     @JsonProperty("CategoryId")
     private Long is_categoryæid;
 
+    @JsonProperty("PlaceId")
+    private Long is_placesæid;
+
 }

@@ -34,6 +34,8 @@ public interface PlaceGymController extends BaseController<PlaceGymParam, PlaceG
 
     ResponseEntity<PlaceGymDto> addMultimediaList(@RequestBody PlaceGymMultimediaListParam place);
 
+    ResponseEntity<PlaceGymDto> setDefaultMultimedia(@RequestBody PlaceGymMultimediaParam place);
+
     ResponseEntity<PlaceGymDto> deleteMultimedia(@RequestBody PlaceGymMultimediaParam place);
 
     ResponseEntity<InviteCode> getPlaceInviteCode(PlaceGymParam placeParam);

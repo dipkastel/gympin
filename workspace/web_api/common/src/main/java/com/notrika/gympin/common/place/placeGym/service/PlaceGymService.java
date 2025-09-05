@@ -32,4 +32,5 @@ public interface PlaceGymService extends BaseService<PlaceGymParam, PlaceGymDto,
     PlaceGymDto updateContract(PlaceGymParam placeParam);
     PlaceGymDto signContract(PlaceGymParam placeParam);
     Boolean sendContractCode(PlaceGymContractSmsParam param);
+    PlaceGymDto setDefaultMultimedia(PlaceGymMultimediaParam param);
 }

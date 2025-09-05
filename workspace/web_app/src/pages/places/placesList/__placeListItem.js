@@ -25,6 +25,14 @@ const __placeListItem = ({item}) => {
         width: '100%',
         objectFit: 'cover',
     };
+
+    function getPlaceImage(item){
+        if(item?.Multimedias?.some(m=>m.default))
+            return item.Multimedias.filter(m=>m.default)[0]?.Url+ "&width=400";
+        return item?.Multimedias?.[0] ? (item.Multimedias?.[0]?.Url + "&width=400") : "https://api.gympin.ir/resource/image?Id=11";
+    }
+
+
     return (
         <Grid container>
             <Card elevation={8} sx={{margin: 2, padding: 0, borderRadius: 3,width:"100%"}}>
@@ -37,7 +45,7 @@ const __placeListItem = ({item}) => {
                           onClick={() => navigate("/place/" + item.Id + "-" + fixTextToSlug(item.Name))}
                           sx={{padding: 0, display: "flex", flexDirection: "column-reverse", alignItems: "end",width:"100%"}}>
                         <Image
-                            src={item?.Multimedias?.[0] ? (item.Multimedias?.[0]?.Url + "&width=400") : "https://api.gympin.ir/resource/image?Id=11"}
+                            src={getPlaceImage(item)}
                             style={imageStyle}
                             width={"100%"}/>
                         {item?.Location?.Name &&

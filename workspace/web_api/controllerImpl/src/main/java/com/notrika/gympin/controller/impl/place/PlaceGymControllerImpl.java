@@ -87,6 +87,12 @@ public class PlaceGymControllerImpl implements PlaceGymController {
     }
 
     @Override
+    @PostMapping("/setDefaultMultimedia")
+    public ResponseEntity<PlaceGymDto> setDefaultMultimedia(PlaceGymMultimediaParam param) {
+        return ResponseEntity.ok(placeService.setDefaultMultimedia(param));
+    }
+
+    @Override
     @PostMapping("/addMultimediaList")
     public ResponseEntity<PlaceGymDto> addMultimediaList(PlaceGymMultimediaListParam param) {
         return ResponseEntity.ok(placeService.addMultimediaList(param));
