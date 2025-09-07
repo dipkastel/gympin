@@ -20,7 +20,7 @@ const GympinMaleFemaleCompare = ({corporate}) => {
         setLoadStatus(LoadStatus.LOADING);
         Report_getGenderCompetition({id:corporate?.Id}).then(result => {
             setCompetitionData(result.data.Data);
-            if(result?.data?.Data?.UsesManInTotal){
+            if(result?.data?.Data?.UsesManInTotal!=null){
                 setLoadStatus(LoadStatus.LOADED);
             }else{
                 setLoadStatus(LoadStatus.NODATA);

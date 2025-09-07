@@ -47,7 +47,7 @@ export default function _SportRadar({corporate}) {
 
     return (
 
-        <BaseReportBox title={"گستره ورزشی"} loadStatus={loadStatus} ReloadData={getPopularSports}>
+        <BaseReportBox title={"گستره ورزشی شش ماهه"} loadStatus={loadStatus} ReloadData={getPopularSports}>
             <ResponsiveContainer width="65%" aspect={1}>
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
                     <PolarGrid/>
