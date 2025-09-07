@@ -37,7 +37,7 @@ import {
 import Grid from "@mui/material/Grid2";
 import {corporate_getCorporateGroups} from "../../network/api/corporate.api";
 import SearchTextField from "../../components/SearchTextField";
-import {checkMobileValid, fixMobile, toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
+import {checkMobileValid, encodeId, fixMobile, toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {Delete} from "@mui/icons-material";
@@ -404,7 +404,7 @@ export const IncreaseSelect = () => {
                                     <TableCell>{row?.PersonnelGroup?.Name || "بدون گروه"}</TableCell>
                                     <TableCell align={"right"}>
                                         <Button
-                                            onClick={() => navigate("/personnel/detail/" + row.Id)} variant={"contained"}>جزئیات</Button>
+                                            onClick={() => navigate("/personnel/detail/" + encodeId(row.Id))} variant={"contained"}>جزئیات</Button>
                                     </TableCell>
                                 </TableRow>
                             ))}

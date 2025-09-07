@@ -37,7 +37,7 @@ import {
 import Grid from "@mui/material/Grid2";
 import {corporate_getCorporateGroups} from "../../network/api/corporate.api";
 import SearchTextField from "../../components/SearchTextField";
-import {checkMobileValid, fixMobile, toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
+import {checkMobileValid, encodeId, fixMobile, toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {Delete} from "@mui/icons-material";
@@ -155,7 +155,7 @@ export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,row
                                 key={row.name}
                                 hover
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                onClick={() => navigate("/personnel/detail/" + row.Id)}
+                                onClick={() => navigate("/personnel/detail/" + encodeId(row.Id))}
                             >
 
                                 {/*<TableCell padding="checkbox">*/}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Typography} from "@mui/material";
-import BaseReportBox from "../../../report/BaseReportBox";
+import BaseReportBox from "./BaseReportBox";
 
 const GympinUsageReport = () => {
     return (

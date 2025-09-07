@@ -12,15 +12,17 @@ import {
     TableHead, TablePagination,
     TableRow,
     Grid2 as Grid,
-    TableSortLabel
+    TableSortLabel, Tooltip
 } from "@mui/material";
 import SearchTextField from "../../../components/SearchTextField";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {transactionCorporate_query} from "../../../network/api/TransactionsCorporate";
-import {toPriceWithComma} from "../../../helper/utils";
+import {encodeId, toPriceWithComma} from "../../../helper/utils";
 import {ProcessTypeEnum} from "../../../helper/enums/ProcessTypeEnum";
+import {InvoiceStatus} from "../../../helper/enums/InvoiceStatus";
+import {AirplaneTicketOutlined, ConfirmationNumber} from "@mui/icons-material";
 
 const _CorporateChargeTransactions = () => {
 
@@ -42,8 +44,8 @@ const _CorporateChargeTransactions = () => {
             transactionCorporate_query({
                 queryType: "FILTER",
                 Type:"DEPOSIT",
-                FinanceCorporateId: corporate.Id,
                 MaxPrice:0,
+                FinanceCorporateId: corporate.Id,
                 paging: {Page: page, Size: rowsPerPage,  orderBy: sortBy.Name, Desc: !sortBy.Desc}
             }).then((data) => {
                 setTransactions(data.data.Data)
@@ -51,7 +53,18 @@ const _CorporateChargeTransactions = () => {
     }
 
 
-
+    function getTicket(transaction){
+        try {
+            var result = "";
+            for(var ticket in transaction?.Serial?.Invoices[0]?.InvoiceSubscribe){
+                console.log("ticket",ticket);
+                result += transaction?.Serial?.Invoices[0]?.InvoiceSubscribe[ticket]?.Name + "\r\n";
+            }
+            return result;
+        }catch (e){
+           return  "نامشخص";
+        }
+    }
 
     return transactions?(
         <>
@@ -61,7 +74,7 @@ const _CorporateChargeTransactions = () => {
                         <TableRow>
                             <TableCell></TableCell>
                             <TableCell>نام و نام خانوادگی</TableCell>
-                            <TableCell>شارژ قبل از تراکنش</TableCell>
+                            <TableCell>تغییر شارژ</TableCell>
                             <TableCell><TableSortLabel onClick={() => {
                                 setSortBy({Name: "Amount", Desc: !sortBy.Desc})
                             }} direction={(sortBy.Desc) ? "desc" : "asc"}>مبلغ</TableSortLabel></TableCell>
@@ -70,6 +83,8 @@ const _CorporateChargeTransactions = () => {
                                 setSortBy({Name: "CreatedDate", Desc: !sortBy.Desc})
                             }} direction={(sortBy.Desc) ? "desc" : "asc"}>تاریخ</TableSortLabel></TableCell>
                             <TableCell>نوع</TableCell>
+                            <TableCell>وضعیت</TableCell>
+                            <TableCell>بیشتر</TableCell>
                         </TableRow>
                     </TableHead>
                     {!transactions && <Grid container fullwidth width={"100%"} direction={"row"}><CircularProgress/></Grid>}
@@ -80,11 +95,10 @@ const _CorporateChargeTransactions = () => {
                                 hover
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
-                                {console.log(row)}
                                 <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.CreatorUser?.Avatar?.Url}
                                                                                  sx={{width: 25, height: 25}}/></TableCell>
                                 <TableCell>{row?.CreatorUser?.FullName || " - "}</TableCell>
-                                <TableCell>{toPriceWithComma(row?.LatestBalance)}</TableCell>
+                                <TableCell>{toPriceWithComma(row?.LatestBalance) +" به "+toPriceWithComma(row?.LatestBalance+row?.Amount)}</TableCell>
                                 <TableCell>{toPriceWithComma(row?.Amount)}</TableCell>
                                 <TableCell>{row?.Serial?.Serial?.split("-")[0]}</TableCell>
                                 <TableCell>{(row?.CreatorUser?.Birthday) ? new Date(row?.CreatedDate).toLocaleDateString('fa-IR', {
@@ -93,6 +107,8 @@ const _CorporateChargeTransactions = () => {
                                     day: 'numeric'
                                 }) : " - "}</TableCell>
                                 <TableCell>{ProcessTypeEnum[row?.Serial?.ProcessType] || ""}</TableCell>
+                                <TableCell>{InvoiceStatus[row?.Serial?.Invoices[0]?.Status] || ""}</TableCell>
+                                <TableCell><Tooltip title={getTicket(row)}> <ConfirmationNumber/></Tooltip></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

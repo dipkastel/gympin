@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, CardActionArea, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
 import {corporatePersonnel_addPersonnelCredit} from "../../../../network/api/corporatePersonnel.api";
-import {toPriceWithComma, toPriceWithoutComma} from "../../../../helper/utils";
+import {encodeId, toPriceWithComma, toPriceWithoutComma} from "../../../../helper/utils";
 import {Form} from "react-bootstrap";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
@@ -57,7 +57,7 @@ const _UserAddCredit = () => {
                 CorporatePersonnel: {Id: selectedPersonnel.value},
                 ...formData
             }).then(result => {
-                navigate("/personnel/detail/" + selectedPersonnel.value);
+                navigate("/personnel/detail/" + + encodeId(selectedPersonnel.value));
             }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message,});

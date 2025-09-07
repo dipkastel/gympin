@@ -3,6 +3,7 @@ import DetailsSimpleData from "../../../../components/DetailsSimpleData";
 import {CircularProgress} from "@mui/material";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {service_GetActiveUsersByCorporate} from "../../../../network/api/service.api";
+import {Report_ticketBuyCountThisWeek} from "../../../../network/api/report.api";
 
 
 const _SportTicketCount = ({corporate}) => {
@@ -16,11 +17,10 @@ const _SportTicketCount = ({corporate}) => {
 
 
     function getActivities() {
-        service_GetActiveUsersByCorporate({
-            CorporateId:corporate.Id,
-            ToDate: new Date(),
-            FromDate: new Date().setMonth(new Date().getMonth()-1)
+        Report_ticketBuyCountThisWeek({
+            id:corporate.Id
         }).then((data) => {
+            console.log(data)
             SetService(data.data.Data);
         }).catch(e => {
             try {
@@ -37,7 +37,7 @@ const _SportTicketCount = ({corporate}) => {
                 title="خریدهای ورزشی هفته"
                 color={"secondary"}
                 percent={0}
-                total={service?0:<><CircularProgress size={20} /></>}
+                total={service!=null?service:<><CircularProgress size={20} /></>}
             />
         </div>
     );

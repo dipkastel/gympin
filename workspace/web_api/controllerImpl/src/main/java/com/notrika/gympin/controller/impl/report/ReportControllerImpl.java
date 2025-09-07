@@ -2,6 +2,7 @@ package com.notrika.gympin.controller.impl.report;
 
 import com.notrika.gympin.common.report.api.ReportController;
 import com.notrika.gympin.common.report.dto.GenderCompetitionDto;
+import com.notrika.gympin.common.report.dto.PopularSportDto;
 import com.notrika.gympin.common.report.dto.ReportUseCorporateChargeDto;
 import com.notrika.gympin.common.report.param.ReportParam;
 import com.notrika.gympin.common.report.service.ReportService;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/report")
@@ -36,6 +39,12 @@ public class ReportControllerImpl implements ReportController {
     @GetMapping("/getGenderCompetition")
     public ResponseEntity<GenderCompetitionDto> getGenderCompetition(ReportParam param){
         return ResponseEntity.ok(reportService.getGenderCompetition(param));
+    }
+
+    @Override
+    @GetMapping("/getPopularSports")
+    public ResponseEntity<List<PopularSportDto>> getPopularSports(ReportParam param){
+        return ResponseEntity.ok(reportService.getPopularSports(param));
     }
 
 }

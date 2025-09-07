@@ -128,28 +128,6 @@ const _RChargeUsage = () => {
 
     return (<>
             <BaseReportBox title={"میزان استفاده از شارژ سازمان "} loadStatus={loadStatus} ReloadData={()=>{getUseCorporateCharge()}} >
-
-                {/*<ResponsiveContainer width="103%" aspect={6}>*/}
-                {/*    <BarChart*/}
-                {/*        width={500}*/}
-                {/*        height={200}*/}
-                {/*        data={data}*/}
-                {/*        margin={{*/}
-                {/*            top: 10,*/}
-                {/*            right: 30,*/}
-                {/*            left: 0,*/}
-                {/*            bottom: 0,*/}
-                {/*        }}*/}
-                {/*    >*/}
-                {/*        <CartesianGrid stroke="none"/>*/}
-                {/*        <XAxis dataKey="month"/>*/}
-                {/*        <YAxis dataKey="deposit"/>*/}
-                {/*        <Tooltip/>*/}
-                {/*        <Bar type="monotone" name="شارژ استفاده شده (ملیون تومان)" dataKey="deposit" stackId="0"*/}
-                {/*             stroke="#e7333e"*/}
-                {/*             fill="#e7333e"/>*/}
-                {/*    </BarChart>*/}
-                {/*</ResponsiveContainer>*/}
                 <Chart options={Roptions} series={Rseries}  type="bar" height={280} />
             </BaseReportBox>
     </>

@@ -135,3 +135,18 @@ export function resizeCanvas(canvas,newH,newW) {
     tempCtx.drawImage(canvas, 0, 0, newW, newH);
     return tempCanvas;
 }
+
+
+export function encodeId(id) {
+    const mixed = id * 1572
+    return btoa(mixed.toString());
+}
+
+export function decodeId(str) {
+    try {
+        const decoded = atob(str);
+        return parseInt(decoded, 10) / 1572
+    } catch {
+        return null
+    }
+}

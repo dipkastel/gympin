@@ -7,7 +7,7 @@ import _UserGroup from "./partials/_UserGroup";
 import _UserCredits from "./partials/_UserCredits";
 import _UserBaseData from "./partials/_UserBaseData";
 import {Container, Grid2 as Grid, Typography} from "@mui/material";
-import {toPriceWithComma} from "../../helper/utils";
+import {decodeId, encodeId, toPriceWithComma} from "../../helper/utils";
 import _UserAddGroupCredit from "../sport/Gympin/Actions/_UserAddCredit";
 
 const SingleUser = () => {
@@ -23,7 +23,7 @@ const SingleUser = () => {
 
     function getCorporatePerson() {
         if (!PersonnelId) return;
-        corporatePersonnel_getById({id: PersonnelId}).then(result => {
+        corporatePersonnel_getById({id: decodeId(PersonnelId)}).then(result => {
             setCorporatePersonnel(result.data.Data);
         }).catch(e => {
             try {

@@ -1,79 +1,62 @@
-import React, { PureComponent } from 'react';
-import { Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
-import {Card, CardContent, CardHeader} from "@mui/material";
+import React, {useContext, useEffect, useState} from 'react';
+import {PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, ResponsiveContainer} from 'recharts';
+import BaseReportBox, {LoadStatus} from "./BaseReportBox";
+import {Report_getPopularSports} from "../../network/api/report.api";
+import {ErrorContext} from "../../components/GympinPagesProvider";
 
-const data = [
-    {
-        subject: 'بدنسازی',
-        count: 80,
-        B: 110,
-        fullMark: 80,
-    },
-    {
-        subject: 'trx',
-        count: 15,
-        B: 130,
-        fullMark: 80,
-    },
-    {
-        subject: 'اسب سواری',
-        count: 15,
-        B: 130,
-        fullMark: 80,
-    },
-    {
-        subject: 'بولبنگ',
-        count: 15,
-        B: 130,
-        fullMark: 80,
-    },
-    {
-        subject: 'ایروبیک',
-        count: 60,
-        B: 130,
-        fullMark: 80,
-    },
-    {
-        subject: 'استخر',
-        count: 68,
-        B: 100,
-        fullMark: 80,
-    },
-    {
-        subject: 'پیلاتس',
-        count: 39,
-        B: 90,
-        fullMark: 80,
-    },
-    {
-        subject: 'تکواندو',
-        count: 0,
-        B: 85,
-        fullMark: 80,
-    },
-];
 
-export default function _SportRadar() {
+export default function _SportRadar({corporate}) {
 
-        return (
-            <Card sx={
-                {
-                    margin:1
+    const error = useContext(ErrorContext);
+    const [loadStatus, setLoadStatus] = useState(LoadStatus.LOADING);
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        getPopularSports()
+    }, []);
+
+    function getPopularSports() {
+
+        setLoadStatus(LoadStatus.LOADING);
+        if (!corporate) return;
+        Report_getPopularSports({id: corporate?.Id}).then(result => {
+            var sportsCount = [];
+            console.log(result.data.Data);
+            for(var item in result.data.Data){
+                sportsCount.push(
+                    {
+                        subject: result.data.Data[item].SportName,
+                        count: result.data.Data[item].SportCount,
+                        B: result.data.Data[item].SportCount,
+                        fullMark: result.data.Data[item].SportCount,
+                    })
+            }
+            setData(sportsCount);
+            setLoadStatus(LoadStatus.LOADED);
+
+        })
+            .catch(e => {
+                try {
+                    setLoadStatus(LoadStatus.ERROR);
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
                 }
-            } elevation={3}>
-                <CardHeader title={"گستره ورزشی"}/>
-                <CardContent>
+            });
+    }
 
-                    <ResponsiveContainer width="100%" aspect={1}>
-                        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-                            <PolarGrid />
-                            <PolarAngleAxis dataKey="subject" />
-                            <PolarRadiusAxis angle={30} domain={[0, 80]} />
-                            <Radar  dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-                        </RadarChart>
-                    </ResponsiveContainer>
-                </CardContent>
-            </Card>
-        );
+    return (
+
+        <BaseReportBox title={"گستره ورزشی"} loadStatus={loadStatus} ReloadData={getPopularSports}>
+            <ResponsiveContainer width="65%" aspect={1}>
+                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+                    <PolarGrid/>
+                    <PolarAngleAxis dataKey="subject"/>
+                    <PolarRadiusAxis angle={360/(data?.length)} domain={[0,Math.max(...data.map(r=>r.SportCount))]}/>
+                    <Radar dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
+                </RadarChart>
+            </ResponsiveContainer>
+        </BaseReportBox>
+    );
 
 }

@@ -1,3 +1,5 @@
+import {Report_getGenderCompetition} from "./report.api";
+
 export let AuthApi = {
     BASEURL: "http://localhost:8080/api/",
     // BASEURL: "http://192.168.1.108:8080/api/",
@@ -77,7 +79,10 @@ export let Api_url = {
         GET_BY_CITY: "v1/region/getRegionsByCity"
     },
     report: {
-        useCorporateCharge: "v1/report/useCorporateCharge"
+        getPopularSports: "v1/report/getPopularSports",
+        useCorporateCharge: "v1/report/useCorporateCharge",
+        getGenderCompetition: "v1/report/getGenderCompetition",
+        ticketBuyCountThisWeek: "v1/report/ticketBuyCountThisWeek"
     },
     sport: {
         GET_ALL: "v1/sport/getAll"

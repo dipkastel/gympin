@@ -2,14 +2,16 @@ import React from 'react';
 import Grid from "@mui/material/Grid2";
 import {Card, CardActionArea, IconButton, Typography} from "@mui/material";
 import _ActivePersonnelCount from "./Base/_ActivePersonnelCount";
-import _SportTicketCount from "./Base/_SportTicketCount";
-import GympinUsageReport from "./Report/GympinUsageReport";
+import _SportTicketCountWeekly from "./Base/_SportTicketCount";
+import GympinUsageReport from "../../report/GympinUsageReport";
 import _SportTotalCredit from "./Base/_SportTotalCredit";
 import _UserAddCredit from "./Actions/_UserAddCredit";
 import _UserAddGroupCredit from "./Actions/_UserAddGroupCredit";
 import {LinkedIn, Telegram, WhatsApp,Instagram} from "@mui/icons-material";
 import _UserAddSelectedCredit from "./Actions/_UserAddSelectedCredit";
 import {useSelector} from "react-redux";
+import GympinMaleFemaleCompare from "../../report/GympinMaleFemaleCompare";
+import _SportRadar from "../../report/_SportRadar";
 
 const Gympin = () => {
 
@@ -41,7 +43,7 @@ const Gympin = () => {
                     <_ActivePersonnelCount corporate={corporate}/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 4, lg: 4}}>
-                    <_SportTicketCount corporate={corporate}/>
+                    <_SportTicketCountWeekly corporate={corporate}/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 4, lg: 4}}>
                     <_UserAddCredit/>
@@ -53,51 +55,41 @@ const Gympin = () => {
                     <_UserAddSelectedCredit />
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 6, lg: 6}}>
-                    <GympinUsageReport/>
+                    <GympinMaleFemaleCompare corporate={corporate}/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 6, lg: 6}}>
-                    <GympinUsageReport/>
+                    <_SportRadar corporate={corporate}/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 12, lg: 12}}>
                 </Grid>
-                <Grid size={{xs: 12, sm: 6, md: 4, lg: 4}}>
-                    <Card elevation={10} sx={{m: 2, p: 3}}>
-                        <Typography variant={"h3"} color={"info"}>
-                            تلفن:
+                <Grid size={{xs: 12, sm: 6, md: 6, lg: 6}}>
+                    <Card elevation={10} sx={{m: 2, px: 4,py:2}}>
+                        <Typography variant={"h6"} color={"info"}>
+                            تلفن پشتیبانی:
                         </Typography>
-                        <Typography sx={{mt: 2, lineHeight: "1.4rem", textAlign: "justify"}} variant={"body2"} color={"info"}>
+                        <Typography sx={{mt: 2,mb:2, textAlign: "justify"}} variant={"h6"} color={"info"}>
                             021-28424190
                         </Typography>
                     </Card>
                 </Grid>
-                <Grid size={{xs: 12, sm: 6, md: 4, lg: 4}}>
+                <Grid size={{xs: 12, sm: 6, md: 6, lg: 6}}>
                     <Card elevation={10} sx={{m: 2, p: 3}}>
-                        <Typography sx={{mb:3}} variant={"h3"} color={"info"}>
-                            شبکه های اجتماعی:
+                        <Typography sx={{mb:1.5}} variant={"h6"} color={"info"}>
+                            شبکه‌های اجتماعی:
                         </Typography>
 
                         <IconButton size={"small"} sx={{mx: 0.5}} href={"https://wa.me/+989221496746"}>
-                            <WhatsApp sx={{fontSize: "2rem"}}/>
+                            <WhatsApp sx={{fontSize: "1.3rem"}}/>
                         </IconButton>
                         <IconButton size={"small"} sx={{mx: 0.5}} href={"https://t.me/gympin_info"}>
-                            <Telegram sx={{fontSize: "2rem"}}/>
+                            <Telegram sx={{fontSize: "1.3rem"}}/>
                         </IconButton>
                         <IconButton size={"small"} sx={{mx: 0.5}} href={"https://www.linkedin.com/company/gympintdp"}>
-                            <LinkedIn sx={{fontSize: "2rem"}}/>
+                            <LinkedIn sx={{fontSize: "1.3rem"}}/>
                         </IconButton>
                         <IconButton size={"small"} sx={{mx: 0.5}} href={"https://www.instagram.com/gympin_ir"}>
-                            <Instagram sx={{fontSize: "2rem"}}/>
+                            <Instagram sx={{fontSize: "1.3rem"}}/>
                         </IconButton>
-                    </Card>
-                </Grid>
-                <Grid size={{xs: 12, sm: 12, md: 4, lg: 4}}>
-                    <Card elevation={10} sx={{m: 2, p: 3}}>
-                        <Typography variant={"h3"} color={"info"}>
-                            آدرس:
-                        </Typography>
-                        <Typography sx={{mt: 2, lineHeight: "1.4rem", textAlign: "justify"}} variant={"body2"} color={"info"}>
-                            تهران - نارمک جنوبی - پلاک ۴۱۶
-                        </Typography>
                     </Card>
                 </Grid>
             </Grid>
