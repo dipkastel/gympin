@@ -76,7 +76,7 @@ public class PurchasedBaseEntity<P> extends BaseEntityWithCreateUpdate<P> {
     private PurchasedType purchasedType;
 
     @ManyToMany
-    @JoinTable(name = "financePurchasedSerial", joinColumns = @JoinColumn(name = "SerialId"), inverseJoinColumns = @JoinColumn(name = "PurchasedId"))
+    @JoinTable(name = "financePurchasedSerial", joinColumns = @JoinColumn(name = "PurchasedId"), inverseJoinColumns = @JoinColumn(name = "SerialId"))
     @JsonIgnore
     @ToString.Exclude
     private List<FinanceSerialEntity> Serials;

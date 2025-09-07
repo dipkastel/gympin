@@ -40,5 +40,17 @@ public final class SerialConvertor {
         return dto;
     }
 
+    public static SerialDto ToDtoMid(FinanceSerialEntity entity) {
+        if (entity == null) return null;
+        SerialDto dto = new SerialDto();
+        dto.setId(entity.getId());
+        dto.setCreatedDate(entity.getCreatedDate());
+        dto.setCreatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()));
+        dto.setSerial(entity.getSerial());
+        dto.setProcessType(entity.getProcessTypeEnum());
+        dto.setInvoices(entity.getInvoices().stream().filter(o->!o.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()));
+        return dto;
+    }
+
 
 }

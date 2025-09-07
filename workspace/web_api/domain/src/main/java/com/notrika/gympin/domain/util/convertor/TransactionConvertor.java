@@ -29,7 +29,7 @@ public final class TransactionConvertor {
         dto.setTransactionStatus(entity.getTransactionStatus());
         dto.setTransactionCorporateType(entity.getTransactionCorporateType());
         dto.setIsChecked(entity.getIsChecked());
-        dto.setSerial(SerialConvertor.ToDto(entity.getSerial()));
+        dto.setSerial(SerialConvertor.ToDtoMid(entity.getSerial()));
         return dto;
     }
 

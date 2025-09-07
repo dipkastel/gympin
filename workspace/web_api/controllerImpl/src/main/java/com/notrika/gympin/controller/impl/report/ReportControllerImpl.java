@@ -1,7 +1,7 @@
 package com.notrika.gympin.controller.impl.report;
 
 import com.notrika.gympin.common.report.api.ReportController;
-import com.notrika.gympin.common.report.dto.ReportDto;
+import com.notrika.gympin.common.report.dto.GenderCompetitionDto;
 import com.notrika.gympin.common.report.dto.ReportUseCorporateChargeDto;
 import com.notrika.gympin.common.report.param.ReportParam;
 import com.notrika.gympin.common.report.service.ReportService;
@@ -24,6 +24,18 @@ public class ReportControllerImpl implements ReportController {
     @GetMapping("/useCorporateCharge")
     public ResponseEntity<ReportUseCorporateChargeDto> useCorporateCharge(ReportParam param){
         return ResponseEntity.ok(reportService.useCorporateCharge(param));
+    }
+
+    @Override
+    @GetMapping("/ticketBuyCountThisWeek")
+    public ResponseEntity<Long> ticketBuyCountThisWeek(ReportParam param){
+        return ResponseEntity.ok(reportService.ticketBuyCountThisWeek(param));
+    }
+
+    @Override
+    @GetMapping("/getGenderCompetition")
+    public ResponseEntity<GenderCompetitionDto> getGenderCompetition(ReportParam param){
+        return ResponseEntity.ok(reportService.getGenderCompetition(param));
     }
 
 }
