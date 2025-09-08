@@ -1,8 +1,6 @@
 package com.notrika.gympin.domain.report;
 
-import com.notrika.gympin.common.report.dto.GenderCompetitionDto;
-import com.notrika.gympin.common.report.dto.PopularSportDto;
-import com.notrika.gympin.common.report.dto.ReportUseCorporateChargeDto;
+import com.notrika.gympin.common.report.dto.*;
 import com.notrika.gympin.common.report.param.ReportParam;
 import com.notrika.gympin.common.report.service.ReportService;
 import com.notrika.gympin.common.user.user.enums.Gender;
@@ -11,12 +9,17 @@ import com.notrika.gympin.persistence.dao.repository.corporate.CorporateReposito
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageServiceExecutionRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.management.service.ActiveUsersQueryDto;
 import com.notrika.gympin.persistence.entity.management.service.PopularSportRequestDto;
+import com.notrika.gympin.persistence.entity.management.service.UserEnterRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +57,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public GenderCompetitionDto getGenderCompetition(ReportParam param) {
+    public ReportGenderCompetitionDto getGenderCompetition(ReportParam param) {
         CorporateEntity corporate =  corporateRepository.getById(param.getId());
         Long mens = corporate.getPersonnel().stream().filter(p->!p.isDeleted()&&p.getUser().getGender()!=null&&p.getUser().getGender().equals(Gender.MALE)).count();
         Long womens = corporate.getPersonnel().stream().filter(p->!p.isDeleted()&&p.getUser().getGender()!=null&&p.getUser().getGender().equals(Gender.FEMALE)).count();
@@ -63,7 +66,7 @@ public class ReportServiceImpl implements ReportService {
         Long mensTicketsThisYear = reportRepository.getTicketBuyByDateThisWeekByGenderAndCorporateId(12,"MALE",param.getId());
         Long womensTicketsThisYear = reportRepository.getTicketBuyByDateThisWeekByGenderAndCorporateId(12,"FEMALE",param.getId());
 
-       return GenderCompetitionDto.builder()
+       return ReportGenderCompetitionDto.builder()
                 .usesManInMonth((long)(((double)mensTicketsThisMount/mens)*100))
                 .usesManInTotal((long)(((double)mensTicketsThisYear/mens)*100))
                 .usesWomanInMonth((long)(((double)womensTicketsThisMount/womens)*100))
@@ -72,10 +75,31 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<PopularSportDto> getPopularSports(ReportParam param) {
+    public List<ReportPopularSportDto> getPopularSports(ReportParam param) {
        List<PopularSportRequestDto> listSports =  reportRepository.getPopularReport(param.getId());
        try {
            return listSports.stream().map(ReportConvertor::toDto).collect(Collectors.toList());
+       }catch (Exception e){
+           return null;
+       }
+    }
+
+    @Override
+    public List<ReportActiveUsersDto> getActiveUsers(ReportParam param) {
+        Date startDate = Date.from(LocalDate.now().minusDays(30).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        List<ActiveUsersQueryDto> listSports =  reportRepository.getActiveUsers(param.getId(),startDate);
+       try {
+           return listSports.stream().limit(3).map(ReportConvertor::toDto).collect(Collectors.toList());
+       }catch (Exception e){
+           return null;
+       }
+    }
+    @Override
+    public List<ReportUserEntryCountDto> getActiveInEnterPlacePersonnel(ReportParam param) {
+        Date startDate = Date.from(LocalDate.now().minusDays(30).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        List<UserEnterRequestDto> listSports =  reportRepository.getActiveInEnterPlacePersonnel(param.getId(),startDate);
+       try {
+           return listSports.stream().limit(3).map(ReportConvertor::toDto).collect(Collectors.toList());
        }catch (Exception e){
            return null;
        }

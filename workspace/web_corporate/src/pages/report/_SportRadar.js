@@ -3,6 +3,7 @@ import {PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, Responsiv
 import BaseReportBox, {LoadStatus} from "./BaseReportBox";
 import {Report_getPopularSports} from "../../network/api/report.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import Grid from "@mui/material/Grid2";
 
 
 export default function _SportRadar({corporate}) {
@@ -21,7 +22,6 @@ export default function _SportRadar({corporate}) {
         if (!corporate) return;
         Report_getPopularSports({id: corporate?.Id}).then(result => {
             var sportsCount = [];
-            console.log(result.data.Data);
             for(var item in result.data.Data){
                 sportsCount.push(
                     {
@@ -48,14 +48,16 @@ export default function _SportRadar({corporate}) {
     return (
 
         <BaseReportBox title={"گستره ورزشی شش ماهه"} loadStatus={loadStatus} ReloadData={getPopularSports}>
-            <ResponsiveContainer width="65%" aspect={1}>
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-                    <PolarGrid/>
-                    <PolarAngleAxis dataKey="subject"/>
-                    <PolarRadiusAxis angle={360/(data?.length)} domain={[0,Math.max(...data.map(r=>r.SportCount))]}/>
-                    <Radar dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
-                </RadarChart>
-            </ResponsiveContainer>
+            <Grid sx={{alignContent:"center",justifyItems:"center",width:"100%"}}>
+                <ResponsiveContainer width="60%" aspect={1}>
+                    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+                        <PolarGrid/>
+                        <PolarAngleAxis dataKey="subject"/>
+                        <PolarRadiusAxis angle={360/(data?.length)} domain={[0,Math.max(...data.map(r=>r.SportCount))]}/>
+                        <Radar dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
+                    </RadarChart>
+                </ResponsiveContainer>
+            </Grid>
         </BaseReportBox>
     );
 

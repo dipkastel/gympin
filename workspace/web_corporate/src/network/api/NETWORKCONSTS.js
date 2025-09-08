@@ -1,9 +1,9 @@
-import {Report_getGenderCompetition} from "./report.api";
+import {Report_getActivePersonnel, Report_getGenderCompetition} from "./report.api";
 
 export let AuthApi = {
-    // BASEURL: "http://localhost:8080/api/",
+    BASEURL: "http://localhost:8080/api/",
     // BASEURL: "http://192.168.1.108:8080/api/",
-    BASEURL: "https://api.gympin.ir/",
+    // BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
@@ -81,8 +81,10 @@ export let Api_url = {
     report: {
         getPopularSports: "v1/report/getPopularSports",
         useCorporateCharge: "v1/report/useCorporateCharge",
+        getActivePersonnel: "v1/report/getActivePersonnel",
         getGenderCompetition: "v1/report/getGenderCompetition",
-        ticketBuyCountThisWeek: "v1/report/ticketBuyCountThisWeek"
+        ticketBuyCountThisWeek: "v1/report/ticketBuyCountThisWeek",
+        getActiveInEnterPlacePersonnel: "v1/report/getActiveInEnterPlacePersonnel"
     },
     sport: {
         GET_ALL: "v1/sport/getAll"

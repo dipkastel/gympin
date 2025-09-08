@@ -13,14 +13,20 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class PopularSportDto extends BaseDto<PopularSportDto> {
+public class ReportGenderCompetitionDto extends BaseDto<ReportGenderCompetitionDto> {
 
 
-    @JsonProperty("SportName")
-    private String sportName;
+    @JsonProperty("UsesManInMonth")
+    private Long usesManInMonth;
 
-    @JsonProperty("SportCount")
-    private Long sportCount;
+    @JsonProperty("UsesWomanInMonth")
+    private Long usesWomanInMonth;
+
+    @JsonProperty("UsesManInTotal")
+    private Long usesManInTotal;
+
+    @JsonProperty("UsesWomanInTotal")
+    private Long usesWomanInTotal;
 
 
 }

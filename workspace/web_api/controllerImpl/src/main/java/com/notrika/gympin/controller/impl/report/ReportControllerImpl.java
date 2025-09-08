@@ -1,9 +1,7 @@
 package com.notrika.gympin.controller.impl.report;
 
 import com.notrika.gympin.common.report.api.ReportController;
-import com.notrika.gympin.common.report.dto.GenderCompetitionDto;
-import com.notrika.gympin.common.report.dto.PopularSportDto;
-import com.notrika.gympin.common.report.dto.ReportUseCorporateChargeDto;
+import com.notrika.gympin.common.report.dto.*;
 import com.notrika.gympin.common.report.param.ReportParam;
 import com.notrika.gympin.common.report.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +35,26 @@ public class ReportControllerImpl implements ReportController {
 
     @Override
     @GetMapping("/getGenderCompetition")
-    public ResponseEntity<GenderCompetitionDto> getGenderCompetition(ReportParam param){
+    public ResponseEntity<ReportGenderCompetitionDto> getGenderCompetition(ReportParam param){
         return ResponseEntity.ok(reportService.getGenderCompetition(param));
     }
 
     @Override
     @GetMapping("/getPopularSports")
-    public ResponseEntity<List<PopularSportDto>> getPopularSports(ReportParam param){
+    public ResponseEntity<List<ReportPopularSportDto>> getPopularSports(ReportParam param){
         return ResponseEntity.ok(reportService.getPopularSports(param));
+    }
+
+    @Override
+    @GetMapping("/getActivePersonnel")
+    public ResponseEntity<List<ReportActiveUsersDto>> getActivePersonnel(ReportParam param) {
+        return ResponseEntity.ok(reportService.getActiveUsers(param));
+    }
+
+    @Override
+    @GetMapping("/getActiveInEnterPlacePersonnel")
+    public ResponseEntity<List<ReportUserEntryCountDto>> getActiveInEnterPlacePersonnel(ReportParam param) {
+        return ResponseEntity.ok(reportService.getActiveInEnterPlacePersonnel(param));
     }
 
 }

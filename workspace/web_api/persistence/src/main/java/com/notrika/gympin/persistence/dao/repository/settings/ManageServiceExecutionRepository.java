@@ -1,12 +1,12 @@
 package com.notrika.gympin.persistence.dao.repository.settings;
 
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
-import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionEntity;
-import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionSimpleDto;
-import com.notrika.gympin.persistence.entity.management.service.PopularSportRequestDto;
+import com.notrika.gympin.persistence.entity.management.service.*;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import javax.persistence.SqlResultSetMapping;
+import java.awt.print.Pageable;
 import java.util.Date;
 import java.util.List;
 
@@ -38,27 +38,6 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
     @Query(value = "SELECT COUNT(DISTINCT u.id) as Count  FROM invoice i  JOIN finance_serial fs ON i.serial_id = fs.id  JOIN finance_corporate_transaction fct ON fct.serial_id = fs.id  JOIN finance_corporate fc ON fc.id = fct.finance_corporate_id  JOIN `user` u ON u.id = i.user_id  WHERE fc.corporate_id = :corporateId   AND i.status = 'COMPLETED'   AND fct.type = 'DEPOSIT'   AND fs.create_date >= DATE_SUB(CURDATE(), INTERVAL :intervalMonthCount MONTH)   AND u.gender = :gender ", nativeQuery = true)
     Long getTicketBuyByDateThisWeekByGenderAndCorporateId(Integer intervalMonthCount, String gender, Long corporateId);
 
-
-//    @Query(value = "SELECT Max(s.name) as sportName , Count(s.Id) as count FROM purchasedbase pb  JOIN purchased_subscribe ps on pb.id = ps.id  JOIN finance_purchased_serial fps on fps.purchased_id = pb.id  JOIN invoice i ON i.serial_id = fps.serial_id  JOIN ticket_subscribe tsu ON tsu.id = ps.ticket_subscribe_id  JOIN ticket_buyable tb ON tb.id = tsu.id  JOIN ticket_subsctibe_sport tss ON tb.id = tss.ticket_subscribe_id  JOIN place_sport pls ON pls.id = tss.place_sport_id  JOIN sport s on s.id = pls.sport_id   JOIN finance_corporate_personel_credit_transaction fcpct ON fcpct.serial_id = fps.serial_id  JOIN finance_corporate_personel_credit fcpc ON fcpct.personel_credit_id = fcpc.id  JOIN corporate_personel cp on fcpc.corporate_personnel_id = cp.id  where i.status = 'COMPLETED'  and cp.corporate_id = :corporateId  and ps.status != 'REFUNDED'  and i.is_deleted = 0  and tb.is_deleted = 0  and pls.is_deleted = 0  and s.is_deleted = 0  and fcpc.is_deleted = 0  and cp.is_deleted = 0  GROUP by s.id", nativeQuery = true)
-//    @Query("SELECT new com.notrika.gympin.persistence.dto.PopularSportRequestDto(s.name, COUNT(s.id)) FROM InvoiceEntity i "+
-//            " JOIN i.serial pb  -- FinanceSerialEntity "+
-//            " JOIN pb.purchasedBases ps  -- PurchasedBaseEntity / PurchasedSubscribeEntity "+
-//            " JOIN ps.ticketSubscribe tsu  -- TicketSubscribeEntity "+
-//            " JOIN tsu.ticketSubscribeSport tss  -- PlaceSportEntity "+
-//            " JOIN tss.sport s  -- SportEntity "+
-//            " JOIN i.corporate cp "+
-//            " WHERE i.status = com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus.COMPLETED "+
-//            " AND cp.id = :corporateId "+
-//            " AND ps.status != com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus.REFUNDED "+
-//            " AND i.isDeleted = false "+
-//            " AND tsu.isDeleted = false "+
-//            " AND tss.isDeleted = false "+
-//            " AND s.isDeleted = false "+
-//            " AND cp.isDeleted = false "+
-//            " GROUP BY s.id "+
-//            " ORDER BY COUNT(s.id) DESC ")
-
-
     @Query(value = "SELECT new com.notrika.gympin.persistence.entity.management.service.PopularSportRequestDto( Max(s.name) as sportName , Count(s.id) as count ) FROM PurchasedBaseEntity pb  " +
             "JOIN PurchasedSubscribeEntity ps on pb.id = ps.id  " +
             "JOIN pb.Serials se " +
@@ -81,6 +60,30 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
             "and cp.deleted = 0  " +
             "GROUP by s.id")
     List<PopularSportRequestDto> getPopularReport(Long corporateId);
+
+    @Query(value = "SELECT new com.notrika.gympin.persistence.entity.management.service.ActiveUsersQueryDto( max(u.fullName),u ,max(cp.id), count(u.id)) \n" +
+            " FROM ManageServiceExecutionEntity mse \n" +
+            "JOIN  CorporatePersonnelEntity cp ON mse.executorUser.id = cp.user.id \n" +
+            "JOIN UserEntity u ON u.id = cp.user.id \n" +
+            "where cp.corporate.id = :corporateId \n" +
+            "AND mse.createdDate >= :startDate \n" +
+            "GROUP BY u.id \n" +
+            "order by count(u.id) DESC \n")
+    List<ActiveUsersQueryDto> getActiveUsers(Long corporateId, Date startDate);
+
+    @Query(value = "SELECT new com.notrika.gympin.persistence.entity.management.service.UserEnterRequestDto( u, COUNT(pse.id),cp.id)\n" +
+            "    FROM PurchasedSubscribeEntryEntity pse \n" +
+            "    JOIN pse.purchasedSubscribe ps \n" +
+            "    JOIN ps.Serials fps \n" +
+            "    JOIN FinanceCorporatePersonnelCreditTransactionEntity fcpct ON fcpct.serial.id = fps.id \n" +
+            "    JOIN FinanceCorporatePersonnelCreditEntity fcpc ON fcpc.id = fcpct.personnelCredit.id \n" +
+            "    JOIN CorporatePersonnelEntity cp ON cp.id = fcpc.corporatePersonnel.id \n" +
+            "    JOIN UserEntity u ON u.id = cp.user.id \n" +
+            "    WHERE cp.corporate.id = :corporateId \n" +
+            "    AND pse.createdDate >= :startDate \n" +
+            "    GROUP BY u.id \n" +
+            "    ORDER BY COUNT(pse.id) DESC")
+    List<UserEnterRequestDto> getActiveInEnterPlacePersonnel(Long corporateId, Date startDate);
 
 
 

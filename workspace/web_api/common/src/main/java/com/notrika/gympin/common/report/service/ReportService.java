@@ -1,18 +1,18 @@
 package com.notrika.gympin.common.report.service;
 
-import com.notrika.gympin.common.report.dto.GenderCompetitionDto;
-import com.notrika.gympin.common.report.dto.PopularSportDto;
-import com.notrika.gympin.common.report.dto.ReportDto;
-import com.notrika.gympin.common.report.dto.ReportUseCorporateChargeDto;
+import com.notrika.gympin.common.report.dto.*;
 import com.notrika.gympin.common.report.param.ReportParam;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 public interface ReportService  {
     ReportUseCorporateChargeDto useCorporateCharge(ReportParam param);
     Long ticketBuyCountThisWeek(ReportParam param);
-    GenderCompetitionDto getGenderCompetition(ReportParam param);
-    List<PopularSportDto> getPopularSports(ReportParam param);
+    ReportGenderCompetitionDto getGenderCompetition(ReportParam param);
+    List<ReportPopularSportDto> getPopularSports(ReportParam param);
+    List<ReportActiveUsersDto> getActiveUsers(ReportParam param);
+    List<ReportUserEntryCountDto> getActiveInEnterPlacePersonnel(ReportParam param);
+
+
 }

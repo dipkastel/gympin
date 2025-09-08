@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import BaseReportBox, {LoadStatus} from "../BaseReportBox";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {Report_getActivePersonnel, Report_getPopularSports} from "../../../network/api/report.api";
+import {Report_getActiveInEnterPlacePersonnel, Report_getActivePersonnel, Report_getPopularSports} from "../../../network/api/report.api";
 import Grid from "@mui/material/Grid2";
 import {Avatar, Card, Input, TableCell, Typography} from "@mui/material";
 import {encodeId, toPriceWithComma} from "../../../helper/utils";
 import {useNavigate} from "react-router";
 
-const _RActiveUsers = ({corporate}) => {
+const _RActiveEnterPlaceUsers = ({corporate}) => {
 
     const error = useContext(ErrorContext);
     const navigate = useNavigate()
@@ -22,7 +22,7 @@ const _RActiveUsers = ({corporate}) => {
 
         setLoadStatus(LoadStatus.LOADING);
         if (!corporate) return;
-        Report_getActivePersonnel({id: corporate?.Id}).then(result => {
+        Report_getActiveInEnterPlacePersonnel({id: corporate?.Id}).then(result => {
             setData(result.data.Data);
             console.log(result.data.Data);
             setLoadStatus(LoadStatus.LOADED);
@@ -38,7 +38,7 @@ const _RActiveUsers = ({corporate}) => {
 
     return (<>
 
-            <BaseReportBox title={"فعالترین کاربران ماه"} ReloadData={getPopularSports} loadStatus={loadStatus} >
+            <BaseReportBox title={"ورزشکارترین کاربران ماه"} ReloadData={getPopularSports} loadStatus={loadStatus} >
                 <Grid container columns={data.length} direction={"row"} spacing={1}>
                     {data.map((item,number)=>(<Grid size={1} key={"ac-us-"+number}  onClick={(e)=>navigate("/personnel/detail/" + encodeId(item.PersonnelId))}>
                         <Grid variant={"outlined"} sx={{ p: 2, justifyItems: "center",textAlign:"center",borderRadius:4,border:"2px solid #333"}}>
@@ -58,4 +58,4 @@ const _RActiveUsers = ({corporate}) => {
     );
 };
 
-export default _RActiveUsers;
+export default _RActiveEnterPlaceUsers;

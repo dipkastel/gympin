@@ -19,3 +19,13 @@ export  function Report_getPopularSports(corporateId){
     return axios.get(Api_url.report.getPopularSports,{params:corporateId})
 }
 
+export  function Report_getActivePersonnel(corporateId){
+    return axios.get(Api_url.report.getActivePersonnel,{params:corporateId})
+}
+
+
+
+export  function Report_getActiveInEnterPlacePersonnel(corporateId){
+    return axios.get(Api_url.report.getActiveInEnterPlacePersonnel,{params:corporateId})
+}
+

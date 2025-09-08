@@ -153,7 +153,7 @@ export const NavigationMenu = [
         segment: 'reports',
         title: 'گزارشات',
         icon: <BarChartIcon/>,
-        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
+        action: <Chip label={"اولیه"} color={"default"} size="small"/>,
         // children: [
         //     {
         //         segment: 'general',

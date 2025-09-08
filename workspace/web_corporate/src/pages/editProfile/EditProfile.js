@@ -31,6 +31,7 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {AdapterDateFnsJalali} from "@mui/x-date-pickers/AdapterDateFnsJalaliV3";
 import {format} from "date-fns";
+import {BarChart, Edit} from "@mui/icons-material";
 
 const EditProfile = (props) => {
     const error = useContext(ErrorContext);
@@ -169,13 +170,18 @@ const EditProfile = (props) => {
 
 
                 <title>ویرایش پروفایل</title>
-                <Grid container columns={9} alignItems={"center"}>
-                    <Grid size={{md: 6, lg: 6, xl: 6}}><Typography sx={{m: 4}} variant={"h4"}>ویرایش پروفایل</Typography></Grid>
-                    <Grid textAlign={"end"} size={{md: 3, lg: 3, xl: 3}}> </Grid>
+
+                <Grid sx={{mx: 2, mt: 2}}>
+                    <Card sx={{p: 2, width: "100%"}} variant={"outlined"}>
+                        <Grid container direction={"row"}>
+                            <Edit/>
+                            <Typography sx={{px: 1}}>{"ویرایش پروفایل"}</Typography>
+                        </Grid>
+                    </Card>
                 </Grid>
                 <Grid container alignContent={"center"} columns={12}>
                     <Grid size={{xs: 12, sm: 5, md: 3}}>
-                        <Card elevation={3} sx={{margin: 1, p: 2, justifyItems: "center"}}>
+                        <Card elevation={3} sx={{margin: 1, p: 2, justifyItems: "center",textAlign:"center"}}>
                             <label htmlFor="raised-button-file">
                                 <Avatar
                                     sx={{width: 120, height: 120, marginTop: 3}}

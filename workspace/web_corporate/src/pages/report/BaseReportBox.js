@@ -14,7 +14,7 @@ const BaseReportBox = ({children,title,loadStatus,ReloadData}) => {
         <div>
             <Card elevation={5} sx={{m:2}} >
                 <CardHeader sx={{backgroundColor:"primary.boxBg"}}  title={<Typography variant={"body2"}>{title}</Typography>} />
-                <CardContent sx={{minHeight:240,alignContent:"center",justifyItems:"center"}}>
+                <CardContent sx={{minHeight:240,maxHeight:400,alignContent:"center"}}>
                     {loadStatus==LoadStatus.LOADING&&<Grid textAlign={"center"}><CircularProgress/></Grid>}
                     {loadStatus==LoadStatus.LOADED&&children}
                     {(loadStatus==LoadStatus.NODATA||loadStatus==null)&&
