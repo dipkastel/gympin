@@ -67,4 +67,9 @@ public class CorporateDto extends BaseDtoWithCreateUpdate<CorporateDto> {
     @JsonProperty("Wizard")
     private Boolean wizard;
 
+    @JsonProperty("Latitude")
+    private double latitude;
+
+    @JsonProperty("Longitude")
+    private double longitude;
 }

@@ -36,6 +36,10 @@ public final class CorporateConvertor {
             dto.setWizard(getWizard(entity));
         }catch (Exception e){}
         try{
+            dto.setLatitude(entity.getLatitude());
+            dto.setLongitude(entity.getLongitude());
+        }catch (Exception e){}
+        try{
             dto.setPersonnelCount(entity.getPersonnel().stream().filter(p->!p.isDeleted() ).count());
 
         }catch (Exception e){}
@@ -51,6 +55,7 @@ public final class CorporateConvertor {
 
     private static Boolean getWizard(CorporateEntity entity) {
         var settings = entity.getSettings().stream().filter(o->!o.isDeleted()).filter(r->r.getKey().equals(CorporateSettingTypesEnum.USER_WIZARD_COMPLETE)).findFirst();
+        if(settings==null)return false;
         return (settings.get().getValue().equals("true"));
     }
 

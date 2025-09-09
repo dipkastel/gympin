@@ -74,6 +74,8 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         CorporateEntity corporateEntity = corporateRepository.add(CorporateEntity.builder()
                 .name(corporateParam.getName())
                 .address(corporateParam.getAddress())
+                .latitude(0)
+                .longitude(0)
                 .email(corporateParam.getEmail())
                 .tel(corporateParam.getTel())
                 .status(CorporateStatusEnum.INACTIVE)
@@ -96,6 +98,8 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         entity.setEmail(corporateParam.getEmail());
         entity.setTel(corporateParam.getTel());
         entity.setStatus(CalculateStatus(entity));
+        entity.setLatitude(corporateParam.getLatitude());
+        entity.setLongitude(corporateParam.getLongitude());
         return CorporateConvertor.toDto(corporateRepository.update(entity));
     }
 

@@ -4,6 +4,7 @@ import CorporatePersonnel from "../Personnel/CorporatePersonnel";
 import PersonnelGroups from "../PersonnelGroups/PersonnelGroups";
 import CorporatePersonnelCreditAction from "../corporatePersonnelCreditAction/CorporatePersonnelCreditAction";
 import CorporatePersonnelNwCreditAction from "../corporatePersonnelCreditAction/CorporatePersonnelNWCreditAction";
+import CorporateMap from "../map/CorporateMap";
 
 const CorporateManagementCorporateTab = ({currentCorporate}) => {
 
@@ -27,6 +28,9 @@ const CorporateManagementCorporateTab = ({currentCorporate}) => {
                 </div>
                 <div className="col-md-6">
                     <PersonnelGroups corporate={currentCorporate} pUpdatePage={updatePage}/>
+                </div>
+                <div className="col-md-12">
+                    <CorporateMap corporate={currentCorporate} pUpdatePage={updatePage}/>
                 </div>
 
             </div>}

@@ -81,7 +81,7 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
             "    JOIN UserEntity u ON u.id = cp.user.id \n" +
             "    WHERE cp.corporate.id = :corporateId \n" +
             "    AND pse.createdDate >= :startDate \n" +
-            "    GROUP BY u.id \n" +
+            "    GROUP BY u.id, cp.id, u " +
             "    ORDER BY COUNT(pse.id) DESC")
     List<UserEnterRequestDto> getActiveInEnterPlacePersonnel(Long corporateId, Date startDate);
 

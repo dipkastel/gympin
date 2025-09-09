@@ -48,6 +48,12 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     @Column(name = "address")
     private String address;
 
+    @Column(name = "latitude",nullable = false, columnDefinition = "double default 0")
+    private double latitude ;
+
+    @Column(name = "longitude",nullable = false, columnDefinition = "double default 0")
+    private double longitude ;
+
     @Column(name = "email")
     private String email;
 

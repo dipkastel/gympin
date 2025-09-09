@@ -2,15 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82a1e8ab-7850-4472-b2c7-7003016a9de7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/PlacePersonnelServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/place/PlacePersonnelServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/map/CorporateMap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/map/_CMap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/map/map.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporate/dto/CorporateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporate/dto/CorporateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporate/param/CorporateParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporate/param/CorporateParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/corporate/CorporateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/corporate/CorporateServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/CorporateConvertor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/CorporateConvertor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_api/logs/logFile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/logs/logFile.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/_TabPlaceBuyable.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/_TabPlaceBuyable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/partial/_SinglePlaceGeneralHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/partial/_SinglePlaceGeneralHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_corporate/src/pages/sport/Gympin/Gympin.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/pages/sport/Gympin/Gympin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/settings/ManageServiceExecutionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/settings/ManageServiceExecutionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/corporate/CorporateEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/corporate/CorporateEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/PlaceEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/PlaceEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_corporate/src/pages/report/GeneralReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/pages/report/GeneralReport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_corporate/src/pages/report/GympinMaleFemaleCompare.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/pages/report/GympinMaleFemaleCompare.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/users/scan/awaitingEnter/_HallAwaitingEntry.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/users/scan/awaitingEnter/_HallAwaitingEntry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/wizard/intro.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/wizard/intro.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/CorporateManagementTabs/CorporateManagementCorporateTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/CorporateManagementTabs/CorporateManagementCorporateTab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Base/PlaceMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Base/PlaceMap.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +140,13 @@
       <workItem from="1755695594446" duration="2671000" />
       <workItem from="1755959453335" duration="1174000" />
       <workItem from="1756025348935" duration="1222000" />
-      <workItem from="1756283727756" duration="605000" />
+      <workItem from="1756283727756" duration="1197000" />
+      <workItem from="1756549527733" duration="2215000" />
+      <workItem from="1756648016767" duration="1875000" />
+      <workItem from="1756800798480" duration="1177000" />
+      <workItem from="1756887075715" duration="1182000" />
+      <workItem from="1757169171789" duration="1179000" />
+      <workItem from="1757332999248" duration="1178000" />
     </task>
     <servers />
   </component>

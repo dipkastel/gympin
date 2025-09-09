@@ -43,6 +43,11 @@ public class CorporateParam extends BaseParam<CorporateParam> {
     @JsonProperty("Wizard")
     private Boolean wizard;
 
+    @JsonProperty("Latitude")
+    private double latitude;
+
+    @JsonProperty("Longitude")
+    private double longitude;
 
 
 

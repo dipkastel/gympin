@@ -218,7 +218,7 @@ const GympinMaleFemaleCompare = ({corporate}) => {
 
     return (
 
-        <BaseReportBox title={"نسبت ورزش خانم‌ها به آقایان"} loadStatus={loadStatus}>
+        <BaseReportBox title={"نسبت ورزش خانم‌ها به آقایان"} loadStatus={loadStatus} ReloadData={getGenderCompatition}>
             <ReactEcharts option={option} style={{ height: '400px', width: '100%' }} />
         </BaseReportBox>
     );

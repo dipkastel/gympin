@@ -9,13 +9,14 @@ var markerLayer = null;
 let leaflet = null;
 const tehranCenterLat = 35.7019;
 const tehranCenterLong = 51.4047;
-class PlaceMap extends Component {
+class _CMap extends Component {
 
     constructor(props) {
         super(props);
+        console.log(props)
         this.state = {
-            selectedLat: props.place.Latitude==0?tehranCenterLat:props.place.Latitude,
-            selectedLng: props.place.Longitude==0?tehranCenterLong:props.place.Longitude
+            selectedLat: props.corporate.Latitude==0?tehranCenterLat:props.corporate.Latitude,
+            selectedLng: props.corporate.Longitude==0?tehranCenterLong:props.corporate.Longitude
         };
     }
     componentDidMount() {
@@ -84,11 +85,11 @@ class PlaceMap extends Component {
         return (
             <div>
                 <Form.Group controlId="MyMap">
-                    <div id="kt_leaflet_map" className={"map"}  style={{ height: "560px" }} />
+                    <div id="kt_leaflet_map" className={"map"} style={{ height: "560px" }} />
                 </Form.Group>
             </div>
         );
     }
 }
 
-export default PlaceMap;
+export default _CMap;

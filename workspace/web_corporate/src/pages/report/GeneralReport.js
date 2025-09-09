@@ -29,11 +29,11 @@ const GeneralReport = () => {
                 <Grid size={{xs:2,md: 2, lg: 2, xl: 2}}>
                     <_RChargeUsage />
                 </Grid>
-                <Grid size={{xs:2,md: 2, lg: 1, xl: 1}}>
+                <Grid size={{xs:2,md: 1, lg: 1, xl: 1}}>
                     <GympinMaleFemaleCompare corporate={corporate} />
                     <_RActiveUsers corporate={corporate} />
                 </Grid>
-                <Grid size={{xs:2,md: 2, lg: 1, xl: 1}}>
+                <Grid size={{xs:2,md: 1, lg: 1, xl: 1}}>
                     <_SportRadar corporate={corporate} />
                     <_RActiveEnterPlaceUsers corporate={corporate} />
                 </Grid>
