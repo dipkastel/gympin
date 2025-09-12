@@ -23,8 +23,12 @@ const _RActiveEnterPlaceUsers = ({corporate}) => {
         setLoadStatus(LoadStatus.LOADING);
         if (!corporate) return;
         Report_getActiveInEnterPlacePersonnel({id: corporate?.Id}).then(result => {
-            setData(result.data.Data);
-            setLoadStatus(LoadStatus.LOADED);
+            if(result.data.Data.length>0){
+                setData(result.data.Data);
+                setLoadStatus(LoadStatus.LOADED);
+            }else {
+                setLoadStatus(LoadStatus.NODATA);
+            }
         }).catch(e => {
                 try {
                     setLoadStatus(LoadStatus.ERROR);

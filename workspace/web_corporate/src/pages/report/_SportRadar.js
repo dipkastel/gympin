@@ -21,18 +21,22 @@ export default function _SportRadar({corporate}) {
         setLoadStatus(LoadStatus.LOADING);
         if (!corporate) return;
         Report_getPopularSports({id: corporate?.Id}).then(result => {
-            var sportsCount = [];
-            for(var item in result.data.Data){
-                sportsCount.push(
-                    {
-                        subject: result.data.Data[item].SportName,
-                        count: result.data.Data[item].SportCount,
-                        B: result.data.Data[item].SportCount,
-                        fullMark: result.data.Data[item].SportCount,
-                    })
+            if(result.data.Data.length>0){
+                var sportsCount = [];
+                for(var item in result.data.Data){
+                    sportsCount.push(
+                        {
+                            subject: result.data.Data[item].SportName,
+                            count: result.data.Data[item].SportCount,
+                            B: result.data.Data[item].SportCount,
+                            fullMark: result.data.Data[item].SportCount,
+                        })
+                }
+                setData(sportsCount);
+                setLoadStatus(LoadStatus.LOADED);
+            }else{
+                setLoadStatus(LoadStatus.NODATA);
             }
-            setData(sportsCount);
-            setLoadStatus(LoadStatus.LOADED);
 
         })
             .catch(e => {

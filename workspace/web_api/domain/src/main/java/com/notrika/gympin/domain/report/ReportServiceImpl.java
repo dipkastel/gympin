@@ -127,6 +127,6 @@ public class ReportServiceImpl implements ReportService {
         Date startDate = Date.from(LocalDate.now().minusDays(param.getDayCount()==null?30:param.getDayCount()).atStartOfDay(ZoneId.systemDefault()).toInstant());
         Long enterCount = reportRepository.getCorporateUserEnterCount(corporate.getId(),startDate);
         List<ReportUserEntryCountDto> actives =  getActiveInEnterPlacePersonnel(ReportParam.builder().id(corporate.getId()).build());
-       return aiReportHelper.getAiReport(corporate,sum,gender,popularSports,enterCount,actives.get(0));
+       return aiReportHelper.getAiReport(corporate,sum,gender,popularSports,enterCount,actives);
     }
 }

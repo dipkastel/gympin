@@ -23,8 +23,12 @@ const _RActiveUsers = ({corporate}) => {
         setLoadStatus(LoadStatus.LOADING);
         if (!corporate) return;
         Report_getActivePersonnel({id: corporate?.Id}).then(result => {
-            setData(result.data.Data);
-            setLoadStatus(LoadStatus.LOADED);
+            if(result.data.Data.length>0){
+                setData(result.data.Data);
+                setLoadStatus(LoadStatus.LOADED);
+            }else{
+                setLoadStatus(LoadStatus.LOADED);
+            }
         }).catch(e => {
                 try {
                     setLoadStatus(LoadStatus.ERROR);

@@ -24,7 +24,7 @@ public class AiReportHelper {
     @Autowired
     CorporateTransactionService corporateTransactionService;
 
-    public List<String> getAiReport(CorporateEntity corporate, BigDecimal UserdCharge, ReportGenderCompetitionDto gender, List<ReportPopularSportDto> popularSports, Long enterCount, ReportUserEntryCountDto actieUser) {
+    public List<String> getAiReport(CorporateEntity corporate, BigDecimal UserdCharge, ReportGenderCompetitionDto gender, List<ReportPopularSportDto> popularSports, Long enterCount, List<ReportUserEntryCountDto> actieUser) {
         long personnelsCount = corporate.getPersonnel().stream().filter(p -> !p.isDeleted()).count();
         List<String> result = new ArrayList<>();
         if (personnelsCount < 10) {
@@ -96,10 +96,10 @@ public class AiReportHelper {
         return "میانگین زمان حضور کاربران در  وب اپلیکیشن جیم پین، 11 دقیقه به ازای هر نفر بوده که کارمندان در این مدت به بررسی مراکز ورزشی طرف قرارداد پرداخته اند و بیشترین آمار جستجو مربوط به رشته های ماساژ، چربی سوزی و فیتنس بوده است.";
     }
 
-    private String getFifthLine(ReportUserEntryCountDto actieUser) {
+    private String getFifthLine(List<ReportUserEntryCountDto> actieUser) {
         String res="ورزشکار ترین افراد در مجموعه شما ";
-        res+=actieUser.getUser().getGender()== Gender.MALE?"آقای ":"خانم ";
-        res+=actieUser.getUser().getFullName();
+        res+=actieUser.get(0).getUser().getGender()== Gender.MALE?"آقای ":"خانم ";
+        res+=actieUser.get(0).getUser().getFullName();
         res+=" می باشد";
         return res;
     }
