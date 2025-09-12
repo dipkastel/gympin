@@ -27,7 +27,7 @@ public class AiReportHelper {
     public List<String> getAiReport(CorporateEntity corporate, BigDecimal UserdCharge, ReportGenderCompetitionDto gender, List<ReportPopularSportDto> popularSports, Long enterCount, ReportUserEntryCountDto actieUser) {
         long personnelsCount = corporate.getPersonnel().stream().filter(p -> !p.isDeleted()).count();
         List<String> result = new ArrayList<>();
-        if (personnelsCount < 2) {
+        if (personnelsCount < 10) {
             return List.of("تعداد کارمندان فعال در پنل شما کمتر از حدی است که امکان تهیه گزارش تحلیلی فراهم شود. پس از ورود و فعالیت تعداد بیشتری از کارمندان، گزارش جامع در اختیارتان قرار خواهد گرفت");
         }
 
@@ -82,7 +82,7 @@ public class AiReportHelper {
         }
         res = res.substring(0,res.length()-2);
         res+=" بوده است. مجموع مدت ورزش پرسنل مجموعه ی "+corporate.getName()+" ";
-        int AllMin = (int) (enterCount*108);
+        int AllMin = (int) (enterCount*109);
         int singleUserMin = (int) (AllMin/corporate.getPersonnel().stream().filter(p->!p.isDeleted()).count());
         int Hour = Math.round(AllMin/60);
         int min = AllMin%60;
@@ -93,7 +93,7 @@ public class AiReportHelper {
     }
 
     private String getFourthLine() {
-        return "میانگین زمان حضور کاربران در پنل جیم پین، 18 دقیقه به ازای هر نفر بوده که کارمندان در این مدت به بررسی مراکز ورزشی طرف قرارداد پرداخته اند و بیشترین آمار جستجو مربوط به رشته های ماساژ، چربی سوزی و فیتنس بوده است.";
+        return "میانگین زمان حضور کاربران در  وب اپلیکیشن جیم پین، 11 دقیقه به ازای هر نفر بوده که کارمندان در این مدت به بررسی مراکز ورزشی طرف قرارداد پرداخته اند و بیشترین آمار جستجو مربوط به رشته های ماساژ، چربی سوزی و فیتنس بوده است.";
     }
 
     private String getFifthLine(ReportUserEntryCountDto actieUser) {

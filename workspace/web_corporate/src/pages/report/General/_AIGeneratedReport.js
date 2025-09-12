@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import BaseReportBox, {LoadStatus} from "../BaseReportBox";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {Report_getAiReport} from "../../../network/api/report.api";
+import {Typography} from "@mui/material";
 
 const _AIGeneratedReport = ({corporate}) => {
 
@@ -75,7 +76,7 @@ const _AIGeneratedReport = ({corporate}) => {
         return (
             <div>
                 {currentText.map((line, i) => (
-                    <p key={i}>{line}</p>
+                    <Typography variant={"subtitle1"} sx={{textAlign:"justify"}} key={i}>{line}</Typography>
                 ))}
             </div>
         );

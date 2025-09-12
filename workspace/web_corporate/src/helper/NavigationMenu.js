@@ -43,7 +43,7 @@ export const NavigationMenu = [
         segment: 'learn',
         title: 'آموزش و توسعه',
         icon: <HealthAndSafety/>,
-        action: <Chip label={"جدید"} color={"primary"} size="small"/>,
+        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
     },
     {
         segment: 'food',
