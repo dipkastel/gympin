@@ -14,7 +14,12 @@ import java.util.Objects;
 
 public interface FinanceCorporateTransactionRepository extends BaseRepository<FinanceCorporateTransactionEntity, Long> {
 
-    @Query("SELECT SUM(f.amount) FROM FinanceCorporateTransactionEntity f  WHERE f.transactionCorporateType LIKE 'DEPOSIT' AND f.amount > 0 AND f.transactionStatus LIKE 'COMPLETE' and f.financeCorporate.id = :#{#financeCorporateId} ")
+    @Query("SELECT SUM(f.amount) FROM FinanceCorporateTransactionEntity f  " +
+            "WHERE f.transactionCorporateType LIKE com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType.DEPOSIT " +
+            "AND f.amount > 0 " +
+            "AND f.transactionStatus LIKE com.notrika.gympin.common.finance.transaction.enums.TransactionStatus.COMPLETE " +
+            "and f.serial.processTypeEnum LIKE com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum.CASH_IN_ACCOUNT_CHARGE_CORPORATE " +
+            "and f.financeCorporate.id = :#{#financeCorporateId} ")
     BigDecimal getCorporateTotalIncreases(Long financeCorporateId);
 
 

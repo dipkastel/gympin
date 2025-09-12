@@ -27,7 +27,7 @@ public class AiReportHelper {
     public List<String> getAiReport(CorporateEntity corporate, BigDecimal UserdCharge, ReportGenderCompetitionDto gender, List<ReportPopularSportDto> popularSports, Long enterCount, ReportUserEntryCountDto actieUser) {
         long personnelsCount = corporate.getPersonnel().stream().filter(p -> !p.isDeleted()).count();
         List<String> result = new ArrayList<>();
-        if (personnelsCount < 10) {
+        if (personnelsCount < 2) {
             return List.of("تعداد کارمندان فعال در پنل شما کمتر از حدی است که امکان تهیه گزارش تحلیلی فراهم شود. پس از ورود و فعالیت تعداد بیشتری از کارمندان، گزارش جامع در اختیارتان قرار خواهد گرفت");
         }
 
@@ -100,7 +100,7 @@ public class AiReportHelper {
         String res="ورزشکار ترین افراد در مجموعه شما ";
         res+=actieUser.getUser().getGender()== Gender.MALE?"آقای ":"خانم ";
         res+=actieUser.getUser().getFullName();
-        res+=" است که پیشنهاد میشود در صورت تمایل برای دوره بعدی اعتبار بیشتری دریافت کند.";
+        res+=" می باشد";
         return res;
     }
 

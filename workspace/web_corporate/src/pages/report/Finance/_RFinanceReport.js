@@ -56,7 +56,7 @@ const _RFinanceReport = () => {
             day: 'numeric'
         }));
         const values = data.map((d) => d.Amount);
-        const values2 = data.map((d) => d.LatestBalance);
+        const values2 = data.map((d) => d.LatestBalance+d.Amount);
 
         setOption({
             title: {
