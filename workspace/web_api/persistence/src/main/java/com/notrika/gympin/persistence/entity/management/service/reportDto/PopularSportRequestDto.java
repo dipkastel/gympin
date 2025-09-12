@@ -1,4 +1,4 @@
-package com.notrika.gympin.persistence.entity.management.service;
+package com.notrika.gympin.persistence.entity.management.service.reportDto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -57,4 +57,16 @@ public class ReportControllerImpl implements ReportController {
         return ResponseEntity.ok(reportService.getActiveInEnterPlacePersonnel(param));
     }
 
+    @Override
+    @GetMapping("getBalanceChangedReport")
+    public ResponseEntity<List<ReportCorporateTransactionsDto>> getBalanceChangedReport(ReportParam param) {
+        return ResponseEntity.ok(reportService.getBalanceChangedReport(param));
+    }
+
+    @Override
+    @GetMapping("getAiReport")
+    public ResponseEntity<List<String>> getAiReport(ReportParam param) {
+        return ResponseEntity.ok(reportService.getAiReport(param));
+    }
+
 }

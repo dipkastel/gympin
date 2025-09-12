@@ -12,11 +12,11 @@ const _SportTicketCount = ({corporate}) => {
     const [service,SetService] = useState(null)
 
     useEffect(() => {
-        getActivities();
+        getweekTickets();
     }, []);
 
 
-    function getActivities() {
+    function getweekTickets() {
         Report_ticketBuyCountThisWeek({
             id:corporate.Id
         }).then((data) => {

@@ -1,11 +1,13 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.report.dto.ReportActiveUsersDto;
+import com.notrika.gympin.common.report.dto.ReportCorporateTransactionsDto;
 import com.notrika.gympin.common.report.dto.ReportPopularSportDto;
 import com.notrika.gympin.common.report.dto.ReportUserEntryCountDto;
-import com.notrika.gympin.persistence.entity.management.service.ActiveUsersQueryDto;
-import com.notrika.gympin.persistence.entity.management.service.PopularSportRequestDto;
-import com.notrika.gympin.persistence.entity.management.service.UserEnterRequestDto;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.ActiveUsersQueryDto;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.FinanceCorporateDepositReportDto;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.PopularSportRequestDto;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.UserEnterRequestDto;
 
 public final class ReportConvertor {
 
@@ -25,6 +27,15 @@ public final class ReportConvertor {
         dto.setUser(UserConvertor.toDtoSimple(entity.getUser()));
         dto.setPersonnelId(entity.getPersonnelId());
         dto.setActivityCount(entity.getActivityCount());
+        return dto;
+    }
+    public static ReportCorporateTransactionsDto toDto(FinanceCorporateDepositReportDto entity) {
+        if (entity == null) return null;
+        ReportCorporateTransactionsDto dto = new ReportCorporateTransactionsDto();
+        dto.setSerial(entity.getSerial().split("-")[entity.getSerial().split("-").length-1]);
+        dto.setAmount(entity.getAmount());
+        dto.setLatestBalance(entity.getLatestBalance());
+        dto.setDate(entity.getDate());
         return dto;
     }
     public static ReportUserEntryCountDto toDto(UserEnterRequestDto entity) {

@@ -13,6 +13,6 @@ public interface ReportService  {
     List<ReportPopularSportDto> getPopularSports(ReportParam param);
     List<ReportActiveUsersDto> getActiveUsers(ReportParam param);
     List<ReportUserEntryCountDto> getActiveInEnterPlacePersonnel(ReportParam param);
-
-
+    List<ReportCorporateTransactionsDto> getBalanceChangedReport(ReportParam param);
+    List<String> getAiReport(ReportParam param);
 }

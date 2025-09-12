@@ -2,6 +2,7 @@ package com.notrika.gympin.common.finance.transaction.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
+import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionType;
@@ -58,6 +59,9 @@ public class CorporateTransactionQuery extends BaseQuery<CorporateTransactionQue
 
     @JsonProperty("Serial")
     private String like_serialæserial;
+
+    @JsonProperty("InvoiceStatus")
+    private InvoiceStatus is_serialæinvoicesæstatus;
 
     @JsonProperty("MaxPrice")
     private BigDecimal ismax_amount;

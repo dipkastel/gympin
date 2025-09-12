@@ -24,7 +24,6 @@ const _RActiveUsers = ({corporate}) => {
         if (!corporate) return;
         Report_getActivePersonnel({id: corporate?.Id}).then(result => {
             setData(result.data.Data);
-            console.log(result.data.Data);
             setLoadStatus(LoadStatus.LOADED);
         }).catch(e => {
                 try {

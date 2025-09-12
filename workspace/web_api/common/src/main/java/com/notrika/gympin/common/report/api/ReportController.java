@@ -14,5 +14,7 @@ public interface ReportController  {
     ResponseEntity<List<ReportPopularSportDto>> getPopularSports(ReportParam param);
     ResponseEntity<List<ReportActiveUsersDto>> getActivePersonnel(ReportParam param);
     ResponseEntity<List<ReportUserEntryCountDto>> getActiveInEnterPlacePersonnel(ReportParam param);
+    ResponseEntity<List<ReportCorporateTransactionsDto>> getBalanceChangedReport(ReportParam param);
+    ResponseEntity<List<String>> getAiReport(ReportParam param);
 
 }

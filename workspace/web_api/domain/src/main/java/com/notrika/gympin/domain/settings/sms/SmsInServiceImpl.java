@@ -207,6 +207,21 @@ public class SmsInServiceImpl implements SmsInService {
     }
 
     @Override
+    public boolean sendYouReserveSubscribe(SmsDto smsDto) throws Exception {
+        log.info("Going to sendYouBuySubscribe with params: {} ...\n", smsDto);
+
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_RESERVE_TICKET_1",SmsTypes.USER_BUY_SUBSCRIBE);
+        return true;
+    }
+
+    @Override
     public boolean sendYouBuyMultipleSubscribe(SmsDto smsDto) throws Exception {
         log.info("Going to sendYouBuySubscribe with params: {} ...\n", smsDto);
 

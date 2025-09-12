@@ -2,7 +2,7 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.settings.service.dto.ServiceDto;
 import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionEntity;
-import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionSimpleDto;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.ManageServiceExecutionSimpleDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

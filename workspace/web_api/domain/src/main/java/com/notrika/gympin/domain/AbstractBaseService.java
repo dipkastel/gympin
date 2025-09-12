@@ -106,6 +106,7 @@ public abstract class AbstractBaseService<I extends BaseParam, O extends BaseDto
             case "ismin": return QueryCriteria.builder().key(queryfieldParam[1]).value(value).operation(QueryOperationsEnum.GREATER_THAN_OR_EQUAL_TO).build();
             case "ismax": return QueryCriteria.builder().key(queryfieldParam[1]).value(value).operation(QueryOperationsEnum.LESS_THAN_OR_EQUAL_TO).build();
             case "is": return QueryCriteria.builder().key(queryfieldParam[1]).value(value).operation(QueryOperationsEnum.EQUAL_TO).build();
+            case "isnot": return QueryCriteria.builder().key(queryfieldParam[1]).value(value).operation(QueryOperationsEnum.NOT_EQUAL_TO).build();
             case "min": return QueryCriteria.builder().key(queryfieldParam[1]).value(value).operation(QueryOperationsEnum.GREATER_THAN).build();
             case "max": return QueryCriteria.builder().key(queryfieldParam[1]).value(value).operation(QueryOperationsEnum.LESS_THAN).build();
             case "slike": return QueryCriteria.builder().key(queryfieldParam[1]).value(value).operation(QueryOperationsEnum.START_LIKE).build();

@@ -74,7 +74,6 @@ const _CorporateChargeTransactions = () => {
                         <TableRow>
                             <TableCell></TableCell>
                             <TableCell>نام و نام خانوادگی</TableCell>
-                            <TableCell>تغییر شارژ</TableCell>
                             <TableCell><TableSortLabel onClick={() => {
                                 setSortBy({Name: "Amount", Desc: !sortBy.Desc})
                             }} direction={(sortBy.Desc) ? "desc" : "asc"}>مبلغ</TableSortLabel></TableCell>
@@ -98,7 +97,6 @@ const _CorporateChargeTransactions = () => {
                                 <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.CreatorUser?.Avatar?.Url}
                                                                                  sx={{width: 25, height: 25}}/></TableCell>
                                 <TableCell>{row?.CreatorUser?.FullName || " - "}</TableCell>
-                                <TableCell>{toPriceWithComma(row?.LatestBalance) +" به "+toPriceWithComma(row?.LatestBalance+row?.Amount)}</TableCell>
                                 <TableCell>{toPriceWithComma(row?.Amount)}</TableCell>
                                 <TableCell>{row?.Serial?.Serial?.split("-")[0]}</TableCell>
                                 <TableCell>{(row?.CreatorUser?.Birthday) ? new Date(row?.CreatedDate).toLocaleDateString('fa-IR', {

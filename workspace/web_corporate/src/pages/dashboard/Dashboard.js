@@ -47,7 +47,7 @@ const Dashboard = (props) => {
                     <_PersonnelCount/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 6, md: 6, lg: 3}}>
-                    <_TicketCount/>
+                    <_TicketCount corporate={corporate} />
                 </Grid>
             </Grid>
             <Grid container columns={12}>

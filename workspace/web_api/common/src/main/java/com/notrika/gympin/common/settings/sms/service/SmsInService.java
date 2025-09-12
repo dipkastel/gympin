@@ -23,5 +23,6 @@ public interface SmsInService {
     boolean sendPlaceContractCode(Long placeId,SmsDto smsDto) throws Exception;
     boolean sendCorporateContractCode(Long corporateId,SmsDto smsDto) throws Exception;
     boolean sendUserAddCreditByCorporate(SmsDto smsDto) throws Exception;
+    boolean sendYouReserveSubscribe(SmsDto smsDto) throws Exception;
 
 }

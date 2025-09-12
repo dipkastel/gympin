@@ -14,6 +14,7 @@ import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
+import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.note.enums.NoteType;
@@ -31,6 +32,7 @@ import com.notrika.gympin.common.util.exception.general.NotFoundException;
 import com.notrika.gympin.common.util.exception.purchased.*;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.finance.helper.FinanceHelper;
+import com.notrika.gympin.domain.util.convertor.PurchasedSubscribeConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
@@ -71,6 +73,7 @@ import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodMenuEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
+import jdk.jfr.Threshold;
 import net.bytebuddy.dynamic.TypeResolutionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -124,6 +127,8 @@ public class InvoiceServiceHelper {
     FinanceHelper financeHelper;
     @Autowired
     SmsInService smsService;
+    @Autowired
+    SettingsService settingsService;
     @Autowired
     UserService userService;
 
@@ -649,12 +654,12 @@ public class InvoiceServiceHelper {
         if (buyableEntities.size() < 1) {
             throw new BadRequestException("بلیط وجود ندارد");
         } else if (buyableEntities.size() == 1) {
+
             try {
-                smsService.sendYouBuySubscribe(SmsDto.builder()
+                smsService.sendYouReserveSubscribe(SmsDto.builder()
                         .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
                         .userNumber(invoice.getUser().getPhoneNumber())
-                        .text1(buyableEntities.get(0).getName())
-                        .text2(buyableEntities.get(0).getPlace().getName())
+                        .text1(PurchasedSubscribeConvertor.getTicketUsageThreshold(settingsService).toString())
                         .build()
                 );
             } catch (Exception e) {

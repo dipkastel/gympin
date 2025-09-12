@@ -79,11 +79,13 @@ export let Api_url = {
         GET_BY_CITY: "v1/region/getRegionsByCity"
     },
     report: {
+        getAiReport: "v1/report/getAiReport",
         getPopularSports: "v1/report/getPopularSports",
         useCorporateCharge: "v1/report/useCorporateCharge",
         getActivePersonnel: "v1/report/getActivePersonnel",
         getGenderCompetition: "v1/report/getGenderCompetition",
         ticketBuyCountThisWeek: "v1/report/ticketBuyCountThisWeek",
+        getBalanceChangedReport: "v1/report/getBalanceChangedReport",
         getActiveInEnterPlacePersonnel: "v1/report/getActiveInEnterPlacePersonnel"
     },
     sport: {

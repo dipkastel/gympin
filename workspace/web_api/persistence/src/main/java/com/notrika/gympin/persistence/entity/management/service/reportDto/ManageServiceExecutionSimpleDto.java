@@ -1,4 +1,4 @@
-package com.notrika.gympin.persistence.entity.management.service;
+package com.notrika.gympin.persistence.entity.management.service.reportDto;
 
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.*;

@@ -9,12 +9,14 @@ import com.notrika.gympin.persistence.dao.repository.corporate.CorporateReposito
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageServiceExecutionRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.management.service.ActiveUsersQueryDto;
-import com.notrika.gympin.persistence.entity.management.service.PopularSportRequestDto;
-import com.notrika.gympin.persistence.entity.management.service.UserEnterRequestDto;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.ActiveUsersQueryDto;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.FinanceCorporateDepositReportDto;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.PopularSportRequestDto;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.UserEnterRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.spi.ServiceRegistry;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -35,6 +37,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     ManageServiceExecutionRepository reportRepository;
+    @Autowired
+    AiReportHelper aiReportHelper;
 
     @Override
     public ReportUseCorporateChargeDto useCorporateCharge(ReportParam param) {
@@ -86,7 +90,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<ReportActiveUsersDto> getActiveUsers(ReportParam param) {
-        Date startDate = Date.from(LocalDate.now().minusDays(30).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date startDate = Date.from(LocalDate.now().minusDays(param.getDayCount()==null?30:param.getDayCount()).atStartOfDay(ZoneId.systemDefault()).toInstant());
         List<ActiveUsersQueryDto> listSports =  reportRepository.getActiveUsers(param.getId(),startDate);
        try {
            return listSports.stream().limit(3).map(ReportConvertor::toDto).collect(Collectors.toList());
@@ -96,12 +100,33 @@ public class ReportServiceImpl implements ReportService {
     }
     @Override
     public List<ReportUserEntryCountDto> getActiveInEnterPlacePersonnel(ReportParam param) {
-        Date startDate = Date.from(LocalDate.now().minusDays(30).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date startDate = Date.from(LocalDate.now().minusDays(param.getDayCount()==null?30:param.getDayCount()).atStartOfDay(ZoneId.systemDefault()).toInstant());
         List<UserEnterRequestDto> listSports =  reportRepository.getActiveInEnterPlacePersonnel(param.getId(),startDate);
        try {
            return listSports.stream().limit(3).map(ReportConvertor::toDto).collect(Collectors.toList());
        }catch (Exception e){
            return null;
        }
+    }
+    @Override
+    public List<ReportCorporateTransactionsDto> getBalanceChangedReport(ReportParam param) {
+        Date startDate = Date.from(LocalDate.now().minusDays(param.getDayCount()==null?30:param.getDayCount()).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        List<FinanceCorporateDepositReportDto> listSports =  reportRepository.getFinanceTransactions(param.getId(),startDate);
+       try {
+           return listSports.stream().map(ReportConvertor::toDto).collect(Collectors.toList());
+       }catch (Exception e){
+           return null;
+       }
+    }
+    @Override
+    public List<String> getAiReport(ReportParam param) {
+        CorporateEntity corporate =  corporateRepository.getById(param.getId());
+        BigDecimal sum = useCorporateCharge(ReportParam.builder().dayCount(30l).id(corporate.getId()).build()).getAmounts().stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+        ReportGenderCompetitionDto gender = getGenderCompetition(ReportParam.builder().id(corporate.getId()).build());
+        List<ReportPopularSportDto> popularSports = getPopularSports(ReportParam.builder().id(corporate.getId()).build());
+        Date startDate = Date.from(LocalDate.now().minusDays(param.getDayCount()==null?30:param.getDayCount()).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Long enterCount = reportRepository.getCorporateUserEnterCount(corporate.getId(),startDate);
+        List<ReportUserEntryCountDto> actives =  getActiveInEnterPlacePersonnel(ReportParam.builder().id(corporate.getId()).build());
+       return aiReportHelper.getAiReport(corporate,sum,gender,popularSports,enterCount,actives.get(0));
     }
 }

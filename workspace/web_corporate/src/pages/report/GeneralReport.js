@@ -8,6 +8,8 @@ import GympinMaleFemaleCompare from "./GympinMaleFemaleCompare";
 import _SportRadar from "./_SportRadar";
 import _RActiveEnterPlaceUsers from "./Sport/_RActiveEnterPlaceUsers";
 import _RChargeUsage from "./Finance/_RChargeUsage";
+import _RFinanceReport from "./Finance/_RFinanceReport";
+import _AIGeneratedReport from "./General/_AIGeneratedReport";
 
 const GeneralReport = () => {
 
@@ -27,7 +29,7 @@ const GeneralReport = () => {
             </Grid>
             <Grid container columns={2} alignItems={"start"}>
                 <Grid size={{xs:2,md: 2, lg: 2, xl: 2}}>
-                    <_RChargeUsage />
+                    <_AIGeneratedReport corporate={corporate}/>
                 </Grid>
                 <Grid size={{xs:2,md: 1, lg: 1, xl: 1}}>
                     <GympinMaleFemaleCompare corporate={corporate} />
@@ -37,6 +39,10 @@ const GeneralReport = () => {
                     <_SportRadar corporate={corporate} />
                     <_RActiveEnterPlaceUsers corporate={corporate} />
                 </Grid>
+            </Grid>
+            <Grid size={{xs:2,md: 2, lg: 2, xl: 2}}>
+                <_RFinanceReport />
+                <_RChargeUsage />
             </Grid>
         </Container>
     );

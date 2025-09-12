@@ -40,14 +40,15 @@ export const NavigationMenu = [
         icon: <SportsVolleyball/>,
     },
     {
-        segment: 'food',
-        title: 'غذا و میان وعده',
-        icon: <Fastfood/>,
-    },
-    {
         segment: 'learn',
         title: 'آموزش و توسعه',
         icon: <HealthAndSafety/>,
+        action: <Chip label={"جدید"} color={"primary"} size="small"/>,
+    },
+    {
+        segment: 'food',
+        title: 'غذا و میان وعده',
+        icon: <Fastfood/>,
         action: <Chip label={"به زودی"} color={"default"} size="small"/>,
     },
     {

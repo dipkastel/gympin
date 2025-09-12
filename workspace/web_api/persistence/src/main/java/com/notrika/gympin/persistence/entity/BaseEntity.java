@@ -100,6 +100,8 @@ public class BaseEntity<T> implements Specification<T> {
             queries.getExpressions().add(builder.like(root.<String>get(key), "%" + value.toString()));
         } else if (operation.equals(QueryOperationsEnum.EQUAL_TO)) {
             queries.getExpressions().add(builder.equal(root.get(key), value));
+        } else if (operation.equals(QueryOperationsEnum.NOT_EQUAL_TO)) {
+            queries.getExpressions().add(builder.notEqual(root.get(key), value));
         }
     }
 

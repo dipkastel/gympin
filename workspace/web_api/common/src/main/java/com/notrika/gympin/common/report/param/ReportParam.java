@@ -18,4 +18,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class ReportParam extends BaseParam<ReportParam> {
 
+    @JsonProperty("DayCount")
+    private Long dayCount;
 }
