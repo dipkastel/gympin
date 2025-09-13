@@ -3,7 +3,7 @@ import Notice from "../../partials/content/Notice";
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal, Table} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar,} from "../../partials/content/Portlet";
-import {Avatar, Button, Chip, TextField} from "@mui/material";
+import {Avatar, Button, Card, CardContent, CardHeader, Chip, Grid, TextField} from "@mui/material";
 import {corporate_add, corporate_query} from "../../../network/api/corporate.api";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
@@ -106,6 +106,27 @@ const CorporateManagement = () => {
             <Notice icon="flaticon-warning kt-font-primary">
                 <p>موجودیت شرکت به معنای طرف قرارداد جیم پین برای پرداخت هزینه ورزش کاربران تحت پوشش میباشد</p>
             </Notice>
+
+
+            <Grid container sx={{mb: 3}} spacing={3}>
+                <Grid item xs={4}>
+                    <Card>
+                        <CardHeader title={"سازمان ها روی نقشه"} color={"primary"}/>
+                        <CardContent className={"kt-space-between"}>
+                            نقشه سازمان ها
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                href="corporate/corporateOnMap"
+                                sx={{marginRight: "auto"}}
+                                size="large"
+                            >
+                                مشاهده
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
             <Portlet>
                 <PortletHeader
                     title="شرکت ها"

@@ -48,6 +48,7 @@ import AffiliateDetail from "./affiliate/affiliateDetail/AffiliateDetail";
 import CateringDataManagement from "./catering/baseData/CateringDataManagement";
 import CateringManagement from "./catering/CateringManagement";
 import LinksManagement from "./links/LinksManagement";
+import CorporatesMap from "./corporate/CorporatesMap/CorporatesMap";
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
@@ -89,6 +90,7 @@ export default function HomePage() {
         {/*corporate*/}
         <Route path="/corporate/details/:corporateId" component={CorporateDetailsManagement} />
         <Route path="/corporate/personnel/:personnelId" component={CorporatePersonnelDetailsManagement} />
+        <Route path="/corporate/corporateOnMap" component={CorporatesMap} />
         <Route path="/corporates" component={CorporateManagement} />
         {/*  sells */}
         <Route path="/sells/" component={SellsManagement} />
