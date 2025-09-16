@@ -7,7 +7,7 @@ import SellManagementCourseTab from "./purchasedTabs/SellManagementCourseTab";
 
 const SellsManagement = () => {
 
-    const [selectedTab, setSelectedTab] = useState("ALL");
+    const [selectedTab, setSelectedTab] = useState("SUBSCRIBE");
 
     return (
         <>
@@ -27,14 +27,14 @@ const SellsManagement = () => {
                     variant={"standard"}
                     aria-label="full width tabs example"
                 >
-                    <Tab label="همه خرید ها" value={"ALL"}/>
                     <Tab label="عضویت ها" value={"SUBSCRIBE"}/>
                     <Tab label="کلاس ها" value={"COURSE"}/>
+                    <Tab label="همه خرید ها" value={"ALL"}/>
                 </Tabs>
             </Paper>
-            {selectedTab == "ALL" && <SellManagementAllTab />}
             {selectedTab == "SUBSCRIBE" && <SellManagementSubscribeTab />}
             {selectedTab == "COURSE" && <SellManagementCourseTab />}
+            {selectedTab == "ALL" && <SellManagementAllTab />}
         </>
     );
 };

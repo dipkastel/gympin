@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {CardContent, CircularProgress, Grid, Typography} from "@mui/material";
+import {Alert, CardContent, CircularProgress, Grid, Typography} from "@mui/material";
 import QRCode from "react-qrcode-logo";
 import {qrCode_getCode} from "../../../network/api/qrCode.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
@@ -59,6 +59,12 @@ const _QRcode = ({ticket, type}) => {
     return (
         <>
             <CardContent>
+
+                <Alert sx={{ mt: 1 }} severity="info" variant="outlined">
+                    <Typography>برای فعال سازی، کد زیر باید توسط متصدی مجموعه اسکن شود.</Typography>
+                    {timerText&&<Typography>{"توجه داشته باشید کد زیر فقط تا " + timerText + " معتبر است و پس از آن تغییر خواهد کرد؛ بنا بر این عکس یا اسکرینشات آن فاقد کارایی خواهد بود."}</Typography>}
+
+                </Alert>
                 <Grid
                     container
                     direction={"column"}

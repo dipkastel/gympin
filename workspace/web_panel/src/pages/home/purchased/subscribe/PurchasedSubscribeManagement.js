@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
-import {Chip, Tooltip} from "@mui/material";
+import {Chip, Paper, Tab, Tabs, Tooltip} from "@mui/material";
 import {Table} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
 import TableContainer from "@mui/material/TableContainer";
@@ -22,13 +22,16 @@ const PurchasedSubscribeManagement = () => {
     const [rowsPerPage, setRowsPerPage] = useState(getRppPurchasedSubscribeManagement());
     const [purchasedSubscribe, SetPurchasedSubscribe] = useState({});
 
+    const [status, setStatus] = useState("ACTIVE");
+
     useEffect(() => {
         getSubscribes()
-    }, [page, rowsPerPage]);
+    }, [page, rowsPerPage,status]);
 
     function getSubscribes() {
         purchasedSubscribe_query({
             queryType: "FILTER",
+            Status:status,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((result) => {
             SetPurchasedSubscribe(result.data.Data)
@@ -60,11 +63,31 @@ const PurchasedSubscribeManagement = () => {
     }
     return (
         <>
+
+
+            <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
+                <Tabs
+                    value={status}
+                    onChange={(e, n) => setStatus(n)}
+                    indicatorColor="primary"
+                    textColor="inherit"
+                    variant={"standard"}
+                    aria-label="full width tabs example"
+                >
+                    <Tab label="همه" value={null}/>
+                    <Tab label="فعال" value={"ACTIVE"}/>
+                    <Tab label="آماده فعال سازی" value={"READY_TO_ACTIVE"}/>
+                    <Tab label="بازپرداخت شده" value={"REFUNDED"}/>
+                    <Tab label="لغو شده" value={"CANCEL"}/>
+                    <Tab label="منقضی" value={"EXPIRE"}/>
+                    <Tab label="درحال انجام" value={"PROCESSING"}/>
+                    <Tab label="تکمیل" value={"COMPLETE"}/>
+                </Tabs>
+            </Paper>
             <Portlet>
                 <PortletHeader
                     title="عضویت ها"
                 />
-
                 <PortletBody>
                     <TableContainer>
                         <Table

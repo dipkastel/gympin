@@ -1,5 +1,28 @@
-import {getStorage, setStorage} from "./utils";
+import {encodeId, getStorage, randomSerialNum, setStorage} from "./utils";
 
+
+const po_driver_id = "po_driver_id";
+
+export function getDriverId(userId) {
+    try {
+        var result = getStorage(po_driver_id);
+        if (result)
+            return result;
+        else {
+            if(userId)
+                result = encodeId(userId);
+            else{
+                result = randomSerialNum();
+            }
+            setStorage(po_driver_id, result);
+            return result;
+        };
+    } catch (e) {
+        result = randomSerialNum();
+        setStorage(po_driver_id, result);
+        return result;
+    }
+}
 
 const po_selected_theme = "po_selected_theme";
 

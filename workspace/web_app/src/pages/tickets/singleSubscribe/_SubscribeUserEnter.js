@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import _GeneratedQrCode from "../commonPartials/_QRcode";
-import {Card, Grid, Tab, Tabs} from "@mui/material";
+import {Card, CardHeader, Grid, Tab, Tabs} from "@mui/material";
 import _ScanQrCode from "../commonPartials/_ScanQrCode";
 import _TicketInvoice from "../commonPartials/_TicketInvoice";
 
@@ -11,6 +11,7 @@ const _SubscribeUserEnter = ({ticket,userCanEnter}) => {
     return (
         <>
             <Card variant={"outlined"} sx={{m:1}}>
+                <CardHeader title={ticket?.EntryList?.length>0?"ثبت ورود":"فعالسازی"}/>
                 <Tabs
                     value={selectedTab}
                     onChange={(e, n) => setSelectedTab(n)}

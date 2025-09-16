@@ -19,7 +19,7 @@ import HomePageTypes from "./mainPage/types/HomePageTypes";
 import SettingsManagement from "./settings/SettingsManagement";
 import CorporateManagement from "./corporate/CorporateManagement";
 import Support from "./support/Support";
-import SupportDetails from "./support/SupportDetails";
+import SupportTicketDetails from "./support/Ticket/SupportTicketDetails";
 import CorporateDetailsManagement from "./corporate/baseData/CorporateDetailsManagement";
 import CorporatePersonnelDetailsManagement from "./corporate/persoanel/CorporatePersonnelDetailsManagement";
 import SubscribeDataManagement from "./purchasedItems/subscribes/baseData/SubscribeDataManagement";
@@ -85,7 +85,7 @@ export default function HomePage() {
         <Route path="/coach/details/:userId" component={CoachDetailsManagement} />
         <Route path="/coach" component={CoachManagement} />
         {/*support*/}
-        <Route path="/support/details/:supportId" component={SupportDetails} />
+        <Route path="/support/details/:supportId" component={SupportTicketDetails} />
         <Route path="/support" component={Support} />
         {/*corporate*/}
         <Route path="/corporate/details/:corporateId" component={CorporateDetailsManagement} />

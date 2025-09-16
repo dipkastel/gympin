@@ -5,6 +5,7 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useNavigate} from "react-router-dom";
 import _placeSubscribes from "./ticketSubscribe/_placeSubscribes";
 import {genders} from "../../../helper/enums/genders";
+import _CallToPlace from "./partial/_CallToPlace";
 
 const _TabPlaceBuyable = ({place}) => {
     const navigate = useNavigate()
@@ -113,23 +114,11 @@ const _TabPlaceBuyable = ({place}) => {
     }
 
 
-    function getfixedPlaceNumber() {
-        return place?.Tell;
-    }
-
-    function showCallSudjest() {
-        return (!!currentUser) && place?.CallUs && place?.Tell;
-    }
 
     return (
         <>
-            {showCallSudjest() &&
-            <Alert sx={{textDecoration: "none", m: 2}} severity="warning" href={"tel:" + getfixedPlaceNumber()} component={"a"}>
-                <AlertTitle>قبل از رزرو بلیط، شرایط استفاده را هماهنگ نمایید.</AlertTitle>
-                <Button variant={"contained"} color={"warning"}>تماس با مرکز</Button>
-            </Alert>}
 
-
+            <_CallToPlace place={place} currentUser={currentUser} />
 
             {place?.Genders?.length > 0 && (
                 <Tabs

@@ -1,17 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-    Portlet,
-    PortletBody,
-    PortletFooter,
-    PortletHeader,
-    PortletHeaderToolbar
-} from "../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletFooter, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import Notice from "../../../partials/content/Notice";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {Form} from "react-bootstrap";
 import "./map.css"
-import {PlaceGym_query} from "../../../../network/api/placeGym.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import Select from "react-select";
@@ -72,12 +65,15 @@ const CorporatesMap = () => {
         setMarkerLayer(markerLaye);
     };
 
+
     function getStatusOptions() {
         return [
-            {value: null, label: "همه"},
             {value: "ACTIVE", label: "فعال"},
+            {value: "LOW_BUDGET", label: "کمبود موجودی"},
             {value: "INACTIVE", label: "غیر فعال"},
-            {value: "PREREGISTER", label: "پیش ثبت نام"}
+            {value: "PREREGISTER", label: "پیش ثبت نام"},
+            {value: "DEMO", label: "دمو"},
+            {value: "SECURE_DEMO", label: "دمو امنیتی"},
         ]
     }
 

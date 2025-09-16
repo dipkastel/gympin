@@ -4,6 +4,7 @@ import {connect, useSelector} from "react-redux";
 import {corporateActions} from "../redux/actions/CorporateActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {corporatePersonnel_corporateOwnedByUserId} from "../../network/api/corporatePersonnel.api";
+import ChatWidget from "./ChatWidget";
 
 const SelectCorproate = (props) => {
     const error = useContext(ErrorContext);
@@ -50,6 +51,7 @@ const SelectCorproate = (props) => {
             {loading && <CircularProgress size="1.5rem"/>}
             {!loading && selectedCorporate && <Chip component={"a"} sx={{cursor: "pointer"}} href={"/settings/corporates"}
                                                     label={<Typography variant={"subtitle"}>{selectedCorporate.Name}</Typography>}/>}
+
         </>
     );
 };

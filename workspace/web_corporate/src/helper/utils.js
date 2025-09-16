@@ -150,3 +150,28 @@ export function decodeId(str) {
         return null
     }
 }
+
+
+export function randomSerialNum(length = 12) {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charsLen = chars.length;
+    if (typeof window !== "undefined" && window.crypto && window.crypto.getRandomValues) {
+        const arr = new Uint8Array(length);
+        window.crypto.getRandomValues(arr);
+        return Array.from(arr, (n) => chars[n % charsLen]).join("");
+    }
+
+    if (typeof require === "function") {
+        try {
+            const crypto = require("crypto");
+            const buf = crypto.randomBytes(length);
+            return Array.from(buf, (b) => chars[b % charsLen]).join("");
+        } catch (e) {
+        }
+    }
+    let out = "";
+    for (let i = 0; i < length; i++) {
+        out += chars.charAt(Math.floor(Math.random() * charsLen));
+    }
+    return out;
+}
