@@ -173,5 +173,8 @@ export let Api_url = {
     },
     TransactionPersonnelCredit: {
         query: "v1/TransactionPersonnelCredit/query",
+    },
+    Chat:{
+     endpoint:"GympinChatEndPoint"
     }
 };

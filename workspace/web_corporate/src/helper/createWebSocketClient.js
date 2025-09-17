@@ -1,12 +1,12 @@
 
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import {AuthApi} from "../network/api/NETWORKCONSTS";
+import {Api_url, AuthApi} from "../network/api/NETWORKCONSTS";
 import {chatStatusEnum} from "./layouts/ChatWidget";
 
 export const createWebSocketClient = (onMessage,driverId,currentUser,setChatStatus) => {
 
-    const socket = new SockJS(AuthApi.BASEURL.replace('api',"GympinChatEndPoint"));
+    const socket = new SockJS(AuthApi.BASEURL+Api_url.Chat.endpoint);
     const client = new Client({
         webSocketFactory: () => socket,
         reconnectDelay: 5000,

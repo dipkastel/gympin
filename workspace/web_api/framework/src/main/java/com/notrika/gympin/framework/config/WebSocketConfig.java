@@ -17,6 +17,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/GympinChatEndPoint").setAllowedOriginPatterns("*").withSockJS();
+        registry.addEndpoint("/api/GympinChatEndPoint").setAllowedOriginPatterns("*").withSockJS();
     }
 }

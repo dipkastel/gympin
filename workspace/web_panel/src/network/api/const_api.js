@@ -575,3 +575,6 @@ export let userRolesApi = {
 
 };
 export let UserCreditApi = {};
+export let Chat = {
+    endpoint:"GympinChatEndPoint"
+};
