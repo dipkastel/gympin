@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.socket;
 
-import com.notrika.gympin.common.settings.base.enums.settingsType;
+import com.notrika.gympin.common.socket.chat.dto.WsSessionInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -13,7 +13,6 @@ import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 
 import java.time.Instant;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -36,8 +35,6 @@ public class WebSocketSessionTracker {
         if (username == null && sha.getUser() != null) {
             username = sha.getUser().getName();
         }
-
-        if (Objects.equals(appName, "WEBPANEL")) return;
         WsSessionInfo info = WsSessionInfo.builder()
                 .userId(userId!=null?Long.valueOf(userId):null)
                 .username(username)
@@ -46,6 +43,7 @@ public class WebSocketSessionTracker {
                 .appName(appName)
                 .driverId(driverId)
                 .connectTime(Instant.now())
+                .isOnline(true)
                 .build();
         sessions.put(sessionId, info);
         messagingTemplate.convertAndSend("/manage/onlineUsers", sessions);
@@ -89,6 +87,10 @@ public class WebSocketSessionTracker {
 
     public Map<String, WsSessionInfo> getSessions() {
         return sessions;
+    }
+
+    public  WsSessionInfo getSession(String sessionId) {
+        return sessions.get(sessionId);
     }
 
 

@@ -171,6 +171,9 @@ export let Api_url = {
         query: "v1/TransactionCorporate/query",
         increaseQuery: "v1/increaseCorporateDeposit/query",
     },
+    ws: {
+        query: "v1/ws/query",
+    },
     TransactionPersonnelCredit: {
         query: "v1/TransactionPersonnelCredit/query",
     },

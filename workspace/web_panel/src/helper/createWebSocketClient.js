@@ -2,15 +2,21 @@ import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import {AuthApi, Chat} from "../network/api/const_api";
 
-export const createWebSocketClient = (onMessage,destination) => {
-    // eslint-disable-next-line no-undef
+export const createWebSocketClient = (onMessage,destination,driverId,user) => {
+
+
+
     const socket = new SockJS(AuthApi.BASEURL+Chat.endpoint);
     const client = new Client({
         webSocketFactory: () => socket,
         reconnectDelay: 5000,
         debug: (str) => console.log(">>>>>>",str),
         connectHeaders: {
-            AppName: "WEBPANEL"
+            Username: user.FullName,
+            UserId: user.Id,
+            PhoneNumber: user.PhoneNumber,
+            DriverId: driverId,
+            AppName: "WEBPANEL",
         },
         onConnect: () => {
             client.subscribe(destination,(msg) => {

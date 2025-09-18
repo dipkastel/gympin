@@ -1,4 +1,4 @@
-package com.notrika.gympin.domain.socket;
+package com.notrika.gympin.common.socket.chat.dto;
 
 import lombok.*;
 
@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 public class WsSessionInfo {
@@ -20,10 +21,14 @@ public class WsSessionInfo {
     private  String appName;
     private  String driverId;
     private  Instant connectTime;
+    private  Boolean isOnline;
     private  Set<String> subscriptions = ConcurrentHashMap.newKeySet();
 
 
-    public void addSubscription(String dest) { subscriptions.add(dest); }
+    public void addSubscription(String dest) {
+        if(subscriptions==null) subscriptions = ConcurrentHashMap.newKeySet();
+        subscriptions.add(dest);
+    }
     public void removeSubscription(String dest) { subscriptions.remove(dest); }
 
 }

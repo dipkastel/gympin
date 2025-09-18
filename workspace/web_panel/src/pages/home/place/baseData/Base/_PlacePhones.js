@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 
 const _PlacePhones = ({initialValue,onChange}) => {
 
-    const [phones, setPhones] = useState(initialValue.split(","));
+    const [phones, setPhones] = useState(initialValue?.split(","));
     const [finalString, setFinalString] = useState(initialValue);
 
     const handleChange = (index, value) => {

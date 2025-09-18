@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
-import {Grid, ListItem, ListItemButton, ListItemText, Typography} from "@mui/material";
+import React from 'react';
+import {Grid, ListItemButton, ListItemText, Typography} from "@mui/material";
 import {ApplicationEnum} from "../../../../helper/enums/ApplicationEnum";
+import {BookOnline, OfflineBolt} from "@mui/icons-material";
 
-const _ActiveUserListItem = ({sessionId,users,selectedUser,setSelectedUser}) => {
+const _ActiveUserListItem = ({user,selectedUser,setSelectedUser}) => {
 
 
     function getItemBgColor(appName){
@@ -19,22 +20,23 @@ const _ActiveUserListItem = ({sessionId,users,selectedUser,setSelectedUser}) => 
     }
 
     return (
-        <Grid container sx={{border:selectedUser === sessionId?"1px solid #e7333e":"1px solid #aaa",
-            background:getItemBgColor(users[sessionId].appName),
+        <Grid container sx={{border:selectedUser === user.driverId?"1px solid #e7333e":"1px solid #aaa",
+            background:getItemBgColor(user.sessions[0].appName),
             borderRadius:3,
             mx:1,my:1}}>
             <Grid container sx={{background:"#FFFFFF",
                 borderRadius:3}}>
                 <ListItemButton
-                    selected={selectedUser?.sessionId === sessionId}
-                    onClick={() => setSelectedUser(users[sessionId])}
+                    selected={selectedUser?.sessionId === user.driverId}
+                    onClick={() => setSelectedUser(user.sessions[0])}
                 >
-                    <ListItemText sx={{textAlign:"start"}} primary={users[sessionId]?.username} secondary={users[sessionId]?.phoneNumber} />
-                    <ListItemText sx={{textAlign:"end"}} primary={sessionId} secondary={users[sessionId]?.driverId}  />
+                    <ListItemText sx={{textAlign:"start"}} primary={user.sessions[0]?.username} secondary={user.sessions[0]?.phoneNumber} />
+                    <ListItemText sx={{textAlign:"end"}} primary={user.driverId} secondary={user.sessions[0]?.driverId}  />
                 </ListItemButton>
+                <OfflineBolt sx={{ml:1,mt:1,color:(user.sessions[0].isOnline)?"#0d8521":"#8d0e0e"}}/>
             </Grid>
             <Typography variant={"caption"} sx={{px:1,color:"white"}}>
-                {ApplicationEnum[users[sessionId]?.appName]}</Typography>
+                {ApplicationEnum[user.sessions[0]?.appName]}</Typography>
         </Grid>
     );
 };

@@ -175,3 +175,10 @@ export function randomSerialNum(length = 12) {
     }
     return out;
 }
+export function playMessageReceived(sender) {
+    var sound = sender=="Client"?"/assets/sound/messageSent.mp3":"/assets/sound/messageReceived.mp3";
+    const audio = new Audio(sound);
+    audio.play().catch((err) => {
+        console.warn("خطا در پخش صدا:", err);
+    });
+}

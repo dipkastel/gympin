@@ -1,36 +1,60 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Box, Button, Paper, TextField} from "@mui/material";
 import {createWebSocketClient} from "../../../../helper/createWebSocketClient";
+import {useSelector} from "react-redux";
+import {useWebSocketClient} from "../../../../helper/useWebSocketClient";
+import {playMessageReceived} from "../../../../helper";
+import {ActivationState} from "@stomp/stompjs";
+import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import {ws_query} from "../../../../network/api/ws.api";
 
 const _ChatBox = ({selectedUser}) => {
 
-    const [message, setMessage] = useState("");
+    const user = useSelector(state => state.auth.user);
+    const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
+    const [status, setStatus] = useState(ActivationState.INACTIVE);
     const socket = useRef(null);
+    const error = useContext(ErrorContext);
+    const msgBox = useRef(null);
 
 
+    const { sendMessage } = useWebSocketClient({
+        ChangeMessages: (msg) => {
+            setMessages((prev)=>[...prev,msg])
+            playMessageReceived(msg.Sender);
+        },
+        setInput:(text) => setInput(text),
+        statusChanged:(status)=>setStatus(status),
+        driverId:selectedUser.driverId
 
+    });
 
-
-    useEffect(() => {
-        console.log(selectedUser);
-        socket.current = createWebSocketClient((obj) => {
-            setMessages((prev) => [...prev, obj]);
-        }, "/chat/SupportChatS/"+selectedUser.driverId);
-        return () => socket.current.deactivate();
-    }, []);
-
-
-    const sendMessage = () => {
-        if (!message.trim()) return;
-        socket.current.publish({
-            destination: "/app/SupportChatM/"+selectedUser.driverId,
-            body: JSON.stringify({
-                Message: message ,
-                Sender:"Server"}),
+    useEffect(()=>{
+        getLastMessages();
+    },[selectedUser])
+    function getLastMessages(){
+        ws_query({
+            queryType: "FILTER",
+            DriverId:selectedUser.driverId,
+            paging: {Page: 0, Size: 100, orderBy: "id", Desc: true}
+        }).then(result => {
+            setMessages(result.data.Data.content.reverse());
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
         });
-        setMessage("");
-    };
+    }
+
+    useEffect(()=>{
+        if (msgBox.current) {
+            msgBox.current.scrollTop = msgBox.current.scrollHeight;
+        }
+    },[messages])
+
 
 
 
@@ -46,6 +70,7 @@ const _ChatBox = ({selectedUser}) => {
                     border: "1px solid #eee",
                     borderRadius: 2,
                 }}
+                ref={msgBox}
             >
                 {messages?.map((msg, idx) => (
                     <Box
@@ -78,14 +103,14 @@ const _ChatBox = ({selectedUser}) => {
                     label={"پیام"}
                     variant={"outlined"}
                     placeholder="پیام خود را بنویسید..."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
                 />
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={sendMessage}
+                    onClick={(e)=>sendMessage(input)}
                 >
                     ارسال
                 </Button>

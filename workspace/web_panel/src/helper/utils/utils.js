@@ -168,3 +168,12 @@ export function setStorage(key, value, expires) {
   }
   return true;
 }
+
+export function playMessageReceived(sender) {
+  if(sender!=="Client")return;
+  var sound = "/assets/sound/messageReceived.mp3";
+  const audio = new Audio(sound);
+  audio.play().catch((err) => {
+    console.warn("خطا در پخش صدا:", err);
+  });
+}

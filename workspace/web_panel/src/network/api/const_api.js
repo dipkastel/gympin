@@ -1,3 +1,5 @@
+import {ws_getSessionServerList} from "./ws.api";
+
 export let AuthApi = {
     // BASEURL: "https://api.gympin.ir/",
     BASEURL: "http://localhost:8080/api/",
@@ -573,6 +575,10 @@ export let userRolesApi = {
     delete: "v1/userRoles/delete",
     query: "v1/userRoles/query"
 
+};
+export let wsApi = {
+    query: "v1/ws/query",
+    getSessionList: "v1/ws/getSessionList",
 };
 export let UserCreditApi = {};
 export let Chat = {
