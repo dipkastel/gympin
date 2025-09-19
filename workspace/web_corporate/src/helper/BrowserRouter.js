@@ -39,6 +39,7 @@ import IncreaseSelect from "../pages/increaseSelect/IncreaseSelect";
 import PayCateringInvoices from "../pages/cateringDetail/payCateringInvoices/PayCateringInvoces";
 import ProcessingInvoices from "../pages/cateringDetail/ProcessingInvoices/ProcessingInvoces";
 import Transactions from "../pages/TransActions/Transactions";
+import TheaterAndLearn from "../pages/Learn/theaterAndLearn/TheaterAndLearn";
 
 export const BrowserRouter =[
     {
@@ -248,6 +249,10 @@ export const BrowserRouter =[
             {
                 path: '',
                 Component: Learn,
+            },
+            {
+                path: 'theaterAndLearn',
+                Component: TheaterAndLearn,
             },
         ],
     },

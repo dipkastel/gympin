@@ -3,8 +3,13 @@ import Grid from "@mui/material/Grid2";
 import _InSectionSlider from "../../components/_InSectionSlider";
 import {Card, Typography} from "@mui/material";
 import _NeedNewService from "../../components/_NeedNewService";
+import _MercheantSelerItem from "../../components/_MercheantSelerItem";
+import {useNavigate} from "react-router";
 
 const Learn = () => {
+
+    const navigate = useNavigate();
+
     return (
         <>
 
@@ -14,6 +19,16 @@ const Learn = () => {
                     <_InSectionSlider sliders={[
                         {Image: "/assets/banners/yadgiri-dash.jpg"},
                     ]}/>
+                </Grid>
+
+                <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
+                    <_MercheantSelerItem
+                        title={"تاتر آموزش"}
+                        icon={<img width={100} alt="icon" src={"/assets/images/btn/learnteather.png"}/>}
+                        describe={"بسته‌ی کارگاه‌های خلاق سازمانی، مجموعه‌ای از کارگاه‌های تعاملی بر پایه‌ی تئاتر و ادبیات است که با رویکرد تجربه و بازی، به تقویت ارتباط، تمرکز، همدلی و خلاقیت تیم‌ها کمک می‌کند."}
+                        onClick={() => navigate("/learn/theaterAndLearn")}
+                        status={"ACTIVE"}
+                    />
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
                     <_NeedNewService category={"آموزش"} />

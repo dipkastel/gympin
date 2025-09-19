@@ -3,7 +3,7 @@ import {Box, Card, CardActionArea, Paper, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {CateringStatus} from "../helper/enums/CateringStatus";
 
-const _MercheantSelerItem = ({icon, title,describe, onClick, status}) => {
+const _TheaterCardItem = ({icon, title,describe, onClick, status}) => {
     return (
         <>
             <Box sx={{zIndex: 900, ml: 4,minHeight:"80px"}} onClick={status !== 'ACTIVE'?{}:onClick}>{icon}</Box>
@@ -14,10 +14,7 @@ const _MercheantSelerItem = ({icon, title,describe, onClick, status}) => {
                     <Typography sx={{mb: 4}} variant={"h4"}>
                         {title}
                     </Typography>
-
-                    <Typography sx={{mb: 1, width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"info"} variant={"body2"}>
                         {describe}
-                    </Typography>
                 </CardActionArea>
                 {status!="ACTIVE"&&<Paper sx={{width: "100%", textAlign: "center", borderRadius: "0", p: 1}}>
                     {CateringStatus[status]}
@@ -27,4 +24,4 @@ const _MercheantSelerItem = ({icon, title,describe, onClick, status}) => {
     );
 };
 
-export default _MercheantSelerItem;
+export default _TheaterCardItem;

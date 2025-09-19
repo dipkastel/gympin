@@ -78,7 +78,7 @@ const _NeedNewService = ({category}) => {
 
     return (
         <>
-            <Box sx={{zIndex: 900, ml: 4}} onClick={()=>{setOpenModalAdd(true)}}><img width={100} alt="icon" src={"/assets/images/btn/add.png"}/></Box>
+            <Box sx={{zIndex: 900, ml: 4,minHeight:"80px"}} onClick={()=>{setOpenModalAdd(true)}}><img width={100} alt="icon" src={"/assets/images/btn/add.png"}/></Box>
             <Card sx={{mt: -8, mb: 2, mx: 2}} elevation={10}>
                 <CardActionArea
                     sx={{px: 4, pt: 4, pb: 2, textAlign: "center", alignContent: "center", justifyItems: "center", borderRadius: 0}}

@@ -2,7 +2,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import {Chip} from "@mui/material";
 import {
-    AccountBalanceWalletOutlined, Badge,
+    AccountBalanceWalletOutlined, Badge, Ballot,
     CalendarMonth,
     CardGiftcard,
     Commute,
@@ -13,7 +13,7 @@ import {
     Fastfood,
     Group,
     HealthAndSafety,
-    LocalLibrary,
+    LocalLibrary, MenuBook,
     Movie,
     PersonPin, ReceiptLong,
     Settings,
@@ -40,20 +40,20 @@ export const NavigationMenu = [
         icon: <SportsVolleyball/>,
     },
     {
+        segment: 'learn',
+        title: 'آموزش و توسعه',
+        icon: <MenuBook/>,
+        action: <Chip label={"جدید"} color={"error"} size="small"/>,
+    },
+    {
         segment: 'food',
         title: 'غذا و میان وعده',
         icon: <Fastfood/>,
     },
     {
-        segment: 'learn',
-        title: 'آموزش و توسعه',
-        icon: <HealthAndSafety/>,
-        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
-    },
-    {
         segment: 'employment',
-        title: 'جذب و استخدام',
-        icon: <Badge/>,
+        title: 'نظرسنجی و آمار',
+        icon: <Ballot/>,
         action: <Chip label={"به زودی"} color={"default"} size="small"/>,
     },
     {
