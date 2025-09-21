@@ -3,7 +3,7 @@ import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../.
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import {Avatar, Chip, TableCell, Typography} from "@mui/material";
+import {Avatar, Chip, CircularProgress, TableCell, Tooltip, Typography} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import {service_deleteCorruptedItems, service_query} from "../../../../network/api/service.api";
 import {getRppSettingActivities, SetRppSettingActivities} from "../../../../helper/pocket/pocket";
@@ -13,6 +13,9 @@ import TablePagination from "@mui/material/TablePagination";
 import SystemSecurityUpdateWarningIcon from '@mui/icons-material/SystemSecurityUpdateWarning';
 import {useHistory} from "react-router-dom";
 import {getUserFixedName} from "../../../../helper";
+import __SelectUser from "../../../partials/selector/__SelectUser";
+import {FormatListBulleted} from "@mui/icons-material";
+import __SelectService from "../../../partials/selector/__SelectService";
 
 const __SettingActivitiesDetails = () => {
 
@@ -21,15 +24,22 @@ const __SettingActivitiesDetails = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppSettingActivities());
     const [service, setService] = useState([]);
+    const [selectedService,setSelectedService] = useState(null);
+    const [selectedUser,setSelectedUser] = useState(null);
 
     useEffect(() => {
         getActivities();
-    }, [page, rowsPerPage]);
+    }, [page, rowsPerPage,selectedUser,selectedService]);
+
+
 
 
     function getActivities() {
+        setService(null);
         service_query({
-            queryType: "SEARCH",
+            queryType: "FILTER",
+            Service:selectedService?.value,
+            User:selectedUser?.value,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
             setService(data.data.Data)
@@ -56,6 +66,21 @@ const __SettingActivitiesDetails = () => {
 
     return (
         <>
+
+
+
+            <Portlet>
+                <PortletHeader
+                    title="فیلتر"
+                />
+
+                <PortletBody>
+                    <__SelectUser value={selectedUser} onChange={setSelectedUser} />
+                    <br/>
+                    <__SelectService value={selectedService} onChange={setSelectedService}  />
+                </PortletBody>
+            </Portlet>
+
             <Portlet>
                 <PortletHeader
                     title="فعالیت های کاربران"
@@ -74,7 +99,7 @@ const __SettingActivitiesDetails = () => {
 
                 <PortletBody>
 
-                    <Table className={"table"}>
+                    {service&&<Table className={"table"}>
                         <TableHead>
                             <TableRow>
                                 <TableCell align="right">Id</TableCell>
@@ -82,6 +107,7 @@ const __SettingActivitiesDetails = () => {
                                 <TableCell align="right">کاربر</TableCell>
                                 <TableCell align="right">نام اکشن</TableCell>
                                 <TableCell align="right">زمان</TableCell>
+                                <TableCell align="right">data</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -115,10 +141,16 @@ const __SettingActivitiesDetails = () => {
                                         hour: "2-digit",
                                         minute: "2-digit"
                                     })}</TableCell>
+                                    <TableCell align="right" component="th"
+                                               scope="row">
+                                        <Tooltip title={item.Dto} placement="left">
+                                            <FormatListBulleted color={"secondary"}/>
+                                        </Tooltip></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
-                    </Table>
+                    </Table>}
+                    {!service&&<><CircularProgress /></>}
 
                     {(service?.totalElements > 0) && <TablePagination
                         rowsPerPageOptions={[15, 25, 50, 100]}

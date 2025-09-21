@@ -28,6 +28,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,6 +48,8 @@ public class PlaceCateringServiceImpl extends AbstractBaseService<PlaceCateringP
         PlaceCateringEntity initPlace = PlaceCateringEntity.builder()
                 .name(placeParam.getName())
                 .status(PlaceStatusEnum.INACTIVE)
+                .hasDishesPrice(false)
+                .freeDeliveryPrice(BigDecimal.ZERO)
                 .build();
         return PlaceConvertor.ToCateringDto(placeCateringRepository.add(initPlace));
     }

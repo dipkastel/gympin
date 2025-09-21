@@ -36,4 +36,8 @@ public class ServiceQuery extends BaseQuery<ServiceQuery> {
     private Long is_executorUseræid;
 
 
+    @JsonProperty("Service")
+    private String like_service;
+
+
 }
