@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect, useContext} from "react";
+import React, {useState, useRef, useEffect, useContext, useCallback} from "react";
 import {connect, useSelector} from "react-redux";
 import {
     Box, Fab, Paper, IconButton, Typography, TextField, Button
@@ -6,7 +6,7 @@ import {
 import ChatIcon from "@mui/icons-material/Chat";
 import CloseIcon from "@mui/icons-material/Close";
 import Grid from "@mui/material/Grid2";
-import { Circle } from "@mui/icons-material";
+import {AccessTime, Circle, Delete, Error, Replay} from "@mui/icons-material";
 import { ActivationState } from "@stomp/stompjs";
 import { useWebSocketClient } from "../useWebSocketClient";
 import {playMessageReceived} from "../utils";
@@ -14,61 +14,111 @@ import {ws_query} from "../../network/api/ws.api";
 import {getDriverId} from "../pocket";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 
-const ChatWidget = () => {
 
-    const currentUser = useSelector(state => state.auth.user)
+const ChatWidget = () => {
+    const currentUser = useSelector(state => state.auth.user);
     const error = useContext(ErrorContext);
     const [open, setOpen] = useState(false);
     const [input, setInput] = useState("");
     const statusIconRef = useRef(null);
     const [messages, setMessages] = useState([]);
+    const [pendingMessages, setPendingMessages] = useState([]);
     const [status, setStatus] = useState(ActivationState.INACTIVE);
     const msgBox = useRef(null);
     const driverId = getDriverId(currentUser?.id);
 
-    const { sendMessage } = useWebSocketClient({
-        ChangeMessages: (msg) => {
-            setMessages((prev)=>[...prev,msg])
-            setOpen(true);
-            playMessageReceived(msg.Sender);
-        },
-        setInput:(text) => setInput(text),
-        statusChanged:(status)=>setStatus(status),
-        driverId:driverId
+    const changeMessages = useCallback((msg) => {
+        setMessages((prev) => [...prev, msg]);
+        setOpen(true);
+        playMessageReceived(msg.Sender);
+        setPendingMessages((prev) =>
+            prev.filter((pm) => pm.Message !== msg.Message || pm.Sender !== msg.Sender)
+        );
+    }, []);
 
+    const handleSetInput = useCallback((text) => {
+        setInput(text);
+    }, []);
+
+    const handleStatusChanged = useCallback((s) => {
+        setStatus(s);
+    }, []);
+
+    const handleMessageStatus = useCallback(({ message, status }) => {
+        if (status === "sent") {
+        } else if (status === "failed") {
+            setPendingMessages((prev) =>
+                prev.map((pm) =>
+                    pm.Message === message.Message && pm.Sender === message.Sender
+                        ? { ...pm, failed: true }
+                        : pm
+                )
+            );
+        }
+    }, []);
+
+    const { sendMessage, reactive } = useWebSocketClient({
+        ChangeMessages: changeMessages,
+        setInput: handleSetInput,
+        statusChanged: handleStatusChanged,
+        driverId,
+        currentUser,
+        onMessageStatus: handleMessageStatus,
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         if (msgBox.current) {
             msgBox.current.scrollTop = msgBox.current.scrollHeight;
         }
-    },[messages,open])
+    }, [messages, pendingMessages, open]);
 
-    useEffect(()=>{
+    useEffect(() => {
         getLastMessages();
-    },[])
-    function getLastMessages(){
+    }, []);
+
+    function getLastMessages() {
         ws_query({
             queryType: "FILTER",
-            DriverId:driverId,
-            paging: {Page: 0, Size: 20, orderBy: "Id", Desc: false}
-        }).then(result => {
-            setMessages(result.data.Data.content);
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
+            DriverId: driverId,
+            paging: { Page: 0, Size: 20, orderBy: "Id", Desc: true },
+        })
+            .then((result) => {
+                setMessages(result.data.Data.content.reverse());
+            })
+            .catch((e) => {
+                try {
+                    error.showError({ message: e.response.data.Message });
+                } catch (f) {
+                    error.showError({ message: "خطا نا مشخص" });
+                }
+            });
     }
 
     const toggleChat = () => setOpen(!open);
 
-    let color = "gray";
-    if (status === ActivationState.ACTIVE) color = "limegreen";
-    if (status === ActivationState.DEACTIVATING) color = "orange";
-    if (status === ActivationState.INACTIVE) color = "red";
+    const handleSendMessage = useCallback(() => {
+        if (input.trim()) {
+            const newMessage = { Message: input, Sender: "Client", id: Date.now() };
+            setPendingMessages((prev) => [...prev, newMessage]);
+            sendMessage(newMessage);
+            setInput("");
+        }
+    }, [input, sendMessage]);
+
+    const deletePendingMessage = useCallback((msg) => () => {
+        setPendingMessages((prev) =>
+            prev.filter((pm) => pm.id !== msg.id)
+        );
+    }, []);
+
+    const resendPendingMessage = useCallback((msg) => () => {
+        setPendingMessages((prev) =>
+            prev.map((pm) =>
+                pm.id === msg.id ? { ...pm, failed: false } : pm
+            )
+        );
+        sendMessage({ Message: msg.Message, Sender: msg.Sender, id: msg.id });
+    }, [sendMessage]);
 
     return (
         <>
@@ -106,32 +156,73 @@ const ChatWidget = () => {
                         justifyContent={"space-between"}
                         container
                     >
-                        <Grid direction={"row"} alignContent={"center"} container>
-                            <Circle ref={statusIconRef} sx={{ color, fontSize: 16, mr: 1 }} />
-                            <Typography variant="subtitle1">پشتیبانی</Typography>
-                        </Grid>
+                        {status === ActivationState.ACTIVE ? (
+                            <Grid direction={"row"} alignContent={"center"} container>
+                                <Circle ref={statusIconRef} color={"success"} sx={{ fontSize: 16, mr: 1 }} />
+                                <Typography variant="subtitle1">پشتیبانی</Typography>
+                            </Grid>
+                        ) : (
+                            <Grid>
+                                <Typography variant={"caption"}>در حال </Typography>
+                                <Typography
+                                    component={"a"}
+                                    sx={{ cursor: "pointer" }}
+                                    variant={"caption"}
+                                    onClick={reactive}
+                                >
+                                    اتصال مجدد
+                                </Typography>
+                                <Typography variant={"caption"}>...</Typography>
+                            </Grid>
+                        )}
 
                         <IconButton size="small" onClick={toggleChat} sx={{ color: "white" }}>
                             <CloseIcon />
                         </IconButton>
                     </Grid>
 
-                    <Box ref={msgBox} sx={{ flex: 1, p: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 1 }}>
-                        {messages?.map((msg, i) => (
+                    <Box
+                        ref={msgBox}
+                        sx={{
+                            flex: 1,
+                            p: 1,
+                            overflowY: "auto",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 1,
+                        }}
+                    >
+                        {[...messages, ...pendingMessages].map((msg, i) => (
                             <Box
-                                key={i}
+                                key={msg.id || i}
                                 sx={{
                                     alignSelf: msg?.Sender === "Client" ? "flex-start" : "flex-end",
-                                    bgcolor: msg?.Sender === "Client" ? "primary.light" : "grey.300",
+                                    bgcolor: msg?.Sender === "Client" ? pendingMessages.includes(msg)?"#ff9999":"primary.light" : "grey.300",
                                     color: "black",
                                     p: 1,
                                     borderRadius: 1,
                                     maxWidth: "80%",
                                     wordBreak: "break-word",
-                                    textAlign:"justify"
+                                    textAlign: "justify",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 1,
+                                    opacity:  1,
                                 }}
                             >
+                                {pendingMessages.includes(msg) && !msg.failed && (<>
+                                    <AccessTime sx={{ fontSize: 16, color: "grey.600" }} />
+                                </>
+                                )}
+                                {msg?.failed && (<>
+                                    <Error sx={{ fontSize: 16, color: "#FF0000" }} />
+                                        <Replay sx={{ fontSize: 16, color: "#FF0000" }} onClick={resendPendingMessage(msg)} />
+                                </>
+                                )}
                                 {msg?.Message}
+                                {msg?.failed && (<>
+                                    <Delete sx={{ fontSize: 16, color: "#4b0505" }} onClick={deletePendingMessage(msg)} />
+                                </>)}
                             </Box>
                         ))}
                     </Box>
@@ -144,12 +235,19 @@ const ChatWidget = () => {
                             value={input}
                             multiline={true}
                             minRows={1}
-                            disabled={status!=ActivationState.ACTIVE}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="پیام خود را بنویسید..."
-                            onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" && !e.shiftKey) {
+                                    e.preventDefault();
+                                    handleSendMessage();
+                                }
+                            }}
                         />
-                        <Button variant="contained" disabled={status!=ActivationState.ACTIVE} onClick={(e)=>sendMessage(input)}>
+                        <Button
+                            variant="contained"
+                            onClick={handleSendMessage}
+                        >
                             ارسال
                         </Button>
                     </Box>

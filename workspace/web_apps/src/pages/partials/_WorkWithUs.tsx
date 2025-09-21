@@ -20,7 +20,7 @@ const _WorkWithUs = () => {
                         </Typography>
                     </Button>
                     <br/>
-                    <Button variant={"contained" } className={"btn-red4"} href="https://gympin.ir/corporate"  sx={{mx:0,my:3,py:2,borderRadius:8}}>
+                    <Button variant={"contained" } className={"btn-red4"} href="https://gympin.ir"  sx={{mx:0,my:3,py:2,borderRadius:8}}>
                         <Typography sx={{mr:3,ml:3,color:"#e7333e",fontWeight:"bold" }} variant={"subtitle2"}>
                             اطلاعات بیشتر شرکت ها
                         </Typography>
