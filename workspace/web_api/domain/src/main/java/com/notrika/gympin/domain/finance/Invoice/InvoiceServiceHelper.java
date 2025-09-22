@@ -39,9 +39,7 @@ import com.notrika.gympin.persistence.dao.repository.corporate.CorporateReposito
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporatePersonnelCreditTransactionRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
-import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceUserTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.transaction.*;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceFoodRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceRepository;
@@ -58,6 +56,8 @@ import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateP
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceDiscountTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
@@ -73,8 +73,6 @@ import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodMenuEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
-import jdk.jfr.Threshold;
-import net.bytebuddy.dynamic.TypeResolutionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,6 +91,10 @@ public class InvoiceServiceHelper {
     CorporatePersonnelCreditRepository financeCorporatePersonnelCreditRepository;
     @Autowired
     FinanceCorporateTransactionRepository financeCorporateTransactionRepository;
+    @Autowired
+    FinanceDiscountTransactionRepository financeDiscountTransactionRepository;
+    @Autowired
+    FinanceIncomeTransactionRepository financeIncomeTransactionRepository;
     @Autowired
     FinanceUserTransactionRepository financeUserTransactionRepository;
     @Autowired
@@ -178,7 +180,7 @@ public class InvoiceServiceHelper {
 
         for (FinanceCorporateTransactionEntity entity : corporateTransactions.stream().filter(e -> !e.isDeleted()).collect(Collectors.toList())) {
             if (entity.getTransactionCorporateType() == TransactionCorporateType.DEPOSIT) {
-                FinanceCorporateEntity financeCorporate =  entity.getFinanceCorporate();
+                FinanceCorporateEntity financeCorporate = entity.getFinanceCorporate();
                 BigDecimal lastCorporateDeposit = financeCorporate.getTotalDeposit();
                 BigDecimal afterCorporateDeposit = lastCorporateDeposit.subtract(entity.getAmount());
                 financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
@@ -196,7 +198,7 @@ public class InvoiceServiceHelper {
 
             } else if (entity.getTransactionCorporateType() == TransactionCorporateType.CREDIT) {
 
-                FinanceCorporateEntity financeCorporate =  entity.getFinanceCorporate();
+                FinanceCorporateEntity financeCorporate = entity.getFinanceCorporate();
                 BigDecimal lastCorporateCredit = financeCorporate.getTotalCredits();
                 BigDecimal afterCorporateCredit = lastCorporateCredit.subtract(entity.getAmount());
                 financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
@@ -219,7 +221,7 @@ public class InvoiceServiceHelper {
     public void refoundpersonelCredit(List<FinanceCorporatePersonnelCreditTransactionEntity> corporatePersonelTransactions, FinanceSerialEntity serial) {
 
         for (FinanceCorporatePersonnelCreditTransactionEntity entity : corporatePersonelTransactions.stream().filter(e -> !e.isDeleted()).collect(Collectors.toList())) {
-            FinanceCorporatePersonnelCreditEntity personnelCredit =  entity.getPersonnelCredit();
+            FinanceCorporatePersonnelCreditEntity personnelCredit = entity.getPersonnelCredit();
             BigDecimal lastCredit = personnelCredit.getCreditAmount();
             BigDecimal afterCredit = lastCredit.subtract(entity.getAmount());
             financeCorporatePersonnelCreditTransactionRepository.add(FinanceCorporatePersonnelCreditTransactionEntity.builder()
@@ -232,7 +234,7 @@ public class InvoiceServiceHelper {
                     .amount(entity.getAmount().negate())
                     .build());
             personnelCredit.setCreditAmount(afterCredit);
-            if(personnelCredit.getStatus()==CorporatePersonnelCreditStatusEnum.COMPLETE)
+            if (personnelCredit.getStatus() == CorporatePersonnelCreditStatusEnum.COMPLETE)
                 personnelCredit.setStatus(CorporatePersonnelCreditStatusEnum.ACTIVE);
             financeCorporatePersonnelCreditRepository.update(personnelCredit);
         }
@@ -242,7 +244,7 @@ public class InvoiceServiceHelper {
     public void refoundUserDeposit(List<FinanceUserTransactionEntity> userTransactions, FinanceSerialEntity serial) {
 
         for (FinanceUserTransactionEntity entity : userTransactions.stream().filter(e -> !e.isDeleted()).collect(Collectors.toList())) {
-            FinanceUserEntity financeUser =  entity.getFinanceUser();
+            FinanceUserEntity financeUser = entity.getFinanceUser();
             BigDecimal lastDeposit = financeUser.getTotalDeposit();
             BigDecimal afterDeposit = lastDeposit.subtract(entity.getAmount());
 
@@ -258,6 +260,63 @@ public class InvoiceServiceHelper {
 
             financeUser.setTotalDeposit(afterDeposit);
             financeUserRepository.update(financeUser);
+        }
+
+    }
+
+    public void refundPlaceSeller(List<FinanceUserTransactionEntity> userTransactions, FinanceSerialEntity serial) {
+
+        for (FinanceUserTransactionEntity entity : userTransactions.stream().filter(e -> !e.isDeleted()).collect(Collectors.toList())) {
+            FinanceUserEntity financeUser = entity.getFinanceUser();
+            BigDecimal lastDeposit = financeUser.getTotalDeposit();
+            BigDecimal afterDeposit = lastDeposit.subtract(entity.getAmount());
+
+            financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
+                    .serial(serial)
+                    .transactionStatus(TransactionStatus.COMPLETE)
+                    .latestBalance(lastDeposit)
+                    .financeUser(financeUser)
+                    .isChecked(false)
+                    .transactionType(TransactionBaseType.USER)
+                    .amount(entity.getAmount().negate())
+                    .build());
+
+            financeUser.setTotalDeposit(afterDeposit);
+            financeUserRepository.update(financeUser);
+        }
+
+    }
+
+    public void refundIncome(List<FinanceIncomeTransactionEntity> incomeTransactions, FinanceSerialEntity serial, PurchasedSubscribeEntity purchased) {
+
+        for (FinanceIncomeTransactionEntity entity : incomeTransactions.stream().filter(e -> !e.isDeleted()).collect(Collectors.toList())) {
+            FinanceIncomeTransactionEntity incomeRefund = FinanceIncomeTransactionEntity.builder()
+                    .amount(entity.getAmount().negate())
+                    .transactionStatus(TransactionStatus.COMPLETE)
+                    .transactionType(TransactionBaseType.USER)
+                    .isChecked(false)
+                    .purchased(purchased)
+                    .latestBalance(financeIncomeTransactionRepository.gympinTotalIncome() == null ? BigDecimal.ZERO : financeIncomeTransactionRepository.gympinTotalIncome())
+                    .serial(serial)
+                    .build();
+             financeIncomeTransactionRepository.add(incomeRefund);
+        }
+
+    }
+
+    public void refundDiscount(List<FinanceDiscountTransactionEntity> discountTransactions, FinanceSerialEntity serial, PurchasedSubscribeEntity purchased) {
+
+        for (FinanceDiscountTransactionEntity entity : discountTransactions.stream().filter(e -> !e.isDeleted()).collect(Collectors.toList())) {
+            FinanceDiscountTransactionEntity discount = FinanceDiscountTransactionEntity.builder()
+                    .amount(entity.getAmount().negate())
+                    .transactionStatus(TransactionStatus.COMPLETE)
+                    .transactionType(TransactionBaseType.DISCOUNT)
+                    .purchased(purchased)
+                    .isChecked(false)
+                    .latestBalance(financeDiscountTransactionRepository.gympinTotalDiscount() == null ? BigDecimal.ZERO : financeDiscountTransactionRepository.gympinTotalDiscount())
+                    .serial(serial)
+                    .build();
+            financeDiscountTransactionRepository.add(discount);
         }
 
     }
@@ -665,15 +724,15 @@ public class InvoiceServiceHelper {
             } catch (Exception e) {
             }
             PlaceEntity place = buyableEntities.get(0).getPlace();
-            if(place.getPurchased()==null||place.getPurchased().size()<5)
+            if (place.getPurchased() == null || place.getPurchased().size() < 5)
                 sendSellMessageToPlace(place, buyableEntities.get(0));
         } else {
             String ticketsName = "";
             for (InvoiceBuyableEntity ticket : buyableEntities) {
                 ticketsName += ticket.getName() + " ";
 
-                if(ticket.getPlace().getPurchased()==null||ticket.getPlace().getPurchased().size()<5)
-                        sendSellMessageToPlace(ticket.getPlace(), ticket);
+                if (ticket.getPlace().getPurchased() == null || ticket.getPlace().getPurchased().size() < 5)
+                    sendSellMessageToPlace(ticket.getPlace(), ticket);
             }
             if (ticketsName.length() > 36)
                 ticketsName = ticketsName.substring(0, 36) + "...";

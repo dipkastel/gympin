@@ -24,6 +24,7 @@ public interface PurchasedSubscribeService extends BaseService<PurchasedSubscrib
     //ticketAction
     Boolean increaseExpireDate(IncreaseExpireParam param);
     PurchasedSubscribeDto updateStatus(PurchasedSubscribeParam param);
+    PurchasedSubscribeDto refundTicket(PurchasedSubscribeParam param);
 
     //messages
     PurchasedSubscribeScannedDto addEntryMessage(EntryMessageParam param);

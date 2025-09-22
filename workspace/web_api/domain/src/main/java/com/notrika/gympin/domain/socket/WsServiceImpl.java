@@ -22,6 +22,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -57,12 +58,14 @@ public class WsServiceImpl extends AbstractBaseService<ChatMessageParam, ChatMes
 
     @Override
     public Map<String, WsSessionInfo> getSessionList() {
+        Map<String, WsSessionInfo> result =  new HashMap<>();
         Map<String, WsSessionInfo> sessions =  webSocketSessionTracker.getSessions();
+        result.putAll(sessions);
        List<ManageChatEntity> lastOfflines = manageChatRepository.findLastMessageOfEachChat(PageRequest.of(0, 100));
         for (ManageChatEntity chat :lastOfflines) {
-            sessions.put(chat.chatId,ChatConvertor.toSessionDto(chat));
+            result.put(chat.chatId,ChatConvertor.toSessionDto(chat));
         }
-        return sessions;
+        return result;
     }
 
 

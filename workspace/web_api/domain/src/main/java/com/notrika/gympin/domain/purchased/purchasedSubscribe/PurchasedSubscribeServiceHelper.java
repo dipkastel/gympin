@@ -5,6 +5,7 @@ import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.transaction.dto.CorporateTransactionDto;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
 import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
@@ -18,6 +19,8 @@ import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceDiscountTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntryEntity;
@@ -119,7 +122,10 @@ public class PurchasedSubscribeServiceHelper {
                 Date exprireSubscribeDate = new Date(subscribe.getCreatedDate().getTime());
                 exprireSubscribeDate.setHours(subscribe.getCreatedDate().getHours()+ PurchasedSubscribeConvertor.getTicketUsageThreshold(settingsService));
                 if(exprireSubscribeDate.before(new Date())){
-                    RefundedSubscribe(subscribe);
+
+                    if(subscribe.getStatus() == READY_TO_ACTIVE) {
+                        RefundedSubscribe(subscribe);
+                    }
                 }
                 if (subscribe.getEntryList().stream().filter(o->!o.isDeleted()).filter(te -> te.getExitDate() != null).count() >= Long.valueOf(subscribe.getEntryTotalCount())) {
                     subscribe.setStatus(COMPLETE);
@@ -172,12 +178,11 @@ public class PurchasedSubscribeServiceHelper {
 
     @Transactional
     public void RefundedSubscribe(PurchasedSubscribeEntity entity){
-        if(entity.getStatus() == READY_TO_ACTIVE){
             FinanceSerialEntity serial =  entity.getSerials().stream().filter(s->s.getProcessTypeEnum()== ProcessTypeEnum.TRA_CHECKOUT_BASKET).findFirst().get();
-            InvoiceEntity invoice = serial.getInvoices().get(0);
-            if(serial.getPurchasedBases().size()==1){
 
-               List<FinanceCorporateTransactionEntity> corporateTransactions =  serial.getCorporateTransactions();
+            if(serial.getPurchasedBases().size()==1){
+                InvoiceEntity invoice = serial.getInvoices().get(0);
+                List<FinanceCorporateTransactionEntity> corporateTransactions =  serial.getCorporateTransactions();
                 invoiceServiceHelper.refoundCorporateTransaction(corporateTransactions,serial);
 
                List<FinanceUserTransactionEntity> userTransactions =  serial.getUserTransactions();
@@ -187,6 +192,21 @@ public class PurchasedSubscribeServiceHelper {
                List<FinanceCorporatePersonnelCreditTransactionEntity> personnelCredits =  serial.getPersonnelCreditTransactions();
                invoiceServiceHelper.refoundpersonelCredit(personnelCredits,serial);
 
+                if(entity.getStatus()==EXPIRE||entity.getStatus()==ACTIVE||entity.getStatus()==COMPLETE){
+                    //get price from place
+                    FinanceSerialEntity useSerial =  entity.getSerials().stream().filter(s->s.getProcessTypeEnum()== ProcessTypeEnum.TRA_USE_TICKET).findFirst().get();
+
+                    List<FinanceUserTransactionEntity> sellerTransaction =  useSerial.getUserTransactions();
+                    invoiceServiceHelper.refundPlaceSeller(sellerTransaction,useSerial);
+
+
+                    List<FinanceIncomeTransactionEntity> incomeTransaction =  useSerial.getIncomeTransactions();
+                    invoiceServiceHelper.refundIncome(incomeTransaction,useSerial,entity);
+
+                    List<FinanceDiscountTransactionEntity> discountTransaction =  useSerial.getDiscount();
+                    invoiceServiceHelper.refundDiscount(discountTransaction,useSerial,entity);
+
+                }
 
                 entity.setStatus(REFUNDED);
                 purchasedSubscribeRepository.update(entity);
@@ -195,12 +215,8 @@ public class PurchasedSubscribeServiceHelper {
                 invoiceRepository.update(invoice);
 
             }else{
-                //TODO ALL PAY AMOUNT ADD TO GYMPIN WALLET
-                //if user uses some of tickets
-
+                //TODO find a solution for multiple purchased refound
+                //at the moment user cannot buy multiple
             }
-
-        }else{
-        }
     }
 }

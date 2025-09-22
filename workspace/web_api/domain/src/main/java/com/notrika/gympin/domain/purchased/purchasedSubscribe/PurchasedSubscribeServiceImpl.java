@@ -300,6 +300,33 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         return PurchasedSubscribeConvertor.toDto(subscribeEntity,settingsService);
     }
 
+    @Override
+    public PurchasedSubscribeDto refundTicket(PurchasedSubscribeParam param) {
+
+        PurchasedSubscribeEntity subscribeEntity = getEntityById(param.getId());
+        UserEntity userEntity = subscribeEntity.getCustomer();
+
+        //checks
+        if (subscribeEntity.getStatus() == EXPIRE) {
+            throw new PurchasedExpiredException();
+        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.CANCEL) {
+            throw new PurchasedCanceledException();
+        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.PROCESSING) {
+            throw new IsInProcessException();
+        }
+
+            //refundTicket
+            purchasedSubscribeHelper.RefundedSubscribe(subscribeEntity);
+
+
+            //enterUser
+//            subscribeEntity.setStatus(REFUNDED);
+//            subscribeEntity.getSerials().add(serial);
+//            purchasedSubscribeRepository.update(subscribeEntity);
+
+        return PurchasedSubscribeConvertor.toDto(subscribeEntity,settingsService);
+    }
+
     //messages
     @Override
     @Transactional

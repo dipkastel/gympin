@@ -37,3 +37,7 @@ export function purchasedSubscribe_acceptEnterRequested(data) {
 export function purchasedSubscribe_increaseExpireDate(data) {
     return axios.post(purchasedSubscribeApi.increaseExpireDate, data);
 }
+
+export function purchasedSubscribe_refund(data) {
+    return axios.post(purchasedSubscribeApi.refundTicket, data);
+}

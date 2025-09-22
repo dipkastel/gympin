@@ -28,6 +28,7 @@ public interface PurchasedSubscribeController extends BaseController<PurchasedSu
         //ticketAction
     ResponseEntity<Boolean> increaseExpireDate(IncreaseExpireParam param) throws Exception;
     ResponseEntity<PurchasedSubscribeDto> updateStatus(PurchasedSubscribeParam param) throws Exception;
+    ResponseEntity<PurchasedSubscribeDto> refundTicket(@RequestBody PurchasedSubscribeParam param) throws Exception;
 
     //messages
     ResponseEntity<PurchasedSubscribeScannedDto> addEntryMessage(EntryMessageParam param);

@@ -36,14 +36,31 @@ export default function SupportChatList() {
             sessions: g.sessions
                 .sort((a, b) => (b.isOnline === true) - (a.isOnline === true))
         }));
-        console.log(groupedArray);
-        setUsers(groupedArray);
+        return groupedArray;
+    }
+    function editUsers(lastSessions,sessions){
+        if(users){
+            setUsers(prev=>{
+
+            })
+        }else{
+            let newUsers = lastSessions;
+            console.log("111",sessions);
+            for(let newSession in sessions){
+                var exist = lastSessions?.filter(ls=>ls.driverId==newSession.driverId);
+                exist.isOnline = true;
+                exist.hasan = false;
+            }
+
+            console.log("lastSessions",lastSessions);
+        }
     }
     useEffect(() => {
         ws_getSessionList().then(result=>{
-            setClientToUsers(result.data.Data);
+            var lastSessionsFromServerApi = setClientToUsers(result.data.Data);
+            setUsers(lastSessionsFromServerApi);
             socket.current = createWebSocketClient((obj) => {
-                setClientToUsers(obj);
+                editUsers(lastSessionsFromServerApi,Object.values(obj).filter(s => s.appName !== 'WEBPANEL'));
             }, "/manage/onlineUsers","0",user);
         }).catch(e => {
             try {

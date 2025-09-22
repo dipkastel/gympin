@@ -439,6 +439,7 @@ export let purchasedSubscribeApi = {
     delete: "v1/purchasedSubscribe/delete",
     getAll: "v1/purchasedSubscribe/getall",
     getById: "v1/purchasedSubscribe/getById",
+    refundTicket: "v1/purchasedSubscribe/refundTicket",
     updateStatus: "v1/purchasedSubscribe/updateStatus",
     enterRequest: "v1/purchasedSubscribe/enterRequest",
     exitUserOfPlace: "v1/purchasedSubscribe/exitUserOfPlace",

@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../../partials/content/Portlet";
 import {Button, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {PurchasedSubscribeStatus} from "../../../../../../helper/enums/PurchasedSubscribeStatus";
-import {purchasedSubscribe_updateStatus} from "../../../../../../network/api/purchasedSubscribes.api";
+import {purchasedSubscribe_refund, purchasedSubscribe_updateStatus} from "../../../../../../network/api/purchasedSubscribes.api";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 import {Article_delete} from "../../../../../../network/api/article.api";
 import {Form, Modal} from "react-bootstrap";
@@ -31,7 +31,7 @@ const _SubscribeStatus = ({subscribe, updatePage}) => {
     function renderModalRefound() {
         function refound(e) {
             e.preventDefault()
-            Article_delete({Id: subscribe.Id})
+            purchasedSubscribe_refund({Id: subscribe.Id})
                 .then((data) => {
                     error.showError({message: "عملیات موفق",});
                     setShowRefoundModal(false);

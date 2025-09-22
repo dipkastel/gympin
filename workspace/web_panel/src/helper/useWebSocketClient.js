@@ -1,22 +1,31 @@
-import { useEffect, useRef, useState, useCallback } from "react";
-import { Client, ActivationState } from "@stomp/stompjs";
+import {useCallback, useEffect, useRef, useState} from "react";
+import {ActivationState, Client} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { useSelector } from "react-redux";
-import { AuthApi, Chat } from "../network/api/const_api";
 
-export function useWebSocketClient({ ChangeMessages, setInput, statusChanged, driverId }) {
-    const clientRef = useRef(null);
-    const subRef = useRef(null);
+export function useWebSocketClient({ ChangeMessages, statusChanged, currentUser, onMessageStatus,driverId,subscribeDestination,sendToDestination,endPoint }) {
     const [status, setStatus] = useState(ActivationState.INACTIVE);
-    const pendingMessages = useRef([]);
-    const currentUser = useSelector(state => state.auth.user);
+    const clientRef = useRef(null);
+    const intervalRef = useRef(null);
+    const isMountedRef = useRef(true);
 
     useEffect(() => {
-        statusChanged(status);
-    }, [status]);
+        if(statusChanged)
+            statusChanged(status);
+    }, [status, statusChanged]);
+
+    useEffect(() => {
+        isMountedRef.current = true;
+        activate();
+        return () => {
+            isMountedRef.current = false;
+            deactivate();
+        };
+    }, [activate, deactivate]);
 
     const activate = useCallback(() => {
-        const socket = new SockJS(AuthApi.BASEURL + Chat.endpoint);
+        if (!isMountedRef.current) return;
+        if (clientRef.current && clientRef.current.connected) return;
+        const socket = new SockJS(endPoint);
 
         const client = new Client({
             webSocketFactory: () => socket,
@@ -26,75 +35,84 @@ export function useWebSocketClient({ ChangeMessages, setInput, statusChanged, dr
                 UserId: currentUser?.Id,
                 PhoneNumber: currentUser?.PhoneNumber,
                 DriverId: driverId,
-                AppName: "WEBPANEL",
+                AppName: "WEBCORPORATE",
             },
             onConnect: () => {
+                if (!isMountedRef.current) return;
                 setStatus(ActivationState.ACTIVE);
-                subRef.current?.unsubscribe();
-                subRef.current = client.subscribe(
-                    "/chat/SupportChatS/" + driverId,
-                    (msg) => {
-                        let payload;
+                clearInterval(intervalRef.current);
+                intervalRef.current = null;
+                const sub = client.subscribe(subscribeDestination, (msg) => {
+                    if (msg.body) {
                         try {
-                            payload = msg?.body ? JSON.parse(msg.body) : null;
-                        } catch {
-                            payload = msg?.body;
+                            const parsed = JSON.parse(msg.body);
+                            ChangeMessages?.(parsed);
+                        } catch (e) {
+                            ChangeMessages?.({ Sender: "server", Message: msg.body });
                         }
-                        ChangeMessages(payload, msg);
                     }
-                );
-
-                while (pendingMessages.current.length > 0) {
-                    const msg = pendingMessages.current.shift();
-                    client.publish(msg);
+                });
+                return () => sub?.unsubscribe();
+            },
+            onDisconnect: () => {
+                if (!isMountedRef.current) return;
+                setStatus(ActivationState.INACTIVE);
+            },
+            onStompError: (frame) => {
+                if (!isMountedRef.current) return;
+                setStatus(ActivationState.INACTIVE);
+            },
+            onWebSocketClose: () => {
+                if (!isMountedRef.current) return;
+                setStatus(ActivationState.INACTIVE);
+                if (!intervalRef.current) {
+                    intervalRef.current = setInterval(() => {
+                        reactive();
+                    }, 10000);
                 }
             },
-            onDisconnect: () => setStatus(ActivationState.INACTIVE),
-            onStompError: () => setStatus(ActivationState.INACTIVE),
-            onWebSocketClose: () => setStatus(ActivationState.DEACTIVATING),
-            onChangeState: (s) => setStatus(s),
         });
+
+        socket.onerror = (error) => {
+            if (!isMountedRef.current) return;
+            socket.close();
+        };
 
         clientRef.current = client;
         client.activate();
-    }, [driverId, currentUser]);
+    }, [currentUser, driverId, ChangeMessages]);
 
     const deactivate = useCallback(() => {
-        subRef.current?.unsubscribe();
-        subRef.current = null;
-
-        clientRef.current?.deactivate();
-        clientRef.current = null;
+        if (clientRef.current) {
+            clientRef.current.deactivate();
+            clientRef.current = null;
+        }
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
     }, []);
 
-    const publish = useCallback((msg) => {
-        const frame = {
-            destination: msg.destination,
-            body: typeof msg.body === "string" ? msg.body : JSON.stringify(msg.body)
-        };
+    const sendMessage = useCallback((msg) => {
         if (clientRef.current && clientRef.current.connected) {
-            clientRef.current.publish(frame);
+            clientRef.current.publish({
+                destination: sendToDestination,
+                body: JSON.stringify(msg),
+            });
+            onMessageStatus?.({ message: msg, status: "sent" });
         } else {
-            pendingMessages.current.push(frame);
-            if (!clientRef.current || clientRef.current.state === ActivationState.INACTIVE) {
-                activate();
-            }
+            onMessageStatus?.({ message: msg, status: "failed" });
         }
-    }, [activate]);
+    }, [driverId, onMessageStatus]);
 
-    const sendMessage = (message) => {
-        if (!message?.trim()) return;
-        publish({
-            destination: "/app/SupportChatM/" + driverId,
-            body: { Message: message, Sender: "Server" },
-        });
-        setInput("");
-    };
+    const reactive = useCallback(() => {
+        if (!isMountedRef.current) return;
+        if (status === ActivationState.INACTIVE && !clientRef.current?.connected) {
+            activate();
+        } else {
+        }
+    }, [activate, status]);
 
-    useEffect(() => {
-        activate();
-        return () => deactivate();
-    }, [activate, deactivate]);
 
-    return { publish, sendMessage };
+    return { sendMessage, reactive };
 }

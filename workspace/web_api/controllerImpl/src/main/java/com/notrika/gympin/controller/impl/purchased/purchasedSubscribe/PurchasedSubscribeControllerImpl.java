@@ -154,4 +154,11 @@ public class PurchasedSubscribeControllerImpl implements PurchasedSubscribeContr
     public ResponseEntity<PurchasedSubscribeDto> updateStatus(@RequestBody PurchasedSubscribeParam param) throws Exception {
         return ResponseEntity.ok(purchasedSubscribeService.updateStatus(param));
     }
+
+    @Override
+    @PostMapping("/refundTicket")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<PurchasedSubscribeDto> refundTicket(@RequestBody PurchasedSubscribeParam param) throws Exception {
+        return ResponseEntity.ok(purchasedSubscribeService.refundTicket(param));
+    }
 }
