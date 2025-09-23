@@ -2,25 +2,14 @@ import {useCallback, useEffect, useRef, useState} from "react";
 import {ActivationState, Client} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
+
+
+
 export function useWebSocketClient({ ChangeMessages, statusChanged, currentUser, onMessageStatus,driverId,subscribeDestination,sendToDestination,endPoint }) {
     const [status, setStatus] = useState(ActivationState.INACTIVE);
     const clientRef = useRef(null);
     const intervalRef = useRef(null);
     const isMountedRef = useRef(true);
-
-    useEffect(() => {
-        if(statusChanged)
-            statusChanged(status);
-    }, [status, statusChanged]);
-
-    useEffect(() => {
-        isMountedRef.current = true;
-        activate();
-        return () => {
-            isMountedRef.current = false;
-            deactivate();
-        };
-    }, [activate, deactivate]);
 
     const activate = useCallback(() => {
         if (!isMountedRef.current) return;
@@ -35,7 +24,7 @@ export function useWebSocketClient({ ChangeMessages, statusChanged, currentUser,
                 UserId: currentUser?.Id,
                 PhoneNumber: currentUser?.PhoneNumber,
                 DriverId: driverId,
-                AppName: "WEBCORPORATE",
+                AppName: "WEBPANEL",
             },
             onConnect: () => {
                 if (!isMountedRef.current) return;
@@ -79,12 +68,12 @@ export function useWebSocketClient({ ChangeMessages, statusChanged, currentUser,
         };
 
         clientRef.current = client;
-        client.activate();
+        client?.activate();
     }, [currentUser, driverId, ChangeMessages]);
 
     const deactivate = useCallback(() => {
         if (clientRef.current) {
-            clientRef.current.deactivate();
+            clientRef.current?.deactivate();
             clientRef.current = null;
         }
         if (intervalRef.current) {
@@ -112,6 +101,20 @@ export function useWebSocketClient({ ChangeMessages, statusChanged, currentUser,
         } else {
         }
     }, [activate, status]);
+
+    useEffect(() => {
+        if(statusChanged)
+            statusChanged(status);
+    }, [status, statusChanged]);
+
+    useEffect(() => {
+        isMountedRef.current = true;
+        activate();
+        return () => {
+            isMountedRef.current = false;
+            deactivate();
+        };
+    }, [activate, deactivate]);
 
 
     return { sendMessage, reactive };

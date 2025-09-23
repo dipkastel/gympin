@@ -61,9 +61,7 @@ const PlaceTags = ({place}) => {
     }
 
     function addTagToPlace(item) {
-        console.log(item);
         tag_addToPlace({Place:{Id:place.Id},Id:item.Id}).then(result => {
-            console.log(result);
             SetPlaceTags(result.data.Data);
         }).catch(e => {
             try {

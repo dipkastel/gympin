@@ -13,7 +13,6 @@ class _CMap extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props)
         this.state = {
             selectedLat: props.corporate.Latitude==0?tehranCenterLat:props.corporate.Latitude,
             selectedLng: props.corporate.Longitude==0?tehranCenterLong:props.corporate.Longitude

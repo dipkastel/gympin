@@ -100,7 +100,6 @@ const InvoiceActions = ({invoice, updatePage}) => {
         function setCreaditPayableAmouunt(item,value) {
             var htpitem = {...item, CreditPayableAmount: Number(value)};
             SetHowToPay([...(howToPay.filter(h => h.Id !== item.Id)), htpitem])
-            console.log(htpitem);
         }
 
         function getMaxPayableAmount(item) {

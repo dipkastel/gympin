@@ -40,7 +40,6 @@ const SettlementRequest = ({currentUser,userFinance, updatePage}) => {
     }, [page, rowsPerPage]);
 
     function getInvoiceSettlementUserDeposit() {
-    console.log(userFinance);
         SettlementUserDeposit_query({
             queryType: "FILTER",
             FinanceUserId: userFinance.Id,
@@ -59,7 +58,6 @@ const SettlementRequest = ({currentUser,userFinance, updatePage}) => {
                 return;
             }
             closeModal()
-            console.log("transactionToSettle",transactionToSettle);
             SettlementUserDeposit_confirmSettlementRequest({
                 Id: transactionToSettle.Id,
                 Accept: acceptTransaction,

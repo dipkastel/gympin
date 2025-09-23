@@ -34,7 +34,6 @@ const InvoiceDetailManagement = () => {
     function getInvoice() {
         invoice_getById({id: invoiceId}).then(result => {
             setInvoice(result.data.Data);
-            console.log(result);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

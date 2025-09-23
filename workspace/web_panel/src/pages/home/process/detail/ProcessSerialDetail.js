@@ -23,7 +23,6 @@ const ProcessSerialDetail = () => {
 
     useEffect(() => {
         serial_getById({id: serialId}).then((result) => {
-            console.log("process",result.data.Data)
             setSerial(result.data.Data);
         }).catch(e => {
             try {

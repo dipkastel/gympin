@@ -37,7 +37,6 @@ const SingleArticle = () => {
     }
 
     function updateArticle(name, data) {
-        console.log("update article",name,data);
         setArticle({...article, [name]: data});
     }
 
@@ -53,7 +52,6 @@ const SingleArticle = () => {
 
     function updateArticleData() {
         setLoading(true)
-        console.log("article",article);
         Article_update(article).then(result => {
             setLoading(false);
             error.showError({message: "با موفقیت ویرایش شد",});

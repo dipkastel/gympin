@@ -34,7 +34,6 @@ const _artilceText = ({article, updateArticle}) => {
             setDefaultEditorState(editorState)
             updateArticle("FullText", draftToHtml(convertToRaw(editorState.getCurrentContent())))
         }else{
-            console.log("judit text = ",editorState);
             setDefaultEditorState(editorState)
             updateArticle("FullText", editorState)
         }

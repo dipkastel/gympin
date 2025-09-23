@@ -1,11 +1,13 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {Box, Grid, List, ListItem, Paper, Typography,} from "@mui/material";
-import {createWebSocketClient} from "../../../../helper/createWebSocketClient";
 import _ActiveUserListItem from "./_ActiveUserListItem";
 import _ChatBox from "./_ChatBox";
 import {useSelector} from "react-redux";
 import {ws_getSessionList} from "../../../../network/api/ws.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import {useWebSocketClient} from "../../../../helper/useWebSocketClient";
+import {AuthApi, Chat} from "../../../../network/api/const_api";
+import {ActivationState} from "@stomp/stompjs";
 
 
 export default function SupportChatList() {
@@ -14,8 +16,61 @@ export default function SupportChatList() {
     const user = useSelector(state => state.auth.user);
     const [selectedUser, setSelectedUser] = useState(null);
     const [users, setUsers] = useState(null);
-    const socket = useRef(null);
+    const [listStatus, setListStatus] = useState(ActivationState.INACTIVE);
 
+
+
+    const recivedList = useCallback(
+        (msg) => {
+            const updatedUsers = setClientToUsers(msg);
+            setUsers((prev) => {
+                if (prev) {
+                    const mergedUsers = prev.map((u) => {
+                        const newUser = updatedUsers.find((nu) => nu.driverId === u.driverId);
+                        if (newUser) {
+                            return {
+                                ...u,
+                                hasOnline: newUser.hasOnline,
+                                sessions: newUser.sessions,
+                            };
+                        }else{
+                            return {
+                                ...u,
+                                hasOnline: false,
+                                sessions:u.sessions.map(se=>{return {...se,isOnline:false}})
+                            }
+                        }
+                        return u;
+                    });
+                    const newUsers = updatedUsers.filter((nu) => !prev.some((u) => u.driverId === nu.driverId));
+                    const finalUsers = [...mergedUsers, ...newUsers].sort(
+                        (a, b) => (b.hasOnline === true) - (a.hasOnline === true)
+                    );
+                    return finalUsers;
+                } else {
+                    return updatedUsers;
+                }
+            });
+        },
+        []
+    );
+
+
+    const handleStatusChanged = useCallback((s) => {
+        setListStatus(s);
+    }, []);
+
+    const { reactive } = useWebSocketClient({
+        ChangeMessages: recivedList,
+        setInput: null,
+        statusChanged: handleStatusChanged,
+        driverId:"0",
+        currentUser:null,
+        onMessageStatus: null,
+        subscribeDestination:"/manage/onlineUsers",
+        sendToDestination:null,
+        endPoint:AuthApi.BASEURL + Chat.endpoint
+    });
 
     function setClientToUsers(sessionLists){
         const sessionsList = Object.values(sessionLists).filter(s => s.appName !== 'WEBPANEL');
@@ -38,30 +93,11 @@ export default function SupportChatList() {
         }));
         return groupedArray;
     }
-    function editUsers(lastSessions,sessions){
-        if(users){
-            setUsers(prev=>{
 
-            })
-        }else{
-            let newUsers = lastSessions;
-            console.log("111",sessions);
-            for(let newSession in sessions){
-                var exist = lastSessions?.filter(ls=>ls.driverId==newSession.driverId);
-                exist.isOnline = true;
-                exist.hasan = false;
-            }
-
-            console.log("lastSessions",lastSessions);
-        }
-    }
     useEffect(() => {
         ws_getSessionList().then(result=>{
             var lastSessionsFromServerApi = setClientToUsers(result.data.Data);
             setUsers(lastSessionsFromServerApi);
-            socket.current = createWebSocketClient((obj) => {
-                editUsers(lastSessionsFromServerApi,Object.values(obj).filter(s => s.appName !== 'WEBPANEL'));
-            }, "/manage/onlineUsers","0",user);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -69,7 +105,6 @@ export default function SupportChatList() {
                 error.showError({message: "خطا نا مشخص",});
             }
         });
-        return () => socket?.current?.deactivate();
     }, []);
 
 
@@ -85,6 +120,9 @@ export default function SupportChatList() {
                         overflowX: "hidden",
                         overflowY: "scroll"
                     }}>
+                        <Grid sx={{bgcolor:listStatus===0?"#02230a":"#e7333e",color:"#FFFFFF",p:1}}>
+                            <Typography>{ActivationState[listStatus]}</Typography>
+                        </Grid>
                         <List>
                             {users?users?.map((user) => (
 

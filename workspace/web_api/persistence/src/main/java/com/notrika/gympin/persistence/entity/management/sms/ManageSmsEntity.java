@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.settings.sms.enums.SmsStatus;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.management.settings.SettingsEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -57,10 +56,9 @@ public class ManageSmsEntity extends BaseEntityWithCreateUpdate<ManageSmsEntity>
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PatternId")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private ManageSmsPatternEntity pattern;
-
 
 
     @Override

@@ -130,7 +130,6 @@ const _PhoneBook = () => {
         function EditItem(e) {
             e.preventDefault()
             setItemToEdit(null);
-            console.log(e.target.Name.value+ " : " + e.target.Phone.value);
             note_update({
                 Id:itemToEdit.Id,
                 Text:e.target.Name.value+ " : " + e.target.Phone.value

@@ -13,6 +13,7 @@ import {playMessageReceived} from "../utils";
 import {ws_query} from "../../network/api/ws.api";
 import {getDriverId} from "../pocket";
 import {ErrorContext} from "../../components/GympinPagesProvider";
+import {Api_url, AuthApi} from "../../network/api/NETWORKCONSTS";
 
 
 const ChatWidget = () => {
@@ -61,9 +62,12 @@ const ChatWidget = () => {
         ChangeMessages: changeMessages,
         setInput: handleSetInput,
         statusChanged: handleStatusChanged,
-        driverId,
-        currentUser,
+        driverId:driverId,
+        currentUser:currentUser,
         onMessageStatus: handleMessageStatus,
+        subscribeDestination:"/chat/SupportChatS/"+driverId,
+        sendToDestination:"/app/SupportChatM/"+driverId,
+        endPoint:AuthApi.BASEURL + Api_url.Chat.endpoint,
     });
 
     useEffect(() => {

@@ -156,5 +156,11 @@ export let Api_url = {
         checkUsernameAvailable: "v1/user/checkUsernameAvailable",
         getMyCredits: "v1/user/getMyCredits",
         query: "v1/user/query",
+    },
+    ws: {
+        query: "v1/ws/query",
+    },
+    Chat:{
+        endpoint:"GympinChatEndPoint"
     }
 };

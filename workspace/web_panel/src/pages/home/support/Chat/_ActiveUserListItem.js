@@ -5,7 +5,6 @@ import {BookOnline, OfflineBolt} from "@mui/icons-material";
 
 const _ActiveUserListItem = ({user,selectedUser,setSelectedUser}) => {
 
-
     function getItemBgColor(appName){
         switch (appName) {
             case "ANDROID": return "#063f0b";
@@ -19,6 +18,20 @@ const _ActiveUserListItem = ({user,selectedUser,setSelectedUser}) => {
         }
     }
 
+    function getConnectionTime(startDate){
+        if(!startDate) return "not Online";
+        const start = new Date(startDate);
+        const now = new Date();
+        const diffInMs = now - start;
+        const hours = Math.floor(diffInMs / (1000 * 60 * 60));
+        const minutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diffInMs % (1000 * 60)) / 1000);
+        const formattedTime =
+            String(hours).padStart(2, '0') + ':' +
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0');
+        return formattedTime;
+    }
     return (
         <Grid container sx={{border:selectedUser === user.driverId?"1px solid #e7333e":"1px solid #aaa",
             background:getItemBgColor(user.sessions[0].appName),
@@ -35,8 +48,12 @@ const _ActiveUserListItem = ({user,selectedUser,setSelectedUser}) => {
                 </ListItemButton>
                 <OfflineBolt sx={{ml:1,mt:1,color:(user.sessions[0].isOnline)?"#0d8521":"#8d0e0e"}}/>
             </Grid>
-            <Typography variant={"caption"} sx={{px:1,color:"white"}}>
-                {ApplicationEnum[user.sessions[0]?.appName]}</Typography>
+            <Grid container justifyContent={"space-between"}>
+                <Typography variant={"caption"} sx={{px:1,color:"white"}}>
+                    {ApplicationEnum[user.sessions[0]?.appName]}</Typography>
+                <Typography variant={"caption"} sx={{px:1,color:"white"}}>{getConnectionTime(user?.sessions?.filter(ss=>ss.isOnline)[0]?.connectTime)}</Typography>
+
+            </Grid>
         </Grid>
     );
 };

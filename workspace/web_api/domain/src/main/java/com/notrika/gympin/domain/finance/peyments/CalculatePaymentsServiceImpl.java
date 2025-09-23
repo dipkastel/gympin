@@ -45,6 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -208,7 +209,7 @@ public class CalculatePaymentsServiceImpl {
         BigDecimal commission = null;
         BigDecimal discount = null;
         BigDecimal beneficiaryShare = null;
-        float discountValue =100- subscribeEntity.getSellPrice().multiply(BigDecimal.valueOf(100)).divide(subscribeEntity.getPlacePrice()).longValue();
+        float discountValue =100- subscribeEntity.getSellPrice().multiply(BigDecimal.valueOf(100)).divide(subscribeEntity.getPlacePrice(), 1, RoundingMode.DOWN).longValue();
 
 
         if (subscribeEntity.getCustomer().getInvitedBy() != null && subscribeEntity.getCustomer().getInvitedBy().startsWith("P") && subscribeEntity.getCustomer().getInvitedBy().equals("P" + GeneralHelper.getInviteCode(subscribeEntity.getPlace().getId(), 1))) {

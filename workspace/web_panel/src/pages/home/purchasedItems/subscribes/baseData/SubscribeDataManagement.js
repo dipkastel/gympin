@@ -44,7 +44,6 @@ const SubscribeDataManagement = () => {
 
     function getSubscribes() {
         purchasedSubscribe_getById({id: subscribeId}).then(result => {
-            console.log(result.data.Data)
             setSubscribe(result.data.Data)
         }).catch(e => {
             try {

@@ -273,3 +273,50 @@ export function resizeCanvas(canvas,newH,newW) {
     tempCtx.drawImage(canvas, 0, 0, newW, newH);
     return tempCanvas;
 }
+
+
+export function encodeId(id) {
+    const mixed = id * 1572
+    return btoa(mixed.toString());
+}
+
+export function decodeId(str) {
+    try {
+        const decoded = atob(str);
+        return parseInt(decoded, 10) / 1572
+    } catch {
+        return null
+    }
+}
+
+export function randomSerialNum(length = 12) {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charsLen = chars.length;
+    if (typeof window !== "undefined" && window.crypto && window.crypto.getRandomValues) {
+        const arr = new Uint8Array(length);
+        window.crypto.getRandomValues(arr);
+        return Array.from(arr, (n) => chars[n % charsLen]).join("");
+    }
+
+    if (typeof require === "function") {
+        try {
+            const crypto = require("crypto");
+            const buf = crypto.randomBytes(length);
+            return Array.from(buf, (b) => chars[b % charsLen]).join("");
+        } catch (e) {
+        }
+    }
+    let out = "";
+    for (let i = 0; i < length; i++) {
+        out += chars.charAt(Math.floor(Math.random() * charsLen));
+    }
+    return out;
+};
+
+export function playMessageReceived(sender) {
+    var sound = sender=="Client"?"/assets/sound/messageSent.mp3":"/assets/sound/messageReceived.mp3";
+    const audio = new Audio(sound);
+    audio.play().catch((err) => {
+        console.warn("خطا در پخش صدا:", err);
+    });
+}

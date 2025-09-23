@@ -1,18 +1,22 @@
 package com.notrika.gympin.domain.socket;
 
-import com.notrika.gympin.common.socket.chat.dto.ChatDto;
+import com.notrika.gympin.common.settings.sms.dto.SmsDto;
+import com.notrika.gympin.common.settings.sms.enums.SmsStatus;
+import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.socket.chat.dto.ChatMessageDto;
 import com.notrika.gympin.common.socket.chat.dto.WsSessionInfo;
 import com.notrika.gympin.common.socket.chat.param.ChatMessageParam;
 import com.notrika.gympin.common.socket.chat.query.ChatQuery;
 import com.notrika.gympin.common.socket.chat.service.WsService;
-import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.ChatConvertor;
-import com.notrika.gympin.domain.util.convertor.PagingConvertor;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageChatRepository;
+import com.notrika.gympin.persistence.dao.repository.settings.ManageSmsPatternRepository;
+import com.notrika.gympin.persistence.dao.repository.settings.ManageSmsRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.management.chat.ManageChatEntity;
+import com.notrika.gympin.persistence.entity.management.sms.ManageSmsEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,8 +24,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +45,15 @@ public class WsServiceImpl extends AbstractBaseService<ChatMessageParam, ChatMes
     UserRepository userRepository;
 
     @Autowired
+    SmsInService smsInService;
+
+    @Autowired
     WebSocketSessionTracker webSocketSessionTracker;
+
+    @Autowired
+    ManageSmsRepository manageSmsRepository;
+    @Autowired
+    ManageSmsPatternRepository manageSmsPatternRepository;
 
     @Override
     public ChatMessageDto SupportChat(ChatMessageParam message, String driverId, StompHeaderAccessor sha) {
@@ -53,6 +68,25 @@ public class WsServiceImpl extends AbstractBaseService<ChatMessageParam, ChatMes
                 .phoneNumber(info.getPhoneNumber())
                 .user((info.getUserId()!=null)?userRepository.getById(info.getUserId()):null)
                 .build());
+
+        try {
+            //TODO FIX This
+            if(webSocketSessionTracker.getSessions().values().stream().anyMatch(s->s.getAppName().equals("WEBPANEL")))
+                return ChatConvertor.toDto(message);
+            manageSmsRepository.add(ManageSmsEntity.builder()
+                    .sendTime(new Date())
+                    .smsStatus(SmsStatus.PENDING)
+                    .pattern(manageSmsPatternRepository.getById(9l))
+                    .userNumber("09194711540")
+                    .text1("چت سایت")
+                    .text2("")
+                    .text3("")
+                    .text4("")
+                    .smsTypes(SmsTypes.SUPPORT_ANSWERED)
+                    .build());
+        } catch (Exception e) {
+        }
+
         return ChatConvertor.toDto(message);
     }
 

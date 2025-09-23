@@ -24,12 +24,6 @@ const _reportSettings = () => {
         });
     }
     function updateAutoUpdate(e,row) {
-        console.log({
-            UpdateAuto:!!e.target.value,
-            Key:row.Key,
-            Value:row.Value,
-            Description:row.Description
-        })
         reportSettings_update({
             Id:row.Id,
             UpdateAuto:e.target.checked,
@@ -37,17 +31,14 @@ const _reportSettings = () => {
             Value:row.Value,
             Description:row.Description
         }).then(result=>{
-            console.log("ok ok ok ")
             getReport();
         }).catch(e => {
-            console.log(e);
             try {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
                 error.showError({message: "خطا نا مشخص",});
             }
         });
-        console.log(!!e.target.value);
     }
 
     return (

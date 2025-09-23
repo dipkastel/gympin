@@ -1,6 +1,5 @@
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {Box, Button, Paper, TextField} from "@mui/material";
-import {createWebSocketClient} from "../../../../helper/createWebSocketClient";
 import {useSelector} from "react-redux";
 import {useWebSocketClient} from "../../../../helper/useWebSocketClient";
 import {playMessageReceived} from "../../../../helper";
@@ -15,7 +14,6 @@ const _ChatBox = ({selectedUser}) => {
     const currentUser = useSelector(state => state.auth.user);
     const error = useContext(ErrorContext);
     const [input, setInput] = useState("");
-    const statusIconRef = useRef(null);
     const [messages, setMessages] = useState([]);
     const [pendingMessages, setPendingMessages] = useState([]);
     const [status, setStatus] = useState(ActivationState.INACTIVE);
@@ -67,6 +65,7 @@ const _ChatBox = ({selectedUser}) => {
     useEffect(()=>{
         getLastMessages();
     },[selectedUser])
+
     function getLastMessages(){
         ws_query({
             queryType: "FILTER",
@@ -74,7 +73,6 @@ const _ChatBox = ({selectedUser}) => {
             paging: {Page: 0, Size: 100, orderBy: "id", Desc: true}
         }).then(result => {
             setMessages(result.data.Data.content.reverse());
-            reactive();
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -93,11 +91,12 @@ const _ChatBox = ({selectedUser}) => {
 
     const handleSendMessage = useCallback(() => {
         if (input.trim()) {
-            const newMessage = { Message: input, Sender: "Client", id: Date.now() };
+            const newMessage = { Message: input, Sender: "Server", id: Date.now() };
             setPendingMessages((prev) => [...prev, newMessage]);
             sendMessage(newMessage);
             setInput("");
         }
+
     }, [input, sendMessage]);
 
     const deletePendingMessage = useCallback((msg) => () => {
@@ -129,7 +128,7 @@ const _ChatBox = ({selectedUser}) => {
                 }}
                 ref={msgBox}
             >
-                {messages?.map((msg, idx) => (
+                {[...messages, ...pendingMessages]?.map((msg, idx) => (
                     <Box
                         key={idx}
                         sx={{

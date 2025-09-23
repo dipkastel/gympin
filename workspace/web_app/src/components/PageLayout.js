@@ -114,7 +114,7 @@ const PageLayout = (props) => {
             <Paper  sx={{pt: {xs:7,sm:9},pb:8,minHeight:"100vh"}} elevation={0}>
                 {props.children}
             </Paper>
-            <ChatWidget driverId={"123456"}/>
+            <ChatWidget />
 
             <Paper sx={{position: 'fixed',mx:2, bottom: 0, left: 0, right: 0, zIndex: 1098,borderRadius:"32px 32px 0 0",boxShadow:"0px 0px 15px #333333"}} elevation={24}>
                 <BottomNavigation
