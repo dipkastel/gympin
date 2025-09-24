@@ -46,7 +46,7 @@ public class ApiAspect {
         // start stopwatch
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
-        if (!method.getName().equals("greeting")) {
+        if (!method.getName().equals("SupportChat")) {
             setGympinServiceCallContext();
         } else {
             setGympinServiceCallContextForChat(pjp.getArgs()[0]);

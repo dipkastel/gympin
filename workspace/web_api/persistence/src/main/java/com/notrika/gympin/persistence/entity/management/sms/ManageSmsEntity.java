@@ -54,7 +54,7 @@ public class ManageSmsEntity extends BaseEntityWithCreateUpdate<ManageSmsEntity>
     @Column(name = "SentBodyCode")
     private String sentBodyCode;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "PatternId")
     @JsonIgnore
     @ToString.Exclude

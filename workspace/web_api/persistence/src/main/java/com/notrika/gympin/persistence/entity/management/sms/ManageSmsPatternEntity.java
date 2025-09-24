@@ -1,11 +1,9 @@
 package com.notrika.gympin.persistence.entity.management.sms;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.notrika.gympin.common.settings.sms.enums.SmsStatus;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.management.settings.SettingsEntity;
-import com.notrika.gympin.persistence.entity.sport.SportMultimediaEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,13 +44,13 @@ public class ManageSmsPatternEntity extends BaseEntityWithCreateUpdate<ManageSms
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ProviderSettingId")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private SettingsEntity provider;
 
-    @OneToMany(mappedBy = "pattern",fetch = FetchType.LAZY)
-   @JsonIgnore
-@ToString.Exclude
+    @OneToMany(mappedBy = "pattern", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
     private List<ManageSmsEntity> smsList;
 
 
