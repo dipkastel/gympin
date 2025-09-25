@@ -2,49 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ecb48492-2b78-4bea-8676-f70c84dd83b8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/settings/links/api/LinkController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/settings/links/dto/LinkDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/settings/links/param/LinkParam.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/settings/links/query/LinkQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/settings/links/service/LinkService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/settings/link/LinkControllerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/settings/link/LinkServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/LinkConvertor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/settings/ManageLinkRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/management/links/ManageLinkEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/public/assets/images/qrlogo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/network/api/link.api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/partial/_GympinIntro.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/tickets/commonPartials/_ScanQrCode.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_app/src/pages/tickets/singleSubscribe/_SubscribeUserEnter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_new_site/src/network/api/link.api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/network/api/link.api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/links/LinksManagement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/TicketSubscribeConvertor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/TicketSubscribeConvertor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/framework/src/main/java/com/notrika/gympin/framework/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/framework/src/main/java/com/notrika/gympin/framework/config/WebSecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_api/logs/logFile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/logs/logFile.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/places/place/Place.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/places/place/Place.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/qrCode/scanner/_ByCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/qrCode/scanner/_ByCode.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/qrCode/scanner/_ScannerCore.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/qrCode/scanner/_ScannerCore.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/tickets/commonPartials/_QRcode.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/tickets/commonPartials/_QRcode.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/tickets/commonPartials/_TicketOwner.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/tickets/commonPartials/_TicketOwner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/tickets/commonPartials/_UseExpire.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/tickets/commonPartials/_UseExpire.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/tickets/singleSubscribe/SingleSubscribe.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/tickets/singleSubscribe/SingleSubscribe.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/tickets/singleSubscribe/_SubscribeDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/tickets/singleSubscribe/_SubscribeDetail.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_food_works/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_food_works/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_new_site/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web_new_site/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_new_site/src/network/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_new_site/src/network/NETWORKCONSTS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_new_site/src/pages/Redirect/Redirect.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_new_site/src/pages/Redirect/Redirect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_new_site/src/router/MainRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_new_site/src/router/MainRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/helper/configs/MenuConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/helper/configs/MenuConfig.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/helper/i18n/messages/fa.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/helper/i18n/messages/fa.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/helper/pocket/pocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/helper/pocket/pocket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/const_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/const_api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,6 +72,7 @@
       <workItem from="1756549506733" duration="1169000" />
       <workItem from="1756647997061" duration="1178000" />
       <workItem from="1756800782155" duration="582000" />
+      <workItem from="1758807416472" duration="147000" />
     </task>
     <servers />
   </component>
