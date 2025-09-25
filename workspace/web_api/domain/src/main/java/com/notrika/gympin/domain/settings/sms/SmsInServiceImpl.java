@@ -30,7 +30,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
@@ -39,28 +38,37 @@ import java.util.Date;
 @Slf4j
 @Service
 public class SmsInServiceImpl implements SmsInService {
-    @Autowired
-    private CorporateContractCodeRepository corporateContractCodeRepository;
+
+
     @Autowired
     private UserActivationCodeRepository userActivationCodeRepository;
+
     @Autowired
     private PlaceContractCodeRepository placeContractCodeRepository;
+
     @Autowired
-    private ManageSmsPatternRepository manageSmsPatternRepository;
-    @Autowired
-    private CorporateRepository corporateRepository;
-    @Autowired
-    private ManageSmsRepository manageSmsRepository;
-    @Autowired
-    private PlaceGymRepository placeGymRepository;
-    @Autowired
-    private SettingsService settingsService;
+    private CorporateContractCodeRepository corporateContractCodeRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserServiceImpl userService;
+
     @Autowired
-    private EntityManager entityManager;
+    private SettingsService settingsService;
+
+    @Autowired
+    private PlaceGymRepository placeGymRepository;
+
+    @Autowired
+    private CorporateRepository corporateRepository;
+
+    @Autowired
+    private ManageSmsRepository manageSmsRepository;
+
+    @Autowired
+    private ManageSmsPatternRepository manageSmsPatternRepository;
 
 
     @Transactional
@@ -352,8 +360,7 @@ public class SmsInServiceImpl implements SmsInService {
 
 
     private void insertSendRequest(SmsDto smsDto, String patternName,SmsTypes smsType) {
-        Long patternId = manageSmsPatternRepository.findIdByPatternKeyAndDeletedFalse(patternName);
-        ManageSmsPatternEntity pattern = entityManager.getReference(ManageSmsPatternEntity.class, patternId);
+        ManageSmsPatternEntity pattern = manageSmsPatternRepository.findByPatternKeyAndDeletedFalse(patternName);
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
