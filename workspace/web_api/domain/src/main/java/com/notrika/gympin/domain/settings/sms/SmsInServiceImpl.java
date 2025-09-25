@@ -30,6 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
@@ -38,37 +39,28 @@ import java.util.Date;
 @Slf4j
 @Service
 public class SmsInServiceImpl implements SmsInService {
-
-
-    @Autowired
-    private UserActivationCodeRepository userActivationCodeRepository;
-
-    @Autowired
-    private PlaceContractCodeRepository placeContractCodeRepository;
-
     @Autowired
     private CorporateContractCodeRepository corporateContractCodeRepository;
-
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    private UserActivationCodeRepository userActivationCodeRepository;
     @Autowired
-    private UserServiceImpl userService;
-
-    @Autowired
-    private SettingsService settingsService;
-
-    @Autowired
-    private PlaceGymRepository placeGymRepository;
-
-    @Autowired
-    private CorporateRepository corporateRepository;
-
-    @Autowired
-    private ManageSmsRepository manageSmsRepository;
-
+    private PlaceContractCodeRepository placeContractCodeRepository;
     @Autowired
     private ManageSmsPatternRepository manageSmsPatternRepository;
+    @Autowired
+    private CorporateRepository corporateRepository;
+    @Autowired
+    private ManageSmsRepository manageSmsRepository;
+    @Autowired
+    private PlaceGymRepository placeGymRepository;
+    @Autowired
+    private SettingsService settingsService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserServiceImpl userService;
+    @Autowired
+    private EntityManager entityManager;
 
 
     @Transactional
@@ -217,7 +209,9 @@ public class SmsInServiceImpl implements SmsInService {
         if(sendToFixNumber()){
             smsDto.setUserNumber(getFixNumber().getValue());
         }
-        insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_RESERVE_TICKET_1",SmsTypes.USER_BUY_SUBSCRIBE);
+        try {
+            insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_RESERVE_TICKET_1",SmsTypes.USER_BUY_SUBSCRIBE);
+        }catch (Exception e){}
         return true;
     }
 
@@ -361,6 +355,9 @@ public class SmsInServiceImpl implements SmsInService {
 
     private void insertSendRequest(SmsDto smsDto, String patternName,SmsTypes smsType) {
         ManageSmsPatternEntity pattern = manageSmsPatternRepository.findByPatternKeyAndDeletedFalse(patternName);
+        if(entityManager.contains(pattern)){
+            pattern = entityManager.getReference(ManageSmsPatternEntity.class, pattern.getId());
+        }
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
