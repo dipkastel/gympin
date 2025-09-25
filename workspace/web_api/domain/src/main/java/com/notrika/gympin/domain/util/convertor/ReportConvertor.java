@@ -17,6 +17,7 @@ public final class ReportConvertor {
         ReportPopularSportDto dto = new ReportPopularSportDto();
         dto.setSportName(entity.getSportName());
         dto.setSportCount(entity.getCount());
+        dto.setSportEnteryCount(entity.getEnteryCount());
         return dto;
     }
 

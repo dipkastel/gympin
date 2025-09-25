@@ -22,17 +22,17 @@ export default function _SportRadar({corporate}) {
         if (!corporate) return;
         Report_getPopularSports({id: corporate?.Id}).then(result => {
             if(result.data.Data.length>0){
-                var sportsCount = [];
+                var SportEnteryCount = [];
                 for(var item in result.data.Data){
-                    sportsCount.push(
+                    SportEnteryCount.push(
                         {
                             subject: result.data.Data[item].SportName,
-                            count: result.data.Data[item].SportCount,
-                            B: result.data.Data[item].SportCount,
-                            fullMark: result.data.Data[item].SportCount,
+                            count: result.data.Data[item].SportEnteryCount,
+                            B: result.data.Data[item].SportEnteryCount,
+                            fullMark: result.data.Data[item].SportEnteryCount,
                         })
                 }
-                setData(sportsCount);
+                setData(SportEnteryCount);
                 setLoadStatus(LoadStatus.LOADED);
             }else{
                 setLoadStatus(LoadStatus.NODATA);
@@ -57,7 +57,7 @@ export default function _SportRadar({corporate}) {
                     <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
                         <PolarGrid/>
                         <PolarAngleAxis dataKey="subject"/>
-                        <PolarRadiusAxis angle={360/(data?.length)} domain={[0,Math.max(...data.map(r=>r.SportCount))]}/>
+                        <PolarRadiusAxis angle={360/(data?.length)} domain={[0,Math.max(...data.map(r=>r.SportEnteryCount))]}/>
                         <Radar dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
                     </RadarChart>
                 </ResponsiveContainer>

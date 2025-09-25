@@ -37,7 +37,7 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
     @Query(value = "SELECT COUNT(DISTINCT u.id) as Count  FROM invoice i  JOIN finance_serial fs ON i.serial_id = fs.id  JOIN finance_corporate_transaction fct ON fct.serial_id = fs.id  JOIN finance_corporate fc ON fc.id = fct.finance_corporate_id  JOIN `user` u ON u.id = i.user_id  WHERE fc.corporate_id = :corporateId   AND i.status = 'COMPLETED'   AND fct.type = 'DEPOSIT'   AND fs.create_date >= DATE_SUB(CURDATE(), INTERVAL :intervalMonthCount MONTH)   AND u.gender = :gender ", nativeQuery = true)
     Long getTicketBuyByDateThisWeekByGenderAndCorporateId(Integer intervalMonthCount, String gender, Long corporateId);
 
-    @Query(value = "SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PopularSportRequestDto( Max(s.name) as sportName , Count(s.id) as count ) FROM PurchasedBaseEntity pb  " +
+    @Query(value = "SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PopularSportRequestDto( Max(s.name) as sportName , Count(s.id) as count, Count(ps.entryList.size) as enteryCount ) FROM PurchasedBaseEntity pb  " +
             "JOIN PurchasedSubscribeEntity ps on pb.id = ps.id  " +
             "JOIN pb.Serials se " +
             "JOIN InvoiceEntity i ON i.serial.id = se.id  " +

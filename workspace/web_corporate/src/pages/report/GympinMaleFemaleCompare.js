@@ -139,7 +139,7 @@ const GympinMaleFemaleCompare = ({corporate}) => {
             selectedMode: 'single'
         },
         xAxis: {
-            data: ['درصد ورزش خانم‌ها', 'درصد ورزش آقایان'],
+            data: [ 'درصد ورزش آقایان','درصد ورزش خانم‌ها'],
             axisTick: { show: false },
             axisLine: { show: false },
             axisLabel: { show: false }

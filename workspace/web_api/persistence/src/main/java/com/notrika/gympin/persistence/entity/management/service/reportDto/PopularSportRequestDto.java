@@ -11,9 +11,11 @@ public class PopularSportRequestDto {
 
     private String sportName;
     private Long count;
+    private Long enteryCount;
 
-    public PopularSportRequestDto(String sportName, Long count) {
+    public PopularSportRequestDto(String sportName, Long count,Long enteryCount) {
         this.sportName = sportName;
         this.count = count;
+        this.enteryCount = enteryCount;
     }
 }

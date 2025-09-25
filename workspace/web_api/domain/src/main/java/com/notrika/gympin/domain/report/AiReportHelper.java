@@ -76,9 +76,9 @@ public class AiReportHelper {
         String res = "بر اساس تعداد کل کارمندان ثبت شده در پنل جیم پین،  ";
         res+=gender.getUsesManInTotal()+"% آقایان و ";
         res+=gender.getUsesWomanInTotal()+"% خانم ها  در امر ورزش مشارکت داشته اند که از آن ";
-        Long whole = popularSports.stream().map(ReportPopularSportDto::getSportCount).reduce(0L, Long::sum);
+        Long whole = popularSports.stream().map(ReportPopularSportDto::getSportEnteryCount).reduce(0L, Long::sum);
         for (ReportPopularSportDto part : popularSports) {
-            res += Math.round(part.getSportCount()*100/whole) + "% مربوط به "+part.getSportName()+", ";
+            res += Math.round(part.getSportEnteryCount()*100/whole) + "% مربوط به "+part.getSportName()+", ";
         }
         res = res.substring(0,res.length()-2);
         res+=" بوده است. مجموع مدت ورزش پرسنل مجموعه ی "+corporate.getName()+" ";

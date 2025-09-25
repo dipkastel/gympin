@@ -22,5 +22,8 @@ public class ReportPopularSportDto extends BaseDto<ReportPopularSportDto> {
     @JsonProperty("SportCount")
     private Long sportCount;
 
+    @JsonProperty("SportEnteryCount")
+    private Long sportEnteryCount;
+
 
 }
