@@ -355,7 +355,7 @@ public class SmsInServiceImpl implements SmsInService {
 
     private void insertSendRequest(SmsDto smsDto, String patternName,SmsTypes smsType) {
         ManageSmsPatternEntity pattern = manageSmsPatternRepository.findByPatternKeyAndDeletedFalse(patternName);
-        if(entityManager.contains(pattern)){
+        if(!entityManager.contains(pattern)){
             pattern = entityManager.getReference(ManageSmsPatternEntity.class, pattern.getId());
         }
 
