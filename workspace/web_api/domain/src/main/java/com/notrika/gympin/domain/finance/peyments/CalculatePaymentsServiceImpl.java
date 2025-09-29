@@ -105,6 +105,8 @@ public class CalculatePaymentsServiceImpl {
             }
             if (transactionResult) {
                 confirmCorporatePayment(transactionSerial,request,description,additionalDescription);
+                request.setDepositStatus(DepositStatus.CONFIRMED);
+                financeIncreaseCorporateDepositRepository.update(request);
             } else {
                 request.setDepositStatus(DepositStatus.REJECTED);
                 request.setDescription(description);
@@ -167,6 +169,8 @@ public class CalculatePaymentsServiceImpl {
             }
             if (transactionResult) {
                 confirmUserPayment(transactionSerial, request, description, additionalDescription);
+                request.setDepositStatus(DepositStatus.CONFIRMED);
+                financeIncreaseUserDepositRepository.update(request);
             } else {
                 request.setDepositStatus(DepositStatus.REJECTED);
                 request.setDescription(description);

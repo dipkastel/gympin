@@ -59,7 +59,7 @@
                 پاسخ درگاه :
                 <span th:text="${Message}" />
                 <br/>
-                <button class="box-btn" id="btn-back" th:href="${Ref}" >بازگشت  - 15</button>
+                <a class="box-btn" id="btn-back" th:href="${Ref}" >بازگشت  - 5</a>
             </div>
         </div>
         <!-- Add your main content here -->
@@ -68,7 +68,7 @@
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script>
     $( document ).ready(function() {
-        var count = 14;
+        var count = 4;
         var result = "true"=="[[${Result}]]";
         $(".box-header").css("background",result?"#128865":"#f54554");
         $(".box-btn").css("background",result?"#128865":"#f54554");
