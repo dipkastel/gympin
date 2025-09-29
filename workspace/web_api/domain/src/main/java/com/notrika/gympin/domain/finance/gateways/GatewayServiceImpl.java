@@ -167,6 +167,7 @@ public class GatewayServiceImpl extends AbstractBaseService<GatewaysParam, Gatew
                     throw new GatewayIsNotAvalable();
                 } else if (gatwayresult.getStatus() == 0 && gatwayresult.getToken() > 0) {
                     bankStaff.setReference("پرداخت از درگاه" + bankStaff.getBankName() + " - توکن بانک " + gatwayresult.getToken());
+                    bankStaff.setReferenceToken(String.valueOf(gatwayresult.getToken()));
                     bankStaff.setUrl("https://pec.shaparak.ir/NewIPG/?token=" + gatwayresult.getToken());
                 } else if (gatwayresult.getMessage() != null) {
                     throw new BadRequestRunTimeMessage(gatwayresult.getMessage());

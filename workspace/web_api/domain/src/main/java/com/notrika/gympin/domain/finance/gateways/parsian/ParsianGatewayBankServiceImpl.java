@@ -10,6 +10,7 @@ import com.notrika.gympin.common.util.exception.transactions.TransactionNotFound
 import com.notrika.gympin.common.util.exception.transactions.unknownPaymentBuyer;
 import com.notrika.gympin.domain.finance.peyments.CalculatePaymentsServiceImpl;
 import com.notrika.gympin.persistence.dao.repository.finance.gateway.FinanceGatewayRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.request.FinanceIncreaseUserDepositRequestRepository;
 import com.notrika.gympin.persistence.entity.finance.gateway.FinanceGatewayEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class ParsianGatewayBankServiceImpl implements GatewayBankService {
 
 
 
+
     public ClientSaleResponseData salePaymentRequest(ClientSaleRequestData requestData) {
         WebServiceTemplate template = getTemplate("https://pec.shaparak.ir/NewIPGServices/Sale/SaleService.asmx");
         String requestUrl = "https://pec.Shaparak.ir/NewIPGServices/Sale/SaleService/SalePaymentRequest";
@@ -66,9 +68,9 @@ public class ParsianGatewayBankServiceImpl implements GatewayBankService {
     @Override
     public String callback(HttpServletRequest request, Model model, PersianGatewayCallbackParam param, String ref) throws Exception{
         log.info("CallbackMethod exe for param", param);
-        String message = getFailierResult(param.getStatus());
+        String message = FailureMessageProvider.getMessage(param.getStatus());
         String additionalMessage = "";
-        model.addAttribute("Ref", getRefrence(ref));
+        model.addAttribute("Ref", ReferenceProvider.getReference(ref));
         var result = false;
         if (param.getStatus() == 0 && param.getRRN() > 0) {
             ClientConfirmRequestData requestData = new ClientConfirmRequestData();
@@ -89,13 +91,14 @@ public class ParsianGatewayBankServiceImpl implements GatewayBankService {
                             " RNN : " + clientConfirmResponseData.getRRN() + "\n" +
                                     " Gateway Token : " + clientConfirmResponseData.getToken() + "\n" +
                                     " Card Hash : " + clientConfirmResponseData.getCardNumberMasked();
+
                     result = true;
                 } else {
-                    message = getFailierResult(clientConfirmResponseData.getStatus());
+                    message = FailureMessageProvider.getMessage(clientConfirmResponseData.getStatus());
                 }
             } catch (Exception e) {
                 log.error("CallbackMethod Bank Request Faild", e);
-                message = getFailierResult((short) -300);
+                message = FailureMessageProvider.getMessage((short) -300);
             }
         }
         try {
@@ -103,18 +106,18 @@ public class ParsianGatewayBankServiceImpl implements GatewayBankService {
             calculatePeymentsService.CalculatePayment(GeneralUtil.PureOrderId(param.getOrderId()), result, message, additionalMessage);
         } catch (TransactionNotFound e) {
             log.error("CallbackMethod CalculatePayment Faild - transactionNotFound", e);
-            message = getFailierResult((short) -311) + param.getOrderId();
+            message = FailureMessageProvider.getMessage((short) -311) + param.getOrderId();
         } catch (unknownPaymentBuyer e) {
             log.error("CallbackMethod CalculatePayment Faild - unknownPaymentBuyer", e);
-            message = getFailierResult((short) -312) + param.getOrderId();
+            message = FailureMessageProvider.getMessage((short) -312) + param.getOrderId();
         } catch (TransactionAlreadyChecked e) {
             log.error("CallbackMethod CalculatePayment Faild - already calculated", e);
             result = false;
-            message = getFailierResult((short) -313) + param.getOrderId();
+            message = FailureMessageProvider.getMessage((short) -313) + param.getOrderId();
         } catch (Exception e) {
             log.error("CallbackMethod CalculatePayment Faild - ex : ", e);
             result = false;
-            message = getFailierResult((short) -310) + param.getOrderId();
+            message = FailureMessageProvider.getMessage((short) -310) + param.getOrderId();
         }
         model.addAttribute("Message", message);
         model.addAttribute("Result", result);
@@ -153,48 +156,6 @@ public class ParsianGatewayBankServiceImpl implements GatewayBankService {
 
             }
         };
-    }
-
-    private String getRefrence(String ref) {
-        switch (ref) {
-            case "WEBAPP":
-                return "https://web.gympin.ir/wallet";
-            case "WEBCORPORATE":
-                return "https://corporate.gympin.ir/finance";
-            case "WEBPLACE":
-                return "https://place.gympin.ir";
-            default:
-                return "https://gympin.ir";
-        }
-    }
-
-    private String getFailierResult(Short status) {
-        switch (status) {
-            case 59:
-                return "عملیات خرید انجام نشد.در صورتی که مبلغ از حساب شما کسر شده، مبلغ کسر شده، حداکثر تا 72 ساعت به حساب  باز می گردد";
-            case 0:
-                return "تراکنش با موفقیت انجام شد";
-            case -112:
-                return "شناسه سفارش تکراری است. در صورتی که مبلغ از حساب شما کسر شده، مبلغ کسر شده، حداکثر تا 72 ساعت به حساب  باز می گردد";
-            case -126:
-                return "درگاه از سمت بانک تایید نشد";
-            case -127:
-                return "ip درگاه از سمت بانک تایید نشد";
-            case -138:
-                return "انصراف از پرداخت در درگاه";
-            case -300:
-                return "تایید تراکنش با خطا مواجه شد.در صورتی که مبلغ از حساب شما کسر شده، مبلغ کسر شده، حداکثر تا 72 ساعت به حساب  باز می گردد";
-            case -310:
-                return "خطا در عملیات با پشتیبانی جیم پین تماس بگیرید. کد پیگیری خطا : ";
-            case -311:
-                return "تراکنش یافت نشد،کد پیگیری تراکنش : ";
-            case -312:
-                return "پرداخت کننده شناسایی نشد. کد پیگیری تراکنش : ";
-            case -313:
-                return "تراکنش قبلا محاسبه و مبلغ آن به حساب شما واریز شده. کد پیگیری تراکنش : ";
-            default:
-                return "خطا در تکمیل خرید.در صورتی که مبلغ از حساب شما کسر شده، مبلغ کسر شده، حداکثر تا 72 ساعت به حساب  باز می گردد";
-        }
     }
 
 }

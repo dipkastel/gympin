@@ -5,6 +5,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePerso
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelGroupDto;
 import com.notrika.gympin.common.settings.corporateSettings.enums.CorporateSettingTypesEnum;
+import com.notrika.gympin.domain.corporate.CorporatePersonelFinanceHelper;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
@@ -100,7 +101,7 @@ public final class CorporateConvertor {
         return dto;
     }
 
-    public static CorporatePersonnelDto toSecurePersonnelDto(CorporatePersonnelEntity entity) {
+    public static CorporatePersonnelDto toSecurePersonnelDto(CorporatePersonnelEntity entity, CorporatePersonelFinanceHelper helper) {
         if (entity == null) return null;
         CorporatePersonnelDto dto = new CorporatePersonnelDto();
         dto.setId(entity.getId());
@@ -112,7 +113,7 @@ public final class CorporateConvertor {
             dto.setTotalCredit(entity.getCredits().stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add));
         }catch (Exception e){}
         if (entity.getCredits() != null)
-            dto.setCreditList(entity.getCredits().stream().filter(o->!o.isDeleted()).sorted((o1, o2)->o2.getId().compareTo(o1.getId())).map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
+            dto.setCreditList(helper.checkCreditsExpiration(entity.getCredits().stream().filter(o->!o.isDeleted()).sorted((o1, o2)->o2.getId().compareTo(o1.getId())).collect(Collectors.toList())).stream().map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
         return dto;
     }
 

@@ -9,7 +9,6 @@ import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
-import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import com.notrika.gympin.common.util.exception.ticket.TicketHasNotOwner;
 import com.notrika.gympin.common.util.exception.transactions.TransactionAlreadyChecked;
 import com.notrika.gympin.common.util.exception.transactions.TransactionNotFound;
@@ -36,7 +35,6 @@ import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
 import com.notrika.gympin.persistence.entity.finance.user.requests.FinanceIncreaseUserDepositRequestEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
-import com.notrika.gympin.persistence.entity.purchased.purchasedCourse.PurchasedCourseEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,124 +90,152 @@ public class CalculatePaymentsServiceImpl {
             throw new TransactionNotFound();
 
         if (transactionSerial.getCorporateIncreases().size() > 0) {
-            //corporate increase request
-            for (FinanceIncreaseCorporateDepositRequestEntity request : transactionSerial.getCorporateIncreases()) {
-                var corporateFinance = request.getCorporate().getFinanceCorporate();
-                if (request.getDepositStatus() != DepositStatus.BANK_PENDING) {
-                    throw new TransactionAlreadyChecked();
-                }
-                if (TransactionResult) {
-
-                    //Tax
-                    BigDecimal amountToIncrease = BigDecimal.valueOf(request.getAmount().longValue()/(1+getCorporateTax()));
-                    BigDecimal tax = request.getAmount().subtract(amountToIncrease);
-                    financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
-                            .serial(transactionSerial)
-                            .isChecked(false)
-                            .latestBalance(corporateFinance.getTotalDeposit())
-                            .transactionStatus(TransactionStatus.COMPLETE)
-                            .transactionType(TransactionBaseType.USER)
-                            .amount(amountToIncrease)
-                            .financeCorporate(corporateFinance)
-                            .description(description + " " + additionalDescription+" Tax : "+tax)
-                            .build()
-                    );
-
-                    var newDeposit = corporateFinance.getTotalDeposit().add(amountToIncrease);
-                    corporateFinance.setTotalDeposit(newDeposit);
-                    financeCorporateRepository.update(corporateFinance);
-                    // todo send increase sms
-                    try {
-                        List<UserEntity> corporateAdmins = request.getCorporate().getPersonnel().stream().filter(o->!o.isDeleted()).filter(p -> p.getRole() == CorporatePersonnelRoleEnum.ADMIN).map(p -> p.getUser()).collect(Collectors.toList());
-                        for (UserEntity corporateAdmin : corporateAdmins) {
-                            smsService.sendCorporateTransactionComplete(
-                                    SmsDto.builder()
-                                            .smsType(SmsTypes.CORPORATE_CHARGE)
-                                            .userNumber(corporateAdmin.getPhoneNumber())
-                                            .text1(amountToIncrease.toString())
-                                            .build()
-                            );
-                        }
-                    } catch (Exception e) {
-                    }
-
-                } else {
-                    request.setDepositStatus(DepositStatus.REJECTED);
-                    request.setDescription(description);
-                    if (!additionalDescription.isEmpty()) {
-                        request.setDescription(request.getDescription() + " - " + additionalDescription);
-                    }
-                    financeIncreaseCorporateDepositRepository.update(request);
-                }
-            }
-
+            checkAndCalculateCorporateIncrease(transactionSerial, TransactionResult, description, additionalDescription);
         } else if (transactionSerial.getUserIncreases().size() > 0) {
-            //user increase request
-            for (FinanceIncreaseUserDepositRequestEntity request : transactionSerial.getUserIncreases()) {
-                var userFinance = financeHelper.getUserPersonalWallet(request.getUser());
-                if (request.getDepositStatus() != DepositStatus.BANK_PENDING) {
-                    throw new TransactionAlreadyChecked();
-                }
-                if (TransactionResult) {
-                    //transaction
-                    financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
-                            .serial(transactionSerial)
-                            .isChecked(false)
-                            .latestBalance(userFinance.getTotalDeposit())
-                            .transactionStatus(TransactionStatus.COMPLETE)
-                            .transactionType(TransactionBaseType.USER)
-                            .amount(request.getAmount())
-                            .financeUser(userFinance)
-                            .description(description + " " + additionalDescription)
-                            .build()
-                    );
-                    //user balance
-                    var newDeposit = userFinance.getTotalDeposit().add(request.getAmount());
-                    userFinance.setTotalDeposit(newDeposit);
-                    financeUserRepository.update(userFinance);
-                    //Todo send increase sms
-                    try {
-                        smsService.sendUserTransactionComplete(
-                                SmsDto.builder()
-                                        .smsType(SmsTypes.USER_CHARGE)
-                                        .userNumber(request.getUser().getPhoneNumber())
-                                        .text1(request.getAmount().toString())
-                                        .build()
-                        );
-                    } catch (Exception e) {
-                    }
-                } else {
-                    request.setDepositStatus(DepositStatus.REJECTED);
-                    request.setDescription(description);
-                    if (!additionalDescription.isEmpty()) {
-                        request.setDescription(request.getDescription() + " - " + additionalDescription);
-                    }
-                    financeIncreaseUserDepositRepository.update(request);
-                }
+            checkAndCalculateUserIncrease(transactionSerial, TransactionResult, description, additionalDescription);
+        }
+    }
+
+    private void checkAndCalculateCorporateIncrease(FinanceSerialEntity transactionSerial, Boolean transactionResult, String description, String additionalDescription) {
+
+        //corporate increase request
+        for (FinanceIncreaseCorporateDepositRequestEntity request : transactionSerial.getCorporateIncreases()) {
+            if (request.getDepositStatus() != DepositStatus.BANK_PENDING) {
+                throw new TransactionAlreadyChecked();
             }
+            if (transactionResult) {
+                confirmCorporatePayment(transactionSerial,request,description,additionalDescription);
+            } else {
+                request.setDepositStatus(DepositStatus.REJECTED);
+                request.setDescription(description);
+                if (!additionalDescription.isEmpty()) {
+                    request.setDescription(request.getDescription() + " - " + additionalDescription);
+                }
+                financeIncreaseCorporateDepositRepository.update(request);
+            }
+        }
+
+    }
+
+    private void confirmCorporatePayment(FinanceSerialEntity transactionSerial, FinanceIncreaseCorporateDepositRequestEntity request, String description, String additionalDescription) {
+
+        var corporateFinance = request.getCorporate().getFinanceCorporate();
+        //Tax
+        BigDecimal amountToIncrease = BigDecimal.valueOf(request.getAmount().longValue() / (1 + getCorporateTax()));
+        BigDecimal tax = request.getAmount().subtract(amountToIncrease);
+        financeCorporateTransactionRepository.add(FinanceCorporateTransactionEntity.builder()
+                .serial(transactionSerial)
+                .isChecked(false)
+                .latestBalance(corporateFinance.getTotalDeposit())
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .transactionType(TransactionBaseType.USER)
+                .amount(amountToIncrease)
+                .financeCorporate(corporateFinance)
+                .description(description + " " + additionalDescription + " Tax : " + tax)
+                .build()
+        );
+
+        var newDeposit = corporateFinance.getTotalDeposit().add(amountToIncrease);
+        corporateFinance.setTotalDeposit(newDeposit);
+        financeCorporateRepository.update(corporateFinance);
+        request.setDepositStatus(DepositStatus.CONFIRMED);
+        financeIncreaseCorporateDepositRepository.update(request);
+        // todo send increase sms
+        try {
+            List<UserEntity> corporateAdmins = request.getCorporate().getPersonnel().stream().filter(o -> !o.isDeleted()).filter(p -> p.getRole() == CorporatePersonnelRoleEnum.ADMIN).map(p -> p.getUser()).collect(Collectors.toList());
+            for (UserEntity corporateAdmin : corporateAdmins) {
+                smsService.sendCorporateTransactionComplete(
+                        SmsDto.builder()
+                                .smsType(SmsTypes.CORPORATE_CHARGE)
+                                .userNumber(corporateAdmin.getPhoneNumber())
+                                .text1(amountToIncrease.toString())
+                                .build()
+                );
+            }
+        } catch (Exception e) {
+        }
+
+    }
+
+
+    private void checkAndCalculateUserIncrease(FinanceSerialEntity transactionSerial, Boolean transactionResult, String description, String additionalDescription) {
+
+        //user increase request
+        for (FinanceIncreaseUserDepositRequestEntity request : transactionSerial.getUserIncreases()) {
+            if (request.getDepositStatus() != DepositStatus.BANK_PENDING) {
+                throw new TransactionAlreadyChecked();
+            }
+            if (transactionResult) {
+                confirmUserPayment(transactionSerial, request, description, additionalDescription);
+            } else {
+                request.setDepositStatus(DepositStatus.REJECTED);
+                request.setDescription(description);
+                if (!additionalDescription.isEmpty()) {
+                    request.setDescription(request.getDescription() + " - " + additionalDescription);
+                }
+                financeIncreaseUserDepositRepository.update(request);
+            }
+        }
+    }
+
+    private void confirmUserPayment(FinanceSerialEntity transactionSerial, FinanceIncreaseUserDepositRequestEntity request, String description, String additionalDescription) {
+
+        //add user transaction
+        var userFinance = financeHelper.getUserPersonalWallet(request.getUser());
+        financeUserTransactionRepository.add(FinanceUserTransactionEntity.builder()
+                .serial(transactionSerial)
+                .isChecked(false)
+                .latestBalance(userFinance.getTotalDeposit())
+                .transactionStatus(TransactionStatus.COMPLETE)
+                .transactionType(TransactionBaseType.USER)
+                .amount(request.getAmount())
+                .financeUser(userFinance)
+                .description(description + " " + additionalDescription)
+                .build()
+        );
+
+        //change user balance
+        var newDeposit = userFinance.getTotalDeposit().add(request.getAmount());
+        userFinance.setTotalDeposit(newDeposit);
+        financeUserRepository.update(userFinance);
+
+        //update request
+        request.setDepositStatus(DepositStatus.CONFIRMED);
+        financeIncreaseUserDepositRepository.update(request);
+
+        //send sms
+        try {
+            smsService.sendUserTransactionComplete(
+                    SmsDto.builder()
+                            .smsType(SmsTypes.USER_CHARGE)
+                            .userNumber(request.getUser().getPhoneNumber())
+                            .text1(request.getAmount().toString())
+                            .build()
+            );
+        } catch (Exception e) {
         }
     }
 
     private Float getCorporateTax() {
         try {
-            String taxValue =  settingsService.getByKey("CORPORATE_GENERAL_TAX").getValue();
-            return Float.parseFloat(taxValue)/100;
-        }catch (Exception e){
+            String taxValue = settingsService.getByKey("CORPORATE_GENERAL_TAX").getValue();
+            return Float.parseFloat(taxValue) / 100;
+        } catch (Exception e) {
             return 0.1f;
         }
     }
 
 
-    public void PayToPlace(PurchasedSubscribeEntity subscribeEntity,FinanceSerialEntity serial) {
+    public void PayToPlace(PurchasedSubscribeEntity subscribeEntity, FinanceSerialEntity serial) {
 
         PlacePersonnelEntity beneficiary = subscribeEntity.getTicketSubscribe().getBeneficiary();
-        FinanceUserEntity beneficiaryFinance = financeHelper.getUserIncomeWallet(beneficiary.getUser(),beneficiary.getPlace());
+        FinanceUserEntity beneficiaryFinance = financeHelper.getUserIncomeWallet(beneficiary.getUser(), beneficiary.getPlace());
         Double commissionFee = beneficiary.getCommissionFee();
 
         BigDecimal commission = null;
         BigDecimal discount = null;
         BigDecimal beneficiaryShare = null;
-        float discountValue =100- subscribeEntity.getSellPrice().multiply(BigDecimal.valueOf(100)).divide(subscribeEntity.getPlacePrice(), 1, RoundingMode.DOWN).longValue();
+        float discountValue = 100 - subscribeEntity.getSellPrice().multiply(BigDecimal.valueOf(100)).divide(subscribeEntity.getPlacePrice(), 1, RoundingMode.DOWN).longValue();
 
 
         if (subscribeEntity.getCustomer().getInvitedBy() != null && subscribeEntity.getCustomer().getInvitedBy().startsWith("P") && subscribeEntity.getCustomer().getInvitedBy().equals("P" + GeneralHelper.getInviteCode(subscribeEntity.getPlace().getId(), 1))) {
@@ -271,10 +297,10 @@ public class CalculatePaymentsServiceImpl {
     public void PayFoodToCatering(InvoiceEntity invoice, PlaceCateringEntity catering) {
 
 
-        PlacePersonnelEntity beneficiary = catering.getPlaceOwners().stream().filter(po->!po.isDeleted()&&po.getIsBeneficiary()).findFirst().orElse(null);
-        if(beneficiary==null)
+        PlacePersonnelEntity beneficiary = catering.getPlaceOwners().stream().filter(po -> !po.isDeleted() && po.getIsBeneficiary()).findFirst().orElse(null);
+        if (beneficiary == null)
             throw new TicketHasNotOwner();
-        FinanceUserEntity beneficiaryFinance = financeHelper.getUserIncomeWallet(beneficiary.getUser(),beneficiary.getPlace());
+        FinanceUserEntity beneficiaryFinance = financeHelper.getUserIncomeWallet(beneficiary.getUser(), beneficiary.getPlace());
         Double commissionFee = beneficiary.getCommissionFee();
 
         BigDecimal commission = null;
@@ -282,9 +308,8 @@ public class CalculatePaymentsServiceImpl {
         BigDecimal beneficiaryShare = null;
 
         //settlement
-            commission = invoice.getTotalPrice().multiply(BigDecimal.valueOf(commissionFee / 100));
-            beneficiaryShare = invoice.getTotalPrice().multiply(BigDecimal.valueOf(1 - (commissionFee / 100)));
-
+        commission = invoice.getTotalPrice().multiply(BigDecimal.valueOf(commissionFee / 100));
+        beneficiaryShare = invoice.getTotalPrice().multiply(BigDecimal.valueOf(1 - (commissionFee / 100)));
 
 
         //place catering personel
@@ -308,7 +333,6 @@ public class CalculatePaymentsServiceImpl {
                 .latestBalance(financeIncomeTransactionRepository.gympinTotalIncome() == null ? BigDecimal.ZERO : financeIncomeTransactionRepository.gympinTotalIncome())
                 .serial(invoice.getSerial())
                 .build());
-
 
 
         //to beneficiary

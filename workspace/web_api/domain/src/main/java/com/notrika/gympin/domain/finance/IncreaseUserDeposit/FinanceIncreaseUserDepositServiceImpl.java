@@ -134,22 +134,27 @@ public class FinanceIncreaseUserDepositServiceImpl extends AbstractBaseService<F
             case BANK_PORTAL:
                 var bankStaff = gatewayService.generateBankStaff(applicationGateway,param.getApplication(),param.getAmount(),serial);
                 request.setRefrence(bankStaff.getReference());
+                request.setRefrenceName(bankStaff.getBankName());
+                request.setRefrenceCode(bankStaff.getReferenceToken());
                 request.setDepositStatus(DepositStatus.BANK_PENDING);
                 result = bankStaff.getUrl();
                 break;
             case CHEQUE:
                 request.setRefrence(GeneralUtil.GetPaymentDescription(applicationGateway.getGateway().getGatewayType(),param.getTransactionReference(),param.getChequeDate()));
                 request.setDepositStatus(DepositStatus.REQUESTED);
+                request.setRefrenceCode(param.getTransactionReference());
                 result = serial.getSerial().split("-")[0];
                 break;
             case BANK_TRANSFER:
                 request.setRefrence(GeneralUtil.GetPaymentDescription(applicationGateway.getGateway().getGatewayType(),param.getTransactionReference(),param.getChequeDate()));
                 request.setDepositStatus(DepositStatus.REQUESTED);
+                request.setRefrenceCode(param.getTransactionReference());
                 result = serial.getSerial().split("-")[0];
                 break;
             case CARD_TRANSFER:
                 request.setRefrence(GeneralUtil.GetPaymentDescription(applicationGateway.getGateway().getGatewayType(),param.getTransactionReference(),param.getChequeDate()));
                 request.setDepositStatus(DepositStatus.REQUESTED);
+                request.setRefrenceCode(param.getTransactionReference());
                 result = serial.getSerial().split("-")[0];
                 break;
         }

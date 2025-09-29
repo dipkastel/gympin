@@ -222,7 +222,8 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     @Override
     @Transactional
     public BigDecimal getTotalUserCredits(CorporatePersonnelCreditParam param) {
-        return financeCorporateRepository.getById(param.getCorporateId()).getTotalCredits();
+        FinanceCorporateEntity corporateF = financeCorporateRepository.getById(param.getCorporateId());
+        return corporateF.getTotalCredits();
     }
 
     @Override
@@ -237,7 +238,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
     @Override
     public CorporatePersonnelCreditDto getById(long id) {
-        return CorporateConvertor.toCreditDto(corporatePersonnelCreditRepository.getById(id));
+        return CorporateConvertor.toCreditDto(helper.checkCreditExpiration(corporatePersonnelCreditRepository.getById(id)));
     }
 
     @Override
@@ -258,12 +259,12 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
     @Override
     public FinanceCorporatePersonnelCreditEntity getEntityById(long id) {
-        return corporatePersonnelCreditRepository.getById(id);
+        return helper.checkCreditExpiration(corporatePersonnelCreditRepository.getById(id));
     }
 
     @Override
     public List<FinanceCorporatePersonnelCreditEntity> getAll(Pageable pageable) {
-        return corporatePersonnelCreditRepository.findAllUndeleted(pageable);
+        return helper.checkCreditsExpiration(corporatePersonnelCreditRepository.findAllUndeleted(pageable));
     }
 
     @Override
@@ -273,12 +274,12 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
     @Override
     public List<CorporatePersonnelCreditDto> convertToDtos(List<FinanceCorporatePersonnelCreditEntity> entities) {
-        return entities.stream().filter(o -> !o.isDeleted()).map(CorporateConvertor::toCreditDto).collect(Collectors.toList());
+        return helper.checkCreditsExpiration(entities).stream().filter(o -> !o.isDeleted()).map(CorporateConvertor::toCreditDto).collect(Collectors.toList());
     }
 
     @Override
     public Page<CorporatePersonnelCreditDto> convertToDtos(Page<FinanceCorporatePersonnelCreditEntity> entities) {
-        return entities.map(CorporateConvertor::toCreditDto);
+        return entities.map(helper::checkCreditExpiration).map(CorporateConvertor::toCreditDto);
     }
 
     @Transactional

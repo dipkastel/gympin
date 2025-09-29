@@ -242,7 +242,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public CorporatePersonnelDto getById(long id) {
-        return CorporateConvertor.toSecurePersonnelDto(corporatePersonnelRepository.getById(id));
+        return CorporateConvertor.toSecurePersonnelDto(corporatePersonnelRepository.getById(id),corporatePersonelFinanceHelper);
     }
 
     @Override
@@ -287,12 +287,12 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public List<CorporatePersonnelDto> getPersonnelByCorporate(CorporateParam corporateParam) {
-        return corporatePersonnelRepository.findByCorporateIdAndDeletedIsFalse(corporateParam.getId()).stream().filter(o->!o.isDeleted()).map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
+        return corporatePersonnelRepository.findByCorporateIdAndDeletedIsFalse(corporateParam.getId()).stream().filter(o->!o.isDeleted()).map(p->CorporateConvertor.toSecurePersonnelDto(p,corporatePersonelFinanceHelper)).collect(Collectors.toList());
     }
 
     @Override
     public List<CorporatePersonnelDto> getByUserid(Long userId) {
-        return corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(userId).stream().map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
+        return corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(userId).stream().map(p->CorporateConvertor.toSecurePersonnelDto(p,corporatePersonelFinanceHelper)).collect(Collectors.toList());
     }
 
     @Override
@@ -303,6 +303,6 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public List<CorporatePersonnelDto> getOwnedByUserid(Long userId) {
-        return corporatePersonnelRepository.findByUserIdAndRoleAndDeletedIsFalse(userId, CorporatePersonnelRoleEnum.ADMIN).stream().map(CorporateConvertor::toSecurePersonnelDto).collect(Collectors.toList());
+        return corporatePersonnelRepository.findByUserIdAndRoleAndDeletedIsFalse(userId, CorporatePersonnelRoleEnum.ADMIN).stream().map(p->CorporateConvertor.toSecurePersonnelDto(p,corporatePersonelFinanceHelper)).collect(Collectors.toList());
     }
 }

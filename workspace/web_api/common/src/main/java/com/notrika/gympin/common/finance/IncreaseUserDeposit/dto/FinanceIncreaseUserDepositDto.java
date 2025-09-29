@@ -39,6 +39,9 @@ public class FinanceIncreaseUserDepositDto extends BaseDtoWithCreateUpdate<Finan
     @JsonProperty("Refrence")
     String refrence;
 
+    @JsonProperty("RefrenceCode")
+    String refrenceCode;
+
     @JsonProperty("SerialDescription")
     String serialDescription;
 

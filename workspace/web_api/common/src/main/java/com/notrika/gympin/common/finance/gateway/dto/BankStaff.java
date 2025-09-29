@@ -25,4 +25,7 @@ public class BankStaff extends BaseDtoWithCreateUpdate<BankStaff> {
 
     @JsonProperty("Reference")
     private String reference;
+
+    @JsonProperty("ReferenceToken")
+    private String referenceToken;
 }

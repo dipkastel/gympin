@@ -49,6 +49,12 @@ public class FinanceIncreaseUserDepositRequestEntity extends BaseEntityWithCreat
     @Column(name = "refrence")
     private String refrence;
 
+    @Column(name = "refrenceCode")
+    private String refrenceCode;
+
+    @Column(name = "refrenceName")
+    private String refrenceName;
+
     @Column(name = "description")
     private String description;
 

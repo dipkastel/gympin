@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.dao.repository.purchased.subscribe;
 
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,8 @@ public interface PurchasedSubscribeRepository extends BaseRepository<PurchasedSu
     PurchasedSubscribeEntity findByKey(String key);
 
     List<PurchasedSubscribeEntity> findAllByPlaceIdAndDeletedFalse(Long id);
+
+    List<PurchasedSubscribeEntity> findAllByDeletedIsFalseAndStatus(SubscribePurchasedStatus status);
 
     @Query("SELECT T FROM PurchasedSubscribeEntity T WHERE T.customer.id = :#{#userId} AND T.ticketSubscribe.place.id = :#{#placeId} AND T.status NOT LIKE 'PAYMENT_WAIT' AND T.status NOT LIKE 'CANCEL'  ORDER BY T.id DESC ")
     List<PurchasedSubscribeEntity> getUserPlaceSubscribe(Long userId, Long placeId);

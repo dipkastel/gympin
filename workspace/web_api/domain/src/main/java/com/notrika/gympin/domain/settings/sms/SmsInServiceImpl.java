@@ -200,7 +200,7 @@ public class SmsInServiceImpl implements SmsInService {
 
     @Override
     public boolean sendYouReserveSubscribe(SmsDto smsDto) throws Exception {
-        log.info("Going to sendYouBuySubscribe with params: {} ...\n", smsDto);
+        log.info("Going to sendYouReserveSubscribe with params: {} ...\n", smsDto);
 
 
         if (canSendSms())
@@ -211,6 +211,23 @@ public class SmsInServiceImpl implements SmsInService {
         }
         try {
             insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_RESERVE_TICKET_1",SmsTypes.USER_BUY_SUBSCRIBE);
+        }catch (Exception e){}
+        return true;
+    }
+
+    @Override
+    public boolean sendYouReserveWillExpireSoon(SmsDto smsDto) throws Exception {
+        log.info("Going to sendYouReserveWillExpireSoon with params: {} ...\n", smsDto);
+
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        try {
+            insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_RESERVE_TICKET_2",SmsTypes.USER_BUY_SUBSCRIBE);
         }catch (Exception e){}
         return true;
     }
