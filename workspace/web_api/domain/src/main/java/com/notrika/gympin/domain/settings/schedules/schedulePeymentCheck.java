@@ -21,7 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,7 +47,12 @@ public class schedulePeymentCheck {
 
     public void checkUserPendingPayments() {
         log.error("Going to checkPendingPayments\n");
-        List<FinanceSerialEntity> pendingSerial = financeSerialRepository.findAllUserPendingPayments(GatewayType.BANK_PORTAL, DepositStatus.BANK_PENDING);
+        List<FinanceSerialEntity> pendingSerial = financeSerialRepository.findAllUserPendingPayments(GatewayType.BANK_PORTAL, DepositStatus.BANK_PENDING)
+                .stream().filter(p->{
+            long diffMillis = new Date().getTime() - p.getCreatedDate().getTime();
+            long diffMinutes = TimeUnit.MILLISECONDS.toMinutes(diffMillis);
+            return diffMinutes > 15;
+        }).collect(Collectors.toList());
         for (FinanceSerialEntity request : pendingSerial) {
             log.error("Going to checkPendingPayments for transactionId :" + request.getId() + "\n");
             try {
