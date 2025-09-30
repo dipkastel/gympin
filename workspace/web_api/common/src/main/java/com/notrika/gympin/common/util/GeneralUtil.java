@@ -25,10 +25,12 @@ public class GeneralUtil {
         Date date = new Date();
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(date);
-        String newOrderId = orderId.toString();
-        newOrderId+=calendar.get(Calendar.HOUR_OF_DAY);
-        newOrderId+=calendar.get(Calendar.SECOND);
-        return Long.parseLong(newOrderId);
+        String tme = "";
+        tme+=calendar.get(Calendar.HOUR_OF_DAY);
+        tme+=calendar.get(Calendar.SECOND);
+        while (tme.length()!=4)
+            tme += "0";
+        return Long.parseLong(orderId.toString()+tme);
     }
 
     public static Long PureOrderId(Long orderId){
