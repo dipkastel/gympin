@@ -86,24 +86,33 @@ public class schedulePeymentCheck {
         } catch (Exception e) {
                 message += FailureMessageProvider.getMessage((short) -300);
         }
+
+        request.setDescription(message);
+        financeIncreaseUserDepositRequestRepository.update(request);
         try {
             message += "CallbackMethod CalculatePayment ";
             calculatePeymentsService.CalculatePayment(GeneralUtil.PureOrderId(OrderId), result, message, "");
         } catch (TransactionNotFound e) {
             result = false;
             message += FailureMessageProvider.getMessage((short) -311) + OrderId;
+            request.setDescription(message);
+            financeIncreaseUserDepositRequestRepository.update(request);
         } catch (unknownPaymentBuyer e) {
             result = false;
             message += FailureMessageProvider.getMessage((short) -312) + OrderId;
+            request.setDescription(message);
+            financeIncreaseUserDepositRequestRepository.update(request);
         } catch (TransactionAlreadyChecked e) {
             result = false;
             message += FailureMessageProvider.getMessage((short) -313) + OrderId;
+            request.setDescription(message);
+            financeIncreaseUserDepositRequestRepository.update(request);
         } catch (Exception e) {
             result = false;
             message += FailureMessageProvider.getMessage((short) -310) + OrderId;
+            request.setDescription(message);
+            financeIncreaseUserDepositRequestRepository.update(request);
         }
 
-        request.setDescription(message+(result?" با نتیجه مثبت ":" با نتیجه منفی "));
-        financeIncreaseUserDepositRequestRepository.update(request);
     }
 }
