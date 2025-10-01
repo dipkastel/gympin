@@ -137,15 +137,15 @@ const FoodMenuOfTheDay = ({catering, date}) => {
             <Grid container spacing={3}>
 
                 {foodMenu && Object.keys(foodMenu).map((cat, num) => (
-                    <Grid key={num} item xs={6}>
+                    <Grid key={num} item size={{xs:12,md:6}}>
                         <FoodMenuCategoryList allFoods={allFoods} date={date} catering={catering} category={cat} menuList={foodMenu[cat]}
                                               getMenu={getFoodMenuByDate}/>
                     </Grid>
                 ))}
-                {foodMenu&&!hasFood && <Grid item xs={6}>
+                {foodMenu&&!hasFood && <Grid item size={{xs:12,md:6}}>
                     <__CopyFromDate catering={catering} selectedDate={date} copyDone={getFoodMenuByDate} />
                 </Grid>}
-                <Grid item xs={6}>
+                <Grid item size={{xs:12,md:6}}>
                     <Card sx={{width: "fit-content"}} elevation={10}>
                         <CardActionArea sx={{p: 2}} onClick={() => {
                             setOpenModalAdd(true)

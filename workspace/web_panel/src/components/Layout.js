@@ -12,6 +12,7 @@ import MenuConfig from "../helper/configs/MenuConfig";
 import LayoutInitializer from "./LayoutInitializer";
 import KtContent from "./KtContent";
 import "./assets/Base.scss";
+import HeaderMobile from "./header/HeaderMobile";
 
 const htmlClassService = new HTMLClassService();
 
@@ -36,7 +37,7 @@ function Layout({
       htmlClassService={htmlClassService}
     >
       {/* <!-- begin:: Header Mobile --> */}
-      {/*<HeaderMobile />*/}
+      <HeaderMobile />
       {/* <!-- end:: Header Mobile --> */}
 
       <div className="kt-grid kt-grid--hor kt-grid--root">

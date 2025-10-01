@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import objectPath from "object-path";
-import * as builder from "../../helper/redux/builder";
 import KTToggle from "../../assets/js/toggle";
 
 class HeaderMobile extends React.Component {
@@ -26,38 +25,38 @@ class HeaderMobile extends React.Component {
         className={`kt-header-mobile ${headerMobileCssClasses}`}
         {...headerMobileAttributes}
       >
-        <div className="kt-header-mobile__logo">
-          <Link to="/">
-            <img alt="logo" src={headerLogo} />
-          </Link>
-        </div>
+        {/*<div className="kt-header-mobile__logo">*/}
+        {/*  <Link to="/">*/}
+        {/*    <img alt="logo" src={headerLogo} />*/}
+        {/*  </Link>*/}
+        {/*</div>*/}
 
         <div className="kt-header-mobile__toolbar">
           {asideDisplay && (
             <button
-              className="kt-header-mobile__toggler kt-header-mobile__toggler--left"
+              className="kt-header-mobile__toggler kt-header-mobile__toggler--right"
               id="kt_aside_mobile_toggler"
             >
               <span />
             </button>
           )}
 
-          {headerMenuSelfDisplay && (
-            <button
-              className="kt-header-mobile__toggler"
-              id="kt_header_mobile_toggler"
-            >
-              <span />
-            </button>
-          )}
+          {/*{headerMenuSelfDisplay && (*/}
+          {/*  <button*/}
+          {/*    className="kt-header-mobile__toggler"*/}
+          {/*    id="kt_header_mobile_toggler"*/}
+          {/*  >*/}
+          {/*    <span />*/}
+          {/*  </button>*/}
+          {/*)}*/}
 
-          <button
-            ref={this.toggleButtonRef}
-            className="kt-header-mobile__topbar-toggler"
-            id="kt_header_mobile_topbar_toggler"
-          >
-            <i className="flaticon-more" />
-          </button>
+          {/*<button*/}
+          {/*  ref={this.toggleButtonRef}*/}
+          {/*  className="kt-header-mobile__topbar-toggler"*/}
+          {/*  id="kt_header_mobile_topbar_toggler"*/}
+          {/*>*/}
+          {/*  <i className="flaticon-more" />*/}
+          {/*</button>*/}
         </div>
       </div>
     );
@@ -65,7 +64,7 @@ class HeaderMobile extends React.Component {
 }
 
 const mapStateToProps = (store) => ({
-  headerLogo: builder.selectors.getStickyLogo(store),
+  headerLogo: "",
   asideDisplay: objectPath.get(
     store.builder.layoutConfig,
     "aside.self.display"
@@ -78,13 +77,13 @@ const mapStateToProps = (store) => ({
     targetState: "kt-header__topbar--mobile-on",
     togglerState: "kt-header-mobile__toolbar-topbar-toggler--active",
   },
-  headerMobileCssClasses: builder.selectors.getClasses(store, {
-    path: "header_mobile",
-    toString: true,
-  }),
-  headerMobileAttributes: builder.selectors.getAttributes(store, {
-    path: "aside_menu",
-  }),
+  // headerMobileCssClasses: builder.selectors.getClasses(store, {
+  //   path: "header_mobile",
+  //   toString: true,
+  // }),
+  // headerMobileAttributes: builder.selectors.getAttributes(store, {
+  //   path: "aside_menu",
+  // }),
 });
 
 export default connect(mapStateToProps)(HeaderMobile);

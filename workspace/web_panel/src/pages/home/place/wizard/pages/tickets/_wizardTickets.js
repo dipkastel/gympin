@@ -20,7 +20,7 @@ const _wizardTickets = ({allowNext}) => {
     function renderMenu(){
         return (
             <Grid container sx={{mb: 3}} spacing={3}>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"عضویت ها"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>
@@ -37,7 +37,7 @@ const _wizardTickets = ({allowNext}) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"کلاس ها"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>
@@ -55,7 +55,7 @@ const _wizardTickets = ({allowNext}) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"رزرو ها"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>
@@ -73,7 +73,7 @@ const _wizardTickets = ({allowNext}) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"فروشگاه"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>
@@ -91,7 +91,7 @@ const _wizardTickets = ({allowNext}) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"غذا ها"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>
@@ -109,7 +109,7 @@ const _wizardTickets = ({allowNext}) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"برنامه ورزشی"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>
@@ -127,7 +127,7 @@ const _wizardTickets = ({allowNext}) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"برنامه غذایی"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>
@@ -145,7 +145,7 @@ const _wizardTickets = ({allowNext}) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"خدمات"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>

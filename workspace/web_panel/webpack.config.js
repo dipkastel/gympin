@@ -27,19 +27,17 @@ const mainConfig = function () {
 		},
 		entry: entries,
 		output: {
-			// main output path in assets folder
 			path: distPath,
-			// output path based on the entries' filename
 			filename: "[name].js"
 		},
-		resolve: {extensions: ['.scss']},
+		resolve: {
+			extensions: [".js", ".jsx", ".scss"]
+		},
 		plugins: [
-			// webpack log message
 			new WebpackMessages({
 				name: themeName,
 				logger: str => console.log(`>> ${str}`)
 			}),
-			// create css file
 			new MiniCssExtractPlugin({
 				filename: "[name].css",
 			}),
@@ -48,10 +46,9 @@ const mainConfig = function () {
 			}),
 			{
 				apply: (compiler) => {
-					// hook name
 					compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
 						(async () => {
-							await del.sync(distPath + "/sass/*.js", {force: true});
+							await del.sync(distPath + "/sass/*.js", { force: true });
 						})();
 					});
 				}
@@ -59,6 +56,13 @@ const mainConfig = function () {
 		],
 		module: {
 			rules: [
+				{
+					test: /\.(js|jsx)$/,
+					exclude: /node_modules\/(?!(@mui|@mui\/.*))/,
+					use: {
+						loader: "babel-loader"
+					}
+				},
 				{
 					test: /\.scss$/,
 					use: [
@@ -71,7 +75,7 @@ const mainConfig = function () {
 							}
 						},
 					]
-				},
+				}
 			]
 		},
 	}

@@ -20,13 +20,13 @@ const AffiliateDetail = () => {
 
 
             <Grid container spacing={3}>
-                <Grid item xs={12}>
+                <Grid item size={{xs:12,md:12}}>
                     <AffiliatorData affiliateId={affiliatorId} />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item size={{xs:12,md:6}}>
                     <AffiliateCorporates  affiliateId={affiliatorId} />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item size={{xs:12,md:6}}>
                     <AffiliatePlaces  affiliateId={affiliatorId} />
                 </Grid>
             </Grid>

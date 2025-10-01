@@ -162,7 +162,7 @@ const ArticlesManagement = () => {
             <Notice icon="flaticon-warning kt-font-primary">مدیریت مطالب</Notice>
 
             <Grid container sx={{mb: 3}} spacing={3}>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"مدیریت دسته بندی مطالب"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>

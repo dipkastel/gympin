@@ -38,6 +38,7 @@ const _ActiveUserListItem = ({user,selectedUser,setSelectedUser}) => {
             borderRadius:3,
             mx:1,my:1}}>
             <Grid container sx={{background:"#FFFFFF",
+                width:"100%",
                 borderRadius:3}}>
                 <ListItemButton
                     selected={selectedUser?.sessionId === user.driverId}

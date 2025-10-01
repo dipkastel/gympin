@@ -10,6 +10,7 @@ import CateringManagementDataTab from "./CateringManagementTabs/CateringManageme
 import CateringManagementManuTab from "./CateringManagementTabs/CateringManagementManuTab";
 import CateringManagementBeneficiariesTab from "./CateringManagementTabs/CateringManagementBeneficiariesTab";
 import CateringManagementSettingTab from "./CateringManagementTabs/CateringManagementSettingTab";
+import CateringManagementItemsTab from "./CateringManagementTabs/CateringManagementItemsTab";
 
 
 
@@ -68,7 +69,8 @@ const CateringDataManagement = () => {
                         >
                             <Tab label="کیترینگ" value={"CATERING"}/>
                             <Tab label="اطلاعات" value={"DATA"}/>
-                            <Tab label="منو" value={"TICKET"}/>
+                            <Tab label="آیتم ها" value={"ITEMS"}/>
+                            <Tab label="منوها" value={"TICKET"}/>
                             <Tab label="فروش ها" value={"SELLS"}/>
                             <Tab label="ذینفعان" value={"BENEFICIARIES"}/>
                             <Tab label="تنظیمات" value={"SETTING"}/>
@@ -76,13 +78,9 @@ const CateringDataManagement = () => {
                     </Paper>
                     {selectedTab === "CATERING"&&<CateringManagementCateringTab catering={catering} update={update}/>}
                     {selectedTab === "DATA"&&<CateringManagementDataTab catering={catering} update={update}/>}
+                    {selectedTab === "ITEMS"&&<CateringManagementItemsTab catering={catering} update={update}/>}
                     {selectedTab === "TICKET"&&<CateringManagementManuTab catering={catering} update={update}/>}
                     {selectedTab === "BENEFICIARIES"&&<CateringManagementBeneficiariesTab catering={catering} update={update}/>}
-            {/*        {selectedTab === "PLACE"&&<PlaceManagementPlaceTab place={place} update={update}/>}*/}
-            {/*        {selectedTab === "DATA"&&<PlaceManagementDataTab place={place} update={update}/>}*/}
-            {/*        {selectedTab === "TICKET"&&<PlaceManagementTicketsTab place={place}/>}*/}
-            {/*        {selectedTab === "SELLS"&&<PlaceManagementSellsTab place={place}/>}*/}
-            {/*        {selectedTab === "BENEFICIARIES"&&<PlaceManagementBeneficiariesTab place={place}/>}*/}
                     {selectedTab === "SETTING"&&<CateringManagementSettingTab catering={catering} update={update}/>}
                 </div>
                 <div className="col-md-2">

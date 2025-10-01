@@ -182,7 +182,7 @@ const ImageManager = ({openAddModalRef,openFilterModalRef},ref) => {
             {images.content && (<>
                 <Grid container spacing={1}>
                     {images.content.map((item, number) => (
-                        <Grid container item xs={2} key={number}>
+                        <Grid container item size={{xs:6,md:2}} key={number}>
                             <Card sx={{width: "100%"}}>
                                 <CardActionArea onClick={() => setItemToDetail(item)}>
                                     <CardMedia

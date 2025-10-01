@@ -8,19 +8,11 @@ const PlaceManagementDataTab = ({catering, updatePlace}) => {
         <>
             {catering && <div className="row">
                 <div className="col-md-6">
-                    {/*{place && <PlaceSports place={place}/>}*/}
-                    {/*{place && <OptionOfPlace place={place}/>}*/}
                     <CateringAbout catering={catering}/>
-                    <CateringPersonnel place={catering}/>
                 </div>
                 <div className="col-md-6">
-                    <CateringFoods catering={catering}/>
-                    {/*{place && <CateringPersonnel place={place}/>}*/}
-                    {/*{place && <PlaceImages place={place}/>}*/}
-                    {/*{place && <PlaceTags place={place}/>}*/}
-                    {/*{place && <Halls place={place}/>}*/}
+                    <CateringPersonnel place={catering}/>
                 </div>
-
             </div>}
         </>
     );

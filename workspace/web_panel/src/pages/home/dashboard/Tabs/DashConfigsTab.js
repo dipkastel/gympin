@@ -89,7 +89,7 @@ const DashTasksTab = ({updatePage}) => {
     return (
         <>
             <Grid container spacing={3}>
-                <Grid item xs={3}>
+                <Grid item size={{xs:12,md:4}}>
                     <QuickStatsIcon
                         onClick={()=>{history.push("/locations/1")}}
                         title="استان های فعال"
@@ -97,7 +97,7 @@ const DashTasksTab = ({updatePage}) => {
                         icon={<LocationCity sx={{fontSize: 40, color: "#218dbb"}}/>}
                     />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item size={{xs:12,md:4}}>
 
                     <QuickStatsIcon
                         onClick={()=>{history.push("/locations/3")}}
@@ -106,7 +106,7 @@ const DashTasksTab = ({updatePage}) => {
                         icon={<EmojiTransportation sx={{fontSize: 40, color: "#21bb9f"}}/>}
                     />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item size={{xs:12,md:4}}>
 
                     <QuickStatsIcon
                         onClick={()=>{history.push("/sports")}}
@@ -115,7 +115,7 @@ const DashTasksTab = ({updatePage}) => {
                         icon={<SportsBasketball sx={{fontSize: 40, color: "#8555e8"}}/>}
                     />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item size={{xs:12,md:4}}>
 
                     <QuickStatsIcon
                         onClick={()=>{history.push("/places")}}
@@ -124,7 +124,7 @@ const DashTasksTab = ({updatePage}) => {
                         icon={<FitnessCenter sx={{fontSize: 40, color: "#d455e8"}}/>}
                     />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item size={{xs:12,md:4}}>
                     <QuickStatsIcon
                         onClick={()=>{history.push("/users")}}
                         title={"کاربر فعال"}

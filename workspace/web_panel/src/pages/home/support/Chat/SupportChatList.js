@@ -112,7 +112,7 @@ export default function SupportChatList() {
         <Box sx={{width: "100%"}}>
             <Paper sx={{width: "100%", mb: 2}}>
                 <Grid container>
-                    <Grid item xs={3} sx={{
+                    <Grid item size={{xs:12,md:3}} sx={{
                         borderRight: "1px solid #ddd",
                         height: "Calc(100VH - 350px)",
                         background: "#f1f1f1",
@@ -139,7 +139,7 @@ export default function SupportChatList() {
 
                     <Grid
                         item
-                        xs={9}
+                        size={{xs:12,md:9}}
                         sx={{
                             display: "flex",
                             flexDirection: "column",

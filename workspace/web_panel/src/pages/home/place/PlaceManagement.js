@@ -162,7 +162,7 @@ const PlaceManagement = () => {
 
 
             <Grid container sx={{mb: 3}} spacing={3}>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"مدیریت امکانات مراکز"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>
@@ -179,7 +179,7 @@ const PlaceManagement = () => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"مراکز روی نقشه"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>
@@ -196,7 +196,7 @@ const PlaceManagement = () => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item size={{xs:12,md:4}}>
                     <Card>
                         <CardHeader title={"افزودن مجموعه"} color={"primary"}/>
                         <CardContent className={"kt-space-between"}>
