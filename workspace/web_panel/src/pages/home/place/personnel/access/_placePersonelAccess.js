@@ -1,10 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {
-    placePersonnel_getAccess,
-    placePersonnel_updatePersonnelAccess
-} from "../../../../../network/api/placePersonnel.api";
+import {placePersonnel_getAccess, placePersonnel_updatePersonnelAccess} from "../../../../../network/api/placePersonnel.api";
 import {InputLabel, Switch} from "@mui/material";
 import {personnelAccessEnum} from "../../../../../helper/enums/personnelAccessEnum";
 

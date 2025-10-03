@@ -1,24 +1,19 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import {Button, FormGroup, IconButton, TextField, Typography} from "@mui/material";
+import {Button, IconButton, TextField} from "@mui/material";
 import {note_delete, note_query, note_update} from "../../../../network/api/note.api";
-import {getRppDashNote, getRppPhoneBook, SetRppDashNote, SetRppPhoneBook} from "../../../../helper/pocket/pocket";
+import {getRppPhoneBook, SetRppPhoneBook} from "../../../../helper/pocket/pocket";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import TableContainer from "@mui/material/TableContainer";
-import {Form, Modal, Table} from "react-bootstrap";
+import {Modal, Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {getUserFixedName, toPriceWithComma, toPriceWithoutComma} from "../../../../helper";
+import {getUserFixedName} from "../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
-import AddIcon from "@mui/icons-material/Add";
 import {DeleteOutline, Edit, Source} from "@mui/icons-material";
-import {TicketSubscribes_delete} from "../../../../network/api/ticketSubscribes.api";
-import {Suggest_update} from "../../../../network/api/suggest.api";
-import Select from "react-select";
-import {ApplicationEnum} from "../../../../helper/enums/ApplicationEnum";
 
 const _PhoneBook = () => {
 

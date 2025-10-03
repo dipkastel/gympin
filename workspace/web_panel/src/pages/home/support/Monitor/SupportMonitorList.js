@@ -3,15 +3,6 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import TableContainer from "@mui/material/TableContainer";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableCell from "@mui/material/TableCell";
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
-import {Chip} from "@mui/material";
-import TablePagination from "@mui/material/TablePagination";
-import {SetRppSupport} from "../../../../helper/pocket/pocket";
 
 const SupportMonitorList = () => {
     return (

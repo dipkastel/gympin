@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LocationApi} from "./const_api";
+import {LocationApi} from "./const_api";
 
 export function Location_getAll() {
     return axios.get(LocationApi.getAll);

@@ -3,7 +3,6 @@ import {Portlet, PortletBody, PortletHeader} from "../../../../../partials/conte
 import {Divider} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {toPriceWithComma} from "../../../../../../helper";
-import {PurchasedCourseStatus} from "../../../../../../helper/enums/PurchasedCourseStatus";
 
 const _CourseInfo = ({course}) => {
     return (

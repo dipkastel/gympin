@@ -3,21 +3,7 @@ import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useParams} from "react-router-dom";
 import {placeAbout_add, placeAbout_delete, placeAbout_getByPlace} from "../../../../../network/api/placeAbout.api";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
-import AddIcon from "@mui/icons-material/Add";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import {
-    Button,
-    FormControlLabel,
-    FormGroup,
-    FormLabel,
-    IconButton, Switch,
-    TableCell,
-    TextField,
-    Typography
-} from "@mui/material";
-import TableBody from "@mui/material/TableBody";
+import {Button, FormControlLabel, FormGroup, IconButton, Switch, TextField, Typography} from "@mui/material";
 import {Form} from "react-bootstrap";
 import DeleteIcon from "@mui/icons-material/Delete";
 

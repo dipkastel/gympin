@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody, PortletFooter, PortletHeader} from "../../../../partials/content/Portlet";
-import {corporate_getByUser} from "../../../../../network/api/corporate.api";
+import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";

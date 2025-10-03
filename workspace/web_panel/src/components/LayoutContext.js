@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-} from "react";
+import React, {createContext, useContext, useEffect, useMemo, useReducer,} from "react";
 
 /**
  * Both context used to create inside react `redux`-like global state managed

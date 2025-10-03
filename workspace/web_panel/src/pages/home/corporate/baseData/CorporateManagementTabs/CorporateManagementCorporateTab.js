@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import CorporateBasics from "../Base/CorporateBasics";
-import CorporatePersonnel from "../Personnel/CorporatePersonnel";
 import PersonnelGroups from "../PersonnelGroups/PersonnelGroups";
-import CorporatePersonnelCreditAction from "../corporatePersonnelCreditAction/CorporatePersonnelCreditAction";
-import CorporatePersonnelNwCreditAction from "../corporatePersonnelCreditAction/CorporatePersonnelNWCreditAction";
 import CorporateMap from "../map/CorporateMap";
 
 const CorporateManagementCorporateTab = ({currentCorporate}) => {

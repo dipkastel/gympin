@@ -1,12 +1,13 @@
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid */
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import objectPath from "object-path";
-import { withRouter } from "react-router-dom";
-import { QuickActions } from "./components/QuickActions";
-import { LayoutContextConsumer } from "../LayoutContext";
-import { ReactComponent as SortNum1Icon } from "../assets/layout-svg-icons/SortNum1.svg";
+import {withRouter} from "react-router-dom";
+import {QuickActions} from "./components/QuickActions";
+import {LayoutContextConsumer} from "../LayoutContext";
+import {ReactComponent as SortNum1Icon} from "../assets/layout-svg-icons/SortNum1.svg";
 import {builderSelectors} from "../../helper/redux/selector/builderSelector";
+
 // import BreadCrumbs from "./components/BreadCrumbs";
 
 class SubHeader extends React.Component {

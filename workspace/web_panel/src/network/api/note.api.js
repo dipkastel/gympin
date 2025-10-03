@@ -1,5 +1,5 @@
 import axios from "axios";
-import {NoteApi, GymApi} from "./const_api";
+import {NoteApi} from "./const_api";
 
 export function note_add(data) {
     return axios.post(NoteApi.add, data);

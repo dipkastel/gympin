@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {ArticleCategory_getAll} from "../../../../../network/api/articleCategories.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {Checkbox, FormControlLabel, List, ListItem, ListItemText, Switch} from "@mui/material";
+import {Checkbox, FormControlLabel, List, ListItem} from "@mui/material";
 
 const _selectCategories = ({itemCategories,changeSelectedCategories}) => {
     const error = useContext(ErrorContext);

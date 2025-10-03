@@ -5,7 +5,6 @@ import {Form} from "react-bootstrap";
 import Select from "react-select";
 import {Location_query} from "../../../../../network/api/location.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import PlaceMap from "../../../place/baseData/Base/PlaceMap";
 import CateringMap from "./CateringMap";
 
 function CateringBase({catering, updateCatering}) {

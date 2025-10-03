@@ -1,11 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {
-    Portlet,
-    PortletBody,
-    PortletFooter,
-    PortletHeader,
-    PortletHeaderToolbar,
-} from "../../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletFooter, PortletHeader, PortletHeaderToolbar,} from "../../../../partials/content/Portlet";
 import TableContainer from "@mui/material/TableContainer";
 import {Form, Modal, Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";

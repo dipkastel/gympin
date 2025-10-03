@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MultimediaApi } from "./const_api";
+import {MultimediaApi} from "./const_api";
 
 
 export function media_addImage(data) {

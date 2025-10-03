@@ -1,8 +1,8 @@
 import React from "react";
 import clsx from "clsx";
-import { connect } from "react-redux";
-import { Dropdown } from "react-bootstrap";
-import { toAbsoluteUrl } from "../../../helper";
+import {connect} from "react-redux";
+import {Dropdown} from "react-bootstrap";
+import {toAbsoluteUrl} from "../../../helper";
 import HeaderDropdownToggle from "../content/CustomDropdowns/HeaderDropdownToggle";
 import {i18nActions} from "../../../helper/redux/actions/i18nActions";
 

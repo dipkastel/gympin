@@ -11,7 +11,8 @@ import {ticketActiveTimes_getByPlace} from "../../../../../../network/api/ticket
 import {dayOfWeekEnum} from "../../../../../../helper/enums/dayOfWeekEnum";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 import {
-    TicketSubscribes_addSubscribeActiveTimes, TicketSubscribes_deleteSubscribeActiveTimes,
+    TicketSubscribes_addSubscribeActiveTimes,
+    TicketSubscribes_deleteSubscribeActiveTimes,
     TicketSubscribes_getActiveTimesByTicketSubscribe
 } from "../../../../../../network/api/ticketSubscribes.api";
 

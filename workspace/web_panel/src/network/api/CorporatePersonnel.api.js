@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CorporateApi, CorporatePersonnelApi, MultimediaApi} from "./const_api";
+import {CorporatePersonnelApi} from "./const_api";
 
 export function corporatePersonnel_add(data) {
   return axios.post(CorporatePersonnelApi.add, data);

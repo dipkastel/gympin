@@ -1,18 +1,18 @@
 import React from 'react';
 import UserPersonalTransactions from "../partials/UserPersonalTransactions";
 import UserCorporatePersonelTransactions from "../../UserTransactions/UserCorporatePersonelTransactions";
-import SettlementRequest from "../../settlement/SettlementRequest";
 
-const UserTransactionsTab = ({currentUser,userFinance, updatePage}) => {
+const UserTransactionsTab = ({currentUser, userFinance, updatePage}) => {
     return (
         <div>
 
             {currentUser && <div className="row">
                 <div className="col-md-6">
 
-                    {userFinance.CreditDetails.map(item=>(
+                    {userFinance.CreditDetails.map(item => (
                         <div key={item.Id}>
-                            {currentUser && <UserPersonalTransactions userFinance={item} currentUser={currentUser} updatePage={updatePage}/>}
+                            {currentUser &&
+                            <UserPersonalTransactions userFinance={item} currentUser={currentUser} updatePage={updatePage}/>}
                         </div>
                     ))}
                 </div>

@@ -12,12 +12,9 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {
-    getRppLinkManagement,
-    SetRppLinkManagement
-} from "../../../helper/pocket/pocket";
+import {getRppLinkManagement, SetRppLinkManagement} from "../../../helper/pocket/pocket";
 import {Link_add, Link_query} from "../../../network/api/link.api";
-import {Edit, InsertLink, Link} from "@mui/icons-material";
+import {Edit, InsertLink} from "@mui/icons-material";
 
 export default function LinksManagement() {
     const error = useContext(ErrorContext);

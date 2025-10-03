@@ -4,7 +4,7 @@ import objectPath from "object-path";
 import clsx from "clsx";
 import MenuItemInner from "./HMenuItemInner";
 import HMenuColumn from "./HMenuColumn";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default class HMenuItem extends React.Component {
   /**

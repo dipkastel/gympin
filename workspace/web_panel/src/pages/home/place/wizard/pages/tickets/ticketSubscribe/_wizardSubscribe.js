@@ -1,17 +1,19 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../../../partials/content/Portlet";
-import {Form, Modal} from "react-bootstrap";
-import {Button, Grid, IconButton, Typography} from "@mui/material";
-import {halls_add, halls_getByPlaceId} from "../../../../../../../network/api/hall.api";
+import {Form} from "react-bootstrap";
+import {Button, IconButton} from "@mui/material";
 import {useParams} from "react-router-dom";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
-import {TicketSubscribes_add, TicketSubscribes_delete, TicketSubscribes_getByPlaceId, TicketSubscribes_update} from "../../../../../../../network/api/ticketSubscribes.api";
+import {
+    TicketSubscribes_add,
+    TicketSubscribes_delete,
+    TicketSubscribes_getByPlaceId,
+    TicketSubscribes_update
+} from "../../../../../../../network/api/ticketSubscribes.api";
 import __wizardTicketSubscribesDetails from "./__wizardTicketSubscribesDetails";
-import {AddCircle, CheckBox, ExpandLess, ExpandMore, FilterAlt, QuestionMark} from "@mui/icons-material";
 import __wizardTicketSubscribesHalls from "./__wizardTicketSubscribesHalls";
 import __wizardTicketSubscribesSports from "./__wizardTicketSubscribesSports";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {defaultFilterFinance} from "../../../../../finance/_financeFilter";
 import __wizardTicketBuyableBeneficiary from "./__wizardTicketBuyableBeneficiary";
 
 const _wizardSubscribe = () => {
@@ -26,7 +28,7 @@ const _wizardSubscribe = () => {
     }, []);
 
     function getTicketSubscribeOfPlace() {
-        TicketSubscribes_getByPlaceId({Id:placeId}).then(data=>{
+        TicketSubscribes_getByPlaceId({Id: placeId}).then(data => {
             SetPlaceTicketSubscribe(data.data.Data);
         }).catch(e => {
             try {
@@ -40,12 +42,12 @@ const _wizardSubscribe = () => {
 
     function addTicketSubscribe(e) {
         e.preventDefault()
-            if(!e.target.Name.value){
-                error.showError({message: "ورود اطلاعات الزامی",});
-                return;
-            }
-        TicketSubscribes_add({Place:{Id:placeId},Name:e.target.Name.value,EntryTotalCount:1})
-            .then(data=>{
+        if (!e.target.Name.value) {
+            error.showError({message: "ورود اطلاعات الزامی",});
+            return;
+        }
+        TicketSubscribes_add({Place: {Id: placeId}, Name: e.target.Name.value, EntryTotalCount: 1})
+            .then(data => {
                 getTicketSubscribeOfPlace()
             }).catch(e => {
             try {
@@ -58,10 +60,10 @@ const _wizardSubscribe = () => {
     }
 
 
-    function deleteTicketSubscribe(e,ticketSubscribe) {
+    function deleteTicketSubscribe(e, ticketSubscribe) {
         e.preventDefault()
-        TicketSubscribes_delete({Id:ticketSubscribe.Id})
-            .then(data=>{
+        TicketSubscribes_delete({Id: ticketSubscribe.Id})
+            .then(data => {
                 getTicketSubscribeOfPlace()
             }).catch(e => {
             try {
@@ -71,7 +73,8 @@ const _wizardSubscribe = () => {
             }
         });
     }
-    function updateTicketSubscribe(e,ticketSubscribe){
+
+    function updateTicketSubscribe(e, ticketSubscribe) {
         e.preventDefault();
 
         TicketSubscribes_update(ticketSubscribe).then(data => {
@@ -115,28 +118,38 @@ const _wizardSubscribe = () => {
                     </PortletBody>
                 </Portlet>
             </div>
-            {placeTicketSubscribe.map(ticketSubscribe=>(
-                    <div key={"ticketSubscribe"+ticketSubscribe.Id} className={"col-md-4"}>
-                        <Portlet>
-                            <PortletHeader
-                                title={ticketSubscribe.Name}
+            {placeTicketSubscribe.map(ticketSubscribe => (
+                <div key={"ticketSubscribe" + ticketSubscribe.Id} className={"col-md-4"}>
+                    <Portlet>
+                        <PortletHeader
+                            title={ticketSubscribe.Name}
 
-                                toolbar={<PortletHeaderToolbar>
-                                    <IconButton aria-label="delete"
-                                                color={"error"}
-                                                onClick={(e) => deleteTicketSubscribe(e,ticketSubscribe)}>
-                                        <DeleteIcon fontSize={"large"}/>
-                                    </IconButton>
-                                </PortletHeaderToolbar>}
-                            />
-                            <PortletBody>
-                                <__wizardTicketSubscribesDetails ticketSubscribe={ticketSubscribe} updateTicketSubscribe={updateTicketSubscribe} />
-                                <__wizardTicketSubscribesHalls ticketSubscribe={ticketSubscribe} setCanGoNext={e=>SetCanGoNext({...canGoNext,[ticketSubscribe.Id]:{...canGoNext[ticketSubscribe.Id],"ticketSubscribe":e}})}/>
-                                <__wizardTicketSubscribesSports ticketSubscribe={ticketSubscribe} setCanGoNext={e=>SetCanGoNext({...canGoNext,[ticketSubscribe.Id]:{...canGoNext[ticketSubscribe.Id],"sport":e}})}/>
-                                <__wizardTicketBuyableBeneficiary ticketSubscribe={ticketSubscribe} setCanGoNext={e=>SetCanGoNext({...canGoNext,[ticketSubscribe.Id]:{...canGoNext[ticketSubscribe.Id],"sport":e}})}/>
-                            </PortletBody>
-                        </Portlet>
-                    </div>
+                            toolbar={<PortletHeaderToolbar>
+                                <IconButton aria-label="delete"
+                                            color={"error"}
+                                            onClick={(e) => deleteTicketSubscribe(e, ticketSubscribe)}>
+                                    <DeleteIcon fontSize={"large"}/>
+                                </IconButton>
+                            </PortletHeaderToolbar>}
+                        />
+                        <PortletBody>
+                            <__wizardTicketSubscribesDetails ticketSubscribe={ticketSubscribe}
+                                                             updateTicketSubscribe={updateTicketSubscribe}/>
+                            <__wizardTicketSubscribesHalls ticketSubscribe={ticketSubscribe} setCanGoNext={e => SetCanGoNext({
+                                ...canGoNext,
+                                [ticketSubscribe.Id]: {...canGoNext[ticketSubscribe.Id], "ticketSubscribe": e}
+                            })}/>
+                            <__wizardTicketSubscribesSports ticketSubscribe={ticketSubscribe} setCanGoNext={e => SetCanGoNext({
+                                ...canGoNext,
+                                [ticketSubscribe.Id]: {...canGoNext[ticketSubscribe.Id], "sport": e}
+                            })}/>
+                            <__wizardTicketBuyableBeneficiary ticketSubscribe={ticketSubscribe} setCanGoNext={e => SetCanGoNext({
+                                ...canGoNext,
+                                [ticketSubscribe.Id]: {...canGoNext[ticketSubscribe.Id], "sport": e}
+                            })}/>
+                        </PortletBody>
+                    </Portlet>
+                </div>
 
             ))}
         </div>

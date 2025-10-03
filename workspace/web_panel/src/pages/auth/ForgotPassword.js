@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Formik } from "formik";
-import { connect } from "react-redux";
-import { TextField } from "@mui/material";
-import { Link, Redirect } from "react-router-dom";
-import { FormattedMessage, injectIntl } from "react-intl";
+import React, {Component} from "react";
+import {Formik} from "formik";
+import {connect} from "react-redux";
+import {TextField} from "@mui/material";
+import {Link, Redirect} from "react-router-dom";
+import {FormattedMessage, injectIntl} from "react-intl";
 import {authActions} from "../../helper/redux/actions/authActions";
 
 class ForgotPassword extends Component {

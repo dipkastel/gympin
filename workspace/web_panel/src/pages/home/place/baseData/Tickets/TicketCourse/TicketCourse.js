@@ -7,11 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import {Button, TableCell} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
-import {
-    TicketCourses_add,
-    TicketCourses_delete,
-    TicketCourses_getByPlaceId
-} from "../../../../../../network/api/ticketCourses.api";
+import {TicketCourses_add, TicketCourses_delete, TicketCourses_getByPlaceId} from "../../../../../../network/api/ticketCourses.api";
 import {Form, Modal} from "react-bootstrap";
 
 const TicketCourse = ({place}) => {

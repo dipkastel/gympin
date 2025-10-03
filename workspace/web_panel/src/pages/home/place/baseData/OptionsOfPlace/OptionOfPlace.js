@@ -7,13 +7,8 @@ import TableRow from "@mui/material/TableRow";
 import {Button, Chip, Collapse, Paper, TableCell} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import {placeOption_getAll} from "../../../../../network/api/placeOptions.api";
-import {
-    optionOfPlace_add,
-    optionOfPlace_delete,
-    optionOfPlace_getByPlaceId
-} from "../../../../../network/api/optionOfPlace.api";
-import {Form, Modal} from "react-bootstrap";
-import Select from "react-select";
+import {optionOfPlace_add, optionOfPlace_delete, optionOfPlace_getByPlaceId} from "../../../../../network/api/optionOfPlace.api";
+import {Modal} from "react-bootstrap";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const OptionOfPlace = ({place}) => {

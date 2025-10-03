@@ -1,12 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-    Portlet,
-    PortletBody,
-    PortletFooter,
-    PortletHeader,
-    PortletHeaderToolbar
-} from "../../../../partials/content/Portlet";
-import {Button, Grid, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {Portlet, PortletBody, PortletFooter, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
+import {Button, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import {DeleteRounded} from "@mui/icons-material";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";

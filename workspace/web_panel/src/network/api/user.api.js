@@ -1,5 +1,5 @@
 import axios from "axios";
-import {UserApi, UserCreditApi} from "./const_api";
+import {UserApi} from "./const_api";
 
 //user
 export function user_add(data) {

@@ -1,12 +1,10 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Grid, Typography} from "@mui/material";
-import {ErrorContext} from "../../../components/GympinPagesProvider";
 import AsyncSelect from "react-select/async";
 import {serviceEnum} from "../../../helper/enums/serviceEnum";
 
-const __SelectService = ({hidden, onChange, value}) => {
+const __SelectService = ({hidden, onChange}) => {
 
-    const error = useContext(ErrorContext);
 
     useEffect(() => {
         if (hidden)

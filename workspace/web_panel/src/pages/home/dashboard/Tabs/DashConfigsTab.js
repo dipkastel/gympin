@@ -5,17 +5,8 @@ import {user_query} from "../../../../network/api/user.api";
 import {sport_query} from "../../../../network/api/sport.api";
 import {PlaceGym_query} from "../../../../network/api/placeGym.api";
 import {Grid} from "@mui/material";
-import _DashItem from "../partials/_DashItem";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {
-    Apartment,
-    EmojiTransportation,
-    FitnessCenter, Group, Groups,
-    LocationCity,
-    NoteAlt,
-    Sports,
-    SportsBasketball
-} from "@mui/icons-material";
+import {EmojiTransportation, FitnessCenter, Groups, LocationCity, SportsBasketball} from "@mui/icons-material";
 import {useHistory} from "react-router-dom";
 
 const DashTasksTab = ({updatePage}) => {

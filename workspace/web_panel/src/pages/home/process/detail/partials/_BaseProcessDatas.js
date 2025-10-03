@@ -2,8 +2,6 @@ import React from 'react';
 import {Avatar, Grid, LinearProgress, Typography} from "@mui/material";
 import {ProcessTypeEnum} from "../../../../../helper/enums/ProcessTypeEnum";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {Progress} from "reactstrap";
-import {toPriceWithComma} from "../../../../../helper";
 
 const _BaseProcessDatas = ({serial}) => {
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import CorporateIncreaseDeposit from "../../CorporateIncreaseDeposit/CorporateIncreaseDeposit";
-import CorporateCreditTransactions from "../../CorporateTransactions/CorporateCreditTransactions";
 
 const FinanceCorporateRequestTab = ({currentCorporate,financeCorporate,updatePage}) => {
     return (

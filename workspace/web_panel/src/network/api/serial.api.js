@@ -1,5 +1,5 @@
 import axios from "axios";
-import {HallsApi, SerialApi, SubscribeApi, TransactionAllApi} from "./const_api";
+import {SerialApi} from "./const_api";
 
 //subscribe
 export function serial_query(data) {

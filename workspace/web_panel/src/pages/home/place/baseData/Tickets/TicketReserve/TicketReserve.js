@@ -1,13 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Form, Modal} from "react-bootstrap";
-import {Button, TableCell} from "@mui/material";
+import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableBody from "@mui/material/TableBody";
-import {TicketSubscribes_add, TicketSubscribes_delete, TicketSubscribes_getByPlaceId} from "../../../../../../network/api/ticketSubscribes.api";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 
 const TicketReserve = ({place}) => {

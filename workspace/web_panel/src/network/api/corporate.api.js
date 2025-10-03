@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CorporateApi, PlaceApi} from "./const_api";
+import {CorporateApi} from "./const_api";
 
 export function corporate_add(data) {
     return axios.post(CorporateApi.add, data);

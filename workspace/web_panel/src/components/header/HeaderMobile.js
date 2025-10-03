@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import objectPath from "object-path";
 import KTToggle from "../../assets/js/toggle";
 

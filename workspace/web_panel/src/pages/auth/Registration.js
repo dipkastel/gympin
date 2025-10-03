@@ -1,9 +1,9 @@
 import React from "react";
-import { Formik } from "formik";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { FormattedMessage, injectIntl } from "react-intl";
-import { Checkbox, FormControlLabel, TextField } from "@mui/material";
+import {Formik} from "formik";
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import {FormattedMessage, injectIntl} from "react-intl";
+import {Checkbox, FormControlLabel, TextField} from "@mui/material";
 import {authActions} from "../../helper/redux/actions/authActions";
 
 function Registration(props) {

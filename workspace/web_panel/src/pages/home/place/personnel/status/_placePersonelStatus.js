@@ -1,10 +1,7 @@
 import React, {useContext} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {
-    placePersonnel_addRole,
-    placePersonnel_deleteRole
-} from "../../../../../network/api/placePersonnel.api";
+import {placePersonnel_addRole, placePersonnel_deleteRole} from "../../../../../network/api/placePersonnel.api";
 import {Chip} from "@mui/material";
 
 const _placePersonelStatus = ({personel,getPerson}) => {

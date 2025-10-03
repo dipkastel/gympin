@@ -4,7 +4,7 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {
     affiliate_AddPlaceToAffiliator,
     affiliate_getPlacesByAffiliatorId,
-    affiliate_RemoveCorporatesToAffiliator, affiliate_RemovePlaceToAffiliator
+    affiliate_RemovePlaceToAffiliator
 } from "../../../../network/api/affiliate.api";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -12,7 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {getCorporateFixedName, getPlaceFixedName} from "../../../../helper";
+import {getPlaceFixedName} from "../../../../helper";
 import {Button, CircularProgress} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal} from "react-bootstrap";

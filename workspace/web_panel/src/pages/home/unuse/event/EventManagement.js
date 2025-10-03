@@ -1,13 +1,8 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import Notice from "../../../partials/content/Notice";
 import AddIcon from "@mui/icons-material/Add";
-import { Table } from "react-bootstrap";
-import {
-  Portlet,
-  PortletBody,
-  PortletHeader,
-  PortletHeaderToolbar,
-} from "../../../partials/content/Portlet";
+import {Table} from "react-bootstrap";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar,} from "../../../partials/content/Portlet";
 
 class EventManagement extends Component {
   constructor(props) {

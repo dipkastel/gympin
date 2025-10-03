@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {
-    Portlet,
-    PortletBody,
-    PortletFooter,
-    PortletHeader,
-    PortletHeaderToolbar,
-} from "../../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletFooter, PortletHeader,} from "../../../../partials/content/Portlet";
 import TableContainer from "@mui/material/TableContainer";
 import {Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
@@ -16,10 +10,6 @@ import {toPriceWithComma} from "../../../../../helper";
 import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
 import TablePagination from "@mui/material/TablePagination";
 import {transactionCorporate_query} from "../../../../../network/api/transactionsCorporate.api";
-import {TransactionCorporateTypes} from "../../../../../helper/enums/TransactionCorporateTypes";
-import AddIcon from "@mui/icons-material/Add";
-import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
-import {ArticleStatus} from "../../../../../helper/enums/ArticleStatus";
 import {getRppCorporateTransactions, SetRppCorporateTransactions} from "../../../../../helper/pocket/pocket";
 
 function CorporateDepositTransactions({currentCorporate, updatePage}) {

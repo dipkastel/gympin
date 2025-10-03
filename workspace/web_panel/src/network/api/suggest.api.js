@@ -1,6 +1,5 @@
 import axios from "axios";
-import { SuggestApi} from "./const_api";
-
+import {SuggestApi} from "./const_api";
 
 
 export function Suggest_add(data) {

@@ -1,7 +1,6 @@
 import React, {useContext, useState} from "react";
 import {Button, FormControl, FormGroup} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader,} from "../../../../partials/content/Portlet";
-import {corporatePersonnel_delete} from "../../../../../network/api/CorporatePersonnel.api";
 import {Modal} from "react-bootstrap";
 import {corporate_delete} from "../../../../../network/api/corporate.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";

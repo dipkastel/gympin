@@ -1,12 +1,12 @@
 import React from "react";
-import { Redirect, Route, Switch, withRouter } from "react-router-dom";
-import { shallowEqual, useSelector } from "react-redux";
-import { useLastLocation } from "react-router-last-location";
+import {Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {shallowEqual, useSelector} from "react-redux";
+import {useLastLocation} from "react-router-last-location";
 import HomePage from "../pages/home/HomePage";
 import AuthPage from "../pages/auth/AuthPage";
 import ErrorsPage from "./ErrorsPage";
 import LogoutPage from "../pages/auth/Logout";
-import { LayoutContextProvider } from "../helper";
+import {LayoutContextProvider} from "../helper";
 import Layout from "../components/Layout";
 import {getLastLocation, saveLastLocation} from "../helper/lastLocationHandler";
 

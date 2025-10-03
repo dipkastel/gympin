@@ -13,7 +13,7 @@ import {getUserFixedName} from "../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {Message, NoteAlt} from "@mui/icons-material";
+import {Message} from "@mui/icons-material";
 
 const _DashSupport = () => {
 

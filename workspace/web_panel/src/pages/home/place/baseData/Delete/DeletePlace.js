@@ -3,7 +3,6 @@ import {Button, FormControl, FormGroup} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader,} from "../../../../partials/content/Portlet";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
-import {corporate_delete} from "../../../../../network/api/corporate.api";
 import {Modal} from "react-bootstrap";
 import {PlaceGym_deletePlace} from "../../../../../network/api/placeGym.api";
 

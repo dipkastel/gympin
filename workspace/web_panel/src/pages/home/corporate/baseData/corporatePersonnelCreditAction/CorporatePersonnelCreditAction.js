@@ -5,10 +5,7 @@ import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {corporate_getCorporateGroups} from "../../../../../network/api/corporate.api";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 import {Modal} from "react-bootstrap";
-import {
-    corporatePersonnel_addCreditToAll,
-    corporatePersonnel_addNWCreditToAll
-} from "../../../../../network/api/CorporatePersonnel.api";
+import {corporatePersonnel_addCreditToAll} from "../../../../../network/api/CorporatePersonnel.api";
 
 export default function CorporatePersonnelCreditAction({currentCorporate, pUpdatePage}) {
     const error = useContext(ErrorContext);

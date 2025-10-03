@@ -1,10 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
 import Select from "react-select";
 import {Button} from "@mui/material";
 import ImagePicker from "../../media/Pickers/ImagePicker";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {homepage_add, homepage_getAllDestinations, homepage_update} from "../../../../network/api/homepage.api";
+import {homepage_update} from "../../../../network/api/homepage.api";
 
 const HomePageEditItem = ({elements,selectedParent,itemToEdit,setItemToEdit,destinations}) => {
     const error = useContext(ErrorContext);

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ticketActiveTimesApi, ticketSubscribeActiveTimesApi} from "./const_api";
+import {ticketActiveTimesApi} from "./const_api";
 
 export function ticketActiveTimes_add(data) {
     return axios.post(ticketActiveTimesApi.add, data);

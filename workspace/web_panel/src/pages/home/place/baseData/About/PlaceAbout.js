@@ -7,12 +7,7 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-import {
-    placeAbout_add,
-    placeAbout_delete,
-    placeAbout_getByPlace,
-    placeAbout_update
-} from "../../../../../network/api/placeAbout.api";
+import {placeAbout_add, placeAbout_delete, placeAbout_getByPlace, placeAbout_update} from "../../../../../network/api/placeAbout.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 

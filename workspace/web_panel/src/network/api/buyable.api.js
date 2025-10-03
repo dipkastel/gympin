@@ -1,5 +1,5 @@
 import axios from "axios";
-import {SportApi, TicketBuyableApi, UserApi} from "./const_api";
+import {TicketBuyableApi} from "./const_api";
 
 //buyable
 export function buyable_query(data) {

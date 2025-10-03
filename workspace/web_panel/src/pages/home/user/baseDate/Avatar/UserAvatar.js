@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Avatar, Grid} from "@mui/material";
 import ImagePicker from "../../../media/Pickers/ImagePicker";
-import {user_UpdateUserAvatar, user_UpdateUserStatus} from "../../../../../network/api/user.api";
+import {user_UpdateUserAvatar} from "../../../../../network/api/user.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const UserAvatar = ({currentUser}) => {

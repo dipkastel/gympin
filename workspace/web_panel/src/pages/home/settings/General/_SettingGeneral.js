@@ -4,11 +4,8 @@ import {settings_add, settings_getAll} from "../../../../network/api/settings.ap
 import {Form, Modal} from "react-bootstrap";
 import Select from "react-select";
 import {SettingTypes} from "../../../../helper/enums/settingsTypeEnum";
-import {Button, Chip, Collapse, Grid, IconButton, Paper, Typography} from "@mui/material";
-import Notice from "../../../partials/content/Notice";
+import {Button, Chip, Grid, Paper} from "@mui/material";
 import SettingDetail from "./detail/SettingDetail";
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import {Delete, ExpandLess, ExpandMore} from "@mui/icons-material";
 import {Row} from "reactstrap";
 
 const _SettingGeneral = () => {

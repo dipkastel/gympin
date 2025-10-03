@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CateringApi, GymApi, SportApi} from "./const_api";
+import {CateringApi} from "./const_api";
 
 //catering
 export function Catering_getAll() {

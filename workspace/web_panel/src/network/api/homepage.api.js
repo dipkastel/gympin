@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CorporateApi, homepage} from "./const_api";
+import {homepage} from "./const_api";
 
 export function homepage_add(item) {
     return axios.post(homepage.add, item);

@@ -1,12 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Grid, Typography} from "@mui/material";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import AsyncSelect from "react-select/async";
-import {corporate_query} from "../../../network/api/corporate.api";
-import {toPriceWithComma} from "../../../helper";
 import {PlaceGym_query} from "../../../network/api/placeGym.api";
 
-const __SelectPlace = ({hidden,onChange,value}) => {
+const __SelectPlace = ({hidden,onChange}) => {
 
     const error = useContext(ErrorContext);
 

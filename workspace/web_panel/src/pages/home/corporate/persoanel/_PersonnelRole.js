@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Form} from "react-bootstrap";
+import {Portlet, PortletHeader} from "../../../partials/content/Portlet";
 import Select from "react-select";
 import {corporatePersonnel_getById, corporatePersonnel_update} from "../../../../network/api/CorporatePersonnel.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";

@@ -1,7 +1,5 @@
 import React from 'react';
-import Slick from "react-slick";
-import {Box, Card, CardContent, CardMedia, Link, Typography} from "@mui/material";
-import {Image} from "react-bootstrap";
+import {Card, CardContent, CardMedia, Link, Typography} from "@mui/material";
 
 const HomeSingleContent =(props) => {
     return (

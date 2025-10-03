@@ -4,7 +4,6 @@ import {LinearProgress, ListItemText, Tooltip, Typography} from "@mui/material";
 import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
 import {AccountBalanceWallet, AttachMoney, Description, NotInterested} from "@mui/icons-material";
 import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
-import {CorporateContractType} from "../../../../../helper/enums/CorporateContractType";
 import {UserFinanceTypesEnum} from "../../../../../helper/enums/UserFinanceTypesEnum";
 
 const _UserTransactions = ({userTransactions}) => {

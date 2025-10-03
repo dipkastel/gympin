@@ -1,22 +1,6 @@
 import React from 'react';
-import Notice from "../../../../partials/content/Notice";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import AddIcon from "@mui/icons-material/Add";
-import TableContainer from "@mui/material/TableContainer";
-import Table from "@mui/material/Table";
-import {Avatar, Button, Grid, TableCell, TableHead} from "@mui/material";
-import TableRow from "@mui/material/TableRow";
-import TableBody from "@mui/material/TableBody";
-import TablePagination from "@mui/material/TablePagination";
-import {toPriceWithComma} from "../../../../../helper";
-import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {Form} from "react-bootstrap";
-import Select from "react-select";
+import {Avatar, Grid} from "@mui/material";
+import {Portlet, PortletBody} from "../../../../partials/content/Portlet";
 
 const _placePersonelDetails = ({personel}) => {
     return (

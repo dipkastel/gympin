@@ -1,7 +1,6 @@
 import React from 'react';
-import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
+import {Portlet, PortletBody} from "../../../../partials/content/Portlet";
 import {ListItemText} from "@mui/material";
-import {userGenders} from "../../../../../helper/enums/genders";
 import {toPriceWithComma} from "../../../../../helper";
 
 const InvoiceDetailPricesData = ({invoice}) => {

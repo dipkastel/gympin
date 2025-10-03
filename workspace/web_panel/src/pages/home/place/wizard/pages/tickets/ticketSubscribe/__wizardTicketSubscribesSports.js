@@ -1,10 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Box, Chip, Collapse, Grid, IconButton, Typography} from "@mui/material";
-import {AddCircle, CheckBox, ExpandLess, ExpandMore, QuestionMark} from "@mui/icons-material";
+import {CheckBox, ExpandLess, ExpandMore, QuestionMark} from "@mui/icons-material";
 import {placeSport_getSportsByPlace} from "../../../../../../../network/api/placeSport.api";
 import {useParams} from "react-router-dom";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
-import {TicketSubscribes_addSport, TicketSubscribes_deleteSport, TicketSubscribes_getTicketSubscribesSports} from "../../../../../../../network/api/ticketSubscribes.api";
+import {
+    TicketSubscribes_addSport,
+    TicketSubscribes_deleteSport,
+    TicketSubscribes_getTicketSubscribesSports
+} from "../../../../../../../network/api/ticketSubscribes.api";
 
 const __wizardTicketSubscribesSports = ({ticketSubscribe,setCanGoNext}) => {
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { homeChild } from "./const_api";
+import {homeChild} from "./const_api";
 
 //collection
 export function _add(data) {

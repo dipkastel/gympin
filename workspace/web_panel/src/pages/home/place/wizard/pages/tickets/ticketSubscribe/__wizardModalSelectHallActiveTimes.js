@@ -3,13 +3,15 @@ import {Modal} from "react-bootstrap";
 import {
     Button,
     Checkbox,
-    Collapse, Divider,
+    Collapse,
+    Divider,
     FormControl,
     FormControlLabel,
     FormGroup,
     FormLabel,
     Grid,
-    IconButton, Typography
+    IconButton,
+    Typography
 } from "@mui/material";
 import {CloseOutlined, ExpandLess, ExpandMore} from "@mui/icons-material";
 import ___wizardFormAddHall from "./___wizardFormAddHall";
@@ -20,9 +22,7 @@ import {ErrorContext} from "../../../../../../../components/GympinPagesProvider"
 import {useParams} from "react-router-dom";
 import {dayOfWeekEnum} from "../../../../../../../helper/enums/dayOfWeekEnum";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-    TicketSubscribes_addSubscribeActiveTimes
-} from "../../../../../../../network/api/ticketSubscribes.api";
+import {TicketSubscribes_addSubscribeActiveTimes} from "../../../../../../../network/api/ticketSubscribes.api";
 
 const __wizardModalSelectHallActiveTimes = ({ticketSubscribe,openModalAddHall,setOpenModalAddHall, getActiveTimesOfTicketSubscribe}) => {
 

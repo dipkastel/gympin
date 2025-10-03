@@ -3,14 +3,10 @@ import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../.
 import AddIcon from "@mui/icons-material/Add";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {Form, Modal} from "react-bootstrap";
-import {Button, Chip, FormControlLabel, FormGroup, FormLabel, Switch, TableCell, TextField} from "@mui/material";
+import {Button, Chip, FormControlLabel, FormGroup, FormLabel, Switch, TableCell} from "@mui/material";
 import Select from "react-select";
 import {ApplicationEnum} from "../../../../helper/enums/ApplicationEnum";
-import {
-    GatewayApplication_add,
-    GatewayApplication_delete,
-    GatewayApplication_query
-} from "../../../../network/api/gatewayApplication.api";
+import {GatewayApplication_add, GatewayApplication_delete, GatewayApplication_query} from "../../../../network/api/gatewayApplication.api";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";

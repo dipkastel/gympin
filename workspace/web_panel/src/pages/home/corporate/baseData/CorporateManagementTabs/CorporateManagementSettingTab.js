@@ -1,10 +1,8 @@
 import React from 'react';
 import CorporateStatus from "../Status/CorporateStatus";
 import DeleteCorporate from "../Delete/DeleteCorporate";
-import CorporatePersonnel from "../Personnel/CorporatePersonnel";
 import CorporateContract from "../Contract/CorporateContract";
 import CorporateContractExpire from "../ContractExpire/CorporateContractExpire";
-import PlaceInviteCode from "../../../place/baseData/Invite/PlaceInviteCode";
 import CorporateInviteCode from "../invite/CorporateInviteCode";
 
 const CorporateManagementSettingTab = ({currentCorporate,updatePage}) => {

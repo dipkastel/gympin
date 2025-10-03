@@ -3,7 +3,6 @@ import {Box, Chip, Collapse, Grid, IconButton, Typography} from "@mui/material";
 import {CheckBox, ExpandLess, ExpandMore, QuestionMark} from "@mui/icons-material";
 import {useParams} from "react-router-dom";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
-import {TicketSubscribes_getById} from "../../../../../../../network/api/ticketSubscribes.api";
 import {placePersonnel_getPlaceBeneficiaries} from "../../../../../../../network/api/placePersonnel.api";
 import {buyable_getById, buyable_setTicketBeneficiary} from "../../../../../../../network/api/buyable.api";
 

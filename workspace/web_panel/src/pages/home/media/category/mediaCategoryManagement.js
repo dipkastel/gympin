@@ -1,11 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import Notice from "../../../partials/content/Notice";
 import {Button, TableCell, TextField} from "@mui/material";
-import {
-    multimediacategory_add,
-    multimediacategory_getAll,
-    multimediacategory_update
-} from "../../../../network/api/mediaCategories.api";
+import {multimediacategory_add, multimediacategory_getAll, multimediacategory_update} from "../../../../network/api/mediaCategories.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";

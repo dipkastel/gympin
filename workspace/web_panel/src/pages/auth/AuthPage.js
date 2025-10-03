@@ -1,10 +1,10 @@
 import React from "react";
-import { Link, Redirect, Route, Switch } from "react-router-dom";
+import {Link, Redirect, Route, Switch} from "react-router-dom";
 import Registration from "./Registration";
 import ForgotPassword from "./ForgotPassword";
 import Login from "./Login";
-import { Helmet } from "react-helmet";
-import { toAbsoluteUrl } from "../../helper";
+import {Helmet} from "react-helmet";
+import {toAbsoluteUrl} from "../../helper";
 import "../../assets/sass/pages/login/login-1.scss";
 
 export default function AuthPage() {

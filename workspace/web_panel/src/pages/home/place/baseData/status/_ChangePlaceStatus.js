@@ -1,8 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
-import {Button, Switch, TextField} from "@mui/material";
-import PlaceMap from "../Base/PlaceMap";
 import Select from "react-select";
 import {placeGym_changeStatus} from "../../../../../network/api/placeGym.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";

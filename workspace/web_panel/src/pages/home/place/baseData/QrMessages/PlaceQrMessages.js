@@ -1,18 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
-import {Button, FormControlLabel, FormGroup, FormLabel, Switch, TableCell} from "@mui/material";
+import {Button, TableCell} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-import {
-    placeAbout_add,
-    placeAbout_delete,
-    placeAbout_getByPlace,
-    placeAbout_update
-} from "../../../../../network/api/placeAbout.api";
 import {
     placeQrMessages_add,
     placeQrMessages_delete,
@@ -36,12 +30,12 @@ const PlaceQrMessages = ({place}) => {
         placeQrMessages_getByPlace({Id: place.Id}).then(data => {
             SetPlaceQrMessages(data.data.Data);
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
 
@@ -55,21 +49,21 @@ const PlaceQrMessages = ({place}) => {
                     setNewAboutItem(null)
                     getQrMessagesOfPlace()
                 }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
 
-        function setFormValues(lable,Value){
-            setNewAboutItem({...newAboutItem,[lable]:Value})
+        function setFormValues(lable, Value) {
+            setNewAboutItem({...newAboutItem, [lable]: Value})
         }
 
         return (
             <>
-                <Modal show={newAboutItem!=null} onHide={() => setNewAboutItem(null)}>
+                <Modal show={newAboutItem != null} onHide={() => setNewAboutItem(null)}>
                     <form onSubmit={(e) => addQrMessage(e)}>
 
 
@@ -84,7 +78,7 @@ const PlaceQrMessages = ({place}) => {
                                     name="Text"
                                     type="text"
                                     placeholder="متن"
-                                    onChange={(e)=>setFormValues("Text",e.target.value)}
+                                    onChange={(e) => setFormValues("Text", e.target.value)}
                                 />
                             </Form.Group>
 
@@ -94,7 +88,7 @@ const PlaceQrMessages = ({place}) => {
                                     name="ReplaceText"
                                     type="text"
                                     placeholder="جایگزین"
-                                    onChange={(e)=>setFormValues("ReplaceText",e.target.value)}
+                                    onChange={(e) => setFormValues("ReplaceText", e.target.value)}
                                 />
                             </Form.Group>
 
@@ -108,7 +102,7 @@ const PlaceQrMessages = ({place}) => {
                             </Button>
                             <Button
                                 className={"button_danger"}
-                                onClick={(e)=>addQrMessage(e)}
+                                onClick={(e) => addQrMessage(e)}
                             >
                                 اضافه
                             </Button>
@@ -128,65 +122,65 @@ const PlaceQrMessages = ({place}) => {
                     setItemToEdit(null)
                     getQrMessagesOfPlace()
                 }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
 
-        function setFormValues(lable,Value){
-            setItemToEdit({...itemToEdit,[lable]:Value})
+        function setFormValues(lable, Value) {
+            setItemToEdit({...itemToEdit, [lable]: Value})
         }
 
         return (
             <>
 
-                <Modal show={itemToEdit!=null} onHide={() => setItemToEdit(null)}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>{"ویرایش یادداشت جایگزین qr"}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
+                <Modal show={itemToEdit != null} onHide={() => setItemToEdit(null)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{"ویرایش یادداشت جایگزین qr"}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
 
 
-                            <Form.Group>
-                                <Form.Label>متن</Form.Label>
-                                <Form.Control
-                                    name="Text"
-                                    type="text"
-                                    placeholder="متن"
-                                    value={itemToEdit.Text}
-                                    onChange={(e)=>setFormValues("Text",e.target.value)}
-                                />
-                            </Form.Group>
+                        <Form.Group>
+                            <Form.Label>متن</Form.Label>
+                            <Form.Control
+                                name="Text"
+                                type="text"
+                                placeholder="متن"
+                                value={itemToEdit.Text}
+                                onChange={(e) => setFormValues("Text", e.target.value)}
+                            />
+                        </Form.Group>
 
-                            <Form.Group>
-                                <Form.Label>جایگزین</Form.Label>
-                                <Form.Control
-                                    name="ReplaceText"
-                                    type="text"
-                                    placeholder="جایگزین"
-                                    value={itemToEdit.ReplaceText}
-                                    onChange={(e)=>setFormValues("ReplaceText",e.target.value)}
-                                />
-                            </Form.Group>
+                        <Form.Group>
+                            <Form.Label>جایگزین</Form.Label>
+                            <Form.Control
+                                name="ReplaceText"
+                                type="text"
+                                placeholder="جایگزین"
+                                value={itemToEdit.ReplaceText}
+                                onChange={(e) => setFormValues("ReplaceText", e.target.value)}
+                            />
+                        </Form.Group>
 
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button
-                                className={"button_edit"}
-                                onClick={() => setItemToEdit(null)}
-                            >
-                                خیر
-                            </Button>
-                            <Button
-                                className={"button_danger"}
-                                onClick={e=>UpdateAbout(e)}
-                            >
-                                ویرایش
-                            </Button>
-                        </Modal.Footer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            className={"button_edit"}
+                            onClick={() => setItemToEdit(null)}
+                        >
+                            خیر
+                        </Button>
+                        <Button
+                            className={"button_danger"}
+                            onClick={e => UpdateAbout(e)}
+                        >
+                            ویرایش
+                        </Button>
+                    </Modal.Footer>
                 </Modal>
             </>
         );
@@ -202,12 +196,12 @@ const PlaceQrMessages = ({place}) => {
                     setItemToDelete(null)
                     getQrMessagesOfPlace()
                 }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
 
         return (
@@ -294,8 +288,8 @@ const PlaceQrMessages = ({place}) => {
                 </PortletBody>
             </Portlet>
             {renderModalAdd()}
-            {itemToEdit&&renderModalEdit()}
-            {itemToDelete&&renderModalDelete()}
+            {itemToEdit && renderModalEdit()}
+            {itemToDelete && renderModalDelete()}
         </>
     );
 };

@@ -3,8 +3,6 @@ import {Portlet, PortletBody} from "../../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import {Button} from "@mui/material";
-import {Place} from "@mui/icons-material";
 
 let leaflet = null;
 const tehranCenterLat = 35.7019;

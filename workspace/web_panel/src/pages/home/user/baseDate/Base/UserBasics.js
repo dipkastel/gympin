@@ -3,7 +3,7 @@ import {Portlet, PortletBody, PortletFooter, PortletHeader,} from "../../../../p
 import {FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField} from "@mui/material";
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from "@mui/x-date-pickers";
-import adapterJalali from "@date-io/date-fns-jalali"
+import {AdapterDateFnsJalali} from '@mui/x-date-pickers/AdapterDateFnsJalali';
 import {user_update} from "../../../../../network/api/user.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
@@ -53,10 +53,9 @@ export default function UserBasics({currentUser}) {
                         margin="normal"
                         variant="outlined"
                     />
-                    <LocalizationProvider
-                        dateAdapter={adapterJalali}>
+                    <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
                         <DatePicker
-                            className={"ltr mt-4 mb-2"}
+                            className="ltr mt-4 mb-2 w-100"
                             label="تاریخ تولد"
                             value={values.Birthday}
                             onChange={handleDateChange("Birthday")}

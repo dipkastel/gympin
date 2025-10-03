@@ -2,10 +2,10 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import adapterJalali from "@date-io/date-fns-jalali";
 import {DatePicker} from "@mui/x-date-pickers";
 import {TextField, Typography} from "@mui/material";
 import {corporate_updateContractDate} from "../../../../../network/api/corporate.api";
+import {AdapterDateFnsJalali} from '@mui/x-date-pickers/AdapterDateFnsJalali';
 
 const CorporateContractExpire = ({currentCorporate, UpdatePage}) => {
     const error = useContext(ErrorContext);
@@ -36,10 +36,11 @@ const CorporateContractExpire = ({currentCorporate, UpdatePage}) => {
                 <PortletHeader title="قرارداد"/>
                 <PortletBody>
 
+
                     <LocalizationProvider
-                        dateAdapter={adapterJalali}>
+                        dateAdapter={AdapterDateFnsJalali}>
                         <DatePicker
-                            className={"ltr mt-4 mb-2"}
+                            className={"ltr mt-4 mb-2 w-100"}
                             label="تاریخ قرارداد"
                             value={contractDate}
                             onChange={e=>UpdateContractDate(e)}

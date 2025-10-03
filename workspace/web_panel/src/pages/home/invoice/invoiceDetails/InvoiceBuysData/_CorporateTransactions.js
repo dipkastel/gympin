@@ -1,6 +1,5 @@
 import React from 'react';
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
-import {BuyableType} from "../../../../../helper/enums/BuyableType";
 import {TransactionCorporateTypes} from "../../../../../helper/enums/TransactionCorporateTypes";
 import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
 import {toPriceWithComma} from "../../../../../helper";

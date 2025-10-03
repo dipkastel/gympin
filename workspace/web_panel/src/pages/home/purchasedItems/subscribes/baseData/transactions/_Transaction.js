@@ -1,12 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../../partials/content/Portlet";
-import {transactionAll_query} from "../../../../../../network/api/transactionsAll.api";
-import {Button, Typography} from "@mui/material";
-import {TransactionCorporateTypes} from "../../../../../../helper/enums/TransactionCorporateTypes";
-import {TransactionStatus} from "../../../../../../helper/enums/TransactionStatus";
-import {toPriceWithComma} from "../../../../../../helper";
+import {Button} from "@mui/material";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
-import {serial_getBySerial} from "../../../../../../network/api/serial.api";
 import {useHistory} from "react-router-dom";
 
 const _Transactions = ({transactions,purchased,updatePage}) => {

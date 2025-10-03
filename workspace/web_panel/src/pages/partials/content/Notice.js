@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, {forwardRef} from "react";
 import clsx from "clsx";
 
 const Notice = forwardRef(
@@ -30,6 +30,6 @@ const Notice = forwardRef(
 export default Notice;
 
 // Set display name for debugging.
-if (process.env.NODE_ENV !== "production") {
+if (process?.env?.NODE_ENV !== "production") {
   Notice.displayName = "Notice";
 }

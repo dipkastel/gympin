@@ -10,8 +10,6 @@ import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {getUserFixedName, toPriceWithComma} from "../../../../helper";
 import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
-import {transactionCorporate_query} from "../../../../network/api/transactionsCorporate.api";
-import {TransactionCorporateTypes} from "../../../../helper/enums/TransactionCorporateTypes";
 import {transactionIncome_query} from "../../../../network/api/transactionsIncome.api";
 import {TransactionBaseTypes} from "../../../../helper/enums/TransactionBaseTypes";
 import {getRppTransactionIncomeManagement, SetRppTransactionIncomeManagement} from "../../../../helper/pocket/pocket";

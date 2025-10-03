@@ -1,5 +1,5 @@
 import axios from "axios";
-import {optionOfPlaceApi, PlaceOptionApi, PlaceSportApi, SportApi} from "./const_api";
+import {optionOfPlaceApi} from "./const_api";
 
 export function optionOfPlace_add(data) {
   return axios.post(optionOfPlaceApi.add, data);

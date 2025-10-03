@@ -11,7 +11,8 @@ import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 import {placePersonnel_ByPlace} from "../../../../../../network/api/placePersonnel.api";
 import {getUserFixedName} from "../../../../../../helper";
 import {
-    TicketSubscribes_addCoach, TicketSubscribes_deleteCoach,
+    TicketSubscribes_addCoach,
+    TicketSubscribes_deleteCoach,
     TicketSubscribes_getTicketSubscribeCoaches
 } from "../../../../../../network/api/ticketSubscribes.api";
 

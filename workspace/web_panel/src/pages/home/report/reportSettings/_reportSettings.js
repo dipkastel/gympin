@@ -1,4 +1,4 @@
-import React, {useContext, useEffect,useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
 import {reportSettings_getAll, reportSettings_update} from "../../../../network/api/reportSettings.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";

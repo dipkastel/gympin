@@ -1,7 +1,7 @@
-import React, { Suspense } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import React, {Suspense} from "react";
+import {Redirect, Route, Switch} from "react-router-dom";
 import Dashboard from "./dashboard/Dashboard";
-import { LayoutSplashScreen } from "../../helper";
+import {LayoutSplashScreen} from "../../helper";
 import PlaceManagement from "./place/PlaceManagement";
 import LocationManagement from "./location/LocationManagement";
 import UserManagement from "./user/UserManagement";
@@ -49,6 +49,7 @@ import CateringDataManagement from "./catering/baseData/CateringDataManagement";
 import CateringManagement from "./catering/CateringManagement";
 import LinksManagement from "./links/LinksManagement";
 import CorporatesMap from "./corporate/CorporatesMap/CorporatesMap";
+
 export default function HomePage() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>

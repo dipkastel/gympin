@@ -1,16 +1,17 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {user_query} from "../../../network/api/user.api";
 import {Grid, Typography} from "@mui/material";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import AsyncSelect from "react-select/async";
 
-const __SelectUser = ({hidden,onChange,value}) => {
+const __SelectUser = ({hidden, onChange}) => {
 
     const error = useContext(ErrorContext);
 
     useEffect(() => {
-        if(hidden)
-            onChange({value:null});
+        if (hidden)
+            onChange({value: null});
+
     }, [hidden]);
 
 
@@ -46,12 +47,12 @@ const __SelectUser = ({hidden,onChange,value}) => {
 
     return (
         <>
-            {!hidden&&<AsyncSelect cacheOptions defaultOptions
-                         name={"User"}
-                         label="کاربر"
-                         placeholder="کاربر"
-                         onChange={onChange}
-                         loadOptions={promiseUserOptions}/>}
+            {!hidden && <AsyncSelect cacheOptions defaultOptions
+                                     name={"User"}
+                                     label="کاربر"
+                                     placeholder="کاربر"
+                                     onChange={onChange}
+                                     loadOptions={promiseUserOptions}/>}
         </>
     );
 };

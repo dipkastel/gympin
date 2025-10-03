@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Col, Image, Row} from "react-bootstrap";
-import {Box, Container, Link} from "@mui/material";
+import {Col, Row} from "react-bootstrap";
+import {Container, Link} from "@mui/material";
 
 const HomeClickableTitle = (prop) => {
     const [data] = useState(prop.item);

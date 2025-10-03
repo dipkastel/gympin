@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import {Form, Modal} from "react-bootstrap";
-import {Button, Chip, Fab, TableCell, TextField} from "@mui/material";
+import {Button, Chip, TableCell, TextField} from "@mui/material";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../helper";
 import Select from "react-select";
 import {ApplicationEnum} from "../../../../helper/enums/ApplicationEnum";
@@ -12,11 +12,7 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-import {InvoiceStatus} from "../../../../helper/enums/InvoiceStatus";
-import {placeOption_update} from "../../../../network/api/placeOptions.api";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {sport_deleteSport} from "../../../../network/api/sport.api";
-import {Gateway_query} from "../../../../network/api/gateway.api";
 
 const __SettingsApplicationAmountSuggest = () => {
 

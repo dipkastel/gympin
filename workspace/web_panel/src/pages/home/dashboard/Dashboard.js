@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Grid, Paper, Tab, Tabs} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Paper, Tab, Tabs} from "@mui/material";
 import DashTasksTab from "./Tabs/DashTasksTab";
 import DashConfigsTab from "./Tabs/DashConfigsTab";
 import DashReportsTab from "./Tabs/DashReportsTab";

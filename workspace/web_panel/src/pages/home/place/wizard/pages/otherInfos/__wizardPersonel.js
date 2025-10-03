@@ -1,15 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Avatar, Box, Button, TableCell, TextField} from "@mui/material";
-import Paper from "@mui/material/Paper";
+import {Avatar, Button, TableCell} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../../partials/content/Portlet";
 import {Form, Modal} from "react-bootstrap";
 import AddIcon from "@mui/icons-material/Add";
 import {useParams} from "react-router-dom";
-import {
-    placePersonnel_add,
-    placePersonnel_ByPlace,
-    placePersonnel_delete
-} from "../../../../../../network/api/placePersonnel.api";
+import {placePersonnel_add, placePersonnel_ByPlace, placePersonnel_delete} from "../../../../../../network/api/placePersonnel.api";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";

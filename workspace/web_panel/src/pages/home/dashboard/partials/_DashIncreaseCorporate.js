@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Support_query} from "../../../../network/api/support.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import TableContainer from "@mui/material/TableContainer";
 import {Modal, Table} from "react-bootstrap";
@@ -9,16 +8,14 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {useHistory} from "react-router-dom";
-import {getCorporateFixedName, getUserFixedName, toPriceWithComma} from "../../../../helper";
+import {getCorporateFixedName, toPriceWithComma} from "../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {Info, Message, NoteAlt, Paid, RequestQuote} from "@mui/icons-material";
-import {SettlementUserDeposit_query} from "../../../../network/api/settlementUserDeposit.api";
+import {Info, Paid} from "@mui/icons-material";
 import {IncreaseCorporateDeposit_query} from "../../../../network/api/increaseCorporateDeposit.api";
 import {Avatar, Tooltip} from "@mui/material";
 import {GatewayType} from "../../../../helper/enums/GatewayType";
-import MessageIcon from "@mui/icons-material/Message";
 
 const _DashIncreaseCorporate = () => {
 

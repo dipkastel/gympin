@@ -3,8 +3,6 @@ import {ActivationState, Client} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
 
-
-
 export function useWebSocketClient({ ChangeMessages, statusChanged, currentUser, onMessageStatus,driverId,subscribeDestination,sendToDestination,endPoint }) {
     const [status, setStatus] = useState(ActivationState.INACTIVE);
     const clientRef = useRef(null);

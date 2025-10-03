@@ -1,11 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-    Portlet,
-    PortletBody,
-    PortletFooter,
-    PortletHeader,
-    PortletHeaderToolbar
-} from "../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletFooter, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import Notice from "../../../partials/content/Notice";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";

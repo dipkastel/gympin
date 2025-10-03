@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import objectPath from "object-path";
 import {builderSelectors} from "../../helper/redux/selector/builderSelector";
 

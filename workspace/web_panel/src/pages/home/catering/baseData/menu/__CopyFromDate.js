@@ -2,8 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, CardContent, CardHeader, Typography} from "@mui/material";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {TicketFoodMenu_copyDate, TicketFoodMenu_getDates} from "../../../../../network/api/TicketFoodMenu.api";
-import {Article_add} from "../../../../../network/api/article.api";
-import {Form, Modal} from "react-bootstrap";
+import {Modal} from "react-bootstrap";
 
 const CopyFromDate = ({catering,selectedDate,copyDone}) => {
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {giftCreditApi, linkApi, PlacePersonelApi, TagApi} from "./const_api";
+import {linkApi} from "./const_api";
 
 //gift
 export function Link_add(data) {

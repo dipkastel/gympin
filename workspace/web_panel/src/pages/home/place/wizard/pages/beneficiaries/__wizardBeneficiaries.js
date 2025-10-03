@@ -8,10 +8,7 @@ import TableBody from "@mui/material/TableBody";
 import {PlacePersonnelRole} from "../../../../../../helper/enums/PlacePersonnelRole";
 import {useParams} from "react-router-dom";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
-import {
-    placePersonnel_ByPlace,
-    placePersonnel_updatePersonnelCommissionFee
-} from "../../../../../../network/api/placePersonnel.api";
+import {placePersonnel_ByPlace, placePersonnel_updatePersonnelCommissionFee} from "../../../../../../network/api/placePersonnel.api";
 import {Form} from "react-bootstrap";
 
 const __wizardBeneficiaries = ({allowNext}) => {

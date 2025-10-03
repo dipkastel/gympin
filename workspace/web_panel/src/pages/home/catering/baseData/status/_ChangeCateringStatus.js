@@ -3,7 +3,6 @@ import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/
 import {Form} from "react-bootstrap";
 import Select from "react-select";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {placeGym_changeStatus} from "../../../../../network/api/placeGym.api";
 import {Catering_changeStatus} from "../../../../../network/api/placeCatering.api";
 
 const _ChangeCateringStatus = ({catering, update}) => {

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { multimediaCategoryApi } from "./const_api";
+import {multimediaCategoryApi} from "./const_api";
+
 //media
 
 export function multimediacategory_add(data) {

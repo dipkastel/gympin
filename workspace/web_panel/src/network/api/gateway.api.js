@@ -1,6 +1,5 @@
 import axios from "axios";
-import { GatewayApi} from "./const_api";
-
+import {GatewayApi} from "./const_api";
 
 
 export function Gateway_add(data) {

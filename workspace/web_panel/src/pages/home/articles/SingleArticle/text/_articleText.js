@@ -6,7 +6,6 @@ import draftToHtml from 'draftjs-to-html';
 import {Editor} from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {getSelectedEditor} from "../../../../../helper/pocket/pocket";
-import {EditorsType} from "../../../../../helper/enums/EditorsType";
 import JoditEditor from "jodit-react";
 
 const _artilceText = ({article, updateArticle}) => {

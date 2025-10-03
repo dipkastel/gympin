@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import {getRppPhoneBook, SetRppPhoneBook} from "../../../../helper/pocket/pocket";
-import {note_delete, note_query, note_update} from "../../../../network/api/note.api";
+import {note_delete} from "../../../../network/api/note.api";
 import {getUserFixedName} from "../../../../helper";
 import {Modal, Table} from "react-bootstrap";
 import {Button, IconButton, TextField} from "@mui/material";
@@ -12,7 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {DeleteOutline, Edit, Source} from "@mui/icons-material";
+import {DeleteOutline} from "@mui/icons-material";
 import TablePagination from "@mui/material/TablePagination";
 import {tag_query} from "../../../../network/api/Tags.api";
 

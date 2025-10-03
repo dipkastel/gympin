@@ -1,6 +1,6 @@
 import React from "react";
 import objectPath from "object-path";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import MenuItemText from "./MenuItemText";
 import MenuSubmenu from "./MenuSubmenu";
 import clsx from "clsx";

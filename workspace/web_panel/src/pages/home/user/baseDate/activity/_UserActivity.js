@@ -1,21 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {Form} from "react-bootstrap";
-import Select from "react-select";
 import {service_query} from "../../../../../network/api/service.api";
-import {useHistory} from "react-router-dom";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {
-    getRppSettingActivities,
-    getRppUserActivity,
-    SetRppSettingActivities, SetRppUserActivity
-} from "../../../../../helper/pocket/pocket";
+import {getRppUserActivity, SetRppUserActivity} from "../../../../../helper/pocket/pocket";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import {Avatar, Chip, TableCell, Typography} from "@mui/material";
+import {TableCell} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
-import {getUserFixedName} from "../../../../../helper";
 import {serviceEnum} from "../../../../../helper/enums/serviceEnum";
 import TablePagination from "@mui/material/TablePagination";
 

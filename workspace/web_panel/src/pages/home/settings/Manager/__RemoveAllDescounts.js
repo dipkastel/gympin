@@ -1,11 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {
-    settings_DoMaximumDiscount,
-    settings_RemoveAllDiscounts,
-    settings_SetAutoToAll,
-    settings_UpdateAutoDiscount
-} from "../../../../network/api/settings.api";
+import {settings_RemoveAllDiscounts} from "../../../../network/api/settings.api";
 import {Modal} from "react-bootstrap";
 import {Button, Typography} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";

@@ -1,13 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import __wizardSports from "./otherInfos/__wizardSports";
-import __wizardPersonel from "./otherInfos/__wizardPersonel";
+import React from 'react';
 import __wizardBeneficiaries from "./beneficiaries/__wizardBeneficiaries";
 
 const _wizardBeneficiaries = ({allowNext}) => {
 
     return (
         <div className={"row"}>
-            <__wizardBeneficiaries allowNext={allowNext} />
+            <__wizardBeneficiaries allowNext={allowNext}/>
         </div>
     );
 };

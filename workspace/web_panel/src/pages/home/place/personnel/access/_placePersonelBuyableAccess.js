@@ -2,10 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {InputLabel, Switch} from "@mui/material";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {
-    placePersonnel_getBuyableAccess,
-    placePersonnel_updatePersonnelBuyableAccess
-} from "../../../../../network/api/placePersonnel.api";
+import {placePersonnel_getBuyableAccess, placePersonnel_updatePersonnelBuyableAccess} from "../../../../../network/api/placePersonnel.api";
 
 const _placePersonelBuyableAccess = ({personel}) => {
     const error = useContext(ErrorContext);

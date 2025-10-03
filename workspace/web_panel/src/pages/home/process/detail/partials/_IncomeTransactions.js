@@ -1,10 +1,7 @@
 import React from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {LinearProgress, ListItemText, Tooltip, Typography} from "@mui/material";
-import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
-import {AccountBalanceWallet, AttachMoney, NotInterested} from "@mui/icons-material";
-import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
-import {CorporateContractType} from "../../../../../helper/enums/CorporateContractType";
+import {LinearProgress, Typography} from "@mui/material";
+import {toPriceWithComma} from "../../../../../helper";
 import {UserFinanceTypesEnum} from "../../../../../helper/enums/UserFinanceTypesEnum";
 
 const _IncomeTransactions = ({incomeTransactions}) => {

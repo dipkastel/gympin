@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import Brand from "../brand/Brand";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Menu from "./Menu";

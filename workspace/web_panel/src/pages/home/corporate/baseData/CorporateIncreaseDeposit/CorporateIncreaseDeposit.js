@@ -1,18 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
-import {
-    Portlet,
-    PortletBody,
-    PortletFooter,
-    PortletHeader,
-    PortletHeaderToolbar,
-} from "../../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletFooter, PortletHeader, PortletHeaderToolbar,} from "../../../../partials/content/Portlet";
 import TableContainer from "@mui/material/TableContainer";
 import {Form, Modal, Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {Button, Chip, IconButton, TextField, Tooltip, Typography} from "@mui/material";
+import {Button, Chip, TextField, Tooltip, Typography} from "@mui/material";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
@@ -22,7 +16,7 @@ import {
     IncreaseCorporateDeposit_confirmIncreaseRequest,
     IncreaseCorporateDeposit_query
 } from "../../../../../network/api/increaseCorporateDeposit.api";
-import {BookmarkBorder, ExpandMore, Receipt, ReceiptLong} from "@mui/icons-material";
+import {BookmarkBorder, ReceiptLong} from "@mui/icons-material";
 import {getRppCorporateIncreaseDeposit, SetRppCorporateIncreaseDeposit} from "../../../../../helper/pocket/pocket";
 
 function CorporateIncreaseDeposit({currentCorporate, updatePage}) {

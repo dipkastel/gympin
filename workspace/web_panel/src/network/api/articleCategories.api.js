@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ArticleCategoryApi, SerialApi} from "./const_api";
+import {ArticleCategoryApi} from "./const_api";
 
 export function ArticleCategory_add(data) {
   return axios.post(ArticleCategoryApi.add, data);

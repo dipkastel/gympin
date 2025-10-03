@@ -6,7 +6,6 @@ import draftToHtml from "draftjs-to-html";
 import {convertToRaw, EditorState} from "draft-js";
 import {getSelectedEditor} from "../../../../../helper/pocket/pocket";
 import JoditEditor from "jodit-react";
-import {Button} from "@mui/material";
 
 const _summary = ({article,updateArticle}) => {
     const [defaultEditorState, setDefaultEditorState] = useState();

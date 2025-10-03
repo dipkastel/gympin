@@ -1,5 +1,4 @@
 import {AuthApi, MultimediaApi} from "../../network/api/const_api";
-import {Support_query} from "../../network/api/support.api";
 import {CorporateContractType} from "../enums/CorporateContractType";
 
 export function getImageUrlByName(name, Height = 0, Width = 0) {
@@ -80,7 +79,7 @@ export function checkMobileValid(mobileNumber) {
   return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
 }
 
-export const toAbsoluteUrl = (pathname) => process.env.PUBLIC_URL + pathname;
+export const toAbsoluteUrl = (pathname) => process?.env?.PUBLIC_URL + pathname;
 
 /*  removeStorage: removes a key from localStorage and its sibling expiracy key
     params:

@@ -1,8 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Notice from "../../partials/content/Notice";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
-import {Avatar, Chip, TextField} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import {Avatar, TextField} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
@@ -10,7 +9,6 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {getUserFixedName} from "../../../helper";
-import {genders} from "../../../helper/enums/genders";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppUserManagement, SetRppUserManagement} from "../../../helper/pocket/pocket";
 import {ErrorContext} from "../../../components/GympinPagesProvider";

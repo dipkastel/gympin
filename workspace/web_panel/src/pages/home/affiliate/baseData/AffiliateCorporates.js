@@ -3,7 +3,8 @@ import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../.
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {
     affiliate_AddCorporatesToAffiliator,
-    affiliate_getCorporatesByAffiliatorId, affiliate_RemoveCorporatesToAffiliator
+    affiliate_getCorporatesByAffiliatorId,
+    affiliate_RemoveCorporatesToAffiliator
 } from "../../../../network/api/affiliate.api";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";

@@ -3,7 +3,7 @@ import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Por
 import {Button, TextField, Typography} from "@mui/material";
 import {Modal} from "react-bootstrap";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {settings_DoMaximumDiscount, settings_DoMaximumManagedDiscount} from "../../../../network/api/settings.api";
+import {settings_DoMaximumManagedDiscount} from "../../../../network/api/settings.api";
 
 const __MaximumManagedDiscount = () => {
 

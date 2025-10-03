@@ -1,5 +1,5 @@
 import axios from "axios";
-import {SportApi, UserApi} from "./const_api";
+import {SportApi} from "./const_api";
 
 //sport
 export function sport_addSport(sport) {

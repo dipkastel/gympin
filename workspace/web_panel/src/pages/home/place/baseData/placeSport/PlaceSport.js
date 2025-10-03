@@ -3,7 +3,7 @@ import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar,} from "../../
 import AddIcon from "@mui/icons-material/Add";
 import {Button, TableCell} from "@mui/material";
 import {Form, Modal, Table} from "react-bootstrap";
-import {sport_getAllSport, sport_query,} from "../../../../../network/api/sport.api";
+import {sport_query,} from "../../../../../network/api/sport.api";
 import {placeSport_add, placeSport_delete, placeSport_getSportsByPlace} from "../../../../../network/api/placeSport.api";
 import Select from "react-select";
 import TableHead from "@mui/material/TableHead";

@@ -1,17 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {
-    Alert,
-    Button,
-    Collapse,
-    FormControlLabel,
-    Grid,
-    Slider,
-    Stack,
-    Switch,
-    TableCell,
-    TableRow, TextField
-} from "@mui/material";
+import {Alert, Button, Collapse, FormControlLabel, Grid, Slider, Stack, Switch, TableCell, TableRow, TextField} from "@mui/material";
 import {Form, Modal} from "react-bootstrap";
 import {User_getUserCredits} from "../../../../../network/api/user.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
@@ -19,7 +8,7 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
 import {toPriceWithComma} from "../../../../../helper";
-import {invoice_advancedCheckout, invoice_checkout} from "../../../../../network/api/invoice.api";
+import {invoice_advancedCheckout} from "../../../../../network/api/invoice.api";
 import {creditTypes} from "../../../../../helper/enums/creditTypes";
 import {CreditStatusEnum} from "../../../../../helper/enums/CreditStatusEnum";
 

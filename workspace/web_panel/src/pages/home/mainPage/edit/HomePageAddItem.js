@@ -1,9 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
 import Select from "react-select";
 import {Button} from "@mui/material";
 import ImagePicker from "../../media/Pickers/ImagePicker";
-import {homepage_add, homepage_getAllDestinations, homepage_getAllTypes} from "../../../../network/api/homepage.api";
+import {homepage_add} from "../../../../network/api/homepage.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
 const HomePageAddItem = ({elements,selectedParent,type,setType,destinations}) => {

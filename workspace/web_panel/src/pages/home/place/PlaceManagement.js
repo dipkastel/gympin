@@ -14,12 +14,10 @@ import TablePagination from "@mui/material/TablePagination";
 import {useHistory} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {getRppPlaceManagement, SetRppPlaceManagement} from "../../../helper/pocket/pocket";
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import DangerousIcon from '@mui/icons-material/Dangerous';
 import PaidIcon from '@mui/icons-material/Paid';
 import ImageIcon from '@mui/icons-material/Image';
 import SportsIcon from '@mui/icons-material/Sports';
-import {NoteAlt, ReceiptLong} from "@mui/icons-material";
+import {NoteAlt} from "@mui/icons-material";
 
 
 const PlaceManagement = () => {

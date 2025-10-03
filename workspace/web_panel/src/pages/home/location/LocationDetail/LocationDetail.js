@@ -5,7 +5,6 @@ import {Location_getById} from "../../../../network/api/location.api";
 import _LocationDetailMap from "./_LocationDetailMap";
 import Notice from "../../../partials/content/Notice";
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Form} from "react-bootstrap";
 
 const LocationDetail = () => {
 

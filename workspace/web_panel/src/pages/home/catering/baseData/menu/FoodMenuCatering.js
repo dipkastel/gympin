@@ -3,7 +3,6 @@ import {Button, ListItemText, Paper, Tab, Tabs} from "@mui/material";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {Add} from "@mui/icons-material";
 import FoodMenuOfTheDay from "./FoodMenuOfTheDay";
-import {TicketFoodMenu_getDates} from "../../../../../network/api/TicketFoodMenu.api";
 
 const FoodMenuCatering = ({catering}) => {
 

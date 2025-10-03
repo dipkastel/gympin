@@ -3,12 +3,7 @@ import {Button, TableCell, TableHead} from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
-import {
-    placeOption_add,
-    placeOption_delete,
-    placeOption_getAll,
-    placeOption_query, placeOption_update
-} from "../../../../network/api/placeOptions.api";
+import {placeOption_add, placeOption_delete, placeOption_query, placeOption_update} from "../../../../network/api/placeOptions.api";
 import Notice from "../../../partials/content/Notice";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";

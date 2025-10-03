@@ -6,7 +6,6 @@ import {Button, Divider, FormControl, FormGroup, FormLabel, Grid, IconButton, Te
 import AddIcon from "@mui/icons-material/Add";
 import {UserSettingKeys} from "../../../../../helper/enums/UserSettingKeys";
 import {Form, Modal} from "react-bootstrap";
-import {ArticleCategory_add} from "../../../../../network/api/articleCategories.api";
 import Select from "react-select";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -35,11 +34,12 @@ const UserAdvanceSettings = ({currentUser}) => {
         function addCategory(e) {
             e.preventDefault()
             setOpenModalAdd(false);
-            SetSettings([...settings,{Key:e.target.settingKey.value}])
+            SetSettings([...settings, {Key: e.target.settingKey.value}])
         }
-        function getKeysToAdd(){
+
+        function getKeysToAdd() {
             var keys = [];
-            Object.keys(UserSettingKeys).filter(key=>!settings?.map(s=>s.Key).includes(key))?.map(key=>{
+            Object.keys(UserSettingKeys).filter(key => !settings?.map(s => s.Key).includes(key))?.map(key => {
                 keys.push({value: key, label: UserSettingKeys[key]});
             })
             return keys;

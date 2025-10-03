@@ -3,29 +3,30 @@ import {Paper, Tab, Tabs} from "@mui/material";
 import UserWalletsTab from "./financeTabs/UserWalletsTab";
 import UserTransactionsTab from "./financeTabs/UserTransactionsTab";
 import UserRequestsTab from "./financeTabs/UserRequestsTab";
-import {user_getFinanceUser, User_getUserCredits} from "../../../../../network/api/user.api";
+import {User_getUserCredits} from "../../../../../network/api/user.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const UserFinanceManagement = ({currentUser}) => {
 
     const error = useContext(ErrorContext);
     const [selectedTab, setSelectedTab] = useState("WALLETS");
-    const [updatePageP,SetUpdatePageP] = useState(false);
-    const [userFinance,SetUserFinance] = useState(null);
+    const [updatePageP, SetUpdatePageP] = useState(false);
+    const [userFinance, SetUserFinance] = useState(null);
 
 
     useEffect(() => {
-        if(updatePageP)
+        if (updatePageP)
             SetUpdatePageP(false)
         getUserFinance();
     }, [updatePageP]);
-    function updatePage(){
+
+    function updatePage() {
         SetUpdatePageP(true)
     }
 
     function getUserFinance() {
 
-        User_getUserCredits({Id:currentUser.Id}).then(result=>{
+        User_getUserCredits({Id: currentUser.Id}).then(result => {
             SetUserFinance(result.data.Data);
         }).catch(e => {
             try {
@@ -39,7 +40,7 @@ const UserFinanceManagement = ({currentUser}) => {
     return (
 
         <>
-            {!updatePageP&&userFinance &&<div>
+            {!updatePageP && userFinance && <div>
                 <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
                     <Tabs
                         value={selectedTab}
@@ -54,9 +55,11 @@ const UserFinanceManagement = ({currentUser}) => {
                         <Tab label="تراکنش ها" value={"TRANSACTIONS"}/>
                     </Tabs>
                 </Paper>
-                {selectedTab === "WALLETS" && <UserWalletsTab userFinance={userFinance} currentUser={currentUser}  updatePage={updatePage}/>}
-                {selectedTab === "REQUESTS" && <UserRequestsTab userFinance={userFinance} currentUser={currentUser} updatePage={updatePage}/>}
-                {selectedTab === "TRANSACTIONS" && <UserTransactionsTab userFinance={userFinance} currentUser={currentUser} updatePage={updatePage}/>}
+                {selectedTab === "WALLETS" && <UserWalletsTab userFinance={userFinance} currentUser={currentUser} updatePage={updatePage}/>}
+                {selectedTab === "REQUESTS" &&
+                <UserRequestsTab userFinance={userFinance} currentUser={currentUser} updatePage={updatePage}/>}
+                {selectedTab === "TRANSACTIONS" &&
+                <UserTransactionsTab userFinance={userFinance} currentUser={currentUser} updatePage={updatePage}/>}
             </div>}
         </>
     );

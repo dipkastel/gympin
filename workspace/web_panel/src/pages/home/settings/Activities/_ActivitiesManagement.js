@@ -1,13 +1,6 @@
 import React, {useState} from 'react';
-import Notice from "../../../partials/content/Notice";
 import {Paper, Tab, Tabs} from "@mui/material";
-import _SettingGeneral from "../General/_SettingGeneral";
-import _SettingFinance from "../Finance/_SettingFinance";
-import _SettingSms from "../sms/_SettingSms";
-import _PhoneBook from "../phoneBook/_PhoneBook";
-import _SettingNotification from "../Notification/_SettingNotification";
 import __SettingActivitiesDetails from "./__SettingActivitiesDetails";
-import _SettingPersonal from "../Personal/_SettingPersonal";
 import __SettingActivitiesGeneral from "./__SettingActivitiesGeneral";
 
 const _ActivitiesManagement = () => {

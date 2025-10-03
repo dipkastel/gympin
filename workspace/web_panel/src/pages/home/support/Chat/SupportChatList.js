@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {Box, Grid, List, ListItem, Paper, Typography,} from "@mui/material";
 import _ActiveUserListItem from "./_ActiveUserListItem";
 import _ChatBox from "./_ChatBox";

@@ -1,10 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@mui/material";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import {creditTypes} from "../../../../../helper/enums/creditTypes";
-import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {User_getUserCredits} from "../../../../../network/api/user.api";
 import {toPriceWithComma} from "../../../../../helper";
 import {CorporateContractType} from "../../../../../helper/enums/CorporateContractType";
 

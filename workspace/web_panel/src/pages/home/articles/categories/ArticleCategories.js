@@ -9,11 +9,7 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-import {
-    ArticleCategory_add,
-    ArticleCategory_delete,
-    ArticleCategory_getAll
-} from "../../../../network/api/articleCategories.api";
+import {ArticleCategory_add, ArticleCategory_delete, ArticleCategory_getAll} from "../../../../network/api/articleCategories.api";
 
 const ArticleCategories = () => {
     const error = useContext(ErrorContext);

@@ -1,7 +1,7 @@
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid */
 import React from "react";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { ReactComponent as Layout4BlocksIcon } from "../assets/layout-svg-icons/Layout-4-blocks.svg";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
+import {ReactComponent as Layout4BlocksIcon} from "../assets/layout-svg-icons/Layout-4-blocks.svg";
 import KTOffcanvas from "../../assets/js/offcanvas";
 
 export default class QuickPanelToggler extends React.Component {

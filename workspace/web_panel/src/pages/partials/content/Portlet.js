@@ -1,6 +1,6 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React, {forwardRef, useEffect, useState} from "react";
 import clsx from "clsx";
-import { isFragment } from "react-is";
+import {isFragment} from "react-is";
 
 export const PortletHeaderIcon = forwardRef(({ className }, ref) => (
   <span ref={ref} className={clsx("kt-portlet__head-icon", className)} />
@@ -152,7 +152,7 @@ export const Portlet = forwardRef(
 );
 
 // Set display names for debugging.
-if (process.env.NODE_ENV !== "production") {
+if (process?.env?.NODE_ENV !== "production") {
   Portlet.displayName = "Portlet";
 
   PortletHeader.displayName = "PortletHeader";

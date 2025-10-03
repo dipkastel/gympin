@@ -1,5 +1,4 @@
 import React from 'react';
-import Halls from "../halls/Halls";
 import PlaceAbout from "../About/PlaceAbout";
 import PlaceImages from "../Images/PlaceImages";
 import PlaceSports from "../placeSport/PlaceSport";

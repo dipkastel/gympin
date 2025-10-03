@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import "./map.css"
 import * as L from "leaflet";
 import {useHistory} from "react-router-dom";
-import Notice from "../../../partials/content/Notice";
-import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
 
 const _LocationDetailMap = ({centerLat, centerLng, mapPolygon}) => {

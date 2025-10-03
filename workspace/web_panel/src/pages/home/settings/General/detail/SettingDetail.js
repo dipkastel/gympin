@@ -1,14 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-    Portlet,
-    PortletBody,
-    PortletFooter,
-    PortletHeader,
-    PortletHeaderToolbar
-} from "../../../../partials/content/Portlet";
-import {Delete, ExpandLess, ExpandMore} from "@mui/icons-material"
+import {Portlet, PortletBody, PortletFooter, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
+import {Delete} from "@mui/icons-material"
 import {Form} from "react-bootstrap";
-import {Button, Collapse, Grid, IconButton, TextField, Typography} from "@mui/material";
+import {Button, Grid, IconButton, TextField, Typography} from "@mui/material";
 import {settings_delete, settings_update} from "../../../../../network/api/settings.api";
 import {SettingTypes} from "../../../../../helper/enums/settingsTypeEnum";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
@@ -90,7 +84,7 @@ const SettingDetail = ({setting, refreshData}) => {
 
                 <PortletBody className={"p-2"}>
                         <Grid container alignItems={"center"} justifyContent={"space-between"} direction={"row"}>
-                            <Grid item paddingX={1} alignItems={"center"} md={6}>
+                            <Grid item paddingX={1} alignItems={"center"} size={6}>
                                 <TextField
                                     label="مقدار"
                                     name="Value"
@@ -102,7 +96,7 @@ const SettingDetail = ({setting, refreshData}) => {
                                     variant="outlined"
                                 />
                             </Grid>
-                            <Grid item paddingX={1} alignItems={"center"} md={5}>
+                            <Grid item paddingX={1} alignItems={"center"} size={5}>
                                 {(inSetting["Data"]) ?
                                     <TextField
                                         label="مقدار اضافه"
@@ -129,7 +123,7 @@ const SettingDetail = ({setting, refreshData}) => {
 
                 </PortletBody>
                 <PortletFooter>
-                    <Grid item paddingX={1} md={6}>
+                    <Grid item paddingX={1} size={6}>
                         <Button
                             type={"submit"}
                             variant={"contained"}

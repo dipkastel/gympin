@@ -4,9 +4,6 @@ import {Form} from "react-bootstrap";
 import Select from "react-select";
 import {genders} from "../../../../../../../helper/enums/genders";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../../../helper";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import adapterJalali from "@date-io/date-fns-jalali";
-import {DatePicker} from "@mui/x-date-pickers";
 import {CheckBox, ExpandLess, ExpandMore, QuestionMark} from "@mui/icons-material";
 import {classStatus} from "../../../../../../../helper/enums/ClassStatus";
 

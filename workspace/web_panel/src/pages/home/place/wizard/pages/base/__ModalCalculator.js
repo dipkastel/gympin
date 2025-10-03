@@ -1,9 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-    optionOfPlace_add,
-    optionOfPlace_delete,
-    optionOfPlace_getByPlaceId
-} from "../../../../../../network/api/optionOfPlace.api";
+import {optionOfPlace_add, optionOfPlace_delete, optionOfPlace_getByPlaceId} from "../../../../../../network/api/optionOfPlace.api";
 import {Modal} from "react-bootstrap";
 import {Button, Chip, Divider} from "@mui/material";
 import {Rating} from "@mui/lab";

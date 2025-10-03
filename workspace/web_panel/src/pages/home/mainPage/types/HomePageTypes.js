@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {placeOption_delete} from "../../../../network/api/placeOptions.api";
 import {Form, Modal} from "react-bootstrap";
 import {
     Button,

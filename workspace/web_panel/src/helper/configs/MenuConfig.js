@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-anonymous-default-export
-import {getSupportCount} from "../utils/utils";
 
 export default {
   header: {

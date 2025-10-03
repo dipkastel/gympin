@@ -1,5 +1,5 @@
 import axios from "axios";
-import {IncreaseCorporateDepositApi, IncreaseUserDepositApi} from "./const_api";
+import {IncreaseCorporateDepositApi} from "./const_api";
 
 //IncreaseCorporateDeposit
 

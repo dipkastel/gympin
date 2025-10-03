@@ -3,7 +3,6 @@ import {Portlet, PortletBody, PortletFooter, PortletHeader,} from "../../../../p
 import {TextField} from "@mui/material";
 import {corporate_update} from "../../../../../network/api/corporate.api";
 import {Form} from "react-bootstrap";
-import Select from "react-select";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 export default function CorporateBasics({currentCorporate}) {

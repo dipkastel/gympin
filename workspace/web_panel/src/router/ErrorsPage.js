@@ -1,6 +1,6 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
-import { ErrorPage404 } from "../pages/errors/ErrorPage404";
+import {Redirect, Route, Switch} from "react-router-dom";
+import {ErrorPage404} from "../pages/errors/ErrorPage404";
 
 export default function ErrorsPage() {
   return (

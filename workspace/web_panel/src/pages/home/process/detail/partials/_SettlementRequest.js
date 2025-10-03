@@ -1,10 +1,7 @@
 import React from 'react';
-import {LinearProgress, ListItemText, Tooltip, Typography} from "@mui/material";
-import {CheckCircle, Dangerous, Description, HourglassTop, NewReleases} from "@mui/icons-material";
+import {LinearProgress, ListItemText} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {DepositStatus} from "../../../../../helper/enums/DepositStatus";
-import {getCorporateFixedName, getUserFixedName, toPriceWithComma} from "../../../../../helper";
-import {GatewayType} from "../../../../../helper/enums/GatewayType";
+import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {UserFinanceTypesEnum} from "../../../../../helper/enums/UserFinanceTypesEnum";
 
 const _SettlementRequest = ({settlementRequest}) => {

@@ -1,6 +1,6 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
-import { Progress } from "reactstrap";
+import {withRouter} from "react-router-dom";
+import {Progress} from "reactstrap";
 
 class AnimateLoading extends React.Component {
   animateTimeout;

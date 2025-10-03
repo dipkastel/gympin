@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
-import {homepage_add, homepage_delete, homepage_getAll, homepage_query} from "../../../network/api/homepage.api";
+import {homepage_add, homepage_delete, homepage_query} from "../../../network/api/homepage.api";
 import {Button, TableCell} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import Table from "@mui/material/Table";

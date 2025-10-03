@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import { connect } from "react-redux";
-import { useLocation } from "react-router-dom";
+import React, {useEffect, useRef} from "react";
+import {connect} from "react-redux";
+import {useLocation} from "react-router-dom";
 import {builderSelectors} from "../helper/redux/selector/builderSelector";
 
 function KtContent({ children, contentContainerClasses }) {

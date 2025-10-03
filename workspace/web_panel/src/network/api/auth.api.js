@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AuthApi } from "./const_api";
+import {AuthApi} from "./const_api";
 
 export function account_login(loginData) {
   return axios.post(AuthApi.LOGIN_URL, loginData);

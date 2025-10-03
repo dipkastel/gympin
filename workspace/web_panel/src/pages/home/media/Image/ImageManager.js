@@ -1,6 +1,6 @@
 import React, {forwardRef, useContext, useEffect, useImperativeHandle, useState} from 'react';
 import {media_delete, media_query} from "../../../../network/api/media.api";
-import {Delete, FilterAlt} from '@mui/icons-material';
+import {Delete} from '@mui/icons-material';
 import {
     Button,
     Card,

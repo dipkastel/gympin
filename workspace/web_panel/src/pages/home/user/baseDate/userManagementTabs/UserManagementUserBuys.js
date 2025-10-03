@@ -1,9 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import UserInvoices from "../Invoice/UserInvoices";
 import {Paper, Tab, Tabs} from "@mui/material";
-import {buyable_query} from "../../../../../network/api/buyable.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {useHistory} from "react-router-dom";
 import {BuyableType} from "../../../../../helper/enums/BuyableType";
 import {Purchased_query} from "../../../../../network/api/purchased.api";
 import PurchasedSubscribeManagement from "../tickets/UserPurchasedSubscribe";
@@ -11,29 +9,20 @@ import PurchasedSubscribeManagement from "../tickets/UserPurchasedSubscribe";
 const UserManagementUserBuys = ({currentUser}) => {
 
     const error = useContext(ErrorContext);
-    const history = useHistory();
     const [selectedTab, setSelectedTab] = useState("USER");
     const [userBuyable, setUserBuyable] =useState(null);
 
-
-
-
-
-    const [Page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(99);
-
-
     useEffect(() => {
         getBuyables();
-    }, [Page, rowsPerPage]);
+    }, []);
 
     function getBuyables() {
         Purchased_query({
             queryType: "SEARCH",
             userId:currentUser.Id,
             paging: {
-                Page: Page,
-                Size: rowsPerPage,
+                Page: 0,
+                Size: 99,
                 Desc: true
             }
         }).then((result) => {

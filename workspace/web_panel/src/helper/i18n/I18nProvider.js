@@ -1,6 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { IntlProvider } from "react-intl";
+import {useSelector} from "react-redux";
+import {IntlProvider} from "react-intl";
 import "@formatjs/intl-listformat/polyfill";
 import "@formatjs/intl-listformat/locale-data/en";
 import "@formatjs/intl-listformat/locale-data/de";

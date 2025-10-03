@@ -1,11 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import {Form} from "reactstrap";
-import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {PlaceGym_query} from "../../../../network/api/placeGym.api";
 import {multimediacategory_getAll} from "../../../../network/api/mediaCategories.api";
-import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
 import AsyncSelect from "react-select/async";
 import {defaultFilterFinance} from "../../finance/_financeFilter";
 

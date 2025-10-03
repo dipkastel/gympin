@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import { Button, Typography} from "@mui/material";
-import {Alert, Form, Modal} from "react-bootstrap";
+import {Button, Typography} from "@mui/material";
+import {Alert, Form} from "react-bootstrap";
 import {sms_addSms} from "../../../../../network/api/sms.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
+
 const __SettingSmsSendManual = ({pattern,smsSent}) => {
 
     const error = useContext(ErrorContext);

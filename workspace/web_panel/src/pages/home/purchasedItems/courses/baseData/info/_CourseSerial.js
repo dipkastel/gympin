@@ -1,9 +1,6 @@
 import React from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../../partials/content/Portlet";
-import {Divider} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {toPriceWithComma} from "../../../../../../helper";
-import {CourseStatus} from "../../../../../../helper/enums/PurchasedCourseStatus";
 
 const _CourseSerial = ({course}) => {
     return (

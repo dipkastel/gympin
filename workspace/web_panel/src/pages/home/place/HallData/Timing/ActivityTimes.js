@@ -1,25 +1,22 @@
-
 import React, {useContext, useEffect, useState} from 'react';
-import {Form, Modal} from "react-bootstrap";
-import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, Link, TableCell, TextField} from "@mui/material";
+import {Modal} from "react-bootstrap";
+import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, TableCell, TextField} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import {TimePicker} from '@mui/x-date-pickers/TimePicker';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {
-    ticketActiveTimes_addAll, ticketActiveTimes_delete,
+    ticketActiveTimes_addAll,
+    ticketActiveTimes_delete,
     ticketActiveTimes_getByHall,
 } from "../../../../../network/api/ticketActiveTimes.api";
 import {dayOfWeekEnum} from "../../../../../helper/enums/dayOfWeekEnum";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-
-
-
 
 
 const ActivityTimes = ({hall}) => {
@@ -27,7 +24,7 @@ const ActivityTimes = ({hall}) => {
     const [ActivityTimes, SetActivityTimes] = useState([])
     const [openModalAdd, setOpenModalAdd] = useState(false)
     const [itemToDelete, setItemToDelete] = useState(null)
-    const [addValues,setAddValues] = useState([])
+    const [addValues, setAddValues] = useState([])
     useEffect(() => {
         getActivityTimesOfHall();
     }, []);
@@ -36,49 +33,51 @@ const ActivityTimes = ({hall}) => {
         ticketActiveTimes_getByHall({Id: hall.Id}).then(data => {
             SetActivityTimes(data.data.Data);
         }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
-    function getDayOfWeek(en){
+
+    function getDayOfWeek(en) {
         return dayOfWeekEnum[en]
     }
+
     function renderModalAdd() {
-        var addDays =[];
+        var addDays = [];
 
         function addItems(e) {
             e.preventDefault()
-            if(!(addValues["Name"])){
+            if (!(addValues["Name"])) {
                 error.showError({message: "نام فعالیت اجباری است",});
                 return;
             }
-            if(!(addValues["OpeningTime"])){
+            if (!(addValues["OpeningTime"])) {
                 error.showError({message: "زمان شروع فعالیت اجباری است",});
                 return;
             }
-            if(!(addValues["ClosingTime"])){
+            if (!(addValues["ClosingTime"])) {
                 error.showError({message: "زمان پایان فعالیت اجباری است",});
                 return;
             }
 
-            if(addDays.length<1){
+            if (addDays.length < 1) {
                 error.showError({message: "حد اقل یکی از روزهای هفته باید انتخاب شود",});
                 return;
             }
 
             setOpenModalAdd(false);
             var postData = [];
-            Object.keys(addDays).map(key =>                {
-                    if(addDays[key]){
+            Object.keys(addDays).map(key => {
+                    if (addDays[key]) {
                         postData.push({
-                            "Name":addValues["Name"],
-                            "ClosingTime":new Date(addValues["ClosingTime"]).toTimeString().substring(0,8),
-                            "OpeningTime":new Date(addValues["OpeningTime"]).toTimeString().substring(0,8),
-                            "Hall":{Id:hall.Id},
-                            "DayOfWeek":key
+                            "Name": addValues["Name"],
+                            "ClosingTime": new Date(addValues["ClosingTime"]).toTimeString().substring(0, 8),
+                            "OpeningTime": new Date(addValues["OpeningTime"]).toTimeString().substring(0, 8),
+                            "Hall": {Id: hall.Id},
+                            "DayOfWeek": key
                         })
                     }
                 }
@@ -89,19 +88,20 @@ const ActivityTimes = ({hall}) => {
                     getActivityTimesOfHall()
                     setAddValues([]);
                 }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
 
-        function setFormValues(lable,newValue){
-            setAddValues({...addValues,[lable]:newValue})
+        function setFormValues(lable, newValue) {
+            setAddValues({...addValues, [lable]: newValue})
         }
-        function setFormDayValues(lable,newValue){
-            addDays = {...addDays,[lable]:newValue}
+
+        function setFormDayValues(lable, newValue) {
+            addDays = {...addDays, [lable]: newValue}
         }
 
 
@@ -121,46 +121,46 @@ const ActivityTimes = ({hall}) => {
                                 label="نام"
                                 placeholder="نام فعالیت"
                                 value={addValues.Name}
-                                onChange={(e)=>setFormValues("Name",e.target.value)}
+                                onChange={(e) => setFormValues("Name", e.target.value)}
                                 fullWidth
                                 margin="normal"
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
                             />
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                    <TimePicker
-                                        className={"ltr fullwidth mt-3"}
-                                        label="از ساعت"
-                                        value={addValues["OpeningTime"]||""}
-                                        ampm={false}
-                                        onChange={(e)=>setFormValues("OpeningTime",e)}
-                                        // onChange={(e)=>setFormValues("Opening-time",new Date(e).getHours() + ":"+new Date(e).getMinutes())}
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
-                                    <TimePicker
-                                        className={"ltr fullwidth mt-4"}
-                                        label="تا ساعت"
-                                        ampm={false}
-                                        value={addValues["ClosingTime"]||""}
-                                        onChange={(e)=>setFormValues("ClosingTime",e)}
-                                        // onChange={(e)=>setFormValues("Closing-time",new Date(e).getHours() + ":"+new Date(e).getMinutes())}
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
-                                </LocalizationProvider>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <TimePicker
+                                    className={"ltr fullwidth mt-3"}
+                                    label="از ساعت"
+                                    value={addValues["OpeningTime"] || ""}
+                                    ampm={false}
+                                    onChange={(e) => setFormValues("OpeningTime", e)}
+                                    // onChange={(e)=>setFormValues("Opening-time",new Date(e).getHours() + ":"+new Date(e).getMinutes())}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                                <TimePicker
+                                    className={"ltr fullwidth mt-4"}
+                                    label="تا ساعت"
+                                    ampm={false}
+                                    value={addValues["ClosingTime"] || ""}
+                                    onChange={(e) => setFormValues("ClosingTime", e)}
+                                    // onChange={(e)=>setFormValues("Closing-time",new Date(e).getHours() + ":"+new Date(e).getMinutes())}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
 
                             <FormControl component="fieldset" className={"mt-3"}>
                                 <FormGroup
                                     aria-label="position"
                                     name="position"
-                                    onChange={(e)=>setFormDayValues(e.target.name,e.target.checked)}
+                                    onChange={(e) => setFormDayValues(e.target.name, e.target.checked)}
                                     row>
                                     {Object.keys(dayOfWeekEnum).map(key =>
                                         <FormControlLabel
                                             key={key}
                                             className={"mr-1"}
                                             value="top"
-                                            control={<Checkbox name={key} color="primary" />}
+                                            control={<Checkbox name={key} color="primary"/>}
                                             label={dayOfWeekEnum[key]}
                                             labelPlacement={"top"}
                                         />
@@ -187,6 +187,7 @@ const ActivityTimes = ({hall}) => {
             </>
         );
     }
+
     function renderModalDelete() {
 
         function DeleteItem(e) {
@@ -196,12 +197,12 @@ const ActivityTimes = ({hall}) => {
                     setItemToDelete(null)
                     getActivityTimesOfHall()
                 }).catch(e => {
-                    try {
-                        error.showError({message: e.response.data.Message,});
-                    } catch (f) {
-                        error.showError({message: "خطا نا مشخص",});
-                    }
-                });
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
         }
 
         return (
@@ -272,8 +273,8 @@ const ActivityTimes = ({hall}) => {
                                 <TableRow key={row.Id}>
                                     <TableCell align="right" component="th" scope="row">{row.Id}</TableCell>
                                     <TableCell align="right">{row.Name}</TableCell>
-                                    <TableCell align="right">{row["OpeningTime"].substring(0,5)}</TableCell>
-                                    <TableCell align="right">{row["ClosingTime"].substring(0,5)}</TableCell>
+                                    <TableCell align="right">{row["OpeningTime"].substring(0, 5)}</TableCell>
+                                    <TableCell align="right">{row["ClosingTime"].substring(0, 5)}</TableCell>
                                     <TableCell align="right">{getDayOfWeek(row["DayOfWeek"])}</TableCell>
                                     <TableCell align="left"><Button variant={"contained"} size={"small"}
                                                                     color={"error"}
@@ -285,8 +286,8 @@ const ActivityTimes = ({hall}) => {
                     </Table>
                 </PortletBody>
             </Portlet>
-            {openModalAdd&&renderModalAdd()}
-            {itemToDelete&&renderModalDelete()}
+            {openModalAdd && renderModalAdd()}
+            {itemToDelete && renderModalDelete()}
         </>
     );
 };

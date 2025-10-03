@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import {serial_getBySerial} from "../../../../../network/api/serial.api";

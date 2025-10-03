@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ReportSettings} from "./const_api";
+import {ReportSettings} from "./const_api";
 
 export function reportSettings_getAll(data) {
     return axios.get(ReportSettings.getAll,{params:data});

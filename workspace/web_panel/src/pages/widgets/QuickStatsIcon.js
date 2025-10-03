@@ -1,8 +1,8 @@
-import React, {useRef} from "react";
-import {Card, CardContent, Grid, Typography} from "@mui/material";
+import React from "react";
+import {Card, CardContent, Typography} from "@mui/material";
 import {toAbsoluteUrl} from "../../helper";
 
-function QuickStatsIcon({title, text, icon,onClick}) {
+function QuickStatsIcon({title, text, icon, onClick}) {
     return (
         <>
             <Card onClick={onClick}>
@@ -12,7 +12,7 @@ function QuickStatsIcon({title, text, icon,onClick}) {
                     backgroundSize: "cover"
                 }}>
                     {icon}
-                    <Typography sx={{pt:1}} variant={"h5"}>{title}</Typography>
+                    <Typography sx={{pt: 1}} variant={"h5"}>{title}</Typography>
                     <div className="kt-widget26__content">
                         <span className="kt-widget26__number"></span>
                         <span className="kt-widget26__desc">{text}</span>

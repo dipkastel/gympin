@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GymApi, SportApi} from "./const_api";
+import {GymApi} from "./const_api";
 
 //place
 export function PlaceGym_getPlaceById(place) {

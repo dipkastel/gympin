@@ -13,7 +13,6 @@ import CateringManagementSettingTab from "./CateringManagementTabs/CateringManag
 import CateringManagementItemsTab from "./CateringManagementTabs/CateringManagementItemsTab";
 
 
-
 const CateringDataManagement = () => {
 
     const error = useContext(ErrorContext);

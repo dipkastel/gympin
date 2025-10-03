@@ -1,7 +1,6 @@
 import React from 'react';
-import {getCorporateFixedName, getPlaceFixedName, getUserFixedName, toPriceWithComma} from "../../../../../helper";
+import {getPlaceFixedName, getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {LinearProgress, ListItemText} from "@mui/material";
-import {InvoiceStatus} from "../../../../../helper/enums/InvoiceStatus";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {PurchasedSubscribeStatus} from "../../../../../helper/enums/PurchasedSubscribeStatus";
 import {BuyableType} from "../../../../../helper/enums/BuyableType";

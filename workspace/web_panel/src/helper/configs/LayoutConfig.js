@@ -1,4 +1,4 @@
-import { toAbsoluteUrl } from "../utils/utils";
+import {toAbsoluteUrl} from "../utils/utils";
 
 export const initLayoutConfig = {
   demo: "demo1",

@@ -1,9 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
+import {connect} from "react-redux";
+import {Link, withRouter} from "react-router-dom";
 import objectPath from "object-path";
 import HMenuItem from "./HMenuItem";
-import { toAbsoluteUrl } from "../../../helper";
+import {toAbsoluteUrl} from "../../../helper";
 import KTMenu from "../../../assets/js/menu";
 import KTOffcanvas from "../../../assets/js/offcanvas";
 import {builderSelectors} from "../../../helper/redux/selector/builderSelector";

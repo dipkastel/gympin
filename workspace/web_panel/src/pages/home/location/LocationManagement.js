@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import Notice from "../../partials/content/Notice";
 import {useHistory, useParams} from "react-router-dom";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
-import {Button, Chip, TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import {Form, Modal, Table} from "react-bootstrap";
@@ -11,8 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
-import {Location_add, Location_addCity, Location_getById, Location_query} from "../../../network/api/location.api";
-import {PlaceGym_addPlace} from "../../../network/api/placeGym.api";
+import {Location_add, Location_getById, Location_query} from "../../../network/api/location.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {getRppLocationManagement, SetRppLocationManagement} from "../../../helper/pocket/pocket";
 

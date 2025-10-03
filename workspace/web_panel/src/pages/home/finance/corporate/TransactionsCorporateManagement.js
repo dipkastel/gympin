@@ -12,10 +12,7 @@ import {getUserFixedName, toPriceWithComma} from "../../../../helper";
 import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
 import {transactionCorporate_query} from "../../../../network/api/transactionsCorporate.api";
 import {TransactionCorporateTypes} from "../../../../helper/enums/TransactionCorporateTypes";
-import {
-    getRppTransactionCorporateManagement,
-    SetRppTransactionCorporateManagement
-} from "../../../../helper/pocket/pocket";
+import {getRppTransactionCorporateManagement, SetRppTransactionCorporateManagement} from "../../../../helper/pocket/pocket";
 
 const TransactionsCorporateManagement = () => {
     const history = useHistory();

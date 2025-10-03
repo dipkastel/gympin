@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, ListItemButton, ListItemText, Typography} from "@mui/material";
 import {ApplicationEnum} from "../../../../helper/enums/ApplicationEnum";
-import {BookOnline, OfflineBolt} from "@mui/icons-material";
+import {OfflineBolt} from "@mui/icons-material";
 
 const _ActiveUserListItem = ({user,selectedUser,setSelectedUser}) => {
 

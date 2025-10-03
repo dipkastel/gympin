@@ -1,15 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {Chip, Divider, IconButton, Paper, TextField} from "@mui/material";
+import {Chip, Divider, IconButton, TextField} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
-import {
-    tag_add,
-    tag_addToPlace,
-    tag_getPlaceTags,
-    tag_query,
-    tag_removeFromPlace,
-} from "../../../../../network/api/Tags.api";
+import {tag_add, tag_addToPlace, tag_getPlaceTags, tag_query, tag_removeFromPlace,} from "../../../../../network/api/Tags.api";
 import {Row} from "reactstrap";
 
 

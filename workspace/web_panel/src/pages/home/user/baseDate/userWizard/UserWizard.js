@@ -1,13 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {Form} from "react-bootstrap";
-import Select from "react-select";
-import {
-    user_GetStatuses,
-    user_GetUserSettings,
-    user_SetUserSettings,
-    user_UpdateUserStatus
-} from "../../../../../network/api/user.api";
+import {user_GetUserSettings, user_SetUserSettings,} from "../../../../../network/api/user.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {FormControlLabel, FormGroup, FormLabel, Switch} from "@mui/material";
 

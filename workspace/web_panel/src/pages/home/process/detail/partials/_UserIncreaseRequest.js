@@ -3,7 +3,7 @@ import {LinearProgress, ListItemText, Tooltip, Typography} from "@mui/material";
 import {CheckCircle, Dangerous, Description, HourglassTop, NewReleases} from "@mui/icons-material";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {DepositStatus} from "../../../../../helper/enums/DepositStatus";
-import {getCorporateFixedName, getUserFixedName, toPriceWithComma} from "../../../../../helper";
+import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {GatewayType} from "../../../../../helper/enums/GatewayType";
 
 const _UserIncreaseRequest = ({UserIncreaseRequest}) => {

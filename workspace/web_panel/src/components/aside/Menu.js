@@ -1,9 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import objectPath from "object-path";
-import { Link, withRouter } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import clsx from "clsx";
-import { removeCSSClass } from "../../helper";
+import {removeCSSClass} from "../../helper";
 import MenuList from "./MenuList";
 import KTMenu from "../../assets/js/menu";
 import KTUtil from "../../assets/js/util";

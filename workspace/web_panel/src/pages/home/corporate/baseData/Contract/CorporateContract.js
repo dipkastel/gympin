@@ -2,10 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
 import Select from "react-select";
-import {
-    corporate_updateContractType,
-    corporate_updateDefaultExpireDuratione,
-} from "../../../../../network/api/corporate.api";
+import {corporate_updateContractType, corporate_updateDefaultExpireDuratione,} from "../../../../../network/api/corporate.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {Button, FormLabel, Grid, TextField} from "@mui/material";
 

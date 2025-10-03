@@ -1,8 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Button, FormControlLabel,Switch, TextField} from "@mui/material";
+import {Button} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader,} from "../../../../partials/content/Portlet";
 import {Form} from "react-bootstrap";
-import Select from "react-select";
 import {Location_query} from "../../../../../network/api/location.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import _CMap from "./_CMap";

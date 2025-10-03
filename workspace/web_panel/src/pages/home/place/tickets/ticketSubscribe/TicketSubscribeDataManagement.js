@@ -9,7 +9,6 @@ import TicketSubscribeSport from "./ticketSubscribeSports/TicketSubscribeSport";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import _TicketSubscribeHistoryChart from "./HistoryChart/_TicketSubscribeHistoryChart";
 import _ChangeTicketSubscribeStatus from "./changeStatus/_ChangeTicketSubscribeStatus";
-import TicketCourseCoaches from "../ticketCourse/ticketCourseCoaches/TicketCourseCoaches";
 import TicketSubscribeCoaches from "./ticketSubscribeCoaches/TicketSubscribeCoaches";
 
 const TicketSubscribeDataManagement = () => {

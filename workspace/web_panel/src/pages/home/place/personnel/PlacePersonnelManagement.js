@@ -1,12 +1,10 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import _placePersonelDetails from "./baseData/_placePersonelDetails";
 import _placePersonelAccess from "./access/_placePersonelAccess";
 import {placePersonnel_getById} from "../../../../network/api/placePersonnel.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import _placePersonelStatus from "./status/_placePersonelStatus";
-import _PersonnelRole from "../../corporate/persoanel/_PersonnelRole";
-import _PersonnelCredit from "../../corporate/persoanel/_PersonnelCredit";
 import _placePersonelBuyableAccess from "./access/_placePersonelBuyableAccess";
 import _placePersonnelCommitionFee from "./commissionFee/_placePersonnelCommitionFee";
 import Notice from "../../../partials/content/Notice";

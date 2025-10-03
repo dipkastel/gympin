@@ -1,5 +1,5 @@
 import axios from "axios";
-import {TicketCoursesApi, TicketSubscribesApi} from "./const_api";
+import {TicketSubscribesApi} from "./const_api";
 
 export function TicketSubscribes_add(data) {
     return axios.post(TicketSubscribesApi.add, data);

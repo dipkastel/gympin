@@ -7,13 +7,8 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-import {halls_add, halls_delete, halls_getByPlaceId} from "../../../../../network/api/hall.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {
-    corporate_addGroup,
-    corporate_deleteGroup,
-    corporate_getCorporateGroups
-} from "../../../../../network/api/corporate.api";
+import {corporate_addGroup, corporate_deleteGroup, corporate_getCorporateGroups} from "../../../../../network/api/corporate.api";
 
 const PersonnelGroups = ({corporate}) => {
     const error = useContext(ErrorContext);

@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Support_query} from "../../../../network/api/support.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import TableContainer from "@mui/material/TableContainer";
 import {Modal, Table} from "react-bootstrap";
@@ -13,8 +12,7 @@ import {getUserFixedName, toPriceWithComma} from "../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {AttachMoney, Info, Message, NoteAlt, RequestQuote} from "@mui/icons-material";
-import {SettlementUserDeposit_query} from "../../../../network/api/settlementUserDeposit.api";
+import {AttachMoney, Info} from "@mui/icons-material";
 import {IncreaseUserDeposit_query} from "../../../../network/api/increaseUserDeposit.api";
 import {Avatar, Tooltip} from "@mui/material";
 import {GatewayType} from "../../../../helper/enums/GatewayType";

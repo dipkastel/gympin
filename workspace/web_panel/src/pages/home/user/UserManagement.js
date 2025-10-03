@@ -21,7 +21,6 @@ import {useSelector} from "react-redux";
 import {getUserFixedName} from "../../../helper";
 import {genders} from "../../../helper/enums/genders";
 import {getRppUserManagement, SetRppUserManagement} from "../../../helper/pocket/pocket";
-import SportsIcon from "@mui/icons-material/Sports";
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import {CreditScore} from "@mui/icons-material";
 

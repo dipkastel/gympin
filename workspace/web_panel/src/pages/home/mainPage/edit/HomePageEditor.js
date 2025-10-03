@@ -5,11 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/EditSharp';
 import {ExpandLess, ExpandMore, NavigateBefore, NavigateNext} from '@mui/icons-material';
-import {
-    homepage_delete, homepage_getAllDestinations,
-    homepage_getAllTypes,
-    homepage_update
-} from "../../../../network/api/homepage.api";
+import {homepage_delete, homepage_getAllDestinations, homepage_getAllTypes, homepage_update} from "../../../../network/api/homepage.api";
 import HomeTitle from "./resultItems/HomeTitle";
 import HomeSlider from "./resultItems/HomeSlider";
 import HomeUserList from "./resultItems/HomeUserList";

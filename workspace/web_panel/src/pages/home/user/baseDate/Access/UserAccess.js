@@ -1,8 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Portlet, PortletBody, PortletHeader,} from "../../../../partials/content/Portlet";
-import {
-    user_getById,
-} from "../../../../../network/api/user.api";
+import {user_getById,} from "../../../../../network/api/user.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {Chip} from "@mui/material";
 import {userRoles_add, userRoles_delete, userRoles_getAllRoles} from "../../../../../network/api/userRoles.api";

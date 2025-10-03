@@ -1,5 +1,4 @@
 import React from 'react';
-import Slick from "react-slick";
 import {Card, Link, Typography} from "@mui/material";
 import {Image} from "react-bootstrap";
 

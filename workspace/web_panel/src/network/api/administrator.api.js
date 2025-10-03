@@ -1,5 +1,6 @@
 import axios from "axios";
-import { AdministratorApi } from "./const_api";
+import {AdministratorApi} from "./const_api";
+
 //user
 export function administrator_add(user) {
   return axios.post(AdministratorApi.add, user);

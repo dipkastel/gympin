@@ -6,7 +6,7 @@ import Select from "react-select";
 import {genders} from "../../../../../../helper/enums/genders";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../../helper";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import adapterJalali from "@date-io/date-fns-jalali";
+import {AdapterDateFnsJalali} from '@mui/x-date-pickers/AdapterDateFnsJalali';
 import {DatePicker} from "@mui/x-date-pickers";
 import {classStatus} from "../../../../../../helper/enums/ClassStatus";
 
@@ -205,9 +205,9 @@ function TicketCourseBase({ticketCourse, updateTicketCourse}) {
                         />
 
                         <LocalizationProvider
-                            dateAdapter={adapterJalali}>
+                            dateAdapter={AdapterDateFnsJalali}>
                             <DatePicker
-                                className={"ltr mt-4 mb-2 col-6"}
+                                className={"ltr mt-4 mb-2 col-6 w-100"}
                                 label="تاریخ شروع"
                                 value={inTicketCourse.StartDate}
                                 onChange={(e) => setFormValues("StartDate", e)}

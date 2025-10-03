@@ -1,5 +1,5 @@
 import axios from "axios";
-import {SmsApi, UserApi} from "./const_api";
+import {SmsApi} from "./const_api";
 
 //sms
 export function sms_addSms(sms) {

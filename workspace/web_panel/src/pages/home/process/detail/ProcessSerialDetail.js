@@ -44,12 +44,12 @@ const ProcessSerialDetail = () => {
                 </Typography>
             </Notice>
             <Grid container alignItems={"unset"} spacing={3} direction={"row"}>
-                <Grid md={6} item>
+                <Grid size={6} item>
                     <_BaseProcessDatas serial={serial}/>
                     <_Invoice serialInvoice={serial?.Invoices} />
                     <_PurchasedBases purchasedBases={serial?.PurchasedBases} />
                 </Grid>
-                <Grid md={6} item>
+                <Grid size={6} item>
                     <_SettlementRequest settlementRequest={serial?.SettlementRequests}/>
                     <_CorporateIncreaseRequest CorporateIncreaseRequest={serial?.CorporateIncreaseRequest}/>
                     <_CorporateTransactions corporateTransaction={serial?.CorporateTransactions}/>

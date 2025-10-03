@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Image} from "react-bootstrap";
 import ImagePicker from "../../../media/Pickers/ImagePicker";
-import {user_UpdateUserAvatar} from "../../../../../network/api/user.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {Article_updateArticleImage} from "../../../../../network/api/article.api";
 

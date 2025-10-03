@@ -1,8 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {user_GetUserSettings, user_SetUserSettings} from "../../../../../network/api/user.api";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
-import {FormControlLabel, FormGroup, FormLabel, Switch} from "@mui/material";
+import {FormControlLabel, FormGroup, Switch} from "@mui/material";
 
 const PlaceContract = ({place,updatePlace}) =>{
 

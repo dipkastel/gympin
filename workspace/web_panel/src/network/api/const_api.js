@@ -1,5 +1,3 @@
-import {ws_getSessionServerList} from "./ws.api";
-
 export let AuthApi = {
     // BASEURL: "https://api.gympin.ir/",
     BASEURL: "http://localhost:8080/api/",

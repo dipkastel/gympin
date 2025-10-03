@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Notice from "../../../partials/content/Notice";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Toolbar from "@mui/material/Toolbar";

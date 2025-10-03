@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, TableCell} from "@mui/material";
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
-import AddIcon from "@mui/icons-material/Add";
+import {TableCell} from "@mui/material";
+import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -10,7 +9,7 @@ import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {placeGym_getBuyableByPlace} from "../../../../../network/api/placeGym.api";
 import {placePersonnel_ByPlace} from "../../../../../network/api/placePersonnel.api";
 import Select from "react-select";
-import { buyable_setTicketBeneficiary} from "../../../../../network/api/buyable.api";
+import {buyable_setTicketBeneficiary} from "../../../../../network/api/buyable.api";
 import {getUserFixedName} from "../../../../../helper";
 
 const PlaceBeneficiaries = ({place}) => {

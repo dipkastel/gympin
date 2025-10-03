@@ -1,9 +1,7 @@
 import React, {forwardRef, useContext, useEffect, useImperativeHandle, useState} from 'react';
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
-import {media_getAllFiles, media_getAllImages} from "../../../../network/api/media.api";
-import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import {Button, IconButton} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import {media_getAllFiles} from "../../../../network/api/media.api";
+import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
 import TableContainer from "@mui/material/TableContainer";
 import {Image, Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
@@ -11,7 +9,6 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
-import {SetRppSportsManagement} from "../../../../helper/pocket/pocket";
 
 const AllFilesManager = (props, ref) => {
     const error = useContext(ErrorContext);
@@ -27,8 +24,9 @@ const AllFilesManager = (props, ref) => {
             alert(item);
         }
     }));
+
     function getAllFiles(page) {
-        media_getAllFiles(page).then(result=>{
+        media_getAllFiles(page).then(result => {
             setFiles(result.data.Data)
         }).catch(e => {
             try {
@@ -65,20 +63,20 @@ const AllFilesManager = (props, ref) => {
                                 {files && files.map((row, index) => (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={index.toString()}>
                                         <TableCell component="th" scope="row" padding="normal"
-                                                   align="right">{row?.Url||0}</TableCell>
+                                                   align="right">{row?.Url || 0}</TableCell>
 
 
-                                        <TableCell align="right"><Image src={"file://"+row.Url} width={"100%"}/></TableCell>
+                                        <TableCell align="right"><Image src={"file://" + row.Url} width={"100%"}/></TableCell>
                                         {/*<TableCell align="right">{(row.LogoIds.length) ? "has image" : ""}</TableCell>*/}
                                         {/*<TableCell align="left">*/}
 
-                                            {/*<Button*/}
-                                            {/*    variant="contained"*/}
-                                            {/*    color={"error"}*/}
-                                            {/*    onClick={(e) => setItemToDelete(row)}*/}
-                                            {/*>*/}
-                                            {/*    حذف*/}
-                                            {/*</Button>*/}
+                                        {/*<Button*/}
+                                        {/*    variant="contained"*/}
+                                        {/*    color={"error"}*/}
+                                        {/*    onClick={(e) => setItemToDelete(row)}*/}
+                                        {/*>*/}
+                                        {/*    حذف*/}
+                                        {/*</Button>*/}
                                         {/*</TableCell>*/}
                                     </TableRow>
                                 ))}
@@ -95,9 +93,9 @@ const AllFilesManager = (props, ref) => {
                         }}
                         rowsPerPage={pagination.Size}
                         page={pagination.Page}
-                        onPageChange={(event, newPage) => setPagination({...pagination,Page: newPage})}
+                        onPageChange={(event, newPage) => setPagination({...pagination, Page: newPage})}
                         onRowsPerPageChange={(event) => {
-                            setPagination({Page: 0,Size: parseInt(event.target.value, 10)});
+                            setPagination({Page: 0, Size: parseInt(event.target.value, 10)});
                             // SetRppSportsManagement(parseInt(event.target.value, 10));
                         }}
                     />}

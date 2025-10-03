@@ -1,19 +1,16 @@
 import React, {useContext, useState} from 'react';
-import {Avatar, Button, Card, CardHeader, Chip, IconButton, ListItemText, TextField, Tooltip} from "@mui/material";
-import {CardBody} from "reactstrap";
-import {Add, CreditScore, Delete, Edit} from "@mui/icons-material";
+import {Chip, ListItemText} from "@mui/material";
+import {Edit} from "@mui/icons-material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
-import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
+import {toPriceWithComma} from "../../../../../helper";
 import {TicketFoodMenu_add, TicketFoodMenu_delete} from "../../../../../network/api/TicketFoodMenu.api";
-import {Form, Modal} from "react-bootstrap";
-import __SelectFood from "../../../../partials/selector/__SelectFood";
+import {Modal} from "react-bootstrap";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 
 const FoodMenuCategoryList = ({date,category,menuList,getMenu,catering,allFoods}) => {

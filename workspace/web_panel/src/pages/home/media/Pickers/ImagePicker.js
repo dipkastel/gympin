@@ -43,7 +43,6 @@ const ImagePicker = ({setClose, onSelect, options}) => {
 
     const [addItem, setAddItem] = useState([]);
     const [categories, setCategories] = useState([])
-    const [uploading, setUploading] = useState(false)
 
 
     useEffect(() => {
@@ -288,7 +287,6 @@ const ImagePicker = ({setClose, onSelect, options}) => {
                                 type={"submit"}
                                 variant={"contained"}
                                 color={"success"}
-                                disabled={uploading}
                             >
                                 آپلود
                             </Button>

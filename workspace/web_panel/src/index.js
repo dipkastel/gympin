@@ -2,7 +2,7 @@ import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
-import store, { persistor } from "./helper/redux/store";
+import store, {persistor} from "./helper/redux/store";
 import App from "./router/App";
 import {setupAxios} from "./network/setupAxios";
 import axios from "axios";
@@ -12,10 +12,10 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/plugins/line-awesome/css/line-awesome.css";
 import "./assets/plugins/flaticon/flaticon.css";
 import "./assets/plugins/flaticon2/flaticon.css";
-const { PUBLIC_URL } = process.env;
+
+const { PUBLIC_URL } = process?.env;
 
 setupAxios(axios, store);
-
 ReactDOM.render(
   <App store={store} persistor={persistor} basename={PUBLIC_URL} />,
   document.getElementById("root")
