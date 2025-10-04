@@ -24,3 +24,16 @@ export function TicketFoods_update(place) {
 export function TicketFoods_query(data) {
   return axios.post(Api_url.ticketFood.query, data);
 }
+
+export function TicketFoods_GetMultimedias(data) {
+  return axios.get(Api_url.ticketFood.getMultimedias, {params:data});
+}
+export function TicketFoods_addMultimeida(data) {
+  return axios.post(Api_url.ticketFood.addMultimedia, data);
+}
+export function TicketFoods_setDefaultMultimedia(data) {
+  return axios.post(Api_url.ticketFood.setDefaultMultimedia, data);
+}
+export function TicketFoods_deleteMultimedia(data) {
+  return axios.put(Api_url.ticketFood.deleteMultimedia,data );
+}

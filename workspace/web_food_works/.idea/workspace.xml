@@ -2,23 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82a1e8ab-7850-4472-b2c7-7003016a9de7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/map/CorporateMap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/map/_CMap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/map/map.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporate/dto/CorporateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporate/dto/CorporateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporate/param/CorporateParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporate/param/CorporateParam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/corporate/CorporateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/corporate/CorporateServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/CorporateConvertor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/util/convertor/CorporateConvertor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/ticket/ticketFood/param/TicketFoodMultimediaParam.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/foodItems/_ItemDrawer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/foodItems/__DeleteFoodItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/foodItems/__EditFoodImages.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/foodItems/__EditFoodItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/_EditFoodItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/_FoodItemEditImage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/ticket/ticketFood/api/TicketFoodController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/ticket/ticketFood/api/TicketFoodController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/ticket/ticketFood/servie/TicketFoodService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/ticket/ticketFood/servie/TicketFoodService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/PlaceGymControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/PlaceGymControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/ticket/ticketFood/TicketFoodControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/ticket/ticketFood/TicketFoodControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/ticket/food/TicketFoodServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/ticket/food/TicketFoodServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_api/logs/logFile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/logs/logFile.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/settings/ManageServiceExecutionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/settings/ManageServiceExecutionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/corporate/CorporateEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/corporate/CorporateEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/PlaceEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/place/PlaceEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_corporate/src/pages/report/GeneralReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/pages/report/GeneralReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_corporate/src/pages/report/GympinMaleFemaleCompare.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/pages/report/GympinMaleFemaleCompare.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/multimedia/MultimediaEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/multimedia/MultimediaEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/ticket/food/TicketFoodItemEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/ticket/food/TicketFoodItemEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/api/NETWORKCONSTS.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/api/TicketFoods.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/api/TicketFoods.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/foodItems/FoodItems.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/foodItems/FoodItems.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/helper/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/helper/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/finance/_Wallet.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/finance/_Wallet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/purchased/subscribe/activeSubscribes/_ActiveSubscribes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/purchased/subscribe/activeSubscribes/_ActiveSubscribes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/tickets/subscribe/singleSubscribe/_SubscribeBaseData.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/tickets/subscribe/singleSubscribe/_SubscribeBaseData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/CorporateManagementTabs/CorporateManagementCorporateTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/CorporateManagementTabs/CorporateManagementCorporateTab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Base/PlaceMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Base/PlaceMap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/TicketFoods.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/TicketFoods.api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/const_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/const_api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/CateringFoods.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/CateringFoods.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/_AddFoodItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/_AddFoodItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Images/PlaceImages.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Images/PlaceImages.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +67,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/network/api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/foodItems" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -66,11 +78,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\work\gympin_repository\gympin\workspace\web_food_works\src\pages\foodItems" />
       <recent name="E:\work\gympin_repository\gympin\workspace\web_food_works\src\network\api" />
       <recent name="E:\work\gympin_repository\gympin\workspace\web_food_works\src\helper\enums" />
       <recent name="E:\work\gympin_repository\gympin\workspace\web_food_works\src\pages\finance" />
       <recent name="E:\work\gympin_repository\gympin\workspace\web_food_works\src\pages\preOrders\edit\partials" />
-      <recent name="E:\work\gympin_repository\gympin\workspace\web_food_works\src\pages\orders\Details" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\work\gympin_repository\gympin\workspace\web_food_works\src\pages\preOrders\edit" />
@@ -147,6 +159,10 @@
       <workItem from="1756887075715" duration="1182000" />
       <workItem from="1757169171789" duration="1179000" />
       <workItem from="1757332999248" duration="1178000" />
+      <workItem from="1757516766831" duration="585000" />
+      <workItem from="1757839596741" duration="1182000" />
+      <workItem from="1759227087570" duration="5568000" />
+      <workItem from="1759427849623" duration="8560000" />
     </task>
     <servers />
   </component>

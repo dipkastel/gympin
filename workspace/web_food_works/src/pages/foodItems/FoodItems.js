@@ -33,6 +33,7 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {Check, Delete, Percent} from "@mui/icons-material";
 import {Form} from "react-bootstrap";
+import _ItemDrawer from "./_ItemDrawer";
 
 const FoodItems = () => {
 
@@ -41,8 +42,8 @@ const FoodItems = () => {
     const [item, setItem] = useState(null);
     const [inputValue, setInputValue] = useState(null);
     const [openModalAdd, setOpenModalAdd] = useState(false);
-    const [itemToDelete, setItemToDelete] = useState(null);
     const [discount, setDiscount] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
     const [page, setPage] = useState(0);
     const [perPage, setPerPage] = useState(10);
 
@@ -67,7 +68,6 @@ const FoodItems = () => {
             }
         });
     }
-
 
     function renderModalAdd() {
         function submitRequest(e) {
@@ -198,50 +198,6 @@ const FoodItems = () => {
         );
     }
 
-    function renderModalDelete() {
-        function submitDelete(e) {
-            e.preventDefault();
-            setItemToDelete(null);
-            TicketFoods_delete({id: itemToDelete.Id}).then(result => {
-                getFoods();
-            }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message,});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            });
-        }
-
-        return (
-            <Dialog
-                open={!!itemToDelete}
-                onClose={() => setItemToDelete(null)}
-            >
-                <Form onSubmit={(e) => submitDelete(e)}>
-                    <DialogTitle>{"حذف " + itemToDelete?.Name}</DialogTitle>
-                    <DialogActions>
-                        <Button
-                            sx={{px: 7, mb: 2, mx: 2}}
-                            variant={"outlined"}
-                            color={"error"}
-                            onClick={(e) => setItemToDelete(null)}
-                        >
-                            لغو
-                        </Button>
-                        <Button
-                            sx={{px: 7, mb: 2, mx: 2}}
-                            type={"submit"}
-                            variant={"outlined"}
-                            color={"success"}
-                        >
-                            تایید
-                        </Button>
-                    </DialogActions>
-                </Form>
-            </Dialog>
-        );
-    }
 
     return (
         <>
@@ -265,14 +221,13 @@ const FoodItems = () => {
                             <Table aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>id</TableCell>
-                                        <TableCell>نام آیتم</TableCell>
+                                        <TableCell >id</TableCell>
+                                        <TableCell >نام آیتم</TableCell>
                                         <TableCell align="center">ارزش</TableCell>
                                         <TableCell align="center">قیمت</TableCell>
                                         <TableCell align="center">غذای اصلی</TableCell>
                                         <TableCell align="center">حداقل (تعداد)</TableCell>
                                         <TableCell align="center">حداکثر (تعداد)</TableCell>
-                                        <TableCell align="right">عملیات</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -283,19 +238,17 @@ const FoodItems = () => {
                                             key={row.name}
                                             sx={{cursor: "pointer"}}
                                         >
-                                            <TableCell component="th" scope="row">
+                                            <TableCell onClick={(e)=>setSelectedItem(row)} component="th" scope="row">
                                                 {row.Id}
                                             </TableCell>
-                                            <TableCell component="th" scope="row">
+                                            <TableCell onClick={(e)=>setSelectedItem(row)} component="th" scope="row">
                                                 {row.Name}
                                             </TableCell>
-                                            <TableCell align="center">{toPriceWithComma(row.ValuePrice)}</TableCell>
-                                            <TableCell align="center">{toPriceWithComma(row.Price)}</TableCell>
-                                            <TableCell align="center">{row.IsCount && <Check/>}</TableCell>
-                                            <TableCell align="center">{row.MinOrderCount}</TableCell>
-                                            <TableCell align="center">{row.MaxOrderCount}</TableCell>
-                                            <TableCell align="right" sx={{py: 0}}><IconButton onClick={(e) => setItemToDelete(row)}><Delete
-                                                color={"error"}/> </IconButton></TableCell>
+                                            <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{toPriceWithComma(row.ValuePrice)}</TableCell>
+                                            <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{toPriceWithComma(row.Price)}</TableCell>
+                                            <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{row.IsCount && <Check/>}</TableCell>
+                                            <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{row.MinOrderCount}</TableCell>
+                                            <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{row.MaxOrderCount}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -323,8 +276,9 @@ const FoodItems = () => {
                     </Card>
                 </Grid>
             </Grid>
+            <_ItemDrawer selectedItem={selectedItem} setSelectedItem={setSelectedItem} updateList={getFoods}/>
             {renderModalAdd()}
-            {renderModalDelete()}
+
         </>
 
     );
