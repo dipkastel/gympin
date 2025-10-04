@@ -9,6 +9,7 @@ import com.notrika.gympin.persistence.entity.homePage.HomePageItemEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.sport.SportMultimediaEntity;
+import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodItemEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import com.notrika.gympin.persistence.entity.user.UserMultimediaEntity;
 import lombok.Getter;
@@ -75,6 +76,11 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @JsonIgnore
     @ToString.Exclude
     private List<PlaceGymEntity> places;
+
+    @ManyToMany(mappedBy = "multimedias", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<TicketFoodItemEntity> foodItems;
 
     @OneToMany(mappedBy = "multimedia", fetch = FetchType.LAZY)
     @JsonIgnore

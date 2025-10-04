@@ -1,6 +1,7 @@
 package com.notrika.gympin.persistence.entity.ticket.food;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedFood.PurchasedFoodEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
@@ -43,6 +44,13 @@ public class TicketFoodItemEntity extends BuyableEntity<TicketFoodItemEntity> {
     @Column(name = "maxOrderCount", nullable = false , columnDefinition = "smallint(6) default 1000")
     private Short maxOrderCount;
 
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "FoodItemImage", joinColumns = @JoinColumn(name = "TicketFoodItemId"), inverseJoinColumns = @JoinColumn(name = "multimediaId"))
+    @JsonIgnore
+    @ToString.Exclude
+    private List<MultimediaEntity> multimedias;
 
 
     public PlaceCateringEntity getPlaceCatering() {

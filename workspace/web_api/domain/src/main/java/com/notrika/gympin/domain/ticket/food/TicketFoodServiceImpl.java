@@ -1,17 +1,29 @@
 package com.notrika.gympin.domain.ticket.food;
 
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
+import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaListParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodDto;
+import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodMultimediaParam;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodParam;
 import com.notrika.gympin.common.ticket.ticketFood.query.TicketFoodQuery;
 import com.notrika.gympin.common.ticket.ticketFood.servie.TicketFoodService;
 import com.notrika.gympin.common.util.exception.ticket.TicketPriceCannotBeNull;
 import com.notrika.gympin.common.util.exception.ticket.UncomfortableValueExeption;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.util.convertor.MultimediaConvertor;
+import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.convertor.TicketFoodConvertor;
+import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceCateringRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.food.TicketFoodItemRepository;
+import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodItemEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +32,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +44,9 @@ public class TicketFoodServiceImpl extends AbstractBaseService<TicketFoodParam, 
     private TicketFoodItemRepository ticketFoodItemRepository;
     @Autowired
     private PlaceCateringRepository placeCateringRepository;
+
+    @Autowired
+    private MultimediaRepository multimediaRepository;
 
     @Override
     public TicketFoodDto add(@NonNull TicketFoodParam param) {
@@ -65,10 +82,12 @@ public class TicketFoodServiceImpl extends AbstractBaseService<TicketFoodParam, 
         ticketSubscribeEntity.setPrice(param.getPlacePrice());
         ticketSubscribeEntity.setValuePrice(param.getValuePrice());
         ticketSubscribeEntity.setPlacePrice(param.getPlacePrice());
+        ticketSubscribeEntity.setEnable(param.getEnable());
+        ticketSubscribeEntity.setIsCount(param.getIsCount());
         ticketSubscribeEntity.setMinOrderCount(param.getMinOrderCount());
         ticketSubscribeEntity.setMaxOrderCount(param.getMaxOrderCount());
         ticketSubscribeEntity.setDiscount((short) 0);
-        ticketSubscribeEntity.setBuyableType(BuyableType.SUBSCRIBE);
+        ticketSubscribeEntity.setBuyableType(BuyableType.FOOD);
         ticketSubscribeEntity.setDescription(param.getDescription());
         return TicketFoodConvertor.toDto(ticketFoodItemRepository.update(ticketSubscribeEntity));
     }
@@ -125,5 +144,47 @@ public class TicketFoodServiceImpl extends AbstractBaseService<TicketFoodParam, 
         return entities.map(TicketFoodConvertor::toDto);
     }
 
+    @Override
+    public List<MultimediaDto> getMultimedias(TicketFoodParam param) {
+        TicketFoodItemEntity foodItem = getEntityById(param.getId());
+        List<MultimediaEntity> multimedias = foodItem.getMultimedias();
+        return MultimediaConvertor.toDto(multimedias);
+    }
+
+    @Override
+    public TicketFoodDto addMultimedia(TicketFoodMultimediaParam param) {
+        TicketFoodItemEntity item = getEntityById(param.getTicket().getId());
+        MultimediaEntity multimedia = multimediaRepository.getById(param.getMultimedia().getId());
+        item.getMultimedias().add(multimedia);
+        update(item);
+        return TicketFoodConvertor.toDto(item);
+    }
+
+    @Override
+    public TicketFoodDto setDefaultMultimedia(TicketFoodMultimediaParam param) {
+        List<MultimediaEntity> updateList = new ArrayList<>();
+        TicketFoodItemEntity item = getEntityById(param.getTicket().getId());
+        for (MultimediaEntity multimedia : item.getMultimedias()){
+            if(multimedia.getIsDef())
+            {
+                multimedia.setIsDef(false);
+                updateList.add(multimedia);
+            }
+        }
+        MultimediaEntity multimedia = multimediaRepository.getById(param.getMultimedia().getId());
+        multimedia.setIsDef(true);
+        updateList.add(multimedia);
+        multimediaRepository.updateAll(updateList);
+        item = getEntityById(param.getTicket().getId());
+        return TicketFoodConvertor.toDto(item);
+    }
+
+    @Override
+    public TicketFoodDto removeMultimedia(TicketFoodMultimediaParam param) {
+        TicketFoodItemEntity item = getEntityById(param.getTicket().getId());
+        item.getMultimedias().removeIf(m -> Objects.equals(m.getId(), param.getMultimedia().getId()));
+        update(item);
+        return TicketFoodConvertor.toDto(item);
+    }
 
 }

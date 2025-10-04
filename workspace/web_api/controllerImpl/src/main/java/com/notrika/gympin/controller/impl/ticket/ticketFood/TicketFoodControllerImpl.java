@@ -1,7 +1,12 @@
 package com.notrika.gympin.controller.impl.ticket.ticketFood;
 
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
+import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.ticketFood.api.TicketFoodController;
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodDto;
+import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodMultimediaParam;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodParam;
 import com.notrika.gympin.common.ticket.ticketFood.query.TicketFoodQuery;
 import com.notrika.gympin.common.ticket.ticketFood.servie.TicketFoodService;
@@ -48,6 +53,34 @@ public class TicketFoodControllerImpl implements TicketFoodController {
     public ResponseEntity<Page<TicketFoodDto>> query(TicketFoodQuery filter) {
         return ResponseEntity.ok(ticketFoodService.query(filter));
     }
+
+
+    @Override
+    @GetMapping("/getMultimedias")
+    public ResponseEntity<List<MultimediaDto>> getMultimedias(TicketFoodParam param) {
+        return ResponseEntity.ok(ticketFoodService.getMultimedias(param));
+    }
+
+    @Override
+    @PostMapping("/addMultimedia")
+    public ResponseEntity<TicketFoodDto> addMultimedia(TicketFoodMultimediaParam param) {
+        return ResponseEntity.ok(ticketFoodService.addMultimedia(param));
+    }
+
+    @Override
+    @PostMapping("/setDefaultMultimedia")
+    public ResponseEntity<TicketFoodDto> setDefaultMultimedia(TicketFoodMultimediaParam param) {
+        return ResponseEntity.ok(ticketFoodService.setDefaultMultimedia(param));
+    }
+
+    @Override
+    @PutMapping("/deleteMultimedia")
+    public ResponseEntity<TicketFoodDto> deleteMultimedia(TicketFoodMultimediaParam param) {
+        return ResponseEntity.ok(ticketFoodService.removeMultimedia(param));
+    }
+
+
+
 
 
 }

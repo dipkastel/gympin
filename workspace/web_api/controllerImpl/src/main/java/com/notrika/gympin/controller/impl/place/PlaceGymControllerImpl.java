@@ -93,6 +93,13 @@ public class PlaceGymControllerImpl implements PlaceGymController {
     }
 
     @Override
+    @PutMapping("/deleteMultimedia")
+    public ResponseEntity<PlaceGymDto> deleteMultimedia(PlaceGymMultimediaParam param) {
+        return ResponseEntity.ok(placeService.removeMultimedia(param));
+    }
+
+
+    @Override
     @PostMapping("/addMultimediaList")
     public ResponseEntity<PlaceGymDto> addMultimediaList(PlaceGymMultimediaListParam param) {
         return ResponseEntity.ok(placeService.addMultimediaList(param));
@@ -103,12 +110,6 @@ public class PlaceGymControllerImpl implements PlaceGymController {
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN','MANAGER')")
     public ResponseEntity<PlaceGymDto> updateOrder(PlaceGymParam param) {
         return ResponseEntity.ok(placeService.updateOrder(param));
-    }
-
-    @Override
-    @PutMapping("/deleteMultimedia")
-    public ResponseEntity<PlaceGymDto> deleteMultimedia(PlaceGymMultimediaParam param) {
-        return ResponseEntity.ok(placeService.removeMultimedia(param));
     }
 
     @Override
