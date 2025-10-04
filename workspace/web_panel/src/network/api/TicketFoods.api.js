@@ -1,5 +1,5 @@
 import axios from "axios";
-import {TicketFoodApi} from "./const_api";
+import {GymApi, TicketFoodApi} from "./const_api";
 
 export function TicketFoods_getAll() {
     return axios.get(TicketFoodApi.getAll);
@@ -23,4 +23,17 @@ export function TicketFoods_update(place) {
 
 export function TicketFoods_query(data) {
     return axios.post(TicketFoodApi.query, data);
+}
+
+export function TicketFoods_GetMultimedias(data) {
+    return axios.get(TicketFoodApi.getMultimedias, {params:data});
+}
+export function TicketFoods_addMultimeida(data) {
+    return axios.post(TicketFoodApi.addMultimedia, data);
+}
+export function TicketFoods_setDefaultMultimedia(data) {
+    return axios.post(TicketFoodApi.setDefaultMultimedia, data);
+}
+export function TicketFoods_deleteMultimedia(data) {
+    return axios.put(TicketFoodApi.deleteMultimedia,data );
 }

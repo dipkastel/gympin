@@ -113,6 +113,7 @@ const _AddFoodItem = ({catering,refreshList}) => {
                                 label="حداقل سفارش"
                                 type="number"
                                 fullWidth
+                                margin="normal"
                                 defaultValue={1}
                                 variant={"outlined"}
                             />}
@@ -122,6 +123,7 @@ const _AddFoodItem = ({catering,refreshList}) => {
                                 label="حداکثر سفارش"
                                 type="number"
                                 fullWidth
+                                margin="normal"
                                 defaultValue={1000}
                                 variant={"outlined"}
                             />}
@@ -131,9 +133,15 @@ const _AddFoodItem = ({catering,refreshList}) => {
                                     control={<Checkbox defaultChecked/>}
                                     label="غذای اصلی"/>
                             </FormGroup>}
+                            {!addHasNext&&<FormGroup>
+                                <FormControlLabel
+                                    name={"Enable"}
+                                    control={<Checkbox defaultChecked/>}
+                                    label="فعال"/>
+                            </FormGroup>}
                             {!addHasNext&&<TextField
                                 margin="dense"
-                                name="desc"
+                                name="Description"
                                 label="توضیحات"
                                 multiline={true}
                                 rows={5}

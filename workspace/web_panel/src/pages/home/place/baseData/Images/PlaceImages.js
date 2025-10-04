@@ -94,7 +94,7 @@ const PlaceImage = ({place}) => {
 
 
                         <Modal.Header closeButton>
-                            <Modal.Title>{"حذف قوانین - اطلاعات "}</Modal.Title>
+                            <Modal.Title>{"حذف تصویر - اطلاعات "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             {itemToDelete && "حذف " + itemToDelete.Title}

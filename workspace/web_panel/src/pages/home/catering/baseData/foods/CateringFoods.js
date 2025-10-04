@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {Modal} from "react-bootstrap";
-import {Button, IconButton, TableCell, TablePagination, TextField} from "@mui/material";
+import {Button, TableCell, TablePagination, TextField, Typography} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -11,9 +11,9 @@ import {getRppFoodsManagement, SetRppFoodsManagement} from "../../../../../helpe
 import {useEffect} from "react/index";
 import {TicketFoods_query, TicketFoods_update} from "../../../../../network/api/TicketFoods.api";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
-import {Edit} from "@mui/icons-material";
 import _AddFoodItem from "./_AddFoodItem";
-import {number} from "sockjs-client/lib/utils/random";
+import {CheckBox, CheckBoxOutlineBlank} from "@mui/icons-material";
+import _EditFoodItem from "./_EditFoodItem";
 
 
 const CateringFoods = ({catering}) => {
@@ -23,18 +23,18 @@ const CateringFoods = ({catering}) => {
     const [foods, setFoods] = useState(null);
     const [page, setPage] = useState(0);
     const [perPage, setPerPage] = useState(getRppFoodsManagement());
-    const [itemToEdit, setItemToEdit] = useState(null);
+    const [selectedItem, setSelectedItem] = useState(null);
 
 
     useEffect(() => {
         getFoods()
-    }, [perPage,page]);
+    }, [perPage, page]);
 
 
     function getFoods() {
         TicketFoods_query({
             queryType: "FILTER",
-            PlaceId:catering.Id,
+            PlaceId: catering.Id,
             paging: {
                 Page: page,
                 Size: perPage,
@@ -50,118 +50,15 @@ const CateringFoods = ({catering}) => {
             }
         })
     }
-
-
-    function renderModalEdit() {
-
-        function editItem(e) {
-            e.preventDefault()
-            TicketFoods_update({
-                Id:itemToEdit.Id,
-                Place: {Id: catering.Id},
-                Name: e.target.Name.value,
-                PlacePrice: toPriceWithoutComma(e.target.PlacePrice.value),
-                ValuePrice: toPriceWithoutComma(e.target.ValuePrice.value),
-                Enable:true,
-                Description:""
-            })
-                .then(data => {
-                    error.showError({message: "عملیات موفق",});
-                    setItemToEdit(null);
-                    getFoods();
-                }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message,});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            });
-
-        }
-
-        return (
-            <>
-                <Modal show={!!itemToEdit} onHide={() => setItemToEdit(null)}>
-                    <form onSubmit={(e) => editItem(e)}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>{"ویرایش غذا "}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <TextField
-                                id="standard-full-width"
-                                label="نام غذا"
-                                placeholder="نام غذا"
-                                name={"Name"}
-                                type={"text"}
-                                fullWidth
-                                defaultValue={itemToEdit?.Name}
-                                margin="normal"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                            <TextField
-                                id="standard-full-width"
-                                label="ارزش به تومان"
-                                placeholder="ارزش به تومان"
-                                defaultValue={itemToEdit?.Price}
-                                name={"ValuePrice"}
-                                onChange={e =>
-                                    e.target.value = toPriceWithComma(e.target.value)
-                                }
-                                type={"text"}
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-
-                            <TextField
-                                id="standard-full-width"
-                                label="قیمت به تومان"
-                                name={"PlacePrice"}
-                                placeholder="قیمت به تومان"
-                                defaultValue={itemToEdit?.Price}
-                                onChange={e =>
-                                    e.target.value = toPriceWithComma(e.target.value)
-                                }
-                                type={"text"}
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button
-                                className={"button_edit"}
-                                onClick={() => setItemToEdit(null)}
-                            >
-                                خیر
-                            </Button>
-                            <Button
-                                className={"button_danger"}
-                                type={"submit"}
-                            >
-                                ویرایش
-                            </Button>
-                        </Modal.Footer>
-                    </form>
-                </Modal>
-            </>
-        );
-    }
-
     return (
         <>
+            <_EditFoodItem selectedItem={selectedItem} setSelectedItem={setSelectedItem} refreshList={getFoods} />
 
             <Portlet>
                 <PortletHeader
                     title={"غذا های " + catering?.Name}
 
-                    toolbar={ <_AddFoodItem catering={catering} refreshList={getFoods} />}
+                    toolbar={<_AddFoodItem catering={catering} refreshList={getFoods}/>}
                 />
                 <PortletBody>
                     <Table className={"table"}>
@@ -169,17 +66,28 @@ const CateringFoods = ({catering}) => {
                             <TableRow>
                                 <TableCell align="right">id</TableCell>
                                 <TableCell align="right">نام</TableCell>
-                                <TableCell align="right">قیمت</TableCell>
+                                <TableCell align="right">فعال</TableCell>
+                                <TableCell align="right">غذا</TableCell>
+                                <TableCell align="right">حداقل سفارش</TableCell>
+                                <TableCell align="right">حداکثر سفارش</TableCell>
+                                <TableCell align="left">قیمت</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
 
                             {foods?.content && foods?.content?.map((item, number) => (
                                 <TableRow hover role={"checkbox"} tabIndex={-1}
-                                          key={"searched" + item.Id.toString()}>
+                                          key={"searched" + item.Id.toString()} onClick={(e)=>setSelectedItem(item)}>
+                                    {console.log(item)}
                                     <TableCell align="right">{item.Id}</TableCell>
                                     <TableCell align="right">{item.Name}</TableCell>
-                                    <TableCell align="right">{toPriceWithComma(item.Price)}</TableCell>
+                                    <TableCell align="right">{item.Enable?<CheckBox />:<CheckBoxOutlineBlank />}</TableCell>
+                                    <TableCell align="right">{item.IsCount?<CheckBox />:<CheckBoxOutlineBlank />}</TableCell>
+                                    <TableCell align="right">{item.MinOrderCount}</TableCell>
+                                    <TableCell align="right">{item.MaxOrderCount}</TableCell>
+                                    <TableCell align="left">
+                                        <Typography variant={"caption"} sx={{textDecoration:"line-through",display:"inline-flex",px:1}}> {toPriceWithComma(item.ValuePrice)}</Typography>
+                                        <Typography variant={"subtitle1"} sx={{display:"inline-flex"}}> {toPriceWithComma(item.Price)}</Typography></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -205,7 +113,6 @@ const CateringFoods = ({catering}) => {
                     />}
                 </PortletBody>
             </Portlet>
-            {renderModalEdit()}
         </>
     );
 };

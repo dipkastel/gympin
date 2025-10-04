@@ -267,6 +267,10 @@ export let TicketFoodApi = {
     delete: "v1/TicketFood/delete",
     update: "v1/TicketFood/update",
     query: "v1/TicketFood/query",
+    addMultimedia: "v1/TicketFood/addMultimedia",
+    getMultimedias: "v1/TicketFood/getMultimedias",
+    deleteMultimedia: "v1/TicketFood/deleteMultimedia",
+    setDefaultMultimedia: "v1/TicketFood/setDefaultMultimedia",
 };
 export let TicketFoodMenuApi = {
     getAll: "v1/TicketFoodMenu/getAll",
