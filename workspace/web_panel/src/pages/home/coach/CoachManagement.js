@@ -114,7 +114,7 @@ const CoachManagement = () => {
                         sx={{direction: "rtl"}}
                         count={userList.totalElements}
                         labelRowsPerPage={"تعداد نمایش"}
-                        rowsPerPage={rowsPerPage}
+                        rowsPerPage={parseInt(rowsPerPage)}
                         page={page}
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {

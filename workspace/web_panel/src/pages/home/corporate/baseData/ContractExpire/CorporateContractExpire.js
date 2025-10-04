@@ -42,7 +42,7 @@ const CorporateContractExpire = ({currentCorporate, UpdatePage}) => {
                         <DatePicker
                             className={"ltr mt-4 mb-2 w-100"}
                             label="تاریخ قرارداد"
-                            value={contractDate}
+                            value={new Date(contractDate||"")}
                             onChange={e=>UpdateContractDate(e)}
                             renderInput={(params) => <TextField fullWidth {...params} />}
                         />

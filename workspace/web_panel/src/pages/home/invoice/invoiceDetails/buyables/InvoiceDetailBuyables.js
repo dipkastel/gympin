@@ -165,7 +165,7 @@ const InvoiceDetailBuyables = ({invoice, updatePage}) => {
                                 labelDisplayedRows={(param) => {
                                     return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
                                 }}
-                                rowsPerPage={rowsSearchedPerPage}
+                                rowsPerPage={parseInt(rowsSearchedPerPage)}
                                 page={searchedPage}
                                 onPageChange={(event, newPage) => setSearchedPage(newPage)}
                                 onRowsPerPageChange={(event) => {

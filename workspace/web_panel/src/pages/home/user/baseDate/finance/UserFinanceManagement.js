@@ -13,7 +13,6 @@ const UserFinanceManagement = ({currentUser}) => {
     const [updatePageP, SetUpdatePageP] = useState(false);
     const [userFinance, SetUserFinance] = useState(null);
 
-
     useEffect(() => {
         if (updatePageP)
             SetUpdatePageP(false)

@@ -99,7 +99,7 @@ const PlaceSells = ({place}) => {
                         labelDisplayedRows={(param)=>{
                             return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
                         }}
-                        rowsPerPage={perPage}
+                        rowsPerPage={parseInt(perPage)}
                         page={page}
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {

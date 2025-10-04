@@ -57,7 +57,7 @@ export default function UserBasics({currentUser}) {
                         <DatePicker
                             className="ltr mt-4 mb-2 w-100"
                             label="تاریخ تولد"
-                            value={values.Birthday}
+                            value={new Date(values.Birthday||"")}
                             onChange={handleDateChange("Birthday")}
                             renderInput={(params) => <TextField fullWidth {...params} />}
                         />

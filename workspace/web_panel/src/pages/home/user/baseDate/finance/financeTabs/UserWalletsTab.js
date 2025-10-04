@@ -1,11 +1,9 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import UserCredit from "../../credit/UserCredit";
-import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 import UserTotalWallet from "../../credit/UserTotalWallet";
 
-const UserWalletsTab = ({currentUser, userFinance, updatePage}) => {
+const UserWalletsTab = ({currentUser, userFinance }) => {
 
-    const error = useContext(ErrorContext);
 
     return (
         <>

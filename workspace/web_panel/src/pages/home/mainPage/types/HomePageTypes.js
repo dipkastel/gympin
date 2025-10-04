@@ -292,7 +292,7 @@ const HomePageTypes = () => {
                         sx={{direction: "ltr"}}
                     />
                     {/*    count={itemCount}*/}
-                    {/*    rowsPerPage={rowsPerPage}*/}
+                    {/*    rowsPerPage={parseInt(rowsPerPage)}*/}
                     {/*    page={page}*/}
                     {/*    onPageChange={handleChangePage}*/}
                     {/*    onRowsPerPageChange={handleChangeRowsPerPage}*/}

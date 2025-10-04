@@ -263,7 +263,7 @@ const ArticlesManagement = () => {
                         sx={{direction: "rtl"}}
                         count={articleList.totalElements}
                         labelRowsPerPage={"تعداد نمایش"}
-                        rowsPerPage={rowsPerPage}
+                        rowsPerPage={parseInt(rowsPerPage)}
                         page={page}
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {

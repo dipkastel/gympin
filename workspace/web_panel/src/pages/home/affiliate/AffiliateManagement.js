@@ -223,7 +223,7 @@ const AffiliateManagement = () => {
                         sx={{direction: "rtl"}}
                         count={affiliatorsList.totalElements}
                         labelRowsPerPage={"تعداد نمایش"}
-                        rowsPerPage={rowsPerPage}
+                        rowsPerPage={parseInt(rowsPerPage)}
                         page={page}
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {

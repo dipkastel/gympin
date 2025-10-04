@@ -209,7 +209,7 @@ function TicketCourseBase({ticketCourse, updateTicketCourse}) {
                             <DatePicker
                                 className={"ltr mt-4 mb-2 col-6 w-100"}
                                 label="تاریخ شروع"
-                                value={inTicketCourse.StartDate}
+                                value={new Date(inTicketCourse.StartDate||"")}
                                 onChange={(e) => setFormValues("StartDate", e)}
                                 renderInput={(params) => <TextField fullWidth {...params} />}
                             />

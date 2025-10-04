@@ -13,6 +13,7 @@ import {TicketFoods_query, TicketFoods_update} from "../../../../../network/api/
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 import {Edit} from "@mui/icons-material";
 import _AddFoodItem from "./_AddFoodItem";
+import {number} from "sockjs-client/lib/utils/random";
 
 
 const CateringFoods = ({catering}) => {
@@ -169,7 +170,6 @@ const CateringFoods = ({catering}) => {
                                 <TableCell align="right">id</TableCell>
                                 <TableCell align="right">نام</TableCell>
                                 <TableCell align="right">قیمت</TableCell>
-                                <TableCell align="left">عملیات</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -180,7 +180,6 @@ const CateringFoods = ({catering}) => {
                                     <TableCell align="right">{item.Id}</TableCell>
                                     <TableCell align="right">{item.Name}</TableCell>
                                     <TableCell align="right">{toPriceWithComma(item.Price)}</TableCell>
-                                    <TableCell align="left"><IconButton onClick={(e)=>setItemToEdit(item)} ><Edit color={"primary"} /></IconButton></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -195,7 +194,7 @@ const CateringFoods = ({catering}) => {
                         labelDisplayedRows={(param) => {
                             return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
                         }}
-                        rowsPerPage={perPage}
+                        rowsPerPage={parseInt(perPage)}
                         page={page}
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {

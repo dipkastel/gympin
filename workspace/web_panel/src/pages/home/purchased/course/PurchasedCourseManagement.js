@@ -141,7 +141,7 @@ const PurchasedCourseManagement = () => {
                         labelDisplayedRows={(param) => {
                             return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
                         }}
-                        rowsPerPage={rowsPerPage}
+                        rowsPerPage={parseInt(rowsPerPage)}
                         page={page}
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {

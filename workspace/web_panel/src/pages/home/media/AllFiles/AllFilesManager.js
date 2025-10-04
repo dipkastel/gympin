@@ -91,7 +91,7 @@ const AllFilesManager = (props, ref) => {
                         labelDisplayedRows={(param) => {
                             return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
                         }}
-                        rowsPerPage={pagination.Size}
+                        rowsPerPage={parseInt(pagination.Size)}
                         page={pagination.Page}
                         onPageChange={(event, newPage) => setPagination({...pagination, Page: newPage})}
                         onRowsPerPageChange={(event) => {

@@ -137,7 +137,7 @@ const _PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                                         className="w-100"
                                         label="تاریخ انقضا"
                                         name="ExpireDate"
-                                        value={expireDate}
+                                        value={new Date(expireDate||"")}
                                         onChange={e => setExpireDate(e)}
                                         renderInput={(params) => <TextField fullWidth {...params} />}
                                     />

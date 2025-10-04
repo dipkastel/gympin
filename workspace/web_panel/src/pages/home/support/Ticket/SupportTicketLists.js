@@ -125,7 +125,7 @@ const SupportTicketLists = () => {
                         component="div"
                         sx={{direction: "ltr"}}
                         count={SupportList.totalElements}
-                        rowsPerPage={rowsPerPage}
+                        rowsPerPage={parseInt(rowsPerPage)}
                         page={page}
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
