@@ -56,7 +56,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.mfathi91</groupId>
+            <artifactId>persian-date-time</artifactId>
+            <version>4.2.1</version>
+        </dependency>
     </dependencies>
+
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>

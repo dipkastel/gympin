@@ -19,4 +19,5 @@ public interface FinanceIncreaseCorporateDepositController extends BaseControlle
     ResponseEntity<String> completeRequestIncreaseCorporateDeposits(@RequestBody RequestIncreaseCorporateDepositParam param);
     ResponseEntity<FinanceIncreaseCorporateDepositDto> requestIncreaseCorporateDepositsDraft(@RequestBody RequestIncreaseCorporateDepositParam request);
     void getProFormaInvoice(HttpServletResponse response, RequestIncreaseCorporateDepositParam param) throws Exception;
+    void getInvoice(HttpServletResponse response, RequestIncreaseCorporateDepositParam param) throws Exception;
 }

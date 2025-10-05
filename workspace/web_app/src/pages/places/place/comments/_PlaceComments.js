@@ -106,7 +106,7 @@ const _PlaceComments = ({place,currentUser}) => {
                                 <Grid container direction={"row"} justifyContent={"space-between"} sx={{width:"100%"}}>
                                     <Paper key={index} sx={{ backgroundColor: "#f9f9f9",pl:2,pt:2,pr:1, borderRadius: 2, mb: 1 ,width:"100%"}}>
                                         <ListItemText primary={comment.Comment} primaryTypographyProps={{width:"100%"}} />
-                                        <ListItemText primaryTypographyProps={{variant:"caption",color:"#999999"}}  sx={{width:"100%",direction:"rtl",mt:2}} primary={comment?.User?.FullName||"کاربر جیم پین"} />
+                                        <ListItemText primaryTypographyProps={{variant:"caption",color:"#999999"}}  sx={{width:"100%",direction:"rtl",mt:2}} primary={"کاربر جیم پین"} />
                                         {comment?.CreatedDate&&<ListItemText primaryTypographyProps={{variant:"caption",color:"#999999"}}  sx={{width:"100%",direction:"rtl"}} primary={new Date(comment?.CreatedDate).toLocaleDateString('fa-IR', {
                                             year: 'numeric',
                                             month: 'long',

@@ -17,8 +17,8 @@ export function getTax(settings) {
     try{
         var publicSettings = settings?.settings?.server?.Settings?.find(s => s.Key === "CORPORATE_GENERAL_TAX")?.Value;
         if(publicSettings&&publicSettings!="") return publicSettings;
-        return 10;
+        return 0;
     }catch (e) {
-        return 10
+        return 0
     }
 }

@@ -22,5 +22,6 @@ public interface FinanceIncreaseCorporateDepositService extends BaseService<Fina
     String completeRequestIncreaseCorporateDeposits(RequestIncreaseCorporateDepositParam param);
     FinanceIncreaseCorporateDepositDto requestIncreaseCorporateDepositsDraft(RequestIncreaseCorporateDepositParam param);
     byte[] getProFormaInvoice(RequestIncreaseCorporateDepositParam param) throws Exception;
+    byte[] getInvoice(RequestIncreaseCorporateDepositParam param) throws Exception;
 
 }

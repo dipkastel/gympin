@@ -303,7 +303,10 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
 
         var request =new FinanceIncreaseCorporateDepositRequestEntity();
         request.setCorporate(corporate);
-        request.setAmount(param.getAmount());
+
+        int tax = Integer.parseInt(settingsService.getByKey("CORPORATE_GENERAL_TAX").getValue());
+        BigDecimal taxBig = BigDecimal.valueOf(1+(tax/100));
+        request.setAmount(param.getAmount().multiply(taxBig));
         request.setSerial(serial);
         request.setDepositStatus(DepositStatus.DRAFT);
         request.setRequestInvoice(param.getRequestInvoice());
@@ -317,6 +320,15 @@ public class FinanceIncreaseCorporateDepositServiceImpl extends AbstractBaseServ
     public byte[] getProFormaInvoice(RequestIncreaseCorporateDepositParam param) {
         FinanceIncreaseCorporateDepositRequestEntity request = getEntityById(param.getId());
         FinanceGatewayEntity gatewayEntity = financeGatewayRepository.findByGatewayType(request.getGatewayType());
-        return PdfHelper.getProFormaInvoice(request,gatewayEntity);
+        int tax = Integer.parseInt(settingsService.getByKey("CORPORATE_GENERAL_TAX").getValue());
+        return PdfHelper.getProFormaInvoice(request,gatewayEntity,tax,true);
+    }
+
+    @Override
+    public byte[] getInvoice(RequestIncreaseCorporateDepositParam param) {
+        FinanceIncreaseCorporateDepositRequestEntity request = getEntityById(param.getId());
+        FinanceGatewayEntity gatewayEntity = financeGatewayRepository.findByGatewayType(request.getGatewayType());
+        int tax = Integer.parseInt(settingsService.getByKey("CORPORATE_GENERAL_TAX").getValue());
+        return PdfHelper.getProFormaInvoice(request,gatewayEntity,tax,false);
     }
 }

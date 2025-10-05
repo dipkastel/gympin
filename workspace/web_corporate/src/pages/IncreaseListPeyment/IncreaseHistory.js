@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, CardContent, Grid2 as Grid, ListItemText, Typography} from "@mui/material";
+import {Button, Card, CardContent, Grid2 as Grid, ListItemText, Typography} from "@mui/material";
 import {transaction_increaseQuery} from "../../network/api/transactions.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
@@ -9,6 +9,10 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import {Image} from "react-bootstrap";
 import {Receipt} from "@mui/icons-material";
+import {
+    increaseCorporateDeposit_getInvoice,
+    increaseCorporateDeposit_getProFromaInvoice
+} from "../../network/api/increaseCorporateDeposit.api";
 
 const IncreaseHistory = () => {
     const error = useContext(ErrorContext);
@@ -40,6 +44,27 @@ const IncreaseHistory = () => {
         if (!result.some(r => r.Serial == Serial)) result.push({Serial: Serial, Items: []})
         result.find(r => r.Serial == Serial).Items.push(cats);
         return result;
+    }
+
+    function getInvoice(e, item) {
+        e.preventDefault()
+        increaseCorporateDeposit_getInvoice({
+            Id: item.Id
+        }).then((response) => {
+            const url = window.URL.createObjectURL(response.data);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'document.pdf');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
     }
 
     return (
@@ -104,6 +129,7 @@ const IncreaseHistory = () => {
                                         primary={row.Description}
                                         primaryTypographyProps={{variant: "overline"}}
                                     />
+                                    {row.DepositStatus == "CONFIRMED" &&<Button fullWidth variant={"contained"} onClick={(e)=>getInvoice(e,row)}>دریافت فاکتور</Button>}
                                 </CardContent>
                             </Card>
                         </Grid>

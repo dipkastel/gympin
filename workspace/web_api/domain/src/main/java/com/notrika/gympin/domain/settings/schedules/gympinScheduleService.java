@@ -82,6 +82,11 @@ public class gympinScheduleService {
         scheduleCorporate.checkLowBudgetsSms();
     }
 
+    @Scheduled(cron = "0 0 12 ? * SUN,MON,TUE,WED,THU,SAT")
+    public void checkExpirePersonnelCredit(){
+        scheduleCorporate.checkExpirePersonnelCredit();
+    }
+
 
     @Scheduled(cron = "0 */30 * * * ?")
     public void setPeymentChecks(){

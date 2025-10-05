@@ -118,7 +118,6 @@ const _TabPlaceBuyable = ({place}) => {
     return (
         <>
 
-            <_CallToPlace place={place} currentUser={currentUser} />
 
             {place?.Genders?.length > 0 && (
                 <Tabs

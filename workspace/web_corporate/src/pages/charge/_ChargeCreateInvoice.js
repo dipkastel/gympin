@@ -238,10 +238,10 @@ const _ChargeCreateInvoice = ({refreshList}) => {
                                     <TableCell align="start">افزایش شارژ</TableCell>
                                     <TableCell align="right">{toPriceWithComma(amountToPay)}</TableCell>
                                 </TableRow>
-                                <TableRow key={1} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                    <TableCell align="start">{taxPrice + "%"} مالیات بر ارزش افزوده</TableCell>
-                                    <TableCell align="right">{toPriceWithComma(getTaxAmount())}</TableCell>
-                                </TableRow>
+                                {/*<TableRow key={1} sx={{'&:last-child td, &:last-child th': {border: 0}}}>*/}
+                                {/*    <TableCell align="start">{taxPrice + "%"} مالیات بر ارزش افزوده</TableCell>*/}
+                                {/*    <TableCell align="right">{toPriceWithComma(getTaxAmount())}</TableCell>*/}
+                                {/*</TableRow>*/}
                                 <TableRow key={1} sx={{'&:last-child td, &:last-child th': {border: 0}, bgcolor: "primary.boxBg"}}>
                                     <TableCell align="start">قابل پرداخت</TableCell>
                                     <TableCell align="right">{toPriceWithComma(getAmountToPay())}</TableCell>

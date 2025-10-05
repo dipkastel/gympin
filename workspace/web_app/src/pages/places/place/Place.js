@@ -19,6 +19,7 @@ import _PlaceSports from "./info/_PlaceSports";
 import _PlaceAddress from "./info/_PlaceAddress";
 import {Masonry} from "@mui/lab";
 import _GympinIntro from "./partial/_GympinIntro";
+import _CallToPlace from "./partial/_CallToPlace";
 
 const Place = () => {
     const error = useContext(ErrorContext);
@@ -73,7 +74,9 @@ const Place = () => {
                 <_SinglePlaceGeneralHeader/>
             </Grid>}
             <Masonry columns={{xs: 1, sm: 1,md:2,lg:2}} >
-
+                <Grid>
+                    <_CallToPlace place={place} currentUser={currentUser} />
+                </Grid>
                 <Grid>
                     {place&&!currentUser&& <Grid sx={{mx: 2, mt: 4, mb: 2, padding: 1}}><_GympinIntro/></Grid>}
                     {place&&currentUser&& <_placeBaseInfo place={place} currentUser={currentUser}/>}
@@ -81,17 +84,15 @@ const Place = () => {
                 </Grid>
 
                 <Grid sx={{float: "right"}}>
+
+                    {place&&<_PlaceAddress place={place}/>}
+                    {place&&<_PlaceFacilities place={place}/>}
+                    {abouts.map((item, number) => (<_PlaceSingleAbout key={"a" + number} about={item} number={number}/>))}
                     {place && <_TabPlaceBuyable place={place}/>}
                 </Grid>
                 <Grid  sx={{float: "right"}}>
-                    {place&&<_PlaceAddress place={place}/>}
                     {place&&<_PlaceSports place={place}/>}
-                    {place&&<_PlaceFacilities place={place}/>}
                     {place&&<_PlaceComments place={place} currentUser={currentUser}/>}
-                    {abouts.map((item, number) => (
-                        <_PlaceSingleAbout key={"a" + number} about={item} number={number}/>
-                        )
-                        )}
                 </Grid>
             </Masonry>
 

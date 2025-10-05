@@ -105,4 +105,12 @@ public class FinanceIncreaseCorporateDepositControllerImpl implements FinanceInc
         InputStream inputStream = new ByteArrayInputStream(increaseCorporateDepositService.getProFormaInvoice(param));
         IOUtils.copy(inputStream,response.getOutputStream());
     }
+    @Override
+    @RequestMapping(path = "getInvoice", method = GET)
+    @IgnoreWrapAspect
+    public  @ResponseBody void getInvoice(HttpServletResponse response,RequestIncreaseCorporateDepositParam param) throws Exception {
+        response.setContentType(MyMediaType.APPLICATION_PDF_VALUE);
+        InputStream inputStream = new ByteArrayInputStream(increaseCorporateDepositService.getInvoice(param));
+        IOUtils.copy(inputStream,response.getOutputStream());
+    }
 }

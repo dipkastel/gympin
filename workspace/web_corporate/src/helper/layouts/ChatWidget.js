@@ -21,7 +21,6 @@ const ChatWidget = () => {
     const error = useContext(ErrorContext);
     const [open, setOpen] = useState(false);
     const [input, setInput] = useState("");
-    const statusIconRef = useRef(null);
     const [messages, setMessages] = useState([]);
     const [pendingMessages, setPendingMessages] = useState([]);
     const [status, setStatus] = useState(ActivationState.INACTIVE);
@@ -162,7 +161,7 @@ const ChatWidget = () => {
                     >
                         {status === ActivationState.ACTIVE ? (
                             <Grid direction={"row"} alignContent={"center"} container>
-                                <Circle ref={statusIconRef} color={"success"} sx={{ fontSize: 16, mr: 1 }} />
+                                <Circle  color={"success"} sx={{ fontSize: 16, mr: 1 }} />
                                 <Typography variant="subtitle1">پشتیبانی</Typography>
                             </Grid>
                         ) : (

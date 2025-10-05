@@ -164,6 +164,7 @@ export let Api_url = {
         requestIncreaseCorporateDepositsDraft: "v1/increaseCorporateDeposit/requestIncreaseCorporateDepositsDraft",
         completeRequestIncreaseCorporateDeposits: "v1/increaseCorporateDeposit/completeRequestIncreaseCorporateDeposits",
         getProFormaInvoice: "v1/increaseCorporateDeposit/getProFormaInvoice",
+        getInvoice: "v1/increaseCorporateDeposit/getInvoice",
         delete: "v1/increaseCorporateDeposit/delete"
     },
     transaction: {

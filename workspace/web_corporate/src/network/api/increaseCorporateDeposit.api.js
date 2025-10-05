@@ -16,6 +16,10 @@ export function increaseCorporateDeposit_getProFromaInvoice(data) {
     return axios.get(Api_url.increaseCorporateDeposit.getProFormaInvoice,{params: data,responseType:"blob"});
 }
 
+export function increaseCorporateDeposit_getInvoice(data) {
+    return axios.get(Api_url.increaseCorporateDeposit.getInvoice,{params: data,responseType:"blob"});
+}
+
 export function increaseCorporateDeposit_delete(data) {
     return axios.put(Api_url.increaseCorporateDeposit.delete, data );
 }

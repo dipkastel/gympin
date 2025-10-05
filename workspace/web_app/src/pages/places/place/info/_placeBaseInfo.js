@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
-import {Card, CardContent, Grid2 as Grid, Link, Rating, Typography} from "@mui/material";
-import {Comment} from "@mui/icons-material";
+import {Badge, Card, CardContent, Grid2 as Grid, Link, Rating, Typography} from "@mui/material";
+import {ChatBubbleOutline, Comment} from "@mui/icons-material";
 import {PlaceRate_AddRate} from "../../../../network/api/placeRateAndComment.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 
@@ -49,12 +49,18 @@ const _placeBaseInfo = ({place, currentUser}) => {
                                     {place.Rate + " از 5"}
                                 </Typography>}
                             </Grid>
-                            <Grid container direction={"row"} sx={{pt:1.5}}>
-                                <Link href={"#Comments"}  variant={"caption"}>
-                                    <Comment/>
-                                    {place?.CommentCount!=0 &&<>{ "برای "+place.Name+" "+ place?.CommentCount+" نظر ثبت شده"}</>}
-                                    {place?.CommentCount==0 &&<>{ "با ثبت نظر مجموعه "+place.Name+" را ارتقا دهید"}</>}
-                                </Link>
+                            <Grid component={"a"} color={"black"} href={"#Comments"}  container direction={"row"} sx={{pt:1.2,textDecoration:"none"}}>
+                                <Badge variant={"standard"}
+                                       anchorOrigin={{
+                                           vertical: 'top',
+                                           horizontal: 'left',
+                                       }}  color={"error"} badgeContent={place?.CommentCount} >
+                                        <ChatBubbleOutline sx={{fontSize:"1.3rem"}}/>
+                                </Badge>
+                                <Typography sx={{mx:0.3}} variant={"subtitle2"}>
+                                    {"نظرات"}
+                                </Typography>
+
                             </Grid>
                         </Grid>
                     </CardContent>

@@ -13,7 +13,7 @@ import {
     Toolbar,
     Typography, useColorScheme
 } from "@mui/material";
-import {AccountCircleRounded, AccountCircleTwoTone, MenuOpen} from "@mui/icons-material";
+import {AccountCircleRounded, AccountCircleTwoTone, MenuOpen, NotificationsRounded} from "@mui/icons-material";
 import {toPriceWithComma} from "../helper/utils";
 import {connect, useSelector} from "react-redux";
 import {sagaActions} from "../helper/redux/actions/SagaActions";
@@ -22,7 +22,7 @@ import {bottomMenuItems} from "../helper/bottomMenuItems";
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DrawerLayout from "./DrawerLayout";
-import ChatWidget from "./ChatWidget";
+import ChatWidget from "./chat/ChatWidget";
 
 const PageLayout = (props) => {
 
@@ -89,13 +89,15 @@ const PageLayout = (props) => {
 
                         <Typography variant="h6" component="div"
                                     sx={{flexGrow: 1}}>
-
                         </Typography>
-
                         {currentUser &&
-                        <Button sx={{fontWeight:600,fontSize:"1rem"}} color={"inherit"} endIcon={<AccountCircleIcon sx={{fontSize:"1.8rem !important"}}/>}  href={"/wallet"}>
-                            {!!currentUser.Balance&&toPriceWithComma(currentUser.Balance)}
+                        <Button sx={{fontWeight:600,fontSize:"1rem",bgcolor:"#c70813",px:2,py:1,border:"#A40F17FF 2px solid"}} color={"inherit"} href={"/wallet"}>
+                            <Typography sx={{bgcolor:"rgb(119,12,18)",color:"#FFF",borderRadius:1,fontSize:"0.5rem",p:0.2,mr:0.5,ml:-2.8}} variant={"caption"}>{"تومان"}</Typography>
+                            <Typography sx={{ml:0.5}} variant={"subtitle1"}>{!!currentUser.Balance&&toPriceWithComma(currentUser.Balance)}</Typography>
                         </Button>}
+                        {currentUser &&
+                        <IconButton color={"inherit"} href={"/wallet"}><AccountCircleIcon sx={{fontSize:"2.3rem !important"}}/></IconButton>}
+
 
                     </Toolbar>
                 </AppBar>
