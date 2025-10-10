@@ -29,15 +29,6 @@ export default function _ActiveSubscribes() {
     }, []);
 
     function getActiveSubscribes() {
-        // purchasedSubscribe_getPlaceSubscribes({placeId: place.Id}).then(result => {
-        //     setPlaceSubscribes(result.data.Data);
-        // }).catch(e => {
-        //     try {
-        //         error.showError({message: e.response.data.Message,});
-        //     } catch (f) {
-        //         error.showError({message: "خطا نا مشخص",});
-        //     }
-        // })
         purchasedSubscribe_query({
             queryType: "FILTER",
             placeId: place.Id,

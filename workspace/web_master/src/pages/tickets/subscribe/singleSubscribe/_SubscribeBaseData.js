@@ -131,10 +131,11 @@ const _SubscribeBaseData = ({ ticketSubscribe, getSubscribeData}) => {
                         <Typography color={"#a2a2a2"} variant={"subtitle2"}>
                             قیمت ها به تومان می باشد
                         </Typography>}
+                        {console.log(inSubscribe)}
                         <TextField
                             name={"Price"}
                             value={toPriceWithComma(inSubscribe.PlacePrice)}
-                            onChange={(e) => setInSubscribe({...inSubscribe, PlacePrice: toPriceWithoutComma(e.target.value)})}
+                            onChange={(e) => setInSubscribe({...inSubscribe, PlacePrice: toPriceWithoutComma(e.target.value),Price:toPriceWithoutComma(e.target.value),Discount:0})}
                             margin="dense"
                             label="قیمت عضویت (تومان)"
                             type="text"

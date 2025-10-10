@@ -147,8 +147,9 @@ const _Wallet = ({place, user, onRequestComplete}) => {
                         spacing={0}
                     >
                         <Grid item>
-                            <Typography sx={{mt: 1, lineHeight: 0.6}} variant={"subtitle1"}>
+                            <Typography sx={{mt: 1, lineHeight: 0.6 , color:getIncomeWalletAmount()>0?"#0000ff":"#ff0000"}} variant={"subtitle1"}>
                                 {" کیف پول " + getFixPlaceName(place,10)+ " : "}
+                                {getIncomeWalletAmount()<0&&"-"}
                                 {`${toPriceWithComma(getIncomeWalletAmount())} تومان`}
                             </Typography>
                             {getUserWalletAmount() > 0 && <Typography sx={{mr: 1}} variant={"overline"}>
@@ -157,7 +158,7 @@ const _Wallet = ({place, user, onRequestComplete}) => {
                             </Typography>}
                         </Grid>
                         <Grid item>
-                            {getAccessOf(personnelAccessEnumT?.FinanceAction) &&
+                            {getAccessOf(personnelAccessEnumT?.FinanceAction)&&getIncomeWalletAmount()>0&&
                             <Button variant={"contained"} onClick={() => setOpenModalRequest(true)}>تسویه</Button>}
                         </Grid>
                     </Grid>
