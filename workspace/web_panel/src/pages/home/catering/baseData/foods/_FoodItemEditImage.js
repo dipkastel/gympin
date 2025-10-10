@@ -155,7 +155,7 @@ const _FoodItemEditImage = ({selectedFoodItem}) => {
                 rowCount: 8,
                 isSingle: true,
                 filters: {CategoryId: 8},
-                DefaultDiscHelper: "تصویر عذا " + selectedFoodItem?.Name
+                DefaultDiscHelper: "تصویر غذا " + selectedFoodItem?.Name
             }}/>}
             {renderModalDelete()}
         </>

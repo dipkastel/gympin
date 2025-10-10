@@ -11,6 +11,7 @@ import CorporateManagementFinanceTab from "./CorporateManagementTabs/CorporateMa
 import CorporateManagementSettingTab from "./CorporateManagementTabs/CorporateManagementSettingTab";
 import CorporateManagementPersonnelTab from "./CorporateManagementTabs/CorporateManagementPersonnelTab";
 import CorporateManagementProcessTab from "./CorporateManagementTabs/CorporateManagementProcessTab";
+import CorporateManagementInvoicesTab from "./CorporateManagementTabs/CorporateManagementInvoicesTab";
 
 const CorporateDetailsManagement = () => {
     const error = useContext(ErrorContext);
@@ -53,6 +54,7 @@ const CorporateDetailsManagement = () => {
                             <Tab label="سازمان" value={"CORPORATE"}/>
                             <Tab label="پرسنل" value={"PERSONNEL"}/>
                             <Tab label="مالی" value={"FINANCE"}/>
+                            <Tab label="فاکتور ها" value={"INVOICES"}/>
                             <Tab label="فرایند ها" value={"PROCESS"}/>
                             <Tab label="تنظیمات" value={"SETTING"}/>
                         </Tabs>
@@ -61,6 +63,7 @@ const CorporateDetailsManagement = () => {
                     {selectedTab === "PERSONNEL" && <CorporateManagementPersonnelTab currentCorporate={currentCorporate}/>}
                     {selectedTab === "FINANCE" && <CorporateManagementFinanceTab currentCorporate={currentCorporate}/>}
                     {selectedTab === "PROCESS" && <CorporateManagementProcessTab currentCorporate={currentCorporate}/>}
+                    {selectedTab === "INVOICES" && <CorporateManagementInvoicesTab currentCorporate={currentCorporate}/>}
                     {selectedTab === "SETTING" && <CorporateManagementSettingTab currentCorporate={currentCorporate} updatePage={getCorporateData}/>}
                 </div>
                 <div className="col-md-2">

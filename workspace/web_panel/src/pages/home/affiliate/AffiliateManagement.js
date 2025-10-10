@@ -171,7 +171,7 @@ const AffiliateManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>کاربر</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>کمیسیون</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>نام کاربری</TableCell>
-                                    <TableCell align="right" padding="normal" sortDirection={false}>درامد</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>درآمد</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>تعداد شرکت ها</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>تعداد مراکز</TableCell>
                                 </TableRow>

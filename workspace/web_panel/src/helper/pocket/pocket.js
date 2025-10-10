@@ -264,6 +264,14 @@ export function SetRppUserManagement(number){
     setValue(rpp_userManagement,number);
     return getValue(rpp_userManagement);
 }
+const rpp_corporateInvoice = "rpp_corporateInvoice";
+export function getRppCorporateInvoice(){
+    return getValue(rpp_corporateInvoice)||25;
+}
+export function SetRppCorporateInvoice(number){
+    setValue(rpp_corporateInvoice,number);
+    return getValue(rpp_corporateInvoice);
+}
 const rpp_userInvoice = "rpp_userInvoice";
 export function getRppUserInvoice(){
     return getValue(rpp_userInvoice)||25;

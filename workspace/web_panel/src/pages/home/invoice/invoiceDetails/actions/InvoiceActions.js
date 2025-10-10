@@ -22,6 +22,7 @@ const InvoiceActions = ({invoice, updatePage}) => {
     const [howToPay, SetHowToPay] = useState([])
 
     useEffect(() => {
+        if(!invoice?.User) return;
         User_getUserCredits({Id: invoice.User.Id}).then(result => {
             SetUserCredits(result.data.Data);
         }).catch(e => {

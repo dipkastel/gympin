@@ -5,12 +5,13 @@ import {invoice_getById} from "../../../../network/api/invoice.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import InvoiceDetailBaseData from "./baseData/invoiceDetailBaseData";
 import Notes from "../../../partials/content/notes/Notes";
-import InvoiceDetailUserData from "./baseData/invoiceDetailUserData";
 import InvoiceDetailStatusData from "./baseData/invoiceDetailStatusData";
 import InvoiceDetailPricesData from "./baseData/invoiceDetailPricesData";
 import InvoiceDetailBuyables from "./buyables/InvoiceDetailBuyables";
 import InvoiceActions from "./actions/InvoiceActions";
 import InvoiceBuysData from "./InvoiceBuysData/InvoiceBuysData";
+import InvoiceDetailCorporateData from "./baseData/InvoiceDetailCorporateData";
+import InvoiceDetailUserData from "./baseData/invoiceDetailUserData";
 
 const InvoiceDetailManagement = () => {
 
@@ -47,8 +48,8 @@ const InvoiceDetailManagement = () => {
         <div>
             <Notice icon="flaticon-warning kt-font-primary">
                 {'مدیریت فاکتور شماره ' + invoiceId}
-                <br />
-                {'سریال : '+invoice?.Serial?.Serial}
+                <br/>
+                {'سریال : ' + invoice?.Serial?.Serial}
             </Notice>
             {!updatePageP && invoice && <div className={"row"}>
                 <div className={"col-md-10"}>
@@ -56,9 +57,16 @@ const InvoiceDetailManagement = () => {
                         <div className={"col-md-3"}>
                             <InvoiceDetailBaseData invoice={invoice}/>
                         </div>
+                        {invoice.User &&
                         <div className={"col-md-2"}>
                             <InvoiceDetailUserData invoice={invoice}/>
                         </div>
+                        }
+                        {invoice.Corporate &&
+                        <div className={"col-md-2"}>
+                            <InvoiceDetailCorporateData invoice={invoice}/>
+                        </div>
+                        }
                         <div className={"col-md-5"}>
                             <InvoiceDetailStatusData invoice={invoice} updatePage={updatePage}/>
                             <InvoiceDetailPricesData invoice={invoice} updatePage={updatePage}/>
