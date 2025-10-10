@@ -13,25 +13,36 @@ import {
     Toolbar,
     Typography, useColorScheme
 } from "@mui/material";
-import {AccountCircleRounded, AccountCircleTwoTone, MenuOpen, NotificationsRounded} from "@mui/icons-material";
+import {AccountCircleRounded, AccountCircleTwoTone, DinnerDining, MenuOpen, NotificationsRounded} from "@mui/icons-material";
 import {toPriceWithComma} from "../helper/utils";
 import {connect, useSelector} from "react-redux";
 import {sagaActions} from "../helper/redux/actions/SagaActions";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {bottomMenuItems} from "../helper/bottomMenuItems";
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DrawerLayout from "./DrawerLayout";
 import ChatWidget from "./chat/ChatWidget";
+import {getHomeId, getUserCanOrderFood} from "../helper/serverSettingsHelper";
 
 const PageLayout = (props) => {
 
+    const navigate = useNavigate();
     const currentUser = useSelector(state => state.auth.user);
     const userBasket = useSelector(state => state.invoice.userBasket);
+    const serverSettings = useSelector(settings => settings);
     const location = useLocation();
     const pathname = window.location.pathname
     const [value, setValue] = React.useState(getTabName(pathname));
     const [openDrawer, SetOpenDrawer] = useState(false);
+    const [userCanOrderFood,setUserCanOrderFood] = useState(getUserCanOrderFood(serverSettings));
+
+
+
+    useEffect(() => {
+        setUserCanOrderFood(getUserCanOrderFood(serverSettings));
+    }, [serverSettings]);
+
 
 
     function getTabName(path) {
@@ -53,6 +64,11 @@ const PageLayout = (props) => {
     useEffect(() => {
         if (currentUser) {
             props.RequestUser();
+        }
+    }, []);
+    useEffect(() => {
+        if (currentUser) {
+            props.RequestServerSettings(currentUser);
         }
     }, []);
 
@@ -85,7 +101,15 @@ const PageLayout = (props) => {
                             </Badge>
                         </IconButton>
 
-
+                        {userCanOrderFood&&<IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={()=>{navigate("/foodSelect", {replace: false})}}
+                        >
+                            <DinnerDining sx={{fontSize:"1.8rem"}}/>
+                        </IconButton>}
 
                         <Typography variant="h6" component="div"
                                     sx={{flexGrow: 1}}>
@@ -97,8 +121,6 @@ const PageLayout = (props) => {
                         </Button>}
                         {currentUser &&
                         <IconButton color={"inherit"} href={"/wallet"}><AccountCircleIcon sx={{fontSize:"2.3rem !important"}}/></IconButton>}
-
-
                     </Toolbar>
                 </AppBar>
             </Box>

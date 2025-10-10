@@ -3,6 +3,7 @@ package com.notrika.gympin.persistence.entity.corporate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoicePersonnelSelectedFoodEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -53,6 +54,12 @@ public class CorporatePersonnelEntity extends BaseEntityWithCreateUpdate<Corpora
     @JsonIgnore
     @ToString.Exclude
     private List<FinanceCorporatePersonnelCreditEntity> credits;
+
+
+    @OneToMany(mappedBy = "personnel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<InvoicePersonnelSelectedFoodEntity> personnelFoods;
 
 
     @Override

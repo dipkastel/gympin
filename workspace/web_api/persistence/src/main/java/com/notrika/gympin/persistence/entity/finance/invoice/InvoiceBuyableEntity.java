@@ -1,15 +1,11 @@
-package com.notrika.gympin.persistence.entity.finance.user.invoice;
+package com.notrika.gympin.persistence.entity.finance.invoice;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
-import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelGroupEntity;
-import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
-import com.notrika.gympin.persistence.entity.user.UserEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,8 +15,8 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
+
 
 @Getter
 @Setter
@@ -28,26 +24,32 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "invoiceExtraItem")
-public class InvoiceExtraItemEntity extends BaseEntityWithCreateUpdate<InvoiceExtraItemEntity> {
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "invoiceBuyable")
+public class InvoiceBuyableEntity<b> extends BaseEntityWithCreateUpdate<b> {
+
 
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "invoiceId")
-    @JsonIgnore
-    @ToString.Exclude
-    private InvoiceEntity invoice;
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "discount", nullable = false,columnDefinition = "smallint default 0")
+    private Short discount;
+
+    @Column(name = "placePrice")
+    private BigDecimal placePrice;
+
+    @Column(name = "buyableType", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private BuyableType buyableType;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "buyablePlaceId")
     @JsonIgnore
     @ToString.Exclude
     private PlaceEntity place;
-
-    @Column(name = "placePrice")
-    private BigDecimal placePrice;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "beneficiary")
@@ -61,16 +63,28 @@ public class InvoiceExtraItemEntity extends BaseEntityWithCreateUpdate<InvoiceEx
     @Column(name = "count")
     private Short count;
 
+    @ManyToOne
+    @JoinColumn(name = "invoiceId")
+    @JsonIgnore
+    @ToString.Exclude
+    private InvoiceEntity invoice;
 
-    @Column(name = "description")
-    private String description;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "buyableId")
+    @JsonIgnore
+    @ToString.Exclude
+    private BuyableEntity buyable;
+
+
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        InvoiceExtraItemEntity that = (InvoiceExtraItemEntity) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        InvoiceBuyableEntity that = (InvoiceBuyableEntity) o;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override

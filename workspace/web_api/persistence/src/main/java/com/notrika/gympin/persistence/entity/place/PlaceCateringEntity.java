@@ -1,6 +1,8 @@
 package com.notrika.gympin.persistence.entity.place;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
+import com.notrika.gympin.common.place.placeCatering.enums.CateringViewTypeEnum;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodItemEntity;
@@ -47,6 +49,10 @@ public class PlaceCateringEntity extends PlaceEntity<PlaceCateringEntity> {
 
     @Column(name = "hasDishesPrice", nullable = false , columnDefinition = "boolean default false")
     private Boolean hasDishesPrice;
+
+    @Column(name = "viewType")
+    @Enumerated(EnumType.STRING)
+    private CateringViewTypeEnum viewType;
 
     @OneToOne
     @JsonIgnore

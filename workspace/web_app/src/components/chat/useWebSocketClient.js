@@ -25,12 +25,10 @@ export function useWebSocketClient({ ChangeMessages, statusChanged, currentUser,
                 AppName: "WEBAPP",
             },
             onConnect: () => {
-                console.log("chat is onConnect");
                 if (!isMountedRef.current) return;
                 setStatus(ActivationState.ACTIVE);
                 clearInterval(intervalRef.current);
                 intervalRef.current = null;
-                console.log("sub",new Date().getMilliseconds())
                 const sub = client.subscribe(subscribeDestination, (msg) => {
                     if (msg.body) {
                         try {
@@ -45,20 +43,16 @@ export function useWebSocketClient({ ChangeMessages, statusChanged, currentUser,
             },
             onChangeState:(state)=>{
                 setStatus(state);
-                console.log("chat is state change",ActivationState[state]);
             },
             onDisconnect: () => {
-                console.log("chat is disconnect");
                 if (!isMountedRef.current) return;
                 setStatus(ActivationState.INACTIVE);
             },
             onStompError: (frame) => {
-                console.log("chat is onStompError");
                 if (!isMountedRef.current) return;
                 setStatus(ActivationState.INACTIVE);
             },
             onWebSocketClose: () => {
-                console.log("chat is onWebSocketClose");
                 if (!isMountedRef.current) return;
                 setStatus(ActivationState.INACTIVE);
                 if (!intervalRef.current) {
@@ -70,7 +64,6 @@ export function useWebSocketClient({ ChangeMessages, statusChanged, currentUser,
         });
 
         socket.onerror = (error) => {
-            console.log("chat is onerror");
             if (!isMountedRef.current) return;
             socket.close();
         };

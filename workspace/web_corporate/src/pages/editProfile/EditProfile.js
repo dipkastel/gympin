@@ -127,7 +127,6 @@ const EditProfile = (props) => {
     function renderModalCrop() {
 
         const onChange = (cropper) => {
-            console.log(cropper.getCoordinates(), cropper.getCanvas());
 
         };
         return (<>
@@ -368,7 +367,6 @@ const EditProfile = (props) => {
                                                     value={new Date(values.Birthday)}
                                                     className="w-100"
                                                     onChange={(e, w) => {
-                                                        console.log(e)
                                                         setFieldValue('Birthday', format(Date.parse(e), "yyyy-MM-dd"))
                                                     }}
                                                 />

@@ -89,7 +89,6 @@ const TicketsHistory = () => {
     }
 
     function getTicket() {
-        console.log(subscribes);
         return subscribes.filter(p => getByFilter(p));
     }
 

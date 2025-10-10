@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.finance.invoice.dto.*;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.*;
+import com.notrika.gympin.persistence.entity.finance.invoice.*;
 
 import java.util.stream.Collectors;
 
@@ -23,6 +23,7 @@ public final class InvoiceConvertor {
                 .totalPrice(entity.getTotalPrice())
                 .priceToPay(entity.getPriceToPay())
                 .corporate(CorporateConvertor.toDto(entity.getCorporate()))
+                .date(entity.getDate())
                 .invoiceFoods(entity.getInvoiceFoods()==null?null:entity.getInvoiceFoods().stream().filter(i->!i.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()))
                 .invoiceSubscribes(entity.getInvoiceSubscribes()==null?null:entity.getInvoiceSubscribes().stream().filter(i->!i.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()))
                 .invoiceBuyables(entity.getInvoiceBuyables()==null?null:entity.getInvoiceBuyables().stream().filter(i->!i.isDeleted()).map(InvoiceConvertor::toDto).collect(Collectors.toList()))
@@ -107,4 +108,24 @@ public final class InvoiceConvertor {
         return dto;
     }
 
+    public static InvoicePersonnelSelectedFoodDto toDto(InvoicePersonnelSelectedFoodEntity entity) {
+
+        if(entity==null) return null;
+        InvoicePersonnelSelectedFoodDto dto = InvoicePersonnelSelectedFoodDto.builder()
+                .id(entity.getId())
+                .createdDate(entity.getCreatedDate())
+                .creatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()))
+                .description(entity.getDescription())
+                .count(entity.getCount())
+                .personnel(CorporateConvertor.toPersonnelDto(entity.getPersonnel()))
+                .foodMenu(TicketFoodConvertor.toDto(entity.getFoodMenu()))
+                .corporate(CorporateConvertor.toDto(entity.getCorporate()))
+                .ordered(entity.getOrdered())
+                .price(entity.getPrice())
+                .fullName(entity.getFullName())
+                .description(entity.getDescription())
+                .date(entity.getDate())
+                .build();
+        return dto;
+    }
 }

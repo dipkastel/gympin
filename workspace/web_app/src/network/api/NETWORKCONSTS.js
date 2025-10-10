@@ -16,6 +16,22 @@ export let Api_url = {
     configs:{
         WebAppSplash:"v1/configs/WebAppSplash"
     },
+    catering: {
+        getAll: "v1/catering/getAll",
+        getById: "v1/catering/getById",
+    },
+    ticketFood: {
+
+        getAll: "v1/TicketFood/getAll",
+        getById: "v1/TicketFood/getById",
+        query: "v1/TicketFood/query",
+    },
+    ticketMenu: {
+        getAll: "v1/TicketFoodMenu/getAll",
+        getById: "v1/TicketFoodMenu/getById",
+        query: "v1/TicketFoodMenu/query",
+        getDates: "v1/TicketFoodMenu/getDates",
+    },
     gatewayApplication:{
         query: "v1/GatewayApplication/query",
     },
@@ -58,6 +74,11 @@ export let Api_url = {
     placeComment:{
         add:"v1/placeComment/add",
         query:"v1/placeComment/query"
+    },
+    personnelFood:{
+        add:"v1/personnelFood/add",
+        query:"v1/personnelFood/query",
+        delete:"v1/personnelFood/delete"
     },
     increaseUserDeposit:{
         requestIncreaseUserDeposits:"v1/increaseUserDeposit/requestIncreaseUserDeposits",

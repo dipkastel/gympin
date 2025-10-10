@@ -1,6 +1,6 @@
 import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
-import {Box, Button, Divider, Fab, IconButton, Paper, TextField, Typography} from "@mui/material";
+import {Box, Divider, Fab, IconButton, Paper, TextField, Typography} from "@mui/material";
 import {AccessTime, Chat, Delete, Error, Replay, Send} from "@mui/icons-material";
 import Grid from "@mui/material/Grid2";
 import {ActivationState} from "@stomp/stompjs";
@@ -67,7 +67,6 @@ const ChatWidget = () => {
         sendToDestination: "/app/SupportChatM/" + driverId,
         endPoint: AuthApi.BASEURL + Api_url.Chat.endpoint,
     });
-
 
 
     useEffect(() => {
@@ -139,14 +138,16 @@ const ChatWidget = () => {
                     <IconButton
                         size="small"
                         onClick={toggleChat}
-                        sx={{color: "white",
-                            position:"fixed",
-                            width:"30px",
-                            height:"30px",
+                        sx={{
+                            color: "white",
+                            position: "fixed",
+                            width: "30px",
+                            height: "30px",
                             bgcolor: "#cd191a",
-                            bottom: 718,
+                            bottom: 618,
                             right: 29,
-                            zIndex: 3100,}}>
+                            zIndex: 3100,
+                        }}>
                         <CloseIcon/>
                     </IconButton>
                     <Paper
@@ -157,7 +158,7 @@ const ChatWidget = () => {
                             bottom: 134,
                             right: 24,
                             width: 350,
-                            height: 580,
+                            height: 480,
                             display: "flex",
                             flexDirection: "column",
                             zIndex: 3000,
@@ -182,35 +183,35 @@ const ChatWidget = () => {
                                     key={msg.id || i}
                                     sx={{
                                         alignSelf: msg?.Sender === "Client" ? "flex-start" : "flex-end",
-                                        bgcolor: msg?.Sender === "Client" ? pendingMessages.includes(msg)?"#ff9999":"grey.300" : "#cd191a",
-                                        color:  msg?.Sender === "Client" ?"black":"white",
+                                        bgcolor: msg?.Sender === "Client" ? pendingMessages.includes(msg) ? "#ff9999" : "grey.300" : "#cd191a",
+                                        color: msg?.Sender === "Client" ? "black" : "white",
                                         p: 2,
-                                        borderRadius: msg?.Sender === "Client" ?"16px 16px 16px 0":"16px 16px 0 16px",
+                                        borderRadius: msg?.Sender === "Client" ? "16px 16px 16px 0" : "16px 16px 0 16px",
                                         maxWidth: "80%",
                                         wordBreak: "break-word",
                                         textAlign: "justify",
                                         display: "flex",
                                         alignItems: "center",
                                         gap: 1,
-                                        opacity:  1,
+                                        opacity: 1,
                                     }}
                                 >
                                     {pendingMessages.includes(msg) && !msg.failed && (<>
-                                            <AccessTime sx={{ fontSize: 16, color: "grey.600" }} />
+                                            <AccessTime sx={{fontSize: 16, color: "grey.600"}}/>
                                         </>
                                     )}
                                     {msg?.failed && (<>
-                                            <Error sx={{ fontSize: 16, color: "#FF0000" }} />
-                                            <Replay sx={{ fontSize: 16, color: "#FF0000" }} onClick={resendPendingMessage(msg)} />
+                                            <Error sx={{fontSize: 16, color: "#FF0000"}}/>
+                                            <Replay sx={{fontSize: 16, color: "#FF0000"}} onClick={resendPendingMessage(msg)}/>
                                         </>
                                     )}
                                     {msg?.Message}
                                     {msg?.failed && (<>
-                                        <Delete sx={{ fontSize: 16, color: "#4b0505" }} onClick={deletePendingMessage(msg)} />
+                                        <Delete sx={{fontSize: 16, color: "#4b0505"}} onClick={deletePendingMessage(msg)}/>
                                     </>)}
                                 </Box>
                             ))}
-                            {([...messages, ...pendingMessages].length<1) && <>
+                            {([...messages, ...pendingMessages].length < 1) && <>
                                 <Grid container justifyContent={"center"} textAlign={"center"}>
                                     <Typography variant={"subtitle1"} sx={{p: 4}}>کارشناسان ما در سریع ترین زمان ممکن پاسخ شما را خواهند
                                         داد</Typography>
@@ -222,30 +223,33 @@ const ChatWidget = () => {
                         <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0, width: "100%"}}
                                  component="div"/>
 
-                        <Box sx={{display: "flex", p: 2, gap: 1}}>
+                        <Box sx={{display: "flex", px: 2,pt:1, gap: 1}}>
                             <IconButton
                                 variant="contained"
-                                sx={{color:"#cd191a"}}
+                                sx={{color: "#cd191a"}}
                                 onClick={handleSendMessage}
                             >
-                                <Send sx={{fontSize:"1.6rem",rotate:"-30deg"}} />
+                                <Send sx={{fontSize: "1.6rem", rotate: "-30deg"}}/>
                             </IconButton>
-                            <TextField
-                                fullWidth
-                                size="small"
-                                variant={"standard"}
-                                value={input}
-                                multiline={true}
-                                minRows={2}
-                                onChange={(e) => setInput(e.target.value)}
-                                placeholder="پیام خود را بنویسید..."
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter" && !e.shiftKey) {
-                                        e.preventDefault();
-                                        handleSendMessage();
-                                    }
-                                }}
-                            />
+                            <Grid container sx={{width:"100%"}} justifyContent={"end"}>
+                                <TextField
+                                    fullWidth
+                                    size="small"
+                                    variant={"standard"}
+                                    value={input}
+                                    multiline={true}
+                                    minRows={2}
+                                    onChange={(e) => setInput(e.target.value)}
+                                    placeholder="پیام خود را بنویسید..."
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter" && !e.shiftKey) {
+                                            e.preventDefault();
+                                            handleSendMessage();
+                                        }
+                                    }}
+                                />
+                                <Typography sx={{fontSize:"0.5rem"}} variant={"caption"} >ساخته شده در جیم پین</Typography>
+                            </Grid>
                         </Box>
                     </Paper>
                 </div>

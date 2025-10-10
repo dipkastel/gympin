@@ -3,6 +3,7 @@ package com.notrika.gympin.common.place.placeCatering.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
+import com.notrika.gympin.common.place.placeCatering.enums.CateringViewTypeEnum;
 import com.notrika.gympin.common.settings.location.dto.LocationDto;
 import com.notrika.gympin.common.sport.sport.dto.SportDto;
 import com.notrika.gympin.common.user.user.enums.Gender;
@@ -71,5 +72,8 @@ public class PlaceCateringDto extends BaseDtoWithCreateUpdate<PlaceCateringDto> 
 
     @JsonProperty("HasDishesPrice")
     private Boolean hasDishesPrice;
+
+    @JsonProperty("ViewType")
+    private CateringViewTypeEnum viewType;
 
 }

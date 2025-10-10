@@ -47,11 +47,9 @@ function GNotification() {
                 }, 1000 * 12);
             } else {
                 setState(States.denied);
-                console.log(Notification.permission);
             }
         } catch (ex) {
             setState(States.denied);
-            console.log("Notification error");
 
         }
     }
@@ -70,7 +68,6 @@ function GNotification() {
                     buttonTitle: 'فعال سازی',
                     duration: 8000,
                     onClick: () => {
-                        console.log(result)
                         if (result === States.default)
                             requestForNotificationPermission(e);
                         else

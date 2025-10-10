@@ -8,7 +8,6 @@ import _ticketCoach from "../info/_ticketCoach";
 
 
 const _PlaceCourseListItem = ({course, number, addToBasket}) => {
-    console.log(course)
     return (
         <div>
             <ListItem disablePadding>

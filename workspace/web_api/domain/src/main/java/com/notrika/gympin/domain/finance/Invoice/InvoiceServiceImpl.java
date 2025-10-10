@@ -1,17 +1,16 @@
 package com.notrika.gympin.domain.finance.Invoice;
 
-import com.notrika.gympin.common.finance.invoice.api.InvoiceController;
+import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.finance.invoice.dto.InvoiceDto;
 import com.notrika.gympin.common.finance.invoice.dto.UserHowToPayDto;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
+import com.notrika.gympin.common.finance.invoice.enums.InvoiceType;
 import com.notrika.gympin.common.finance.invoice.enums.UserCheckoutTypes;
 import com.notrika.gympin.common.finance.invoice.param.*;
 import com.notrika.gympin.common.finance.invoice.query.InvoiceQuery;
 import com.notrika.gympin.common.finance.invoice.service.InvoiceService;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
-import com.notrika.gympin.common.settings.context.GympinContext;
-import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.user.user.enums.UserProvider;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.service.UserService;
@@ -19,10 +18,10 @@ import com.notrika.gympin.common.util.exception.purchased.IsAlreadyPayedExceptio
 import com.notrika.gympin.common.util.exception.purchased.PriceConflictException;
 import com.notrika.gympin.common.util.exception.purchased.PriceTotalConflictException;
 import com.notrika.gympin.common.util.exception.transactions.*;
-import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.finance.peyments.CalculatePaymentsServiceImpl;
 import com.notrika.gympin.domain.util.convertor.InvoiceConvertor;
+import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceBuyableRepository;
 import com.notrika.gympin.persistence.dao.repository.invoice.InvoiceFoodRepository;
@@ -34,12 +33,11 @@ import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubs
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceFoodEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceSubscribeEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceFoodEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceSubscribeEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
-import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodMenuEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -51,7 +49,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.invoke.WrongMethodTypeException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
@@ -101,17 +98,46 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     InvoiceServiceHelper helper;
     @Autowired
     InvoiceServiceSmartisPayHelper smartisPayHelper;
+    @Autowired
+    CorporateRepository corporateRepository;
 
     @Override
     public InvoiceDto add(@NonNull InvoiceParam invoiceParam) {
-        var user = userRepository.getById(invoiceParam.getUser().getId());
         var serial = financeSerialRepository.add(FinanceSerialEntity.builder()
                 .serial(java.util.UUID.randomUUID().toString())
                 .processTypeEnum(ProcessTypeEnum.TRA_CHECKOUT_BASKET)
                 .build());
-        helper.CancellAllDrafts(invoiceParam.getUser().getId());
-        InvoiceEntity invoice = helper.AddNewInvoice(user, serial,invoiceParam.getCorporateId());
-        return InvoiceConvertor.toDto(invoice);
+        if(invoiceParam.getCorporate()!=null){
+            CorporateEntity corporate =  corporateRepository.getById(invoiceParam.getCorporate().getId());
+            InvoiceEntity invoice = invoiceRepository.add(InvoiceEntity.builder()
+                    .status(InvoiceStatus.DRAFT)
+                    .serial(serial)
+                    .fullName(helper.getCurrentUser().getFullName())
+                    .phoneNumber(helper.getCurrentUser().getPhoneNumber())
+                    .type(InvoiceType.CORPORATE_FOOD)
+                    .totalPrice(BigDecimal.ZERO)
+                    .priceToPay(BigDecimal.ZERO)
+                    .date(invoiceParam.getDate())
+                    .corporate(corporate)
+                    .build());
+            return InvoiceConvertor.toDto(invoice);
+        }else{
+            helper.CancellAllUserDrafts(invoiceParam.getUser().getId());
+            var user = userRepository.getById(invoiceParam.getUser().getId());
+            InvoiceEntity invoice = invoiceRepository.add(InvoiceEntity.builder()
+                    .status(InvoiceStatus.DRAFT)
+                    .fullName(user.getFullName())
+                    .user(user)
+                    .serial(serial)
+                    .type(InvoiceType.USER_SUBSCRIBE)
+                    .phoneNumber(user.getPhoneNumber())
+                    .gender(user.getGender())
+                    .nationalCode(user.getNationalCode())
+                    .totalPrice(BigDecimal.ZERO)
+                    .priceToPay(BigDecimal.ZERO)
+                    .build());
+            return InvoiceConvertor.toDto(invoice);
+        }
     }
 
     @Override
@@ -277,8 +303,13 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
 
     @Override
     public InvoiceDto addFood(InvoiceBuyableFoodParam param) {
+
         TicketFoodMenuEntity foodmenu = ticketFoodMenuRepository.getById(param.getMenu().getId());
-        InvoiceEntity invoice = helper.getUserBasket(param.getInvoice(),param.getCorporate().getId());
+
+        InvoiceEntity invoice = invoiceRepository.findByCorporateIdAndDateAndStatusAndDeletedIsFalse(param.getCorporate().getId(),foodmenu.getDate(),InvoiceStatus.DRAFT).stream().findFirst().orElse(null);
+        if(invoice==null){
+            throw new InvoiceIsNotExistException();
+        }
 
         //date check
         Set<Date> dates = invoice.getInvoiceFoods().stream().filter(p->!p.isDeleted()).map(InvoiceFoodEntity::getDate).collect(Collectors.toSet());
@@ -323,7 +354,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     @Override
     public InvoiceDto addSubscribe(InvoiceBuyableSubscribeParam param) {
         TicketSubscribeEntity subscribe = ticketSubscribeRepository.getById(param.getSubscribe().getId());
-        InvoiceEntity invoice = helper.getUserBasket(param.getInvoice(),null);
+        InvoiceEntity invoice = helper.getUserBasket(param.getInvoice());
 
 
         if (invoice.getInvoiceFoods().size()>0)
@@ -568,9 +599,18 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         var invoice = invoiceRepository.findByUserIdAndStatusAndDeletedIsFalse(param.getId(),InvoiceStatus.DRAFT).stream().findFirst().orElse(null);
         if(invoice==null){
             InvoiceParam invoiceParam = InvoiceParam.builder().user(param).build();
-            invoiceParam.setCorporateId(param.getCorporateId());
             return add(invoiceParam);
         }
         return InvoiceConvertor.toDto(invoice);
     }
+
+    @Override
+    public InvoiceDto getFoodBasket(InvoiceParam param) {
+        var invoice = invoiceRepository.findByCorporateIdAndDateAndStatusAndDeletedIsFalse(param.getCorporate().getId(),param.getDate(),InvoiceStatus.DRAFT).stream().findFirst().orElse(null);
+        if(invoice==null){
+            return add(param);
+        }
+        return InvoiceConvertor.toDto(invoice);
+    }
+
 }

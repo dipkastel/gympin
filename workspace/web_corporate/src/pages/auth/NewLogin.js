@@ -138,7 +138,6 @@ const NewLogin = (props) => {
     }
 
     function confirmCode(e) {
-        console.log(e);
         try {
             setStatus(statusEnum.loadingConfirm);
             login({

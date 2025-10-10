@@ -1,6 +1,7 @@
 package com.notrika.gympin.controller.impl.corporate;
 
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCateringAccessParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelFileParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.query.CorporatePersonnelQuery;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
@@ -130,6 +131,18 @@ public class CorporatePersonnelControllerImpl implements CorporatePersonnelContr
     @GetMapping("getTotalUserCredits")
     public ResponseEntity<BigDecimal> getTotalUserCredits(CorporatePersonnelCreditParam param) {
         return ResponseEntity.ok(corporatePersonnelCreditService.getTotalUserCredits(param));
+    }
+
+    @Override
+    @PostMapping("setPersonelAccessToCatering")
+    public ResponseEntity<Boolean> setPersonelAccessToCatering(CorporatePersonnelCateringAccessParam param) {
+        return ResponseEntity.ok(corporatePersonnelService.setPersonelAccessToCatering(param));
+    }
+
+    @Override
+    @PostMapping("setAllPersonelAccessToCatering")
+    public ResponseEntity<Boolean> setAllPersonelAccessToCatering(CorporatePersonnelCateringAccessParam param) {
+        return ResponseEntity.ok(corporatePersonnelService.setAllPersonelAccessToCatering(param));
     }
 
 

@@ -10,7 +10,6 @@ export const MainRoutes = ({router}) => {
     const isAuthorized = useSelector(({auth: {token}}) => token != null);
 
     function getPageByRoute(router) {
-        console.log(router)
         switch (router.pathname) {
             case '/auth/*' : return <AuthRoutes/>
             case '/error/*' : return <>خطا</>

@@ -20,7 +20,6 @@ const _SportTicketCount = ({corporate}) => {
         Report_ticketBuyCountThisWeek({
             id:corporate.Id
         }).then((data) => {
-            console.log(data)
             SetService(data.data.Data);
         }).catch(e => {
             try {

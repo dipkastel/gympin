@@ -51,7 +51,6 @@ const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits, checkoutType}) 
                     error.showError({message: e.response.data.Message});
                 } catch (f) {
                     error.showError({message: "خطا نا مشخص",});
-                    console.log("خطا - 22")
                 }
             })
         }

@@ -3,7 +3,6 @@ import {Card, CardHeader, Chip, Grid2 as Grid, Typography} from "@mui/material";
 import {SupportStatus} from "../../../helper/enums/SupportStatus";
 
 const _SupportMessageItem = ({item}) => {
-    console.log(item)
     return (
         <>
             <Grid container justifyContent={item.IsAnswer?"end":"start"} >

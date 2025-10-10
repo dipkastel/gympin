@@ -138,7 +138,6 @@ const EditCorporate = (props) => {
     function renderModalCrop() {
 
         const onChange = (cropper) => {
-            console.log(cropper.getCoordinates(), cropper.getCanvas());
 
         };
 

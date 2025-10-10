@@ -31,18 +31,20 @@ export let Api_url = {
         updateStatus: "v1/corporate/updateStatus"
     },
     CorporatePersonnel: {
-        add: "v1/corporatePersonnel/add",
+        setAllPersonelAccessToCatering: "v1/corporatePersonnel/setAllPersonelAccessToCatering",
+        setPersonelAccessToCatering: "v1/corporatePersonnel/setPersonelAccessToCatering",
         corporateOwnedByUserId: "v1/corporatePersonnel/corporateOwnedByUserId",
+        PersonnelByCorporate: "v1/corporatePersonnel/PersonnelByCorporate",
+        getTotalUserCredits: "v1/corporatePersonnel/getTotalUserCredits",
         addPersonnelCredit: "v1/corporatePersonnel/addPersonnelCredit",
         manualExpireCredit: "v1/corporatePersonnel/manualExpireCredit",
         addCreditToAll: "v1/corporatePersonnel/addCreditToAll",
-        getTotalUserCredits: "v1/corporatePersonnel/getTotalUserCredits",
+        getById: "v1/corporatePersonnel/getById",
         delete: "v1/corporatePersonnel/delete",
         getAll: "v1/corporatePersonnel/getAll",
-        getById: "v1/corporatePersonnel/getById",
         update: "v1/corporatePersonnel/update",
         query: "v1/corporatePersonnel/query",
-        PersonnelByCorporate: "v1/corporatePersonnel/PersonnelByCorporate"
+        add: "v1/corporatePersonnel/add",
     },
     gateway: {
         getPaymentGateways: "v1/Gateway/getPaymentGateways",
@@ -66,6 +68,11 @@ export let Api_url = {
     },
     optionOfPlace: {
         GET_BY_PLACE_ID: "v1/OptionOfPlace/getByPlaceId",
+    },
+    personnelFood:{
+        add:"v1/personnelFood/add",
+        query:"v1/personnelFood/query",
+        delete:"v1/personnelFood/delete"
     },
     placeAbout: {
         GET_BY_PLACE_ID: "v1/placeAbout/getByPlaceId",
@@ -154,6 +161,7 @@ export let Api_url = {
         addSubscribe: "v1/invoice/addSubscribe",
         deleteBuyable: "v1/invoice/deleteBuyable",
         getHowToPay: "v1/invoice/getUserHowToPay",
+        getFoodBasket: "v1/invoice/getFoodBasket",
         getBasketByUserId: "v1/invoice/getBasketByUserId",
         confirmFoodPayment: "v1/invoice/confirmFoodPayment",
         sendOrderToCatering: "v1/invoice/sendOrderToCatering",

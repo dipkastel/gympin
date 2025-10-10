@@ -77,7 +77,6 @@ export const IncreaseSelect = () => {
     useEffect(() => {
         var all = personnel?.content?.every(p => selectedUsers?.map(d => d.Id).includes(p?.Id));
         setAllSelected(all)
-        console.log("pe", personnel?.content?.some(p => selectedUsers?.some(su => su?.Id === p?.Id)));
         setSomeSelected(!all && personnel?.content?.some(p => selectedUsers?.some(su => su?.Id === p?.Id)))
     }, [personnel, selectedUsers]);
 
@@ -423,7 +422,6 @@ export const IncreaseSelect = () => {
                             page={page}
                             onPageChange={(event, newPage) => setPage(newPage)}
                             onRowsPerPageChange={(event) => {
-                                console.log(parseInt(event.target.value, 10));
                                 setRowsPerPage(parseInt(event.target.value, 10));
                                 setPage(0);
                             }}

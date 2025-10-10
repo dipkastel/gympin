@@ -20,14 +20,17 @@ export function invoice_sendOrderToCatering(invoice) {
 export function invoice_cancel(invoice) {
     return axios.get(Api_url.invoice.cancelOrder,{params:invoice});
 }
-export function invoice_getBasketByUserId(param) {
-    return axios.get(Api_url.invoice.getBasketByUserId,{params:param});
-}
+// export function invoice_getBasketByUserId(param) {
+//     return axios.get(Api_url.invoice.getBasketByUserId,{params:param});
+// }
 export function invoice_confirmFoodPayment(param) {
     return axios.get(Api_url.invoice.confirmFoodPayment,{params:param});
 }
 export function invoice_addFood(data) {
     return axios.post(Api_url.invoice.addFood, data);
+}
+export function invoice_getFoodBasket(data) {
+    return axios.post(Api_url.invoice.getFoodBasket, data);
 }
 export function invoice_changeInvoiceBuyableCount(data) {
     return axios.post(Api_url.invoice.changeInvoiceBuyableCount, data);

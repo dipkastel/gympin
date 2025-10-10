@@ -1,7 +1,9 @@
-package com.notrika.gympin.persistence.entity.finance.user.invoice;
+package com.notrika.gympin.persistence.entity.finance.invoice;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
+import com.notrika.gympin.common.finance.invoice.enums.InvoiceType;
+import com.notrika.gympin.common.purchased.purchased.enums.InvoiceDestributeType;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
@@ -18,6 +20,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -47,6 +50,11 @@ public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
     @Enumerated(EnumType.STRING)
     private InvoiceStatus status;
 
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private InvoiceType type;
+
     //user
     @Column(name = "fullName")
     private String fullName;
@@ -72,6 +80,10 @@ public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
     @JsonIgnore
     @ToString.Exclude
     private CorporateEntity corporate;
+
+    @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JsonIgnore

@@ -4,6 +4,7 @@ package com.notrika.gympin.domain.finance.Invoice;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.finance.invoice.dto.UserHowToPayDto;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
+import com.notrika.gympin.common.finance.invoice.enums.InvoiceType;
 import com.notrika.gympin.common.finance.invoice.param.CheckoutDetailParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceCheckoutParam;
 import com.notrika.gympin.common.finance.invoice.param.InvoiceParam;
@@ -53,16 +54,16 @@ import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceFoodEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceSubscribeEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceDiscountTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceFoodEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceSubscribeEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
@@ -102,6 +103,8 @@ public class InvoiceServiceHelper {
     @Autowired
     CorporatePersonnelRepository corporatePersonnelRepository;
     @Autowired
+    InvoiceSubscribeRepository invoiceSubscribeRepository;
+    @Autowired
     FinanceCorporateRepository financeCorporateRepository;
     @Autowired
     TicketSubscribeRepository ticketSubscribeRepository;
@@ -110,13 +113,11 @@ public class InvoiceServiceHelper {
     @Autowired
     InvoiceBuyableRepository invoiceBuyableRepository;
     @Autowired
-    InvoiceFoodRepository invoiceFoodRepository;
-    @Autowired
-    InvoiceSubscribeRepository invoiceSubscribeRepository;
-    @Autowired
     FinanceSerialRepository financeSerialRepository;
     @Autowired
     TicketCourseRepository ticketCourseRepository;
+    @Autowired
+    InvoiceFoodRepository invoiceFoodRepository;
     @Autowired
     FinanceUserRepository financeUserRepository;
     @Autowired
@@ -126,13 +127,13 @@ public class InvoiceServiceHelper {
     @Autowired
     InvoiceRepository invoiceRepository;
     @Autowired
-    FinanceHelper financeHelper;
-    @Autowired
-    SmsInService smsService;
-    @Autowired
     SettingsService settingsService;
     @Autowired
+    FinanceHelper financeHelper;
+    @Autowired
     UserService userService;
+    @Autowired
+    SmsInService smsService;
 
 
     @Transactional
@@ -299,7 +300,7 @@ public class InvoiceServiceHelper {
                     .latestBalance(financeIncomeTransactionRepository.gympinTotalIncome() == null ? BigDecimal.ZERO : financeIncomeTransactionRepository.gympinTotalIncome())
                     .serial(serial)
                     .build();
-             financeIncomeTransactionRepository.add(incomeRefund);
+            financeIncomeTransactionRepository.add(incomeRefund);
         }
 
     }
@@ -451,11 +452,11 @@ public class InvoiceServiceHelper {
                         addSubscribe(invoice, invoiceBuyable);
                     }
                     break;
+                case FOOD:
+                    throw new Exception("آیتم برای خرید آماده نیست");
                 case COURSE:
                     throw new Exception("آیتم برای خرید آماده نیست");
                 case PRODUCT:
-                    throw new Exception("آیتم برای خرید آماده نیست");
-                case FOOD:
                     throw new Exception("آیتم برای خرید آماده نیست");
                 case SERVICE:
                     throw new Exception("آیتم برای خرید آماده نیست");
@@ -573,24 +574,6 @@ public class InvoiceServiceHelper {
         invoiceRepository.update(invoice);
     }
 
-    public InvoiceBuyableEntity addBuyableToInvoice(InvoiceEntity invoice, BuyableEntity buyable, Short count) {
-
-        InvoiceBuyableEntity invoiceBuyable = InvoiceBuyableEntity.builder()
-                .name(buyable.getName())
-                .description(buyable.getDescription())
-                .discount(buyable.getDiscount())
-                .placePrice(buyable.getPlacePrice())
-                .buyableType(buyable.getBuyableType())
-                .place(buyable.getPlace())
-                .beneficiary(buyable.getBeneficiary())
-                .unitPrice(buyable.getPrice())
-                .count(count)
-                .invoice(invoice)
-                .buyable(buyable)
-                .build();
-        var result = invoiceBuyableRepository.add(invoiceBuyable);
-        return result;
-    }
 
     public InvoiceFoodEntity addFoodBuyableToInvoice(InvoiceEntity invoice, TicketFoodMenuEntity menu, Short count) {
 
@@ -635,20 +618,18 @@ public class InvoiceServiceHelper {
     }
 
     @Transactional
-    public InvoiceEntity getUserBasket(InvoiceParam invoiceParam, Long corporateId) {
+    public InvoiceEntity getUserBasket(InvoiceParam invoiceParam) {
 
         if (invoiceParam.getId() != null) {
             return invoiceRepository.getById(invoiceParam.getId());
         } else {
             //invoice number not Known
-            var currentUser = getcurrentUser();
+            var currentUser = getCurrentUser();
             var userDraftInvoices = invoiceRepository.findByUserIdAndStatusAndDeletedIsFalse(currentUser.getId(), InvoiceStatus.DRAFT);
             //get last User Draft Invoice as basket
             if (userDraftInvoices.size() > 0)
                 return userDraftInvoices.get(userDraftInvoices.size() - 1);
             else {
-                //add new invoice
-
                 var serial = financeSerialRepository.add(FinanceSerialEntity.builder()
                         .serial(java.util.UUID.randomUUID().toString())
                         .processTypeEnum(ProcessTypeEnum.TRA_CHECKOUT_BASKET)
@@ -658,12 +639,12 @@ public class InvoiceServiceHelper {
                         .status(InvoiceStatus.DRAFT)
                         .fullName(currentUser.getFullName())
                         .user(currentUser)
+                        .type(InvoiceType.USER_SUBSCRIBE)
                         .creatorUser(currentUser)
                         .serial(serial)
                         .phoneNumber(currentUser.getPhoneNumber())
                         .gender(currentUser.getGender())
                         .nationalCode(currentUser.getNationalCode())
-                        .corporate(corporateId != null ? getCorporate(corporateId) : null)
                         .totalPrice(BigDecimal.ZERO)
                         .priceToPay(BigDecimal.ZERO)
                         .build());
@@ -671,18 +652,15 @@ public class InvoiceServiceHelper {
         }
     }
 
-    private CorporateEntity getCorporate(Long corporateId) {
-        return corporateRepository.getById(corporateId);
-    }
 
-    private UserEntity getcurrentUser() {
+    public UserEntity getCurrentUser() {
         GympinContext context = GympinContextHolder.getContext();
         if (context == null)
             throw new UnknownUserException();
         return (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
     }
 
-    public void CancellAllDrafts(Long userId) {
+    public void CancellAllUserDrafts(Long userId) {
         var userDraftInvoices = invoiceRepository.findByUserIdAndStatusAndDeletedIsFalse(userId, InvoiceStatus.DRAFT);
         for (InvoiceEntity invoice : userDraftInvoices) {
             invoice.setStatus(InvoiceStatus.CANCELLED);
@@ -691,21 +669,6 @@ public class InvoiceServiceHelper {
             invoiceRepository.updateAll(userDraftInvoices);
     }
 
-    public InvoiceEntity AddNewInvoice(UserEntity user, FinanceSerialEntity serial, Long corporateId) {
-        var invoice = InvoiceEntity.builder()
-                .status(InvoiceStatus.DRAFT)
-                .fullName(user.getFullName())
-                .user(user)
-                .serial(serial)
-                .phoneNumber(user.getPhoneNumber())
-                .gender(user.getGender())
-                .nationalCode(user.getNationalCode())
-                .totalPrice(BigDecimal.ZERO)
-                .priceToPay(BigDecimal.ZERO)
-                .corporate(corporateId != null ? getCorporate(corporateId) : null)
-                .build();
-        return invoiceRepository.add(invoice);
-    }
 
     public void sendSms(InvoiceEntity invoice) {
         //TODO sms To Place for preparation

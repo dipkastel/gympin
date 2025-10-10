@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.management.settings;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.settings.userSettings.enums.UserSettingTypesEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -37,6 +38,8 @@ public class UserSettingsEntity extends BaseEntityWithCreateUpdate<UserSettingsE
 
     @ManyToOne
     @JoinColumn(name = "settingUserId")
+    @JsonIgnore
+    @ToString.Exclude
     private UserEntity user;
 
 

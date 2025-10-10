@@ -1,7 +1,7 @@
 package com.notrika.gympin.persistence.dao.repository.invoice;
 
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceBuyableEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceBuyableEntity;
 
 import java.util.List;
 

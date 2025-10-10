@@ -7,7 +7,7 @@ const _CoursePhoneLessEnter = ({course,getCourse}) => {
     const error = useContext(ErrorContext);
     const [entryList,setEntryList] = useState([]);
     const [openModalRequestEnter,setOpenModalRequestEnter] = useState(false);
-    console.log(course);
+
     useEffect(() => {
         if(course.EntryList)
             setEntryList(course.EntryList)

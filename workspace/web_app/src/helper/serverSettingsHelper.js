@@ -9,6 +9,20 @@ export function getHomeId(settings) {
         return 2
     }
 }
+export function getUserCanOrderFood(settings) {
+    try{
+        return !!settings?.settings?.server?.UserSettings?.some(s => s.Key ==="CATERING_ACCESS")
+    }catch (e) {
+        return false
+    }
+}
+export function getUserCateringsAvailable(settings) {
+    try{
+        return settings?.settings?.server?.UserSettings?.filter(s => s.Key ==="CATERING_ACCESS");
+    }catch (e) {
+        return false
+    }
+}
 export function getCheckoutType(settings){
     try{
         var userSetting = settings?.settings?.server?.UserSettings?.find(s => s.Key === "USER_CHECKOUT_TYPE")?.Value

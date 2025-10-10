@@ -4,7 +4,7 @@ import {toPriceWithComma} from "../../../helper/utils";
 
 const _LiCreditPersonal = ({credit}) => {
 
-    console.log(credit);
+
     return (
         <>
             <Grid container sx={{mb: 1}} direction={"column"} alignItems={"center"}

@@ -11,8 +11,6 @@ const Invoices = () => {
     useEffect(() => {
         document.title = 'تراکنش ها';
     }, []);
-    console.log("userBasket",userBasket);
-    console.log(userBasket.toReversed());
     return userBasket?.length>0 ? (
         <>
             {userBasket.toReversed().map(invoice => (

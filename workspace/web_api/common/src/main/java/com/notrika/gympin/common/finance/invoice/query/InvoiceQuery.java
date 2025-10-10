@@ -40,6 +40,9 @@ public class InvoiceQuery extends BaseQuery<InvoiceQuery> {
     @JsonProperty("UserId")
     private Long is_useræid;
 
+    @JsonProperty("CorporateId")
+    private Long is_corporateæid;
+
     @JsonProperty("FullName")
     private Long like_fullName;
 

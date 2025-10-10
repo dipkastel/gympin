@@ -311,7 +311,7 @@ const _ChargeCreateInvoice = ({refreshList}) => {
                 justifyContent="center"
                 alignItems="center"
                 sx={{padding: 1}}
-                size={6}
+                size={{sm:12,md:6}}
             >
 
                 <Card elevation={3} sx={{p: 2, borderRadius: 5, width: "100%", mb: 2}}>

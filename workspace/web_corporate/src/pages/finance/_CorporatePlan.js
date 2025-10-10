@@ -12,7 +12,6 @@ const _CorporatePlan = () => {
     const [totalIncreases, setTotalIncreases] = useState(null);
 
     useEffect(() => {
-        console.log(corporate);
         corporate_getTotalIncreases({FinanceCorporateId: corporate.FinanceCorporate.Id}).then(data => {
             setTotalIncreases(data.data.Data);
         }).catch(e => {

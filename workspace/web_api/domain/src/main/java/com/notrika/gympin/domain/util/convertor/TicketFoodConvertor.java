@@ -23,6 +23,9 @@ public class TicketFoodConvertor {
         dto.setMinOrderCount(entity.getMinOrderCount());
         dto.setMaxOrderCount(entity.getMaxOrderCount());
         dto.setDescription(entity.getDescription());
+        try{
+            dto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
+        }catch (Exception e){}
         return dto;
     }
 

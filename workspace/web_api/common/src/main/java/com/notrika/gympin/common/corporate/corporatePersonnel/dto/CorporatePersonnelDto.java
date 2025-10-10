@@ -40,4 +40,7 @@ public class CorporatePersonnelDto extends BaseDto<CorporatePersonnelDto> {
 
     @JsonProperty("TotalCredit")
     private BigDecimal totalCredit;
+
+    @JsonProperty("CateringsAccess")
+    private List<Long> cateringAccess;
 }

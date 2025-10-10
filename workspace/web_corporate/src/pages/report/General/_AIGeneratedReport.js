@@ -21,7 +21,6 @@ const _AIGeneratedReport = ({corporate}) => {
         setLoadStatus(LoadStatus.LOADING);
         if (!corporate) return;
         Report_getAiReport({id: corporate?.Id}).then(result => {
-            console.log(result);
             if (result?.data?.Data?.length > 0) {
                 setInputData(result.data.Data);
                 setLoadStatus(LoadStatus.LOADED);

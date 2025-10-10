@@ -9,7 +9,6 @@ const _LiCreditSponsor = ({credit}) => {
 
 
     function getCorportateName(credit) {
-        console.log(credit)
         return (<>
             {credit?.Corporate?.Name}
             {credit?.Name?" - "+credit.Name:""}

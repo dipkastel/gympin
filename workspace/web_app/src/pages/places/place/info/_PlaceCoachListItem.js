@@ -2,7 +2,6 @@ import React from 'react';
 import {Avatar, Paper, Rating, Typography} from "@mui/material";
 
 const _PlaceCoachListItem = ({coach}) => {
-    console.log("coach",coach)
     return (
         <div>
 

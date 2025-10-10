@@ -29,8 +29,6 @@ const NewUserPage = () => {
     const [formData, setFormData] = useState({});
     const [personnel, setPersonnel] = useState(null);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [allSelected, setAllSelected] = useState(false);
-    const [someSelected, setSomeSelected] = useState(false);
     const [searchText, setSearchText] = useState(undefined);
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState(null);

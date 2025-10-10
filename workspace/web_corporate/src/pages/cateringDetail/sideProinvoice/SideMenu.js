@@ -1,21 +1,16 @@
 import React from 'react';
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
-import {Badge, Button, Card, CardContent, CardHeader, Divider, IconButton, ListItemText, Typography} from "@mui/material";
+import {Badge, Card, CardActionArea, CardContent, CardHeader, Divider, ListItemText, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import {Delete, DinnerDining} from "@mui/icons-material";
+import {Assessment, DinnerDining, Receipt} from "@mui/icons-material";
 import {toPriceWithComma} from "../../../helper/utils";
 import _ProInvoiceItemCount from "./_ProInvoiceItemCount";
 import _ProinvoiceBill from "./_ProinvoiceBill";
 import _SideMenuHeader from "./_SideMenuHeader";
 
-const SideMenu = ({CurrentBasket, removeOrder, setOrderCount, catering,confirmOrder,refresh}) => {
+const SideMenu = ({CurrentBasket, removeOrder, setOrderCount, catering,confirmOrder,refresh,openSideMenu,setOpenSideMenu}) => {
 
-    const [open, setOpen] = React.useState(false);
-
-    const toggleDrawer = (newOpen) => () => {
-        setOpen(newOpen);
-    };
 
     function getItemCount() {
         return CurrentBasket?.InvoiceFoods?.reduce(function (a, b) {
@@ -27,14 +22,18 @@ const SideMenu = ({CurrentBasket, removeOrder, setOrderCount, catering,confirmOr
         <>
             {CurrentBasket &&
             <>
-                <Card sx={{py: 4}} onClick={toggleDrawer(true)}>
-                    <Grid container justifyContent={"center"}>
-                        <Badge badgeContent={CurrentBasket?.InvoiceBuyables?.length} color="error">
-                            <DinnerDining sx={{m: 1}} fontSize={"large"}/>
-                        </Badge>
-                    </Grid>
+
+                <Card sx={{m: 2}}>
+                    <CardActionArea sx={{p: 2, textAlign: "center"}} onClick={(e) => setOpenSideMenu(true)}>
+                        <CardContent>
+                            <Badge badgeContent={CurrentBasket?.InvoiceBuyables?.length} color="error">
+                                <Receipt sx={{fontSize: "3rem", mb: 1}}/>
+                            </Badge>
+                            <Typography variant={"h5"}>صورت حساب</Typography>
+                        </CardContent>
+                    </CardActionArea>
                 </Card>
-                <Drawer open={open} anchor={'right'} onClose={toggleDrawer(false)}>
+                <Drawer open={openSideMenu} anchor={'right'} onClose={(e)=>setOpenSideMenu(false)}>
                     <Box sx={{width: 520, mt: 8}}>
                         <_SideMenuHeader CurrentBasket={CurrentBasket} catering={catering} refresh={refresh} />
                         {!!CurrentBasket?.InvoiceBuyables?.length > 0 ? <Card sx={{m: 1}}>

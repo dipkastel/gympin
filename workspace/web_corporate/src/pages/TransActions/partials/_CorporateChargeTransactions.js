@@ -57,7 +57,6 @@ const _CorporateChargeTransactions = () => {
         try {
             var result = "";
             for(var ticket in transaction?.Serial?.Invoices[0]?.InvoiceSubscribe){
-                console.log("ticket",ticket);
                 result += transaction?.Serial?.Invoices[0]?.InvoiceSubscribe[ticket]?.Name + "\r\n";
             }
             return result;

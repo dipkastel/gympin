@@ -53,11 +53,4 @@ public class UserParam extends BaseParam<UserParam> {
     private Long avatarId;
 
 
-    @JsonProperty("CorporateId")
-    private Long corporateId;
-
-
-
-
-
 }

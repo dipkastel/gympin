@@ -6,7 +6,6 @@ import PersonIcon from "@mui/icons-material/Person";
 const _ticketInfo = ({subscribe}) => {
     const [openModalInfo, setOpenModalInfo] = useState(false)
 
-    console.log("subscribe",subscribe)
     function renderModalInfo() {
         return (<>
             <Dialog

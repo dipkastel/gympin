@@ -43,13 +43,11 @@ const _UserCreditListItem = ({userCredit, updatePage}) => {
 
 
     function getTransactionDetails() {
-        console.log(userCredit.Id)
         TransactionPersonnelCredit_query({
             queryType: "FILTER",
             CreditId: userCredit.Id,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
-            console.log(data.data.Data.content);
             setCreditTransaction(data.data.Data.content)
         }).catch(e => {
             try {
@@ -63,7 +61,6 @@ const _UserCreditListItem = ({userCredit, updatePage}) => {
     function renderModalDecrease() {
 
         function creditExpire(e) {
-            console.log("ex", e)
             e.preventDefault();
             setCreditToDecrease(null);
             corporatePersonnel_manualExpireCredit({

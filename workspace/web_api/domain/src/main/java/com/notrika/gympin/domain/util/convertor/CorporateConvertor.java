@@ -5,6 +5,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePerso
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelGroupDto;
 import com.notrika.gympin.common.settings.corporateSettings.enums.CorporateSettingTypesEnum;
+import com.notrika.gympin.common.settings.userSettings.enums.UserSettingTypesEnum;
 import com.notrika.gympin.domain.corporate.CorporatePersonelFinanceHelper;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
@@ -81,6 +82,9 @@ public final class CorporateConvertor {
         dto.setRole(entity.getRole());
         dto.setUser(UserConvertor.toDtoSimple(entity.getUser()));
         dto.setPersonnelGroup(toDto(entity.getPersonnelGroup()));
+        try{
+            dto.setCateringAccess(entity.getUser().getSettings().stream().filter(us->us.getKey().equals(UserSettingTypesEnum.CATERING_ACCESS)&&!us.isDeleted()).map(us->Long.valueOf(us.getValue())).collect(Collectors.toList()));
+        }catch (Exception e){}
         if (entity.getCredits() != null)
             dto.setCreditList(entity.getCredits().stream().filter(o->!o.isDeleted()).map(CorporateConvertor::toCreditDto).collect(Collectors.toList()));
         try{

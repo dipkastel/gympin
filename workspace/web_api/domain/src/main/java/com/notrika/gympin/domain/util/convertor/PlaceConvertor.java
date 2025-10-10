@@ -132,6 +132,7 @@ public final class PlaceConvertor {
         catering.setMinOrderCount(entity.getMinOrderCount());
         catering.setFreeDeliveryPrice(entity.getFreeDeliveryPrice());
         catering.setHasDishesPrice(entity.getHasDishesPrice());
+        catering.setViewType(entity.getViewType());
         return catering;
     }
 

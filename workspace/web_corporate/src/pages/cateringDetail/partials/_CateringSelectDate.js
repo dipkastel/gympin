@@ -15,7 +15,6 @@ const _CateringSelectDate = ({selectedDate, setSelectedDate, catering}) => {
     useEffect(() => {
         var initDates = [];
         var tmpDate = new Date().getTime();
-        console.log("catering",catering);
         for (var i = catering.LastOrderDayCount; i < 30+catering.LastOrderDayCount; i++) {
             initDates.push({Date: new Date(tmpDate + i*day)})
         }

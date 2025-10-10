@@ -23,7 +23,6 @@ const Code = () => {
 
     function getCodeDetails() {
         giftCredit_checkStatus({code: code}).then(result => {
-            console.log(result);
             SetLoading(false);
             SetCodeDetails(result?.data?.Data);
         }).catch(e => {

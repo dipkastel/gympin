@@ -28,6 +28,7 @@ public interface InvoiceController extends BaseController<InvoiceParam, InvoiceD
     ResponseEntity<InvoiceDto> simpleCheckout(InvoiceCheckoutParam param) throws Exception;
     ResponseEntity<InvoiceDto> confirmFoodPayment(InvoiceCheckoutParam param) throws Exception;
     ResponseEntity<InvoiceDto> completeFoodPayment(InvoiceCheckoutParam param) throws Exception;
+    ResponseEntity<InvoiceDto> getFoodBasket(@RequestBody InvoiceParam param) throws Exception;
     ResponseEntity<InvoiceDto> moderateCheckout(InvoiceCheckoutParam param) throws Exception;
     ResponseEntity<InvoiceDto> advancedCheckout(InvoiceCheckoutParam param) throws Exception;
     ResponseEntity<InvoiceDto> userCheckout(InvoiceCheckoutParam param) throws Exception;

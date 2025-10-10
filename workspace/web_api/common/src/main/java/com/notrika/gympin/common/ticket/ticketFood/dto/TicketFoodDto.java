@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketFood.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeCatering.dto.PlaceCateringDto;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
@@ -57,6 +58,7 @@ public class TicketFoodDto extends BaseDto<TicketFoodDto> {
     @JsonProperty("MaxOrderCount")
     private Short maxOrderCount;
 
-
+    @JsonProperty("Multimedias")
+    private List<MultimediaDto> multimedias;
 
 }

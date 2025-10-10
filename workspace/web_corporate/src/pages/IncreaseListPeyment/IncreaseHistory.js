@@ -10,8 +10,7 @@ import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import {Image} from "react-bootstrap";
 import {Receipt} from "@mui/icons-material";
 import {
-    increaseCorporateDeposit_getInvoice,
-    increaseCorporateDeposit_getProFromaInvoice
+    increaseCorporateDeposit_getInvoice
 } from "../../network/api/increaseCorporateDeposit.api";
 
 const IncreaseHistory = () => {

@@ -14,6 +14,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -46,6 +47,9 @@ public class InvoiceDto extends BaseDtoWithCreateUpdate<InvoiceDto> {
 
     @JsonProperty("Corporate")
     private CorporateDto corporate;
+
+    @JsonProperty("Date")
+    private Date date;
 
     @JsonProperty("TotalPrice")
     private BigDecimal totalPrice;

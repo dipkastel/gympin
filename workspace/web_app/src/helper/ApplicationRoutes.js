@@ -29,6 +29,7 @@ import NewHome from "../pages/newHome/NewHome";
 import Code from "../pages/auth/Code";
 import Support from "../pages/support/Support";
 import SupportDetail from "../pages/support/supportDetail/SupportDetail";
+import FoodSelect from "../pages/Food/FoodSelect";
 
 export default function ApplicationRoutes() {
     const isAuthorized = useSelector(({auth: {user}}) => user ? user.Id != null : false);
@@ -54,6 +55,7 @@ export default function ApplicationRoutes() {
                     {/*<Route path="/" element={<NewHome/>}/>*/}
                     <Route path="/" element={<NewHome/>}/>
                     <Route path="/places" element={<Places/>}/>
+                    <Route path="/foodSelect" element={<FoodSelect/>}/>
                     <Route path="/places/:sid" element={<Places/>}/>
                     <Route path="/place/:placeId" element={<Place/>}/>
                     <Route path="/placesMap" element={<PlacesMap/>}/>

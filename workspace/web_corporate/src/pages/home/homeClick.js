@@ -2,12 +2,10 @@ export default function clickHandler(item, navigator) {
     if (!item.Destination) return;
     switch (item.Destination.Name) {
         case "PLACES": {
-            console.log("Data - " + item.Data)
             if (!item.Data)
                 navigator("/places", {replace: false});
             else
                 navigator("/place/" + item.Data, {replace: false});
-            console.log("PLACES")
         }
             break;
         case "SPORTS": {

@@ -15,4 +15,5 @@ public interface ManageUserSettingsRepository extends BaseRepository<UserSetting
 
     List<UserSettingsEntity> findAllByDeletedIsFalseAndUserId(Long userId);
     List<UserSettingsEntity> findAllByDeletedIsFalseAndUserIdAndKey(Long userId, UserSettingTypesEnum key);
+    List<UserSettingsEntity> findAllByDeletedIsFalseAndUserIdAndKeyAndDataLike(Long userId, UserSettingTypesEnum key,String Data);
 }

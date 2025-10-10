@@ -30,7 +30,6 @@ const _UserAddCredit = () => {
     function renderModalAddCredit() {
         function addCredit(e) {
             e.preventDefault()
-            console.log(selectedPersonnel?.value);
             if(!selectedPersonnel?.value){
                 error.showError({message: "پرسنل انتخاب نشده",});
                 return;

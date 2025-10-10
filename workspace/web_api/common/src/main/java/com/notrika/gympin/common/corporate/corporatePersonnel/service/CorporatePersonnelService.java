@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.corporate.corporatePersonnel.service;
 
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCateringAccessParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelFileParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.query.CorporatePersonnelQuery;
@@ -19,4 +20,6 @@ public interface CorporatePersonnelService extends BaseService<CorporatePersonne
     CorporatePersonnelDto getPersonnelByCorporateIdAndUserId(long corporateId,long userId);
     List<CorporatePersonnelDto> getOwnedByUserid(Long userId);
     List<CorporatePersonnelDto> addList(CorporatePersonnelFileParam param);
+    Boolean setPersonelAccessToCatering(CorporatePersonnelCateringAccessParam param);
+    Boolean setAllPersonelAccessToCatering(CorporatePersonnelCateringAccessParam param);
 }

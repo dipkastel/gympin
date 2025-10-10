@@ -1,9 +1,6 @@
-package com.notrika.gympin.persistence.entity.finance.user.invoice;
+package com.notrika.gympin.persistence.entity.finance.invoice;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.user.user.enums.Gender;
-import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
-import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodMenuEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.Objects;
 
 
@@ -22,24 +18,19 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "invoiceFood")
-public class InvoiceFoodEntity extends InvoiceBuyableEntity<InvoiceFoodEntity> {
-
-    @Column(name = "date")
-    private Date date;
+@Table(name = "invoiceSubscribe")
+public class InvoiceSubscribeEntity extends InvoiceBuyableEntity<InvoiceSubscribeEntity> {
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "buyableFoodId")
-    @JsonIgnore
-    @ToString.Exclude
-    private TicketFoodMenuEntity foodMenus;
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        InvoiceFoodEntity that = (InvoiceFoodEntity) o;
+        InvoiceSubscribeEntity that = (InvoiceSubscribeEntity) o;
         return Objects.equals(getId(), that.getId());
     }
 

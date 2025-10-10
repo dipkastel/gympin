@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -21,9 +23,12 @@ public class InvoiceParam extends BaseParam<InvoiceParam> {
     @JsonProperty("User")
     private UserParam user;
 
+    @JsonProperty("Corporate")
+    private CorporateParam corporate;
+
     @JsonProperty("Status")
     private InvoiceStatus status;
 
-    @JsonProperty("CorporateId")
-    private Long corporateId;
+    @JsonProperty("Date")
+    private Date date;
 }

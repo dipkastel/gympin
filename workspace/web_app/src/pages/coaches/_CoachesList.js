@@ -74,10 +74,6 @@ const _CoachesList = () => {
         getData(0);
     }, [filters,sortBy]);
 
-    useEffect(() => {
-        console.log("coaches",coaches)
-    }, [coaches]);
-
     function getData(page){
         setIsLoading(true);
         User_query({

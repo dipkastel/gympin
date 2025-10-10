@@ -40,7 +40,6 @@ const EditProfile = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log(currentUser);
         var can = true;
         if (!currentUser.FullName) can=false;
         if (!currentUser.Gender) can=false;
@@ -86,7 +85,6 @@ const EditProfile = (props) => {
     }
 
     function setFieldValue(name, value) {
-        console.log(value?.label?.props?.children?.props?.children);
         setCurrentUser(lastUser => {
             if(name=="LocationId")
                 return {...lastUser, [name]: value.value,Location:{Id:value.value,Name:value?.label?.props?.children?.props?.children}}

@@ -32,7 +32,6 @@ export function* saga() {
         const result = yield call(
             () => new Promise((resolve) => {
                 configs_getWebAppSplash({UserId:action.payload.user.Id}).then((_result) => {
-                    console.log(_result.data.Data)
                     resolve(_result.data.Data);
                 }).catch(e => {
                     console.log(e)

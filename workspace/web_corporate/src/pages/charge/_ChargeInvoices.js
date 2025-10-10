@@ -78,7 +78,6 @@ const _ChargeInvoices = ({refreshCode}) => {
     function getlabelOfRefrence() {
         if (!itemToPay)
             return "نوع تراکنش انتخاب نشده";
-        console.log(itemToPay)
         switch (itemToPay?.GatewayType) {
             case 'CARD_TRANSFER':
                 return "کد مرجع تراکنش";
@@ -211,7 +210,7 @@ const _ChargeInvoices = ({refreshCode}) => {
 
     return (
         <>
-            {transactions?.content?.length > 0 && <Grid container textAlign={"center"} columns={2} size={6}>
+            {transactions?.content?.length > 0 && <Grid container textAlign={"center"} columns={2} size={{sm:12,md:6}}>
                 {transactions?.content && transactions.content.map((row, index) => {
                     return (
                         <Grid key={"tr-" + row.Serial} size={2} textAlign={"center"}>
@@ -261,7 +260,7 @@ const _ChargeInvoices = ({refreshCode}) => {
             {transactions?.content && transactions?.content?.length < 1 && <>
                 <Grid
                     container
-                    size={6}
+                    size={{sm:12,md:6}}
                     sx={{height: "60vh"}}
                     direction={"column"}
                     justifyContent={"center"}

@@ -194,7 +194,6 @@ export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,row
                         page={page}
                         onPageChange={(event, newPage) => setPage(newPage)}
                         onRowsPerPageChange={(event) => {
-                            console.log(parseInt(event.target.value, 10));
                             setRowsPerPage(parseInt(event.target.value, 10));
                             setPage(0);
                         }}

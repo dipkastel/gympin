@@ -4,6 +4,7 @@ import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCateringAccessParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelFileParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.query.CorporatePersonnelQuery;
@@ -12,6 +13,7 @@ import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
+import com.notrika.gympin.common.settings.userSettings.enums.UserSettingTypesEnum;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.param.UserRegisterParam;
@@ -20,12 +22,14 @@ import com.notrika.gympin.common.util.exception.general.SendSmsException;
 import com.notrika.gympin.common.util.exception.user.LowDepositException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.finance.helper.FinanceHelper;
+import com.notrika.gympin.domain.settings.userSettings.UserSettingsServiceImpl;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
+import com.notrika.gympin.persistence.dao.repository.settings.ManageUserSettingsRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
@@ -34,6 +38,7 @@ import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporatePersonnelCreditEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
+import com.notrika.gympin.persistence.entity.management.settings.UserSettingsEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +69,8 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
     private CorporateServiceImpl corporateService;
     @Autowired
     private FinanceSerialRepository financeSerialRepository;
+    @Autowired
+    private ManageUserSettingsRepository manageUserSettingsRepository;
     @Autowired
     private CorporatePersonnelRepository corporatePersonnelRepository;
     @Autowired
@@ -304,5 +311,42 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
     @Override
     public List<CorporatePersonnelDto> getOwnedByUserid(Long userId) {
         return corporatePersonnelRepository.findByUserIdAndRoleAndDeletedIsFalse(userId, CorporatePersonnelRoleEnum.ADMIN).stream().map(p->CorporateConvertor.toSecurePersonnelDto(p,corporatePersonelFinanceHelper)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean setPersonelAccessToCatering(CorporatePersonnelCateringAccessParam param) {
+        CorporatePersonnelEntity personnel = corporatePersonnelRepository.getById(param.getPersonnelId());
+        List<UserSettingsEntity> settings = manageUserSettingsRepository.findAllByDeletedIsFalseAndUserIdAndKeyAndDataLike(personnel.getUser().getId(), UserSettingTypesEnum.CATERING_ACCESS,personnel.getId().toString());
+        if(param.getAccess()){
+            //Add Access
+            UserSettingsEntity access = settings.stream().filter(a->a.getValue().equals(param.getCateringId().toString())).findFirst().orElse(null);
+            if(access==null){
+                manageUserSettingsRepository.add(UserSettingsEntity.builder()
+                        .key(UserSettingTypesEnum.CATERING_ACCESS)
+                        .value(param.getCateringId().toString())
+                        .user(personnel.getUser())
+                        .data(personnel.getId().toString())
+                        .build()
+                );
+            }
+        }else{
+            //removeAccess
+            UserSettingsEntity access = settings.stream().filter(a->a.getValue().equals(param.getCateringId().toString())).findFirst().orElse(null);
+            if(access!=null){
+                manageUserSettingsRepository.deleteById2(access);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean setAllPersonelAccessToCatering(CorporatePersonnelCateringAccessParam param) {
+        List<CorporatePersonnelEntity> personnel = corporatePersonnelRepository.findByCorporateIdAndDeletedIsFalse(param.getCorporateId());
+        for (CorporatePersonnelEntity person :
+                personnel) {
+            param.setPersonnelId(person.getId());
+            setPersonelAccessToCatering(param);
+        }
+        return true;
     }
 }

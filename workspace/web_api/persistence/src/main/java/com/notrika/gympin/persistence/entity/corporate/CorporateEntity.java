@@ -8,7 +8,8 @@ import com.notrika.gympin.persistence.entity.authCodes.CorporateContractCodeEnti
 import com.notrika.gympin.persistence.entity.finance.affiliate.FinanceAffiliatorEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateEntity;
 import com.notrika.gympin.persistence.entity.finance.corporate.FinanceIncreaseCorporateDepositRequestEntity;
-import com.notrika.gympin.persistence.entity.finance.user.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoicePersonnelSelectedFoodEntity;
 import com.notrika.gympin.persistence.entity.management.gifts.ManageGiftCreditEntity;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.management.note.ManageNoteEntity;
@@ -141,6 +142,11 @@ public class CorporateEntity extends BaseEntityWithCreateUpdate<CorporateEntity>
     @JsonIgnore
     @ToString.Exclude
     private FinanceAffiliatorEntity affiliator;
+
+    @OneToMany(mappedBy = "corporate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<InvoicePersonnelSelectedFoodEntity> personnelFoods;
 
 
     @Override

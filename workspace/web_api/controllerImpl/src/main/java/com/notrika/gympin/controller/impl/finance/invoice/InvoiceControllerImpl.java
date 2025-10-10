@@ -95,6 +95,12 @@ public class InvoiceControllerImpl implements InvoiceController {
     }
 
     @Override
+    @PostMapping("getFoodBasket")
+    public ResponseEntity<InvoiceDto> getFoodBasket(InvoiceParam param) throws Exception {
+        return ResponseEntity.ok(invoiceService.getFoodBasket(param));
+    }
+
+    @Override
     @GetMapping("confirmFoodPayment")
     public ResponseEntity<InvoiceDto> confirmFoodPayment(InvoiceCheckoutParam param) throws Exception {
         return ResponseEntity.ok(invoiceService.confirmFoodPayment(param));

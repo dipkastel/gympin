@@ -3,6 +3,7 @@ package com.notrika.gympin.persistence.entity.ticket.food;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.ticketFood.enums.FoodItemStatus;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoicePersonnelSelectedFoodEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -38,6 +40,12 @@ public class TicketFoodMenuEntity extends BaseEntityWithCreateUpdate<TicketFoodM
 
     @Column(name = "category")
     private String category;
+
+
+    @OneToMany(mappedBy = "foodMenu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<InvoicePersonnelSelectedFoodEntity> personnelFoods;
 
     @Override
     public boolean equals(Object o) {

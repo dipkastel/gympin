@@ -42,10 +42,8 @@ const PlacesMap = () => {
             paging: {Page: 0, Size: 60}
         }).then(result => {
             setIsLoading(false);
-            console.log(result.data.Data.content);
             setBoundsPlace(result.data.Data.content);
         }).catch(e => {
-            console.log(e);
             try {
                 error.showError({message: e.response.data.Message});
             } catch (f) {
@@ -104,7 +102,6 @@ const PlacesMap = () => {
 
 
     function addMarkers(places) {
-        console.log(markerLayer)
         // markerLayer?.clearLayers();
         places.forEach(place => {
             if (place.Latitude != null && place.Longitude != null)
@@ -143,7 +140,6 @@ const PlacesMap = () => {
             popupAnchor: [-19, -35],
             className: "leaflet-marker",
         });
-        console.log("markerLayer",markerLayer);
         for(let layer in markerLayer?.getLayers()){
             if(markerLayer?.getLayers()[layer].id==place?.Id) return;
         }
@@ -153,14 +149,12 @@ const PlacesMap = () => {
         marker.on('click', function (e) {
             setOpenPlace(place)
            var a =  marker.openPopup();
-            console.log("aaa",a);
             // navigate("/place/" + place.Id + "-" + fixTextToSlug(place.Name), {replace: false});
         });
 
         marker.on('popupclose',setOpenPlace(null))
         if(place.Id===openPlace?.Id){
             setTimeout(()=>{
-                console.log("openPlace",openPlace);
                 marker?.openPopup();
             },200)
         }

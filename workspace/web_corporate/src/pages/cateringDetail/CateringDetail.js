@@ -1,16 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Badge, Button, Card, CardContent} from "@mui/material";
+import {Badge, Button, Card, CardActionArea, CardContent, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import SideMenu from "./sideProinvoice/SideMenu";
 import _CateringSelectDate from "./partials/_CateringSelectDate";
-import _CateringMenu from "./partials/_CateringMenu";
+import _CateringListSimpleMenu from "./partials/_CateringListSimpleMenu";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {
     invoice_addFood,
     invoice_changeInvoiceBuyableCount,
     invoice_deleteBuyable,
-    invoice_getBasketByUserId,
+    invoice_getFoodBasket,
     invoice_query,
     invoice_sendOrderToCatering
 } from "../../network/api/invoice.api";
@@ -18,6 +18,10 @@ import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useNavigate} from "react-router";
 import {Catering_getById} from "../../network/api/catering.api";
 import _CateringAbout from "./partials/_CateringAbout";
+import {Assessment, PeopleAlt, RamenDining} from "@mui/icons-material";
+import _CateringSettings from "./partials/_CateringSettings";
+import _CateringListImageMenu from "./partials/_CateringListImageMenu";
+import _CateringUserOrders from "./partials/_CateringUserOrders";
 
 const CateringDetail = () => {
 
@@ -25,18 +29,21 @@ const CateringDetail = () => {
     let {cateringId} = useParams();
     const navigate = useNavigate();
     const [selectedDate, setSelectedDate] = useState(false);
-    const currentUser = useSelector(state => state.auth.user);
     const [CurrentBasket, SetCurrentBasket] = useState(null);
     const [catering, SetCatering] = useState(null);
     const [invoiceToPayCount, SetInvoiceToPayCount] = useState(0);
     const [invoiceProcessingCount, SetInvoiceProcessingCount] = useState(0);
+    const [openSideMenu, setOpenSideMenu] = React.useState(false);
     const corporate = useSelector(({corporate}) => corporate.corporate)
 
 
     useEffect(() => {
-        getBasket();
         getCatering()
     }, []);
+
+    useEffect(() => {
+        getBasket();
+    }, [selectedDate]);
 
     useEffect(() => {
         getInvoiceToPay()
@@ -105,8 +112,12 @@ const CateringDetail = () => {
         })
     }
 
-    function getBasket() {
-        invoice_getBasketByUserId({id: currentUser.Id, CorporateId: corporate.Id}).then(result => {
+    function getBasket(refresh) {
+        if (!catering) return;
+        if (!selectedDate) return;
+        if(refresh)
+            SetCurrentBasket(null);
+        invoice_getFoodBasket({Date: new Date(selectedDate), Corporate: {Id: corporate.Id}}).then(result => {
             SetCurrentBasket(result.data.Data);
         }).catch(e => {
             try {
@@ -125,9 +136,9 @@ const CateringDetail = () => {
             Corporate: {Id: corporate.Id},
         }).then(result => {
             error.showError({message: 'به سبد خرید اضافه شد'});
-            getBasket();
+            getBasket(false);
         }).catch(e => {
-            getBasket();
+            getBasket(true);
             try {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
@@ -141,7 +152,7 @@ const CateringDetail = () => {
 
         invoice_sendOrderToCatering({Id: CurrentBasket.Id})
             .then(result => {
-                getBasket();
+                getBasket(true);
             })
             .catch(e => {
                 try {
@@ -158,15 +169,16 @@ const CateringDetail = () => {
             invoice_deleteBuyable({id: item.Id})
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
-                    getBasket()
-                }).catch(e => {
-                getBasket();
-                try {
-                    error.showError({message: e.response.data.Message,});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            });
+                    getBasket(false)
+                })
+                .catch(e => {
+                    getBasket(true);
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
         } else {
             updateCount("minus", item);
         }
@@ -175,7 +187,7 @@ const CateringDetail = () => {
     function updateOrderCount(item, Count) {
         if (Count < 1) {
             error.showError({message: "تعداد آیتم ها نمی‌تواند کمتر از 1 باشد!",});
-            getBasket();
+            getBasket(false);
             return;
         }
         updateCount("update", item, Count);
@@ -198,9 +210,9 @@ const CateringDetail = () => {
             Count: newCount
         }).then(result => {
             error.showError({message: "عملیات موفق",});
-            getBasket();
+            getBasket(false);
         }).catch(e => {
-            getBasket();
+            getBasket(true);
             try {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
@@ -213,12 +225,13 @@ const CateringDetail = () => {
         <>
             <Grid columns={120} container>
                 <Grid sx={{p: 1}} size={{xs: 90, sm: 96, md: 102, lg: 104, xl: 108}}>
-                    <Card><CardContent sx={{p: 2}}>
-                        <_CateringAbout Catering={catering}/>
-                    </CardContent></Card>
+                    <Card>
+                        <CardContent sx={{p: 2}}>
+                            <_CateringAbout Catering={catering}/>
+                        </CardContent>
+                    </Card>
                 </Grid>
                 <Grid sx={{p: 1, alignContent: "top"}} size={{xs: 30, sm: 24, md: 18, lg: 16, xl: 12}}>
-
                     <Badge sx={{my: 1}} badgeContent={invoiceProcessingCount} color="error">
                         <Button variant={"contained"} onClick={(e) => navigate("/food/Process/" + cateringId)}
                                 disabled={!invoiceProcessingCount} color={"warning"} fullWidth size={"small"}>در حال آماده سازی</Button>
@@ -227,19 +240,66 @@ const CateringDetail = () => {
                         <Button variant={"contained"} onClick={(e) => navigate("/food/needToPay/" + cateringId)}
                                 disabled={!invoiceToPayCount} color={"warning"} fullWidth size={"small"}>تاریخچه و پیگیری</Button>
                     </Badge>
-                    <SideMenu CurrentBasket={CurrentBasket} catering={catering}
-                              setOrderCount={updateOrderCount} removeOrder={RemoveOrder} confirmOrder={ConfirmOrder} refresh={getBasket}/>
                 </Grid>
+
                 {catering && <Grid size={{xs: 120, sm: 120, md: 120, lg: 120, xl: 120}}>
                     <_CateringSelectDate selectedDate={selectedDate} setSelectedDate={setSelectedDate} catering={catering}/>
                 </Grid>}
+
+                {selectedDate && <Grid sx={{p: 1}} size={{xs: 120, sm: 120, md: 30, lg: 30, xl: 30}}>
+                    <_CateringUserOrders corporate={corporate} selectedDate={selectedDate} setOpenSideMenu={setOpenSideMenu} />
+                </Grid>}
+                <Grid sx={{p: 1}} size={{xs: 120, sm: 120, md: 30, lg: 30, xl: 30}}>
+                    <_CateringSettings catering={catering} corporate={corporate}/>
+                </Grid>
+                <Grid sx={{p: 1}} size={{xs: 120, sm: 120, md: 30, lg: 30, xl: 30}}>
+                    <Card sx={{m: 2}}>
+                        <CardActionArea sx={{p: 2, textAlign: "center"}} onClick={(e) => {error.showError({message: "به زودی",})}}>
+                            <CardContent>
+                                <Assessment sx={{fontSize: "3rem", mb: 1}}/>
+                                <Typography variant={"h5"}>گزارشات</Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+                </Grid>
+                <Grid sx={{p: 1}} size={{xs: 120, sm: 120, md: 30, lg: 30, xl: 30}}>
+                    <SideMenu CurrentBasket={CurrentBasket} catering={catering}
+                              setOrderCount={updateOrderCount}
+                              removeOrder={RemoveOrder}
+                              confirmOrder={ConfirmOrder}
+                              refresh={getBasket}
+                              openSideMenu={openSideMenu}
+                              setOpenSideMenu={setOpenSideMenu}
+                    />
+                </Grid>
                 <Grid size={{xs: 120, sm: 120, md: 120, lg: 120, xl: 120}}>
-                    {selectedDate &&
-                    <_CateringMenu selectedDate={selectedDate} catering={cateringId} orders={CurrentBasket} addOrder={AddFood}
+                    {selectedDate && CurrentBasket && catering?.ViewType == "LIST_SIMPLE" &&
+                    <_CateringListSimpleMenu
+                        selectedDate={selectedDate}
+                        catering={cateringId}
+                        orders={CurrentBasket}
+                        addOrder={AddFood}
+                    />}
+                    {selectedDate && CurrentBasket && catering?.ViewType == "LIST_IMAGE" &&
+                    <_CateringListImageMenu
+                        selectedDate={selectedDate}
+                        catering={cateringId}
+                        orders={CurrentBasket}
+                        addOrder={AddFood}
+                        minusOrder={(item)=>updateCount("minus",item)}
+                        deleteOrder={RemoveOrder}
                     />}
                 </Grid>
 
 
+                {!selectedDate && <Grid sx={{p: 1}} size={{xs: 120, sm: 120, md: 120, lg: 120, xl: 120}}>
+                    <Card sx={{m: 1, p: 8}}>
+                        <CardContent sx={{textAlign: "center"}}>
+                            <RamenDining sx={{fontSize: "6rem", mb: 4}}/>
+                            <Typography variant={"h5"}>برای سفارش غذا یک تاریخ انتخاب کنید</Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>}
             </Grid>
         </>
     );
