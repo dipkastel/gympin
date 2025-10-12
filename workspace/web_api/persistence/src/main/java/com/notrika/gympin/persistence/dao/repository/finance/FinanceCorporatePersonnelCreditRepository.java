@@ -19,4 +19,12 @@ public interface FinanceCorporatePersonnelCreditRepository extends BaseRepositor
     @Query("SELECT a FROM FinanceCorporatePersonnelCreditEntity a where a.corporatePersonnel.user.id = :#{#userId} and a.status = 'ACTIVE'")
     List<FinanceCorporatePersonnelCreditEntity> getActiveUserCredits(Long userId);
 
+
+    @Query("SELECT fcpce FROM FinanceCorporatePersonnelCreditEntity fcpce " +
+            "where fcpce.corporatePersonnel.deleted = false " +
+            "and fcpce.status = 'ACTIVE' " +
+            "and fcpce.deleted = false " +
+            "and fcpce.ExpireDate < current_date ")
+    List<FinanceCorporatePersonnelCreditEntity> getExpireCredits();
+
 }
