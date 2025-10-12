@@ -73,9 +73,10 @@ export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,row
         })
     }
 
-    function getNearestExpirationDate(credit) {
+    function getNearestExpirationDate(allCredit) {
         try {
-            var date = credit[0].ExpireDate;
+            var credit = allCredit?.filter(c=>c.Status=="ACTIVE");
+            var date = credit[0]?.ExpireDate;
             for (let item in credit) {
                 if (date > item?.ExpireDate)
                     date = item?.ExpireDate;
@@ -86,7 +87,7 @@ export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,row
                 day: 'numeric',
             })
         } catch (e) {
-            return "ثبت نشده"
+            return "ندارد"
         }
 
     }
