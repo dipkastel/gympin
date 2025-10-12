@@ -44,9 +44,9 @@ const _CateringSelectDate = ({selectedDate, setSelectedDate, catering, AllOrders
 
     function getLabel(itemDate) {
         console.log(itemDate);
-        console.log(AllOrders.filter(o => o.Date === itemDate).Date);
-        return (<Badge badgeContent={AllOrders.filter(o => (new Date(o.Date).toDateString()) == itemDate.toDateString()).length}
-                       color={AllOrders.filter(o => (new Date(o.Date).toDateString()) == itemDate.toDateString()).Ordered ? "success" : "info"}
+        console.log(AllOrders?.filter(o => o.Date === itemDate).Date);
+        return (<Badge badgeContent={AllOrders?.filter(o => (new Date(o.Date).toDateString()) == itemDate.toDateString())?.length}
+                       color={AllOrders?.filter(o => (new Date(o.Date).toDateString()) == itemDate.toDateString())?.Ordered ? "success" : "info"}
                        variant={"standard"}
                        sx={{mx:1.3,mt:1}}
         ><Grid sx={{p: 1, borderRadius: 3, border: "1px solid"}} disabled={isDisable(itemDate)}>
