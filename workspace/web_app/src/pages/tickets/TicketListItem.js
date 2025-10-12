@@ -57,7 +57,8 @@ const TicketListItem = ({item,getSubscribe}) => {
                     <Grid sx={{mx:5}} container direction={"row"} justifyContent={"space-between"}>
                         {item?.Status=="READY_TO_ACTIVE"&&
                         <Alert sx={{m: 2,width:"100%"}} severity={"error"}>
-                            <AlertTitle >بلیط غیر فعال</AlertTitle>
+                            <AlertTitle sx={{mb:0}} >بلیط غیر فعال</AlertTitle>
+                            <Typography variant={"overline"} >برای فعال سازی کلیک کنید</Typography>
                         </Alert>}
                     </Grid>
                     <Divider variant={"middle"} sx={{my:2,borderStyle:"dashed"}} component="div"/>
