@@ -1,7 +1,6 @@
 package com.notrika.gympin.persistence.entity.place;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
 import com.notrika.gympin.common.place.placeCatering.enums.CateringViewTypeEnum;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntity;

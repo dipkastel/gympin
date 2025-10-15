@@ -58,6 +58,10 @@ public class TicketFoodDto extends BaseDto<TicketFoodDto> {
     @JsonProperty("MaxOrderCount")
     private Short maxOrderCount;
 
+
+    @JsonProperty("Category")
+    private String category;
+
     @JsonProperty("Multimedias")
     private List<MultimediaDto> multimedias;
 

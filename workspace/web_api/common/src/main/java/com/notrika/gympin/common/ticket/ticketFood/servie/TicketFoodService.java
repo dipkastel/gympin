@@ -1,11 +1,13 @@
 package com.notrika.gympin.common.ticket.ticketFood.servie;
 
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
+import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaListParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodDto;
+import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodCategoryParam;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodMultimediaParam;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodParam;
 import com.notrika.gympin.common.ticket.ticketFood.query.TicketFoodQuery;
@@ -19,4 +21,9 @@ public interface TicketFoodService extends BaseService<TicketFoodParam, TicketFo
     TicketFoodDto addMultimedia(TicketFoodMultimediaParam param);
     TicketFoodDto removeMultimedia(TicketFoodMultimediaParam param);
     TicketFoodDto setDefaultMultimedia(TicketFoodMultimediaParam param);
+
+    List<String> GetAllCategoriesByCatering(PlaceCateringParam param);
+    TicketFoodDto ClearCategory(TicketFoodCategoryParam param);
+    TicketFoodDto SetCategory(TicketFoodCategoryParam param);
+
 }

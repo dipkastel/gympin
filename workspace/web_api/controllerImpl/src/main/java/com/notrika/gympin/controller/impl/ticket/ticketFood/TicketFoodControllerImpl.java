@@ -1,11 +1,13 @@
 package com.notrika.gympin.controller.impl.ticket.ticketFood;
 
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
+import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.ticketFood.api.TicketFoodController;
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodDto;
+import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodCategoryParam;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodMultimediaParam;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodParam;
 import com.notrika.gympin.common.ticket.ticketFood.query.TicketFoodQuery;
@@ -79,8 +81,23 @@ public class TicketFoodControllerImpl implements TicketFoodController {
         return ResponseEntity.ok(ticketFoodService.removeMultimedia(param));
     }
 
+    @Override
+    @GetMapping("/GetAllCategoriesByCatering")
+    public ResponseEntity<List<String>> GetAllCategories(PlaceCateringParam param) {
+        return ResponseEntity.ok(ticketFoodService.GetAllCategoriesByCatering(param));
+    }
 
+    @Override
+    @PostMapping("/ClearCategory")
+    public ResponseEntity<TicketFoodDto> ClearCategory(TicketFoodCategoryParam param) {
+        return ResponseEntity.ok(ticketFoodService.ClearCategory(param));
+    }
 
+    @Override
+    @PostMapping("/SetCategory")
+    public ResponseEntity<TicketFoodDto> SetCategory(TicketFoodCategoryParam param) {
+        return ResponseEntity.ok(ticketFoodService.SetCategory(param));
+    }
 
 
 }

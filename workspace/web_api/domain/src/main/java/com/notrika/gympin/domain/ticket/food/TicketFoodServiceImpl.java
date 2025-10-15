@@ -2,12 +2,14 @@ package com.notrika.gympin.domain.ticket.food;
 
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
+import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaListParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodDto;
+import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodCategoryParam;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodMultimediaParam;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodParam;
 import com.notrika.gympin.common.ticket.ticketFood.query.TicketFoodQuery;
@@ -176,6 +178,28 @@ public class TicketFoodServiceImpl extends AbstractBaseService<TicketFoodParam, 
         updateList.add(multimedia);
         multimediaRepository.updateAll(updateList);
         item = getEntityById(param.getTicket().getId());
+        return TicketFoodConvertor.toDto(item);
+    }
+
+    @Override
+    public List<String> GetAllCategoriesByCatering(PlaceCateringParam param) {
+        List<String> categories = ticketFoodItemRepository.getAllFoodCategoriesByCateringId(param.getId());
+        return categories;
+    }
+
+    @Override
+    public TicketFoodDto ClearCategory(TicketFoodCategoryParam param) {
+        TicketFoodItemEntity item = getEntityById(param.getId());
+        item.setCategory(null);
+        update(item);
+        return TicketFoodConvertor.toDto(item);
+    }
+
+    @Override
+    public TicketFoodDto SetCategory(TicketFoodCategoryParam param) {
+        TicketFoodItemEntity item = getEntityById(param.getId());
+        item.setCategory(param.getCategory());
+        update(item);
         return TicketFoodConvertor.toDto(item);
     }
 

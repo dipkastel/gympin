@@ -44,7 +44,8 @@ public class TicketFoodItemEntity extends BuyableEntity<TicketFoodItemEntity> {
     @Column(name = "maxOrderCount", nullable = false , columnDefinition = "smallint(6) default 1000")
     private Short maxOrderCount;
 
-
+    @Column(name = "category")
+    private String category;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "FoodItemImage", joinColumns = @JoinColumn(name = "TicketFoodItemId"), inverseJoinColumns = @JoinColumn(name = "multimediaId"))
