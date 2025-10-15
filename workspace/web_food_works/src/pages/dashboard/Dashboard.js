@@ -10,7 +10,8 @@ const Dashboard = (props) => {
   const catering = useSelector(({ catering }) => catering.catering);
 
   useEffect(() => {
-    props.RequestCatering(catering);
+    if(catering)
+      props.RequestCatering(catering);
   }, []);
 
   return (

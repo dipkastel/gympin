@@ -29,7 +29,6 @@ function App(props) {
   const isAuthorized = useSelector(({ auth: { token } }) => token != null);
 
   const { mode } = useColorScheme();
-
   function CheckAuth() {
     return isAuthorized ? (
       <ReactRouterAppProvider

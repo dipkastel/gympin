@@ -52,6 +52,7 @@ const EditCatering = (props) => {
   }, [catering]);
   useEffect(() => {
     document.title = "ویرایش مشخصات سازمان";
+    console.log("---2");
     props.RequestCatering(catering);
     getratio();
   }, []);
@@ -80,6 +81,7 @@ const EditCatering = (props) => {
       Tel: inCatering.Tel,
     })
       .then((result) => {
+        console.log("---3");
         props.RequestCatering(catering);
         error.showError({ message: "ثبت موفق" });
       })
@@ -120,6 +122,7 @@ const EditCatering = (props) => {
                 MultimediaId: data.data.Data.Id,
               })
                 .then((result) => {
+                  console.log("---4");
                   props.RequestCatering(catering);
 
                   SetImageUrl(

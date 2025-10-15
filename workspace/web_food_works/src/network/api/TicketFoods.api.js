@@ -37,3 +37,14 @@ export function TicketFoods_setDefaultMultimedia(data) {
 export function TicketFoods_deleteMultimedia(data) {
   return axios.put(Api_url.ticketFood.deleteMultimedia,data );
 }
+
+export function TicketFoods_GetAllCategoriesByCatering(data) {
+  return axios.get(Api_url.ticketFood.GetAllCategoriesByCatering, {params:data});
+}
+
+export function TicketFoods_ClearCategory(data) {
+  return axios.post(Api_url.ticketFood.ClearCategory, data);
+}
+export function TicketFoods_SetCategory(data) {
+  return axios.post(Api_url.ticketFood.SetCategory, data);
+}

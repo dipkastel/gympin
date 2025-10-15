@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Card, CardContent, CardHeader, Chip, Dialog, DialogContent, DialogTitle, IconButton} from "@mui/material";
 import {PlaylistAdd} from "@mui/icons-material";
 import TableContainer from "@mui/material/TableContainer";
@@ -17,6 +17,23 @@ const FoodMenuCategoryList = ({date, category, menuList, getMenu, catering, allF
 
     const error = useContext(ErrorContext);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
+
+    const [AllFoodCats, SetAllFoodCats] = useState(null);
+
+
+    useEffect(() => {
+        const cateFoods = allFoods.reduce((acc, item) => {
+            const key = item.Category;
+            if (!acc[key]) acc[key] = [];
+            acc[key].push(item);
+            return acc;
+        }, {});
+        const Array = Object.entries(cateFoods).map(([category, items]) => ({
+            Category: category,
+            Items: items
+        }))
+        SetAllFoodCats(Array);
+    }, [allFoods]);
 
 
     function RenderModalAdd() {
@@ -43,7 +60,7 @@ const FoodMenuCategoryList = ({date, category, menuList, getMenu, catering, allF
 
         function removeFromList(e, item) {
             TicketFoodMenu_delete({
-                Id: item.Id
+                Id: menuList.find(ml=>ml.Food.Id==item.Id).Id
             }).then(result => {
                 getMenu()
             }).catch(e => {
@@ -55,25 +72,29 @@ const FoodMenuCategoryList = ({date, category, menuList, getMenu, catering, allF
             })
         }
 
+        function foodExist(food) {
+            return menuList?.some(f=>f.Food.Id==food.Id);
+        }
+
         return (
             <>
                 <Dialog maxWidth={"md"} open={openModalAdd} onClose={() => SetOpenModalAdd(false)}>
                     <DialogTitle>{"افزودن غذا به منو " + category}</DialogTitle>
                     <DialogContent>
-                        <Grid container columns={3}>
-                            {menuList?.map((item, num) => (
-                                <Grid item key={num}>
-                                    <Chip color={"secondary"} size={"medium"} sx={{p: 1, m: 1}} label={item?.Food?.Name}
-                                          onClick={e => removeFromList(e, item)}/>
-                                </Grid>
+                        {AllFoodCats?.map((item, num) => (
+                            <Grid item key={num}>
+                                <Card variant={"outlined"} sx={{p: 1}} fullWidth>{item.Category}</Card>
 
-                            ))}
-                            {allFoods?.filter(f => !menuList.map(o => o.Food.Id).includes(f.Id))?.map((item, num) => (
-                                <Grid item key={num}>
-                                    <Chip size={"medium"} sx={{p: 1, m: 1}} label={item?.Name} onClick={e => addToList(e, item)}/>
+                                <Grid container columns={3}>
+                                    {item?.Items?.map((food, num) => (
+                                        <Grid item key={num+"food"+food.Id}>
+                                            <Chip size={"medium"} color={foodExist(food)?"success":"inherit"} sx={{p: 1, m: 1}} label={food?.Name} onClick={e => foodExist(food)?removeFromList(e, food):addToList(e, food)}/>
+                                        </Grid>
+
+                                    ))}
                                 </Grid>
-                            ))}
-                        </Grid>
+                            </Grid>
+                        ))}
                     </DialogContent>
                 </Dialog>
             </>

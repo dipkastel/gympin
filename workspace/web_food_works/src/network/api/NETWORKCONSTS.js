@@ -108,10 +108,13 @@ export let Api_url = {
     delete: "v1/TicketFood/delete",
     update: "v1/TicketFood/update",
     getById: "v1/TicketFood/getById",
+    SetCategory: "v1/TicketFood/SetCategory",
+    ClearCategory: "v1/TicketFood/ClearCategory",
     addMultimedia: "v1/TicketFood/addMultimedia",
     getMultimedias: "v1/TicketFood/getMultimedias",
     deleteMultimedia: "v1/TicketFood/deleteMultimedia",
     setDefaultMultimedia: "v1/TicketFood/setDefaultMultimedia",
+    GetAllCategoriesByCatering: "v1/TicketFood/GetAllCategoriesByCatering",
   },
   ticketMenu: {
     add: "v1/TicketFoodMenu/add",

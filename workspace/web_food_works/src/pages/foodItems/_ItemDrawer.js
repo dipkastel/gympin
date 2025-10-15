@@ -8,6 +8,7 @@ import Grid from "@mui/material/Grid2";
 import __EditFoodItem from "./__EditFoodItem";
 import __EditFoodImages from "./__EditFoodImages";
 import __DeleteFoodItem from "./__DeleteFoodItem";
+import _ItemCategories from "./_ItemCategories";
 
 const _ItemDrawer = ({selectedItem,setSelectedItem,updateList}) => {
 
@@ -22,6 +23,7 @@ const _ItemDrawer = ({selectedItem,setSelectedItem,updateList}) => {
 
                     <__EditFoodImages  selectedItem={selectedItem} setSelectedItem={setSelectedItem}  />
                     <__EditFoodItem selectedItem={selectedItem} setSelectedItem={setSelectedItem} updateList={updateList} />
+                    <_ItemCategories selectedItem={selectedItem} setSelectedItem={setSelectedItem} updateList={updateList} />
                     <__DeleteFoodItem selectedItem={selectedItem} setSelectedItem={setSelectedItem} updateList={updateList} />
                 </Grid>
             </Drawer>

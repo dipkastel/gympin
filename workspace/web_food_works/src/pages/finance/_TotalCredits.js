@@ -9,6 +9,7 @@ const _TotalCredits = (props) => {
 
     useEffect(() => {
     if (!catering) return;
+        console.log("---4");
     props.RequestCatering(catering);
   }, []);
 

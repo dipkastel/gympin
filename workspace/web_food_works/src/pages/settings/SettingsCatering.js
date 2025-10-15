@@ -5,48 +5,43 @@ import {cateringActions} from "../../helper/redux/actions/CateringActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {toPriceWithComma} from "../../helper/utils";
 import {useNavigate} from "react-router-dom";
+import {placePersonnel_CateringPersonnelByUser} from "../../network/api/placePersonnel.api";
 
 const SettingsCatering = (props) => {
     const error = useContext(ErrorContext);
     const navigate = useNavigate();
     const user = useSelector(({auth}) => auth.user);
-    const [selectedCatring, SetSelectedCatring] = useState(
-        useSelector(({catering}) => catering.catering)
-        ,
-    );
+    const [selectedCatring, SetSelectedCatring] = useState(null);
+    const {catering} = useSelector(({catering}) => catering);
     const [personCatering, SetPersonCatering] = useState([]);
     useEffect(() => {
         getUserCaterings();
     }, []);
 
+    useEffect(() => {
+        SetSelectedCatring(catering);
+    }, [catering]);
+
     function getUserCaterings() {
-        // placePersonnel_OwnedByUserId({ id: user.Id })
-        //   .then((result) => {
-        //     SetPersonCatering(result.data.Data);
-        //     if (
-        //       result.data.Data.length === 1 &&
-        //       selectedCatring?.Id !== result.data.Data[0]?.Catering.Id
-        //     ) {
-        //       SetSelectedCatring(result.data.Data[0]?.Catering);
-        //       props.SetCatering(result.data.Data[0]?.Catering);
-        //       window.location = window.location;
-        //     }
-        //   })
-        //   .catch((e) => {
-        //     try {
-        //       error.showError({ message: e.response.data.Message });
-        //     } catch (f) {
-        //       error.showError({ message: "خطا نا مشخص" });
-        //     }
-        //   });
+        placePersonnel_CateringPersonnelByUser({id: user.Id})
+            .then((result) => {
+                SetPersonCatering(result.data.Data);
+            })
+            .catch((e) => {
+                try {
+                    error.showError({message: e.response.data.Message});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص"});
+                }
+            });
     }
 
     function selectedPlaceChanged(cateringId) {
         const catering = personCatering.find(
-            (r) => r.Catering.Id == cateringId,
+            (r) => r.Catering?.Id == cateringId,
         ).Catering;
+        console.log(catering);
         if (catering) {
-            SetSelectedCatring(catering);
             props.SetCatering(catering);
             window.location = "/";
         }
@@ -74,7 +69,7 @@ const SettingsCatering = (props) => {
                                 p: 1,
                                 border: "2px solid",
                                 borderColor:
-                                    selectedCatring.Id === item?.Catering?.Id
+                                    selectedCatring?.Id === item?.Catering?.Id
                                         ? "secondary.otherText"
                                         : "quaternary.otherText",
                                 borderRadius: 4,
@@ -94,9 +89,7 @@ const SettingsCatering = (props) => {
 
                                 <ListItemText
                                     primary={
-                                        item.Catering.Name +
-                                        " ( " +
-                                        " )"
+                                        item.Catering.Name
                                     }
                                     secondary={
                                         item?.Catering?.FinanceCatering?.TotalDeposit > 0 &&
@@ -114,7 +107,7 @@ const SettingsCatering = (props) => {
                                 />
                                 <Grid container justifyContent={"space-around"} spacing={2}>
                                     <Button
-                                        hidden={!(selectedCatring.Id === item?.Catering?.Id)}
+                                        hidden={!(selectedCatring?.Id === item?.Catering?.Id)}
                                         variant={"outlined"}
                                         sx={{
                                             my: 1,
@@ -122,14 +115,11 @@ const SettingsCatering = (props) => {
                                             borderColor: "secondary.otherText",
                                         }}
                                         size={"large"}
-                                        onClick={() => {
-                                            navigate("/management/details/");
-                                        }}
                                     >
-                                        ویرایش
+                                        فعال
                                     </Button>
                                     <Button
-                                        hidden={selectedCatring.Id === item?.Catering?.Id}
+                                        hidden={selectedCatring?.Id === item?.Catering?.Id}
                                         variant={"outlined"}
                                         sx={{
                                             my: 1,
@@ -137,7 +127,7 @@ const SettingsCatering = (props) => {
                                             borderColor: "quaternary.otherText",
                                         }}
                                         size={"large"}
-                                        onClick={() => selectedPlaceChanged(item.Catering.Id)}
+                                        onClick={() => selectedPlaceChanged(item?.Catering?.Id)}
                                     >
                                         فعالسازی مرکز
                                     </Button>

@@ -9,7 +9,7 @@ const initialPlaceState = {
 const ReducerConfig = {
   storage,
   key: "gympin-catering-catering",
-  whitelist: ["Catering"],
+  whitelist: ["catering"],
 };
 
 const Reducer = (state = initialPlaceState, action) => {

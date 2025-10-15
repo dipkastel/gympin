@@ -1,5 +1,5 @@
 export const cateringActionTypes = {
-  SetCatering: "[Catering] catering ",
+  SetCatering: "[Catering] catering",
 };
 
 export const cateringActions = {
