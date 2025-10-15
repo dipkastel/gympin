@@ -13,6 +13,7 @@ const _CateringListImageMenu = ({selectedDate, catering, addOrder,minusOrder,del
 
     useEffect(() => {
         var date = new Date(selectedDate);
+        if (!date) return;
         TicketFoodMenu_query({
             queryType: "FILTER",
             PlaceId: catering,

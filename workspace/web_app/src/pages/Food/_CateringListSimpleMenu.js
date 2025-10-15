@@ -9,6 +9,7 @@ const _CateringListSimpleMenu = ({selectedDate, catering, addOrder}) => {
 
     useEffect(() => {
         var date = new Date(selectedDate);
+        if (!date) return;
         TicketFoodMenu_query({
             queryType: "FILTER",
             PlaceId: catering,
