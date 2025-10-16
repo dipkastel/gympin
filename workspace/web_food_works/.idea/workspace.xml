@@ -2,35 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82a1e8ab-7850-4472-b2c7-7003016a9de7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/ticket/ticketFood/param/TicketFoodMultimediaParam.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/foodItems/_ItemDrawer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/foodItems/__DeleteFoodItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/foodItems/__EditFoodImages.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/foodItems/__EditFoodItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/_EditFoodItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/_FoodItemEditImage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/ticket/ticketFood/api/TicketFoodController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/ticket/ticketFood/api/TicketFoodController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/ticket/ticketFood/servie/TicketFoodService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/ticket/ticketFood/servie/TicketFoodService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/PlaceGymControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/place/PlaceGymControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/ticket/ticketFood/TicketFoodControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/ticket/ticketFood/TicketFoodControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/ticket/food/TicketFoodServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/ticket/food/TicketFoodServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_api/logs/logFile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/logs/logFile.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/multimedia/MultimediaEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/multimedia/MultimediaEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/ticket/food/TicketFoodItemEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/entity/ticket/food/TicketFoodItemEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/api/NETWORKCONSTS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network/api/TicketFoods.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/api/TicketFoods.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/foodItems/FoodItems.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/foodItems/FoodItems.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/helper/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/helper/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/finance/_Wallet.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/finance/_Wallet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/purchased/subscribe/activeSubscribes/_ActiveSubscribes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/purchased/subscribe/activeSubscribes/_ActiveSubscribes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_master/src/pages/tickets/subscribe/singleSubscribe/_SubscribeBaseData.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/src/pages/tickets/subscribe/singleSubscribe/_SubscribeBaseData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/cateringDetail/partials/_CateringSelectDate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cateringDetail/partials/_CateringSelectDate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/TicketFoods.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/TicketFoods.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/const_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/const_api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/CateringFoods.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/CateringFoods.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/_AddFoodItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/_AddFoodItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Images/PlaceImages.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Images/PlaceImages.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +137,10 @@
       <workItem from="1757516766831" duration="585000" />
       <workItem from="1757839596741" duration="1182000" />
       <workItem from="1759227087570" duration="5568000" />
-      <workItem from="1759427849623" duration="8560000" />
+      <workItem from="1759427849623" duration="9754000" />
+      <workItem from="1759773826516" duration="1316000" />
+      <workItem from="1760017482352" duration="17164000" />
+      <workItem from="1760606135052" duration="625000" />
     </task>
     <servers />
   </component>
@@ -180,16 +158,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/finance/Finance.js</url>
-          <line>34</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -94,7 +94,7 @@ const _CateringSelectDate = ({ selectedDate, setSelectedDate, catering }) => {
             key={item.Date}
             color={"secondary"}
             label={getLabel(item.Date)}
-            value={item.Date.toLocaleDateString()}
+            value={item.Date.toLocaleDateString("en-US")}
             disabled={isDisable(item.Date)}
           />
         ))}
