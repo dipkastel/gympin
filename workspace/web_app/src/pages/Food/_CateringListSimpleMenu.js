@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import Grid from "@mui/material/Grid2";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {TicketFoodMenu_query} from "../../network/api/TicketFoodMenu.api";
+import {parse} from "date-fns";
 
 const _CateringListSimpleMenu = ({selectedDate, catering, addOrder}) => {
     const error = useContext(ErrorContext);

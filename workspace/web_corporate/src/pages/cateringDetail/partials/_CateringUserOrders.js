@@ -1,35 +1,34 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
-import _SideMenuHeader from "../sideProinvoice/_SideMenuHeader";
 import {
-    Avatar,
-    Badge, Button, ButtonGroup,
+    Badge,
+    Button,
+    ButtonGroup,
     Card,
     CardActionArea,
     CardContent,
-    CardHeader, Checkbox, CircularProgress,
-    Divider, FormControlLabel,
-    IconButton,
+    CircularProgress,
     ListItemText,
-    Table, TableBody, TableCell,
-    TableHead, TableRow, TableSortLabel,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
     Typography
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import {encodeId, toPriceWithComma} from "../../../helper/utils";
-import _ProInvoiceItemCount from "../sideProinvoice/_ProInvoiceItemCount";
-import _ProinvoiceBill from "../sideProinvoice/_ProinvoiceBill";
-import {Add, Delete, DeleteOutline, PeopleAlt, Remove} from "@mui/icons-material";
+import {toPriceWithComma} from "../../../helper/utils";
+import {Add, DeleteOutline, PeopleAlt, Remove} from "@mui/icons-material";
 import {PersonnelFood_query} from "../../../network/api/PersonnelFood.api";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
+import {parse} from "date-fns";
 
 const _CateringUserOrders = ({corporate,selectedDate,setOpenSideMenu}) => {
 
     const error = useContext(ErrorContext);
-    const [openDrawer,setOpenDrawer] = useState(true);
+    const [openDrawer,setOpenDrawer] = useState(false);
     const [userOrders,setUserOrders] = useState(null);
-    const [loading,setLoading] = useState(false);
 
 
     useEffect(() => {
@@ -39,10 +38,12 @@ const _CateringUserOrders = ({corporate,selectedDate,setOpenSideMenu}) => {
 
     function getUserOrders() {
         setUserOrders(null);
+
+        var date = new Date(selectedDate);
         PersonnelFood_query({
             queryType: "FILTER",
             CorporateId:corporate.Id,
-            Date:new Date(selectedDate),
+            Date:date,
             paging: {Page: 0, Size: 20, orderBy: "id", Desc: false}
         }).then(result => {
             console.log(result.data.Data);

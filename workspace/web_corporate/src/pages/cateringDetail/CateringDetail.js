@@ -22,6 +22,7 @@ import {Assessment, PeopleAlt, RamenDining} from "@mui/icons-material";
 import _CateringSettings from "./partials/_CateringSettings";
 import _CateringListImageMenu from "./partials/_CateringListImageMenu";
 import _CateringUserOrders from "./partials/_CateringUserOrders";
+import {parse} from "date-fns";
 
 const CateringDetail = () => {
 
@@ -117,7 +118,9 @@ const CateringDetail = () => {
         if (!selectedDate) return;
         if(refresh)
             SetCurrentBasket(null);
-        invoice_getFoodBasket({Date: new Date(selectedDate), Corporate: {Id: corporate.Id}}).then(result => {
+
+        var date = new Date(selectedDate);
+        invoice_getFoodBasket({Date: date, Corporate: {Id: corporate.Id}}).then(result => {
             SetCurrentBasket(result.data.Data);
         }).catch(e => {
             try {

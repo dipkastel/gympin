@@ -68,7 +68,7 @@ const _CateringSelectDate = ({selectedDate, setSelectedDate, catering}) => {
             >
 
                 {dates?.map((item, number) => (
-                    <Tab key={item.Date} color={"secondary"} label={getLabel(item.Date)} value={item.Date.toLocaleDateString()}
+                    <Tab key={item.Date} color={"secondary"} label={getLabel(item.Date)} value={item.Date.toLocaleDateString("en-US")}
                          disabled={isDisable(item.Date)} />
                 ))}
             </Tabs>

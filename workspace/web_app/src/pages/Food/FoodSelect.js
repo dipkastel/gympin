@@ -10,6 +10,7 @@ import {RamenDining} from "@mui/icons-material";
 import _CateringListSimpleMenu from "./_CateringListSimpleMenu";
 import _CateringListImageMenu from "./_CateringListImageMenu";
 import {PersonnelFood_add, PersonnelFood_delete, PersonnelFood_query} from "../../network/api/PersonnelFood.api";
+import {parse} from "date-fns";
 
 const FoodSelect = () => {
 
@@ -61,7 +62,6 @@ const FoodSelect = () => {
             PersonnelId:selectedPersonnelId,
             paging: {Page: 0, Size: 100, orderBy: "id", Desc: false}
         }).then(result => {
-            console.log("SelectedDateOrders",result.data.Data.content)
             setSelectedDayOrders(result.data.Data.content);
         }).catch(e => {
             try {
@@ -79,7 +79,6 @@ const FoodSelect = () => {
             PersonnelId:selectedPersonnelId,
             paging: {Page: 0, Size: 100, orderBy: "id", Desc: false}
         }).then(result => {
-            console.log("lastOrders",result.data.Data.content)
             setLastOrders(result.data.Data.content);
         }).catch(e => {
             try {

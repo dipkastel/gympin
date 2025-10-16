@@ -81,13 +81,13 @@ export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,row
                 if (date > item?.ExpireDate)
                     date = item?.ExpireDate;
             }
-            return new Date(date).toLocaleDateString('fa-IR', {
+            return date? new Date(date).toLocaleDateString('fa-IR', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
-            })
+            }):"ندارد";
         } catch (e) {
-            return "ندارد"
+            return "--"
         }
 
     }

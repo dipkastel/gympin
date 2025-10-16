@@ -26,6 +26,10 @@ const _CateringSelectDate = ({selectedDate, setSelectedDate, catering, AllOrders
         getActiveDates();
     }, []);
 
+    useEffect(() => {
+        console.log("selectedDate",selectedDate)
+    }, [selectedDate]);
+
     function getActiveDates() {
         TicketFoodMenu_getDates({cateringId: catering.Id}).then(result => {
             setActiveDates(result.data.Data);
@@ -43,8 +47,6 @@ const _CateringSelectDate = ({selectedDate, setSelectedDate, catering, AllOrders
     }
 
     function getLabel(itemDate) {
-        console.log(itemDate);
-        console.log(AllOrders?.filter(o => o.Date === itemDate).Date);
         return (<Badge badgeContent={AllOrders?.filter(o => (new Date(o.Date).toDateString()) == itemDate.toDateString())?.length}
                        color={AllOrders?.filter(o => (new Date(o.Date).toDateString()) == itemDate.toDateString())?.Ordered ? "success" : "info"}
                        variant={"standard"}
@@ -81,7 +83,7 @@ const _CateringSelectDate = ({selectedDate, setSelectedDate, catering, AllOrders
                     key={item.Date}
                     color={"secondary"}
                     label={getLabel(item.Date)}
-                    value={item.Date.toLocaleDateString()}
+                    value={item.Date.toLocaleDateString("en-US")}
                     sx={{px: 0}}
                     disabled={isDisable(item.Date)}
                 />
