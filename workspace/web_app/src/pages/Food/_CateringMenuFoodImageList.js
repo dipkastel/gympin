@@ -18,7 +18,7 @@ const _CateringMenuFoodImageList = ({title, Items, onAddClick,onMinusClick, sele
             </Grid>
             <Grid container columns={12} spacing={0.5}>
 
-                {Items.map((row) => (
+                {Items.map((row,number) => (
 
                     <Grid
                         textAlign={"center"}
@@ -28,7 +28,7 @@ const _CateringMenuFoodImageList = ({title, Items, onAddClick,onMinusClick, sele
                         alignContent={"center"}
                         size={{xs: 6, sm: 6, md: 4, lg: 3, xl: 3}}
                         sx={{px: 0.5}}
-                        key={row.name}>
+                        key={"ooooo"+number+"--"+row?.Id}>
                         <Card sx={{mt: 0.5,bgcolor:!!selected?.find(inf => inf.FoodMenu.Id === row?.Id)?.Count?"rgba(12,133,12,0.19)":"#FFFFFFFF"}}>
                             <Grid container direction={"row"}>
                                 <Grid size={10}>

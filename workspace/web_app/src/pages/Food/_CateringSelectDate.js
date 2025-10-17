@@ -26,9 +26,6 @@ const _CateringSelectDate = ({selectedDate, setSelectedDate, catering, AllOrders
         getActiveDates();
     }, []);
 
-    useEffect(() => {
-        console.log("selectedDate",selectedDate)
-    }, [selectedDate]);
 
     function getActiveDates() {
         TicketFoodMenu_getDates({cateringId: catering.Id}).then(result => {
@@ -71,7 +68,7 @@ const _CateringSelectDate = ({selectedDate, setSelectedDate, catering, AllOrders
 
     return (
         <Tabs
-            value={selectedDate}
+            value={selectedDate?? false}
             onChange={(e, v) => setSelectedDate(v)}
             variant="scrollable"
             scrollButtons={false}
