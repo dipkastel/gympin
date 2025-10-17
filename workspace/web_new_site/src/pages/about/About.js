@@ -1,9 +1,8 @@
 import React from 'react';
-import {Container, Typography} from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import _PageTitle from "../partials/_PageTitle";
-import _ImageText from "../partials/_ImageText";
-import _TextImage from "../partials/_TextImage";
+import {Typography} from "@mui/material";
+import _PageTitle from "../partials/_PageTitle.js";
+import _ImageText from "../partials/_ImageText.js";
+import _TextImage from "../partials/_TextImage.js";
 
 const About = () => {
     return (<>

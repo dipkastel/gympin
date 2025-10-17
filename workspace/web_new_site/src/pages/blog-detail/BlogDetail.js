@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {Article_getById} from "../../network/api/article.api";
-import _PageTitle from "../partials/_PageTitle";
+import {Article_getById} from "../../network/api/article.api.js";
+import _PageTitle from "../partials/_PageTitle.js";
 import {Container} from "@mui/material";
 
 const BlogDetail = (props) => {

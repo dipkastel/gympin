@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {account_requestRegisterAdvise} from "../../network/api/account.api";
 import {useParams} from "react-router-dom";
 import Grid from "@mui/material/Grid2";
-import {link_getByCode} from "../../network/api/link.api";
+import {link_getByCode} from "../../network/api/link.api.js";
 
 const Redirect = () => {
 
@@ -14,7 +13,10 @@ const Redirect = () => {
         link_getByCode({code}).then(result => {
             console.log(result);
             setCodeData(result.data.Data);
-            window.location.href = result.data.Data.Url;
+
+            if (typeof window !== "undefined") {
+                window.location.href = result.data.Data.Url;
+            }
         }).catch(e => {
 
         });

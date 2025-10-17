@@ -28,6 +28,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.3",
+    "react-snap": "^1.23.0",
     "react-type-animation": "^3.2.0",
     "slick-carousel": "^1.8.1",
     "stylis": "^4.3.4",
@@ -37,8 +38,15 @@
   "scripts": {
     "start": "set PORT=2740 && react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "react-snap || true",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "reactSnap": {
+    "inlineCss": true,
+    "source": "build",
+    "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
+    "waitFor": 5000
   },
   "eslintConfig": {
     "extends": [

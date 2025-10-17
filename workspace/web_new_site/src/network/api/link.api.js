@@ -1,4 +1,4 @@
-import {ArticleApi, LinkApi} from "../NETWORKCONSTS";
+import {LinkApi} from "../NETWORKCONSTS.js";
 import axios from "axios";
 
 export function link_getByCode(data) {

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Grid from "@mui/material/Grid2";
 import {Button, Card, CardActionArea, Container, InputBase, Pagination, Paper, Typography} from "@mui/material";
 import {Search} from '@mui/icons-material';
-import {Article_query} from "../../network/api/article.api";
+import {Article_query} from "../../network/api/article.api.js";
 
 const _BlogContents = () => {
 

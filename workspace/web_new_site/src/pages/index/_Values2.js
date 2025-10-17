@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Container, Typography} from "@mui/material";
+import React, {useEffect} from 'react';
+import {Typography} from "@mui/material";
 import {TypeAnimation} from "react-type-animation";
 import Grid from "@mui/material/Grid2";
 
@@ -16,13 +16,14 @@ const _Values2 = () => {
     const COLOURS = ["#eaa7a7", "#de7a7a", "#e05b5b"];
 
     useEffect(() => {
-        let canvasTemp = canvasRef.current;
-        let width = widthRef.current;
-        console.log("innerwidth",window.innerWidth,"screenWidth",window.screen.width,"outherwidth",window.outerWidth,widthRef)
-        canvasTemp.width = width.clientWidth;
-        canvasTemp.height = window.innerHeight/3;
-        setContext(canvasTemp.getContext('2d'));
-        setCanvas(canvasTemp);
+        if (typeof window !== "undefined") {
+            let canvasTemp = canvasRef.current;
+            let width = widthRef.current;
+            canvasTemp.width = width.clientWidth;
+            canvasTemp.height = window.innerHeight/3;
+            setContext(canvasTemp.getContext('2d'));
+            setCanvas(canvasTemp);
+        }
     }, []);
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button, Container, Grid, Typography} from "@mui/material";
-import __IntroForm from "./__IntroForm";
+import {Container, Grid} from "@mui/material";
+import __IntroForm from "./__IntroForm.js";
 
 const _Introduction = () => {
     return (

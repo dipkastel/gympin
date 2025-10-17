@@ -1,7 +1,7 @@
 import React from 'react';
-import _PageTitle from "../partials/_PageTitle";
-import _ContactData from "./_ContactData";
-import _ContactUs from "./_ContactUs";
+import _PageTitle from "../partials/_PageTitle.js";
+import _ContactData from "./_ContactData.js";
+import _ContactUs from "./_ContactUs.js";
 
 const Contact = () => {
     return (

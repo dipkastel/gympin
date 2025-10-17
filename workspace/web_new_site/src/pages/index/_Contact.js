@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Alert, Card, CardContent, Collapse, Container, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import _ContactForm from "../partials/_ContactForm";
-import {formTypeEnum} from "../../helper/enum/formTypeEnum";
-import {formStatus} from "../../helper/enum/fromStatusEnum";
+import _ContactForm from "../partials/_ContactForm.js";
+import {formTypeEnum} from "../../helper/enum/formTypeEnum.js";
+import {formStatus} from "../../helper/enum/fromStatusEnum.js";
 
 const _Contact = () => {
     const [thisFormStatus, setThisFormStatus] = useState(null)

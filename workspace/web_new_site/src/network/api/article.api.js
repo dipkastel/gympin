@@ -1,4 +1,4 @@
-import {ArticleApi} from "../NETWORKCONSTS";
+import {ArticleApi} from "../NETWORKCONSTS.js";
 import axios from "axios";
 
 

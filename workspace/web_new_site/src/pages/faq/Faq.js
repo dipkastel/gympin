@@ -1,6 +1,6 @@
 import React from 'react';
-import _PageTitle from "../partials/_PageTitle";
-import _FaqList from "./_FaqList";
+import _PageTitle from "../partials/_PageTitle.js";
+import _FaqList from "./_FaqList.js";
 
 const Faq = () => {
     return (

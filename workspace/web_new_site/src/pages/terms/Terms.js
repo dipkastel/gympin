@@ -1,7 +1,6 @@
 import React from 'react';
-import _Text from "./_Text";
-import {Container} from "@mui/material";
-import _PageTitle from "../partials/_PageTitle";
+import _Text from "./_Text.js";
+import _PageTitle from "../partials/_PageTitle.js";
 
 const Terms = () => {
     return (

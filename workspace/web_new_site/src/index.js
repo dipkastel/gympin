@@ -1,17 +1,24 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './helper/App';
-import reportWebVitals from './helper/reportWebVitals';
+import App from './App.js';
 import "./helper/scss/style.css"
-import {setupAxios} from "./network/setupAxios";
-import axios from "axios";
+import {createRoot, hydrateRoot} from 'react-dom/client';
 
 
-setupAxios(axios);
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-reportWebVitals();
+const rootElement = document.getElementById('root');
+if (rootElement.hasChildNodes()) {
+    console.log("hydrateRoot")
+    hydrateRoot(
+        rootElement,
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+        );
+} else {
+    console.log("createRoot")
+    const root = createRoot(rootElement);
+    root.render(
+        <React.StrictMode>
+            <App/>
+        </React.StrictMode>
+    );
+}

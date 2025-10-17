@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Card, Container} from "@mui/material";
-import {PlayCircle} from "@mui/icons-material";
 
 const _video = () => {
 

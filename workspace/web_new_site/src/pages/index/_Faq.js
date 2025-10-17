@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from "@mui/material/Grid2";
-import {Card, Container, Typography} from "@mui/material";
+import {Card, Typography} from "@mui/material";
 import Slider from "react-slick";
 
 const _Faq = () => {

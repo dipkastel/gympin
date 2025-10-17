@@ -1,23 +1,21 @@
 import React, {useEffect} from 'react';
-import _Introduction from "./_Introduction";
-import _RedAdditionalData from "./_RedAdditionalData";
-import _ExcitingTexts from "./_ExcitingTexts";
-import _OurGoals from "./_OurGoals";
-import _Apps from "./_Apps";
-import _Faq from "./_Faq";
-import _Sports from "./_Sports";
-import _Contact from "./_Contact";
-import _video from "../corporate/_Video";
-import _Values2 from "./_Values2";
-import _Slider from "./_Slider";
-import _Companies from "./_Companies";
-import {Card, Container, Paper, Typography} from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import _CorporateForm from "../corporate/_CorporateForm";
-import _Boxes from "../corporate/_Boxes";
+import _Introduction from "./_Introduction.js";
+import _RedAdditionalData from "./_RedAdditionalData.js";
+import _ExcitingTexts from "./_ExcitingTexts.js";
+import _OurGoals from "./_OurGoals.js";
+import _Apps from "./_Apps.js";
+import _Faq from "./_Faq.js";
+import _Sports from "./_Sports.js";
+import _Contact from "./_Contact.js";
+import _video from "../corporate/_Video.js";
+import _Values2 from "./_Values2.js";
+import _Slider from "./_Slider.js";
+import _Companies from "./_Companies.js";
+import _CorporateForm from "../corporate/_CorporateForm.js";
+import _Boxes from "../corporate/_Boxes.js";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import _TextBox from "./_TextBox";
+import _TextBox from "./_TextBox.js";
 
 const Index = () => {
 

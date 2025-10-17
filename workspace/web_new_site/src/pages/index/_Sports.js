@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from "@mui/material/Grid2";
-import {Card, CardContent, CardHeader, Container, Typography} from "@mui/material";
+import {Card, Container, Typography} from "@mui/material";
 
 const _Sports = () => {
     function SportItem({title,alt,image,text,size,delay}) {

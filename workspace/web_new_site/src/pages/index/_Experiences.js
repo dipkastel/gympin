@@ -1,10 +1,7 @@
 import React from 'react';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import {Avatar, Card, Divider, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const _Experiences = () => {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from "@mui/material/Grid2";
-import {Card, CardContent, Container, Typography} from "@mui/material";
-import __SingleGoal from "./__SingleGoal";
+import {Container} from "@mui/material";
+import __SingleGoal from "./__SingleGoal.js";
 
 const _OurGoals = () => {
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from "@mui/material/Grid2";
-import {Card, Container, Typography} from "@mui/material";
+import {Container, Typography} from "@mui/material";
 
 const _Apps = () => {
     return (

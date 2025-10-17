@@ -3,7 +3,7 @@ import {Alert, Card, CardContent, Collapse, Container, Typography} from "@mui/ma
 import Grid from "@mui/material/Grid2";
 import {formStatus} from "../../helper/enum/fromStatusEnum";
 import {formTypeEnum} from "../../helper/enum/formTypeEnum";
-import _ContactForm from "../partials/_ContactForm";
+import _ContactForm from "../partials/_ContactForm.js";
 
 const _ContactUs = () => {
     const [thisFormStatus, setThisFormStatus] = useState(null)

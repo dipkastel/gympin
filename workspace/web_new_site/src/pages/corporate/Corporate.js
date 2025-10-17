@@ -1,15 +1,14 @@
 import React from 'react';
-import _ImageText from "../partials/_ImageText";
-import _TextImage from "../partials/_TextImage";
-import _RoadMap from "./_RoadMap";
-import _CorporateForm from "./_CorporateForm";
-import _Boxes from "./_Boxes";
-import _PageTitle from "../partials/_PageTitle";
+import _ImageText from "../partials/_ImageText.js";
+import _TextImage from "../partials/_TextImage.js";
+import _RoadMap from "./_RoadMap.js";
+import _CorporateForm from "./_CorporateForm.js";
+import _Boxes from "./_Boxes.js";
+import _PageTitle from "../partials/_PageTitle.js";
 import {Container, Typography} from "@mui/material";
-import _Boxes2 from "./_Boxes2";
-import _video from "./_Video";
+import _Boxes2 from "./_Boxes2.js";
 import Grid from "@mui/material/Grid2";
-import _VarietyMap from "./_VarietyMap";
+import _VarietyMap from "./_VarietyMap.js";
 
 const Corporate = () => {
     return (

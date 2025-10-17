@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import Grid from "@mui/material/Grid2";
-import {Avatar, Card, Typography} from "@mui/material";
+import {Card} from "@mui/material";
 import Slider from "react-slick";
 
 const _Slider = () => {
@@ -21,6 +20,7 @@ const _Slider = () => {
 
     };
 
+    if (typeof window === "undefined") return ;
 
     function Arrow() {
         return (

@@ -1,4 +1,4 @@
-import {AuthApi} from "./NETWORKCONSTS";
+import {AuthApi} from "./NETWORKCONSTS.js";
 
 export function setupAxios(axios) {
     axios?.interceptors?.request?.use(

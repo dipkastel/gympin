@@ -5,9 +5,9 @@ import createCache from "@emotion/cache";
 import {prefixer} from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 import {CacheProvider} from "@emotion/react";
-import {formStatus} from "../../helper/enum/fromStatusEnum";
+import {formStatus} from "../../helper/enum/fromStatusEnum.js";
 import {account_requestPublicMessage, account_requestRegisterAdvise, account_requestRegisterCorporate} from "../../network/api/account.api";
-import {formTypeEnum} from "../../helper/enum/formTypeEnum";
+import {formTypeEnum} from "../../helper/enum/formTypeEnum.js";
 
 const _ContactForm = ({setFormStatus, formType}) => {
 

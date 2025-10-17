@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {Route, Routes} from "react-router-dom";
-import Terms from "../pages/terms/Terms";
-import Index from "../pages/index/Index";
-import Corporate from "../pages/corporate/Corporate";
-import Contact from "../pages/contact/Contact";
-import About from "../pages/about/About";
-import Faq from "../pages/faq/Faq";
-import Blog from "../pages/blog/Blog";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import BlogDetail from "../pages/blog-detail/BlogDetail";
-import _Loading from "../pages/partials/_Loading";
+import Terms from "../pages/terms/Terms.js";
+import Index from "../pages/index/Index.js";
+import Corporate from "../pages/corporate/Corporate.js";
+import Contact from "../pages/contact/Contact.js";
+import About from "../pages/about/About.js";
+import Faq from "../pages/faq/Faq.js";
+import Blog from "../pages/blog/Blog.js";
+import Header from "../components/Header.js";
+import Footer from "../components/Footer.js";
+import BlogDetail from "../pages/blog-detail/BlogDetail.js";
+import _Loading from "../pages/partials/_Loading.js";
 import {Collapse} from "@mui/material";
-import PageNotFound from "../pages/other/PageNotFound";
-import Redirect from "../pages/Redirect/Redirect";
+import PageNotFound from "../pages/other/PageNotFound.js";
+import Redirect from "../pages/Redirect/Redirect.js";
 
 export const MainRoutes = () => {
 

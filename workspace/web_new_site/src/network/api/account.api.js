@@ -1,5 +1,5 @@
 import axios from "axios";
-import {AccountApi, ArticleApi} from "../NETWORKCONSTS";
+import {AccountApi} from "../NETWORKCONSTS.js";
 
 
 export function account_requestRegisterAdvise(data) {
