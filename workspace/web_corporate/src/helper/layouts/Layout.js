@@ -23,14 +23,14 @@ export default function Layout() {
             (
                 <Typography
                     variant="caption"
-                    sx={{m: 1, whiteSpace: 'nowrap', overflow: 'hidden'}}
-                >جیم پین
+                    sx={{m: 1, whiteSpace: 'nowrap', overflow: 'hidden'}}>
+                    اپــســا
                 </Typography>
             ) : (<Grid container justifyContent={"space-between"}>
                 <Typography
                     variant="caption"
-                    sx={{m: 1, whiteSpace: 'nowrap', overflow: 'hidden'}}
-                >{new Date().getFullYear()} ساخته شده در جیم پین ©
+                    sx={{m: 1, whiteSpace: 'nowrap', overflow: 'hidden'}}>
+                    {new Date().getFullYear()} ساخته شده در اپسا ©
                 </Typography>
                 <LogoutIcon/>
             </Grid>);

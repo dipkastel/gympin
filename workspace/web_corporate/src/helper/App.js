@@ -44,7 +44,7 @@ function App(props) {
                                 theme={mode==='light'?GympinTheme.colorSchemes.light:GympinTheme.colorSchemes.dark}
                                 branding={{
                                     logo: <img src="/logo192.png" alt="MUI logo"/>,
-                                    title: 'جیم پین',
+                                    title: 'اپـسـا',
                                     homeUrl: '/dashboard',
                                 }}
 
