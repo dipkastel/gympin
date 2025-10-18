@@ -16,8 +16,6 @@ import {ReactRouterAppProvider} from '@toolpad/core/react-router';
 import {Outlet} from 'react-router';
 import {useSelector} from "react-redux";
 import NewLogin from "../pages/auth/NewLogin";
-import {useEffect} from "react";
-import {getSelectedTheme} from "./pocket";
 import {useColorScheme} from "@mui/material";
 
 
