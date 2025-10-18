@@ -3,13 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="82a1e8ab-7850-4472-b2c7-7003016a9de7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/corporate/CorporatePersonelFinanceHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/corporate/CorporatePersonelFinanceHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/logs/logFile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/logs/logFile.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/public/sw.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/public/sw.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/Food/_CateringListImageMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/Food/_CateringListImageMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/Food/_CateringMenuFoodImageList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/Food/_CateringMenuFoodImageList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/Food/_CateringSelectDate.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/Food/_CateringSelectDate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
