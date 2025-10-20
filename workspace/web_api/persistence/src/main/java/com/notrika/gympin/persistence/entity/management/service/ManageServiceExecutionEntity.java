@@ -25,14 +25,6 @@ public class ManageServiceExecutionEntity extends BaseEntityWithCreateUpdate<Man
     @Column(name = "service", nullable = false)
     @Lob
     private String service;
-//
-//    @Column(name = "paramClass", nullable = false)
-//    @Lob
-//    private Class paramClass;
-//
-//    @Column(name = "dtoClass", nullable = false)
-//    @Lob
-//    private Class dtoClass;
 
     @ManyToOne
     @JoinColumn(name = "executorUserId")

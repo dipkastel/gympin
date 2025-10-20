@@ -59,7 +59,8 @@ const NewUserPage = () => {
             }
             corporatePersonnel_add({
                 Corporate: {Id: corporate.Id},
-                PhoneNumber: e.target.PhoneNumber.value
+                PhoneNumber: e.target.PhoneNumber.value,
+                FullName: e.target.FullName.value
             }).then(result => {
                 setOpenModalAdd(false);
                 getPersonnel();
@@ -89,12 +90,21 @@ const NewUserPage = () => {
                         </DialogContentText>
                         <TextField
                             autoFocus
+                            label="موبایل"
                             margin="dense"
                             name={"PhoneNumber"}
-                            label="موبایل"
                             type="number"
                             sx={{mt: 2}}
                             onChange={e => changePhoneNumber(e)}
+                            fullWidth
+                            variant={"outlined"}
+                        />
+                        <TextField
+                            label="نام و نام خانوادگی"
+                            margin="dense"
+                            name={"FullName"}
+                            type="text"
+                            className="textField"
                             fullWidth
                             variant={"outlined"}
                         />

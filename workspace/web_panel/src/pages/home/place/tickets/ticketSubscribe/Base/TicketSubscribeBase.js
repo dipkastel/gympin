@@ -13,6 +13,7 @@ function TicketSubscribeBase({ticketSubscribe, updateTicketSubscribe}) {
 
 
     useEffect(() => {
+        console.log(ticketSubscribe);
         var inTicketCheck = inTicketSubscribe;
         if(!inTicketSubscribe.Gender)
             inTicketCheck.Gender = "MALE"

@@ -80,7 +80,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public CorporatePersonnelDto add(@NonNull CorporatePersonnelParam Param) {
-        CorporatePersonnelEntity personnelEntity =  addUserToCorporate(Param.getPhoneNumber(),Param.getCorporate().getId());
+        CorporatePersonnelEntity personnelEntity =  addUserToCorporate(Param.getPhoneNumber(),Param.getFullName(),Param.getCorporate().getId());
         try {
             smsService.sendJoinedToCorporateSms(new SmsDto(personnelEntity.getUser().getPhoneNumber(), SmsTypes.JOINED_TO_CORPORATE, personnelEntity.getCorporate().getName()));
         } catch (Exception e) {
@@ -89,12 +89,12 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
         return CorporateConvertor.toPersonnelDto(personnelEntity);
     }
 
-    private CorporatePersonnelEntity addUserToCorporate(String phoneNumber,Long corporateId) {
+    private CorporatePersonnelEntity addUserToCorporate(String phoneNumber,String fullName,Long corporateId) {
 
         UserEntity user = userRepository.findByPhoneNumber(phoneNumber);
         CorporateEntity corporate = corporateService.getEntityById(corporateId);
         if (user == null) {
-            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(phoneNumber).invitedBy("C" + GeneralHelper.getInviteCode(corporate.getId(), 1)).userRole(RoleEnum.USER).build());
+            user = accountService.addUser(UserRegisterParam.builder().phoneNumber(phoneNumber).fullName(fullName).invitedBy("C" + GeneralHelper.getInviteCode(corporate.getId(), 1)).userRole(RoleEnum.USER).build());
         } else {
             //check for duplication
             UserEntity finalUser = user;

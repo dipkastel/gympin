@@ -20,8 +20,7 @@ export default function Layout() {
         return mini ? (
             <Typography
                 variant="caption"
-                sx={{m: 1, whiteSpace: "nowrap", overflow: "hidden"}}
-            >
+                sx={{m: 1, whiteSpace: "nowrap", overflow: "hidden"}}>
                 اپــســا
             </Typography>
         ) : (

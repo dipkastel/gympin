@@ -10,6 +10,7 @@ const _TicketSubscribeHistoryChart = ({ticketSubscribe}) => {
 
     useEffect(() => {
         TicketSubscribes_getDiscountHistory({ticketSubscribeId: ticketSubscribe.Id}).then(result => {
+            console.log(result.data.Data);
             setHistory(result.data.Data)
         }).catch(e => {
             try {
@@ -47,6 +48,7 @@ const _TicketSubscribeHistoryChart = ({ticketSubscribe}) => {
                             <Tooltip/>
                             <Line type={"stepAfter"} yAxisId="left" dataKey="Discount" stroke="#750f0f"/>
                             <Line type={"monotone"} yAxisId="right" dataKey="afterPrice" stroke="#05421c"/>
+                            <Line type={"monotone"} yAxisId="right" dataKey="beforPrice" stroke="#FF5523"/>
                         </LineChart>
                     </ResponsiveContainer>
                 </PortletBody>

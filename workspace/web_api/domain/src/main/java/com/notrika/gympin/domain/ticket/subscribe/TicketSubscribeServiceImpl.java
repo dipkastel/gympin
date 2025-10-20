@@ -2,8 +2,6 @@ package com.notrika.gympin.domain.ticket.subscribe;
 
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.settings.context.GympinContext;
-import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
@@ -19,8 +17,8 @@ import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
+import com.notrika.gympin.common.util.exception.purchased.PriceConflictException;
 import com.notrika.gympin.common.util.exception.ticket.*;
-import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.HallConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceSportConvertor;
@@ -28,11 +26,13 @@ import com.notrika.gympin.domain.util.convertor.TicketSubscribeConvertor;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.sport.PlaceSportRepository;
+import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketDiscountHistoryRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketHallActiveTimesRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
 import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -44,6 +44,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,15 +54,17 @@ import java.util.stream.Collectors;
 public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscribeParam, TicketSubscribeDto, TicketSubscribeQuery, TicketSubscribeEntity> implements TicketSubscribeService {
 
     @Autowired
-    private TicketSubscribeRepository ticketSubscribeRepository;
-    @Autowired
     private TicketHallActiveTimesRepository ticketSubscribeHallActiveTimesRepository;
+    @Autowired
+    private TicketDiscountHistoryRepository ticketDiscountHistoryRepository;
+    @Autowired
+    private TicketSubscribeRepository ticketSubscribeRepository;
     @Autowired
     private PlaceSportRepository placeSportRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private PlaceGymRepository placeGymRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public TicketSubscribeDto add(@NonNull TicketSubscribeParam ticketSubscribeParam) {
@@ -96,11 +100,11 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
         if (ticketSubscribeParam.getValuePrice().compareTo(ticketSubscribeParam.getPlacePrice()) < 0)
             throw new UncomfortableValueExeption();
         TicketSubscribeEntity ticketSubscribeEntity = getEntityById(ticketSubscribeParam.getId());
+        BigDecimal beforePrice = ticketSubscribeEntity.getPrice();
         ticketSubscribeEntity.setName(ticketSubscribeParam.getName());
         ticketSubscribeEntity.setPrice(ticketSubscribeParam.getPrice());
         ticketSubscribeEntity.setValuePrice(ticketSubscribeParam.getValuePrice());
         ticketSubscribeEntity.setPlacePrice(ticketSubscribeParam.getPlacePrice());
-        ticketSubscribeEntity.setDiscount((short) 0);
         ticketSubscribeEntity.setBuyableType(BuyableType.SUBSCRIBE);
         ticketSubscribeEntity.setTiming(ticketSubscribeParam.getTiming());
         ticketSubscribeEntity.setEntryTotalCount(ticketSubscribeParam.getEntryTotalCount());
@@ -109,6 +113,23 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
         ticketSubscribeEntity.setDescription(ticketSubscribeParam.getDescription());
         ticketSubscribeEntity.setExpireDuration(ticketSubscribeParam.getExpireDuration());
         ticketSubscribeEntity.setSubscribeCapacity(ticketSubscribeParam.getSubscribeCapacity());
+
+
+        if (ticketSubscribeParam.getPlacePrice().compareTo(ticketSubscribeParam.getPrice()) < 0)
+            throw new PriceConflictException();
+
+        BigDecimal percent = ticketSubscribeParam.getPrice()
+                .divide(ticketSubscribeParam.getPlacePrice(), 2, RoundingMode.HALF_EVEN);
+        Short newDiscount = (short) Math.round((1 - percent.floatValue()) * 100);
+        ticketDiscountHistoryRepository.add(
+                BuyableDiscountHistoryEntity.builder()
+                        .buyable(ticketSubscribeEntity)
+                        .discount(newDiscount)
+                        .beforPrice(beforePrice)
+                        .afterPrice(ticketSubscribeParam.getPrice())
+                        .build());
+        ticketSubscribeEntity.setDiscount(newDiscount);
+
         return TicketSubscribeConvertor.toDto(ticketSubscribeRepository.update(ticketSubscribeEntity));
     }
 

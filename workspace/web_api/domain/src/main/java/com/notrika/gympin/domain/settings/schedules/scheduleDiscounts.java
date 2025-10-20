@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class scheduleDiscounts {
@@ -23,7 +25,7 @@ public class scheduleDiscounts {
     @Autowired
     private TicketSubscribeRepository ticketSubscribeRepository;
     @Autowired
-    private TicketDiscountHistoryRepository ticketSubscribeDiscountHistoryRepository;
+    private TicketDiscountHistoryRepository ticketDiscountHistoryRepository;
 
 
     @Transactional
@@ -32,30 +34,33 @@ public class scheduleDiscounts {
       List<BuyableDiscountHistoryEntity> buyableDiscountHistoryEntityListToAdd = new ArrayList<>();
       List<TicketSubscribeEntity> ticketSubscribeEntityListToUpdate = new ArrayList<>();
         for (PlaceGymEntity place : places) {
-            for (BuyableEntity<TicketSubscribeEntity> buyable : place.getTicketSubscribes()) {
+            if(Math.random()>0.5)
+            for (BuyableEntity<TicketSubscribeEntity> buyable : place.getTicketSubscribes().stream().filter(t->!t.isDeleted()).collect(Collectors.toList())) {
                 BigDecimal beforPrice = buyable.getPrice();
-                //TODO Commition fee
-//                Short newDiscount = (short) Math.round(place.getCommissionFee()*Math.random());
-//                if(newDiscount>1){
-//                    buyable.setDiscount(newDiscount);
-//                    BigDecimal newPrice = buyable.getPlacePrice().multiply(BigDecimal.valueOf(1-(newDiscount*0.01))).setScale(-3, RoundingMode.HALF_UP);
-//                    buyable.setPrice(newPrice);
-//                    ticketSubscribeEntityListToUpdate.add((TicketSubscribeEntity) buyable);
-//
-//                    buyableDiscountHistoryEntityListToAdd.add(
-//                            BuyableDiscountHistoryEntity.builder()
-//                                    .buyable(buyable)
-//                                    .discount(newDiscount)
-//                                    .beforPrice(beforPrice)
-//                                    .afterPrice(newPrice)
-//                                    .build());
-//                }
+                Double commissionFee = buyable.getBeneficiary().getCommissionFee();
+                Short newDiscount = (short) Math.round(commissionFee*((Math.random() * (0.6)) + 0.2));
+
+
+                if(newDiscount>1){
+                    buyable.setDiscount(newDiscount);
+                    BigDecimal newPrice = buyable.getPlacePrice().multiply(BigDecimal.valueOf(1-(newDiscount*0.01))).setScale(-3, RoundingMode.HALF_UP);
+                    buyable.setPrice(newPrice);
+                    ticketSubscribeEntityListToUpdate.add((TicketSubscribeEntity) buyable);
+
+                    buyableDiscountHistoryEntityListToAdd.add(
+                            BuyableDiscountHistoryEntity.builder()
+                                    .buyable(buyable)
+                                    .discount(newDiscount)
+                                    .beforPrice(beforPrice)
+                                    .afterPrice(newPrice)
+                                    .build());
+                }
 
 
             }
         }
         ticketSubscribeRepository.updateAll(ticketSubscribeEntityListToUpdate);
-        ticketSubscribeDiscountHistoryRepository.addAll(buyableDiscountHistoryEntityListToAdd);
+        ticketDiscountHistoryRepository.addAll(buyableDiscountHistoryEntityListToAdd);
 
     }
 }

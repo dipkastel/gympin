@@ -133,7 +133,11 @@ const CorporatePersonnel = ({currentCorporate}) => {
 
         function addOption(e) {
             e.preventDefault()
-            corporatePersonnel_add({Corporate: {Id: currentCorporate.Id}, PhoneNumber: e.target.PhoneNumber.value})
+            corporatePersonnel_add({
+                Corporate: {Id: currentCorporate.Id},
+                PhoneNumber: e.target.PhoneNumber.value,
+                FullName: e.target.PhoneNumber.value
+            })
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
                     setOpenModalAdd(false)
@@ -167,6 +171,15 @@ const CorporatePersonnel = ({currentCorporate}) => {
 
                                 />
                             </Form.Group>
+                            <TextField
+                                label="نام و نام خانوادگی"
+                                margin="dense"
+                                name={"FullName"}
+                                type="text"
+                                className="textField"
+                                fullWidth
+                                variant={"outlined"}
+                            />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button

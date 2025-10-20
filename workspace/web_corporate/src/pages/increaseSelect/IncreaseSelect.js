@@ -5,7 +5,8 @@ import {
     Card,
     CardActions,
     Checkbox,
-    CircularProgress, Container,
+    CircularProgress,
+    Container,
     Dialog,
     DialogActions,
     DialogContent,
@@ -24,28 +25,21 @@ import {
     TablePagination,
     TableRow,
     TableSortLabel,
-    TextField,
-    Typography
+    TextField
 } from "@mui/material";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
-import {
-    corporatePersonnel_add,
-    corporatePersonnel_addCreditToAll,
-    corporatePersonnel_query
-} from "../../network/api/corporatePersonnel.api";
+import {corporatePersonnel_addCreditToAll, corporatePersonnel_query} from "../../network/api/corporatePersonnel.api";
 import Grid from "@mui/material/Grid2";
 import {corporate_getCorporateGroups} from "../../network/api/corporate.api";
 import SearchTextField from "../../components/SearchTextField";
-import {checkMobileValid, encodeId, fixMobile, toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
+import {encodeId, toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {Delete} from "@mui/icons-material";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDateFnsJalali} from "@mui/x-date-pickers/AdapterDateFnsJalaliV3";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import _UsersActions from "../../components/_UsersActions";
-import _UserList from "../users/_UserList";
 
 export const IncreaseSelect = () => {
 
@@ -60,7 +54,6 @@ export const IncreaseSelect = () => {
     const [searchText, setSearchText] = useState(undefined);
     const [groups, setGroups] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
-    const [openModalAdd, setOpenModalAdd] = useState(false);
     const [openModalAddCredit, setOpenModalAddCredit] = useState(false);
     const [allSelected, setAllSelected] = useState(false);
     const [someSelected, setSomeSelected] = useState(false);
@@ -147,67 +140,6 @@ export const IncreaseSelect = () => {
 
     function selectGroup(e) {
         setSelectedGroup(e.target.value);
-    }
-
-    function renderModalAdd() {
-        function addPersonnel(e) {
-            e.preventDefault()
-            if (personnel?.content?.length > 1 && (corporate.Status == "DEMO" || corporate?.Status == "SECURE_DEMO")) {
-                error.showError({message: "برای Demo بیش از 2 کاربر امکان پذیر نیست",});
-                return;
-            }
-            if (!checkMobileValid(e.target.PhoneNumber.value)) {
-                error.showError({message: "شماره موبایل صحیح نیست",});
-                return;
-            }
-            corporatePersonnel_add({
-                Corporate: {Id: corporate.Id},
-                PhoneNumber: e.target.PhoneNumber.value
-            }).then(result => {
-                setOpenModalAdd(false);
-                getPersonnel();
-            }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message,});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            });
-        }
-
-        function changePhoneNumber(e) {
-            if (e.target.value.length < 12)
-                e.target.value = fixMobile(e.target.value);
-            else
-                e.target.value = e.target.value.substring(0, 11)
-        }
-
-        return (
-            <Dialog open={openModalAdd} onClose={() => setOpenModalAdd(false)}>
-                <Form onSubmit={(e) => addPersonnel(e)}>
-                    <DialogTitle>افزودن پرسنل</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            برای افزودن فرد جدید شماره همراه را وارد کنید
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name={"PhoneNumber"}
-                            label="موبایل"
-                            type="number"
-                            sx={{mt: 2}}
-                            onChange={e => changePhoneNumber(e)}
-                            fullWidth
-                            variant={"outlined"}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button variant={"outlined"} onClick={() => setOpenModalAdd(false)}>لغو</Button>
-                        <Button variant={"outlined"} color={"success"} type={"submit"}>ثبت</Button>
-                    </DialogActions>
-                </Form>
-            </Dialog>)
     }
 
 
@@ -300,7 +232,7 @@ export const IncreaseSelect = () => {
 
                     </DialogContent>
                     <DialogActions>
-                        <Button variant={"contained"} color={"primary"} onClick={() => setOpenModalAdd(false)}>لغو</Button>
+                        <Button variant={"contained"} color={"primary"} onClick={() => setOpenModalAddCredit(false)}>لغو</Button>
                         <Button variant={"contained"} color={"success"} type={"submit"}>ثبت</Button>
                     </DialogActions>
                 </Form>
@@ -403,7 +335,8 @@ export const IncreaseSelect = () => {
                                     <TableCell>{row?.PersonnelGroup?.Name || "بدون گروه"}</TableCell>
                                     <TableCell align={"right"}>
                                         <Button
-                                            onClick={() => navigate("/personnel/detail/" + encodeId(row.Id))} variant={"contained"}>جزئیات</Button>
+                                            onClick={() => navigate("/personnel/detail/" + encodeId(row.Id))}
+                                            variant={"contained"}>جزئیات</Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -475,7 +408,6 @@ export const IncreaseSelect = () => {
                     </CardActions>
                 </Card>}
             </Container>
-            {renderModalAdd()}
             {renderModalAddCreditToSelectedUsers()}
         </>
     );

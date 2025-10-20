@@ -20,7 +20,7 @@ import {
 import {connect, useSelector} from "react-redux";
 import {media_AddImage, media_getCatById} from "../../network/api/multimedia.api";
 import {Formik} from "formik";
-import {user_updateAvatar, user_updateMe} from "../../network/api/user.api";
+import {user_updateAvatar, user_update} from "../../network/api/user.api";
 import {sagaActions} from "../../helper/redux/actions/SagaActions";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {CircleStencil, FixedCropper} from 'react-advanced-cropper'
@@ -259,7 +259,7 @@ const EditProfile = (props) => {
                                         return;
                                     }
 
-                                    user_updateMe(values).then(result => {
+                                    user_update(values).then(result => {
                                         setUser(result.data.Data);
                                         props.RequestUser(values)
                                         error.showError({message: "با موفقیت ثبت شد",});

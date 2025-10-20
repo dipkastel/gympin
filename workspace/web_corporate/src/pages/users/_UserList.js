@@ -1,19 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
     Avatar,
-    Button,
     Card,
     CardActions,
-    Checkbox,
     CircularProgress,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
     FormControl,
-    FormControlLabel,
-    IconButton,
     InputLabel,
     MenuItem,
     Select,
@@ -23,37 +14,34 @@ import {
     TableHead,
     TablePagination,
     TableRow,
-    TableSortLabel,
-    TextField,
-    Typography
+    TableSortLabel
 } from "@mui/material";
 import {ErrorContext} from "../../components/GympinPagesProvider";
-import {useSelector} from "react-redux";
-import {
-    corporatePersonnel_add,
-    corporatePersonnel_addCreditToAll,
-    corporatePersonnel_query
-} from "../../network/api/corporatePersonnel.api";
 import Grid from "@mui/material/Grid2";
 import {corporate_getCorporateGroups} from "../../network/api/corporate.api";
 import SearchTextField from "../../components/SearchTextField";
-import {checkMobileValid, encodeId, fixMobile, toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
-import {Form} from "react-bootstrap";
+import {encodeId, toPriceWithComma} from "../../helper/utils";
 import {useNavigate} from "react-router-dom";
-import {Delete} from "@mui/icons-material";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import {AdapterDateFnsJalali} from "@mui/x-date-pickers/AdapterDateFnsJalaliV3";
-import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import _UsersActions from "../../components/_UsersActions";
 
-export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,rowsPerPage, setRowsPerPage,selectedGroup, setSelectedGroup,setSearchText}) => {
+export const _UserList = ({
+                              personnel,
+                              corporate,
+                              sortBy,
+                              setSortBy,
+                              page,
+                              setPage,
+                              rowsPerPage,
+                              setRowsPerPage,
+                              selectedGroup,
+                              setSelectedGroup,
+                              setSearchText
+                          }) => {
 
 
     const navigate = useNavigate();
     const error = useContext(ErrorContext);
     const [groups, setGroups] = useState(null);
     const [selectedUsers, setSelectedUsers] = useState([]);
-
 
 
     useEffect(() => {
@@ -75,17 +63,17 @@ export const _UserList = ({personnel,corporate,sortBy,setSortBy,page,setPage,row
 
     function getNearestExpirationDate(allCredit) {
         try {
-            var credit = allCredit?.filter(c=>c.Status=="ACTIVE");
+            var credit = allCredit?.filter(c => c.Status == "ACTIVE");
             var date = credit[0]?.ExpireDate;
             for (let item in credit) {
                 if (date > item?.ExpireDate)
                     date = item?.ExpireDate;
             }
-            return date? new Date(date).toLocaleDateString('fa-IR', {
+            return date ? new Date(date).toLocaleDateString('fa-IR', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
-            }):"ندارد";
+            }) : "ندارد";
         } catch (e) {
             return "--"
         }
