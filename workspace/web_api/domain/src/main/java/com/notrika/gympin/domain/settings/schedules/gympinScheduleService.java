@@ -29,7 +29,7 @@ public class gympinScheduleService {
     @Autowired
     scheduleSms scheduleSms;
 
-    @Scheduled(cron = "0 0 2 * * ?")
+    @Scheduled(cron = "0 */5 * * * ?")
     public void setDiscounts(){
         scheduleReports.updateLastTimeDiscountCheck();
         scheduleDiscounts.UpdateAutoTicketSubscribeDiscount();
