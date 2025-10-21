@@ -41,7 +41,7 @@ public class scheduleDiscounts {
                 Short newDiscount = (short) Math.round(commissionFee*((Math.random() * (0.6)) + 0.2));
 
 
-                if(newDiscount>1){
+                if(newDiscount>1&&buyable.getPlacePrice()!=null&&buyable instanceof TicketSubscribeEntity){
                     buyable.setDiscount(newDiscount);
                     BigDecimal newPrice = buyable.getPlacePrice().multiply(BigDecimal.valueOf(1-(newDiscount*0.01))).setScale(-3, RoundingMode.HALF_UP);
                     buyable.setPrice(newPrice);
