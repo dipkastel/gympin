@@ -126,7 +126,7 @@ const TheaterAndLearn = () => {
                         icon={<img width={100} alt="icon" src={"/assets/images/btn/class10.png"}/>}
                         describe={
                             <>
-                                <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem",color:"white"}}  variant={"subtitle1"}>
+                                <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"textPrimary"}  variant={"subtitle1"}>
                                     {"جیم‌پین این فرصت را فراهم کرده است تا سازمان‌ها بتوانند با برگزاری یک جلسه مشاوره و تجربه عملی کارگاه‌های خلاق سازمانی، نیازها و اهداف تیم خود را شناسایی کنند."}
                                 </Typography>
                                 <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"success"}  variant={"subtitle2"}>
@@ -147,7 +147,7 @@ const TheaterAndLearn = () => {
                         title={"بازی‌های آشنایی"}
                         icon={<img width={100} alt="icon" src={"/assets/images/btn/class1.png"}/>}
                         describe={<>
-                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem",color:"white"}}  variant={"subtitle1"}>
+                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"textPrimary"}  variant={"subtitle1"}>
                                 {"هدف: شکستن یخ، ایجاد اعتماد و ساختن یک فضای راحت و صمیمی."}
                             </Typography>
                             <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"warning"} variant={"subtitle2"}>
@@ -169,7 +169,7 @@ const TheaterAndLearn = () => {
                         title={"بازی‌های تمرکزی"}
                         icon={<img width={100} alt="icon" src={"/assets/images/btn/class9.png"}/>}
                         describe={<>
-                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem",color:"white"}}  variant={"subtitle1"}>
+                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"textPrimary"}  variant={"subtitle1"}>
                                 {"هدف: تقویت حضور ذهن و دقت در لحظه."}
                             </Typography>
                             <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"warning"} variant={"subtitle2"}>
@@ -191,7 +191,7 @@ const TheaterAndLearn = () => {
                         title={"بازی‌های زبانی"}
                         icon={<img width={100} alt="icon" src={"/assets/images/btn/class4.png"}/>}
                         describe={<>
-                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem",color:"white"}}  variant={"subtitle1"}>
+                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"textPrimary"}  variant={"subtitle1"}>
                                 {"هدف: آزاد کردن قدرت کلمات برای نوشتن و گفتن."}
                             </Typography>
                             <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"warning"} variant={"subtitle2"}>
@@ -213,7 +213,7 @@ const TheaterAndLearn = () => {
                         title={"بازی‌های مجازی"}
                         icon={<img width={100} alt="icon" src={"/assets/images/btn/class5.png"}/>}
                         describe={<>
-                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem",color:"white"}}  variant={"subtitle1"}>
+                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"textPrimary"}  variant={"subtitle1"}>
                                 {"هدف: فهم بهتر دنیای شبکه‌های اجتماعی از زاویه‌ی انسانی."}
                             </Typography>
                             <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"warning"} variant={"subtitle2"}>
@@ -235,7 +235,7 @@ const TheaterAndLearn = () => {
                         title={"بازی‌های حرکتی"}
                         icon={<img width={100} alt="icon" src={"/assets/images/btn/class8.png"}/>}
                         describe={<>
-                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem",color:"white"}}  variant={"subtitle1"}>
+                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"textPrimary"}  variant={"subtitle1"}>
                                 {"هدف: فعال‌سازی انرژی گروهی و ایجاد هماهنگی بدنی."}
                             </Typography>
                             <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"warning"} variant={"subtitle2"}>
@@ -257,7 +257,7 @@ const TheaterAndLearn = () => {
                         title={"بازی‌های ارتباطی"}
                         icon={<img width={100} alt="icon" src={"/assets/images/btn/class6.png"}/>}
                         describe={<>
-                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem",color:"white"}}  variant={"subtitle1"}>
+                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}}  color={"textPrimary"}  variant={"subtitle1"}>
                                 {"هدف: تقویت توانایی شنیدن، دیدن و فهمیدن دیگری."}
                             </Typography>
                             <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"warning"} variant={"subtitle2"}>
@@ -279,7 +279,7 @@ const TheaterAndLearn = () => {
                         title={"بازی‌های صامت"}
                         icon={<img width={100} alt="icon" src={"/assets/images/btn/class2.png"}/>}
                         describe={<>
-                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem",color:"white"}}  variant={"subtitle1"}>
+                            <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"textPrimary"}  variant={"subtitle1"}>
                                 {"هدف: کشف قدرت بیان غیرکلامی."}
                             </Typography>
                             <Typography sx={{width: "100%", textAlign: "justify",lineHeight:"1.5rem"}} color={"warning"} variant={"subtitle2"}>

@@ -55,7 +55,7 @@ const _DashAlerts = () => {
 
     return (
         <>
-            {invoiceToPays &&
+            {invoiceToPays && invoiceToPays?.totalElements>0 &&
             <Grid sx={{mx: 2, mt: 2}}>
                 <Card sx={{p: 2, width: "100%"}} variant={"outlined"}>
                     <Grid container direction={"column"}>

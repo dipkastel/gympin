@@ -51,7 +51,7 @@ export const NavigationMenu = [
         icon: <Fastfood/>,
     },
     {
-        segment: 'employment',
+        segment: 'survay',
         title: 'نظرسنجی و آمار',
         icon: <Ballot/>,
         action: <Chip label={"به زودی"} color={"default"} size="small"/>,

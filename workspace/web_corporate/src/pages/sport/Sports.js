@@ -5,6 +5,8 @@ import {Card, Typography} from "@mui/material";
 import _MercheantSelerItem from "../../components/_MercheantSelerItem";
 import {useNavigate} from "react-router";
 import _NeedNewService from "../../components/_NeedNewService";
+import _HallReservation from "./Gympin/Reserve/_HallReservation";
+import _SendCouch from "./Gympin/Couch/_SendCouch";
 
 const Sports = () => {
 
@@ -27,18 +29,29 @@ const Sports = () => {
                 <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
                     <_MercheantSelerItem
                         title={"جیم پین"}
-                        icon={<img width={100} alt="icon" src={"/assets/images/btn/sportIcon.png"}/>}
+                        icon={<img width={100} alt="icon" src={"/assets/images/btn/gympin1.png"}/>}
                         describe={"جیم پین پل ارتباطی مراکز ورزشی و سازمان ها. اعتبار دهی گروهی و شخصی به کارمندان برای استفاده از مجموعه‌های ورزشی در اپلیکیشن جیم پین."}
                         onClick={() => navigate("/sport/gympin")}
                         status={"ACTIVE"}
                     />
                 </Grid>
+
+                <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
+                    <_HallReservation  />
+                </Grid>
+
+
+                <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
+                    <_SendCouch  />
+                </Grid>
+
                 <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
                     <_NeedNewService category={"ورزش"} />
                 </Grid>
 
 
-                <Grid size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
+
+                <Grid sx={{mb:8}} size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
                     <Card elevation={10} sx={{m:2,p:3}}>
                         <Typography variant={"h3"} color={"info"} >
                             ورزش کارمندان

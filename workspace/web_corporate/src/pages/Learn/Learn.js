@@ -5,6 +5,7 @@ import {Card, Typography} from "@mui/material";
 import _NeedNewService from "../../components/_NeedNewService";
 import _MercheantSelerItem from "../../components/_MercheantSelerItem";
 import {useNavigate} from "react-router";
+import _InCoGames from "./InCoGames/_InCoGames";
 
 const Learn = () => {
 
@@ -18,6 +19,7 @@ const Learn = () => {
                 <Grid size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
                     <_InSectionSlider sliders={[
                         {Image: "/assets/banners/yadgiri-dash.jpg"},
+                        {Image: "/assets/banners/gamem.jpg"},
                     ]}/>
                 </Grid>
 
@@ -31,13 +33,17 @@ const Learn = () => {
                     />
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
+                    <_InCoGames />
+                </Grid>
+
+                <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
                     <_NeedNewService category={"آموزش"} />
                 </Grid>
 
 
 
 
-                <Grid size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
+                <Grid sx={{mb:8}} size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
                     <Card elevation={10} sx={{m:2,p:3}}>
                         <Typography variant={"h3"} color={"info"} >
                             آموزش و توسعه

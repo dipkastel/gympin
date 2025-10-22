@@ -20,7 +20,7 @@ const Transport = () => {
                     <_NeedNewService category={"حمل و نقل"} />
                 </Grid>
 
-                <Grid size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
+                <Grid sx={{mb:8}} size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
                     <Card elevation={10} sx={{m:2,p:3}}>
                         <Typography variant={"h3"} color={"info"} >
                             خدمات حمل و نقل

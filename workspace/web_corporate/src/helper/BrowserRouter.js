@@ -40,6 +40,7 @@ import PayCateringInvoices from "../pages/cateringDetail/payCateringInvoices/Pay
 import ProcessingInvoices from "../pages/cateringDetail/ProcessingInvoices/ProcessingInvoces";
 import Transactions from "../pages/TransActions/Transactions";
 import TheaterAndLearn from "../pages/Learn/theaterAndLearn/TheaterAndLearn";
+import Survay from "../pages/Survay/Survay";
 
 export const BrowserRouter =[
     {
@@ -313,6 +314,16 @@ export const BrowserRouter =[
             {
                 path: '',
                 Component: Employment,
+            },
+        ],
+    },
+    {
+        path: 'survay',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: Survay,
             },
         ],
     },

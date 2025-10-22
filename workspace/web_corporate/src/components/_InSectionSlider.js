@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Card} from "@mui/material";
 import Slider from "react-slick";
+import Grid from "@mui/material/Grid2";
 
 const _InSectionSlider = ({sliders}) => {
 
@@ -8,7 +9,7 @@ const _InSectionSlider = ({sliders}) => {
         centerMode: false,
         infinite: true,
         slidesToShow: 1,
-        dots: true,
+        dots: false,
         rtl:true,
         autoplay: true,
         speed: 1000,
@@ -30,7 +31,7 @@ const _InSectionSlider = ({sliders}) => {
     function SliderItem({src,alt}){
         return(
             <div>
-                <Card className={"rtl"} elevation={4}  sx={{borderRadius: 4,mx:"1VW",my:"1VW"}}>
+                <Card className={"rtl"} elevation={4}  sx={{borderRadius: 4,mx:2,my:3}}>
                     <img alt={alt} width={"100%"} className={"slider-img"} src={src}/>
                 </Card>
             </div>)
@@ -38,13 +39,13 @@ const _InSectionSlider = ({sliders}) => {
     return (
         <section>
 
-            <div>
+            <Grid>
                 <Slider  {...settings}>
                     {sliders?.map((item,num)=>(
                         <SliderItem key={num} src={item.Image} />
                     ))}
                 </Slider>
-            </div>
+            </Grid>
         </section>
     );
 };
