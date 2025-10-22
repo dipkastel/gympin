@@ -28,7 +28,6 @@ public class scheduleDiscounts {
     private TicketDiscountHistoryRepository ticketDiscountHistoryRepository;
 
 
-    @Transactional
     public void UpdateAutoTicketSubscribeDiscount() {
       List<PlaceGymEntity> places =  placeGymRepository.findAllByDeletedIsFalseAndAutoDiscountIsTrue();
       List<BuyableDiscountHistoryEntity> buyableDiscountHistoryEntityListToAdd = new ArrayList<>();
@@ -36,27 +35,27 @@ public class scheduleDiscounts {
         for (PlaceGymEntity place : places) {
             if(Math.random()>0.5)
             for (BuyableEntity<TicketSubscribeEntity> buyable : place.getTicketSubscribes().stream().filter(t->!t.isDeleted()).collect(Collectors.toList())) {
-                BigDecimal beforPrice = buyable.getPrice();
-                Double commissionFee = buyable.getBeneficiary().getCommissionFee();
-                Short newDiscount = (short) Math.round(commissionFee*((Math.random() * (0.6)) + 0.2));
+                try{
+                    BigDecimal beforPrice = buyable.getPrice();
+                    Double commissionFee = buyable.getBeneficiary().getCommissionFee();
+                    Short newDiscount = (short) Math.round(commissionFee*((Math.random() * (0.6)) + 0.2));
 
 
-                if(newDiscount>1&&buyable.getPlacePrice()!=null&&buyable instanceof TicketSubscribeEntity){
-                    buyable.setDiscount(newDiscount);
-                    BigDecimal newPrice = buyable.getPlacePrice().multiply(BigDecimal.valueOf(1-(newDiscount*0.01))).setScale(-3, RoundingMode.HALF_UP);
-                    buyable.setPrice(newPrice);
-                    ticketSubscribeEntityListToUpdate.add((TicketSubscribeEntity) buyable);
+                    if(newDiscount>1&&buyable.getPlacePrice()!=null&&buyable instanceof TicketSubscribeEntity){
+                        buyable.setDiscount(newDiscount);
+                        BigDecimal newPrice = buyable.getPlacePrice().multiply(BigDecimal.valueOf(1-(newDiscount*0.01))).setScale(-3, RoundingMode.HALF_UP);
+                        buyable.setPrice(newPrice);
+                        ticketSubscribeEntityListToUpdate.add((TicketSubscribeEntity) buyable);
 
-                    buyableDiscountHistoryEntityListToAdd.add(
-                            BuyableDiscountHistoryEntity.builder()
-                                    .buyable(buyable)
-                                    .discount(newDiscount)
-                                    .beforPrice(beforPrice)
-                                    .afterPrice(newPrice)
-                                    .build());
-                }
-
-
+                        buyableDiscountHistoryEntityListToAdd.add(
+                                BuyableDiscountHistoryEntity.builder()
+                                        .buyable(buyable)
+                                        .discount(newDiscount)
+                                        .beforPrice(beforPrice)
+                                        .afterPrice(newPrice)
+                                        .build());
+                    }
+                }catch (Exception e){}
             }
         }
         ticketSubscribeRepository.updateAll(ticketSubscribeEntityListToUpdate);
