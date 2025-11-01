@@ -1,29 +1,30 @@
 package com.notrika.gympin.domain.support;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.support.query.SupportQuery;
+import com.notrika.gympin.common.settings.notification.dto.NotificationBasePayload;
+import com.notrika.gympin.common.settings.notification.dto.NotificationPayloadData;
+import com.notrika.gympin.common.settings.notification.service.NotificationService;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.support.dto.SupportDto;
 import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
+import com.notrika.gympin.common.support.query.SupportQuery;
 import com.notrika.gympin.common.support.service.SupportService;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.SupportConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.dao.repository.support.SupportMessageRepository;
 import com.notrika.gympin.persistence.dao.repository.support.SupportRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.support.SupportMessagesEntity;
@@ -49,6 +50,9 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     SupportMessageRepository supportMessageRepository;
 
     @Autowired
+    NotificationService notificationService;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -65,7 +69,8 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     @Transactional
     public SupportDto add(@NonNull SupportParam supportParam) {
         SupportEntity supportEntity = new SupportEntity();
-        supportEntity.setTitle(supportParam.getTitle());;
+        supportEntity.setTitle(supportParam.getTitle());
+        ;
         if (supportParam.getPlaceId() != null) {
             PlaceEntity place = placeRepository.getById(supportParam.getPlaceId());
             supportEntity.setPlace(place);
@@ -89,6 +94,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         supportEntity.setSupportMessages(List.of(supportMessagesEntity));
         supportRepository.add(supportEntity);
         supportMessagesEntity.setSupport(supportEntity);
+        notifToAdmin(supportEntity);
         return SupportConvertor.toDto(supportMessageRepository.add(supportMessagesEntity).getSupport());
     }
 
@@ -106,7 +112,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         supportMessageRepository.saveAll(support.getSupportMessages());
         try {
             if (param.isAnswer()) {
-                UserEntity user = (tme.getSupport().getUser()!=null)?tme.getSupport().getUser():((PlacePersonnelEntity)tme.getSupport().getPlace().getPlaceOwners().stream().filter(po->((PlacePersonnelEntity)po).getPlacePersonnelRoles().stream().anyMatch(ppp->ppp.getRole()== PlacePersonnelRoleEnum.PLACE_OWNER)&&!((PlacePersonnelEntity)po).isDeleted()).findFirst().get()).getUser();
+                UserEntity user = (tme.getSupport().getUser() != null) ? tme.getSupport().getUser() : ((PlacePersonnelEntity) tme.getSupport().getPlace().getPlaceOwners().stream().filter(po -> ((PlacePersonnelEntity) po).getPlacePersonnelRoles().stream().anyMatch(ppp -> ppp.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER) && !((PlacePersonnelEntity) po).isDeleted()).findFirst().get()).getUser();
                 smsService.sendSupportAnswered(SmsDto.builder()
                         .smsType(SmsTypes.SUPPORT_ANSWERED)
                         .userNumber(user.getPhoneNumber())
@@ -116,6 +122,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
             }
         } catch (Exception e) {
         }
+        notifToAdmin(support);
         return SupportConvertor.toDto(supportMessageRepository.add(tme).getSupport());
     }
 
@@ -142,14 +149,14 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     @Override
     public Long getCorporateSupportCount(CorporateParam param) {
         CorporateEntity corporate = corporateRepository.getById(param.getId());
-        return supportRepository.findAllByDeletedIsFalseAndCorporate(corporate).stream().map(c->c.getSupportMessages().stream().anyMatch(sm->!sm.getIsRead())).filter(d->d.booleanValue()).count();
+        return supportRepository.findAllByDeletedIsFalseAndCorporate(corporate).stream().map(c -> c.getSupportMessages().stream().anyMatch(sm -> !sm.getIsRead())).filter(d -> d.booleanValue()).count();
     }
 
 
     @Override
     public Boolean setMessagesReadById(Long id) {
         SupportEntity support = supportRepository.getById(id);
-        support.getSupportMessages().stream().filter(o->!o.isDeleted()).peek(sm-> sm.setIsRead(true)).collect(Collectors.toList());
+        support.getSupportMessages().stream().filter(o -> !o.isDeleted()).peek(sm -> sm.setIsRead(true)).collect(Collectors.toList());
         supportRepository.update(support);
         return true;
     }
@@ -203,11 +210,29 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public List<SupportDto> convertToDtos(List<SupportEntity> entities) {
-        return entities.stream().filter(o->!o.isDeleted()).map(SupportConvertor::toDto).collect(Collectors.toList());
+        return entities.stream().filter(o -> !o.isDeleted()).map(SupportConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override
     public Page<SupportDto> convertToDtos(Page<SupportEntity> entities) {
         return entities.map(SupportConvertor::toDto);
+    }
+
+
+    private void notifToAdmin(SupportEntity support) {
+        if (support.getSupportStatus() != SupportStatus.AWAITING_EXPERT) return;
+        try {
+            notificationService.sendNotificationToApplication(NotificationBasePayload.builder()
+                    .data(NotificationPayloadData.builder()
+                            .title("پشتیبانی جیم پین")
+                            .body(support.getTitle())
+                            .dir("rtl")
+                            .renotify(true)
+                            .data("/support")
+                            .build())
+                    .appName("WEBPANEL")
+                    .build());
+        } catch (Exception e) {
+        }
     }
 }

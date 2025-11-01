@@ -12,4 +12,5 @@ public interface ManageNotificationRepository extends BaseRepository<ManageNotif
 
     List<ManageNotificationEntity> findAllByUserAndDeletedIsFalse(UserEntity user);
 
+
 }

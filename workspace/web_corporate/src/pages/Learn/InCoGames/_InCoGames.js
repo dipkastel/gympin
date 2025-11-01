@@ -19,7 +19,7 @@ const _InCoGames = () => {
             e.preventDefault()
 
             Support_add({
-                Title: "درخواست رزرو سالن",
+                Title: "درخواست بازی سازمانی",
                 Message: {
                     Status: "AWAITING_EXPERT",
                     Message: e.target.Request.value,

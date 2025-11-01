@@ -36,7 +36,8 @@ const __SmsCanceledList = ({updatePage}) => {
         });
 
     }
-    function sendSmsAgain(sms) {
+    function sendSmsAgain(e,sms) {
+        e.preventDefault();
         sms_ChangeStatus({
             Id: sms.Id,
             SmsStatus:"PENDING"
@@ -91,7 +92,7 @@ const __SmsCanceledList = ({updatePage}) => {
                                             <Button
                                                 variant="contained"
                                                 color={"secondary"}
-                                                onClick={(e) => sendSmsAgain(row)}
+                                                onClick={(e) => sendSmsAgain(e,row)}
                                             >
                                                 ارسال
                                             </Button>

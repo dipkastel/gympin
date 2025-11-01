@@ -2,9 +2,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import {invoice_query} from "../../network/api/invoice.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
-import {Card, Typography} from "@mui/material";
+import {Button, Card, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import {ArrowLeft, NotificationImportant} from "@mui/icons-material";
+import {ArrowLeft, NotificationImportant, NotificationsActive} from "@mui/icons-material";
 import {useNavigate} from "react-router";
 
 const _DashAlerts = () => {
@@ -13,8 +13,13 @@ const _DashAlerts = () => {
     const navigate = useNavigate();
     const [invoiceToPays, SetInvoiceToPays] = useState(null);
     const [invoicePlaces, SetInvoicePlaces] = useState(null);
+    const [notificationPermission, SetNotificationPermission] = useState(Notification.permission);
     const corporate = useSelector(({corporate}) => corporate.corporate)
 
+
+    useEffect(() => {
+        SetNotificationPermission(Notification.permission);
+    }, [Notification.permission]);
 
     useEffect(() => {
         getInvoiceToPay()
@@ -36,8 +41,8 @@ const _DashAlerts = () => {
             .then((result) => {
                 SetInvoiceToPays(result.data.Data);
                 const caterings = [];
-                for(var item in result.data.Data.content){
-                    if(!caterings.some(o=>o.Id==result?.data?.Data?.content[item]?.InvoiceBuyables[0]?.Place.Id))
+                for (var item in result.data.Data.content) {
+                    if (!caterings.some(o => o.Id == result?.data?.Data?.content[item]?.InvoiceBuyables[0]?.Place.Id))
                         caterings.push(result?.data?.Data?.content[item]?.InvoiceBuyables[0]?.Place)
                 }
                 SetInvoicePlaces(caterings);
@@ -53,24 +58,49 @@ const _DashAlerts = () => {
     }
 
 
+    function requestForPermission(e) {
+        e.preventDefault();
+        Notification.requestPermission().then(result=>{
+            SetNotificationPermission(result);
+            if(result=="granted"){
+                window.location = "/";
+            }
+        });
+    }
+
     return (
         <>
-            {invoiceToPays && invoiceToPays?.totalElements>0 &&
-            <Grid sx={{mx: 2, mt: 2}}>
-                <Card sx={{p: 2, width: "100%"}} variant={"outlined"}>
-                    <Grid container direction={"column"}>
-                        <Grid container direction={"row"}>
-                            <NotificationImportant/>
-                            <Typography sx={{px: 1}}>{"شما " + invoiceToPays?.totalElements + " رسید آماده پرداخت دارید"}</Typography>
-                        </Grid>
-                        {invoicePlaces.map(item => (
-                            <Grid sx={{cursor:"pointer",pl:2,pt:1}} onClick={(e=>{navigate("/food/needToPay/"+item.Id)})} container direction={"row"}>
-                                <ArrowLeft/>
-                                <Typography variant={"body2"} sx={{px: 1}}>{"پیگیری و پرداخت سفارشات "+item?.Name}</Typography>
-                            </Grid>))}
+            {/*{invoiceToPays && invoiceToPays?.totalElements > 0 &&*/}
+            {/*<Grid sx={{mx: 2, mt: 2}}>*/}
+            {/*    <Card sx={{p: 2, width: "100%"}} variant={"outlined"}>*/}
+            {/*        <Grid container direction={"column"}>*/}
+            {/*            <Grid container direction={"row"}>*/}
+            {/*                <NotificationImportant/>*/}
+            {/*                <Typography sx={{px: 1}}>{"شما " + invoiceToPays?.totalElements + " رسید آماده پرداخت دارید"}</Typography>*/}
+            {/*            </Grid>*/}
+            {/*            {invoicePlaces.map(item => (*/}
+            {/*                <Grid sx={{cursor: "pointer", pl: 2, pt: 1}} onClick={(e => {*/}
+            {/*                    navigate("/food/needToPay/" + item.Id)*/}
+            {/*                })} container direction={"row"}>*/}
+            {/*                    <ArrowLeft/>*/}
+            {/*                    <Typography variant={"body2"} sx={{px: 1}}>{"پیگیری و پرداخت سفارشات " + item?.Name}</Typography>*/}
+            {/*                </Grid>))}*/}
 
+            {/*        </Grid>*/}
+            {/*        {invoiceToPays?.totalElement > 10 && <Typography sx={{px: 1}}>{"و..."}</Typography>}*/}
+            {/*    </Card>*/}
+            {/*</Grid>}*/}
+            {notificationPermission!="granted"&&<Grid sx={{mx: 2, mt: 2}}>
+                <Card sx={{p: 2, width: "100%"}} variant={"outlined"}>
+                    <Grid container justifyContent={"space-between"} direction={"row"}>
+                        <Grid container direction={"row"}>
+                            <NotificationsActive color={"warning"}/>
+                            <Typography sx={{px: 1}}>با فعال سازی اعلان ها از آخرین تغییرات و جدید ترین خدمات اپسا مطلع شوید.</Typography>
+                        </Grid>
+                        <Grid >
+                            <Button variant={"outlined"} onClick={(e)=>requestForPermission(e)} >فعالسازی</Button>
+                        </Grid>
                     </Grid>
-                    {invoiceToPays?.totalElement > 10 && <Typography sx={{px: 1}}>{"و..."}</Typography>}
                 </Card>
             </Grid>}
 

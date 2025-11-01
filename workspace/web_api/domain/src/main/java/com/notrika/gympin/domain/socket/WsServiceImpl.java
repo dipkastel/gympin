@@ -1,5 +1,8 @@
 package com.notrika.gympin.domain.socket;
 
+import com.notrika.gympin.common.settings.notification.dto.NotificationBasePayload;
+import com.notrika.gympin.common.settings.notification.dto.NotificationPayloadData;
+import com.notrika.gympin.common.settings.notification.service.NotificationService;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
@@ -20,9 +23,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,9 @@ public class WsServiceImpl extends AbstractBaseService<ChatMessageParam, ChatMes
     @Autowired
     WebSocketSessionTracker webSocketSessionTracker;
 
+    @Autowired
+    NotificationService notificationService;
+
     @Override
     public ChatMessageDto SupportChat(ChatMessageParam message, String driverId, StompHeaderAccessor sha) {
         WsSessionInfo info = webSocketSessionTracker.getSession(sha.getSessionId());
@@ -55,34 +60,52 @@ public class WsServiceImpl extends AbstractBaseService<ChatMessageParam, ChatMes
                 .message(message.getMessage())
                 .sender(message.getSender())
                 .phoneNumber(info.getPhoneNumber())
-                .user((info.getUserId()!=null)?userRepository.getById(info.getUserId()):null)
+                .user((info.getUserId() != null) ? userRepository.getById(info.getUserId()) : null)
                 .build());
 
         sendSmsToAdmin();
+        notifToAdmin(message, info);
         return ChatConvertor.toDto(message);
     }
 
-    private void sendSmsToAdmin() {
-        if(webSocketSessionTracker.getSessions().values().stream().anyMatch(s->s.getAppName().equals("WEBPANEL"))) return;
+    private void notifToAdmin(ChatMessageParam message, WsSessionInfo info) {
+        if (!message.getSender().equals("Client")) return;
         try {
-                smsInService.sendSupportAnswered(SmsDto.builder()
-                        .smsType(SmsTypes.SUPPORT_ANSWERED)
-                        .userNumber("09194711540")
-                        .text1("چت سایت")
-                        .build()
-                );
+            notificationService.sendNotificationToApplication(NotificationBasePayload.builder()
+                    .data(NotificationPayloadData.builder()
+                            .title("چت جیم پین")
+                            .body(info.getUsername() + " : " + message.getMessage())
+                            .dir("rtl")
+                            .renotify(true)
+                            .data("/support")
+                            .build())
+                    .appName("WEBPANEL")
+                    .build());
+        } catch (Exception e) {
+        }
+    }
+
+    private void sendSmsToAdmin() {
+        if (webSocketSessionTracker.getSessions().values().stream().anyMatch(s -> s.getAppName().equals("WEBPANEL"))) return;
+        try {
+            smsInService.sendSupportAnswered(SmsDto.builder()
+                    .smsType(SmsTypes.SUPPORT_ANSWERED)
+                    .userNumber("09194711540")
+                    .text1("چت سایت")
+                    .build()
+            );
         } catch (Exception e) {
         }
     }
 
     @Override
     public Map<String, WsSessionInfo> getSessionList() {
-        Map<String, WsSessionInfo> result =  new HashMap<>();
-        Map<String, WsSessionInfo> sessions =  webSocketSessionTracker.getSessions();
+        Map<String, WsSessionInfo> result = new HashMap<>();
+        Map<String, WsSessionInfo> sessions = webSocketSessionTracker.getSessions();
         result.putAll(sessions);
-       List<ManageChatEntity> lastOfflines = manageChatRepository.findLastMessageOfEachChat(PageRequest.of(0, 100));
-        for (ManageChatEntity chat :lastOfflines) {
-            result.put(chat.chatId,ChatConvertor.toSessionDto(chat));
+        List<ManageChatEntity> lastOfflines = manageChatRepository.findLastMessageOfEachChat(PageRequest.of(0, 100));
+        for (ManageChatEntity chat : lastOfflines) {
+            result.put(chat.chatId, ChatConvertor.toSessionDto(chat));
         }
         return result;
     }

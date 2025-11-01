@@ -64,7 +64,10 @@ export let Api_url = {
         categoryGetById: "v1/multimediacategory/getById"
     },
     Notification: {
-        getUserNotifications: "v1/Notification/getUserNotifications"
+        register: "v1/Notification/registerSubscription"
+    },
+    NotificationSubscription: {
+        add: "v1/NotificationSubscription/add"
     },
     optionOfPlace: {
         GET_BY_PLACE_ID: "v1/OptionOfPlace/getByPlaceId",

@@ -134,7 +134,7 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                 <DialogTitle>درخواست ثبت مجموعه</DialogTitle>
                 <DialogContent>
                     <Typography variant="body2" align="center" sx={{ mb: 2,textAlign:"justify" }}>
-                        اگر مجموعه ورزشی مورد نظرتان در اپلیکیشن موجود نیست، جزئیات آن را اینجا وارد کنید. تیم ما بررسی می‌کند و در صورت امکان، ظرف حدود ۵ روز به اپ اضافه می‌کنیم.
+                        اگر مجموعه ورزشی مورد نظرتان در اپلیکیشن موجود نیست، جزئیات آن را اینجا وارد کنید. تیم ما بررسی می‌کند و در صورت امکان، در سریع ترین زمان ممکن به اپ اضافه خواهیم کرد.
                     </Typography>
                     <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                         <TextField

@@ -6,21 +6,18 @@ import com.notrika.gympin.domain.settings.schedules.farazSmsDataModels.smsReques
 import com.notrika.gympin.domain.settings.schedules.farazSmsDataModels.smsResult;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageSettingsRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageSmsRepository;
+import com.notrika.gympin.persistence.entity.management.settings.SettingsEntity;
 import com.notrika.gympin.persistence.entity.management.sms.ManageSmsEntity;
-import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +44,7 @@ public class scheduleSms {
         //GET SMS
         List<ManageSmsEntity> pendingMessages = manageSmsRepository.findAllByDeletedIsFalseAndSmsStatusAndSendTimeLessThan(SmsStatus.PENDING,new Date());
         for (ManageSmsEntity pending : pendingMessages) {
+            pending = checkChange(pending);
             switch (pending.getPattern().getProvider().getValue()) {
                 case "FARAZ":{
                     System.out.println("sms time is : -> " + new Date().toString());
@@ -60,6 +58,13 @@ public class scheduleSms {
                 default:faildToSend(pending,"provider is not define");
             }
         }
+    }
+
+    private ManageSmsEntity checkChange(ManageSmsEntity pending) {
+        SettingsEntity changeNumber =  manageSettingsRepository.findByKeyAndDeletedFalse("SMS_CHANGE_NUMBER");
+        if(!changeNumber.getValue().isEmpty()&&!changeNumber.getData().isEmpty()&&pending.getUserNumber().equals(changeNumber.getValue()))
+            pending.setUserNumber(changeNumber.getData());
+        return pending;
     }
 
     private void smsSent(ManageSmsEntity pending, Integer result) {

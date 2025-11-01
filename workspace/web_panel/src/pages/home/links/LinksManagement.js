@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import Notice from "../../partials/content/Notice";
 import {useHistory, useParams} from "react-router-dom";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
-import {Button, FormControlLabel, FormGroup, IconButton, Switch, TextField} from "@mui/material";
+import {Button, FormControlLabel, FormGroup, FormLabel, IconButton, Switch, TextField} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import {Form, Modal, Table} from "react-bootstrap";
@@ -13,8 +13,9 @@ import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {getRppLinkManagement, SetRppLinkManagement} from "../../../helper/pocket/pocket";
-import {Link_add, Link_query} from "../../../network/api/link.api";
+import {Link_add, Link_query, Link_update} from "../../../network/api/link.api";
 import {Edit, InsertLink} from "@mui/icons-material";
+import {placeAbout_update} from "../../../network/api/placeAbout.api";
 
 export default function LinksManagement() {
     const error = useContext(ErrorContext);
@@ -25,6 +26,7 @@ export default function LinksManagement() {
     const [searchString, setSearchString] = useState("");
     const [links, SetLinks] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
+    const [itemToEdit, SetItemToEdit] = useState(null);
 
 
     useEffect(() => {
@@ -49,6 +51,139 @@ export default function LinksManagement() {
         });
     }
 
+    function renderModalEdit() {
+        function UpdateLink(e) {
+            e.preventDefault()
+            Link_update(itemToEdit)
+                .then(data => {
+                    error.showError({message: "عملیات موفق",});
+                    SetItemToEdit(null)
+                    getLinks()
+                }).catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+        }
+
+        function setFormValues(lable,Value){
+            SetItemToEdit({...itemToEdit,[lable]:Value})
+        }
+
+        return (
+            <>
+
+                <Modal show={itemToEdit!=null} onHide={() => SetItemToEdit(null)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{"ویرایش لینک "}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+
+                        <Form.Group controlId="formName">
+                            <Form.Control
+                                name="formName"
+                                type="text"
+                                placeholder="نام"
+                                value={itemToEdit?.Name}
+                                onChange={(e)=>setFormValues("Name",e.target.value)}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formCode">
+                            <Form.Control
+                                name="formCode"
+                                type="text"
+                                placeholder="کد"
+                                value={itemToEdit?.Code}
+                                onChange={(e)=>setFormValues("Code",e.target.value)}
+                            />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
+                        <Form.Group controlId="formUrl">
+                            <Form.Control
+                                name="formUrl"
+                                type="text"
+                                placeholder="آدرس"
+                                value={itemToEdit?.Url}
+                                onChange={(e)=>setFormValues("Url",e.target.value)}
+                            />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
+                        <Form.Group controlId="formValue1">
+                            <Form.Control
+                                name="formValue1"
+                                type="text"
+                                placeholder="مقدار1"
+                                value={itemToEdit?.Value1}
+                                onChange={(e)=>setFormValues("Value1",e.target.value)}
+                            />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
+                        <Form.Group controlId="formValue2">
+                            <Form.Control
+                                name="formValue2"
+                                type="text"
+                                placeholder="مقدار2"
+                                value={itemToEdit?.Value2}
+                                onChange={(e)=>setFormValues("Value2",e.target.value)}
+                            />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
+                        <Form.Group controlId="formValue3">
+                            <Form.Control
+                                name="formValue3"
+                                type="text"
+                                placeholder="مقدار3"
+                                value={itemToEdit?.Value3}
+                                onChange={(e)=>setFormValues("Value3",e.target.value)}
+                            />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
+                        <FormGroup>
+                            <FormControlLabel
+                                name="formIsActive"
+                                control={<Switch/>}
+                                label="فعال"
+                                checked={itemToEdit?.IsActive}
+                                onChange={(e)=>setFormValues("IsActive",e.target.checked)}
+                            />
+                        </FormGroup>
+                        <Form.Group controlId="formDescription">
+                            <Form.Control
+                                as="textarea"
+                                name="formDescription"
+                                rows={3}
+                                placeholder="توضیحات"
+                                value={itemToEdit?.Description}
+                                onChange={(e)=>setFormValues("Description",e.target.value)}
+                            />
+                        </Form.Group>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            className={"button_edit"}
+                            onClick={() => SetItemToEdit(null)}
+                        >
+                            خیر
+                        </Button>
+                        <Button
+                            className={"button_danger"}
+                            onClick={e=>UpdateLink(e)}
+                        >
+                            ویرایش
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        );
+    }
     function renderModalAdd() {
         function addLink(e) {
             e.preventDefault()
@@ -59,6 +194,7 @@ export default function LinksManagement() {
                 Value1:e.target.formValue1.value,
                 Value2:e.target.formValue2.value,
                 Value3:e.target.formValue3.value,
+                Description:e.target.formDescription.value,
                 IsActive:e.target.formIsActive.checked,
             }).then(result=>{
                 getLinks();
@@ -251,7 +387,7 @@ export default function LinksManagement() {
                                     <TableCell component="th" align="right"><Switch checked={row.IsActive}/></TableCell>
                                     <TableCell component="th" align="left">
                                         <IconButton size={"small"} color={"success"} onClick={()=>copyToClipboard(row)}><InsertLink/></IconButton>
-                                        <IconButton size={"small"} color={"primary"}><Edit/></IconButton>
+                                        <IconButton size={"small"} color={"primary"} onClick={(e)=>SetItemToEdit(row)}><Edit/></IconButton>
                                     </TableCell>
                                 </TableRow>
                             ))
@@ -280,6 +416,7 @@ export default function LinksManagement() {
             </PortletBody>
         </Portlet>
         {renderModalAdd()}
+        {renderModalEdit()}
     </>
   );
 }

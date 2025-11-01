@@ -94,6 +94,9 @@ export let Api_url = {
     Notification:{
         getUserNotifications:"v1/Notification/getUserNotifications"
     },
+    NotificationSubscription: {
+        add: "v1/NotificationSubscription/add"
+    },
     optionOfPlace:{
         GET_BY_PLACE_ID: "v1/OptionOfPlace/getByPlaceId",
     },

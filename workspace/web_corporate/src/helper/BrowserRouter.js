@@ -41,6 +41,8 @@ import ProcessingInvoices from "../pages/cateringDetail/ProcessingInvoices/Proce
 import Transactions from "../pages/TransActions/Transactions";
 import TheaterAndLearn from "../pages/Learn/theaterAndLearn/TheaterAndLearn";
 import Survay from "../pages/Survay/Survay";
+import EmployeeHampers from "../pages/EmployeeHampers/EmployeeHampers";
+import Nuts from "../pages/EmployeeHampers/nuts/Nuts";
 
 export const BrowserRouter =[
     {
@@ -354,6 +356,20 @@ export const BrowserRouter =[
             {
                 path: '',
                 Component: Transactions,
+            },
+        ],
+    },
+    {
+        path: 'EmployeeHampers',
+        Component: Layout,
+        children: [
+            {
+                path: '',
+                Component: EmployeeHampers,
+            },
+            {
+                path: 'nuts',
+                Component: Nuts,
             },
         ],
     },

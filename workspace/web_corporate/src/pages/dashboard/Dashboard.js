@@ -156,7 +156,7 @@ const Dashboard = (props) => {
                         }}
                     />
                 </Grid>
-                <Grid size={{xs: 6, sm: 6, md: 4, lg: 4}}>
+                <Grid size={{xs: 6, sm: 6, md: 4, lg: 3}}>
                     <_DashCatItem
                         title={"حمل و نقل"}
                         description={"وانت، پیک، خودرو، حمل و نقل سازمانی"}
@@ -167,7 +167,7 @@ const Dashboard = (props) => {
                         }}
                     />
                 </Grid>
-                <Grid size={{xs: 6, sm: 6, md: 6, lg: 4}}>
+                <Grid size={{xs: 6, sm: 6, md: 4, lg: 3}}>
                     <_DashCatItem
                         title={"سفر و گردشگری"}
                         description={"تور‌های یک روزه، مسافرت و بلیط"}
@@ -178,7 +178,7 @@ const Dashboard = (props) => {
                         }}
                     />
                 </Grid>
-                <Grid size={{xs: 6, sm: 6, md: 6, lg: 4}}>
+                <Grid size={{xs: 6, sm: 6, md: 4, lg: 3}}>
                     <_DashCatItem
                         title={"فرهنگ و هنر"}
                         description={"سینما، تئاتر، موزه، گالری، کافه"}
@@ -186,6 +186,17 @@ const Dashboard = (props) => {
                         icon={<img alt="icon" width={80} src="/assets/images/btn/culturalIcon.png"/>}
                         onClick={() => {
                             navigate("/cult")
+                        }}
+                    />
+                </Grid>
+                <Grid size={{xs: 6, sm: 6, md: 4, lg: 3}}>
+                    <_DashCatItem
+                        title={"سبد کالا"}
+                        description={"سبد کالای سازمانی و مناسبتی"}
+                        header={<img width={"100%"} alt="icon" src="/assets/images/btn/cultural.jpg"/>}
+                        icon={<img alt="icon" width={80} src="/assets/images/btn/sabadkala.png"/>}
+                        onClick={() => {
+                            navigate("/EmployeeHampers")
                         }}
                     />
                 </Grid>

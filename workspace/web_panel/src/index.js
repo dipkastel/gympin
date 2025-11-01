@@ -12,6 +12,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/plugins/line-awesome/css/line-awesome.css";
 import "./assets/plugins/flaticon/flaticon.css";
 import "./assets/plugins/flaticon2/flaticon.css";
+import swDev from "./helper/swDev";
 
 const { PUBLIC_URL } = process?.env;
 
@@ -20,3 +21,5 @@ ReactDOM.render(
   <App store={store} persistor={persistor} basename={PUBLIC_URL} />,
   document.getElementById("root")
 );
+
+swDev();

@@ -180,6 +180,9 @@ export let multimediaCategoryApi = {
     getById: "v1/multimediacategory/getbyid",
     update: "v1/multimediacategory/update",
 };
+export let NotificationSubscriptionApi= {
+        add: "v1/NotificationSubscription/add"
+    };
 export let NoteApi = {
     add: "v1/note/add",
     delete: "v1/note/delete",
