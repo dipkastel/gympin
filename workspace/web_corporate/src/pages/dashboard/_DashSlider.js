@@ -45,14 +45,15 @@ const _DashSlider = () => {
             <div>
                 <Slider  {...settings}>
                     <SliderItem
-                        bigImage={"/assets/images/slide1.jpg"}
-                        smallImage={"/assets/images/slide11.jpg"}
-                        alt={"شادی کارمندان در دستان توست"}
-                    />
-                    <SliderItem
                         bigImage={"/assets/images/slide2.jpg"}
                         smallImage={"/assets/images/slide12.jpg"}
                         alt={"تجربه جدید"}
+                    />
+                    <SliderItem
+                        bigImage={"/assets/images/slide4.jpg"}
+                        smallImage={"/assets/images/slide14.jpg"}
+                        alt={"سبد کالای سازمانی برای سازمانی که به کارمند اهمیت میدهد"}
+                        onclick={(e)=>navigate("/EmployeeHampers")}
                     />
                     <SliderItem
                         bigImage={"/assets/images/slide3.jpg"}
@@ -60,9 +61,9 @@ const _DashSlider = () => {
                         alt={"اعتبار دهی به کارمندان"}
                     />
                     <SliderItem
-                        bigImage={"/assets/images/slide4.jpg"}
-                        smallImage={"/assets/images/slide14.jpg"}
-                        alt={"سبد کالای سازمانی برای سازمانی که به کارمند اهمیت میدهد"}
+                        bigImage={"/assets/images/slide5.jpg"}
+                        smallImage={"/assets/images/slide13.jpg"}
+                        alt={"سبد کالای ویژه"}
                         onclick={(e)=>navigate("/EmployeeHampers")}
                     />
                 </Slider>

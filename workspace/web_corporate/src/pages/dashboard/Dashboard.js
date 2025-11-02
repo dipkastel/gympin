@@ -148,7 +148,7 @@ const Dashboard = (props) => {
                 <Grid size={{xs: 6, sm: 6, md: 4, lg: 3}}>
                     <_DashCatItem
                         title={"اقساط و تسهیلات"}
-                        description={"خرید اقساطی، فروشگاه‌ها و کثر از حقوق"}
+                        description={"خرید اقساطی، فروشگاه‌ها و کسر از حقوق"}
                         header={<img width={"100%"} alt="icon" src="/assets/images/btn/loan.jpg"/>}
                         icon={<img alt="icon" width={80} src="/assets/images/btn/loanIcon.png"/>}
                         onClick={() => {
@@ -193,7 +193,7 @@ const Dashboard = (props) => {
                     <_DashCatItem
                         title={"سبد کالا"}
                         description={"سبد کالای سازمانی و مناسبتی"}
-                        header={<img width={"100%"} alt="icon" src="/assets/images/btn/cultural.jpg"/>}
+                        header={<img width={"100%"} alt="icon" src="/assets/images/btn/sabadhead.jpg"/>}
                         icon={<img alt="icon" width={80} src="/assets/images/btn/sabadkala.png"/>}
                         onClick={() => {
                             navigate("/EmployeeHampers")
