@@ -63,7 +63,7 @@ public class scheduleSms {
     private ManageSmsEntity checkChange(ManageSmsEntity pending) {
         SettingsEntity changeNumber =  manageSettingsRepository.findByKeyAndDeletedFalse("SMS_CHANGE_NUMBER");
         if(!changeNumber.getValue().isEmpty()&&!changeNumber.getData().isEmpty()&&pending.getUserNumber().equals(changeNumber.getValue()))
-            pending.setUserNumber(changeNumber.getData());
+            pending.setUserNumber(changeNumber.getData().trim());
         return pending;
     }
 
