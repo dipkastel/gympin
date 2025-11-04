@@ -13,7 +13,15 @@ import {
     Toolbar,
     Typography, useColorScheme
 } from "@mui/material";
-import {AccountCircleRounded, AccountCircleTwoTone, DinnerDining, MenuOpen, NotificationsRounded} from "@mui/icons-material";
+import {
+    AccountCircleRounded,
+    AccountCircleTwoTone,
+    DinnerDining,
+    LocalDining,
+    MenuOpen,
+    NotificationsRounded,
+    Restaurant
+} from "@mui/icons-material";
 import {toPriceWithComma} from "../helper/utils";
 import {connect, useSelector} from "react-redux";
 import {sagaActions} from "../helper/redux/actions/SagaActions";
@@ -108,7 +116,7 @@ const PageLayout = (props) => {
                             aria-label="menu"
                             onClick={()=>{navigate("/foodSelect", {replace: false})}}
                         >
-                            <DinnerDining sx={{fontSize:"1.8rem"}}/>
+                            <Restaurant sx={{fontSize:"1.8rem"}}/>
                         </IconButton>}
 
                         <Typography variant="h6" component="div"

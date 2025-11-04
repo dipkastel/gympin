@@ -15,6 +15,7 @@ const Event = () => {
                 <Grid size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
                     <_InSectionSlider sliders={[
                         {Image: "/assets/banners/ajil.jpg"},
+                        {Image: "/assets/banners/sabad2.jpg"},
                     ]}/>
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
@@ -27,7 +28,7 @@ const Event = () => {
                     />
                 </Grid>
                 <Grid size={{xs: 12, sm: 12, md: 6, lg: 4}}>
-                    <_NeedNewService category={"ارزاق"} />
+                    <_NeedNewService category={"سبد کالا"} />
                 </Grid>
                 <Grid sx={{mb:8}} size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
                     <Card elevation={10} sx={{m:2,p:3}}>

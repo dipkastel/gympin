@@ -21,7 +21,7 @@ const Sports = () => {
                 <Grid size={{xs: 12, sm: 12, md: 12 ,lg:12}}>
                     <_InSectionSlider sliders={[
                         {Image: "/assets/banners/sport2.jpg"},
-                        {Image: "/assets/banners/sport1.jpg"},
+                        {Image: "/assets/banners/sport3.jpg"},
                     ]}/>
                 </Grid>
 

@@ -6,7 +6,7 @@ import {Catering_getById} from "../../network/api/catering.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {Card, CardContent, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import {RamenDining} from "@mui/icons-material";
+import {Fastfood, RamenDining} from "@mui/icons-material";
 import _CateringListSimpleMenu from "./_CateringListSimpleMenu";
 import _CateringListImageMenu from "./_CateringListImageMenu";
 import {PersonnelFood_add, PersonnelFood_delete, PersonnelFood_query} from "../../network/api/PersonnelFood.api";
@@ -140,7 +140,7 @@ const FoodSelect = () => {
             {!selectedDate && <Grid sx={{p: 1}} size={{xs: 120, sm: 120, md: 120, lg: 120, xl: 120}}>
                 <Card sx={{m: 1, p: 8}}>
                     <CardContent sx={{textAlign: "center"}}>
-                        <RamenDining sx={{fontSize: "6rem", mb: 4}}/>
+                        <Fastfood sx={{fontSize: "6rem", mb: 4}}/>
                         <Typography variant={"h5"}>برای سفارش غذا یک تاریخ انتخاب کنید</Typography>
                     </CardContent>
                 </Card>

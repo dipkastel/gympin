@@ -62,7 +62,7 @@ const _DashSlider = () => {
                     />
                     <SliderItem
                         bigImage={"/assets/images/slide5.jpg"}
-                        smallImage={"/assets/images/slide13.jpg"}
+                        smallImage={"/assets/images/slide15.jpg"}
                         alt={"سبد کالای ویژه"}
                         onclick={(e)=>navigate("/EmployeeHampers")}
                     />
