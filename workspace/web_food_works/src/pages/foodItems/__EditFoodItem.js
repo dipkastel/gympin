@@ -23,7 +23,7 @@ const __EditFoodItem = ({selectedItem,setSelectedItem,updateList}) => {
     const error = useContext(ErrorContext);
     const [itemFood,SetItemFood] = useState(selectedItem);
     const [Loading,SetLoading] = useState(false);
-    const [discount, setDiscount] = useState(selectedItem?.ValuePrice>selectedItem?.Price);
+    const [discount, setDiscount] = useState(selectedItem?.ValuePrice>selectedItem?.PlacePrice);
 
     useEffect(() => {
         SetItemFood(selectedItem);
@@ -32,6 +32,7 @@ const __EditFoodItem = ({selectedItem,setSelectedItem,updateList}) => {
     function UpdateFoodItem() {
         SetLoading(true);
         TicketFoods_update(itemFood).then((result) => {
+            console.log("--------asdasd")
             SetLoading(false);
             updateList();
         }).catch(e => {
@@ -64,9 +65,9 @@ const __EditFoodItem = ({selectedItem,setSelectedItem,updateList}) => {
                     <InputLabel>قیمت (تومان)</InputLabel>
                     <OutlinedInput
                         type={'text'}
-                        name={"price"}
-                        value={toPriceWithComma(itemFood?.Price)}
-                        onChange={e =>SetItemFood({...itemFood, Price:toPriceWithoutComma(e.target.value)})}
+                        name={"PlacePrice"}
+                        value={toPriceWithComma(itemFood?.PlacePrice)}
+                        onChange={e =>SetItemFood({...itemFood, PlacePrice:toPriceWithoutComma(e.target.value)})}
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
