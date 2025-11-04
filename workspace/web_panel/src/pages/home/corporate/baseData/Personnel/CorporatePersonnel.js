@@ -136,7 +136,7 @@ const CorporatePersonnel = ({currentCorporate}) => {
             corporatePersonnel_add({
                 Corporate: {Id: currentCorporate.Id},
                 PhoneNumber: e.target.PhoneNumber.value,
-                FullName: e.target.PhoneNumber.value
+                FullName: e.target.FullName.value
             })
                 .then(data => {
                     error.showError({message: "عملیات موفق",});
