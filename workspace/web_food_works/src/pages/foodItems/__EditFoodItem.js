@@ -67,7 +67,7 @@ const __EditFoodItem = ({selectedItem,setSelectedItem,updateList}) => {
                         type={'text'}
                         name={"PlacePrice"}
                         value={toPriceWithComma(itemFood?.PlacePrice)}
-                        onChange={e =>SetItemFood({...itemFood, PlacePrice:toPriceWithoutComma(e.target.value)})}
+                        onChange={e =>SetItemFood({...itemFood, PlacePrice:toPriceWithoutComma(e.target.value),ValuePrice:toPriceWithoutComma(e.target.value)})}
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
