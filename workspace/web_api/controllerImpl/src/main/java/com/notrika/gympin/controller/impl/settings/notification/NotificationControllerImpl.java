@@ -64,14 +64,14 @@ public class NotificationControllerImpl implements NotificationController {
     @PostMapping("/sendNotificationToAll")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET')")
     public ResponseEntity<Integer> sendNotificationToAll(NotificationBasePayload data) throws Exception {
-        return ResponseEntity.ok(notificationService.sendNotificationToAll(data));
+        return ResponseEntity.ok(notificationService.sendNotificationToAll(data).get());
     }
 
     @Override
     @PostMapping("/sendNotificationToApp")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN', 'MARKET')")
     public ResponseEntity<Integer> sendNotificationToApp(NotificationBasePayload data) throws Exception {
-        return ResponseEntity.ok(notificationService.sendNotificationToApplication(data));
+        return ResponseEntity.ok(notificationService.sendNotificationToApplication(data).get());
     }
 
 }

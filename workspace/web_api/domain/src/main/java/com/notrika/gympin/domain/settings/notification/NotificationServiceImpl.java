@@ -25,10 +25,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Service
@@ -120,43 +124,97 @@ public class NotificationServiceImpl extends AbstractBaseService<NotificationPar
     }
 
     @Override
-    public Integer sendNotificationToAll(NotificationBasePayload data) throws Exception {
+    public CompletableFuture<Integer> sendNotificationToAll(NotificationBasePayload data) throws Exception {
         List<ManageNotificationSubscribesEntity> subscriptions = notificationSubscriptionRepository.findAllByDeletedIsFalseAndStatusIs(NotificationSubscriberStatus.ACTIVE);
         data.setAudience(subscriptions.stream().map(BaseEntity::getId).collect(Collectors.toList()));
-        return sendNotification(data);
+        return sendNotificationAsync(data);
     }
 
     @Override
-    public Integer sendNotificationToApplication(NotificationBasePayload data) throws Exception {
+    public CompletableFuture<Integer> sendNotificationToApplication(NotificationBasePayload data) throws Exception {
         List<ManageNotificationSubscribesEntity> subscriptions = notificationSubscriptionRepository.findAllByDeletedIsFalseAndAppNameLikeAndStatusIs(data.getAppName(),NotificationSubscriberStatus.ACTIVE);
         data.setAudience(subscriptions.stream().map(BaseEntity::getId).collect(Collectors.toList()));
-        return sendNotification(data);
+        return sendNotificationAsync(data);
     }
+//
+//    public Integer sendNotification(NotificationBasePayload data) throws Exception {
+//        PushService pushService = new PushService();
+//        pushService.setPublicKey(publicKey);
+//        pushService.setPrivateKey(privateKey);
+//        pushService.setSubject(subject);
+//        ObjectMapper mapper = new ObjectMapper();
+//
+//        NotificationBasePayload sendData = NotificationBasePayload.builder().data(data.getData()).build();
+//        String payload = mapper.writeValueAsString(sendData);
+//
+//        List<ManageNotificationSubscribesEntity> audience =notificationSubscriptionRepository.findAllByDeletedIsFalseAndIdIn(data.getAudience());
+//        List<ManageNotificationSubscribesEntity> subscriptionsToUpdate = new ArrayList<>();
+//        for (ManageNotificationSubscribesEntity sub : audience) {
+//            String p256dh = sub.getP256dh();
+//            String auth =sub.getAuth();
+//            Subscription subscription = new Subscription(sub.getEndpoint(), new Subscription.Keys(p256dh, auth));
+//            Notification notification = new Notification(subscription, payload);
+//            var res = pushService.sendAsync(notification).get();
+//            if(res.getStatusLine().getStatusCode()==410){
+//                sub.setStatus(NotificationSubscriberStatus.GONE);
+//                subscriptionsToUpdate.add(sub);
+//            }
+//        }
+//        notificationSubscriptionRepository.updateAll(subscriptionsToUpdate);
+//        return audience.size()-subscriptionsToUpdate.size();
+//    }
 
-    public Integer sendNotification(NotificationBasePayload data) throws Exception {
+    public CompletableFuture<Integer> sendNotificationAsync(NotificationBasePayload data) throws Exception {
+
         PushService pushService = new PushService();
         pushService.setPublicKey(publicKey);
         pushService.setPrivateKey(privateKey);
         pushService.setSubject(subject);
+
         ObjectMapper mapper = new ObjectMapper();
+        NotificationBasePayload sendData = NotificationBasePayload.builder()
+                .data(data.getData())
+                .build();
 
-        NotificationBasePayload sendData = NotificationBasePayload.builder().data(data.getData()).build();
-        String payload = mapper.writeValueAsString(sendData);
-
-        List<ManageNotificationSubscribesEntity> audience =notificationSubscriptionRepository.findAllByDeletedIsFalseAndIdIn(data.getAudience());
-        List<ManageNotificationSubscribesEntity> subscriptionsToUpdate = new ArrayList<>();
-        for (ManageNotificationSubscribesEntity sub : audience) {
-            String p256dh = sub.getP256dh();
-            String auth =sub.getAuth();
-            Subscription subscription = new Subscription(sub.getEndpoint(), new Subscription.Keys(p256dh, auth));
-            Notification notification = new Notification(subscription, payload);
-            var res = pushService.sendAsync(notification).get();
-            if(res.getStatusLine().getStatusCode()==410){
-                sub.setStatus(NotificationSubscriberStatus.GONE);
-                subscriptionsToUpdate.add(sub);
-            }
+        String payload;
+        try {
+            payload = mapper.writeValueAsString(sendData);
+        } catch (Exception e) {
+            return CompletableFuture.failedFuture(e);
         }
-        notificationSubscriptionRepository.updateAll(subscriptionsToUpdate);
-        return audience.size()-subscriptionsToUpdate.size();
+
+        List<ManageNotificationSubscribesEntity> audience =
+                notificationSubscriptionRepository.findAllByDeletedIsFalseAndIdIn(data.getAudience());
+
+        List<ManageNotificationSubscribesEntity> toUpdate = Collections.synchronizedList(new ArrayList<>());
+
+        List<CompletableFuture<Void>> futures = audience.stream()
+                .map(sub -> CompletableFuture.runAsync(() -> {
+
+                    try {
+                        Subscription subscription = new Subscription(
+                                sub.getEndpoint(),
+                                new Subscription.Keys(sub.getP256dh(), sub.getAuth())
+                        );
+
+                        Notification notification = new Notification(subscription, payload);
+                        var response = pushService.sendAsync(notification).get();
+
+                        if (response.getStatusLine().getStatusCode() == 410) {
+                            sub.setStatus(NotificationSubscriberStatus.GONE);
+                            toUpdate.add(sub);
+                        }
+                    } catch (Exception ignored) {
+                    }
+
+                }))
+                .toList();
+
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .thenApply(v -> {
+                    notificationSubscriptionRepository.updateAll(toUpdate);
+                    return audience.size() - toUpdate.size();
+                });
     }
+
 }

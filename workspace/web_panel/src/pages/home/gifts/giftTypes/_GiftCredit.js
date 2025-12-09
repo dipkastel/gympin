@@ -1,23 +1,21 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import {Button, FormControlLabel, FormGroup, IconButton, Switch, TextField} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import {IconButton} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
-import {Modal, Table} from "react-bootstrap";
+import {Table} from "react-bootstrap";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {Edit, InsertLink} from "@mui/icons-material";
-import {GiftCredit_add, GiftCredit_query} from "../../../../network/api/GiftCredits.api";
+import {InsertLink} from "@mui/icons-material";
+import {GiftCredit_query} from "../../../../network/api/GiftCredits.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import TablePagination from "@mui/material/TablePagination";
-import {getCorporateFixedName, getUserFixedName, toPriceWithComma, toPriceWithoutComma} from "../../../../helper";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import {AdapterDateFnsJalali} from '@mui/x-date-pickers/AdapterDateFnsJalali';
-import {DatePicker} from "@mui/x-date-pickers";
-import __SelectUser from "../../../partials/selector/__SelectUser";
-import __SelectCorporate from "../../../partials/selector/__SelectCorporate";
+import {getCorporateFixedName, getUserFixedName, toPriceWithComma} from "../../../../helper";
+import _GiftAddItem from "../partials/_GiftAddItem";
+import _GiftEditItem from "../partials/_GiftEditItem";
+import _GiftDeleteItem from "../partials/_GiftDeleteItem";
+import {GiftCreditStatus} from "../../../../helper/enums/GiftCreditStatus";
 
 const _GiftCredit = () => {
 
@@ -26,18 +24,9 @@ const _GiftCredit = () => {
     const [rowsPerPage, setRowsPerPage] = useState(15);
     const [giftCredits, setGiftCredits] = useState(null);
     const [openModalAdd, setOpenModalAdd] = useState(false);
-    const [addFormData,setAddFormData] = useState({CanRegister:true,CheckCorporateDeposit:true})
-
     useEffect(() => {
         getGifts();
-    }, [page,rowsPerPage]);
-    useEffect(() => {
-        var Edate = new Date();
-        Edate.setDate(Edate.getDate()+13);
-        var CEdate = new Date();
-        CEdate.setDate(CEdate.getDate()+43);
-        setAddFormData({...addFormData,ExpireDate:Edate,CreditExpireDate:CEdate,Count:1})
-    }, [openModalAdd]);
+    }, [page, rowsPerPage]);
 
     function getGifts() {
         GiftCredit_query({
@@ -55,132 +44,8 @@ const _GiftCredit = () => {
     }
 
 
-    function renderModalAdd() {
-        function addGiftCredit(e) {
-            e.preventDefault()
-            GiftCredit_add(addFormData).then(result => {
-                setOpenModalAdd(false)
-                setPage(0);
-                getGifts();
-            }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            })
-        }
-        return (
-            <>
-                <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
-                    <form onSubmit={(e) => addGiftCredit(e)}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن شارژ به سازمان "}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-
-
-                            <TextField
-                                className="w-100"
-                                variant="outlined"
-                                margin="normal"
-                                name="count"
-                                value={addFormData.Name}
-                                onChange={(e)=>{setAddFormData({...addFormData,Name:e.target.value})}}
-                                type="text"
-                                label={"نام یا دسته بندی هدیه"}
-                            />
-
-
-                            <TextField
-                                className="w-100"
-                                variant="outlined"
-                                margin="normal"
-                                name="count"
-                                value={addFormData.Count}
-                                onChange={(e)=>{setAddFormData({...addFormData,Count:e.target.value})}}
-                                type="number"
-                                label={"تعداد"}
-                            />
-
-                            <TextField
-                                className="w-100"
-                                variant="outlined"
-                                margin="normal"
-                                name="amount"
-                                value={toPriceWithComma(addFormData.Amount)}
-                                onChange={(e)=>{setAddFormData({...addFormData,Amount:toPriceWithoutComma(e.target.value)})}}
-                                type="text"
-                                label={"مبلغ دلخواه به تومان"}
-                            />
-
-                            <LocalizationProvider
-                                dateAdapter={AdapterDateFnsJalali}>
-                                <DatePicker
-                                    className="w-100 mt-3"
-                                    label="تاریخ انقضا"
-                                    name="ExpireDate"
-                                    value={new Date(addFormData.ExpireDate||"")}
-                                    onChange={e => setAddFormData({...addFormData,ExpireDate:e})}
-                                    renderInput={(params) => <TextField fullWidth {...params} />}
-                                />
-                                <DatePicker
-                                    className="w-100 mt-4"
-                                    label="تاریخ انقضا اعتبار"
-                                    name="CreditExpireDate"
-                                    value={addFormData.CreditExpireDate}
-                                    onChange={e => setAddFormData({...addFormData, CreditExpireDate: e})}
-                                    renderInput={(params) => <TextField fullWidth {...params} />}
-                                />
-                            </LocalizationProvider>
-
-                            <FormGroup>
-                                <FormControlLabel
-                                    checked={addFormData.CheckCorporateDeposit}
-                                    onChange={(e)=>{setAddFormData({...addFormData,CheckCorporateDeposit:e.target.checked})}}
-                                    control={<Switch/>}
-                                    label="موجودی سازمان بررسی شود"
-                                />
-                            </FormGroup>
-                            <__SelectCorporate
-                                onChange={(e)=>{setAddFormData({...addFormData,Corporate:{Id:e.value}})}}
-                            />
-                            <FormGroup>
-                                <FormControlLabel
-                                    checked={addFormData.CanRegister}
-                                    onChange={(e)=>{setAddFormData({...addFormData,CanRegister:e.target.checked})}}
-                                    control={<Switch />}
-                                    label="امکان ثبت نام"
-                                />
-                            </FormGroup>
-                            <__SelectUser
-                                hidden={addFormData?.CanRegister}
-                                onChange={(e)=>{setAddFormData({...addFormData,User:{Id:e.value}})}}
-                            />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button
-                                className={"button_edit"}
-                                onClick={() => setOpenModalAdd(false)}
-                            >
-                                لغو
-                            </Button>
-                            <Button
-                                className={"button_danger"}
-                                type={"submit"}
-                            >
-                                ثبت
-                            </Button>
-                        </Modal.Footer>
-                    </form>
-                </Modal>
-            </>
-        );
-    }
-
-
     function copyToClipboard(item) {
-        navigator.clipboard.writeText("https://web.gympin.ir/code/"+item.Code);
+        navigator.clipboard.writeText("https://web.gympin.ir/code/" + item.Code);
         error.showError({message: "کپی شد",});
     }
 
@@ -189,10 +54,10 @@ const _GiftCredit = () => {
 
             <Portlet>
                 <PortletHeader
-                    title={"کارت های هدیه ایحاد شده"}
+                    title={"کارت های هدیه ایجاد شده"}
                     toolbar={
                         <PortletHeaderToolbar>
-                            <IconButton onClick={()=>setOpenModalAdd(true)} size={"small"} color={"primary"}><AddIcon/></IconButton>
+                            <_GiftAddItem openModalAdd={openModalAdd} setOpenModalAdd={setOpenModalAdd} reloadList={getGifts}/>
                         </PortletHeaderToolbar>}
                 />
 
@@ -224,14 +89,16 @@ const _GiftCredit = () => {
 
                                 {giftCredits?.content?.map((row, index) => {
                                     return (
-                                        <TableRow hover role={"checkbox"}>
+                                        <TableRow hover role={"checkbox"} key={"i-i-"+index}>
                                             <TableCell component="th" align="right">{row.Id}</TableCell>
                                             <TableCell component="th" align="right">{row.Name}</TableCell>
                                             <TableCell component="th" align="right">{row.Code}</TableCell>
                                             <TableCell component="th" align="right">{row.RegisterCode}</TableCell>
-                                            <TableCell component="th" align="right">{row?.User?.Id?getUserFixedName(row.User):"ثبت شده"}</TableCell>
-                                            <TableCell component="th" align="right">{row?.Corporate?.Id?getCorporateFixedName(row.Corporate):"ثبت شده"}</TableCell>
-                                            <TableCell component="th" align="right">{row.CanRegister?"دارد":"ندارد"}</TableCell>
+                                            <TableCell component="th"
+                                                       align="right">{row?.User?.Id ? getUserFixedName(row.User) : "ثبت نشده"}</TableCell>
+                                            <TableCell component="th"
+                                                       align="right">{row?.Corporate?.Id ? getCorporateFixedName(row.Corporate) : "ثبت نشده"}</TableCell>
+                                            <TableCell component="th" align="right">{row.CanRegister ? "دارد" : "ندارد"}</TableCell>
                                             <TableCell component="th" align="right">{toPriceWithComma(row.Amount)}</TableCell>
                                             <TableCell component="th" align="right">{new Date(row.ExpireDate).toLocaleDateString('fa-IR', {
                                                 year: 'numeric',
@@ -240,32 +107,36 @@ const _GiftCredit = () => {
                                                 hour: "2-digit",
                                                 minute: "2-digit"
                                             })}</TableCell>
-                                            <TableCell component="th" align="right">{new Date(row.CreditExpireDate).toLocaleDateString('fa-IR', {
+                                            <TableCell component="th"
+                                                       align="right">{new Date(row.CreditExpireDate).toLocaleDateString('fa-IR', {
                                                 year: 'numeric',
                                                 month: 'long',
                                                 day: 'numeric',
                                                 hour: "2-digit",
                                                 minute: "2-digit"
                                             })}</TableCell>
-                                            <TableCell component="th" align="right">{row.Status}</TableCell>
+                                            <TableCell component="th" align="right">{GiftCreditStatus[row.Status]}</TableCell>
                                             <TableCell component="th" align="left">
-                                                <IconButton size={"small"} color={"success"} onClick={()=>copyToClipboard(row)}><InsertLink/></IconButton>
-                                                <IconButton size={"small"} color={"primary"}><Edit/></IconButton>
+                                                <IconButton size={"small"} color={"success"}
+                                                            onClick={() => copyToClipboard(row)}><InsertLink/></IconButton>
+                                                <_GiftEditItem item={row} reloadList={getGifts} />
+                                                <_GiftDeleteItem item={row} reloadList={getGifts}/>
                                             </TableCell>
 
                                         </TableRow>
-                                    )})}
+                                    )
+                                })}
 
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    {(giftCredits?.totalElements>0) &&<TablePagination
+                    {(giftCredits?.totalElements > 0) && <TablePagination
                         rowsPerPageOptions={[5, 10, 15, 25, 50, 100]}
                         component="div"
                         sx={{direction: "rtl"}}
-                        count={giftCredits.totalElements||0}
+                        count={giftCredits.totalElements || 0}
                         labelRowsPerPage={"تعداد نمایش"}
-                        labelDisplayedRows={(param)=>{
+                        labelDisplayedRows={(param) => {
                             return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`
                         }}
                         rowsPerPage={parseInt(rowsPerPage)}
@@ -278,7 +149,7 @@ const _GiftCredit = () => {
                     />}
                 </PortletBody>
             </Portlet>
-            {renderModalAdd()}
+
         </>
     );
 };

@@ -112,34 +112,9 @@ export default function SupportChatList() {
         <Box sx={{width: "100%"}}>
             <Paper sx={{width: "100%", mb: 2}}>
                 <Grid container>
-                    <Grid item size={{xs:12,md:3}} sx={{
-                        borderRight: "1px solid #ddd",
-                        height: "Calc(100VH - 350px)",
-                        background: "#f1f1f1",
-                        direction: "ltr",
-                        overflowX: "hidden",
-                        overflowY: "scroll"
-                    }}>
-                        <Grid sx={{bgcolor:listStatus===0?"#02230a":"#e7333e",color:"#FFFFFF",p:1}}>
-                            <Typography>{ActivationState[listStatus]}</Typography>
-                        </Grid>
-                        <List>
-                            {users?users?.map((user) => (
-
-                                <ListItem sx={{direction: "rtl"}} key={user.driverId} disablePadding>
-                                    <_ActiveUserListItem
-                                        user={user}
-                                        selectedUser={selectedUser}
-                                        setSelectedUser={setSelectedUser}
-                                    />
-                                </ListItem>
-                            )) : <>هیچ کس اینجا نیست</>}
-                        </List>
-                    </Grid>
-
                     <Grid
                         item
-                        size={{xs:12,md:9}}
+                        size={{xs:12,md:8,lg:9}}
                         sx={{
                             display: "flex",
                             flexDirection: "column",
@@ -162,6 +137,30 @@ export default function SupportChatList() {
                             </Grid>
                         )}
                     </Grid>
+                    <Grid item size={{xs:12,md:4,lg:3}} sx={{
+                        borderRight: "1px solid #ddd",
+                        height: "Calc(100VH - 350px)",
+                        background: "#f1f1f1",
+                        direction: "ltr",
+                        overflowX: "hidden",
+                        overflowY: "scroll"
+                    }}>
+                        <Grid sx={{bgcolor:listStatus===0?"#02230a":"#e7333e",color:"#FFFFFF",p:1}}>
+                            <Typography>{ActivationState[listStatus]}</Typography>
+                        </Grid>
+                        <List>
+                            {users?users?.map((user) => (
+                                <ListItem sx={{direction: "rtl",width:"100%"}} key={user.driverId} disablePadding>
+                                    <_ActiveUserListItem
+                                        user={user}
+                                        selectedUser={selectedUser}
+                                        setSelectedUser={setSelectedUser}
+                                    />
+                                </ListItem>
+                            )) : <>هیچ کس اینجا نیست</>}
+                        </List>
+                    </Grid>
+
                 </Grid>
             </Paper>
         </Box>

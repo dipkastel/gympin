@@ -23,7 +23,7 @@ const __SmsCanceledList = ({updatePage}) => {
 
     useEffect(() => {
         getSmsCanceledList();
-    }, []);
+    }, [page,rowsPerPage]);
 
 
     function getSmsCanceledList() {

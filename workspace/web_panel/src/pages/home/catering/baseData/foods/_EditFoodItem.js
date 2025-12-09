@@ -17,6 +17,7 @@ import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {Portlet, PortletBody, PortletFooter, PortletHeader} from "../../../../partials/content/Portlet";
 import DeleteIcon from "@mui/icons-material/Delete";
 import _FoodItemEditImage from "./_FoodItemEditImage";
+import {Modal} from "react-bootstrap";
 
 const _EditFoodItem = ({selectedItem, setSelectedItem, refreshList}) => {
 
@@ -51,12 +52,12 @@ const _EditFoodItem = ({selectedItem, setSelectedItem, refreshList}) => {
     return (
         <div>
 
-            {selectedItem && <Portlet>
-                <PortletHeader
-                    title={"ویرایش " + selectedItem?.Name}
-                />
+            {selectedItem &&<Modal show={!!selectedItem} onHide={() => setSelectedItem(null)}>
                 <form onSubmit={(e) => updateFoodItem(e)}>
-                    <PortletBody>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{"ویرایش"+ selectedItem?.Name}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
                         <_FoodItemEditImage selectedFoodItem={selectedItem} />
                         <Grid container spacing={2}>
                             <Grid size={12}>
@@ -170,15 +171,15 @@ const _EditFoodItem = ({selectedItem, setSelectedItem, refreshList}) => {
                                 />
                             </Grid>
                         </Grid>
-                    </PortletBody>
-                    <PortletFooter>
+                    </Modal.Body>
+                    <Modal.Footer>
                         <div className="text-right">
                             <Button variant={"contained"} color={"primary"} sx={{mx:1}} onClick={(e) => setSelectedItem(null)}> خیر </Button>
                             <Button variant={"contained"} color={"success"} sx={{mx:1}} type={"submit"}> ویرایش </Button>
                         </div>
-                    </PortletFooter>
+                    </Modal.Footer>
                 </form>
-            </Portlet>}
+            </Modal>}
         </div>
     );
 };

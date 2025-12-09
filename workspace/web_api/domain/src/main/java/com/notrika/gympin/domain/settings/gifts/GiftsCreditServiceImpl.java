@@ -162,12 +162,12 @@ public class GiftsCreditServiceImpl extends AbstractBaseService<GiftCreditParam,
     @Override
     public GiftCreditDto update(@NonNull GiftCreditParam giftCreditParam) {
         ManageGiftCreditEntity entity = manageGiftCreditRepository.getById(giftCreditParam.getId());
-        entity.setCode(giftCreditParam.getCode());
-        entity.setRegisterCode(giftCreditParam.getRegisterCode());
+        entity.setName(giftCreditParam.getName());
         entity.setExpireDate(giftCreditParam.getExpireDate());
         entity.setCanRegister(giftCreditParam.getCanRegister());
         entity.setAmount(giftCreditParam.getAmount());
         entity.setStatus(giftCreditParam.getStatus());
+
         return GiftConvertor.toDto(manageGiftCreditRepository.update(entity));
     }
 

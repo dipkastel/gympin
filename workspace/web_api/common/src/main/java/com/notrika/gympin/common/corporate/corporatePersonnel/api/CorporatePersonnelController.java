@@ -3,10 +3,7 @@ package com.notrika.gympin.common.corporate.corporatePersonnel.api;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCateringAccessParam;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelFileParam;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.*;
 import com.notrika.gympin.common.corporate.corporatePersonnel.query.CorporatePersonnelQuery;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
 import com.notrika.gympin.common.user.user.param.UserParam;
@@ -20,6 +17,8 @@ import java.util.List;
 public interface CorporatePersonnelController extends BaseController<CorporatePersonnelParam, CorporatePersonnelDto, CorporatePersonnelQuery> {
 
     ResponseEntity<List<CorporatePersonnelDto>> addList(CorporatePersonnelFileParam param);
+
+    ResponseEntity<Boolean> addPersonnelByList(@RequestBody List<CorporatePersonnelListItem> param);
 
     ResponseEntity<List<CorporatePersonnelDto>> getPersonnelByCorporate(CorporateParam corporateParam);
 

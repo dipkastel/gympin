@@ -1,8 +1,7 @@
 package com.notrika.gympin.controller.impl.corporate;
 
 import com.notrika.gympin.common.corporate.corporate.query.CorporateQuery;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCateringAccessParam;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelFileParam;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.*;
 import com.notrika.gympin.common.corporate.corporatePersonnel.query.CorporatePersonnelQuery;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
@@ -13,11 +12,10 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.api.CorporatePerso
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCreditParam;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelCreditService;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelService;
 import com.notrika.gympin.common.user.user.param.UserParam;
+import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -76,7 +74,14 @@ public class CorporatePersonnelControllerImpl implements CorporatePersonnelContr
     @RequestMapping(path = "/addList", method = POST, consumes = {MediaType.ALL_VALUE})
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<List<CorporatePersonnelDto>> addList(CorporatePersonnelFileParam param) {
-        return new ResponseEntity<>(corporatePersonnelService.addList(param),HttpStatus.OK);
+        throw new FunctionNotAvalable();
+    }
+
+    @Override
+    @PostMapping(path = "/addPersonnelByList")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<Boolean> addPersonnelByList(List<CorporatePersonnelListItem> param) {
+        return new ResponseEntity<>(corporatePersonnelService.addPersonnelByList(param),HttpStatus.OK);
     }
 
     @Override

@@ -9,12 +9,14 @@ import TableHead from "@mui/material/TableHead";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
-import {Chip} from "@mui/material";
+import {Button, Chip, IconButton} from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppSupport, SetRppSupport} from "../../../../helper/pocket/pocket";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
-import {Support_query} from "../../../../network/api/support.api";
+import {Support_delete, Support_query} from "../../../../network/api/support.api";
+import {Delete} from "@mui/icons-material";
+import {Form, Modal} from "react-bootstrap";
 
 const SupportTicketLists = () => {
 
@@ -23,11 +25,17 @@ const SupportTicketLists = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(getRppSupport());
     const [itemCount, setItemCount] = useState(0);
+    const [itemToDelete, setItemToDelete] = useState(null);
     const [SupportList, setSupportList] = useState([]);
     const history = useHistory();
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - itemCount) : 0;
 
     useEffect(() => {
+        getSupports();
+    }, [page, rowsPerPage]);
+
+    function getSupports(){
+        setSupportList([]);
         Support_query({
             queryType: "FILTER",
             paging: {Page: page, Size: rowsPerPage,Desc:true}
@@ -42,7 +50,57 @@ const SupportTicketLists = () => {
                     error.showError({message: "خطا نا مشخص",});
                 }
             });
-    }, [page, rowsPerPage]);
+    }
+
+
+    function RenderModalDelete() {
+        function deleteSupport(e) {
+            e.preventDefault()
+            Support_delete({Id: itemToDelete.Id})
+                .then((data) => {
+                    error.showError({message: "عملیات موفق",});
+                    setItemToDelete(null);
+                    getSupports();
+                })
+                .catch(e => {
+                    try {
+                        error.showError({message: e.response.data.Message,});
+                    } catch (f) {
+                        error.showError({message: "خطا نا مشخص",});
+                    }
+                });
+        }
+
+        return (
+            <>
+                <Modal show={!!itemToDelete} onHide={() => setItemToDelete(null)}>
+                    <Form noValidate autoComplete="off" onSubmit={(e) => deleteSupport(e)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{"حذف پشتیبانی "}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+
+                            {"حذف پشتیبانی "+itemToDelete?.Title}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                className={"button_edit"}
+                                onClick={() => setItemToDelete(null)}
+                            >
+                                خیر
+                            </Button>
+                            <Button
+                                className={"button_danger"}
+                                type={"submit"}
+                            >
+                                حذف
+                            </Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
+            </>
+        );
+    }
 
     return (
         <>
@@ -66,9 +124,11 @@ const SupportTicketLists = () => {
                         >
                             <TableHead>
                                 <TableCell align="right">Id</TableCell>
-                                <TableCell align="right">Owner</TableCell>
-                                <TableCell align="right">Title</TableCell>
-                                <TableCell align="right">Status</TableCell>
+                                <TableCell align="right">مربوط به</TableCell>
+                                <TableCell align="right">موضوع</TableCell>
+                                <TableCell align="right">پیام ها</TableCell>
+                                <TableCell align="right">وضعیت</TableCell>
+                                <TableCell align="right"></TableCell>
                             </TableHead>
                             <TableBody>
                                 {SupportList.content&&SupportList.content.map((row, index) => {
@@ -76,11 +136,6 @@ const SupportTicketLists = () => {
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => {
-                                                history.push({
-                                                    pathname: "/support/details/" + row.Id
-                                                });
-                                            }}
                                             role="checkbox"
                                             tabIndex={-1}
                                             key={row.Id.toString()}
@@ -91,19 +146,51 @@ const SupportTicketLists = () => {
                                                 scope="row"
                                                 padding="normal"
                                                 align="right"
+                                                onClick={(event) => {
+                                                    history.push({
+                                                        pathname: "/support/details/" + row.Id
+                                                    });
+                                                }}
                                             >
                                                 {row.Id}
                                             </TableCell>
-                                            <TableCell align="right">
+                                            <TableCell align="right"
+                                                       onClick={(event) => {
+                                                           history.push({
+                                                               pathname: "/support/details/" + row.Id
+                                                           });
+                                                       }}>
                                                 {row.Place&&"مجموعه : "+row.Place.Name}
                                                 {row.User&&"کاربر : "+row.User.Username}
                                             </TableCell>
-                                            <TableCell align="right">{row.Title}</TableCell>
-                                            <TableCell align="right">
+                                            <TableCell align="right"
+                                                       onClick={(event) => {
+                                                           history.push({
+                                                               pathname: "/support/details/" + row.Id
+                                                           });
+                                                       }}>{row.Title}</TableCell>
+                                            <TableCell align="right"
+                                                       onClick={(event) => {
+                                                           history.push({
+                                                               pathname: "/support/details/" + row.Id
+                                                           });
+                                                       }}>
+
+                                                {row?.Messages?.length}
+                                            </TableCell>
+                                            <TableCell align="right"
+                                                       onClick={(event) => {
+                                                           history.push({
+                                                               pathname: "/support/details/" + row.Id
+                                                           });
+                                                       }}>
 
                                                 <Chip
                                                     label={row?.Status}
                                                     color={(row?.Status?.startsWith("AWAITING"))?"error":"success"} />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <IconButton onClick={(e)=>setItemToDelete(row)} size={"small"} ><Delete color={"error"} /></IconButton>
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -136,6 +223,7 @@ const SupportTicketLists = () => {
                     />
                 </Paper>
             </Box>
+            {RenderModalDelete()}
         </>
     );
 };

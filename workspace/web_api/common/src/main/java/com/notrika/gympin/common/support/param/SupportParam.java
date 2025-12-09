@@ -31,4 +31,7 @@ public class SupportParam extends BaseParam<SupportParam> {
     @JsonProperty("CorporateId")
     private Long corporateId;
 
+    @JsonProperty("Status")
+    private SupportStatus status;
+
 }

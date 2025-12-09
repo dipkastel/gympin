@@ -28,7 +28,7 @@ const __SmsPendingList = ({updatePage}) => {
 
     useEffect(() => {
         getSmsPendingList();
-    }, []);
+    }, [page,rowsPerPage]);
 
     function cancelSendSms(sms) {
         sms_ChangeStatus({

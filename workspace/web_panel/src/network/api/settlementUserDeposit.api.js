@@ -28,3 +28,9 @@ export function SettlementUserDeposit_confirmSettlementRequest(data) {
     return axios.post(SettlementUserDepositApi.confirmSettlementRequest, data);
 }
 
+
+
+export function SettlementUserDeposit_getAllCreditors() {
+    return axios.get(SettlementUserDepositApi.getAllCreditors);
+}
+

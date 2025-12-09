@@ -33,7 +33,7 @@ const _ActiveUserListItem = ({user,selectedUser,setSelectedUser}) => {
         return formattedTime;
     }
     return (
-        <Grid container sx={{border:selectedUser === user.driverId?"1px solid #e7333e":"1px solid #aaa",
+        <Grid container sx={{border:selectedUser === user.driverId?"1px solid #e7333e":"1px solid #aaa",width:"100%",
             background:getItemBgColor(user.sessions[0].appName),
             borderRadius:3,
             mx:1,my:1}}>
@@ -44,16 +44,21 @@ const _ActiveUserListItem = ({user,selectedUser,setSelectedUser}) => {
                     selected={selectedUser?.sessionId === user.driverId}
                     onClick={() => setSelectedUser(user.sessions[0])}
                 >
-                    <ListItemText sx={{textAlign:"start"}} primary={user.sessions[0]?.username} secondary={user.sessions[0]?.phoneNumber} />
-                    <ListItemText sx={{textAlign:"end"}} primary={user.driverId} secondary={user.sessions[0]?.driverId}  />
+                    <ListItemText sx={{textAlign:"start"}}
+                                  primary={user.sessions[0]?.username}
+                                  primaryTypographyProps={{variant:"subtitle2",WebkitLineClamp:1}}
+                                  secondary={user.sessions[0]?.phoneNumber} />
+                    <ListItemText sx={{textAlign:"end"}}
+                                  primary={user.sessions[0]?.driverId}
+                                  primaryTypographyProps={{variant:"subtitle2"}}
+                                  secondary={user?.sessions?.length+" نشست"}  />
                 </ListItemButton>
-                <OfflineBolt sx={{ml:1,mt:1,color:(user.sessions[0].isOnline)?"#0d8521":"#8d0e0e"}}/>
+                <OfflineBolt sx={{mr:0.3,mt:0.3,color:(user.sessions[0].isOnline)?"#0d8521":"#8d0e0e",position:"absolute"}}/>
             </Grid>
             <Grid container justifyContent={"space-between"}>
                 <Typography variant={"caption"} sx={{px:1,color:"white"}}>
                     {ApplicationEnum[user.sessions[0]?.appName]}</Typography>
                 <Typography variant={"caption"} sx={{px:1,color:"white"}}>{getConnectionTime(user?.sessions?.filter(ss=>ss.isOnline)[0]?.connectTime)}</Typography>
-
             </Grid>
         </Grid>
     );

@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.settlement.dto.FinanceSettlementUserDep
 import com.notrika.gympin.common.finance.settlement.param.FinanceSettlementUserDepositParam;
 import com.notrika.gympin.common.finance.settlement.query.FinanceSettlementUserDepositQuery;
 import com.notrika.gympin.common.finance.settlement.service.FinanceSettlementUserDepositService;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -65,6 +66,14 @@ public class FinanceSettlementUserDepositControllerImpl implements FinanceSettle
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<FinanceSettlementUserDepositDto> confirmSettlementRequest(@RequestBody FinanceSettlementUserDepositParam param) {
         return ResponseEntity.ok(settlementUserDepositService.confirmSettlementRequest(param));
+    }
+
+
+    @Override
+    @GetMapping("getAllCreditors")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<List<FinanceUserDto>> getAllCreditors() {
+        return ResponseEntity.ok(settlementUserDepositService.getAllCreditors());
     }
 
 

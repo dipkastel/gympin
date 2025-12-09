@@ -5,7 +5,7 @@ import AsyncSelect from "react-select/async";
 import {corporate_query} from "../../../network/api/corporate.api";
 import {toPriceWithComma} from "../../../helper";
 
-const __SelectCorporate = ({hidden,onChange}) => {
+const __SelectCorporate = ({hidden,value,onChange}) => {
 
     const error = useContext(ErrorContext);
 

@@ -3,6 +3,7 @@ package com.notrika.gympin.common.finance.settlement.api;
 import com.notrika.gympin.common.finance.settlement.dto.FinanceSettlementUserDepositDto;
 import com.notrika.gympin.common.finance.settlement.param.FinanceSettlementUserDepositParam;
 import com.notrika.gympin.common.finance.settlement.query.FinanceSettlementUserDepositQuery;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import org.springframework.http.ResponseEntity;
 
@@ -12,5 +13,6 @@ public interface FinanceSettlementUserDepositController extends BaseController<F
 
     ResponseEntity<List<FinanceSettlementUserDepositDto>> getSettlementUserDeposits(Long userId);
     ResponseEntity<FinanceSettlementUserDepositDto> confirmSettlementRequest(FinanceSettlementUserDepositParam param);
+    ResponseEntity<List<FinanceUserDto>> getAllCreditors();
 
 }

@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
-import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
+import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import {Modal} from "react-bootstrap";
-import {Button, TableCell, TablePagination, TextField, Typography} from "@mui/material";
+import {Avatar, Button, Grid, TableCell, TablePagination, TextField, Typography} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -14,6 +14,7 @@ import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 import _AddFoodItem from "./_AddFoodItem";
 import {CheckBox, CheckBoxOutlineBlank} from "@mui/icons-material";
 import _EditFoodItem from "./_EditFoodItem";
+import AddIcon from "@mui/icons-material/Add";
 
 
 const CateringFoods = ({catering}) => {
@@ -24,17 +25,19 @@ const CateringFoods = ({catering}) => {
     const [page, setPage] = useState(0);
     const [perPage, setPerPage] = useState(getRppFoodsManagement());
     const [selectedItem, setSelectedItem] = useState(null);
+    const [searchStr, setSearchStr] = useState(null);
 
 
     useEffect(() => {
         getFoods()
-    }, [perPage, page]);
+    }, [perPage, page,searchStr]);
 
 
     function getFoods() {
         TicketFoods_query({
             queryType: "FILTER",
             PlaceId: catering.Id,
+            Name:searchStr,
             paging: {
                 Page: page,
                 Size: perPage,
@@ -58,15 +61,34 @@ const CateringFoods = ({catering}) => {
                 <PortletHeader
                     title={"غذا های " + catering?.Name}
 
-                    toolbar={<_AddFoodItem catering={catering} refreshList={getFoods}/>}
+                    toolbar={
+
+                        <PortletHeaderToolbar>
+                            <TextField
+                                fullWidth
+                                id="outlined-adornment-password"
+                                className="w-100"
+                                variant="outlined"
+                                margin="normal"
+                                type="text"
+                                value={searchStr}
+                                onChange={(event) => {
+                                    setSearchStr(event.target.value);
+                                    setPage(0);
+                                }}
+                                label={"جستجو"}
+                            />
+                            <_AddFoodItem catering={catering} refreshList={getFoods}/>
+                        </PortletHeaderToolbar>}
                 />
                 <PortletBody>
                     <Table className={"table"}>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="right">id</TableCell>
+                                <TableCell align="right"></TableCell>
                                 <TableCell align="right">نام</TableCell>
                                 <TableCell align="right">فعال</TableCell>
+                                <TableCell align="right">توضیحات</TableCell>
                                 <TableCell align="right">غذا</TableCell>
                                 <TableCell align="right">حداقل سفارش</TableCell>
                                 <TableCell align="right">حداکثر سفارش</TableCell>
@@ -78,10 +100,17 @@ const CateringFoods = ({catering}) => {
                             {foods?.content && foods?.content?.map((item, number) => (
                                 <TableRow hover role={"checkbox"} tabIndex={-1}
                                           key={"searched" + item.Id.toString()} onClick={(e)=>setSelectedItem(item)}>
-                                    {console.log(item)}
-                                    <TableCell align="right">{item.Id}</TableCell>
+
+                                    <TableCell align="right">
+                                        <Grid container direction={"row"}>
+                                            {item?.Multimedias?.map(image=>(
+                                                <Avatar  alt="userImage" src={(image?.Url)}  sx={{width:30,height:30,ml:-1}} />
+                                            ))}
+                                        </Grid>
+                                    </TableCell>
                                     <TableCell align="right">{item.Name}</TableCell>
                                     <TableCell align="right">{item.Enable?<CheckBox />:<CheckBoxOutlineBlank />}</TableCell>
+                                    <TableCell align="right">{item.Description?<CheckBox />:<CheckBoxOutlineBlank />}</TableCell>
                                     <TableCell align="right">{item.IsCount?<CheckBox />:<CheckBoxOutlineBlank />}</TableCell>
                                     <TableCell align="right">{item.MinOrderCount}</TableCell>
                                     <TableCell align="right">{item.MaxOrderCount}</TableCell>

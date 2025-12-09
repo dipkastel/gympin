@@ -14,11 +14,10 @@ export function corporatePersonnel_manualExpireCredit(data) {
   return axios.post(CorporatePersonnelApi.manualExpireCredit, data);
 }
 export function corporatePersonnel_addList(data) {
-  return axios.post(CorporatePersonnelApi.addList, data,{
-    headers: {
-      "content-type": "multipart/form-data",
-    },
-  });
+  return axios.post(CorporatePersonnelApi.addList, data);
+}
+export function corporatePersonnel_addPersonnelByList(data) {
+  return axios.post(CorporatePersonnelApi.addPersonnelByList, data);
 }
 export function corporatePersonnel_delete(data) {
   return axios.put(CorporatePersonnelApi.delete,  data );

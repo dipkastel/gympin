@@ -37,6 +37,7 @@ import {ErrorContext} from "./GympinPagesProvider";
 const DrawerLayout = ({UserBasket,setMenuOpen}) => {
 
     const [openModalExit,setOpenModalExit] = useState(false);
+    const [loading,setLoading] = useState(false);
     const [openModalRegister,setOpenModalRegister] = useState(false);
     const currentUser = useSelector(state => state.auth.user);
     const error = useContext(ErrorContext);
@@ -55,6 +56,11 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
     useEffect(() => {
         setMode("light");
     }, []);
+
+    useEffect(() => {
+        if(openModalRegister)
+            setLoading(false);
+    }, [openModalRegister]);
 
     if (!mode) {
         return null;
@@ -75,6 +81,7 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
     };
 
     const handleSubmit = () => {
+        setLoading(true);
         if (validate()) {
             Support_add({
                 Title:  "درخواست افزودن مجموعه "+formData.gymName,
@@ -97,6 +104,7 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                     setOpenModalRegister(false)
                 }, 2000);
             }).catch(e => {
+                setLoading(false);
                 try {
                     error.showError({message: e.response.data.Message,});
                 } catch (f) {
@@ -146,6 +154,7 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                             error={!!errors.gymName}
                             helperText={errors.gymName}
                             variant="outlined"
+                            disabled={loading}
                         />
                         <TextField
                             fullWidth
@@ -156,6 +165,7 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                             error={!!errors.gymAddress}
                             helperText={errors.gymAddress}
                             variant="outlined"
+                            disabled={loading}
                         />
                         <TextField
                             fullWidth
@@ -166,6 +176,7 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                             error={!!errors.gymPhone}
                             helperText={errors.gymPhone}
                             variant="outlined"
+                            disabled={loading}
                         />
                         <TextField
                             fullWidth
@@ -176,6 +187,7 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                             multiline
                             rows={3}
                             variant="outlined"
+                            disabled={loading}
                         />
                         {submitSuccess && (
                             <Typography variant="body2" color="success.main" align="center">
@@ -185,10 +197,12 @@ const DrawerLayout = ({UserBasket,setMenuOpen}) => {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button sx={{ m: 1 }} variant="contained" color="error" onClick={() => setOpenModalRegister(false)}>
+                    <Button
+                        disabled={loading} sx={{ m: 1 }} variant="contained" color="error" onClick={() => setOpenModalRegister(false)}>
                         لغو
                     </Button>
-                    <Button sx={{ m: 1 }} variant="contained" color="success" onClick={handleSubmit}>
+                    <Button
+                        disabled={loading} sx={{ m: 1 }} variant="contained" color="success" onClick={handleSubmit}>
                         ثبت درخواست
                     </Button>
                 </DialogActions>

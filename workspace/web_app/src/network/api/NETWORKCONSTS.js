@@ -2,7 +2,7 @@
 
 export let AuthApi = {
     BASEURL: "http://localhost:8080/api/",
-    // BASEURL: "http://192.168.0.117:8080/api/",
+    // BASEURL: "http://192.168.1.108:8080/api/",
     // BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {

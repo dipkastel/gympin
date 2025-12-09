@@ -17,6 +17,7 @@ import com.notrika.gympin.common.support.query.SupportQuery;
 import com.notrika.gympin.common.support.service.SupportService;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.util.convertor.InvoiceConvertor;
 import com.notrika.gympin.domain.util.convertor.SupportConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
@@ -24,6 +25,7 @@ import com.notrika.gympin.persistence.dao.repository.support.SupportMessageRepos
 import com.notrika.gympin.persistence.dao.repository.support.SupportRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceExtraItemEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
@@ -87,7 +89,6 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         }
 
         supportEntity.setSupportStatus(SupportStatus.AWAITING_EXPERT);
-
         SupportMessagesEntity supportMessagesEntity = new SupportMessagesEntity();
         supportMessagesEntity.setSupportMessage(supportParam.getSupportMessages().getMessages());
         supportMessagesEntity.setIsRead(supportParam.getSupportMessages().isRead());
@@ -102,7 +103,6 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     public SupportDto addMessageToSupport(@NonNull SupportMessageParam param) throws Exception {
         SupportMessagesEntity tme = new SupportMessagesEntity();
         tme.setSupportMessage(param.getMessages());
-
         tme.setAnswer(param.isAnswer());
         tme.setIsRead(param.isRead());
         SupportEntity support = supportRepository.getById(param.getSupportId());
@@ -163,12 +163,16 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public SupportDto update(@NonNull SupportParam supportParam) {
-        return null;
+        SupportEntity support = supportRepository.getById(supportParam.getId());
+        support.setSupportStatus(supportParam.getStatus());
+        return SupportConvertor.toDto(update(support));
     }
 
     @Override
-    public SupportDto delete(@NonNull SupportParam supportParam) {
-        return null;
+    public SupportDto delete(@NonNull SupportParam param) {
+
+        SupportEntity invoiceExtra = supportRepository.getById(param.getId());
+        return SupportConvertor.toDto(delete(invoiceExtra));
     }
 
     @Override
@@ -185,12 +189,12 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public SupportEntity update(SupportEntity entity) {
-        return null;
+        return supportRepository.update(entity);
     }
 
     @Override
     public SupportEntity delete(SupportEntity entity) {
-        return null;
+        return supportRepository.deleteById2(entity);
     }
 
     @Override

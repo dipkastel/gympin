@@ -7,6 +7,7 @@ import _DashIncreaseCorporate from "../partials/_DashIncreaseCorporate";
 import _DashIncreaseUser from "../partials/_DashIncreaseUser";
 import _DashUncontractPlaces from "../partials/_DashUnContractPlaces";
 import {Grid} from "@mui/material";
+import _DashCreditorsPeople from "../partials/_DashCreditorsPeople";
 
 const DashTasksTab = ({updatePage}) => {
 
@@ -33,6 +34,9 @@ const DashTasksTab = ({updatePage}) => {
                 </Grid>
                 <Grid item size={{xs:12,md:4}}>
                     <_DashUncontractPlaces/>
+                </Grid>
+                <Grid item size={{xs:12,md:4}}>
+                    <_DashCreditorsPeople/>
                 </Grid>
             </Grid>
         </>

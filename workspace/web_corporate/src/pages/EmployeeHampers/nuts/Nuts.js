@@ -200,9 +200,9 @@ const Nuts = () => {
                                 ))}
                                 <Grid sx={{mt:4}}>
                                     <ButtonGroup  size={"large"} >
-                                        <Button size={"large"} variant={"outlined"} onClick={(e)=>setOpenItem({...openItem,count:openItem.count+1})}><Add /></Button>
+                                        <Button size={"large"} variant={"outlined"} onClick={(e)=>setOpenItem({...openItem,count:openItem.count+10})}>10<Add /></Button>
                                         <Button disabled={true} variant={"contained"}>{openItem?.count}</Button>
-                                        <Button size={"large"} variant={"outlined"} onClick={(e)=>openItem.count>openItem?.minOrder&&setOpenItem({...openItem,count:openItem.count-1})}>{openItem?.count>1?<Remove />:<DeleteOutline />}</Button>
+                                        <Button size={"large"} variant={"outlined"} onClick={(e)=>openItem.count>openItem?.minOrder&&setOpenItem({...openItem,count:openItem.count-1})}>1<Remove /></Button>
                                     </ButtonGroup>
                                 </Grid>
                             </Grid>

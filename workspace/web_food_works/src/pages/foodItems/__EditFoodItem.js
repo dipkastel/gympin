@@ -32,9 +32,9 @@ const __EditFoodItem = ({selectedItem,setSelectedItem,updateList}) => {
     function UpdateFoodItem() {
         SetLoading(true);
         TicketFoods_update(itemFood).then((result) => {
-            console.log("--------asdasd")
             SetLoading(false);
             updateList();
+            error.showError({message: "ثبت موفق",});
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});

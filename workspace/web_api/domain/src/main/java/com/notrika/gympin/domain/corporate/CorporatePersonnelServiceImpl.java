@@ -4,9 +4,7 @@ import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelCateringAccessParam;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelFileParam;
-import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
+import com.notrika.gympin.common.corporate.corporatePersonnel.param.*;
 import com.notrika.gympin.common.corporate.corporatePersonnel.query.CorporatePersonnelQuery;
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelService;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
@@ -22,7 +20,6 @@ import com.notrika.gympin.common.util.exception.general.SendSmsException;
 import com.notrika.gympin.common.util.exception.user.LowDepositException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.finance.helper.FinanceHelper;
-import com.notrika.gympin.domain.settings.userSettings.UserSettingsServiceImpl;
 import com.notrika.gympin.domain.user.AccountServiceImpl;
 import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
@@ -80,16 +77,18 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public CorporatePersonnelDto add(@NonNull CorporatePersonnelParam Param) {
-        CorporatePersonnelEntity personnelEntity =  addUserToCorporate(Param.getPhoneNumber(),Param.getFullName(),Param.getCorporate().getId());
-        try {
-            smsService.sendJoinedToCorporateSms(new SmsDto(personnelEntity.getUser().getPhoneNumber(), SmsTypes.JOINED_TO_CORPORATE, personnelEntity.getCorporate().getName()));
-        } catch (Exception e) {
-            throw new SendSmsException();
+        CorporatePersonnelEntity personnelEntity = addUserToCorporate(Param.getPhoneNumber(), Param.getFullName(), Param.getCorporate().getId());
+        if (Param.getSendSms()) {
+            try {
+                smsService.sendJoinedToCorporateSms(new SmsDto(personnelEntity.getUser().getPhoneNumber(), SmsTypes.JOINED_TO_CORPORATE, personnelEntity.getCorporate().getName()));
+            } catch (Exception e) {
+                throw new SendSmsException();
+            }
         }
         return CorporateConvertor.toPersonnelDto(personnelEntity);
     }
 
-    private CorporatePersonnelEntity addUserToCorporate(String phoneNumber,String fullName,Long corporateId) {
+    private CorporatePersonnelEntity addUserToCorporate(String phoneNumber, String fullName, Long corporateId) {
 
         UserEntity user = userRepository.findByPhoneNumber(phoneNumber);
         CorporateEntity corporate = corporateService.getEntityById(corporateId);
@@ -98,7 +97,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
         } else {
             //check for duplication
             UserEntity finalUser = user;
-            if (corporate.getPersonnel().stream().anyMatch(p -> Objects.equals(p.getUser().getId(), finalUser.getId())&&!p.isDeleted()))
+            if (corporate.getPersonnel().stream().anyMatch(p -> Objects.equals(p.getUser().getId(), finalUser.getId()) && !p.isDeleted()))
                 throw new DuplicateEntryAddExeption();
         }
 
@@ -107,7 +106,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
                 .user(user)
                 .role(CorporatePersonnelRoleEnum.PERSONEL)
                 .build();
-       return corporatePersonnelRepository.add(corporatePersonnelEntity);
+        return corporatePersonnelRepository.add(corporatePersonnelEntity);
     }
 
     @Override
@@ -159,7 +158,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
                         if (!columns[5].isEmpty()) {
                             try {
                                 var personnelEntity = getEntityById(personnel.getId());
-                                var group = groupEntities.stream().filter(o->!o.isDeleted()).filter(p -> p.getName().trim().equals(columns[5].trim())).findFirst();
+                                var group = groupEntities.stream().filter(o -> !o.isDeleted()).filter(p -> p.getName().trim().equals(columns[5].trim())).findFirst();
                                 if (group.isPresent()) {
                                     personnelEntity.setPersonnelGroup(group.get());
                                 } else {
@@ -184,11 +183,52 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
     }
 
     @Override
+    @Transactional
+    public Boolean addPersonnelByList(List<CorporatePersonnelListItem> param) {
+
+        try {
+            for (CorporatePersonnelListItem person : param) {
+                UserEntity user = userRepository.findByPhoneNumber("0" + person.getPhoneNumber());
+                if (user == null) {
+                    try {
+                        user = accountService.addUser(UserRegisterParam.builder()
+                                .phoneNumber(person.getPhoneNumber())
+                                .invitedBy("C" + GeneralHelper.getInviteCode(person.getCorporate().getId(), 1))
+                                .userRole(RoleEnum.USER)
+                                .build());
+                        if (!person.getFullName().isEmpty())
+                            user.setFullName(person.getFullName());
+                        if (person.getGender() != null)
+                            user.setGender(person.getGender());
+                        if (!person.getNationalCode().isEmpty())
+                            user.setNationalCode(person.getNationalCode());
+                        if (person.getBirthDay() != null)
+                            user.setBirthday(person.getBirthDay());
+                        userRepository.update(user);
+                    } catch (Exception e) {
+                    }
+                }
+                //add user by create add(addparam)
+                add(CorporatePersonnelParam.builder()
+                        .role(CorporatePersonnelRoleEnum.PERSONEL)
+                        .phoneNumber("0" + person.getPhoneNumber())
+                        .sendSms(person.getSendSms())
+                        .PersonelGroup(CorporatePersonnelGroupParam.builder().id(person.getGroupId()).build())
+                        .corporate(CorporateParam.builder().id(person.getCorporate().getId()).build())
+                        .build());
+            }
+        } catch (Exception e) {
+        }
+        return true;
+
+    }
+
+    @Override
     public CorporatePersonnelDto update(@NonNull CorporatePersonnelParam corporatePersonnelParam) {
         CorporatePersonnelEntity entity = corporatePersonnelRepository.getById(corporatePersonnelParam.getId());
-        if (corporatePersonnelParam.getRole() != null){
+        if (corporatePersonnelParam.getRole() != null) {
             entity.setRole(corporatePersonnelParam.getRole());
-            if(corporatePersonnelParam.getRole()==CorporatePersonnelRoleEnum.ADMIN){
+            if (corporatePersonnelParam.getRole() == CorporatePersonnelRoleEnum.ADMIN) {
                 try {
                     smsService.sendAdminRoleInCorporate(SmsDto.builder()
                             .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
@@ -216,31 +256,31 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
         CorporatePersonnelEntity personnel = corporatePersonnelRepository.getById(corporateParam.getId());
         CorporateEntity corporate = personnel.getCorporate();
         FinanceCorporateEntity financeCorporate = corporate.getFinanceCorporate();
-        var serial =FinanceSerialEntity.builder()
+        var serial = FinanceSerialEntity.builder()
                 .serial(java.util.UUID.randomUUID().toString())
                 .processTypeEnum(ProcessTypeEnum.TRA_REMOVE_CORPORATE_PERSONNEL)
                 .build();
         //calc total ammount
-        List<FinanceCorporatePersonnelCreditEntity> credits =personnel.getCredits().stream().filter(o->!o.isDeleted()).filter(pc->pc.getStatus() == CorporatePersonnelCreditStatusEnum.ACTIVE).collect(Collectors.toList());
-        BigDecimal totalAmount = credits.stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO,BigDecimal::add);
+        List<FinanceCorporatePersonnelCreditEntity> credits = personnel.getCredits().stream().filter(o -> !o.isDeleted()).filter(pc -> pc.getStatus() == CorporatePersonnelCreditStatusEnum.ACTIVE).collect(Collectors.toList());
+        BigDecimal totalAmount = credits.stream().filter(o -> !o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
         //check corporate has deposit
-        if(financeCorporate.getTotalDeposit().compareTo(totalAmount)<0){
+        if (financeCorporate.getTotalDeposit().compareTo(totalAmount) < 0) {
             throw new LowDepositException();
         }
-        if(totalAmount.compareTo(BigDecimal.ZERO)>0){
+        if (totalAmount.compareTo(BigDecimal.ZERO) > 0) {
             financeSerialRepository.add(serial);
             //subtranct totaldeposit
-            corporatePersonelFinanceHelper.decreaseCorporateTotalDeposit(financeCorporate,totalAmount,serial,null);
+            corporatePersonelFinanceHelper.decreaseCorporateTotalDeposit(financeCorporate, totalAmount, serial, null);
 
             //subtranct totalcredit
-            corporatePersonelFinanceHelper.decreaseCorporateTotalCredit(financeCorporate,totalAmount,serial,null);
+            corporatePersonelFinanceHelper.decreaseCorporateTotalCredit(financeCorporate, totalAmount, serial, null);
 
             //transfer to non withdrawable and decrease credit
             FinanceUserEntity wallet = financeHelper.getUserNonWithdrawableWallet(personnel.getUser());
-            for(FinanceCorporatePersonnelCreditEntity cpe:credits){
+            for (FinanceCorporatePersonnelCreditEntity cpe : credits) {
                 BigDecimal amountBefore = cpe.getCreditAmount();
-                corporatePersonelFinanceHelper.decreaseCorporatePersonnelCredit(cpe,cpe.getCreditAmount(),serial);
-                wallet = financeHelper.increaseNonWithdrawableWallet(wallet,amountBefore,serial,"بابت اعتبار با شماره : "+cpe.getId());
+                corporatePersonelFinanceHelper.decreaseCorporatePersonnelCredit(cpe, cpe.getCreditAmount(), serial);
+                wallet = financeHelper.increaseNonWithdrawableWallet(wallet, amountBefore, serial, "بابت اعتبار با شماره : " + cpe.getId());
             }
         }
 
@@ -249,7 +289,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public CorporatePersonnelDto getById(long id) {
-        return CorporateConvertor.toSecurePersonnelDto(corporatePersonnelRepository.getById(id),corporatePersonelFinanceHelper);
+        return CorporateConvertor.toSecurePersonnelDto(corporatePersonnelRepository.getById(id), corporatePersonelFinanceHelper);
     }
 
     @Override
@@ -284,7 +324,7 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public List<CorporatePersonnelDto> convertToDtos(List<CorporatePersonnelEntity> entities) {
-        return entities.stream().filter(o->!o.isDeleted()).map(CorporateConvertor::toPersonnelDto).collect(Collectors.toList());
+        return entities.stream().filter(o -> !o.isDeleted()).map(CorporateConvertor::toPersonnelDto).collect(Collectors.toList());
     }
 
     @Override
@@ -294,33 +334,33 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
 
     @Override
     public List<CorporatePersonnelDto> getPersonnelByCorporate(CorporateParam corporateParam) {
-        return corporatePersonnelRepository.findByCorporateIdAndDeletedIsFalse(corporateParam.getId()).stream().filter(o->!o.isDeleted()).map(p->CorporateConvertor.toSecurePersonnelDto(p,corporatePersonelFinanceHelper)).collect(Collectors.toList());
+        return corporatePersonnelRepository.findByCorporateIdAndDeletedIsFalse(corporateParam.getId()).stream().filter(o -> !o.isDeleted()).map(p -> CorporateConvertor.toSecurePersonnelDto(p, corporatePersonelFinanceHelper)).collect(Collectors.toList());
     }
 
     @Override
     public List<CorporatePersonnelDto> getByUserid(Long userId) {
-        return corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(userId).stream().map(p->CorporateConvertor.toSecurePersonnelDto(p,corporatePersonelFinanceHelper)).collect(Collectors.toList());
+        return corporatePersonnelRepository.findByUserIdAndDeletedIsFalse(userId).stream().map(p -> CorporateConvertor.toSecurePersonnelDto(p, corporatePersonelFinanceHelper)).collect(Collectors.toList());
     }
 
     @Override
     public CorporatePersonnelDto getPersonnelByCorporateIdAndUserId(long corporateId, long userId) {
-        CorporatePersonnelEntity pp = corporatePersonnelRepository.findByCorporateIdAndUserIdAndDeletedIsFalse(corporateId,userId);
+        CorporatePersonnelEntity pp = corporatePersonnelRepository.findByCorporateIdAndUserIdAndDeletedIsFalse(corporateId, userId);
         return CorporateConvertor.toPersonnelDto(pp);
     }
 
     @Override
     public List<CorporatePersonnelDto> getOwnedByUserid(Long userId) {
-        return corporatePersonnelRepository.findByUserIdAndRoleAndDeletedIsFalse(userId, CorporatePersonnelRoleEnum.ADMIN).stream().map(p->CorporateConvertor.toSecurePersonnelDto(p,corporatePersonelFinanceHelper)).collect(Collectors.toList());
+        return corporatePersonnelRepository.findByUserIdAndRoleAndDeletedIsFalse(userId, CorporatePersonnelRoleEnum.ADMIN).stream().map(p -> CorporateConvertor.toSecurePersonnelDto(p, corporatePersonelFinanceHelper)).collect(Collectors.toList());
     }
 
     @Override
     public Boolean setPersonelAccessToCatering(CorporatePersonnelCateringAccessParam param) {
         CorporatePersonnelEntity personnel = corporatePersonnelRepository.getById(param.getPersonnelId());
-        List<UserSettingsEntity> settings = manageUserSettingsRepository.findAllByDeletedIsFalseAndUserIdAndKeyAndDataLike(personnel.getUser().getId(), UserSettingTypesEnum.CATERING_ACCESS,personnel.getId().toString());
-        if(param.getAccess()){
+        List<UserSettingsEntity> settings = manageUserSettingsRepository.findAllByDeletedIsFalseAndUserIdAndKeyAndDataLike(personnel.getUser().getId(), UserSettingTypesEnum.CATERING_ACCESS, personnel.getId().toString());
+        if (param.getAccess()) {
             //Add Access
-            UserSettingsEntity access = settings.stream().filter(a->a.getValue().equals(param.getCateringId().toString())).findFirst().orElse(null);
-            if(access==null){
+            UserSettingsEntity access = settings.stream().filter(a -> a.getValue().equals(param.getCateringId().toString())).findFirst().orElse(null);
+            if (access == null) {
                 manageUserSettingsRepository.add(UserSettingsEntity.builder()
                         .key(UserSettingTypesEnum.CATERING_ACCESS)
                         .value(param.getCateringId().toString())
@@ -329,10 +369,10 @@ public class CorporatePersonnelServiceImpl extends AbstractBaseService<Corporate
                         .build()
                 );
             }
-        }else{
+        } else {
             //removeAccess
-            UserSettingsEntity access = settings.stream().filter(a->a.getValue().equals(param.getCateringId().toString())).findFirst().orElse(null);
-            if(access!=null){
+            UserSettingsEntity access = settings.stream().filter(a -> a.getValue().equals(param.getCateringId().toString())).findFirst().orElse(null);
+            if (access != null) {
                 manageUserSettingsRepository.deleteById2(access);
             }
         }

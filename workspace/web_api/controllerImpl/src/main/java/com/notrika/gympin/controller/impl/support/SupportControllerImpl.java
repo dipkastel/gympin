@@ -68,12 +68,12 @@ public class SupportControllerImpl implements SupportController {
 
     @Override
     public ResponseEntity<SupportDto> update(SupportParam supportParam) {
-        throw new FunctionNotAvalable();
+        return new ResponseEntity<SupportDto>(supportService.update(supportParam),HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<SupportDto> delete(SupportParam supportParam) {
-        throw new FunctionNotAvalable();
+        return new ResponseEntity<SupportDto>(supportService.delete(supportParam),HttpStatus.OK);
     }
 
     @Override

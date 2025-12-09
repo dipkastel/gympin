@@ -43,8 +43,16 @@ const _CateringSelectDate = ({selectedDate, setSelectedDate, catering, AllOrders
         return !activeDates?.includes(new Date(item)?.toISOString()?.split('T')[0]);
     }
 
+
+    function getDateItemCount(itemDate) {
+        var orders = AllOrders?.filter(o => (new Date(o.Date).toDateString()) == itemDate.toDateString());
+        if(!orders)
+            return 0;
+        return orders.map(o=>o.Count).reduce((a, b) => a + b, 0);
+    }
+
     function getLabel(itemDate) {
-        return (<Badge badgeContent={AllOrders?.filter(o => (new Date(o.Date).toDateString()) == itemDate.toDateString())?.length}
+        return (<Badge badgeContent={ getDateItemCount(itemDate)}
                        color={AllOrders?.filter(o => (new Date(o.Date).toDateString()) == itemDate.toDateString())?.Ordered ? "success" : "info"}
                        variant={"standard"}
                        sx={{mx:1.3,mt:1}}
@@ -71,7 +79,7 @@ const _CateringSelectDate = ({selectedDate, setSelectedDate, catering, AllOrders
             value={selectedDate?? false}
             onChange={(e, v) => setSelectedDate(v)}
             variant="scrollable"
-            scrollButtons={false}
+            scrollButtons={true}
             allowScrollButtonsMobile
         >
 

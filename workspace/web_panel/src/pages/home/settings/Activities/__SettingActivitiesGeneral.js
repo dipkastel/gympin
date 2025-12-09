@@ -5,10 +5,8 @@ const __SettingActivitiesGeneral = () => {
 
     return (<>
             <div className={"row"}>
-                <div className={"col-6"}>
+                <div className={"col-md-6 col-sm-12"}>
                     <___SettingsActivitiesUsersActives/>
-                </div>
-                <div className={"col-6"}>
                 </div>
             </div>
         </>

@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Grid from "@mui/material/Grid2";
 import {
+    Avatar,
     Button,
     Card,
-    CardActions,
+    CardActions, CardHeader,
     Checkbox,
     Collapse,
     Dialog,
@@ -32,7 +33,7 @@ import {useSelector} from "react-redux";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {toPriceWithComma, toPriceWithoutComma} from "../../helper/utils";
 import {Check, Delete, Percent} from "@mui/icons-material";
-import {Form} from "react-bootstrap";
+import {Form, Image} from "react-bootstrap";
 import _ItemDrawer from "./_ItemDrawer";
 
 const FoodItems = () => {
@@ -49,7 +50,7 @@ const FoodItems = () => {
 
     useEffect(() => {
         getFoods()
-    }, [catering, page, perPage]);
+    }, [catering, page, perPage,inputValue]);
 
     function getFoods() {
         if (!catering) return;
@@ -60,6 +61,8 @@ const FoodItems = () => {
             paging: {Page: page, Size: perPage, Desc: true}
         }).then((data) => {
             setItem(data.data.Data);
+            if(selectedItem)
+                setSelectedItem(data?.data?.Data?.content?.find(i=>i.Id == selectedItem.Id))
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -85,6 +88,7 @@ const FoodItems = () => {
                 Description: e.target.desc.value
             }).then((result) => {
                 getFoods()
+                error.showError({message: "ثبت موفق",});
             }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message,});
@@ -216,16 +220,35 @@ const FoodItems = () => {
                 </Grid>
                 <Grid size={12}>
                     <Card sx={{m: 2, p: 2}} variant={"outlined"}>
+                        <CardHeader
+                            title={"لیست آیتم‌ها"}
+                            action={
+                                <TextField
+                                    fullWidth
+                                    className="w-100"
+                                    variant="outlined"
+                                    margin="dense"
+                                    type="text"
+                                    value={inputValue}
+                                    onChange={(event) => {
+                                        setInputValue(event.target.value);
+                                        setPage(0);
+                                    }}
+                                    label={"جستجو"}
+                                />}
+                            sx={{bgcolor:"#88888820"}}
+                        />
 
                         <TableContainer>
                             <Table aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell >id</TableCell>
+                                        <TableCell ></TableCell>
                                         <TableCell >نام آیتم</TableCell>
                                         <TableCell align="center">ارزش</TableCell>
                                         <TableCell align="center">قیمت</TableCell>
                                         <TableCell align="center">غذای اصلی</TableCell>
+                                        <TableCell align="center">توضیحات</TableCell>
                                         <TableCell align="center">حداقل (تعداد)</TableCell>
                                         <TableCell align="center">حداکثر (تعداد)</TableCell>
                                     </TableRow>
@@ -234,12 +257,16 @@ const FoodItems = () => {
                                     {item?.content?.map((row) => (
                                         <TableRow
                                             hover
-
                                             key={row.name}
                                             sx={{cursor: "pointer"}}
                                         >
                                             <TableCell onClick={(e)=>setSelectedItem(row)} component="th" scope="row">
-                                                {row.Id}
+
+                                                <Grid container direction={"row"}>
+                                                    {row?.Multimedias?.map(image=>(
+                                                        <Avatar  alt="userImage" src={(image?.Url)}  sx={{width:30,height:30,ml:-2}} />
+                                                    ))}
+                                                </Grid>
                                             </TableCell>
                                             <TableCell onClick={(e)=>setSelectedItem(row)} component="th" scope="row">
                                                 {row.Name}
@@ -247,6 +274,7 @@ const FoodItems = () => {
                                             <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{toPriceWithComma(row.ValuePrice)}</TableCell>
                                             <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{toPriceWithComma(row.Price)}</TableCell>
                                             <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{row.IsCount && <Check/>}</TableCell>
+                                            <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{row.Description && <Check/>}</TableCell>
                                             <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{row.MinOrderCount}</TableCell>
                                             <TableCell onClick={(e)=>setSelectedItem(row)} align="center">{row.MaxOrderCount}</TableCell>
                                         </TableRow>
@@ -256,7 +284,7 @@ const FoodItems = () => {
                         </TableContainer>
                         <CardActions sx={{justifyContent: "right"}}>
                             {(item?.totalElements > 0) && <TablePagination
-                                rowsPerPageOptions={[5, 10, 15, 25, 50, 100]}
+                                rowsPerPageOptions={[5, 10, 15, 25]}
                                 component="div"
                                 count={item?.totalElements || 0}
                                 labelRowsPerPage={<Typography sx={{mt: 2}}>تعداد نمایش</Typography>}

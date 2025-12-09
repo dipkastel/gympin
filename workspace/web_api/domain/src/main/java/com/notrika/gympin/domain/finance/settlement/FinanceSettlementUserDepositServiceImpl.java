@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.settlement.query.FinanceSettlementUserD
 import com.notrika.gympin.common.finance.settlement.service.FinanceSettlementUserDepositService;
 import com.notrika.gympin.common.finance.settlement.dto.FinanceSettlementUserDepositDto;
 import com.notrika.gympin.common.finance.settlement.param.FinanceSettlementUserDepositParam;
+import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.user.user.enums.UserFinanceType;
@@ -15,6 +16,7 @@ import com.notrika.gympin.common.util.exception.user.UserHasOpenSettlementReques
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.finance.helper.FinanceHelper;
 import com.notrika.gympin.domain.user.UserServiceImpl;
+import com.notrika.gympin.domain.util.convertor.FinanceUserConvertor;
 import com.notrika.gympin.domain.util.convertor.SettlementConvertor;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceUserRepository;
@@ -34,6 +36,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,6 +98,12 @@ public class FinanceSettlementUserDepositServiceImpl extends AbstractBaseService
         financeUserTransactionRepository.add(userTransaction);
         financeSettlementUserDepositRepository.update(settlementRequest);
         return SettlementConvertor.ToDto(settlementRequest);
+    }
+
+    @Override
+    public List<FinanceUserDto> getAllCreditors() {
+        List<FinanceUserEntity>  wallets = financeUserRepository.findByDeletedIsFalseAndUserFinanceTypeAndTotalDepositIsGreaterThan(UserFinanceType.INCOME_WALLET,BigDecimal.ZERO);
+        return FinanceUserConvertor.toFinanceDto(wallets);
     }
 
     @Override

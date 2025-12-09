@@ -88,6 +88,7 @@ export let CorporatePersonnelApi = {
     addPersonnelCredit: "v1/corporatePersonnel/addPersonnelCredit",
     decreaseCredit: "v1/corporatePersonnel/decreaseCredit",
     manualExpireCredit: "v1/corporatePersonnel/manualExpireCredit",
+    addPersonnelByList: "v1/corporatePersonnel/addPersonnelByList",
 };
 export let HallsApi = {
     add: "v1/hall/add",
@@ -435,6 +436,7 @@ export let SupportApi = {
     addMessage: "v1/Support/addMessage",
     getAll: "v1/Support/getall",
     getById: "v1/Support/getById",
+    delete: "v1/Support/delete",
     query: "v1/Support/query",
 };
 export let purchasedSubscribeApi = {
@@ -484,7 +486,8 @@ export let SettlementUserDepositApi = {
     query: "v1/settlementUserDeposit/query",
     getById: "v1/settlementUserDeposit/getById",
     confirmSettlementRequest: "v1/settlementUserDeposit/confirmSettlementRequest",
-    update: "v1/settlementUserDeposit/update"
+    update: "v1/settlementUserDeposit/update",
+    getAllCreditors: "v1/settlementUserDeposit/getAllCreditors",
 
 };
 export let IncreaseCorporateDepositApi = {

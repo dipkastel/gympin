@@ -23,7 +23,7 @@ const __SmsFailedList = ({updatePage}) => {
 
     useEffect(() => {
         getSmsFailedList();
-    }, []);
+    }, [page,rowsPerPage]);
 
 
     function getSmsFailedList() {

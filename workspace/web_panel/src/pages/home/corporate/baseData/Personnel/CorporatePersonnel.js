@@ -21,13 +21,13 @@ import {toPriceWithComma} from "../../../../../helper";
 import {ListAlt} from "@mui/icons-material";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppCorporatePersonnel, SetRppCorporatePersonnel} from "../../../../../helper/pocket/pocket";
+import _AddPersonelByList from "./_AddPersonelByList";
 
 const CorporatePersonnel = ({currentCorporate}) => {
     const error = useContext(ErrorContext);
     const history = useHistory();
     const [corporatePersonnels, SetCorporatePersonnels] = useState({})
     const [openModalAdd, setOpenModalAdd] = useState(false)
-    const [openModalAddList, setOpenModalAddList] = useState(false)
     const [itemToDelete, setItemToDelete] = useState(null)
     const [SearchName, setSearchName] = useState(null)
     const [searchPhone, setSearchPhone] = useState(null)
@@ -56,79 +56,6 @@ const CorporatePersonnel = ({currentCorporate}) => {
             }
         });
     }
-
-    function renderModalAddList() {
-
-        function addListFile(e) {
-            e.preventDefault();
-            const formData = new FormData();
-            formData.append("MediaType", "*/*");
-            if (e.target.file.files[0] && e.target.file.files[0].size > 0) {
-                formData.append("File", e.target.file.files[0]);
-            } else {
-                error.showError({message: "فایل انتخاب نشده",});
-                return
-            }
-            formData.append("HasHeader", !!e.target.HasHeader.value || false);
-            formData.append("CorporateId", currentCorporate.Id);
-
-            corporatePersonnel_addList(formData)
-                .then(data => {
-                    setOpenModalAddList(false);
-                    error.showError({message: "عملیات موفق",});
-                    getPersonnelsOfCorporate();
-                }).catch(e => {
-                try {
-                    error.showError({message: e.response.data.Message,});
-                } catch (f) {
-                    error.showError({message: "خطا نا مشخص",});
-                }
-            });
-        }
-
-        return (
-            <>
-                <Modal show={openModalAddList} onHide={() => setOpenModalAddList(false)}>
-                    <form onSubmit={(e) => addListFile(e)}>
-
-
-                        <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن پرسنل با فایل "}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-
-                            <Form.Group>
-                                <input name={"file"} type={"file"} accept={"text/csv"}/>
-                            </Form.Group>
-
-                            <Form.Group>
-                                <FormControlLabel
-                                    className={"mr-1"}
-                                    control={<Checkbox name={"HasHeader"} color="primary"/>}
-                                    label={"دارای هدر"}
-                                />
-                            </Form.Group>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button
-                                className={"button_edit"}
-                                onClick={() => setOpenModalAddList(false)}
-                            >
-                                خیر
-                            </Button>
-                            <Button
-                                className={"button_danger"}
-                                type={"submit"}
-                            >
-                                اضافه
-                            </Button>
-                        </Modal.Footer>
-                    </form>
-                </Modal>
-            </>
-        );
-    }
-
     function renderModalAdd() {
 
         function addOption(e) {
@@ -161,7 +88,6 @@ const CorporatePersonnel = ({currentCorporate}) => {
                             <Modal.Title>{"افزودن پرسنل "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-
 
                             <Form.Group controlId="PhoneNumber">
                                 <Form.Control
@@ -286,13 +212,7 @@ const CorporatePersonnel = ({currentCorporate}) => {
                                 }}
                                 label={"جستجو شماره همراه"}
                             />
-                            <button
-                                type="button"
-                                className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                onClick={(e) => setOpenModalAddList(true)}
-                            >
-                                <ListAlt/>
-                            </button>
+                            <_AddPersonelByList getPersonnelsOfCorporate={getPersonnelsOfCorporate} currentCorporate={currentCorporate} />
                             <button
                                 type="button"
                                 className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
@@ -367,7 +287,6 @@ const CorporatePersonnel = ({currentCorporate}) => {
                 </PortletBody>
             </Portlet>
             {renderModalAdd()}
-            {renderModalAddList()}
             {renderModalDelete()}
         </>
     );
