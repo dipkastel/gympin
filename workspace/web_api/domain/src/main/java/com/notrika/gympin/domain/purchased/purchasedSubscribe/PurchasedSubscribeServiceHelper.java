@@ -110,10 +110,6 @@ public class PurchasedSubscribeServiceHelper {
                 return subscribe;
             }
             case READY_TO_ACTIVE: {
-                if (subscribe.getExpireDate().before(new Date())) {
-                    subscribe.setStatus(EXPIRE);
-                    purchasedSubscribeRepository.update(subscribe);
-                }
                 Date exprireSubscribeDate = new Date(subscribe.getCreatedDate().getTime());
                 exprireSubscribeDate.setHours(subscribe.getCreatedDate().getHours()+ PurchasedSubscribeConvertor.getTicketUsageThreshold(settingsService));
                 if(exprireSubscribeDate.before(new Date())){
