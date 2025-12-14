@@ -207,9 +207,9 @@ const SettlementRequest = ({currentUser,userFinance, updatePage}) => {
                                 variant="outlined"
                                 margin="normal"
                                 name="amount"
-                                value={toPriceWithComma(amountToPay)}
+                                value={amountToPay}
                                 type="text"
-                                onChange={e => setAmountToPay(toPriceWithoutComma(e.target.value))}
+                                onChange={e => setAmountToPay(e.target.value)}
                                 label={"مبلغ دلخواه به تومان"}
                             />
                         </Modal.Body>
