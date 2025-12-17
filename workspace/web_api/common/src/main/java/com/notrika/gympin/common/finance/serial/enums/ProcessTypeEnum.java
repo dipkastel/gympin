@@ -3,6 +3,7 @@ package com.notrika.gympin.common.finance.serial.enums;
 public enum ProcessTypeEnum {
     CASH_IN_ACCOUNT_CHARGE_CORPORATE,
     CASH_IN_ACCOUNT_CHARGE_USER,
+    TRA_INCREASE_USER_NW_CARD,
     CASH_OUT_GYMPIN,
     CASH_OUT_PLACE,
     CASH_OUT_CORPORATE,

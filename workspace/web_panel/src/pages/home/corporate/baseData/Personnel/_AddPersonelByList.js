@@ -29,7 +29,7 @@ import {userGenders} from "../../../../../helper/enums/genders";
 const _AddPersonelByList = ({getPersonnelsOfCorporate, currentCorporate}) => {
 
     const error = useContext(ErrorContext);
-    const [openModalAddList, setOpenModalAddList] = useState(true)
+    const [openModalAddList, setOpenModalAddList] = useState(false)
     const [sendSms, setSendSms] = useState(true)
     const [fileToAdd, setFileToAdd] = useState(null)
     const [allLocations, setAllLocations] = useState(null);

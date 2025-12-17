@@ -6,6 +6,7 @@ export const ProcessTypeEnum = {
     CASH_OUT_CORPORATE:"خروج وجه شرکت",
     CASH_OUT_PERSONAL:"خروج وجه شخص",
     CASH_OUT_PLACE:"خروج درامد مرکز",
+    TRA_INCREASE_USER_NW_CARD:"افزایش اعتبار با کارت",
     TRA_INCREASE_PERSONNEL_CREDIT_NW_MULTIPLE:"افزایش اعتبار غیر قابل برداشت",
     TRA_INCREASE_PERSONNEL_CREDIT_SINGLE:"افزایش اعتبار تکی",
     TRA_INCREASE_PERSONNEL_CREDIT_MULTIPLE:"افزایش اعتبار گروهی",

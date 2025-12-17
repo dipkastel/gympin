@@ -30,6 +30,7 @@ import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorpora
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -170,7 +171,7 @@ public class CorporatePersonelFinanceHelper {
         financeCorporatePersonnelCreditTransactionRepository.addAll(tListToAdd);
         return result;
     }
-    public List<FinanceUserEntity> addNWToCorporatePersonnelCredits(List<CorporatePersonnelEntity> personnelsToAddCredit, CorporatePersonnelCreditParam param, FinanceSerialEntity serial) {
+    public List<FinanceUserEntity> addNWToAllCorporatePersonnelCredits(List<CorporatePersonnelEntity> personnelsToAddCredit, CorporatePersonnelCreditParam param, FinanceSerialEntity serial) {
         List<FinanceUserTransactionEntity> tListToAdd = new ArrayList<>();
         List<FinanceUserEntity> listToUpdate = personnelsToAddCredit.stream().filter(o->!o.isDeleted()).map(personel -> {
             //add user none withdrawable credit;
@@ -192,6 +193,28 @@ public class CorporatePersonelFinanceHelper {
         List<FinanceUserEntity> result = financeUserRepository.updateAll(listToUpdate);
         //add finance credit transaction
         financeUserTransactionRepository.addAll(tListToAdd);
+        return result;
+    }
+
+    public FinanceUserEntity addNWToSingleCorporatePersonnelCredits(UserEntity user,BigDecimal amount, FinanceSerialEntity serial) {
+
+            //add user none withdrawable credit;
+            FinanceUserEntity userNwWallet = financeHelper.getUserNonWithdrawableWallet(user);
+            BigDecimal before = userNwWallet.getTotalDeposit();
+            userNwWallet.setTotalDeposit(before.add(amount));
+            //add transaction for none withdrawable credit
+        FinanceUserTransactionEntity fute = FinanceUserTransactionEntity.builder()
+                    .serial(serial)
+                    .transactionStatus(TransactionStatus.COMPLETE)
+                    .latestBalance(before)
+                    .financeUser(userNwWallet)
+                    .isChecked(false)
+                    .transactionType(TransactionBaseType.USER)
+                    .amount(amount)
+                    .build();
+        FinanceUserEntity result = financeUserRepository.update(userNwWallet);
+        //add finance credit transaction
+        financeUserTransactionRepository.add(fute);
         return result;
     }
 

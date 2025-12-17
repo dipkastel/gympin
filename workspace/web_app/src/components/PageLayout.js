@@ -122,7 +122,7 @@ const PageLayout = (props) => {
                         <Typography variant="h6" component="div"
                                     sx={{flexGrow: 1}}>
                         </Typography>
-                        {currentUser &&
+                        {currentUser && currentUser?.Balance>0 &&
                         <Button sx={{fontWeight:600,fontSize:"1rem",bgcolor:"#c70813",px:2,py:1,border:"#A40F17FF 2px solid"}} color={"inherit"} href={"/wallet"}>
                             <Typography sx={{bgcolor:"rgb(119,12,18)",color:"#FFF",borderRadius:1,fontSize:"0.5rem",p:0.2,mr:0.5,ml:-2.8}} variant={"caption"}>{"تومان"}</Typography>
                             <Typography sx={{ml:0.5}} variant={"subtitle1"}>{!!currentUser.Balance&&toPriceWithComma(currentUser.Balance)}</Typography>

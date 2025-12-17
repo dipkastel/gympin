@@ -149,7 +149,7 @@ public class GiftsCreditServiceImpl extends AbstractBaseService<GiftCreditParam,
     }
 
     private Boolean checkForExpire(ManageGiftCreditEntity gift) {
-        if(gift.getExpireDate().before(new Date())){
+        if(gift.getExpireDate()!=null&&gift.getExpireDate().before(new Date())){
           gift.setStatus(GiftCreditStatusEnum.EXPIRED);
           gift.setCanRegister(false);
           manageGiftCreditRepository.update(gift);
@@ -165,9 +165,9 @@ public class GiftsCreditServiceImpl extends AbstractBaseService<GiftCreditParam,
         entity.setName(giftCreditParam.getName());
         entity.setExpireDate(giftCreditParam.getExpireDate());
         entity.setCanRegister(giftCreditParam.getCanRegister());
+        entity.setCreditExpireDate(giftCreditParam.getCreditExpireDate());
         entity.setAmount(giftCreditParam.getAmount());
         entity.setStatus(giftCreditParam.getStatus());
-
         return GiftConvertor.toDto(manageGiftCreditRepository.update(entity));
     }
 

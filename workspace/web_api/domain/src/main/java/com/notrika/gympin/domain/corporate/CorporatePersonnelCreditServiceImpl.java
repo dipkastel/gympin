@@ -174,7 +174,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
 
         financeSerialRepository.add(serial);
         //add finance corporate personnel credits
-        List<FinanceUserEntity> credits = helper.addNWToCorporatePersonnelCredits(personnelsToAddCredit, param, serial);
+        List<FinanceUserEntity> credits = helper.addNWToAllCorporatePersonnelCredits(personnelsToAddCredit, param, serial);
         //sms
         return FinanceUserConvertor.toFinanceDto(credits);
     }
@@ -283,7 +283,7 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     }
 
     @Transactional
-    public CorporatePersonnelCreditDto addGiftCredit(ManageGiftCreditEntity gift, UserEntity user) {
+    public boolean addGiftCredit(ManageGiftCreditEntity gift, UserEntity user) {
         //find or add user to corporate
         CorporatePersonnelEntity personnel = gift.getCorporate().getPersonnel().stream().filter(cp -> cp.getUser().getId().equals(user.getId()) && !cp.isDeleted()).findFirst().orElse(null);
 
@@ -297,24 +297,49 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
             corporatePersonnelRepository.add(personnel);
         }
 
+        if(gift.getExpireDate()==null&&gift.getCreditExpireDate()==null){
+            //get Credit of corporate
+            //add amount to nw wallet
 
-        var serial = FinanceSerialEntity.builder()
-                .serial(java.util.UUID.randomUUID().toString())
-                .processTypeEnum(ProcessTypeEnum.TRA_INCREASE_PERSONNEL_CREDIT_GIFT)
-                .build();
+            var serial = FinanceSerialEntity.builder()
+                    .serial(java.util.UUID.randomUUID().toString())
+                    .processTypeEnum(ProcessTypeEnum.TRA_INCREASE_USER_NW_CARD)
+                    .build();
+            if (helper.checkLowBudjetByContract(gift.getCorporate(), gift.getAmount()))
+                throw new LowDepositException();
+            financeSerialRepository.add(serial);
 
-        //checks
-        if (!helper.checkContractContract(personnel.getCorporate()))
-            throw new CorporateContractIsNotComplete();
-        if (helper.checkLowBudjetByContract(gift.getCorporate(), gift.getAmount()))
-            throw new LowDepositException();
+            //add finance user charge
+            helper.addNWToSingleCorporatePersonnelCredits(user, gift.getAmount(), serial);
+            //update corporate finance total charge
+            String desc = "کاهش شارژ سازمان ";
+            desc += gift.getCorporate().getName() + " ";
+            desc += "انتقال به حساب خرید "+ user.getFullName() + " با شماره "+ user.getPhoneNumber();
+            helper.decreaseCorporateTotalDeposit(gift.getCorporate().getFinanceCorporate(),gift.getAmount(),serial,desc);
+            //sms
+            return true;
+        }else{
+            //add credit to personel as usual
+            var serial = FinanceSerialEntity.builder()
+                    .serial(java.util.UUID.randomUUID().toString())
+                    .processTypeEnum(ProcessTypeEnum.TRA_INCREASE_PERSONNEL_CREDIT_GIFT)
+                    .build();
 
-        financeSerialRepository.add(serial);
-        //add finance corporate personnel credit
-        FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnel, gift.getExpireDate(), gift.getAmount(), gift.getName(), serial);
-        //update corporate finance total credit
-        FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(gift.getCorporate(), gift.getAmount(), serial, null);
-        //sms
-        return CorporateConvertor.toCreditDto(corporatePersonnelCredit);
+            //checks
+            if (!helper.checkContractContract(personnel.getCorporate()))
+                throw new CorporateContractIsNotComplete();
+            if (helper.checkLowBudjetByContract(gift.getCorporate(), gift.getAmount()))
+                throw new LowDepositException();
+
+            financeSerialRepository.add(serial);
+            //add finance corporate personnel credit
+            FinanceCorporatePersonnelCreditEntity corporatePersonnelCredit = helper.addCorporatePersonnelCredit(personnel, gift.getExpireDate(), gift.getAmount(), gift.getName(), serial);
+            //update corporate finance total credit
+            FinanceCorporateEntity financeCorporate = helper.addCorporateTotalCredit(gift.getCorporate(), gift.getAmount(), serial, null);
+            //sms
+            return true;
+        }
+
+
     }
 }

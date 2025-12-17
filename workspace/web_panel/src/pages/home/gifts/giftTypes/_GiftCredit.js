@@ -100,7 +100,7 @@ const _GiftCredit = () => {
                                                        align="right">{row?.Corporate?.Id ? getCorporateFixedName(row.Corporate) : "ثبت نشده"}</TableCell>
                                             <TableCell component="th" align="right">{row.CanRegister ? "دارد" : "ندارد"}</TableCell>
                                             <TableCell component="th" align="right">{toPriceWithComma(row.Amount)}</TableCell>
-                                            <TableCell component="th" align="right">{new Date(row.ExpireDate).toLocaleDateString('fa-IR', {
+                                            <TableCell component="th" align="right">{row.ExpireDate&&new Date(row.ExpireDate).toLocaleDateString('fa-IR', {
                                                 year: 'numeric',
                                                 month: 'long',
                                                 day: 'numeric',
@@ -108,7 +108,7 @@ const _GiftCredit = () => {
                                                 minute: "2-digit"
                                             })}</TableCell>
                                             <TableCell component="th"
-                                                       align="right">{new Date(row.CreditExpireDate).toLocaleDateString('fa-IR', {
+                                                       align="right">{row.CreditExpireDate&&new Date(row.CreditExpireDate).toLocaleDateString('fa-IR', {
                                                 year: 'numeric',
                                                 month: 'long',
                                                 day: 'numeric',
