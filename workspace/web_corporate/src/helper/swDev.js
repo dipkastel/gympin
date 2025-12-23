@@ -34,14 +34,15 @@ export default function swDev() {
     navigator.serviceWorker.register(swUrl).then(async (registration) => {
         const {auth: { token }} = store.getState();
         if(token){
-            // const permission = await Notification.requestPermission();
-            if (Notification.permission === "granted") {
-                navigator.serviceWorker.ready.then(reg => {
-                    subscribeAndSendToServer(registration)
-                });
-            } else {
-                console.log("Notification permission denied. 👎");
-            }
+            try{
+                if (Notification.permission === "granted") {
+                    navigator.serviceWorker.ready.then(reg => {
+                        subscribeAndSendToServer(registration)
+                    });
+                } else {
+                    console.log("Notification permission denied. 👎");
+                }
+            }catch (e) {}
         }
         async function subscribeAndSendToServer(registration) {
             const vapidPublicKey = "BCesZltGiWtG7RVkAl4qpoMigCmELNahwEyxQ5ivA-IcO93wF3-ERqA2ZqB2-UCYuDVZBiVYgotmaoYOdG9U6bw";

@@ -13,13 +13,13 @@ const _DashAlerts = () => {
     const navigate = useNavigate();
     const [invoiceToPays, SetInvoiceToPays] = useState(null);
     const [invoicePlaces, SetInvoicePlaces] = useState(null);
-    const [notificationPermission, SetNotificationPermission] = useState(Notification.permission);
+    const [notificationPermission, SetNotificationPermission] = useState(Notification?.permission);
     const corporate = useSelector(({corporate}) => corporate.corporate)
 
 
     useEffect(() => {
-        SetNotificationPermission(Notification.permission);
-    }, [Notification.permission]);
+        SetNotificationPermission(Notification?.permission);
+    }, [Notification?.permission]);
 
     useEffect(() => {
         getInvoiceToPay()
@@ -60,12 +60,14 @@ const _DashAlerts = () => {
 
     function requestForPermission(e) {
         e.preventDefault();
-        Notification.requestPermission().then(result=>{
-            SetNotificationPermission(result);
-            if(result=="granted"){
-                window.location = "/";
-            }
-        });
+        try{
+            Notification?.requestPermission().then(result=>{
+                SetNotificationPermission(result);
+                if(result=="granted"){
+                    window.location = "/";
+                }
+            });
+        }catch (e) { }
     }
 
     return (

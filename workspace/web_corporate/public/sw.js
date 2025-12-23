@@ -68,7 +68,7 @@ this.addEventListener("push", (event) => {
 
 this.addEventListener("notificationclick", (event) => {
     console.log(event);
-    event.notification.close();
+    event?.notification?.close();
     if (event?.notification?.data)
         event.waitUntil(clients.openWindow(event?.notification?.data));
     else

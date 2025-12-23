@@ -10,8 +10,6 @@ import store, {persistor} from "./helper/redux/store";
 import {Provider, useSelector} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
 import {BrowserRouter} from "./helper/BrowserRouter";
-import {useColorScheme} from "@mui/material";
-
 
 setupAxios(axios, store);
 
