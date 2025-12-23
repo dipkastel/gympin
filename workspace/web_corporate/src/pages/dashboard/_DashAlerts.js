@@ -13,13 +13,15 @@ const _DashAlerts = () => {
     const navigate = useNavigate();
     const [invoiceToPays, SetInvoiceToPays] = useState(null);
     const [invoicePlaces, SetInvoicePlaces] = useState(null);
-    const [notificationPermission, SetNotificationPermission] = useState(Notification?.permission);
     const corporate = useSelector(({corporate}) => corporate.corporate)
 
-
+    const [notificationPermission, SetNotificationPermission] = useState("granted");
     useEffect(() => {
-        SetNotificationPermission(Notification?.permission);
-    }, [Notification?.permission]);
+        try{
+            SetNotificationPermission(Notification?.permission);
+        }catch (e) {}
+    }, []);
+
 
     useEffect(() => {
         getInvoiceToPay()
