@@ -50,21 +50,9 @@ const _DashSlider = () => {
                         alt={"تجربه جدید"}
                     />
                     <SliderItem
-                        bigImage={"/assets/images/slide4.jpg"}
-                        smallImage={"/assets/images/slide14.jpg"}
-                        alt={"سبد کالای سازمانی برای سازمانی که به کارمند اهمیت میدهد"}
-                        onclick={(e)=>navigate("/EmployeeHampers")}
-                    />
-                    <SliderItem
                         bigImage={"/assets/images/slide3.jpg"}
                         smallImage={"/assets/images/slide13.jpg"}
                         alt={"اعتبار دهی به کارمندان"}
-                    />
-                    <SliderItem
-                        bigImage={"/assets/images/slide5.jpg"}
-                        smallImage={"/assets/images/slide15.jpg"}
-                        alt={"سبد کالای ویژه"}
-                        onclick={(e)=>navigate("/EmployeeHampers")}
                     />
                 </Slider>
             </div>

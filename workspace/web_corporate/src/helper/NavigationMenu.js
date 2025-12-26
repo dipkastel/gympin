@@ -32,35 +32,6 @@ export const NavigationMenu = [
     },
     {
         kind: 'header',
-        title: 'خدمات',
-    },
-    {
-        segment: 'sport',
-        title: 'ورزش',
-        icon: <SportsVolleyball/>,
-    },
-    {
-        segment: 'learn',
-        title: 'آموزش و توسعه',
-        icon: <MenuBook/>,
-        action: <Chip label={"جدید"} color={"error"} size="small"/>,
-    },
-    {
-        segment: 'food',
-        title: 'غذا و میان وعده',
-        icon: <Fastfood/>,
-    },
-    {
-        segment: 'survay',
-        title: 'نظرسنجی و آمار',
-        icon: <Ballot/>,
-        action: <Chip label={"به زودی"} color={"default"} size="small"/>,
-    },
-    {
-        kind: 'divider',
-    },
-    {
-        kind: 'header',
         title: 'مدیریت',
     },
     {
