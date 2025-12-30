@@ -45,4 +45,12 @@ public class SupportQuery extends BaseQuery<SupportQuery> {
     @JsonProperty("UserId")
     private Long is_useræid;
 
+    @JsonProperty("Title")
+    private String like_title;
+
+    @JsonProperty("Message")
+    private String like_supportMessagesæsupportMessage;
+
+
+
 }

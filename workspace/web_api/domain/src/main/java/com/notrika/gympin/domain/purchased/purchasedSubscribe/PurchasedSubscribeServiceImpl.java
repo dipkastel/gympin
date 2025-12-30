@@ -17,7 +17,6 @@ import com.notrika.gympin.common.purchased.purchasedSubscribe.service.PurchasedS
 import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
-import com.notrika.gympin.common.settings.service.service.ServiceService;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
@@ -309,20 +308,15 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
         //checks
         if (subscribeEntity.getStatus() == EXPIRE) {
             throw new PurchasedExpiredException();
-        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.CANCEL) {
+        } else if (subscribeEntity.getStatus() == CANCEL) {
             throw new PurchasedCanceledException();
-        } else if (subscribeEntity.getStatus() == SubscribePurchasedStatus.PROCESSING) {
+        } else if (subscribeEntity.getStatus() == PROCESSING) {
             throw new IsInProcessException();
         }
 
             //refundTicket
             purchasedSubscribeHelper.RefundedSubscribe(subscribeEntity);
 
-
-            //enterUser
-//            subscribeEntity.setStatus(REFUNDED);
-//            subscribeEntity.getSerials().add(serial);
-//            purchasedSubscribeRepository.update(subscribeEntity);
 
         return PurchasedSubscribeConvertor.toDto(subscribeEntity,settingsService);
     }

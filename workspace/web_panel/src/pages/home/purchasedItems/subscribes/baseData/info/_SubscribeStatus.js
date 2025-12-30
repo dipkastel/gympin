@@ -53,7 +53,7 @@ const _SubscribeStatus = ({subscribe, updatePage}) => {
                         </Modal.Header>
                         <Modal.Body>
                             <p>آیا مبلغ بلیط به حساب کاربر بازپرداخت شود ؟</p>
-                            <p>اگر بلیط استفاده (اولین ورود) شده باشد این امر تنها با هماهنگی مستقیم مجموعه ورزشی باید انجام شود چرا که مبلغ بلیط از حساب مرکز کسر میگردد.</p>
+                            <p>این امر تنها با هماهنگی مستقیم مجموعه ورزشی باید انجام شود چرا که مبلغ بلیط از حساب مرکز کسر میگردد.</p>
 
                         </Modal.Body>
                         <Modal.Footer>
@@ -95,15 +95,18 @@ const _SubscribeStatus = ({subscribe, updatePage}) => {
                     </div>
                 </PortletBody>
             </Portlet>
-            {(subscribe.Status==="ACTIVE"||subscribe.Status==="COMPLETE")&&
+            {(subscribe.Status==="ACTIVE"||subscribe.Status==="COMPLETE"||subscribe.Status==="READY_TO_ACTIVE")&&
             <Portlet>
-                <PortletHeader title="عودت وجه"/>
+                <PortletHeader title="تغییر وضعیت"/>
 
                 <PortletBody>
+
                     <Button variant={"contained"}
                             size={"large"}
                             color={"error"}
-                            onClick={(e) => setShowRefoundModal(true)}>عودت وجه</Button>
+                            onClick={(e) => setShowRefoundModal(true)}>
+                        {subscribe.Status==="READY_TO_ACTIVE"?"لغو رزرو":"عودت وجه"}
+                    </Button>
                 </PortletBody>
             </Portlet>}
             {renderModalRefound()}
