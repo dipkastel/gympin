@@ -66,7 +66,7 @@ public class AiReportHelper {
         res+=notUsed+"%";
         res+=" از بودجه (به مبلغ ";
         res+=toPriceWithComma(charge.subtract(usedCharge).longValue());
-        res+=" تومان) از اعتبار سازمان ویستا در کیف پولش باقی مانده است.";
+        res+=" تومان) از اعتبار سازمان ، در کیف پولش باقی مانده است.";
 
         return res;
     }
