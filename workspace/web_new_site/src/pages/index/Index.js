@@ -32,7 +32,7 @@ const Index = () => {
             <_Introduction/>
             <_ExcitingTexts/>
             <_RedAdditionalData/>
-            <_Companies/>
+            {/*<_Companies/>*/}
             <_video />
             <_TextBox />
             <_Boxes />
