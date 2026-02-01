@@ -1,11 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Alert, AlertTitle, AppBar, Button, Card, CardContent, Grid, List, Paper, Tab, Tabs,} from "@mui/material";
+import { List, Tab, Tabs,} from "@mui/material";
 import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
-import {useNavigate} from "react-router-dom";
 import _placeSubscribes from "./ticketSubscribe/_placeSubscribes";
 import {genders} from "../../../helper/enums/genders";
-import _CallToPlace from "./partial/_CallToPlace";
+import {useNavigate} from "react-router";
 
 const _TabPlaceBuyable = ({place}) => {
     const navigate = useNavigate()
@@ -125,7 +124,7 @@ const _TabPlaceBuyable = ({place}) => {
                     onChange={(e, n) => setGenderFilter(n)}
                     variant="fullWidth"
                     textColor="inherit"
-                    TabIndicatorProps={{ sx: { display: "none" } }} // حذف اندیکاتور
+                    TabIndicatorProps={{ sx: { display: "none" } }}
                     sx={{
                         background: "linear-gradient(90deg, #ff416c, #ff4b2b)",
                         borderRadius: 3,

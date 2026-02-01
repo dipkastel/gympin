@@ -16,10 +16,10 @@ const NewHome = () => {
             </Grid>
             <Grid>
                 <_HomeBanner
-                    smImage={"/assets/images/banner/MapBanner.jpg"}
-                    xlImage={"/assets/images/banner/MapBanner-full.jpg"}
+                    smImage={"/assets/images/banner/psy-dash.jpg"}
+                    xlImage={"/assets/images/banner/psy-dash-full.jpg"}
                     sx={{mt:4,mb:2}}
-                    onClick={()=>{navigate("/placesMap")}} />
+                    onClick={()=>{navigate("/place/268")}} />
             </Grid>
             <>
                 <_HomePlaceList title={"مجموعه‌های جدید"} query={{paging: {Page: 0, Size: 10, Desc: true, OrderBy: "Id"}}} ls={"new"} playSpeed={3000} />
@@ -39,12 +39,20 @@ const NewHome = () => {
                 <_HomePlaceList title={"برترین مجموعه‌های آبی"} query={{Sports:36,paging: {Page: 0, Size: 10, Desc: true, OrderBy: "Id"}}} ls={"water"} playSpeed={3500} />
             </Grid>
             <>
-                <_HomeBanner
-                    smImage={"/assets/images/banner/BadansaziBanner.jpg"}
-                    xlImage={"/assets/images/banner/BadansaziBanner-full.jpg"}
-                    sx={{mt:0}}
-                    onClick={()=>{navigate("/places/11")}}
-                />
+                {/*<_HomeBanner*/}
+                {/*    smImage={"/assets/images/banner/BadansaziBanner.jpg"}*/}
+                {/*    xlImage={"/assets/images/banner/BadansaziBanner-full.jpg"}*/}
+                {/*    sx={{mt:0}}*/}
+                {/*    onClick={()=>{navigate("/places/11")}}*/}
+                {/*/>*/}
+
+                <Grid>
+                    <_HomeBanner
+                        smImage={"/assets/images/banner/MapBanner.jpg"}
+                        xlImage={"/assets/images/banner/MapBanner-full.jpg"}
+                        sx={{mt:4,mb:2}}
+                        onClick={()=>{navigate("/placesMap")}} />
+                </Grid>
             </>
 
             <Grid>
