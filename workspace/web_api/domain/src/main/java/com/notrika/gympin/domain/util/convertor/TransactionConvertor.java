@@ -48,6 +48,9 @@ public final class TransactionConvertor {
         dto.setTransactionStatus(entity.getTransactionStatus());
         dto.setIsChecked(entity.getIsChecked());
         dto.setSerial(SerialConvertor.ToDto(entity.getSerial()));
+
+        //TODO fix this
+        dto.setRefounded(entity.getSerial().getUserTransactions().size()>1);
         return dto;
     }
 

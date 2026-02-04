@@ -2,6 +2,7 @@ package com.notrika.gympin.domain.report;
 
 import com.notrika.gympin.common.report.dto.*;
 import com.notrika.gympin.common.report.param.ReportParam;
+import com.notrika.gympin.common.report.param.ReportPlaceViewsParam;
 import com.notrika.gympin.common.report.service.ReportService;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.domain.util.convertor.ReportConvertor;
@@ -9,10 +10,7 @@ import com.notrika.gympin.persistence.dao.repository.corporate.CorporateReposito
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageServiceExecutionRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.management.service.reportDto.ActiveUsersQueryDto;
-import com.notrika.gympin.persistence.entity.management.service.reportDto.FinanceCorporateDepositReportDto;
-import com.notrika.gympin.persistence.entity.management.service.reportDto.PopularSportRequestDto;
-import com.notrika.gympin.persistence.entity.management.service.reportDto.UserEnterRequestDto;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -118,6 +116,13 @@ public class ReportServiceImpl implements ReportService {
            return null;
        }
     }
+
+    @Override
+    public List<ReportPlaceViewsDto> getPlaceViewsReport(ReportPlaceViewsParam param) {
+        List<PlaceViewsDto> listViews =  reportRepository.getPlaceViewsReport(param.getPlacId(),param.getFromDate(),param.getToDate());
+        return listViews.stream().map(ReportConvertor::toDto).collect(Collectors.toList());
+    }
+
     @Override
     public List<String> getAiReport(ReportParam param) {
         CorporateEntity corporate =  corporateRepository.getById(param.getId());

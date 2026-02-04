@@ -49,5 +49,8 @@ public class UserTransactionDto extends BaseDtoWithCreateUpdate<UserTransactionD
     @JsonProperty("FinanceUser")
     private FinanceUserDto financeUser;
 
+    @JsonProperty("Refounded")
+    private Boolean refounded;
+
 
 }

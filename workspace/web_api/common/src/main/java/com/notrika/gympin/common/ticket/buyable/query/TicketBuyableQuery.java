@@ -37,5 +37,8 @@ public class TicketBuyableQuery extends BaseQuery<TicketBuyableQuery> {
 
     @JsonProperty("Place")
     private Long is_placeæid;
-    
+
+    @JsonProperty("Enable")
+    private Boolean is_enable;
+
 }

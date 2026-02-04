@@ -1,13 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.report.dto.ReportActiveUsersDto;
-import com.notrika.gympin.common.report.dto.ReportCorporateTransactionsDto;
-import com.notrika.gympin.common.report.dto.ReportPopularSportDto;
-import com.notrika.gympin.common.report.dto.ReportUserEntryCountDto;
-import com.notrika.gympin.persistence.entity.management.service.reportDto.ActiveUsersQueryDto;
-import com.notrika.gympin.persistence.entity.management.service.reportDto.FinanceCorporateDepositReportDto;
-import com.notrika.gympin.persistence.entity.management.service.reportDto.PopularSportRequestDto;
-import com.notrika.gympin.persistence.entity.management.service.reportDto.UserEnterRequestDto;
+import com.notrika.gympin.common.report.dto.*;
+import com.notrika.gympin.persistence.entity.management.service.reportDto.*;
 
 public final class ReportConvertor {
 
@@ -48,4 +42,10 @@ public final class ReportConvertor {
         return dto;
     }
 
+    public static ReportPlaceViewsDto toDto(PlaceViewsDto placeViewsDto) {
+       return ReportPlaceViewsDto.builder()
+                .date(placeViewsDto.getDate())
+                .viewCount(placeViewsDto.getViewCount())
+                .build();
+    }
 }
