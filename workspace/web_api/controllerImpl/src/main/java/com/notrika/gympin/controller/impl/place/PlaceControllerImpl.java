@@ -77,6 +77,12 @@ public class PlaceControllerImpl implements PlaceController {
     }
 
     @Override
+    @GetMapping("/getMyPlaceById")
+    public ResponseEntity<PlaceDto> getMyPlaceById(Long id) {
+        return new ResponseEntity<>(placeService.getById(id), HttpStatus.OK);
+    }
+
+    @Override
     @GetMapping("/getBuyableByPlace")
     public ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceParam placeParam) {
         return new ResponseEntity<>(placeService.getBuyableByPlace(placeParam), HttpStatus.OK);
