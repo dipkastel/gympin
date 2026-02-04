@@ -236,6 +236,12 @@ public class PurchasedSubscribeServiceImpl extends AbstractBaseService<Purchased
     }
 
     @Override
+    public Long getPlaceSellsSubscribesCount(Long placeId) {
+        List<PurchasedSubscribeEntity> subscribeEntities = purchasedSubscribeRepository.findAllByPlaceIdAndDeletedFalse(placeId).stream().map(purchasedSubscribeHelper::checkForExpire).filter(t -> purchasedSubscribeHelper.checkForAccess(t, placeId)).collect(Collectors.toList());
+        return subscribeEntities.stream().filter(se->se.getStatus()==ACTIVE||se.getStatus()==EXPIRE||se.getStatus()==COMPLETE).count();
+    }
+
+    @Override
     public List<PurchasedSubscribeDto> getByUser(UserParam userParam) {
         return convertToDtos(purchasedSubscribeRepository.findAllByCustomerIdAndDeletedFalse(userParam.getId()));
     }

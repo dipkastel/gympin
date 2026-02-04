@@ -23,6 +23,7 @@ public interface PurchasedSubscribeController extends BaseController<PurchasedSu
     ResponseEntity<List<PurchasedSubscribeDto>> getPlaceSubscribes(Long placeId);
     ResponseEntity<List<PurchasedSubscribeDto>> getByUser(UserParam userParam);
     ResponseEntity<PurchasedSubscribeDto> getPurchasedByKey(String key);
+    ResponseEntity<Long> getPlaceSellsSubscribesCount(Long placeId);
 
 
         //ticketAction
