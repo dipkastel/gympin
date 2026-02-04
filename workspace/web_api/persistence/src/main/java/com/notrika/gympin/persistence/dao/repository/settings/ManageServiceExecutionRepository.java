@@ -105,7 +105,7 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
          "AND pse.createdDate >= :startDate ")
     Long getCorporateUserEnterCount(Long corporateId, Date startDate);
 
-    @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PlaceViewsDto( COUNT(*), ANY_VALUE(DATE(mse.executionDate))) " +
+    @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PlaceViewsDto( COUNT(*), ANY_VALUE(mse.executionDate)) " +
             "FROM ManageServiceExecutionEntity mse " +
             "WHERE mse.service = 'public org.springframework.http.ResponseEntity<com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto> com.notrika.gympin.controller.impl.place.PlaceGymControllerImpl.getById(java.lang.Long)' " +
             "  AND mse.dto LIKE CONCAT('{\"id\":', :placeId, ',%') " +
