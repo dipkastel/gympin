@@ -112,7 +112,7 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
             "  AND mse.executionDate > :startDate " +
             "  AND mse.executionDate < :endDate " +
             "GROUP BY DATE(mse.executionDate) " +
-            "ORDER BY mse.executionDate ASC")
+            "ORDER BY DATE(mse.executionDate) ASC")
     List<PlaceViewsDto> getPlaceViewsReport(Long placeId, Date startDate, Date endDate);
 }
 
