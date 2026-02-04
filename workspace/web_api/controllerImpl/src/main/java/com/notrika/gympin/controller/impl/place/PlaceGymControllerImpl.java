@@ -81,6 +81,12 @@ public class PlaceGymControllerImpl implements PlaceGymController {
     }
 
     @Override
+    @GetMapping("/getMyPlaceGymById")
+    public ResponseEntity<PlaceGymDto> getMyPlaceGymById(Long id) {
+        return new ResponseEntity<>(placeService.getById(id), HttpStatus.OK);
+    }
+
+    @Override
     @PostMapping("/addMultimedia")
     public ResponseEntity<PlaceGymDto> addMultimedia(PlaceGymMultimediaParam param) {
         return ResponseEntity.ok(placeService.addMultimedia(param));

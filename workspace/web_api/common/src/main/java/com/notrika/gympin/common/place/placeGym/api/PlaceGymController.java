@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.place.placeGym.api;
 
+import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymContractSmsParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
@@ -29,6 +30,8 @@ public interface PlaceGymController extends BaseController<PlaceGymParam, PlaceG
     ResponseEntity<List<SportDto>> getSportsOfPlace(PlaceGymDto place);
 
     ResponseEntity<List<MultimediaDto>> getMultimedias(PlaceGymParam place);
+
+    ResponseEntity<PlaceGymDto> getMyPlaceGymById(Long id);
 
     ResponseEntity<PlaceGymDto> addMultimedia(@RequestBody PlaceGymMultimediaParam place);
 
