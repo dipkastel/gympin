@@ -22,6 +22,8 @@ public interface PlaceController extends BaseController<PlaceParam, PlaceDto, Pl
 
     ResponseEntity<InviteCode> getPlaceInviteCode(PlaceParam placeParam);
 
+    ResponseEntity<PlaceDto> getMyPlaceById(Long id);
+
     ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceParam placeParam);
 
 }
