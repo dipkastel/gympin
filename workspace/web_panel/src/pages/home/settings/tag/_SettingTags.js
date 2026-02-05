@@ -15,6 +15,7 @@ import TableBody from "@mui/material/TableBody";
 import {DeleteOutline} from "@mui/icons-material";
 import TablePagination from "@mui/material/TablePagination";
 import {tag_query} from "../../../../network/api/Tags.api";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const _SettingTags = () => {
 
@@ -168,7 +169,7 @@ const _SettingTags = () => {
                                             minute: "2-digit"
                                         })}</TableCell>
                                         <TableCell component="th" scope="row" padding="normal"
-                                                   align="right">{getUserFixedName(row.CreatorUser)}</TableCell>
+                                                   align="right">{<PopoverUser user ={row.CreatorUser} />}</TableCell>
                                         <TableCell component="th" scope="row" padding="normal"
                                                    align="right">{row.PlaceCount}</TableCell>
                                         <TableCell component="th" scope="row" padding="normal"

@@ -14,6 +14,7 @@ import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
 import {Message} from "@mui/icons-material";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const _DashSupport = () => {
 
@@ -85,7 +86,7 @@ const _DashSupport = () => {
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{getLastMessage(row).Message}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{getUserFixedName(row.CreatorUser)}</TableCell>
+                                                           align="right">{<PopoverUser user ={row.CreatorUser} />}</TableCell>
 
                                             </TableRow>
                                         ))}

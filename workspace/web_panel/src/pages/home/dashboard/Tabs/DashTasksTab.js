@@ -8,6 +8,10 @@ import _DashIncreaseUser from "../partials/_DashIncreaseUser";
 import _DashUncontractPlaces from "../partials/_DashUnContractPlaces";
 import {Grid} from "@mui/material";
 import _DashCreditorsPeople from "../partials/_DashCreditorsPeople";
+import _DashComments from "../partials/_DashComments";
+import _DashOldPricesTickets from "../partials/_DashOldPricesTickets";
+import _DashNewPricesTickets from "../partials/_DashNewPricesTickets";
+import _DashPlaceNewImages from "../partials/_DashPlaceNewImages";
 
 const DashTasksTab = ({updatePage}) => {
 
@@ -37,6 +41,18 @@ const DashTasksTab = ({updatePage}) => {
                 </Grid>
                 <Grid item size={{xs:12,md:4}}>
                     <_DashCreditorsPeople/>
+                </Grid>
+                <Grid item size={{xs:12,md:4}}>
+                    <_DashComments/>
+                </Grid>
+                <Grid item size={{xs:12,md:4}}>
+                    <_DashOldPricesTickets/>
+                </Grid>
+                <Grid item size={{xs:12,md:4}}>
+                    <_DashNewPricesTickets/>
+                </Grid>
+                <Grid item size={{xs:12,md:4}}>
+                    <_DashPlaceNewImages/>
                 </Grid>
             </Grid>
         </>

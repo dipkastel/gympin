@@ -13,6 +13,7 @@ import {purchasedSubscribe_query} from "../../../../../network/api/purchasedSubs
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {Portlet, PortletBody} from "../../../../partials/content/Portlet";
 import {getRppUserPurchasedSubscribe, SetRppUserPurchasedSubscribe} from "../../../../../helper/pocket/pocket";
+import PopoverUser from "../../../../../components/popover/PopoverUser";
 
 const PurchasedSubscribeManagement = ({currentUser}) => {
     const error = useContext(ErrorContext);
@@ -72,7 +73,7 @@ const PurchasedSubscribeManagement = ({currentUser}) => {
                                         }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
-                                            <TableCell align="right">{getUserFixedName(row.User)}</TableCell>
+                                            <TableCell align="right">{<PopoverUser user ={row.User} />}</TableCell>
                                             <TableCell
                                                 align="right">{row?.TicketSubscribe.Place?.Name || "ثبت نشده"}</TableCell>
                                             <TableCell align="right">{row.Name || "ثبت نشده"}</TableCell>

@@ -12,6 +12,7 @@ import {getUserFixedName, toPriceWithComma} from "../../../../helper";
 import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
 import {transactionUser_query} from "../../../../network/api/transactionsUser.api";
 import {getRppTransactionUserManagement, SetRppTransactionUserManagement} from "../../../../helper/pocket/pocket";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const TransactionsUserManagement = () => {
     const history = useHistory();
@@ -70,7 +71,7 @@ const TransactionsUserManagement = () => {
                                             <TableCell component="th" id={`transaction-${index}`} scope="row"
                                                        padding="normal" align="right">{row.Id}</TableCell>
                                             <TableCell component="th" padding="normal" align="right">
-                                                {getUserFixedName(row.User)}
+                                                {<PopoverUser user ={row.User} />}
                                             </TableCell>
                                             <TableCell component="th" padding="normal" align="right">
                                                 {toPriceWithComma(row.Amount)}
@@ -85,7 +86,7 @@ const TransactionsUserManagement = () => {
                                                 {row.Description}
                                             </TableCell>
                                             <TableCell component="th" padding="normal" align="right">
-                                                {getUserFixedName(row.CreatorUser)}
+                                                <PopoverUser user ={row.CreatorUser} />
                                             </TableCell>
                                         </TableRow>
                                     );

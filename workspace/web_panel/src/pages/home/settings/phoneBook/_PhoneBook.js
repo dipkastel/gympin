@@ -14,6 +14,7 @@ import TableBody from "@mui/material/TableBody";
 import {getUserFixedName} from "../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
 import {DeleteOutline, Edit, Source} from "@mui/icons-material";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const _PhoneBook = () => {
 
@@ -68,7 +69,7 @@ const _PhoneBook = () => {
         if (row.Place)
             return "مرکز ◄ " + row.Place.Name;
         if (row.User)
-            return "کاربر ◄ " + getUserFixedName(row.User);
+            return "کاربر ◄ " + <PopoverUser user ={row.User} />;
     }
 
 
@@ -251,7 +252,7 @@ const _PhoneBook = () => {
                                         <TableCell component="th" scope="row" padding="normal"
                                                    align="right">{getSourceName(row)}</TableCell>
                                         <TableCell component="th" scope="row" padding="normal"
-                                                   align="right">{getUserFixedName(row.CreatorUser)}</TableCell>
+                                                   align="right">{<PopoverUser user ={row.CreatorUser} />}</TableCell>
                                         <TableCell component="th" scope="row" padding="normal"
                                                    align="left">
                                            <IconButton onClick={(event) => history.push({pathname: getSourceUrl(row)})} color={"secondary"} variant={"contained"}><Source /></IconButton>

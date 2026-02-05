@@ -11,6 +11,7 @@ import PlaceManagementSettingTab from "./placeManagementTabs/PlaceManagementSett
 import PlaceManagementPlaceTab from "./placeManagementTabs/PlaceManagementPlaceTab";
 import PlaceManagementBeneficiariesTab from "./placeManagementTabs/PlaceManagementBeneficiariesTab";
 import PlaceManagementSellsTab from "./placeManagementTabs/PlaceManagementSellTab";
+import PlaceManagementReportTab from "./placeManagementTabs/PlaceManagementReportTab";
 
 const PlaceDataManagement = () => {
     const error = useContext(ErrorContext);
@@ -70,6 +71,7 @@ const PlaceDataManagement = () => {
                             <Tab label="فروش ها" value={"SELLS"}/>
                             <Tab label="ذینفعان" value={"BENEFICIARIES"}/>
                             <Tab label="تنظیمات" value={"SETTING"}/>
+                            <Tab label="گزارشات" value={"REPORTS"}/>
                         </Tabs>
                     </Paper>
                     {selectedTab === "PLACE"&&<PlaceManagementPlaceTab place={place} updatePlace={updatePlace}/>}
@@ -78,6 +80,7 @@ const PlaceDataManagement = () => {
                     {selectedTab === "SELLS"&&<PlaceManagementSellsTab place={place}/>}
                     {selectedTab === "BENEFICIARIES"&&<PlaceManagementBeneficiariesTab place={place}/>}
                     {selectedTab === "SETTING"&&<PlaceManagementSettingTab place={place} updatePlace={updatePlace}/>}
+                    {selectedTab === "REPORTS"&&<PlaceManagementReportTab place={place} updatePlace={updatePlace}/>}
                 </div>
                 <div className="col-md-2">
                     {place && <Notes source={{Place: {Id: place.Id}}}/>}

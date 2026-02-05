@@ -5,6 +5,7 @@ import {Alert, Form} from "react-bootstrap";
 import {note_add, note_getByParam, note_update} from "../../../../network/api/note.api";
 import {getUserFixedName} from "../../../../helper";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const Notes = ({source}) => {
     const error = useContext(ErrorContext);
@@ -135,7 +136,7 @@ const Notes = ({source}) => {
                             <Typography
                                 sx={{m: 0, lineHeight: "inherit"}}
                                 variant={"overline"} component={"p"}>
-                                {getUserFixedName(item.CreatorUser)}</Typography>
+                                {<PopoverUser user ={item.CreatorUser} />}</Typography>
                             <Typography
                                 sx={{m: 0, lineHeight: "inherit"}}
                                 variant={"overline"} component={"p"}>

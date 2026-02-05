@@ -168,6 +168,13 @@ export function setStorage(key, value, expires) {
   return true;
 }
 
+export function getStringOfTime(time) {
+  if((time+"").length>1)
+    return time;
+  else
+    return "0"+time;
+}
+
 export function playMessageReceived(sender) {
   if(sender!=="Client")return;
   var sound = "/assets/sound/messageReceived.mp3";

@@ -3,6 +3,7 @@ import {LinearProgress, ListItemText} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {UserFinanceTypesEnum} from "../../../../../helper/enums/UserFinanceTypesEnum";
+import PopoverUser from "../../../../../components/popover/PopoverUser";
 
 const _SettlementRequest = ({settlementRequest}) => {
     if (!settlementRequest)
@@ -44,7 +45,7 @@ const _SettlementRequest = ({settlementRequest}) => {
                                     })}
                                     sx={{textAlign: "right"}}/>
                                 <ListItemText
-                                    primary={"برای  : "+getUserFixedName(tr?.FinanceUser?.User)}
+                                    primary={"برای  : "+<PopoverUser user ={tr?.FinanceUser?.User} />}
                                     secondary={"مربوط به : "+ UserFinanceTypesEnum[tr?.FinanceUser?.FinanceType]}
                                     sx={{textAlign: "right"}}/>
                                 <span

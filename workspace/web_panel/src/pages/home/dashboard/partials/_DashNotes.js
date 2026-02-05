@@ -14,6 +14,7 @@ import {getUserFixedName} from "../../../../helper";
 import {getRppDashNote, SetRppDashNote} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
 import {NoteAlt} from "@mui/icons-material";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const _DashNotes = () => {
     const error = useContext(ErrorContext);
@@ -61,7 +62,7 @@ const _DashNotes = () => {
         if (row.Place)
             return "مرکز ◄ " + row.Place.Name;
         if (row.User)
-            return "کاربر ◄ " + getUserFixedName(row.User);
+            return "کاربر ◄ " + <PopoverUser user ={row.User} />;
     }
 
 
@@ -99,7 +100,7 @@ const _DashNotes = () => {
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{getSourceName(row)}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{getUserFixedName(row.CreatorUser)}</TableCell>
+                                                           align="right">{<PopoverUser user ={row.CreatorUser} />}</TableCell>
 
                                             </TableRow>
                                         ))}

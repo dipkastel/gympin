@@ -13,6 +13,7 @@ import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
 import {transactionCorporate_query} from "../../../../network/api/transactionsCorporate.api";
 import {TransactionCorporateTypes} from "../../../../helper/enums/TransactionCorporateTypes";
 import {getRppTransactionCorporateManagement, SetRppTransactionCorporateManagement} from "../../../../helper/pocket/pocket";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const TransactionsCorporateManagement = () => {
     const history = useHistory();
@@ -84,7 +85,7 @@ const TransactionsCorporateManagement = () => {
                                                        padding="normal" align="right">{row.Id}</TableCell>
                                             <TableCell component="th" padding="normal" align="right">
                                                 {(row.CorporatePersonnel!=null)?
-                                                    (getUserFixedName(row.CorporatePersonnel?.User) + " از سازمان " + getCorporate(row))
+                                                    (<PopoverUser user ={row.CorporatePersonnel?.User} /> + " از سازمان " + getCorporate(row))
                                                 :getCorporate(row)}
                                             </TableCell>
                                             <TableCell component="th" padding="normal" align="right">
@@ -103,7 +104,7 @@ const TransactionsCorporateManagement = () => {
                                                 {row.Description}
                                             </TableCell>
                                             <TableCell component="th" padding="normal" align="right">
-                                                {getUserFixedName(row.CreatorUser)}
+                                                {<PopoverUser user ={row.CreatorUser} />}
                                             </TableCell>
                                         </TableRow>
                                     );

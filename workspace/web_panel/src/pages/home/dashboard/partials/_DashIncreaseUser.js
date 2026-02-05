@@ -16,6 +16,7 @@ import {AttachMoney, Info} from "@mui/icons-material";
 import {IncreaseUserDeposit_query} from "../../../../network/api/increaseUserDeposit.api";
 import {Avatar, Tooltip} from "@mui/material";
 import {GatewayType} from "../../../../helper/enums/GatewayType";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const _DashIncreaseUser = () => {
 
@@ -78,7 +79,7 @@ const _DashIncreaseUser = () => {
                                                       onClick={(event) => history.push({pathname: "/Users/details/" + row.User.Id})}
                                                       role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                                 <TableCell align="right"><Avatar alt="userImage" src={(row?.User?.Avatar) ? (row?.User?.Avatar?.Url || "") : ""} sx={{width: 30, height: 30}}/></TableCell>
-                                                <TableCell align="right">{getUserFixedName(row?.User)}</TableCell>
+                                                <TableCell align="right">{<PopoverUser user ={row?.User} />}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal" align="right">{GatewayType[row?.GatewayType]}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal" align="right">{toPriceWithComma(row?.Amount)}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal" align="right">{row?.Refrence}</TableCell>

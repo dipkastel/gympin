@@ -16,6 +16,7 @@ import {getUserFixedName} from "../../../../helper";
 import __SelectUser from "../../../partials/selector/__SelectUser";
 import {FormatListBulleted} from "@mui/icons-material";
 import __SelectService from "../../../partials/selector/__SelectService";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const __SettingActivitiesDetails = () => {
 
@@ -125,7 +126,7 @@ const __SettingActivitiesDetails = () => {
                                     </TableCell>
                                     <TableCell align="right" component="th" scope="row">
                                         {item.ExecutorUser && <Typography>
-                                            {item.ExecutorUser.FullName ? getUserFixedName(item.ExecutorUser) :
+                                            {item.ExecutorUser.FullName ? <PopoverUser user ={item.ExecutorUser} /> :
                                                 <Chip label={item.ExecutorUser.Username} color={"error"}/>}
                                         </Typography>}
 

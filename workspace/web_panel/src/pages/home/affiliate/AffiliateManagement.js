@@ -14,9 +14,9 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {Form, Modal} from "react-bootstrap";
 import TablePagination from "@mui/material/TablePagination";
-import {getUserFixedName} from "../../../helper";
 import {useHistory} from "react-router-dom";
 import __SelectUser from "../../partials/selector/__SelectUser";
+import PopoverUser from "../../../components/popover/PopoverUser";
 
 const AffiliateManagement = () => {
 
@@ -187,7 +187,7 @@ const AffiliateManagement = () => {
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
-                                                       align="right">{getUserFixedName(row.User)}</TableCell>
+                                                       align="right">{<PopoverUser user ={row.User} />}</TableCell>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.CommissionFee}</TableCell>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"

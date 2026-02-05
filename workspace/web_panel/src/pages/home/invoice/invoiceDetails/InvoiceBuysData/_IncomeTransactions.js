@@ -3,6 +3,7 @@ import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
+import PopoverUser from "../../../../../components/popover/PopoverUser";
 
 const _IncomeTransactions = ({transactions}) => {
     return (
@@ -25,7 +26,7 @@ const _IncomeTransactions = ({transactions}) => {
                             {transactions.map((row, number) => (
                                 <TableRow key={"purchased-"+number} sx={{backgroundColor:(row.Amount>0)?"#d3fcef":"#f5d2d2"}}>
                                     <TableCell align="right">{row.Id}</TableCell>
-                                    <TableCell align="right">{getUserFixedName(row.User)}</TableCell>
+                                    <TableCell align="right">{<PopoverUser user ={row.User} />}</TableCell>
                                     <TableCell align="right">{toPriceWithComma(row.Amount)}</TableCell>
                                     <TableCell align="right">{row.Purchased?.Name}</TableCell>
                                     <TableCell align="right">{TransactionStatus[row.TransactionStatus]}</TableCell>

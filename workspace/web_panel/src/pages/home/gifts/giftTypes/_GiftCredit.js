@@ -16,6 +16,7 @@ import _GiftAddItem from "../partials/_GiftAddItem";
 import _GiftEditItem from "../partials/_GiftEditItem";
 import _GiftDeleteItem from "../partials/_GiftDeleteItem";
 import {GiftCreditStatus} from "../../../../helper/enums/GiftCreditStatus";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const _GiftCredit = () => {
 
@@ -95,7 +96,7 @@ const _GiftCredit = () => {
                                             <TableCell component="th" align="right">{row.Code}</TableCell>
                                             <TableCell component="th" align="right">{row.RegisterCode}</TableCell>
                                             <TableCell component="th"
-                                                       align="right">{row?.User?.Id ? getUserFixedName(row.User) : "ثبت نشده"}</TableCell>
+                                                       align="right">{row?.User?.Id ? <PopoverUser user ={row.User} /> : "ثبت نشده"}</TableCell>
                                             <TableCell component="th"
                                                        align="right">{row?.Corporate?.Id ? getCorporateFixedName(row.Corporate) : "ثبت نشده"}</TableCell>
                                             <TableCell component="th" align="right">{row.CanRegister ? "دارد" : "ندارد"}</TableCell>

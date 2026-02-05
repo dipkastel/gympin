@@ -33,6 +33,8 @@ public class TicketSubscribeConvertor {
         dto.setExpireDuration(entity.getExpireDuration());
         dto.setSubscribeCapacity(entity.getSubscribeCapacity());
         dto.setTiming(entity.getTiming());
+        dto.setUpdatedDate(entity.getUpdatedDate());
+        dto.setCreatedDate(entity.getCreatedDate());
         try {
             GympinContext context = GympinContextHolder.getContext();
             if (context == null)

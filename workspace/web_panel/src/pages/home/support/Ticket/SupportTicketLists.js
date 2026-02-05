@@ -15,6 +15,7 @@ import {Delete} from "@mui/icons-material";
 import {Form, Modal} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import {getUserFixedName} from "../../../../helper";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const SupportTicketLists = () => {
 
@@ -176,7 +177,7 @@ const SupportTicketLists = () => {
                                                            });
                                                        }}>
                                                 {row.Place && "مجموعه : " + row.Place.Name}
-                                                {row.User && "کاربر : " + getUserFixedName(row.User)}
+                                                {row.User && "کاربر : " + <PopoverUser user ={row.User} />}
                                             </TableCell>
                                             <TableCell align="right"
                                                        onClick={(event) => {

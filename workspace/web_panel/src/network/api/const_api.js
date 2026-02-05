@@ -181,9 +181,9 @@ export let multimediaCategoryApi = {
     getById: "v1/multimediacategory/getbyid",
     update: "v1/multimediacategory/update",
 };
-export let NotificationSubscriptionApi= {
-        add: "v1/NotificationSubscription/add"
-    };
+export let NotificationSubscriptionApi = {
+    add: "v1/NotificationSubscription/add"
+};
 export let NoteApi = {
     add: "v1/note/add",
     delete: "v1/note/delete",
@@ -379,6 +379,13 @@ export let PlaceQrMessageApi = {
     update: "v1/PlaceQrMessage/update",
     getByPlace: "v1/PlaceQrMessage/getByPlace"
 };
+export let PlaceCommentsApi = {
+    add: "v1/placeComment/add",
+    delete: "v1/placeComment/delete",
+    getAll: "v1/placeComment/getAll",
+    update: "v1/placeComment/update",
+    query: "v1/placeComment/query",
+};
 export let PlacePersonelApi = {
     add: "v1/placePersonnel/add",
     delete: "v1/placePersonnel/delete",
@@ -398,6 +405,18 @@ export let PlacePersonelApi = {
 export let ReportSettings = {
     getAll: "v1/reportSettings/getAll",
     update: "v1/reportSettings/update",
+}
+
+export let Report = {
+    getAiReport: "v1/report/getAiReport",
+    getPlaceViews: "v1/report/getPlaceViews",
+    getPopularSports: "v1/report/getPopularSports",
+    useCorporateCharge: "v1/report/useCorporateCharge",
+    getActivePersonnel: "v1/report/getActivePersonnel",
+    getGenderCompetition: "v1/report/getGenderCompetition",
+    ticketBuyCountThisWeek: "v1/report/ticketBuyCountThisWeek",
+    getBalanceChangedReport: "v1/report/getBalanceChangedReport",
+    getActiveInEnterPlacePersonnel: "v1/report/getActiveInEnterPlacePersonnel",
 }
 export let SportApi = {
     addSport: "v1/sport/add",
@@ -591,5 +610,5 @@ export let wsApi = {
 };
 export let UserCreditApi = {};
 export let Chat = {
-    endpoint:"GympinChatEndPoint"
+    endpoint: "GympinChatEndPoint"
 };

@@ -8,6 +8,7 @@ import {Alert} from "react-bootstrap";
 import {Row} from "reactstrap";
 import {getUserFixedName} from "../../../../helper";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const SupportTicketDetails = () => {
     const error = useContext(ErrorContext);
@@ -80,7 +81,7 @@ const SupportTicketDetails = () => {
                 <PortletBody>
                     <Typography variant={"h5"}>{"موضوع : "}<small>{support.Title}</small></Typography>
                     <Typography
-                        variant={"h5"}>{"ایجاد کننده : "}<small>{getUserFixedName(support.CreatorUser)}</small></Typography>
+                        variant={"h5"}>{"ایجاد کننده : "}<small>{<PopoverUser user ={support.CreatorUser} />}</small></Typography>
                     {support.Place && <Typography
                         variant={"h5"}>{"مربوط به : "}<small>{"مجموعه " + support.Place.Name}</small></Typography>}
                     {support.Corporate && <Typography

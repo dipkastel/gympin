@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
-import {Chip, Paper, Tab, Tabs, Tooltip} from "@mui/material";
+import {Button, Chip, Paper, Tab, Tabs, Tooltip} from "@mui/material";
 import {Table} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
 import TableContainer from "@mui/material/TableContainer";
@@ -14,6 +14,8 @@ import TablePagination from "@mui/material/TablePagination";
 import {purchasedSubscribe_query} from "../../../../network/api/purchasedSubscribes.api";
 import {PurchasedSubscribeStatus} from "../../../../helper/enums/PurchasedSubscribeStatus";
 import {getRppPurchasedSubscribeManagement, SetRppPurchasedSubscribeManagement} from "../../../../helper/pocket/pocket";
+import _TicketStatus from "../partials/_TicketStatus";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const PurchasedSubscribeManagement = () => {
     const error = useContext(ErrorContext);
@@ -22,7 +24,7 @@ const PurchasedSubscribeManagement = () => {
     const [rowsPerPage, setRowsPerPage] = useState(getRppPurchasedSubscribeManagement());
     const [purchasedSubscribe, SetPurchasedSubscribe] = useState({});
 
-    const [status, setStatus] = useState("ACTIVE");
+    const [status, setStatus] = useState("READY_TO_ACTIVE");
 
     useEffect(() => {
         getSubscribes()
@@ -106,18 +108,19 @@ const PurchasedSubscribeManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>قیمت</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>انقضا</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
+                                    <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {purchasedSubscribe.content && purchasedSubscribe.content.map((row, index) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
-                                        <TableRow hover onClick={(event) => {
-                                            history.push({pathname: "subscribe/data/" + row.Id});
-                                        }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
-                                            <TableCell align="right">{getUserFixedName(row.User)}</TableCell>
+                                            <TableCell align="right">
+                                                <PopoverUser user ={row.User} />
+                                            </TableCell>
                                             <TableCell
                                                 align="right">{row?.TicketSubscribe.Place?.Name || "ثبت نشده"}</TableCell>
                                             <TableCell align="right">{row.Name || "ثبت نشده"}</TableCell>
@@ -145,7 +148,10 @@ const PurchasedSubscribeManagement = () => {
                                                     </span>
                                                 </Tooltip>
                                             </TableCell>
-                                            <TableCell align="right"><Chip color={getStatusCollor(row)} size={"small"} label={PurchasedSubscribeStatus[row.Status]}/></TableCell>
+                                            <TableCell align="right"><Chip color={getStatusCollor(row)} size={"small"} label={<_TicketStatus ticket={row} />}/></TableCell>
+                                            <TableCell align="left"><Button variant={"contained"} onClick={(event) => {
+                                                history.push({pathname: "subscribe/data/" + row.Id});
+                                            }} >جزییات عضویت</Button> </TableCell>
                                         </TableRow>
                                     );
                                 })}

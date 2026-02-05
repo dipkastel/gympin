@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -34,6 +36,12 @@ public class TicketSubscribeQuery extends BaseQuery<TicketSubscribeQuery> {
 
     @JsonProperty("Name")
     private String like_name;
+
+    @JsonProperty("MaxUpdateDate")
+    private Date max_updatedDate;
+
+    @JsonProperty("MinUpdateDate")
+    private Date min_updatedDate;
 
 
 }

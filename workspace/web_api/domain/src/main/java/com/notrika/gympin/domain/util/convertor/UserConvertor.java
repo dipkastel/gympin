@@ -63,7 +63,7 @@ public final class UserConvertor {
         dto.setUsername(user.getUsername());
         dto.setBirthday(user.getBirthday());
         dto.setGender(user.getGender());
-        dto.setPhoneNumber("09*******"+user.getPhoneNumber().substring(9,11));
+        dto.setPhoneNumber(user.getPhoneNumber());
         dto.setAvatar(MultimediaConvertor.toDto(user.getUserAvatar()));
         return dto;
     }

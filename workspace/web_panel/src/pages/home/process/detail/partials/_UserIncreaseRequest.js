@@ -5,6 +5,7 @@ import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/
 import {DepositStatus} from "../../../../../helper/enums/DepositStatus";
 import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {GatewayType} from "../../../../../helper/enums/GatewayType";
+import PopoverUser from "../../../../../components/popover/PopoverUser";
 
 const _UserIncreaseRequest = ({UserIncreaseRequest}) => {
     if (!UserIncreaseRequest)
@@ -65,7 +66,7 @@ const _UserIncreaseRequest = ({UserIncreaseRequest}) => {
                             </Tooltip>
                         </span>
                                 <ListItemText
-                                    primary={getUserFixedName(tr?.User)}
+                                    primary={<PopoverUser user ={tr?.User} />}
                                     secondary={<Typography variant={"caption"} sx={{maxWidth:"165px"}} component={"p"}>{tr?.Refrence}</Typography>}
                                     sx={{textAlign: "right"}}/>
                                 <ListItemText

@@ -13,6 +13,7 @@ import {BuyableType} from "../../../../../helper/enums/BuyableType";
 import {Purchased_query} from "../../../../../network/api/purchased.api";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppPlaceSells, SetRppPlaceSells} from "../../../../../helper/pocket/pocket";
+import PopoverUser from "../../../../../components/popover/PopoverUser";
 
 const PlaceSells = ({place}) => {
 
@@ -76,7 +77,7 @@ const PlaceSells = ({place}) => {
                                           key={"searched" + item.Id.toString()}>
                                     <TableCell align="right">{item.Place.Name}</TableCell>
                                     <TableCell align="right">{item.Name}</TableCell>
-                                    <TableCell align="right">{getUserFixedName(item.Customer)}</TableCell>
+                                    <TableCell align="right">{<PopoverUser user ={item.Customer} />}</TableCell>
                                     <TableCell align="right">{toPriceWithComma(item.SellPrice)}</TableCell>
                                     <TableCell align="right">{toPriceWithComma(item.PlacePrice)}</TableCell>
                                     <TableCell align="right">{BuyableType[item.PurchasedType]}</TableCell>

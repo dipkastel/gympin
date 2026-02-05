@@ -14,6 +14,7 @@ import TablePagination from "@mui/material/TablePagination";
 import {purchasedCourse_query} from "../../../../network/api/purchasedCourses.api";
 import {PurchasedCourseStatus} from "../../../../helper/enums/PurchasedCourseStatus";
 import {getRppPurchasedCourseManagement, SetRppPurchasedCourseManagement} from "../../../../helper/pocket/pocket";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const PurchasedCourseManagement = () => {
     const error = useContext(ErrorContext);
@@ -96,7 +97,7 @@ const PurchasedCourseManagement = () => {
                                         }} role="checkbox" tabIndex={-1} key={row?.Id.toString()}>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row?.Id}</TableCell>
-                                            <TableCell align="right">{getUserFixedName(row?.User)}</TableCell>
+                                            <TableCell align="right">{<PopoverUser user ={row?.User} />}</TableCell>
                                             <TableCell
                                                 align="right">{row?.TicketCourse?.Place?.Name || "ثبت نشده"}</TableCell>
                                             <TableCell align="right">{row?.Name || "ثبت نشده"}</TableCell>

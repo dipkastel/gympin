@@ -15,6 +15,7 @@ import {
     TicketSubscribes_deleteCoach,
     TicketSubscribes_getTicketSubscribeCoaches
 } from "../../../../../../network/api/ticketSubscribes.api";
+import PopoverUser from "../../../../../../components/popover/PopoverUser";
 
 const TicketSubscribeCoaches = ({ticketSubscribe}) => {
     const error = useContext(ErrorContext);
@@ -184,7 +185,7 @@ const TicketSubscribeCoaches = ({ticketSubscribe}) => {
                             {ticketSubscribeCoaches.map(row => (
                                 <TableRow key={row.Id}>
                                     <TableCell align="right" component="th" scope="row">{row.Id}</TableCell>
-                                    <TableCell align="right">{getUserFixedName(row)}</TableCell>
+                                    <TableCell align="right">{<PopoverUser user ={row} />}</TableCell>
                                     <TableCell align="left">
                                         <Button variant={"contained"}
                                                 size={"small"}

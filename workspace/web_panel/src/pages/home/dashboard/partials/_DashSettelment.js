@@ -15,6 +15,7 @@ import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
 import {RequestQuote} from "@mui/icons-material";
 import {SettlementUserDeposit_query} from "../../../../network/api/settlementUserDeposit.api";
 import {UserFinanceTypesEnum} from "../../../../helper/enums/UserFinanceTypesEnum";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const _DashSettelment = () => {
 
@@ -56,7 +57,7 @@ const _DashSettelment = () => {
                 <Modal show={showModal} size={"lg"} onHide={() => setShowModal(false)}>
                     <Portlet>
                         <PortletHeader
-                            title="پیام های جدید پشتیبانی"
+                            title="درخواست های تسویه مراکز"
                         />
 
                         <PortletBody>
@@ -87,11 +88,11 @@ const _DashSettelment = () => {
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{toPriceWithComma(row?.Amount)}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{getUserFixedName(row?.CreatorUser)}</TableCell>
+                                                           align="right">{<PopoverUser user ={row?.CreatorUser} />}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{UserFinanceTypesEnum[row?.FinanceUser?.FinanceType]}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{getUserFixedName(row?.FinanceUser?.User)}</TableCell>
+                                                           align="right">{<PopoverUser user ={row?.FinanceUser?.User} />}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{toPriceWithComma(row?.FinanceUser?.TotalDeposit)}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"

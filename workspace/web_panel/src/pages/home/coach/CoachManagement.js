@@ -15,6 +15,7 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {userRoles_query} from "../../../network/api/userRoles.api";
+import PopoverUser from "../../../components/popover/PopoverUser";
 
 const CoachManagement = () => {
     const error = useContext(ErrorContext);
@@ -101,7 +102,7 @@ const CoachManagement = () => {
                                             <TableCell align="right">
                                                 <Avatar alt="userImage" src={(row.User.Avatar) ? (row.User.Avatar.Url || "") : ""}
                                                         sx={{width: 40, height: 40}}/></TableCell>
-                                            <TableCell align="right">{getUserFixedName(row.User)}</TableCell>
+                                            <TableCell align="right">{<PopoverUser user ={row.User} />}</TableCell>
                                         </TableRow>
                                     );
                                 })}

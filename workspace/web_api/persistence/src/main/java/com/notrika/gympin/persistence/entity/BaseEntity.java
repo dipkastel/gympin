@@ -14,6 +14,8 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.*;
 import javax.persistence.criteria.*;
+import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -87,11 +89,17 @@ public class BaseEntity<T> implements Specification<T> {
         }else if (operation.equals(QueryOperationsEnum.GREATER_THAN_OR_EQUAL_TO)) {
             queries.getExpressions().add(builder.greaterThanOrEqualTo(root.<String>get(key), value.toString()));
         } else if (operation.equals(QueryOperationsEnum.GREATER_THAN)) {
-            queries.getExpressions().add(builder.greaterThan(root.<String>get(key), value.toString()));
+            if(value instanceof Date)
+                queries.getExpressions().add(builder.greaterThan(root.<Date>get(key),(Date) value));
+            else
+                queries.getExpressions().add(builder.greaterThan(root.<String>get(key), value.toString()));
         } else if (operation.equals(QueryOperationsEnum.LESS_THAN_OR_EQUAL_TO)) {
             queries.getExpressions().add(builder.lessThanOrEqualTo(root.<String>get(key), value.toString()));
         } else if (operation.equals(QueryOperationsEnum.LESS_THAN)) {
-            queries.getExpressions().add(builder.lessThan(root.<String>get(key), value.toString()));
+            if(value instanceof Date)
+                queries.getExpressions().add(builder.lessThan(root.<Date>get(key),(Date) value));
+            else
+                queries.getExpressions().add(builder.lessThan(root.<String>get(key), value.toString()));
         } else if (operation.equals(QueryOperationsEnum.LIKE)) {
             queries.getExpressions().add(builder.like(root.<String>get(key), "%" + value.toString() + "%"));
         } else if (operation.equals(QueryOperationsEnum.START_LIKE)) {

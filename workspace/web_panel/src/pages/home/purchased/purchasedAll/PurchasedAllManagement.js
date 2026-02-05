@@ -15,6 +15,7 @@ import {Purchased_query} from "../../../../network/api/purchased.api";
 import {BuyableType} from "../../../../helper/enums/BuyableType";
 import {genders} from "../../../../helper/enums/genders";
 import {getRppPurchasedAllManagement, SetRppPurchasedAllManagement} from "../../../../helper/pocket/pocket";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const PurchasedAllManagement = () => {
     const error = useContext(ErrorContext);
@@ -90,7 +91,7 @@ const PurchasedAllManagement = () => {
                                         <TableRow hover onClick={(event) => toPage(event,row)} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal" align="right">{row.Id}</TableCell>
                                             <TableCell align="right"><Chip label={BuyableType[row.PurchasedType]} color={"primary"}/></TableCell>
-                                            <TableCell align="right">{getUserFixedName(row.Customer)}</TableCell>
+                                            <TableCell align="right">{<PopoverUser user ={row.Customer} />}</TableCell>
                                             <TableCell align="right">{row?.Place?.Name || "ثبت نشده"}</TableCell>
                                             <TableCell align="right">{row.Name || "ثبت نشده"}</TableCell>
                                             <TableCell align="right">{toPriceWithComma(row.SellPrice)}</TableCell>

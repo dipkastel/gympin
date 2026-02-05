@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {getUserFixedName} from "../../../../../helper";
 import {useHistory} from "react-router-dom";
+import PopoverUser from "../../../../../components/popover/PopoverUser";
 
 const ___SettingsActivitiesUsersActives = () => {
 
@@ -74,7 +75,7 @@ const ___SettingsActivitiesUsersActives = () => {
                                     </TableCell>
                                     <TableCell align="right" component="th" scope="row">
                                         {item.ExecutorUser && <Typography>
-                                            {item.ExecutorUser.FullName ? getUserFixedName(item.ExecutorUser) :
+                                            {item.ExecutorUser.FullName ? <PopoverUser user ={item.ExecutorUser} /> :
                                                 <Chip label={item.ExecutorUser.Username} color={"error"}/>}
                                         </Typography>}
 

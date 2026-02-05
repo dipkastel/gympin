@@ -11,7 +11,7 @@ import {useHistory} from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {Message} from "@mui/icons-material";
+import {AssignmentTurnedIn, Message} from "@mui/icons-material";
 import {PlaceGym_query} from "../../../../network/api/placeGym.api";
 
 const _DashUncontractPlaces = () => {
@@ -120,7 +120,7 @@ const _DashUncontractPlaces = () => {
             onClick={()=>{setShowModal(UncontractPlaces?.totalElements > 0)}}
             title="قرارداد"
             text={UncontractPlaces?.totalElements > 0 ? "شما " + UncontractPlaces?.totalElements + " مجموعه بدون قرارداد دارید" : "تمام مجموعه ها قرارداد دارند"}
-            icon={<Message sx={{fontSize: 40, color: UncontractPlaces?.totalElements > 0 ? "#d00d48" : "#0c5049"}}
+            icon={<AssignmentTurnedIn sx={{fontSize: 40, color: UncontractPlaces?.totalElements > 0 ? "#d00d48" : "#0c5049"}}
                            color={"#AA5598"}/>}
         />
         {renderModalSupport()}

@@ -15,6 +15,7 @@ import {getRppInvoiceManagement, SetRppInvoiceManagement} from "../../../helper/
 import {serial_query} from "../../../network/api/serial.api";
 import {ProcessTypeEnum} from "../../../helper/enums/ProcessTypeEnum";
 import {getUserFixedName} from "../../../helper";
+import PopoverUser from "../../../components/popover/PopoverUser";
 
 const ProcessManagement = () => {
     const error = useContext(ErrorContext);
@@ -162,7 +163,7 @@ const ProcessManagement = () => {
                                                         src={row?.CreatorUser?.Multimedias ? row?.CreatorUser?.Multimedias[0]?.Url : ""}
                                                         sx={{width: 20, height: 20, mx: 1}}/>
                                                     <Typography variant={"subtitle1"}>
-                                                        {getUserFixedName(row?.CreatorUser)}
+                                                        {<PopoverUser user ={row?.CreatorUser} />}
                                                     </Typography>
                                                 </Grid>
                                             </TableCell>

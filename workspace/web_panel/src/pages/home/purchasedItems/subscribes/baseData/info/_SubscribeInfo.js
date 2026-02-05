@@ -3,6 +3,7 @@ import {Portlet, PortletBody, PortletHeader} from "../../../../../partials/conte
 import {Divider} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {toPriceWithComma} from "../../../../../../helper";
+import PopoverUser from "../../../../../../components/popover/PopoverUser";
 
 const _SubscribeInfo = ({subscribe}) => {
     return (
@@ -14,7 +15,8 @@ const _SubscribeInfo = ({subscribe}) => {
                     <div className={"col-4"}>
                         <Typography variant={"h6"} component="p">{"خریدار : "}</Typography></div>
                     <div className={"col-8"}>
-                        {subscribe.User&&<Typography variant={"h6"} component="p">{`${subscribe?.User?.FullName} (${subscribe?.User?.Username})`}</Typography>}</div>
+                        <PopoverUser user ={subscribe?.User} />
+                    </div>
                 </div>
                 <Divider variant="inset" sx={{marginLeft: 0, marginRight: 0}} component="p"/>
                 <div className={"row"}>

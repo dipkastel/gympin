@@ -12,6 +12,7 @@ public final class PlaceRateAndCommentConvertor {
     public static PlaceCommentDto toDto(PlaceCommentEntity entity) {
         if (entity == null) return null;
         return PlaceCommentDto.builder()
+                .id(entity.getId())
                 .Comment(entity.getComment())
                 .user(UserConvertor.toDtoSimple(entity.getUser()))
                 .status(entity.getStatus())

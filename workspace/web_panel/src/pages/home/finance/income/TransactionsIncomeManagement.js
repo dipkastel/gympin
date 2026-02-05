@@ -13,6 +13,7 @@ import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
 import {transactionIncome_query} from "../../../../network/api/transactionsIncome.api";
 import {TransactionBaseTypes} from "../../../../helper/enums/TransactionBaseTypes";
 import {getRppTransactionIncomeManagement, SetRppTransactionIncomeManagement} from "../../../../helper/pocket/pocket";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const TransactionsIncomeManagement = () => {
     const history = useHistory();
@@ -86,7 +87,7 @@ const TransactionsIncomeManagement = () => {
                                                 {TransactionBaseTypes[row.TransactionType]}
                                             </TableCell>
                                             <TableCell component="th" padding="normal" align="right">
-                                                {getUserFixedName(row.Purchased?.Customer)}
+                                                {<PopoverUser user ={row.Purchased?.Customer} />}
                                             </TableCell>
                                             <TableCell component="th" padding="normal" align="right">
                                                 {row.Purchased?.Name}
@@ -95,7 +96,7 @@ const TransactionsIncomeManagement = () => {
                                                 {row.Purchased?.Place?.Name}
                                             </TableCell>
                                             <TableCell component="th" padding="normal" align="right">
-                                                {getUserFixedName(row.CreatorUser)}
+                                                <PopoverUser user ={row.CreatorUser} />
                                             </TableCell>
                                         </TableRow>
                                     );
