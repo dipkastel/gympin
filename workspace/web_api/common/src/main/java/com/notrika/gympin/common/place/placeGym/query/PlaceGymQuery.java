@@ -76,4 +76,10 @@ public class PlaceGymQuery extends BaseQuery<PlaceGymQuery> {
     @JsonProperty("MINlongitude")
     private Double min_longitude;
 
+    @JsonProperty("TagId")
+    private Long is_tagsæid;
+
+    @JsonProperty("TagName")
+    private String like_tagsæname;
+
 }
