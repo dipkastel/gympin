@@ -32,7 +32,7 @@ const _placeBaseInfo = ({place, currentUser}) => {
                     <CardContent>
                         <Typography variant="h1" fontWeight="bold" textAlign={"left"}
                                     sx={{mt: -5, bgcolor: "#FFFFFF", position: "absolute", px: 3,fontSize:"1.2rem"}} gutterBottom>
-                            {"مجموعه ورزشی " + place.Name}
+                            {"مجموعه " + place.Name}
                         </Typography>
                         <Grid
                             container

@@ -19,7 +19,7 @@ const NewHome = () => {
                     smImage={"/assets/images/banner/psy-dash.jpg"}
                     xlImage={"/assets/images/banner/psy-dash-full.jpg"}
                     sx={{mt:4,mb:2}}
-                    onClick={()=>{navigate("/place/268")}} />
+                    onClick={()=>{navigate("/psych")}} />
             </Grid>
             <>
                 <_HomePlaceList title={"مجموعه‌های جدید"} query={{paging: {Page: 0, Size: 10, Desc: true, OrderBy: "Id"}}} ls={"new"} playSpeed={3000} />

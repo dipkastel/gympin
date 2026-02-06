@@ -18,7 +18,7 @@ const _SubscribeDetail = ({subscribe}) => {
                 <Card elevation={3} sx={{margin: 1, borderRadius: 3}}>
                     <CardContent >
                         <Grid container direction="row" justifyContent={"space-between"} alignItems={"center"}>
-                            <Typography sx={{color: "#858585"}} variant={"body2"}>{"مجموعه ورزشی : "}</Typography>
+                            <Typography sx={{color: "#858585"}} variant={"body2"}>{"مجموعه : "}</Typography>
                             <Typography variant={"subtitle1"}>{subscribe?.TicketSubscribe?.Place?.Name}</Typography>
                         </Grid>
                         <Grid container direction="row" justifyContent={"space-between"} alignItems={"center"}>

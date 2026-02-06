@@ -42,7 +42,7 @@ const _CourseDetail = ({course}) => {
                     >
                         <Grid>
                             <Typography sx={{paddingY: 0.5}}
-                                        variant={"subtitle1"}>{"مجموعه ورزشی " + course?.TicketCourse?.Place?.Name}</Typography>
+                                        variant={"subtitle1"}>{"مجموعه " + course?.TicketCourse?.Place?.Name}</Typography>
                         </Grid>
                         <IconButton hidden={(!course.Description)} aria-label="openDescription" color="info" onClick={()=>SetOpenDescription(!openDescription)}>
                             <HelpOutlineIcon/>

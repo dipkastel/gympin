@@ -56,7 +56,7 @@ const Place = () => {
             setPlace(result.data.Data);
             if (placeId.includes("-") && !placeId.includes(fixTextToSlug(result.data.Data.Name)))
                 navigate("/");
-            document.title = 'مرکز ورزشی ' + result?.data?.Data?.Name + " - جیم پین پل ارتباطی مراکز ورزشی و سازمان ها";
+            document.title = 'مرکز ' + result?.data?.Data?.Name + " - جیم پین پل ارتباطی مراکز ورزشی و سازمان ها";
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});
@@ -67,16 +67,14 @@ const Place = () => {
     }
 
     return (
-
-
         <Grid container alignItems={"flex-start"}>
             {!currentUser && <Grid size={{xs: 12, sm: 12, md: 12}} sx={{float: "right"}}>
                 <_SinglePlaceGeneralHeader/>
             </Grid>}
+            <Grid size={{xs: 12, sm: 12, md: 12}} >
+                <_CallToPlace place={place} currentUser={currentUser} />
+            </Grid>
             <Masonry columns={{xs: 1, sm: 1,md:2,lg:2}} >
-                <Grid>
-                    <_CallToPlace place={place} currentUser={currentUser} />
-                </Grid>
                 <Grid>
                     {place&&!currentUser&& <Grid sx={{mx: 2, mt: 4, mb: 2, padding: 1}}><_GympinIntro/></Grid>}
                     {place&&currentUser&& <_placeBaseInfo place={place} currentUser={currentUser}/>}
@@ -95,8 +93,6 @@ const Place = () => {
                     {place&&<_PlaceComments place={place} currentUser={currentUser}/>}
                 </Grid>
             </Masonry>
-
-
             {!currentUser && <Grid size={{sm: 12, md: 12}} sx={{float: "right"}}>
                 <_SinglePlaceGeneralFooter/>
             </Grid>}

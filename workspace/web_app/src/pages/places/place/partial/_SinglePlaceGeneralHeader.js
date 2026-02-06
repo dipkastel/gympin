@@ -37,7 +37,7 @@ const _SinglePlaceGeneralHeader = () => {
                             }}
                             href={"https://place.gympin.ir/auth/register"}
                         >
-                            {"ثبت نام مجموعه ورزشی"}
+                            {"ثبت نام مجموعه"}
                         </Button>
                         <Button
                             sx={{

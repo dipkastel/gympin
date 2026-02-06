@@ -63,7 +63,7 @@ const TicketListItem = ({item,getSubscribe}) => {
                     </Grid>
                     <Divider variant={"middle"} sx={{my:2,borderStyle:"dashed"}} component="div"/>
                     <Grid sx={{mx:5,mt:1}} container direction={"row"} justifyContent={"space-between"}>
-                        <Typography variant={"subtitle2"} sx={{color:"#888888"}} >مجموعه ورزشی</Typography>
+                        <Typography variant={"subtitle2"} sx={{color:"#888888"}} >مجموعه</Typography>
                         <Typography variant={"body1"}>{item?.TicketSubscribe?.Place?.Name}</Typography>
                     </Grid>
                     <Grid sx={{mx:5,mt:1}} container direction={"row"} justifyContent={"space-between"}>

@@ -30,6 +30,7 @@ import Code from "../pages/auth/Code";
 import Support from "../pages/support/Support";
 import SupportDetail from "../pages/support/supportDetail/SupportDetail";
 import FoodSelect from "../pages/Food/FoodSelect";
+import Psych from "../pages/Psych/Psych";
 
 export default function ApplicationRoutes() {
     const isAuthorized = useSelector(({auth: {user}}) => user ? user.Id != null : false);
@@ -66,6 +67,7 @@ export default function ApplicationRoutes() {
                     <Route path="/support" element={<Support/>}/>
                     <Route path="/support/detail/:supportId" element={<SupportDetail/>}/>
                     {/*<Route path="/profile" element={ <Profile/>}/>*/}
+                    <Route path="/Psych" element={<Psych/>}/>
                     {/*tickets*/}
                     <Route path="/tickets" element={<TicketsActive/>}/>
                     <Route path="/ticketsHistory" element={<TicketsHistory/>}/>

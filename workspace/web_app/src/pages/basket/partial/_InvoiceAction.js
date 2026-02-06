@@ -103,10 +103,10 @@ const _InvoiceAction = ({userBasket, userCanPay, invoiceCredits, checkoutType}) 
                     <Typography variant={"subtitle1"}>
                         رزرو به معنای پرداخت به مجموعه نیست! هنگام مراجعه به مجموعه، حتماً گوشی موبایل خود را به همراه داشته باشید و فرایند پرداخت را به یکی از روش های زیر تکمیل نمایید:
                     </Typography>
-                    <Typography variant={"caption"}>◄ روش اول: QR کد داخل بلیط را برای اسکن، به متصدی مجموعه ورزشی ارائه کنید.
+                    <Typography variant={"caption"}>◄ روش اول: QR کد داخل بلیط را برای اسکن، به متصدی مجموعه ارائه کنید.
                     </Typography>
                     <br/>
-                    <Typography variant={"caption"}>◄ روش دوم: از داخل بلیط، "توسط خودم" را انتخاب کرده و QR کد تابلو جیم پین در مجموعه ورزشی را اسکن کنید، سپس رسید را به متصدی ارائه دهید.
+                    <Typography variant={"caption"}>◄ روش دوم: از داخل بلیط، "توسط خودم" را انتخاب کرده و QR کد تابلو جیم پین در مجموعه را اسکن کنید، سپس رسید را به متصدی ارائه دهید.
                     </Typography>
                 </Alert>
                 {userBasket && <_invoiceAgreements userBasket={userBasket} setAcceptAgreements={setAcceptAgreements}/>}

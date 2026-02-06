@@ -16,7 +16,7 @@ export function checkUsername(username) {
 }
 
 export function fixTextToSlug(text) {
-    text = "اطلاعات کامل مجموعه ورزشی "+text + " به همراه آدرس قیمت شماره تماس امکانات"
+    text = "اطلاعات کامل مجموعه "+text + " به همراه آدرس قیمت شماره تماس امکانات"
     return text
         .toString()
         .toLowerCase()

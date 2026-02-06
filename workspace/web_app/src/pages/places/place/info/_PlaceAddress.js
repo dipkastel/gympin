@@ -22,7 +22,7 @@ const _PlaceAddress = ({place}) => {
             <CardContent>
                 <Typography variant="h5" fontWeight="bold" textAlign={"left"} sx={{mt: -5, bgcolor: "#FFFFFF", position: "absolute", px: 3}}
                             gutterBottom>
-                    {"آدرس مجموعه ورزشی "+place.Name}
+                    {"آدرس مجموعه "+place.Name}
                 </Typography>
 
                 <Grid container columns={3} sx={{mt: 2}} justifyContent={"space-between"}>
