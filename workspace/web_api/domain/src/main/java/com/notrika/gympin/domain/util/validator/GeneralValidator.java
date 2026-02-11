@@ -18,8 +18,8 @@ public final class GeneralValidator {
         }
     }
 
-    public static boolean validateUser(@NonNull BaseParam<? extends UserParam> param) {
-        return validateId(param) || (StringUtils.isNotEmpty(param.getObject().getUsername()));
-    }
+//    public static boolean validateUser(@NonNull BaseParam<? extends UserParam> param) {
+//        return validateId(param) || (StringUtils.isNotEmpty(param.getObject().getUsername()));
+//    }
 
 }

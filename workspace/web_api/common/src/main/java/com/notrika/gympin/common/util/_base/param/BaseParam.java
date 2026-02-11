@@ -22,22 +22,22 @@ public class BaseParam<T> implements Serializable {
     private Long id;
 
     //@JsonProperty("CreatedDate")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private Date createdDate;
 
     //@JsonProperty("UpdatedDate")
-   @JsonIgnore
-@ToString.Exclude
+    @JsonIgnore
+    @ToString.Exclude
     private Date updatedDate;
 
     @JsonProperty("IsDeleted")
     //   @JsonIgnore
-@ToString.Exclude
+    @ToString.Exclude
     private boolean isDeleted;
 
-   @JsonIgnore
-@ToString.Exclude
-    private T object = (T) this;
+//    @JsonIgnore
+//    @ToString.Exclude
+//    private T object = (T) this;
 
 }

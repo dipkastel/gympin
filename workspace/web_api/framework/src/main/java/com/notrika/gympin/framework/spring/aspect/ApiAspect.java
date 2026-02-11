@@ -147,7 +147,13 @@ public class ApiAspect {
             DeleteMapping deleteMapping = method.getAnnotation(DeleteMapping.class);
             // if (postMapping == null && putMapping == null && deleteMapping == null) return;
             ObjectMapper objectMapper = new ObjectMapper();
-            String paramJson = objectMapper.writeValueAsString(Arrays.stream(joinPoint.getArgs()).findFirst());
+            String paramJson = "";
+            try {
+                paramJson = objectMapper.writeValueAsString(joinPoint.getArgs());
+            }catch (Exception e){
+                paramJson = "error in parse json";
+            }
+
             String dtoJson = null;
             Class dtoClass;
             if (retVal.getClass().isAssignableFrom(ResponseEntity.class)) {
