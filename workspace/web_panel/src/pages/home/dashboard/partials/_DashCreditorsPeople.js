@@ -67,12 +67,12 @@ const _DashCreditorsPeople = () => {
                                     <TableBody>
                                         {creditorList?.map((row, index) => (
                                             <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "/Users/details/" + row.User.Id})}
                                                       role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{toPriceWithComma(row.TotalDeposit)}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{<PopoverUser user ={row.User} />}</TableCell>
+                                                {console.log("---",row)}
 
                                             </TableRow>
                                         ))}

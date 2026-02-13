@@ -14,7 +14,7 @@ import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/po
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
 import {Info, Paid} from "@mui/icons-material";
 import {IncreaseCorporateDeposit_query} from "../../../../network/api/increaseCorporateDeposit.api";
-import {Avatar, Tooltip} from "@mui/material";
+import {Avatar, Button, Tooltip} from "@mui/material";
 import {GatewayType} from "../../../../helper/enums/GatewayType";
 
 const _DashIncreaseCorporate = () => {
@@ -49,7 +49,7 @@ const _DashIncreaseCorporate = () => {
                 <Modal show={showModal} size={"lg"} onHide={() => setShowModal(false)}>
                     <Portlet>
                         <PortletHeader
-                            title="پیام های جدید پشتیبانی"
+                            title="افزایش اعتبار سازمان"
                         />
 
                         <PortletBody>
@@ -67,25 +67,34 @@ const _DashIncreaseCorporate = () => {
                                             <TableCell align="right" padding="normal" sortDirection={false}>سازمان</TableCell>
                                             <TableCell align="right" padding="normal" sortDirection={false}>نوع پرداخت</TableCell>
                                             <TableCell align="right" padding="normal" sortDirection={false}>مبلغ</TableCell>
-                                            <TableCell align="right" padding="normal" sortDirection={false}>مرجع</TableCell>
-                                            <TableCell align="left" padding="normal" sortDirection={false}>توضیح</TableCell>
+                                            {requests?.content?.some(c=>c.Refrence)&&<TableCell align="right" padding="normal" sortDirection={false}>منبع</TableCell>}
+                                            {requests?.content?.some(c=>c.Description)&&<TableCell align="right" padding="normal" sortDirection={false}>توضیح</TableCell>}
+                                            <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {requests.content && requests.content.map((row, index) => (
                                             <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "/corporate/details/" + row.Corporate.Id})}
                                                       role="checkbox" tabIndex={-1} key={row.Id.toString()}>
-                                                <TableCell align="right"><Avatar alt="userImage" src={(row?.Corporate?.Logo) ? (row?.Corporate?.Logo?.Url || "") : ""} sx={{width: 30, height: 30}}/></TableCell>
+                                                <TableCell align="left"><Avatar alt="userImage" src={(row?.Corporate?.Logo) ? (row?.Corporate?.Logo?.Url || "") : ""} sx={{width: 30, height: 30}}/></TableCell>
                                                 <TableCell align="right">{getCorporateFixedName(row?.Corporate)}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal" align="right">{GatewayType[row?.GatewayType]}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal" align="right">{toPriceWithComma(row?.Amount)}</TableCell>
-                                                <TableCell component="th" scope="row" padding="normal" align="right">{row?.Refrence}</TableCell>
-                                                <TableCell component="th" scope="row" padding="normal" align="left">{row?.Description&&<>
+                                                {requests?.content?.some(c=>c.Refrence)&&<TableCell component="th" scope="row" padding="normal" align="right">{row?.Refrence}</TableCell>}
+                                                {requests?.content?.some(c=>c.Description)&&<TableCell component="th" scope="row" padding="normal" align="right">
                                                     <Tooltip title={row?.Description || ""} placement="top">
                                                         <Info />
                                                     </Tooltip>
-                                                </>}</TableCell>
+                                                </TableCell>}
+                                                <TableCell component="th" scope="row" padding="normal" align="left">
+
+                                                    <Button
+                                                        variant={"contained"}
+                                                        onClick={(event) => history.push({pathname: "/corporate/details/" + row.Corporate.Id})}
+                                                    >جزییات</Button>
+                                                </TableCell>
+
+
                                             </TableRow>
                                         ))}
                                     </TableBody>

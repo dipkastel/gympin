@@ -10,11 +10,11 @@ import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Por
 import {note_query} from "../../../../network/api/note.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
-import {getUserFixedName} from "../../../../helper";
 import {getRppDashNote, SetRppDashNote} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
 import {NoteAlt} from "@mui/icons-material";
 import PopoverUser from "../../../../components/popover/PopoverUser";
+import {Button} from "@mui/material";
 
 const _DashNotes = () => {
     const error = useContext(ErrorContext);
@@ -62,14 +62,14 @@ const _DashNotes = () => {
         if (row.Place)
             return "مرکز ◄ " + row.Place.Name;
         if (row.User)
-            return "کاربر ◄ " + <PopoverUser user ={row.User} />;
+            return <PopoverUser user={row.User}/>;
     }
 
 
     function renderModalNotes() {
         return (
             <>
-                <Modal show={showModal} size={"lg"}  onHide={() => setShowModal(false)}>
+                <Modal show={showModal} size={"lg"} onHide={() => setShowModal(false)}>
                     <Portlet>
                         <PortletHeader
                             title="یادداشت های قابل انجام"
@@ -86,21 +86,28 @@ const _DashNotes = () => {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="right" padding="normal" sortDirection={false}>متن</TableCell>
-                                            <TableCell align="right" padding="normal" sortDirection={false}>منبع</TableCell>
-                                            <TableCell align="right" padding="normal" sortDirection={false}>ایجاد
-                                                کننده</TableCell>
+                                            <TableCell align="right" padding="normal" sortDirection={false}>برای</TableCell>
+                                            <TableCell align="right" padding="normal" sortDirection={false}>ایجاد کننده</TableCell>
+                                            <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
+
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {note.content && note.content.map((row, index) => (
-                                            <TableRow hover onClick={(event) => history.push({pathname: getSourceUrl(row)})}
-                                                      role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{row.Text}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{getSourceName(row)}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{<PopoverUser user ={row.CreatorUser} />}</TableCell>
+                                                           align="right"><PopoverUser user={row.CreatorUser}/></TableCell>
+                                                <TableCell component="th" scope="row" padding="normal"
+                                                           align="left">
+                                                    <Button
+                                                        variant={"contained"}
+                                                        onClick={(event) => history.push({pathname: getSourceUrl(row)})}>رفتن به منبع
+                                                        یادداشت</Button>
+                                                </TableCell>
 
                                             </TableRow>
                                         ))}
@@ -136,7 +143,9 @@ const _DashNotes = () => {
     return (<>
 
         <QuickStatsIcon
-            onClick={()=>{setShowModal(note.totalElements > 0)}}
+            onClick={() => {
+                setShowModal(note.totalElements > 0)
+            }}
             title="یادداشت ها"
             text={note.totalElements > 0 ? "شما " + note.totalElements + " یاداشت انجام نشده دارید" : "تمام یاداشت ها انجام شده"}
             icon={<NoteAlt sx={{fontSize: 40, color: note.totalElements > 0 ? "#d00d48" : "#0c5049"}}

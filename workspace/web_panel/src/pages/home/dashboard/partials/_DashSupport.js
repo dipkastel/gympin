@@ -15,6 +15,7 @@ import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/po
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
 import {Message} from "@mui/icons-material";
 import PopoverUser from "../../../../components/popover/PopoverUser";
+import {Button} from "@mui/material";
 
 const _DashSupport = () => {
 
@@ -76,17 +77,24 @@ const _DashSupport = () => {
                                                        sortDirection={false}>متن</TableCell>
                                             <TableCell align="right" padding="normal" sortDirection={false}>ایجاد
                                                 کننده</TableCell>
+                                            <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {supportList.content && supportList.content.map((row, index) => (
                                             <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "/support/details/" + row.Id})}
                                                       role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{getLastMessage(row).Message}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{<PopoverUser user ={row.CreatorUser} />}</TableCell>
+                                                           align="right"><PopoverUser user ={row.CreatorUser} /></TableCell>
+                                                <TableCell component="th" scope="row" padding="normal"
+                                                           align="left">
+                                                    <Button
+                                                        variant={"contained"}
+                                                        onClick={(event) => history.push({pathname: "/support/details/" + row.Id})}
+                                                    >جزییات</Button>
+                                                </TableCell>
 
                                             </TableRow>
                                         ))}

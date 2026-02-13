@@ -53,17 +53,6 @@ const __SettingActivitiesDetails = () => {
         });
     }
 
-    function DeleteCorruptItems() {
-        service_deleteCorruptedItems().then((data) => {
-            alert("success");
-        }).catch(e => {
-            try {
-                error.showError({message: e.response.data.Message,});
-            } catch (f) {
-                error.showError({message: "خطا نا مشخص",});
-            }
-        });
-    }
 
     return (
         <>
@@ -85,17 +74,6 @@ const __SettingActivitiesDetails = () => {
             <Portlet>
                 <PortletHeader
                     title="فعالیت های کاربران"
-                    toolbar={
-                        <PortletHeaderToolbar>
-                            <button
-                                type="button"
-                                className="btn btn-clean btn-sm btn-icon btn-icon-md ng-star-inserted"
-                                onClick={(e) => DeleteCorruptItems()}
-                            >
-                                <SystemSecurityUpdateWarningIcon/>
-                            </button>
-                        </PortletHeaderToolbar>
-                    }
                 />
 
                 <PortletBody>

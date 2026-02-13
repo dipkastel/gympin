@@ -145,6 +145,7 @@ const SupportTicketLists = () => {
                                 <TableCell align="right">پیام ها</TableCell>
                                 <TableCell align="right">وضعیت</TableCell>
                                 <TableCell align="right"></TableCell>
+                                <TableCell align="left">عملیات</TableCell>
                             </TableHead>
                             <TableBody>
                                 {SupportList.content && SupportList.content.map((row, index) => {
@@ -162,22 +163,12 @@ const SupportTicketLists = () => {
                                                 scope="row"
                                                 padding="normal"
                                                 align="right"
-                                                onClick={(event) => {
-                                                    history.push({
-                                                        pathname: "/support/details/" + row.Id
-                                                    });
-                                                }}
                                             >
                                                 {row.Id}
                                             </TableCell>
-                                            <TableCell align="right"
-                                                       onClick={(event) => {
-                                                           history.push({
-                                                               pathname: "/support/details/" + row.Id
-                                                           });
-                                                       }}>
+                                            <TableCell align="right">
                                                 {row.Place && "مجموعه : " + row.Place.Name}
-                                                {row.User && "کاربر : " + <PopoverUser user ={row.User} />}
+                                                {row.User && <PopoverUser user ={row.User} />}
                                             </TableCell>
                                             <TableCell align="right"
                                                        onClick={(event) => {
@@ -208,6 +199,16 @@ const SupportTicketLists = () => {
                                             <TableCell align="right">
                                                 <IconButton onClick={(e) => setItemToDelete(row)} size={"small"}><Delete
                                                     color={"error"}/></IconButton>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <Button
+                                                    variant={"contained"}
+                                                    onClick={(event) => {
+                                                        history.push({
+                                                            pathname: "/support/details/" + row.Id
+                                                        });
+                                                    }}
+                                                    size={"small"}>جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

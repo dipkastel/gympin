@@ -41,7 +41,6 @@ const _DashOldPricesTickets = () => {
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         })
             .then((data) => {
-                console.log("message",data.data.Data)
                 setComment(data.data.Data);
             })
             .catch(e => {

@@ -16,6 +16,7 @@ import {RequestQuote} from "@mui/icons-material";
 import {SettlementUserDeposit_query} from "../../../../network/api/settlementUserDeposit.api";
 import {UserFinanceTypesEnum} from "../../../../helper/enums/UserFinanceTypesEnum";
 import PopoverUser from "../../../../components/popover/PopoverUser";
+import {Button} from "@mui/material";
 
 const _DashSettelment = () => {
 
@@ -83,7 +84,6 @@ const _DashSettelment = () => {
                                     <TableBody>
                                         {settelment.content && settelment.content.map((row, index) => (
                                             <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "/users/details/" + row?.FinanceUser?.User?.Id})}
                                                       role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{toPriceWithComma(row?.Amount)}</TableCell>
@@ -103,7 +103,6 @@ const _DashSettelment = () => {
                                                     hour: "2-digit",
                                                     minute: "2-digit"
                                                 })}</TableCell>
-
                                             </TableRow>
                                         ))}
                                     </TableBody>
