@@ -25,7 +25,7 @@ import getArrenge from "./imageListArrenges";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
-import {CircleStencil, FixedCropper} from 'react-advanced-cropper'
+import {FixedCropper} from 'react-advanced-cropper'
 import 'react-advanced-cropper/dist/style.css';
 import {resizeCanvas} from "../../helper/utils";
 import AccessDenied from "../../components/AccessDenied";
