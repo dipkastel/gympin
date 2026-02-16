@@ -1,14 +1,21 @@
 package com.notrika.gympin.domain.settings;
 
 import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
+import com.notrika.gympin.common.settings.base.dto.CallListDataItemDto;
 import com.notrika.gympin.common.settings.base.dto.SettingDto;
 import com.notrika.gympin.common.settings.base.enums.settingsType;
+import com.notrika.gympin.common.settings.base.dto.CallListDto;
+import com.notrika.gympin.common.settings.base.param.CallToNumberParam;
+import com.notrika.gympin.common.settings.base.param.GetCallListParam;
 import com.notrika.gympin.common.settings.base.param.SettingParam;
 import com.notrika.gympin.common.settings.base.param.SettingProfitParam;
 import com.notrika.gympin.common.settings.base.service.SettingsService;
+import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.domain.AbstractBaseService;
+import com.notrika.gympin.domain.user.UserServiceImpl;
 import com.notrika.gympin.domain.util.convertor.SettingsConvertor;
+import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageSettingsRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.common.BuyableRepository;
@@ -17,12 +24,17 @@ import com.notrika.gympin.persistence.entity.management.settings.SettingsEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import org.springframework.web.client.RestTemplate;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -42,6 +54,8 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
     BuyableRepository buyableRepository;
     @Autowired
     private TicketDiscountHistoryRepository ticketSubscribeDiscountHistoryRepository;
+    @Autowired
+    private UserServiceImpl userService;
 
     @Override
     public SettingDto add(@NonNull SettingParam settingParam) {
@@ -229,6 +243,85 @@ public class SettingsServiceImpl extends AbstractBaseService<SettingParam, Setti
         buyableRepository.updateAll(buyableToUpdate);
         ticketSubscribeDiscountHistoryRepository.addAll(buyableDiscountHistoryEntityListToAdd);
         return true;
+    }
+
+    @Override
+    public CallListDto getCallList(GetCallListParam param) {
+
+        String token = getByKey("CALL_TOKEN").getValue();
+        String url = "https://coreapi.daftareshoma.com/api/Customize/CustomerCallSearch";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", token);
+
+        HttpEntity<GetCallListParam> requestEntity =
+                new HttpEntity<>(param, headers);
+
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<CallListDto> response = restTemplate.postForEntity(
+                    url,
+                    requestEntity,
+                    CallListDto.class
+            );
+            List<CallListDataItemDto> resultList = new ArrayList<>();
+            CallListDto result = response.getBody();
+            result.setData(response.getBody().getData().stream().map(e->{
+
+                try {
+                    e.setUser(UserConvertor.toDtoSimple(userService.getByPhoneNumber(e.getFromNumber().replace("+98","0"))));
+                }catch (Exception g){}
+                resultList.add(e);
+                return e;
+            }).collect(Collectors.toList()));
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            } else {
+                return response.getBody();
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    @Override
+    public String CallToNumber(CallToNumberParam param) {
+
+        String extension = getByKey("CALL_CALLER_EXTENSION").getValue();
+        String fromNumber = getByKey("CALL_CALLER_NUMBER").getValue();
+        String token = getByKey("CALL_TOKEN").getValue();
+        param.setCaller_extension(extension);
+        param.setFrom_number(fromNumber);
+
+        String url = "https://coreapi.daftareshoma.com/api/Customize/OutgoingCall";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", token);
+
+        HttpEntity<CallToNumberParam> requestEntity =
+                new HttpEntity<>(param, headers);
+
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.postForEntity(
+                    url,
+                    requestEntity,
+                    String.class
+            );
+
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return "موفق - " + response.getBody();
+            } else {
+                return "خطا - وضعیت: " + response.getStatusCode();
+            }
+
+        } catch (Exception e) {
+            return "ارسال ناموفق: " + e.getMessage();
+        }
     }
 
     @Override

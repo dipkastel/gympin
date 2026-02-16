@@ -1,5 +1,8 @@
 package com.notrika.gympin.controller.impl.settings;
 
+import com.notrika.gympin.common.settings.base.dto.CallListDto;
+import com.notrika.gympin.common.settings.base.param.CallToNumberParam;
+import com.notrika.gympin.common.settings.base.param.GetCallListParam;
 import com.notrika.gympin.common.settings.base.param.SettingProfitParam;
 import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
@@ -64,6 +67,20 @@ public class SettingControllerImpl implements SettingsController {
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public ResponseEntity<Boolean> UpdateAutoDiscount() {
         return new ResponseEntity<Boolean>(settingsService.UpdateAutoDiscount(),HttpStatus.OK);
+    }
+
+    @Override
+    @PostMapping("/callToNumber")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    public ResponseEntity<String> callToNumber(CallToNumberParam param) {
+        return new ResponseEntity<String>(settingsService.CallToNumber(param),HttpStatus.OK);
+    }
+
+    @Override
+    @PostMapping("/getCallList")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    public ResponseEntity<CallListDto> getCallList(GetCallListParam param) {
+        return new ResponseEntity<CallListDto>(settingsService.getCallList(param),HttpStatus.OK);
     }
 
     @Override

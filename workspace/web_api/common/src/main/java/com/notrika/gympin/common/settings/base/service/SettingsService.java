@@ -1,5 +1,8 @@
 package com.notrika.gympin.common.settings.base.service;
 
+import com.notrika.gympin.common.settings.base.dto.CallListDto;
+import com.notrika.gympin.common.settings.base.param.CallToNumberParam;
+import com.notrika.gympin.common.settings.base.param.GetCallListParam;
 import com.notrika.gympin.common.settings.base.param.SettingProfitParam;
 import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
@@ -21,4 +24,6 @@ public interface SettingsService extends BaseService<SettingParam, SettingDto, B
     Boolean RemoveAllDiscounts();
     Boolean SetAutoToAll();
     Boolean UpdateAutoDiscount();
+    String CallToNumber(CallToNumberParam param);
+    CallListDto getCallList(GetCallListParam param);
 }
