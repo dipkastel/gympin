@@ -37,6 +37,10 @@ export function invoice_addBuyable(data) {
     return axios.post(InvoiceApi.addBuyable, data);
 }
 
+export function invoice_addSubscribe(data) {
+    return axios.post(InvoiceApi.addSubscribe, data);
+}
+
 export function invoice_changeInvoiceBuyableCount(data) {
     return axios.post(InvoiceApi.changeInvoiceBuyableCount, data);
 }

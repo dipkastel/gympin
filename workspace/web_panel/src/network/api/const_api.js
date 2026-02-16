@@ -359,6 +359,7 @@ export let InvoiceApi = {
     advancedCheckout: "v1/invoice/advancedCheckout",
     changeStatus: "v1/invoice/changeStatus",
     update: "v1/invoice/update",
+    addSubscribe:"v1/invoice/addSubscribe",
     addBuyable: "v1/invoice/addBuyable",
     changeInvoiceBuyableCount: "v1/invoice/changeInvoiceBuyableCount",
     deleteBuyable: "v1/invoice/deleteBuyable",
