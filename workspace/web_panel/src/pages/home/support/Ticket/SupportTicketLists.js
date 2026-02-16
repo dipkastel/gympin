@@ -5,7 +5,7 @@ import TableHead from "@mui/material/TableHead";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
-import {Button, Chip, IconButton, TextField} from "@mui/material";
+import {Button, Chip, IconButton, Paper, Tab, Tabs, TextField} from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppSupport, SetRppSupport} from "../../../../helper/pocket/pocket";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
@@ -28,12 +28,13 @@ const SupportTicketLists = () => {
     const [itemToDelete, setItemToDelete] = useState(null);
     const [searchString, setSearchString] = useState(null);
     const [SupportList, setSupportList] = useState([]);
+    const [selectedTab,setSelectedTab] = useState(null);
     const history = useHistory();
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - itemCount) : 0;
 
     useEffect(() => {
         getSupports();
-    }, [searchString, page, rowsPerPage]);
+    }, [searchString, page, rowsPerPage,selectedTab]);
 
     function getSupports() {
         setSupportList([]);
@@ -41,6 +42,7 @@ const SupportTicketLists = () => {
             queryType: "SEARCH",
             Message: searchString?.trim()||null,
             Title: searchString?.trim()||null,
+            Status:selectedTab,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         })
             .then((data) => {
@@ -105,9 +107,37 @@ const SupportTicketLists = () => {
         );
     }
 
+    function getColorByStatus(Status) {
+
+        switch (Status) {
+            case "PROCESSING": return "warning";
+            case "AWAITING_EXPERT": return "error";
+            case "AWAITING_USER": return "error";
+            case "CANCEL": return "default";
+            case "COMPLETE": return "success";
+            default: return "#4400FF";
+        }
+    }
+
     return (
         <>
 
+
+            <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
+                <Tabs
+                    value={selectedTab}
+                    onChange={(e, n) => setSelectedTab(n)}
+                    indicatorColor="primary"
+                    textColor="inherit"
+                    variant={"standard"}
+                    aria-label="full width tabs example"
+                >
+                    <Tab label={"همه"} value={null}/>
+                    {Object.keys(SupportStatus).map(ss=>(
+                        <Tab label={SupportStatus[ss]} value={ss}/>
+                    ))}
+                </Tabs>
+            </Paper>
 
             <Portlet>
                 <PortletHeader
@@ -180,7 +210,8 @@ const SupportTicketLists = () => {
                                                 <Chip
                                                     variant={"outlined"}
                                                     label={SupportStatus[row?.Status]}
-                                                    color={(row?.Status?.startsWith("AWAITING")) ? "error" : "success"}/>
+                                                    color={getColorByStatus(row?.Status)}
+                                                />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <IconButton onClick={(e) => setItemToDelete(row)} size={"small"}><Delete

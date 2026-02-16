@@ -7,7 +7,7 @@ import SupportMonitorList from "./Monitor/SupportMonitorList";
 
 
 const Support = () => {
-    const [selectedTab,setSelectedTab] = useState("CHAT")
+    const [selectedTab,setSelectedTab] = useState("TICKETS")
 
     return (
         <>
@@ -22,13 +22,13 @@ const Support = () => {
                     variant={"standard"}
                     aria-label="full width tabs example"
                 >
-                    <Tab label="چت آنلاین" value={"CHAT"}/>
                     <Tab label="تیکت ها" value={"TICKETS"}/>
+                    <Tab label="چت آنلاین" value={"CHAT"}/>
                     <Tab label="مانیتور" value={"MONITOR"}/>
                 </Tabs>
             </Paper>
-            {selectedTab=="CHAT"&&<SupportChatList/>}
             {selectedTab=="TICKETS"&&<SupportTicketList/>}
+            {selectedTab=="CHAT"&&<SupportChatList/>}
             {selectedTab=="MONITOR"&&<SupportMonitorList/>}
         </>
     );
