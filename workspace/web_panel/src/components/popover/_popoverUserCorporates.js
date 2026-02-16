@@ -12,6 +12,7 @@ const _popoverUserCorporates = ({currentUser}) => {
     const history = useHistory();
     const [userCorporates, setUserCorporates] = useState([]);
     useEffect(() => {
+        if(!currentUser) return;
         corporatePersonnel_getByUser({id:currentUser.Id}).then(result=>{
             setUserCorporates(result.data.Data)
         }).catch(e => {

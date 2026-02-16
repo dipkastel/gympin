@@ -12,6 +12,8 @@ import _DashComments from "../partials/_DashComments";
 import _DashOldPricesTickets from "../partials/_DashOldPricesTickets";
 import _DashNewPricesTickets from "../partials/_DashNewPricesTickets";
 import _DashPlaceNewImages from "../partials/_DashPlaceNewImages";
+import _DashCallList from "../partials/_DashCallList";
+import _DashCall from "../partials/_DashCall";
 
 const DashTasksTab = ({updatePage}) => {
 
@@ -53,6 +55,12 @@ const DashTasksTab = ({updatePage}) => {
                 </Grid>
                 <Grid item size={{xs:12,md:4}}>
                     <_DashPlaceNewImages/>
+                </Grid>
+                <Grid item size={{xs:12,md:4}}>
+                    <_DashCallList/>
+                </Grid>
+                <Grid item size={{xs:12,md:4}}>
+                    <_DashCall/>
                 </Grid>
             </Grid>
         </>

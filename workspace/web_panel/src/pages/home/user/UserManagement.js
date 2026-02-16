@@ -23,6 +23,7 @@ import {genders} from "../../../helper/enums/genders";
 import {getRppUserManagement, SetRppUserManagement} from "../../../helper/pocket/pocket";
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import {CreditScore} from "@mui/icons-material";
+import PopoverUser from "../../../components/popover/PopoverUser";
 
 const UserManagement = () => {
     const error = useContext(ErrorContext);
@@ -273,25 +274,24 @@ const UserManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>کد ملی</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>گروه</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
+                                    <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {userList.content && userList.content.map((row, index) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
-                                        <TableRow hover onClick={(event) => {
-                                            history.push({pathname: "/users/details/" + row.Id});
-                                        }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.Id.toString()}>
 
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">
                                                 <Avatar alt="userImage" src={(row.Avatar) ? (row.Avatar.Url || "") : ""}
                                                         sx={{width: 40, height: 40}}/></TableCell>
-                                            <TableCell align="right">{row.FullName?getUserFixedName(row):<Chip label={row.Username} color={"error"}/>}</TableCell>
-                                            <TableCell align="right">{row.Gender?genders[row.Gender]:<Chip label={"ثبت نشده"} color={"error"}/>}</TableCell>
+                                            <TableCell align="right"><PopoverUser user ={row} /></TableCell>
+                                            <TableCell align="right">{row.Gender?genders[row.Gender]:<Chip  variant={"outlined"} label={"ثبت نشده"} color={"error"}/>}</TableCell>
                                             <TableCell align="right">{row.PhoneNumber}</TableCell>
-                                            <TableCell align="right">{row.Birthday?new Date(row.Birthday).toLocaleDateString('fa-IR', {month: 'long', day: 'numeric'}):<Chip label={"ثبت نشده"} color={"error"}/>}</TableCell>
+                                            <TableCell align="right">{row.Birthday?new Date(row.Birthday).toLocaleDateString('fa-IR', {month: 'long', day: 'numeric'}):<Chip  variant={"outlined"} label={"ثبت نشده"} color={"error"}/>}</TableCell>
                                             <TableCell align="right">
 
                                                 <Tooltip title={row.UserRole.Role?row.UserRole.Role:"بدون نقش"}>
@@ -305,12 +305,18 @@ const UserManagement = () => {
                                                 </Tooltip>
 
                                             </TableCell>
-                                            <TableCell align="right">{row.NationalCode?row.NationalCode:<Chip label={"ثبت نشده"} color={"error"}/>}</TableCell>
+                                            <TableCell align="right">{row.NationalCode?row.NationalCode:<Chip  variant={"outlined"} label={"ثبت نشده"} color={"error"}/>}</TableCell>
                                             <TableCell align="right">{row.UserGroup}</TableCell>
                                             <TableCell align="right">
 
-                                                <Chip label={row.UserStatus}
+                                                <Chip label={row.UserStatus} variant={"outlined"}
                                                       color={(row.UserStatus.startsWith("ENABLED")) ? "success" : "error"}/>
+                                            </TableCell>
+                                            <TableCell align="left">
+
+                                                <Button variant={"contained"} onClick={(event) => {
+                                                    history.push({pathname: "/users/details/" + row.Id});
+                                                }} >جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

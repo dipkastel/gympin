@@ -1,5 +1,5 @@
 import axios from "axios";
-import {SupportApi, TicketFoodMenuApi} from "./const_api";
+import {SupportApi, TicketFoodApi, TicketFoodMenuApi} from "./const_api";
 
 //place
 export function Support_getAll() {
@@ -16,6 +16,11 @@ export function Support_add(data) {
 
 export function Support_delete(item) {
     return axios.put(SupportApi.delete,  item);
+}
+
+
+export function Support_update(item) {
+    return axios.put(SupportApi.update, item);
 }
 
 export function Support_addMessage(data) {

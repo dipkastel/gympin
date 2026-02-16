@@ -3,7 +3,7 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import Notice from "../../partials/content/Notice";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
-import {Avatar, Grid, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
+import {Avatar, Button, Grid, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
@@ -130,7 +130,7 @@ const ProcessManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>زمان</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>سریال</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>توسط</TableCell>
-                                    <TableCell align="left" padding="normal" sortDirection={false}>وضعیت</TableCell>
+                                    <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -138,9 +138,7 @@ const ProcessManagement = () => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={row.Id.toString()}>
-                                            <TableCell onClick={(event) => {
-                                                history.push({pathname: "/process/detail/" + row.Id});
-                                            }} component="th" id={labelId} scope="row" padding="normal"
+                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell onClick={(event) => {
                                                 history.push({pathname: "/process/detail/" + row.Id});
@@ -163,9 +161,14 @@ const ProcessManagement = () => {
                                                         src={row?.CreatorUser?.Multimedias ? row?.CreatorUser?.Multimedias[0]?.Url : ""}
                                                         sx={{width: 20, height: 20, mx: 1}}/>
                                                     <Typography variant={"subtitle1"}>
-                                                        {<PopoverUser user ={row?.CreatorUser} />}
+                                                        <PopoverUser user ={row?.CreatorUser} />
                                                     </Typography>
                                                 </Grid>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <Button variant={"contained"} onClick={(event) => {
+                                                    history.push({pathname: "/process/detail/" + row.Id});
+                                                }} >جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

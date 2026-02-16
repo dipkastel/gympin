@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import Notice from "../../partials/content/Notice";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
-import {Avatar, Chip, Grid, TextField, Typography} from "@mui/material";
+import {Avatar, Button, Chip, Grid, TextField, Typography} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -16,6 +16,7 @@ import TablePagination from "@mui/material/TablePagination";
 import {invoice_query} from "../../../network/api/invoice.api";
 import {InvoiceStatus} from "../../../helper/enums/InvoiceStatus";
 import {getRppInvoiceManagement, SetRppInvoiceManagement} from "../../../helper/pocket/pocket";
+import PopoverUser from "../../../components/popover/PopoverUser";
 
 const InvoiceManagement = () => {
     const error = useContext(ErrorContext);
@@ -125,6 +126,7 @@ const InvoiceManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>مجموع
                                         قیمت</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
+                                    <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -132,9 +134,7 @@ const InvoiceManagement = () => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
                                         <TableRow hover  role="checkbox" tabIndex={-1} key={row.Id.toString()}>
-                                            <TableCell onClick={(event) => {
-                                                history.push({pathname: "/invoice/detail/" + row.Id});
-                                            }} component="th" id={labelId} scope="row" padding="normal"
+                                            <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal" align="right">
                                                 <Grid container direction={"row"} justifyContent={"start"} alignItems={"center"}>
@@ -143,24 +143,21 @@ const InvoiceManagement = () => {
                                                         onClick={() => history.push("/users/details/" + row.User.Id)}
                                                         src={row?.User?.Multimedias ? row?.Corporate?.Multimedias[0]?.Url : ""}
                                                         sx={{width: 20, height: 20,mx:1}}/>
-                                                    <Typography variant={"subtitle1"} >
-                                                        {row.UserFullName}
-                                                    </Typography>
+
+                                                    <PopoverUser user ={row?.User} />
                                                 </Grid>
                                             </TableCell>
-                                            <TableCell onClick={(event) => {
-                                                history.push({pathname: "/invoice/detail/" + row.Id});
-                                            }} align="right">{row.UserPhoneNumber}</TableCell>
-                                            <TableCell
-                                                align="right">{row.InvoiceBuyables.reduce((a, b) => a + b.Count, 0)}</TableCell>
-                                            <TableCell onClick={(event) => {
-                                                history.push({pathname: "/invoice/detail/" + row.Id});
-                                            }} align="right">{row.TotalPrice}</TableCell>
-                                            <TableCell onClick={(event) => {
-                                                history.push({pathname: "/invoice/detail/" + row.Id});
-                                            }} align="right">
-                                                <Chip label={InvoiceStatus[row.Status]}
+                                            <TableCell align="right">{row.UserPhoneNumber}</TableCell>
+                                            <TableCell align="right">{row.InvoiceBuyables.reduce((a, b) => a + b.Count, 0)}</TableCell>
+                                            <TableCell align="right">{row.TotalPrice}</TableCell>
+                                            <TableCell align="right">
+                                                <Chip variant={"outlined"} label={InvoiceStatus[row.Status]}
                                                       color={getStatusCollor(row)}/>
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <Button variant={"contained"} onClick={(event) => {
+                                                    history.push({pathname: "/invoice/detail/" + row.Id});
+                                                }}>جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

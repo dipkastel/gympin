@@ -1,17 +1,20 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Card, CardContent, ClickAwayListener, Grid, IconButton, Popper, Typography} from "@mui/material";
 import {getUserFixedName} from "../../helper";
 import {ArrowCircleLeft, Call} from "@mui/icons-material";
 import _popoverUserCorporates from "./_popoverUserCorporates";
 import _popoverUserPlaces from "./_popoverUserPlaces";
 import {useHistory} from "react-router-dom";
+import {settings_callToNumber} from "../../network/api/settings.api";
+import {ErrorContext} from "../GympinPagesProvider";
 
 const PopoverUser = ({user}) => {
 
+    const error = useContext(ErrorContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const history = useHistory();
-    const id = isOpen ? "user" + user.Id : undefined;
+    const id = isOpen ? "user" + user?.Id : undefined;
 
     function clickAwayHandler() {
         setIsOpen(false)
@@ -21,6 +24,23 @@ const PopoverUser = ({user}) => {
         setIsOpen(true)
         setAnchorEl(e.currentTarget);
     }
+
+
+    function callTOUser(e) {
+        e.preventDefault();
+        settings_callToNumber({to_number: user?.PhoneNumber})
+            .then(data => {
+                error.showError({message: data.data.Data,});
+            }).catch(e => {
+            try {
+                error.showError({message: e.response.data.Message,});
+            } catch (f) {
+                error.showError({message: "خطا نا مشخص",});
+            }
+        });
+    }
+
+    if(!user) return (<></>);
 
     return (
         <div>
@@ -50,7 +70,7 @@ const PopoverUser = ({user}) => {
                                 <Grid><Typography sx={{p: 1}}>تلفن </Typography></Grid>
                                 <Grid container direction={"row"} alignContent={"center"}>
                                     <Typography sx={{p: 1}}>{user?.PhoneNumber}</Typography>
-                                    <IconButton size={"small"}><Call color={"success"}/></IconButton>
+                                    <IconButton onClick={(e) => callTOUser(e)} size={"small"}><Call color={"success"}/></IconButton>
                                 </Grid>
                             </Grid>
                             <Grid container direction={"row"} justifyContent={"space-between"}>

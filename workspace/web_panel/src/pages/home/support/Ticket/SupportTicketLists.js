@@ -16,6 +16,7 @@ import {Form, Modal} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
 import {getUserFixedName} from "../../../../helper";
 import PopoverUser from "../../../../components/popover/PopoverUser";
+import {SupportStatus} from "../../../../helper/enums/SupportStatus";
 
 const SupportTicketLists = () => {
 
@@ -170,30 +171,15 @@ const SupportTicketLists = () => {
                                                 {row.Place && "مجموعه : " + row.Place.Name}
                                                 {row.User && <PopoverUser user ={row.User} />}
                                             </TableCell>
-                                            <TableCell align="right"
-                                                       onClick={(event) => {
-                                                           history.push({
-                                                               pathname: "/support/details/" + row.Id
-                                                           });
-                                                       }}>{row.Title}</TableCell>
-                                            <TableCell align="right"
-                                                       onClick={(event) => {
-                                                           history.push({
-                                                               pathname: "/support/details/" + row.Id
-                                                           });
-                                                       }}>
+                                            <TableCell align="right">{row.Title}</TableCell>
+                                            <TableCell align="right">
 
                                                 {row?.Messages?.length}
                                             </TableCell>
-                                            <TableCell align="right"
-                                                       onClick={(event) => {
-                                                           history.push({
-                                                               pathname: "/support/details/" + row.Id
-                                                           });
-                                                       }}>
-
+                                            <TableCell align="right">
                                                 <Chip
-                                                    label={row?.Status}
+                                                    variant={"outlined"}
+                                                    label={SupportStatus[row?.Status]}
                                                     color={(row?.Status?.startsWith("AWAITING")) ? "error" : "success"}/>
                                             </TableCell>
                                             <TableCell align="right">

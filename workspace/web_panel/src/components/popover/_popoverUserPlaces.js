@@ -12,6 +12,7 @@ const _popoverUserPlaces = ({currentUser}) => {
     const history = useHistory();
     const [userPlaces, setUserPlaces] = useState([]);
     useEffect(() => {
+        if(!currentUser) return;
         Place_getPlaceByUser({id: currentUser.Id}).then(result => {
             setUserPlaces(result.data.Data)
         }).catch(e => {

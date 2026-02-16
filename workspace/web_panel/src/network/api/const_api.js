@@ -443,6 +443,8 @@ export let SettingsApi = {
     delete: "v1/Settings/delete",
     getAll: "v1/Settings/getAll",
     update: "v1/Settings/update",
+    getCallList: "v1/Settings/getCallList",
+    callToNumber: "v1/Settings/callToNumber",
     DoMaximumManagedDiscount: "v1/Settings/DoMaximumManagedDiscount",
     DoMaximumDiscount: "v1/Settings/DoMaximumDiscount",
     RemoveAllDiscounts: "v1/Settings/RemoveAllDiscounts",
@@ -455,6 +457,7 @@ export let SupportApi = {
     getAll: "v1/Support/getall",
     getById: "v1/Support/getById",
     delete: "v1/Support/delete",
+    update: "v1/Support/update",
     query: "v1/Support/query",
 };
 export let purchasedSubscribeApi = {

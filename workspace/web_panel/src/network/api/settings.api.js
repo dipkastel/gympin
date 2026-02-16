@@ -33,3 +33,11 @@ export function settings_DoMaximumDiscount() {
 export function settings_DoMaximumManagedDiscount(data) {
   return axios.post(SettingsApi.DoMaximumManagedDiscount,data);
 }
+
+export function settings_callToNumber(data) {
+  return axios.post(SettingsApi.callToNumber,data);
+}
+
+export function settings_getCallList(data) {
+  return axios.post(SettingsApi.getCallList,data);
+}

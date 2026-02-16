@@ -1,14 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Notice from "../../../partials/content/Notice";
-import {Support_addMessage, Support_getById} from "../../../../network/api/support.api";
+import {Support_addMessage, Support_getById, Support_update} from "../../../../network/api/support.api";
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Checkbox, FormControlLabel, FormGroup, List, TextField, Typography} from "@mui/material";
-import {Alert} from "react-bootstrap";
+import {Card, Checkbox, FormControlLabel, FormGroup, Grid, List, TextField, Typography} from "@mui/material";
+import {Alert, Form} from "react-bootstrap";
 import {Row} from "reactstrap";
 import {getUserFixedName} from "../../../../helper";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import PopoverUser from "../../../../components/popover/PopoverUser";
+import Select from "react-select";
+import {SupportStatus} from "../../../../helper/enums/SupportStatus";
 
 const SupportTicketDetails = () => {
     const error = useContext(ErrorContext);
@@ -65,31 +67,78 @@ const SupportTicketDetails = () => {
     }
 
 
+    function getStatusOptions() {
+
+        return Object.keys(SupportStatus).map(item => {
+            return {label: SupportStatus[item], value: item}
+        })
+
+    }
+
+    function setStatusOptions(value) {
+        Support_update({...support,Status:value})
+            .then(result => {
+                error.showError({message: "عملیات موفق",});
+                getSupportDetail()
+            })
+            .catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+    }
+
     return (
         <>
 
             <Notice icon="flaticon-warning kt-font-primary">
-                <p>کرامت مشتری برای ما اولویت است </p>
-                <p>مشتری فقط وقتی تیکت می زند که عصبانی یا دلسرد است پس در پاسخ به مشتری نکات زیر را رعایت کنید</p>
-                <p>ادب ما در پاسخ باید مشتری را آرام کند</p>
-                <p>توهین یا تیکه انداختن به مشتری هیچ توجیهی ندارد</p>
+                <p>کرامت کاربر برای ما اولویت است </p>
             </Notice>
 
             <Portlet>
                 <PortletHeader title="مشخصات تیکت"/>
 
                 <PortletBody>
-                    <Typography variant={"h5"}>{"موضوع : "}<small>{support.Title}</small></Typography>
-                    <Typography
-                        variant={"h5"}>{"ایجاد کننده : "}<small>{<PopoverUser user ={support.CreatorUser} />}</small></Typography>
-                    {support.Place && <Typography
-                        variant={"h5"}>{"مربوط به : "}<small>{"مجموعه " + support.Place.Name}</small></Typography>}
-                    {support.Corporate && <Typography
-                        variant={"h5"}>{"مربوط به : "}<small>{"سازمان " + support.Corporate.Name}</small></Typography>}
-                    <Typography
-                        variant={"h5"}>{"تاریخ ایجاد : "}<small>{new Date(support.CreatedDate).toLocaleDateString('fa-IR')}</small></Typography>
-                    <Typography
-                        variant={"h5"}>{"ساعت ایجاد : "}<small>{new Date(support.CreatedDate).toLocaleTimeString()}</small></Typography>
+                    <Grid container spacing={2}>
+                        <Grid size={6}>
+
+                            <Card variant={"outlined"} sx={{borderRadius: 3, p: 2}}>
+                                <Typography variant={"h5"}>{"موضوع : "}<small>{support.Title}</small></Typography>
+                                <Typography sx={{display: "flex"}}
+                                            variant={"h5"}>{"ایجاد کننده : "}<PopoverUser user={support.CreatorUser}/></Typography>
+                                {support.Place && <Typography
+                                    variant={"h5"}>{"مربوط به : "}<small>{"مجموعه " + support.Place.Name}</small></Typography>}
+                                {support.Corporate && <Typography
+                                    variant={"h5"}>{"مربوط به : "}<small>{"سازمان " + support.Corporate.Name}</small></Typography>}
+                                <Typography
+                                    variant={"h5"}>{"تاریخ ایجاد : "}<small>{new Date(support.CreatedDate).toLocaleDateString('fa-IR')}</small></Typography>
+                                <Typography
+                                    variant={"h5"}>{"ساعت ایجاد : "}<small>{new Date(support.CreatedDate).toLocaleTimeString()}</small></Typography>
+                            </Card>
+                        </Grid>
+                        <Grid size={6}>
+                            <Card variant={"outlined"} sx={{borderRadius: 3, p: 2}}>
+                                <Form.Group>
+                                    <Form.Label>وضعیت</Form.Label>
+                                    <Select
+                                        className={"dropdown"}
+                                        name="formStatus"
+                                        value={
+                                            getStatusOptions()?.filter(option =>
+                                                option.value === support?.Status)
+                                        }
+                                        options={getStatusOptions()}
+                                        onChange={(e) => setStatusOptions(e.value)}
+                                        defaultValue={"dropdown-menu"}
+                                        menuPortalTarget={document.body}
+                                    />
+                                </Form.Group>
+
+                            </Card>
+                        </Grid>
+                    </Grid>
                 </PortletBody>
             </Portlet>
 
