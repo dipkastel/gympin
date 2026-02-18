@@ -1,0 +1,231 @@
+#qrCanvas {
+  width: 100%;
+}
+.bg-primary {
+  background-color: #d90a1a !important;
+}
+
+.MuiSlider-thumb {
+  -webkit-transform: translate(50%, -50%) !important;
+  -moz-transform: translate(50%, -50%) !important;
+  -ms-transform: translate(50%, -50%) !important;
+  transform: translate(50%, -50%) !important;
+}
+@media (min-width: 1000px) {
+  /*body{*/
+  /*  position: absolute;*/
+  /*  width: 390px;*/
+  /*  max-width: 390px;*/
+  /*  left: Calc(50% - 195px);*/
+  /*}*/
+}
+#qrCanvas {
+  width: 100%;
+}
+.blur {
+  filter: blur(6px);
+}
+.messagebox {
+  position: fixed;
+  bottom: 56px;
+  width: 100%;
+}
+.section-title {
+  color: #fff;
+  background-color: #e7333e;
+  width: fit-content;
+  padding: 10px 10px 10px 40px;
+  border-radius: 25px 0 0 25px;
+}
+.MuiAlert-icon {
+  margin-right: 0;
+  margin-left: 12px;
+}
+.rtl {
+  direction: rtl;
+}
+.ltr {
+  direction: ltr;
+}
+/*# sourceMappingURL=other.css.map */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.loginBgDark {
+  background: rgb(18, 1, 0);
+  background: linear-gradient(
+    40deg,
+    rgba(18, 1, 0, 1) 0%,
+    rgba(236, 13, 18, 1) 100%
+  );
+}
+.loginBgLight {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    40deg,
+    rgb(150, 18, 26) 0%,
+    rgb(255, 160, 165) 100%
+  );
+}
+
+.bg-primary {
+  background-color: $primary !important;
+}
+.MuiSlider-thumb {
+  -webkit-transform: translate(50%, -50%) !important;
+  -moz-transform: translate(50%, -50%) !important;
+  -ms-transform: translate(50%, -50%) !important;
+  transform: translate(50%, -50%) !important;
+}
+.progress-item {
+  width: 56px;
+  height: 56px;
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+  background: url("/public/assets/images/Loading-ic.jpg");
+  background-size: contain;
+}
+.progress-box {
+  right: Calc(50vw - 130px);
+  width: 260px;
+  position: absolute;
+  text-align: -webkit-center;
+  padding: 10px;
+  top: Calc(50vh - 180px);
+  height: 160px;
+}
+.apexcharts-tooltip {
+  direction: rtl !important;
+}
+.apexcharts-tooltip-marker {
+  margin-left: 4px;
+  margin-right: 0px !important;
+}
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.rselect-container {
+  .rselect__control {
+    background-color: #393939;
+    border: 1px solid #a8a8a8;
+    border-radius: 8px;
+    padding: 8px;
+    transition: none;
+    margin-top: 20px;
+
+    &:hover {
+      border-color: #ffffff;
+    }
+  }
+  .rselect__menu {
+    z-index: 9999;
+    background-color: #4e5357;
+    border-radius: 8px;
+  }
+
+  .rselect__option {
+    background-color: #4e5357;
+    border-radius: 8px;
+    padding: 10px;
+
+    &:hover {
+      background-color: #696f73;
+    }
+  }
+  .rselect__indicator-separator {
+    background-color: #2c3034;
+  }
+  .rselect__input-container {
+    color: #e8e8e8;
+  }
+  .rselect__placeholder,
+  .rselect__single-value {
+    color: rgb(243, 243, 243);
+  }
+}
+
+.rdselect-container {
+  .rselect__control {
+    background-color: #ffffff;
+    border: 1px solid #838383;
+    border-radius: 8px;
+    padding: 8px;
+    transition: none;
+    margin-top: 20px;
+
+    &:hover {
+      border-color: #f1f1f1;
+    }
+  }
+  .rselect__menu {
+    z-index: 9999;
+    background-color: #f3f3f3;
+    border-radius: 8px;
+  }
+
+  .rselect__option {
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    padding: 10px;
+
+    &:hover {
+      background-color: #dadada;
+    }
+  }
+  .rselect__indicator-separator {
+    background-color: #2c3034;
+  }
+  .rselect__input-container {
+    color: #232323;
+  }
+  .rselect__placeholder,
+  .rselect__single-value {
+    color: rgb(44, 44, 44);
+  }
+}
+.count {
+  width: 40px !important;
+  text-align: center;
+  padding: 0 !important;
+  .MuiInputBase-root {
+    border-radius: 0 !important;
+  }
+}
