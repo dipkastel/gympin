@@ -4,8 +4,7 @@ import { settingsReducer } from "./reducers/settingsReducer";
 import { placeReducer } from "./reducers/placeReducer";
 
 export const rootReducer = combineReducers({
-  auth: authReducer,
-  place: placeReducer,
-  settings: settingsReducer,
+    auth: authReducer,
+    place: placeReducer,
+    settings: settingsReducer,
 });
-
