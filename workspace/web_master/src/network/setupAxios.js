@@ -11,6 +11,7 @@ export function setupAxios(axios, store) {
         // console.log("block expired request");
         return null;
       }
+
       const {
         auth: { token },
       } = store.getState();
