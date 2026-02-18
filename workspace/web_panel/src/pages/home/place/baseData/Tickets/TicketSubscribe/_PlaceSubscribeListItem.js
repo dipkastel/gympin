@@ -3,7 +3,7 @@ import {
     Button,
     Card,
     CardContent,
-    CardHeader,
+    CardHeader, Collapse,
     Dialog,
     DialogActions,
     DialogContent,
@@ -14,6 +14,7 @@ import {
     Typography
 } from "@mui/material";
 import {
+    ArrowDownward, ArrowUpward, ExpandLess, ExpandMore,
     GroupOutlined,
     HistoryToggleOffOutlined,
     HourglassTopOutlined,
@@ -37,7 +38,8 @@ const _PlaceSubscribeListItem = ({place,subscribe, reloadList}) => {
 
     const error = useContext(ErrorContext);
     const [deleteItem, setDeleteItem] = useState(null);
-    const [itemToEdit, setItemToEdit] = useState(null)
+    const [itemToEdit, setItemToEdit] = useState(null);
+    const [openDetails,setOpenDetails] = useState(false);
 
     useEffect(() => {
         reloadList();
@@ -104,10 +106,15 @@ const _PlaceSubscribeListItem = ({place,subscribe, reloadList}) => {
                 <CardHeader
                     component={"a"}
                     sx={{textDecoration: "none", textAlign: "start", color: "#000000"}}
-                    title={subscribe.Name}
+                    title={<Typography variant={"h5"} onClick={(e)=>setOpenDetails(!openDetails)}>
+                        {subscribe.Name}
+                        {openDetails?<ExpandLess />:<ExpandMore />}
+                    </Typography>}
                     action={<_SubscribeDeactiveDelete subscribe={subscribe} reloadList={reloadList}/>}
                 />
                 <CardContent sx={{pt: 0}}>
+
+                    <Collapse in={openDetails} timeout="auto" unmountOnExit>
                     <Grid sx={{mt: 1}} container justifyContent={"space-between"} direction={"row"} alignItems={"center"}>
                         <Grid><GroupOutlined sx={{mx: 1, color: "gray.contrastText"}}/><Typography sx={{display: "inline"}}
                                                                                                    variant={"body2"}
@@ -175,9 +182,10 @@ const _PlaceSubscribeListItem = ({place,subscribe, reloadList}) => {
                             <_SubscribeSport place={place} ticketSubscribe={subscribe}/>
                         </Grid>
                     </Grid>
+                    </Collapse>
                     {subscribe.Enable && <Button variant={"contained"} color={"primary"} onClick={() => setItemToEdit(subscribe)}
                                                  sx={{mt: 1}} fullWidth>
-                        <Grid container sx={{width: "100%", minHeight: 45}} columns={42}>
+                        <Grid container sx={{width: "100%", minHeight: 25}} columns={42}>
                             <Grid size={20} container direction={"column"} justifyContent={"center"} alignContent={"center"}
                                   alignItems={"start"}>
                                 <Grid>
@@ -188,11 +196,11 @@ const _PlaceSubscribeListItem = ({place,subscribe, reloadList}) => {
                             <Grid size={1}>
 
                                 <Divider orientation="vertical"
-                                         sx={{height: "45px", width: "1px", borderColor: "#FFFFFF", borderStyle: "dashed"}}
+                                         sx={{height: "25px", width: "1px", borderColor: "#FFFFFF", borderStyle: "dashed"}}
                                          component="div"/>
                             </Grid>
                             <Grid alignContent={"center"} size={21}>
-                                <Typography component={"span"} variant={"h5"} sx={{fontSize: "1.0rem"}}>ویرایش</Typography>
+                                <Typography component={"span"} variant={"h5"} sx={{fontSize: "0.8rem"}}>ویرایش</Typography>
                             </Grid>
                         </Grid>
                     </Button>}
