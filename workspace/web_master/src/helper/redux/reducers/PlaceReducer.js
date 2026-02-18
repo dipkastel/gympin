@@ -12,6 +12,8 @@ const ReducerConfig = {
   whitelist: ["place"],
 };
 
+
+
 const Reducer = (state = initialPlaceState, action) => {
   switch (action.type) {
     case placeActionTypes.SetPlace: {

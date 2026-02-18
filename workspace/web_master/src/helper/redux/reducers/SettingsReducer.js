@@ -13,6 +13,8 @@ const ReducerConfig = {
   whitelist: ["server", "app"],
 };
 
+
+
 const SettingsReducer = (state = initialSettingsState, action) => {
   switch (action.type) {
     case settingsActionTypes.SetServerSettings: {

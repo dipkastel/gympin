@@ -8,3 +8,4 @@ export const rootReducer = combineReducers({
   place: placeReducer,
   settings: settingsReducer,
 });
+
