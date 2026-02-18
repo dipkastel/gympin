@@ -1,14 +1,17 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from "react";
+import Grid from "@mui/material/Grid2";
+import { Typography } from "@mui/material";
 
-export function  NotFound(){
+export function NotFound() {
+  useEffect(() => {
+    document.title = "صفحه یافت نشد";
+  }, []);
 
-    useEffect(() => {
-        document.title = 'صفحه یافت نشد';
-    }, []);
-    return (
-        <div>
-            <h1>404</h1>
-        </div>
-    );
+  return (
+    <Grid container sx={{ textAlign: "center", p: 5 }}>
+      <Typography variant={"h3"} sx={{ width: "100%" }}>
+        موردی یافت نشد
+      </Typography>
+    </Grid>
+  );
 }
-

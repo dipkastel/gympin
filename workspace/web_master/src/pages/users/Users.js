@@ -1,80 +1,45 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {useTheme} from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import ScanPage from "./scan/ScanPage";
-import getAccessOf from "../../helper/accessManager";
-import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
-import AccessDenied from "../../components/AccessDenied";
-import SellsOfPlace from "./sells/SellsOfPlace";
+import {useState} from 'react';
+import Grid from "@mui/material/Grid2";
+import {Card, Container, Typography} from "@mui/material";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import _ActiveSubscribes from "../purchased/subscribe/activeSubscribes/_ActiveSubscribes";
+import _EnterByCamera from "./partials/_EnterByCamera";
+import _EnterByCode from "./partials/_EnterByCode";
+import _UserEnterRequest from "./partials/_UserEnterRequest";
 
 function Users() {
-    const theme = useTheme();
-    theme.direction = 'rtl';
-    const [selectedSubscribe, setSelectedSubscribe] = useState(null);
-    const [selectedTab, setSelectedTab] = useState(0);
 
-    useEffect(() => {
-        document.title = 'کاربران';
-    }, []);
+    const [enterRequestCode,SetEnterRequestCode] = useState(null);
 
-
-    if (!getAccessOf(personnelAccessEnumT.Users))
-        return <AccessDenied/>;
-
+    function onFind(code) {
+        if(!enterRequestCode)
+            SetEnterRequestCode(code);
+    }
     return (<>
 
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <AppBar position="static">
-                    <Tabs
-                        value={selectedTab}
-                        onChange={(e, n) => setSelectedTab(n)}
-                        aria-label="usersTab"
-                        textColor="inherit"
-                        indicatorColor="secondary"
-                        variant="fullWidth"
-                    >
+            <Container>
+                <title>ثبت ورود - کاربران</title>
+                <Grid sx={{mx: 2, mt: 2}}>
+                    <Card sx={{p: 2, width: "100%"}} variant={"outlined"}>
+                        <Grid container direction={"row"}>
+                            <DashboardIcon/>
+                            <Typography sx={{px: 1}}>{"ثبت ورود - کاربران"}</Typography>
+                        </Grid>
+                    </Card>
+                </Grid>
 
-                        {getAccessOf(personnelAccessEnumT.Scan) &&
-                        <Tab label="اسکن" id={"user-tab-0"} aria-controls={"user-tabpanel-0"}/>}
-                        {getAccessOf(personnelAccessEnumT.Sells) &&
-                        <Tab label="فروش ها" id={"user-tab-1"} aria-controls={"user-tabpanel-1"}/>}
-                    </Tabs>
-                </AppBar>
-            </Box>
-
-            <Box sx={{bgcolor: 'background.paper'}}>
-
-                {getAccessOf(personnelAccessEnumT.Scan) &&
-
-
-                <div
-                    hidden={selectedTab !== 0}
-                    id={`user-tabpanel-0`}
-                    aria-labelledby={`user-tab-0`}
-                >
-                    {selectedTab === 0 && (
-                        <Box>
-                            <ScanPage selectedSubscribe={selectedSubscribe}/>
-                        </Box>
-                    )}
-                </div>}
-                {getAccessOf(personnelAccessEnumT.Sells) &&
-                <div
-                    hidden={selectedTab !== 1}
-                    id={`user-tabpanel-1`}
-                    aria-labelledby={`user-tab-1`}
-                >
-                    {selectedTab === 1 && (
-                        <Box>
-                            <SellsOfPlace selectedSubscribe={setSelectedSubscribe}/>
-                        </Box>
-                    )}
-                </div>}
-            </Box>
+                <Grid sx={{p: 1}} container columns={12}>
+                    <Grid sx={{p: 1}} size={{xs: 12, sm: 12, md: 6, lg: 6}}>
+                            <_EnterByCamera onFind={onFind}/>
+                            <_EnterByCode setCode={onFind}/>
+                    </Grid>
+                    <Grid sx={{p: 1}} size={{xs: 12, sm: 12, md: 6, lg: 6}}>
+                        <_ActiveSubscribes/>
+                    </Grid>
+                </Grid>
+            </Container>
+            <_UserEnterRequest enterRequestCode={enterRequestCode} SetEnterRequestCode={SetEnterRequestCode}  />
         </>
     );
 }

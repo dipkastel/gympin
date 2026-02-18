@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import _HallEntered from "../../users/scan/EnteredUsers/_HallEntered";
 import _ActiveSubscribes from "./activeSubscribes/_ActiveSubscribes";
 
 const PurchasedSubscribe = () => {

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card, CardContent, CardHeader, CircularProgress, Grid, List, Pagination, Typography} from "@mui/material";
+import {Button, Card, CardContent, CardHeader, CircularProgress, Grid, List, Pagination, Typography} from "@mui/material";
 import {transactionUser_query} from "../../network/api/transaction.api";
 import {ErrorContext} from "../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
@@ -21,6 +21,7 @@ const _transactions = ({place}) => {
     if (!place || !currentUser)
         return (<></>);
 
+
     function getUserTransactions() {
         if (!place || !currentUser)
             return (<></>);
@@ -31,10 +32,8 @@ const _transactions = ({place}) => {
             PlaceId: place.Id,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         }).then((data) => {
-            console.log(data.data.Data);
             SetTransactions(data.data.Data);
         }).catch(e => {
-            console.log("err", e);
             try {
                 error.showError({message: e.response.data.Message,});
             } catch (f) {
@@ -43,31 +42,32 @@ const _transactions = ({place}) => {
         })
     }
 
+
     return (transactions != null) ? (
         <>
-            {transactions?.content?.length > 0 &&<>
-                <div>
-                    <div className={"section-title"}>
-                        تراکنش ها
-                    </div>
-                </div>
-                <List disablePadding>
-                    {transactions?.content?.map((item, Num) => (
-                        <Card key={"transaction-" + Num} elevation={3} sx={{borderRadius: 3,margin: 1}}>
-                            <__TransactionListItem item={item}/>
-                        </Card>
-                    ))}
-                </List>
-                <Grid container direction={"row"} alignItems={"center"} justifyContent={"center"}>
-                    <Pagination
-                        variant="outlined"
-                        count={transactions?.totalPages}
-                        onChange={(f, p) => setPage(p - 1)}
-                        color="primary"/>
-                </Grid>
-            </>}
-            {transactions?.content?.length < 1 &&
-            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
+            <Card sx={{mt: 2}} variant={"outlined"}>
+                <CardHeader
+                    title={"تراکنش ها"}
+                />
+                {transactions?.content?.length > 0 && <>
+                    <CardContent>
+                        <List disablePadding>
+                            {transactions?.content?.map((item, Num) => (
+                                <Card key={"transaction-" + Num} elevation={3} sx={{borderRadius: 3, margin: 1}}>
+                                    <__TransactionListItem item={item}/>
+                                </Card>
+                            ))}
+                        </List>
+                        <Grid container direction={"row"} alignItems={"center"} justifyContent={"center"}>
+                            <Pagination
+                                variant="outlined"
+                                count={transactions?.totalPages}
+                                onChange={(f, p) => setPage(p - 1)}
+                                color="primary"/>
+                        </Grid>
+                    </CardContent>
+                </>}
+                {transactions?.content?.length < 1 &&
                 <CardContent>
                     <Grid
                         container
@@ -80,15 +80,14 @@ const _transactions = ({place}) => {
                         <Typography variant={"body"} sx={{m: 2}}>
                             تراکنش یافت نشد
                         </Typography>
-
                     </Grid>
                 </CardContent>
+                }
             </Card>
-            }
         </>
 
     ) : (<>
-        <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
+        <Card sx={{mt: 2}} variant={"outlined"}>
             <CardHeader title={"تراکنش ها"}/>
             <CardContent>
                 <Grid container direction={"row"} alignItems={"center"} justifyContent={"center"}>

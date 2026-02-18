@@ -5,16 +5,26 @@ import {UserFinanceTypesEnum} from "../../helper/enums/UserFinanceTypesEnum";
 import {TransactionStatus} from "../../helper/enums/TransactionStatus";
 
 const __TransactionListItem = ({item}) => {
-    const [details, setDetails] = useState(true);
+    const [details, setDetails] = useState(false);
     return (
         <>
             <CardHeader
                 onClick={e => setDetails(!details)}
                 title={<ListItemText
-                    primary={<Typography variant={"body1"}
-                                         sx={{inlineSize: "max-content"}}>{item?.Purchased?.Name}</Typography>}
+                    sx={{ml:1}}
+                    primary={<Typography
+                                         sx={{inlineSize: "max-content", mt: 1}}>{item?.Purchased?.Name}</Typography>}
                     secondary={<Typography variant={"overline"}
-                                           sx={{mt: 3}}>{new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
+                                           sx={{mt: 3}}>{item?.Purchased?.Customer?.FullName}
+                    </Typography>}
+                />}
+                titleTypographyProps={{variant: "body2"}}
+                action={<ListItemText
+                    sx={{mr:1,textAlign:"end"}}
+                    primary={<Typography component={"p"} variant={"body1"}
+                                         sx={{textAlign: "end", mt: 2}}>{toPriceWithComma(item.Amount) + " تومان"}</Typography>}
+                    secondary={<Typography variant={"overline"}
+                                           sx={{textAlign: "end",mt: 3}}>{new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
                         hour: "numeric",
                         minute: "numeric",
                         year: 'numeric',
@@ -23,18 +33,9 @@ const __TransactionListItem = ({item}) => {
 
                     })}
                     </Typography>}
-                />}
-                titleTypographyProps={{variant: "body2"}}
-                action={<ListItemText
-                    primary={<Typography component={"p"} variant={"overline"}
-                                         sx={{textAlign: "left", mt: 1, color: "#addead"}}>موفق</Typography>}
-                    secondary={<Typography component={"p"} variant={"body1"} sx={{
-                        textAlign: "left",
-                        mt: 0
-                    }}>{toPriceWithComma(item.Amount) + " تومان"}</Typography>}
 
                 />}
-                sx={{backgroundColor: "#216a93", color: "#ffffff", px: 1, py: 0}}
+                sx={{backgroundColor: item?.Refounded?"#770d0d":"#216a93", color: "#ffffff", px: 1, py: 0}}
             />
             <Collapse in={details}>
                 <CardContent>
@@ -58,12 +59,12 @@ const __TransactionListItem = ({item}) => {
                         <Typography component={"p"} sx={{mt: 1}}
                                     variant={"caption"}>{UserFinanceTypesEnum[item?.FinanceUser?.FinanceType] + " ( " + item?.Place?.Name + " )"}</Typography>
                     </Grid>
-                    <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                    {!item?.Refounded&&<Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
                         <Typography component={"p"} sx={{mt: 1, color: "#aaaaaa"}}
                                     variant={"caption"}>{"تغییر حساب "}</Typography>
                         <Typography component={"p"} sx={{mt: 1}}
                                     variant={"caption"}>{toPriceWithComma(item?.LatestBalance) + " به " + toPriceWithComma(item?.LatestBalance + item.Amount)}</Typography>
-                    </Grid>
+                    </Grid>}
 
                     <Grid container direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
                         <Typography component={"p"} sx={{mt: 1, color: "#aaaaaa"}}
@@ -75,7 +76,7 @@ const __TransactionListItem = ({item}) => {
                         <Typography component={"p"} sx={{mt: 1, color: "#aaaaaa"}}
                                     variant={"caption"}>{"وضعیت تراکنش : "}</Typography>
                         <Typography component={"p"} sx={{mt: 1}}
-                                    variant={"caption"}>{TransactionStatus[item?.TransactionStatus]}</Typography>
+                                    variant={"caption"}>{item?.Refounded?"بازپرداخت":TransactionStatus[item?.TransactionStatus]}</Typography>
                     </Grid>
 
                 </CardContent>

@@ -40,11 +40,11 @@ const _AboutItem = ({placeAbout, onChange}) => {
                     <Form onSubmit={(e)=>deleteItem(e)}>
                         <DialogTitle>{"حذف "+itemToDelete.Name}</DialogTitle>
                         <DialogContent>
-                            {"آیا از حذف "+itemToDelete.Name+"("+aboutText+") اطمینان دارید؟"}
+                            {"آیا از حذف "+itemToDelete.Name+" اطمینان دارید؟"}
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={()=>setItemToDelete(null)}>لغو</Button>
-                            <Button type={"submit"}>ثبت</Button>
+                            <Button type={"submit"}>تایید</Button>
                         </DialogActions>
                     </Form>
                 </Dialog>}
@@ -67,8 +67,7 @@ const _AboutItem = ({placeAbout, onChange}) => {
 
     return (
         <>
-            <Card elevation={3} sx={{borderRadius: 3,margin: 1}}>
-
+            <Card sx={{p: 1, width: "100%"}} variant={"outlined"}>
                 <CardHeader
                     sx={{paddingBottom: 0}}
                     title={placeAbout.Name+(acceptable?" را خوانده و تایید میکنم.":"")}

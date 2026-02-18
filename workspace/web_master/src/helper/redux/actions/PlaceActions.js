@@ -1,9 +1,10 @@
 export const placeActionTypes = {
-    SetPlace: "[Place] place ",
-    SetHalls: "[Place] halls",
+  SetPlace: "[Place] place ",
 };
 
 export const placeActions = {
-    SetPlace: (place) => ({ type: placeActionTypes.SetPlace, payload: { place } }),
-    SetHalls: (halls) => ({ type: placeActionTypes.SetHalls, payload: { halls: halls } })
+  SetPlace: (place) => ({
+    type: placeActionTypes.SetPlace,
+    payload: { place },
+  }),
 };

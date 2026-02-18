@@ -1,30 +1,25 @@
-import {persistReducer} from "redux-persist";
-import {placeActionTypes} from "../actions/PlaceActions";
+import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
+import { placeActionTypes } from "../actions/PlaceActions";
 
 const initialPlaceState = {
-    place:undefined,
-    halls:undefined,
+  place: undefined,
 };
 
 const ReducerConfig = {
-    storage,
-    key: "gympin-master-place",
-    whitelist:["place","halls"]
+  storage,
+  key: "gympin-place-place",
+  whitelist: ["place"],
 };
 
-const PlaceReducer = (state = initialPlaceState, action) => {
-    switch (action.type) {
-        case placeActionTypes.SetPlace: {
-            return {...state,place: action.payload.place};
-        }
-        case placeActionTypes.SetHalls: {
-            return {...state ,halls: action.payload.halls};
-        }
-        default:
-            return state;
+const Reducer = (state = initialPlaceState, action) => {
+  switch (action.type) {
+    case placeActionTypes.SetPlace: {
+      return { ...state, place: action.payload.place };
     }
-}
+    default:
+      return state;
+  }
+};
 
-export const placeReducer = persistReducer(ReducerConfig, PlaceReducer);
+export const placeReducer = persistReducer(ReducerConfig, Reducer);

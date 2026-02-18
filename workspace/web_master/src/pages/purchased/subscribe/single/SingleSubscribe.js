@@ -17,7 +17,6 @@ const SingleSubscribe = () => {
 
     useEffect(() => {
         document.title = 'مدیریت عضویت';
-        console.log(subscribeId)
         getSubscribe();
     }, [subscribeId]);
 

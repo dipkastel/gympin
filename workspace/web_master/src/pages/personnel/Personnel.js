@@ -7,17 +7,17 @@ import {useSelector} from "react-redux";
 import getAccessOf from "../../helper/accessManager";
 import {personnelAccessEnumT} from "../../helper/enums/personnelAccessEnum";
 import AccessDenied from "../../components/AccessDenied";
-import {Grid, Typography} from "@mui/material";
+import {Card, CardContent, CardHeader, Container, Grid2 as Grid, Typography} from "@mui/material";
 import {getWizardComplete} from "../../helper/pocket";
+import SupportIcon from "@mui/icons-material/Support";
+import _AddImage from "../images/_AddImage";
 
 const Personnel = () => {
     const error = useContext(ErrorContext);
     const place = useSelector(({place}) => place.place)
     const [personnelList, SetPersonnelList] = useState(null);
-    const introMode = !getWizardComplete()
 
     useEffect(() => {
-        document.title = 'مدیریت پرسنل';
         getPersonnelList();
     }, []);
 
@@ -39,21 +39,37 @@ const Personnel = () => {
 
     return (
         <>
-            {personnelList && <_AddPersonnel renewList={getPersonnelList}/>}
-            {introMode && <Grid sx={{p: 2}}>
-                <Typography variant={"subtitle1"}>
-                    لطفا پرسنل مرکز را در این قسمت وارد نمایید.
-                </Typography>
-                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                    پس از تکمیل فرم میتوانید از قسمت تنظیمات ← پرسنل ، دسترسی های لازم برای پرسنل را بدهید.
-                </Typography>
-                <Typography color={"#a2a2a2"} variant={"subtitle2"}>
-                    پرسنلی که دسترسی به آنها داده نشده باشد امکان استفاده از هیچ بخشی از اپلیکیشن را ندارد.
-                </Typography>
-            </Grid>}
-            {personnelList && <_PersonnelList personnelList={personnelList} renewList={getPersonnelList}/>}
-            {/*{personnelList&&<_AddCoach renewList={getPersonnelList}/>}*/}
-            {/*{personnelList&&<_CoachList personnelList={personnelList} renewList={getPersonnelList}/>}*/}
+
+
+            <Container>
+                <title>پرسنل مجموعه ورزشی</title>
+                <Grid container direction={"column"}>
+                    <Grid sx={{p: 2}}>
+                        <Card sx={{p: 2, width: "100%"}} variant={"outlined"}>
+                            <Grid container justifyContent={"space-between"}>
+                                <Grid container direction={"row"}>
+                                    <SupportIcon/>
+                                    <Typography sx={{px: 1}}>{"پرسنل مجموعه ورزشی"}</Typography>
+                                </Grid>
+                            </Grid>
+                        </Card>
+                    </Grid>
+                    <Grid container columns={2} alignItems={"start"} sx={{p: 1}}>
+                        <Grid sx={{p: 1}} size={{xs: 2, md: 1, lg: 1, xl: 1}}>
+                            <Card sx={{width: "100%"}} variant={"outlined"}>
+                                <CardHeader
+                                    sx={{paddingBottom: 0}}
+                                    title={"پرسنل"}
+                                    action={personnelList && <_AddPersonnel renewList={getPersonnelList}/>}
+                                />
+                                <CardContent sx={{margin: 0}}>
+                                    {personnelList && <_PersonnelList personnelList={personnelList} renewList={getPersonnelList}/>}
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Container>
         </>
     );
 };
