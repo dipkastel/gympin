@@ -405,10 +405,7 @@
       <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_corporate/src/network/api/report.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/network/api/report.api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helper/redux/actions/PlaceActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/redux/actions/PlaceActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helper/redux/actions/SagaActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/redux/actions/SagaActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helper/redux/actions/SettingsActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/redux/actions/SettingsActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helper/redux/reducers/authReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/redux/reducers/authReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helper/redux/actions/AuthActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/redux/actions/AuthActions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -535,7 +532,7 @@
       <workItem from="1766740448344" duration="19545000" />
       <workItem from="1767430496505" duration="124815000" />
       <workItem from="1769787004028" duration="58584000" />
-      <workItem from="1771453042976" duration="1632000" />
+      <workItem from="1771453042976" duration="1880000" />
     </task>
     <servers />
   </component>
