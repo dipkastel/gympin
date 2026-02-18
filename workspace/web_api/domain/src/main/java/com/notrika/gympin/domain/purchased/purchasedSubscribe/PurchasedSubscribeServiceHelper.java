@@ -168,8 +168,8 @@ public class PurchasedSubscribeServiceHelper {
     }
 
     @Transactional
-    public void RefundedSubscribe(PurchasedSubscribeEntity entity){
-            FinanceSerialEntity serial =  entity.getSerials().stream().filter(s->s.getProcessTypeEnum()== ProcessTypeEnum.TRA_CHECKOUT_BASKET).findFirst().get();
+    public void RefundedSubscribe(PurchasedSubscribeEntity purchasedSubscribeEntity){
+            FinanceSerialEntity serial =  purchasedSubscribeEntity.getSerials().stream().filter(s->s.getProcessTypeEnum()== ProcessTypeEnum.TRA_CHECKOUT_BASKET).findFirst().get();
 
             if(serial.getPurchasedBases().size()==1){
                 InvoiceEntity invoice = serial.getInvoices().get(0);
@@ -183,24 +183,24 @@ public class PurchasedSubscribeServiceHelper {
                List<FinanceCorporatePersonnelCreditTransactionEntity> personnelCredits =  serial.getPersonnelCreditTransactions();
                invoiceServiceHelper.refoundpersonelCredit(personnelCredits,serial);
 
-                if(entity.getStatus()==EXPIRE||entity.getStatus()==ACTIVE||entity.getStatus()==COMPLETE){
+                if(purchasedSubscribeEntity.getStatus()==EXPIRE||purchasedSubscribeEntity.getStatus()==ACTIVE||purchasedSubscribeEntity.getStatus()==COMPLETE){
                     //get price from place
-                    FinanceSerialEntity useSerial =  entity.getSerials().stream().filter(s->s.getProcessTypeEnum()== ProcessTypeEnum.TRA_USE_TICKET).findFirst().get();
+                    FinanceSerialEntity useSerial =  purchasedSubscribeEntity.getSerials().stream().filter(s->s.getProcessTypeEnum()== ProcessTypeEnum.TRA_USE_TICKET).findFirst().get();
 
                     List<FinanceUserTransactionEntity> sellerTransaction =  useSerial.getUserTransactions();
                     invoiceServiceHelper.refundPlaceSeller(sellerTransaction,useSerial);
 
 
                     List<FinanceIncomeTransactionEntity> incomeTransaction =  useSerial.getIncomeTransactions();
-                    invoiceServiceHelper.refundIncome(incomeTransaction,useSerial,entity);
+                    invoiceServiceHelper.refundIncome(incomeTransaction,useSerial,purchasedSubscribeEntity);
 
                     List<FinanceDiscountTransactionEntity> discountTransaction =  useSerial.getDiscount();
-                    invoiceServiceHelper.refundDiscount(discountTransaction,useSerial,entity);
+                    invoiceServiceHelper.refundDiscount(discountTransaction,useSerial,purchasedSubscribeEntity);
 
                 }
 
-                entity.setStatus(REFUNDED);
-                purchasedSubscribeRepository.update(entity);
+                purchasedSubscribeEntity.setStatus(REFUNDED);
+                purchasedSubscribeRepository.update(purchasedSubscribeEntity);
 
                 invoice.setStatus(InvoiceStatus.REFUNDED);
                 invoiceRepository.update(invoice);
