@@ -67,7 +67,7 @@ const PlaceDataManagement = () => {
                         >
                             <Tab label="مرکز" value={"PLACE"}/>
                             <Tab label="اطلاعات" value={"DATA"}/>
-                            <Tab label="بلیط ها" value={"TICKET"}/>
+                            <Tab label="عضویت ها" value={"TICKET"}/>
                             <Tab label="فروش ها" value={"SELLS"}/>
                             <Tab label="ذینفعان" value={"BENEFICIARIES"}/>
                             <Tab label="تنظیمات" value={"SETTING"}/>

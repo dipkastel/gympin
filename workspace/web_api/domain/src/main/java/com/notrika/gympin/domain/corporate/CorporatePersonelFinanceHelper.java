@@ -73,7 +73,9 @@ public class CorporatePersonelFinanceHelper {
         //TODO change this by query
         BigDecimal totalPersonnelCreditsBeforeAdd = corporate.getPersonnel().stream().map(p -> p.getCredits().stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, (f, q) -> f.add(q))).findAny().get();
         BigDecimal totalPersonnelCreditsAfterAdd = totalPersonnelCreditsBeforeAdd.add(CreditToAdd);
-        if (corporate.getContractType() == CorporateContractTypeEnum.NEO) {
+        if (corporate.getContractType() == CorporateContractTypeEnum.GOLD) {
+            return true;
+        }else if (corporate.getContractType() == CorporateContractTypeEnum.NEO) {
             return compareDepositAndCredit(totalPersonnelCreditsAfterAdd, corporate.getFinanceCorporate().getTotalDeposit(), 3);
         } else {
             return compareDepositAndCredit(totalPersonnelCreditsAfterAdd, corporate.getFinanceCorporate().getTotalDeposit(), 1);

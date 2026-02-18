@@ -29,8 +29,8 @@ export function TicketSubscribes_getById(data) {
     return axios.get(TicketSubscribesApi.getById, {params: data});
 }
 
-export function TicketSubscribes_getByPlaceId(data) {
-    return axios.get(TicketSubscribesApi.getByPlaceId, {params: data});
+export function TicketSubscribes_getByPlace(data) {
+    return axios.get(TicketSubscribesApi.getByPlace, {params: data});
 }
 
 export function TicketSubscribes_getTicketSubscribesSports(data) {

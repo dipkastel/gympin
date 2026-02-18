@@ -5,6 +5,7 @@ import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
 import {AccountBalanceWallet, AttachMoney, Description, NotInterested} from "@mui/icons-material";
 import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {UserFinanceTypesEnum} from "../../../../../helper/enums/UserFinanceTypesEnum";
+import PopoverUser from "../../../../../components/popover/PopoverUser";
 
 const _UserTransactions = ({userTransactions}) => {
     if (!userTransactions)
@@ -33,12 +34,12 @@ const _UserTransactions = ({userTransactions}) => {
 
 
         return (<>
-            {UserFinanceTypesEnum[tr?.FinanceUser?.FinanceType]+" "}
+            {UserFinanceTypesEnum[tr?.FinanceUser?.FinanceType] + " "}
             <>{"با مبلغ : " + toPriceWithComma(tr?.FinanceUser?.TotalDeposit)}</>
 
-            {tr?.Description&&
+            {tr?.Description &&
             <Tooltip title={tr?.Description} placement="top">
-                <Description sx={{color:"#f44fd3"}} />
+                <Description sx={{color: "#f44fd3"}}/>
             </Tooltip>}
         </>);
     }
@@ -59,7 +60,7 @@ const _UserTransactions = ({userTransactions}) => {
                     <div className="kt-widget4">
                         {userTransactions.map((tr, num) => (
                             <div>
-                            <div key={num} className="kt-widget4__item">
+                                <div key={num} className="kt-widget4__item">
                         <span className="kt-widget4__icon">
                                     {(tr?.TransactionStatus !== "COMPLETE") && (
                                         <Tooltip title={TransactionStatus[tr?.TransactionStatus]} placement="top">
@@ -78,26 +79,26 @@ const _UserTransactions = ({userTransactions}) => {
                             </Tooltip>
                             }
                         </span>
-                                <ListItemText
-                                    primary={getUserFixedName(tr?.FinanceUser?.User)}
-                                    secondary={getCalc(tr)}
-                                    sx={{textAlign: "right"}}/>
-                                <ListItemText
-                                    primary={getCurrentAmount(tr)}
-                                    secondary={"انجام شده در : "+new Date(tr?.CreatedDate).toLocaleDateString('fa-IR', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: "2-digit",
-                                        minute: "2-digit"
-                                    })}
-                                    sx={{textAlign: "right"}}/>
-                                <span
-                                    className={"kt-widget4__number " + getColorClassByAmount(tr?.Amount)}>{toPriceWithComma(tr?.Amount) + " تومان"}</span>
+                                    <ListItemText
+                                        primary={<PopoverUser user={tr?.FinanceUser?.User} />}
+                                        secondary={getCalc(tr)}
+                                        sx={{textAlign: "right"}}/>
+                                    <ListItemText
+                                        primary={getCurrentAmount(tr)}
+                                        secondary={"انجام شده در : " + new Date(tr?.CreatedDate).toLocaleDateString('fa-IR', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                            hour: "2-digit",
+                                            minute: "2-digit"
+                                        })}
+                                        sx={{textAlign: "right"}}/>
+                                    <span
+                                        className={"kt-widget4__number " + getColorClassByAmount(tr?.Amount)}>{toPriceWithComma(tr?.Amount) + " تومان"}</span>
 
-                            </div>
-                                <Typography variant={"overline"} >
-                                    {"انجام شده توسط : " +getUserFixedName(tr?.CreatorUser)}
+                                </div>
+                                <Typography variant={"overline"}>
+                                    {"انجام شده توسط : " + getUserFixedName(tr?.CreatorUser)}
                                 </Typography>
                             </div>
                         ))}

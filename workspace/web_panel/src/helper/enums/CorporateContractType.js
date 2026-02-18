@@ -1,5 +1,6 @@
 export const CorporateContractType = {
 ALPHA: "آلفا",
 PRO:"پرو",
-NEO:"نئو"
+NEO:"نئو",
+GOLD:"طلایی"
 }

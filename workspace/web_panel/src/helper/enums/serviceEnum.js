@@ -300,5 +300,7 @@ export const serviceEnum = {
     "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.settings.notification.dto.NotificationSubscriptionDto> com.notrika.gympin.controller.impl.settings.notification.NotificationSubscriptionControllerImpl.add(com.notrika.gympin.common.settings.notification.param.NotificationSubscriptionParam)":"درخواست دریافت نوتیفیکیشن",
     "public org.springframework.http.ResponseEntity<org.springframework.data.domain.Page<com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto>> com.notrika.gympin.controller.impl.ticket.ticketSubscribe.TicketSubscribeControllerImpl.query(com.notrika.gympin.common.ticket.ticketSubscribe.query.TicketSubscribeQuery)":"دریافت لیست بلیط ها",
     "public org.springframework.http.ResponseEntity<java.util.List<com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto>> com.notrika.gympin.controller.impl.finance.Settlement.FinanceSettlementUserDepositControllerImpl.getAllCreditors()":"دریافت لیست کیف پول ها",
+    "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.settings.base.dto.CallListDto> com.notrika.gympin.controller.impl.settings.SettingControllerImpl.getCallList(com.notrika.gympin.common.settings.base.param.GetCallListParam)":"دریافت لیست تماس ها",
+    "public org.springframework.http.ResponseEntity<java.lang.String> com.notrika.gympin.controller.impl.settings.SettingControllerImpl.callToNumber(com.notrika.gympin.common.settings.base.param.CallToNumberParam)":"تماس با یک شماره",
     "":"",
 }

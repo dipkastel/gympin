@@ -10,7 +10,7 @@ import TableBody from "@mui/material/TableBody";
 import {
     TicketSubscribes_add,
     TicketSubscribes_delete,
-    TicketSubscribes_getByPlaceId
+    TicketSubscribes_getByPlace
 } from "../../../../../../network/api/ticketSubscribes.api";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";
 
@@ -23,7 +23,7 @@ const TicketSubscribe = ({place}) => {
         getTicketSubscribesOfPlace();
     }, []);
     function getTicketSubscribesOfPlace(){
-        TicketSubscribes_getByPlaceId({Id:place.Id}).then(data=>{
+        TicketSubscribes_getByPlace({Id:place.Id}).then(data=>{
             SetPlaceTicketSubscribes(data.data.Data);
         }).catch(e => {
                     try {

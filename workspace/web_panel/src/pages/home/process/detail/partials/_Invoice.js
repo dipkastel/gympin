@@ -3,6 +3,7 @@ import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/
 import {LinearProgress, ListItemText} from "@mui/material";
 import {toPriceWithComma} from "../../../../../helper";
 import {InvoiceStatus} from "../../../../../helper/enums/InvoiceStatus";
+import PopoverUser from "../../../../../components/popover/PopoverUser";
 
 const _Invoice = ({serialInvoice}) => {
 
@@ -31,19 +32,16 @@ const _Invoice = ({serialInvoice}) => {
                         {serialInvoice.map(item => (
                             <div key={item.Id + "in"}>
                                 <div className="kt-widget4__item">
-                                    <ListItemText
-                                        primary={item?.UserFullName}
-                                        secondary={item?.UserPhoneNumber}
-                                        sx={{textAlign: "right"}}/>
+                                    <PopoverUser user={item?.User} />
                                     <ListItemText
                                         primary={"مبلغ فاکتور : " + toPriceWithComma(item.TotalPrice) + " تومان"}
                                         secondary={"قابل پرداخت : " + toPriceWithComma(item.PriceToPay) + " تومان"}
                                         sx={{textAlign: "right"}}/>
                                     <ListItemText
                                         primary={InvoiceStatus[item.Status]}
-                                        secondary={"انجام شده در : " + new Date(item?.CreatedDate).toLocaleDateString('fa-IR', {
+                                        secondary={new Date(item?.CreatedDate).toLocaleDateString('fa-IR', {
                                             year: 'numeric',
-                                            month: 'long',
+                                            month: 'numeric',
                                             day: 'numeric',
                                             hour: "2-digit",
                                             minute: "2-digit"

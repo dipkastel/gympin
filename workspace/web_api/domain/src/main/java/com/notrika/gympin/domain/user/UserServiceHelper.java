@@ -1,6 +1,7 @@
 package com.notrika.gympin.domain.user;
 
 
+import com.notrika.gympin.common.corporate.corporate.enums.CorporateContractTypeEnum;
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
@@ -65,6 +66,8 @@ public class UserServiceHelper {
             var personelCorproateMaxCredit = activeCredits.stream().filter(o->!o.isDeleted()).map(FinanceCorporatePersonnelCreditEntity::getCreditAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
             if (personelCorproateMaxCredit.compareTo(corporate.getFinanceCorporate().getTotalDeposit()) > 0)
                 canPay = false;
+            if(corporate.getContractType()== CorporateContractTypeEnum.GOLD)
+                canPay = true;
             for (FinanceCorporatePersonnelCreditEntity credit : activeCredits) {
                 //check Credit
                 //add credit To List

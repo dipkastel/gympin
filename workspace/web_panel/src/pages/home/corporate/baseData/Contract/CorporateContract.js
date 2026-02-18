@@ -28,7 +28,8 @@ const CorporateContract = ({currentCorporate, UpdatePage}) => {
         return [
             {value: "ALPHA", label: "آلفا"},
             {value: "PRO", label: "پرو"},
-            {value: "NEO", label: "نئو"}
+            {value: "NEO", label: "نئو"},
+            {value: "GOLD", label: "طلایی"},
         ]
     }
 
@@ -61,7 +62,7 @@ const CorporateContract = ({currentCorporate, UpdatePage}) => {
                             onChange={e => changeCorporateContractType(e.value)}
                         />
                     </Form.Group>
-                    {(currentCorporate.ContractType=="PRO"||currentCorporate.ContractType=="NEO")&&
+                    {(currentCorporate.ContractType=="PRO"||currentCorporate.ContractType=="NEO"||currentCorporate.ContractType=="GOLD")&&
                         <Form.Group className={"m-0"}>
                             <FormLabel sx={{m:0}} component="legend">مدت پیشنهادی برای انقضای اعتبار :</FormLabel>
                             <Grid container sx={{flexGrow: 1, mb: 2}}

@@ -2,6 +2,7 @@ import React from 'react';
 import {Avatar, Grid, LinearProgress, Typography} from "@mui/material";
 import {ProcessTypeEnum} from "../../../../../helper/enums/ProcessTypeEnum";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
+import PopoverUser from "../../../../../components/popover/PopoverUser";
 
 const _BaseProcessDatas = ({serial}) => {
 
@@ -30,8 +31,7 @@ const _BaseProcessDatas = ({serial}) => {
                         alignItems="center">
                         <Avatar alt="userImage" src={(serial?.CreatorUser?.Avatar)?(serial?.CreatorUser.Avatar.Url||""):""}  sx={{width:90,height:90,ml:1}} />
                         <div>
-                            <p>{("نام و نام خانوادگی : "+serial?.CreatorUser?.FullName)}</p>
-                            <p>{("نام کاربری : "+serial?.CreatorUser?.Username)}</p>
+                            <Grid sx={{display:"inline-flex"}}>{"نام و نام خانوادگی : "}<PopoverUser user={serial?.CreatorUser} /></Grid>
                         </div>
                     </Grid>
                     <Typography variant={"h6"}>{" نوع فرایند : "+ProcessTypeEnum[serial?.ProcessType]}</Typography>

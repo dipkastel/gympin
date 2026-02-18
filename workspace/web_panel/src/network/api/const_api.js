@@ -222,7 +222,7 @@ export let optionOfPlaceApi = {
     delete: "v1/OptionOfPlace/delete",
     getAll: "v1/OptionOfPlace/getAll",
     update: "v1/OptionOfPlace/update",
-    getByPlaceId: "v1/OptionOfPlace/getByPlaceId",
+    getByPlaceId: "v1/OptionOfPlace/getByPlace",
 
 };
 export let ServiceApi = {
@@ -297,7 +297,7 @@ export let TicketSubscribesApi = {
     update: "v1/TicketSubscribe/update",
     ChangeTicketSubscribeStatus: "v1/TicketSubscribe/ChangeTicketSubscribeStatus",
     query: "v1/TicketSubscribe/query",
-    getByPlaceId: "v1/TicketSubscribe/getByPlace",
+    getByPlace: "v1/TicketSubscribe/getByPlace",
     countFilter: "v1/TicketSubscribe/count-filter",
     getCoaches: "v1/TicketSubscribe/getCoaches",
     addCoach: "v1/TicketSubscribe/addCoach",
@@ -370,7 +370,7 @@ export let PlaceAboutApi = {
     delete: "v1/placeAbout/delete",
     getAll: "v1/placeAbout/getAll",
     update: "v1/placeAbout/update",
-    getByPlace: "v1/placeAbout/getByPlaceId"
+    getByPlace: "v1/placeAbout/getByPlace"
 };
 export let PlaceQrMessageApi = {
     add: "v1/PlaceQrMessage/add",

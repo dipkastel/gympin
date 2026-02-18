@@ -7,7 +7,7 @@ import {ErrorContext} from "../../../../../../../components/GympinPagesProvider"
 import {
     TicketSubscribes_add,
     TicketSubscribes_delete,
-    TicketSubscribes_getByPlaceId,
+    TicketSubscribes_getByPlace,
     TicketSubscribes_update
 } from "../../../../../../../network/api/ticketSubscribes.api";
 import __wizardTicketSubscribesDetails from "./__wizardTicketSubscribesDetails";
@@ -28,7 +28,7 @@ const _wizardSubscribe = () => {
     }, []);
 
     function getTicketSubscribeOfPlace() {
-        TicketSubscribes_getByPlaceId({Id: placeId}).then(data => {
+        TicketSubscribes_getByPlace({Id: placeId}).then(data => {
             SetPlaceTicketSubscribe(data.data.Data);
         }).catch(e => {
             try {

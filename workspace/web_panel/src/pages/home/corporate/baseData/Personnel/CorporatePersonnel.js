@@ -22,6 +22,7 @@ import {ListAlt} from "@mui/icons-material";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppCorporatePersonnel, SetRppCorporatePersonnel} from "../../../../../helper/pocket/pocket";
 import _AddPersonelByList from "./_AddPersonelByList";
+import PopoverUser from "../../../../../components/popover/PopoverUser";
 
 const CorporatePersonnel = ({currentCorporate}) => {
     const error = useContext(ErrorContext);
@@ -232,7 +233,7 @@ const CorporatePersonnel = ({currentCorporate}) => {
                             <TableRow>
                                 <TableCell align="right">Id</TableCell>
                                 <TableCell align="right"></TableCell>
-                                <TableCell align="right">نام/تلفن</TableCell>
+                                <TableCell align="right">کاربر</TableCell>
                                 <TableCell align="right">دسترسی</TableCell>
                                 <TableCell align="right">گروه</TableCell>
                                 <TableCell align="right">اعتبار</TableCell>
@@ -248,9 +249,7 @@ const CorporatePersonnel = ({currentCorporate}) => {
                                         alt={row.User.Username} src={row.User.Avatar ? row.User.Avatar.Url : ""}
                                         sx={{width: 20, height: 20}}/></TableCell>
                                     <TableCell align="right">
-                                        <Tooltip title={row.User.Username || ""} placement="left">
-                                            <span>{(row.User.FullName || "")}</span>
-                                        </Tooltip>
+                                        <PopoverUser user={row?.User} />
                                     </TableCell>
                                     <TableCell align="right">{<>
                                         <Tooltip title={row.Role} placement="top">

@@ -9,6 +9,7 @@ import {toPriceWithComma} from "../../../../helper";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {Portlet, PortletBody} from "../../../partials/content/Portlet";
 import _PersonnelGroup from "./_PersonnelGroup";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
 const CorporatePersonnelDetailsManagement = () => {
     const error = useContext(ErrorContext);
@@ -69,8 +70,7 @@ const CorporatePersonnelDetailsManagement = () => {
                                 justifyContent={"space-between"}
                                 alignItems="center">
                                 <div>
-                                    <p>{("نام و نام خانوادگی : " + corporatePersonnel?.User?.FullName)}</p>
-                                    <p>{("نام کاربری : " + corporatePersonnel?.User?.Username)}</p>
+                                    <Grid sx={{display:"inline-flex"}}>{"نام و نام خانوادگی : "}<PopoverUser user={corporatePersonnel?.User} /></Grid>
                                     <p>{("تلفن : " + corporatePersonnel?.User?.PhoneNumber)}</p>
                                     <p>{("اعتبار : " + toPriceWithComma(corporatePersonnel?.TotalCredit))}</p>
                                 </div>
