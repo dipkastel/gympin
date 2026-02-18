@@ -2,63 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82a1e8ab-7850-4472-b2c7-7003016a9de7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporatePersonnel/param/CorporatePersonnelListItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/helper/enums/GiftCreditStatus.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/Personnel/_AddPersonelByList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashCreditorsPeople.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/gifts/partials/_GiftAddItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/gifts/partials/_GiftDeleteItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/gifts/partials/_GiftEditItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporatePersonnel/api/CorporatePersonnelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporatePersonnel/api/CorporatePersonnelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporatePersonnel/param/CorporatePersonnelParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporatePersonnel/param/CorporatePersonnelParam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporatePersonnel/service/CorporatePersonnelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/corporate/corporatePersonnel/service/CorporatePersonnelService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/finance/settlement/api/FinanceSettlementUserDepositController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/finance/settlement/api/FinanceSettlementUserDepositController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/finance/settlement/service/FinanceSettlementUserDepositService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/finance/settlement/service/FinanceSettlementUserDepositService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/settings/notification/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/settings/notification/service/NotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/support/param/SupportParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/java/com/notrika/gympin/common/support/param/SupportParam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/common/src/main/resources/i18n/messages_fa.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/common/src/main/resources/i18n/messages_fa.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/corporate/CorporatePersonnelControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/corporate/CorporatePersonnelControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/finance/Settlement/FinanceSettlementUserDepositControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/finance/Settlement/FinanceSettlementUserDepositControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/settings/notification/NotificationControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/settings/notification/NotificationControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/support/SupportControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/controllerImpl/src/main/java/com/notrika/gympin/controller/impl/support/SupportControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/corporate/CorporatePersonnelServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/corporate/CorporatePersonnelServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/finance/settlement/FinanceSettlementUserDepositServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/finance/settlement/FinanceSettlementUserDepositServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/settings/gifts/GiftsCreditServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/settings/gifts/GiftsCreditServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/settings/notification/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/settings/notification/NotificationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/support/SupportServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/domain/src/main/java/com/notrika/gympin/domain/support/SupportServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/logs/logFile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/logs/logFile.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/finance/FinanceUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/persistence/src/main/java/com/notrika/gympin/persistence/dao/repository/finance/FinanceUserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/components/DrawerLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/components/DrawerLayout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/Food/_CateringMenuFoodImageList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/Food/_CateringMenuFoodImageList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_app/src/pages/Food/_CateringSelectDate.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/pages/Food/_CateringSelectDate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_corporate/src/pages/EmployeeHampers/nuts/Nuts.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/pages/EmployeeHampers/nuts/Nuts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/foodItems/FoodItems.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/foodItems/FoodItems.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/foodItems/_ItemCategories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/foodItems/_ItemCategories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/foodItems/__EditFoodItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/foodItems/__EditFoodItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/CorporatePersonnel.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/CorporatePersonnel.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/GiftCredits.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/GiftCredits.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/const_api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/const_api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/settlementUserDeposit.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/settlementUserDeposit.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/network/api/support.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/network/api/support.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/CateringFoods.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/CateringFoods.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/_EditFoodItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/catering/baseData/foods/_EditFoodItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/Personnel/CorporatePersonnel.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/corporate/baseData/Personnel/CorporatePersonnel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/Tabs/DashTasksTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/Tabs/DashTasksTab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashboardIncomeChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashboardIncomeChart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/gifts/giftTypes/_GiftCredit.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/gifts/giftTypes/_GiftCredit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/settings/Activities/__SettingActivitiesGeneral.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/settings/Activities/__SettingActivitiesGeneral.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/settings/sms/engin/__SmsCanceledList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/settings/sms/engin/__SmsCanceledList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/settings/sms/engin/__SmsFailedList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/settings/sms/engin/__SmsFailedList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/settings/sms/engin/__SmsPendingList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/settings/sms/engin/__SmsPendingList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/support/Chat/SupportChatList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/support/Chat/SupportChatList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/support/Chat/_ActiveUserListItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/support/Chat/_ActiveUserListItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/support/Ticket/SupportTicketLists.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/support/Ticket/SupportTicketLists.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/partials/selector/__SelectCorporate.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/partials/selector/__SelectCorporate.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,6 +148,7 @@
       <workItem from="1764595824150" duration="1449000" />
       <workItem from="1764753359682" duration="585000" />
       <workItem from="1765091916696" duration="584000" />
+      <workItem from="1765381342741" duration="698000" />
     </task>
     <servers />
   </component>
