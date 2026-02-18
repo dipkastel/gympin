@@ -21,3 +21,4 @@ export function* rootSaga() {
 sagaMiddleware.run(rootSaga);
 
 export default store;
+

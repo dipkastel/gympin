@@ -13,3 +13,4 @@ export const settingActions = {
     payload: { settings },
   }),
 };
+

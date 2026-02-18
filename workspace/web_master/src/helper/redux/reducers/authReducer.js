@@ -15,6 +15,7 @@ const ReducerConfig = {
   whitelist: ["user", "token", "refreshToken"],
 };
 
+
 const AuthBaseReducer = (state = initialAuthState, action) => {
   switch (action.type) {
     case authActionTypes.SetUser: {

@@ -19,3 +19,4 @@ export const sagaActions = {
   }),
   RequestLogout: () => ({ type: ActionTypesSaga.RequestLogout }),
 };
+
