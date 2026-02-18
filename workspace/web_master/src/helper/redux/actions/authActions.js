@@ -1,10 +1,8 @@
 export const authActionTypes = {
-
     SetUser: "[Auth] User",
     SetToken: "[Auth] Token",
     SetRefreshToken: "[Auth] Refresh Token",
     Logout: "[Auth] Logout",
-
 };
 
 export const authActions = {
