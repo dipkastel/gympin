@@ -30,10 +30,11 @@ const _SubscribeStatus = ({subscribe, updatePage}) => {
     function renderModalRefound() {
         function refound(e) {
             e.preventDefault()
+            setShowRefoundModal(false);
             purchasedSubscribe_refund({Id: subscribe.Id})
                 .then((data) => {
                     error.showError({message: "عملیات موفق",});
-                    setShowRefoundModal(false);
+                    window.location.reload();
                 })
                 .catch(e => {
                     try {
