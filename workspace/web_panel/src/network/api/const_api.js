@@ -222,7 +222,7 @@ export let optionOfPlaceApi = {
     delete: "v1/OptionOfPlace/delete",
     getAll: "v1/OptionOfPlace/getAll",
     update: "v1/OptionOfPlace/update",
-    getByPlaceId: "v1/OptionOfPlace/getByPlace",
+    getByPlaceId: "v1/OptionOfPlace/getByPlaceId",
 
 };
 export let ServiceApi = {
@@ -370,7 +370,7 @@ export let PlaceAboutApi = {
     delete: "v1/placeAbout/delete",
     getAll: "v1/placeAbout/getAll",
     update: "v1/placeAbout/update",
-    getByPlace: "v1/placeAbout/getByPlace"
+    getByPlace: "v1/placeAbout/getByPlaceId"
 };
 export let PlaceQrMessageApi = {
     add: "v1/PlaceQrMessage/add",

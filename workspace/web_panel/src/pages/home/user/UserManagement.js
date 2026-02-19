@@ -314,9 +314,8 @@ const UserManagement = () => {
                                             </TableCell>
                                             <TableCell align="left">
 
-                                                <Button variant={"contained"} onClick={(event) => {
-                                                    history.push({pathname: "/users/details/" + row.Id});
-                                                }} >جزییات</Button>
+                                                <Button variant={"contained"}
+                                                        href={ "/users/details/" + row.Id} >جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

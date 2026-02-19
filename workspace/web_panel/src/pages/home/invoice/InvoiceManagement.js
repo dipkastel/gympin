@@ -155,9 +155,8 @@ const InvoiceManagement = () => {
                                                       color={getStatusCollor(row)}/>
                                             </TableCell>
                                             <TableCell align="left">
-                                                <Button variant={"contained"} onClick={(event) => {
-                                                    history.push({pathname: "/invoice/detail/" + row.Id});
-                                                }}>جزییات</Button>
+                                                <Button variant={"contained"}
+                                                        href={"/invoice/detail/" + row.Id}>جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

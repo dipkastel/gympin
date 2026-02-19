@@ -92,7 +92,7 @@ const _DashSupport = () => {
                                                            align="left">
                                                     <Button
                                                         variant={"contained"}
-                                                        onClick={(event) => history.push({pathname: "/support/details/" + row.Id})}
+                                                        href={"/support/details/" + row.Id}
                                                     >جزییات</Button>
                                                 </TableCell>
 

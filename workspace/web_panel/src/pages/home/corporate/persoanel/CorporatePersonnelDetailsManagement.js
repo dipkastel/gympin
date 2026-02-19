@@ -52,9 +52,7 @@ const CorporatePersonnelDetailsManagement = () => {
                     <p>{"مدیریت پرسنل "}</p>
                     <div>
                         <Button variant={"contained"} color={"warning"}
-                                onClick={() => {
-                                    history.push("/corporate/details/" + corporatePersonnel.Corporate.Id)
-                                }}
+                                href={"/corporate/details/" + corporatePersonnel.Corporate.Id}
                         >{corporatePersonnel.Corporate.Name}</Button>
                     </div>
 

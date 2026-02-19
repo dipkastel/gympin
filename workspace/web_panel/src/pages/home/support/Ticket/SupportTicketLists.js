@@ -220,11 +220,7 @@ const SupportTicketLists = () => {
                                             <TableCell align="left">
                                                 <Button
                                                     variant={"contained"}
-                                                    onClick={(event) => {
-                                                        history.push({
-                                                            pathname: "/support/details/" + row.Id
-                                                        });
-                                                    }}
+                                                    href={ "/support/details/" + row.Id}
                                                     size={"small"}>جزییات</Button>
                                             </TableCell>
                                         </TableRow>

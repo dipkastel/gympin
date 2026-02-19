@@ -166,9 +166,9 @@ const ProcessManagement = () => {
                                                 </Grid>
                                             </TableCell>
                                             <TableCell align="left">
-                                                <Button variant={"contained"} onClick={(event) => {
-                                                    history.push({pathname: "/process/detail/" + row.Id});
-                                                }} >جزییات</Button>
+                                                <Button variant={"contained"}
+                                                        href={"/process/detail/" + row.Id}
+                                                >جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

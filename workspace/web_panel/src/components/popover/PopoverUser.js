@@ -53,7 +53,7 @@ const PopoverUser = ({user}) => {
                                 <Grid><Typography sx={{p: 1}}>صفحه کاربر </Typography></Grid>
                                 <Grid>
                                     <IconButton
-                                        onClick={(event) => history.push({pathname: "/users/details/" + user?.Id})}>
+                                        href={"/users/details/" + user?.Id}>
                                         <ArrowCircleLeft/>
                                     </IconButton>
                                 </Grid>

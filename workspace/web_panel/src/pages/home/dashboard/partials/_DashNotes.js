@@ -105,7 +105,7 @@ const _DashNotes = () => {
                                                            align="left">
                                                     <Button
                                                         variant={"contained"}
-                                                        onClick={(event) => history.push({pathname: getSourceUrl(row)})}>رفتن به منبع
+                                                        href={getSourceUrl(row)}>رفتن به منبع
                                                         یادداشت</Button>
                                                 </TableCell>
 

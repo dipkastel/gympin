@@ -50,9 +50,8 @@ const TicketCourseDataManagement = () => {
                 {ticketCourse && (
                     <>
                         <p>مدیریت مشخصات کلاس {ticketCourse.Name}</p>
-                        <Button variant={"contained"} color={"warning"} onClick={()=>{
-                         history.push("/place/data/"+ticketCourse.Place.Id)
-                        }}>بازگشت</Button>
+                        <Button variant={"contained"} color={"warning"}
+                                href={"/place/data/"+ticketCourse.Place.Id}>بازگشت</Button>
                     </>
 
                 )}

@@ -51,9 +51,8 @@ const TicketSubscribeDataManagement = () => {
                 {ticketSubscribe && (
                     <>
                         <p>مدیریت مشخصات عضویت {ticketSubscribe.Name}</p>
-                        <Button variant={"contained"} color={"warning"} onClick={()=>{
-                         history.push("/place/data/"+ticketSubscribe.Place.Id)
-                        }}>بازگشت</Button>
+                        <Button variant={"contained"} color={"warning"}
+                                href={"/place/data/"+ticketSubscribe.Place.Id}>بازگشت</Button>
                     </>
 
                 )}

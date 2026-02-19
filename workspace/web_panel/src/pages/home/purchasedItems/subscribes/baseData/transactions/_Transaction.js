@@ -14,9 +14,8 @@ const _Transactions = ({transactions,purchased,updatePage}) => {
                 <PortletHeader title="فاکتور مرتبط"/>
                 <PortletBody>
                     {transactions.Invoices.map((item, Number) => (
-                        <Button key={Number} fullWidth variant={"contained"} color={"error"} onClick={(event) => {
-                            history.push({pathname: "/invoice/detail/" + item.Id});
-                        }} > برو به فاکتور</Button>
+                        <Button key={Number} fullWidth variant={"contained"} color={"error"}
+                                href={"/invoice/detail/" + item.Id} > فاکتور</Button>
                     ))}
                 </PortletBody>
             </Portlet>}

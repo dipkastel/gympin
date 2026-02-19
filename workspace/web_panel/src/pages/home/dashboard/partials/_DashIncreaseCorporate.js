@@ -90,7 +90,7 @@ const _DashIncreaseCorporate = () => {
 
                                                     <Button
                                                         variant={"contained"}
-                                                        onClick={(event) => history.push({pathname: "/corporate/details/" + row.Corporate.Id})}
+                                                        href={"/corporate/details/" + row.Corporate.Id}
                                                     >جزییات</Button>
                                                 </TableCell>
 
