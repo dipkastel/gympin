@@ -69,7 +69,7 @@ const _PhoneBook = () => {
         if (row.Place)
             return "مرکز ◄ " + row.Place.Name;
         if (row.User)
-            return "کاربر ◄ " + <PopoverUser user ={row.User} />;
+            return <PopoverUser user ={row.User} />;
     }
 
 
