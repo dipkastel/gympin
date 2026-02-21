@@ -1,7 +1,7 @@
 import { AuthApi } from "./api/NETWORKCONSTS";
 import { refreshToken } from "./api/account.api";
 import { sagaActions } from "../helper/redux/actions/SagaActions";
-import {authActions} from "../helper/redux/actions/AuthActions";
+import {authActions} from "../helper/redux/actions/authActions";
 
 export function setupAxios(axios, store) {
   var loading = false;
