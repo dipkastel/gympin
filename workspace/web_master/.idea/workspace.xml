@@ -404,7 +404,9 @@
       <change beforePath="$PROJECT_DIR$/../web_api/logs/logFile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/logs/logFile.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_corporate/src/network/api/report.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/network/api/report.api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helper/redux/rootReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/redux/rootReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/sw.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/sw.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_off/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -533,7 +535,7 @@
       <workItem from="1767430496505" duration="124815000" />
       <workItem from="1769787004028" duration="58584000" />
       <workItem from="1771453042976" duration="6151000" />
-      <workItem from="1771677627725" duration="2087000" />
+      <workItem from="1771677627725" duration="3141000" />
     </task>
     <servers />
   </component>

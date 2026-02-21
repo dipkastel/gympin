@@ -1,4 +1,4 @@
-let cacheData = "appV1";
+let cacheData = "appV2";
 
 //save to cache
 this.addEventListener("install", (event) => {
@@ -8,12 +8,14 @@ this.addEventListener("install", (event) => {
                 '/static/js/bundle.js',
                 '/favicon.ico',
                 '/manifest.json',
-                '/index.html',
+                '/dashboard',
                 '/',
-                '/personnel',
-                '/finance',
+                '/users',
                 '/management',
-                '/report',
+                '/finance',
+                '/reports',
+                '/support',
+                '/settings',
                 '/assets/images/noInternet.png'
             ])
         })
