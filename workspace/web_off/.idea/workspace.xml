@@ -405,10 +405,6 @@
       <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_corporate/src/network/api/report.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/network/api/report.api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_master/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -477,7 +473,7 @@
       <workItem from="1756800782155" duration="582000" />
       <workItem from="1758807416472" duration="1527000" />
       <workItem from="1771445991278" duration="1715000" />
-      <workItem from="1771686208445" duration="1644000" />
+      <workItem from="1771686208445" duration="2139000" />
     </task>
     <servers />
   </component>
