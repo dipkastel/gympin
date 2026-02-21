@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
-import {Tooltip} from "@mui/material";
+import {Chip, Tooltip} from "@mui/material";
 import {Table} from "react-bootstrap";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
@@ -14,6 +14,7 @@ import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {Portlet, PortletBody} from "../../../../partials/content/Portlet";
 import {getRppUserPurchasedSubscribe, SetRppUserPurchasedSubscribe} from "../../../../../helper/pocket/pocket";
 import PopoverUser from "../../../../../components/popover/PopoverUser";
+import _TicketStatus from "../../../purchased/partials/_TicketStatus";
 
 const PurchasedSubscribeManagement = ({currentUser}) => {
     const error = useContext(ErrorContext);
@@ -42,6 +43,24 @@ const PurchasedSubscribeManagement = ({currentUser}) => {
         });
     }
 
+    function getStatusCollor(row) {
+        switch (row.Status) {
+            case "PAYMENT_WAIT":
+                return "info";
+            case "READY_TO_ACTIVE":
+                return "default";
+            case "CANCEL":
+                return "error";
+            case "EXPIRE":
+                return "warning";
+            case "ACTIVE":
+                return "success";
+            case "PROCESSING":
+                return "secondary";
+            case "COMPLETE":
+                return "primary";
+        }
+    }
     return (
         <>
             <Portlet>
@@ -62,6 +81,7 @@ const PurchasedSubscribeManagement = ({currentUser}) => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>ورود</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>قیمت</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>انقضا</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -71,11 +91,12 @@ const PurchasedSubscribeManagement = ({currentUser}) => {
                                         <TableRow hover onClick={(event) => {
                                             history.push({pathname: "/subscribe/data/" + row.Id});
                                         }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+                                            {console.log(row)}
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">{<PopoverUser user ={row.User} />}</TableCell>
                                             <TableCell
-                                                align="right">{row?.TicketSubscribe.Place?.Name || "ثبت نشده"}</TableCell>
+                                                align="right">{row?.TicketSubscribe?.Place?.Name || "ثبت نشده"}</TableCell>
                                             <TableCell align="right">{row.Name || "ثبت نشده"}</TableCell>
                                             <TableCell
                                                 align="right">{row.EntryList.length + "/" + row.EntryTotalCount}</TableCell>
@@ -101,6 +122,7 @@ const PurchasedSubscribeManagement = ({currentUser}) => {
                                                     </span>
                                                 </Tooltip>
                                             </TableCell>
+                                            <TableCell align="right"><Chip color={getStatusCollor(row)} size={"small"} label={<_TicketStatus ticket={row} />}/></TableCell>
                                         </TableRow>
                                     );
                                 })}

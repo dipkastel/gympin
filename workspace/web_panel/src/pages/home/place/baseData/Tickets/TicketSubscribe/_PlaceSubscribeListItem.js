@@ -32,6 +32,7 @@ import _ticketInfo from "./partials/_ticketInfo";
 import _SubscribeSport from "./partials/_SubscribeSports";
 import _EditSubscribeModal from "./partials/_EditSubscribeModal";
 import _ticketCoach from "./partials/_ticketCoach";
+import _CopySubscribe from "./partials/_CopySubscribe";
 
 
 const _PlaceSubscribeListItem = ({place,subscribe, reloadList}) => {
@@ -110,7 +111,10 @@ const _PlaceSubscribeListItem = ({place,subscribe, reloadList}) => {
                         {subscribe.Name}
                         {openDetails?<ExpandLess />:<ExpandMore />}
                     </Typography>}
-                    action={<_SubscribeDeactiveDelete subscribe={subscribe} reloadList={reloadList}/>}
+                    action={<>
+                        <_CopySubscribe  subscribe={subscribe} reloadList={reloadList}/>
+                        <_SubscribeDeactiveDelete subscribe={subscribe} reloadList={reloadList}/>
+                    </>}
                 />
                 <CardContent sx={{pt: 0}}>
 

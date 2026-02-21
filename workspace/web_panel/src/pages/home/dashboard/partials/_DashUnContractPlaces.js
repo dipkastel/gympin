@@ -48,7 +48,7 @@ const _DashUncontractPlaces = () => {
                 <Modal show={showModal} size={"lg"} onHide={() => setShowModal(false)}>
                     <Portlet>
                         <PortletHeader
-                            title="پیام های جدید پشتیبانی"
+                            title="قرارداد"
                         />
 
                         <PortletBody>

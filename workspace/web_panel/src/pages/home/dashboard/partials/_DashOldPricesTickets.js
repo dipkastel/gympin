@@ -58,7 +58,7 @@ const _DashOldPricesTickets = () => {
                 <Modal show={showModal} size={"xl"} onHide={() => setShowModal(false)}>
                     <Portlet>
                         <PortletHeader
-                            title="نظرات جدید کاربران"
+                            title="بلیط های قدیمی"
                         />
 
                         <PortletBody>

@@ -132,7 +132,7 @@ const CorporateInvoices = ({corporate}) => {
         <>
             <Portlet>
                 <PortletHeader
-                    title="فاکتور های کاربر"
+                    title="فاکتور های شرکت"
                     toolbar={
                         <PortletHeaderToolbar>
                             <button

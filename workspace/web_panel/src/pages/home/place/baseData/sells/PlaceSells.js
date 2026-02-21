@@ -3,7 +3,7 @@ import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import {TableCell} from "@mui/material";
+import {Chip, TableCell} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
 import {genders} from "../../../../../helper/enums/genders";
@@ -14,6 +14,7 @@ import {Purchased_query} from "../../../../../network/api/purchased.api";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppPlaceSells, SetRppPlaceSells} from "../../../../../helper/pocket/pocket";
 import PopoverUser from "../../../../../components/popover/PopoverUser";
+import _TicketStatus from "../../../purchased/partials/_TicketStatus";
 
 const PlaceSells = ({place}) => {
 
@@ -52,6 +53,24 @@ const PlaceSells = ({place}) => {
             }
         });
     }
+    function getStatusCollor(row) {
+        switch (row.PurchasedStatus) {
+            case "PAYMENT_WAIT":
+                return "info";
+            case "READY_TO_ACTIVE":
+                return "default";
+            case "CANCEL":
+                return "error";
+            case "EXPIRE":
+                return "warning";
+            case "ACTIVE":
+                return "success";
+            case "PROCESSING":
+                return "secondary";
+            case "COMPLETE":
+                return "primary";
+        }
+    }
 
     return (
         <>
@@ -68,6 +87,7 @@ const PlaceSells = ({place}) => {
                                 <TableCell align="right">قیمت مرکز</TableCell>
                                 <TableCell align="right">نوع بلیط</TableCell>
                                 <TableCell align="right">جنسیت</TableCell>
+                                <TableCell align="right">وضعیت</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -82,10 +102,7 @@ const PlaceSells = ({place}) => {
                                     <TableCell align="right">{toPriceWithComma(item.PlacePrice)}</TableCell>
                                     <TableCell align="right">{BuyableType[item.PurchasedType]}</TableCell>
                                     <TableCell align="right">{genders[item.Gender]}</TableCell>
-                                    <TableCell align="left">
-                                        {/*<Button color={"error"} variant={"contained"} size={"small"}*/}
-                                        {/*        onClick={(e) => addBuyableToInvoice(e, item)}>افزودن</Button>*/}
-                                    </TableCell>
+                                    <TableCell align="right"><Chip color={getStatusCollor(item)} size={"small"} label={[item.PurchasedStatus]}/></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

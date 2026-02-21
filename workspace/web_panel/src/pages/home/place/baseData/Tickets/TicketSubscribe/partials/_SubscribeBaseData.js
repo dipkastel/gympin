@@ -23,9 +23,7 @@ import {classStatus} from "../../../../../../../helper/enums/ClassStatus";
 const _SubscribeBaseData = ({ticketSubscribe,setSubscribe, getSubscribeData}) => {
     const error = useContext(ErrorContext);
     const [inSubscribe, setInSubscribe] = useState(ticketSubscribe)
-    const [isOff, setIsOff] = useState(ticketSubscribe.ValuePrice!=ticketSubscribe.PlacePrice)
-    const [off, setOff] = useState(0)
-
+    
     useEffect(() => {
         setInSubscribe(ticketSubscribe);
     }, [ticketSubscribe]);
@@ -46,25 +44,11 @@ const _SubscribeBaseData = ({ticketSubscribe,setSubscribe, getSubscribeData}) =>
     }
 
 
-    function changeOff(value){
-        setOff(value);
-        setInSubscribe({...inSubscribe, PlacePrice: inSubscribe.ValuePrice*(1-(value/100)),price:inSubscribe.ValuePrice*(1-(value/100))})
-    }
 
     function priceChange(value){
         setInSubscribe({...inSubscribe, ValuePrice: toPriceWithoutComma(value), PlacePrice: toPriceWithoutComma(value), Price: toPriceWithoutComma(value)})
-        setIsOff(false);
     }
 
-    function handleOffSwitch(value){
-        setIsOff(value)
-        if(!value){
-            setInSubscribe({...inSubscribe, PlacePrice: inSubscribe.ValuePrice,Price: inSubscribe.ValuePrice})
-            setOff(0)
-        }else{
-            changeOff(10)
-        }
-    }
 
     return (
         <>

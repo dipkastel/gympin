@@ -12,7 +12,7 @@ const _SubscribeNew = ({place, reloadList}) => {
 
     function addNewTicket(e) {
         e.preventDefault()
-        if (e.target.Name?.value?.length > 35) {
+        if (e.target.Name?.value?.length > 45) {
             error.showError({message: "نام بلیط طولانی است",});
             return;
         }

@@ -58,7 +58,7 @@ const _DashNewPricesTickets = () => {
                 <Modal show={showModal} size={"xl"} onHide={() => setShowModal(false)}>
                     <Portlet>
                         <PortletHeader
-                            title="نظرات جدید کاربران"
+                            title="قیمت های جدید"
                         />
 
                         <PortletBody>
@@ -149,7 +149,7 @@ const _DashNewPricesTickets = () => {
         <QuickStatsIcon
             onClick={()=>{setShowModal(Comment.totalElements > 0)}}
             title="قیمت های جدید"
-            text={Comment.totalElements > 0 ? Comment.totalElements + " بلیط از دیروز تغییر کرده" : "تمام بلیط ها به روز شده"}
+            text={Comment.totalElements > 0 ? Comment.totalElements + " بلیط از دیروز تغییر کرده" : "قیمت ها تغییری نداشته"}
             icon={<PublishedWithChanges sx={{fontSize: 40, color: Comment.totalElements > 0 ? "#d00d48" : "#0c5049"}}
                            color={"#AA5598"}/>}
         />
