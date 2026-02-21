@@ -45,8 +45,19 @@ img {
 .center {
   text-align: center;
 }
+
 .left {
   text-align: left;
+}
+
+.button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #e7333e;
+  color: #FFFFFF;
+  font-family: "IRANSans-web";
+  text-decoration: none;
 }
 
 .content {
@@ -142,12 +153,12 @@ img {
     bottom: calc(-85vh + 600px);
   }
 }
-.timer{
-  margin: 30px;
-}
+
 .footer {
   position: absolute;
-  width: 100%;
+  bottom: -5%;
+  left: -100%;
+  width: 300%;
   height: 15vh;
   background: #e7333e;
   z-index: -1;
@@ -171,7 +182,6 @@ img {
 }
 @media screen and (min-height: 700px) {
   .footer {
-    color: #b6131d;
     bottom: -25vh;
     height: 50vh;
   }
@@ -181,7 +191,7 @@ img {
   position: absolute;
   top: 10px;
   right: 5%;
-  color: #6b3636;
+  color: #999;
   text-transform: uppercase;
 }
 

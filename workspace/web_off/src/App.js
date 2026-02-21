@@ -40,15 +40,6 @@ function App() {
                 data-scalar-y="15"
                 data-limit-y="50"
                 className="scene">
-                <li className="layer" data-depth="0.40">
-                    <div className="content">
-                        <h1 className={"center"} id="title">شما شایسته امکانات جدید و به‌روز هستید</h1>
-                        <p  className={"center"}>اکنون سایت در حال به‌روز رسانی است!</p>
-                        <p  className={"center"}>تا دقایقی دیگر برمی‌گردیم.</p>
-                        <h3  className={"center"} id="title">از شکیبایی شما سپاسگزاریم.</h3>
-
-                    </div>
-                </li>
                 <li className="layer" data-depth="1.00">
                     <div className="footer">
                         <h6  className={"timer left"} id="title">{"این صفحه تا "+secondsLeft+" ثانیه دیگر مجددا بارگذاری میشود"}</h6>
@@ -70,6 +61,17 @@ function App() {
                     <div style={{left:mousePosition.x/10-100,marginTop:mousePosition.y/12}} className="cloud-front">
                         <img src="/assets/images/rocket_cloud_front.svg"
                              alt="Site Launching Soon!"/>
+                    </div>
+                </li>
+
+                <li className="layer" data-depth="0.40">
+                    <div className="content">
+                        <h1 className={"center"} id="title">شما شایسته امکانات جدید و به‌روز هستید</h1>
+                        <p  className={"center"}>اکنون سایت در حال به‌روز رسانی است!</p>
+                        <p  className={"center"}>تا دقایقی دیگر برمی‌گردیم.</p>
+                        <h3  className={"center"} id="title">از شکیبایی شما سپاسگزاریم.</h3>
+                        <div  className={"center"} ><a href={"tel:02128424190"} className={"button"} >تماس با جیم پین</a></div>
+
                     </div>
                 </li>
             </ul>
