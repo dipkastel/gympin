@@ -401,22 +401,14 @@
       <change afterPath="$PROJECT_DIR$/../web_appsa_corporate/src/router/AuthRoutes.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../web_appsa_corporate/src/router/ErrorRoutes.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../web_appsa_corporate/src/router/MainRoutes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Tickets/TicketSubscribe/partials/_CopySubscribe.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_api/logs/logFile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../web_api/logs/logFile.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_app/src/network/api/NETWORKCONSTS.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_corporate/src/network/api/report.api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_corporate/src/network/api/report.api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web_master/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web_master/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashNewPricesTickets.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashNewPricesTickets.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashOldPricesTickets.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashOldPricesTickets.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashUnContractPlaces.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/dashboard/partials/_DashUnContractPlaces.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Tickets/TicketSubscribe/_PlaceSubscribeListItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Tickets/TicketSubscribe/_PlaceSubscribeListItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Tickets/TicketSubscribe/_SubscribeNew.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Tickets/TicketSubscribe/_SubscribeNew.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Tickets/TicketSubscribe/partials/_SubscribeBaseData.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web_panel/src/pages/home/place/baseData/Tickets/TicketSubscribe/partials/_SubscribeBaseData.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -485,7 +477,7 @@
       <workItem from="1756800782155" duration="582000" />
       <workItem from="1758807416472" duration="1527000" />
       <workItem from="1771445991278" duration="1715000" />
-      <workItem from="1771686208445" duration="780000" />
+      <workItem from="1771686208445" duration="1644000" />
     </task>
     <servers />
   </component>

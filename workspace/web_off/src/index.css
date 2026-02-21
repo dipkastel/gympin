@@ -157,10 +157,11 @@ img {
 .footer {
   position: absolute;
   bottom: -5%;
-  left: -100%;
-  width: 300%;
+  width: 100%;
+  padding: 30px;
   height: 15vh;
   background: #e7333e;
+  color: #b01212;
   z-index: -1;
 }
 @media screen and (min-width: 480px) {
