@@ -15,7 +15,7 @@ import { ValidatedTextField } from "../../components/ValidatedTextField";
 import { checkMobileValid } from "../../helper/utils";
 import { login, sendSms } from "../../network/api/account.api";
 import { connect } from "react-redux";
-import { authActions } from "../../helper/redux/actions/AuthActions";
+import { authActions } from "../../helper/redux/actions/authActions";
 import * as docharkhe from "../../helper/json/docharkhe.json";
 import * as vazne from "../../helper/json/vazne.json";
 import * as tirandaz from "../../helper/json/tirandaz.json";
