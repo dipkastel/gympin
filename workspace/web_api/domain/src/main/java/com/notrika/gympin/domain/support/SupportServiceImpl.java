@@ -10,6 +10,7 @@ import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.support.dto.SupportDto;
+import com.notrika.gympin.common.support.dto.SupportMessageDto;
 import com.notrika.gympin.common.support.enums.SupportStatus;
 import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
@@ -88,7 +89,7 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
             supportEntity.setCorporate(corporate);
         }
 
-        supportEntity.setSupportStatus(SupportStatus.AWAITING_EXPERT);
+        supportEntity.setSupportStatus(supportParam.getStatus()==null?SupportStatus.AWAITING_EXPERT:supportParam.getStatus());
         SupportMessagesEntity supportMessagesEntity = new SupportMessagesEntity();
         supportMessagesEntity.setSupportMessage(supportParam.getSupportMessages().getMessages());
         supportMessagesEntity.setIsRead(supportParam.getSupportMessages().isRead());
@@ -166,6 +167,14 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         SupportEntity support = supportRepository.getById(supportParam.getId());
         support.setSupportStatus(supportParam.getStatus());
         return SupportConvertor.toDto(update(support));
+    }
+
+    @Override
+    public SupportMessageDto updateMessage(@NonNull SupportMessageParam Param) {
+        SupportMessagesEntity supportMessage = supportMessageRepository.getById(Param.getId());
+        supportMessage.setSupportMessage(Param.getMessages());
+        supportMessageRepository.update(supportMessage);
+        return SupportConvertor.toMessagesDto(supportMessage);
     }
 
     @Override

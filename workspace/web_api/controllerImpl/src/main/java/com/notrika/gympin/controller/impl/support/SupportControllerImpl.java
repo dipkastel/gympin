@@ -2,6 +2,7 @@ package com.notrika.gympin.controller.impl.support;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.support.dto.SupportMessageDto;
 import com.notrika.gympin.common.support.query.SupportQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.support.api.SupportController;
@@ -13,6 +14,7 @@ import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +66,12 @@ public class SupportControllerImpl implements SupportController {
     @GetMapping("/setMessagesRead")
     public ResponseEntity<Boolean> setMessagesRead(Long id) {
         return new ResponseEntity<Boolean>(supportService.setMessagesReadById(id),HttpStatus.OK);
+    }
+
+    @Override
+    @PostMapping("/updateMessage")
+    public ResponseEntity<SupportMessageDto> updateMessage(SupportMessageParam param) {
+        return new ResponseEntity<>(supportService.updateMessage(param),HttpStatus.OK);
     }
 
     @Override

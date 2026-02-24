@@ -14,6 +14,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @SuperBuilder
@@ -46,13 +47,11 @@ public class CorporateTransactionQuery extends BaseQuery<CorporateTransactionQue
     @JsonProperty("Type")
     private TransactionCorporateType is_transactionCorporateType;
 
-
     @JsonProperty("CorporatePersonnelId")
     private Long is_corporatePersonnelæid;
 
     @JsonProperty("CorporatePersonnelUserId")
     private Long is_corporatePersonnelæuseræid;
-
 
     @JsonProperty("FinanceCorporateId")
     private Long is_financeCorporateæid;
@@ -65,5 +64,11 @@ public class CorporateTransactionQuery extends BaseQuery<CorporateTransactionQue
 
     @JsonProperty("MaxPrice")
     private BigDecimal ismax_amount;
+
+    @JsonProperty("ToDate")
+    private Date max_createdDate;
+
+    @JsonProperty("FromDate")
+    private Date min_createdDate;
 
 }
