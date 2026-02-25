@@ -3,13 +3,17 @@ package com.notrika.gympin.controller.impl.finance.transaction;
 import com.notrika.gympin.common.finance.transaction.api.TransactionCorporateController;
 import com.notrika.gympin.common.finance.transaction.dto.CorporateTransactionDto;
 import com.notrika.gympin.common.finance.transaction.param.CorporateTransactionParam;
+import com.notrika.gympin.common.finance.transaction.param.TransactionPlaceSettelingParam;
 import com.notrika.gympin.common.finance.transaction.query.CorporateTransactionQuery;
 import com.notrika.gympin.common.finance.transaction.service.CorporateTransactionService;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,6 +54,13 @@ public class TransactionCorporateControllerImpl implements TransactionCorporateC
     @Override
     public ResponseEntity<Page<CorporateTransactionDto>> query(CorporateTransactionQuery param) {
         return ResponseEntity.ok(corporateTransactionService.query(param));
+    }
+
+    @Override
+    @PostMapping(value = "/queryExport")
+    @IgnoreWrapAspect
+    public byte[] queryExport(CorporateTransactionQuery param) throws Exception {
+        return corporateTransactionService.queryExport(param);
     }
 
 //    @Override

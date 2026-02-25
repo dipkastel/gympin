@@ -6,6 +6,7 @@ import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionType;
+import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -70,5 +71,6 @@ public class CorporateTransactionQuery extends BaseQuery<CorporateTransactionQue
 
     @JsonProperty("FromDate")
     private Date min_createdDate;
+
 
 }
