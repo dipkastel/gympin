@@ -73,6 +73,22 @@ export function getWizardLevel() {
     }
 }
 
+function getValue(key) {
+    return  localStorage.getItem(key);
+}
+function setValue(key,value) {
+    localStorage.setItem(key, value);
+}
+
 export function setWizardLevel(value) {
     setStorage(po_wizard_level, value);
+}
+
+const rpp_chargeTransaction = "rpp_chargeTransaction";
+export function getRppChargeTransaction(){
+    return getValue(rpp_chargeTransaction)||5;
+}
+export function SetRppChargeTransaction(number){
+    setValue(rpp_chargeTransaction,number);
+    return getValue(rpp_chargeTransaction);
 }

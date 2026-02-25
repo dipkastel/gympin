@@ -23,20 +23,13 @@ export  function Report_getActivePersonnel(corporateId){
     return axios.get(Api_url.report.getActivePersonnel,{params:corporateId})
 }
 
-
-
 export  function Report_getActiveInEnterPlacePersonnel(corporateId){
     return axios.get(Api_url.report.getActiveInEnterPlacePersonnel,{params:corporateId})
 }
 
-
-
-
 export  function Report_getBalanceChangedReport(corporateId){
     return axios.get(Api_url.report.getBalanceChangedReport,{params:corporateId})
 }
-
-
 
 export  function Report_getAiReport(corporateId){
     return axios.get(Api_url.report.getAiReport,{params:corporateId})

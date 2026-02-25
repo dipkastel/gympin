@@ -58,6 +58,7 @@ export let Api_url = {
     },
     transactionCorporate: {
         query: "v1/transactionCorporate/query",
+        queryExport: "v1/transactionCorporate/queryExport",
     },
     multimedia: {
         add: "v1/multimedia/add",

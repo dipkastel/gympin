@@ -227,6 +227,15 @@ input[type=number] {
   border-radius: 0 !important;
 }
 
+.DatePicker {
+  padding: 10px;
+  border: #bdbdbd 1px solid;
+  border-radius: 10px;
+}
+.DatePicker:hover {
+  border: #222222 1px solid;
+}
+
 body {
   font-family: "IRANSans-web" !important;
 }
