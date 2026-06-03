@@ -92,27 +92,27 @@ public class gympinScheduleService {
 
 
 //    @Scheduled(cron = "11 */1 * * * ?")
-    @Scheduled(cron = "11 */1 * * * ?")
+    @Scheduled(cron = "1 */3 * * * ?")
     public void setIncrediblesDeactive(){
         scheduleReports.updateLastTimeIncredibleUpdate();
         scheduleIncredible.Deactive();
     }
 
 //    @Scheduled(cron = "21 */2 * * * ?")
-    @Scheduled(cron = "21 */1 * * * ?")
+    @Scheduled(cron = "21 */11 * * * ?")
     public void setIncrediblesActive(){
         scheduleReports.updateLastTimeIncredibleUpdate();
         scheduleIncredible.Active();
     }
 
 //    @Scheduled(cron = "31 */3 * * * ?")
-    @Scheduled(cron = "31 */1 * * * ?")
+    @Scheduled(cron = "31 0 */8 * * ?")
     public void setIncrediblesAddBySystem(){
         scheduleReports.updateLastTimeIncredibleUpdate();
         scheduleIncredible.AddBySystem();
     }
 
-    @Scheduled(cron = "0 */30 * * * ?")
+    @Scheduled(cron = "35 */30 * * * ?")
     public void setPeymentChecks(){
         scheduleReports.updateLastTimePaymentCheck();
         schedulePeymentCheck.checkUserPendingPayments();

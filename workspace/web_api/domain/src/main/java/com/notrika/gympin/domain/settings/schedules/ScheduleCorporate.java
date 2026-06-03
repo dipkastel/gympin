@@ -85,6 +85,7 @@ public class ScheduleCorporate {
 
     @Transactional
     public void checkExpirePersonnelCredit() {
+        //TODO check this
         List<FinanceCorporatePersonnelCreditEntity> ExpireActiveCredits = financeCorporatePersonnelCreditRepository.getExpireCredits();
         for (FinanceCorporatePersonnelCreditEntity credit : ExpireActiveCredits) {
             if(!entityManager.contains(credit)){
