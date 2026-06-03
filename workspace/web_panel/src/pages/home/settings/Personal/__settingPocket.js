@@ -5,20 +5,25 @@ import {Typography} from "@mui/material";
 const __settingPocket = () => {
 
 
-    return(<>
+    return (<>
 
-        {Object.keys(localStorage).map(key=>(
-            <Portlet key={key}>
-                    <PortletHeader
-                        title={<>
-                            <Typography variant={"subtitle1"} >{key}</Typography>
-                        </>}
-                    />
-                    <PortletBody className={"p-2"}>
-                        <Typography variant={"subtitle1"} ><code>{localStorage.getItem(key)}</code></Typography>
-                    </PortletBody>
-            </Portlet>
+        <div className={"row"}>
+            {Object.keys(localStorage).map(key => (
+                <div className={"col-md-6"} key={key}>
+                    <Portlet className={"kt-portlet kt-portlet--height-fluid"}>
+                        <PortletHeader
+                            className={"kt-portlet__head"}
+                            title={<>
+                                <Typography variant={"subtitle1"}>{key}</Typography>
+                            </>}
+                        />
+                        <PortletBody className={"kt-portlet__body"}>
+                            <Typography variant={"subtitle1"}><code>{localStorage.getItem(key)}</code></Typography>
+                        </PortletBody>
+                    </Portlet>
+                </div>
             ))}
+        </div>
     </>)
 };
 

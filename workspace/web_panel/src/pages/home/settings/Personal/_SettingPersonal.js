@@ -15,13 +15,7 @@ const _SettingPersonal = () => {
 
     return (
         <>
-            {!updatePageP && <div className={"row"}>
-                <div className={"col-md-6"}>
-                </div>
-                <div className={"col-md-6"}>
-                    <__settingPocket updatePage={updatePage} />
-                </div>
-            </div>}
+            {!updatePageP &&  <__settingPocket updatePage={updatePage} />}
         </>
     );
 };
