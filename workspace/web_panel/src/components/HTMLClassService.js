@@ -257,7 +257,7 @@ export default class HtmlClassService {
   }
 
   /**
-   *   Set the body class name based on page skin options
+   *   Set the body class name based on parent skin options
    */
   initSkin() {
     if (objectPath.get(this.config, "header.self.skin")) {

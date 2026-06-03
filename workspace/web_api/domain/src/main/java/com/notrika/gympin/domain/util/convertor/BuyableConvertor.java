@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelBuyableAccessDto;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonelBuyableAccessEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;

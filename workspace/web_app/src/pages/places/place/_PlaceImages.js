@@ -38,7 +38,8 @@ const _PlaceImages = ({place}) => {
                         <Card elevation={5} >
                             <Link  underline="none" color="inherit" fontWeight="800">
                                 <Box>
-                                    <Image width={"100%"} src={item.Url}/>
+                                    <Image
+                                        loading={"lazy"} width={"100%"} src={item.Url}/>
                                 </Box>
                             </Link>
                         </Card>

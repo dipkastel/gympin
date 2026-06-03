@@ -38,6 +38,8 @@ public class HallEntity extends BaseEntityWithCreateUpdate<HallEntity> {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hallPlaceId")
+    @JsonIgnore
+    @ToString.Exclude
     private PlaceGymEntity place;
 
     @OneToMany(mappedBy = "hall")

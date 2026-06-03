@@ -25,12 +25,13 @@ import LogoutPage from "../pages/auth/Logout";
 import PageLayout from "../components/PageLayout";
 import {useColorScheme} from "@mui/material";
 import TicketsActive from "../pages/tickets/TicketsActive";
-import NewHome from "../pages/newHome/NewHome";
 import Code from "../pages/auth/Code";
 import Support from "../pages/support/Support";
 import SupportDetail from "../pages/support/supportDetail/SupportDetail";
 import FoodSelect from "../pages/Food/FoodSelect";
 import Psych from "../pages/Psych/Psych";
+import Home from "../pages/home/Home";
+import Page from "../pages/home/Page";
 
 export default function ApplicationRoutes() {
     const isAuthorized = useSelector(({auth: {user}}) => user ? user.Id != null : false);
@@ -54,7 +55,8 @@ export default function ApplicationRoutes() {
             {isAuthorized && <PageLayout>
                 <Routes>
                     {/*<Route path="/" element={<NewHome/>}/>*/}
-                    <Route path="/" element={<NewHome/>}/>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/page/:pData" element={<Page/>}/>
                     <Route path="/places" element={<Places/>}/>
                     <Route path="/foodSelect" element={<FoodSelect/>}/>
                     <Route path="/places/:sid" element={<Places/>}/>

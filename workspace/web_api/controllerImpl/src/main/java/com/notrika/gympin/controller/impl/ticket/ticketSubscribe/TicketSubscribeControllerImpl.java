@@ -1,7 +1,7 @@
 package com.notrika.gympin.controller.impl.ticket.ticketSubscribe;
 
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeCoachParam;
@@ -105,6 +105,11 @@ public class TicketSubscribeControllerImpl implements TicketSubscribeController 
     @GetMapping("/getTicketSubscribeDiscountHistory")
     public ResponseEntity<List<TicketDiscountHistoryDto>> getTicketSubscribeDiscountHistory(Long ticketSubscribeId) {
         return ResponseEntity.ok(ticketSubscribeService.getTicketSubscribeDiscountHistory(ticketSubscribeId));
+    }
+    @Override
+    @GetMapping("/getTicketSubscribeDiscountHistoryByUser")
+    public ResponseEntity<List<TicketDiscountHistoryDto>> getTicketSubscribeDiscountHistoryByUser(Long ticketSubscribeId) {
+        return ResponseEntity.ok(ticketSubscribeService.getTicketSubscribeDiscountHistoryByUser(ticketSubscribeId));
     }
     @Override
     @PostMapping("/changeTicketSubscribeStatus")

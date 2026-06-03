@@ -37,13 +37,16 @@ const _DashCallList = () => {
             pagination: page,
             directionType:"Incoming"
         })
-            .then((data) => {
-                console.log(data.data.Data.data);
-                setCallList(data.data.Data);
+            .then((result) => {
+                setCallList(result.data.Data);
             })
             .catch(e => {
                 try {
-                    error.showError({message: e.response.data.Message,});
+                    try {
+                        error.showError({message: e.persianErrorMessage,});
+                    } catch (f) {
+                        error.showError({message: e.response.data.Message,});
+                    }
                 } catch (f) {
                     error.showError({message: "خطا نا مشخص",});
                 }

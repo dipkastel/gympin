@@ -2,10 +2,10 @@ package com.notrika.gympin.controller.impl.place.option;
 
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
-import com.notrika.gympin.common.place.option.api.OptionOfPlaceController;
-import com.notrika.gympin.common.place.option.dto.OptionOfPlaceDto;
-import com.notrika.gympin.common.place.option.param.OptionOfPlaceParam;
-import com.notrika.gympin.common.place.option.service.OptionOfPlaceService;
+import com.notrika.gympin.common.place.parts.option.api.OptionOfPlaceController;
+import com.notrika.gympin.common.place.parts.option.dto.OptionOfPlaceDto;
+import com.notrika.gympin.common.place.parts.option.param.OptionOfPlaceParam;
+import com.notrika.gympin.common.place.parts.option.service.OptionOfPlaceService;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;

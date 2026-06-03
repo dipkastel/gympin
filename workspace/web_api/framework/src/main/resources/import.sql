@@ -477,24 +477,7 @@ INSERT INTO sport(id, launch_status, name ) VALUES ( 57,'LAUNCHED','یوگا');
 
 
 
-#HomePage
-    #Destinations
-    #TODO ADD Description for how it used and what can do with datas
-
-    INSERT INTO home_page_destinations(id, name,description) VALUES (1,'PLACES','برای مشخص کردن فیلتر از دیتا استفاده میشود');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (2,'SPORTS','');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (3,'OUTERBROWSER','url در دیتا');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (4,'INNERBROWSER','url در دیتا');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (5,'USERLIST','url در دیتا');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (6,'PROFILE','username در دیتا');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (7,'CONTENTS','contentId در دیتا');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (8,'DISCOUNTS','placeId در دیتا');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (9,'SINGLECONTENT','');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (10,'SINGLEDISCOUNT','');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (11,'INVITEFRIENDS','');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (12,'SURVEYLIST','');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (13,'LOGOUT','');
-    INSERT INTO home_page_destinations(id, name,description) VALUES (14,'SUBSCRIBES','');
+#Pages
 
     #place Options
 
@@ -522,69 +505,67 @@ INSERT INTO sport(id, launch_status, name ) VALUES ( 57,'LAUNCHED','یوگا');
 
     #Types
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (1,'CLICKABLE_TITLE','تیتر کلیک دار','یک تیتر ساده با امکان کلیک',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (1,'Title');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (1,'Destination');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (1,'CLICKABLE_TITLE','تیتر کلیک دار','یک تیتر ساده با امکان کلیک',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (1,'Title');
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (2,'TITLE','تیتر بدون کلیک','یک تیتر ساده بدون امکان کلیک',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (2,'Title');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (2,'TITLE','تیتر بدون کلیک','یک تیتر ساده بدون امکان کلیک',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (2,'Title');
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (3,'SLIDER','اسلایدر','مجموعه ای که اسلاید ها در آن قرار میگیرد',true);
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (3,'SLIDER','اسلایدر','مجموعه ای که اسلاید ها در آن قرار میگیرد',true);
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (4,'SLIDE','اسلاید','آیتم زیرمجموعه برای اسلایدر',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (4,'Multimedia');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (4,'Destination');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (4,'SLIDE','اسلاید','آیتم زیرمجموعه برای اسلایدر',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (4,'Multimedia');
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (5,'CLICKABLE_BANNER','بنر کلیکی','یک بنر با امکان کلیک',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (5,'Destination');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (5,'Multimedia');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (5,'CLICKABLE_BANNER','بنر کلیکی','یک بنر با امکان کلیک',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (5,'Destination');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (5,'Multimedia');
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (6,'BANNER','بنر ساده','یک بنر بدون امکان کلیک',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (6,'Multimedia');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (6,'BANNER','بنر ساده','یک بنر بدون امکان کلیک',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (6,'Multimedia');
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (7,'USER_LIST','لیست کاربران','مجموعه ای که آیتم کاربر در آن قرار میگیرد',true);
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (7,'USER_LIST','لیست کاربران','مجموعه ای که آیتم کاربر در آن قرار میگیرد',true);
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (8,'USER_ITEM','آیتم کاربر','زیر مجموعه لیست کاربران با امکان کلیک',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (8,'Title');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (8,'Destination');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (8,'Multimedia');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (8,'USER_ITEM','آیتم کاربر','زیر مجموعه لیست کاربران با امکان کلیک',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (8,'Title');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (8,'Destination');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (8,'Multimedia');
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (9,'SINGLE_USER','تک کاربر','یک کاربر برای نمایش کاربر برنده اصلی یا جایی که لازم است یک کاربر معرفی شود',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (9,'Title');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (9,'Destination');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (9,'Multimedia');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (9,'SINGLE_USER','تک کاربر','یک کاربر برای نمایش کاربر برنده اصلی یا جایی که لازم است یک کاربر معرفی شود',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (9,'Title');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (9,'Destination');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (9,'Multimedia');
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (10,'CONTENT_LIST','لیست مطالب','لیستی که آیتم های مطلب در آن قرار میکیرد',true);
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (10,'CONTENT_LIST','لیست مطالب','لیستی که آیتم های مطلب در آن قرار میکیرد',true);
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (11,'CONTENT_ITEM','آیتم مطلب','تک آیتم زیر مجموعه لیست مطالب معرفی کننده یک مطلب از سایت یا ... است',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (11,'Title');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (11,'Description');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (11,'Destination');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (11,'Multimedia');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (11,'CONTENT_ITEM','آیتم مطلب','تک آیتم زیر مجموعه لیست مطالب معرفی کننده یک مطلب از سایت یا ... است',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (11,'Title');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (11,'Description');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (11,'Destination');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (11,'Multimedia');
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (12,'SINGLE_CONTENT','تک مطلب','مطلب تکی در لیست',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (12,'Title');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (12,'Description');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (12,'Destination');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (12,'Multimedia');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (12,'SINGLE_CONTENT','تک مطلب','مطلب تکی در لیست',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (12,'Title');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (12,'Description');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (12,'Destination');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (12,'Multimedia');
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (13,'DISCOUNT_LIST','لیست تخفیف ها','آیتم های تخفیف در این لیست قرار میگیرد',true);
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (13,'DISCOUNT_LIST','لیست تخفیف ها','آیتم های تخفیف در این لیست قرار میگیرد',true);
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (14,'DISCOUNT_ITEM','آیتم تخفیف','آیتم زیر مجموعه لیست تخفیف',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (14,'Title');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (14,'Description');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (14,'Destination');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (14,'Multimedia');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (14,'DISCOUNT_ITEM','آیتم تخفیف','آیتم زیر مجموعه لیست تخفیف',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (14,'Title');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (14,'Description');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (14,'Destination');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (14,'Multimedia');
 
-    INSERT INTO home_page_type(id, type, name, description, can_be_parent) value (15,'SINGLE_DISCOUNT','تخفیف تکی','آیتم تخفیف تکی ',false);
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (15,'Title');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (15,'Description');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (15,'Destination');
-    INSERT INTO home_page_type_entity_elements(home_page_type_entity_id, elements) values (15,'Multimedia');
+    INSERT INTO pages_type(id, type, name, description, can_be_parent) value (15,'SINGLE_DISCOUNT','تخفیف تکی','آیتم تخفیف تکی ',false);
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (15,'Title');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (15,'Description');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (15,'Destination');
+    INSERT INTO pages_type_entity_elements(pages_type_entity_id, elements) values (15,'Multimedia');
 
 # first main page
-    INSERT INTO home_page_item(id,title) VALUES (1,'صفحه اول همه اپلیکیشن ها');
-    INSERT INTO home_page_item(id,title,priority,type,parent_id) VALUES (2,'خوش آمد',1,"TITLE",1);
+    INSERT INTO pages_item(id,title) VALUES (1,'صفحه اول همه اپلیکیشن ها');
+    INSERT INTO pages_item(id,title,priority,type,parent_id) VALUES (2,'خوش آمد',1,"TITLE",1);
 # finance gateways
     INSERT INTO finance_gateway(id,name,gateway_type,description) VALUES (1,'درگاه پارسیان','BANK_PORTAL',null);
     INSERT INTO finance_gateway(id,name,gateway_type,description) VALUES (2,'کارت به کارت','CARD_TRANSFER','شماره کارت جهت واریز مبلغ 6221061225406448 به نام پیشکامان داده نوتریکا');

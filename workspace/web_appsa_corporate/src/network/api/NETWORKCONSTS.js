@@ -1,0 +1,195 @@
+import {Report_getActivePersonnel, Report_getGenderCompetition} from "./report.api";
+
+export let AuthApi = {
+    BASEURL: "http://localhost:8080/api/",
+    // BASEURL: "http://192.168.1.108:8080/api/",
+    // BASEURL: "https://api.gympin.ir/",
+};
+export let Api_url = {
+    Account: {
+        LOGIN_URL: "v1/account/login",
+        SEND_SMS_URL: "v1/account/sendsms",
+        requestRegisterCorporate: "v1/account/requestRegisterCorporate",
+        REFRESH_TOKEN: "v1/account/refreshToken"
+    },
+    configs: {
+        CorporateSplash: "v1/configs/CorporateSplash"
+    },
+    corporate: {
+        GET_BY_ID: "v1/corporate/getById",
+        updateLogo: "v1/corporate/updateLogo",
+        getTransactions: "v1/corporate/getTransactions",
+        getTotalDeposit: "v1/corporate/getTotalDeposit",
+        update: "v1/corporate/update",
+        getCorproteCategories: "v1/corporate/getCorporateGroups",
+        addCategory: "v1/corporate/addGroup",
+        sendContractCode: "v1/corporate/sendContractCode",
+        signContract: "v1/corporate/signContract",
+        updateContract: "v1/corporate/updateContract",
+        getTotalIncreases: "v1/corporate/getTotalIncreases",
+        deleteCategory: "v1/corporate/deleteGroup",
+        updateStatus: "v1/corporate/updateStatus"
+    },
+    CorporatePersonnel: {
+        setAllPersonelAccessToCatering: "v1/corporatePersonnel/setAllPersonelAccessToCatering",
+        setPersonelAccessToCatering: "v1/corporatePersonnel/setPersonelAccessToCatering",
+        corporateOwnedByUserId: "v1/corporatePersonnel/corporateOwnedByUserId",
+        PersonnelByCorporate: "v1/corporatePersonnel/PersonnelByCorporate",
+        getTotalUserCredits: "v1/corporatePersonnel/getTotalUserCredits",
+        addPersonnelCredit: "v1/corporatePersonnel/addPersonnelCredit",
+        manualExpireCredit: "v1/corporatePersonnel/manualExpireCredit",
+        addCreditToAll: "v1/corporatePersonnel/addCreditToAll",
+        getById: "v1/corporatePersonnel/getById",
+        delete: "v1/corporatePersonnel/delete",
+        getAll: "v1/corporatePersonnel/getAll",
+        update: "v1/corporatePersonnel/update",
+        query: "v1/corporatePersonnel/query",
+        add: "v1/corporatePersonnel/add",
+    },
+    gateway: {
+        getPaymentGateways: "v1/Gateway/getPaymentGateways",
+        getPaymentSuggest: "v1/suggest/getall",
+    },
+    gatewayApplication: {
+        query: "v1/GatewayApplication/query",
+    },
+    homePage: {
+        GET_HOME_PAGE: "v1/homepage/getHome",
+    },
+    transactionCorporate: {
+        query: "v1/transactionCorporate/query",
+    },
+    multimedia: {
+        add: "v1/multimedia/add",
+        categoryGetById: "v1/multimediacategory/getById"
+    },
+    Notification: {
+        register: "v1/Notification/registerSubscription"
+    },
+    NotificationSubscription: {
+        add: "v1/NotificationSubscription/add"
+    },
+    optionOfPlace: {
+        GET_BY_PLACE_ID: "v1/OptionOfPlace/getByPlaceId",
+    },
+    personnelFood:{
+        add:"v1/personnelFood/add",
+        query:"v1/personnelFood/query",
+        delete:"v1/personnelFood/delete"
+    },
+    placeAbout: {
+        GET_BY_PLACE_ID: "v1/placeAbout/getByPlaceId",
+    },
+    plans: {
+        GET_BY_ID: "v1/plan/getById",
+        GET_BY_PLACE_ID: "v1/plan/getPlansByPlace"
+    },
+    region: {
+        GET_ALL: "v1/region/getAll",
+        GET_BY_CITY: "v1/region/getRegionsByCity"
+    },
+    report: {
+        getAiReport: "v1/report/getAiReport",
+        getPopularSports: "v1/report/getPopularSports",
+        useCorporateCharge: "v1/report/useCorporateCharge",
+        getActivePersonnel: "v1/report/getActivePersonnel",
+        getGenderCompetition: "v1/report/getGenderCompetition",
+        ticketBuyCountThisWeek: "v1/report/ticketBuyCountThisWeek",
+        getBalanceChangedReport: "v1/report/getBalanceChangedReport",
+        getActiveInEnterPlacePersonnel: "v1/report/getActiveInEnterPlacePersonnel"
+    },
+    sport: {
+        GET_ALL: "v1/sport/getAll"
+    },
+    service: {
+        GET_ACTIVE_USERS_BY_CORPORATE: "v1/service/getActiveUsersByCorporate"
+    },
+    state: {
+        GET_ALL: "v1/state/getAll"
+    },
+    suggest: {
+        query: "v1/suggest/query",
+    },
+    support: {
+        ADD: "v1/support/add",
+        ADD_MESSAGE: "v1/support/addMessage",
+        GET_BY_PLACE: "v1/support/getByPlace",
+        GET_BY_ID: "v1/support/getById",
+        setMessagesRead: "v1/support/setMessagesRead",
+        getCorporateSupportCount: "v1/support/getCorporateSupportCount",
+        query: "v1/support/query"
+    },
+    catering: {
+        getAll: "v1/catering/getAll",
+        getById: "v1/catering/getById",
+        add: "v1/catering/add",
+        delete: "v1/catering/delete",
+        update: "v1/catering/update",
+        query: "v1/catering/query",
+    },
+    ticketFood: {
+
+        getAll: "v1/TicketFood/getAll",
+        getById: "v1/TicketFood/getById",
+        add: "v1/TicketFood/add",
+        delete: "v1/TicketFood/delete",
+        update: "v1/TicketFood/update",
+        query: "v1/TicketFood/query",
+    },
+    ticketMenu: {
+        getAll: "v1/TicketFoodMenu/getAll",
+        getById: "v1/TicketFoodMenu/getById",
+        add: "v1/TicketFoodMenu/add",
+        delete: "v1/TicketFoodMenu/delete",
+        update: "v1/TicketFoodMenu/update",
+        query: "v1/TicketFoodMenu/query",
+        getDates: "v1/TicketFoodMenu/getDates",
+    },
+    user: {
+        GET_BY_ID: "v1/user/getById",
+        UPDATE_USER: "v1/user/update",
+        UPDATE_AVATAR: "v1/user/updateUserAvatar",
+        query: "v1/user/query",
+    },
+    invoice: {
+        add: "v1/invoice/add",
+        query: "v1/invoice/query",
+        update: "v1/invoice/update",
+        delete: "v1/invoice/delete",
+        getAll: "v1/invoice/getAll",
+        addFood: "v1/invoice/addFood",
+        getById: "v1/invoice/getById",
+        cancelOrder: "v1/invoice/cancelOrder",
+        userCheckout: "v1/invoice/userCheckout",
+        addSubscribe: "v1/invoice/addSubscribe",
+        deleteBuyable: "v1/invoice/deleteBuyable",
+        getHowToPay: "v1/invoice/getUserHowToPay",
+        getFoodBasket: "v1/invoice/getFoodBasket",
+        getBasketByUserId: "v1/invoice/getBasketByUserId",
+        confirmFoodPayment: "v1/invoice/confirmFoodPayment",
+        sendOrderToCatering: "v1/invoice/sendOrderToCatering",
+        changeInvoiceBuyableCount: "v1/invoice/changeInvoiceBuyableCount",
+    },
+    increaseCorporateDeposit: {
+        requestIncreaseCorporateDeposits: "v1/increaseCorporateDeposit/requestIncreaseCorporateDeposits",
+        requestIncreaseCorporateDepositsDraft: "v1/increaseCorporateDeposit/requestIncreaseCorporateDepositsDraft",
+        completeRequestIncreaseCorporateDeposits: "v1/increaseCorporateDeposit/completeRequestIncreaseCorporateDeposits",
+        getProFormaInvoice: "v1/increaseCorporateDeposit/getProFormaInvoice",
+        getInvoice: "v1/increaseCorporateDeposit/getInvoice",
+        delete: "v1/increaseCorporateDeposit/delete"
+    },
+    transaction: {
+        setPaymentRequest: "v1/transaction/setPaymentRequest",
+        query: "v1/TransactionCorporate/query",
+        increaseQuery: "v1/increaseCorporateDeposit/query",
+    },
+    ws: {
+        query: "v1/ws/query",
+    },
+    TransactionPersonnelCredit: {
+        query: "v1/TransactionPersonnelCredit/query",
+    },
+    Chat:{
+     endpoint:"GympinChatEndPoint"
+    }
+};

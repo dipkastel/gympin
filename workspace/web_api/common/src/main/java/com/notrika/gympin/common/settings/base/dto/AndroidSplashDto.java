@@ -1,6 +1,8 @@
 package com.notrika.gympin.common.settings.base.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
+import com.notrika.gympin.common.settings.corporateSettings.dto.CorporateSettingDto;
 import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
 import com.notrika.gympin.common.util._base.dto.BaseDto;
 import lombok.Data;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -23,4 +26,7 @@ public class AndroidSplashDto extends BaseDto<AndroidSplashDto> {
 
     @JsonProperty("UserSettings")
     private List<UserSettingDto> userSettings;
+
+    @JsonProperty("UserCorporateSettings")
+    private HashMap<String,List<CorporateSettingDto>> userCorporateSettings;
 }

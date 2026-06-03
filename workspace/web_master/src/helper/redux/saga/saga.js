@@ -86,6 +86,17 @@ export function* saga() {
                 store.dispatch(authActions.Logout());
             } catch (e) {
             }
+            try{
+                setTimeout(function () {
+                    if(window.location.href.includes("auth/logout"))
+                        window.location.href = "/";
+                    else
+                        window.location = window.location;
+
+                }, 3 * 1000);
+            }catch (e){
+
+            }
         },
     );
 }

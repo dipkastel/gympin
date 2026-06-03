@@ -4,6 +4,7 @@ import DeleteCorporate from "../Delete/DeleteCorporate";
 import CorporateContract from "../Contract/CorporateContract";
 import CorporateContractExpire from "../ContractExpire/CorporateContractExpire";
 import CorporateInviteCode from "../invite/CorporateInviteCode";
+import CorporateSettings from "../settings/CorporateSettings";
 
 const CorporateManagementSettingTab = ({currentCorporate,updatePage}) => {
     return (
@@ -12,6 +13,7 @@ const CorporateManagementSettingTab = ({currentCorporate,updatePage}) => {
 
                 <div className="col-md-6">
                     <CorporateStatus currentCorporate={currentCorporate} updatePage={updatePage}/>
+                    <CorporateSettings currentCorporate={currentCorporate} />
                     <DeleteCorporate currentCorporate={currentCorporate}/>
                 </div>
                 <div className="col-md-6">

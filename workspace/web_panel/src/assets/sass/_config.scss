@@ -220,13 +220,13 @@ $kt-portlet: (
   shadow: 0px 0px 30px 0px rgba(82, 63, 105, 0.05),
 ) !default;
 
-// Page padding
+// parent padding
 $kt-page-padding: (
   desktop: 25px,
   mobile: 15px,
 ) !default;
 
-// Page container width
+// parent container width
 $kt-page-container-width: 1380px !default;
 
 // Custom Scroll(Perfect Scrollbar) size

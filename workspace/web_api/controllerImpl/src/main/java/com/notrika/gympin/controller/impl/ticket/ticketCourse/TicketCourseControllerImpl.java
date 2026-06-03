@@ -1,7 +1,7 @@
 package com.notrika.gympin.controller.impl.ticket.ticketCourse;
 
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
 import com.notrika.gympin.common.ticket.ticketCourse.api.TicketCourseController;

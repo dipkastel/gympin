@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.settings;
 
+import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.settings.base.dto.*;
 import com.notrika.gympin.common.settings.base.enums.settingsType;
 import com.notrika.gympin.common.settings.base.param.*;
@@ -9,12 +10,12 @@ import com.notrika.gympin.common.settings.corporateSettings.dto.CorporateSetting
 import com.notrika.gympin.common.settings.userSettings.dto.UserSettingDto;
 import com.notrika.gympin.domain.settings.corporateSettings.CorporateSettingsServiceImpl;
 import com.notrika.gympin.domain.settings.userSettings.UserSettingsServiceImpl;
-import com.notrika.gympin.persistence.dao.repository.settings.ManageUserSettingsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +27,7 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
     @Autowired
     UserSettingsServiceImpl userSettingsService;
     @Autowired
-    CorporateSettingsServiceImpl CorporateSettingsService;
+    CorporateSettingsServiceImpl corporateSettingsService;
 
     @Override
     public AndroidSplashDto AndroidSplash(AndroidSplashParam splashParam) {
@@ -38,6 +39,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         result.setSettings(settingDtoList);
         List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
         result.setUserSettings(userSettings);
+        HashMap<String,List<CorporateSettingDto>> userCorporatesSettings = corporateSettingsService.getUserCorporateSettings(splashParam.getUserId());
+        result.setUserCorporateSettings(userCorporatesSettings);
         return result;
     }
 
@@ -51,6 +54,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         result.setSettings(settingDtoList);
         List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
         result.setUserSettings(userSettings);
+        HashMap<String,List<CorporateSettingDto>> userCorporatesSettings = corporateSettingsService.getUserCorporateSettings(splashParam.getUserId());
+        result.setUserCorporateSettings(userCorporatesSettings);
         return result;
     }
 
@@ -64,6 +69,8 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         result.setSettings(settingDtoList);
         List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
         result.setUserSettings(userSettings);
+        HashMap<String,List<CorporateSettingDto>> userCorporatesSettings = corporateSettingsService.getUserCorporateSettings(splashParam.getUserId());
+        result.setUserCorporateSettings(userCorporatesSettings);
         return result;
     }
 
@@ -77,6 +84,7 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         result.setSettings(settingDtoList);
         List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
         result.setUserSettings(userSettings);
+
         return result;
     }
 
@@ -90,7 +98,7 @@ public class ApplicationConfigsServiceImpl implements ApplicationConfigService {
         result.setSettings(settingDtoList);
         List<UserSettingDto> userSettings = userSettingsService.getUserSettings(splashParam.getUserId());
         result.setUserSettings(userSettings);
-        List<CorporateSettingDto> corporateSettings = CorporateSettingsService.getCorporateSettings(splashParam.getCorporateId());
+        List<CorporateSettingDto> corporateSettings = corporateSettingsService.getCorporateSettings(splashParam.getCorporateId());
         result.setCorporateSettings(corporateSettings);
         return result;
     }

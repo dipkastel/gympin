@@ -1,9 +1,9 @@
 package com.notrika.gympin.domain.place.hall;
 
 import com.notrika.gympin.common.util._base.query.BaseQuery;
-import com.notrika.gympin.common.place.hall.dto.HallTrafficDto;
-import com.notrika.gympin.common.place.hall.param.HallTrafficParam;
-import com.notrika.gympin.common.place.hall.service.HallTrafficService;
+import com.notrika.gympin.common.place.parts.hall.dto.HallTrafficDto;
+import com.notrika.gympin.common.place.parts.hall.param.HallTrafficParam;
+import com.notrika.gympin.common.place.parts.hall.service.HallTrafficService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.HallConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.hall.HallRepository;

@@ -24,6 +24,8 @@ public class Consts {
     public static String FARAZ_SMS_PATTERN_CORPORATE_CHARGE = "k0pyzc0atwmqiy8";
     public static String FARAZ_SMS_PATTERN_USER_BUY_SUBSCRIBE = "zn9ewsfhggm48od";
     public static String FARAZ_SMS_PATTERN_SUPPORT_ANSWERED = "rgmw67l84zc28y3";
+    public static String FARAZ_SMS_PATTERN_START_INCREDIBLE = "avx1nu7skeurciq";
+    public static String FARAZ_SMS_PATTERN_END_INCREDIBLE = "1x3gp6m6mweom0t";
 
 
 }

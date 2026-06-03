@@ -47,6 +47,7 @@ const __placeListItem = ({item}) => {
                         <Image
                             src={getPlaceImage(item)}
                             style={imageStyle}
+                            loading={"lazy"}
                             width={"100%"}/>
                         {item?.Location?.Name &&
                         <Grid container direction={"row"} sx={{height: "30px", position: "absolute",mb:"-1px"}}>

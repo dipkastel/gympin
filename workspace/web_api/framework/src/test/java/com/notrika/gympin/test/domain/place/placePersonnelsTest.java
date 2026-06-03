@@ -1,12 +1,12 @@
 package com.notrika.gympin.test.domain.place;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelAccessDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelDto;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelAccessEnum;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelAccessParam;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelParam;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;

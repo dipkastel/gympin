@@ -30,3 +30,7 @@ export function Support_addMessage(data) {
 export function Support_query(data) {
     return axios.post(SupportApi.query, data);
 }
+
+export function Support_updateMessage(data) {
+    return axios.post(SupportApi.updateMessage, data);
+}

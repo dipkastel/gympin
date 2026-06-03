@@ -211,7 +211,7 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         UserDto userDto = UserConvertor.toDtoComplete(userRequester);
         userDto.setFollowersCount(followService.getFollowersCount(userRequester));
         userDto.setFollowingsCount(followService.getFollowingsCount(userRequester));
-        userDto.setBalance(getPurchaseableCreditsByUser(UserParam.builder().id(userRequester.getId()).build()).getTotalCredit());
+        userDto.setBalance(getPurchaseableCreditsByUser(UserParam.builder().id(userRequester.getId()).build(),true).getTotalCredit());
         return userDto;
     }
 
@@ -304,15 +304,17 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
         return result;
     }
 
-    public UserCreditDto getPurchaseableCreditsByUser(UserParam param) {
+    public UserCreditDto getPurchaseableCreditsByUser(UserParam param,Boolean canBuyForOthers) {
         //inits
         UserCreditDto result = new UserCreditDto();
         List<UserCreditDetailDto> detalsList = new ArrayList<>();
         UserEntity user = userRepository.getById(param.getId());
 //        corporate credits
         detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserNonWithdrawableWallet(user)));
-        List<UserCreditDetailDto> creditsBySponcers = userServiceHelper.getUserCreditsByCorporate(param);
-        detalsList.addAll(creditsBySponcers.stream().filter(o -> !o.isDeleted()).sorted(Comparator.comparing(UserCreditDetailDto::getExpireDate)).collect(Collectors.toList()));
+        if(canBuyForOthers){
+            List<UserCreditDetailDto> creditsBySponcers = userServiceHelper.getUserCreditsByCorporate(param);
+            detalsList.addAll(creditsBySponcers.stream().filter(o -> !o.isDeleted()).sorted(Comparator.comparing(UserCreditDetailDto::getExpireDate)).collect(Collectors.toList()));
+        }
 //        user wallets
         detalsList.add(FinanceUserConvertor.toDto(financeHelper.getUserPersonalWallet(user)));
 
@@ -323,12 +325,12 @@ public class UserServiceImpl extends AbstractBaseService<UserParam, UserDto, Use
 
     @Override
     @Transactional
-    public UserCreditDto getMyCredits() {
+    public UserCreditDto getMyCredits(Boolean canBuyForOthers) {
         GympinContext context = GympinContextHolder.getContext();
         if (context == null)
             throw new UnknownUserException();
         UserEntity userRequester = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
-        return getPurchaseableCreditsByUser(UserParam.builder().id(userRequester.getId()).build());
+        return getPurchaseableCreditsByUser(UserParam.builder().id(userRequester.getId()).build(),canBuyForOthers);
     }
 
     @Override

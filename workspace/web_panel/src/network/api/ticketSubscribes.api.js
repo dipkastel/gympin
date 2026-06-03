@@ -16,6 +16,9 @@ export function TicketSubscribes_getAll() {
 export function TicketSubscribes_getDiscountHistory(data) {
     return axios.get(TicketSubscribesApi.getTicketSubscribeDiscountHistory, {params: data});
 }
+export function TicketSubscribes_getDiscountHistoryByUser(data) {
+    return axios.get(TicketSubscribesApi.getTicketSubscribeDiscountHistoryByUser, {params: data});
+}
 
 export function TicketSubscribes_update(data) {
     return axios.put(TicketSubscribesApi.update, data);

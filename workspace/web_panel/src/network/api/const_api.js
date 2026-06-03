@@ -9,6 +9,7 @@ export let AuthApi = {
     REFRESH_TOKEN: "v1/account/refreshToken"
 
 };
+
 export let AdministratorApi = {
     add: "v1/administrator/add",
     update: "v1/administrator/update",
@@ -71,6 +72,8 @@ export let CorporateApi = {
     addGroup: "v1/corporate/addGroup",
     deleteGroup: "v1/corporate/deleteGroup",
     getCorporateInviteCode: "v1/corporate/getCorporateInviteCode",
+    getCorporateSettings: "v1/corporate/getCorporateSettings",
+    setCorporateSettings: "v1/corporate/setCorporateSettings",
 };
 export let CorporatePersonnelApi = {
     add: "v1/corporatePersonnel/add",
@@ -138,20 +141,20 @@ export let homeItem = {
     getMainPage: "v1/mainpagelayoutitem/mainPage",
     update: "v1/mainpagelayoutitem/update",
 };
-export let homepage = {
-    add: "v1/homepage/add",
-    update: "v1/homepage/update",
-    delete: "v1/homepage/delete",
-    getAll: "v1/homepage/getall",
-    query: "v1/homepage/query",
-    getById: "v1/homepage/getbyid",
-    getHome: "v1/homepage/getHome",
-    getAllTypes: "v1/homepage/getAllTypes",
-    addType: "v1/homepage/addType",
-    deleteType: "v1/homepage/deleteType",
-    getAllDestinations: "v1/homepage/getAllDestinations",
-    addDestinations: "v1/homepage/addDestinations",
-    deleteDestinations: "v1/homepage/deleteDestinations",
+export let pages = {
+    add: "v1/pages/add",
+    update: "v1/pages/update",
+    updatePriority: "v1/pages/updatePriority",
+    delete: "v1/pages/delete",
+    getAll: "v1/pages/getall",
+    query: "v1/pages/query",
+    getById: "v1/pages/getbyid",
+    getHome: "v1/pages/getHome",
+    clearCash: "v1/pages/clearCash",
+    getAllTypes: "v1/pages/getAllTypes",
+    addType: "v1/pages/addType",
+    updateType: "v1/pages/updateType",
+    deleteType: "v1/pages/deleteType",
 };
 export let LocationApi = {
     add: "v1/location/add",
@@ -247,6 +250,24 @@ export let GymApi = {
     getPlacesInviteCode: "v1/gym/getPlacesInviteCode",
     setDefaultMultimedia: "v1/gym/setDefaultMultimedia",
 };
+export let CounselingApi = {
+    query: "v1/counseling/query",
+    addPlace: "v1/counseling/add",
+    deletePlace: "v1/counseling/delete",
+    updatePlace: "v1/counseling/update",
+    getAllPlace: "v1/counseling/getAll",
+    getPlaceById: "v1/counseling/getById",
+    updateOrder: "v1/counseling/updateOrder",
+    getByUser: "v1/counseling/getPlacesByUser",
+    CHANGE_STATUS: "v1/counseling/changeStatus",
+    addMultimedia: "v1/counseling/addMultimedia",
+    getMultimedias: "v1/counseling/getMultimedias",
+    deleteMultimedia: "v1/counseling/deleteMultimedia",
+    getBuyableByPlace: "v1/counseling/getBuyableByPlace",
+    addMultimediaList: "v1/counseling/addMultimediaList",
+    getPlacesInviteCode: "v1/counseling/getPlacesInviteCode",
+    setDefaultMultimedia: "v1/counseling/setDefaultMultimedia",
+};
 export let PlaceApi = {
     getPlacesInviteCode: "v1/Place/getPlacesInviteCode",
     getBuyableByPlace: "v1/Place/getBuyableByPlace",
@@ -290,6 +311,7 @@ export let TicketSubscribesApi = {
     delete: "v1/TicketSubscribe/delete",
     getAll: "v1/TicketSubscribe/getAll",
     getTicketSubscribeDiscountHistory: "v1/TicketSubscribe/getTicketSubscribeDiscountHistory",
+    getTicketSubscribeDiscountHistoryByUser: "v1/TicketSubscribe/getTicketSubscribeDiscountHistoryByUser",
     getById: "v1/TicketSubscribe/getById",
     getSports: "v1/TicketSubscribe/getSports",
     addSport: "v1/TicketSubscribe/addSport",
@@ -395,6 +417,7 @@ export let PlacePersonelApi = {
     getUserPlaceAccess: "v1/placePersonnel/getUserPlaceAccess",
     getPlaceBeneficiaries: "v1/placePersonnel/getPlaceBeneficiaries",
     updatePersonnelAccess: "v1/placePersonnel/updatePersonnelAccess",
+    updatePersonnelGetSms: "v1/placePersonnel/updatePersonnelGetSms",
     getUserPlaceBuyableAccess: "v1/placePersonnel/getUserPlaceBuyableAccess",
     updatePersonnelCommissionFee: "v1/placePersonnel/updatePersonnelCommissionFee",
     updatePersonnelBuyableAccess: "v1/placePersonnel/updatePersonnelBuyableAccess",
@@ -460,6 +483,7 @@ export let SupportApi = {
     delete: "v1/Support/delete",
     update: "v1/Support/update",
     query: "v1/Support/query",
+    updateMessage: "v1/Support/updateMessage",
 };
 export let purchasedSubscribeApi = {
     add: "v1/purchasedSubscribe/add",

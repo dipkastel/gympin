@@ -35,7 +35,7 @@ const _popoverUserPlaces = ({currentUser}) => {
                     <TableBody>
                         {userPlaces && userPlaces.map(row => (
                             <TableRow key={row.Id}>
-                                <TableCell align="right"><Avatar onClick={() => history.push("/place/data/" + row.Id)}
+                                <TableCell align="right"><Avatar onClick={() => history.push("/gyms/data/" + row.Id)}
                                                                  alt={row.Name} src={row.Logo ? row.Logo.Url : ""}
                                                                  sx={{width: 20, height: 20}}/></TableCell>
                                 <TableCell align="right">{row.Name}</TableCell>

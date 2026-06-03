@@ -17,6 +17,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,6 +43,10 @@ public class BuyableEntity<P> extends BaseEntityWithCreateUpdate<P> {
 
     @Column(name = "enable", nullable = false)
     private Boolean enable;
+
+    @Column(name = "startIncredible")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startIncredible;
 
     @Column(name = "discount", nullable = false, columnDefinition = "smallint default 0")
     private Short discount;

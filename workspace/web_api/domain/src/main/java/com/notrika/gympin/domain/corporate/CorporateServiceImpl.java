@@ -10,7 +10,7 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePerso
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelGroupParam;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceCorporateDto;
 import com.notrika.gympin.common.finance.transaction.param.FinanceCorporateParam;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymContractDto;
+import com.notrika.gympin.common.place.placeBase.dto.PlaceContractDto;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
@@ -304,7 +304,7 @@ public class CorporateServiceImpl extends AbstractBaseService<CorporateParam, Co
         String contractData = corporate.getContractData();
         String code = MyRandom.GenerateRandomVerificationSmsCode();
         try {
-            PlaceGymContractDto contractDto = objectMapper.readValue(contractData, PlaceGymContractDto.class);
+            PlaceContractDto contractDto = objectMapper.readValue(contractData, PlaceContractDto.class);
             smsInService.sendCorporateContractCode(corporate.getId(), SmsDto.builder()
                     .smsType(SmsTypes.JOINED_TO_CORPORATE)
                     .userNumber(contractDto.ownerPhoneNumber)

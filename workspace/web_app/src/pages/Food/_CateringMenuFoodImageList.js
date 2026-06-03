@@ -220,6 +220,7 @@ const _CateringMenuFoodImageList = ({title, Items, onAddClick, onMinusClick, sel
                                     <Grid container alignContent={"center"} direction={"column"} sx={{width: "100%", p: 0.5}}>
                                         {row?.Food?.Multimedias.length>1&&<PermMedia sx={{color:"#757575",position:"absolute",ml:5,mt:1}}  />}
                                         <Image rounded={"12px"} className={"m-1"}
+                                               loading={"lazy"}
                                                onClick={(e)=>row?.Food?.Multimedias.length>1&&setSelectedItemImages(row)}
                                                src={(row?.Food?.Multimedias[0]?.Url) || "/assets/images/icons/ic-empty-transaction.svg"}
                                                width={!!selected?.find(inf => inf.FoodMenu.Id === row?.Id)?.Count?"50%":"70%"}/>

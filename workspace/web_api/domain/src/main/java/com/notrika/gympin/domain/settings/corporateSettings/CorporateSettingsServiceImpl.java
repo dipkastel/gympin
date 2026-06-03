@@ -1,15 +1,20 @@
 package com.notrika.gympin.domain.settings.corporateSettings;
 
+import com.notrika.gympin.common.corporate.corporate.dto.CorporateDto;
 import com.notrika.gympin.common.settings.corporateSettings.dto.CorporateSettingDto;
 import com.notrika.gympin.common.settings.corporateSettings.param.CorporateSettingParam;
 import com.notrika.gympin.common.settings.corporateSettings.service.corporateSettingsService;
+import com.notrika.gympin.common.user.user.service.UserService;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.corporate.CorporateServiceImpl;
+import com.notrika.gympin.domain.user.UserServiceImpl;
+import com.notrika.gympin.domain.util.convertor.CorporateConvertor;
 import com.notrika.gympin.domain.util.convertor.CorporateSettingsConvertor;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageCorporateSettingsRepository;
 import com.notrika.gympin.persistence.entity.management.settings.CorporateSettingsEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,8 +33,12 @@ public class CorporateSettingsServiceImpl extends AbstractBaseService<CorporateS
 
     @Autowired
     ManageCorporateSettingsRepository corporateSettingsRepository;
+
     @Autowired
     CorporateServiceImpl corporateService;
+
+    @Autowired
+    UserServiceImpl userServiceImpl;
 
     @Override
     public CorporateSettingDto add(@NonNull CorporateSettingParam settingParam) {
@@ -102,6 +112,16 @@ public class CorporateSettingsServiceImpl extends AbstractBaseService<CorporateS
     @Override
     public List<CorporateSettingDto> getCorporateSettings(Long corporateId) {
         return convertToDtos(corporateSettingsRepository.findAllByDeletedIsFalseAndCorporateId(corporateId));
+    }
+
+    @Override
+    public HashMap<String, List<CorporateSettingDto>> getUserCorporateSettings(Long userId) {
+        UserEntity user = userServiceImpl.getEntityById(userId);
+        HashMap<String,List<CorporateSettingDto>> userSettings = new HashMap<>();
+        for(CorporateEntity corporate:user.getCorporatesPersonel().stream().filter(pp->!pp.isDeleted()).collect(Collectors.toList()).stream().map(pp->pp.getCorporate()).collect(Collectors.toList())){
+            userSettings.put(corporate.getName(),corporate.getSettings().stream().map(CorporateSettingsConvertor::toDto).collect(Collectors.toList()));
+        }
+        return userSettings;
     }
 
     @Override

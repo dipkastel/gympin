@@ -11,7 +11,7 @@ const _DashTotalDeposit = ({ place,wallet, navigate,currentUser }) => {
   return (
     <AnalyticsBox
       icon={<img alt="icon" src="/assets/images/icons/ic-glass-bag3.svg" />}
-      title={"کیف پول "+currentUser.FullName+" ("+place?.Name+") "}
+      title={"کیف پول "+currentUser?.FullName||currentUser.Username+" ("+place?.Name+") "}
       onClick={() => navigate("/finance")}
       color={"quaternary"}
       total={wallet?toPriceWithComma(getPlaceBalance()) + " تومان":<CircularProgress size={20} />}

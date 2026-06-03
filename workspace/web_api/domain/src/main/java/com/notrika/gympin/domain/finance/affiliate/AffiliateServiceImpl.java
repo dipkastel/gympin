@@ -17,7 +17,7 @@ import com.notrika.gympin.common.finance.affiliate.param.AffiliateParam;
 import com.notrika.gympin.common.finance.affiliate.param.AffiliateTPRegisterParam;
 import com.notrika.gympin.common.finance.affiliate.query.AffiliateQuery;
 import com.notrika.gympin.common.finance.affiliate.service.AffiliateService;
-import com.notrika.gympin.common.place.personnel.service.PlacePersonnelService;
+import com.notrika.gympin.common.place.parts.personnel.service.PlacePersonnelService;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util.exception.affiliate.AffiliateAuthException;

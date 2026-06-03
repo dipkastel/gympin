@@ -25,5 +25,7 @@ public interface SmsInService {
     boolean sendUserAddCreditByCorporate(SmsDto smsDto) throws Exception;
     boolean sendYouReserveSubscribe(SmsDto smsDto) throws Exception;
     boolean sendYouReserveWillExpireSoon(SmsDto smsDto) throws Exception;
+    boolean sendStartIncredible(SmsDto smsDto) throws Exception;
+    boolean sendEndIncredible(SmsDto smsDto) throws Exception;
 
 }

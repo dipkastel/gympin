@@ -1,15 +1,15 @@
 package com.notrika.gympin.controller.impl.place;
 
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymContractSmsParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceContractSmsParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.placeGym.api.PlaceGymController;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaListParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceMultimediaListParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.placeGym.query.PlaceGymQuery;
 import com.notrika.gympin.common.place.placeGym.service.PlaceGymService;
 import com.notrika.gympin.common.sport.sport.dto.SportDto;
@@ -88,26 +88,26 @@ public class PlaceGymControllerImpl implements PlaceGymController {
 
     @Override
     @PostMapping("/addMultimedia")
-    public ResponseEntity<PlaceGymDto> addMultimedia(PlaceGymMultimediaParam param) {
+    public ResponseEntity<PlaceGymDto> addMultimedia(PlaceMultimediaParam param) {
         return ResponseEntity.ok(placeService.addMultimedia(param));
     }
 
     @Override
     @PostMapping("/setDefaultMultimedia")
-    public ResponseEntity<PlaceGymDto> setDefaultMultimedia(PlaceGymMultimediaParam param) {
+    public ResponseEntity<PlaceGymDto> setDefaultMultimedia(PlaceMultimediaParam param) {
         return ResponseEntity.ok(placeService.setDefaultMultimedia(param));
     }
 
     @Override
     @PutMapping("/deleteMultimedia")
-    public ResponseEntity<PlaceGymDto> deleteMultimedia(PlaceGymMultimediaParam param) {
+    public ResponseEntity<PlaceGymDto> deleteMultimedia(PlaceMultimediaParam param) {
         return ResponseEntity.ok(placeService.removeMultimedia(param));
     }
 
 
     @Override
     @PostMapping("/addMultimediaList")
-    public ResponseEntity<PlaceGymDto> addMultimediaList(PlaceGymMultimediaListParam param) {
+    public ResponseEntity<PlaceGymDto> addMultimediaList(PlaceMultimediaListParam param) {
         return ResponseEntity.ok(placeService.addMultimediaList(param));
     }
 
@@ -163,7 +163,7 @@ public class PlaceGymControllerImpl implements PlaceGymController {
 
     @Override
     @PostMapping("/sendContractCode")
-    public ResponseEntity<Boolean> sendContractCode(PlaceGymContractSmsParam param) {
+    public ResponseEntity<Boolean> sendContractCode(PlaceContractSmsParam param) {
         return new ResponseEntity<>(placeService.sendContractCode(param), HttpStatus.OK);
     }
 

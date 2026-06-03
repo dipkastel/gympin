@@ -67,7 +67,7 @@ export default function Layout() {
 
         <Outlet />
 
-        <ChatWidget driverId={"123456"} />
+        {/*<ChatWidget driverId={"123456"} />*/}
         {/*</PageContainer>*/}
       </PageAuthGate>
     </DashboardLayout>

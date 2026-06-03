@@ -1,12 +1,7 @@
 package com.notrika.gympin.domain.ticket.food;
 
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
-import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
 import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaListParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodDto;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodCategoryParam;
@@ -15,17 +10,15 @@ import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodParam;
 import com.notrika.gympin.common.ticket.ticketFood.query.TicketFoodQuery;
 import com.notrika.gympin.common.ticket.ticketFood.servie.TicketFoodService;
 import com.notrika.gympin.common.util.exception.ticket.TicketPriceCannotBeNull;
-import com.notrika.gympin.common.util.exception.ticket.UncomfortableValueExeption;
+import com.notrika.gympin.common.util.exception.ticket.WrongValueExeption;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.MultimediaConvertor;
-import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.convertor.TicketFoodConvertor;
 import com.notrika.gympin.persistence.dao.repository.multimedia.MultimediaRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceCateringRepository;
 import com.notrika.gympin.persistence.dao.repository.ticket.food.TicketFoodItemRepository;
 import com.notrika.gympin.persistence.entity.multimedia.MultimediaEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodItemEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +71,7 @@ public class TicketFoodServiceImpl extends AbstractBaseService<TicketFoodParam, 
         if (param.getPlacePrice() == null)
             throw new TicketPriceCannotBeNull();
         if (param.getValuePrice().compareTo(param.getPlacePrice()) < 0)
-            throw new UncomfortableValueExeption();
+            throw new WrongValueExeption();
         TicketFoodItemEntity ticketSubscribeEntity = getEntityById(param.getId());
         ticketSubscribeEntity.setName(param.getName());
         ticketSubscribeEntity.setPrice(param.getPlacePrice());

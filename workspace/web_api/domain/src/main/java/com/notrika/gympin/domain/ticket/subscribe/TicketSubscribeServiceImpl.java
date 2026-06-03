@@ -1,7 +1,10 @@
 package com.notrika.gympin.domain.ticket.subscribe;
 
+import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.settings.sms.dto.SmsDto;
+import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
+import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketDiscountHistoryDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
@@ -17,6 +20,7 @@ import com.notrika.gympin.common.user.user.dto.UserDto;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
 import com.notrika.gympin.common.util.exception.general.NotFoundException;
+import com.notrika.gympin.common.util.exception.general.SendSmsException;
 import com.notrika.gympin.common.util.exception.purchased.PriceConflictException;
 import com.notrika.gympin.common.util.exception.ticket.*;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -31,8 +35,10 @@ import com.notrika.gympin.persistence.dao.repository.ticket.common.TicketHallAct
 import com.notrika.gympin.persistence.dao.repository.ticket.subscribe.TicketSubscribeRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
+import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableDiscountHistoryEntity;
+import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
@@ -66,6 +72,9 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private SmsInService smsService;
+
     @Override
     public TicketSubscribeDto add(@NonNull TicketSubscribeParam ticketSubscribeParam) {
         PlaceGymEntity place = placeGymRepository.getById(ticketSubscribeParam.getPlace().getId());
@@ -92,45 +101,80 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     }
 
     @Override
-    public TicketSubscribeDto update(@NonNull TicketSubscribeParam ticketSubscribeParam) {
-        if (ticketSubscribeParam.getValuePrice() == null)
+    public TicketSubscribeDto update(@NonNull TicketSubscribeParam param) {
+        if (param.getValuePrice() == null)
             throw new TicketPriceCannotBeNull();
-        if (ticketSubscribeParam.getPlacePrice() == null)
+        if (param.getPlacePrice() == null)
             throw new TicketPriceCannotBeNull();
-        if (ticketSubscribeParam.getValuePrice().compareTo(ticketSubscribeParam.getPlacePrice()) < 0)
-            throw new UncomfortableValueExeption();
-        TicketSubscribeEntity ticketSubscribeEntity = getEntityById(ticketSubscribeParam.getId());
+        if (param.getValuePrice().compareTo(param.getPlacePrice()) < 0)
+            throw new WrongValueExeption();
+
+
+        TicketSubscribeEntity ticketSubscribeEntity = getEntityById(param.getId());
+        if (param.getValuePrice().compareTo(param.getPlacePrice()) != 0) {
+            if (placeHasOtherIncredible(ticketSubscribeEntity)) {
+                throw new MultipleIncredibleException();
+            }
+        } else {
+            if (ticketSubscribeEntity.getStartIncredible() != null) {
+                ticketSubscribeEntity.setStartIncredible(null);
+
+                try {
+                    var placePersonel = ticketSubscribeEntity.getPlace().getPlaceOwners().stream().filter(o -> !o.isDeleted() && o.getSms()).collect(Collectors.toList());
+                    for (PlacePersonnelEntity owner : placePersonel) {
+                        smsService.sendEndIncredible(SmsDto.builder()
+                                .userNumber(owner.getUser().getPhoneNumber())
+                                .smsType(SmsTypes.JOIN_PLACE_REQUEST)
+                                .text1(ticketSubscribeEntity.getName())
+                                .build()
+                        );
+                    }
+                } catch (Exception e) {
+                    throw new SendSmsException();
+                }
+            }
+        }
         BigDecimal beforePrice = ticketSubscribeEntity.getPrice();
-        ticketSubscribeEntity.setName(ticketSubscribeParam.getName());
-        ticketSubscribeEntity.setPrice(ticketSubscribeParam.getPrice());
-        ticketSubscribeEntity.setValuePrice(ticketSubscribeParam.getValuePrice());
-        ticketSubscribeEntity.setPlacePrice(ticketSubscribeParam.getPlacePrice());
+        ticketSubscribeEntity.setName(param.getName());
+        ticketSubscribeEntity.setPrice(param.getPrice());
+        ticketSubscribeEntity.setValuePrice(param.getValuePrice());
+        ticketSubscribeEntity.setPlacePrice(param.getPlacePrice());
         ticketSubscribeEntity.setBuyableType(BuyableType.SUBSCRIBE);
-        ticketSubscribeEntity.setTiming(ticketSubscribeParam.getTiming());
-        ticketSubscribeEntity.setEntryTotalCount(ticketSubscribeParam.getEntryTotalCount());
-        ticketSubscribeEntity.setSubscribeStatus(ticketSubscribeParam.getSubscribeStatus());
-        ticketSubscribeEntity.setGender(ticketSubscribeParam.getGender());
-        ticketSubscribeEntity.setDescription(ticketSubscribeParam.getDescription());
-        ticketSubscribeEntity.setExpireDuration(ticketSubscribeParam.getExpireDuration());
-        ticketSubscribeEntity.setSubscribeCapacity(ticketSubscribeParam.getSubscribeCapacity());
+        ticketSubscribeEntity.setTiming(param.getTiming());
+        ticketSubscribeEntity.setEntryTotalCount(param.getEntryTotalCount());
+        ticketSubscribeEntity.setSubscribeStatus(param.getSubscribeStatus());
+        ticketSubscribeEntity.setGender(param.getGender());
+        ticketSubscribeEntity.setDescription(param.getDescription());
+        ticketSubscribeEntity.setExpireDuration(param.getExpireDuration());
+        ticketSubscribeEntity.setSubscribeCapacity(param.getSubscribeCapacity());
 
 
-        if (ticketSubscribeParam.getPlacePrice().compareTo(ticketSubscribeParam.getPrice()) < 0)
+        if (param.getPlacePrice().compareTo(param.getPrice()) < 0)
             throw new PriceConflictException();
 
-        BigDecimal percent = ticketSubscribeParam.getPrice()
-                .divide(ticketSubscribeParam.getPlacePrice(), 2, RoundingMode.HALF_EVEN);
+        BigDecimal percent = param.getPrice()
+                .divide(param.getPlacePrice(), 2, RoundingMode.HALF_EVEN);
         Short newDiscount = (short) Math.round((1 - percent.floatValue()) * 100);
         ticketDiscountHistoryRepository.add(
                 BuyableDiscountHistoryEntity.builder()
                         .buyable(ticketSubscribeEntity)
                         .discount(newDiscount)
                         .beforPrice(beforePrice)
-                        .afterPrice(ticketSubscribeParam.getPrice())
+                        .afterPrice(param.getPrice())
                         .build());
         ticketSubscribeEntity.setDiscount(newDiscount);
 
         return TicketSubscribeConvertor.toDto(ticketSubscribeRepository.update(ticketSubscribeEntity));
+    }
+
+    private boolean placeHasOtherIncredible(TicketSubscribeEntity ticketSubscribeEntity) {
+        List<BuyableEntity<?>> buyables = ticketSubscribeEntity.getPlace().getBuyables().stream().filter(b->!b.isDeleted()).collect(Collectors.toList());
+        for (BuyableEntity<?> buyable : buyables) {
+            if (buyable.getId() != ticketSubscribeEntity.getId() && buyable.getPlacePrice().compareTo(buyable.getValuePrice()) != 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -263,7 +307,13 @@ public class TicketSubscribeServiceImpl extends AbstractBaseService<TicketSubscr
     @Override
     public List<TicketDiscountHistoryDto> getTicketSubscribeDiscountHistory(Long ticketSubscribeId) {
         TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(ticketSubscribeId);
-        return ticketSubscribe.getDiscountHistory().stream().filter(o -> !o.isDeleted()).skip(Math.max(0, ticketSubscribe.getDiscountHistory().size() - 30)).map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
+        return ticketSubscribe.getDiscountHistory().stream().filter(o -> !o.isDeleted()).skip(Math.max(0, ticketSubscribe.getDiscountHistory().size() - 100)).map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TicketDiscountHistoryDto> getTicketSubscribeDiscountHistoryByUser(Long ticketSubscribeId) {
+        TicketSubscribeEntity ticketSubscribe = ticketSubscribeRepository.getById(ticketSubscribeId);
+        return ticketSubscribe.getDiscountHistory().stream().filter(t->t.getCreatorUser()!=null).map(TicketSubscribeConvertor::toDto).collect(Collectors.toList());
     }
 
     @Override

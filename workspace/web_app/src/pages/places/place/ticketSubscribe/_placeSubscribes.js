@@ -115,7 +115,7 @@ const _placeSubscribes = ({place,genderFilter}) => {
         return (
             <div>
                 <Box sx={{ display: "flex", justifyContent: "center", p: 2,width:"100%" }}>
-                    {subscribes?.length > 0 && <Grid container columns={2} spacing={2} sx={{width:"100%" }} >
+                    {subscribes?.length > 0 && <Grid container columns={2} spacing={3} sx={{width:"100%" }} >
                         {subscribes?.filter(t => t.Enable).filter(b=>genderFilter==null||b.Gender==genderFilter).map((item, number) => (
                             <_PlaceSubscribeListItem key={"ac" + number} subscribe={item} number={number}
                                                      addToSubscribe={addToBasket} login={!!currentUser}/>))}

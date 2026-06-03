@@ -1,11 +1,11 @@
 //package com.notrika.gympin.test.domain.place;
 //
 //import com.fasterxml.jackson.core.type.TypeReference;
-//import com.notrika.gympin.common.place.hall.dto.HallDto;
-//import com.notrika.gympin.common.place.hall.param.HallParam;
-//import com.notrika.gympin.common.place.hallEnter.dto.EnterHallConfirmDto;
-//import com.notrika.gympin.common.place.hallEnter.dto.EnterHallRequestDto;
-//import com.notrika.gympin.common.place.hallEnter.param.EnterHallRequestParam;
+//import com.notrika.gympin.common.place.parts.hall.dto.HallDto;
+//import com.notrika.gympin.common.place.parts.hall.param.HallParam;
+//import com.notrika.gympin.common.place.parts.hallEnter.dto.EnterHallConfirmDto;
+//import com.notrika.gympin.common.place.parts.hallEnter.dto.EnterHallRequestDto;
+//import com.notrika.gympin.common.place.parts.hallEnter.param.EnterHallRequestParam;
 //import com.notrika.gympin.common.place.place.dto.PlaceGymDto;
 //import com.notrika.gympin.common.place.place.param.PlaceParam;
 //import com.notrika.gympin.common.sportTest.sportTest.param.SportParam;

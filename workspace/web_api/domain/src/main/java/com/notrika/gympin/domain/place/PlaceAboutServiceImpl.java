@@ -1,8 +1,8 @@
 package com.notrika.gympin.domain.place;
 
-import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
-import com.notrika.gympin.common.place.about.param.PlaceAboutParam;
-import com.notrika.gympin.common.place.about.service.PlaceAboutService;
+import com.notrika.gympin.common.place.parts.about.dto.PlaceAboutDto;
+import com.notrika.gympin.common.place.parts.about.param.PlaceAboutParam;
+import com.notrika.gympin.common.place.parts.about.service.PlaceAboutService;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
@@ -12,7 +12,6 @@ import com.notrika.gympin.persistence.dao.repository.place.PlaceAboutRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceGymRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;

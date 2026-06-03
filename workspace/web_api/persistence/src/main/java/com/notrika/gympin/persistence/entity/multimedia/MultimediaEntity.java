@@ -5,8 +5,7 @@ import com.notrika.gympin.common.multimedia.enums.MediaType;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.article.ArticleEntity;
 import com.notrika.gympin.persistence.entity.finance.gateway.FinanceGatewayEntity;
-import com.notrika.gympin.persistence.entity.homePage.HomePageItemEntity;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
+import com.notrika.gympin.persistence.entity.pages.PagesItemEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.sport.SportMultimediaEntity;
 import com.notrika.gympin.persistence.entity.ticket.food.TicketFoodItemEntity;
@@ -85,7 +84,7 @@ public class MultimediaEntity extends BaseEntityWithCreateUpdate<MultimediaEntit
     @OneToMany(mappedBy = "multimedia", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private List<HomePageItemEntity> homeMultimedia;
+    private List<PagesItemEntity> homeMultimedia;
 
     @ManyToOne
     @JoinColumn(name = "categoryId")

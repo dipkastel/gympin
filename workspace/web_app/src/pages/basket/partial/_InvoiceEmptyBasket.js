@@ -11,7 +11,8 @@ const _InvoiceEmptyBasket = () => {
             justifyContent={"center"}
             alignItems={"center"}
         >
-            <Image src={toAbsoluteUrl("/assets/images/noBastket.png")} width={"40%"}  style={{maxWidth: "300px"}} />
+            <Image src={toAbsoluteUrl("/assets/images/noBastket.png")}
+                   loading={"lazy"} width={"40%"}  style={{maxWidth: "300px"}} />
             <Typography variant={"body1"} sx={{m: 2}}>
                 سبد خرید شما خالی است
             </Typography>

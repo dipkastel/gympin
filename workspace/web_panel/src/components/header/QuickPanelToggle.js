@@ -26,7 +26,7 @@ export default class QuickPanelToggler extends React.Component {
           overlay={<Tooltip id="quick-panel-tooltip">Quick panel</Tooltip>}
         >
           <div
-            className="kt-header__topbar-item kt-header__topbar-item--quick-panel"
+            className="kt-header__topbar-itemToEdit kt-header__topbar-itemToEdit--quick-panel"
             data-toggle="kt-tooltip"
             title="Quick panel"
             data-placement="right"

@@ -95,16 +95,19 @@ public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
     @ToString.Exclude
     private List<InvoiceExtraItemEntity> invoiceExtraItems;
 
+    @JsonIgnore
     public void addInvoiceBuyable(InvoiceBuyableEntity<?> buyable) {
         invoiceBuyables.add(buyable);
         buyable.setInvoice(this);
     }
 
+    @JsonIgnore
     public void removeBuyable(InvoiceBuyableEntity<?> buyable) {
         invoiceBuyables.remove(buyable);
         buyable.setPlace(null);
     }
 
+    @JsonIgnore
     public List<InvoiceFoodEntity> getInvoiceFoods() {
         if(getInvoiceBuyables()==null) return new ArrayList<>();
         return getInvoiceBuyables().stream()
@@ -114,6 +117,7 @@ public class InvoiceEntity extends BaseEntityWithCreateUpdate<InvoiceEntity> {
                 .collect(Collectors.toList());
     }
 
+    @JsonIgnore
     public List<InvoiceSubscribeEntity> getInvoiceSubscribes() {
         if(getInvoiceBuyables()==null) return new ArrayList<>();
         return getInvoiceBuyables().stream()

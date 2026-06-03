@@ -51,7 +51,6 @@ const _DashSupport = () => {
     }
 
     function SetStatus(item,status) {
-        console.log({...item,Status:status})
         placeComments_update({...item,Status:status})
             .then((data) => {
                 setPage(0);

@@ -90,6 +90,16 @@ export default function _ActiveSubscribes() {
         }
 
     }
+
+    function getPurchasedSerial(item){
+        try{
+            var serialArr = item?.Serial?.find(p=>p.ProcessType == "TRA_USE_TICKET")?.Serial.split('-');
+            return  serialArr[serialArr.length-1];
+        }catch (e){
+            return "ثبت نشده"
+        }
+    }
+
     return (
         <>
             <Card variant={"outlined"}>
@@ -104,12 +114,11 @@ export default function _ActiveSubscribes() {
                             <_WaitingUserListItem purchasedItem={ps} renewList={getActiveSubscribes} />
                         ))}
                         {!canEnterUser&&PlaceSubscribes?.content?.filter(ps => ps.Status == "READY_TO_ACTIVE").length > 0 &&
-                        PlaceSubscribes?.content?.filter(ps => ps.Status == "READY_TO_ACTIVE").map(ps=>(
                             <Alert severity="success" sx={{px: 1,m:1}}>
                                 <Typography variant={"body1"}
                                             sx={{px: 1}}>{"احتمال ورود " + PlaceSubscribes?.content?.filter(ps => ps.Status == "READY_TO_ACTIVE").length + " کاربر تا 72 ساعت آینده"}</Typography>
                             </Alert>
-                        ))}
+                        }
                         <List sx={{width: '100%', bgcolor: 'background.paper'}}>
                             {PlaceSubscribes?.content?.filter(ps => ps.Status === "ACTIVE").map((item, Index) => (
                                 <div key={Index}>
@@ -123,7 +132,7 @@ export default function _ActiveSubscribes() {
                                         <Link
                                             // href={"/users/SingleSubscribe/" + item?.Key}
                                               sx={{textDecoration: "none", color: "#666666", width: "100%"}}>
-                                            <ListItemText primary={`${item?.User?.FullName || ""} (${item?.User?.Username})`}/>
+                                            <ListItemText primary={`${item?.User?.FullName || ""} (${getPurchasedSerial(item)})`}/>
                                             <ListItemText secondary={`${item?.Name || ""}`}/>
                                         </Link>
                                         <Chip  variant={"outlined"} color={getColor(item.Status)}
@@ -143,7 +152,7 @@ export default function _ActiveSubscribes() {
                                         <Link
                                             // href={"/users/SingleSubscribe/" + item?.Key}
                                               sx={{textDecoration: "none", color: "#666666", width: "100%"}}>
-                                            <ListItemText primary={`${item?.User?.FullName || ""} (${item?.User?.Username})`}/>
+                                            <ListItemText primary={`${item?.User?.FullName || ""} (${getPurchasedSerial(item)})`}/>
                                             <ListItemText secondary={`${item?.Name || ""}`}/>
                                         </Link>
                                         <Chip  variant={"outlined"} color={getColor(item.Status)}
@@ -163,7 +172,7 @@ export default function _ActiveSubscribes() {
                                         <Link
                                             // href={"/users/SingleSubscribe/" + item?.Key}
                                               sx={{textDecoration: "none", color: "#666666", width: "100%"}}>
-                                            <ListItemText primary={`${item?.User?.FullName || ""} (${item?.User?.Username})`}/>
+                                            <ListItemText primary={`${item?.User?.FullName || ""} (${getPurchasedSerial(item)})`}/>
                                             <ListItemText secondary={`${item?.Name || ""}`}/>
                                         </Link>
                                         <Chip  variant={"outlined"} color={getColor(item.Status)}

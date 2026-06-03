@@ -1,9 +1,9 @@
 
 
 export let AuthApi = {
-    // BASEURL: "http://localhost:8080/api/",
+    BASEURL: "http://localhost:8080/api/",
     // BASEURL: "http://192.168.1.108:8080/api/",
-    BASEURL: "https://api.gympin.ir/",
+    // BASEURL: "https://api.gympin.ir/",
 };
 export let Api_url = {
     Account: {
@@ -21,7 +21,6 @@ export let Api_url = {
         getById: "v1/catering/getById",
     },
     ticketFood: {
-
         getAll: "v1/TicketFood/getAll",
         getById: "v1/TicketFood/getById",
         query: "v1/TicketFood/query",
@@ -45,7 +44,8 @@ export let Api_url = {
         checkStatus:"v1/giftCredit/checkStatus"
     },
     homePage: {
-        GET_HOME_PAGE: "v1/homepage/getHome",
+        GetHome: "v1/pages/getHome",
+        GetPageByData: "v1/pages/getPageByData",
     },
     TicketBuyable:{
         query:"v1/TicketBuyable/query"
@@ -115,7 +115,8 @@ export let Api_url = {
     TicketSubscribe:{
         getById:"v1/TicketSubscribe/getById",
         getByPlace:"v1/TicketSubscribe/getByPlace",
-        getActiveTimesByTicketSubscribe:"v1/TicketSubscribe/getActiveTimesByTicketSubscribe"
+        getActiveTimesByTicketSubscribe:"v1/TicketSubscribe/getActiveTimesByTicketSubscribe",
+        query:"v1/TicketSubscribe/query",
     },
     Link:{
         getByCode: "v1/link/getByCode",

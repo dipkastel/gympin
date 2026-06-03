@@ -67,20 +67,16 @@ const TicketListItem = ({item,getSubscribe}) => {
                         <Typography variant={"body1"}>{item?.TicketSubscribe?.Place?.Name}</Typography>
                     </Grid>
                     <Grid sx={{mx:5,mt:1}} container direction={"row"} justifyContent={"space-between"}>
-                        <Typography variant={"subtitle2"} sx={{color:"#888888"}} >{item?.Status=="READY_TO_ACTIVE"?"مهلت ورود":"انقضا"}</Typography>
+                        <Typography variant={"subtitle2"} sx={{color:"#888888"}} >تعداد ورود مجاز</Typography>
+                        <Typography variant={"body1"}>{replacePersianNumbers(item?.EntryTotalCount+"")}</Typography>
+                    </Grid>
+                    <Grid sx={{mx:5,mt:1}} container direction={"row"} justifyContent={"space-between"}>
+                        <Typography variant={"subtitle2"} sx={{color:"#888888"}} >{item?.Status=="READY_TO_ACTIVE"?"مهلت ورود و تایید خرید":"انقضا"}</Typography>
                         <Typography variant={"body1"}>{item?.Status=="READY_TO_ACTIVE"?timerText:(new Date(item?.ExpireDate).toLocaleDateString('fa-IR', {
                             year: 'numeric',
                             month: 'long',
                             day: 'numeric'
                         }))}</Typography>
-                    </Grid>
-                    <Grid sx={{mx:5,mt:1}} container direction={"row"} justifyContent={"space-between"}>
-                        <Typography variant={"subtitle2"} sx={{color:"#888888"}} >تعداد ورود</Typography>
-                        <Typography variant={"body1"}>{replacePersianNumbers(item?.EntryTotalCount+"")}</Typography>
-                    </Grid>
-                    <Grid sx={{mx:5,mt:1}} container direction={"row"} justifyContent={"space-between"}>
-                        <Typography variant={"subtitle2"} sx={{color:"#888888"}} >کد رزرو</Typography>
-                        <Typography variant={"body1"}>{replacePersianNumbers(item?.Serial[0]?.Serial?.split("-")[0])}</Typography>
                     </Grid>
                 </Grid>
             </TicketLayout>

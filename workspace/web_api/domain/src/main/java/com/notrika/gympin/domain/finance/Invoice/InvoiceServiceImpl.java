@@ -302,6 +302,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     }
 
     @Override
+    @Transactional
     public InvoiceDto addFood(InvoiceBuyableFoodParam param) {
 
         TicketFoodMenuEntity foodmenu = ticketFoodMenuRepository.getById(param.getMenu().getId());
@@ -352,6 +353,7 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
     }
 
     @Override
+    @Transactional
     public InvoiceDto addSubscribe(InvoiceBuyableSubscribeParam param) {
         TicketSubscribeEntity subscribe = ticketSubscribeRepository.getById(param.getSubscribe().getId());
         InvoiceEntity invoice = helper.getUserBasket(param.getInvoice());
@@ -363,8 +365,10 @@ public class InvoiceServiceImpl extends AbstractBaseService<InvoiceParam, Invoic
         if(invoice.getUser().getUserProvider()== UserProvider.SMARTIS){
             subscribe.setPrice(subscribe.getPlacePrice());
         }
+
         if(invoice.getInvoiceSubscribes().size()>0)
             throw new OnlyOneItemCanBeInInvoice();
+
 
         //if buyable exist add +1
         InvoiceSubscribeEntity userBuyable = null;

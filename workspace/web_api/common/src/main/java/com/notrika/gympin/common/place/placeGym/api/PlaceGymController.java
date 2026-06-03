@@ -1,15 +1,14 @@
 package com.notrika.gympin.common.place.placeGym.api;
 
-import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymContractSmsParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceContractSmsParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
 import com.notrika.gympin.common.util._base.base.BaseController;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaListParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceMultimediaListParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.placeGym.query.PlaceGymQuery;
 import com.notrika.gympin.common.sport.sport.dto.SportDto;
 import com.notrika.gympin.common.user.user.dto.InviteCode;
@@ -33,13 +32,13 @@ public interface PlaceGymController extends BaseController<PlaceGymParam, PlaceG
 
     ResponseEntity<PlaceGymDto> getMyPlaceGymById(Long id);
 
-    ResponseEntity<PlaceGymDto> addMultimedia(@RequestBody PlaceGymMultimediaParam place);
+    ResponseEntity<PlaceGymDto> addMultimedia(@RequestBody PlaceMultimediaParam place);
 
-    ResponseEntity<PlaceGymDto> addMultimediaList(@RequestBody PlaceGymMultimediaListParam place);
+    ResponseEntity<PlaceGymDto> addMultimediaList(@RequestBody PlaceMultimediaListParam place);
 
-    ResponseEntity<PlaceGymDto> setDefaultMultimedia(@RequestBody PlaceGymMultimediaParam place);
+    ResponseEntity<PlaceGymDto> setDefaultMultimedia(@RequestBody PlaceMultimediaParam place);
 
-    ResponseEntity<PlaceGymDto> deleteMultimedia(@RequestBody PlaceGymMultimediaParam place);
+    ResponseEntity<PlaceGymDto> deleteMultimedia(@RequestBody PlaceMultimediaParam place);
 
     ResponseEntity<InviteCode> getPlaceInviteCode(PlaceGymParam placeParam);
 
@@ -51,6 +50,6 @@ public interface PlaceGymController extends BaseController<PlaceGymParam, PlaceG
 
     ResponseEntity<PlaceGymDto>  signContract(@RequestBody PlaceGymParam placeParam);
 
-    ResponseEntity<Boolean> sendContractCode(@RequestBody PlaceGymContractSmsParam param);
+    ResponseEntity<Boolean> sendContractCode(@RequestBody PlaceContractSmsParam param);
 
 }

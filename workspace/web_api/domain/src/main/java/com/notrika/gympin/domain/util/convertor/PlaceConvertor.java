@@ -1,20 +1,21 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.corporate.corporate.enums.CorporateStatusEnum;
-import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
+import com.notrika.gympin.common.place.parts.about.dto.PlaceAboutDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelAccessDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelBuyableAccessDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeCatering.dto.PlaceCateringDto;
+import com.notrika.gympin.common.place.placeCounseling.dto.PlaceCounselingDto;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.user.user.enums.UserProvider;
 import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceCateringEntity;
+import com.notrika.gympin.persistence.entity.place.PlaceCounselingEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.about.PlaceAboutEntity;
@@ -24,11 +25,11 @@ import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntit
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelRoleEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
+import com.notrika.gympin.persistence.entity.ticket.appointment.TicketAppointmentEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import org.springframework.data.domain.Page;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -36,17 +37,15 @@ import java.util.stream.Collectors;
 
 public final class PlaceConvertor {
 
-
+    //gym
     public static List<PlaceGymDto> ToGymDto(Collection<PlaceGymEntity> entities) {
         if (entities == null) return null;
         return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::toDtoSecureGym).collect(Collectors.toList());
     }
-
     public static Page<PlaceGymDto> ToGymDto(Page<PlaceGymEntity> entities) {
         if (entities == null) return null;
         return entities.map(PlaceConvertor::toDtoSecureGym);
     }
-
     public static PlaceGymDto ToGymDto(PlaceGymEntity entity) {
         if (entity == null) return null;
         Boolean isSequred = false;
@@ -102,69 +101,6 @@ public final class PlaceConvertor {
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
         return placeDto;
     }
-
-    public static List<PlaceCateringDto> ToCateringDto(Collection<PlaceCateringEntity> entities) {
-        if (entities == null) return null;
-        return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::ToCateringDto).collect(Collectors.toList());
-    }
-
-    public static Page<PlaceCateringDto> ToCateringDto(Page<PlaceCateringEntity> entities) {
-        if (entities == null) return null;
-        return entities.map(PlaceConvertor::ToCateringDto);
-    }
-
-    public static PlaceCateringDto ToCateringDto(PlaceCateringEntity entity) {
-        if (entity == null) return null;
-
-        PlaceCateringDto catering = new PlaceCateringDto();
-        catering.setId(entity.getId());
-        catering.setName(entity.getName());
-        catering.setLatitude(entity.getLatitude());
-        catering.setLongitude(entity.getLongitude());
-        catering.setTell(entity.getTell());
-        catering.setAddress(entity.getAddress());
-        catering.setOrder(entity.getOrder());
-        catering.setAutoDiscount(entity.isAutoDiscount());
-        catering.setStatus(entity.getStatus());
-        catering.setLocation(LocationConvertor.toDto(entity.getLocation()));
-        catering.setLogo(MultimediaConvertor.toDto(entity.getLogo()));
-        catering.setLastOrderDayCount(entity.getLastOrderDayCount());
-        catering.setMinOrderCount(entity.getMinOrderCount());
-        catering.setFreeDeliveryPrice(entity.getFreeDeliveryPrice());
-        catering.setHasDishesPrice(entity.getHasDishesPrice());
-        catering.setViewType(entity.getViewType());
-        return catering;
-    }
-
-    public static List<PlaceDto> ToDto(Collection<PlaceEntity> entities) {
-        if (entities == null) return null;
-        return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::ToDto).collect(Collectors.toList());
-    }
-
-    public static Page<PlaceDto> ToDto(Page<PlaceEntity> entities) {
-        if (entities == null) return null;
-        return entities.map(PlaceConvertor::ToDto);
-    }
-
-    public static PlaceDto ToDto(PlaceEntity entity) {
-        if (entity == null) return null;
-        PlaceDto placeDto = new PlaceDto();
-        placeDto.setId(entity.getId());
-        placeDto.setName(entity.getName());
-        placeDto.setLatitude(entity.getLatitude());
-        placeDto.setLongitude(entity.getLongitude());
-        placeDto.setTell(entity.getTell());
-        placeDto.setAddress(entity.getAddress());
-        placeDto.setStatus(entity.getStatus());
-        placeDto.setRate(entity.getRate());
-        placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
-        if(entity instanceof PlaceGymEntity)
-            placeDto.setPlaceType("Gym");
-        if(entity instanceof PlaceCateringEntity)
-            placeDto.setPlaceType("Catering");
-        return placeDto;
-    }
-
     public static PlaceGymDto toSimpleGymDto(PlaceGymEntity entity) {
         if (entity == null) return null;
         Boolean isSequred = false;
@@ -193,7 +129,6 @@ public final class PlaceConvertor {
         placeDto.setStatus(entity.getStatus());
         return placeDto;
     }
-
     public static PlaceGymDto toDtoSecureGym(PlaceGymEntity entity) {
         if (entity == null) return null;
         Boolean isSequred = false;
@@ -263,6 +198,223 @@ public final class PlaceConvertor {
         placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
         return placeDto;
     }
+    //counseling
+    public static List<PlaceCounselingDto> ToCounselingDto(List<PlaceCounselingEntity> entities) {
+        if (entities == null) return null;
+        return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::toDtoSecureCounseling).collect(Collectors.toList());
+    }
+    public static Page<PlaceCounselingDto> ToCounselingDto(Page<PlaceCounselingEntity> entities) {
+        if (entities == null) return null;
+        return entities.map(PlaceConvertor::toDtoSecureCounseling);
+    }
+    public static PlaceCounselingDto ToCounselingDto(PlaceCounselingEntity entity) {
+        if (entity == null) return null;
+        Boolean isSequred = false;
+        try {
+            GympinContext context = GympinContextHolder.getContext();
+            if (context == null)
+                throw new UnknownUserException();
+            UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+            for (CorporatePersonnelEntity personnel : user.getCorporatesPersonel().stream().filter(cp -> !cp.isDeleted()).collect(Collectors.toList())) {
+                if (personnel.getCorporate().getStatus() == CorporateStatusEnum.SECURE_DEMO) {
+                    isSequred = true;
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        PlaceCounselingDto placeDto = new PlaceCounselingDto();
+        placeDto.setId(entity.getId());
+        try {
+            placeDto.setName(isSequred ? (entity.getName().substring(0, 2) + "*****" + entity.getName().substring(entity.getName().length() - 2)) : entity.getName());
+        } catch (Exception e) {
+
+        }
+        try {
+            placeDto.setLatitude(isSequred ? entity.getLatitude() + Math.random() * 0.002 : entity.getLatitude());
+            placeDto.setLongitude(isSequred ? entity.getLongitude() + Math.random() * 0.002 : entity.getLongitude());
+        } catch (Exception e) {
+
+        }
+        if (entity.getTicketAppointments().size() > 0) {
+            try {
+                placeDto.setGenders(entity.getTicketAppointments().stream().filter(be -> be.getEnable() && (!be.isDeleted())).map(TicketAppointmentEntity::getGender).collect(Collectors.toSet()));
+            } catch (Exception e) {
+            }
+        }
+        placeDto.setTell(isSequred ? "02177487334" : entity.getTell());
+        placeDto.setContractData(entity.getContractData());
+        placeDto.setHasContract(entity.isHasContract());
+        placeDto.setCallUs(entity.isCallUs());
+        try {
+            placeDto.setAddress(isSequred ? (entity.getAddress().substring(0, 3) + "****" + entity.getAddress().substring(entity.getAddress().length() - 3)) : entity.getAddress());
+        } catch (Exception e) {
+        }
+        placeDto.setCommentCount((short) (entity.getPlaceComments()==null?0:entity.getPlaceComments().size()));
+        placeDto.setOrder(entity.getOrder());
+        placeDto.setActiveTimes(entity.getActiveTimes());
+        placeDto.setAutoDiscount(entity.isAutoDiscount());
+        placeDto.setRate(entity.getRate());
+        placeDto.setStatus(entity.getStatus());
+        placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
+        placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
+        return placeDto;
+    }
+    public static PlaceCounselingDto toSimpleCounselingDto(PlaceCounselingEntity entity) {
+        if (entity == null) return null;
+        Boolean isSequred = false;
+        try {
+            GympinContext context = GympinContextHolder.getContext();
+            if (context == null)
+                throw new UnknownUserException();
+            UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+            for (CorporatePersonnelEntity personnel : user.getCorporatesPersonel().stream().filter(cp -> !cp.isDeleted()).collect(Collectors.toList())) {
+                if (personnel.getCorporate().getStatus() == CorporateStatusEnum.SECURE_DEMO) {
+                    isSequred = true;
+                }
+            }
+        } catch (Exception e) {
+        }
+        PlaceCounselingDto placeDto = new PlaceCounselingDto();
+        placeDto.setId(entity.getId());
+        placeDto.setActiveTimes(entity.getActiveTimes());
+        placeDto.setRate(entity.getRate());
+        placeDto.setName(isSequred ? (entity.getName().substring(0, 2) + "*****" + entity.getName().substring(entity.getName().length() - 2)) : entity.getName());
+        placeDto.setOrder(entity.getOrder());
+        try {
+            placeDto.setAddress(isSequred ? (entity.getAddress().substring(0, 3) + "****" + entity.getAddress().substring(entity.getAddress().length() - 3)) : entity.getAddress());
+        } catch (Exception e) {
+        }
+        placeDto.setStatus(entity.getStatus());
+        return placeDto;
+    }
+    public static PlaceCounselingDto toDtoSecureCounseling(PlaceCounselingEntity entity) {
+        if (entity == null) return null;
+        Boolean isSequred = false;
+        UserProvider provider = UserProvider.GYMPIN;
+        try {
+            GympinContext context = GympinContextHolder.getContext();
+            if (context == null)
+                throw new UnknownUserException();
+            UserEntity user = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+
+            for (CorporatePersonnelEntity personnel : user.getCorporatesPersonel().stream().filter(cp -> !cp.isDeleted()).collect(Collectors.toList())) {
+                if (personnel.getCorporate().getStatus() == CorporateStatusEnum.SECURE_DEMO) {
+                    isSequred = true;
+                }
+            }
+            provider = user.getUserProvider();
+        } catch (Exception e) {
+        }
+
+        PlaceCounselingDto placeDto = new PlaceCounselingDto();
+        placeDto.setId(entity.getId());
+        placeDto.setActiveTimes(entity.getActiveTimes());
+        placeDto.setRate(entity.getRate());
+        try {
+            placeDto.setName(isSequred ? (entity.getName().substring(0, 2) + "*****" + entity.getName().substring(entity.getName().length() - 2)) : entity.getName());
+        } catch (Exception e) {
+
+        }
+        try {
+            placeDto.setLatitude(isSequred ? entity.getLatitude() + Math.random() * 0.002 : entity.getLatitude());
+            placeDto.setLongitude(isSequred ? entity.getLongitude() + Math.random() * 0.002 : entity.getLongitude());
+        } catch (Exception e) {
+
+        }
+        placeDto.setHasContract(entity.isHasContract());
+        placeDto.setOrder(entity.getOrder());
+        try {
+            placeDto.setAddress(isSequred ? (entity.getAddress().substring(0, 3) + "****" + entity.getAddress().substring(entity.getAddress().length() - 3)) : entity.getAddress());
+        } catch (Exception e) {
+        }
+        placeDto.setAutoDiscount(entity.isAutoDiscount());
+        placeDto.setHasBeneficiary(entity.getPlaceOwners().stream().filter(o -> !o.isDeleted()).filter(PlacePersonnelEntity::getIsBeneficiary).findFirst().map(p -> true).orElse(false));
+        placeDto.setStatus(entity.getStatus());
+        if (entity.getTicketAppointments().size() > 0) {
+            try {
+                placeDto.setGenders(entity.getTicketAppointments().stream().filter(be -> be.getEnable() && (!be.isDeleted())).map(TicketAppointmentEntity::getGender).collect(Collectors.toSet()));
+            } catch (Exception e) {
+            }
+            try {
+                if(provider==UserProvider.SMARTIS){
+                    var minPriceTicket = entity.getTicketAppointments().stream().filter(p -> !p.isDeleted() && p.getEnable() && p.getPlacePrice() != null).min(Comparator.comparing(BuyableEntity::getPlacePrice)).get();
+                    placeDto.setMinPrice(minPriceTicket.getPlacePrice());
+                    if (minPriceTicket.getValuePrice().compareTo(minPriceTicket.getPlacePrice()) > 0)
+                        placeDto.setMinPriceBeforeDiscount(minPriceTicket.getValuePrice());
+                }else{
+                    var minPriceTicket = entity.getTicketAppointments().stream().filter(p -> !p.isDeleted() && p.getEnable() && p.getPrice() != null).min(Comparator.comparing(BuyableEntity::getPrice)).get();
+                    placeDto.setMinPrice(minPriceTicket.getPrice());
+                    if (minPriceTicket.getValuePrice().compareTo(minPriceTicket.getPrice()) > 0)
+                        placeDto.setMinPriceBeforeDiscount(minPriceTicket.getValuePrice());
+                }
+            } catch (Exception e) {
+            }
+        }
+        placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
+        placeDto.setMultimedias(MultimediaConvertor.toDto(entity.getMultimedias()));
+        return placeDto;
+    }
+    //catering
+    public static List<PlaceCateringDto> ToCateringDto(Collection<PlaceCateringEntity> entities) {
+        if (entities == null) return null;
+        return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::ToCateringDto).collect(Collectors.toList());
+    }
+    public static Page<PlaceCateringDto> ToCateringDto(Page<PlaceCateringEntity> entities) {
+        if (entities == null) return null;
+        return entities.map(PlaceConvertor::ToCateringDto);
+    }
+    public static PlaceCateringDto ToCateringDto(PlaceCateringEntity entity) {
+        if (entity == null) return null;
+
+        PlaceCateringDto catering = new PlaceCateringDto();
+        catering.setId(entity.getId());
+        catering.setName(entity.getName());
+        catering.setLatitude(entity.getLatitude());
+        catering.setLongitude(entity.getLongitude());
+        catering.setTell(entity.getTell());
+        catering.setAddress(entity.getAddress());
+        catering.setOrder(entity.getOrder());
+        catering.setAutoDiscount(entity.isAutoDiscount());
+        catering.setStatus(entity.getStatus());
+        catering.setLocation(LocationConvertor.toDto(entity.getLocation()));
+        catering.setLogo(MultimediaConvertor.toDto(entity.getLogo()));
+        catering.setLastOrderDayCount(entity.getLastOrderDayCount());
+        catering.setMinOrderCount(entity.getMinOrderCount());
+        catering.setFreeDeliveryPrice(entity.getFreeDeliveryPrice());
+        catering.setHasDishesPrice(entity.getHasDishesPrice());
+        catering.setViewType(entity.getViewType());
+        return catering;
+    }
+    //place
+    public static List<PlaceDto> ToDto(Collection<PlaceEntity> entities) {
+        if (entities == null) return null;
+        return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::ToDto).collect(Collectors.toList());
+    }
+    public static Page<PlaceDto> ToDto(Page<PlaceEntity> entities) {
+        if (entities == null) return null;
+        return entities.map(PlaceConvertor::ToDto);
+    }
+    public static PlaceDto ToDto(PlaceEntity entity) {
+        if (entity == null) return null;
+        PlaceDto placeDto = new PlaceDto();
+        placeDto.setId(entity.getId());
+        placeDto.setName(entity.getName());
+        placeDto.setLatitude(entity.getLatitude());
+        placeDto.setLongitude(entity.getLongitude());
+        placeDto.setTell(entity.getTell());
+        placeDto.setAddress(entity.getAddress());
+        placeDto.setStatus(entity.getStatus());
+        placeDto.setRate(entity.getRate());
+        placeDto.setLocation(LocationConvertor.toDto(entity.getLocation()));
+        if(entity instanceof PlaceGymEntity)
+            placeDto.setPlaceType("Gym");
+        if(entity instanceof PlaceCateringEntity)
+            placeDto.setPlaceType("Catering");
+        return placeDto;
+    }
+
+
 
     public static PlaceAboutDto AboutToDto(PlaceAboutEntity entity) {
         if (entity == null) return null;
@@ -279,7 +431,6 @@ public final class PlaceConvertor {
                 .place(ToDto(entity.getPlace()))
                 .build();
     }
-
     public static PlacePersonnelDto personnelToDto(PlacePersonnelEntity entity) {
         if (entity == null) return null;
         PlacePersonnelDto dto = new PlacePersonnelDto();
@@ -291,6 +442,7 @@ public final class PlaceConvertor {
             dto.setPlaceCateringDto(ToCateringDto((PlaceCateringEntity) entity.getPlace()));
         if(entity.getPlace() instanceof PlaceGymEntity)
             dto.setPlaceGymDto(ToGymDto((PlaceGymEntity) entity.getPlace()));
+        dto.setSms(entity.getSms());
         dto.setUserDto(UserConvertor.toDtoComplete(entity.getUser()));
         dto.setUserRole(entity.getPlacePersonnelRoles().stream().filter(pp -> !pp.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()));
         dto.setIsBeneficiary(entity.getIsBeneficiary());
@@ -298,7 +450,6 @@ public final class PlaceConvertor {
         dto.setCommissionFee(entity.getCommissionFee());
         return dto;
     }
-
     public static PlacePersonnelAccessDto personnelAccessToDto(PlacePersonnelAccessEntity entity) {
         if (entity == null) return null;
         return PlacePersonnelAccessDto.builder()
@@ -308,7 +459,6 @@ public final class PlaceConvertor {
                 .access(entity.getAccess())
                 .build();
     }
-
     public static PlacePersonnelBuyableAccessDto personelBuyableAccessToDto(PlacePersonelBuyableAccessEntity entity) {
         if (entity == null) return null;
         return PlacePersonnelBuyableAccessDto.builder()
@@ -318,13 +468,11 @@ public final class PlaceConvertor {
                 .buyableDto(BuyableConvertor.ToDto(entity.getBuyable()))
                 .build();
     }
-
     public static List<PlacePersonnelAccessDto> personnelAccessToDto(List<PlacePersonnelAccessEntity> entities) {
         if (entities == null) return null;
         return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::personnelAccessToDto).collect(Collectors.toList());
 
     }
-
     public static List<PlacePersonnelBuyableAccessDto> personelBuyableAccessToDto(List<PlacePersonelBuyableAccessEntity> entities) {
         if (entities == null) return null;
         return entities.stream().filter(o -> !o.isDeleted()).map(PlaceConvertor::personelBuyableAccessToDto).collect(Collectors.toList());

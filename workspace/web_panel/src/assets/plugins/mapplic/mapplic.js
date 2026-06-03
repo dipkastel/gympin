@@ -1294,7 +1294,7 @@
 
             self.scale = normalizeScale(scale + (scale * delta) / 5);
 
-            // Disable page scroll when zoom is applicable
+            // Disable parent scroll when zoom is applicable
             //if (scale != self.scale)
             e.preventDefault();
 

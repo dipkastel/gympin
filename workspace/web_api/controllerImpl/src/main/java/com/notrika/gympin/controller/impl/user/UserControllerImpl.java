@@ -80,7 +80,7 @@ public class UserControllerImpl implements UserController {
     @Override
     @GetMapping("/getMyCredits")
     public ResponseEntity<UserCreditDto> getMyCredits() {
-        return ResponseEntity.ok(userService.getMyCredits());
+        return ResponseEntity.ok(userService.getMyCredits(true));
     }
 
     //status

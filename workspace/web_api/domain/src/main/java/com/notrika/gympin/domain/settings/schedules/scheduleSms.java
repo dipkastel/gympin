@@ -117,7 +117,7 @@ public class scheduleSms {
                 return -1;
             }
         }catch (Exception e){
-            faildToSend(entity,"خطا در ارسال از فراز");
+                faildToSend(entity,e.getMessage());
             throw new SendSmsException();
         }
     }

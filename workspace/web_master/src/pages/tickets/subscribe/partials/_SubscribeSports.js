@@ -20,10 +20,6 @@ const _SubscribeSport = ({ticketSubscribe}) => {
     const [sportsPlace, SetSportsPlace] = useState([])
 
     useEffect(() => {
-        if (ticketSubscribe.Id)
-            getTicketSubscribeSports();
-    }, [ticketSubscribe]);
-    useEffect(() => {
         if (openModalEdit)
             getPlaceSports();
     }, [openModalEdit]);
@@ -122,7 +118,7 @@ const _SubscribeSport = ({ticketSubscribe}) => {
     function getSport() {
         switch (ticketSubscribeSports?.length) {
             case 0 :
-                return "ثبت نشده"
+                return "مشاهده"
             case 1 :
                 return ticketSubscribeSports[0].sport.Name
             default :

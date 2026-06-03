@@ -1,9 +1,8 @@
 package com.notrika.gympin.common.finance.invoice.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelDto;
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
-import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;
 import com.notrika.gympin.common.util._base.param.BaseParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

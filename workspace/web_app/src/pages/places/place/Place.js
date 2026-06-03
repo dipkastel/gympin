@@ -53,10 +53,11 @@ const Place = () => {
 
     function getPlace(id) {
         gym_getById(id).then(result => {
-            setPlace(result.data.Data);
-            if (placeId.includes("-") && !placeId.includes(fixTextToSlug(result.data.Data.Name)))
-                navigate("/");
             document.title = 'مرکز ' + result?.data?.Data?.Name + " - جیم پین پل ارتباطی مراکز ورزشی و سازمان ها";
+            if (!placeId.includes(fixTextToSlug(result.data.Data.Name)))
+                navigate("/");
+            else
+                setPlace(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message});

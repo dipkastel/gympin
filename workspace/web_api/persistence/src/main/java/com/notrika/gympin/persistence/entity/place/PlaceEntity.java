@@ -2,6 +2,7 @@ package com.notrika.gympin.persistence.entity.place;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
+import com.notrika.gympin.common.place.placeBase.enums.PlaceTypeEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
@@ -51,6 +52,10 @@ public class PlaceEntity<P> extends BaseEntityWithCreateUpdate<P> {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private PlaceStatusEnum status;
+
+    @Column(name = "placeType")
+    @Enumerated(EnumType.STRING)
+    private PlaceTypeEnum placeType;
 
     @Column(name = "Tell")
     private String tell;

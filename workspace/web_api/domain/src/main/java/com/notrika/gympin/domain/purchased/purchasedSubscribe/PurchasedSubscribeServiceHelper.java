@@ -3,7 +3,7 @@ package com.notrika.gympin.domain.purchased.purchasedSubscribe;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;

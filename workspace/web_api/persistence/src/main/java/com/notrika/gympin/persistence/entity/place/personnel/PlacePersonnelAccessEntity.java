@@ -1,6 +1,6 @@
 package com.notrika.gympin.persistence.entity.place.personnel;
 
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelAccessEnum;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,11 +1,11 @@
 package com.notrika.gympin.domain.sport;
 
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.place.placeSport.param.PlaceSportParam;
+import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.parts.placeSport.param.PlaceSportParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util.exception.general.DuplicateEntryAddExeption;
-import com.notrika.gympin.common.place.placeSport.service.PlaceSportService;
+import com.notrika.gympin.common.place.parts.placeSport.service.PlaceSportService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.place.PlaceGymServiceImpl;
 import com.notrika.gympin.domain.util.convertor.PlaceSportConvertor;

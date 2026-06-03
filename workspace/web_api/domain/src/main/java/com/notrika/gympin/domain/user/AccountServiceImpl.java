@@ -3,8 +3,6 @@ package com.notrika.gympin.domain.user;
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.param.CorporatePersonnelParam;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
-import com.notrika.gympin.common.place.personnel.service.PlacePersonnelService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.gifts.enums.GiftCreditStatusEnum;
@@ -42,8 +40,6 @@ import com.notrika.gympin.domain.settings.userSettings.UserSettingsServiceImpl;
 import com.notrika.gympin.domain.util.convertor.UserConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.authCodes.UserActivationCodeRepository;
-import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
-import com.notrika.gympin.persistence.dao.repository.place.PlacePersonnelRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageGiftCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserPasswordRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
@@ -278,7 +274,7 @@ public class AccountServiceImpl implements AccountService {
                         || p == RoleEnum.MANAGER
                         || p == RoleEnum.MARKET);
             case WEBAPP:
-                return true;
+                return user.getCorporatesPersonel().stream().filter(o->!o.isDeleted()).count() > 0;
             case WEBMASTER:
                 return user.getPlacePersonnel().stream().anyMatch(pp->pp.getPlace() instanceof PlaceGymEntity && !pp.isDeleted());
             case WEBCORPORATE:

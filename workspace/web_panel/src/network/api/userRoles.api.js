@@ -15,7 +15,7 @@ export function userRoles_delete(data) {
  }
 
 // export function userRoles_getAll(_page, _size) {
-//     return axios.get(userRolesApi.getAll, {params: {page: _page, size: _size}});
+//     return axios.get(userRolesApi.getAll, {params: {parent: _page, size: _size}});
 // }
 //
 // export function userRoles_getById(data) {

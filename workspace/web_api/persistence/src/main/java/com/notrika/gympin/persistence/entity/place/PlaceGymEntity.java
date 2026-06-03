@@ -10,10 +10,7 @@ import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntit
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
@@ -96,7 +93,7 @@ public class PlaceGymEntity extends PlaceEntity<PlaceGymEntity> {
     @ToString.Exclude
     private FinanceAffiliatorEntity affiliator;
 
-
+    @JsonIgnore
     public List<TicketSubscribeEntity> getTicketSubscribes() {
         if(getBuyables()==null) return new ArrayList<>();
         return getBuyables().stream()

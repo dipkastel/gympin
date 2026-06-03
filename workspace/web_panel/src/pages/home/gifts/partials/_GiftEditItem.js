@@ -199,7 +199,6 @@ const _GiftEditItem = ({item, reloadList}) => {
                                 <__SelectUser
                                     hidden={itemToEdit?.CanRegister}
                                     onChange={(e) => {
-                                        console.log(e)
                                         setItemToEdit({...itemToEdit, User: {Id: e.value,FullName:e.label?.props?.children[1]?.props?.children || e.value}})
                                     }}
                                 />

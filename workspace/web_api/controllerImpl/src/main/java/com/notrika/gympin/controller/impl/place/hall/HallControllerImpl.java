@@ -1,12 +1,12 @@
 package com.notrika.gympin.controller.impl.place.hall;
 
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
-import com.notrika.gympin.common.place.hall.api.HallController;
-import com.notrika.gympin.common.place.hall.dto.HallDto;
-import com.notrika.gympin.common.place.hall.filter.HallFilter;
-import com.notrika.gympin.common.place.hall.param.HallParam;
+import com.notrika.gympin.common.place.parts.hall.api.HallController;
+import com.notrika.gympin.common.place.parts.hall.dto.HallDto;
+import com.notrika.gympin.common.place.parts.hall.filter.HallFilter;
+import com.notrika.gympin.common.place.parts.hall.param.HallParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.hall.service.HallService;
+import com.notrika.gympin.common.place.parts.hall.service.HallService;
 import com.notrika.gympin.common.sport.sport.param.SportParam;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -130,7 +130,7 @@ const _RViews = () => {
     }
 
     return (<>
-            <BaseReportBox title={"آمار بازدید مجموعه"} loadStatus={loadStatus} ReloadData={()=>{getUseCorporateCharge()}} >
+            <BaseReportBox title={"آمار دریافت اطلاعات مجموعه"} loadStatus={loadStatus} ReloadData={()=>{getUseCorporateCharge()}} >
                 <Chart options={Roptions} series={Rseries}  type="bar" height={280} />
             </BaseReportBox>
     </>

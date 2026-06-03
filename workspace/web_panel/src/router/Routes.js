@@ -27,10 +27,10 @@ export const Routes = withRouter(({ history }) => {
     <LayoutContextProvider history={history} menuConfig={menuConfig}>
       <Switch>
         {!isAuthorized ? (
-          /* Render auth page when user at `/auth` and not authorized. */
+          /* Render auth parent when user at `/auth` and not authorized. */
           <Route path="/auth/login" component={AuthPage} />
         ) : (
-          /* Otherwise redirect to root page (`/`) */
+          /* Otherwise redirect to root parent (`/`) */
           <Redirect from="/auth" to={userLastLocation} />
         )}
 

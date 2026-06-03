@@ -1729,9 +1729,9 @@ KTUtil.ready(function () {
   KTUtil.init();
 });
 
-// CSS3 Transitions only after page load(.kt-page-loading class added to body tag and remove with JS on page load)
+// CSS3 Transitions only after parent load(.kt-parent-loading class added to body tag and remove with JS on parent load)
 window.onload = function () {
-  KTUtil.removeClass(KTUtil.get("body"), "kt-page--loading");
+  KTUtil.removeClass(KTUtil.get("body"), "kt-parent--loading");
 };
 
 export default KTUtil;

@@ -1,13 +1,13 @@
 package com.notrika.gympin.common.place.placeGym.service;
 
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymContractSmsParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceContractSmsParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaListParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceMultimediaListParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.placeGym.query.PlaceGymQuery;
 import com.notrika.gympin.common.sport.sport.dto.SportDto;
@@ -23,14 +23,14 @@ public interface PlaceGymService extends BaseService<PlaceGymParam, PlaceGymDto,
     List<SportDto> getSportsOfPlace(PlaceGymDto place);
     List<PlaceGymDto> getPlacesByUser(UserParam userParam);
     List<MultimediaDto> getMultimedias(PlaceGymParam param);
-    PlaceGymDto addMultimedia(PlaceGymMultimediaParam param);
-    PlaceGymDto addMultimediaList(PlaceGymMultimediaListParam param);
-    PlaceGymDto removeMultimedia(PlaceGymMultimediaParam param);
+    PlaceGymDto addMultimedia(PlaceMultimediaParam param);
+    PlaceGymDto addMultimediaList(PlaceMultimediaListParam param);
+    PlaceGymDto removeMultimedia(PlaceMultimediaParam param);
     InviteCode getPlaceInviteCode(PlaceGymParam param);
     List<TicketBuyableDto> getBuyableByPlace(PlaceGymParam param);
     PlaceGymDto updateOrder(PlaceGymParam placeParam);
     PlaceGymDto updateContract(PlaceGymParam placeParam);
     PlaceGymDto signContract(PlaceGymParam placeParam);
-    Boolean sendContractCode(PlaceGymContractSmsParam param);
-    PlaceGymDto setDefaultMultimedia(PlaceGymMultimediaParam param);
+    Boolean sendContractCode(PlaceContractSmsParam param);
+    PlaceGymDto setDefaultMultimedia(PlaceMultimediaParam param);
 }

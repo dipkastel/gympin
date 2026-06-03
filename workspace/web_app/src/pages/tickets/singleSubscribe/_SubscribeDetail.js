@@ -35,10 +35,6 @@ const _SubscribeDetail = ({subscribe}) => {
                             <Typography sx={{color: "#858585"}} variant={"body2"}>{"تعداد ورود : "}</Typography>
                             <Typography variant={"subtitle1"}>{subscribe?.EntryTotalCount}</Typography>
                         </Grid>
-                        <Grid container direction="row" justifyContent={"space-between"} alignItems={"center"}>
-                            <Typography sx={{color: "#858585"}} variant={"body2"}>{"کد رزرو : "}</Typography>
-                            <Typography variant={"subtitle1"}>{subscribe?.Serial?.filter(ss=>ss?.ProcessType==="TRA_CHECKOUT_BASKET")[0]?.Serial?.split('-')[0]}</Typography>
-                        </Grid>
                         {subscribe.Description&&<Grid container direction="row" justifyContent={"space-between"} alignItems={"center"}>
                             <Typography sx={{color: "#858585"}} variant={"body2"}>{"توضیحات : "}</Typography>
                             <IconButton sx={{pt:1,pb:0}} aria-label="openDescription" color="info"

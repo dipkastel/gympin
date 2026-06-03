@@ -2,15 +2,14 @@ package com.notrika.gympin.controller.impl.place.option;
 
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
-import com.notrika.gympin.common.place.option.api.PlaceOptionController;
-import com.notrika.gympin.common.place.option.dto.PlaceOptionDto;
-import com.notrika.gympin.common.place.option.param.PlaceOptionParam;
-import com.notrika.gympin.common.place.option.service.PlaceOptionService;
+import com.notrika.gympin.common.place.parts.option.api.PlaceOptionController;
+import com.notrika.gympin.common.place.parts.option.dto.PlaceOptionDto;
+import com.notrika.gympin.common.place.parts.option.param.PlaceOptionParam;
+import com.notrika.gympin.common.place.parts.option.service.PlaceOptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

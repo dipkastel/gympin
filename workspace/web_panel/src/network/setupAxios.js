@@ -9,7 +9,6 @@ export function setupAxios(axios, store) {
     axios.interceptors.request.use(
         (config) => {
             if(loading&&config.url!="v1/account/refreshToken") {
-                // console.log("block expired request");
                 return null;
             }
             const {

@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
-import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.sport.sport.dto.SportDto;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
 

@@ -1,10 +1,10 @@
 package com.notrika.gympin.domain.place.hall;
 
-import com.notrika.gympin.common.place.hall.dto.HallDto;
+import com.notrika.gympin.common.place.parts.hall.dto.HallDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
-import com.notrika.gympin.common.place.hall.filter.HallFilter;
-import com.notrika.gympin.common.place.hall.param.HallParam;
-import com.notrika.gympin.common.place.hall.service.HallService;
+import com.notrika.gympin.common.place.parts.hall.filter.HallFilter;
+import com.notrika.gympin.common.place.parts.hall.param.HallParam;
+import com.notrika.gympin.common.place.parts.hall.service.HallService;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.sport.sport.param.SportParam;
 import com.notrika.gympin.domain.AbstractBaseService;

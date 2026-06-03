@@ -49,7 +49,7 @@ const _DashNotes = () => {
         if (row.Corporate)
             return "/corporate/details/" + row.Corporate.Id;
         if (row.Place)
-            return "/place/data/" + row.Place.Id;
+            return "/gyms/data/" + row.Place.Id;
         if (row.User)
             return "/users/details/" + row.User.Id;
         return "/";

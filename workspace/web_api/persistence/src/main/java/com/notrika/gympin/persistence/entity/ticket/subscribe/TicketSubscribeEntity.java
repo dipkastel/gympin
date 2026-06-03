@@ -3,7 +3,6 @@ package com.notrika.gympin.persistence.entity.ticket.subscribe;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.common.ticket.ticketSubscribe.enums.SubscribeStatus;
 import com.notrika.gympin.common.user.user.enums.Gender;
-import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.purchased.purchasedSubscribe.PurchasedSubscribeEntity;
 import com.notrika.gympin.persistence.entity.sport.placeSport.PlaceSportEntity;
@@ -75,6 +74,7 @@ public class TicketSubscribeEntity extends BuyableEntity<TicketSubscribeEntity> 
     private List<UserEntity> coaches;
 
 
+    @JsonIgnore
     public PlaceGymEntity getPlaceGym() {
         if (getPlace() instanceof PlaceGymEntity) {
             return (PlaceGymEntity) getPlace();

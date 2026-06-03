@@ -66,7 +66,7 @@ const AllFilesManager = (props, ref) => {
                                                    align="right">{row?.Url || 0}</TableCell>
 
 
-                                        <TableCell align="right"><Image src={"file://" + row.Url} width={"100%"}/></TableCell>
+                                        <TableCell align="right"><Image src={ row.Url} width={"100%"}/></TableCell>
                                         {/*<TableCell align="right">{(row.LogoIds.length) ? "has image" : ""}</TableCell>*/}
                                         {/*<TableCell align="left">*/}
 

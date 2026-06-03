@@ -72,7 +72,6 @@ const _DashCreditorsPeople = () => {
                                                            align="right">{toPriceWithComma(row.TotalDeposit)}</TableCell>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{<PopoverUser user ={row.User} />}</TableCell>
-                                                {console.log("---",row)}
 
                                             </TableRow>
                                         ))}
@@ -90,7 +89,7 @@ const _DashCreditorsPeople = () => {
                             {/*                    return `${param.from} تا ${param.to} از ${param.count !== -1 ? param.count : `بیش از ${param.to}`}`*/}
                             {/*                }}*/}
                             {/*                rowsPerPage={parseInt(rowsPerPage)}*/}
-                            {/*                page={page}*/}
+                            {/*                parent={parent}*/}
                             {/*                onPageChange={(event, newPage) => setPage(newPage)}*/}
                             {/*                onRowsPerPageChange={(event) => {*/}
                             {/*                    setRowsPerPage(parseInt(event.target.value, 10));*/}
@@ -112,7 +111,7 @@ const _DashCreditorsPeople = () => {
             }}
             title="درآمد ها"
             text={creditorList.length > 0 ? "شما " + creditorList.length + " درآمد تسویه نشده دارید" : "جیم پین بدهی ندارد"}
-            icon={<Payment sx={{fontSize: 40, color: creditorList.length > 0 ? "#d00d48" : "#0c5049"}}
+            icon={<Payment sx={{fontSize: 40, color:  "#0c5049"}}
                            color={"#AA5598"}/>}
         />
         {renderModalCredits()}

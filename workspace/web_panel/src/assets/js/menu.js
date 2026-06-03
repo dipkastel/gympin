@@ -705,7 +705,7 @@ var KTMenu = function (elementId, options) {
     },
 
     /**
-     * Returns page breadcrumbs for the menu's active item
+     * Returns parent breadcrumbs for the menu's active item
      * @returns {KTMenu}
      */
     getBreadcrumbs: function (item) {
@@ -738,7 +738,7 @@ var KTMenu = function (elementId, options) {
     },
 
     /**
-     * Returns page title for the menu's active item
+     * Returns parent title for the menu's active item
      * @returns {KTMenu}
      */
     getPageTitle: function (item) {
@@ -840,7 +840,7 @@ var KTMenu = function (elementId, options) {
   };
 
   /**
-   * Set page title for menu item
+   * Set parent title for menu item
    */
   the.getPageTitle = function (item) {
     return Plugin.getPageTitle(item);

@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import Slick from "react-slick";
 import {Image} from "react-bootstrap";
-import __placeListItemSlick from "../../places/placesList/__placeListItemSlick";
+import __placeListItemSlick from "../../home/components/_ep_CAROUSEL_SIMPLE_LIST_ITEM_SIMPLE_GYM";
 import {useSelector} from "react-redux";
 
 const _HomePlaceList = ({title,query,ls,playSpeed}) => {
@@ -15,20 +15,12 @@ const _HomePlaceList = ({title,query,ls,playSpeed}) => {
     const [places,setPlaces] = useState(null);
     const currentUser = useSelector(state => state.auth.user);
 
-
     const settings = {
-        // dots: true,
-        // slidesToShow: 4,
-        // slidesToScroll: 2,
         infinite: true,
         centerMode:true,
-        // cssEase: 'linear',
         swipeToSlide:true,
-        // slidesToShow:4,
-        //  initialSlide: 1,
         autoplay: true,
         rows: 1,
-        // focusOnSelect:true,
         autoplaySpeed: playSpeed*32,
         pauseOnHover: false,
         arrows: false,
@@ -98,9 +90,6 @@ const _HomePlaceList = ({title,query,ls,playSpeed}) => {
     return (
         <>
             <Grid sx={{my:2}} direction={"column"} container>
-                <Grid sx={{mx:3}}>
-                    <Typography sx={{fontWeight:600}} >{title}</Typography>
-                </Grid>
                     <Container sx={{px:0}} maxWidth>
                         <div dir={"ltr"}>
                             {places?.content&&<Slick {...settings}>

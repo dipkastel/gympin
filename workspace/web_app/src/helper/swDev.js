@@ -44,7 +44,6 @@ export default function swDev() {
             const vapidPublicKey = "BCesZltGiWtG7RVkAl4qpoMigCmELNahwEyxQ5ivA-IcO93wF3-ERqA2ZqB2-UCYuDVZBiVYgotmaoYOdG9U6bw";
             await UnsubscribingOldSubscription(registration);
             const {auth: {user}} = store.getState();
-            console.log("user", user.Id);
             const subscription = await registration.pushManager.subscribe({
                 userVisibleOnly: true,
                 applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)

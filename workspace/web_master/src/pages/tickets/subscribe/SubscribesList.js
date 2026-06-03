@@ -21,6 +21,7 @@ const SubscribesList = () => {
 
     function getTickets() {
         TicketSubscribes_getByPlace({Id: place.Id}).then(result => {
+            console.log("get tickets");
             setSubscribes(result.data.Data);
         }).catch(e => {
             try {
@@ -48,7 +49,7 @@ const SubscribesList = () => {
                         <Box sx={{display: "flex", justifyContent: "center", width: "100%"}}>
                             {subscribes?.length > 0 && <Grid container columns={2} spacing={2} sx={{width: "100%"}}>
                                 {subscribes?.map((item, number) => (
-                                    <_PlaceSubscribeListItem subscribe={item} reloadList={getTickets}/>))
+                                    <_PlaceSubscribeListItem key={"ticketsss" + item.Id}  subscribe={item} reloadList={getTickets}/>))
                                 }
                                 <_SubscribeNew place={place} reloadList={getTickets} />
                             </Grid>}

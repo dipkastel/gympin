@@ -8,6 +8,7 @@ const _WalletImage = () => {
             <Card elevation={0} sx={{margin: 1}}>
                 <Grid container direction={"column"} justifyContent={"center"} alignItems={"center"}>
                     <Image
+                        loading={"lazy"}
                         src={"https://api.gympin.ir/resource/image?Id=12"}
                         width={"200px"}/>
 

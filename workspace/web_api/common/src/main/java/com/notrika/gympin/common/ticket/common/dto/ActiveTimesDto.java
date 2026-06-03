@@ -2,7 +2,7 @@ package com.notrika.gympin.common.ticket.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.hall.dto.HallDto;
+import com.notrika.gympin.common.place.parts.hall.dto.HallDto;
 import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
 import com.notrika.gympin.common.ticket.common.enums.DayOfWeek;
 import lombok.Data;

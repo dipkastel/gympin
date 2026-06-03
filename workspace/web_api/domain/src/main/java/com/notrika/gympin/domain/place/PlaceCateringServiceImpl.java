@@ -2,6 +2,7 @@ package com.notrika.gympin.domain.place;
 
 import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
+import com.notrika.gympin.common.place.placeBase.enums.PlaceTypeEnum;
 import com.notrika.gympin.common.place.placeBase.param.PlaceParam;
 import com.notrika.gympin.common.place.placeCatering.dto.PlaceCateringDto;
 import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
@@ -50,6 +51,7 @@ public class PlaceCateringServiceImpl extends AbstractBaseService<PlaceCateringP
                 .status(PlaceStatusEnum.INACTIVE)
                 .hasDishesPrice(false)
                 .freeDeliveryPrice(BigDecimal.ZERO)
+                .placeType(PlaceTypeEnum.CATERING)
                 .build();
         return PlaceConvertor.ToCateringDto(placeCateringRepository.add(initPlace));
     }

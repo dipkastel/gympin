@@ -50,7 +50,7 @@ class LanguageSelector extends React.Component {
     const currentLanguage = languages.find((x) => x.lang === lang);
     return (
       <Dropdown
-        className="kt-header__topbar-item kt-header__topbar-item--langs"
+        className="kt-header__topbar-itemToEdit kt-header__topbar-itemToEdit--langs"
         drop="down"
         alignRight
       >

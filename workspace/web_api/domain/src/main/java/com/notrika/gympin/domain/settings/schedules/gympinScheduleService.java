@@ -24,12 +24,15 @@ public class gympinScheduleService {
     ScheduleUser scheduleUser;
 
     @Autowired
+    scheduleIncredible scheduleIncredible;
+
+    @Autowired
     schedulePeymentCheck schedulePeymentCheck;
 
     @Autowired
     scheduleSms scheduleSms;
 
-    @Scheduled(cron = "0 0 2 * * ?")
+    @Scheduled(cron = "0 */2 * * * ?")
     public void setDiscounts(){
         scheduleReports.updateLastTimeDiscountCheck();
         scheduleDiscounts.UpdateAutoTicketSubscribeDiscount();
@@ -87,6 +90,27 @@ public class gympinScheduleService {
         scheduleCorporate.checkExpirePersonnelCredit();
     }
 
+
+//    @Scheduled(cron = "11 */1 * * * ?")
+    @Scheduled(cron = "11 */1 * * * ?")
+    public void setIncrediblesDeactive(){
+        scheduleReports.updateLastTimeIncredibleUpdate();
+        scheduleIncredible.Deactive();
+    }
+
+//    @Scheduled(cron = "21 */2 * * * ?")
+    @Scheduled(cron = "21 */1 * * * ?")
+    public void setIncrediblesActive(){
+        scheduleReports.updateLastTimeIncredibleUpdate();
+        scheduleIncredible.Active();
+    }
+
+//    @Scheduled(cron = "31 */3 * * * ?")
+    @Scheduled(cron = "31 */1 * * * ?")
+    public void setIncrediblesAddBySystem(){
+        scheduleReports.updateLastTimeIncredibleUpdate();
+        scheduleIncredible.AddBySystem();
+    }
 
     @Scheduled(cron = "0 */30 * * * ?")
     public void setPeymentChecks(){

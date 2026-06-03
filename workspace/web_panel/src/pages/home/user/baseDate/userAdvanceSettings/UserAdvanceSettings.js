@@ -155,7 +155,7 @@ const UserAdvanceSettings = ({currentUser}) => {
 
 
                                     <FormGroup>
-                                        <FormLabel component="legend">{UserSettingKeys[item.Key]}</FormLabel>
+                                        <FormLabel component="legend">{UserSettingKeys[item.Key]||item.Key}</FormLabel>
 
                                     </FormGroup>
 

@@ -10,7 +10,7 @@ import {
     Grid,
     Typography,
 } from "@mui/material";
-import { CropFree } from "@mui/icons-material";
+import {AddAlert, CropFree, ReportProblem, TaxiAlert} from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import Lottie from "react-lottie";
 
@@ -233,11 +233,18 @@ const ScanQrCode = ({ ticket }) => {
             <Alert
                 sx={{ m: 1 }}
                 variant="outlined"
-                severity="info"
+                severity={"info"}
                 icon={<CropFree />}
             >
-                لطفا QR کد جیم پین داخل مجموعه را اسکن کنید
-            </Alert>
+                لطفا تابلو جیم پین مجموعه را اسکن کنید             </Alert>
+            {!ticket?.EntryList?.length>0&&<Alert
+                sx={{ m: 1 }}
+                variant="outlined"
+                severity="warning"
+                icon={<ReportProblem />}
+            >
+                کد دریافتی را به متصدی مجموعه ارائه دهید
+            </Alert>}
             <_ScannerCore
                 scannWork={!scannedCode}
                 actionOnScan={actionOnScan}

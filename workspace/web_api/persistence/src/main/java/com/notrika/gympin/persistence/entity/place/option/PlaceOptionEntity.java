@@ -22,6 +22,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuperBuilder
 @Entity
+//TODO rename to placeGymOption
 @Table(name = "placeOption")
 public class PlaceOptionEntity extends BaseEntityWithCreateUpdate<PlaceOptionEntity> {
 

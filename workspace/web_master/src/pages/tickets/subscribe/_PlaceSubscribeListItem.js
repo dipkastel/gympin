@@ -39,9 +39,6 @@ const _PlaceSubscribeListItem = ({subscribe, reloadList}) => {
     const [deleteItem, setDeleteItem] = useState(null);
     const [itemToEdit, setItemToEdit] = useState(null)
 
-    useEffect(() => {
-        reloadList();
-    }, [itemToEdit]);
 
     function ActiveSubscribe(subscribe) {
         TicketSubscribes_ChangeTicketSubscribesStatus({...subscribe,Enable : true}).then(result => {

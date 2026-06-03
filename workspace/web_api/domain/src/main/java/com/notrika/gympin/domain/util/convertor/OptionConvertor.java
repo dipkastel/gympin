@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.place.option.dto.PlaceOptionDto;
-import com.notrika.gympin.common.place.option.dto.OptionOfPlaceDto;
+import com.notrika.gympin.common.place.parts.option.dto.PlaceOptionDto;
+import com.notrika.gympin.common.place.parts.option.dto.OptionOfPlaceDto;
 import com.notrika.gympin.persistence.entity.place.option.PlaceOptionOfPlaceEntity;
 import com.notrika.gympin.persistence.entity.place.option.PlaceOptionEntity;
 

@@ -38,7 +38,7 @@ const _SettingSms = () => {
             </Paper>
             {!updatePageP && <div>
                 {selectedTab == "Auto" && <__SettingSmsList updatePage={updatePage}/>}
-                {selectedTab == "Manual" && <__SettingSmsManual updatePage={updatePage} smsSent={()=>setSelectedTab("Auto")}/>}
+                {selectedTab == "Manual" && <__SettingSmsManual updatePage={updatePage} />}
                 {selectedTab == "Advance" && <__SettingSmsConfigs updatePage={updatePage}/>}
                 {selectedTab == "Patterns" && <__SettingSmsPattern updatePage={updatePage}/>}
             </div>}

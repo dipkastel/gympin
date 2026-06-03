@@ -76,20 +76,37 @@ const PlacesMap = () => {
 
 
     useEffect(() => {
-        if (!map) return;
-        map.locate().on("locationfound", function (e) {
-            setUserLocation(e)
-        }).on("locationerror", function (e) {
-            setUserLocation(null)
-            error.showError({message: "خطا در دسترسی به موقعیت مکانی",});
-        });
+        getLocation();
     }, []);
+
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.permissions.query({name:'geolocation'}).then(permissionStatus => {
+                if (permissionStatus.state === 'denied') {
+                    window.location.href = "app-settings:location";
+                } else {
+                    if (!map) return;
+                    map.locate().on('locationfound', function (e) {
+                        setUserLocation(e)
+                        mapRef.current.flyTo([e.latitude, e.longitude], 14)
+                    }).on("locationerror", function (e) {
+                        setUserLocation(null)
+                        error.showError({message: "خطا در دسترسی به موقعیت مکانی",});
+                    });
+                }
+            });
+        } else {
+            alert('Geolocation is not supported in your browser.');
+        }
+    }
 
 
     const prepareMap = (map) => {
         map.panTo(map.getCenter());
         // set leaflet tile layer
-        L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        L.tileLayer("https://map.ir/shiveh/xyz/1.0.0/Shiveh:Shiveh@EPSG:3857@png/{z}/{x}/{y}.png?x-api-key=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImI2YWYwMWE4NzU2MTFiOWQyNGRhOTk2YzU2ZDU0MTE3MDUxMzA5Y2U4ZTJkNTJhYmFkZDJiMTA5MDRmOGQ5OTlmZTZkNTA2OWE5OWVjMjFmIn0.eyJhdWQiOiIzOTA1MSIsImp0aSI6ImI2YWYwMWE4NzU2MTFiOWQyNGRhOTk2YzU2ZDU0MTE3MDUxMzA5Y2U4ZTJkNTJhYmFkZDJiMTA5MDRmOGQ5OTlmZTZkNTA2OWE5OWVjMjFmIiwiaWF0IjoxNzc2NTAwMjQ5LCJuYmYiOjE3NzY1MDAyNDksImV4cCI6MTc3OTA5MjI0OSwic3ViIjoiIiwic2NvcGVzIjpbImJhc2ljIl19.CeXLZ1EdUvf0WdbzV7oXL7xnLtr72_OBKR8e6vftiFOqmJP_gOizLEhQkLfvSFDlZZGf9IrsiXmLwjor7pTgD3_8vVuBqMA7jA-udIobGPcJm_Vu3dI6gf8wpjLfY2JQVd4IJ3lDS15aGuB0fELhGmcAS7mE2yaFti4OI05oq9xb53Q-Yc95rujqTQBAyfJkTXPYa9DCXPqAmIsefNTxHC-K1AJmXrNB1_43Y1IhuKiWwn7BO1OsA3E38YYuXbpkruyDP06nzaliigp1ozk2btiz3CQmDTJu1jIHvyn7E23JQrIgzoHFkloVu-GqziHd2HgMS-Uh8RSgQytBoiCbkQ", {
+        // L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             variant: "rastertiles/voyager",
             attribution:
                 '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -165,7 +182,7 @@ const PlacesMap = () => {
 
         function getIconHtml() {
             return ` <span class="svg-icon svg-icon-danger svg-icon-3x">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 30 30" version="1.1">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45px" height="45px" viewBox="0 0 30 30" version="1.1">
                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                     <rect x="15" y="0" width="30" height="30"/>
                     <path fill="#3F3F3F" d="M9.76,18.59L9.34,18.5c-0.21-0.04-0.41-0.15-0.57-0.3l0,0c-0.39-0.37-0.72-0.8-0.98-1.27 C7.01,15.47,6.71,13.84,6.92,12c0.02-0.21,0.05-0.4-0.13-0.57c-1.08-1.06-2.14-2.14-3.27-3.27C3.46,8.29,3.42,8.34,3.4,8.39 C3.36,8.46,3.32,8.54,3.3,8.62c-1.73,4.96-0.88,9.44,2.72,13.26c2.63,2.79,0.66,0.69,2.88,2.92l0,0c0.04,0.04,0.08,0.08,0.13,0.13 c0.08,0.08,0.17,0.18,0.27,0.27l0,0c1.19,1.17,2.43,2.3,3.72,3.39c0.67,0.57,1.43,0.96,2.46,0.91c0.77-0.04,2.86-1.95,3.92-2.94 c0.43-0.33,0.82-0.7,1.13-1.13c0.95-1.34,1.92-2.66,3.01-3.92c0.27-0.31,0.39-0.63,0.39-0.96c0.2-0.55,0.03-1.1-0.47-1.59 c-0.74-0.71-1.57-1.34-2.4-1.98c-0.33-0.25-0.7-0.28-1.11,0.03c-0.39,0.29-0.57,0.3-1.07,0.44c-0.47,0.13-0.64,0.32-0.47,0.59 c0.12,0.2,0.25,0.39,0.38,0.59c0.05,0.08,0.14,0.16,0.24,0.18c0.06,0.12,0.27,0.1,0.36,0.23c0.12,0.17,0,0.14,0.08,0.19 c0.01,0.02,0.02,0.04,0.04,0.06c0.03,0.05,0.07,0.1,0.1,0.15c0.01,0.03,0.03,0.07,0.04,0.1c0.22,0.45,0.43,0.86,1.23,0.8 c0.29-0.02,0.5,0.21,0.54,0.45c0,0,0,0.01-0.01,0.01h0.01c0.02,0.14-0.02,0.29-0.14,0.4c-0.32,0.28-0.68,0.53-1.03,0.78l-4.91,2.56 l-0.28-0.47c-0.5-0.72-0.58-1.34-0.76-2.2c-0.15-0.75-0.48-1.48-1.2-2.11c-0.4-0.35-0.89-0.59-1.41-0.71L9.76,18.59z"/>
@@ -176,8 +193,7 @@ const PlacesMap = () => {
         }
     }
 
-    const goToUserLocation = () => {
-        mapRef.current.flyTo([userLocation.latitude, userLocation.longitude], 14)
+    const goToUserLocation = (latitude,longitude,zoom) => {
     }
 
     return (
@@ -186,7 +202,8 @@ const PlacesMap = () => {
             <Form.Group controlId="MyMap">
                 <div  id="kt_leaflet_map" className={"map"}/>
             </Form.Group>
-            {userLocation&&<IconButton  sx={{position:"absolute",bottom:90,right:12,bgcolor:"#e7333e !important",zIndex:499}} size={"large"} onClick={()=>goToUserLocation()}><MyLocation sx={{color:"#FFFFFF"}} /> </IconButton>}
+            {userLocation&&<IconButton  sx={{position:"absolute",bottom:90,left:12,bgcolor:"#e7333e !important",zIndex:499}} size={"large"} onClick={()=>
+                mapRef.current.flyTo([userLocation.latitude,userLocation.longitude],16)}><MyLocation sx={{color:"#FFFFFF"}} /> </IconButton>}
         </div>
     );
 };

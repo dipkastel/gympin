@@ -15,16 +15,19 @@ public interface PlaceGymRepository extends BaseRepository<PlaceGymEntity, Long>
 
     List<PlaceGymEntity> findAllByLocationAndDeletedIsFalse(ManageLocationEntity region);
 
-    List<PlaceGymEntity> findAllByDeletedIsFalseAndAutoDiscountIsTrue();
+    List<PlaceGymEntity> findAllByDeletedIsFalseAndAutoDiscountIsTrueAndStatus(PlaceStatusEnum status);
 
     List<PlaceGymEntity> findAllByStatusAndDeletedIsFalse(PlaceStatusEnum status);
 
     List<PlaceGymEntity> findAllByStatusAndDeletedIsFalseAndSearchStrIsNull(PlaceStatusEnum status);
 
-    @Query("select p from PlaceGymEntity p,PlacePersonnelEntity po where p.id=po.place.id and po.deleted = 0 and po.user.id = :#{#userId} ")
+    @Query("select p from PlaceGymEntity p,PlacePersonnelEntity po where p.id=po.place.id and po.deleted = false and po.user.id = :#{#userId} ")
     List<PlaceGymEntity> getPlaceByUser(Long userId);
 
-    @Query("select p.sport from PlaceSportEntity p where p.place.id=:#{#place.id} and p.deleted = 0")
+    @Query("select p.sport from PlaceSportEntity p where p.place.id=:#{#place.id} and p.deleted = false ")
     List<SportEntity> getSportsOfPlace(PlaceGymEntity place);
+
+    @Query(value = "SELECT p FROM PlaceGymEntity p WHERE NOT EXISTS (SELECT 1 FROM p.buyables tb WHERE tb.enable = true AND tb.deleted = false and tb.startIncredible IS NOT NULL ) AND NOT EXISTS ( SELECT 1 FROM p.buyables tb where tb.beneficiary.commissionFee < :#{#minCommission} AND tb.enable = true AND tb.beneficiary.deleted = false AND tb.deleted = false ) AND p.status = 'ACTIVE' AND p.placeType = 'GYM' ")
+    List<PlaceGymEntity> findAllToAddIncredible(Double minCommission);
 
 }

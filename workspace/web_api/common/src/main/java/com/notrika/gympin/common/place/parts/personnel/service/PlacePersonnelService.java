@@ -1,0 +1,45 @@
+package com.notrika.gympin.common.place.parts.personnel.service;
+
+import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.user.user.param.UserParam;
+import com.notrika.gympin.common.util._base.query.BaseQuery;
+import com.notrika.gympin.common.util._base.base.BaseService;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelAccessDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelBuyableAccessDto;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelAccessParam;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelBuyableAccessParam;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelParam;
+
+import java.util.List;
+
+public interface PlacePersonnelService extends BaseService<PlacePersonnelParam, PlacePersonnelDto, BaseQuery<?>> {
+
+    List<PlacePersonnelDto> getPersonnelByPlace(PlaceGymParam placeParam);
+    List<PlacePersonnelDto> getPersonnelByUser(UserParam userParam);
+    List<PlacePersonnelDto> getGymPersonnelByUser(UserParam userParam);
+    List<PlacePersonnelDto> getCateringPersonnelByUser(UserParam userParam);
+
+    List<PlacePersonnelAccessDto> updatePersonnelAccess(List<PlacePersonnelAccessParam> personnelAccess);
+
+    List<PlacePersonnelAccessDto> getUserPlaceAccess(Long placeId, Long userId);
+
+    List<PlacePersonnelDto> getPlaceBeneficiaries(Long placeId);
+
+    List<PlacePersonnelBuyableAccessDto> updatePersonnelBuyableAccess(List<PlacePersonnelBuyableAccessParam> personnelHallAccess);
+
+//    List<PlacePersonnelBuyableAccessDto> getUserPlaceHallAccess(Long placeId, Long userId);
+
+    List<PlacePersonnelBuyableAccessDto> getUserPlaceBuyableAccess(Long placeId, Long userId);
+
+    List<PlacePersonnelBuyableAccessDto> getPersonnelBuyableAccess(Long userId);
+
+    PlacePersonnelDto updatePersonnelCommissionFee(PlacePersonnelParam param);
+
+    PlacePersonnelDto updatePersonnelGetSms(PlacePersonnelParam param);
+
+
+    PlacePersonnelDto addPlacePersonnelRole(PlacePersonnelParam placePersonnelParam);
+
+    PlacePersonnelDto deletePlacePersonnelRole(PlacePersonnelParam placePersonnelParam);
+}

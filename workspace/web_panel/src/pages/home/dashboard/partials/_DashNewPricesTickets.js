@@ -37,7 +37,8 @@ const _DashNewPricesTickets = () => {
         yesterday.setDate(today.getDate() - 1);
         TicketSubscribes_query({
             queryType: "FILTER",
-            MinUpdateDate: yesterday,
+            DiscountMinCreatedDate: yesterday,
+            DiscountMinUserUpdater: 0,
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         })
             .then((data) => {
@@ -84,7 +85,7 @@ const _DashNewPricesTickets = () => {
                                     <TableBody>
                                         {Comment.content && Comment.content.map((row, index) => (
                                             <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "/place/ticketSubscribe/" + row.Id})}
+                                                      onClick={(event) => history.push({pathname: "/gyms/ticketSubscribe/" + row.Id})}
                                                       role="checkbox" tabIndex={-1} key={row?.Id?.toString()}>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{row.Name}</TableCell>

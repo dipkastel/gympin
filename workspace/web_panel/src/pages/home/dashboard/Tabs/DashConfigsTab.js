@@ -109,7 +109,7 @@ const DashTasksTab = ({updatePage}) => {
                 <Grid item size={{xs:12,md:4}}>
 
                     <QuickStatsIcon
-                        onClick={()=>{history.push("/places")}}
+                        onClick={()=>{history.push("/gyms")}}
                         title={"مجموعه های فعال"}
                         text={placeCount + " مجموعه فعال"}
                         icon={<FitnessCenter sx={{fontSize: 40, color: "#d455e8"}}/>}

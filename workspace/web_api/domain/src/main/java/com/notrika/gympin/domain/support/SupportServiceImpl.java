@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.support;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.notification.dto.NotificationBasePayload;
 import com.notrika.gympin.common.settings.notification.dto.NotificationPayloadData;
@@ -18,7 +18,6 @@ import com.notrika.gympin.common.support.query.SupportQuery;
 import com.notrika.gympin.common.support.service.SupportService;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
-import com.notrika.gympin.domain.util.convertor.InvoiceConvertor;
 import com.notrika.gympin.domain.util.convertor.SupportConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
@@ -26,7 +25,6 @@ import com.notrika.gympin.persistence.dao.repository.support.SupportMessageRepos
 import com.notrika.gympin.persistence.dao.repository.support.SupportRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
-import com.notrika.gympin.persistence.entity.finance.invoice.InvoiceExtraItemEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
@@ -93,9 +91,23 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
         SupportMessagesEntity supportMessagesEntity = new SupportMessagesEntity();
         supportMessagesEntity.setSupportMessage(supportParam.getSupportMessages().getMessages());
         supportMessagesEntity.setIsRead(supportParam.getSupportMessages().isRead());
+        supportMessagesEntity.setAnswer(supportParam.getStatus()==SupportStatus.AWAITING_USER);
         supportEntity.setSupportMessages(List.of(supportMessagesEntity));
         supportRepository.add(supportEntity);
         supportMessagesEntity.setSupport(supportEntity);
+
+        try {
+            if (supportMessagesEntity.isAnswer()) {
+                UserEntity user = (supportEntity.getUser() != null) ? supportEntity.getUser() : ((PlacePersonnelEntity) supportEntity.getPlace().getPlaceOwners().stream().filter(po -> ((PlacePersonnelEntity) po).getPlacePersonnelRoles().stream().anyMatch(ppp -> ppp.getRole() == PlacePersonnelRoleEnum.PLACE_OWNER) && !((PlacePersonnelEntity) po).isDeleted()).findFirst().get()).getUser();
+                smsService.sendSupportAnswered(SmsDto.builder()
+                        .smsType(SmsTypes.SUPPORT_ANSWERED)
+                        .userNumber(user.getPhoneNumber())
+                        .text1(supportEntity.getId().toString())
+                        .build()
+                );
+            }
+        } catch (Exception e) {
+        }
         notifToAdmin(supportEntity);
         return SupportConvertor.toDto(supportMessageRepository.add(supportMessagesEntity).getSupport());
     }

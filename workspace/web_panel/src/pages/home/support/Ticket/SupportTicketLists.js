@@ -17,6 +17,7 @@ import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../.
 import {getUserFixedName} from "../../../../helper";
 import PopoverUser from "../../../../components/popover/PopoverUser";
 import {SupportStatus} from "../../../../helper/enums/SupportStatus";
+import _AddSupportTicket from "./_AddSupportTicket";
 
 const SupportTicketLists = () => {
 
@@ -158,6 +159,7 @@ const SupportTicketLists = () => {
                                 }}
                                 label={"جستجو"}
                             />
+                            <_AddSupportTicket reloadList={getSupports} />
                         </PortletHeaderToolbar>
                     }
                 />

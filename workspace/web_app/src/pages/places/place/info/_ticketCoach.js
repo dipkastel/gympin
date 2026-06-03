@@ -20,7 +20,7 @@ const _ticketCoach = ({subscribe}) => {
                 }}>{subscribe.Coaches.length == 1 ? "مربی : " : "مربیان"}</DialogTitle>
                 {subscribe.Coaches.map(coach => (
                     <>
-                        <_PlaceCoachListItem coach={coach}/>
+                        <_PlaceCoachListItem key={"coachId"+coach.Id} coach={coach}/>
 
                     </>
                 ))}

@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.corporate;
 
+import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
 import com.notrika.gympin.common.corporate.corporatePersonnel.dto.CorporatePersonnelCreditDto;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelCreditStatusEnum;
 import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
@@ -8,6 +9,9 @@ import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporateP
 import com.notrika.gympin.common.corporate.corporatePersonnel.service.CorporatePersonnelService;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.transaction.dto.FinanceUserDto;
+import com.notrika.gympin.common.settings.note.enums.NoteType;
+import com.notrika.gympin.common.settings.note.param.NoteParam;
+import com.notrika.gympin.common.settings.note.service.NoteService;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
@@ -22,9 +26,11 @@ import com.notrika.gympin.domain.util.convertor.FinanceUserConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelGroupRepository;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporatePersonnelRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporatePersonnelCreditRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceCorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.settings.ManageNoteRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
 import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
@@ -69,6 +75,8 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     CorporatePersonelFinanceHelper helper;
     @Autowired
     private SmsInService smsInService;
+    @Autowired
+    private NoteService noteService;
 
     @Override
     @Transactional
@@ -222,8 +230,16 @@ public class CorporatePersonnelCreditServiceImpl extends AbstractBaseService<Cor
     @Override
     @Transactional
     public BigDecimal getTotalUserCredits(CorporatePersonnelCreditParam param) {
-        FinanceCorporateEntity corporateF = financeCorporateRepository.getById(param.getCorporateId());
-        return corporateF.getTotalCredits();
+        CorporateEntity corporate =  corporateService.getEntityById(param.getId());
+
+        Long amount = corporatePersonnelCreditRepository.getTotalCreditByCorporateId(param.getId(),CorporatePersonnelCreditStatusEnum.ACTIVE);
+        if(amount!=null){
+            if(BigDecimal.valueOf(amount).compareTo(corporate.getFinanceCorporate().getTotalCredits())!=0){
+                noteService.add(NoteParam.builder().corporate(CorporateParam.builder().id(param.getId()).build()).isToDo(true).type(NoteType.NOTE).text("مغایرت در مجموع اعتبارات").build());
+            }
+            return BigDecimal.valueOf(amount);
+        }
+        return BigDecimal.ZERO;
     }
 
     @Override

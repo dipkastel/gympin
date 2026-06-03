@@ -1,14 +1,14 @@
 package com.notrika.gympin.domain.place;
 
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelBuyableAccessParam;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
-import com.notrika.gympin.common.place.personnel.service.PlacePersonnelService;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelAccessDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelBuyableAccessDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelDto;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelAccessEnum;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelAccessParam;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelBuyableAccessParam;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelParam;
+import com.notrika.gympin.common.place.parts.personnel.service.PlacePersonnelService;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
@@ -108,6 +108,7 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
                 .user(user)
                 .placePersonnelRoles(Set.of(PlacePersonnelRoleEntity.builder().role(placePersonnelRole).build()))
                 .isBeneficiary(false)
+                .sms(true)
                 .isPublic(false)
                 .commissionFee(0.0)
                 .build();
@@ -201,6 +202,13 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
     }
 
     @Override
+    public PlacePersonnelDto updatePersonnelGetSms(PlacePersonnelParam param) {
+        PlacePersonnelEntity placePersonnel = placePersonnelRepository.getById(param.getId());
+        placePersonnel.setSms(param.getSms());
+        return PlaceConvertor.personnelToDto(placePersonnelRepository.update(placePersonnel));
+    }
+
+    @Override
     public List<PlacePersonnelAccessDto> updatePersonnelAccess(List<PlacePersonnelAccessParam> personnelAccess) {
         PlacePersonnelEntity placePersonnel = placePersonnelRepository.getById(personnelAccess.get(0).getPlacePersonelId());
         List<PlacePersonnelAccessEntity> toUpdate = new ArrayList<>();
@@ -260,7 +268,8 @@ public class PlacePersonnelServiceImpl extends AbstractBaseService<PlacePersonne
             return ( List<PlacePersonnelDto> ) placeRepository
                     .getById(placeId)
                     .getPlaceOwners()
-                    .stream().filter(o -> !((PlacePersonnelEntity) o).isDeleted())
+                    .stream()
+                    .filter(o -> !((PlacePersonnelEntity) o).isDeleted())
                     .filter(p->((PlacePersonnelEntity) p).getIsBeneficiary())
                     .map(p->PlaceConvertor.personnelToDto((PlacePersonnelEntity) p))
                     .collect(Collectors.toList());

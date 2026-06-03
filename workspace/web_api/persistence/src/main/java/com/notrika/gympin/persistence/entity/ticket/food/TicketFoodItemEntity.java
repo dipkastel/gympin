@@ -53,7 +53,7 @@ public class TicketFoodItemEntity extends BuyableEntity<TicketFoodItemEntity> {
     @ToString.Exclude
     private List<MultimediaEntity> multimedias;
 
-
+    @JsonIgnore
     public PlaceCateringEntity getPlaceCatering() {
         if (getPlace() instanceof PlaceCateringEntity) {
             return (PlaceCateringEntity) getPlace();

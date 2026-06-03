@@ -42,3 +42,16 @@ export function getUserCanSetEnter(settings) {
 }
 
 
+export function getIncredibleTime(settings) {
+  try {
+    var publicSettings = settings?.settings?.server?.Settings?.find(
+        (s) => s.Key === "TICKET_INCREDIBLES_INTERVAL",
+    )?.Value;
+    if (publicSettings && publicSettings != "") return Number(publicSettings);
+    return 72;
+  } catch (e) {
+    return 72;
+  }
+}
+
+

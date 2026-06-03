@@ -53,7 +53,7 @@ function findPageConfig(currentPage, items, breadcrumbs) {
   }
 
   for (const item of items) {
-    // Return `item` if it's `page` matches `currentPage`
+    // Return `item` if it's `parent` matches `currentPage`
     if (currentPage === item.page && !item.submenu) {
       return item;
     }

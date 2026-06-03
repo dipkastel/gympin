@@ -38,6 +38,7 @@ const _DashOldPricesTickets = () => {
         TicketSubscribes_query({
             queryType: "FILTER",
             MaxUpdateDate: nintyDaysAgo,
+            PlaceStatus:"ACTIVE",
             paging: {Page: page, Size: rowsPerPage, Desc: true}
         })
             .then((data) => {
@@ -84,7 +85,7 @@ const _DashOldPricesTickets = () => {
                                     <TableBody>
                                         {Comment.content && Comment.content.map((row, index) => (
                                             <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "/place/ticketSubscribe/" + row.Id})}
+                                                      onClick={(event) => history.push({pathname: "/gyms/ticketSubscribe/" + row.Id})}
                                                       role="checkbox" tabIndex={-1} key={row?.Id?.toString()}>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{row.Name}</TableCell>
@@ -123,7 +124,7 @@ const _DashOldPricesTickets = () => {
                             </TableContainer>
 
                             {(Comment.totalElements > 0) && <TablePagination
-                                rowsPerPageOptions={[5, 10]}
+                                rowsPerPageOptions={[5, 10,25,50]}
                                 component="div"
                                 sx={{direction: "rtl"}}
                                 count={Comment.totalElements || 0}

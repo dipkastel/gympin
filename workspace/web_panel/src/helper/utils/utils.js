@@ -1,41 +1,45 @@
 import {AuthApi, MultimediaApi} from "../../network/api/const_api";
 import {CorporateContractType} from "../enums/CorporateContractType";
+import {PagesViewTypes} from "../enums/PagesViewTypes";
 
 export function getImageUrlByName(name, Height = 0, Width = 0) {
-  var url = AuthApi.BASEURL+MultimediaApi.getByName+"?fileName=" + name;
-  if (Height !== 0) url += "&height=" + Height;
-  if (Width !== 0) url += "&width=" + Width;
-  return url;
+    var url = AuthApi.BASEURL + MultimediaApi.getByName + "?fileName=" + name;
+    if (Height !== 0) url += "&height=" + Height;
+    if (Width !== 0) url += "&width=" + Width;
+    return url;
 }
+
 export function getImageUrlById(id, Height = 0, Width = 0) {
-  var url = AuthApi.BASEURL+MultimediaApi.getById+"?Id=" + id;
-  if (Height !== 0) url += "&height=" + Height;
-  if (Width !== 0) url += "&width=" + Width;
-  return url;
+    var url = AuthApi.BASEURL + MultimediaApi.getById + "?Id=" + id;
+    if (Height !== 0) url += "&height=" + Height;
+    if (Width !== 0) url += "&width=" + Width;
+    return url;
 }
 
 export function getRandStr(length) {
-  const list = "ABCDEFGHJKMNPQRSTUVWXYZ123456789";
-  var res = "";
-  for(var i = 0; i < length; i++) {
-    var rnd = Math.floor(Math.random() * list.length);
-    res = res + list.charAt(rnd);
-  }
-  return res;
+    const list = "ABCDEFGHJKMNPQRSTUVWXYZ123456789";
+    var res = "";
+    for (var i = 0; i < length; i++) {
+        var rnd = Math.floor(Math.random() * list.length);
+        res = res + list.charAt(rnd);
+    }
+    return res;
 }
 
 
 export function getUserFixedName(user) {
-  if(!user) return "";
-  return (user.FullName || "") + " " + " ( " + (user.Username || "") + " ) ";
+    if (!user) return "";
+    return (user.FullName || "") + " " + " ( " + (user.Username || "") + " ) ";
 }
+
 export function getPlaceFixedName(place) {
-  if(!place) return "";
-  return (place.Name || "") ;
+    if (!place) return "";
+    return (place.Name || "");
 }
+
 export function getCorporateFixedName(corporate) {
-  if(!corporate) return "";
-  return (corporate.Name || "") + " " + " ( " + (CorporateContractType[corporate.ContractType] || "") + " ) ";
+    if (!corporate) return "";
+    return (corporate.Name || "") + " " + " ( " + (CorporateContractType[corporate.ContractType] || "") + " ) ";
 }
 
 //
@@ -43,7 +47,7 @@ export function getCorporateFixedName(corporate) {
 //   Support_query({
 //     queryType: "FILTER",
 //     Status:"AWAITING_EXPERT",
-//     paging: {Page: 0, Size: 200, Desc: true}
+//     paging: {parent: 0, Size: 200, Desc: true}
 //   })
 //       .then((data) => {
 //         return data.data.Data.length;
@@ -52,31 +56,32 @@ export function getCorporateFixedName(corporate) {
 // }
 
 
-export function toPriceWithComma(price){
-  if(!price) return "0";
-  price = (price+"").split('.')[0]
-  if(price.length>1&&price.startsWith("0")) price = price.substring(1,price.length);
-  return (price+"")
-      .replace(/\D/g, "")
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-export function toPriceWithoutComma(price){
-  if(!price) return "";
-  return (price+"").replace(/\D/g, "");
+export function toPriceWithComma(price) {
+    if (!price) return "0";
+    price = (price + "").split('.')[0]
+    if (price.length > 1 && price.startsWith("0")) price = price.substring(1, price.length);
+    return (price + "")
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export function toPriceWithoutComma(price) {
+    if (!price) return "";
+    return (price + "").replace(/\D/g, "");
+}
 
 
 export function removeCSSClass(ele, cls) {
-  const reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
-  ele.className = ele.className.replace(reg, " ");
+    const reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
+    ele.className = ele.className.replace(reg, " ");
 }
 
 export function addCSSClass(ele, cls) {
-  ele.classList.add(cls);
+    ele.classList.add(cls);
 }
+
 export function checkMobileValid(mobileNumber) {
-  return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
+    return mobileNumber.match("^(\\+98|0)?9\\d{9}$");
 }
 
 export const toAbsoluteUrl = (pathname) => process?.env?.PUBLIC_URL + pathname;
@@ -88,19 +93,19 @@ export const toAbsoluteUrl = (pathname) => process?.env?.PUBLIC_URL + pathname;
         <boolean> : telling if operation succeeded
  */
 export function removeStorage(key) {
-  try {
-    localStorage.setItem(key, "");
-    localStorage.setItem(key + "_expiresIn", "");
-  } catch (e) {
-    console.log(
-      "removeStorage: Error removing key [" +
-        key +
-        "] from localStorage: " +
-        JSON.stringify(e)
-    );
-    return false;
-  }
-  return true;
+    try {
+        localStorage.setItem(key, "");
+        localStorage.setItem(key + "_expiresIn", "");
+    } catch (e) {
+        console.log(
+            "removeStorage: Error removing key [" +
+            key +
+            "] from localStorage: " +
+            JSON.stringify(e)
+        );
+        return false;
+    }
+    return true;
 }
 
 /*  getStorage: retrieves a key from localStorage previously set with setStorage().
@@ -111,33 +116,34 @@ export function removeStorage(key) {
         null : in case of expired key or failure
  */
 export function getStorage(key) {
-  const now = Date.now(); //epoch time, lets deal only with integer
-  // set expiration for storage
-  let expiresIn = localStorage.getItem(key + "_expiresIn");
-  if (expiresIn === undefined || expiresIn === null) {
-    expiresIn = 0;
-  }
-
-  expiresIn = Math.abs(expiresIn);
-  if (expiresIn < now) {
-    // Expired
-    removeStorage(key);
-    return null;
-  } else {
-    try {
-      const value = localStorage.getItem(key);
-      return value;
-    } catch (e) {
-      console.log(
-        "getStorage: Error reading key [" +
-          key +
-          "] from localStorage: " +
-          JSON.stringify(e)
-      );
-      return null;
+    const now = Date.now(); //epoch time, lets deal only with integer
+    // set expiration for storage
+    let expiresIn = localStorage.getItem(key + "_expiresIn");
+    if (expiresIn === undefined || expiresIn === null) {
+        expiresIn = 0;
     }
-  }
+
+    expiresIn = Math.abs(expiresIn);
+    if (expiresIn < now) {
+        // Expired
+        removeStorage(key);
+        return null;
+    } else {
+        try {
+            const value = localStorage.getItem(key);
+            return value;
+        } catch (e) {
+            console.log(
+                "getStorage: Error reading key [" +
+                key +
+                "] from localStorage: " +
+                JSON.stringify(e)
+            );
+            return null;
+        }
+    }
 }
+
 /*  setStorage: writes a key into localStorage setting a expire time
     params:
         key <string>     : localStorage key
@@ -147,39 +153,65 @@ export function getStorage(key) {
         <boolean> : telling if operation succeeded
  */
 export function setStorage(key, value, expires) {
-  if (expires === undefined || expires === null) {
-    expires = 24 * 60 * 60; // default: seconds for 1 day
-  }
+    if (expires === undefined || expires === null) {
+        expires = 24 * 60 * 60; // default: seconds for 1 day
+    }
 
-  const now = Date.now(); //millisecs since epoch time, lets deal only with integer
-  const schedule = now + expires * 1000;
-  try {
-    localStorage.setItem(key, value);
-    localStorage.setItem(key + "_expiresIn", schedule);
-  } catch (e) {
-    console.log(
-      "setStorage: Error setting key [" +
-        key +
-        "] in localStorage: " +
-        JSON.stringify(e)
-    );
-    return false;
-  }
-  return true;
+    const now = Date.now(); //millisecs since epoch time, lets deal only with integer
+    const schedule = now + expires * 1000;
+    try {
+        localStorage.setItem(key, value);
+        localStorage.setItem(key + "_expiresIn", schedule);
+    } catch (e) {
+        console.log(
+            "setStorage: Error setting key [" +
+            key +
+            "] in localStorage: " +
+            JSON.stringify(e)
+        );
+        return false;
+    }
+    return true;
 }
 
 export function getStringOfTime(time) {
-  if((time+"").length>1)
-    return time;
-  else
-    return "0"+time;
+    if ((time + "").length > 1)
+        return time;
+    else
+        return "0" + time;
 }
 
 export function playMessageReceived(sender) {
-  if(sender!=="Client")return;
-  var sound = "/assets/sound/messageReceived.mp3";
-  const audio = new Audio(sound);
-  audio.play().catch((err) => {
-    console.warn("خطا در پخش صدا:", err);
-  });
+    if (sender !== "Client") return;
+    var sound = "/assets/sound/messageReceived.mp3";
+    const audio = new Audio(sound);
+    audio.play().catch((err) => {
+        console.warn("خطا در پخش صدا:", err);
+    });
+}
+
+
+export function getViewTypesByItemType(type) {
+    switch (type) {
+        //parents
+        case "CAROUSEL":
+            return [PagesViewTypes.CAROUSEL.SIMPLE_LIST, PagesViewTypes.CAROUSEL.INCREDIBLE_LIST, PagesViewTypes.CAROUSEL.BUTTON_LIST]
+        case "BANNER":
+            return [PagesViewTypes.BANNER.BANNER_FULL]
+        case "TEXT":
+            return [PagesViewTypes.TEXT.TITLE_MORE, PagesViewTypes.TEXT.SIMPLE_TITLE]
+        //childes
+        case "BANNER_IMAGE":
+            return [PagesViewTypes.BANNER_IMAGE.xs, PagesViewTypes.BANNER_IMAGE.sm, PagesViewTypes.BANNER_IMAGE.md]
+        case "QUERY_GYM":
+            return [PagesViewTypes.QUERY_GYM.SIMPLE_GYM]
+        case "QUERY_SUBSCRIBE":
+            return [PagesViewTypes.QUERY_SUBSCRIBE.SIMPLE_SUBSCRIBE]
+        case "QUERY_APPOINTMENT":
+            return [PagesViewTypes.QUERY_APPOINTMENT.SIMPLE_APPOINTMENT]
+        case "QUERY_COUNSELING":
+            return [PagesViewTypes.QUERY_COUNSELING.SIMPLE_COUNSELING]
+        case "CAROUSEL_BUTTON":
+            return [PagesViewTypes.CAROUSEL_BUTTON.SIMPLE_SPORT_CAT, PagesViewTypes.CAROUSEL_BUTTON.NEW_SPORT_CAT]
+    }
 }

@@ -70,7 +70,7 @@ const _DashUncontractPlaces = () => {
                                     <TableBody>
                                         {UncontractPlaces?.content && UncontractPlaces?.content.map((row, index) => (
                                             <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "/place/data/" + row.Id})}
+                                                      onClick={(event) => history.push({pathname: "/gyms/data/" + row.Id})}
                                                       role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{row?.Name}</TableCell>

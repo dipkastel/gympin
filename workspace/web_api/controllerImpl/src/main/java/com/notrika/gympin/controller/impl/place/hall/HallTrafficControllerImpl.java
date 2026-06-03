@@ -2,11 +2,11 @@ package com.notrika.gympin.controller.impl.place.hall;
 
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
-import com.notrika.gympin.common.place.hall.api.HallTrafficController;
-import com.notrika.gympin.common.place.hall.dto.HallTrafficDto;
-import com.notrika.gympin.common.place.hall.param.HallParam;
-import com.notrika.gympin.common.place.hall.param.HallTrafficParam;
-import com.notrika.gympin.common.place.hall.service.HallTrafficService;
+import com.notrika.gympin.common.place.parts.hall.api.HallTrafficController;
+import com.notrika.gympin.common.place.parts.hall.dto.HallTrafficDto;
+import com.notrika.gympin.common.place.parts.hall.param.HallParam;
+import com.notrika.gympin.common.place.parts.hall.param.HallTrafficParam;
+import com.notrika.gympin.common.place.parts.hall.service.HallTrafficService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketSubscribe.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -42,6 +43,26 @@ public class TicketSubscribeQuery extends BaseQuery<TicketSubscribeQuery> {
 
     @JsonProperty("MinUpdateDate")
     private Date min_updatedDate;
+
+    @JsonProperty("DiscountMaxCreatedDate")
+    private Date max_discountHistoryæcreatedDate;
+
+    @JsonProperty("DiscountMinCreatedDate")
+    private Date min_discountHistoryæcreatedDate;
+
+    @JsonProperty("DiscountMinUserCreator")
+    private Long min_discountHistoryæcreatorUseræid;
+
+    @JsonProperty("PlaceStatus")
+    private PlaceStatusEnum is_placeæstatus;
+
+    @JsonProperty("Enable")
+    private Boolean is_enable;
+
+    @JsonProperty("Incredibles")
+    private Date min_startIncredible;
+
+
 
 
 }

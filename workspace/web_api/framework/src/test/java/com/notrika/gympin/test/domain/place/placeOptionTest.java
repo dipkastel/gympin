@@ -1,8 +1,8 @@
 package com.notrika.gympin.test.domain.place;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.place.option.dto.PlaceOptionDto;
-import com.notrika.gympin.common.place.option.param.PlaceOptionParam;
+import com.notrika.gympin.common.place.parts.option.dto.PlaceOptionDto;
+import com.notrika.gympin.common.place.parts.option.param.PlaceOptionParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
 import com.notrika.gympin.test.domain.utils.BaseTest;
 import org.junit.jupiter.api.*;

@@ -6,12 +6,11 @@ import _TicketInvoice from "../commonPartials/_TicketInvoice";
 
 const _SubscribeUserEnter = ({ticket,userCanEnter}) => {
 
-    const [selectedTab, setSelectedTab] = useState(ticket?.EntryList?.length>0 ?"SCAN":"QRCODE");
-    if (!userCanEnter) return (<></>);
+    const [selectedTab, setSelectedTab] = useState(userCanEnter?"SCAN":"INVOICE");
+
     return (
         <>
-            <Card variant={"outlined"} sx={{m:1}}>
-                <CardHeader title={ticket?.EntryList?.length>0?"ثبت ورود":"فعالسازی"}/>
+            <Card variant={"outlined"}>
                 <Tabs
                     value={selectedTab}
                     onChange={(e, n) => setSelectedTab(n)}
@@ -23,22 +22,11 @@ const _SubscribeUserEnter = ({ticket,userCanEnter}) => {
                         borderRadius: 3,
                         borderBottomLeftRadius:0,
                         borderBottomRightRadius:0,
-                        p: 0.5
+                        p: 0.5,
                     }}
                 >
-                    <Tab
-                        label={"توسط مجموعه"}
-                        value={"QRCODE"}
-                        sx={{
-                            color: "white",
-                            fontWeight: selectedTab === "QRCODE" ? "bold" : "normal",
-                            fontSize: selectedTab === "QRCODE" ? "1.1rem" : "0.95rem",
-                            transition: "all 0.3s ease",
-                            "&.Mui-selected": { color: "#fff" }
-                        }}
-                    />
-                    <Tab
-                        label={"توسط خودم"}
+                    {userCanEnter&&<Tab
+                        label={ticket?.EntryList?.length>0?"ثبت ورود":"تکمیل خرید"}
                         value={"SCAN"}
                         sx={{
                             color: "white",
@@ -47,7 +35,7 @@ const _SubscribeUserEnter = ({ticket,userCanEnter}) => {
                             transition: "all 0.3s ease",
                             "&.Mui-selected": { color: "#fff" }
                         }}
-                    />
+                    />}
                     {ticket?.EntryList?.length>0 &&
                     <Tab
                         label={"سند پرداخت"}
@@ -61,7 +49,7 @@ const _SubscribeUserEnter = ({ticket,userCanEnter}) => {
                         }}
                     /> }
                 </Tabs>
-                {selectedTab=="QRCODE"&&<_GeneratedQrCode ticket={ticket} type={"SUBSCRIBE"} userCanEnter={userCanEnter}/>}
+                {/*{selectedTab=="QRCODE"&&<_GeneratedQrCode ticket={ticket} type={"SUBSCRIBE"} userCanEnter={userCanEnter}/>}*/}
                 {selectedTab=="SCAN"&&<_ScanQrCode ticket={ticket} type={"SUBSCRIBE"} userCanEnter={userCanEnter}/>}
                 {ticket?.EntryList?.length>0 &&selectedTab=="INVOICE"&&<_TicketInvoice ticket={ticket} type={"SUBSCRIBE"} userCanEnter={userCanEnter}/> }
             </Card>

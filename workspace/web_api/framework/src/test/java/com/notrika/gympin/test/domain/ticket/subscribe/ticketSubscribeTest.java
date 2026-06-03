@@ -1,12 +1,12 @@
 package com.notrika.gympin.test.domain.ticket.subscribe;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.place.hall.dto.HallDto;
-import com.notrika.gympin.common.place.hall.param.HallParam;
+import com.notrika.gympin.common.place.parts.hall.dto.HallDto;
+import com.notrika.gympin.common.place.parts.hall.param.HallParam;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.place.placeSport.param.PlaceSportParam;
+import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.parts.placeSport.param.PlaceSportParam;
 import com.notrika.gympin.common.sport.sport.param.SportParam;
 import com.notrika.gympin.common.ticket.buyable.param.TicketBuyableParam;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;

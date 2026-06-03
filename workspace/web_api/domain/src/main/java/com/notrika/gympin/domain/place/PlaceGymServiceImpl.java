@@ -2,13 +2,14 @@ package com.notrika.gympin.domain.place;
 
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.multimedia.param.MultimediaRetrieveParam;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymContractDto;
+import com.notrika.gympin.common.place.placeBase.dto.PlaceContractDto;
+import com.notrika.gympin.common.place.placeBase.enums.PlaceTypeEnum;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymContractSmsParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaListParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceContractSmsParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceMultimediaListParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
+import com.notrika.gympin.common.place.placeBase.param.PlaceMultimediaParam;
 import com.notrika.gympin.common.place.placeGym.query.PlaceGymQuery;
 import com.notrika.gympin.common.place.placeGym.service.PlaceGymService;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
@@ -42,7 +43,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -70,6 +70,7 @@ public class PlaceGymServiceImpl extends AbstractBaseService<PlaceGymParam, Plac
         PlaceGymEntity initPlace = PlaceGymEntity.builder()
                 .name(placeParam.getName())
                 .status(PlaceStatusEnum.INACTIVE)
+                .placeType(PlaceTypeEnum.GYM)
                 .build();
         return PlaceConvertor.ToGymDto(placeGymRepository.add(initPlace));
     }
@@ -237,7 +238,7 @@ public class PlaceGymServiceImpl extends AbstractBaseService<PlaceGymParam, Plac
     }
 
     @Override
-    public PlaceGymDto addMultimedia(PlaceGymMultimediaParam param) {
+    public PlaceGymDto addMultimedia(PlaceMultimediaParam param) {
         PlaceGymEntity place = getEntityById(param.getPlaceParam().getId());
         MultimediaEntity multimedia = multimediaRepository.getById(param.getMultimedia().getId());
         place.getMultimedias().add(multimedia);
@@ -246,7 +247,7 @@ public class PlaceGymServiceImpl extends AbstractBaseService<PlaceGymParam, Plac
     }
 
     @Override
-    public PlaceGymDto setDefaultMultimedia(PlaceGymMultimediaParam param) {
+    public PlaceGymDto setDefaultMultimedia(PlaceMultimediaParam param) {
         List<MultimediaEntity> updateList = new ArrayList<>();
         PlaceGymEntity place = getEntityById(param.getPlaceParam().getId());
         for (MultimediaEntity multimedia : place.getMultimedias()){
@@ -265,7 +266,7 @@ public class PlaceGymServiceImpl extends AbstractBaseService<PlaceGymParam, Plac
     }
 
     @Override
-    public PlaceGymDto addMultimediaList(PlaceGymMultimediaListParam param) {
+    public PlaceGymDto addMultimediaList(PlaceMultimediaListParam param) {
         PlaceGymEntity place = getEntityById(param.getPlaceParam().getId());
         for (MultimediaRetrieveParam image : param.getMultimedias()) {
             MultimediaEntity multimedia = multimediaRepository.getById(image.getId());
@@ -276,7 +277,7 @@ public class PlaceGymServiceImpl extends AbstractBaseService<PlaceGymParam, Plac
     }
 
     @Override
-    public PlaceGymDto removeMultimedia(PlaceGymMultimediaParam param) {
+    public PlaceGymDto removeMultimedia(PlaceMultimediaParam param) {
         PlaceGymEntity place = getEntityById(param.getPlaceParam().getId());
         place.getMultimedias().removeIf(m -> Objects.equals(m.getId(), param.getMultimedia().getId()));
         update(place);
@@ -305,13 +306,13 @@ public class PlaceGymServiceImpl extends AbstractBaseService<PlaceGymParam, Plac
     }
 
     @Override
-    public Boolean sendContractCode(PlaceGymContractSmsParam param) {
+    public Boolean sendContractCode(PlaceContractSmsParam param) {
         ObjectMapper objectMapper = new ObjectMapper();
         PlaceGymEntity place = placeGymRepository.getById(param.getPlaceId());
         String contractData = place.getContractData();
         String code = MyRandom.GenerateRandomVerificationSmsCode();
         try {
-            PlaceGymContractDto contractDto = objectMapper.readValue(contractData, PlaceGymContractDto.class);
+            PlaceContractDto contractDto = objectMapper.readValue(contractData, PlaceContractDto.class);
             smsInService.sendPlaceContractCode(place.getId(), SmsDto.builder()
                     .smsType(SmsTypes.JOINED_TO_PLACE)
                     .userNumber(contractDto.ownerPhoneNumber)

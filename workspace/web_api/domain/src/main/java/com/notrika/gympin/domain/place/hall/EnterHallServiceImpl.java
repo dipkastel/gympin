@@ -1,13 +1,13 @@
 package com.notrika.gympin.domain.place.hall;
 
-import com.notrika.gympin.common.place.hallEnter.dto.EnterHallRequestDto;
+import com.notrika.gympin.common.place.parts.hallEnter.dto.EnterHallRequestDto;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribeEntryStatus;
-import com.notrika.gympin.common.place.hallEnter.param.EnterHallConfirmParam;
-import com.notrika.gympin.common.place.hallEnter.param.EnterHallRequestParam;
+import com.notrika.gympin.common.place.parts.hallEnter.param.EnterHallConfirmParam;
+import com.notrika.gympin.common.place.parts.hallEnter.param.EnterHallRequestParam;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
-import com.notrika.gympin.common.place.hallEnter.dto.EnterHallConfirmDto;
-import com.notrika.gympin.common.place.hallEnter.service.EnterHallService;
+import com.notrika.gympin.common.place.parts.hallEnter.dto.EnterHallConfirmDto;
+import com.notrika.gympin.common.place.parts.hallEnter.service.EnterHallService;
 import com.notrika.gympin.domain.util.convertor.HallConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.PurchasedSubscribeEntryRequstRepository;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;

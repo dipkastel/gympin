@@ -1,5 +1,6 @@
 package com.notrika.gympin.persistence.entity.management.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 import lombok.Getter;
@@ -28,6 +29,8 @@ public class ManageServiceExecutionEntity extends BaseEntityWithCreateUpdate<Man
 
     @ManyToOne
     @JoinColumn(name = "executorUserId")
+    @JsonIgnore
+    @ToString.Exclude
     private UserEntity executorUser;
 
     @Column(name = "executionDate", nullable = false)
@@ -40,6 +43,8 @@ public class ManageServiceExecutionEntity extends BaseEntityWithCreateUpdate<Man
 
     @Column(name = "dto", nullable = false)
     @Lob
+    @JsonIgnore
+    @ToString.Exclude
     private String dto;
 
     @PrePersist

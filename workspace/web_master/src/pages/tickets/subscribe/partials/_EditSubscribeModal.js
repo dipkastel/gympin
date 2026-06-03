@@ -7,6 +7,7 @@ import _SubscribeCoaches from "./_SubscribeCoaches";
 import _SubscribeDelete from "./_SubscribeDelete";
 import {TicketSubscribes_getById} from "../../../../network/api/ticketSubscribe.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
+import Grid from "@mui/material/Grid2";
 
 const _EditSubscribeModal = ({subscribe,setSubscribe,reloadList}) => {
 
@@ -36,9 +37,9 @@ const _EditSubscribeModal = ({subscribe,setSubscribe,reloadList}) => {
             <Dialog open={true} onClose={() => setSubscribe(null)}>
                 <DialogTitle>{"ویرایش "+subscribe.Name}</DialogTitle>
                 <DialogContent>
-                    {!!ticketSubscribe&&<DialogContentText>
-                        <_SubscribeBaseData ticketSubscribe={subscribe} setSubscribe={setSubscribe} getSubscribeData={getSubscribeData} reloadList={reloadList}/>
-                    </DialogContentText>}
+                    {!!ticketSubscribe&&<Grid>
+                        <_SubscribeBaseData ticketSubscribe={ticketSubscribe} setSubscribe={setSubscribe} getSubscribeData={getSubscribeData} reloadList={reloadList}/>
+                    </Grid>}
                     {!ticketSubscribe&&<DialogContentText sx={{p:10,alignContent:"center"}}>
                         <CircularProgress size="1.5rem" />
                     </DialogContentText>}

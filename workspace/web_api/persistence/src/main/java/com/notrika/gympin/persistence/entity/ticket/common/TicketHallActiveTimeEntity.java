@@ -30,6 +30,8 @@ public class TicketHallActiveTimeEntity extends BaseEntityWithCreateUpdate<Ticke
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hallId")
+    @JsonIgnore
+    @ToString.Exclude
     private HallEntity hall;
 
     @Column(name = "Name")

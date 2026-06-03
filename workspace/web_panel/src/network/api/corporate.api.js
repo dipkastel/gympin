@@ -50,8 +50,8 @@ export function corporate_getFinanceCorporate(data) {
 export function corporate_getTotalIncreases(data) {
     return axios.post(CorporateApi.getTotalIncreases,data);
 }
-// groups
 
+// groups
 export function corporate_getCorporateGroups(data) {
     return axios.get(CorporateApi.getCorporateGroups,{ params: data });
 }
@@ -61,7 +61,14 @@ export function corporate_addGroup(data) {
 export function corporate_deleteGroup(data) {
     return axios.put(CorporateApi.deleteGroup,  data );
 }
-
 export function corporate_getCorporateInviteCode(corporate) {
     return axios.get(CorporateApi.getCorporateInviteCode, {params: corporate});
+}
+
+//settings
+export function corporate_getCorporateSettings(data) {
+    return axios.get(CorporateApi.getCorporateSettings,{ params: data });
+}
+export function corporate_setCorporateSettings(data) {
+    return axios.post(CorporateApi.setCorporateSettings, data);
 }

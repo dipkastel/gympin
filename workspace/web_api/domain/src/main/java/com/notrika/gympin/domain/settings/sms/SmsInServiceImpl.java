@@ -233,6 +233,36 @@ public class SmsInServiceImpl implements SmsInService {
     }
 
     @Override
+    public boolean sendStartIncredible(SmsDto smsDto) throws Exception {
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        try {
+            insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_START_INCREDIBLE",SmsTypes.JOIN_PLACE_REQUEST);
+        }catch (Exception e){}
+        return true;
+    }
+
+    @Override
+    public boolean sendEndIncredible(SmsDto smsDto) throws Exception {
+
+        if (canSendSms())
+            throw new SmsServiceIsDisabled();
+
+        if(sendToFixNumber()){
+            smsDto.setUserNumber(getFixNumber().getValue());
+        }
+        try {
+            insertSendRequest(smsDto,"FARAZ_SMS_PATTERN_END_INCREDIBLE",SmsTypes.JOIN_PLACE_REQUEST);
+        }catch (Exception e){}
+        return true;
+    }
+
+    @Override
     public boolean sendYouBuyMultipleSubscribe(SmsDto smsDto) throws Exception {
         log.info("Going to sendYouBuySubscribe with params: {} ...\n", smsDto);
 

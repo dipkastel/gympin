@@ -44,9 +44,9 @@
       } else {
         this.onmousewheel = handler;
       }
-      // Store the line height and page height for this particular element
+      // Store the line height and parent height for this particular element
       $.data(this, "mousewheel-line-height", special.getLineHeight(this));
-      $.data(this, "mousewheel-page-height", special.getPageHeight(this));
+      $.data(this, "mousewheel-parent-height", special.getPageHeight(this));
     },
 
     teardown: function () {
@@ -59,7 +59,7 @@
       }
       // Clean up the data we added to the element
       $.removeData(this, "mousewheel-line-height");
-      $.removeData(this, "mousewheel-page-height");
+      $.removeData(this, "mousewheel-parent-height");
     },
 
     getLineHeight: function (elem) {
@@ -158,7 +158,7 @@
       deltaY *= lineHeight;
       deltaX *= lineHeight;
     } else if (orgEvent.deltaMode === 2) {
-      var pageHeight = $.data(this, "mousewheel-page-height");
+      var pageHeight = $.data(this, "mousewheel-parent-height");
       delta *= pageHeight;
       deltaY *= pageHeight;
       deltaX *= pageHeight;

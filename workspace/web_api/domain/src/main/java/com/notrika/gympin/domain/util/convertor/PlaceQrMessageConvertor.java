@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.util.convertor;
 
-import com.notrika.gympin.common.place.qrMessage.dto.PlaceQrMessageDto;
-import com.notrika.gympin.common.place.qrMessage.param.PlaceQrMessageParam;
+import com.notrika.gympin.common.place.parts.qrMessage.dto.PlaceQrMessageDto;
+import com.notrika.gympin.common.place.parts.qrMessage.param.PlaceQrMessageParam;
 import com.notrika.gympin.persistence.entity.place.PlaceGymEntity;
 import com.notrika.gympin.persistence.entity.place.qrMessage.PlaceQrMessageEntity;
 

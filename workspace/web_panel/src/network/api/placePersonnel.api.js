@@ -35,6 +35,11 @@ export function placePersonnel_updatePersonnelCommissionFee(data) {
 }
 
 
+export function placePersonnel_updatePersonnelGetSms(data) {
+  return axios.post(PlacePersonelApi.updatePersonnelGetSms,  data);
+}
+
+
 export function placePersonnel_getBuyableAccess(data) {
   return axios.get(PlacePersonelApi.getUserPlaceBuyableAccess, {params: data});
 }

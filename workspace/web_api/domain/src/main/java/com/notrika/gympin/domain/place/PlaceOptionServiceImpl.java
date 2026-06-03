@@ -1,9 +1,9 @@
 package com.notrika.gympin.domain.place;
 
 import com.notrika.gympin.common.util._base.query.BaseQuery;
-import com.notrika.gympin.common.place.option.dto.PlaceOptionDto;
-import com.notrika.gympin.common.place.option.param.PlaceOptionParam;
-import com.notrika.gympin.common.place.option.service.PlaceOptionService;
+import com.notrika.gympin.common.place.parts.option.dto.PlaceOptionDto;
+import com.notrika.gympin.common.place.parts.option.param.PlaceOptionParam;
+import com.notrika.gympin.common.place.parts.option.service.PlaceOptionService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.OptionConvertor;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceOptionRepository;

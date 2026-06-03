@@ -9,5 +9,10 @@ public enum SmsTypes {
     USER_CHARGE,
     CORPORATE_CHARGE,
     USER_BUY_SUBSCRIBE,
-    SUPPORT_ANSWERED
+    SUPPORT_ANSWERED,
+    USER,
+    CORPORATE,
+    PLACE,
+    GYMPIN,
+    ALL
 }

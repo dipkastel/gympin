@@ -16,7 +16,8 @@ const _HomeCategories = () => {
         {id:5,name:"ورزش‌های رزمی",icon:"/assets/images/icon/ico-razmi.svg",sid:29},
         {id:6,name:"ورزش‌های آبی",icon:"/assets/images/icon/ico-shena.svg",sid:36},
         {id:7,name:"ماساژ و اسپا",icon:"/assets/images/icon/ico-spa.svg",sid:49},
-        {id:8,name:"یوگا",icon:"/assets/images/icon/ico-yoga.svg",sid:57}]
+        {id:8,name:"یوگا",icon:"/assets/images/icon/ico-yoga.svg",sid:57}
+    ]
 
 
     const settings = {
@@ -69,7 +70,7 @@ const _HomeCategories = () => {
         <>
 
             <Slick {...settings}>
-                {[...categories,...categories,...categories].map((item, index) => (
+                {categories.map((item, index) => (
                     <Grid sx={{placeItems:"center",alignItems:"center",alignContent:"center",mt:1}} alignItems={"center"} alignContent={"center"} textAlign={"center"} direction={"column"} container key={index}  onClick={()=>navigate("/places/"+item.sid)} >
                         <Paper sx={{m:"auto" ,width:"100px",borderRadius:8,p:2}} elevation={8} >
                             <img width={64} src={item.icon}/>

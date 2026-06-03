@@ -66,7 +66,7 @@ const _DashTicketBeneficiary = () => {
                                     <TableBody>
                                         {ticket && ticket.map((row, index) => (
                                             <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "/Place/data/" + row?.Place?.Id})}
+                                                      onClick={(event) => history.push({pathname: "/gyms/data/" + row?.Place?.Id})}
                                                       role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                                 <TableCell component="th" scope="row" padding="normal"
                                                            align="right">{row?.Name}</TableCell>

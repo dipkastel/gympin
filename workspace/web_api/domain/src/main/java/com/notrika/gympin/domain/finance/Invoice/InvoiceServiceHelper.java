@@ -12,18 +12,20 @@ import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionBaseType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionCorporateType;
 import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.enums.SubscribePurchasedStatus;
 import com.notrika.gympin.common.settings.base.service.SettingsService;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;
+import com.notrika.gympin.common.settings.corporateSettings.enums.CorporateSettingTypesEnum;
 import com.notrika.gympin.common.settings.note.enums.NoteType;
 import com.notrika.gympin.common.settings.sms.dto.SmsDto;
 import com.notrika.gympin.common.settings.sms.enums.SmsTypes;
 import com.notrika.gympin.common.settings.sms.service.SmsInService;
 import com.notrika.gympin.common.user.user.dto.UserCreditDetailDto;
 import com.notrika.gympin.common.user.user.dto.UserCreditDto;
+import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.common.user.user.enums.UserFinanceType;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.user.user.service.UserService;
@@ -688,7 +690,7 @@ public class InvoiceServiceHelper {
             }
             PlaceEntity place = buyableEntities.get(0).getPlace();
 //            if (place.getPurchased() == null || place.getPurchased().size() < 5)
-                sendSellMessageToPlace(place, buyableEntities.get(0));
+            sendSellMessageToPlace(place, buyableEntities.get(0));
         } else {
             String ticketsName = "";
             for (InvoiceBuyableEntity ticket : buyableEntities) {
@@ -715,7 +717,11 @@ public class InvoiceServiceHelper {
     private void sendSellMessageToPlace(PlaceEntity place, InvoiceBuyableEntity invoiceBuyables) {
         if (((List<PurchasedBaseEntity>) place.getPurchased().stream().filter(o -> !((PurchasedBaseEntity) o).isDeleted()).collect(Collectors.toList())).size() < 1) {
             try {
-                List<PlacePersonnelEntity> owners = (List<PlacePersonnelEntity>) place.getPlaceOwners().stream().filter(pl -> !((PlacePersonnelEntity) pl).isDeleted()).filter(po -> ((PlacePersonnelEntity) po).getPlacePersonnelRoles().stream().filter(ppr -> !ppr.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
+                List<PlacePersonnelEntity> owners = (List<PlacePersonnelEntity>) place
+                        .getPlaceOwners()
+                        .stream()
+                        .filter(pl -> !((PlacePersonnelEntity) pl).isDeleted()&&((PlacePersonnelEntity) pl).getSms())
+                        .collect(Collectors.toList());
                 for (PlacePersonnelEntity owner : owners) {
                     smsService.sendFirstTicketSell(SmsDto.builder()
                             .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
@@ -728,7 +734,11 @@ public class InvoiceServiceHelper {
             }
         } else {
             try {
-                List<PlacePersonnelEntity> owners = (List<PlacePersonnelEntity>) place.getPlaceOwners().stream().filter(pl -> !((PlacePersonnelEntity) pl).isDeleted()).filter(po -> ((PlacePersonnelEntity) po).getPlacePersonnelRoles().stream().filter(pl -> !pl.isDeleted()).map(PlacePersonnelRoleEntity::getRole).collect(Collectors.toList()).contains(PlacePersonnelRoleEnum.PLACE_OWNER)).collect(Collectors.toList());
+                List<PlacePersonnelEntity> owners = (List<PlacePersonnelEntity>) place
+                        .getPlaceOwners()
+                        .stream()
+                        .filter(pl -> !((PlacePersonnelEntity) pl).isDeleted()&&((PlacePersonnelEntity) pl).getSms())
+                        .collect(Collectors.toList());
                 for (PlacePersonnelEntity owner : owners) {
                     smsService.sendOrdinaryTicketSell(SmsDto.builder()
                             .smsType(SmsTypes.USER_BUY_SUBSCRIBE)
@@ -746,7 +756,8 @@ public class InvoiceServiceHelper {
     @Transactional
     public UserHowToPayDto getSimpleHowToPay(InvoiceEntity invoice) {
         //only by user
-        UserCreditDto userCredits = userService.getMyCredits();
+        UserCreditDto userCredits = userService.getMyCredits(!checkUserCanBuyForOtherGendersError(invoice));
+
         UserHowToPayDto result = new UserHowToPayDto();
         var creditList = userCredits.getCreditDetail().stream().filter(o -> !o.isDeleted()).filter(c -> c.getCreditAmount().compareTo(BigDecimal.ZERO) > 0 && c.getCreditPayableAmount().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
         if (invoice.getPriceToPay().compareTo(userCredits.getTotalCredit()) > 0)
@@ -845,4 +856,21 @@ public class InvoiceServiceHelper {
         return invoice;
     }
 
+    public boolean checkUserCanBuyForOtherGendersError(InvoiceEntity invoice) {
+        //true for error
+        //TODO Do somthing for multi corporate users
+        try {
+            UserEntity user = invoice.getUser();
+            CorporateEntity userCorporate = user.getCorporatesPersonel().stream().filter(pp -> !pp.isDeleted()).collect(Collectors.toList()).get(0).getCorporate();
+            Boolean corporateLimitedBuyForGenders = userCorporate.getSettings().stream().anyMatch(cs -> cs.getKey() == CorporateSettingTypesEnum.PERSONNEL_CAN_BUY_TICKET_FOR_OTHER_GENDERS && cs.getValue().toLowerCase(Locale.ROOT).trim().equals("false"));
+            if (!corporateLimitedBuyForGenders)
+                return false;
+            Gender ticketGender = invoice.getInvoiceSubscribes().get(0).getGender();
+            if (user.getGender().equals(ticketGender))
+                return false;
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
 }

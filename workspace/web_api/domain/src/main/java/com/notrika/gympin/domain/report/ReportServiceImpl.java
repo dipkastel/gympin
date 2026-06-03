@@ -29,10 +29,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     FinanceCorporateTransactionRepository corporateTransactionRepository;
-
     @Autowired
     CorporateRepository corporateRepository;
-
     @Autowired
     ManageServiceExecutionRepository reportRepository;
     @Autowired
@@ -67,12 +65,11 @@ public class ReportServiceImpl implements ReportService {
         Long womensTicketsThisMount = reportRepository.getTicketBuyByDateThisWeekByGenderAndCorporateId(1,"FEMALE",param.getId());
         Long mensTicketsThisYear = reportRepository.getTicketBuyByDateThisWeekByGenderAndCorporateId(12,"MALE",param.getId());
         Long womensTicketsThisYear = reportRepository.getTicketBuyByDateThisWeekByGenderAndCorporateId(12,"FEMALE",param.getId());
-
        return ReportGenderCompetitionDto.builder()
-                .usesManInMonth((long)(((double)mensTicketsThisMount/mens)*100))
-                .usesManInTotal((long)(((double)mensTicketsThisYear/mens)*100))
-                .usesWomanInMonth((long)(((double)womensTicketsThisMount/womens)*100))
-                .usesWomanInTotal((long)(((double)womensTicketsThisYear/womens)*100))
+                .usesManInMonth(Math.min((long)(((double)mensTicketsThisMount/mens)*100),100))
+                .usesManInTotal(Math.min((long)(((double)mensTicketsThisYear/mens)*100),100))
+                .usesWomanInMonth(Math.min((long)(((double)womensTicketsThisMount/womens)*100),100))
+                .usesWomanInTotal(Math.min((long)(((double)womensTicketsThisYear/womens)*100),100))
                 .build();
     }
 

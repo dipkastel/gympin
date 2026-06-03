@@ -1,5 +1,7 @@
 package com.notrika.gympin.persistence.entity.ticket;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.notrika.gympin.persistence.entity.BaseEntityWithCreateUpdate;
 import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEntity;
 import lombok.Getter;
@@ -25,6 +27,8 @@ public class BuyableDiscountHistoryEntity extends BaseEntityWithCreateUpdate<Buy
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "buyableId")
+    @JsonIgnore
+    @ToString.Exclude
     private BuyableEntity buyable;
 
     @Column(name = "discount", nullable = false,columnDefinition = "smallint default 0")

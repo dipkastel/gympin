@@ -27,7 +27,7 @@ let arabicNumbers = [
 ];
 
 export function fixTextToSlug(text) {
-  text = "اطلاعات کامل مجموعه ورزشی "+text + " به همراه آدرس قیمت شماره تماس امکانات"
+  text = "اطلاعات کامل مجموعه "+text + " به همراه آدرس قیمت شماره تماس امکانات"
   return text
       .toString()
       .toLowerCase()
@@ -149,6 +149,7 @@ export function getStringOfTime(time) {
   else
     return "0"+time;
 }
+
 
 export function setStorage(key, value, expires) {
   if (expires === undefined || expires === null) {

@@ -35,7 +35,7 @@ const _DashPlaceNewImages = () => {
         // placeComments_query({
         //     queryType: "FILTER",
         //     Status: "AWAIT",
-        //     paging: {Page: page, Size: rowsPerPage, Desc: true}
+        //     paging: {parent: parent, Size: rowsPerPage, Desc: true}
         // })
         //     .then((data) => {
         //         setComment(data.data.Data);
@@ -50,7 +50,6 @@ const _DashPlaceNewImages = () => {
     }
 
     function SetStatus(item,status) {
-        console.log({...item,Status:status})
         placeComments_update({...item,Status:status})
             .then((data) => {
                 setPage(0);

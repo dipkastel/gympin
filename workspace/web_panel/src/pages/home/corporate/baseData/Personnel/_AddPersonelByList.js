@@ -135,7 +135,6 @@ const _AddPersonelByList = ({getPersonnelsOfCorporate, currentCorporate}) => {
         function addListFile(e) {
             e.preventDefault();
             setOpenModalAddList(false);
-            console.log(fileToAdd)
             corporatePersonnel_addPersonnelByList(fileToAdd)
                 .then(data => {
                     error.showError({message: "عملیات موفق",});

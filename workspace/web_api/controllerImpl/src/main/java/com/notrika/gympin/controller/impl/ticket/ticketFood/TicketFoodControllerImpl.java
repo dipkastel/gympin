@@ -2,9 +2,6 @@ package com.notrika.gympin.controller.impl.ticket.ticketFood;
 
 import com.notrika.gympin.common.multimedia.dto.MultimediaDto;
 import com.notrika.gympin.common.place.placeCatering.param.PlaceCateringParam;
-import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymMultimediaParam;
-import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.ticket.ticketFood.api.TicketFoodController;
 import com.notrika.gympin.common.ticket.ticketFood.dto.TicketFoodDto;
 import com.notrika.gympin.common.ticket.ticketFood.param.TicketFoodCategoryParam;

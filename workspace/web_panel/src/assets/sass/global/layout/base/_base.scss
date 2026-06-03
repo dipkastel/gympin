@@ -16,7 +16,7 @@ body {
 
 // Desktop mode
 @include kt-desktop {
-  // Page
+  // parent
   .kt-wrapper {
     transition: kt-get($kt-aside-config, base, minimize, transition);
 
@@ -131,7 +131,7 @@ body:not(.kt-aside--enabled) {
 
 // Tablet & mobile
 @include kt-tablet-and-mobile {
-  // Page
+  // parent
   .kt-wrapper {
     // Fixed Header
     .kt-header-mobile--fixed & {

@@ -1,8 +1,8 @@
 package com.notrika.gympin.domain.purchased.purchasedSubscribe;
 
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelAccessEnum;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelAccessEnum;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.purchased.purchased.enums.PurchasedType;
 import com.notrika.gympin.common.purchased.purchased.param.UserPlacePurchasedParam;
 import com.notrika.gympin.common.purchased.purchasedSubscribe.dto.PurchasedSubscribeDto;

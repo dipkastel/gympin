@@ -40,7 +40,7 @@ const _MonthSellCount = ({place}) => {
                 title="فروش ها"
                 color={"quinary"}
                 total={
-                    placeSubscribes ? (
+                    placeSubscribes!=null ? (
                         placeSubscribes
                     ) : (
                         <>

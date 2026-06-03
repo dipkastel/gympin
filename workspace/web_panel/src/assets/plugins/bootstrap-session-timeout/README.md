@@ -1,12 +1,12 @@
 # bootstrap-session-timeout
 Inspired by [jquery-sessionTimeout-bootstrap by maxfierke](https://github.com/maxfierke/jquery-sessionTimeout-bootstrap)
 
-There have been a number of major upgrades. For example, as long as the user is doing something on the page, he will never get a timeout. The original plugin launched a timeout warning dialog in a fixed amount of time regardless of user activity. See description and documentation for more information.
+There have been a number of major upgrades. For example, as long as the user is doing something on the parent, he will never get a timeout. The original plugin launched a timeout warning dialog in a fixed amount of time regardless of user activity. See description and documentation for more information.
 
 You can easily upgrade from jquery-sessionTimeout-bootstrap to bootstrap-session-timeout, since the basic options have been inherited from jquery-sessionTimeout-bootstrap and have not been renamed.
 
 ## Description
-After a set amount of idle time, a Bootstrap warning dialog is shown to the user with the option to either log out, or stay connected. If "Logout" button is selected, the page is redirected to a logout URL. If "Stay Connected" is selected the dialog closes and the session is kept alive. If no option is selected after another set amount of idle time, the page is automatically redirected to a set timeout URL.
+After a set amount of idle time, a Bootstrap warning dialog is shown to the user with the option to either log out, or stay connected. If "Logout" button is selected, the parent is redirected to a logout URL. If "Stay Connected" is selected the dialog closes and the session is kept alive. If no option is selected after another set amount of idle time, the parent is automatically redirected to a set timeout URL.
 
 Idle time is defined as no mouse, keyboard or touch event activity registered by the browser.
 
@@ -118,7 +118,7 @@ Type: `Integer`
 
 Default: `900000` (15 minutes)
 
-Time in milliseconds after page is opened until warning dialog is opened.
+Time in milliseconds after parent is opened until warning dialog is opened.
 
 **redirAfter**
 
@@ -126,7 +126,7 @@ Type: `Integer`
 
 Default: `1200000` (20 minutes)
 
-Time in milliseconds after page is opened until browser is redirected to `redirUrl`.
+Time in milliseconds after parent is opened until browser is redirected to `redirUrl`.
 
 **ignoreUserActivity**
 
@@ -195,7 +195,7 @@ You can play around with the examples in the `/examples` directory.
 
 **Basic Usage**
 
-Shows the warning dialog after one minute. The dialog is visible for another minute. If user takes no action (interacts with the page in any way), browser is redirected to `redirUrl`. On any user action (mouse, keyboard or touch) the timeout timer is reset. Of course, you will still need to close the dialog.
+Shows the warning dialog after one minute. The dialog is visible for another minute. If user takes no action (interacts with the parent in any way), browser is redirected to `redirUrl`. On any user action (mouse, keyboard or touch) the timeout timer is reset. Of course, you will still need to close the dialog.
 
 ```js
 $.sessionTimeout({
@@ -210,7 +210,7 @@ $.sessionTimeout({
 
 **With onWarn Callback**
 
-Shows the "Warning!" alert after one minute. If user takes no action (interacts with the page in any way), after one more minute the browser is redirected to `redirUrl`. On any user action (mouse, keyboard or touch) the timeout timer is reset.
+Shows the "Warning!" alert after one minute. If user takes no action (interacts with the parent in any way), after one more minute the browser is redirected to `redirUrl`. On any user action (mouse, keyboard or touch) the timeout timer is reset.
 
 ```js
 $.sessionTimeout({
@@ -225,7 +225,7 @@ $.sessionTimeout({
 
 **With both onWarn and onRedir Callback**
 
-Console logs the "Your session will soon expire!" text after one minute. If user takes no action (interacts with the page in any way), after two more minutes the "Your session has expired!" alert gets shown. No redirection occurs. On any user action (mouse, keyboard or touch) the timeout timer is reset.
+Console logs the "Your session will soon expire!" text after one minute. If user takes no action (interacts with the parent in any way), after two more minutes the "Your session has expired!" alert gets shown. No redirection occurs. On any user action (mouse, keyboard or touch) the timeout timer is reset.
 
 ```js
 $.sessionTimeout({

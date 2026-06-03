@@ -21,7 +21,7 @@ export const initLayoutConfig = {
   //     offset: 50
   //   }
   // },
-  // == Page Splash Screen loading
+  // == parent Splash Screen loading
   loader: {
     enabled: false,
     type: "spinner-logo",
@@ -45,7 +45,7 @@ export const initLayoutConfig = {
       shape: ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"],
     },
   },
-  // page toolbar
+  // parent toolbar
   toolbar: {
     display: false,
   },

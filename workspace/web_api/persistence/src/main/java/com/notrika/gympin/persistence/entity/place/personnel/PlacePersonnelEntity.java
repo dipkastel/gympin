@@ -46,6 +46,9 @@ public class PlacePersonnelEntity extends BaseEntityWithCreateUpdate<PlacePerson
     @Column(name = "isBeneficiary", nullable = false, columnDefinition = "boolean default false")
     private Boolean isBeneficiary;
 
+    @Column(name = "sms", nullable = false, columnDefinition = "boolean default true")
+    private Boolean sms;
+
     @Column(name = "isPublic", nullable = false, columnDefinition = "boolean default true")
     private Boolean isPublic;
 

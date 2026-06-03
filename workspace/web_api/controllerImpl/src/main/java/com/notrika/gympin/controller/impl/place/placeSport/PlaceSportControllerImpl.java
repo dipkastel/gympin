@@ -1,12 +1,12 @@
 package com.notrika.gympin.controller.impl.place.placeSport;
 
-import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
-import com.notrika.gympin.common.place.placeSport.param.PlaceSportParam;
+import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.parts.placeSport.param.PlaceSportParam;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.placeSport.api.PlaceSportController;
-import com.notrika.gympin.common.place.placeSport.service.PlaceSportService;
+import com.notrika.gympin.common.place.parts.placeSport.api.PlaceSportController;
+import com.notrika.gympin.common.place.parts.placeSport.service.PlaceSportService;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

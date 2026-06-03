@@ -1,8 +1,8 @@
 package com.notrika.gympin.test.domain.place;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.place.about.dto.PlaceAboutDto;
-import com.notrika.gympin.common.place.about.param.PlaceAboutParam;
+import com.notrika.gympin.common.place.parts.about.dto.PlaceAboutDto;
+import com.notrika.gympin.common.place.parts.about.param.PlaceAboutParam;
 import com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;

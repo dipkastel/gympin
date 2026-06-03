@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Paper, Tab, Tabs} from "@mui/material";
+import {Chip, Grid, Paper, Tab, Tabs} from "@mui/material";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {sms_getAllPatterns} from "../../../../network/api/sms.api";
 import __SettingSmsSendManual from "./manual/__SettingSmsSendManual";
 
-const __SettingSmsManual = ({smsSent}) => {
+const __SettingSmsManual = () => {
 
     const error = useContext(ErrorContext);
 
@@ -33,22 +33,16 @@ const __SettingSmsManual = ({smsSent}) => {
 
     return (
         <>
-            <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
-                <Tabs
-                    value={selectedTab}
-                    onChange={(e, n) => setSelectedTab(n)}
-                    indicatorColor="primary"
-                    textColor="inherit"
-                    variant={"scrollable"}
-                    aria-label="full width tabs example"
-                >
+            <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2,p:1}}>
+                <Grid container spacing={1}>
                     {patterns && patterns.map(item => (
-                        <Tab key={item.Id} label={item.Name} value={item.Id}/>
+                        <Chip variant={selectedTab==item.Id?"filled":"outlined"} color={"success"} key={item.Id} label={item.Name} value={item.Id}
+                              onClick={(e) => setSelectedTab(item.Id)} />
                     ))}
-                </Tabs>
+                </Grid>
             </Paper>
+            {patterns && <__SettingSmsSendManual pattern={patterns.filter(p => p.Id === selectedTab)?.[0]}/>}
 
-            {patterns && <__SettingSmsSendManual pattern={patterns.filter(p => p.Id === selectedTab)?.[0]} smsSent={smsSent}/>}
 
         </>
     );

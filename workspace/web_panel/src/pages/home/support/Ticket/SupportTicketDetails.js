@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import Notice from "../../../partials/content/Notice";
 import {Support_addMessage, Support_getById, Support_update} from "../../../../network/api/support.api";
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Card, Checkbox, FormControlLabel, FormGroup, Grid, List, TextField, Typography} from "@mui/material";
+import {Button, Card, Checkbox, FormControlLabel, FormGroup, Grid, IconButton, List, TextField, Typography} from "@mui/material";
 import {Alert, Form} from "react-bootstrap";
 import {Row} from "reactstrap";
 import {getUserFixedName} from "../../../../helper";
@@ -11,6 +11,8 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import PopoverUser from "../../../../components/popover/PopoverUser";
 import Select from "react-select";
 import {SupportStatus} from "../../../../helper/enums/SupportStatus";
+import {EditNote} from "@mui/icons-material";
+import _EditSupportTicket from "./_EditSupportTicket";
 
 const SupportTicketDetails = () => {
     const error = useContext(ErrorContext);
@@ -194,7 +196,7 @@ const SupportTicketDetails = () => {
                                         day: 'numeric',
                                         hour: "2-digit",
                                         minute: "2-digit"
-                                    })}</Typography>
+                                    })}<_EditSupportTicket message={item} reloadList={getSupportDetail} /></Typography>
                                 </Alert></Row>)
                                 :
                                 (<Row className={"ltr"}><Alert key={item.Id} variant={"warning"} className={"m-2 d-block "}>
@@ -207,7 +209,7 @@ const SupportTicketDetails = () => {
                                         day: 'numeric',
                                         hour: "2-digit",
                                         minute: "2-digit"
-                                    })}</Typography>
+                                    })}<_EditSupportTicket message={item} reloadList={getSupportDetail} /></Typography>
                                 </Alert></Row>)
                         ))}
                     </List>

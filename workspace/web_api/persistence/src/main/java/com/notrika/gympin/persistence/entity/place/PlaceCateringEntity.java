@@ -63,6 +63,7 @@ public class PlaceCateringEntity extends PlaceEntity<PlaceCateringEntity> {
     @ToString.Exclude
     private List<PlaceQrMessageEntity> qrMessages;
 
+    @JsonIgnore
     public List<TicketFoodItemEntity> getTicketFoodItems() {
         return getBuyables().stream()
                 .filter(b -> b instanceof TicketFoodItemEntity)

@@ -15,7 +15,7 @@ const FinanceCorporateInformationTab = ({currentCorporate ,financeCorporate}) =>
                     <CorporateTotalDeposit financeCorporate={financeCorporate}/>
                 </div>
                 <div className="col-md-6">
-                    <CorporateTotalCreadit financeCorporate={financeCorporate}/>
+                    <CorporateTotalCreadit  currentCorporate={currentCorporate} financeCorporate={financeCorporate}/>
                 </div>
 
             </div>

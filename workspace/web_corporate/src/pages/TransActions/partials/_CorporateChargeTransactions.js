@@ -18,15 +18,12 @@ import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {transactionCorporate_query, transactionCorporate_queryExport} from "../../../network/api/TransactionsCorporate";
 import {toPriceWithComma} from "../../../helper/utils";
-import {ProcessTypeEnum} from "../../../helper/enums/ProcessTypeEnum";
 import {InvoiceStatus} from "../../../helper/enums/InvoiceStatus";
 import DatePicker, {DateObject} from "react-multi-date-picker"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 import {DriveFolderUpload} from "@mui/icons-material";
 import {getRppChargeTransaction, SetRppChargeTransaction} from "../../../helper/pocket";
-import gregorian from "react-date-object/calendars/gregorian";
-import gregorian_en from "react-date-object/locales/gregorian_en";
 
 const _CorporateChargeTransactions = () => {
 
@@ -184,7 +181,6 @@ const _CorporateChargeTransactions = () => {
                                 hover
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
-                                {console.log(row)}
                                 <TableCell sx={{justifyItems: "center"}}><Avatar src={row?.Serial?.Invoices[0]?.User?.Avatar?.Url}
                                                                                  sx={{width: 25, height: 25}}/></TableCell>
                                 <TableCell>{row?.Serial?.Invoices[0]?.User?.FullName || " - "}</TableCell>
@@ -209,7 +205,7 @@ const _CorporateChargeTransactions = () => {
                         count={transactions?.totalElements}
                         labelRowsPerPage={"تعداد نمایش"}
                         labelDisplayedRows={(a) => {
-                            return ("نمایش " + a?.from + " تا " + a?.to + " از " + a?.count + " کارمند")
+                            return ("نمایش " + a?.from + " تا " + a?.to + " از " + a?.count)
                         }}
                         rowsPerPage={rowsPerPage}
                         page={page}

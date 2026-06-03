@@ -1,7 +1,7 @@
 package com.notrika.gympin.domain.ticket.course;
 
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
-import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.buyable.enums.BuyableType;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
@@ -95,7 +95,7 @@ public class TicketCourseServiceImpl extends AbstractBaseService<TicketCoursePar
     @Override
     public TicketCourseDto update(@NonNull TicketCourseParam ticketCourseParam) {
         if (ticketCourseParam.getValuePrice().compareTo(ticketCourseParam.getPlacePrice()) < 0)
-            throw new UncomfortableValueExeption();
+            throw new WrongValueExeption();
         TicketCourseEntity ticketCourseEntity = getEntityById(ticketCourseParam.getId());
         ticketCourseEntity.setName(ticketCourseParam.getName());
         ticketCourseEntity.setDiscount((short) 0);

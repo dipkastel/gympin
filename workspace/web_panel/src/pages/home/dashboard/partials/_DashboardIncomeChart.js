@@ -11,7 +11,7 @@ const _DashboardIncomeChart = () => {
     useEffect(() => {
         transactionIncome_query({
             queryType: "FILTER",
-            paging: {Page: 0, Size: 50,Desc:true}
+            paging: {Page: 0, Size: 100,Desc:true}
         }).then(result=>{
             setIncomeData(result.data.Data)
         }).catch(e => {
@@ -25,7 +25,6 @@ const _DashboardIncomeChart = () => {
 
 
     function getData(){
-        console.log(incomeData?.content)
         return incomeData?.content?.toReversed();
     }
     const CustomTooltip = ({ active, payload, label }) => {

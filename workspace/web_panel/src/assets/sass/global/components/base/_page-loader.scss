@@ -1,8 +1,8 @@
 //
-// Page loader
+// parent loader
 //
 
-// CSS3 Transitions only after page load(.kt-page-loading class added to body tag and remove with JS on page load)
+// CSS3 Transitions only after parent load(.kt-parent-loading class added to body tag and remove with JS on parent load)
 .kt-page--loading * {
   transition: none !important;
 }

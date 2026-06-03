@@ -12,13 +12,12 @@ import com.notrika.gympin.persistence.entity.ticket.subscribe.TicketSubscribeEnt
 import com.notrika.gympin.persistence.entity.user.UserEntity;
 
 import java.util.stream.Collectors;
-//import com.notrika.gympin.persistence.entity.ticket.common.TicketSubscribeHallActiveTime;
 
 public class TicketSubscribeConvertor {
 
     public static TicketSubscribeDto toDto(TicketSubscribeEntity entity) {
         TicketSubscribeDto dto = new TicketSubscribeDto();
-        dto.setPlace(PlaceConvertor.ToDto(entity.getPlace()));
+        dto.setPlace(PlaceConvertor.ToGymDto(entity.getPlaceGym()));
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setPrice(entity.getPrice());
@@ -35,6 +34,10 @@ public class TicketSubscribeConvertor {
         dto.setTiming(entity.getTiming());
         dto.setUpdatedDate(entity.getUpdatedDate());
         dto.setCreatedDate(entity.getCreatedDate());
+        dto.setIncredible(entity.getStartIncredible());
+        try{
+            entity.getDiscountHistory().stream().filter(f->f.getDiscount()==null).collect(Collectors.toList());
+        }catch (Exception e){}
         try {
             GympinContext context = GympinContextHolder.getContext();
             if (context == null)
@@ -55,6 +58,7 @@ public class TicketSubscribeConvertor {
         dto.setAfterPrice(entity.getAfterPrice());
         dto.setBeforPrice(entity.getBeforPrice());
         dto.setDiscount(entity.getDiscount());
+        dto.setCreatorUser(UserConvertor.toDtoSimple(entity.getCreatorUser()));
         return dto;
     }
 

@@ -1,13 +1,12 @@
 package com.notrika.gympin.test.domain.home;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.notrika.gympin.common.home.dto.HomePageDestinationDto;
-import com.notrika.gympin.common.home.dto.HomePageItemDto;
-import com.notrika.gympin.common.home.dto.HomePageTypeDto;
-import com.notrika.gympin.common.home.enums.HomePageElementsEnum;
-import com.notrika.gympin.common.home.param.HomePageDestinationParam;
-import com.notrika.gympin.common.home.param.HomePageItemParam;
-import com.notrika.gympin.common.home.param.HomePageTypeParam;
+import com.notrika.gympin.common.pages.dto.PagesItemDto;
+import com.notrika.gympin.common.pages.dto.PagesTypeDto;
+import com.notrika.gympin.common.pages.enums.PagesDestinationsEnum;
+import com.notrika.gympin.common.pages.enums.PagesElementsEnum;
+import com.notrika.gympin.common.pages.param.PagesItemParam;
+import com.notrika.gympin.common.pages.param.PagesTypeParam;
 import com.notrika.gympin.common.util._base.base.ResponseModel;
 import com.notrika.gympin.test.domain.utils.BaseTest;
 import org.junit.jupiter.api.*;
@@ -25,21 +24,20 @@ public class homeTest extends BaseTest {
     public static Long itemId = null;
     public static Long subItemId = null;
     public static Long typeId = null;
-    public static Long destinationId = null;
 //    public static Long place2Id = null;
 
     @Test
     @Order(1)
     public void add() throws Exception {
-        final HomePageItemParam param = HomePageItemParam.builder()
+        final PagesItemParam param = PagesItemParam.builder()
                 .title("صفحه اصلی 2")
                 .build();
 
-        ResponseModel<HomePageItemDto> result = TestPost(
-                "/api/v1/homepage/add",
+        ResponseModel<PagesItemDto> result = TestPost(
+                "/api/v1/pages/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<HomePageItemDto>>() {
+                new TypeReference<ResponseModel<PagesItemDto>>() {
                 });
 
         Assertions.assertEquals(result.getData().getTitle(), "صفحه اصلی 2");
@@ -49,17 +47,17 @@ public class homeTest extends BaseTest {
     @Test
     @Order(2)
     public void addItem() throws Exception {
-        final HomePageItemParam param = HomePageItemParam.builder()
+        final PagesItemParam param = PagesItemParam.builder()
                 .title("لیست مطالب")
-                .parent(HomePageItemParam.builder().id(homeId).build())
+                .parent(PagesItemParam.builder().id(homeId).build())
                 .type("CONTENT_LIST")
                 .build();
 
-        ResponseModel<HomePageItemDto> result = TestPost(
-                "/api/v1/homepage/add",
+        ResponseModel<PagesItemDto> result = TestPost(
+                "/api/v1/pages/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<HomePageItemDto>>() {
+                new TypeReference<ResponseModel<PagesItemDto>>() {
                 });
 
         Assertions.assertEquals(result.getData().getTitle(), "لیست مطالب");
@@ -69,32 +67,32 @@ public class homeTest extends BaseTest {
     @Test
     @Order(3)
     public void addSubItem() throws Exception {
-        final HomePageItemParam param = HomePageItemParam.builder()
+        final PagesItemParam param = PagesItemParam.builder()
                 .title("تیتر مطلب")
                 .description("مطلب مطلب مطلب مطلب مطلب مطلب مطلب مطلب مطلب ")
-                .parent(HomePageItemParam.builder().id(itemId).build())
+                .parent(PagesItemParam.builder().id(itemId).build())
                 .type("CONTENT_LIST")
-                .destination(HomePageDestinationParam.builder().id(2l).build())
+                .destination(PagesDestinationsEnum.INNERBROWSER)
                 .data("1")
                 .build();
 
-        ResponseModel<HomePageItemDto> result = TestPost(
-                "/api/v1/homepage/add",
+        ResponseModel<PagesItemDto> result = TestPost(
+                "/api/v1/pages/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<HomePageItemDto>>() {
+                new TypeReference<ResponseModel<PagesItemDto>>() {
                 });
 
             param.setTitle("تیتر مطلب 2");
             param.setDescription("مطلب 2 مطلب 2 مطلب 2 مطلب 2 مطلب 2 مطلب 2 مطلب 2 مطلب 2 مطلب 2 مطلب 2 مطلب 2 مطلب 2");
-            param.setDestination(HomePageDestinationParam.builder().id(2l).build());
+            param.setDestination(PagesDestinationsEnum.INNERBROWSER);
             param.setData("1");
 
-        ResponseModel<HomePageItemDto> result2 = TestPost(
-                "/api/v1/homepage/add",
+        ResponseModel<PagesItemDto> result2 = TestPost(
+                "/api/v1/pages/add",
                 param,
                 true,
-                new TypeReference<ResponseModel<HomePageItemDto>>() {
+                new TypeReference<ResponseModel<PagesItemDto>>() {
                 });
 
         Assertions.assertEquals(result.getData().getTitle(), "تیتر مطلب");
@@ -108,21 +106,21 @@ public class homeTest extends BaseTest {
     @Order(4)
     public void update() throws Exception {
         if(subItemId==null) throw new Exception("is not exist");
-        final HomePageItemParam param = HomePageItemParam.builder()
+        final PagesItemParam param = PagesItemParam.builder()
                 .id(subItemId)
                 .title("تیتر مطلب جدید")
                 .description("مطلب مطلب مطلب مطلب مطلب مطلب مطلب مطلب مطلب ")
-                .parent(HomePageItemParam.builder().id(itemId).build())
+                .parent(PagesItemParam.builder().id(itemId).build())
                 .type("CONTENT_LIST")
-                .destination(HomePageDestinationParam.builder().id(2l).build())
+                .destination(PagesDestinationsEnum.INNERBROWSER)
                 .data("1")
                 .build();
 
-        ResponseModel<HomePageItemDto> result = TestPut(
-                "/api/v1/homepage/update",
+        ResponseModel<PagesItemDto> result = TestPut(
+                "/api/v1/pages/update",
                 param,
                 true,
-                new TypeReference<ResponseModel<HomePageItemDto>>() {});
+                new TypeReference<ResponseModel<PagesItemDto>>() {});
 
         Assertions.assertEquals(result.getData().getTitle(), "تیتر مطلب جدید");
     }
@@ -134,11 +132,11 @@ public class homeTest extends BaseTest {
         final Map<String, Object> param = new TreeMap<>();
         param.put("id", homeId);
 
-        ResponseModel<HomePageItemDto> result = TestGet(
-                "/api/v1/homepage/getById",
+        ResponseModel<PagesItemDto> result = TestGet(
+                "/api/v1/pages/getById",
                 param,
                 true,
-                new TypeReference<ResponseModel<HomePageItemDto>>() {
+                new TypeReference<ResponseModel<PagesItemDto>>() {
                 });
 
         Assertions.assertEquals(result.getData().getId(),homeId);
@@ -151,11 +149,11 @@ public class homeTest extends BaseTest {
         final Map<String, Object> param = new TreeMap<>();
         param.put("id", homeId);
 
-        ResponseModel<HomePageItemDto> result = TestGet(
-                "/api/v1/homepage/getHome",
+        ResponseModel<PagesItemDto> result = TestGet(
+                "/api/v1/pages/getHome",
                 param,
                 true,
-                new TypeReference<ResponseModel<HomePageItemDto>>() {
+                new TypeReference<ResponseModel<PagesItemDto>>() {
                 });
 
         Assertions.assertTrue(result.getData().getItems().stream().filter(o->!o.isDeleted()).findFirst().get().getItems().size()>0);
@@ -165,11 +163,11 @@ public class homeTest extends BaseTest {
     @Test
     @Order(7)
     public void getAll() throws Exception {
-        ResponseModel<List<HomePageItemDto>> result = TestGet(
-                "/api/v1/homepage/getAll",
+        ResponseModel<List<PagesItemDto>> result = TestGet(
+                "/api/v1/pages/getAll",
                 null,
                 true,
-                new TypeReference<ResponseModel<List<HomePageItemDto>>>() {
+                new TypeReference<ResponseModel<List<PagesItemDto>>>() {
                 });
 
         Assertions.assertTrue(result.getData().size()> 1);
@@ -179,19 +177,19 @@ public class homeTest extends BaseTest {
     @Test
     @Order(8)
     public void addType() throws Exception {
-        final HomePageTypeParam param = HomePageTypeParam.builder()
+        final PagesTypeParam param = PagesTypeParam.builder()
                 .name("نام تایپ")
-                .canBeParent(true)
+                .parent(null)
                 .description("توضیح")
                 .type("TestType")
-                .elements(List.of(HomePageElementsEnum.Description,HomePageElementsEnum.Title))
+                .elements(List.of(PagesElementsEnum.Description, PagesElementsEnum.Title))
                 .build();
 
-        ResponseModel<HomePageTypeDto> result = TestPost(
-                "/api/v1/homepage/addType",
+        ResponseModel<PagesTypeDto> result = TestPost(
+                "/api/v1/pages/addType",
                 param,
                 true,
-                new TypeReference<ResponseModel<HomePageTypeDto>>() {
+                new TypeReference<ResponseModel<PagesTypeDto>>() {
                 });
 
         Assertions.assertEquals(result.getData().getName(), "نام تایپ");
@@ -201,11 +199,11 @@ public class homeTest extends BaseTest {
     @Test
     @Order(9)
     public void getAllTypes() throws Exception {
-        ResponseModel<List<HomePageTypeDto>> result = TestGet(
-                "/api/v1/homepage/getAllTypes",
+        ResponseModel<List<PagesTypeDto>> result = TestGet(
+                "/api/v1/pages/getAllTypes",
                 null,
                 true,
-                new TypeReference<ResponseModel<List<HomePageTypeDto>>>() {
+                new TypeReference<ResponseModel<List<PagesTypeDto>>>() {
                 });
 
         Assertions.assertTrue(result.getData().size()> 1);
@@ -218,11 +216,11 @@ public class homeTest extends BaseTest {
         final Map<String, Object> param = new TreeMap<>();
         param.put("id", typeId.toString());
 
-        ResponseModel<HomePageTypeDto> result = TestPut(
-                "/api/v1/homepage/deleteType",
+        ResponseModel<PagesTypeDto> result = TestPut(
+                "/api/v1/pages/deleteType",
                 param,
                 true,
-                new TypeReference<ResponseModel<HomePageTypeDto>>() {
+                new TypeReference<ResponseModel<PagesTypeDto>>() {
                 });
 
         Assertions.assertEquals(result.isSuccess(), true);
@@ -230,56 +228,6 @@ public class homeTest extends BaseTest {
         Assertions.assertNotEquals(result.getData(), null);
     }
 
-    @Test
-    @Order(11)
-    public void addDestination() throws Exception {
-        final HomePageDestinationParam param = HomePageDestinationParam.builder()
-                .name("نام مقصد")
-                .description("توضیح")
-                .build();
-
-        ResponseModel<HomePageDestinationDto> result = TestPost(
-                "/api/v1/homepage/addDestination",
-                param,
-                true,
-                new TypeReference<ResponseModel<HomePageDestinationDto>>() {
-                });
-
-        Assertions.assertEquals(result.getData().getName(), "نام مقصد");
-        destinationId = result.getData().getId();
-    }
-
-    @Test
-    @Order(12)
-    public void getAllDestinations() throws Exception {
-        ResponseModel<List<HomePageDestinationDto>> result = TestGet(
-                "/api/v1/homepage/getAllDestinations",
-                null,
-                true,
-                new TypeReference<ResponseModel<List<HomePageDestinationDto>>>() {
-                });
-
-        Assertions.assertTrue(result.getData().size()> 1);
-    }
-
-    @Test
-    @Order(13)
-    public void deleteDestination() throws Exception {
-        if(destinationId==null) throw new Exception("is not exist");
-        final Map<String, Object> param = new TreeMap<>();
-        param.put("id", destinationId.toString());
-
-        ResponseModel<HomePageDestinationDto> result = TestPut(
-                "/api/v1/homepage/deleteDestination",
-                param,
-                true,
-                new TypeReference<ResponseModel<HomePageDestinationDto>>() {
-                });
-
-        Assertions.assertEquals(result.isSuccess(), true);
-        Assertions.assertEquals(result.getError(), null);
-        Assertions.assertNotEquals(result.getData(), null);
-    }
 
     @Test
     @Order(14)
@@ -288,11 +236,11 @@ public class homeTest extends BaseTest {
         final Map<String, Object> param = new TreeMap<>();
         param.put("id", subItemId.toString());
 
-        ResponseModel<HomePageItemDto> result = TestPut(
-                "/api/v1/homepage/delete",
+        ResponseModel<PagesItemDto> result = TestPut(
+                "/api/v1/pages/delete",
                 param,
                 true,
-                new TypeReference<ResponseModel<HomePageItemDto>>() {
+                new TypeReference<ResponseModel<PagesItemDto>>() {
                 });
 
         Assertions.assertEquals(result.isSuccess(), true);

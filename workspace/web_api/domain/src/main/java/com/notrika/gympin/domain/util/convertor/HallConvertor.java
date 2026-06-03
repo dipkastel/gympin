@@ -2,10 +2,10 @@ package com.notrika.gympin.domain.util.convertor;
 
 import com.notrika.gympin.common.ticket.common.param.ActiveTimesParam;
 import com.notrika.gympin.common.settings.context.GympinContext;
-import com.notrika.gympin.common.place.hall.dto.HallDto;
+import com.notrika.gympin.common.place.parts.hall.dto.HallDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
-import com.notrika.gympin.common.place.hall.dto.HallTrafficDto;
-import com.notrika.gympin.common.place.hall.param.HallParam;
+import com.notrika.gympin.common.place.parts.hall.dto.HallTrafficDto;
+import com.notrika.gympin.common.place.parts.hall.param.HallParam;
 import com.notrika.gympin.domain.place.PlaceGymServiceImpl;
 import com.notrika.gympin.persistence.entity.place.hall.HallEntity;
 import com.notrika.gympin.persistence.entity.ticket.common.TicketHallActiveTimeEntity;

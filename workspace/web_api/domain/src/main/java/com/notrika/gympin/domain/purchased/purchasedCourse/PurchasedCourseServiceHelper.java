@@ -1,6 +1,6 @@
 package com.notrika.gympin.domain.purchased.purchasedCourse;
 
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.purchased.purchasedCourse.enums.CourseEntryStatus;
 import com.notrika.gympin.common.settings.context.GympinContext;
 import com.notrika.gympin.common.settings.context.GympinContextHolder;

@@ -11,7 +11,8 @@ const _InvoiceEmptyTransaction = () => {
             justifyContent={"center"}
             alignItems={"center"}
         >
-            <Image src={toAbsoluteUrl("/assets/images/noTransfer.png")} width={"40%"}  style={{maxWidth: "300px"}} />
+            <Image
+                loading={"lazy"} src={toAbsoluteUrl("/assets/images/noTransfer.png")} width={"40%"}  style={{maxWidth: "300px"}} />
             <Typography variant={"body1"} sx={{m: 2}}>
                 تراکنشی وجود ندارد
             </Typography>

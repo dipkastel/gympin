@@ -1,13 +1,13 @@
 package com.notrika.gympin.controller.impl.place;
 
-import com.notrika.gympin.common.place.personnel.api.PlacePersonnelController;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelAccessDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelBuyableAccessDto;
-import com.notrika.gympin.common.place.personnel.dto.PlacePersonnelDto;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelAccessParam;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelBuyableAccessParam;
-import com.notrika.gympin.common.place.personnel.param.PlacePersonnelParam;
-import com.notrika.gympin.common.place.personnel.service.PlacePersonnelService;
+import com.notrika.gympin.common.place.parts.personnel.api.PlacePersonnelController;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelAccessDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelBuyableAccessDto;
+import com.notrika.gympin.common.place.parts.personnel.dto.PlacePersonnelDto;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelAccessParam;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelBuyableAccessParam;
+import com.notrika.gympin.common.place.parts.personnel.param.PlacePersonnelParam;
+import com.notrika.gympin.common.place.parts.personnel.service.PlacePersonnelService;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
@@ -100,6 +100,12 @@ public class PlacePersonnelControllerImpl implements PlacePersonnelController {
     @PostMapping("updatePersonnelCommissionFee")
     public ResponseEntity<PlacePersonnelDto> updatePersonnelCommissionFee(@RequestBody PlacePersonnelParam param) {
         return new ResponseEntity<>(placePersonnelService.updatePersonnelCommissionFee(param), HttpStatus.OK);
+    }
+
+    @Override
+    @PostMapping("updatePersonnelGetSms")
+    public ResponseEntity<PlacePersonnelDto> updatePersonnelGetSms(@RequestBody PlacePersonnelParam param) {
+        return new ResponseEntity<>(placePersonnelService.updatePersonnelGetSms(param), HttpStatus.OK);
     }
 
     @Override

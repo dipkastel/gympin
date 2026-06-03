@@ -1,7 +1,7 @@
 package com.notrika.gympin.common.user.user.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.notrika.gympin.common.place.personnel.enums.PlacePersonnelRoleEnum;
+import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.*;

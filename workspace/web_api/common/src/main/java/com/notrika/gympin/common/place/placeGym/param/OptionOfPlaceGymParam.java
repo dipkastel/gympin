@@ -2,7 +2,7 @@ package com.notrika.gympin.common.place.placeGym.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.util._base.param.BaseParam;
-import com.notrika.gympin.common.place.option.param.PlaceOptionParam;
+import com.notrika.gympin.common.place.parts.option.param.PlaceOptionParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

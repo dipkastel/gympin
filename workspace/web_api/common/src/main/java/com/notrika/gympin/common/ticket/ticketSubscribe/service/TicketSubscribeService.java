@@ -1,6 +1,6 @@
 package com.notrika.gympin.common.ticket.ticketSubscribe.service;
 
-import com.notrika.gympin.common.place.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeCoachParam;
@@ -19,6 +19,7 @@ public interface TicketSubscribeService extends BaseService<TicketSubscribeParam
 
     List<TicketSubscribeDto> getTicketSubscribeByPlace(PlaceGymParam place);
     List<TicketDiscountHistoryDto> getTicketSubscribeDiscountHistory(Long ticketSubscribeId);
+    List<TicketDiscountHistoryDto> getTicketSubscribeDiscountHistoryByUser(Long ticketSubscribeId);
     TicketSubscribeDto ChangeTicketSubscribeStatus(TicketSubscribeParam ticketSubscribeParam);
 
     //sport

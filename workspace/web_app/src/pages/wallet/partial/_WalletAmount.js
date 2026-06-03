@@ -107,6 +107,14 @@ const _WalletAmount = () => {
                         <Typography variant={"body2"}>
                             *این اعتبار در هرزمان، بنابر صلاحدید شرکت مربوطه، قابل کسر یا مسدود شدن می باشد.
                         </Typography></>}
+                    {selectedCredit?.Corporate?.ContractType=="GOLD"&&<>
+                        <Typography variant={"subtitle1"}>
+                            اعتبار سازمانی گلد بالاترین نوع اعتبار در جیم پین میباشد. قبل از خرید بلیط قوانین شرکت را جویا شوید.
+                        </Typography>
+                        <Divider variant="inset" sx={{mx:0,my:1, width: "100%"}} component="div"/>
+                        <Typography variant={"body2"}>
+                            *این اعتبار در هرزمان، بنابر صلاحدید شرکت مربوطه، قابل کسر یا مسدود شدن می باشد.
+                        </Typography></>}
                 </DialogContent>
             </Dialog>
         </>)

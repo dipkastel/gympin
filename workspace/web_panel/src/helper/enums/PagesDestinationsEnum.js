@@ -1,0 +1,4 @@
+
+export const PagesDestinationsEnum = {
+    INNERBROWSER:"INNERBROWSER", OUTERBROWSER:"OUTERBROWSER", PAGE:"PAGE"
+}
