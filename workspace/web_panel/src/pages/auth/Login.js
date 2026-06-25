@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {Formik} from "formik";
 import {connect} from "react-redux";
 import {FormattedMessage, injectIntl} from "react-intl";
-import { IconButton, InputAdornment, TextField, Typography,} from "@mui/material";
+import {IconButton, InputAdornment, TextField, Typography,} from "@mui/material";
 import clsx from "clsx";
 import {account_login, account_sendSms} from "../../network/api/auth.api";
 import SendToMobileIcon from "@mui/icons-material/SendToMobile";

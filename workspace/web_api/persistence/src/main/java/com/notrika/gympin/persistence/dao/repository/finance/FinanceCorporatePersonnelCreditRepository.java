@@ -24,7 +24,7 @@ public interface FinanceCorporatePersonnelCreditRepository extends BaseRepositor
             "where fcpce.corporatePersonnel.deleted = false " +
             "and fcpce.status = 'ACTIVE' " +
             "and fcpce.deleted = false " +
-            "and fcpce.ExpireDate < current_date ")
+            "and fcpce.ExpireDate < CURRENT_TIMESTAMP ")
     List<FinanceCorporatePersonnelCreditEntity> getExpireCredits();
 
 }

@@ -46,7 +46,7 @@ public class schedulePeymentCheck {
     CalculatePaymentsServiceImpl calculatePeymentsService;
 
     public void checkUserPendingPayments() {
-        log.error("Going to checkPendingPayments\n");
+        log.debug("Going to checkPendingPayments\n");
         List<FinanceSerialEntity> pendingSerial = financeSerialRepository.findAllUserPendingPayments(GatewayType.BANK_PORTAL, DepositStatus.BANK_PENDING)
                 .stream().filter(p->{
             long diffMillis = new Date().getTime() - p.getCreatedDate().getTime();

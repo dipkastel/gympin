@@ -22,7 +22,6 @@ import __SelectCorporate from "../../../partials/selector/__SelectCorporate";
 import __SelectUser from "../../../partials/selector/__SelectUser";
 import {GiftCredit_update} from "../../../../network/api/GiftCredits.api";
 import Select from "react-select";
-import {UserSettingKeys} from "../../../../helper/enums/UserSettingKeys";
 import {GiftCreditStatus} from "../../../../helper/enums/GiftCreditStatus";
 
 const _GiftEditItem = ({item, reloadList}) => {

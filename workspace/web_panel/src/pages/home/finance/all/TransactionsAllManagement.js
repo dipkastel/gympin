@@ -9,7 +9,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import {transactionAll_query} from "../../../../network/api/transactionsAll.api";
-import {getUserFixedName, toPriceWithComma} from "../../../../helper";
+import {toPriceWithComma} from "../../../../helper";
 import {TransactionStatus} from "../../../../helper/enums/TransactionStatus";
 import {TransactionBaseTypes} from "../../../../helper/enums/TransactionBaseTypes";
 import {getRppTransactionAllManagement, SetRppTransactionAllManagement} from "../../../../helper/pocket/pocket";

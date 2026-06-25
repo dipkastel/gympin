@@ -8,8 +8,10 @@ import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.domain.util.convertor.ReportConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
+import com.notrika.gympin.persistence.dao.repository.settings.ManageLinkRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageServiceExecutionRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.management.links.ManageLinkEntity;
 import com.notrika.gympin.persistence.entity.management.service.reportDto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,8 @@ public class ReportServiceImpl implements ReportService {
     CorporateRepository corporateRepository;
     @Autowired
     ManageServiceExecutionRepository reportRepository;
+    @Autowired
+    ManageLinkRepository manageLinkRepository;
     @Autowired
     AiReportHelper aiReportHelper;
 
@@ -130,5 +134,14 @@ public class ReportServiceImpl implements ReportService {
         Long enterCount = reportRepository.getCorporateUserEnterCount(corporate.getId(),startDate);
         List<ReportUserEntryCountDto> actives =  getActiveInEnterPlacePersonnel(ReportParam.builder().id(corporate.getId()).build());
        return aiReportHelper.getAiReport(corporate,sum,gender,popularSports,enterCount,actives);
+    }
+
+    @Override
+    public List<ReportPlaceViewsDto> getLinkViewsReport(Long linkId){
+        ManageLinkEntity link = manageLinkRepository.getById(linkId);
+        List<PlaceViewsDto> listViews =  reportRepository.getExecutionGroupByDateReport(
+                "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.settings.links.dto.LinkDto> com.notrika.gympin.controller.impl.settings.link.LinkControllerImpl.getByCode(java.lang.String)",
+                "[\""+link.getCode()+"\"]",null,null);
+        return listViews.stream().map(ReportConvertor::toDto).collect(Collectors.toList());
     }
 }

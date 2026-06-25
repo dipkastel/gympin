@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GymApi, TicketFoodApi} from "./const_api";
+import {TicketFoodApi} from "./const_api";
 
 export function TicketFoods_getAll() {
     return axios.get(TicketFoodApi.getAll);

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
-import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
+import {toPriceWithComma} from "../../../../../helper";
 import {TransactionStatus} from "../../../../../helper/enums/TransactionStatus";
 import {Portlet, PortletBody, PortletHeader} from "../../../../partials/content/Portlet";
 import PopoverUser from "../../../../../components/popover/PopoverUser";

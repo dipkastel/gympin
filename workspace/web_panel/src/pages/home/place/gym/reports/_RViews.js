@@ -1,9 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import BaseReportBox, {LoadStatus} from "../../../../../components/BaseReportBox";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {toPriceWithComma} from "../../../../../helper";
 import {Report_getPlaceViews} from "../../../../../network/api/report.api";
-import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from "recharts";
+import {Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts";
 
 const _RViews = ({place,updatePlace}) => {
 

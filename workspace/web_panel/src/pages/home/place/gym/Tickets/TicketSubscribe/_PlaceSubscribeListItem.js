@@ -20,11 +20,11 @@ import {
     Typography
 } from "@mui/material";
 import {
-    AddTask,
     DeleteRounded,
     ExpandLess,
     ExpandMore,
-    InfoRounded, Percent,
+    InfoRounded,
+    Percent,
     RadioButtonChecked,
     SupervisorAccountOutlined
 } from "@mui/icons-material";

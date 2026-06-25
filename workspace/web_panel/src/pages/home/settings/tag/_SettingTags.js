@@ -3,7 +3,6 @@ import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import {getRppPhoneBook, SetRppPhoneBook} from "../../../../helper/pocket/pocket";
 import {note_delete} from "../../../../network/api/note.api";
-import {getUserFixedName} from "../../../../helper";
 import {Modal, Table} from "react-bootstrap";
 import {Button, IconButton, TextField} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";

@@ -1,7 +1,7 @@
 package com.notrika.gympin.persistence.dao.repository.settings;
 
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
-import com.notrika.gympin.persistence.entity.management.service.*;
+import com.notrika.gympin.persistence.entity.management.service.ManageServiceExecutionEntity;
 import com.notrika.gympin.persistence.entity.management.service.reportDto.*;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,11 +17,11 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
 //    void forceDelete(long i);
 
 
-   @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.ManageServiceExecutionSimpleDto(Max(m.id), m.executorUser ,max(m.createdDate) ,max(m.executionDate)) FROM ManageServiceExecutionEntity m WHERE m.executionDate BETWEEN :#{#fromDate} AND :#{#toDate} AND m.executorUser.id IS NOT NULL GROUP BY m.executorUser.id ORDER BY MAX(m.id) Desc")
-   List<ManageServiceExecutionSimpleDto> getFastUsersActive(Date fromDate, Date toDate);
+    @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.ManageServiceExecutionSimpleDto(Max(m.id), m.executorUser ,max(m.createdDate) ,max(m.executionDate)) FROM ManageServiceExecutionEntity m WHERE m.executionDate BETWEEN :#{#fromDate} AND :#{#toDate} AND m.executorUser.id IS NOT NULL GROUP BY m.executorUser.id ORDER BY MAX(m.id) Desc")
+    List<ManageServiceExecutionSimpleDto> getFastUsersActive(Date fromDate, Date toDate);
 
-   @Query("SELECT  n.executorUser.id FROM ManageServiceExecutionEntity n JOIN CorporatePersonnelEntity cp on cp.user.id = n.executorUser.id  WHERE cp.corporate.id = :#{#corporateId} AND n.executorUser.id IS NOT NULL  AND n.executionDate > :#{#fromDate} GROUP BY n.executorUser.id")
-    List<Long> getActiveUsersByCorporate(Date fromDate,Long corporateId);
+    @Query("SELECT  n.executorUser.id FROM ManageServiceExecutionEntity n JOIN CorporatePersonnelEntity cp on cp.user.id = n.executorUser.id  WHERE cp.corporate.id = :#{#corporateId} AND n.executorUser.id IS NOT NULL  AND n.executionDate > :#{#fromDate} GROUP BY n.executorUser.id")
+    List<Long> getActiveUsersByCorporate(Date fromDate, Long corporateId);
 
     @Query(value = "SELECT Pmonth(ft.create_date)+(pyear(ft.create_date)*100) as ym , CONCAT(pyear(MIN(ft.create_date)),\" \",pmonthname(MIN(ft.create_date))) as monthName,SUM(ft.amount) as amount FROM finance_corporate_transaction fct LEFT JOIN finance_transaction ft ON ft.id = fct.id join invoice inv on fct.serial_id = inv.serial_id WHERE inv.status like 'COMPLETED' AND fct.type = 'DEPOSIT' AND ft.amount < 0 AND fct.finance_corporate_id = :financeCorporateId GROUP BY ym", nativeQuery = true)
     List<Object[]> getReportUseCorporateCharge(Long financeCorporateId);
@@ -89,16 +89,16 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
     List<FinanceCorporateDepositReportDto> getFinanceTransactions(Long corporateId, Date startDate);
 
 
- @Query(value = "SELECT COUNT(*) " +
-         "FROM PurchasedSubscribeEntryEntity pse " +
-         "JOIN pse.purchasedSubscribe ps " +
-         "JOIN ps.Serials se " +
-         "JOIN InvoiceEntity i ON i.serial.id = se.id " +
-         "JOIN FinanceCorporatePersonnelCreditTransactionEntity fcpct ON fcpct.serial.id = i.serial.id " +
-         "JOIN FinanceCorporatePersonnelCreditEntity fcpc ON fcpc.id = fcpct.personnelCredit.id " +
-         "JOIN CorporatePersonnelEntity cp ON cp.id = fcpc.corporatePersonnel.id " +
-         "WHERE cp.corporate.id = :corporateId " +
-         "AND pse.createdDate >= :startDate ")
+    @Query(value = "SELECT COUNT(*) " +
+            "FROM PurchasedSubscribeEntryEntity pse " +
+            "JOIN pse.purchasedSubscribe ps " +
+            "JOIN ps.Serials se " +
+            "JOIN InvoiceEntity i ON i.serial.id = se.id " +
+            "JOIN FinanceCorporatePersonnelCreditTransactionEntity fcpct ON fcpct.serial.id = i.serial.id " +
+            "JOIN FinanceCorporatePersonnelCreditEntity fcpc ON fcpc.id = fcpct.personnelCredit.id " +
+            "JOIN CorporatePersonnelEntity cp ON cp.id = fcpc.corporatePersonnel.id " +
+            "WHERE cp.corporate.id = :corporateId " +
+            "AND pse.createdDate >= :startDate ")
     Long getCorporateUserEnterCount(Long corporateId, Date startDate);
 
     @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PlaceViewsDto( COUNT(*), MAX(mse.executionDate)) " +
@@ -107,9 +107,12 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
             "  AND mse.dto LIKE CONCAT('{\"id\":', :placeId, ',%') " +
             "  AND mse.executionDate > :startDate " +
             "  AND mse.executionDate < :endDate " +
-            "GROUP BY DATE(mse.executionDate) " +
-            "ORDER BY DATE(mse.executionDate) ASC")
+            " GROUP BY DATE(mse.executionDate) " +
+            " ORDER BY DATE(mse.executionDate) ASC")
     List<PlaceViewsDto> getPlaceViewsReport(Long placeId, Date startDate, Date endDate);
+
+    @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PlaceViewsDto( COUNT(*), DATE(mse.executionDate)) FROM ManageServiceExecutionEntity mse WHERE (:service IS NULL OR mse.service LIKE :service) AND (:param IS NULL OR mse.param LIKE %:param%) AND (:startDate IS NULL OR mse.executionDate > :startDate) AND (:endDate IS NULL OR mse.executionDate < :endDate) GROUP BY DATE(mse.executionDate) ORDER BY DATE(mse.executionDate) ASC ")
+    List<PlaceViewsDto> getExecutionGroupByDateReport(String service, String param, Date startDate, Date endDate);
 }
 
 

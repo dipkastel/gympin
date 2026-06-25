@@ -7,6 +7,7 @@ import com.notrika.gympin.common.place.placeBase.query.PlaceQuery;
 import com.notrika.gympin.common.place.placeBase.service.PlaceService;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
+import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 import com.notrika.gympin.common.user.user.dto.InviteCode;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
@@ -86,6 +87,12 @@ public class PlaceControllerImpl implements PlaceController {
     @GetMapping("/getBuyableByPlace")
     public ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceParam placeParam) {
         return new ResponseEntity<>(placeService.getBuyableByPlace(placeParam), HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/getPlacesByTicketUpdatesDate")
+    public ResponseEntity<List<PlaceDto>> getPlacesByTicketUpdatesDate() {
+        return ResponseEntity.ok(placeService.getPlacesByTicketUpdatesDate());
     }
 
 

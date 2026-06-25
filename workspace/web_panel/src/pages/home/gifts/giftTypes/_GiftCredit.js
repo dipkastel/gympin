@@ -11,7 +11,7 @@ import {InsertLink} from "@mui/icons-material";
 import {GiftCredit_query} from "../../../../network/api/GiftCredits.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import TablePagination from "@mui/material/TablePagination";
-import {getCorporateFixedName, getUserFixedName, toPriceWithComma} from "../../../../helper";
+import {getCorporateFixedName, toPriceWithComma} from "../../../../helper";
 import _GiftAddItem from "../partials/_GiftAddItem";
 import _GiftEditItem from "../partials/_GiftEditItem";
 import _GiftDeleteItem from "../partials/_GiftDeleteItem";

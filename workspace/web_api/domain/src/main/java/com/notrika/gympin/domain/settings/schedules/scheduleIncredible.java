@@ -48,10 +48,15 @@ public class scheduleIncredible {
     public void Deactive() {
         List<TicketSubscribeEntity> currentIncredibles = ticketSubscribeRepository.findAllByStartIncredibleIsNotNullAndDeletedIsFalse();
         ticketsToUpdate = new ArrayList<>();
+        historyToAdd = new ArrayList<>();
         checkForDeactive(currentIncredibles);
         if(ticketsToUpdate.size()>0){
             ticketSubscribeRepository.updateAll(ticketsToUpdate);
             ticketsToUpdate.clear();
+        }
+        if(historyToAdd.size()>0){
+            ticketDiscountHistoryRepository.addAll(historyToAdd);
+            historyToAdd.clear();
         }
     }
     public void Active() {

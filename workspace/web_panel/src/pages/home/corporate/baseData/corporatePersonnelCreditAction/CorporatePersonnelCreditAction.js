@@ -6,6 +6,9 @@ import {corporate_getCorporateGroups} from "../../../../../network/api/corporate
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 import {Modal} from "react-bootstrap";
 import {corporatePersonnel_addCreditToAll} from "../../../../../network/api/CorporatePersonnel.api";
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import {AdapterDateFnsJalali} from "@mui/x-date-pickers/AdapterDateFnsJalali";
+import {DatePicker} from "@mui/x-date-pickers";
 
 export default function CorporatePersonnelCreditAction({currentCorporate, pUpdatePage}) {
     const error = useContext(ErrorContext);
@@ -113,6 +116,16 @@ export default function CorporatePersonnelCreditAction({currentCorporate, pUpdat
 
                 <FormControl fullWidth>
                     <TextField
+                        label="نام اعتبار"
+                        className="textField"
+                        value={values}
+                        onChange={(e) => setValues(toPriceWithComma(e.target.value))}
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </FormControl>
+                <FormControl fullWidth>
+                    <TextField
                         label="مبلغ افزایش برای هر کاربر"
                         className="textField"
                         value={values}
@@ -122,6 +135,15 @@ export default function CorporatePersonnelCreditAction({currentCorporate, pUpdat
                     />
                 </FormControl>
 
+                <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                    <DatePicker
+                        className="ltr mt-4 mb-2 w-100"
+                        label="تاریخ انقضا"
+                        value={new Date(values.Birthday||"")}
+                        onChange={(e)=>setValues("Birthday")}
+                        renderInput={(params) => <TextField fullWidth {...params} />}
+                    />
+                </LocalizationProvider>
 
             </PortletBody>
             <PortletFooter>

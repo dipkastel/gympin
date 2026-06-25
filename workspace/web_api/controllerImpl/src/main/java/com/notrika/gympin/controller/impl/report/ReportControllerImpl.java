@@ -70,6 +70,11 @@ public class ReportControllerImpl implements ReportController {
     public ResponseEntity<List<ReportPlaceViewsDto>> getPlaceViewsReport(ReportPlaceViewsParam param) {
         return ResponseEntity.ok(reportService.getPlaceViewsReport(param));
     }
+    @Override
+    @GetMapping("getLinkViews")
+    public ResponseEntity<List<ReportPlaceViewsDto>> getLinkViewsReport(Long id) {
+        return ResponseEntity.ok(reportService.getLinkViewsReport(id));
+    }
 
     @Override
     @GetMapping("getAiReport")

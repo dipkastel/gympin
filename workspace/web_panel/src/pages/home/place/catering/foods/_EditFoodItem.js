@@ -1,21 +1,8 @@
-import React, {useContext, useState} from 'react';
-import {
-    Button,
-    Checkbox,
-    FormControlLabel,
-    FormGroup,
-    Grid, IconButton,
-    ImageList,
-    ImageListItem,
-    ImageListItemBar,
-    Switch,
-    TextField
-} from "@mui/material";
+import React, {useContext} from 'react';
+import {Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField} from "@mui/material";
 import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
 import {TicketFoods_update} from "../../../../../network/api/TicketFoods.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import {Portlet, PortletBody, PortletFooter, PortletHeader} from "../../../../partials/content/Portlet";
-import DeleteIcon from "@mui/icons-material/Delete";
 import _FoodItemEditImage from "./_FoodItemEditImage";
 import {Modal} from "react-bootstrap";
 

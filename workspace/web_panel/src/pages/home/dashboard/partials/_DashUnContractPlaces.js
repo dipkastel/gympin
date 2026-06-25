@@ -11,7 +11,7 @@ import {useHistory} from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {AssignmentTurnedIn, Message} from "@mui/icons-material";
+import {AssignmentTurnedIn} from "@mui/icons-material";
 import {PlaceGym_query} from "../../../../network/api/placeGym.api";
 
 const _DashUncontractPlaces = () => {

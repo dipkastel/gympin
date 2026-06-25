@@ -3,16 +3,14 @@ import {useParams} from "react-router-dom";
 import Notice from "../../../partials/content/Notice";
 import {Support_addMessage, Support_getById, Support_update} from "../../../../network/api/support.api";
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Button, Card, Checkbox, FormControlLabel, FormGroup, Grid, IconButton, List, TextField, Typography} from "@mui/material";
-import {Alert, Form} from "react-bootstrap";
-import {Row} from "reactstrap";
-import {getUserFixedName} from "../../../../helper";
+import {Alert, Avatar, Card, Checkbox, FormControlLabel, FormGroup, Grid, List, TextField, Typography} from "@mui/material";
+import {Form} from "react-bootstrap";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import PopoverUser from "../../../../components/popover/PopoverUser";
 import Select from "react-select";
 import {SupportStatus} from "../../../../helper/enums/SupportStatus";
-import {EditNote} from "@mui/icons-material";
 import _EditSupportTicket from "./_EditSupportTicket";
+import _DeliverySupportTicket from "./_DeliverySupportTicket";
 
 const SupportTicketDetails = () => {
     const error = useContext(ErrorContext);
@@ -78,7 +76,7 @@ const SupportTicketDetails = () => {
     }
 
     function setStatusOptions(value) {
-        Support_update({...support,Status:value})
+        Support_update({...support, Status: value})
             .then(result => {
                 error.showError({message: "عملیات موفق",});
                 getSupportDetail()
@@ -184,33 +182,51 @@ const SupportTicketDetails = () => {
                         {Messages.map(item => (
 
                             item.IsAnswer ?
-                                (<Row><Alert key={item.Id} variant={"info"} className={"m-2  d-block"}>
-                                    <Typography variant={"h6"} component={"p"}>{item.Message}</Typography>
-
-
-                                    <Typography
-                                        variant={"caption"}
-                                        component={"p"}>{getUserFixedName(item.CreatorUser) + " - " + new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: "2-digit",
-                                        minute: "2-digit"
-                                    })}<_EditSupportTicket message={item} reloadList={getSupportDetail} /></Typography>
-                                </Alert></Row>)
+                                (<Grid container spacing={1}>
+                                    <Grid direction={"row"} justifyItems={"center"}>
+                                        <Avatar src={item?.CreatorUser?.Avatar?.Url}/>
+                                        {item?.CreatorUser?.FullName || "بدون نام"}
+                                    </Grid>
+                                    <Grid direction={"row"}>
+                                        <Alert key={item.Id} variant={"filled"} severity={"info"} icon={false}>
+                                            <Typography variant={"h6"} component={"p"}>{item.Message}</Typography>
+                                            <_EditSupportTicket message={item} reloadList={getSupportDetail}/>
+                                            <_DeliverySupportTicket message={item} />
+                                        </Alert>
+                                        <Typography
+                                            variant={"caption"}
+                                            component={"p"}>{new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                            hour: "2-digit",
+                                            minute: "2-digit"
+                                        })}
+                                        </Typography>
+                                    </Grid></Grid>)
                                 :
-                                (<Row className={"ltr"}><Alert key={item.Id} variant={"warning"} className={"m-2 d-block "}>
-                                    <Typography variant={"h6"} component={"p"}>{item.Message}</Typography>
-                                    <Typography
-                                        variant={"caption"}
-                                        component={"p"}>{getUserFixedName(item.CreatorUser) + " - " + new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: "2-digit",
-                                        minute: "2-digit"
-                                    })}<_EditSupportTicket message={item} reloadList={getSupportDetail} /></Typography>
-                                </Alert></Row>)
+                                (<Grid container spacing={1} className={"ltr"}>
+                                    <Grid direction={"row"} justifyItems={"center"}>
+                                        <Avatar src={item?.CreatorUser?.Avatar?.Url}/>
+                                        {item?.CreatorUser?.FullName || "بدون نام"}
+                                    </Grid>
+                                    <Grid direction={"row"}>
+                                        <Alert key={item.Id} variant={"filled"} severity={"warning"} icon={false}>
+                                            <Typography variant={"h6"} component={"p"}>{item.Message}</Typography>
+                                            <_EditSupportTicket message={item} reloadList={getSupportDetail}/>
+                                            <_DeliverySupportTicket message={item} />
+                                        </Alert>
+                                        <Typography
+                                            variant={"caption"}
+                                            component={"p"}>{new Date(item.CreatedDate).toLocaleDateString('fa-IR', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                            hour: "2-digit",
+                                            minute: "2-digit"
+                                        })}</Typography>
+                                    </Grid>
+                                </Grid>)
                         ))}
                     </List>
                 </PortletBody>

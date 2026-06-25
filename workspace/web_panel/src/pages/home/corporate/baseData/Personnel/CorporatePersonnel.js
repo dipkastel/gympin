@@ -1,24 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Form, Modal} from "react-bootstrap";
-import {Avatar, Button, Checkbox, FormControlLabel, TableCell, TextField, Tooltip} from "@mui/material";
+import {Avatar, Button, TableCell, TextField, Tooltip} from "@mui/material";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
 import AddIcon from "@mui/icons-material/Add";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-import {
-    corporate_query,
-    corporatePersonnel_add,
-    corporatePersonnel_addList,
-    corporatePersonnel_delete
-} from "../../../../../network/api/CorporatePersonnel.api";
+import {corporate_query, corporatePersonnel_add, corporatePersonnel_delete} from "../../../../../network/api/CorporatePersonnel.api";
 import {useHistory} from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {toPriceWithComma} from "../../../../../helper";
-import {ListAlt} from "@mui/icons-material";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppCorporatePersonnel, SetRppCorporatePersonnel} from "../../../../../helper/pocket/pocket";
 import _AddPersonelByList from "./_AddPersonelByList";

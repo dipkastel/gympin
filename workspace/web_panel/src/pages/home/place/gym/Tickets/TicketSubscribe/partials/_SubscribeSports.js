@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Chip, Dialog, DialogContent, DialogTitle, Typography} from "@mui/material";
-import {useSelector} from "react-redux";
 import {DriveFileRenameOutline} from "@mui/icons-material";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
 import {placeSport_getSportsByPlace} from "../../../../../../../network/api/placeSport.api";

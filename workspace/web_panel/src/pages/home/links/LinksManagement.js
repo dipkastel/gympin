@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import Notice from "../../partials/content/Notice";
 import {useHistory, useParams} from "react-router-dom";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
-import {Button, FormControlLabel, FormGroup, FormLabel, IconButton, Switch, TextField} from "@mui/material";
+import {Button, FormControlLabel, FormGroup, IconButton, Switch, TextField, Tooltip} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import TableContainer from "@mui/material/TableContainer";
 import {Form, Modal, Table} from "react-bootstrap";
@@ -14,8 +14,8 @@ import TablePagination from "@mui/material/TablePagination";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {getRppLinkManagement, SetRppLinkManagement} from "../../../helper/pocket/pocket";
 import {Link_add, Link_query, Link_update} from "../../../network/api/link.api";
-import {Edit, InsertLink} from "@mui/icons-material";
-import {placeAbout_update} from "../../../network/api/placeAbout.api";
+import {BubbleChart, Edit, InsertLink} from "@mui/icons-material";
+import _LinkViewsModal from "./_LinkViewsModal";
 
 export default function LinksManagement() {
     const error = useContext(ErrorContext);
@@ -27,6 +27,7 @@ export default function LinksManagement() {
     const [links, SetLinks] = useState([]);
     const [openModalAdd, SetOpenModalAdd] = useState(false);
     const [itemToEdit, SetItemToEdit] = useState(null);
+    const [selectedLinkViews, SetSelectedLinkViews] = useState(null);
 
 
     useEffect(() => {
@@ -380,7 +381,11 @@ export default function LinksManagement() {
                                     <TableCell component="th" align="right">
                                         {row.Code}
                                     </TableCell>
-                                    <TableCell component="th" align="right">{row.Url}</TableCell>
+                                    <TableCell component="th" align="right">
+                                        <Tooltip title={row.Url} placement="top">
+                                            {row.Url.substring(0,20)}
+                                        </Tooltip>
+                                    </TableCell>
                                     <TableCell component="th" align="right">{row.Value1}</TableCell>
                                     <TableCell component="th" align="right">{row.Value2}</TableCell>
                                     <TableCell component="th" align="right">{row.Value3}</TableCell>
@@ -388,6 +393,7 @@ export default function LinksManagement() {
                                     <TableCell component="th" align="left">
                                         <IconButton size={"small"} color={"success"} onClick={()=>copyToClipboard(row)}><InsertLink/></IconButton>
                                         <IconButton size={"small"} color={"primary"} onClick={(e)=>SetItemToEdit(row)}><Edit/></IconButton>
+                                        <IconButton size={"small"} color={"primary"} onClick={(e)=>SetSelectedLinkViews(row.Id)}><BubbleChart/></IconButton>
                                     </TableCell>
                                 </TableRow>
                             ))
@@ -417,6 +423,8 @@ export default function LinksManagement() {
         </Portlet>
         {renderModalAdd()}
         {renderModalEdit()}
+        <_LinkViewsModal linkId={selectedLinkViews} setLinkId={SetSelectedLinkViews} />
+
     </>
   );
 }

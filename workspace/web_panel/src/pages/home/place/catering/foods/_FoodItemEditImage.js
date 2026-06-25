@@ -9,7 +9,6 @@ import {
 } from "../../../../../network/api/TicketFoods.api";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import ImagePicker from "../../../media/Pickers/ImagePicker";
-import {PlaceGym_deleteMultimedia} from "../../../../../network/api/placeGym.api";
 import {Modal} from "react-bootstrap";
 
 const _FoodItemEditImage = ({selectedFoodItem}) => {

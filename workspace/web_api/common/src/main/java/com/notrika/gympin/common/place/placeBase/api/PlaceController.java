@@ -5,6 +5,7 @@ import com.notrika.gympin.common.place.placeBase.param.PlaceParam;
 import com.notrika.gympin.common.place.placeBase.query.PlaceQuery;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
+import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 import com.notrika.gympin.common.user.user.dto.InviteCode;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.base.BaseController;
@@ -26,4 +27,5 @@ public interface PlaceController extends BaseController<PlaceParam, PlaceDto, Pl
 
     ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceParam placeParam);
 
+    ResponseEntity<List<PlaceDto>> getPlacesByTicketUpdatesDate();
 }

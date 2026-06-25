@@ -1,7 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {EditNote} from "@mui/icons-material";
-import {Button, Chip, FormControlLabel, FormGroup, IconButton, Switch} from "@mui/material";
-import {Link_update} from "../../../../network/api/link.api";
+import {Button} from "@mui/material";
 import {Form, Modal} from "react-bootstrap";
 import {Support_updateMessage} from "../../../../network/api/support.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
@@ -78,7 +77,7 @@ const _EditSupportTicket = ({message,reloadList}) => {
 
     return (
         <>
-            <Chip onClick={(e)=>setOpenModal(true)} variant={"filled"} color={"secondary"} sx={{position:"absolute",mt:1,opacity:0.5,"&:hover": {opacity:1 }}} label={ <EditNote />} />
+            <EditNote sx={{m:0,cursor:"pointer"}} onClick={(e)=>setOpenModal(true)} />
             {renderModalEdit()}
         </>
     );

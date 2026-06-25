@@ -1,5 +1,5 @@
 import axios from "axios";
-import {SupportApi, TicketFoodApi, TicketFoodMenuApi} from "./const_api";
+import {SupportApi} from "./const_api";
 
 //place
 export function Support_getAll() {

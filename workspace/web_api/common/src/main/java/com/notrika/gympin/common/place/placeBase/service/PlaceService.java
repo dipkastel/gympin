@@ -5,6 +5,7 @@ import com.notrika.gympin.common.place.placeBase.param.PlaceParam;
 import com.notrika.gympin.common.place.placeBase.query.PlaceQuery;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
+import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 import com.notrika.gympin.common.user.user.dto.InviteCode;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.common.util._base.base.BaseService;
@@ -20,4 +21,6 @@ public interface PlaceService extends BaseService<PlaceParam, PlaceDto, PlaceQue
     InviteCode getPlaceInviteCode(PlaceParam param);
 
     List<TicketBuyableDto> getBuyableByPlace(PlaceParam param);
+
+    List<PlaceDto> getPlacesByTicketUpdatesDate();
 }

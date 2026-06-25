@@ -18,7 +18,6 @@ import {account_registerByInviteCode} from "../../../network/api/auth.api";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
 import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useSelector} from "react-redux";
-import {getUserFixedName} from "../../../helper";
 import {genders} from "../../../helper/enums/genders";
 import {getRppUserManagement, SetRppUserManagement} from "../../../helper/pocket/pocket";
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';

@@ -1,7 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../../partials/content/Portlet";
-import {Modal} from "react-bootstrap";
-import {Avatar, Button, Grid, TableCell, TablePagination, TextField, Typography} from "@mui/material";
+import {Avatar, Grid, TableCell, TablePagination, TextField, Typography} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -9,12 +8,11 @@ import TableBody from "@mui/material/TableBody";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {getRppFoodsManagement, SetRppFoodsManagement} from "../../../../../helper/pocket/pocket";
 import {useEffect} from "react/index";
-import {TicketFoods_query, TicketFoods_update} from "../../../../../network/api/TicketFoods.api";
-import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
+import {TicketFoods_query} from "../../../../../network/api/TicketFoods.api";
+import {toPriceWithComma} from "../../../../../helper";
 import _AddFoodItem from "./_AddFoodItem";
 import {CheckBox, CheckBoxOutlineBlank} from "@mui/icons-material";
 import _EditFoodItem from "./_EditFoodItem";
-import AddIcon from "@mui/icons-material/Add";
 
 
 const CateringFoods = ({catering}) => {

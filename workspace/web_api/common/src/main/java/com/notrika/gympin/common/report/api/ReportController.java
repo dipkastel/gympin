@@ -18,6 +18,7 @@ public interface ReportController  {
     ResponseEntity<List<ReportUserEntryCountDto>> getActiveInEnterPlacePersonnel(ReportParam param);
     ResponseEntity<List<ReportCorporateTransactionsDto>> getBalanceChangedReport(ReportParam param);
     ResponseEntity<List<ReportPlaceViewsDto>> getPlaceViewsReport(@RequestBody ReportPlaceViewsParam param);
+    ResponseEntity<List<ReportPlaceViewsDto>> getLinkViewsReport(Long id);
     ResponseEntity<List<String>> getAiReport(ReportParam param);
 
 }

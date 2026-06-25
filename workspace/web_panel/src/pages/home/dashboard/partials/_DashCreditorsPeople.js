@@ -8,10 +8,10 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {useHistory} from "react-router-dom";
-import {getUserFixedName, toPriceWithComma} from "../../../../helper";
+import {toPriceWithComma} from "../../../../helper";
 import {getRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {Message, Payment} from "@mui/icons-material";
+import {Payment} from "@mui/icons-material";
 import {SettlementUserDeposit_getAllCreditors} from "../../../../network/api/settlementUserDeposit.api";
 import PopoverUser from "../../../../components/popover/PopoverUser";
 

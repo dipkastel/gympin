@@ -1,9 +1,7 @@
 import React from 'react';
-import {Grid} from "@mui/material";
 import _EpBase from "../partials/_EpBase";
-import {Crop169, FormatSize, Rtt, Title, Vrpano} from "@mui/icons-material";
+import {FormatSize, Rtt, Title} from "@mui/icons-material";
 import {PagesViewTypes} from "../../../../../../helper/enums/PagesViewTypes";
-import _EpBannerFull from "./_epBanner/_EpBannerFull";
 import _EpTextSimpleTitle from "./_epText/_EpTextSimpleTitle";
 import _EpTextTitleMore from "./_epText/_EpTextTitleMore";
 

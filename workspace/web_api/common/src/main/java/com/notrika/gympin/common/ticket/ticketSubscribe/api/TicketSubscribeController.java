@@ -1,6 +1,7 @@
 package com.notrika.gympin.common.ticket.ticketSubscribe.api;
 
 import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
+import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
 import com.notrika.gympin.common.ticket.common.param.TicketActiveTimesParam;
 import com.notrika.gympin.common.ticket.ticketSubscribe.param.TicketSubscribeCoachParam;
@@ -37,4 +38,5 @@ public interface TicketSubscribeController extends BaseController<TicketSubscrib
     ResponseEntity<List<UserDto>> getCoaches(Long ticketId);
     ResponseEntity<TicketSubscribeDto> addCoach(TicketSubscribeCoachParam param);
     ResponseEntity<TicketSubscribeDto> deleteCoach(TicketSubscribeCoachParam param);
+
 }

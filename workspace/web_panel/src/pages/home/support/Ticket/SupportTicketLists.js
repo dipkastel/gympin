@@ -14,7 +14,6 @@ import {Support_delete, Support_query} from "../../../../network/api/support.api
 import {Delete} from "@mui/icons-material";
 import {Form, Modal} from "react-bootstrap";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../../partials/content/Portlet";
-import {getUserFixedName} from "../../../../helper";
 import PopoverUser from "../../../../components/popover/PopoverUser";
 import {SupportStatus} from "../../../../helper/enums/SupportStatus";
 import _AddSupportTicket from "./_AddSupportTicket";

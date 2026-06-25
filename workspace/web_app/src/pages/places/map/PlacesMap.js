@@ -67,7 +67,7 @@ const PlacesMap = () => {
         if (leaflet) return;
         if (map) return;
         map = L.map("kt_leaflet_map", {center: [tehranCenterLat, tehranCenterLong], zoom: 15,
-            minZoom: 14,
+            minZoom: 13,
             maxZoom: 16});
 
         prepareMap(map);

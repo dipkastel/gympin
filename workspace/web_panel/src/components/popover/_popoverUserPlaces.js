@@ -4,7 +4,7 @@ import {useHistory} from "react-router-dom";
 import {Place_getPlaceByUser} from "../../network/api/place.api";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
-import {Avatar, Chip, Divider, TableCell, Typography} from "@mui/material";
+import {Avatar, Divider, TableCell, Typography} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 
 const _popoverUserPlaces = ({currentUser}) => {

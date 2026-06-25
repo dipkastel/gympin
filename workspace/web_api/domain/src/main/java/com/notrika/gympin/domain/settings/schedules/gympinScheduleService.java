@@ -32,7 +32,7 @@ public class gympinScheduleService {
     @Autowired
     scheduleSms scheduleSms;
 
-    @Scheduled(cron = "0 */2 * * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void setDiscounts(){
         scheduleReports.updateLastTimeDiscountCheck();
         scheduleDiscounts.UpdateAutoTicketSubscribeDiscount();
@@ -47,13 +47,13 @@ public class gympinScheduleService {
 //        scheduleReports.updateMinTicketSubscribePrice();
     }
 
-    @Scheduled(cron = "0 */9 * * * ?")
+    @Scheduled(cron = "0 9 20 * * ?")
     public void UpdateWarningBaskets(){
         scheduleUser.sendAlarmToUsers();
     }
 
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 1 0 * * ?")
     public void UpdateBaskets(){
         scheduleUser.CloseOpenInvoices();
     }
@@ -85,8 +85,9 @@ public class gympinScheduleService {
         scheduleCorporate.checkLowBudgetsSms();
     }
 
-    @Scheduled(cron = "7 18 * * * ?")
+    @Scheduled(cron = "7 */10 * * * ?")
     public void checkExpirePersonnelCredit(){
+        scheduleReports.updateLastTimeExpireCredits();
         scheduleCorporate.checkExpirePersonnelCredit();
     }
 
@@ -94,21 +95,21 @@ public class gympinScheduleService {
 //    @Scheduled(cron = "11 */1 * * * ?")
     @Scheduled(cron = "1 */3 * * * ?")
     public void setIncrediblesDeactive(){
-        scheduleReports.updateLastTimeIncredibleUpdate();
+        scheduleReports.updateLastTimeIncredibleDeactive();
         scheduleIncredible.Deactive();
     }
 
 //    @Scheduled(cron = "21 */2 * * * ?")
     @Scheduled(cron = "21 */11 * * * ?")
     public void setIncrediblesActive(){
-        scheduleReports.updateLastTimeIncredibleUpdate();
+        scheduleReports.updateLastTimeIncredibleActive();
         scheduleIncredible.Active();
     }
 
-//    @Scheduled(cron = "31 */3 * * * ?")
-    @Scheduled(cron = "31 0 */8 * * ?")
+//    @Scheduled(cron = "31 */1 * * * ?")
+    @Scheduled(cron = "31 0 */4 * * ?")
     public void setIncrediblesAddBySystem(){
-        scheduleReports.updateLastTimeIncredibleUpdate();
+        scheduleReports.updateLastTimeIncredibleAddBySystem();
         scheduleIncredible.AddBySystem();
     }
 

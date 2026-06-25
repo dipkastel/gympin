@@ -1,6 +1,6 @@
 import React from 'react';
 import _EpBase from "../partials/_EpBase";
-import { Square, ViewCarousel, ViewColumn} from "@mui/icons-material";
+import {Square, ViewCarousel, ViewColumn} from "@mui/icons-material";
 import {PagesViewTypes} from "../../../../../../helper/enums/PagesViewTypes";
 import _EpCarouselSimpleList from "./_epCarousel/_EpCarouselSimpleList";
 import _EpCarouselButtonList from "./_epCarousel/_EpCarouselButtonList";

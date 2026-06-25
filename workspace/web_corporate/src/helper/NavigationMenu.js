@@ -27,6 +27,18 @@ export const NavigationMenu = [
         title: 'پیشخوان',
         icon: <DashboardIcon/>,
     },
+    // {
+    //     kind: 'divider',
+    // },
+    // {
+    //     kind: 'header',
+    //     title: 'خدمات',
+    // },
+    // {
+    //     segment: 'support',
+    //     title: 'جیم پین',
+    //     icon: <SupportAgent/>,
+    // },
     {
         kind: 'divider',
     },

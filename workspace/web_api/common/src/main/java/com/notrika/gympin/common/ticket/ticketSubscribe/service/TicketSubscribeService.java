@@ -36,4 +36,5 @@ public interface TicketSubscribeService extends BaseService<TicketSubscribeParam
     List<ActiveTimesDto> getTicketSubscribeActiveTimesByTicketSubscribe(Long ticketSubscribeId);
     TicketSubscribeDto addSubscribeActiveTimes(TicketActiveTimesParam ticketSubscribeActiveTimesParam);
     TicketSubscribeDto deleteSubscribeActiveTimes(TicketActiveTimesParam ticketSubscribeActiveTimesParam);
+
 }

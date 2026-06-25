@@ -17,4 +17,5 @@ public interface ReportService  {
     List<ReportCorporateTransactionsDto> getBalanceChangedReport(ReportParam param);
     List<ReportPlaceViewsDto> getPlaceViewsReport(ReportPlaceViewsParam param);
     List<String> getAiReport(ReportParam param);
+    List<ReportPlaceViewsDto> getLinkViewsReport(Long linkId);
 }

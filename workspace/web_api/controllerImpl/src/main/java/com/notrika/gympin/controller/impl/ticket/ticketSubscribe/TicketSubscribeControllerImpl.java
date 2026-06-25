@@ -1,5 +1,6 @@
 package com.notrika.gympin.controller.impl.ticket.ticketSubscribe;
 
+import com.notrika.gympin.common.place.placeBase.dto.PlaceDto;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
 import com.notrika.gympin.common.place.parts.placeSport.dto.PlaceSportDto;
 import com.notrika.gympin.common.ticket.common.dto.ActiveTimesDto;
@@ -101,6 +102,7 @@ public class TicketSubscribeControllerImpl implements TicketSubscribeController 
     public ResponseEntity<TicketSubscribeDto> deleteCoach(@RequestBody TicketSubscribeCoachParam param) {
         return ResponseEntity.ok(ticketSubscribeService.deleteCoach(param));
     }
+
     @Override
     @GetMapping("/getTicketSubscribeDiscountHistory")
     public ResponseEntity<List<TicketDiscountHistoryDto>> getTicketSubscribeDiscountHistory(Long ticketSubscribeId) {

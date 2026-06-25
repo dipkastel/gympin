@@ -8,33 +8,36 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {useHistory} from "react-router-dom";
-import {getPlaceFixedName} from "../../../../helper";
-import TablePagination from "@mui/material/TablePagination";
-import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
+import {getRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {PublishedWithChanges} from "@mui/icons-material";
-import {place_getPlacesByTicketUpdatesDate} from "../../../../network/api/place.api";
+import {ConfirmationNumber} from "@mui/icons-material";
+import {invoice_query} from "../../../../network/api/invoice.api";
+import PopoverUser from "../../../../components/popover/PopoverUser";
 
-const _DashNewPricesTickets = () => {
+const _DashTicketBeneficiary = () => {
 
     const error = useContext(ErrorContext);
     const history = useHistory();
-    const [place, setPlace] = useState([])
+    const [ticket, setTicket] = useState([])
+
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(getRppDashSupport);
+    const [rowsPerPage, setRowsPerPage] = useState(getRppDashSupport());
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        getComments();
-    }, [page, rowsPerPage]);
-
-    function getComments(){
-        const today = new Date();
-        const yesterday = new Date(today);
-        yesterday.setDate(today.getDate() - 1);
-        place_getPlacesByTicketUpdatesDate()
+        invoice_query({
+            queryType: "FILTER",
+            Status: "DRAFT",
+            Type: "USER_SUBSCRIBE",
+            paging: {
+                Page: page,
+                Size: rowsPerPage,
+                Desc: true
+            }
+        })
             .then((data) => {
-                setPlace(data.data.Data);
+                console.log(data.data.Data?.content)
+                setTicket(data.data.Data?.content);
             })
             .catch(e => {
                 try {
@@ -43,15 +46,16 @@ const _DashNewPricesTickets = () => {
                     error.showError({message: "خطا نا مشخص",});
                 }
             });
-    }
+    }, [page, rowsPerPage]);
+
 
     function renderModalSupport() {
         return (
             <>
-                <Modal show={showModal} size={"xl"} onHide={() => setShowModal(false)}>
+                <Modal show={showModal} size={"lg"} onHide={() => setShowModal(false)}>
                     <Portlet>
                         <PortletHeader
-                            title="قیمت های جدید"
+                            title="سبد خرید ها"
                         />
 
                         <PortletBody>
@@ -65,17 +69,21 @@ const _DashNewPricesTickets = () => {
 
                                     <TableHead>
                                         <TableRow>
+                                            <TableCell align="right" padding="normal"  sortDirection={false}>کاربر</TableCell>
+                                            <TableCell align="right" padding="normal"  sortDirection={false}>بلیط</TableCell>
                                             <TableCell align="right" padding="normal" sortDirection={false}>مجموعه</TableCell>
-                                  </TableRow>
+                                        </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {place && place.map((row, index) => (
+                                        {ticket && ticket.map((row, index) => (
                                             <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "gyms/data/" + row.Id})}
-                                                      role="checkbox" tabIndex={-1} key={row?.Id?.toString()}>
+                                                      role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                                 <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{getPlaceFixedName(row)}</TableCell>
-
+                                                           align="right"><PopoverUser user={row.User} /> </TableCell>
+                                                <TableCell component="th" scope="row" padding="normal"
+                                                           align="right">{row?.InvoiceBuyables?.[0]?.Name||"خالی است"}</TableCell>
+                                                <TableCell component="th" scope="row" padding="normal"
+                                                           align="right">{row?.InvoiceBuyables?.[0]?.Place?.Name||"خالی است"}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -90,14 +98,14 @@ const _DashNewPricesTickets = () => {
 
     return (<>
         <QuickStatsIcon
-            onClick={()=>{setShowModal(place.length > 0)}}
-            title="قیمت های جدید"
-            text={place.length > 0 ? place.length + " مجموعه این هفته تغییر کرده" : "قیمت ها تغییری نداشته"}
-            icon={<PublishedWithChanges sx={{fontSize: 40, color: place.length > 0 ? "#d00d48" : "#0c5049"}}
+            onClick={()=>{setShowModal(ticket.length > 0)}}
+            title="سبد خرید ورزشی"
+            text={ticket.length > 0 ? "شما " + ticket.length + " سبد خرید باز دارید" : "همه سبد خرید ها خالی است"}
+            icon={<ConfirmationNumber sx={{fontSize: 40, color: ticket.length > 0 ? "#d00d48" : "#0c5049"}}
                            color={"#AA5598"}/>}
         />
         {renderModalSupport()}
     </>)
 }
 
-export default _DashNewPricesTickets;
+export default _DashTicketBeneficiary;

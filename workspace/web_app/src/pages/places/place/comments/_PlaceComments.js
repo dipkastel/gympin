@@ -38,6 +38,7 @@ const _PlaceComments = ({place,currentUser}) => {
         PlaceComment_query({
             queryType: "FILTER",
             PlaceId:place.Id,
+            Status:"CONFIRMED",
             paging: {Page: 0, Size: 50, Desc: true}
         }).then(result => {
             setLoading(false);

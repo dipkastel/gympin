@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Chip, Grid, Paper, Tab, Tabs} from "@mui/material";
+import {Chip, Grid, Paper} from "@mui/material";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {sms_getAllPatterns} from "../../../../network/api/sms.api";
 import __SettingSmsSendManual from "./manual/__SettingSmsSendManual";

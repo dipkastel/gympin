@@ -1,8 +1,11 @@
 package com.notrika.gympin.domain.support;
 
 import com.notrika.gympin.common.corporate.corporate.param.CorporateParam;
+import com.notrika.gympin.common.corporate.corporatePersonnel.enums.CorporatePersonnelRoleEnum;
 import com.notrika.gympin.common.place.parts.personnel.enums.PlacePersonnelRoleEnum;
 import com.notrika.gympin.common.place.placeGym.param.PlaceGymParam;
+import com.notrika.gympin.common.settings.context.GympinContext;
+import com.notrika.gympin.common.settings.context.GympinContextHolder;
 import com.notrika.gympin.common.settings.notification.dto.NotificationBasePayload;
 import com.notrika.gympin.common.settings.notification.dto.NotificationPayloadData;
 import com.notrika.gympin.common.settings.notification.service.NotificationService;
@@ -16,7 +19,9 @@ import com.notrika.gympin.common.support.param.SupportMessageParam;
 import com.notrika.gympin.common.support.param.SupportParam;
 import com.notrika.gympin.common.support.query.SupportQuery;
 import com.notrika.gympin.common.support.service.SupportService;
+import com.notrika.gympin.common.user.user.enums.RoleEnum;
 import com.notrika.gympin.common.user.user.param.UserParam;
+import com.notrika.gympin.common.util.exception.user.UnknownUserException;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.SupportConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
@@ -25,11 +30,13 @@ import com.notrika.gympin.persistence.dao.repository.support.SupportMessageRepos
 import com.notrika.gympin.persistence.dao.repository.support.SupportRepository;
 import com.notrika.gympin.persistence.dao.repository.user.UserRepository;
 import com.notrika.gympin.persistence.entity.corporate.CorporateEntity;
+import com.notrika.gympin.persistence.entity.corporate.CorporatePersonnelEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.place.personnel.PlacePersonnelEntity;
 import com.notrika.gympin.persistence.entity.support.SupportEntity;
 import com.notrika.gympin.persistence.entity.support.SupportMessagesEntity;
 import com.notrika.gympin.persistence.entity.user.UserEntity;
+import com.notrika.gympin.persistence.entity.user.UserRolesEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -87,11 +94,11 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
             supportEntity.setCorporate(corporate);
         }
 
-        supportEntity.setSupportStatus(supportParam.getStatus()==null?SupportStatus.AWAITING_EXPERT:supportParam.getStatus());
+        supportEntity.setSupportStatus(supportParam.getStatus() == null ? SupportStatus.AWAITING_EXPERT : supportParam.getStatus());
         SupportMessagesEntity supportMessagesEntity = new SupportMessagesEntity();
         supportMessagesEntity.setSupportMessage(supportParam.getSupportMessages().getMessages());
         supportMessagesEntity.setIsRead(supportParam.getSupportMessages().isRead());
-        supportMessagesEntity.setAnswer(supportParam.getStatus()==SupportStatus.AWAITING_USER);
+        supportMessagesEntity.setAnswer(supportParam.getStatus() == SupportStatus.AWAITING_USER);
         supportEntity.setSupportMessages(List.of(supportMessagesEntity));
         supportRepository.add(supportEntity);
         supportMessagesEntity.setSupport(supportEntity);
@@ -142,21 +149,32 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
     @Override
     public List<SupportDto> getByUser(UserParam param) {
         UserEntity user = userRepository.getById(param.getId());
-        return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndUser(user));
+        List<SupportEntity> supportEntities = supportRepository.findAllByDeletedIsFalseAndUser(user);
+        if (checkUserAccess(user.getId()))
+            return SupportConvertor.toDto(supportEntities);
+        else
+            return null;
     }
 
     @Override
     public List<SupportDto> getByPlace(PlaceGymParam param) {
-        //TODO check User has this place
-        PlaceEntity place = placeRepository.getById(param.getId());
-        return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndPlace(place));
+        PlaceEntity<?> place = placeRepository.getById(param.getId());
+        for (PlacePersonnelEntity personel : place.getPlaceOwners()) {
+            if (checkUserAccess(personel.getUser().getId()))
+                return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndPlace(place));
+        }
+        return null;
     }
 
     @Override
     public List<SupportDto> getByCorporate(CorporateParam param) {
-        //TODO check User has this corporate
         CorporateEntity corporate = corporateRepository.getById(param.getId());
-        return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndCorporate(corporate));
+        for (CorporatePersonnelEntity personnel : corporate.getPersonnel().stream().filter(p -> p.getRole() == CorporatePersonnelRoleEnum.ADMIN).collect(Collectors.toList())) {
+            if (checkUserAccess(personnel.getUser().getId()))
+                return SupportConvertor.toDto(supportRepository.findAllByDeletedIsFalseAndCorporate(corporate));
+
+        }
+        return null;
     }
 
     @Override
@@ -198,9 +216,11 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
 
     @Override
     public SupportDto getById(long id) {
-
-        //TODO check User has this message
-        return SupportConvertor.toDto(supportRepository.getById(id));
+        SupportEntity supportEntity = supportRepository.getById(id);
+        if (checkUserAccess(supportEntity.getUser()==null?null:supportEntity.getUser().getId()))
+            return SupportConvertor.toDto(supportEntity);
+        else
+            return null;
     }
 
     @Override
@@ -259,5 +279,16 @@ public class SupportServiceImpl extends AbstractBaseService<SupportParam, Suppor
                     .build());
         } catch (Exception e) {
         }
+    }
+
+    private boolean checkUserAccess(Long accessUserId) {
+        GympinContext context = GympinContextHolder.getContext();
+        if (context == null)
+            throw new UnknownUserException();
+        UserEntity userEntity = (UserEntity) context.getEntry().get(GympinContext.USER_KEY);
+        if (userEntity.getUserRoles().stream().map(UserRolesEntity::getRole).collect(Collectors.toList()).contains(RoleEnum.ADMIN) || userEntity.getId().equals(accessUserId))
+            return true;
+        else
+            return false;
     }
 }

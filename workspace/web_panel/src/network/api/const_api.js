@@ -273,6 +273,7 @@ export let PlaceApi = {
     getBuyableByPlace: "v1/Place/getBuyableByPlace",
     getByUser: "v1/Place/getPlacesByUser",
     query: "v1/Place/query",
+    getPlacesByTicketUpdatesDate: "v1/Place/getPlacesByTicketUpdatesDate",
 };
 export let CateringApi = {
     add: "v1/catering/add",
@@ -432,6 +433,7 @@ export let ReportSettings = {
 
 export let Report = {
     getAiReport: "v1/report/getAiReport",
+    getLinkViews: "v1/report/getLinkViews",
     getPlaceViews: "v1/report/getPlaceViews",
     getPopularSports: "v1/report/getPopularSports",
     useCorporateCharge: "v1/report/useCorporateCharge",

@@ -175,14 +175,13 @@ const CorporateManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>نوع قرارداد</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>تعداد پرسنل</TableCell>
                                     <TableCell align="left" padding="normal" sortDirection={false}>وضعیت</TableCell>
+                                    <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {corporates.content && corporates.content.map((row, index) => {
                                     return (
-                                        <TableRow hover onClick={(event) => {
-                                            history.push({pathname: "corporate/details/" + row.Id});
-                                        }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                             <TableCell component="th" scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">
@@ -194,6 +193,12 @@ const CorporateManagement = () => {
                                             <TableCell align="right">{row.PersonnelCount}</TableCell>
                                             <TableCell align="right">
                                                 <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
+                                            </TableCell>
+
+                                            <TableCell align="left">
+
+                                                <Button variant={"contained"}
+                                                        href={ "corporate/details/" + row.Id} >جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

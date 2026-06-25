@@ -5,7 +5,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import {Chip, ListItemText, TableCell} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
-import {getUserFixedName, toPriceWithComma} from "../../../../../helper";
+import {toPriceWithComma} from "../../../../../helper";
 import {genders} from "../../../../../helper/enums/genders";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
@@ -14,7 +14,6 @@ import {Purchased_query} from "../../../../../network/api/purchased.api";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppPlaceSells, SetRppPlaceSells} from "../../../../../helper/pocket/pocket";
 import PopoverUser from "../../../../../components/popover/PopoverUser";
-import _TicketStatus from "../../../purchased/partials/_TicketStatus";
 
 const PlaceSells = ({place}) => {
 

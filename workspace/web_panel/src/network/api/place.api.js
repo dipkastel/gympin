@@ -1,5 +1,5 @@
 import axios from "axios";
-import {PlaceApi} from "./const_api";
+import {PlaceApi, TicketSubscribesApi} from "./const_api";
 
 //place
 export function Place_getPlacesInviteCode(place) {
@@ -16,4 +16,8 @@ export function Place_query(data) {
 
 export function place_getBuyableByPlace(data) {
     return axios.get(PlaceApi.getBuyableByPlace, {params:data});
+}
+
+export function place_getPlacesByTicketUpdatesDate(data) {
+    return axios.get(PlaceApi.getPlacesByTicketUpdatesDate, {params: data});
 }

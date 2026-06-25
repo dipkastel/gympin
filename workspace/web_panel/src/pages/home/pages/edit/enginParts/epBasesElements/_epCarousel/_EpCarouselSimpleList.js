@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import _EpBase from "../../partials/_EpBase";
-import {Add, ViewCarousel} from "@mui/icons-material";
+import {Add} from "@mui/icons-material";
 import {Button, Grid} from "@mui/material";
 import _epBaseAddOrEditItem from "../../partials/_epBaseAddOrEditItem";
 

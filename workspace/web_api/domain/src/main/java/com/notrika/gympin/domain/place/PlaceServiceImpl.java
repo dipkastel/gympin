@@ -7,6 +7,7 @@ import com.notrika.gympin.common.place.placeBase.query.PlaceQuery;
 import com.notrika.gympin.common.place.placeBase.service.PlaceService;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
+import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 import com.notrika.gympin.common.user.user.dto.InviteCode;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -24,6 +25,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -127,6 +132,14 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
                 .isActive(true)
                 .build();
         return code;
+    }
+
+    @Override
+    public List<PlaceDto> getPlacesByTicketUpdatesDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -30);
+        Date oneWeekAgo = calendar.getTime();
+        return convertToDtos(placeRepository.getPlacesByTicketUpdatesDate(oneWeekAgo));
     }
 
 

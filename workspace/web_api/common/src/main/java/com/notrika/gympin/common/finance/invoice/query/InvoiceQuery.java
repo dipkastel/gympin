@@ -3,6 +3,7 @@ package com.notrika.gympin.common.finance.invoice.query;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.article.enums.ArticleStatus;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
+import com.notrika.gympin.common.finance.invoice.enums.InvoiceType;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -48,6 +49,9 @@ public class InvoiceQuery extends BaseQuery<InvoiceQuery> {
 
     @JsonProperty("Status")
     private InvoiceStatus is_status;
+
+    @JsonProperty("Type")
+    private InvoiceType is_type;
 
     @JsonProperty("PlaceId")
     private Long is_invoiceBuyablesæplaceæid;

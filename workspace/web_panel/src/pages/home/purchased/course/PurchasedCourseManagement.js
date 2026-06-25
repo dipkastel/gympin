@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {getUserFixedName, toPriceWithComma} from "../../../../helper";
+import {toPriceWithComma} from "../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
 import {purchasedCourse_query} from "../../../../network/api/purchasedCourses.api";
 import {PurchasedCourseStatus} from "../../../../helper/enums/PurchasedCourseStatus";

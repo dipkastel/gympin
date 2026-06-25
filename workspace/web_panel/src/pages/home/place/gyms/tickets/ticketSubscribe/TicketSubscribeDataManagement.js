@@ -3,7 +3,6 @@ import {useHistory, useParams} from "react-router-dom";
 import Notice from "../../../../../partials/content/Notice";
 import {TicketSubscribes_getById, TicketSubscribes_update} from "../../../../../../network/api/ticketSubscribes.api";
 import TicketSubscribeBase from "./Base/TicketSubscribeBase";
-import TicketSubscribeActivityTimes from "./TicketActivityTimes/TicketSubscribeActivityTimes";
 import {Button} from "@mui/material";
 import TicketSubscribeSport from "./ticketSubscribeSports/TicketSubscribeSport";
 import {ErrorContext} from "../../../../../../components/GympinPagesProvider";

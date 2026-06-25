@@ -5,7 +5,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import {Alert, Button, Chip, TableCell, TextField, Typography} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
-import {toPriceWithComma, toPriceWithoutComma} from "../../../../../helper";
+import {toPriceWithComma} from "../../../../../helper";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
 import {
     SettlementUserDeposit_add,
@@ -96,8 +96,12 @@ const SettlementRequest = ({currentUser,userFinance, updatePage}) => {
                                                 <Typography color={"success"} variant={"body2"}>
                                                     لطفا دلیل تایید تراکنش را یادداشت کنید :
                                                 </Typography>
-                                                <Chip color={"success"} size={"small"} label={"تراکنش بررسی و تایید شد"}
-                                                      onClick={(e) => setTransactionText("تراکنش بررسی و تایید شد.")}/>
+                                                <Chip color={"success"} size={"small"} label={" پایا از پاسارگاد"}
+                                                      onClick={(e) => setTransactionText("پرداخت پایا از پاسارگاد با شماره پیگیری :")}/>
+                                                 <Chip color={"success"} size={"small"} label={" پل از پاسارگاد"}
+                                                      onClick={(e) => setTransactionText("پرداخت پل از پاسارگاد با شماره پیگیری :")}/>
+                                                 <Chip color={"success"} size={"small"} label={" کارت به کارت از پارسیان"}
+                                                      onClick={(e) => setTransactionText("پرداخت کارت به کارت از پارسیان با شماره پیگیری :")}/>
                                             </>
                                         )
                                         :

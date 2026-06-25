@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Avatar, Chip, CircularProgress, Dialog, DialogContent, DialogTitle, Grid, Rating, Typography} from "@mui/material";
 import {DriveFileRenameOutline} from "@mui/icons-material";
-import {useSelector} from "react-redux";
 import {ErrorContext} from "../../../../../../../components/GympinPagesProvider";
 import {placePersonnel_ByPlace} from "../../../../../../../network/api/placePersonnel.api";
 import {

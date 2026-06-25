@@ -14,7 +14,6 @@ import TablePagination from "@mui/material/TablePagination";
 import {getRppInvoiceManagement, SetRppInvoiceManagement} from "../../../helper/pocket/pocket";
 import {serial_query} from "../../../network/api/serial.api";
 import {ProcessTypeEnum} from "../../../helper/enums/ProcessTypeEnum";
-import {getUserFixedName} from "../../../helper";
 import PopoverUser from "../../../components/popover/PopoverUser";
 
 const ProcessManagement = () => {

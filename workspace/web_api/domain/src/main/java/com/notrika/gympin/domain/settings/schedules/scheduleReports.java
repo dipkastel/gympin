@@ -35,8 +35,11 @@ public class scheduleReports {
     public static final String LAST_TIME_SMS_CHECK = "LAST_TIME_SMS_CHECK";
     public static final String LAST_TIME_CREDITS_CHECK = "LAST_TIME_CREDITS_CHECK";
     public static final String LAST_TIME_PAYMENT_CHECK = "LAST_TIME_PAYMENT_CHECK";
-    public static final String LAST_TIME_INCREDIBLES_UPDATE = "LAST_TIME_INCREDIBLES_UPDATE";
+    public static final String LAST_TIME_INCREDIBLES_ADD_BY_SYSTEM = "LAST_TIME_INCREDIBLES_ADD_BY_SYSTEM";
+    public static final String LAST_TIME_INCREDIBLES_ACTIVE = "LAST_TIME_INCREDIBLES_ACTIVE";
+    public static final String LAST_TIME_INCREDIBLES_DEACTIVE = "LAST_TIME_INCREDIBLES_DEACTIVE";
     public static final String LAST_TIME_CORPORATE_CHARGE_CHECK = "LAST_TIME_CORPORATE_CHARGE_CHECK";
+    public static final String LAST_TIME_EXPIRE_CREDITS = "LAST_TIME_EXPIRE_CREDITS";
     public static final String LAST_TIME_DISCOUNT_CHECK = "LAST_TIME_DISCOUNT_CHECK";
 
 
@@ -64,7 +67,10 @@ public class scheduleReports {
         createKeyIfNotExist(LAST_TIME_CREDITS_CHECK,"آخرین زمانی که اعتبار ها چک شد");
         createKeyIfNotExist(LAST_TIME_PAYMENT_CHECK,"آخرین زمانی که پرداخت های بانکی چک شد");
         createKeyIfNotExist(LAST_TIME_CORPORATE_CHARGE_CHECK,"آخرین زمانی که شارژ شرکت ها چک شد");
-        createKeyIfNotExist(LAST_TIME_INCREDIBLES_UPDATE,"آخرین زمانی که شگفت انگیز آپدیت شد");
+        createKeyIfNotExist(LAST_TIME_INCREDIBLES_ADD_BY_SYSTEM,"آخرین زمانی که شگفت انگیز سیستمی اضافه و آپدیت شد");
+        createKeyIfNotExist(LAST_TIME_INCREDIBLES_ACTIVE,"آخرین زمانی که شگفت انگیز کاربران چک شد");
+        createKeyIfNotExist(LAST_TIME_INCREDIBLES_DEACTIVE,"آخرین زمانی که شگفت انگیز غیر فعال شد");
+        createKeyIfNotExist(LAST_TIME_EXPIRE_CREDITS,"آخرین زمانی اعتبار های منقضی شده چک شد");
         createKeyIfNotExist(LAST_TIME_DISCOUNT_CHECK,"آخرین زمانی که شارژ شرکت ها چک شد");
     }
 
@@ -93,8 +99,21 @@ public class scheduleReports {
         manageReportSettingRepository.save(entity);
     }
 
-    public void updateLastTimeIncredibleUpdate(){
-        ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_INCREDIBLES_UPDATE);
+    public void updateLastTimeIncredibleAddBySystem(){
+        ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_INCREDIBLES_ADD_BY_SYSTEM);
+        if(!entity.getUpdateAuto())return;
+        entity.setValue((new Date()).toString());
+        manageReportSettingRepository.save(entity);
+    }
+
+    public void updateLastTimeIncredibleDeactive(){
+        ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_INCREDIBLES_DEACTIVE);
+        if(!entity.getUpdateAuto())return;
+        entity.setValue((new Date()).toString());
+        manageReportSettingRepository.save(entity);
+    }
+    public void updateLastTimeIncredibleActive(){
+        ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_INCREDIBLES_ACTIVE);
         if(!entity.getUpdateAuto())return;
         entity.setValue((new Date()).toString());
         manageReportSettingRepository.save(entity);
@@ -102,6 +121,12 @@ public class scheduleReports {
 
     public void updateLastTimeCorporateChargeCheck(){
         ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_CORPORATE_CHARGE_CHECK);
+        if(!entity.getUpdateAuto())return;
+        entity.setValue((new Date()).toString());
+        manageReportSettingRepository.save(entity);
+    }
+    public void updateLastTimeExpireCredits(){
+        ManageReportSettingsEntity entity = manageReportSettingRepository.getFirstByKey(LAST_TIME_EXPIRE_CREDITS);
         if(!entity.getUpdateAuto())return;
         entity.setValue((new Date()).toString());
         manageReportSettingRepository.save(entity);

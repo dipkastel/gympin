@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Portlet, PortletBody, PortletHeader} from "../../../partials/content/Portlet";
-import {Support_query} from "../../../../network/api/support.api";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import TableContainer from "@mui/material/TableContainer";
 import {Modal, Table} from "react-bootstrap";
@@ -9,13 +8,11 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {useHistory} from "react-router-dom";
-import {getPlaceFixedName, getUserFixedName} from "../../../../helper";
+import {getPlaceFixedName} from "../../../../helper";
 import TablePagination from "@mui/material/TablePagination";
 import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
-import {Check, Close, Explore, Message, Reviews} from "@mui/icons-material";
-import {placeComments_query, placeComments_update} from "../../../../network/api/placeComment.api";
-import {Button} from "@mui/material";
+import {Explore} from "@mui/icons-material";
 import {TicketSubscribes_query} from "../../../../network/api/ticketSubscribes.api";
 
 const _DashOldPricesTickets = () => {

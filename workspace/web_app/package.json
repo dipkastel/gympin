@@ -1,6 +1,6 @@
 {
   "name": "pwa-web_app",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "private": true,
   "dependencies": {
     "@date-io/date-fns-jalali": "^3.2.0",

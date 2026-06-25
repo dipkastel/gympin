@@ -280,15 +280,14 @@ const GymsManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>آدرس</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>اطلاعات</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
+                                    <TableCell align="right" padding="normal" sortDirection={false}>عملیات</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {places.content && places.content.map((row, index) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
-                                        <TableRow hover onClick={(event) => {
-                                            history.push({pathname: "gyms/data/" + row.Id});
-                                        }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+                                        <TableRow hover  role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">{row.Name||"ثبت نشده"}</TableCell>
@@ -309,6 +308,12 @@ const GymsManagement = () => {
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
+                                            </TableCell>
+
+                                            <TableCell align="left">
+
+                                                <Button variant={"contained"}
+                                                        href={ "gyms/data/" + row.Id} >جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

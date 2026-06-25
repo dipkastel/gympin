@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {Chip, Dialog, DialogContent, DialogTitle, Typography} from "@mui/material";
+import React, {useState} from 'react';
+import {Dialog, DialogContent, DialogTitle, Typography} from "@mui/material";
 
 const _ticketSubscribeActiveTimes = ({subscribe}) => {
     const [openModalTimes, setOpenModalTimes] = useState(false)
