@@ -21,3 +21,7 @@ export function place_getBuyableByPlace(data) {
 export function place_getPlacesByTicketUpdatesDate(data) {
     return axios.get(PlaceApi.getPlacesByTicketUpdatesDate, {params: data});
 }
+
+export function place_getPlacesByTicketOutdated(data) {
+    return axios.get(PlaceApi.getPlacesByTicketOutdated, {params: data});
+}

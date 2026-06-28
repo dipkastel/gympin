@@ -13,6 +13,8 @@ import {DatePicker} from "@mui/x-date-pickers";
 export default function CorporatePersonnelCreditAction({currentCorporate, pUpdatePage}) {
     const error = useContext(ErrorContext);
     const [values, setValues] = useState(0);
+    const [name, setName] = useState("");
+    const [expireDate, setExpireDate] = useState(null);
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
     const [groups, SetGroups] = useState([]);
     const [selectedGroup, SetSelectedGroup] = useState("All");
@@ -50,6 +52,8 @@ export default function CorporatePersonnelCreditAction({currentCorporate, pUpdat
             corporatePersonnel_addCreditToAll({
                 CorporateId: currentCorporate.Id,
                 CreditAmount: toPriceWithoutComma(values),
+                ExpireDate:expireDate,
+                Name:name,
                 GroupId: (selectedGroup == "All") ? null : selectedGroup
             }).then(result => {
                 error.showError({message: "افزایش اعتبار گروهی موفق",});
@@ -118,9 +122,10 @@ export default function CorporatePersonnelCreditAction({currentCorporate, pUpdat
                     <TextField
                         label="نام اعتبار"
                         className="textField"
-                        value={values}
-                        onChange={(e) => setValues(toPriceWithComma(e.target.value))}
+                        value={name}
+                        name={"creditName"}
                         margin="normal"
+                        onChange={e=>setName(e.target.value)}
                         variant="outlined"
                     />
                 </FormControl>
@@ -139,8 +144,8 @@ export default function CorporatePersonnelCreditAction({currentCorporate, pUpdat
                     <DatePicker
                         className="ltr mt-4 mb-2 w-100"
                         label="تاریخ انقضا"
-                        value={new Date(values.Birthday||"")}
-                        onChange={(e)=>setValues("Birthday")}
+                        value={new Date(expireDate||"")}
+                        onChange={(e)=>setExpireDate(e)}
                         renderInput={(params) => <TextField fullWidth {...params} />}
                     />
                 </LocalizationProvider>

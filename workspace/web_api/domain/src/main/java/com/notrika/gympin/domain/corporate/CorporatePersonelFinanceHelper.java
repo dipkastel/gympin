@@ -96,12 +96,21 @@ public class CorporatePersonelFinanceHelper {
         }
         if(creditExpireDate==null)
            throw new TicketExpireDateCannotBeNull();
+
+        //to 00:00:00
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(creditExpireDate);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
         FinanceCorporatePersonnelCreditEntity result = financeCorporatePersonnelCreditRepository.add(FinanceCorporatePersonnelCreditEntity.builder()
                 .status(CorporatePersonnelCreditStatusEnum.ACTIVE)
                 .corporatePersonnel(personnelEntity)
                 .creditAmount(creditAmount)
                 .name(name)
-                .ExpireDate(creditExpireDate)
+                .ExpireDate(cal.getTime())
                 .build());
         //add finance corporate personnel credit transaction
         financeCorporatePersonnelCreditTransactionRepository.add(FinanceCorporatePersonnelCreditTransactionEntity.builder()
@@ -152,12 +161,21 @@ public class CorporatePersonelFinanceHelper {
             throw new TicketExpireDateCannotBeNull();
          if(param.getCreditAmount()==null)
             throw new CreditCannotBeNegativeException();
+
+        //to 00:00:00
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(param.getExpireDate());
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
         List<FinanceCorporatePersonnelCreditEntity> listToAdd = personnelsToAddCredit.stream().filter(o->!o.isDeleted()).map(personel -> FinanceCorporatePersonnelCreditEntity.builder()
                 .status(CorporatePersonnelCreditStatusEnum.ACTIVE)
                 .corporatePersonnel(personel)
                 .creditAmount(param.getCreditAmount())
                 .name(param.getName())
-                .ExpireDate(param.getExpireDate())
+                .ExpireDate(cal.getTime())
                 .build()).collect(Collectors.toList());
         List<FinanceCorporatePersonnelCreditEntity> result = financeCorporatePersonnelCreditRepository.addAll(listToAdd);
         //add finance corporate personnel credit transaction

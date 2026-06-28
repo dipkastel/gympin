@@ -9,32 +9,44 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {useHistory} from "react-router-dom";
 import {getPlaceFixedName} from "../../../../helper";
-import TablePagination from "@mui/material/TablePagination";
-import {getRppDashSupport, SetRppDashSupport} from "../../../../helper/pocket/pocket";
+import {getRppDashSupport} from "../../../../helper/pocket/pocket";
 import QuickStatsIcon from "../../../widgets/QuickStatsIcon";
 import {PublishedWithChanges} from "@mui/icons-material";
-import {place_getPlacesByTicketUpdatesDate} from "../../../../network/api/place.api";
+import {place_getPlacesByTicketOutdated, place_getPlacesByTicketUpdatesDate} from "../../../../network/api/place.api";
+import {Card, CardContent, CardHeader, Grid, Paper} from "@mui/material";
 
 const _DashNewPricesTickets = () => {
 
     const error = useContext(ErrorContext);
     const history = useHistory();
-    const [place, setPlace] = useState([])
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(getRppDashSupport);
+    const [newPlace, setNewPlace] = useState([])
+    const [oldPlace, setOldPlace] = useState([])
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        getComments();
-    }, [page, rowsPerPage]);
+        if(showModal){
+            getNewPlaces();
+            getOldPlaces();
+        }
+    }, [showModal]);
 
-    function getComments(){
-        const today = new Date();
-        const yesterday = new Date(today);
-        yesterday.setDate(today.getDate() - 1);
+    function getNewPlaces() {
         place_getPlacesByTicketUpdatesDate()
             .then((data) => {
-                setPlace(data.data.Data);
+                setNewPlace(data.data.Data);
+            })
+            .catch(e => {
+                try {
+                    error.showError({message: e.response.data.Message,});
+                } catch (f) {
+                    error.showError({message: "خطا نا مشخص",});
+                }
+            });
+    }
+    function getOldPlaces() {
+        place_getPlacesByTicketOutdated()
+            .then((data) => {
+                setOldPlace(data.data.Data);
             })
             .catch(e => {
                 try {
@@ -51,36 +63,78 @@ const _DashNewPricesTickets = () => {
                 <Modal show={showModal} size={"xl"} onHide={() => setShowModal(false)}>
                     <Portlet>
                         <PortletHeader
-                            title="قیمت های جدید"
+                            title="قیمت ها"
                         />
 
                         <PortletBody>
+                            <Grid container columns={2} spacing={1}>
+                                <Grid size={1}>
+                                    <Card variant={"elevation"} elevation={10} sx={{borderRadius:4}} >
+                                        <CardHeader title={"قیمت های جدید"} />
+                                        <CardContent>
+                                            <TableContainer>
+                                                <Table
+                                                    sx={{minWidth: 750}}
+                                                    aria-labelledby="tableTitle"
+                                                    size="medium"
+                                                >
 
-                            <TableContainer>
-                                <Table
-                                    sx={{minWidth: 750}}
-                                    aria-labelledby="tableTitle"
-                                    size="medium"
-                                >
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            <TableCell align="right" padding="normal" sortDirection={false}>مجموعه</TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
+                                                        {newPlace && newPlace.map((row, index) => (
+                                                            <TableRow hover
+                                                                      onClick={(event) => history.push({pathname: "gyms/data/" + row.Id})}
+                                                                      role="checkbox" tabIndex={-1} key={row?.Id?.toString()}>
+                                                                <TableCell component="th" scope="row" padding="normal"
+                                                                           align="right">{getPlaceFixedName(row)}</TableCell>
 
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell align="right" padding="normal" sortDirection={false}>مجموعه</TableCell>
-                                  </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {place && place.map((row, index) => (
-                                            <TableRow hover
-                                                      onClick={(event) => history.push({pathname: "gyms/data/" + row.Id})}
-                                                      role="checkbox" tabIndex={-1} key={row?.Id?.toString()}>
-                                                <TableCell component="th" scope="row" padding="normal"
-                                                           align="right">{getPlaceFixedName(row)}</TableCell>
+                                                            </TableRow>
+                                                        ))}
+                                                    </TableBody>
+                                                </Table>
+                                            </TableContainer>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid size={1}>
+                                    <Card variant={"elevation"} elevation={10} sx={{borderRadius:4}} >
+                                        <CardHeader title={"قیمت های قدیمی"} />
+                                        <CardContent>
+                                            <TableContainer>
+                                                <Table
+                                                    sx={{minWidth: 750}}
+                                                    aria-labelledby="tableTitle"
+                                                    size="medium"
+                                                >
 
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            <TableCell align="right" padding="normal" sortDirection={false}>مجموعه</TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
+                                                        {oldPlace && oldPlace.map((row, index) => (
+                                                            <TableRow hover
+                                                                      onClick={(event) => history.push({pathname: "gyms/data/" + row.Id})}
+                                                                      role="checkbox" tabIndex={-1} key={row?.Id?.toString()}>
+                                                                <TableCell component="th" scope="row" padding="normal"
+                                                                           align="right">{getPlaceFixedName(row)}</TableCell>
+
+                                                            </TableRow>
+                                                        ))}
+                                                    </TableBody>
+                                                </Table>
+                                            </TableContainer>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+
+
                         </PortletBody>
                     </Portlet>
                 </Modal>
@@ -90,11 +144,13 @@ const _DashNewPricesTickets = () => {
 
     return (<>
         <QuickStatsIcon
-            onClick={()=>{setShowModal(place.length > 0)}}
-            title="قیمت های جدید"
-            text={place.length > 0 ? place.length + " مجموعه این هفته تغییر کرده" : "قیمت ها تغییری نداشته"}
-            icon={<PublishedWithChanges sx={{fontSize: 40, color: place.length > 0 ? "#d00d48" : "#0c5049"}}
-                           color={"#AA5598"}/>}
+            onClick={() => {
+                setShowModal(true)
+            }}
+            title="تغییر قیمت ها"
+            text={"مدیریت بروز رسانی قیمت مجموعه ها"}
+            icon={<PublishedWithChanges sx={{fontSize: 40, color:"#0c5049"}}
+                                        color={"#AA5598"}/>}
         />
         {renderModalSupport()}
     </>)

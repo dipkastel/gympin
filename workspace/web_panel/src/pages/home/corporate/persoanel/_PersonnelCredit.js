@@ -90,7 +90,8 @@ const _PersonnelCredit = ({corporatePersonnel, getPerson}) => {
             corporatePersonnel_addPersonnelCredit({
                 CorporatePersonnel: {Id: corporatePersonnel.Id},
                 ExpireDate: expireDate,
-                CreditAmount: toPriceWithoutComma(e.target.creditToAdd.value)
+                CreditAmount: toPriceWithoutComma(e.target.creditToAdd.value),
+                Name:e.target.creditName.value
             })
                 .then(result => {
                     getPersonnelCredits();
@@ -114,8 +115,15 @@ const _PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                         </Modal.Header>
                         <Modal.Body>
 
-
                             <div className="form-group">
+                                <TextField
+                                    className="w-100"
+                                    variant="outlined"
+                                    margin="normal"
+                                    name="creditName"
+                                    type="text"
+                                    label={"نام اعتبار"}
+                                />
                                 <TextField
                                     className="w-100"
                                     variant="outlined"
@@ -168,7 +176,6 @@ const _PersonnelCredit = ({corporatePersonnel, getPerson}) => {
     function renderModalExpire() {
         function expire(e) {
             e.preventDefault()
-            setOpenModalAdd(false);
 
             corporatePersonnel_manualExpireCredit({
                 Id: creditToExpire.Id,
@@ -177,6 +184,7 @@ const _PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                     getPersonnelCredits();
                     getPerson();
                     error.showError({message: "با موفقیت انجام شد",});
+                    setCreditToExpire(null);
                 }).catch(e => {
                 try {
                     error.showError({message: e.response.data.Message,});
@@ -368,6 +376,7 @@ const _PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="right">Id</TableCell>
+                                <TableCell align="right">نام</TableCell>
                                 <TableCell align="right">اعتبار</TableCell>
                                 <TableCell align="right">تاریخ ثبت</TableCell>
                                 <TableCell align="right">انقضا</TableCell>
@@ -380,6 +389,9 @@ const _PersonnelCredit = ({corporatePersonnel, getPerson}) => {
                             {credits && credits.map(row => (
                                 <TableRow key={row.Id}>
                                     <TableCell align="right" component="th" scope="row">{row.Id}</TableCell>
+                                    <TableCell component="th" padding="normal" align="right">
+                                        {row.Name||"ثبت نشده"}
+                                    </TableCell>
                                     <TableCell align="right">{toPriceWithComma(row.CreditAmount)}</TableCell>
                                     <TableCell align="right">{new Date(row.CreatedDate).toLocaleDateString('fa-IR', {
                                         year: 'numeric',

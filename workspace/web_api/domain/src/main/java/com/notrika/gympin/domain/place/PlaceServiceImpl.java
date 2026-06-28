@@ -7,7 +7,6 @@ import com.notrika.gympin.common.place.placeBase.query.PlaceQuery;
 import com.notrika.gympin.common.place.placeBase.service.PlaceService;
 import com.notrika.gympin.common.settings.location.param.LocationParam;
 import com.notrika.gympin.common.ticket.buyable.dto.TicketBuyableDto;
-import com.notrika.gympin.common.ticket.ticketSubscribe.dto.TicketSubscribeDto;
 import com.notrika.gympin.common.user.user.dto.InviteCode;
 import com.notrika.gympin.common.user.user.param.UserParam;
 import com.notrika.gympin.domain.AbstractBaseService;
@@ -15,7 +14,6 @@ import com.notrika.gympin.domain.util.convertor.BuyableConvertor;
 import com.notrika.gympin.domain.util.convertor.PlaceConvertor;
 import com.notrika.gympin.domain.util.helper.GeneralHelper;
 import com.notrika.gympin.persistence.dao.repository.place.PlaceRepository;
-import com.notrika.gympin.persistence.dao.repository.settings.ManageLocationRepository;
 import com.notrika.gympin.persistence.entity.management.location.ManageLocationEntity;
 import com.notrika.gympin.persistence.entity.place.PlaceEntity;
 import com.notrika.gympin.persistence.entity.ticket.BuyableEntity;
@@ -25,8 +23,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -135,11 +131,19 @@ public class PlaceServiceImpl extends AbstractBaseService<PlaceParam, PlaceDto, 
     }
 
     @Override
-    public List<PlaceDto> getPlacesByTicketUpdatesDate() {
+    public List<PlaceDto> getPlacesByUpdateTicketRecently() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -30);
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
         Date oneWeekAgo = calendar.getTime();
-        return convertToDtos(placeRepository.getPlacesByTicketUpdatesDate(oneWeekAgo));
+        return convertToDtos(placeRepository.getPlacesByTicketUpdatesDateAfter(oneWeekAgo));
+    }
+
+    @Override
+    public List<PlaceDto> getPlacesByUpdateTicketOutdated() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -180);
+        Date oneWeekAgo = calendar.getTime();
+        return convertToDtos(placeRepository.getPlacesByTicketUpdatesDateBefore(oneWeekAgo));
     }
 
 

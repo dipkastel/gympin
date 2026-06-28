@@ -24,7 +24,21 @@ public interface PlaceRepository extends BaseRepository<PlaceEntity, Long> {
     @Query("select p from PlaceGymEntity p,PlacePersonnelEntity po where p.id=po.place.id and po.deleted = 0 and po.user.id = :#{#userId} ")
     List<PlaceEntity> getPlaceByUser(Long userId);
 
-    @Query("SELECT  tbdh.buyable.place from BuyableDiscountHistoryEntity tbdh where tbdh.creatorUser is Not null AND tbdh.createdDate > :date group by tbdh.buyable.place.id order by max(tbdh.createdDate) DESC")
-    List<PlaceEntity> getPlacesByTicketUpdatesDate(Date date);
+    @Query("SELECT DISTINCT bdh.buyable.place \n" +
+            "FROM BuyableDiscountHistoryEntity bdh \n" +
+            "WHERE bdh.createdDate >= :startOfWeek \n" +
+            "and bdh.buyable.place.status = 'ACTIVE' \n" +
+            "AND bdh.creatorUser is not null \n" +
+            "and bdh.buyable.place.deleted = false")
+    List<PlaceEntity> getPlacesByTicketUpdatesDateAfter(Date startOfWeek);
+
+    @Query("SELECT bdh.buyable.place \n" +
+            "FROM BuyableDiscountHistoryEntity bdh \n" +
+            "WHERE bdh.buyable.place.status = 'ACTIVE' \n" +
+            "AND bdh.buyable.place.deleted = false \n" +
+            "AND bdh.creatorUser is not null \n" +
+            "GROUP BY bdh.buyable.place \n" +
+            "HAVING MAX(bdh.createdDate) < :thresholdDate")
+    List<PlaceEntity> getPlacesByTicketUpdatesDateBefore(Date thresholdDate);
 
 }

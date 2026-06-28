@@ -28,4 +28,6 @@ public interface PlaceController extends BaseController<PlaceParam, PlaceDto, Pl
     ResponseEntity<List<TicketBuyableDto>> getBuyableByPlace(PlaceParam placeParam);
 
     ResponseEntity<List<PlaceDto>> getPlacesByTicketUpdatesDate();
+
+    ResponseEntity<List<PlaceDto>> getPlacesByTicketOutdated();
 }

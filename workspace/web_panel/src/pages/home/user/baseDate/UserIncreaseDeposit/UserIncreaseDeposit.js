@@ -205,7 +205,7 @@ function UserIncreaseDeposit({currentUser, updatePage}) {
                 <Modal show={openModalAdd} onHide={() => setOpenModalAdd(false)}>
                     <form onSubmit={(e) => addOption(e)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>{"افزودن اعتبار به کاربر "}</Modal.Title>
+                            <Modal.Title>{"افزودن شارژ به کاربر "}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
 

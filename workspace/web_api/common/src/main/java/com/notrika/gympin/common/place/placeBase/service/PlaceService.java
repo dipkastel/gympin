@@ -22,5 +22,7 @@ public interface PlaceService extends BaseService<PlaceParam, PlaceDto, PlaceQue
 
     List<TicketBuyableDto> getBuyableByPlace(PlaceParam param);
 
-    List<PlaceDto> getPlacesByTicketUpdatesDate();
+    List<PlaceDto> getPlacesByUpdateTicketRecently();
+
+    List<PlaceDto> getPlacesByUpdateTicketOutdated();
 }

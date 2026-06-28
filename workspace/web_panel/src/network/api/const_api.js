@@ -274,6 +274,7 @@ export let PlaceApi = {
     getByUser: "v1/Place/getPlacesByUser",
     query: "v1/Place/query",
     getPlacesByTicketUpdatesDate: "v1/Place/getPlacesByTicketUpdatesDate",
+    getPlacesByTicketOutdated: "v1/Place/getPlacesByTicketOutdated",
 };
 export let CateringApi = {
     add: "v1/catering/add",
