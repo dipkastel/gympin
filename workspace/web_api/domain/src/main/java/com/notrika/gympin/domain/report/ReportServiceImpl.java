@@ -7,6 +7,7 @@ import com.notrika.gympin.common.report.service.ReportService;
 import com.notrika.gympin.common.user.user.enums.Gender;
 import com.notrika.gympin.domain.util.convertor.ReportConvertor;
 import com.notrika.gympin.persistence.dao.repository.corporate.CorporateRepository;
+import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceCorporateTransactionRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageLinkRepository;
 import com.notrika.gympin.persistence.dao.repository.settings.ManageServiceExecutionRepository;
@@ -16,7 +17,6 @@ import com.notrika.gympin.persistence.entity.management.service.reportDto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.spi.ServiceRegistry;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -35,6 +35,8 @@ public class ReportServiceImpl implements ReportService {
     CorporateRepository corporateRepository;
     @Autowired
     ManageServiceExecutionRepository reportRepository;
+    @Autowired
+    FinanceSerialRepository serialRepository;
     @Autowired
     ManageLinkRepository manageLinkRepository;
     @Autowired
@@ -143,5 +145,17 @@ public class ReportServiceImpl implements ReportService {
                 "public org.springframework.http.ResponseEntity<com.notrika.gympin.common.settings.links.dto.LinkDto> com.notrika.gympin.controller.impl.settings.link.LinkControllerImpl.getByCode(java.lang.String)",
                 "[\""+link.getCode()+"\"]",null,null);
         return listViews.stream().map(ReportConvertor::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReportCountByMonthDto> getPanelSellsReportByMonth(ReportParam param) {
+        List<Object[]> result = serialRepository.getSellsByMonth();
+        return result.stream().map(ReportConvertor::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReportCountByMonthDto> getPanelUseReportByMonth(ReportParam param) {
+        List<Object[]> result = serialRepository.getUseByMonth();
+        return result.stream().map(ReportConvertor::toDto).collect(Collectors.toList());
     }
 }

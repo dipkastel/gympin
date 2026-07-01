@@ -4,9 +4,7 @@ import com.notrika.gympin.common.finance.IncreaseUserDeposit.enums.DepositStatus
 import com.notrika.gympin.common.finance.transaction.enums.GatewayType;
 import com.notrika.gympin.persistence.dao.repository.BaseRepository;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
-import lombok.ToString;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -25,4 +23,10 @@ public interface FinanceSerialRepository extends BaseRepository<FinanceSerialEnt
             "where ci.gatewayType is :gatewayType " +
             "and ci.depositStatus is :depositStatus")
     List<FinanceSerialEntity> findAllCorporatePendingPayments(GatewayType gatewayType, DepositStatus depositStatus);
+
+    @Query(value = "select pmonthname(fse.create_date),count(*)from finance_serial fse where fse.process like 'TRA_CHECKOUT_BASKET' group by pmonthname(fse.create_date) order by Max(fse.id)", nativeQuery = true)
+    List<Object[]> getSellsByMonth();
+
+    @Query(value = "select pmonthname(fse.create_date),count(*)from finance_serial fse where fse.process like 'TRA_USE_TICKET' group by pmonthname(fse.create_date) order by Max(fse.id)", nativeQuery = true)
+    List<Object[]> getUseByMonth();
 }

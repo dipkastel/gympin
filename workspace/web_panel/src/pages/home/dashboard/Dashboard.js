@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Paper, Tab, Tabs} from "@mui/material";
 import DashTasksTab from "./Tabs/DashTasksTab";
 import DashConfigsTab from "./Tabs/DashConfigsTab";
-import DashReportsTab from "./Tabs/DashReportsTab";
+import DashReportsTab from "../report/Tabs/ReportFinanceTab";
 
 export default function Dashboard() {
 
@@ -32,12 +32,10 @@ export default function Dashboard() {
                     >
                         <Tab label="انجام نشده" value={"TASKS"}/>
                         <Tab label="پیکر بندی" value={"CONFIGURATION"}/>
-                        <Tab label="گزارشات" value={"REPORTS"}/>
                     </Tabs>
                 </Paper>
                 {selectedTab === "TASKS" && <DashTasksTab  updatePage={updatePage}/>}
                 {selectedTab === "CONFIGURATION" && <DashConfigsTab  updatePage={updatePage}/>}
-                {selectedTab === "REPORTS" && <DashReportsTab  updatePage={updatePage}/>}
             </div>}
 
         </>

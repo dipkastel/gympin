@@ -198,6 +198,14 @@ export function SetRppCateringManagement(number){
     setValue(rpp_cateringManagement,number);
     return getValue(rpp_cateringManagement);
 }
+const rpp_vatManagement = "rpp_vatManagement";
+export function getRppVatManagement(){
+    return getValue(rpp_vatManagement)||5;
+}
+export function SetRppVatManagement(number){
+    setValue(rpp_vatManagement,number);
+    return getValue(rpp_vatManagement);
+}
 
 const rpp_foodManagement = "rpp_foodManagement";
 export function getRppFoodsManagement(){
@@ -352,6 +360,15 @@ export function getRppSmsList(){
 export function SetRppSmsList(number){
     setValue(rpp_smsList,number);
     return getValue(rpp_smsList);
+}
+
+const ps_vatManagement = "ps_vatManagement";
+export function getPsVatManagement(){
+    return JSON.parse(getValue(ps_vatManagement))||{};
+}
+export function SetPsVatManagement(object){
+    setValue(ps_vatManagement,JSON.stringify(object));
+    return JSON.parse(getValue(ps_vatManagement))||{};
 }
 
 

@@ -8,3 +8,10 @@ export function Report_getPlaceViews(data) {
 export function Report_getLinkViews(param) {
   return axios.get(Report.getLinkViews,{params:param});
 }
+
+export function Report_getSellsByMonth(param) {
+  return axios.get(Report.SellsByMonth,{params:param});
+}
+export function Report_getUseByMonth(param) {
+  return axios.get(Report.useByMonth,{params:param});
+}

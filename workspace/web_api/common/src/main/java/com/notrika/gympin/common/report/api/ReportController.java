@@ -20,5 +20,7 @@ public interface ReportController  {
     ResponseEntity<List<ReportPlaceViewsDto>> getPlaceViewsReport(@RequestBody ReportPlaceViewsParam param);
     ResponseEntity<List<ReportPlaceViewsDto>> getLinkViewsReport(Long id);
     ResponseEntity<List<String>> getAiReport(ReportParam param);
+    ResponseEntity<List<ReportCountByMonthDto>> getPanelSellsReportByMonth(ReportParam param);
+    ResponseEntity<List<ReportCountByMonthDto>> getPanelUseReportByMonth(ReportParam param);
 
 }

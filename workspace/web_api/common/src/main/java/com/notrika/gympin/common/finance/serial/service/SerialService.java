@@ -2,6 +2,7 @@ package com.notrika.gympin.common.finance.serial.service;
 
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
+import com.notrika.gympin.common.finance.serial.dto.SerialVatDto;
 import com.notrika.gympin.common.finance.serial.param.SerialParam;
 import com.notrika.gympin.common.finance.serial.query.SerialQuery;
 import com.notrika.gympin.common.finance.transaction.dto.IncomeTransactionDto;
@@ -9,8 +10,11 @@ import com.notrika.gympin.common.finance.transaction.param.IncomeTransactionPara
 import com.notrika.gympin.common.finance.transaction.query.IncomeTransactionQuery;
 import com.notrika.gympin.common.util._base.base.BaseService;
 import lombok.NonNull;
+import org.springframework.data.domain.Page;
 
 public interface SerialService extends BaseService<SerialParam, SerialDto, SerialQuery> {
 
     SerialDto getBySerial(String serial);
+
+    Page<SerialVatDto> vatQuery(SerialQuery param);
 }

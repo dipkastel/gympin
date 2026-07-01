@@ -7,6 +7,7 @@ import com.notrika.gympin.common.report.param.ReportPlaceViewsParam;
 import com.notrika.gympin.common.report.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,6 +81,19 @@ public class ReportControllerImpl implements ReportController {
     @GetMapping("getAiReport")
     public ResponseEntity<List<String>> getAiReport(ReportParam param) {
         return ResponseEntity.ok(reportService.getAiReport(param));
+    }
+
+    @Override
+    @GetMapping("SellsByMonth")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<List<ReportCountByMonthDto>> getPanelSellsReportByMonth(ReportParam param) {
+        return ResponseEntity.ok(reportService.getPanelSellsReportByMonth(param));
+    }
+    @Override
+    @GetMapping("useByMonth")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<List<ReportCountByMonthDto>> getPanelUseReportByMonth(ReportParam param) {
+        return ResponseEntity.ok(reportService.getPanelUseReportByMonth(param));
     }
 
 }

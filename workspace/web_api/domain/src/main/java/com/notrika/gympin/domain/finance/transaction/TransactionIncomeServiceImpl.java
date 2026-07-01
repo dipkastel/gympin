@@ -1,12 +1,14 @@
 package com.notrika.gympin.domain.finance.transaction;
 
 import com.notrika.gympin.common.finance.transaction.dto.IncomeTransactionDto;
+import com.notrika.gympin.common.finance.transaction.dto.MonthIncomeDto;
 import com.notrika.gympin.common.finance.transaction.param.IncomeTransactionParam;
 import com.notrika.gympin.common.finance.transaction.query.IncomeTransactionQuery;
 import com.notrika.gympin.common.finance.transaction.service.IncomeTransactionService;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.TransactionConvertor;
 import com.notrika.gympin.persistence.dao.repository.finance.transaction.FinanceIncomeTransactionRepository;
+import com.notrika.gympin.persistence.entity.finance.transactions.MonthIncomeQDto;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +86,11 @@ public class TransactionIncomeServiceImpl extends AbstractBaseService<IncomeTran
     @Override
     public Page<IncomeTransactionDto> convertToDtos(Page<FinanceIncomeTransactionEntity> entities) {
         return entities.map(TransactionConvertor::toDto);
+    }
+
+    @Override
+    public List<MonthIncomeDto> getByMonth() {
+        List<Object[]> result =  financeIncomeTransactionRepository.getByMonth();
+        return result.stream().map(TransactionConvertor::toDto).collect(Collectors.toList());
     }
 }

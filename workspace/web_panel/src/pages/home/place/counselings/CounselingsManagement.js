@@ -232,7 +232,7 @@ const CounselingsManagement = () => {
 
             <Portlet>
                 <PortletHeader
-                    title="مراکز"
+                    title="مراکز مشاوره"
                     toolbar={
                         <PortletHeaderToolbar>
 
@@ -280,6 +280,7 @@ const CounselingsManagement = () => {
                                     <TableCell align="right" padding="normal" sortDirection={false}>آدرس</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>اطلاعات</TableCell>
                                     <TableCell align="right" padding="normal" sortDirection={false}>وضعیت</TableCell>
+                                    <TableCell align="left" padding="normal" sortDirection={false}>عملیات</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -309,6 +310,12 @@ const CounselingsManagement = () => {
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip label={row.Status} color={(row.Status.startsWith("ACTIVE"))?"success":"error"} />
+                                            </TableCell>
+
+                                            <TableCell align="left">
+
+                                                <Button variant={"contained"}
+                                                        href={ "gyms/data/" + row.Id} >جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

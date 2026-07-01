@@ -51,6 +51,7 @@ import CateringDataManagement from "./place/catering/CateringDataManagement";
 import CateringManagement from "./place/caterings/CateringManagement";
 import LinksManagement from "./links/LinksManagement";
 import CorporatesMap from "./corporate/CorporatesMap/CorporatesMap";
+import VatManagement from "./vat/VatManagement";
 
 export default function HomePage() {
   return (
@@ -119,6 +120,8 @@ export default function HomePage() {
         {/* affiliate */}
         <Route path="/affiliate/detail/:affiliatorId" component={AffiliateDetail} />
         <Route path="/affiliate" component={AffiliateManagement} />
+        {/*vat*/}
+        <Route path="/vat" component={VatManagement} />
 
 
         {/* location */}

@@ -2,6 +2,7 @@ package com.notrika.gympin.controller.impl.finance.serial;
 
 import com.notrika.gympin.common.finance.serial.api.SerialController;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
+import com.notrika.gympin.common.finance.serial.dto.SerialVatDto;
 import com.notrika.gympin.common.finance.serial.param.SerialParam;
 import com.notrika.gympin.common.finance.serial.query.SerialQuery;
 import com.notrika.gympin.common.finance.serial.service.SerialService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,6 +54,12 @@ public class SerialControllerImpl implements SerialController {
     @GetMapping("getBySerial")
     public ResponseEntity<SerialDto> getBySerial(String serial) {
         return ResponseEntity.ok(serialService.getBySerial(serial));
+    }
+
+    @Override
+    @PostMapping("vatQuery")
+    public ResponseEntity<Page<SerialVatDto>> vatQuery(SerialQuery param) {
+        return ResponseEntity.ok(serialService.vatQuery(param));
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.notrika.gympin.common.report.service;
 import com.notrika.gympin.common.report.dto.*;
 import com.notrika.gympin.common.report.param.ReportParam;
 import com.notrika.gympin.common.report.param.ReportPlaceViewsParam;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -18,4 +17,6 @@ public interface ReportService  {
     List<ReportPlaceViewsDto> getPlaceViewsReport(ReportPlaceViewsParam param);
     List<String> getAiReport(ReportParam param);
     List<ReportPlaceViewsDto> getLinkViewsReport(Long linkId);
+    List<ReportCountByMonthDto> getPanelSellsReportByMonth(ReportParam param);
+    List<ReportCountByMonthDto> getPanelUseReportByMonth(ReportParam param);
 }

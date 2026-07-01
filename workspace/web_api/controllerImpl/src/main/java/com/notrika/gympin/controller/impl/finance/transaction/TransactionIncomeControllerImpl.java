@@ -3,6 +3,7 @@ package com.notrika.gympin.controller.impl.finance.transaction;
 import com.notrika.gympin.common.finance.transaction.api.TransactionIncomeController;
 import com.notrika.gympin.common.finance.transaction.api.TransactionUserController;
 import com.notrika.gympin.common.finance.transaction.dto.IncomeTransactionDto;
+import com.notrika.gympin.common.finance.transaction.dto.MonthIncomeDto;
 import com.notrika.gympin.common.finance.transaction.dto.UserTransactionDto;
 import com.notrika.gympin.common.finance.transaction.param.IncomeTransactionParam;
 import com.notrika.gympin.common.finance.transaction.param.UserTransactionParam;
@@ -15,6 +16,8 @@ import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,5 +58,12 @@ public class TransactionIncomeControllerImpl implements TransactionIncomeControl
     @Override
     public ResponseEntity<Page<IncomeTransactionDto>> query(IncomeTransactionQuery param) {
         return ResponseEntity.ok(incomeTransactionService.query(param));
+    }
+
+    @Override
+    @GetMapping("/getByMonth")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<List<MonthIncomeDto>> getByMonth() throws Exception {
+        return ResponseEntity.ok(incomeTransactionService.getByMonth());
     }
 }

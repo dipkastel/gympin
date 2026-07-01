@@ -48,4 +48,11 @@ public final class ReportConvertor {
                 .viewCount(placeViewsDto.getViewCount())
                 .build();
     }
+
+    public static ReportCountByMonthDto toDto(Object[] o) {
+        return ReportCountByMonthDto.builder()
+                .month(o[0].toString())
+                .count(Integer.valueOf(o[1].toString()))
+                .build();
+    }
 }

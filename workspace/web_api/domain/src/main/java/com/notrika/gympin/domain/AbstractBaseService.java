@@ -55,6 +55,12 @@ public abstract class AbstractBaseService<I extends BaseParam, O extends BaseDto
         return convertToDtos(findAll(clause,pageable));
     }
 
+    public Page<ET> eQuery(F param) {
+        Specification<ET> clause = createSpecification(param);
+        Pageable pageable = PagingConvertor.extractPagingParams(param.getPaging());
+        return findAll(clause,pageable);
+    }
+
     @SuppressWarnings("unchecked")
     private Specification<ET> createSpecification(F filter) {
         Query query =new Query();

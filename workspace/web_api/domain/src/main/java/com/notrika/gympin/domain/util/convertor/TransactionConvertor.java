@@ -7,6 +7,7 @@ import com.notrika.gympin.persistence.entity.finance.corporate.FinanceCorporateP
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporatePersonnelCreditTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceCorporateTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.FinanceUserTransactionEntity;
+import com.notrika.gympin.persistence.entity.finance.transactions.MonthIncomeQDto;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceDiscountTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.transactions.gympin.FinanceIncomeTransactionEntity;
 import com.notrika.gympin.persistence.entity.finance.user.FinanceUserEntity;
@@ -160,4 +161,12 @@ public final class TransactionConvertor {
                 .build();
         return dto;
     }
+
+    public static MonthIncomeDto toDto(Object[] ob) {
+        return MonthIncomeDto.builder()
+                .amount((BigDecimal)ob[0])
+                .monthName((String) ob[1])
+                .build();
+    }
+
 }

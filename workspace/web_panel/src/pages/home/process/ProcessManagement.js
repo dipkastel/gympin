@@ -3,7 +3,7 @@ import {ErrorContext} from "../../../components/GympinPagesProvider";
 import {useHistory} from "react-router-dom";
 import Notice from "../../partials/content/Notice";
 import {Portlet, PortletBody, PortletHeader, PortletHeaderToolbar} from "../../partials/content/Portlet";
-import {Avatar, Button, Grid, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
+import {Avatar, Button, Chip, Grid, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
@@ -76,21 +76,28 @@ const ProcessManagement = () => {
         <>
             <Notice icon="flaticon-warning kt-font-primary">مدیریت فرآیند ها</Notice>
 
-            <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
-                <Tabs
-                    value={selectedTab}
-                    onChange={(e, n) => setSelectedTab(n)}
-                    indicatorColor="primary"
-                    textColor="inherit"
-                    variant={"scrollable"}
-                    aria-label="full width tabs example"
-                >
-                    <Tab label="همه" value={null}/>
+            <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2,p:2}}>
+                <Grid container spacing={2} >
+                    <Chip onClick={(e) => setSelectedTab(null)} label={"همه"} color={selectedTab==null?"success":"info"} variant={selectedTab==null?"filled":"outlined"} value={null}/>
                     {Object.keys(ProcessTypeEnum).map(item => (
-                            <Tab key={item} label={ProcessTypeEnum[item]} value={item}/>
+                            <Chip key={item} size={"large"} onClick={(e) => setSelectedTab(item)} label={ProcessTypeEnum[item]} color={selectedTab==item?"success":"info"} variant={selectedTab==item?"filled":"outlined"} value={item}/>
                         )
                     )}
-                </Tabs>
+                </Grid>
+                {/*<Tabs*/}
+                {/*    value={selectedTab}*/}
+                {/*    onChange={(e, n) => setSelectedTab(n)}*/}
+                {/*    indicatorColor="primary"*/}
+                {/*    textColor="inherit"*/}
+                {/*    variant={"scrollable"}*/}
+                {/*    aria-label="full width tabs example"*/}
+                {/*>*/}
+                {/*    <Tab label="همه" value={null}/>*/}
+                {/*    {Object.keys(ProcessTypeEnum).map(item => (*/}
+                {/*            <Tab key={item} label={ProcessTypeEnum[item]} value={item}/>*/}
+                {/*        )*/}
+                {/*    )}*/}
+                {/*</Tabs>*/}
             </Paper>
 
             <Portlet>

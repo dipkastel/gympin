@@ -433,8 +433,10 @@ export let ReportSettings = {
 }
 
 export let Report = {
+    useByMonth: "v1/report/useByMonth",
     getAiReport: "v1/report/getAiReport",
     getLinkViews: "v1/report/getLinkViews",
+    SellsByMonth: "v1/report/SellsByMonth",
     getPlaceViews: "v1/report/getPlaceViews",
     getPopularSports: "v1/report/getPopularSports",
     useCorporateCharge: "v1/report/useCorporateCharge",
@@ -552,6 +554,7 @@ export let IncreaseCorporateDepositApi = {
 
 export let SerialApi = {
     query: "v1/serial/query",
+    vatQuery: "v1/serial/vatQuery",
     getBySerial: "v1/serial/getBySerial",
     getById: "v1/serial/getById",
 };
@@ -608,6 +611,7 @@ export let TransactionPersonnelCredit = {
 
 export let TransactionIncomeApi = {
     query: "v1/TransactionIncome/query",
+    getByMonth: "v1/TransactionIncome/getByMonth",
 };
 
 export let UserApi = {

@@ -6,6 +6,10 @@ export function serial_query(data) {
     return axios.post(SerialApi.query, data);
 }
 
+export function serial_vatQuery(data) {
+    return axios.post(SerialApi.vatQuery, data);
+}
+
 
 export function serial_getBySerial(data) {
     return axios.get(SerialApi.getBySerial,{ params: data });

@@ -232,7 +232,7 @@ const GymsManagement = () => {
 
             <Portlet>
                 <PortletHeader
-                    title="مراکز"
+                    title="مراکز ورزشی"
                     toolbar={
                         <PortletHeaderToolbar>
 
