@@ -103,8 +103,8 @@ public final class SerialConvertor {
             }
 
 
-            BigDecimal payByCorporatePercent = corporatePay.multiply(BigDecimal.valueOf(-1)).divide(sellPrice,3,BigDecimal.ROUND_CEILING);
-            BigDecimal commissionByCo = commissionAll.multiply(payByCorporatePercent).divide(BigDecimal.valueOf(110),0,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
+            BigDecimal payByCorporatePercent = corporatePay.multiply(BigDecimal.valueOf(-1)).divide(sellPrice,10,BigDecimal.ROUND_CEILING);
+            BigDecimal commissionByCo = commissionAll.multiply(payByCorporatePercent).divide(BigDecimal.valueOf(110),3,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100)).setScale(0,RoundingMode.CEILING);
             BigDecimal commissionByUser = commissionAll.multiply(BigDecimal.ONE.subtract(payByCorporatePercent)).divide(BigDecimal.valueOf(110),0,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
             BigDecimal vatByCo = commissionByCo.multiply(BigDecimal.valueOf(0.1)).setScale(0,RoundingMode.CEILING);
             BigDecimal vatByUser = commissionByUser.multiply(BigDecimal.valueOf(0.1)).setScale(0,RoundingMode.CEILING);
