@@ -89,9 +89,9 @@ public final class SerialConvertor {
                 placePrices = placePrices.add(buyable.getPlacePrice());
                 sellPrice = sellPrice.add(buyable.getUnitPrice());
                 BigDecimal placePercent = BigDecimal.valueOf(1 - (buyable.getBeneficiary().getCommissionFee() / 100));
-                beneficiaryPayment = beneficiaryPayment.add(buyable.getPlacePrice().multiply(placePercent));
-                discount = discount.add(buyable.getPlacePrice().subtract(buyable.getUnitPrice()));
-                commissionAll = commissionAll.add(sellPrice.subtract(beneficiaryPayment)).round(new MathContext(1, RoundingMode.UP));
+                beneficiaryPayment = beneficiaryPayment.add(buyable.getPlacePrice().multiply(placePercent)).setScale(0,RoundingMode.CEILING);
+                discount = discount.add(buyable.getPlacePrice().subtract(buyable.getUnitPrice())).setScale(0,RoundingMode.CEILING);
+                commissionAll = commissionAll.add(sellPrice.subtract(beneficiaryPayment)).setScale(0,RoundingMode.CEILING);
                 ticketName += buyable.getName()+" ";
                 placeName += buyable.getPlace().getName()+" ";
             }
@@ -104,10 +104,10 @@ public final class SerialConvertor {
 
 
             BigDecimal payByCorporatePercent = corporatePay.multiply(BigDecimal.valueOf(-1)).divide(sellPrice,3,BigDecimal.ROUND_CEILING);
-            BigDecimal commissionByCo = commissionAll.multiply(payByCorporatePercent).divide(BigDecimal.valueOf(110),3,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
-            BigDecimal commissionByUser = commissionAll.multiply(BigDecimal.ONE.subtract(payByCorporatePercent)).divide(BigDecimal.valueOf(110),3,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
-            BigDecimal vatByCo = commissionByCo.multiply(BigDecimal.valueOf(0.1));
-            BigDecimal vatByUser = commissionByUser.multiply(BigDecimal.valueOf(0.1));
+            BigDecimal commissionByCo = commissionAll.multiply(payByCorporatePercent).divide(BigDecimal.valueOf(110),0,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
+            BigDecimal commissionByUser = commissionAll.multiply(BigDecimal.ONE.subtract(payByCorporatePercent)).divide(BigDecimal.valueOf(110),0,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
+            BigDecimal vatByCo = commissionByCo.multiply(BigDecimal.valueOf(0.1)).setScale(0,RoundingMode.CEILING);
+            BigDecimal vatByUser = commissionByUser.multiply(BigDecimal.valueOf(0.1)).setScale(0,RoundingMode.CEILING);
             try{
                 for (PurchasedBaseEntity purchase : serial.getPurchasedBases()){
                     for (FinanceSerialEntity pSerial :((List<FinanceSerialEntity>)purchase.getSerials()).stream().filter(p->p.getProcessTypeEnum()== ProcessTypeEnum.TRA_USE_TICKET).collect(Collectors.toList())) {
