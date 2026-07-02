@@ -14,6 +14,8 @@ import com.notrika.gympin.persistence.entity.finance.transactions.gympin.Finance
 import com.notrika.gympin.persistence.entity.purchased.PurchasedBaseEntity;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,7 +91,7 @@ public final class SerialConvertor {
                 BigDecimal placePercent = BigDecimal.valueOf(1 - (buyable.getBeneficiary().getCommissionFee() / 100));
                 beneficiaryPayment = beneficiaryPayment.add(buyable.getPlacePrice().multiply(placePercent));
                 discount = discount.add(buyable.getPlacePrice().subtract(buyable.getUnitPrice()));
-                commissionAll = commissionAll.add(sellPrice.subtract(beneficiaryPayment));
+                commissionAll = commissionAll.add(sellPrice.subtract(beneficiaryPayment)).round(new MathContext(1, RoundingMode.UP));
                 ticketName += buyable.getName()+" ";
                 placeName += buyable.getPlace().getName()+" ";
             }
