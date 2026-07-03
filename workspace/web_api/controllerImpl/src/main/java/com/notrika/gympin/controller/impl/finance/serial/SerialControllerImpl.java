@@ -5,8 +5,11 @@ import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.finance.serial.dto.SerialVatDto;
 import com.notrika.gympin.common.finance.serial.param.SerialParam;
 import com.notrika.gympin.common.finance.serial.query.SerialQuery;
+import com.notrika.gympin.common.finance.serial.query.VatSerialQueryExportParam;
 import com.notrika.gympin.common.finance.serial.service.SerialService;
+import com.notrika.gympin.common.finance.transaction.query.CorporateTransactionQuery;
 import com.notrika.gympin.common.util._base.param.BasePagedParam;
+import com.notrika.gympin.common.util.annotation.IgnoreWrapAspect;
 import com.notrika.gympin.common.util.exception.general.FunctionNotAvalable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,5 +69,14 @@ public class SerialControllerImpl implements SerialController {
     public ResponseEntity<Page<SerialDto>> query(SerialQuery param) {
         return ResponseEntity.ok(serialService.query(param));
     }
+
+
+    @Override
+    @PostMapping(value = "/vatQueryExport")
+    @IgnoreWrapAspect
+    public byte[] vatQueryExport(VatSerialQueryExportParam param) throws Exception {
+        return serialService.vatQueryExport(param);
+    }
+
 
 }

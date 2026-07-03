@@ -555,6 +555,7 @@ export let IncreaseCorporateDepositApi = {
 export let SerialApi = {
     query: "v1/serial/query",
     vatQuery: "v1/serial/vatQuery",
+    vatQueryExport: "v1/serial/vatQueryExport",
     getBySerial: "v1/serial/getBySerial",
     getById: "v1/serial/getById",
 };

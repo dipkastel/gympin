@@ -10,6 +10,10 @@ export function serial_vatQuery(data) {
     return axios.post(SerialApi.vatQuery, data);
 }
 
+export function serial_vatQueryExport(data) {
+    return axios.post(SerialApi.vatQueryExport, data,{responseType:"blob"});
+}
+
 
 export function serial_getBySerial(data) {
     return axios.get(SerialApi.getBySerial,{ params: data });

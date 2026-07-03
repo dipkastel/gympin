@@ -32,13 +32,17 @@ public interface PlaceRepository extends BaseRepository<PlaceEntity, Long> {
             "and bdh.buyable.place.deleted = false")
     List<PlaceEntity> getPlacesByTicketUpdatesDateAfter(Date startOfWeek);
 
-    @Query("SELECT bdh.buyable.place \n" +
-            "FROM BuyableDiscountHistoryEntity bdh \n" +
-            "WHERE bdh.buyable.place.status = 'ACTIVE' \n" +
-            "AND bdh.buyable.place.deleted = false \n" +
-            "AND bdh.creatorUser is not null \n" +
-            "GROUP BY bdh.buyable.place \n" +
-            "HAVING MAX(bdh.createdDate) < :thresholdDate")
+    @Query("SELECT p\n" +
+            "    FROM PlaceEntity p \n" +
+            "    WHERE p.status = com.notrika.gympin.common.place.placeBase.enums.PlaceStatusEnum.ACTIVE \n" +
+            "      AND p.deleted = false \n" +
+            "      AND p.id IN ( \n" +
+            "          SELECT bdh.buyable.place.id \n" +
+            "          FROM BuyableDiscountHistoryEntity bdh \n" +
+            "          WHERE bdh.creatorUser IS NOT NULL \n" +
+            "          GROUP BY bdh.buyable.place.id \n" +
+            "          HAVING MAX(bdh.createdDate) < :thresholdDate \n" +
+            "      )")
     List<PlaceEntity> getPlacesByTicketUpdatesDateBefore(Date thresholdDate);
 
 }

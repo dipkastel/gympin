@@ -66,7 +66,7 @@ public final class SerialConvertor {
     }
 
 
-    public static SerialVatDto ToVDto(FinanceSerialEntity serial) {
+    public static SerialVatDto ToVDto(FinanceSerialEntity serial,Boolean isRIAL) {
         String error = "serial : " + serial.getSerial();
         try {
             InvoiceEntity invoice = serial.getInvoices().get(0);
@@ -85,13 +85,13 @@ public final class SerialConvertor {
             BigDecimal incomeCheck = BigDecimal.ZERO;
             String placeName = "";
             String ticketName = "";
-            for (InvoiceBuyableEntity buyable : invoice.getInvoiceBuyables()) {
+            for (InvoiceBuyableEntity buyable : buyables) {
                 placePrices = placePrices.add(buyable.getPlacePrice());
                 sellPrice = sellPrice.add(buyable.getUnitPrice());
                 BigDecimal placePercent = BigDecimal.valueOf(1 - (buyable.getBeneficiary().getCommissionFee() / 100));
-                beneficiaryPayment = beneficiaryPayment.add(buyable.getPlacePrice().multiply(placePercent)).setScale(0,RoundingMode.CEILING);
-                discount = discount.add(buyable.getPlacePrice().subtract(buyable.getUnitPrice())).setScale(0,RoundingMode.CEILING);
-                commissionAll = commissionAll.add(sellPrice.subtract(beneficiaryPayment)).setScale(0,RoundingMode.CEILING);
+                beneficiaryPayment = beneficiaryPayment.add(buyable.getPlacePrice().multiply(placePercent)).setScale(2,RoundingMode.CEILING);
+                discount = discount.add(buyable.getPlacePrice().subtract(buyable.getUnitPrice())).setScale(2,RoundingMode.CEILING);
+                commissionAll = commissionAll.add(sellPrice.subtract(beneficiaryPayment)).setScale(2,RoundingMode.CEILING);
                 ticketName += buyable.getName()+" ";
                 placeName += buyable.getPlace().getName()+" ";
             }
@@ -104,10 +104,12 @@ public final class SerialConvertor {
 
 
             BigDecimal payByCorporatePercent = corporatePay.multiply(BigDecimal.valueOf(-1)).divide(sellPrice,10,BigDecimal.ROUND_CEILING);
-            BigDecimal commissionByCo = commissionAll.multiply(payByCorporatePercent).divide(BigDecimal.valueOf(110),3,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100)).setScale(0,RoundingMode.CEILING);
-            BigDecimal commissionByUser = commissionAll.multiply(BigDecimal.ONE.subtract(payByCorporatePercent)).divide(BigDecimal.valueOf(110),0,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
-            BigDecimal vatByCo = commissionByCo.multiply(BigDecimal.valueOf(0.1)).setScale(0,RoundingMode.CEILING);
-            BigDecimal vatByUser = commissionByUser.multiply(BigDecimal.valueOf(0.1)).setScale(0,RoundingMode.CEILING);
+            BigDecimal commissionByCo = commissionAll.multiply(payByCorporatePercent).setScale(2,RoundingMode.CEILING);
+            BigDecimal commissionByUser = commissionAll.multiply(BigDecimal.ONE.subtract(payByCorporatePercent)).setScale(2,RoundingMode.CEILING);
+            BigDecimal netIncomeByCompany = commissionByCo.divide(BigDecimal.valueOf(110),3,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100)).setScale(2,RoundingMode.CEILING);
+            BigDecimal netIncomeByUser = commissionByUser.divide(BigDecimal.valueOf(110),0,BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100)).setScale(2,RoundingMode.CEILING);
+            BigDecimal vatByCo = netIncomeByCompany.multiply(BigDecimal.valueOf(0.1)).setScale(2,RoundingMode.CEILING);
+            BigDecimal vatByUser = netIncomeByUser.multiply(BigDecimal.valueOf(0.1)).setScale(2,RoundingMode.CEILING);
             try{
                 for (PurchasedBaseEntity purchase : serial.getPurchasedBases()){
                     for (FinanceSerialEntity pSerial :((List<FinanceSerialEntity>)purchase.getSerials()).stream().filter(p->p.getProcessTypeEnum()== ProcessTypeEnum.TRA_USE_TICKET).collect(Collectors.toList())) {
@@ -122,6 +124,21 @@ public final class SerialConvertor {
             if (incomeCheck.compareTo(commissionAll) != 0)
                 error += "\n- income Error : check => " + incomeCheck + " vs " + commissionAll;
 
+            if(isRIAL){
+                placePrices = placePrices.multiply(BigDecimal.valueOf(10));
+                sellPrice = sellPrice.multiply(BigDecimal.valueOf(10));
+                discount = discount.multiply(BigDecimal.valueOf(10));
+                beneficiaryPayment = beneficiaryPayment.multiply(BigDecimal.valueOf(10));
+                corporatePay = corporatePay.multiply(BigDecimal.valueOf(10));
+                userPay = userPay.multiply(BigDecimal.valueOf(10));
+                commissionAll = commissionAll.multiply(BigDecimal.valueOf(10));
+                commissionByCo = commissionByCo.multiply(BigDecimal.valueOf(10));
+                commissionByUser = commissionByUser.multiply(BigDecimal.valueOf(10));
+                netIncomeByCompany = netIncomeByCompany.multiply(BigDecimal.valueOf(10));
+                netIncomeByUser = netIncomeByUser.multiply(BigDecimal.valueOf(10));
+                vatByCo = vatByCo.multiply(BigDecimal.valueOf(10));
+                vatByUser = vatByUser.multiply(BigDecimal.valueOf(10));
+            }
 
             return SerialVatDto.builder()
                     .id(serial.getId())
@@ -139,6 +156,8 @@ public final class SerialConvertor {
                     .commissionAll(commissionAll)
                     .commissionByCorporate(commissionByCo)
                     .commissionByUser(commissionByUser)
+                    .netIncomeByCorporate(netIncomeByCompany)
+                    .netIncomeByUser(netIncomeByUser)
                     .vatByCorporate(vatByCo)
                     .vatByUser(vatByUser)
                     .ticketName(ticketName)

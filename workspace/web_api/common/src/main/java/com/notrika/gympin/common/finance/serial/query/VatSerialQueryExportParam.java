@@ -3,13 +3,14 @@ package com.notrika.gympin.common.finance.serial.query;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.notrika.gympin.common.finance.invoice.enums.InvoiceStatus;
 import com.notrika.gympin.common.finance.serial.enums.ProcessTypeEnum;
-import com.notrika.gympin.common.finance.transaction.enums.TransactionStatus;
 import com.notrika.gympin.common.util._base.query.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -33,16 +34,10 @@ import lombok.experimental.SuperBuilder;
     private Long min_id
     private Long max_id
     */
-public class SerialQuery extends BaseQuery<SerialQuery> {
+public class VatSerialQueryExportParam extends SerialQuery {
 
-    @JsonProperty("Serial")
-    private String like_serial;
-
-    @JsonProperty("ProcessType")
-    private ProcessTypeEnum is_processTypeEnum;
-
-    @JsonProperty("InvoiceStatus")
-    private InvoiceStatus is_invoicesæstatus;
+    @JsonProperty("Filters")
+    private List<String> filters;
 
     @JsonProperty("IsRial")
     private Boolean isRial = false;

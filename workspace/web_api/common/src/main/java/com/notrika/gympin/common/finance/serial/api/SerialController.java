@@ -4,6 +4,7 @@ import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.finance.serial.dto.SerialVatDto;
 import com.notrika.gympin.common.finance.serial.param.SerialParam;
 import com.notrika.gympin.common.finance.serial.query.SerialQuery;
+import com.notrika.gympin.common.finance.serial.query.VatSerialQueryExportParam;
 import com.notrika.gympin.common.finance.transaction.dto.CorporateTransactionDto;
 import com.notrika.gympin.common.finance.transaction.param.CorporateTransactionParam;
 import com.notrika.gympin.common.finance.transaction.query.CorporateTransactionQuery;
@@ -19,5 +20,7 @@ public interface SerialController extends BaseController<SerialParam, SerialDto,
     ResponseEntity<SerialDto> getBySerial(String serial);
 
     ResponseEntity<Page<SerialVatDto>> vatQuery(@RequestBody SerialQuery param);
+
+    byte[] vatQueryExport(@RequestBody VatSerialQueryExportParam param) throws Exception;
 
 }

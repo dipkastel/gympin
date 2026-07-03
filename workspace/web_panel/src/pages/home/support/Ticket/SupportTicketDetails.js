@@ -27,7 +27,7 @@ const SupportTicketDetails = () => {
     function getSupportDetail() {
         Support_getById({id: supportId}).then(result => {
             SetSupport(result.data.Data);
-            SetMessages(result.data.Data.Messages.reverse())
+            SetMessages(result.data.Data?.Messages?.reverse())
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -105,17 +105,17 @@ const SupportTicketDetails = () => {
                         <Grid size={6}>
 
                             <Card variant={"outlined"} sx={{borderRadius: 3, p: 2}}>
-                                <Typography variant={"h5"}>{"موضوع : "}<small>{support.Title}</small></Typography>
+                                <Typography variant={"h5"}>{"موضوع : "}<small>{support?.Title}</small></Typography>
                                 <Typography sx={{display: "flex"}}
-                                            variant={"h5"}>{"ایجاد کننده : "}<PopoverUser user={support.CreatorUser}/></Typography>
-                                {support.Place && <Typography
+                                            variant={"h5"}>{"ایجاد کننده : "}<PopoverUser user={support?.CreatorUser}/></Typography>
+                                {support?.Place && <Typography
                                     variant={"h5"}>{"مربوط به : "}<small>{"مجموعه " + support.Place.Name}</small></Typography>}
-                                {support.Corporate && <Typography
+                                {support?.Corporate && <Typography
                                     variant={"h5"}>{"مربوط به : "}<small>{"سازمان " + support.Corporate.Name}</small></Typography>}
                                 <Typography
-                                    variant={"h5"}>{"تاریخ ایجاد : "}<small>{new Date(support.CreatedDate).toLocaleDateString('fa-IR')}</small></Typography>
+                                    variant={"h5"}>{"تاریخ ایجاد : "}<small>{new Date(support?.CreatedDate).toLocaleDateString('fa-IR')}</small></Typography>
                                 <Typography
-                                    variant={"h5"}>{"ساعت ایجاد : "}<small>{new Date(support.CreatedDate).toLocaleTimeString()}</small></Typography>
+                                    variant={"h5"}>{"ساعت ایجاد : "}<small>{new Date(support?.CreatedDate).toLocaleTimeString()}</small></Typography>
                             </Card>
                         </Grid>
                         <Grid size={6}>
@@ -179,9 +179,9 @@ const SupportTicketDetails = () => {
                 <PortletBody>
 
                     <List>
-                        {Messages.map(item => (
+                        {Messages?.map(item => (
 
-                            item.IsAnswer ?
+                            item?.IsAnswer ?
                                 (<Grid container spacing={1}>
                                     <Grid direction={"row"} justifyItems={"center"}>
                                         <Avatar src={item?.CreatorUser?.Avatar?.Url}/>

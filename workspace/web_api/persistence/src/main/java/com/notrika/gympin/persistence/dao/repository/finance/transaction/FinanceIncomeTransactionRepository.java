@@ -16,6 +16,6 @@ public interface FinanceIncomeTransactionRepository extends BaseRepository<Finan
     BigDecimal gympinTotalIncome();
 
 
-    @Query(value = "SELECT Sum(ft.amount), pmonthname(ft.create_date) FROM finance_income_transaction fit JOIN finance_transaction ft on ft.id = fit.id GROUP BY pmonthname(ft.create_date)",nativeQuery = true)
+    @Query(value = "SELECT Sum(ft.amount), pmonthname(ft.create_date) FROM finance_income_transaction fit JOIN finance_transaction ft on ft.id = fit.id GROUP BY pmonthname(ft.create_date)  order by Max(ft.id)",nativeQuery = true)
     List<Object[]> getByMonth();
 }

@@ -1,22 +1,37 @@
 package com.notrika.gympin.domain.finance.serial;
 
+import com.github.mfathi91.time.PersianDate;
 import com.notrika.gympin.common.finance.serial.dto.SerialDto;
 import com.notrika.gympin.common.finance.serial.dto.SerialVatDto;
 import com.notrika.gympin.common.finance.serial.param.SerialParam;
 import com.notrika.gympin.common.finance.serial.query.SerialQuery;
+import com.notrika.gympin.common.finance.serial.query.VatSerialQueryExportParam;
 import com.notrika.gympin.common.finance.serial.service.SerialService;
+import com.notrika.gympin.common.finance.transaction.dto.CorporateTransactionDto;
+import com.notrika.gympin.common.util._base.dto.BaseDto;
+import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreate;
+import com.notrika.gympin.common.util._base.dto.BaseDtoWithCreateUpdate;
+import com.notrika.gympin.common.util._base.param.BasePagedParam;
 import com.notrika.gympin.domain.AbstractBaseService;
 import com.notrika.gympin.domain.util.convertor.SerialConvertor;
 import com.notrika.gympin.persistence.dao.repository.finance.FinanceSerialRepository;
 import com.notrika.gympin.persistence.entity.finance.FinanceSerialEntity;
 import lombok.NonNull;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.security.KeyPair;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +40,9 @@ public class SerialServiceImpl extends AbstractBaseService<SerialParam, SerialDt
 
     @Autowired
     FinanceSerialRepository financeSerialRepository;
+
+    @Autowired
+    SerialServiceHelper serialServiceHelper;
 
 
     @Override
@@ -95,6 +113,23 @@ public class SerialServiceImpl extends AbstractBaseService<SerialParam, SerialDt
     @Override
     public Page<SerialVatDto> vatQuery(SerialQuery param) {
         var qResult = eQuery(param);
-        return qResult.map(SerialConvertor::ToVDto);
+        return qResult.map(p->SerialConvertor.ToVDto(p,param.getIsRial()));
     }
+
+    @Override
+    public byte[] vatQueryExport(VatSerialQueryExportParam param) throws IOException {
+        List<SerialVatDto> export = new ArrayList<>();
+        int currentPage = 0;
+        Page<SerialVatDto> data = vatQuery(param);
+        do {
+            export.addAll(data.getContent());
+            currentPage++;
+            BasePagedParam page = param.getPaging();
+            page.setPage(currentPage);
+            param.setPaging(page);
+            data = vatQuery(param);
+        }while (data.getTotalPages()>currentPage);
+        return serialServiceHelper.generateExcelFile(export,param);
+    }
+
 }

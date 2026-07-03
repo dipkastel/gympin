@@ -73,6 +73,12 @@ public class SerialVatDto extends BaseDtoWithCreateUpdate<SerialVatDto> {
     @JsonProperty("CommissionByUser")
     private BigDecimal commissionByUser;
 
+    @JsonProperty("NetIncomeByCorporate")
+    private BigDecimal netIncomeByCorporate;
+
+    @JsonProperty("NetIncomeByUser")
+    private BigDecimal netIncomeByUser;
+
     @JsonProperty("VatByCorporate")
     private BigDecimal vatByCorporate;
 
