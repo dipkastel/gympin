@@ -3,7 +3,7 @@ import {Button, TextField} from "@mui/material";
 import {Add, Delete} from "@mui/icons-material";
 import Box from "@mui/material/Box";
 
-const _PlacePhones = ({initialValue,onChange}) => {
+const _CounselingPhones = ({initialValue,onChange}) => {
 
     const [phones, setPhones] = useState(initialValue?.split(",")||[""]);
 
@@ -22,6 +22,7 @@ const _PlacePhones = ({initialValue,onChange}) => {
     const removePhone = (index) => {
         const updatedPhones = phones.filter((_, i) => i !== index);
         setPhones(updatedPhones);
+        onChange(updatedPhones.join(","));
     };
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -50,4 +51,4 @@ const _PlacePhones = ({initialValue,onChange}) => {
     );
 };
 
-export default _PlacePhones;
+export default _CounselingPhones;

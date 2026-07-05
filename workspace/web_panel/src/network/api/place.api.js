@@ -1,7 +1,7 @@
 import axios from "axios";
 import {PlaceApi, TicketSubscribesApi} from "./const_api";
 
-//place
+//counseling
 export function Place_getPlacesInviteCode(place) {
     return axios.get(PlaceApi.getPlacesInviteCode, {params: place});
 }

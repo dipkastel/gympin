@@ -4,15 +4,15 @@ import {Portlet, PortletBody, PortletHeader,} from "../../../../partials/content
 import {Form} from "react-bootstrap";
 import Select from "react-select";
 import {Location_query} from "../../../../../network/api/location.api";
-import PlaceMap from "./PlaceMap";
+import CounselingMap from "./CounselingMap";
 import {ErrorContext} from "../../../../../components/GympinPagesProvider";
-import _PlacePhones from "./_PlacePhones";
+import _CounselingPhones from "./_CounselingPhones";
 
-function PlaceBase({place, updatePlace}) {
+function CounselingBase({counseling, updateCounseling}) {
     const error = useContext(ErrorContext);
 
     const [location, SetLocations] = useState(null)
-    const [inPlace, SetInPlace] = useState(place)
+    const [inCounseling, SetInCounseling] = useState(counseling)
 
     useEffect(() => {
         Location_query({
@@ -20,7 +20,7 @@ function PlaceBase({place, updatePlace}) {
             Type: "REGION",
             paging: {Page: 0, Size: 1000}
         }).then(data => {
-            SetInPlace(place);
+            SetInCounseling(counseling);
             SetLocations(data.data.Data.content)
         }).catch(e => {
             try {
@@ -32,11 +32,12 @@ function PlaceBase({place, updatePlace}) {
     }, []);
 
     function setFormValues(lable, Value) {
-        SetInPlace({...inPlace, [lable]: Value})
+        console.log(lable,Value);
+        SetInCounseling({...inCounseling, [lable]: Value})
     }
 
     function submitForm() {
-        updatePlace(inPlace)
+        updateCounseling(inCounseling)
     }
 
     function getLocationOptions() {
@@ -52,7 +53,7 @@ function PlaceBase({place, updatePlace}) {
         <>
             <Portlet>
                 <PortletHeader
-                    title={"مکان " + place.Name}
+                    title={counseling.Name}
                 />
 
                 <PortletBody>
@@ -65,7 +66,7 @@ function PlaceBase({place, updatePlace}) {
                             label="نام مجموعه"
                             style={{margin: 8}}
                             placeholder="نام مجموعه"
-                            value={inPlace.Name}
+                            value={inCounseling.Name}
                             onChange={(e) => setFormValues("Name", e.target.value)}
                             fullWidth
                             margin="normal"
@@ -74,14 +75,14 @@ function PlaceBase({place, updatePlace}) {
                             }}
                         />
                     </Form.Group>
-                    <_PlacePhones
-                        initialValue={inPlace.Tell}
+                    <_CounselingPhones
+                        initialValue={inCounseling.Tell}
                         onChange={(e) => setFormValues("Tell", e)}
                     />
                     <Form.Group>
                         <FormControlLabel
                             control={<Switch
-                                defaultChecked={inPlace.CallUs}
+                                defaultChecked={inCounseling.CallUs}
                                 onChange={(e) => setFormValues("CallUs", e.target.checked)}/>}
                             label="تماس قبل از خرید"
                         />
@@ -94,12 +95,12 @@ function PlaceBase({place, updatePlace}) {
                             id="exampleTextarea"
                             rows="4"
                             name="formActiveTimes"
-                            value={inPlace.ActiveTimes ? inPlace.ActiveTimes : ""}
+                            value={inCounseling.ActiveTimes ? inCounseling.ActiveTimes : ""}
                             onChange={(e) => setFormValues("ActiveTimes", e.target.value)}
                         />
                     </Form.Group>
                     <Form.Group>
-                        <PlaceMap place={inPlace} setFormValues={setFormValues}/>
+                        <CounselingMap counseling={inCounseling} setFormValues={setFormValues}/>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>منطقه</Form.Label>
@@ -108,8 +109,8 @@ function PlaceBase({place, updatePlace}) {
                             inputId="react-select-single"
                             name="formState"
                             value={
-                                inPlace.Location ? getLocationOptions().filter(option =>
-                                    option.value === inPlace.Location.Id) : 0
+                                inCounseling.Location ? getLocationOptions().filter(option =>
+                                    option.value === inCounseling.Location.Id) : 0
                             }
                             options={getLocationOptions()}
                             onChange={(e) => setFormValues("Location", {Id: e.value})}
@@ -122,7 +123,7 @@ function PlaceBase({place, updatePlace}) {
                             id="exampleTextarea"
                             rows="3"
                             name="formAddress"
-                            value={inPlace.Address ? inPlace.Address : ""}
+                            value={inCounseling.Address ? inCounseling.Address : ""}
                             onChange={(e) => setFormValues("Address", e.target.value)}
                         />
                     </Form.Group>
@@ -131,7 +132,7 @@ function PlaceBase({place, updatePlace}) {
                         <Switch
                             edge="end"
                             onChange={(e) => setFormValues("AutoDiscount", e.target.checked)}
-                            checked={inPlace.AutoDiscount}
+                            checked={inCounseling.AutoDiscount}
                         />
                     </Form.Group>
 
@@ -152,4 +153,4 @@ function PlaceBase({place, updatePlace}) {
     );
 }
 
-export default PlaceBase;
+export default CounselingBase;

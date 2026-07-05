@@ -1,12 +1,12 @@
 import React from 'react';
 import PlaceAbout from "../About/PlaceAbout";
 import PlaceImages from "../Images/PlaceImages";
-import PlaceSports from "../placeSport/PlaceSport";
+import PlaceSports from "../gymSport/PlaceSport";
 import OptionOfPlace from "../OptionsOfPlace/OptionOfPlace";
 import PlacePersonnel from "../Personnel/PlacePersonnel";
 import PlaceTags from "../gymTags/PlaceTags";
 
-const PlaceManagementDataTab = ({place, updatePlace}) => {
+const GymManagementDataTab = ({place, updatePlace}) => {
     return (
         <>
             {place && <div className="row">
@@ -19,7 +19,7 @@ const PlaceManagementDataTab = ({place, updatePlace}) => {
                     {place && <PlacePersonnel place={place}/>}
                     {place && <PlaceImages place={place}/>}
                     {place && <PlaceTags place={place}/>}
-                    {/*{place && <Halls place={place}/>}*/}
+                    {/*{counseling && <Halls counseling={counseling}/>}*/}
                 </div>
 
             </div>}
@@ -27,4 +27,4 @@ const PlaceManagementDataTab = ({place, updatePlace}) => {
     );
 };
 
-export default PlaceManagementDataTab;
+export default GymManagementDataTab;

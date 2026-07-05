@@ -231,6 +231,7 @@ export let optionOfPlaceApi = {
 export let ServiceApi = {
     query: "v1/service/query",
     getUsersActive: "v1/service/getUsersActive",
+    getMapViews: "v1/service/getMapViews",
 };
 export let GymApi = {
     query: "v1/gym/query",

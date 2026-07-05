@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {Form} from "react-bootstrap";
-import "./map.css"
+import "./gymMap.css"
+
 
 
 var markerLayer = null;
 let leaflet = null;
 const tehranCenterLat = 35.7019;
 const tehranCenterLong = 51.4047;
-class PlaceMap extends Component {
+class GymMap extends Component {
 
     constructor(props) {
         super(props);
@@ -91,4 +92,4 @@ class PlaceMap extends Component {
     }
 }
 
-export default PlaceMap;
+export default GymMap;

@@ -5,13 +5,13 @@ import Notice from "../../../partials/content/Notice";
 import Notes from "../../../partials/content/notes/Notes";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {Paper, Tab, Tabs} from "@mui/material";
-import PlaceManagementDataTab from "./placeManagementTabs/PlaceManagementDataTab";
-import PlaceManagementTicketsTab from "./placeManagementTabs/PlaceManagementTicketTab";
-import PlaceManagementSettingTab from "./placeManagementTabs/PlaceManagementSettingTab";
-import PlaceManagementPlaceTab from "./placeManagementTabs/PlaceManagementPlaceTab";
-import PlaceManagementBeneficiariesTab from "./placeManagementTabs/PlaceManagementBeneficiariesTab";
-import PlaceManagementSellsTab from "./placeManagementTabs/PlaceManagementSellTab";
-import PlaceManagementReportTab from "./placeManagementTabs/PlaceManagementReportTab";
+import GymManagementDataTab from "./gymManagementTabs/GymManagementDataTab";
+import PlaceManagementTicketsTab from "./gymManagementTabs/GymManagementTicketTab";
+import GymManagementSettingTab from "./gymManagementTabs/GymManagementSettingTab";
+import GymManagementPlaceTab from "./gymManagementTabs/GymManagementPlaceTab";
+import GymManagementBeneficiariesTab from "./gymManagementTabs/GymManagementBeneficiariesTab";
+import GymManagementSellTab from "./gymManagementTabs/GymManagementSellTab";
+import PlaceManagementReportTab from "./gymManagementTabs/GymManagementReportTab";
 
 const GymDataManagement = () => {
     const error = useContext(ErrorContext);
@@ -74,12 +74,12 @@ const GymDataManagement = () => {
                             <Tab label="گزارشات" value={"REPORTS"}/>
                         </Tabs>
                     </Paper>
-                    {selectedTab === "PLACE"&&<PlaceManagementPlaceTab place={place} updatePlace={updatePlace}/>}
-                    {selectedTab === "DATA"&&<PlaceManagementDataTab place={place} updatePlace={updatePlace}/>}
+                    {selectedTab === "PLACE"&&<GymManagementPlaceTab place={place} updatePlace={updatePlace}/>}
+                    {selectedTab === "DATA"&&<GymManagementDataTab place={place} updatePlace={updatePlace}/>}
                     {selectedTab === "TICKET"&&<PlaceManagementTicketsTab place={place}/>}
-                    {selectedTab === "SELLS"&&<PlaceManagementSellsTab place={place}/>}
-                    {selectedTab === "BENEFICIARIES"&&<PlaceManagementBeneficiariesTab place={place}/>}
-                    {selectedTab === "SETTING"&&<PlaceManagementSettingTab place={place} updatePlace={updatePlace}/>}
+                    {selectedTab === "SELLS"&&<GymManagementSellTab place={place}/>}
+                    {selectedTab === "BENEFICIARIES"&&<GymManagementBeneficiariesTab place={place}/>}
+                    {selectedTab === "SETTING"&&<GymManagementSettingTab place={place} updatePlace={updatePlace}/>}
                     {selectedTab === "REPORTS"&&<PlaceManagementReportTab place={place} updatePlace={updatePlace}/>}
                 </div>
                 <div className="col-md-2">

@@ -1,7 +1,7 @@
 import axios from "axios";
 import {GymApi} from "./const_api";
 
-//place
+//counseling
 export function PlaceGym_getPlaceById(place) {
     return axios.get(GymApi.getPlaceById, {params: place});
 }

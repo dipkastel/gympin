@@ -1,7 +1,7 @@
 import React from 'react';
 import _RViews from "../reports/_RViews";
 
-const PlaceManagementReportsTab = ({place, updatePlace}) => {
+const GymManagementReportTab = ({place, updatePlace}) => {
     return (
         <>
             {place && <div className="row">
@@ -16,4 +16,4 @@ const PlaceManagementReportsTab = ({place, updatePlace}) => {
     );
 };
 
-export default PlaceManagementReportsTab;
+export default GymManagementReportTab;

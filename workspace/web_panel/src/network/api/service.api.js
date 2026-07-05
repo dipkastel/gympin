@@ -9,3 +9,7 @@ export function service_query(data) {
 export function service_GetActiveUsers(data) {
     return axios.post(ServiceApi.getUsersActive, data);
 }
+
+export function service_getUserMapViews(param) {
+    return axios.get(ServiceApi.getMapViews,{params: param});
+}

@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.settings.service.service;
 
+import com.notrika.gympin.common.settings.service.dto.MapViewsDto;
 import com.notrika.gympin.common.settings.service.dto.ServiceDto;
 import com.notrika.gympin.common.settings.service.param.ServiceByDateParam;
 import com.notrika.gympin.common.settings.service.param.ServiceParam;
@@ -13,5 +14,6 @@ public interface ServiceService extends BaseService<ServiceParam, ServiceDto, Se
     Boolean deleteCorruptedItems();
     List<ServiceDto> getUsersActive(ServiceByDateParam param);
     List<Long> getActiveUsersByCorporate(ServiceByDateParam param);
+    List<MapViewsDto> getMapViews();
 
 }

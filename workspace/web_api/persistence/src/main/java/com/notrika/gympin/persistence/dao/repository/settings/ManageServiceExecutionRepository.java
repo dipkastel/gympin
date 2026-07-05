@@ -113,6 +113,15 @@ public interface ManageServiceExecutionRepository extends BaseRepository<ManageS
 
     @Query("SELECT new com.notrika.gympin.persistence.entity.management.service.reportDto.PlaceViewsDto( COUNT(*), DATE(mse.executionDate)) FROM ManageServiceExecutionEntity mse WHERE (:service IS NULL OR mse.service LIKE :service) AND (:param IS NULL OR mse.param LIKE %:param%) AND (:startDate IS NULL OR mse.executionDate > :startDate) AND (:endDate IS NULL OR mse.executionDate < :endDate) GROUP BY DATE(mse.executionDate) ORDER BY DATE(mse.executionDate) ASC ")
     List<PlaceViewsDto> getExecutionGroupByDateReport(String service, String param, Date startDate, Date endDate);
+
+
+    @Query(value = "SELECT param FROM manage_service_execution where service = 'public org.springframework.http.ResponseEntity<org.springframework.data.domain.Page<com.notrika.gympin.common.place.placeGym.dto.PlaceGymDto>> com.notrika.gympin.controller.impl.place.PlaceGymControllerImpl.query(com.notrika.gympin.common.place.placeGym.query.PlaceGymQuery)' and param like '%max_latitude\":35%' order by id DESC LIMIT 500", nativeQuery = true)
+    List<Object> getMapViews();
+
+
+
+
+
 }
 
 

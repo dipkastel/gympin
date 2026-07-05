@@ -1,7 +1,7 @@
 import React from 'react';
 import PlaceSells from "../sells/PlaceSells";
 
-const PlaceManagementSellsTab = ({place}) => {
+const CounselingManagementSellTab = ({place}) => {
 
 
     return (
@@ -15,4 +15,4 @@ const PlaceManagementSellsTab = ({place}) => {
     );
 };
 
-export default PlaceManagementSellsTab;
+export default CounselingManagementSellTab;

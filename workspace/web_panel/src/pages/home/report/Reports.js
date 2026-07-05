@@ -5,6 +5,7 @@ import {Paper, Tab, Tabs} from "@mui/material";
 import ReportFinanceTab from "./Tabs/ReportFinanceTab";
 import ReportUsageTab from "./Tabs/ReportUsageTab";
 import ReportSystemTab from "./Tabs/ReportSystemTab";
+import ReportViewTab from "./Tabs/ReportViewTab";
 
 const Reports = () => {
 
@@ -27,11 +28,13 @@ const Reports = () => {
                     >
                         <Tab label="مالی" value={"FINANCE"}/>
                         <Tab label="استفاده" value={"USAGE"}/>
+                        <Tab label="مشاهده" value={"VIEW"}/>
                         <Tab label="سیستم" value={"SYSTEM"}/>
                     </Tabs>
                 </Paper>
                 {selectedTab === "FINANCE" && <ReportFinanceTab  />}
                 {selectedTab === "USAGE" && <ReportUsageTab  />}
+                {selectedTab === "VIEW" && <ReportViewTab  />}
                 {selectedTab === "SYSTEM" && <ReportSystemTab />}
             </div>
 

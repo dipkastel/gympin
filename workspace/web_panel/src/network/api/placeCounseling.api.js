@@ -1,7 +1,7 @@
 import axios from "axios";
 import {CounselingApi} from "./const_api";
 
-//place
+//counseling
 export function PlaceCounseling_getPlaceById(place) {
     return axios.get(CounselingApi.getPlaceById, {params: place});
 }

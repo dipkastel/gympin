@@ -1,7 +1,7 @@
 import React from 'react';
-import PlaceBeneficiaries from "../placeBeneficiaries/PlaceBeneficiaries";
+import PlaceBeneficiaries from "../gymBeneficiaries/PlaceBeneficiaries";
 
-const PlaceManagementBeneficiariesTab = ({place, updatePlace}) => {
+const GymManagementBeneficiariesTab = ({place, updatePlace}) => {
     return (
         <>
             {place && <div className="row">
@@ -14,4 +14,4 @@ const PlaceManagementBeneficiariesTab = ({place, updatePlace}) => {
     );
 };
 
-export default PlaceManagementBeneficiariesTab;
+export default GymManagementBeneficiariesTab;

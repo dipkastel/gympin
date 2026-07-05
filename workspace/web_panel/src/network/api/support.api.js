@@ -1,7 +1,7 @@
 import axios from "axios";
 import {SupportApi} from "./const_api";
 
-//place
+//counseling
 export function Support_getAll() {
     return axios.get(SupportApi.getAll);
 }

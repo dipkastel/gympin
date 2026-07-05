@@ -1,5 +1,6 @@
 package com.notrika.gympin.domain.settings.service;
 
+import com.notrika.gympin.common.settings.service.dto.MapViewsDto;
 import com.notrika.gympin.common.settings.service.dto.ServiceDto;
 import com.notrika.gympin.common.settings.service.param.ServiceByDateParam;
 import com.notrika.gympin.common.settings.service.param.ServiceParam;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -99,6 +101,12 @@ public class ServiceServiceImpl extends AbstractBaseService<ServiceParam, Servic
     @Override
     public List<Long> getActiveUsersByCorporate(ServiceByDateParam param) {
         return manageServiceExecutionRepository.getActiveUsersByCorporate(param.fromDate,param.corporateId);
+    }
+
+    @Override
+    public List<MapViewsDto> getMapViews() {
+        List<Object> result =  manageServiceExecutionRepository.getMapViews();
+        return result.stream().map(ServiceConvertor::ToDto).collect(Collectors.toList());
     }
 
     @Override

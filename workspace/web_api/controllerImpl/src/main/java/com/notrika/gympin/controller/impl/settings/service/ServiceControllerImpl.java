@@ -1,6 +1,7 @@
 package com.notrika.gympin.controller.impl.settings.service;
 
 import com.notrika.gympin.common.settings.service.api.ServiceController;
+import com.notrika.gympin.common.settings.service.dto.MapViewsDto;
 import com.notrika.gympin.common.settings.service.dto.ServiceDto;
 import com.notrika.gympin.common.settings.service.param.ServiceByDateParam;
 import com.notrika.gympin.common.settings.service.param.ServiceParam;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,5 +81,12 @@ public class ServiceControllerImpl implements ServiceController {
     @PostMapping("/getActiveUsersByCorporate")
     public ResponseEntity<List<Long>> getActiveUsersByCorporate(ServiceByDateParam param) {
         return ResponseEntity.ok(serviceService.getActiveUsersByCorporate(param));
+    }
+
+    @Override
+    @GetMapping("/getMapViews")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<List<MapViewsDto>> getMapViews() {
+        return ResponseEntity.ok(serviceService.getMapViews());
     }
 }

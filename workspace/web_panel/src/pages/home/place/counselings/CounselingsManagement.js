@@ -159,59 +159,6 @@ const CounselingsManagement = () => {
 
 
 
-            <Grid container sx={{mb: 3}} spacing={3}>
-                <Grid item size={{xs:12,md:4}}>
-                    <Card>
-                        <CardHeader title={"مدیریت امکانات مراکز"} color={"primary"}/>
-                        <CardContent className={"kt-space-between"}>
-                            مدیریت امکانات مراکز
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                href="gyms/placeOptionManagement"
-                                sx={{marginRight: "auto"}}
-                                size="large"
-                            >
-                                مدیریت
-                            </Button>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item size={{xs:12,md:4}}>
-                    <Card>
-                        <CardHeader title={"مراکز روی نقشه"} color={"primary"}/>
-                        <CardContent className={"kt-space-between"}>
-                            نقشه مراکز تهران
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                href="gyms/placeOnMap"
-                                sx={{marginRight: "auto"}}
-                                size="large"
-                            >
-                                مشاهده
-                            </Button>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item size={{xs:12,md:4}}>
-                    <Card>
-                        <CardHeader title={"افزودن مجموعه"} color={"primary"}/>
-                        <CardContent className={"kt-space-between"}>
-                            افرودن سریع مجموعه
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                href="gyms/wizard/0"
-                                sx={{marginRight: "auto"}}
-                                size="large"
-                            >
-                                شروع
-                            </Button>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
 
             <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
                 <Tabs
@@ -287,9 +234,7 @@ const CounselingsManagement = () => {
                                 {places.content && places.content.map((row, index) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     return (
-                                        <TableRow hover onClick={(event) => {
-                                            history.push({pathname: "gyms/data/" + row.Id});
-                                        }} role="checkbox" tabIndex={-1} key={row.Id.toString()}>
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.Id.toString()}>
                                             <TableCell component="th" id={labelId} scope="row" padding="normal"
                                                        align="right">{row.Id}</TableCell>
                                             <TableCell align="right">{row.Name||"ثبت نشده"}</TableCell>
@@ -315,7 +260,7 @@ const CounselingsManagement = () => {
                                             <TableCell align="left">
 
                                                 <Button variant={"contained"}
-                                                        href={ "gyms/data/" + row.Id} >جزییات</Button>
+                                                        href={ "counseling/data/" + row.Id} >جزییات</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

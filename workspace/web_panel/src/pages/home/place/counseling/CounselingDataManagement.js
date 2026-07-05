@@ -1,23 +1,27 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {PlaceGym_getPlaceById, PlaceGym_updatePlace} from "../../../../network/api/placeGym.api";
+import {PlaceGym_updatePlace} from "../../../../network/api/placeGym.api";
 import Notice from "../../../partials/content/Notice";
 import Notes from "../../../partials/content/notes/Notes";
 import {ErrorContext} from "../../../../components/GympinPagesProvider";
 import {Paper, Tab, Tabs} from "@mui/material";
+import {PlaceCounseling_getPlaceById, PlaceCounseling_updatePlace} from "../../../../network/api/placeCounseling.api";
+import CounselingManagementBaseTab from "./counselingManagementTabs/CounselingManagementBaseTab";
+import CounselingManagementDataTab from "./counselingManagementTabs/CounselingManagementDataTab";
 
 const CounselingDataManagement = () => {
     const error = useContext(ErrorContext);
-    let {placeId} = useParams();
-    const [place, setPlace] = useState(null);
-    const [selectedTab, setSelectedTab] = useState("PLACE");
+    let {counselingId} = useParams();
+    const [counseling, setCounseling] = useState(null);
+    const [selectedTab, setSelectedTab] = useState("COUNSELING");
     useEffect(() => {
         getPlace();
     }, []);
 
     function getPlace() {
-        PlaceGym_getPlaceById({id: placeId}).then((result) => {
-            setPlace(result.data.Data);
+        PlaceCounseling_getPlaceById({id: counselingId}).then((result) => {
+            console.log(result);
+            setCounseling(result.data.Data);
         }).catch(e => {
             try {
                 error.showError({message: e.response.data.Message,});
@@ -27,9 +31,9 @@ const CounselingDataManagement = () => {
         });
     }
 
-    function updatePlace(place) {
-        PlaceGym_updatePlace(place).then(data => {
-            setPlace(data.data.Data);
+    function updateCounseling(place) {
+        PlaceCounseling_updatePlace(place).then(data => {
+            setCounseling(data.data.Data);
             error.showError({message: "با موفقیت ثبت شد"});
         }).catch(e => {
             try {
@@ -43,11 +47,11 @@ const CounselingDataManagement = () => {
     return (
         <>
             <Notice icon="flaticon-warning kt-font-primary">
-                {place && (
-                    <p>مدیریت مشخصات مجموعه {place.Name}</p>
+                {counseling && (
+                    <p>مدیریت مشخصات مجموعه {counseling.Name}</p>
                 )}
             </Notice>
-            {place && <div className="row">
+            {counseling && <div className="row">
                 <div className={"col-md-10"}>
                     <Paper sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
                         <Tabs
@@ -58,7 +62,7 @@ const CounselingDataManagement = () => {
                             variant={"standard"}
                             aria-label="full width tabs example"
                         >
-                            <Tab label="مرکز" value={"PLACE"}/>
+                            <Tab label="مرکز" value={"COUNSELING"}/>
                             <Tab label="اطلاعات" value={"DATA"}/>
                             <Tab label="عضویت ها" value={"TICKET"}/>
                             <Tab label="فروش ها" value={"SELLS"}/>
@@ -67,16 +71,17 @@ const CounselingDataManagement = () => {
                             <Tab label="گزارشات" value={"REPORTS"}/>
                         </Tabs>
                     </Paper>
-                    {/*{selectedTab === "PLACE"&&<PlaceManagementPlaceTab place={place} updatePlace={updatePlace}/>}*/}
-                    {/*{selectedTab === "DATA"&&<PlaceManagementDataTab place={place} updatePlace={updatePlace}/>}*/}
-                    {/*{selectedTab === "TICKET"&&<PlaceManagementTicketsTab place={place}/>}*/}
-                    {/*{selectedTab === "SELLS"&&<PlaceManagementSellsTab place={place}/>}*/}
-                    {/*/!*{selectedTab === "BENEFICIARIES"&&<PlaceManagementBeneficiariesTab place={place}/>}*!/*/}
-                    {/*{selectedTab === "SETTING"&&<PlaceManagementSettingTab place={place} updatePlace={updatePlace}/>}*/}
-                    {/*{selectedTab === "REPORTS"&&<PlaceManagementReportTab place={place} updatePlace={updatePlace}/>}*/}
+
+                    {selectedTab === "COUNSELING"&&<CounselingManagementBaseTab counseling={counseling} updateCounseling={updateCounseling}/>}
+                    {selectedTab === "DATA"&&<CounselingManagementDataTab counseling={counseling} updateCounseling={updateCounseling}/>}
+                    {/*{selectedTab === "TICKET"&&<PlaceManagementTicketsTab counseling={counseling}/>}*/}
+                    {/*{selectedTab === "SELLS"&&<GymManagementSellTab counseling={counseling}/>}*/}
+                    {/*/!*{selectedTab === "BENEFICIARIES"&&<GymManagementBeneficiariesTab counseling={counseling}/>}*!/*/}
+                    {/*{selectedTab === "SETTING"&&<GymManagementSettingTab counseling={counseling} updateCounseling={updateCounseling}/>}*/}
+                    {/*{selectedTab === "REPORTS"&&<PlaceManagementReportTab counseling={counseling} updateCounseling={updateCounseling}/>}*/}
                 </div>
                 <div className="col-md-2">
-                    {place && <Notes source={{Place: {Id: place.Id}}}/>}
+                    {counseling && <Notes source={{Place: {Id: counseling.Id}}}/>}
                 </div>
             </div>}
         </>

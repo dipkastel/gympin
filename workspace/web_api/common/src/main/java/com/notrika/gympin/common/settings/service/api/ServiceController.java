@@ -1,5 +1,6 @@
 package com.notrika.gympin.common.settings.service.api;
 
+import com.notrika.gympin.common.settings.service.dto.MapViewsDto;
 import com.notrika.gympin.common.settings.service.dto.ServiceDto;
 import com.notrika.gympin.common.settings.service.param.ServiceByDateParam;
 import com.notrika.gympin.common.settings.service.param.ServiceParam;
@@ -17,4 +18,6 @@ public interface ServiceController extends BaseController<ServiceParam, ServiceD
     ResponseEntity<List<ServiceDto>> getUsersActive(@RequestBody ServiceByDateParam param);
 
     ResponseEntity<List<Long>> getActiveUsersByCorporate(@RequestBody ServiceByDateParam param);
+
+    ResponseEntity<List<MapViewsDto>> getMapViews();
 }

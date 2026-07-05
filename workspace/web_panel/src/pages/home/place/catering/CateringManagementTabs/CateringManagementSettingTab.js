@@ -8,14 +8,14 @@ const CateringManagementSettingTab = ({catering, update}) => {
 
                 <div className="col-md-6">
                     {catering && <_ChangeCateringStatus catering={catering} update={update}/>}
-                    {/*{place && <PlaceOrder place={place} updatePlace={updatePlace}/>}*/}
-                    {/*{place && <DeletePlace place={place}/>}*/}
+                    {/*{counseling && <PlaceOrder counseling={counseling} updateCounseling={updateCounseling}/>}*/}
+                    {/*{counseling && <DeletePlace counseling={counseling}/>}*/}
 
                 </div>
                 <div className="col-md-6">
-                    {/*{place && <PlaceContract place={place} updatePlace={updatePlace}/>}*/}
-                    {/*{place && <PlaceQrMessages place={place}/>}*/}
-                    {/*{place && <PlaceInviteCode place={place}/>}*/}
+                    {/*{counseling && <PlaceContract counseling={counseling} updateCounseling={updateCounseling}/>}*/}
+                    {/*{counseling && <PlaceQrMessages counseling={counseling}/>}*/}
+                    {/*{counseling && <PlaceInviteCode counseling={counseling}/>}*/}
                 </div>
 
             </div>}

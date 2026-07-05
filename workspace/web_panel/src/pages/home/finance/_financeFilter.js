@@ -169,7 +169,7 @@ const _financeFilter = ({openModal, setOpenModal,filter,setFilter}) => {
                                                  })}
                                                  loadOptions={promiseUserOptions}/>
                                 </Tab>
-                                <Tab eventKey="place" title="مجموعه">
+                                <Tab eventKey="counseling" title="مجموعه">
                                     <AsyncSelect cacheOptions defaultOptions
                                                  name={"Select_place"}
                                                  label="مجموعه"

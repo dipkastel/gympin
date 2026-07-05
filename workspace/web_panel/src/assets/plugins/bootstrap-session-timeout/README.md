@@ -242,7 +242,7 @@ $.sessionTimeout({
 
 **With countdown message and bar displayed in warning dialog**
 
-Same as basic usage except you'll also see the countdown message and countdown bar in the warning dialog. Uses Bootstrap progress bar. In countdownMessage place the `{timer}` string where you want the numeric countdown (seconds) to appear.
+Same as basic usage except you'll also see the countdown message and countdown bar in the warning dialog. Uses Bootstrap progress bar. In countdownMessage counseling the `{timer}` string where you want the numeric countdown (seconds) to appear.
 
 ```js
 $.sessionTimeout({

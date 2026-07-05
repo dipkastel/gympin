@@ -6,7 +6,7 @@ import PlaceQrMessages from "../QrMessages/PlaceQrMessages";
 import PlaceOrder from "../order/PlaceOrder";
 import PlaceContract from "../contract/PlaceContract";
 
-const PlaceManagementSettingTab = ({place, updatePlace}) => {
+const GymManagementSettingTab = ({place, updatePlace}) => {
     return (
         <>
             {place && <div className="row">
@@ -28,4 +28,4 @@ const PlaceManagementSettingTab = ({place, updatePlace}) => {
     );
 };
 
-export default PlaceManagementSettingTab;
+export default GymManagementSettingTab;
